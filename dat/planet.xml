@@ -48,6 +48,61 @@
    <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
   </general>
  </planet>
+ <planet name="Hurada">
+  <GFX>
+   <exterior>desertic4.png</exterior>
+   <space>H01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.2</prodfactor>
+   <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
+   <description>A formerly-promising world; following intense volcanic activity, Hurada's orbit decayed, increasing surface temperatures severely and all but eradicating natural surface life. Hurada only maintains a population due to its proximity to Arcturus, providing affordable housing for reserve military troops.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>H</class>
+   <population>12000</population>
+  </general>
+ </planet>
+ 
+  <planet name="Bon Sebb">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M06.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.2</prodfactor>
+   <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past, when it was a frontier world.</bar>
+   <description>While Bon Sebb was once a popular tourist destination, the stop in neighbouring Apez, with its well-known Dowue Syndrome, has resulted in the tourism industry waning. It is now primarily known for its all-natural crops and herbal remedies.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>M</class>
+   <population>40000</population>
+  </general>
+ </planet>
+ 
  <planet name="S23491">
   <GFX>
    <exterior>station01.png</exterior>
@@ -294,7 +349,7 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>7</services>
    <class>A</class>
    <population>40000</population>
   </general>
@@ -383,6 +438,36 @@
    <population>350000</population>
   </general>
  </planet>
+ 
+  <planet name="Paxsor">
+  <GFX>
+   <exterior>mining6.png</exterior>
+   <space>G01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
+   <description>Paxsor is the primary Nexus mining asset within Empire spaced, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>G</class>
+   <population>65000</population>
+  </general>
+ </planet>
+ 
  <planet name="Omega Station">
   <GFX>
    <exterior>station00.png</exterior>
@@ -412,7 +497,7 @@
  </planet>
  <planet name="Emperor's Fist">
   <GFX>
-   <exterior>mining3.png</exterior>
+   <exterior>mining5.png</exterior>
    <space>C00.png</space>
   </GFX>
   <pos>
@@ -461,8 +546,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade.</bar>
-   <description>Arrakis is a desert planet with no natural precipitation.</description>
+   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
+   <description>Arrakis is a desert planet with no natural precipitation. The locals are continuously discussing sandworms, though you're not sure what to make of it.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -563,7 +648,7 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
+   <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
    <description>Jorlan is a small moon that orbits Haleb IV. It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent down to Haleb IV every dozen STU when the climate conditions are favorable, as outside of that narrow window, intense winds capable of severely damaging most ships persist.</description>
    <faction>Frontier</faction>
    <commodities>
@@ -633,7 +718,7 @@
    </tech>
    <services>7</services>
    <class>P</class>
-   <population>2500</population>
+   <population>4500</population>
   </general>
  </planet>
  <planet name="Nova Shakar">
@@ -1013,8 +1098,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>There's nothing remarkable about the Nor spaceport bar. It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed. It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
+   <bar>Typical of poorer Dvaered mining worlds, the Nor spaceport bar is cavernous, sparsely decorated and full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed. Its abundance of gas and ore make it a strategic location and a prime target for the FLF. Due to repeated attacks and sabotage attempts, the Dvaered military has increased the frequency of patrols.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -1057,6 +1142,23 @@
   <pos>
    <y>17</y>
    <x>23</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <class>J</class>
+  </general>
+ </planet>
+ <planet name="Saturn VI">
+  <GFX>
+   <space>J00.png</space>
+  </GFX>
+  <pos>
+   <y>240</y>
+   <x>220</x>
   </pos>
   <general>
    <services>0</services>
