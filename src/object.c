@@ -92,10 +92,13 @@ static void materials_readFromFile( const char *filename, Material **materials )
          readGLfloat(&curr->d, 1);
       } else if (strcmp(token, "Ka") == 0) {
          readGLfloat(curr->Ka, 3);
+         curr->Ka[3] = 1.0;
       } else if (strcmp(token, "Kd") == 0) {
          readGLfloat(curr->Kd, 3);
+         curr->Kd[3] = 1.0;
       } else if (strcmp(token, "Ks") == 0) {
          readGLfloat(curr->Ks, 3);
+         curr->Ks[3] = 1.0;
       } else if (strcmp(token, "map_Kd") == 0) {
          token = strtok(NULL, DELIM);
          if (token[0] == '-')
@@ -111,6 +114,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
 
          DEBUG("texture_filename = %s", texture_filename);
          curr->texture = texture_loadFromFile(texture_filename);
+         curr->has_texture = 1;
          free(copy_filename);
          free(texture_filename);
       } else if (token[0] == '#') {
@@ -143,11 +147,10 @@ Object *object_loadFromFile( const char *filename )
    if (!f)
       ERR("Cannot open object file %s", filename);
 
+   Mesh *curr = NULL;
    Object *object = calloc(1, sizeof(Object));
    object->meshes = array_create(Mesh, mesh_init);
    object->materials = array_create(Material, clear_memory);
-
-   Mesh *curr = &array_grow(&object->meshes);
 
    char line[256];
    while (fgets(line, sizeof(line), f)) {
@@ -262,14 +265,16 @@ void object_free( Object *object )
   /* XXX */
 }
 
-void object_render( Object *object )
+static void object_renderMesh( Object *object, int part, GLfloat alpha )
 {
+   Mesh *mesh = &object->meshes[part];
+
    /* computes relative addresses of the vertice and texture coords */
-   int ver_offset = (int)(&((Vertex *)NULL)->ver);
-   int tex_offset = (int)(&((Vertex *)NULL)->tex);
+   const int ver_offset = (int)(&((Vertex *)NULL)->ver);
+   const int tex_offset = (int)(&((Vertex *)NULL)->tex);
 
    /* FIXME how much to scale the object? */
-   const double scale = 1. / 40.;
+   const double scale = 1. / 10.;
 
    /* rotates the object to match projection */
    double zoom;
@@ -291,28 +296,43 @@ void object_render( Object *object )
    glPushMatrix();
    glLoadIdentity();
 
-#if 0
    /* activates vertices and texture coords */
-   gl_vboActivateOffset(object->mesh,
+   gl_vboActivateOffset(mesh->vbo,
          GL_VERTEX_ARRAY, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
-   gl_vboActivateOffset(object->mesh,
+   gl_vboActivateOffset(mesh->vbo,
          GL_TEXTURE_COORD_ARRAY, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
 
-   /* binds textures */
-   glBindTexture(GL_TEXTURE_2D, object->texture);
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+   /* Set material */
+   /* XXX Ni, d ?? */
+   assert("Part has no material" && (mesh->material != -1));
+   Material *material = object->materials + mesh->material;
+   material->Kd[3] = alpha;
 
-   glEnable(GL_TEXTURE_2D);
+   if (glIsEnabled(GL_LIGHTING)) {
+      glMaterialfv(GL_FRONT, GL_AMBIENT,  material->Ka);
+      glMaterialfv(GL_FRONT, GL_DIFFUSE,  material->Kd);
+      glMaterialfv(GL_FRONT, GL_SPECULAR, material->Ks);
+      glMaterialf(GL_FRONT, GL_SHININESS, material->Ns);
+   } else {
+      glColor4fv(material->Kd);
+   }
+
+   /* binds textures */
+   if (material->has_texture) {
+      glBindTexture(GL_TEXTURE_2D, material->texture);
+      glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+      glEnable(GL_TEXTURE_2D);
+   }
+
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */
 
-   glColor4f(1.0, 1.0, 1.0, 1.0);
-   glDrawArrays(GL_TRIANGLES, 0, object->num_corners);
+   glDrawArrays(GL_TRIANGLES, 0, mesh->num_corners);
 
-   gl_vboDeactivate();
-   glDisable(GL_TEXTURE_2D);
    glDisable(GL_DEPTH_TEST);
-#endif
+   if (material->has_texture)
+      glDisable(GL_TEXTURE_2D);
+   gl_vboDeactivate();
 
    /* restores all matrices */
    glPopMatrix();
@@ -323,9 +343,10 @@ void object_render( Object *object )
 }
 
 
-void object_renderSolid( Object *object, const Solid *solid )
+void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha )
 {
    double x, y, cx, cy, gx, gy, zoom;
+   int i;
 
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix();
@@ -341,8 +362,11 @@ void object_renderSolid( Object *object, const Solid *solid )
 
    glTranslatef(x, y, 0.);
    glRotatef(solid->dir / M_PI * 180. + 90., 0., 0., 1.);
+   glRotatef(90., 1., 0., 0.);
 
-   object_render(object);
+   for (i = 0; i < array_size(object->meshes); ++i)
+      if (strcmp(part_name, object->meshes[i].name) == 0)
+         object_renderMesh(object, i, alpha);
 
    glPopMatrix();
 }

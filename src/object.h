@@ -15,7 +15,7 @@ struct gl_vbo;
 
 typedef struct Material_ {
    char *name;
-   GLfloat Ka[3], Kd[3], Ks[3];
+   GLfloat Ka[4], Kd[4], Ks[4];
    GLfloat Ns, Ni, d;
    GLuint texture;
 
@@ -36,8 +36,7 @@ typedef struct Object_ {
 
 
 Object *object_loadFromFile( const char *filename);
-void object_render( Object *object );
-void object_renderSolid( Object *object, const Solid *solid );
+void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha );
 void object_free( Object *object );
 
 
