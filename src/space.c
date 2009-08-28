@@ -114,8 +114,8 @@ static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
 static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
 static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
-static unsigned long nstars = 0; /**< total stars */
-static unsigned long mstars = 0; /**< memory stars are taking */
+static unsigned int nstars = 0; /**< total stars */
+static unsigned int mstars = 0; /**< memory stars are taking */
 
 
 /*
@@ -651,12 +651,13 @@ static void space_addFleet( Fleet* fleet, int init )
  */
 void space_initStars( int n )
 {
-   unsigned long i, size;
+   unsigned int i;
    GLfloat w, h, hw, hh;
+   double size;
 
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
-   size /= conf.zoom_min;
+   size /= pow2(conf.zoom_min);
 
    /* Calculate star buffer. */
    w  = (SCREEN_W + 2.*STAR_BUF);
@@ -668,7 +669,7 @@ void space_initStars( int n )
 
    /* Calculate stars. */
    size  *= n;
-   nstars = (unsigned long)((double)(size)/(800.*640.));
+   nstars = (unsigned int)(size/(800.*600.));
 
    if (mstars < nstars) {
       /* Create data. */
@@ -1634,7 +1635,7 @@ void space_renderOverlay( const double dt )
  */
 void space_renderStars( const double dt )
 {
-   unsigned long i;
+   unsigned int i;
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
