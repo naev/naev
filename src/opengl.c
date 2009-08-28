@@ -277,7 +277,7 @@ GLboolean gl_hasExt( char *name )
 /**
  * @brief Checks and reports if there's been an error.
  */
-void gl_checkHandleError( const char *func )
+void gl_checkHandleError( const char *func, int line )
 {
    GLenum err;
    const char* errstr;
@@ -315,7 +315,7 @@ void gl_checkHandleError( const char *func )
          errstr = "GL unknown error";
          break;
    }
-   WARN("OpenGL error [%s]: %s", func, errstr);
+   WARN("OpenGL error [%s:%d]: %s", func, line, errstr);
 }
 #endif /* DEBUGGING */
 

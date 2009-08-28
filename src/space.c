@@ -114,8 +114,8 @@ static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
 static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
 static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
-static int nstars = 0; /**< total stars */
-static int mstars = 0; /**< memory stars are taking */
+static unsigned long nstars = 0; /**< total stars */
+static unsigned long mstars = 0; /**< memory stars are taking */
 
 
 /*
@@ -651,8 +651,7 @@ static void space_addFleet( Fleet* fleet, int init )
  */
 void space_initStars( int n )
 {
-   int i;
-   int size;
+   unsigned long i, size;
    GLfloat w, h, hw, hh;
 
    /* Calculate size. */
@@ -660,13 +659,16 @@ void space_initStars( int n )
    size /= conf.zoom_min;
 
    /* Calculate star buffer. */
-   w  = (SCREEN_W + 2.*STAR_BUF) / conf.zoom_min;
-   h  = (SCREEN_H + 2.*STAR_BUF) / conf.zoom_min;
+   w  = (SCREEN_W + 2.*STAR_BUF);
+   w += conf.zoom_stars * (w / conf.zoom_min - 1.);
+   h  = (SCREEN_H + 2.*STAR_BUF);
+   h += conf.zoom_stars * (h / conf.zoom_min - 1.);
    hw = w / 2.;
    hh = h / 2.;
 
    /* Calculate stars. */
-   nstars = (int)((double)(n*size)/(800.*640.));
+   size  *= n;
+   nstars = (unsigned long)((double)(size)/(800.*640.));
 
    if (mstars < nstars) {
       /* Create data. */
@@ -1632,7 +1634,7 @@ void space_renderOverlay( const double dt )
  */
 void space_renderStars( const double dt )
 {
-   int i;
+   unsigned long i;
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
@@ -1644,13 +1646,10 @@ void space_renderStars( const double dt )
 
    /* Do some scaling for now. */
    gl_cameraZoomGet( &z );
+   z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
    gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
       gl_matrixScale( z, z );
-
-   /* Enable vertex arrays. */
-   glEnableClientState(GL_VERTEX_ARRAY);
-   glEnableClientState(GL_COLOR_ARRAY);
 
    if ((player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING) &&
@@ -1686,10 +1685,12 @@ void space_renderStars( const double dt )
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
          /* Calculate some dimensions. */
-         hw = (SCREEN_W / 2. + STAR_BUF) / conf.zoom_min;
-         hh = (SCREEN_H / 2. + STAR_BUF) / conf.zoom_min;
-         w  = 2.*hw;
-         h  = 2.*hh;
+         w  = (SCREEN_W + 2.*STAR_BUF);
+         w += conf.zoom_stars * (w / conf.zoom_min - 1.);
+         h  = (SCREEN_H + 2.*STAR_BUF);
+         h += conf.zoom_stars * (h / conf.zoom_min - 1.);
+         hw = w/2.;
+         hh = h/2.;
 
          /* Calculate new star positions. */
          for (i=0; i < nstars; i++) {
@@ -1720,6 +1721,7 @@ void space_renderStars( const double dt )
       gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
       gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
       glDrawArrays( GL_POINTS, 0, nstars );
+      gl_checkErr();
    }
 
    /* Disable vertex array. */

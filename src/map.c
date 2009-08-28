@@ -214,7 +214,8 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, y, h, standing, nstanding;
+   int f, y, h;
+   double standing, nstanding;
    unsigned int services;
    char buf[PATH_MAX];
    int p;
@@ -262,9 +263,9 @@ static void map_update( unsigned int wid )
    /* System is known */
    window_modifyText( wid, "txtSysname", sys->name );
 
-   standing = 0;
-   nstanding = 0;
-   f = -1;
+   standing  = 0.;
+   nstanding = 0.;
+   f         = -1;
    for (i=0; i<sys->nplanets; i++) {
       if ((f==-1) && (sys->planets[i]->faction>0)) {
          f = sys->planets[i]->faction;
@@ -573,7 +574,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   /* render the star systems */
+   /*
+    * First pass renders everything almost (except names and markers).
+    */
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
@@ -620,15 +623,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
          /* Radius slightly shorter. */
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
-      }
-
-      /* draw the system name */
-      if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
-         tx = x + (sys->pos.x+11.) * map_zoom;
-         ty = y + (sys->pos.y-5.) * map_zoom;
-         gl_print( &gl_smallFont,
-               tx + SCREEN_W/2., ty + SCREEN_H/2.,
-               &cWhite, sys->name );
       }
 
       if (!sys_isKnown(sys))
@@ -697,7 +691,27 @@ static void map_render( double bx, double by, double w, double h, void *data )
    }
 
 
-   /* Second pass to put markers. */
+   /*
+    * Second pass - System names
+    */
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+
+      /* Skip system. */
+      if (!sys_isKnown(sys) || (map_zoom <= 0.5 ))
+         continue;
+
+      tx = x + (sys->pos.x+11.) * map_zoom;
+      ty = y + (sys->pos.y-5.) * map_zoom;
+      gl_print( &gl_smallFont,
+            tx + SCREEN_W/2., ty + SCREEN_H/2.,
+            &cWhite, sys->name );
+   }
+
+
+   /*
+    * Third pass - system markers
+    */
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 

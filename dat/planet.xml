@@ -97,6 +97,38 @@
    <population>318000</population>
   </general>
  </planet>
+ 
+  <planet name="Arcturus Gamma">
+  <GFX>
+   <exterior>station03.png</exterior>
+   <space>002.png</space>
+  </GFX>
+  <pos>
+   <y>120</y>
+   <x>80</x>
+  </pos>
+  <general>
+   <prodfactor>0.5</prodfactor>
+   <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained, and full of off-duty Empire soldiers.</bar>
+   <description>Arcturus Gamma is the Empire's first line of defense when it comes to their core systems. Piracy is nearly non-existent in the core systems due to the large standing force stationed here, and their routine patrols.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>14</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>1</class>
+   <population>52000</population>
+  </general>
+ </planet>
+ 
  <planet name="Selphod">
   <GFX>
    <exterior>snow.png</exterior>
@@ -136,7 +168,7 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty, given the standing orders for all outpost personnel to remain on alert given the threat of FLF attack.</bar>
+   <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty. Though Dvaereds do like to drink, all outpost personnel are under standing orders to remain on alert, given the threat of FLF attack.</bar>
    <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident. To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement. Meanwhile the Dvaereds use this base extensively in their fight against the FLF.</description>
    <faction>Dvaered</faction>
    <tech>
@@ -190,7 +222,7 @@
  </planet>
  <planet name="Tau Station">
   <GFX>
-   <exterior>station00.png</exterior>
+   <exterior>station04.png</exterior>
    <space>000.png</space>
   </GFX>
   <pos>
@@ -216,7 +248,7 @@
  </planet>
  <planet name="Oma">
   <GFX>
-   <exterior>desertic.png</exterior>
+   <exterior>desertic2.png</exterior>
    <space>H01.png</space>
   </GFX>
   <pos>
@@ -264,12 +296,68 @@
    </tech>
    <services>3</services>
    <class>A</class>
-   <population>20000</population>
+   <population>40000</population>
+  </general>
+ </planet>
+  <planet name="Valt">
+  <GFX>
+   <exterior>mining2.png</exterior>
+   <space>K00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
+   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>K</class>
+   <population>15000</population>
+  </general>
+ </planet>
+  <planet name="Praxis">
+  <GFX>
+   <exterior>oceanic2.png</exterior>
+   <space>M00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>While not nearly as pristine as many Empire bars, the Praxis bar is remarkably well-kept for a Dvaered bar.</bar>
+   <description>Praxis is an anomaly in Dvaered culture, known for its commerce rather than production of materials. Beginning as a small colony, it has become increasingly important since the Incident. Praxis is now considered one of the core Dvaered worlds, the gateway through which Dvaered ore and materials flow into Empire space.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>8</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+   <population>400000</population>
   </general>
  </planet>
  <planet name="Torloth">
   <GFX>
-   <exterior>mining.png</exterior>
+   <exterior>mining2.png</exterior>
    <space>G00.png</space>
   </GFX>
   <pos>
@@ -324,7 +412,7 @@
  </planet>
  <planet name="Emperor's Fist">
   <GFX>
-   <exterior>mining.png</exterior>
+   <exterior>mining3.png</exterior>
    <space>C00.png</space>
   </GFX>
   <pos>
@@ -419,7 +507,7 @@
  </planet>
  <planet name="Thar">
   <GFX>
-   <exterior>mining.png</exterior>
+   <exterior>mining4.png</exterior>
    <space>L00.png</space>
   </GFX>
   <pos>
@@ -429,7 +517,7 @@
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
-   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate several kilometers wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
+   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometres wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -550,7 +638,7 @@
  </planet>
  <planet name="Nova Shakar">
   <GFX>
-   <exterior>oceanic.png</exterior>
+   <exterior>forest2.png</exterior>
    <space>M05.png</space>
   </GFX>
   <pos>
@@ -579,7 +667,7 @@
  </planet>
  <planet name="Em 5">
   <GFX>
-   <exterior>oceanic.png</exterior>
+   <exterior>oceanic2.png</exterior>
    <space>M03.png</space>
   </GFX>
   <pos>
@@ -732,7 +820,7 @@
  </planet>
  <planet name="Cetrat">
   <GFX>
-   <exterior>aquatic.png</exterior>
+   <exterior>aquatic2.png</exterior>
    <space>O01.png</space>
   </GFX>
   <pos>
@@ -755,6 +843,35 @@
    <services>15</services>
    <class>A</class>
    <population>930000</population>
+  </general>
+ </planet>
+  <planet name="Norpin II">
+  <GFX>
+   <exterior>desertic3.png</exterior>
+   <space>H02.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.6</prodfactor>
+   <bar>The Norpin II bar isn't the safest place around. With a deep-seated loathing of the Dvaered, the local citizens have brawled with Dvaered soldiers on numerous occasions.</bar>
+   <description>Norpin II is truly at the edge of the frontier, a barely-habitable world being mined and terraformed, though the latter is being as cheaply as possible, resulting in very poor conditions. The Dvaered are loathed here, and it's rumored that the local shipyard is a major source of FLF vessels.</description>
+   <faction>Frontier</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>8</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>H</class>
+   <population>260000</population>
   </general>
  </planet>
  <planet name="Raelid Outpost">
@@ -804,9 +921,38 @@
     <main>7</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>15</services>
    <class>P</class>
-   <population>325000</population>
+   <population>125000</population>
+  </general>
+ </planet>
+  <planet name="Antica">
+  <GFX>
+   <exterior>aquatic3.png</exterior>
+   <space>O01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The Antican bar is a rather lavish affair, quite in contrast to the stark exterior of the orbiting military station. Serving some of the Empire's finest food and drink, this Arcturian bar is often a traveller's introduction to Empire cuisine.</bar>
+   <description>Though the orbiting military installation is all business, Antica mixes business and pleasure quite readily. Given its location, a vast number of transports stop at Antica to sell their wares before venturing deeper into Empire space.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>12</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>O</class>
+   <population>450000</population>
   </general>
  </planet>
  <planet name="Uhriabi-17">
@@ -828,7 +974,7 @@
  </planet>
  <planet name="Darkshed">
   <GFX>
-   <exterior>station02.png</exterior>
+   <exterior>station05.png</exterior>
    <space>002.png</space>
   </GFX>
   <pos>

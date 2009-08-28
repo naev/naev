@@ -109,8 +109,8 @@ void gl_defViewport (void);
 void gl_screenshot( const char *filename );
 int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #ifdef DEBUGGING
-#define gl_checkErr()   gl_checkHandleError( __func__ )
-void gl_checkHandleError( const char *func );
+#define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
+void gl_checkHandleError( const char *func, int line );
 #else /* DEBUGGING */
 #define gl_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUGGING */

@@ -10,8 +10,8 @@
    <jump>Tau Prime</jump>
   </jumps>
   <pos>
-   <y>-138</y>
-   <x>121</x>
+   <y>-148</y>
+   <x>201</x>
   </pos>
   <planets>
    <planet>Anecu</planet>
@@ -47,15 +47,17 @@
  </ssys>
  <ssys name="Raelid">
   <fleets>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
    <fleet>Dvaered Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
+	<fleet>Pirate Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
-   <jump>Arcanis</jump>
    <jump>Toaxis</jump>
    <jump>Zacron</jump>
+	<jump>Draconis</jump>
+	<jump>Arcanis</jump>
   </jumps>
   <pos>
    <y>-137</y>
@@ -79,14 +81,12 @@
   </fleets>
   <jumps>
    <jump>Cygnus</jump>
-   <jump>Eridani</jump>
-   <jump>NGC-7273</jump>
    <jump>Goddard</jump>
    <jump>Alteris</jump>
   </jumps>
   <pos>
-   <y>-10</y>
-   <x>28</x>
+   <y>-55</y>
+   <x>38</x>
   </pos>
   <planets>
    <planet>Caladan</planet>
@@ -103,10 +103,8 @@
    <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>Myad</jump>
    <jump>Sigur</jump>
    <jump>Doeston</jump>
-   <jump>Toaxis</jump>
    <jump>Arcanis</jump>
   </jumps>
   <pos>
@@ -126,7 +124,6 @@
   <jumps>
    <jump>Zerantix</jump>
    <jump>Polaris</jump>
-   <jump>Toros</jump>
    <jump>Doeston</jump>
    <jump>Oriantis</jump>
   </jumps>
@@ -146,18 +143,42 @@
   <fleets>
    <fleet>Empire Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
-   <fleet>Dvaered Light Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>Vlexon</jump>
-   <jump>Goddard</jump>
+   <jump>Arcturus</jump>
+	<jump>Gamma Polaris</jump>
   </jumps>
   <pos>
-   <y>-266</y>
-   <x>42</x>
+   <y>-320</y>
+   <x>-80</x>
   </pos>
   <planets>
    <planet>Dowue</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Arcturus">
+  <fleets>
+   <fleet>Empire Heavy Prescence</fleet>
+   <fleet>Trader Heavy Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Goddard</jump>
+	<jump>Gamma Polaris</jump>
+	<jump>Apez</jump>
+  </jumps>
+  <pos>
+   <y>-246</y>
+   <x>-40</x>
+  </pos>
+  <planets>
+  	<planet>Antica</planet>
+	<planet>Arcturus Gamma</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
@@ -192,12 +213,11 @@
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
-   <jump>NGC-7324</jump>
    <jump>Capricorn</jump>
-   <jump>NGC-7693</jump>
+	<jump>NGC-7414</jump>
   </jumps>
   <pos>
-   <y>100</y>
+   <y>110</y>
    <x>-5</x>
   </pos>
   <planets/>
@@ -214,13 +234,11 @@
    <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>Coriolis</jump>
    <jump>NGC-7723</jump>
-   <jump>NGC-7690</jump>
-   <jump>Dune</jump>
+	<jump>Coriolis</jump>
   </jumps>
   <pos>
-   <y>124</y>
+   <y>134</y>
    <x>81</x>
   </pos>
   <planets/>
@@ -236,7 +254,6 @@
    <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>Arcanis</jump>
    <jump>Sigur</jump>
   </jumps>
   <pos>
@@ -253,15 +270,16 @@
  </ssys>
  <ssys name="Doranthex">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
    <fleet>Dvaered Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Torg</jump>
-   <jump>Theras</jump>
-   <jump>Goddard</jump>
+   <jump>Dakron</jump>
    <jump>Tuoladis</jump>
+	<jump>Ogat</jump>
+	<jump>Tarsus</jump>
   </jumps>
   <pos>
    <y>-353</y>
@@ -269,6 +287,30 @@
   </pos>
   <planets>
    <planet>Doranthex Prime</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Tarsus">
+  <fleets>
+   <fleet>FLF Light Guerrilla</fleet>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Dakron</jump>
+	<jump>Doranthex</jump>
+  </jumps>
+  <pos>
+   <y>-403</y>
+   <x>247</x>
+  </pos>
+  <planets>
+  	<planet>Valt</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
@@ -302,11 +344,8 @@
    <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>NGC-8037</jump>
-   <jump>Tau Prime</jump>
    <jump>Zylex</jump>
-   <jump>Raelid</jump>
-   <jump>Sigur</jump>
+	<jump>Raelid</jump>
   </jumps>
   <pos>
    <y>-57</y>
@@ -398,7 +437,7 @@
    <jump>Doranthex</jump>
   </jumps>
   <pos>
-   <y>-407</y>
+   <y>-387</y>
    <x>140</x>
   </pos>
   <planets>
@@ -411,6 +450,33 @@
    <stars>100</stars>
   </general>
  </ssys>
+ <ssys name="Ogat">
+  <fleets>
+   <fleet>Dvaered Heavy Prescence</fleet>
+	<fleet>Empire Light Prescence</fleet>
+   <fleet>Trader Heavy Prescence</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Goddard</jump>
+	<jump>Vlexon</jump>
+	<jump>Zacron</jump>
+	<jump>Doranthex</jump>
+  </jumps>
+  <pos>
+   <y>-250</y>
+   <x>150</x>
+  </pos>
+  <planets>
+  	<planet>Praxis</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>400</stars>
+  </general>
+ </ssys>
  <ssys name="C-00">
   <fleets>
    <fleet>Collective Medium Prescence</fleet>
@@ -420,7 +486,7 @@
    <jump>C-14</jump>
   </jumps>
   <pos>
-   <y>147</y>
+   <y>167</y>
    <x>-296</x>
   </pos>
   <planets>
@@ -437,10 +503,6 @@
   <fleets/>
   <jumps>
    <jump>Arandon</jump>
-   <jump>Polaris</jump>
-   <jump>Toros</jump>
-   <jump>Sol</jump>
-   <jump>Haered</jump>
   </jumps>
   <pos>
    <y>64</y>
@@ -465,7 +527,7 @@
    <jump>C-14</jump>
   </jumps>
   <pos>
-   <y>79</y>
+   <y>99</y>
    <x>-265</x>
   </pos>
   <planets>
@@ -486,8 +548,6 @@
    <jump>NGC-8037</jump>
    <jump>Zylex</jump>
    <jump>Doeston</jump>
-   <jump>Arcanis</jump>
-   <jump>Oriantis</jump>
   </jumps>
   <pos>
    <y>-15</y>
@@ -508,7 +568,7 @@
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
-   <jump>NGC-7324</jump>
+	<jump>NGC-7690</jump>
   </jumps>
   <pos>
    <y>82</y>
@@ -529,7 +589,6 @@
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
-   <jump>Delta Pavonis</jump>
    <jump>NGC-6938</jump>
    <jump>NGC-7324</jump>
   </jumps>
@@ -555,12 +614,10 @@
    <jump>Coriolis</jump>
    <jump>NGC-7789</jump>
    <jump>Eridani</jump>
-   <jump>NGC-7693</jump>
-   <jump>Alteris</jump>
   </jumps>
   <pos>
    <y>90</y>
-   <x>120</x>
+   <x>130</x>
   </pos>
   <planets>
    <planet>Arrakis</planet>
@@ -580,9 +637,9 @@
   </fleets>
   <jumps>
    <jump>Dune</jump>
-   <jump>NGC-7693</jump>
    <jump>Alteris</jump>
    <jump>NGC-7690</jump>
+	<jump>NGC-7693</jump>
   </jumps>
   <pos>
    <y>73</y>
@@ -603,11 +660,12 @@
    <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
-   <jump>Klantar</jump>
+	<jump>Haleb</jump>
+	<jump>Norpin</jump>
   </jumps>
   <pos>
-   <y>-446</y>
-   <x>443</x>
+   <y>-376</y>
+   <x>483</x>
   </pos>
   <planets/>
   <general>
@@ -627,7 +685,8 @@
    <jump>Qex</jump>
    <jump>Sirou</jump>
    <jump>Shakar</jump>
-   <jump>Goddard</jump>
+	<jump>Arcturus</jump>
+	<jump>Apez</jump>
   </jumps>
   <pos>
    <y>-296</y>
@@ -652,11 +711,10 @@
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
-   <jump>Tau Prime</jump>
   </jumps>
   <pos>
    <y>-81</y>
-   <x>100</x>
+   <x>60</x>
   </pos>
   <planets>
    <planet>Torloth</planet>
@@ -678,12 +736,10 @@
    <jump>Draconis</jump>
    <jump>Draygar</jump>
    <jump>Raelid</jump>
-   <jump>Arcanis</jump>
-   <jump>Cygnus</jump>
   </jumps>
   <pos>
    <y>-94</y>
-   <x>177</x>
+   <x>197</x>
   </pos>
   <planets>
    <planet>Tau Prime</planet>
@@ -700,11 +756,10 @@
   <fleets/>
   <jumps>
    <jump>Arandon</jump>
-   <jump>Zerantix</jump>
    <jump>Sol</jump>
   </jumps>
   <pos>
-   <y>148</y>
+   <y>128</y>
    <x>590</x>
   </pos>
   <planets/>
@@ -725,7 +780,7 @@
   </jumps>
   <pos>
    <y>148</y>
-   <x>-74</x>
+   <x>-54</x>
   </pos>
   <planets>
    <planet>Durea</planet>
@@ -767,7 +822,7 @@
    <jump>C-28</jump>
   </jumps>
   <pos>
-   <y>27</y>
+   <y>47</y>
    <x>-262</x>
   </pos>
   <planets>
@@ -788,13 +843,12 @@
    <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>NGC-7324</jump>
    <jump>NGC-7273</jump>
    <jump>NGC-7132</jump>
    <jump>NGC-7414</jump>
   </jumps>
   <pos>
-   <y>13</y>
+   <y>23</y>
    <x>-117</x>
   </pos>
   <planets>
@@ -859,7 +913,7 @@
    <jump>C-43</jump>
   </jumps>
   <pos>
-   <y>35</y>
+   <y>55</y>
    <x>-169</x>
   </pos>
   <planets/>
@@ -874,7 +928,6 @@
   <fleets/>
   <jumps>
    <jump>Arandon</jump>
-   <jump>Sigur</jump>
   </jumps>
   <pos>
    <y>60</y>
@@ -897,6 +950,7 @@
   <jumps>
    <jump>Tau Prime</jump>
    <jump>Mizar</jump>
+	<jump>Raelid</jump>
   </jumps>
   <pos>
    <y>-33</y>
@@ -941,7 +995,6 @@
   </fleets>
   <jumps>
    <jump>Doeston</jump>
-   <jump>Zylex</jump>
    <jump>Tormulex</jump>
   </jumps>
   <pos>
@@ -983,13 +1036,11 @@
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
-   <jump>Slaccid</jump>
-   <jump>Theras</jump>
    <jump>Dakron</jump>
   </jumps>
   <pos>
    <y>-421</y>
-   <x>366</x>
+   <x>346</x>
   </pos>
   <planets>
    <planet>Nor</planet>
@@ -1011,11 +1062,10 @@
    <jump>Coriolis</jump>
    <jump>Delta Pavonis</jump>
    <jump>Eridani</jump>
-   <jump>Dune</jump>
    <jump>NGC-7324</jump>
   </jumps>
   <pos>
-   <y>33</y>
+   <y>23</y>
    <x>47</x>
   </pos>
   <planets>
@@ -1033,7 +1083,6 @@
   <fleets/>
   <jumps>
    <jump>Myad</jump>
-   <jump>Toros</jump>
   </jumps>
   <pos>
    <y>-78</y>
@@ -1051,13 +1100,16 @@
   <fleets>
    <fleet>Dvaered Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Klantar</jump>
+	<jump>Doranthex</jump>
+	<jump>Theras</jump>
+	<jump>Tarsus</jump>
   </jumps>
   <pos>
-   <y>-448</y>
+   <y>-370</y>
    <x>302</x>
   </pos>
   <planets>
@@ -1073,10 +1125,7 @@
  <ssys name="Toros">
   <fleets/>
   <jumps>
-   <jump>Arandon</jump>
-   <jump>Zerantix</jump>
    <jump>Doeston</jump>
-   <jump>Tormulex</jump>
   </jumps>
   <pos>
    <y>8</y>
@@ -1094,11 +1143,10 @@
   <fleets>
    <fleet>Dvaered Light Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
-   <fleet>FLF Medium Guerrilla</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Raelid</jump>
-   <jump>Zylex</jump>
   </jumps>
   <pos>
    <y>-149</y>
@@ -1143,8 +1191,8 @@
    <jump>Eneguoz</jump>
   </jumps>
   <pos>
-   <y>-455</y>
-   <x>-140</x>
+   <y>-465</y>
+   <x>-150</x>
   </pos>
   <planets>
    <planet>Em 5</planet>
@@ -1180,11 +1228,10 @@
  <ssys name="Haered">
   <fleets/>
   <jumps>
-   <jump>Zerantix</jump>
    <jump>Sol</jump>
   </jumps>
   <pos>
-   <y>176</y>
+   <y>136</y>
    <x>751</x>
   </pos>
   <planets/>
@@ -1205,7 +1252,7 @@
    <jump>C-43</jump>
   </jumps>
   <pos>
-   <y>52</y>
+   <y>72</y>
    <x>-331</x>
   </pos>
   <planets>
@@ -1247,8 +1294,7 @@
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
-   <jump>Doranthex</jump>
-   <jump>Klantar</jump>
+   <jump>Dakron</jump>
    <jump>Haleb</jump>
   </jumps>
   <pos>
@@ -1268,7 +1314,6 @@
  <ssys name="Sol">
   <fleets/>
   <jumps>
-   <jump>Zerantix</jump>
    <jump>Polaris</jump>
    <jump>Haered</jump>
   </jumps>
@@ -1308,14 +1353,11 @@
    <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>NGC-7291</jump>
    <jump>Alteris</jump>
    <jump>NGC-7273</jump>
-   <jump>NGC-7690</jump>
-   <jump>NGC-7414</jump>
   </jumps>
   <pos>
-   <y>40</y>
+   <y>50</y>
    <x>-31</x>
   </pos>
   <planets/>
@@ -1333,13 +1375,12 @@
    <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>Delta Pavonis</jump>
    <jump>Mizar</jump>
    <jump>Dune</jump>
    <jump>Alteris</jump>
   </jumps>
   <pos>
-   <y>20</y>
+   <y>40</y>
    <x>131</x>
   </pos>
   <planets>
@@ -1362,7 +1403,7 @@
    <jump>C-43</jump>
   </jumps>
   <pos>
-   <y>75</y>
+   <y>95</y>
    <x>-214</x>
   </pos>
   <planets>
@@ -1383,6 +1424,7 @@
   </fleets>
   <jumps>
    <jump>Theras</jump>
+	<jump>Slaccid</jump>
   </jumps>
   <pos>
    <y>-337</y>
@@ -1400,18 +1442,42 @@
    <stars>400</stars>
   </general>
  </ssys>
+ <ssys name="Norpin">
+  <fleets>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+  <jumps>
+	<jump>Slaccid</jump>
+  </jumps>
+  <pos>
+   <y>-427</y>
+   <x>449</x>
+  </pos>
+  <planets>
+  	<planet>Norpin II</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>400</stars>
+  </general>
+ </ssys>
  <ssys name="Vlexon">
   <fleets>
    <fleet>Empire Light Prescence</fleet>
    <fleet>Dvaered Medium Prescence</fleet>
    <fleet>Trader Medium Prescence</fleet>
+	<fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
-   <jump>Apez</jump>
+	<jump>Ogat</jump>
   </jumps>
   <pos>
    <y>-309</y>
-   <x>9</x>
+   <x>115</x>
   </pos>
   <planets>
    <planet>Vlexair</planet>
@@ -1477,6 +1543,7 @@
   <jumps>
    <jump>Raelid</jump>
    <jump>Tuoladis</jump>
+	<jump>Ogat</jump>
   </jumps>
   <pos>
    <y>-224</y>
@@ -1495,13 +1562,12 @@
    <fleet>Pirate Light Prescence</fleet>
    <fleet>Trader Heavy Prescence</fleet>
    <fleet>Goddard Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
   </fleets>
   <jumps>
-   <jump>Doranthex</jump>
    <jump>Delta Pavonis</jump>
-   <jump>Apez</jump>
-   <jump>Gamma Polaris</jump>
+   <jump>Arcturus</jump>
+	<jump>Ogat</jump>
   </jumps>
   <pos>
    <y>-194</y>

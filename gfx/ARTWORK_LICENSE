@@ -48,12 +48,11 @@
        * capacitor2-g.png
        * capacitor4-g.png
        * missile.png
-       * orion.png
        * neutron.png
        * reactor_i.png
        * reactor_ii.png
        * reactor_iii.png
-       * rerout.png
+       * reroute.png
        * shield.png
        * stabilizer.png
        * thruster.png
@@ -62,16 +61,32 @@
    * planet
      * exterior
        * aquatic.png
+       * aquatic2.png
+       * aquatic3.png
        * desertic.png
+       * desertic2.png
+       * desertic3.png
+       * desertic4.png
+       * forest.png
+       * forest2.png
        * gas.png
-       * mining2.png
+       * lava.png
        * mining.png
+       * mining2.png
+       * mining3.png
+       * mining4.png
+       * mining5.png
+       * mining6.png
        * oceanic.png
+       * oceanic2.png
        * snow.png
        * traderoom.png
        * station00.png
        * station01.png
        * station02.png
+       * station03.png
+       * station04.png
+       * station05.png
      * space
        * 000.png
        * 001.png
@@ -296,6 +311,8 @@
        * empire2.png
        * empire3.png
        * empire4.png
+       * rebina.png
+       * jorek.png
    * logo
      * dvaered_small.png
      * empire_small.png
