@@ -43,6 +43,8 @@ static int readGLfloat( GLfloat *dest, int how_many )
 
 static GLuint texture_loadFromFile( const char *filename )
 {
+   DEBUG("Loading texture from %s", filename);
+
    /* Reads image and converts it to RGBA */
    SDL_Surface *brute = IMG_Load(filename);
    if (brute == NULL)
@@ -53,7 +55,7 @@ static GLuint texture_loadFromFile( const char *filename )
    glGenTextures(1, &texture);
    glBindTexture(GL_TEXTURE_2D, texture);
 
-   glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+   glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, image->pixels);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -65,6 +67,8 @@ static GLuint texture_loadFromFile( const char *filename )
 
 static void materials_readFromFile( const char *filename, Material **materials )
 {
+   DEBUG("Loading material from %s", filename);
+
    FILE *f = fopen(filename, "r");
    if (!f)
       ERR("Cannot open material file %s", filename);
@@ -112,7 +116,6 @@ static void materials_readFromFile( const char *filename, Material **materials )
          strcat(texture_filename, "/");
          strcat(texture_filename, token);
 
-         DEBUG("texture_filename = %s", texture_filename);
          curr->texture = texture_loadFromFile(texture_filename);
          curr->has_texture = 1;
          free(copy_filename);
@@ -172,7 +175,6 @@ Object *object_loadFromFile( const char *filename )
             strcat(material_filename, "/");
             strcat(material_filename, token);
 
-            DEBUG("material_filename = %s", material_filename);
             materials_readFromFile(material_filename, &object->materials);
             free(copy_filename);
             free(material_filename);
@@ -314,6 +316,11 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
       glMaterialfv(GL_FRONT, GL_SPECULAR, material->Ks);
       glMaterialf(GL_FRONT, GL_SHININESS, material->Ns);
    } else {
+#if 0
+      DEBUG("No lighting kd = %.3lf %.3lf %.3lf %.3lf",
+            material->Kd[0], material->Kd[1],
+            material->Kd[2], material->Kd[3]);
+#endif
       glColor4fv(material->Kd);
    }
 
