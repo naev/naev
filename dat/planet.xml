@@ -48,6 +48,33 @@
    <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
   </general>
  </planet>
+ <planet name="Hurada">
+  <GFX>
+   <exterior>desertic4.png</exterior>
+   <space>H01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.2</prodfactor>
+   <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
+   <description>A formerly-promising world; following intense volcanic activity, Hurada's orbit decayed, increasing surface temperatures severely and all but eradicating natural surface life. Hurada only maintains a population due to its proximity to Arcturus, providing affordable housing for reserve military troops.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>A</class>
+   <population>40000</population>
+  </general>
+ </planet>
+ 
  <planet name="S23491">
   <GFX>
    <exterior>station01.png</exterior>
@@ -294,7 +321,7 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>7</services>
    <class>A</class>
    <population>40000</population>
   </general>
@@ -633,7 +660,7 @@
    </tech>
    <services>7</services>
    <class>P</class>
-   <population>2500</population>
+   <population>4500</population>
   </general>
  </planet>
  <planet name="Nova Shakar">

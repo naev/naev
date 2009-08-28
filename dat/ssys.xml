@@ -147,6 +147,7 @@
   <jumps>
    <jump>Arcturus</jump>
 	<jump>Gamma Polaris</jump>
+	<jump>Hekaras</jump>
   </jumps>
   <pos>
    <y>-320</y>
@@ -179,6 +180,28 @@
   <planets>
   	<planet>Antica</planet>
 	<planet>Arcturus Gamma</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Hekaras">
+  <fleets>
+   <fleet>Empire Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Apez</jump>
+  </jumps>
+  <pos>
+   <y>-280</y>
+   <x>0</x>
+  </pos>
+  <planets>
+   <planet>Hurada</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>

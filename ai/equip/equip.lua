@@ -132,7 +132,7 @@ function equip_fillSlots( p, high, medium, low, use_high, use_medium, use_low )
 end
 
 
---[[[
+--[[
 -- @brief Does generic pilot equipping
 --
 --    @param p Pilot to equip
@@ -238,14 +238,14 @@ function equip_genericMilitary( p, shipsize )
       local class = p:shipClass()
       if class == "Scout" then
          high   = { "Laser Cannon" }
-         medium = { "Reactor Class I", "Generic Afterburner", "Mispec Jammer" }
+         medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer" }
          low    = { "Solar Panel", }
       elseif class == "Fighter" then
          high   = { "Laser Cannon", "Plasma Blaster", "40mm Autocannon" }
          p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-1 ) -- Adds uniformity
          p:addOutfit( "Seeker Launcher" )
          high   = { }
-         medium = { "Reactor Class I", "Generic Afterburner", "Mispec Jammer",
+         medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer",
                     "Auxiliary Processing Unit I" }
          low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute", }
       elseif class == "Bomber" then
@@ -253,7 +253,7 @@ function equip_genericMilitary( p, shipsize )
          p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
          p:addOutfit( "Seeker Launcher", 2 )
          high   = { }
-         medium = { "Reactor Class I", "Generic Afterburner", "Mispec Jammer",
+         medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer",
                     "Auxiliary Processing Unit I" }
          low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute", }
       end
