@@ -1359,14 +1359,21 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
 
-   if (p->ship->gfx_engine != NULL)
-      gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
-            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            p->tsx, p->tsy, NULL );
-   else
-      gl_blitSprite( p->ship->gfx_space,
-            p->solid->pos.x, p->solid->pos.y,
-            p->tsx, p->tsy, NULL );
+   if (p->ship->gfx_3d != NULL) {
+      /* 3d */
+      object_renderSolidPart(p->ship->gfx_3d, p->solid, "body", 1);
+      object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", p->engine_glow);
+   } else {
+      /* Sprites */
+      if (p->ship->gfx_engine != NULL)
+         gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
+               1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+               p->tsx, p->tsy, NULL );
+      else
+         gl_blitSprite( p->ship->gfx_space,
+               p->solid->pos.x, p->solid->pos.y,
+               p->tsx, p->tsy, NULL );
+   }
 }
 
 
