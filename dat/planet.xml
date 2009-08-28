@@ -301,7 +301,7 @@
  </planet>
   <planet name="Valt">
   <GFX>
-   <exterior>mining5.png</exterior>
+   <exterior>mining2.png</exterior>
    <space>K00.png</space>
   </GFX>
   <pos>
