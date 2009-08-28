@@ -29,7 +29,9 @@
 
 #define SHIP_DATA    "dat/ship.xml" /**< XML file containing ships. */
 #define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
+#define SHIP_3DGFX   "gfx/ship/3d/" /**< Location of ship 3d graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
+#define SHIP_3DEXT   ".obj" /**< Ship 3d graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Target graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communicatio graphic extension. */
@@ -316,9 +318,18 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       if (xml_isNode(node,"GFX")) {
+         int has_3d_model = 0;
 
          /* Get base graphic name. */
          buf = xml_get(node);
+
+         /* Checks for a 3d model */
+         xmlr_attr(node, "_3d", stmp);
+         if (stmp != NULL) {
+            if (strcmp(stmp, "true") == 0)
+               has_3d_model = 1;
+            free(stmp);
+         }
 
          /* Get sprite size. */
          xmlr_attr(node, "sx", stmp );
@@ -347,6 +358,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          if (i>=PATH_MAX) {
             WARN("Failed to get base path of '%s'.", buf);
             continue;
+         }
+
+         /* Load the 3d model */
+         if (has_3d_model) {
+            snprintf(str, PATH_MAX, SHIP_3DGFX"%s/%s"SHIP_3DEXT, base, buf);
+            temp->gfx_3d = object_loadFromFile(str);
          }
 
          /* Load the space sprite. */

@@ -11,6 +11,7 @@
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
+#include "object.h"
 
 
 /* target gfx dimensions */
@@ -108,6 +109,7 @@ typedef struct Ship_ {
    double energy_regen; /**< Maximum energy regeneration in MJ/s. */
 
    /* graphics */
+   Object *gfx_3d; /**< 3d model of the ship */
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */

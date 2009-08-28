@@ -278,7 +278,7 @@
  </ship>
  <!-- Fighters -->
  <ship name="Lancelot">
-  <GFX>lancelot</GFX>
+  <GFX _3d="true">lancelot</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
@@ -483,7 +483,7 @@
   </slots>
  </ship>
  <ship name="Ancestor">
-  <GFX>ancestor</GFX>
+  <GFX _3d="true">ancestor</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
@@ -779,7 +779,7 @@
   </slots>
  </ship>
  <ship name="Empire Pacifier">
-  <GFX sx="10" sy="10">pacifier_empire</GFX>
+  <GFX _3d="true" sx="10" sy="10">pacifier_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
