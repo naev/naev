@@ -131,6 +131,7 @@ end
 function equip_ship( p, scramble, primary, secondary, medium, low, apu,
    use_primary, use_secondary, use_medium, use_low, olist )
 
+   -- Get the ship
    if olist ~= nil then
       s = ship.get( p )
    else
