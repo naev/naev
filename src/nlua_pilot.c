@@ -20,6 +20,7 @@
 #include "nluadef.h"
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
+#include "nlua_ship.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -64,15 +65,12 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
-static int pilotL_outfitCPU( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_shipName( lua_State *L );
-static int pilotL_shipClass( lua_State *L );
-static int pilotL_shipSlots( lua_State *L );
-static int pilotL_shipCPU( lua_State *L );
+static int pilotL_ship( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilot_getPlayer },
@@ -105,12 +103,9 @@ static const luaL_reg pilotL_methods[] = {
    /* Outfits. */
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
-   { "outfitCPU", pilotL_outfitCPU },
    /* Ship. */
    { "shipName", pilotL_shipName },
-   { "shipClass", pilotL_shipClass },
-   { "shipSlots", pilotL_shipSlots },
-   { "shipCPU", pilotL_shipCPU },
+   { "ship", pilotL_ship },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -140,6 +135,9 @@ int nlua_loadPilot( lua_State *L, int readonly )
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, PILOT_METATABLE);
+
+   /* Pilot always loads ship. */
+   nlua_loadShip(L,readonly);
 
    return 0;
 }
@@ -1107,34 +1105,6 @@ static int pilotL_rmOutfit( lua_State *L )
 
 
 /**
- * @brief Gets the outfit CPU usage.
- *
- * @usage cpu_used += p.outfitCPU( "Heavy Ion Turret" ) -- Adds the used cpu by the outfit
- *
- *    @luaparam outfit Name of the outfit to get CPU usage of.
- *    @luareturn CPU the outfit uses.
- * @luafunc outfitCPU( outfit )
- */
-static int pilotL_outfitCPU( lua_State *L )
-{
-   const char *outfit;
-   Outfit *o;
-
-   /* Get parameters. */
-   outfit = luaL_checkstring(L,1);
-
-   /* Get the outfit. */
-   o = outfit_get( outfit );
-   if (o == NULL)
-      return 0;
-
-   /* Return parameter. */
-   lua_pushnumber(L, outfit_cpu(o));
-   return 1;
-}
-
-
-/**
  * @brief Changes the pilot's AI.
  *
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
@@ -1309,18 +1279,19 @@ static int pilotL_shipName( lua_State *L )
 
 
 /**
- * @brief Gets the name of the pilot's ship class.
+ * @brief Gets the pilot's ship.
  *
- * @usage shipclass = p:shipClass()
+ * @usage s = p:ship()
  *
- *    @luaparam p Pilot to get ship class name.
- *    @luareturn The name of the pilot's ship class.
- * @luafunc shipClass( p )
+ *    @luaparam p Pilot to get ship of.
+ *    @luareturn The ship of the pilot.
+ * @luafunc ship( p )
  */
-static int pilotL_shipClass( lua_State *L )
+static int pilotL_ship( lua_State *L )
 {
    LuaPilot *lp;
    Pilot *p;
+   LuaShip ls;
 
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
@@ -1330,64 +1301,10 @@ static int pilotL_shipClass( lua_State *L )
       return 0;
    }
 
-   lua_pushstring(L, ship_class(p->ship));
+   /* Create the ship. */
+   ls.ship = p->ship;
+   lua_pushship(L, ls);
    return 1;
 }
 
 
-/**
- * @brief Gets the amount of the pilot's ship slots.
- *
- * @usage slots_high, slots_medium, slots_low = p:shipSlots()
- *
- *    @luaparam p Pilot to get ship slots of.
- *    @luareturn Number of high, medium and low slots.
- * @luafunc shipSlots( p )
- */
-static int pilotL_shipSlots( lua_State *L )
-{
-   LuaPilot *lp;
-   Pilot *p;
-
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
-   /* Push slot numbers. */
-   lua_pushnumber(L, p->outfit_nhigh);
-   lua_pushnumber(L, p->outfit_nmedium);
-   lua_pushnumber(L, p->outfit_nlow);
-   return 3;
-}
-
-
-/**
- * @brief Gets the ship available CPU.
- *
- * @usage cpu_left = p:shipCPU()
- *
- *    @luaparam p Pilot to get available CPU of.
- *    @luareturn The CPU available on the pilot's ship.
- * @luafunc shipCPU( p )
- */
-static int pilotL_shipCPU( lua_State *L )
-{
-   LuaPilot *lp;
-   Pilot *p;
-
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
-   /* Get CPU. */
-   lua_pushnumber(L, p->cpu);
-   return 1;
-}

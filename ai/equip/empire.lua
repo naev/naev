@@ -5,7 +5,7 @@
 --]]
 function equip_empire( p )
    -- Get ship info
-   local shiptype, shipsize = equip_getShipBroad( p )
+   local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
 
    -- Split by type
    if shiptype == "military" then
@@ -43,7 +43,7 @@ end
 function equip_empireMilitary( p, shipsize )
    local primary, secondary, medium, low, apu
    local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = p:shipSlots()
+   local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Civilian Jammer" }
@@ -52,7 +52,7 @@ function equip_empireMilitary( p, shipsize )
 
    -- Equip by size and type
    if shipsize == "small" then
-      local class = p:shipClass()
+      local class = p:ship():class()
 
       -- Scout
       if class == "Scout" then
