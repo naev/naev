@@ -239,7 +239,7 @@ function equip_genericMilitary( p, shipsize )
       if class == "Scout" then
          high   = { "Laser Cannon" }
          medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer" }
-         low    = { "Solar Panel", }
+         low    = { "Solar Panel" }
       elseif class == "Fighter" then
          high   = { "Laser Cannon", "Plasma Blaster", "40mm Autocannon" }
          p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-1 ) -- Adds uniformity
@@ -247,7 +247,7 @@ function equip_genericMilitary( p, shipsize )
          high   = { }
          medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer",
                     "Auxiliary Processing Unit I" }
-         low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute", }
+         low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute" }
       elseif class == "Bomber" then
          high   = { "Laser Cannon", "Plasma Blaster" }
          p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
@@ -255,16 +255,23 @@ function equip_genericMilitary( p, shipsize )
          high   = { }
          medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer",
                     "Auxiliary Processing Unit I" }
-         low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute", }
+         low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute", "Battery"  }
       end
    elseif shipsize == "medium" then
       high   = { "Laser Turret" }
-      medium = { }
-      low    = { }
+      p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
+      p:addOutfit( "Seeker Launcher", 2 )
+      medium = { "Reactor Class II", "Generic Afterburner", "Milspec Jammer",
+                 "Auxiliary Processing Unit II" }
+      low    = { "Shield Capacitor II", "Shield Capacitor III", "Plasteel Plating",
+                 "Engine Reroute", "Battery II" }
    else
-      high   = { "Laser Turret", "EMP Grenade Launcher" }
-      medium = { }
-      low    = { }
+      high   = { "Laser Turret", "Heavy Ion Turret" }
+      p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
+      p:addOutfit( "Seeker Launcher", 2 )
+      medium = { "Reactor Class III", "Milspec Jammer",
+                 "Auxiliary Processing Unit III" }
+      low    = { "Shield Capacitor III", "Shield Capacitor IV", "Battery III" }
    end
    equip_fillSlots( p, high,     medium,     low,
                        use_high, use_medium, use_low)
