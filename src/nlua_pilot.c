@@ -1023,6 +1023,7 @@ static int pilotL_addOutfit( lua_State *L )
 
       /* Add outfit - already tested. */
       ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
+      pilot_calcStats( p );
 
       /* Add ammo if needed. */
       if ((ret==0) && (outfit_ammo(o) != NULL))
