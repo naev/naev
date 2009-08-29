@@ -6,10 +6,7 @@ include("ai/equip/outfits.lua")
 include("ai/equip/generic.lua")
 include("ai/equip/pirate.lua")
 include("ai/equip/empire.lua")
---[[
-include("ai/equip/dvaerd.lua")
-include("ai/equip/trader.lua")
---]]
+include("ai/equip/dvaered.lua")
 
 
 --[[
@@ -19,14 +16,10 @@ include("ai/equip/trader.lua")
 --    @param f Faction to which pilot belongs
 --]]
 function equip ( p, f )
-   --[[
+   if f == faction.get( "Empire" ) or f == faction.get( "Goddard" ) then
+      equip_empire( p )
    elseif f == faction.get( "Dvaered" ) then
       equip_dvaered( p )
-   elseif f == faction.get( "Trader" ) then
-      equip_trader( p )
-   --]]
-   if f == faction.get( "Empire" ) then
-      equip_empire( p )
    elseif f == faction.get( "Pirate" ) then
       equip_pirate( p )
    else
