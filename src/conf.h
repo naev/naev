@@ -58,6 +58,9 @@ typedef struct PlayerConf_s {
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
 
+   /* Debugging. */
+   int fpu_except;
+
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 

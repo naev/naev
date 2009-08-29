@@ -160,6 +160,9 @@ void conf_setDefaults (void)
 
    /* Input */
    input_setDefault();
+
+   /* Debugging. */
+   conf.fpu_except   = 1;
 }
 
 
@@ -253,6 +256,9 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
+
+      /* Debugging. */
+      conf_loadBool("fpu_except",conf.fpu_except);
 
 
       /*
@@ -785,6 +791,10 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
    conf_saveEmptyLine();
 
+   /* Debugging. */
+   conf_saveComment("Enables FPU exceptions - only works on DEBUG builds");
+   conf_saveBool("fpu_except",conf.fpu_except);
+   conf_saveEmptyLine();
 
    /*
     * Keybindings.

@@ -24,6 +24,9 @@
 
 /* global */
 #include <string.h> /* strdup */
+#ifdef DEBUGGING
+#include <fenv.h>
+#endif /* DEBUGGING */
 #if HAS_LINUX && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
@@ -159,6 +162,12 @@ int main( int argc, char** argv )
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
+
+   /* Enable FPU exceptions. */
+#ifdef DEBUGGING
+   if (conf.fpu_except)
+      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
+#endif /* DEBUGGING */
 
    /* Open data. */
    if (ndata_open() != 0)
