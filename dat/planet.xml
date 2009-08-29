@@ -1087,6 +1087,35 @@
    <population>14000</population>
   </general>
  </planet>
+ <planet name="Sinclair">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.3</prodfactor>
+   <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The planet that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
+   <bar>Sinclair's spaceport bar is run by entrepreneurs, not warriors. But being entrepreneurs, they recognize the value of catering to the locals and to those that pass through, and so it is that this bar has a large holoportrait of Godfried Sinclair hanging over the bar, and his family's weapon can be seen on various decorative fixtures.</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>8</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+   <population>130000</population>
+  </general>
+ </planet>
  <planet name="Nor">
   <GFX>
    <exterior>gas.png</exterior>

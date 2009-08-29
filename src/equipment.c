@@ -1068,7 +1068,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          ship->energy_max, ship->energy_regen,
          /* Misc. */
          pilot_cargoUsed(ship), cargo,
-         ship->fuel, ship->fuel_max, pilot_getJumps(player),
+         ship->fuel, ship->fuel_max, pilot_getJumps(ship),
          /* Transportation. */
          buf2,
          loc, sysname );

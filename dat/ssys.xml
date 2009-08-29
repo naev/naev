@@ -1110,6 +1110,7 @@
   </fleets>
   <jumps>
    <jump>Dakron</jump>
+   <jump>Massia</jump>
   </jumps>
   <pos>
    <y>-421</y>
@@ -1117,6 +1118,29 @@
   </pos>
   <planets>
    <planet>Nor</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Massia">
+  <fleets>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+  <jumps>
+   <jump>Klantar</jump>
+  </jumps>
+  <pos>
+   <y>-470</y>
+   <x>330</x>
+  </pos>
+  <planets>
+   <planet>Sinclair</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
