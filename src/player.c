@@ -1262,7 +1262,6 @@ void player_secondaryPrev (void)
 void player_targetPlanet (void)
 {
    /* Clean up some stuff. */
-   hyperspace_target = -1;
    player_rmFlag(PLAYER_LANDACK);
 
    /* Find next planet target. */
