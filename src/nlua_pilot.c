@@ -1013,7 +1013,7 @@ static int pilotL_addOutfit( lua_State *L )
          continue;
 
       /* Test if can add outfit. */
-      ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
+      ret = pilot_addOutfitTest( p, o, p->outfits[i], 1 );
       if (ret) {
          lua_pushboolean(L, 0);
          return 1;
@@ -1076,6 +1076,7 @@ static int pilotL_rmOutfit( lua_State *L )
       for (i=0; i<p->noutfits; i++) {
          pilot_rmOutfitRaw( p, p->outfits[i] );
       }
+      pilot_calcStats( p ); /* Recalculate stats. */
       return 0;
    }
 
@@ -1086,7 +1087,7 @@ static int pilotL_rmOutfit( lua_State *L )
       return 0;
    }
    
-   /* Add outfit. */
+   /* Remove the outfit outfit. */
    for (i=0; i<p->noutfits; i++) {
       /* Must still need to remove. */
       if (q <= 0)
