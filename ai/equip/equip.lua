@@ -5,8 +5,8 @@ include("ai/equip/outfits.lua")
 -- Equipping algorithms
 include("ai/equip/generic.lua")
 include("ai/equip/pirate.lua")
---[[
 include("ai/equip/empire.lua")
+--[[
 include("ai/equip/dvaerd.lua")
 include("ai/equip/trader.lua")
 --]]
@@ -20,14 +20,14 @@ include("ai/equip/trader.lua")
 --]]
 function equip ( p, f )
    --[[
-   if f == faction.get( "Empire" ) then
-      equip_empire( p )
    elseif f == faction.get( "Dvaered" ) then
       equip_dvaered( p )
    elseif f == faction.get( "Trader" ) then
       equip_trader( p )
    --]]
-   if f == faction.get( "Pirate" ) then
+   if f == faction.get( "Empire" ) then
+      equip_empire( p )
+   elseif f == faction.get( "Pirate" ) then
       equip_pirate( p )
    else
       equip_generic( p )
