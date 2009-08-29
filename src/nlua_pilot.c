@@ -1013,7 +1013,7 @@ static int pilotL_addOutfit( lua_State *L )
          continue;
 
       /* Test if can add outfit. */
-      ret = pilot_addOutfitTest( p, o, p->outfits[i], 1 );
+      ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
       if (ret) {
          lua_pushboolean(L, 0);
          return 1;
