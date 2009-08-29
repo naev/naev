@@ -1432,6 +1432,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
 void land_checkAddRefuel (void)
 {
    char buf[32], cred[16];
+   unsigned int w;
 
    /* Check to see if fuel conditions are met. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC))
@@ -1444,6 +1445,9 @@ void land_checkAddRefuel (void)
    /* Autorefuel. */
    if (conf.autorefuel) {
       spaceport_refuel( land_windows[0], "btnRefuel" );
+      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      if (w > 0)
+         equipment_updateShips( w, NULL ); /* Must update counter. */
       if (player->fuel >= player->fuel_max)
          return;
    }
