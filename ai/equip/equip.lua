@@ -144,6 +144,8 @@ function table_merge( t, ... )
    end
    return t
 end
+
+
 --[[
 -- Forward mounts
 --]]
@@ -162,6 +164,8 @@ end
 function equip_forwardHigMedLow ()
    return table_merge( equip_forwardLow(), equip_forwardMed(), equip_forwardHig() )
 end
+
+
 --[[
 -- Turret mounts
 --]]
@@ -180,6 +184,28 @@ end
 function equip_turretHigMedLow ()
    return table_merge( equip_turretLow(), equip_turretMed(), equip_turretHig() )
 end
+
+
+--[[
+-- Ranged weapons
+--]]
+function equip_rangedLow ()
+   return { "Seeker Launcher" }
+end
+function equip_rangedMed ()
+   return { "Headhunter Launcher" }
+end
+function equip_rangedHig ()
+   return { }
+end
+function equip_rangedMedLow ()
+   return table_merge( equip_rangedLow(), equip_rangedMed() )
+end
+function equip_rangedHigMedLow ()
+   return table_merge( equip_rangedLow(), equip_rangedMed(), equip_rangedHig() )
+end
+
+
 --[[
 -- Secondary weapons
 --]]
@@ -243,7 +269,7 @@ function equip_ship( p, scramble, primary, secondary, medium, low, apu,
    --]]
    -- Check uniformity
    local po, so
-   if scramble then
+   if not scramble then
       po = primary[ rnd.rnd(1,#primary) ]
       so = secondary[ rnd.rnd(1,#secondary) ]
    end
@@ -342,16 +368,15 @@ function equip_genericCivilian( p, shipsize )
    use_medium  = 0
    use_low     = 0
 
-
    -- Per ship type
    if shipsize == "small" then
-      primary  = { "Laser Cannon", "Plasma Blaster" }
+      primary  = equip_forwardLow()
       medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.8 then
          use_medium = 1
       end
    else
-      primary  = { "Laser Turret" }
+      primary  = equip_turretLow()
       medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.5 then
          use_medium = 1
@@ -370,40 +395,51 @@ end
 -- @brief Equips a generic merchant type ship.
 --]]
 function equip_genericMerchant( p, shipsize )
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:shipSlots()
-   local high, medium, low
-   local use_high, use_medium, use_low
-   use_high = rnd.rnd(1,nhigh) -- Use fewer slots
+
+   -- Defaults
+   medium      = { "Civilian Jammer" }
+   secondary   = { }
+   apu         = { }
+   use_primary = rnd.rnd(1,nhigh) -- Use fewer slots
+   use_secondary = 0
+   use_medium  = 0
+   use_low     = 0
+
+   -- Equip by size
    if shipsize == "small" then
-      high   = { "Laser Cannon", "Plasma Blaster" }
-      medium = { "Civilian Jammer" }
+      primary  = equip_forwardLow()
+      medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.8 then
          use_medium = 1
-      else
-         use_medium = 0
       end
-      low    = { }
    elseif shipsize == "medium" then
-      high   = { "Laser Turret" }
-      medium = { "Civilian Jammer" }
+      primary  = equip_turretLow()
+      medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.6 then
          use_medium = 1
-      else
-         use_medium = 0
       end
-      low    = { }
+      low    = { "Plasteel Plating" }
+      if rnd.rnd() > 0.6 then
+         use_low = 1
+      end
    else
-      high   = { "Laser Turret", "EMP Grenade Launcher" }
+      primary     = equip_turretLow()
+      secondary   = { "EMP Grenade Launcher" }
+      use_seconadry = 1
       medium = { "Civilian Jammer" }
       if rnd.rnd() > 0.4 then
          use_medium = 1
-      else
-         use_medium = 0
       end
-      low    = { }
+      low    = { "Plasteel Plating" }
+      if rnd.rnd() > 0.6 then
+         use_low = 1
+      end
    end
-   equip_fillSlots( p, high,     medium,     low,
-                       use_high, use_medium, use_low)
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low )
 end
 
 
@@ -411,50 +447,75 @@ end
 -- @brief Equips a generic military type ship.
 --]]
 function equip_genericMilitary( p, shipsize )
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:shipSlots()
-   local high, medium, low
-   local use_high, use_medium, use_low
+
+   -- Defaults
+   medium      = { "Civilian Jammer" }
+   secondary   = { }
+   apu         = { }
+
+   -- Equip by size and type
    if shipsize == "small" then
       local class = p:shipClass()
+
+      -- Scout
       if class == "Scout" then
-         high   = { "Laser Cannon" }
-         medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer" }
+         primary = equip_forwardLow ()
+         use_primary = rnd.rnd(1,#nhigh)
+         medium = { "Generic Afterburner", "Milspec Jammer" }
+         use_medium = 2
          low    = { "Solar Panel" }
+
+      -- Fighter
       elseif class == "Fighter" then
-         high   = { "Laser Cannon", "Plasma Blaster", "40mm Autocannon" }
-         p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-1 ) -- Adds uniformity
-         p:addOutfit( "Seeker Launcher" )
-         high   = { }
+         primary  = equip_forwardLow()
+         use_primary = nhigh-1
+         secondary = equip_secondaryLow()
+         use_secondary = 1
          medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer",
                     "Auxiliary Processing Unit I" }
          low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute" }
+         apu    = { "Reactor Class I" }
+
+      -- Bomber
       elseif class == "Bomber" then
-         high   = { "Laser Cannon", "Plasma Blaster" }
-         p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
-         p:addOutfit( "Seeker Launcher", 2 )
-         high   = { }
-         medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer",
-                    "Auxiliary Processing Unit I" }
+         primary = equip_forwardLow()
+         secondary = equip_rangedLow()
+         use_primary = rnd.rnd(1,2)
+         secondary = nhigh - use_primary
+         use_secondary = nhigh - use_primary
+         medium = { "Reactor Class I", "Generic Afterburner", "Milspec Jammer" }
          low    = { "Shield Capacitor", "Plasteel Plating", "Engine Reroute", "Battery"  }
+         apu    = { "Auxiliary Processing Unit I" }
       end
+
    elseif shipsize == "medium" then
-      high   = { "Laser Turret" }
-      p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
-      p:addOutfit( "Seeker Launcher", 2 )
-      medium = { "Reactor Class II", "Generic Afterburner", "Milspec Jammer",
-                 "Auxiliary Processing Unit II" }
+      if rnd.rnd() < 0.6 then
+         primary = equip_forwardMedLow()
+      else
+         primary = equip_turretLow()
+      end
+      secondary = equip_secondaryMedLow()
+      use_secondary = rnd.rnd(1,2)
+      use_primary = nhigh - use_secondary
+      medium = { "Reactor Class II", "Generic Afterburner", "Milspec Jammer" }
       low    = { "Shield Capacitor II", "Shield Capacitor III", "Plasteel Plating",
                  "Engine Reroute", "Battery II" }
+      apu    = { "Auxiliary Processing Unit II" }
+
    else
-      high   = { "Laser Turret", "Heavy Ion Turret" }
-      p:addOutfit( high[ rnd.rnd(1,#high) ], nhigh-2 ) -- Adds uniformity
-      p:addOutfit( "Seeker Launcher", 2 )
-      medium = { "Reactor Class III", "Milspec Jammer",
-                 "Auxiliary Processing Unit III" }
+      primary   = equip_turretMedLow()
+      secondary = equip_secondaryMedLow()
+      use_primary = nhigh-2
+      use_secondary = 2
+      medium = { "Reactor Class III", "Milspec Jammer" }
       low    = { "Shield Capacitor III", "Shield Capacitor IV", "Battery III" }
+      apu    = { "Auxiliary Processing Unit III" }
    end
-   equip_fillSlots( p, high,     medium,     low,
-                       use_high, use_medium, use_low)
+   equip_ship( p, false, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low )
 end
 
 
