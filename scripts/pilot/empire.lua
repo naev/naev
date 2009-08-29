@@ -89,7 +89,7 @@ function empire_createHawking( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
-   medium         = equip_lowHig()
+   medium         = equip_mediumHig()
    low            = equip_lowHig()
    apu            = equip_apuHig()
 
@@ -97,7 +97,7 @@ function empire_createHawking( empire_create )
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
-   return p,o
+   return p,olist
 end
 
 
@@ -130,7 +130,7 @@ function empire_createPacifier( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
-   medium         = equip_lowMed()
+   medium         = equip_mediumMed()
    low            = equip_lowMed()
    apu            = equip_apuMed()
 
@@ -138,7 +138,7 @@ function empire_createPacifier( empire_create )
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
-   return p,o
+   return p,olist
 end
 
 
