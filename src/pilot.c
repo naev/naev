@@ -899,6 +899,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          q++;
       }
 
+      /* Q must be valid. */
+      if (q == 0)
+         return 0;
+
       /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
       if (mint > outfit_delay(w->outfit) * ((q-1) / q))
          return 0;
@@ -1559,7 +1563,7 @@ void pilot_update( Pilot* pilot, const double dt )
    }
 
    /* update the solid */
-   (*pilot->solid->update)( pilot->solid, dt );
+   pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,  
          pilot->ship->gfx_space, pilot->solid->dir );
 
@@ -2353,8 +2357,14 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Set weapon range and speed */
-   pilot->weap_range = wrange / (double)nweaps;
-   pilot->weap_speed = wspeed / (double)nweaps;
+   if (nweaps > 0) {
+      pilot->weap_range = wrange / (double)nweaps;
+      pilot->weap_speed = wspeed / (double)nweaps;
+   }
+   else {
+      pilot->weap_range = 0.;
+      pilot->weap_speed = 0.;
+   }
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -2839,17 +2849,17 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
          pilot_setFlag(pilot,PILOT_CARRIED);
    }
 
-   /* AI */
-   pilot->target = pilot->id; /* Self = no target. */
-   if (ai != NULL)
-      ai_pinit( pilot, ai ); /* Must run before ai_create */
-
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
    /* Update the x and y sprite positions. */
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
+
+   /* AI */
+   pilot->target = pilot->id; /* Self = no target. */
+   if (ai != NULL)
+      ai_pinit( pilot, ai ); /* Must run before ai_create */
 }
 
 
