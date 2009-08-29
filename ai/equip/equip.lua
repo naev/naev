@@ -133,6 +133,177 @@ end
 
 
 --[[
+-- Weapon definitions
+--]]
+function table_merge( t, ... )
+   args = {...}
+   for ak, av in ipairs( args ) do
+      for k,v in ipairs(av) do
+         t[ #t+1 ] = v
+      end
+   end
+   return t
+end
+--[[
+-- Forward mounts
+--]]
+function equip_forwardLow ()
+   return { "Laser Cannon", "Plasma Blaster", "40mm Autocannon" }
+end
+function equip_forwardMed ()
+   return { "Laser Cannon MK2", "Plasma Blaster MK2", "Ion Cannon" }
+end
+function equip_forwardHig ()
+   return { "150mm Railgun", "Ripper MK2" }
+end
+function equip_forwardMedLow ()
+   return table_merge( equip_forwardLow(), equip_forwardMed() )
+end
+function equip_forwardHigMedLow ()
+   return table_merge( equip_forwardLow(), equip_forwardMed(), equip_forwardHig() )
+end
+--[[
+-- Turret mounts
+--]]
+function equip_turretLow ()
+   return { "Laser Turret" }
+end
+function equip_turretMed ()
+   return { "Laser Turret MK2", "Heavy Ion Turret" }
+end
+function equip_turretHig ()
+   return { "150mm Railgun Turret" }
+end
+function equip_turretMedLow ()
+   return table_merge( equip_turretLow(), equip_turretMed() )
+end
+function equip_turretHigMedLow ()
+   return table_merge( equip_turretLow(), equip_turretMed(), equip_turretHig() )
+end
+--[[
+-- Secondary weapons
+--]]
+function equip_secondaryLow ()
+   return { "Seeker Launcher", "Mace Launcher" }
+end
+function equip_secondaryMed ()
+   return { "Banshee Launcher", "Headhunter Launcher" }
+end
+function equip_secondaryHig ()
+   return { }
+end
+function equip_secondaryMedLow ()
+   return table_merge( equip_secondaryLow(), equip_secondaryMed() )
+end
+function equip_secondaryHigMedLow ()
+   return table_merge( equip_secondaryLow(), equip_secondaryMed(), equip_secondaryHig() )
+end
+
+
+--[[
+-- @brief Ultimate equipment function, will set up a ship based on many parameters
+--
+--    @param p Pilot to equip.
+--    @param scramble Use crazy assortment of primary/secondary weapons.
+--    @param primary List of primary weapons to use.
+--    @param secondary List of secondary weapons to use.
+--    @param medium List of medium outfits to use.
+--    @param low List of low outfits to use.
+--    @param apu List of APU to use.
+--    @param reactor List of reactors to use.
+--    @param use_primary Amount of slots to use for primary (default nhigh-1).
+--    @param use_secondary Amount of slots to use for secondary (default 1).
+--    @param use_medium Amount of slots to use for medium outfits (default nmedium).
+--    @param use_low Amount of slots to use for low outfits (default nlow).
+--]]
+function equip_ship( p, scramble, primary, secondary, medium, low, apu,
+   use_primary, use_secondary, use_medium, use_low )
+
+   --[[
+   --    Variables
+   --]]
+   local nhigh, nmedium, nlow = p:shipSlots()
+   local shipcpu = p:shipCPU()
+   local shiptype, shipsize = equip_getShipBroad( p )
+   local outfits = { }
+   local i
+
+
+   --[[
+   --    Set up parameters that might be empty
+   --]]
+   use_primary    = use_primary or nhigh-1
+   use_secondary  = use_secondary or 1
+   use_medium     = use_medium or nmedium
+   use_low        = use_low or nlow
+
+
+   --[[
+   --    Set up weapons
+   --]]
+   -- Check uniformity
+   local po, so
+   if scramble then
+      po = primary[ rnd.rnd(1,#primary) ]
+      so = secondary[ rnd.rnd(1,#secondary) ]
+   end
+   -- Primary
+   i = 0
+   local o = primary[ rnd.rnd(1,#primary) ]
+   while i < use_primary do
+      outfits[ #outfits+1 ] = po or primary[ rnd.rnd(1,#primary) ]
+      i = i + 1
+   end
+   -- Secondary
+   i = 0
+   o = secondary[ rnd.rnd(1,#secondary) ]
+   while i < use_secondary do
+      outfits[ #outfits+1 ] = so or secondary[ rnd.rnd(1,#secondary) ]
+      i = i + 1
+   end
+   -- Check CPU if we can add APU
+   if apu ~= nil and #apu > 0 then
+      local cpu_usage = 0
+      for k,v in ipairs( outfits ) do
+         cpu_usage = cpu_usage + p.outfitCPU( v )
+      end
+      local added = true
+      while added and cpu_usage > shipcpu do -- Need to add APU
+         added       = p:addOutfit( apu[ rnd.rnd(1,#apu) ] )
+         shipcpu     = p:shipCPU()
+         use_medium  = use_medium - 1 -- Discount from available medium slots
+      end
+   end
+   -- Add high slots
+   for k,v in ipairs(outfits) do
+      p:addOutfit( v )
+   end
+
+
+   --[[
+   --    Medium and low slots
+   --]]
+   outfits  = { }
+   -- Medium slots
+   i        = 0
+   while i < use_medium do
+      outfits[ #outfits+1 ] = medium[ rnd.rnd(1,#medium) ]
+      i = i + 1
+   end
+   -- Low slots
+   i        = 0
+   while i < use_low do
+      outfits[ #outfits+1 ] = low[ rnd.rnd(1,#low) ]
+      i = i + 1
+   end
+   -- Add slots
+   for k,v in ipairs(outfits) do
+      p:addOutfit( v )
+   end
+end
+
+
+--[[
 -- @brief Does generic pilot equipping
 --
 --    @param p Pilot to equip
@@ -158,31 +329,40 @@ end
 -- @brief Equips a generic civilian type ship.
 --]]
 function equip_genericCivilian( p, shipsize )
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:shipSlots()
-   local high, medium, low
-   local use_high, use_medium, use_low
-   use_high = rnd.rnd(nhigh) -- Use fewer slots
+
+   -- Defaults
+   medium      = { "Civilian Jammer" }
+   secondary   = { }
+   apu         = { }
+   use_primary = rnd.rnd(nhigh) -- Use fewer slots
+   use_secondary = 0
+   use_medium  = 0
+   use_low     = 0
+
+
+   -- Per ship type
    if shipsize == "small" then
-      high   = { "Laser Cannon", "Plasma Blaster" }
-      medium = { "Civilian Jammer" }
+      primary  = { "Laser Cannon", "Plasma Blaster" }
+      medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.8 then
          use_medium = 1
-      else
-         use_medium = 0
       end
-      low    = { }
    else
-      high   = { "Laser Turret" }
-      medium = { "Civilian Jammer" }
+      primary  = { "Laser Turret" }
+      medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.5 then
          use_medium = 1
-      else
-         use_medium = 0
       end
-      low    = { }
+      low      = { "Plasteel Plating" }
+      if rnd.rnd() > 0.5 then
+         use_low = 1
+      end
    end
-   equip_fillSlots( p, high,     medium,     low,
-                       use_high, use_medium, use_low)
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low )
 end
 
 
