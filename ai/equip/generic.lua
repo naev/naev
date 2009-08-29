@@ -152,7 +152,6 @@ function equip_genericMilitary( p, shipsize )
          primary        = equip_forwardLow()
          secondary      = equip_rangedLow()
          use_primary    = rnd.rnd(1,2)
-         secondary      = nhigh - use_primary
          use_secondary  = nhigh - use_primary
          medium         = equip_mediumLow()
          low            = equip_lowLow()
