@@ -187,7 +187,7 @@ function equip_ship( p, scramble, primary, secondary, medium, low, apu,
          cpu_usage = cpu_usage + s.outfitCPU( v )
       end
       local added = true
-      while added and cpu_usage > shipcpu do -- Need to add APU
+      while added and use_medium > 0 and cpu_usage > shipcpu do -- Need to add APU
          local o_apu
          o_apu       = apu[ rnd.rnd(1,#apu) ]
          added       = _equip_addOutfit( p, o_apu, olist )
