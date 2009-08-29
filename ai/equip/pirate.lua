@@ -61,7 +61,7 @@ function equip_pirateMilitary( p, shipsize )
       -- Fighter
       elseif class == "Fighter" then
          primary        = equip_forwardPirLow()
-         if nhigh >= 3 then
+         if nhigh > 3 then
             use_primary    = nhigh-1
             secondary      = equip_secondaryPirLow()
             use_secondary  = 1
