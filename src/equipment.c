@@ -153,6 +153,7 @@ void equipment_open( unsigned int wid )
    /* Sane defaults. */
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
+   eq_wgt.selected      = NULL;
 
    /* Add ammo. */
    equipment_addAmmo();
