@@ -18,10 +18,22 @@ typedef struct {
 } Vertex;
 
 
-static void mesh_init( Mesh *mesh )
+static void mesh_create( Mesh **meshes, const char* name,
+                         Vertex *corners, int material )
 {
-   memset(mesh, 0x00, sizeof(Mesh));
-   mesh->material = -1;
+   if (array_size(corners) == 0)
+      return;
+   if (name == NULL)
+      ERR("No name for current part");
+   if (material == -1)
+      ERR("No material for current part");
+
+   Mesh *mesh = &array_grow(meshes);
+   mesh->name = strdup(name);
+   mesh->vbo = gl_vboCreateStatic(array_size(corners) * sizeof(Vertex), corners);
+   mesh->num_corners = array_size(corners);
+   mesh->material = material;
+   array_clear(corners);
 }
 
 static int readGLfloat( GLfloat *dest, int how_many )
@@ -150,9 +162,11 @@ Object *object_loadFromFile( const char *filename )
    if (!f)
       ERR("Cannot open object file %s", filename);
 
-   Mesh *curr = NULL;
+   char *name = NULL;
+   int material = -1;
+
    Object *object = calloc(1, sizeof(Object));
-   object->meshes = array_create(Mesh, mesh_init);
+   object->meshes = array_create(Mesh, NULL);
    object->materials = array_create(Material, clear_memory);
 
    char line[256];
@@ -180,17 +194,9 @@ Object *object_loadFromFile( const char *filename )
             free(material_filename);
          }
       } else if (strcmp(token, "o") == 0) {
+         mesh_create(&object->meshes, name, corners, material);
          token = strtok(NULL, DELIM);
-
-         if (curr != NULL) {
-            curr->num_corners = array_size(corners);
-            curr->vbo = gl_vboCreateStatic(
-               array_size(corners) * sizeof(Vertex), corners);
-            array_clear(corners);
-         }
-
-         curr = &array_grow(&object->meshes);
-         curr->name = strdup(token);
+         free(name), name = strdup(token);
       } else if (strcmp(token, "v") == 0) {
          (void)array_grow(&vertex);
          (void)array_grow(&vertex);
@@ -221,20 +227,15 @@ Object *object_loadFromFile( const char *filename )
 
          assert("Too few or too many vertices for a face." && (num == 3));
       } else if (strcmp(token, "usemtl") == 0) {
-         int i;
+         mesh_create(&object->meshes, name, corners, material);
 
-         if (curr->material != -1)
-            ERR("Current object part already has material");
-
+         /* a new mesh with the same name */
          token = strtok(NULL, DELIM);
-         if (!object->materials)
-            ERR("No materials available. Cannot usemtl %s", token);
+         for (material = 0; material < array_size(object->materials); ++material)
+            if (strcmp(token, object->materials[material].name) == 0)
+               break;
 
-         for (i = 0; i < array_size(object->materials); ++i)
-            if (strcmp(token, object->materials[i].name) == 0)
-               curr->material = i;
-
-         if (curr->material == -1)
+         if (material == array_size(object->materials))
             ERR("No such material %s", token);
       } else if (token[0] == '#') {
          /* Comment */
@@ -243,10 +244,8 @@ Object *object_loadFromFile( const char *filename )
       }
    }
 
-   curr->num_corners = array_size(corners);
-   curr->vbo = gl_vboCreateStatic(
-      array_size(corners) * sizeof(Vertex), corners);
-   array_clear(corners);
+   mesh_create(&object->meshes, name, corners, material);
+   free(name);
 
    /* cleans up */
    array_free(vertex);
@@ -276,7 +275,7 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    const int tex_offset = (int)(&((Vertex *)NULL)->tex);
 
    /* FIXME how much to scale the object? */
-   const double scale = 1. / 10.;
+   const double scale = 1. / 20.;
 
    /* rotates the object to match projection */
    double zoom;
