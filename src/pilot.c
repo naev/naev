@@ -883,8 +883,12 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       for (i=0; i<p->outfit_nhigh; i++) {
          slot = &p->outfit_high[i];
 
+         /* No outfit. */
+         if (slot->outfit == NULL)
+            continue;
+
          /* Not what we are looking for. */
-         if (slot->outfit != w->outfit)
+         if (outfit_delay(slot->outfit) != outfit_delay(w->outfit))
             continue;
 
          /* Launcher only counts with ammo. */
