@@ -304,7 +304,7 @@
   <avail>
    <priority>4</priority>
    <cond>player.getRating() &gt; 50 and system.get():hasPresence("Pirate")</cond>
-   <chance>5</chance>
+   <chance>10</chance>
    <done>Empire HCVL</done>
    <location>Bar</location>
    <faction>Empire</faction>
