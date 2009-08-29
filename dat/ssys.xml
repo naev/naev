@@ -1384,6 +1384,29 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="Gilligan's Light">
+  <fleets>
+   <fleet>Trader Medium Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+  <jumps>
+   <jump>Theras</jump>
+  </jumps>
+  <pos>
+   <y>-267</y>
+   <x>470</x>
+  </pos>
+  <planets>
+   <planet>Dawn</planet>
+   <planet>Dusk</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>400</stars>
+  </general>
+ </ssys>
  <ssys name="Theras">
   <fleets>
    <fleet>Dvaered Light Prescence</fleet>
@@ -1393,6 +1416,7 @@
   <jumps>
    <jump>Dakron</jump>
    <jump>Haleb</jump>
+   <jump>Gilligan's Light</jump>
   </jumps>
   <pos>
    <y>-323</y>

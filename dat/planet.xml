@@ -1255,4 +1255,48 @@
    <population>2000000</population>
   </general>
  </planet>
+ <planet name="Dawn">
+  <GFX>
+   <exterior>oceanic2.png</exterior>
+   <space>O01.png</space>
+  </GFX>
+  <pos>
+   <y>500</y>
+   <x>400</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Gilligan's Light was one of the first systems to ever be chosen for a colonization project, and Dawn was the first world on which humans set foot in this sector of space. Dawn served as a staging point for further colonization of the Frontier during the first expansion of mankind, and as such had a lead start in planetary development. With the advent of hyperspace travel, Dawn found itself the local capital of the Frontier worlds. This status is strictly symbolic, but it explains why the FLF have chosen to rally around Gilligan's Light.</description>
+   <bar>Dawn's bar has a rustic feel to it, as the locals have made a point of keeping the style close to what was the prevalent design in the early expansion era. Other than that, this bar doesn't have much to set it apart from others. The noise, the smell and the drunks are features that are commonplace throughout the galaxy.</bar>
+   <faction>Frontier</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>O</class>
+   <population>4000000</population>
+  </general>
+ </planet>
+ <planet name="Dusk">
+  <GFX>
+   <space>P01.png</space>
+  </GFX>
+  <pos>
+   <y>-80</y>
+   <x>-90</x>
+  </pos>
+  <general>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>0</services>
+   <class>P</class>
+  </general>
+ </planet>
 </Planets>
