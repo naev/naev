@@ -64,6 +64,7 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
+static int pilotL_outfitCPU( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
@@ -71,35 +72,45 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_shipName( lua_State *L );
 static int pilotL_shipClass( lua_State *L );
 static int pilotL_shipSlots( lua_State *L );
+static int pilotL_shipCPU( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
+   /* General. */
    { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
-   { "clear", pilot_clear },
-   { "toggleSpawn", pilot_toggleSpawn },
    { "get", pilot_getPilots },
    { "__eq", pilotL_eq },
+   /* Info. */
    { "name", pilotL_name },
    { "alive", pilotL_alive },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
+   /* System. */
+   { "clear", pilot_clear },
+   { "toggleSpawn", pilot_toggleSpawn },
+   /* Modify. */
+   { "changeAI", pilotL_changeAI },
+   { "setHealth", pilotL_setHealth },
+   { "setNoboard", pilotL_setNoboard },
+   { "getHealth", pilotL_getHealth },
    { "warp", pilotL_warp },
-   { "broadcast", pilotL_broadcast },
-   { "comm", pilotL_comm },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
    { "disable", pilotL_disable },
+   /* Talk. */
+   { "broadcast", pilotL_broadcast },
+   { "comm", pilotL_comm },
+   /* Outfits. */
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
-   { "changeAI", pilotL_changeAI },
-   { "setHealth", pilotL_setHealth },
-   { "setNoboard", pilotL_setNoboard },
-   { "getHealth", pilotL_getHealth },
+   { "outfitCPU", pilotL_outfitCPU },
+   /* Ship. */
    { "shipName", pilotL_shipName },
    { "shipClass", pilotL_shipClass },
    { "shipSlots", pilotL_shipSlots },
+   { "shipCPU", pilotL_shipCPU },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -1086,6 +1097,35 @@ static int pilotL_rmOutfit( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Gets the outfit CPU usage.
+ *
+ * @usage cpu_used += p.outfitCPU( "Heavy Ion Turret" ) -- Adds the used cpu by the outfit
+ *
+ *    @luaparam outfit Name of the outfit to get CPU usage of.
+ *    @luareturn CPU the outfit uses.
+ * @luafunc outfitCPU( outfit )
+ */
+static int pilotL_outfitCPU( lua_State *L )
+{
+   const char *outfit;
+   Outfit *o;
+
+   /* Get parameters. */
+   outfit = luaL_checkstring(L,1);
+
+   /* Get the outfit. */
+   o = outfit_get( outfit );
+   if (o == NULL)
+      return 0;
+
+   /* Return parameter. */
+   lua_pushnumber(L, outfit_cpu(o));
+   return 1;
+}
+
+
 /**
  * @brief Changes the pilot's AI.
  *
@@ -1316,3 +1356,30 @@ static int pilotL_shipSlots( lua_State *L )
    return 3;
 }
 
+
+/**
+ * @brief Gets the ship available CPU.
+ *
+ * @usage cpu_left = p:shipCPU()
+ *
+ *    @luaparam p Pilot to get available CPU of.
+ *    @luareturn The CPU available on the pilot's ship.
+ * @luafunc shipCPU( p )
+ */
+static int pilotL_shipCPU( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get CPU. */
+   lua_pushnumber(L, p->cpu);
+   return 1;
+}
