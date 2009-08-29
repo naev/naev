@@ -1805,6 +1805,43 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 }
 
 
+/**
+ * @brief Tests to see if an outfit can be added.
+ *
+ *    @param pilot Pilot to add outfit to.
+ *    @param outfit Outfit to add.
+ *    @param s Slot adding outfit to.
+ *    @param warn Whether or not should generate a warning.
+ *    @return 0 if can add, -1 if can't.
+ */
+int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn )
+{
+   const char *str;
+
+   /* See if slot has space. */
+   if (s->outfit != NULL) {
+      if (warn)
+         WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
+               pilot->name, outfit->name );
+      return -1;
+   }
+   else if ((outfit_cpu(outfit) > 0) &&
+         (pilot->cpu < outfit_cpu(outfit))) {
+      if (warn)
+         WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
+               pilot->name, outfit->name );
+      return -1;
+   }
+   else if ((str = pilot_canEquip( pilot, s, outfit, 1)) != NULL) {
+      if (warn)
+         WARN( "Pilot '%s': Trying to add outfit but %s",
+               pilot->name, str );
+      return -1;
+   }
+   return 0;
+}
+
+
 
 /**
  * @brief Adds an outfit to the pilot.
@@ -1816,27 +1853,14 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
-   const char *str;
    int ret;
 
-   /* See if slot has space. */
-   if (s->outfit != NULL) {
-      WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
-            pilot->name, outfit->name );
+   /* Test to see if outfit can be added. */
+   ret = pilot_addOutfitTest( pilot, outfit, s, 1 );
+   if (ret != 0)
       return -1;
-   }
-   else if ((outfit_cpu(outfit) > 0) &&
-         (pilot->cpu < outfit_cpu(outfit))) {
-      WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
-            pilot->name, outfit->name );
-      return -1;
-   }
-   else if ((str = pilot_canEquip( pilot, s, outfit, 1)) != NULL) {
-      WARN( "Pilot '%s': Trying to add outfit but %s",
-            pilot->name, str );
-      return -1;
-   }
 
+   /* Add outfit. */
    ret = pilot_addOutfitRaw( pilot, outfit, s );
 
    /* recalculate the stats */

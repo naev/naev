@@ -1014,8 +1014,15 @@ static int pilotL_addOutfit( lua_State *L )
       if (o->slot != p->outfits[i]->slot)
          continue;
 
-      /* Add outfit. */
-      ret = pilot_addOutfit( p, o, p->outfits[i] );
+      /* Test if can add outfit. */
+      ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
+      if (ret) {
+         lua_pushboolean(L, 0);
+         return 1;
+      }
+
+      /* Add outfit - already tested. */
+      ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
 
       /* Add ammo if needed. */
       if ((ret==0) && (outfit_ammo(o) != NULL))

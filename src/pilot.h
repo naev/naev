@@ -312,6 +312,7 @@ double pilot_face( Pilot* p, const double dir );
  */
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn );
 int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
 /* Changes with checks. */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
