@@ -266,21 +266,19 @@ void object_free( Object *object )
   /* XXX */
 }
 
-static void object_renderMesh( Object *object, int part, GLfloat alpha )
+static void object_fix3d( void )
 {
-   Mesh *mesh = &object->meshes[part];
-
-   /* computes relative addresses of the vertice and texture coords */
-   const int ver_offset = (int)(&((Vertex *)NULL)->ver);
-   const int tex_offset = (int)(&((Vertex *)NULL)->tex);
-
    /* FIXME how much to scale the object? */
    const double scale = 1. / 20.;
-
-   /* rotates the object to match projection */
    double zoom;
-   gl_cameraZoomGet(&zoom);
 
+   /* XXX changes the projection */
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+   glLoadIdentity();
+
+   /* rotates and scales the object to match projection */
+   gl_cameraZoomGet(&zoom);
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix();
    glScalef(scale * zoom, scale * zoom, scale * zoom);
@@ -291,11 +289,26 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    glMatrixMode(GL_TEXTURE);
    glPushMatrix();
    glScalef(+1., -1., +1.);
+}
 
-   /* XXX changes the projection */
+static void object_restore2d( void )
+{
+   /* restores all matrices */
    glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
-   glLoadIdentity();
+   glPopMatrix();
+   glMatrixMode(GL_TEXTURE);
+   glPopMatrix();
+   glMatrixMode(GL_MODELVIEW);
+   glPopMatrix();
+}
+
+static void object_renderMesh( Object *object, int part, GLfloat alpha )
+{
+   Mesh *mesh = &object->meshes[part];
+
+   /* computes relative addresses of the vertice and texture coords */
+   const int ver_offset = (int)(&((Vertex *)NULL)->ver);
+   const int tex_offset = (int)(&((Vertex *)NULL)->tex);
 
    /* activates vertices and texture coords */
    gl_vboActivateOffset(mesh->vbo,
@@ -340,12 +353,6 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
       glDisable(GL_TEXTURE_2D);
    gl_vboDeactivate();
 
-   /* restores all matrices */
-   glPopMatrix();
-   glMatrixMode(GL_TEXTURE);
-   glPopMatrix();
-   glMatrixMode(GL_MODELVIEW);
-   glPopMatrix();
 }
 
 
@@ -353,9 +360,6 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
 {
    double x, y, cx, cy, gx, gy, zoom;
    int i;
-
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix();
 
    /* get parameters. */
    gl_cameraGet(&cx, &cy);
@@ -366,13 +370,18 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    x = (solid->pos.x - cx + gx) * zoom / gl_screen.nw * 2;
    y = (solid->pos.y - cy + gy) * zoom / gl_screen.nh * 2;
 
+   glMatrixMode(GL_MODELVIEW);
+   glPushMatrix();
    glTranslatef(x, y, 0.);
    glRotatef(solid->dir / M_PI * 180. + 90., 0., 0., 1.);
    glRotatef(90., 1., 0., 0.);
 
+   object_fix3d();
    for (i = 0; i < array_size(object->meshes); ++i)
       if (strcmp(part_name, object->meshes[i].name) == 0)
          object_renderMesh(object, i, alpha);
+   object_restore2d();
 
+   glMatrixMode(GL_MODELVIEW);
    glPopMatrix();
 }
