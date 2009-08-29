@@ -162,6 +162,11 @@ static int ovpack_close( void *datasource )
    SDL_RWops *rw = datasource;
    return SDL_RWclose( rw );
 }
+static int ovpack_closeFake( void *datasource )
+{  
+   (void) datasource;
+   return 0;
+}
 static long ovpack_tell( void *datasource )
 {  
    SDL_RWops *rw = datasource;
@@ -176,7 +181,7 @@ ov_callbacks sound_al_ovcall = {
 ov_callbacks sound_al_ovcall_noclose = {
    .read_func  = ovpack_read,
    .seek_func  = ovpack_seek,
-   .close_func = NULL,
+   .close_func = ovpack_closeFake,
    .tell_func  = ovpack_tell
 }; /**< Vorbis call structure to handl rwops without closing. */
 
@@ -864,7 +869,12 @@ int sound_al_load( alSound *snd, const char *filename )
    alGetBufferi( snd->u.al.buf, AL_BITS, &bits );
    alGetBufferi( snd->u.al.buf, AL_CHANNELS, &channels );
    alGetBufferi( snd->u.al.buf, AL_SIZE, &size );
-   snd->length = (double)size / (double)(freq * (bits/8) * channels);
+   if ((freq==0) || (bits==0) || (channels==0)) {
+      WARN("Something went wrong when loading sound file '%s'.", filename);
+      snd->length = 0;
+   }
+   else
+      snd->length = (double)size / (double)(freq * (bits/8) * channels);
 
    /* Check for errors. */
    al_checkErr();
