@@ -413,7 +413,8 @@ function boardOver()
    tk.msg(title[4], text[13])
    hyena = pilot.add("Pirate Hyena")
    for k,v in ipairs(hyena) do
-       v:rmOutfit("Laser Cannon", 1) -- Make it weaker
+       v:rmOutfit("all") -- Make weaker
+       v:addOutfit(l"Laser Cannon", 2)
        hook.pilot(v, "death", "hyenaWait")
        hook.pilot(v, "jump", "hyenaWait") -- Treat jump as dead
    end
