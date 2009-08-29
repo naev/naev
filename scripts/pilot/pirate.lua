@@ -88,7 +88,7 @@ function pirate_createKestrel( pirate_create )
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
-   return p,o
+   return p,olist
 end
 
 
@@ -129,7 +129,7 @@ function pirate_createAdmonisher( pirate_create )
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
-   return p,o
+   return p,olist
 end
 
 
@@ -170,7 +170,7 @@ function pirate_createAncestor( pirate_create )
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
-   return p,o
+   return p,olist
 end
 
 
@@ -211,7 +211,7 @@ function pirate_createVendetta( pirate_create )
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
-   return p,o
+   return p,olist
 end
 
 
