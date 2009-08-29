@@ -1,4 +1,6 @@
 include("scripts/pilot/generic.lua")
+include("ai/equip/helper.lua")
+include("ai/equip/outfits.lua")
 
 
 --[[
@@ -18,8 +20,7 @@ function pirate_create( pirate_create )
 
    -- Choose pirate type
    local z = rnd.rnd()
-   local p
-   local o
+   local p, o
    if z < 0.25 then
       p,o = pirate_createKestrel( pirate_create )
    elseif z < 0.5 then
@@ -50,108 +51,6 @@ function pirate_createEmpty( ship )
    return p
 end
 
-
--- Gets a generic pirate outfit
-function pirate_outfitGeneric( p, o )
-   local r = rnd.rnd()
-   if r < 0.25 then -- Get cannon
-      return pirate_outfitCannon( p, o )
-   elseif r < 0.5 then -- Get turret
-      return pirate_outfitTurret( p, o )
-   elseif r < 0.8 then -- Get special weapon
-      return pirate_outfitSecondary( p, o )
-   else
-      return pirate_outfitModification( p, o )
-   end
-end
-
-
--- Tries to add a turret
-function pirate_outfitTurret( p, o )
-   local turrets = {
-      "Heavy Ion Turret",
-      "Laser Turret",
-      "Laser Turret MK2"
-   }
-   return pilot_outfitAdd( p, o, turrets )
-end
-
-
--- Tries to add a cannon
-function pirate_outfitCannon( p, o )
-   local cannons = {
-      "Ripper MK2",
-      "Laser Cannon",
-      "Laser Cannon MK2",
-      "Ion Cannon",
-      "40mm Autocannon",
-      "Plasma Blaster", -- Biased towards plasma
-      "Plasma Blaster",
-      "Plasma Blaster MK2",
-      "Plasma Blaster MK2"
-   }
-   return pilot_outfitAdd( p, o, cannons )
-end
-
-
--- Tries to add a secondary weapon
-function pirate_outfitSecondary( p, o )
-   local sec = {
-      "150mm Railgun",
-      "Seeker Launcher",
-      "Headhunter Launcher",
-      "Banshee Launcher",
-      "Mace Launcher",
-      "EMP Grenade Launcher"
-   }
-   return pilot_outfitAdd( p, o, sec )
-end
-
-
--- Tries to add a ranged weapon
-function pirate_outfitRanged( p, o )
-   local sec = {
-      "Seeker Launcher",
-      "Headhunter Launcher"
-   }
-   return pilot_outfitAdd( p, o, sec )
-end
-
-
--- Tries to add a modification
-function pirate_outfitModification( p, o )
-   local mods = {
-      -- Shield
-      "Shield Capacitor",
-      "Shield Booster",
-      -- Armour
-      "Plasteel Plating",
-      "Plasteel Plating",
-      "Nanobond Plating",
-      "Droid Repair Crew",
-      "Droid Repair Crew",
-      -- Energy
-      "Solar Panel",
-      "Battery",
-      "Reactor Class I",
-      "Reactor Class I",
-      "Reactor Class II",
-      -- Movement stuff
-      "Engine Reroute",
-      "Improved Stabilizer",
-      "Steering Thrusters",
-      -- Make jammers more likely.
-      "Civilian Jammer",
-      "Civilian Jammer",
-      "Civilian Jammer",
-      "Civilian Jammer",
-      "Milspec Jammer",
-      "Milspec Jammer"
-   }
-   return pilot_outfitAdd( p, o, mods )
-end
-
-
 -- Creates a pirate flying a "Pirate Kestrel"
 function pirate_createKestrel( pirate_create )
    -- Create by default
@@ -160,26 +59,34 @@ function pirate_createKestrel( pirate_create )
    end
 
    -- Create the pirate ship
-   local p
+   local p, s, olist
    if pirate_create then
-      p = pirate_createEmpty( "Pirate Kestrel" )
+      p     = pirate_createEmpty( "Pirate Kestrel" )
+      s     = p:ship()
+      olist = nil
    else
-      p = "Pirate Kestrel"
+      p     = "Pirate Kestrel"
+      s     = ship.get(p)
+      olist = { }
    end
 
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
    -- Kestrel gets some good stuff
-   local o = {}
-   pirate_outfitTurret(p,o)
-   pirate_outfitRanged(p,o)
-   pirate_outfitModification(p,o)
-   -- Might not have enough room for these last three
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
+   primary        = { "Heavy Ion Turret", "150mm Railgun Turret", "Laser Turret MK2" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh-2
+   use_secondary  = 2
+   medium         = equip_mediumHig()
+   low            = equip_lowHig()
+   apu            = equip_apuHig()
+
+   -- FInally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
 
    return p,o
 end
@@ -193,24 +100,34 @@ function pirate_createAdmonisher( pirate_create )
    end
 
    -- Create the pirate ship
-   local p
+   local p, s, olist
    if pirate_create then
-      p = pirate_createEmpty( "Pirate Admonisher" )
+      p     = pirate_createEmpty( "Pirate Admonisher" )
+      s     = p:ship()
+      olist = nil
    else
-      p = "Pirate Admonisher"
+      p     = "Pirate Admonisher"
+      s     = ship.get(p)
+      olist = { }
    end
 
-   -- Make sure Admonisher has at least one cannon
-   local o = {}
-   pirate_outfitCannon(p,o)
-   pirate_outfitSecondary(p,o)
-   pirate_outfitModification(p,o)
-   -- Probably won't have much room left
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Admonisher specializes in forward-firing weapons.
+   primary        = { "150mm Railgun", "Plasma Blaster MK2", "Ion Cannon" }
+   secondary      = { "Headhunter Launcher", "Seeker Launcher", "Banshee Launcher" }
+   use_primary    = nhigh-1
+   use_secondary  = 1
+   medium         = equip_mediumMed()
+   low            = equip_lowMed()
+   apu            = equip_apuMed()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
 
    return p,o
 end
@@ -224,22 +141,34 @@ function pirate_createAncestor( pirate_create )
    end
 
    -- Create the pirate ship
-   local p
+   local p, s, olist
    if pirate_create then
-      p = pirate_createEmpty( "Pirate Ancestor" )
+      p     = pirate_createEmpty( "Pirate Ancestor" )
+      s     = p:ship()
+      olist = nil
    else
-      p = "Pirate Ancestor"
+      p     = "Pirate Ancestor"
+      s     = ship.get(p)
+      olist = { }
    end
 
-   -- Should have at least one cannon and ranged
-   local o = {}
-   pirate_outfitCannon(p,o)
-   pirate_outfitRanged(p,o)
-   -- Probably won't have much room left
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Ancestor specializes in ranged combat.
+   primary        = { "Laser Cannon", "Laser Cannon MK2", "Plasma Blaster", "Plasma Blaster MK2" }
+   secondary      = { "Seeker Launcher" }
+   use_primary    = nhigh-2
+   use_secondary  = 2
+   medium         = equip_mediumMed()
+   low            = equip_lowMed()
+   apu            = equip_apuLow()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
 
    return p,o
 end
@@ -253,23 +182,34 @@ function pirate_createVendetta( pirate_create )
    end
 
    -- Create the pirate ship
-   local p
+   local p, s, olist
    if pirate_create then
-      p = pirate_createEmpty( "Pirate Vendetta" )
+      p     = pirate_createEmpty( "Pirate Vendetta" )
+      s     = p:ship()
+      olist = nil
    else
-      p = "Pirate Vendetta"
+      p     = "Pirate Vendetta"
+      s     = ship.get(p)
+      olist = { } 
    end
 
-   -- Biased towards cannons
-   local o = {}
-   pirate_outfitCannon(p,o)
-   pirate_outfitCannon(p,o)
-   pirate_outfitCannon(p,o)
-   -- Probably won't have much room left
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
-   pirate_outfitGeneric(p,o)
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Vendettas are all about close-range firepower.
+   primary        = { "Plasma Blaster", "Plasma Blaster MK2", "Laser Cannon" }
+   secondary      = { "Seeker Launcher", "Banshee Launcher" }
+   use_primary    = nhigh-1
+   use_secondary  = 1
+   medium         = equip_mediumLow()
+   low            = equip_lowLow()
+   apu            = equip_apuMed()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
 
    return p,o
 end

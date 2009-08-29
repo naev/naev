@@ -8,7 +8,7 @@
  <event name="Unique">
   <lua>neutral/unique</lua>
   <trigger>enter</trigger>
-  <chance>3</chance>
+  <chance>100</chance>
  </event>
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
