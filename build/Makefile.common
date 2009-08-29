@@ -61,6 +61,9 @@ DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua \
 						dat/missions/*/*.lua \
 						dat/missions/*/*/*.lua )
+DATA_EVTS :=   $(wildcard dat/events/*.lua \
+						dat/events/*/*.lua \
+						dat/events/*/*/*.lua )
 DATA_SCRIPTS := $(wildcard scripts/*.lua \
 						scripts/*/*.lua \
 						scripts/*/*/*.lua )
