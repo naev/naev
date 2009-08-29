@@ -784,8 +784,6 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    for (i=0; i<num; i++)
       DEBUG("   %s", symbols[i]);
    DEBUG("Report this to project maintainer with the backtrace.");
-
-   exit(1);
 }
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 
