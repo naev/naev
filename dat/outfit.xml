@@ -412,7 +412,7 @@
    <gfx_store>seeker</gfx_store>
   </general>
   <specific type="missile seek ammo">
-   <gfx>missile</gfx>
+   <gfx>seeker</gfx>
    <sound>seeker</sound>
    <sound_hit>medexp1</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
