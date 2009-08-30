@@ -1015,7 +1015,7 @@
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>8</cpu>
+   <cpu>4</cpu>
    <range>400</range>
    <chance>20</chance>
    <energy>15</energy>
@@ -1031,7 +1031,7 @@
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>18</cpu>
+   <cpu>8</cpu>
    <range>600</range>
    <chance>40</chance>
    <energy>30</energy>
