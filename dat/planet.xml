@@ -152,7 +152,6 @@
    <population>318000</population>
   </general>
  </planet>
- 
   <planet name="Arcturus Gamma">
   <GFX>
    <exterior>station03.png</exterior>
@@ -1297,6 +1296,135 @@
    </tech>
    <services>0</services>
    <class>P</class>
+  </general>
+ </planet>
+ <planet name="Verex III">
+  <GFX>
+   <exterior>desertic2.png</exterior>
+   <space>H01.png</space>
+  </GFX>
+  <pos>
+   <y>-300</y>
+   <x>-100</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <commodities>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>0</services>
+   <class>H</class>
+   </general>
+ </planet>
+ <planet name="Ullnorn">
+  <GFX>
+   <exterior>lava.png</exterior>
+   <space>D00.png</space>
+  </GFX>
+  <pos>
+   <y>500</y>
+   <x>400</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
+   <bar>This is a bar. It has to be, because you usually don't have to pay for muddy rainwater. It doesn't seem this place is frequented by its patrons for the purpose of entertainment, because there are no recreational facilities, not even a jukebox. The few appointments are welded to the floor, and everything else is either made out of steel or has steel bars covering it. Clearly, this is a place where fists meet faces. Maybe you shouldn't stay here too long...</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>Y</class>
+   <population>10000</population>
+  </general>
+ </planet>
+ <planet name="Varia">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M04.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
+   <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <tech>
+    <main>5</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>M</class>
+   <population>500000000</population>
+  </general>
+ </planet>
+ <planet name="Stalwart Station">
+  <GFX>
+   <exterior>station04.png</exterior>
+   <space>001.png</space>
+  </GFX>
+  <pos>
+   <y>-800</y>
+   <x>300</x>
+  </pos>
+  <general>
+   <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
+   <bar>This bar is the only public facility on the station. It is here that free merchants come to do business as well as relax. The bar also doubles as a modest hotel, so at least you won't have to sleep on your ship. Of course, the only difference is that your ship isn't as noisy...</bar>
+   <prodfactor>0.8</prodfactor>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>7</main>
+    <special>0</special>
+   </tech>
+   <services>13</services>
+   <class>25</class>
+   <population>12000</population>
+  </general>
+ </planet>
+ <planet name="Utsuwa">
+  <GFX>
+   <exterior>mining3.png</exterior>
+   <space>K00.png</space>
+  </GFX>
+  <pos>
+   <y>80</y>
+   <x>-80</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Many people who live in the Empire think of the Dvaered as unsophisticated, brawny louts who spend all day down in the mines and all night picking fights with each other. This is a stereotype, and it's hardly a fair description of Dvaered society as a whole, but it happens to be absolutely accurate when it comes to the Dvaereds on Utsuwa. The colony on this planet is a full-time mining operation, and all who live on Utsuwa work in the mining industry or its peripherals. Needless to say, House Dvaered gets a significant amount of its raw resources from here.</description>
+   <bar>This bar is a miner's bar, alpha and omega. Virtually all its patrons are miners, and they do what miners do, which is drink, fight, and talk about miner things. Fortunately, the owner of the bar is considerate of outside visitors, so in addition to Miner's Ale, Miner's Vodka, Miner's Whiskey and Bloody Miners you can also order a light beer, which has a little wooden miner's pickaxe in it.</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>5</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>K</class>
+   <population>400000</population>
   </general>
  </planet>
 </Planets>

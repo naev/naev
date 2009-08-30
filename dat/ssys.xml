@@ -350,7 +350,8 @@
   </fleets>
   <jumps>
    <jump>Dakron</jump>
-	<jump>Doranthex</jump>
+   <jump>Doranthex</jump>
+   <jump>Verex</jump>
   </jumps>
   <pos>
    <y>-403</y>
@@ -358,6 +359,138 @@
   </pos>
   <planets>
   	<planet>Valt</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="NGC-7843">
+  <fleets>
+   <fleet>Pirate Heavy Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>NGC-7723</jump>
+   <jump>New Haven</jump>
+  </jumps>
+  <pos>
+   <y>235</y>
+   <x>155</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>100</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>120</stars>
+  </general>
+ </ssys>
+ <ssys name="NGC-7843">
+  <fleets>
+   <fleet>Pirate Heavy Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>NGC-7723</jump>
+   <jump>New Haven</jump>
+  </jumps>
+  <pos>
+   <y>235</y>
+   <x>155</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>100</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>120</stars>
+  </general>
+ </ssys>
+ <ssys name="Verex">
+  <fleets>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Tarsus</jump>
+   <jump>Ginger</jump>
+   <jump>Darkstone</jump>
+   <jump>Blunderbluss</jump>
+  </jumps>
+  <pos>
+   <y>-453</y>
+   <x>207</x>
+  </pos>
+  <planets>
+  	<planet>Verex III</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Ginger">
+  <fleets>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Verex</jump>
+  </jumps>
+  <pos>
+   <y>-505</y>
+   <x>237</x>
+  </pos>
+  <planets>
+  	<planet>Ullnorn</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Darkstone">
+  <fleets>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Verex</jump>
+  </jumps>
+  <pos>
+   <y>-535</y>
+   <x>180</x>
+  </pos>
+  <planets>
+  	<planet>Varia</planet>
+  	<planet>Stalwart Station</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Blunderbluss">
+  <fleets>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Verex</jump>
+  </jumps>
+  <pos>
+   <y>-491</y>
+   <x>140</x>
+  </pos>
+  <planets>
+  	<planet>Utsuwa</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
