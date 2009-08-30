@@ -179,7 +179,7 @@ static int shipL_get( lua_State *L )
  *
  *    @luaparam s Ship to get ship name.
  *    @luareturn The name of the ship's ship.
- * @luafunc shipName( s )
+ * @luafunc name( s )
  */
 static int shipL_name( lua_State *L )
 {
