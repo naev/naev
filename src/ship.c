@@ -621,6 +621,7 @@ void ships_free (void)
          free(s->outfit_high);
 
       /* Free graphics. */
+      object_free(s->gfx_3d);
       gl_freeTexture(s->gfx_space);
       if (s->gfx_engine != NULL)
          gl_freeTexture(s->gfx_engine);

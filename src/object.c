@@ -308,8 +308,26 @@ Object *object_loadFromFile( const char *filename )
  */
 void object_free( Object *object )
 {
-   (void)object;
-  /* XXX */
+   int i;
+
+   if (object == NULL)
+      return;
+
+   for (i = 0; i < (int)array_size(object->materials); ++i) {
+      Material *material = &object->materials[i];
+      free(material->name);
+      if (material->has_texture)
+         glDeleteTextures(1, &material->texture);
+   }
+
+   for (i = 0; i < (int)array_size(object->meshes); ++i) {
+      Mesh *mesh = &object->meshes[i];
+      free(mesh->name);
+      gl_vboDestroy(mesh->vbo);
+   }
+
+   array_free(object->meshes);
+   array_free(object->materials);
 }
 
 static void object_fix3d( void )
