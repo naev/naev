@@ -603,7 +603,7 @@
  </ship>
  <!-- Corvettes -->
  <ship name="Admonisher">
-  <GFX>admonisher</GFX>
+  <GFX _3d="true">admonisher</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
