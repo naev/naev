@@ -32,7 +32,7 @@ LDCSPARSE := lib/csparse/libcsparse.a
 #LDXML   := $(shell xml2-config --libs)
 #LDTTF   := $(shell freetype-config --libs)
 #LDPNG   := $(shell libpng-config --libs)
-LDSDL   := -lmingw32 -lSDLmain -lSDL -mwindows -lSDL_image 
+LDSDL   := -lSDLmain -lSDL -lSDL_image 
 LDSOUND :=
 ifeq ($(USE_SDLMIX),1)
 LDSOUND += -lSDL_mixer
@@ -44,7 +44,8 @@ LDXML   := -lxml2
 LDTTF   := -lfreetype -lz
 LDPNG   := -lpng12
 LDGL    := -lopengl32
-LDFLAGS := $(LDSDL) -lm -lws2_32 -lwsock32 $(LDLUA) $(LDCSPARSE) $(LDSOUND) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDWINDOWS := -lmingw32 -lwsock32 -mwindows
+LDFLAGS := $(LDSDL) -lm $(LDWINDOWS) $(LDLUA) $(LDCSPARSE) $(LDSOUND) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
@@ -102,7 +103,7 @@ lib/csparse/libcsparse.a:
 
 
 pack: src/md5.c src/pack.c utils/pack/main.c
-	+@$(MAKE) -C utils/pack
+	+@$(MAKE) -C utils/pack LDFLAGS="$(LDWINDOWS) $(LDSDL)"
 
 
 mkspr: utils/mkspr/main.c
@@ -119,7 +120,7 @@ ndata: pack $(DATAFILES)
 	@./pack $(DATA) $(DATAFILES)
 
 
-utils: pack mkspr
+utils: pack
 
 
 docs:
