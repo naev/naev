@@ -31,44 +31,44 @@
 
 
 /* player */
-static int player_getname( lua_State *L );
-static int player_shipname( lua_State *L );
-static int player_freeSpace( lua_State *L );
-static int player_pay( lua_State *L );
-static int player_credits( lua_State *L );
-static int player_msg( lua_State *L );
-static int player_modFaction( lua_State *L );
-static int player_modFactionRaw( lua_State *L );
-static int player_getFaction( lua_State *L );
-static int player_getRating( lua_State *L );
-static int player_getPosition( lua_State *L );
-static int player_getPilot( lua_State *L );
-static int player_fuel( lua_State *L );
-static int player_refuel( lua_State *L );
-static int player_unboard( lua_State *L );
-static const luaL_reg player_methods[] = {
-   { "name", player_getname },
-   { "ship", player_shipname },
-   { "freeCargo", player_freeSpace },
-   { "pay", player_pay },
-   { "credits", player_credits },
-   { "msg", player_msg },
-   { "modFaction", player_modFaction },
-   { "modFactionRaw", player_modFactionRaw },
-   { "getFaction", player_getFaction },
-   { "getRating", player_getRating },
-   { "pos", player_getPosition },
-   { "pilot", player_getPilot },
-   { "fuel", player_fuel },
-   { "refuel", player_refuel },
-   { "unboard", player_unboard },
+static int playerL_getname( lua_State *L );
+static int playerL_shipname( lua_State *L );
+static int playerL_freeSpace( lua_State *L );
+static int playerL_pay( lua_State *L );
+static int playerL_credits( lua_State *L );
+static int playerL_msg( lua_State *L );
+static int playerL_modFaction( lua_State *L );
+static int playerL_modFactionRaw( lua_State *L );
+static int playerL_getFaction( lua_State *L );
+static int playerL_getRating( lua_State *L );
+static int playerL_getPosition( lua_State *L );
+static int playerL_getPilot( lua_State *L );
+static int playerL_fuel( lua_State *L );
+static int playerL_refuel( lua_State *L );
+static int playerL_unboard( lua_State *L );
+static const luaL_reg playerL_methods[] = {
+   { "name", playerL_getname },
+   { "ship", playerL_shipname },
+   { "freeCargo", playerL_freeSpace },
+   { "pay", playerL_pay },
+   { "credits", playerL_credits },
+   { "msg", playerL_msg },
+   { "modFaction", playerL_modFaction },
+   { "modFactionRaw", playerL_modFactionRaw },
+   { "getFaction", playerL_getFaction },
+   { "getRating", playerL_getRating },
+   { "pos", playerL_getPosition },
+   { "pilot", playerL_getPilot },
+   { "fuel", playerL_fuel },
+   { "refuel", playerL_refuel },
+   { "unboard", playerL_unboard },
    {0,0}
 }; /**< Player lua methods. */
-static const luaL_reg player_cond_methods[] = {
-   { "name", player_getname },
-   { "ship", player_shipname },
-   { "getFaction", player_getFaction },
-   { "getRating", player_getRating },
+static const luaL_reg playerL_cond_methods[] = {
+   { "name", playerL_getname },
+   { "ship", playerL_shipname },
+   { "getFaction", playerL_getFaction },
+   { "getRating", playerL_getRating },
    {0,0}
 }; /**< Conditional player lua methods. */
 
@@ -81,9 +81,9 @@ static const luaL_reg player_cond_methods[] = {
 int nlua_loadPlayer( lua_State *L, int readonly )
 {
    if (readonly == 0)
-      luaL_register(L, "player", player_methods);
+      luaL_register(L, "player", playerL_methods);
    else
-      luaL_register(L, "player", player_cond_methods);
+      luaL_register(L, "player", playerL_cond_methods);
    return 0;
 }  
 
@@ -107,7 +107,7 @@ int nlua_loadPlayer( lua_State *L, int readonly )
  *    @luareturn The name of the player.
  * @luafunc name()
  */
-static int player_getname( lua_State *L )
+static int playerL_getname( lua_State *L )
 {
    lua_pushstring(L,player_name);
    return 1;
@@ -118,7 +118,7 @@ static int player_getname( lua_State *L )
  *    @luareturn The name of the ship the player is currently in.
  * @luafunc ship()
  */
-static int player_shipname( lua_State *L )
+static int playerL_shipname( lua_State *L )
 {
    lua_pushstring(L,player->name);
    return 1;
@@ -129,7 +129,7 @@ static int player_shipname( lua_State *L )
  *    @luareturn The free cargo space in tons of the player.
  * @brief freeCargo()
  */
-static int player_freeSpace( lua_State *L )
+static int playerL_freeSpace( lua_State *L )
 {
    lua_pushnumber(L, pilot_cargoFree(player) );
    return 1;
@@ -142,7 +142,7 @@ static int player_freeSpace( lua_State *L )
  *    @luaparam amount Amount of money to pay the player in credits.
  * @luafunc pay( amount )
  */
-static int player_pay( lua_State *L )
+static int playerL_pay( lua_State *L )
 {
    int money;
 
@@ -159,7 +159,7 @@ static int player_pay( lua_State *L )
  *    @luareturn The amount of credits the player has on him.
  * @luafunc credits()
  */
-static int player_credits( lua_State *L )
+static int playerL_credits( lua_State *L )
 {
    lua_pushnumber(L,player->credits);
    return 1;
@@ -170,7 +170,7 @@ static int player_credits( lua_State *L )
  *    @luaparam message Message to send the player.
  * @luafunc msg( message )
  */
-static int player_msg( lua_State *L )
+static int playerL_msg( lua_State *L )
 {
    const char* str;
 
@@ -187,7 +187,7 @@ static int player_msg( lua_State *L )
  *    @luaparam mod Amount to modify standing by.
  * @luafunc modFaction( faction, mod )
  */
-static int player_modFaction( lua_State *L )
+static int playerL_modFaction( lua_State *L )
 {
    int f;
    double mod;
@@ -208,7 +208,7 @@ static int player_modFaction( lua_State *L )
  *    @luaparam mod Amount to modify standing by.
  * @luafunc modFactionRaw( faction, mod )
  */
-static int player_modFactionRaw( lua_State *L )
+static int playerL_modFactionRaw( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int f;
@@ -228,7 +228,7 @@ static int player_modFactionRaw( lua_State *L )
  *    @luareturn The faction standing.
  * @luafunc getFaction( faction )
  */
-static int player_getFaction( lua_State *L )
+static int playerL_getFaction( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    int f;
@@ -247,7 +247,7 @@ static int player_getFaction( lua_State *L )
  *             standing in human readable form.
  * @luafunc getRating()
  */
-static int player_getRating( lua_State *L )
+static int playerL_getRating( lua_State *L )
 {
    lua_pushnumber(L, player_crating);
    lua_pushstring(L, player_rating());
@@ -262,7 +262,7 @@ static int player_getRating( lua_State *L )
  *    @luareturn The position of the player (Vec2).
  * @luafunc pos()
  */
-static int player_getPosition( lua_State *L )
+static int playerL_getPosition( lua_State *L )
 {
    LuaVector v;
 
@@ -277,7 +277,7 @@ static int player_getPosition( lua_State *L )
  *    @luareturn The player's pilot.
  * @luafunc pilot()
  */
-static int player_getPilot( lua_State *L )
+static int playerL_getPilot( lua_State *L )
 {
    LuaPilot lp;
    lp.pilot = PLAYER_ID;
@@ -294,7 +294,7 @@ static int player_getPilot( lua_State *L )
  *    @luareturn The player's fuel.
  * @luafunc fuel()
  */
-static int player_fuel( lua_State *L )
+static int playerL_fuel( lua_State *L )
 {
    lua_pushnumber(L,player->fuel);
    return 1;
@@ -310,7 +310,7 @@ static int player_fuel( lua_State *L )
  *    @param fuel Amount of fuel to add, will set to max if nil.
  * @luafunc refuel( fuel )
  */
-static int player_refuel( lua_State *L )
+static int playerL_refuel( lua_State *L )
 {
    double f;
 
@@ -337,7 +337,7 @@ static int player_refuel( lua_State *L )
  *
  * @luafunc unboard()
  */
-static int player_unboard( lua_State *L )
+static int playerL_unboard( lua_State *L )
 {
    (void) L;
    board_unboard();
