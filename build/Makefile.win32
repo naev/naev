@@ -45,7 +45,7 @@ LDTTF   := -lfreetype -lz
 LDPNG   := -lpng12
 LDGL    := -lopengl32
 LDWINDOWS := -lmingw32 -lwsock32 -mwindows
-LDFLAGS := $(LDSDL) -lm $(LDWINDOWS) $(LDLUA) $(LDCSPARSE) $(LDSOUND) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDFLAGS := -lm $(LDWINDOWS) $(LDSDL) $(LDLUA) $(LDCSPARSE) $(LDSOUND) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
