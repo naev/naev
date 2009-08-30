@@ -157,6 +157,7 @@ void conf_setDefaults (void)
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
    conf.afterburn_sens = 250;
+   conf.nosave       = 0;
 
    /* Input */
    input_setDefault();
@@ -256,6 +257,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
+      conf_loadBool("conf_nosave",conf.nosave);
 
       /* Debugging. */
       conf_loadBool("fpu_except",conf.fpu_except);
@@ -629,6 +631,10 @@ int conf_saveConfig ( const char* file )
 
    pos = 0;
 
+   /* User doesn't want to save the config. */
+   if (conf.nosave)
+      return 0;
+
    /* Read the old configuration, if possible */
    if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
       /* See if we can find the generated section and preserve
@@ -789,6 +795,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Afterburner sensitivity");
    conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Save the config everytime game exits (rewriting this bit)");
+   conf_saveInt("conf_nosave",conf.nosave);
    conf_saveEmptyLine();
 
    /* Debugging. */
