@@ -162,7 +162,7 @@ void conf_setDefaults (void)
    input_setDefault();
 
    /* Debugging. */
-   conf.fpu_except   = 1;
+   conf.fpu_except   = 0; /* Causes many issues. */
 }
 
 
