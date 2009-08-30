@@ -573,7 +573,7 @@ int ships_load (void)
       return -1;
    }
 
-   ship_stack = array_create(Ship, NULL);
+   ship_stack = array_create(Ship);
    do {
       if (xml_isNode(node, XML_SHIP))
          /* Load the ship. */

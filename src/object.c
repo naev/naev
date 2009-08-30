@@ -200,9 +200,9 @@ static void materials_readFromFile( const char *filename, Material **materials )
  */
 Object *object_loadFromFile( const char *filename )
 {
-   GLfloat *vertex = array_create(GLfloat, NULL);   /**< vertex coordinates */
-   GLfloat *texture = array_create(GLfloat, NULL);  /**< texture coordinates */
-   Vertex *corners = array_create(Vertex, NULL);
+   GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
+   GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
+   Vertex *corners = array_create(Vertex);    /**< corners of the triangle faces */
 
    SDL_RWops *f = ndata_rwops(filename);
    if (!f)
@@ -212,8 +212,8 @@ Object *object_loadFromFile( const char *filename )
    int material = -1;
 
    Object *object = calloc(1, sizeof(Object));
-   object->meshes = array_create(Mesh, NULL);
-   object->materials = array_create(Material, clear_memory);
+   object->meshes = array_create(Mesh);
+   object->materials = array_create(Material);
 
    char line[256];
    while (SDL_RWgets(line, sizeof(line), f)) {

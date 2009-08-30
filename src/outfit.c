@@ -1561,7 +1561,7 @@ int outfit_load (void)
    }        
 
    /* First pass, loads up ammunition. */
-   outfit_stack = array_create(Outfit, NULL);
+   outfit_stack = array_create(Outfit);
    do {
       if (xml_isNode(node,XML_OUTFIT_TAG))
          outfit_parse( &array_grow(&outfit_stack), node );
