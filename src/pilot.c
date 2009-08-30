@@ -1144,8 +1144,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       /* knock back effect is dependent on both damage and mass of the weapon 
        * should probably get turned into a partial conservative collision */
       vect_cadd( &p->solid->vel,
-            knockback * (w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.)),
-            knockback * (w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.)) );
+            knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
+            knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
    return dmg;
 }
