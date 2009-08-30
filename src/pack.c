@@ -958,7 +958,7 @@ static int packrw_seek( SDL_RWops *rw, int offset, int whence )
    else
       return -1;
 
-   return pack_seek( packfile, offset, whence );
+   return pack_seek( packfile, offset, wh );
 }
 #if SDL_VERSION_ATLEAST(1,3,0)
 static size_t packrw_read( SDL_RWops *rw, void *ptr, size_t size, size_t maxnum )
