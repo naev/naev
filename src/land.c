@@ -936,7 +936,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* player just gots a new ship */
    if (player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
-         0., 0., player->solid->dir ) != 0) {
+         0., 0., player->solid->dir, NULL ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }
