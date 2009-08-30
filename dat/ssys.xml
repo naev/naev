@@ -633,6 +633,7 @@
   <fleets>
    <fleet>Pirate Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
+	<fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -1085,7 +1086,7 @@
  <ssys name="NGC-6938">
   <fleets>
    <fleet>Pirate Light Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7273</jump>
@@ -1388,6 +1389,7 @@
   <fleets>
    <fleet>Trader Medium Prescence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
+	<fleet>Dvaered Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Theras</jump>

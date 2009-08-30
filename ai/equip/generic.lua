@@ -86,6 +86,8 @@ function equip_genericMerchant( p, shipsize )
       end
    elseif shipsize == "medium" then
       primary  = equip_turretLow()
+      secondary   = { "EMP Grenade Launcher" }
+      use_secondary = 1
       medium   = { "Civilian Jammer" }
       if rnd.rnd() > 0.6 then
          use_medium = 1
@@ -97,7 +99,7 @@ function equip_genericMerchant( p, shipsize )
    else
       primary     = equip_turretLow()
       secondary   = { "EMP Grenade Launcher" }
-      use_seconadry = 1
+      use_secondary = 2
       medium = { "Civilian Jammer" }
       if rnd.rnd() > 0.4 then
          use_medium = 1
