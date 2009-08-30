@@ -1475,7 +1475,7 @@ int space_load (void)
 static int system_calcSecurity( StarSystem *sys )
 {
    int i;
-   double guard, hostile, c;
+   double guard, hostile, c, mod;
    Fleet *f;
 
    /* Do not run while loading to speed up. */
@@ -1488,12 +1488,13 @@ static int system_calcSecurity( StarSystem *sys )
 
    /* Calculate hostiles/friendlies. */
    for (i=0; i<sys->nfleets; i++) {
-      f = sys->fleets[i].fleet;
-      c = (double)sys->fleets[i].chance / 100.;
+      f     = sys->fleets[i].fleet;
+      c     = (double)sys->fleets[i].chance / 100.;
+      mod   = c * f->pilot_avg * sqrt(f->mass_avg);
       if (fleet_isFlag(f, FLEET_FLAG_GUARD))
-         guard += c * f->pilot_avg;
+         guard    += mod;
       else if (faction_getPlayerDef(f->faction) < 0)
-         hostile += c * f->pilot_avg;
+         hostile  += mod;
    }
 
    /* Set security. */

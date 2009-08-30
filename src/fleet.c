@@ -213,8 +213,12 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
    /* Calculate average amount of pilots. */
    temp->pilot_avg = 0.;
-   for (i=0; i<temp->npilots; i++)
+   temp->mass_avg  = 0.;
+   for (i=0; i<temp->npilots; i++) {
       temp->pilot_avg += ((double)temp->pilots[i].chance / 100.);
+      temp->mass_avg  += temp->pilots[i].ship->mass;
+   }
+   temp->mass_avg /= temp->npilots;
 
 #define MELEMENT(o,s) \
 if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
