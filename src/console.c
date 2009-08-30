@@ -240,18 +240,18 @@ int cli_init (void)
       return 0;
 
    /* Calculate size. */
-   cli_width  = SCREEN_W - 100;
-   cli_height = SCREEN_H - 100;
+   cli_width   = SCREEN_W - 100;
+   cli_height  = SCREEN_H - 100;
 
    /* Create the state. */
-   cli_state = nlua_newState();
+   cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
    nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 
    /* Set the font. */
-   cli_font = malloc( sizeof(glFont) );
+   cli_font    = malloc( sizeof(glFont) );
    gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
 
    /* Clear the buffer. */
@@ -313,13 +313,15 @@ static void cli_input( unsigned int wid, char *unused )
 
    /* Set up state. */
    L = cli_state;
+   /* Set up for concat. */
+   if (!cli_firstline) {         /* o */
+      lua_pushliteral(L, "\n");  /* o \n */
+   }
    /* Load the string. */
-   lua_pushstring( L, str );
-   /* Concat string if needed. */
-   if (!cli_firstline) {
-      lua_pushliteral(L, "\n");  /* add a new line... */
-      lua_insert(L, -2);  /* ...between the two lines */
-      lua_concat(L, 3);  /* join them */
+   lua_pushstring( L, str );     /* s */
+   /* Concat. */
+   if (!cli_firstline) {         /* o \n s */
+      lua_concat(L, 3);          /* s */
    }
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
    lua_remove(L,-2); /**< Remove the string. */
@@ -332,6 +334,7 @@ static void cli_input( unsigned int wid, char *unused )
          /* Pop the loaded buffer. */
          lua_pop(L, 1);
          cli_firstline = 0;
+         lua_pushstring( L, str );
       }
       else {
          /* Real error, spew message and break. */
