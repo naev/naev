@@ -1490,7 +1490,7 @@ static int system_calcSecurity( StarSystem *sys )
    for (i=0; i<sys->nfleets; i++) {
       f     = sys->fleets[i].fleet;
       c     = (double)sys->fleets[i].chance / 100.;
-      mod   = c * f->pilot_avg * sqrt(f->mass_avg);
+      mod   = c * f->pilot_avg * pow(f->mass_avg, 1./3.);
       if (fleet_isFlag(f, FLEET_FLAG_GUARD))
          guard    += mod;
       else if (faction_getPlayerDef(f->faction) < 0)
