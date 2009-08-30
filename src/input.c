@@ -768,7 +768,7 @@ static void input_key( int keynum, double value, double kabs )
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();
    /* pause the games */
-   } else if (KEY("pause") && NOHYP()) {
+   } else if (KEY("pause")) {
       if (value==KEY_PRESS) {
          if (!toolkit_isOpen()) {
             if (paused)
