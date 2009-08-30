@@ -543,6 +543,47 @@
    <damage type="kinetic">44</damage>
   </specific>
  </outfit>
+ <outfit name="Caesar IV Launcher">
+  <general>
+   <slot>high</slot>
+   <tech>9</tech>
+   <license>Heavy Weapon License</license>
+   <mass>40</mass>
+   <price>120000</price>
+   <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 6 seconds, besting older mechanisms by a substantial margin.</description>
+   <gfx_store>caesar</gfx_store>
+  </general>
+  <specific type="missile smart" secondary="1">
+   <cpu>16</cpu>
+   <ammo>Caesar IV Missile</ammo>
+   <delay>10000</delay>
+   <amount>5</amount>
+  </specific>
+ </outfit>
+ <outfit name="Caesar IV Missile">
+  <general>
+   <tech>9</tech>
+   <license>Heavy Weapon License</license>
+   <mass>4</mass>
+   <price>15000</price>
+   <description>The Caesar IV is truly a sight to behold. Immense beyond compare, the polished exterior hides cutting-edge electronics and a massive explosive payload.</description>
+   <gfx_store>caesar</gfx_store>
+  </general>
+  <specific type="missile smart ammo">
+   <gfx>caesar</gfx>
+   <sound>mace</sound>
+   <sound_hit>lrgexp0</sound_hit>
+   <spfx_shield>ExpL</spfx_shield>
+   <spfx_armour>ExpL</spfx_armour>
+   <duration blowup="armour">20</duration>
+   <lockon>4</lockon>
+   <resist>5</resist>
+   <thrust>125</thrust>
+   <turn>20</turn>
+   <speed>350</speed>
+   <damage type="kinetic">160</damage>
+  </specific>
+ </outfit>
  <outfit name="EMP Grenade Launcher">
   <general>
    <slot>high</slot>
