@@ -921,10 +921,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       dialogue_alert( "Insufficient credits!" );
       return;
    }
-   else if (pilot_hasDeployed(player)) {
-      dialogue_alert( "You can't leave your fighters stranded. Recall them before buying a new ship." );
-      return;
-   }
 
    /* Must have license. */
    if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
@@ -933,11 +929,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
 
-   /* we now move cargo to the new ship */
-   if (pilot_cargoUsed(player) > ship->cap_cargo) {
-      dialogue_alert("You won't have enough space to move your current cargo into the new ship.");
-      return; 
-   }
    credits2str( buf, ship->price, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
          "Do you really want to spend %s on a new ship?", buf )==0)
@@ -945,7 +936,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* player just gots a new ship */
    if (player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
-         0., 0., player->solid->dir ) != 0) {
+         0., 0., player->solid->dir, NULL ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }

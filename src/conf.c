@@ -157,12 +157,13 @@ void conf_setDefaults (void)
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
    conf.afterburn_sens = 250;
+   conf.nosave       = 0;
 
    /* Input */
    input_setDefault();
 
    /* Debugging. */
-   conf.fpu_except   = 1;
+   conf.fpu_except   = 0; /* Causes many issues. */
 }
 
 
@@ -256,6 +257,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
+      conf_loadBool("conf_nosave",conf.nosave);
 
       /* Debugging. */
       conf_loadBool("fpu_except",conf.fpu_except);
@@ -346,6 +348,14 @@ int conf_loadConfig ( const char* file )
             }
             else {
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
+            }
+         }
+         /* Handle "none". */
+         else if (lua_isstring(L,-1)) {
+            str = lua_tostring(L,-1);
+            if (strcmp(str,"none")) {
+               input_setKeybind( keybindNames[i],
+                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
             }
          }
          /* clean up after table stuff */
@@ -629,6 +639,10 @@ int conf_saveConfig ( const char* file )
 
    pos = 0;
 
+   /* User doesn't want to save the config. */
+   if (conf.nosave)
+      return 0;
+
    /* Read the old configuration, if possible */
    if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
       /* See if we can find the generated section and preserve
@@ -791,6 +805,10 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
    conf_saveEmptyLine();
 
+   conf_saveComment("Save the config everytime game exits (rewriting this bit)");
+   conf_saveInt("conf_nosave",conf.nosave);
+   conf_saveEmptyLine();
+
    /* Debugging. */
    conf_saveComment("Enables FPU exceptions - only works on DEBUG builds");
    conf_saveBool("fpu_except",conf.fpu_except);
@@ -824,7 +842,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if (typename == NULL || key == SDLK_UNKNOWN) {
-         conf_saveString(*keybind,NULL);
+         conf_saveString(*keybind,"none");
          continue;
       }
 

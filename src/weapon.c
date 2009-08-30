@@ -37,8 +37,9 @@
 
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
-#define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
-#define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
+#define WEAPON_STATUS_LOCKEDON   1 /**< Weapon is locked on. */
+#define WEAPON_STATUS_JAMMED     2 /**< Got jammed */
+#define WEAPON_STATUS_UNJAMMED   3 /**< Survived jamming */
 
 
 /*
@@ -321,76 +322,75 @@ static void think_seeker( Weapon* w, const double dt )
       return;
    }
 
-   /* Only run if locked on. */
-   if (w->lockon < 0.) {
+   /* Handle by status. */
+   switch (w->status) {
+      case WEAPON_STATUS_OK:
+         if (w->lockon < 0.)
+            w->status = WEAPON_STATUS_LOCKEDON;
+         break;
 
-      switch (w->status) {
-         case WEAPON_STATUS_OK: /* Check to see if can get jammed */
-            if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
-                  (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
+      case WEAPON_STATUS_LOCKEDON: /* Check to see if can get jammed */
+         if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
+               (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
 
-               /* Check to see if weapon gets jammed */
-               if (RNGF() < p->jam_chance - w->outfit->u.amm.resist) {
-                  w->status = WEAPON_STATUS_JAMMED;
-                  /* Give it a nice random effect */
-                  effect = RNG(0,4);
-                  switch (effect) {
-                     case 0: /* Blow up */
-                        w->timer = -1.;
-                        break;
-                     case 1: /* Stuck in left loop */
-                        weapon_setTurn( w, w->outfit->u.amm.turn );
-                        break;
-                     case 2: /* Stuck in right loop */
-                        weapon_setTurn( w, -w->outfit->u.amm.turn );
-                        break;
+            /* Check to see if weapon gets jammed */
+            if (RNGF() < p->jam_chance - w->outfit->u.amm.resist) {
+               w->status = WEAPON_STATUS_JAMMED;
+               /* Give it a nice random effect */
+               effect = RNG(0,3);
+               switch (effect) {
+                  case 0: /* Stuck in left loop */
+                     weapon_setTurn( w, w->outfit->u.amm.turn );
+                     break;
+                  case 1: /* Stuck in right loop */
+                     weapon_setTurn( w, -w->outfit->u.amm.turn );
+                     break;
 
-                     default: /* Go straight */
-                        weapon_setTurn( w, 0. );
-                        return;
-                  }
+                  default: /* Blow up. */
+                     w->timer = -1.;
+                     break;
                }
-               else /* Can't get jammed anymore */
-                  w->status = WEAPON_STATUS_UNJAMMED;
             }
+            else /* Can't get jammed anymore */
+               w->status = WEAPON_STATUS_UNJAMMED;
+         }
 
-         /* Purpose fallthrough */
-         case WEAPON_STATUS_UNJAMMED: /* Work as expected */
+      /* Purpose fallthrough */
+      case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
-            /* Smart seekers take into account ship velocity. */
-            if (w->outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) {
+         /* Smart seekers take into account ship velocity. */
+         if (w->outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) {
 
-               /* Calculate time to reach target. */
-               vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
-                     p->solid->pos.y - w->solid->pos.y );
-               t = vect_odist( &v ) / w->outfit->u.amm.speed;
+            /* Calculate time to reach target. */
+            vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
+                  p->solid->pos.y - w->solid->pos.y );
+            t = vect_odist( &v ) / w->outfit->u.amm.speed;
 
-               /* Calculate target's movement. */
-               vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
-                     v.y + t*(p->solid->vel.y - w->solid->vel.y) );
+            /* Calculate target's movement. */
+            vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
+                  v.y + t*(p->solid->vel.y - w->solid->vel.y) );
 
-               /* Get the angle now. */
-               diff = angle_diff(w->solid->dir, VANGLE(v) );
-            }
-            /* Other seekers are stupid. */
-            else {
-               diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                     vect_angle(&w->solid->pos, &p->solid->pos));
-            }
+            /* Get the angle now. */
+            diff = angle_diff(w->solid->dir, VANGLE(v) );
+         }
+         /* Other seekers are stupid. */
+         else {
+            diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                  vect_angle(&w->solid->pos, &p->solid->pos));
+         }
 
-            /* Set turn. */
-            weapon_setTurn( w, CLAMP( -w->outfit->u.amm.turn, w->outfit->u.amm.turn,
-                     10 * diff * w->outfit->u.amm.turn ));
-            break;
+         /* Set turn. */
+         weapon_setTurn( w, CLAMP( -w->outfit->u.amm.turn, w->outfit->u.amm.turn,
+                  10 * diff * w->outfit->u.amm.turn ));
+         break;
 
-         case WEAPON_STATUS_JAMMED: /* Continue doing whatever */
-            /* Do nothing, dir_vel should be set already if needed */
-            break;
+      case WEAPON_STATUS_JAMMED: /* Continue doing whatever */
+         /* Do nothing, dir_vel should be set already if needed */
+         break;
 
-         default:
-            WARN("Unknown weapon status for '%s'", w->outfit->name);
-            break;
-      }
+      default:
+         WARN("Unknown weapon status for '%s'", w->outfit->name);
+         break;
    }
 
    /* Limit speed here */
@@ -908,6 +908,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       else if (weapon_isSmart(w)) {
 
          if ((pilot_stack[i]->id == w->target) &&
+               (w->status != WEAPON_STATUS_OK) && /* Must not be locking on. */
                weapon_checkCanHit(w,p) &&
                CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                      p->ship->gfx_space, psx, psy,
