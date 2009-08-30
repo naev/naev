@@ -121,6 +121,9 @@ int comm_openPilot( unsigned int pilot )
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
             "Refuel", comm_requestFuel );
 
+   /* Run hooks if needed. */
+   pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+
    return 0;
 }
 

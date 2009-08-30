@@ -373,7 +373,8 @@ void loadscreen_render( double done, const char *msg )
    double x,y, w,h, rh;
 
    /* Clear background. */
-   glClear(GL_COLOR_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
    /* Draw stars. */
    space_renderStars( 0. );
@@ -495,7 +496,7 @@ void main_loop (void)
    tk = toolkit_isOpen();
 
    /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    fps_control(); /* everyone loves fps control */
 
