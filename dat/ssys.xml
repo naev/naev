@@ -461,6 +461,7 @@
   </fleets>
   <jumps>
    <jump>Verex</jump>
+   <jump>Beeklo</jump>
   </jumps>
   <pos>
    <y>-535</y>
@@ -491,6 +492,28 @@
   </pos>
   <planets>
   	<planet>Utsuwa</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Beeklo">
+  <fleets>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Darkstone</jump>
+  </jumps>
+  <pos>
+   <y>-565</y>
+   <x>240</x>
+  </pos>
+  <planets>
+  	<planet>Totoran</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
