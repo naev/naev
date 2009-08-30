@@ -8,6 +8,7 @@
 #include "array.h"
 #include "gui.h"
 #include "log.h"
+#include "ndata.h"
 
 #define DELIM " \t\n"
 
@@ -53,19 +54,25 @@ static int readGLfloat( GLfloat *dest, int how_many )
 }
 
 
-static GLuint texture_loadFromFile( const char *filename )
+static int texture_loadFromFile( const char *filename, GLuint *texture )
 {
+   SDL_RWops *rw;
+   SDL_Surface *brute, *image;
    DEBUG("Loading texture from %s", filename);
 
    /* Reads image and converts it to RGBA */
-   SDL_Surface *brute = IMG_Load(filename);
-   if (brute == NULL)
-      ERR("Cannot load texture from %s", filename);
-   SDL_Surface *image = SDL_DisplayFormatAlpha(brute);
+   rw = ndata_rwops(filename);
+   if (rw != NULL)
+      brute = IMG_Load_RW(rw, 1);
+   if (brute != NULL)
+      image = SDL_DisplayFormatAlpha(brute);
+   if (rw == NULL || brute == NULL || image == NULL) {
+      WARN("Failed to load texture '%s' from ndata", filename);
+      return 0;
+   }
 
-   GLuint texture;
-   glGenTextures(1, &texture);
-   glBindTexture(GL_TEXTURE_2D, texture);
+   glGenTextures(1, texture);
+   glBindTexture(GL_TEXTURE_2D, *texture);
 
    glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, image->pixels);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -74,21 +81,60 @@ static GLuint texture_loadFromFile( const char *filename )
 
    SDL_FreeSurface(brute);
    SDL_FreeSurface(image);
-   return texture;
+   return 1;
+}
+
+
+/*
+ * @brief Behaves exactly as standard fgets() but accepts a
+ * SDL_RWops context instead of a FILE
+ */
+static char* SDL_RWgets( char *str, int size, SDL_RWops *ctx )
+{
+   int i, done = 0;
+   int read, to_read = 16;
+
+   while (done + 1 < size) {
+      if (to_read + done + 1 > size)
+         to_read = size - (done + 1);
+      read = SDL_RWread(ctx, str + done, 1, to_read);
+
+      if (read == 0) {
+         /* EOF occured */
+         if (done == 0)
+            /* No bytes read */
+            return NULL;
+         break;
+      }
+
+      for (i = 0; i < read; ++i)
+         if (str[done + i] == '\n') {
+            str[done + i + 1] = 0;
+            SDL_RWseek(ctx, - read + i + 1, SEEK_CUR);
+            return str;
+         }
+
+      done += read;
+      to_read *= 2;
+   }
+
+   assert(done + 1 == size);
+   str[done] = '\0';
+   return str;
 }
 
 static void materials_readFromFile( const char *filename, Material **materials )
 {
    DEBUG("Loading material from %s", filename);
 
-   FILE *f = fopen(filename, "r");
+   SDL_RWops *f = ndata_rwops(filename);
    if (!f)
-      ERR("Cannot open material file %s", filename);
+      ERR("Cannot open object file %s", filename);
 
    Material *curr = &array_back(*materials);
 
    char line[256];
-   while (fgets(line, sizeof(line), f)) {
+   while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
       token = strtok(line, DELIM);
@@ -128,8 +174,8 @@ static void materials_readFromFile( const char *filename, Material **materials )
          strcat(texture_filename, "/");
          strcat(texture_filename, token);
 
-         curr->texture = texture_loadFromFile(texture_filename);
-         curr->has_texture = 1;
+         curr->has_texture = texture_loadFromFile(
+               texture_filename, &curr->texture) != 0;
          free(copy_filename);
          free(texture_filename);
       } else if (token[0] == '#') {
@@ -139,7 +185,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
       }
    }
 
-   fclose(f);
+   SDL_RWclose(f);
 }
 
 
@@ -158,7 +204,7 @@ Object *object_loadFromFile( const char *filename )
    GLfloat *texture = array_create(GLfloat, NULL);  /**< texture coordinates */
    Vertex *corners = array_create(Vertex, NULL);
 
-   FILE *f = fopen(filename, "r");
+   SDL_RWops *f = ndata_rwops(filename);
    if (!f)
       ERR("Cannot open object file %s", filename);
 
@@ -170,7 +216,7 @@ Object *object_loadFromFile( const char *filename )
    object->materials = array_create(Material, clear_memory);
 
    char line[256];
-   while (fgets(line, sizeof(line), f)) {
+   while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
       token = strtok(line, DELIM);
@@ -251,7 +297,7 @@ Object *object_loadFromFile( const char *filename )
    array_free(vertex);
    array_free(texture);
    array_free(corners);
-   fclose(f);
+   SDL_RWclose(f);
 
    return object;
 }
