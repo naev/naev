@@ -1376,7 +1376,7 @@
  <planet name="Stalwart Station">
   <GFX>
    <exterior>station04.png</exterior>
-   <space>001.png</space>
+   <space>003.png</space>
   </GFX>
   <pos>
    <y>-800</y>
@@ -1419,7 +1419,7 @@
     <commodity>Ore</commodity>
    </commodities>
    <tech>
-    <main>5</main>
+    <main>3</main>
     <special>0</special>
    </tech>
    <services>15</services>
