@@ -148,7 +148,7 @@ static void iar_render( Widget* iar, double bx, double by )
     * Scrollbar.
     */
    d          = h * (yelem - (int)(iar->h / h));
-   if (d==0.)
+   if (fabs(d) < 1e-05)
       scroll_pos = 0.;
    else
       scroll_pos = iar->dat.iar.pos / d;
@@ -555,7 +555,10 @@ static void iar_focus( Widget* iar, double bx, double by )
    else {
       /* Get bar position (center). */
       hmax = h * (yelem - (int)(iar->h / h));
-      scroll_pos = iar->dat.iar.pos / hmax;
+      if (fabs(hmax) < 1e-05)
+         scroll_pos = 0.;
+      else
+         scroll_pos = iar->dat.iar.pos / hmax;
       y = iar->h - (iar->h - 30.) * scroll_pos - 15.;
 
       /* Click below the bar. */
