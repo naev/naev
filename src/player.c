@@ -442,42 +442,34 @@ static void player_newShipMake( char* name )
 {
    Vector2d vp, vv;
    unsigned int flags;
+   PlayerShip_t *ship;
 
    /* store the current ship if it exists */
    flags = PILOT_PLAYER;
-   if (player != NULL) {
-      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
-      player_stack[player_nstack].p = pilot_copy( player );
-      player_stack[player_nstack].loc = strdup( land_planet->name );
-      player_nstack++;
-
-      player_credits = player->credits;
-      pilot_destroy( player );
-
-      /* No outfits. */
-      flags |= PILOT_NO_OUTFITS;
-   }
 
    /* in case we're respawning */
    player_rmFlag(PLAYER_CREATING);
 
-   /* hackish position setting */
-   vect_cset( &vp, player_px, player_py );
-   vect_cset( &vv, player_vx, player_vy );
-
    /* create the player */
-   pilot_create( player_ship, name, faction_get("Player"), NULL,
-         player_dir,  &vp, &vv, flags );
-   gl_cameraBind( &player->solid->pos ); /* set opengl camera */
+   if (player == NULL) {
+      /* Hackish position setting */
+      vect_cset( &vp, player_px, player_py );
+      vect_cset( &vv, player_vx, player_vy );
 
-   /* copy cargo over. */
-   if (player_nstack > 0) { /* not during creation though. */
-      pilot_moveCargo( player, player_stack[player_nstack-1].p );
-
-      /* recalculate stats after cargo movement. */
-      pilot_calcStats( player );
-      pilot_calcStats( player_stack[player_nstack-1].p );
+      /* CCreate the player. */
+      pilot_create( player_ship, name, faction_get("Player"), NULL,
+            player_dir, &vp, &vv, flags );
    }
+   else {
+      /* Grow memory. */
+      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
+      ship = &player_stack[player_nstack];
+      /* CReate the ship. */
+      ship->p = pilot_createEmpty( player_ship, name, faction_get("Player"), NULL, flags );
+      ship->loc = strdup( land_planet->name );;
+      player_nstack++;
+   }
+   gl_cameraBind( &player->solid->pos ); /* set opengl camera */
 
    /* money. */
    player->credits = player_credits;
