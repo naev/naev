@@ -50,11 +50,13 @@ function equip_empireMilitary( p, shipsize )
    local primary, secondary, medium, low, apu
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
+   local scramble
 
    -- Defaults
    medium      = { "Civilian Jammer" }
    secondary   = { }
    apu         = { }
+   scramble    = false
 
    -- Equip by size and type
    if shipsize == "small" then
@@ -125,12 +127,6 @@ function equip_empireMilitary( p, shipsize )
       apu            = equip_apuHig()
    end
 
-   if scramble == true then
-      equip_ship( p, true, primary, secondary, medium, low, apu,
-                  use_primary, use_secondary, use_medium, use_low )
-      scramble = false
-   else
-      equip_ship( p, false, primary, secondary, medium, low, apu,
-                  use_primary, use_secondary, use_medium, use_low )
-   end
+   equip_ship( p, scramble, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low )
 end
