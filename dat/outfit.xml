@@ -394,7 +394,7 @@
    <mass>10</mass>
    <price>25000</price>
    <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>seekerlauncher</gfx_store>
   </general>
   <specific type="missile seek" secondary="1">
    <cpu>6</cpu>
@@ -409,7 +409,7 @@
    <mass>1</mass>
    <price>800</price>
    <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>seeker</gfx_store>
   </general>
   <specific type="missile seek ammo">
    <gfx>missile</gfx>
@@ -433,7 +433,7 @@
    <mass>12</mass>
    <price>40000</price>
    <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>headhunterlauncher</gfx_store>
   </general>
   <specific type="missile smart" secondary="1">
    <cpu>8</cpu>
@@ -449,7 +449,7 @@
    <mass>1</mass>
    <price>2000</price>
    <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>headhunter</gfx_store>
   </general>
   <specific type="missile smart ammo">
    <gfx>headhunter</gfx>
@@ -513,7 +513,7 @@
    <mass>10</mass>
    <price>19000</price>
    <description>A base for launching Dvaered Mace rockets.</description>
-   <gfx_store>mace</gfx_store>
+   <gfx_store>macelauncher</gfx_store>
   </general>
   <specific type="missile dumb" secondary="1">
    <cpu>5</cpu>
@@ -551,7 +551,7 @@
    <mass>40</mass>
    <price>120000</price>
    <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 6 seconds, besting older mechanisms by a substantial margin.</description>
-   <gfx_store>caesar</gfx_store>
+   <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="missile smart" secondary="1">
    <cpu>16</cpu>
