@@ -46,6 +46,8 @@ static int playerL_getPilot( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_unboard( lua_State *L );
+static int playerL_addOutfit( lua_State *L );
+static int playerL_addShip( lua_State *L );
 static const luaL_reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -62,6 +64,8 @@ static const luaL_reg playerL_methods[] = {
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "unboard", playerL_unboard },
+   { "addOutfit", playerL_addOutfit },
+   { "addShip", playerL_addShip },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg playerL_cond_methods[] = {
@@ -341,6 +345,74 @@ static int playerL_unboard( lua_State *L )
 {
    (void) L;
    board_unboard();
+   return 0;
+}
+
+
+/**
+ * @brief Adds an outfit to the player's outfit list.
+ *
+ * @usage player.addOutfit( "Laser Cannon" ) -- Gives the player a laser cannon
+ * @usage player.addOutfit( "Plasma Blaster", 2 ) -- Gives the player two plasma blasters
+ *
+ *    @luaparam name Name of the outfit to give.
+ *    @luaparam q Optional parameter that sets the quantity to give (default 1).
+ * @luafunc addOutfit( name, q )
+ */
+static int playerL_addOutfit( lua_State *L  )
+{
+   const char *str;
+   Outfit *o;
+   int q;
+
+   /* Defaults. */
+   q = 1;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+   if (lua_gettop(L) > 1)
+      q = luaL_checkint(L, 2);
+
+   /* Get outfit. */
+   o = outfit_get( str );
+   if (o==NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found.", str);
+      return 0;
+   }
+
+   /* Add the outfits. */
+   player_addOutfit( o, q );
+   return 0;
+}
+
+
+/**
+ * @brief Gives the player a new ship.
+ *
+ * @note Should be given when landed, ideally on a planet with a shipyard.
+ *
+ *    @luaparam ship Name of the ship to add.
+ *    @luaparam name Name to give the ship if player refuses to name it.
+ * @luafunc addShip( ship, name )
+ */
+static int playerL_addShip( lua_State *L )
+{
+   const char *str, *name;
+   Ship *s;
+
+   /* Handle parameters. */
+   str  = luaL_checkstring(L, 1);
+   name = luaL_checkstring(L, 2);
+
+   /* Get ship. */
+   s = ship_get(str);
+   if (s==NULL) {
+      NLUA_ERROR(L, "Ship '%s' not found.", str);
+      return 0;
+   }
+
+   /* Add the ship. */
+   player_newShip( s, 0., 0, 0., 0., 0., name );
    return 0;
 }
 
