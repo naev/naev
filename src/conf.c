@@ -350,6 +350,14 @@ int conf_loadConfig ( const char* file )
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
             }
          }
+         /* Handle "none". */
+         else if (lua_isstring(L,-1)) {
+            str = lua_tostring(L,-1);
+            if (strcmp(str,"none")) {
+               input_setKeybind( keybindNames[i],
+                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
+            }
+         }
          /* clean up after table stuff */
          lua_pop(L,1);
       }
@@ -834,7 +842,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if (typename == NULL || key == SDLK_UNKNOWN) {
-         conf_saveString(*keybind,NULL);
+         conf_saveString(*keybind,"none");
          continue;
       }
 
