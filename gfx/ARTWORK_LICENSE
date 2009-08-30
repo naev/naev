@@ -159,6 +159,7 @@
      * space
        * headhunter.png
        * mace.png
+       * macelauncher.png
      * store
        * mace.png
    * spfx
@@ -283,11 +284,20 @@
          * laser2-end.png
          * plasma2.png
          * plasma2-end.png
+         * headhunter.png
+         * seeker.png
+         * caesar.png
        * store
          * cpu_i.png
          * cpu_ii.png
          * cpu_iii.png
          * biometal.png
+         * seekerlauncher.png
+         * seeker.png
+         * headhunterlauncher.png
+         * headhunter.png
+         * caesarlauncher.png
+         * caesar.png
      * spfx
        * plas2.png
        * plam2.png
