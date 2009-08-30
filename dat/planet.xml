@@ -1376,7 +1376,7 @@
  <planet name="Stalwart Station">
   <GFX>
    <exterior>station04.png</exterior>
-   <space>001.png</space>
+   <space>003.png</space>
   </GFX>
   <pos>
    <y>-800</y>
