@@ -416,7 +416,7 @@
    <jump>Tarsus</jump>
    <jump>Ginger</jump>
    <jump>Darkstone</jump>
-   <jump>Blunderbluss</jump>
+   <jump>Blunderbuss</jump>
   </jumps>
   <pos>
    <y>-453</y>
@@ -478,7 +478,7 @@
    <stars>500</stars>
   </general>
  </ssys>
- <ssys name="Blunderbluss">
+ <ssys name="Blunderbuss">
   <fleets>
    <fleet>Dvaered Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
