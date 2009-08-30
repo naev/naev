@@ -391,6 +391,8 @@ static int playerL_addOutfit( lua_State *L  )
  *
  * @note Should be given when landed, ideally on a planet with a shipyard.
  *
+ * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
+ *
  *    @luaparam ship Name of the ship to add.
  *    @luaparam name Name to give the ship if player refuses to name it.
  * @luafunc addShip( ship, name )
