@@ -124,6 +124,7 @@ static void iar_render( Widget* iar, double bx, double by )
    glColour *c, *dc, *lc, tc;
    int is_selected;
    int tw;
+   double d;
 
    /*
     * Calculations.
@@ -146,7 +147,11 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Scrollbar.
     */
-   scroll_pos = iar->dat.iar.pos / (h * (yelem - (int)(iar->h / h)));
+   d          = h * (yelem - (int)(iar->h / h));
+   if (d==0.)
+      scroll_pos = 0.;
+   else
+      scroll_pos = iar->dat.iar.pos / d;
    toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
 
    /*
