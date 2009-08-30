@@ -143,6 +143,10 @@ Press yes to abort the tutorial, or no to continue it.]]
 end
 
 function create()
+
+   -- Hack to add lasers
+   pilot.player():addOutfit( "Laser Cannon", 2 )
+
    if forced == 1 then
       start()
    else
