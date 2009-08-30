@@ -734,7 +734,7 @@
   </slots>
  </ship>
  <ship name="Pacifier">
-  <GFX sx="10" sy="10">pacifier</GFX>
+  <GFX _3d="true" sx="10" sy="10">pacifier</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
