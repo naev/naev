@@ -1211,16 +1211,16 @@ void player_secondaryNext (void)
 
       /* Make sure it isn't the same as the current one. */
       if ((player->secondary != NULL) &&
-            (player->secondary->outfit == o))
+            (player->secondary->outfit == o)) {
+         if (player->secondary == player->outfits[i])
+            found = 1;
          continue;
+      }
 
       /* No secondary, grab first. */
       if (found==1) {
          player->secondary = player->outfits[i];
          return;
-      }
-      else if (player->secondary == player->outfits[i]) {
-         found = 1;
       }
    }
    player->secondary = NULL;
@@ -1246,16 +1246,16 @@ void player_secondaryPrev (void)
 
       /* Make sure it isn't the same as the current one. */
       if ((player->secondary != NULL) &&
-            (player->secondary->outfit == o))
+            (player->secondary->outfit == o)) {
+         if (player->secondary == player->outfits[i])
+            found = 1;
          continue;
+      }
 
       /* No secondary, grab first. */
       if (found==1) {
          player->secondary = player->outfits[i];
          return;
-      }
-      else if (player->secondary == player->outfits[i]) {
-         found = 1;
       }
    }
    player->secondary = NULL;
