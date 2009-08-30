@@ -57,6 +57,7 @@ typedef struct PlayerConf_s {
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
+   int nosave; /**< Disables conf saving. */
 
    /* Debugging. */
    int fpu_except;
