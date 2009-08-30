@@ -17,7 +17,7 @@ end
 
 
 function equip_forwardEmpLow ()
-   return { "Laser Cannon MK2", "Ripper MK2", "Ion Cannon" }
+   return { "Laser Cannon MK2", "Ion Cannon" }
 end
 function equip_forwardEmpMed ()
    return { "Ripper MK2", "Ion Cannon" }
@@ -26,7 +26,13 @@ function equip_turretEmpLow ()
    return { "Laser Turret MK2" }
 end
 function equip_turretEmpMed ()
-   return { "Laser Turret MK2", "Heavy Ion Turret" }
+   return { "Heavy Ion Turret" }
+end
+function equip_mixedEmpMed ()
+   return { "Heavy Ion Turret", "Ion Cannon", "Ion Cannon" }
+end
+function equip_turretEmpHig ()
+   return { "Heavy Ion Turret" }
 end
 function equip_rangedEmp ()
    return { "Headhunter Launcher" }
@@ -64,7 +70,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         primary        = equip_forwardEmpLow()
+         primary        = equip_forwardEmpMed()
          use_primary    = nhigh-1
          secondary      = equip_secondaryEmp()
          use_secondary  = 1
@@ -84,20 +90,33 @@ function equip_empireMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      if rnd.rnd() < 0.6 then
-         primary = equip_forwardEmpMed()
-      else
-         primary = equip_turretEmpLow()
+      local class = p:ship():class()
+      
+      -- Corvette
+      if class == "Corvette" then
+         primary        = equip_forwardEmpMed()
+         secondary      = equip_secondaryEmp()
+         use_secondary  = rnd.rnd(1,2)
+         use_primary    = nhigh - use_secondary
+         medium         = equip_mediumMed()
+         low            = equip_lowMed()
+         apu            = equip_apuMed()
       end
-      secondary      = equip_secondaryEmp()
-      use_secondary  = rnd.rnd(1,2)
-      use_primary    = nhigh - use_secondary
-      medium         = equip_mediumMed()
-      low            = equip_lowMed()
-      apu            = equip_apuMed()
+
+      -- Destroyer
+      if class == "Destroyer" then
+         scramble       = true
+         primary        = equip_mixedEmpMed()
+         secondary      = equip_secondaryEmp()
+         use_secondary  = rnd.rnd(1,2)
+         use_primary    = nhigh - use_secondary
+         medium         = equip_mediumMed()
+         low            = equip_lowMed()
+         apu            = equip_apuMed()
+      end
 
    else
-      primary        = equip_turretEmpMed()
+      primary        = equip_turretEmpHig()
       secondary      = equip_secondaryEmp()
       use_primary    = nhigh-2
       use_secondary  = 2
@@ -105,7 +124,13 @@ function equip_empireMilitary( p, shipsize )
       low            = equip_lowHig()
       apu            = equip_apuHig()
    end
-   equip_ship( p, false, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low )
-end
 
+   if scramble == true then
+      equip_ship( p, true, primary, secondary, medium, low, apu,
+                  use_primary, use_secondary, use_medium, use_low )
+      scramble = false
+   else
+      equip_ship( p, false, primary, secondary, medium, low, apu,
+                  use_primary, use_secondary, use_medium, use_low )
+   end
+end
