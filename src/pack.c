@@ -635,7 +635,7 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
    int bytes;
 
    if ((file->pos + count) > file->end)
-      count = file->end - file->pos; /* can't go past end */
+      count = MAX(file->end - file->pos, 0); /* can't go past end */
    if (count == 0)
       return 0;
 
@@ -696,7 +696,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
    target = base + offset;
 
    /* Limit checks. */
-   if ((target < file->start) || (target >= file->end))
+   if (target < file->start)
       return -1;
 
 #if HAS_FD
