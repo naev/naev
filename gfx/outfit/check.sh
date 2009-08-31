@@ -9,7 +9,7 @@ echo
 echo "   Unused outfit store gfx"
 cd store
 for SPACE in *.png; do
-   if [ -z "`grep ${SPACE%.png} ../$DATA | grep "<gfx_store>"`" ]; then
+   if [ -z "`grep ">${SPACE%.png}<" ../$DATA | grep "<gfx_store>"`" ]; then
       echo "      $SPACE"
    fi
 done
@@ -19,7 +19,7 @@ cd ..
 echo "   Unused outfit gfx"
 cd space
 for SPACE in *.png; do
-   if [ -z "`grep ${SPACE%.png} ../$DATA | grep "<gfx>"`" ]; then
+   if [ -z "`grep ">${SPACE%.png}<" ../$DATA | grep "<gfx>"`" ]; then
       echo "      $SPACE"
    fi
 done
