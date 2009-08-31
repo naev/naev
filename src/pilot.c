@@ -958,7 +958,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - sanity check for the player */
-      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==p->target))
+      if ((w->outfit->u.lau.ammo->u.amm.ai == 0) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */

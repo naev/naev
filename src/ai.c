@@ -1873,7 +1873,7 @@ static int aiL_aim( lua_State *L )
    /* Check if should recalculate weapon speed with secondary weapon. */
    if ((cur_pilot->secondary != NULL) &&
          outfit_isBolt(cur_pilot->secondary->outfit) &&
-         (cur_pilot->secondary->outfit->type == OUTFIT_TYPE_MISSILE_DUMB)) {
+         (cur_pilot->secondary->outfit->type == OUTFIT_TYPE_LAUNCHER)) {
       speed  = cur_pilot->weap_speed + outfit_speed(cur_pilot->secondary->outfit);
       speed /= 2.;
    }
@@ -1937,8 +1937,10 @@ static int outfit_isMelee( Pilot *p, PilotOutfitSlot *o )
 {
    (void) p;
    if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit) ||
-         (o->outfit->type == OUTFIT_TYPE_MISSILE_DUMB) ||
-         (o->outfit->type == OUTFIT_TYPE_TURRET_DUMB))
+         (((o->outfit->type == OUTFIT_TYPE_LAUNCHER) ||
+           (o->outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)) &&
+          (o->outfit->u.lau.ammo->u.amm.ai == 0)))
+
       return 1;
    return 0;
 }
@@ -1951,10 +1953,10 @@ static int outfit_isRanged( Pilot *p, PilotOutfitSlot *o )
 {
    (void) p;
    if (outfit_isFighterBay(o->outfit) ||
-         (outfit_isLauncher(o->outfit) &&
-            (o->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))) {
+         (((o->outfit->type == OUTFIT_TYPE_LAUNCHER) ||
+           (o->outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)) &&
+          (o->outfit->u.lau.ammo->u.amm.ai > 0)))
       return 1;
-   }
    return 0;
 }
 /**
@@ -2034,7 +2036,7 @@ static int aiL_secondary( lua_State *L )
 
          /* Only if r == 1 in case of dumb turrets. */
          if (r == 1) {
-            if ((po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))
+            if (po->outfit->u.lau.ammo->u.amm.ai > 0)
                lua_pushstring( L, "Smart" );
             else
                lua_pushstring( L, "Dumb" );
