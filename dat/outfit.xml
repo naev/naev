@@ -548,7 +548,7 @@
    <slot>high</slot>
    <tech>9</tech>
    <license>Heavy Weapon License</license>
-   <mass>40</mass>
+   <mass>30</mass>
    <price>120000</price>
    <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 5 seconds, besting older mechanisms by a substantial margin.</description>
    <gfx_store>caesarlauncher</gfx_store>
@@ -564,7 +564,7 @@
   <general>
    <tech>9</tech>
    <license>Heavy Weapon License</license>
-   <mass>4</mass>
+   <mass>3</mass>
    <price>15000</price>
    <description>The Caesar line hasn't changed much since its inception, and the Caesar IV holds the line. Known primarily for its immense explosive payload, its electronics are somewhat antiquated, making it</description>
    <gfx_store>caesar</gfx_store>
