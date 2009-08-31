@@ -1054,9 +1054,17 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       player_abortAutonav("Sustaining Damage");
 
    /*
+    * EMP don't do damage if pilot is disabled.
+    */
+   if (pilot_isDisabled(p) && (dtype == DAMAGE_TYPE_EMP)) {
+      dmg        = 0.;
+      dam_mod    = 0.;
+   }
+
+   /*
     * Shields take entire blow.
     */
-   if (p->shield-damage_shield > 0.) {
+   else if (p->shield-damage_shield > 0.) {
       dmg        = damage_shield;
       p->shield -= damage_shield;
       dam_mod    = damage_shield/p->shield_max;
@@ -1078,11 +1086,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dmg        = damage_armour;
       p->armour -= damage_armour;
    }
-
-   /* EMP don't kill. */
-   if (!pilot_isPlayer(p) && (dtype == DAMAGE_TYPE_EMP) &&
-         (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
-      p->armour = MIN(p->armour + dmg, PILOT_DISABLED_ARMOR * p->armour_max - 1.);
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
