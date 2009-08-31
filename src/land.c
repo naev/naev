@@ -1402,14 +1402,17 @@ static unsigned int refuel_price (void)
 static void spaceport_refuel( unsigned int wid, char *str )
 {
    (void)str;
+   unsigned int price;
 
-   if (player->credits < refuel_price()) { /* player is out of money after landing */
+   price = refuel_price();
+
+   if (player->credits < price) { /* player is out of money after landing */
       dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }
 
-   player->credits -= refuel_price();
-   player->fuel = player->fuel_max;
+   player->credits  -= price;
+   player->fuel      = player->fuel_max;
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_destroyWidget( wid, "btnRefuel" );
       window_destroyWidget( wid, "txtRefuel" );

@@ -786,9 +786,8 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
       DEBUG("   %s", symbols[i]);
    DEBUG("Report this to project maintainer with the backtrace.");
 
-   /* Only exit for non-fatal errors. */
-   if (sig == SIGFPE)
-      exit(1);
+   /* Always exit. */
+   exit(1);
 }
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 

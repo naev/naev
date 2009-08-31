@@ -359,7 +359,7 @@ static void think_seeker( Weapon* w, const double dt )
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
          /* Smart seekers take into account ship velocity. */
-         if (w->outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) {
+         if (w->outfit->u.amm.ai == 2) {
 
             /* Calculate time to reach target. */
             vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
@@ -510,17 +510,11 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       switch (w->outfit->type) {
 
          /* most missiles behave the same */
-         case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
-         case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
-         case OUTFIT_TYPE_MISSILE_SWARM_AMMO:
-         case OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO:
+         case OUTFIT_TYPE_AMMO:
+         case OUTFIT_TYPE_TURRET_AMMO:
             if (w->lockon > 0.) /* decrement lockon */
                w->lockon -= dt;
-            /* purpose fallthrough */
 
-         /* bolts too */
-         case OUTFIT_TYPE_TURRET_DUMB_AMMO:
-         case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
             limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
             w->timer -= dt;
             if (w->timer < 0.) {
@@ -665,14 +659,10 @@ static void weapon_render( Weapon* w, const double dt )
 
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
-      case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
-      case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
-      case OUTFIT_TYPE_MISSILE_SWARM_AMMO:
-      case OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO:
+      case OUTFIT_TYPE_AMMO:
+      case OUTFIT_TYPE_TURRET_AMMO:
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
-      case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
-      case OUTFIT_TYPE_TURRET_DUMB_AMMO:
          gfx = outfit_gfx(w->outfit);
 
          /* Alpha based on strength. */
@@ -1203,45 +1193,9 @@ static Weapon* weapon_create( const Outfit* outfit,
          break;
 
       /* Treat seekers together. */
-      case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
-      case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
-         mass = w->outfit->mass;
-
-         rdir = dir;
-         if (outfit->u.amm.accuracy != 0.) {
-            rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
-         }
-         if (rdir < 0.)
-            rdir += 2.*M_PI;
-         else if (rdir >= 2.*M_PI)
-            rdir -= 2.*M_PI;
-
-         w->lockon = outfit->u.amm.lockon;
-         w->timer = outfit->u.amm.duration;
-         w->solid = solid_create( mass, dir, pos, vel );
-
-         /* if they are seeking a pilot, increment lockon counter */
-         pilot_target = pilot_get(target);
-         if (pilot_target != NULL)
-            pilot_target->lockons++;
-
-         /* only diff is AI */
-         w->think = think_seeker; /* AI is the same atm. */
-         /*if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_AMMO)
-            w->think = think_seeker;
-         else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
-            w->think = think_smart;*/
-         w->voice = sound_playPos(w->outfit->u.amm.sound,
-               w->solid->pos.x,
-               w->solid->pos.y,
-               w->solid->vel.x,
-               w->solid->vel.y);
-         break;
-
-      /* Dumb missiles and turrets. */
-      case OUTFIT_TYPE_TURRET_DUMB_AMMO:
-      case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
-         if (w->outfit->type == OUTFIT_TYPE_TURRET_DUMB_AMMO) {
+      case OUTFIT_TYPE_AMMO:
+      case OUTFIT_TYPE_TURRET_AMMO:
+         if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
             pilot_target = pilot_get(w->target);
             if (pilot_target == NULL)
                rdir = dir;
@@ -1287,18 +1241,31 @@ static Weapon* weapon_create( const Outfit* outfit,
             vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
                   sin(rdir) * w->outfit->u.amm.speed );
 
-         mass = w->outfit->mass;
-         w->timer = outfit->u.amm.duration;
-         w->solid = solid_create( mass, rdir, pos, &v );
+         /* Set up ammo details. */
+         mass        = w->outfit->mass;
+         w->lockon   = outfit->u.amm.lockon;
+         w->timer    = outfit->u.amm.duration;
+         w->solid    = solid_create( mass, rdir, pos, &v );
          if (w->outfit->u.amm.thrust != 0.)
             weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-         w->voice = sound_playPos(w->outfit->u.amm.sound,
+
+         /* Handle seekers. */
+         if (w->outfit->u.amm.ai > 0) {
+            w->think = think_seeker; /* AI is the same atm. */
+
+            /* If they are seeking a pilot, increment lockon counter. */
+            pilot_target = pilot_get(target);
+            if (pilot_target != NULL)
+               pilot_target->lockons++;
+         }
+
+         /* Play sound. */
+         w->voice    = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x,
                w->solid->pos.y,
                w->solid->vel.x,
                w->solid->vel.y);
          break;
-
 
       /* just dump it where the player is */
       default:

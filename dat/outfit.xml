@@ -396,7 +396,7 @@
    <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
    <gfx_store>seekerlauncher</gfx_store>
   </general>
-  <specific type="missile seek" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Seeker Missile</ammo>
    <delay>1800</delay>
@@ -411,7 +411,7 @@
    <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
    <gfx_store>seeker</gfx_store>
   </general>
-  <specific type="missile seek ammo">
+  <specific type="ammo">
    <gfx>seeker</gfx>
    <sound>seeker</sound>
    <sound_hit>medexp1</sound_hit>
@@ -423,6 +423,7 @@
    <turn>60</turn>
    <speed>800</speed>
    <damage type="kinetic">20</damage>
+   <ai>seek</ai>
   </specific>
  </outfit>
  <outfit name="Headhunter Launcher">
@@ -435,7 +436,7 @@
    <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
    <gfx_store>headhunterlauncher</gfx_store>
   </general>
-  <specific type="missile smart" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
    <delay>2000</delay>
@@ -451,7 +452,7 @@
    <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
    <gfx_store>headhunter</gfx_store>
   </general>
-  <specific type="missile smart ammo">
+  <specific type="ammo">
    <gfx>headhunter</gfx>
    <sound>missile</sound>
    <sound_hit>medexp0</sound_hit>
@@ -464,6 +465,7 @@
    <turn>90</turn>
    <speed>550</speed>
    <damage type="kinetic">20</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
  <outfit name="Banshee Launcher">
@@ -476,7 +478,7 @@
    <gfx_store>bansheelauncher</gfx_store>
    <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
   </general>
-  <specific type="missile dumb" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Banshee Rocket</ammo>
    <delay>375</delay>
@@ -492,7 +494,7 @@
    <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
    <gfx_store>banshee</gfx_store>
   </general>
-  <specific type="missile dumb ammo">
+  <specific type="ammo">
    <gfx>banshee</gfx>
    <sound>missile</sound>
    <sound_hit>bansheeexp</sound_hit>
@@ -503,6 +505,7 @@
    <thrust>0</thrust>
    <speed>600</speed>
    <damage type="emp">15</damage>
+   <ai>dumb</ai>
   </specific>
  </outfit>
  <outfit name="Mace Launcher">
@@ -515,7 +518,7 @@
    <description>A base for launching Dvaered Mace rockets.</description>
    <gfx_store>macelauncher</gfx_store>
   </general>
-  <specific type="missile dumb" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Mace Rocket</ammo>
    <delay>2000</delay>
@@ -531,7 +534,7 @@
    <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
    <gfx_store>mace</gfx_store>
   </general>
-  <specific type="missile dumb ammo">
+  <specific type="ammo">
    <gfx>mace</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
@@ -541,6 +544,7 @@
    <thrust>300</thrust>
    <speed>1000</speed>
    <damage type="kinetic">44</damage>
+   <ai>dumb</ai>
   </specific>
  </outfit>
  <outfit name="Caesar IV Launcher">
@@ -553,7 +557,7 @@
    <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 5 seconds, besting older mechanisms by a substantial margin.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
-  <specific type="missile seek" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>16</cpu>
    <ammo>Caesar IV Missile</ammo>
    <delay>5000</delay>
@@ -569,7 +573,7 @@
    <description>The Caesar line hasn't changed much since its inception, and the Caesar IV holds the line. Known primarily for its immense explosive payload, its electronics are somewhat antiquated, making it</description>
    <gfx_store>caesar</gfx_store>
   </general>
-  <specific type="missile seek ammo">
+  <specific type="ammo">
    <gfx>caesar</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
@@ -581,6 +585,7 @@
    <turn>20</turn>
    <speed>350</speed>
    <damage type="kinetic">140</damage>
+   <ai>seek</ai>
   </specific>
  </outfit>
  <outfit name="EMP Grenade Launcher">
@@ -592,7 +597,7 @@
    <gfx_store>empgrenadelauncher</gfx_store>
    <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
   </general>
-  <specific type="turret dumb" secondary="1">
+  <specific type="turret launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>EMP Grenade</ammo>
    <delay>2000</delay>
@@ -607,7 +612,7 @@
    <gfx_store>empgrenade</gfx_store>
    <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
-  <specific type="turret dumb ammo">
+  <specific type="turret ammo">
    <gfx spin="0.3">empgrenade</gfx>
    <sound>grenadefire</sound>
    <sound_hit>empexplode</sound_hit>
@@ -617,6 +622,7 @@
    <thrust>0</thrust>
    <speed>400</speed>
    <damage type="emp">50</damage>
+   <ai>dumb</ai>
   </specific>
  </outfit>
 <!-- Energy-Related Outfits -->
