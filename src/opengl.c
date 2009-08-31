@@ -597,8 +597,10 @@ int gl_init (void)
    /* Load configuration. */
    if (conf.vsync)
       gl_screen.flags |= OPENGL_VSYNC;
-   if (conf.fsaa > 1)
+   if (conf.fsaa > 1) {
       gl_screen.fsaa = conf.fsaa;
+      gl_screen.flags |= OPENGL_FSAA;
+   }
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
    gl_setScale( conf.scalefactor );
