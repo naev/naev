@@ -87,10 +87,10 @@ static int cli_print( lua_State *L ) {
    int i;
    char buf[LINE_LENGTH];
    int p;
+   const char *s;
    p = 0;
    lua_getglobal(L, "tostring");
    for (i=1; i<=n; i++) {
-      const char *s;
       lua_pushvalue(L, -1);  /* function to be called */
       lua_pushvalue(L, i);   /* value to print */
       lua_call(L, 1, 1);
@@ -324,7 +324,6 @@ static void cli_input( unsigned int wid, char *unused )
       lua_concat(L, 3);          /* s */
    }
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
-   lua_remove(L,-2); /**< Remove the string. */
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;
@@ -334,7 +333,6 @@ static void cli_input( unsigned int wid, char *unused )
          /* Pop the loaded buffer. */
          lua_pop(L, 1);
          cli_firstline = 0;
-         lua_pushstring( L, str );
       }
       else {
          /* Real error, spew message and break. */
@@ -345,8 +343,10 @@ static void cli_input( unsigned int wid, char *unused )
    }
    /* Print results - all went well. */
    else if (status == 0) {
+      lua_remove(L,1);
       if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
          cli_addMessage( lua_tostring(L, -1) );
+         lua_pop(L,1);
       }
       if (lua_gettop(L) > 0) {
          lua_getglobal(L, "print");
