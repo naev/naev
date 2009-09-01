@@ -733,8 +733,54 @@
    <low />
   </slots>
  </ship>
-  <ship name="Vigilance">
+ <ship name="Vigilance">
   <GFX sx="10" sy="10">vigilance</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Destroyer</class>
+  <price>1200000</price>
+  <fabricator>House Dvaered</fabricator>
+  <tech>8</tech>
+  <license>Medium Combat Vessel License</license>
+  <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
+  <movement>
+   <thrust>130</thrust>
+   <turn>85</turn>
+   <speed>160</speed>
+  </movement>
+  <health>
+   <shield>520</shield>
+   <armour>690</armour>
+   <energy>2100</energy>
+   <shield_regen>260</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>3000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>75</cpu>
+   <crew>15</crew>
+   <mass>830</mass>
+   <fuel>400</fuel>
+   <cap_cargo>25</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="20"  y="0"   h="-10" />
+   <high x="4"   y="-5"  h="-10" />
+   <high x="4"   y="5"   h="-10" />
+   <high x="-15" y="-10" h="-10" />
+   <high x="-15" y="10"  h="-10" />
+   <high x="-15" y="10"  h="-10" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Dvaered Vigilance">
+  <GFX sx="10" sy="10">vigilance_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
