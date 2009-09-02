@@ -271,7 +271,7 @@
   </slots>
  </ship>
  <ship name="Quicksilver">
-  <GFX>quicksilver</GFX>
+  <GFX sx="10" sy="10">quicksilver</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Luxury Yacht</class>
@@ -295,7 +295,7 @@
   <characteristics>
    <cpu>35</cpu>
    <crew>4</crew>
-   <mass>90</mass>
+   <mass>80</mass>
    <fuel>500</fuel>
    <cap_cargo>50</cap_cargo>
   </characteristics>
