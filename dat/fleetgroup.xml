@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FleetGroups>
  <fleetgroup name="Goddard Prescence">
-  <fleet chance="50">Goddard Goddard</fleet>
-  <fleet chance="50">Goddard Goddard</fleet>
+  <fleet chance="60">Goddard Goddard</fleet>
+  <fleet chance="40">Goddard Goddard</fleet>
  </fleetgroup>
  <fleetgroup name="Trader Light Prescence">
   <fleet chance="70">Trader Llama</fleet>
@@ -32,6 +32,10 @@
   <fleet chance="40">Trader Mule</fleet>
   <fleet chance="40">Sml Trader Convoy</fleet>
   <fleet chance="30">Sml Trader Convoy</fleet>
+ </fleetgroup>
+ <fleetgroup name="Pirate Token Prescence">
+  <fleet chance="30">Pirate Hyena</fleet>
+  <fleet chance="10">Pirate Vendetta</fleet>
  </fleetgroup>
  <fleetgroup name="Pirate Light Prescence">
   <fleet chance="50">Pirate Hyena</fleet>
@@ -104,15 +108,15 @@
   <fleet chance="70">Dvaered Vendetta</fleet>
   <fleet chance="50">Dvaered Vendetta</fleet>
   <fleet chance="60">Dvaered Ancestor</fleet>
-  <fleet chance="40">Dvaered Ancestor</fleet>
+  <fleet chance="20">Dvaered Vigilance</fleet>
   <fleet chance="5" >Dvaered Goddard</fleet>
  </fleetgroup>
  <fleetgroup name="Dvaered Heavy Prescence">
   <fleet chance="80">Dvaered Vendetta</fleet>
   <fleet chance="60">Dvaered Vendetta</fleet>
-  <fleet chance="40">Dvaered Vendetta</fleet>
   <fleet chance="60">Dvaered Ancestor</fleet>
   <fleet chance="40">Dvaered Ancestor</fleet>
+  <fleet chance="40">Dvaered Vigilance</fleet>
   <fleet chance="15">Dvaered Goddard</fleet>
   <fleet chance="30">Dvaered Sml Force</fleet>
  </fleetgroup>

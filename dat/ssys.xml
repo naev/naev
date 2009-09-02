@@ -47,10 +47,10 @@
  </ssys>
  <ssys name="Raelid">
   <fleets>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
    <fleet>Dvaered Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
-	<fleet>Pirate Light Prescence</fleet>
+	<fleet>Pirate Token Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -168,6 +168,7 @@
   <fleets>
    <fleet>Empire Heavy Prescence</fleet>
    <fleet>Trader Heavy Prescence</fleet>
+	<fleet>Pirate Token Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Goddard</jump>
@@ -655,10 +656,10 @@
  </ssys>
  <ssys name="Ogat">
   <fleets>
-   <fleet>Dvaered Heavy Prescence</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
 	<fleet>Empire Light Prescence</fleet>
    <fleet>Trader Heavy Prescence</fleet>
-   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Pirate Token Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Goddard</jump>

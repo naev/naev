@@ -20,7 +20,7 @@ function equip_forwardDvaLow ()
    return { "Laser Cannon", "Laser Cannon MK2" }
 end
 function equip_forwardDvaMed ()
-   return { "Laser Cannon", "Laser Cannon MK2" }
+   return { "Laser Cannon MK2", "40mm Autocannon" }
 end
 function equip_turretDvaLow ()
    return { "Laser Turret" }
@@ -93,17 +93,17 @@ function equip_dvaeredMilitary( p, shipsize )
       use_secondary  = rnd.rnd(1,2)
       use_primary    = nhigh - use_secondary
       medium         = equip_mediumLow()
-      low            = equip_lowLow()
-      apu            = equip_apuLow()
+      low            = equip_lowMed()
+      apu            = equip_apuMed()
 
    else
       primary        = equip_turretDvaMed()
       secondary      = equip_secondaryDva()
       use_primary    = nhigh-2
       use_secondary  = 2
-      medium         = equip_mediumMed()
-      low            = equip_lowMed()
-      apu            = equip_apuMed()
+      medium         = equip_mediumHig()
+      low            = equip_lowHig()
+      apu            = equip_apuHig()
    end
    equip_ship( p, false, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low )

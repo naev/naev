@@ -764,12 +764,12 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
-   <high x="-15" y="10"  h="-10" />
+   <high x="28"  y="-3"   h="-0" />
+	<high x="28"  y="3"   h="-0" />
+   <high x="10"   y="-3"  h="2" />
+   <high x="10"   y="3"   h="2" />
+   <high x="-22" y="-8" h="-0" />
+   <high x="-22" y="8"  h="-0" />
    <medium />
    <medium />
    <medium />
@@ -810,12 +810,12 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
-   <high x="-15" y="10"  h="-10" />
+   <high x="28"  y="-3"   h="-0" />
+	<high x="28"  y="3"   h="-0" />
+   <high x="10"   y="-3"  h="2" />
+   <high x="10"   y="3"   h="2" />
+   <high x="-22" y="-8" h="-0" />
+   <high x="-22" y="8"  h="-0" />
    <medium />
    <medium />
    <medium />

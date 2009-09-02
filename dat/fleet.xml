@@ -213,6 +213,16 @@
    <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
   </pilots>
  </fleet>
+  <fleet name="Dvaered Vigilance">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
+  </pilots>
+  </fleet>
  <fleet name="Dvaered Goddard">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
@@ -235,7 +245,7 @@
    <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
    <pilot name="Vendetta" chance="80" ship="Dvaered Vendetta"></pilot>
    <pilot name="Ancestor" chance="60" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" chance="40" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" chance="20" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Med Force">
@@ -248,10 +258,9 @@
    <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
    <pilot name="Vendetta" chance="80" ship="Dvaered Vendetta"></pilot>
    <pilot name="Vendetta" chance="60" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" chance="40" ship="Dvaered Vendetta"></pilot>
    <pilot name="Ancestor" chance="60" ship="Dvaered Ancestor"></pilot>
    <pilot name="Ancestor" chance="40" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" chance="20" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" chance="50" ship="Dvaered Vigilance"></pilot>
    <pilot name="Goddard" chance="40" ship="Dvaered Goddard"></pilot>
   </pilots>
  </fleet>
