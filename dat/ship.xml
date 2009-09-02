@@ -76,6 +76,45 @@
    <low/>
   </slots>
  </ship>
+ <ship name="Derivative">
+  <GFX>derivative</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>290000</price>
+  <fabricator>Krain Industries</fabricator>
+  <tech>5</tech>
+  <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+  <movement>
+   <thrust>280</thrust>
+   <turn>160</turn>
+   <speed>300</speed>
+  </movement>
+  <health>
+   <shield>180</shield>
+   <armour>120</armour>
+   <energy>500</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1200</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>30</cpu>
+   <crew>2</crew>
+   <mass>80</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="15" y="0" h="-3" />
+   <high x="15" y="0" h="-3" />
+   <high x="0"  y="0" h="0" />
+   <medium/>
+   <medium/>
+   <low/>
+   <low/>
+  </slots>
+ </ship>
  <ship name="Schroedinger">
   <GFX>schroedinger</GFX>
   <GUI>minimal</GUI>
@@ -227,6 +266,46 @@
    <medium />
    <low />
    <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Quicksilver">
+  <GFX>quicksilver</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Luxury Yacht</class>
+  <price>800000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <tech>8</tech>
+  <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
+  <movement>
+   <thrust>260</thrust>
+   <turn>120</turn>
+   <speed>280</speed>
+  </movement>
+  <health>
+   <shield>160</shield>
+   <armour>80</armour>
+   <energy>480</energy>
+   <shield_regen>120</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1200</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>35</cpu>
+   <crew>4</crew>
+   <mass>90</mass>
+   <fuel>500</fuel>
+   <cap_cargo>50</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="12" y="0" h="-2" />
+   <high x="-5" y="-5" h="1" />
+   <high x="-5" y="5" h="1" />
+   <medium />
+   <medium />
+   <medium />
    <low />
    <low />
   </slots>
@@ -825,6 +904,51 @@
    <low />
   </slots>
  </ship>
+ <ship name="Kahan">
+  <GFX sx="10" sy="10">kahan</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Destroyer</class>
+  <price>2100000</price>
+  <fabricator>House Proteron</fabricator>
+  <tech>10</tech>
+  <license>Medium Combat Vessel License</license>
+  <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it's now the primary combat vessel fielded by the Proteron military. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
+  <movement>
+   <thrust>170</thrust>
+   <turn>85</turn>
+   <speed>180</speed>
+  </movement>
+  <health>
+   <shield>740</shield>
+   <armour>410</armour>
+   <energy>2100</energy>
+   <shield_regen>300</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>3000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>90</cpu>
+   <crew>20</crew>
+   <mass>650</mass>
+   <fuel>400</fuel>
+   <cap_cargo>30</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="28"  y="-3"   h="-0" />
+	<high x="28"  y="3"   h="-0" />
+   <high x="-22" y="-8" h="-0" />
+   <high x="-22" y="8"  h="-0" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
  <ship name="Pacifier">
   <GFX sx="10" sy="10">pacifier</GFX>
   <GUI>minimal</GUI>
@@ -1005,6 +1129,57 @@
    <medium />
    <medium />
    <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Archimedes">
+  <GFX sx="12" sy="12">archimedes</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>6250000</price>
+  <fabricator>House Proteron</fabricator>
+  <tech>9</tech>
+  <license>Heavy Combat Vessel License</license>
+  <description>The Archimedes is a last-generation heavy cruiser. In their efforts against the Empire, House Proteron has retrofitted many of these behemoths with the latest equipment, though they still fall short in direct confrontations with Hawkings.</description>
+  <movement>
+   <thrust>70</thrust>
+   <turn>60</turn>
+   <speed>90</speed>
+  </movement>
+  <health>
+   <shield>950</shield>
+   <armour>1200</armour>
+   <energy>2400</energy>
+   <shield_regen>300</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>4500</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>130</cpu>
+   <crew>40</crew>
+   <mass>4200</mass>
+   <fuel>400</fuel>
+   <cap_cargo>80</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="40"  y="0"  h="2" />
+   <high x="25"  y="0"  h="2" />
+   <high x="12"  y="-6" h="0" />
+   <high x="12"  y="6"  h="0" />
+   <high x="0"   y="0"  h="7" />
+   <high x="-15" y="0"  h="7" />
+   <high x="-33" y="0"  h="7" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
    <low />
    <low />
    <low />

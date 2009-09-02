@@ -38,6 +38,13 @@
    <pilot chance="100" ship="Gawain"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Trader Quicksilver">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot chance="100" ship="Quicksilver"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Sml Trader Convoy">
   <ai>trader</ai>
   <faction>Trader</faction>

@@ -10,6 +10,7 @@
   <fleet chance="50">Trader Koala</fleet>
   <fleet chance="30">Trader Koala</fleet>
   <fleet chance="30">Trader Mule</fleet>
+  <fleet chance="30">Trader Quicksilver</fleet>
  </fleetgroup>
  <fleetgroup name="Trader Medium Prescence">
   <fleet chance="70">Trader Llama</fleet>
@@ -18,6 +19,7 @@
   <fleet chance="50">Trader Koala</fleet>
   <fleet chance="50">Trader Mule</fleet>
   <fleet chance="40">Trader Mule</fleet>
+  <fleet chance="40">Trader Quicksilver</fleet>
   <fleet chance="30">Sml Trader Convoy</fleet>
  </fleetgroup>
  <fleetgroup name="Trader Heavy Prescence">
@@ -30,6 +32,8 @@
   <fleet chance="60">Trader Mule</fleet>
   <fleet chance="50">Trader Mule</fleet>
   <fleet chance="40">Trader Mule</fleet>
+  <fleet chance="40">Trader Quicksilver</fleet>
+  <fleet chance="40">Trader Quicksilver</fleet>
   <fleet chance="40">Sml Trader Convoy</fleet>
   <fleet chance="30">Sml Trader Convoy</fleet>
  </fleetgroup>
