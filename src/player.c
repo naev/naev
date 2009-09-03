@@ -410,6 +410,7 @@ int player_newShip( Ship* ship, double px, double py,
 
    /* temporary values while player doesn't exist */
    player_ship    = ship;
+   player_credits = player->credits;
    player_px      = px;
    player_py      = py;
    player_vx      = vx;
