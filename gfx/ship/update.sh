@@ -3,7 +3,7 @@
 #
 #   Variables
 #
-ARTWORK_PATH="../../../naev-artwork/"
+ARTWORK_PATH="../../../../naev-artwork/"
 
 
 #
@@ -43,3 +43,9 @@ copy_over "ancestor2" "ancestor/ancestor_dvaered"
 copy_over "koala" "koala/koala"
 copy_over "kestrel0" "kestrel/kestrel"
 copy_over "kestrel1" "kestrel/kestrel_pirate"
+copy_over "archimedes" "archimedes/archimedes"
+copy_over "derivative" "derivative/derivative"
+copy_over "kahan" "kahan/kahan"
+copy_over "vigilance" "vigilance/vigilance"
+copy_over "vigilance1" "vigilance/vigilance_dvaered"
+copy_over "watson" "watson/watson"
