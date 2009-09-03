@@ -830,7 +830,7 @@
   <health>
    <shield>520</shield>
    <armour>690</armour>
-   <energy>2100</energy>
+   <energy>1800</energy>
    <shield_regen>260</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>3000</energy_regen>
@@ -876,7 +876,7 @@
   <health>
    <shield>520</shield>
    <armour>690</armour>
-   <energy>2100</energy>
+   <energy>1800</energy>
    <shield_regen>260</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>3000</energy_regen>
@@ -922,7 +922,7 @@
   <health>
    <shield>740</shield>
    <armour>410</armour>
-   <energy>2100</energy>
+   <energy>1600</energy>
    <shield_regen>300</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>3000</energy_regen>
