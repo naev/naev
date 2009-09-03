@@ -285,9 +285,9 @@
    <speed>280</speed>
   </movement>
   <health>
-   <shield>160</shield>
-   <armour>80</armour>
-   <energy>480</energy>
+   <shield>200</shield>
+   <armour>120</armour>
+   <energy>580</energy>
    <shield_regen>120</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>1200</energy_regen>
@@ -297,7 +297,7 @@
    <crew>4</crew>
    <mass>80</mass>
    <fuel>500</fuel>
-   <cap_cargo>50</cap_cargo>
+   <cap_cargo>40</cap_cargo>
   </characteristics>
   <slots>
    <high x="12" y="0" h="-2" />
