@@ -42,7 +42,7 @@ CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototype
 # Linux stuff
 #
 ifeq ($(OS),LINUX)
-LDFLAGS += -rdynamic
+LDFLAGS += -lbfd -rdynamic
 endif # LINUX
 
 else # DEBUG
@@ -93,7 +93,7 @@ help:
 
 
 $(APPNAME): $(OBJS)
-	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a lib/csparse/libcsparse.a
+	@$(CC) -o $(APPNAME) $(OBJS) lib/lua/liblua.a lib/csparse/libcsparse.a $(LDFLAGS) 
 	@echo "   LD   $(APPNAME)"
 
 
