@@ -167,7 +167,7 @@ void equipment_open( unsigned int wid )
          "Sell Ship", equipment_sellShip );
    window_addButton( wid, -20 - (20+bw)*2, 20,
          bw, bh, "btnChangeShip",
-         "Swap Ships", equipment_transChangeShip );
+         "Swap Ship", equipment_transChangeShip );
    window_addButton( wid, -20 - (20+bw)*3, 20,
          bw, bh, "btnUnequipShip",
          "Unequip", equipment_unequipShip );

@@ -297,7 +297,7 @@
    <crew>4</crew>
    <mass>80</mass>
    <fuel>500</fuel>
-   <cap_cargo>40</cap_cargo>
+   <cap_cargo>45</cap_cargo>
   </characteristics>
   <slots>
    <high x="12" y="0" h="-2" />
@@ -306,6 +306,7 @@
    <medium />
    <medium />
    <medium />
+   <low />
    <low />
    <low />
   </slots>
