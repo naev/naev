@@ -174,10 +174,10 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>14</main>
+    <main>15</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>31</services>
    <class>1</class>
    <population>52000</population>
   </general>
@@ -1034,7 +1034,7 @@
     <main>12</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>15</services>
    <class>O</class>
    <population>450000</population>
   </general>
