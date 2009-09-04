@@ -114,7 +114,8 @@ static void lst_render( Widget* lst, double bx, double by )
 
       scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
-      toolkit_drawScrollbar( x + lst->w - 10., y, 10., lst->h, scroll_pos );
+      /* XXX lst->h is off by one */
+      toolkit_drawScrollbar( x + lst->w - 10. + 1, y, 10., lst->h + 1, scroll_pos );
    }
 
    /* draw selected */

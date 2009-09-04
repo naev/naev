@@ -750,7 +750,6 @@ void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
       glColour* c, glColour* lc )
 {
-   int i;
    static GLfloat lines[4][2], colours[4][4];
 
    /* Set shade model. */
@@ -1366,8 +1365,8 @@ void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
 
    /* scrollbar background */
    toolkit_drawRect( x, y, w, h, toolkit_colDark, toolkit_col );
-   toolkit_drawOutline( x, y, w, h, 1., toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( x, y, w, h, 2., toolkit_colDark, NULL );
+   /* toolkit_drawOutline( x, y, w, h,  0., toolkit_colDark, NULL ); */
+   /* toolkit_drawOutline( x, y, w, h, 0., toolkit_colLight, toolkit_col ); */
 
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);
