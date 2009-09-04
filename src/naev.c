@@ -794,7 +794,7 @@ static void debug_translateAddress(const char *symbol, bfd_vma address)
       return;
    }
 
-   printf("%s(...):%u %s\n", "??", 0, "??");
+   DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
 }
 
 
