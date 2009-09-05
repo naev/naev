@@ -139,6 +139,10 @@ int main( int argc, char** argv )
    snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
    LOG( " "APPNAME" v%s", version );
 
+#ifdef GIT_COMMIT
+   LOG( " git HEAD at " GIT_COMMIT );
+#endif
+
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);
 

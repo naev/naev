@@ -42,6 +42,7 @@ CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototype
 # Linux stuff
 #
 ifeq ($(OS),LINUX)
+CFLAGS += -DGIT_COMMIT="\"$(shell git rev-parse HEAD 2> /dev/null)\""
 LDFLAGS += -lbfd -rdynamic
 endif # LINUX
 
