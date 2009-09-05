@@ -2567,6 +2567,9 @@ static int player_parse( xmlNodePtr parent )
 
    xmlr_attr(parent,"name",player_name);
 
+   /* Make sure player is NULL. */
+   player = NULL;
+
    /* Must get planet first. */
    node = parent->xmlChildrenNode;
    do {
@@ -2626,10 +2629,16 @@ static int player_parse( xmlNodePtr parent )
 
    } while (xml_nextNode(node));
 
-   /* Make sure player exists. */
+   /* Handle cases where ship is missing. */
    if (player == NULL) {
-      WARN("Savegame has no primary ship node!");
-      return -1;
+      if (player_nstack == 0) {
+         WARN("Player has no ships!");
+         return -1;
+      }
+
+      /* Just give player a random ship in the stack. */
+      player = &player_stack[player_nstack-1];
+      player_nstack--1;
    }
 
    /* set global thingies */
@@ -2849,6 +2858,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    char *name, *model, *loc, *q, *id;
    int i, n;
    double fuel;
+   Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node, cur;
    int quantity;
@@ -2859,14 +2869,21 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 
+   /* Get the ship. */
+   ship_parsed = ship_get(model);
+   if (ship_parsed == NULL) {
+      WARN("Player ship '%s' not found", model);
+      return 0;
+   }
+
    /* player is currently on this ship */
    if (is_player != 0) {
-      pilot_create( ship_get(model), name, faction_get("Player"), NULL, 0., NULL, NULL,
+      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL,
             PILOT_PLAYER | PILOT_NO_OUTFITS );
       ship = player;
    }
    else
-      ship = pilot_createEmpty( ship_get(model), name, faction_get("Player"), NULL,
+      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL,
             PILOT_PLAYER | PILOT_NO_OUTFITS );
 
    free(name);
