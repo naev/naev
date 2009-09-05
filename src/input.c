@@ -563,16 +563,17 @@ static void input_key( int keynum, double value, double kabs )
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
-         else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+         else if (value==KEY_RELEASE)
             player_afterburnOver();
 
-         if (value==KEY_PRESS) input_accelLast = t;
+         if (value==KEY_PRESS)
+            input_accelLast = t;
       }
    /* Afterburning. */
-   } else if (KEY("afterburn") && INGAME() && NOHYP() && NODEAD()) {
-      if (value==KEY_PRESS)
+   } else if (KEY("afterburn") && INGAME()) {
+      if ((value==KEY_PRESS) && NOHYP() && NODEAD())
          player_afterburn();
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+      else if (value==KEY_RELEASE)
          player_afterburnOver();
 
    /* turning left */
