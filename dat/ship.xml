@@ -820,7 +820,7 @@
   <class>Destroyer</class>
   <price>1200000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
+  <tech>8</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
@@ -866,7 +866,7 @@
   <class>Destroyer</class>
   <price>1200000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>8</tech>
+  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
