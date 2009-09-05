@@ -76,45 +76,6 @@
    <low/>
   </slots>
  </ship>
- <ship name="Derivative">
-  <GFX>derivative</GFX>
-  <GUI>minimal</GUI>
-  <sound>engine</sound>
-  <class>Fighter</class>
-  <price>290000</price>
-  <fabricator>Krain Industries</fabricator>
-  <tech>5</tech>
-  <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
-  <movement>
-   <thrust>280</thrust>
-   <turn>160</turn>
-   <speed>300</speed>
-  </movement>
-  <health>
-   <shield>180</shield>
-   <armour>120</armour>
-   <energy>500</energy>
-   <shield_regen>130</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1200</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>30</cpu>
-   <crew>2</crew>
-   <mass>80</mass>
-   <fuel>300</fuel>
-   <cap_cargo>10</cap_cargo>
-  </characteristics>
-  <slots>
-   <high x="10" y="0" h="0" />
-   <high x="0" y="-4" h="-3" />
-   <high x="0" y="4" h="-3" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
-  </slots>
- </ship>
  <ship name="Schroedinger">
   <GFX>schroedinger</GFX>
   <GUI>minimal</GUI>
@@ -274,7 +235,7 @@
   <GFX sx="10" sy="10">quicksilver</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>Luxury Yacht</class>
+  <class>Courier</class>
   <price>800000</price>
   <fabricator>Melendez Corp.</fabricator>
   <tech>8</tech>
@@ -357,6 +318,45 @@
   </slots>
  </ship>
  <!-- Fighters -->
+ <ship name="Derivative">
+  <GFX>derivative</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>290000</price>
+  <fabricator>Krain Industries</fabricator>
+  <tech>5</tech>
+  <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+  <movement>
+   <thrust>280</thrust>
+   <turn>140</turn>
+   <speed>300</speed>
+  </movement>
+  <health>
+   <shield>180</shield>
+   <armour>120</armour>
+   <energy>500</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1200</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>30</cpu>
+   <crew>2</crew>
+   <mass>80</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="10" y="0" h="0" />
+   <high x="0" y="-4" h="-3" />
+   <high x="0" y="4" h="-3" />
+   <medium/>
+   <medium/>
+   <low/>
+   <low/>
+  </slots>
+ </ship>
  <ship name="Lancelot">
   <GFX>lancelot</GFX>
   <GUI>minimal</GUI>
@@ -825,7 +825,7 @@
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
    <thrust>130</thrust>
-   <turn>85</turn>
+   <turn>75</turn>
    <speed>160</speed>
   </movement>
   <health>
@@ -871,7 +871,7 @@
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
    <thrust>130</thrust>
-   <turn>85</turn>
+   <turn>75</turn>
    <speed>160</speed>
   </movement>
   <health>
@@ -917,7 +917,7 @@
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it's now the primary combat vessel fielded by the Proteron military. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <movement>
    <thrust>170</thrust>
-   <turn>85</turn>
+   <turn>65</turn>
    <speed>180</speed>
   </movement>
   <health>
@@ -1148,7 +1148,7 @@
   <description>The Archimedes is a last-generation heavy cruiser. In their efforts against the Empire, House Proteron has retrofitted many of these behemoths with the latest equipment, though they still fall short in direct confrontations with Hawkings.</description>
   <movement>
    <thrust>70</thrust>
-   <turn>60</turn>
+   <turn>45</turn>
    <speed>90</speed>
   </movement>
   <health>
