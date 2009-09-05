@@ -256,7 +256,7 @@
   <characteristics>
    <cpu>35</cpu>
    <crew>4</crew>
-   <mass>80</mass>
+   <mass>120</mass>
    <fuel>500</fuel>
    <cap_cargo>45</cap_cargo>
   </characteristics>
@@ -264,7 +264,6 @@
    <high x="15" y="0" h="5" />
    <high x="-10" y="-3" h="0" />
    <high x="-10" y="3" h="0" />
-   <medium />
    <medium />
    <medium />
    <low />
