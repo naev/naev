@@ -34,6 +34,18 @@
 	<done>Tutorial Landing</done>
   </avail>
  </mission>
+ <mission name="Tutorial Features">
+  <lua>tutorial-features</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <cond>var.peek("tutorial_aborted") ~= true</cond>
+   <location>None</location>
+	<done>Tutorial Features</done>
+  </avail>
+ </mission>
  <mission name="Cargo">
   <lua>neutral/cargo</lua>
   <avail>
