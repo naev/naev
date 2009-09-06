@@ -118,11 +118,20 @@ static int ndata_openPackfile (void)
     */
    if (ndata_filename == NULL) {
       /* Check ndata with version appended. */
+#if VREV < 0
+      if (nfile_fileExists("%s-%d.%d.0-beta%d", NDATA_FILENAME,
+               VMAJOR, VMINOR, ABS(VREV) )) {
+         ndata_filename = malloc(PATH_MAX);
+         snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
+               NDATA_FILENAME, VMAJOR, VMINOR, ABS(VREV) );
+      }
+#else /* VREV < 0 */
       if (nfile_fileExists("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
          ndata_filename = malloc(PATH_MAX);
          snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
                NDATA_FILENAME, VMAJOR, VMINOR, VREV );
       }
+#endif /* VREV < 0 */
       /* Check default ndata. */
       else if (nfile_fileExists(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
