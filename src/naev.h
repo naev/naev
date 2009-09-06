@@ -58,7 +58,7 @@
 #endif
 
 
-char *naev_version (void);
+char *naev_version( int long_version );
 
 
 #endif /* NAEV_H */

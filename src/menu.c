@@ -136,7 +136,7 @@ void menu_main (void)
          menu_main_nebu, NULL, &menu_main_lasttick );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, "imgLogo", tex, 0 );
    window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
-         &cWhite, naev_version() );
+         &cWhite, naev_version(1) );
 
    /* create menu window */
    wid = window_create( "Main Menu", -1, offset_wdw,

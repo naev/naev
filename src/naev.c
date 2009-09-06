@@ -77,7 +77,6 @@
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
-#define VERSION_LEN     10 /**< Maximum length of the version file. */
 #define FONT_SIZE       12 /**< Normal font size. */
 #define FONT_SIZE_SMALL 10 /**< Small font size. */
 
@@ -86,7 +85,8 @@
 
 static int quit = 0; /**< For primary loop */
 static unsigned int time = 0; /**< used to calculate FPS and movement. */
-static char version[VERSION_LEN]; /**< Contains version. */
+static char short_version[64]; /**< Contains version. */
+static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
 
 /*
@@ -136,12 +136,10 @@ int main( int argc, char** argv )
    char buf[PATH_MAX];
    
    /* print the version */
-   snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
-   LOG( " "APPNAME" v%s", version );
-
+   LOG( " "APPNAME" v%s", naev_version(0) );
 #ifdef GIT_COMMIT
-   LOG( " git HEAD at " GIT_COMMIT );
-#endif
+   DEBUG( " git HEAD at " GIT_COMMIT );
+#endif /* GIT_COMMIT */
 
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);
@@ -688,24 +686,41 @@ static void window_caption (void)
 }
 
 
-static char human_version[50]; /**< Stores the human readable version string. */
 /**
  * @brief Returns the version in a human readable string.
  *
+ *    @param long_version Returns the long version if it's long.
  *    @return The human readable version string.
  */
-char *naev_version (void)
+char *naev_version( int long_version )
 {
-   if (human_version[0] == '\0')
-      snprintf( human_version, 50, " "APPNAME" v%s%s - %s", version,
-#ifdef DEBUGGING
-            " debug",
-#else /* DEBUGGING */
-            "",
-#endif /* DEBUGGING */
-            ndata_name() );
+   /* Set short version if needed. */
+   if (short_version[0] == '\0')
+      snprintf( short_version, sizeof(short_version),
+#if VREV < 0
+            "%d.%d.0-beta%d",
+            VMAJOR, VMINOR, ABS(VREV)
+#else /* VREV < 0 */
+            "%d.%d.%d",
+            VMAJOR, VMINOR, VREV
+#endif /* VREV < 0 */
+            );
 
-   return human_version;
+   /* Set up the long version. */
+   if (long_version) {
+      if (human_version[0] == '\0')
+         snprintf( human_version, sizeof(human_version),
+               " "APPNAME" v%s%s - %s", short_version,
+#ifdef DEBUGGING
+               " debug",
+#else /* DEBUGGING */
+               "",
+#endif /* DEBUGGING */
+               ndata_name() );
+      return human_version;
+   }
+
+   return short_version;
 }
 
 
