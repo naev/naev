@@ -1388,4 +1388,57 @@
    <low />
   </slots>
  </ship>
+ <ship name="Peacemaker">
+  <GFX sx="12" sy="12">peacemaker</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>18000000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <tech>15</tech>
+  <license>Heavy Combat Vessel License</license>
+  <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the fiercest vessels in the galaxy, dwarfing even the mighty Goddard. So utterly devestating is this ship, that none are available to civilians.</description>
+  <movement>
+   <thrust>50</thrust>
+   <turn>40</turn>
+   <speed>55</speed>
+  </movement>
+  <health>
+   <shield>2100</shield>
+   <armour>1300</armour>
+   <energy>4800</energy>
+   <shield_regen>450</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>7100</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>240</cpu>
+   <crew>65</crew>
+   <mass>6200</mass>
+   <fuel>500</fuel>
+   <cap_cargo>80</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="40"  y="0"  h="2" />
+   <high x="25"  y="0"  h="2" />
+   <high x="12"  y="-6" h="0" />
+   <high x="12"  y="6"  h="0" />
+   <high x="0"   y="0"  h="7" />
+   <high x="0"   y="0"  h="7" />
+   <high x="-15" y="0"  h="7" />
+   <high x="-33" y="0"  h="7" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
 </Ships>
