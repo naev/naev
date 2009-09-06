@@ -9,9 +9,21 @@
  </faction>
  <faction name="Independent">
   <player>3</player>
-  <colour>purple</colour>
+  <colour>lightblue</colour>
   <allies>
    <ally>Trader</ally>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Collective</enemy>
+  </enemies>
+ </faction>
+ <faction name="Proteron">
+  <longname>House Proteron</longname>
+  <player>3</player>
+  <colour>purple</colour>
+  <allies>
+   <ally>Empire</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -59,6 +71,7 @@
    <enemy>Trader</enemy>
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
+   <enemy>Proteron</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
@@ -71,6 +84,7 @@
    <ally>Trader</ally>
    <ally>Sirius</ally>
    <ally>Goddard</ally>
+   <ally>Proteron</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -93,6 +107,7 @@
    <enemy>Trader</enemy>
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
+   <enemy>Proteron</enemy>
   </enemies>
  </faction>
  <faction name="FLF">

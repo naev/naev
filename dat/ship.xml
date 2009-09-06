@@ -911,9 +911,9 @@
   <class>Destroyer</class>
   <price>2100000</price>
   <fabricator>House Proteron</fabricator>
-  <tech>10</tech>
+  <tech>1002</tech>
   <license>Medium Combat Vessel License</license>
-  <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it's now the primary combat vessel fielded by the Proteron military. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
+  <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <movement>
    <thrust>170</thrust>
    <turn>65</turn>
@@ -1142,9 +1142,9 @@
   <class>Cruiser</class>
   <price>6250000</price>
   <fabricator>House Proteron</fabricator>
-  <tech>9</tech>
+  <tech>1002</tech>
   <license>Heavy Combat Vessel License</license>
-  <description>The Archimedes is a last-generation heavy cruiser. In their efforts against the Empire, House Proteron has retrofitted many of these behemoths with the latest equipment, though they still fall short in direct confrontations with Hawkings.</description>
+  <description>The Archimedes is a last-generation heavy cruiser. While many were being retired at the time of the Incident, the remnants of House Proteron have retrofitted them and offered some for sale to the public.</description>
   <movement>
    <thrust>70</thrust>
    <turn>45</turn>
@@ -1395,7 +1395,7 @@
   <class>Cruiser</class>
   <price>18000000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>15</tech>
+  <tech>1002</tech>
   <license>Heavy Combat Vessel License</license>
   <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the fiercest vessels in the galaxy, dwarfing even the mighty Goddard. So utterly devestating is this ship, that none are available to civilians.</description>
   <movement>

@@ -71,6 +71,11 @@
   <fleet chance="70">Empire Pacifier</fleet>
   <fleet chance="20">Empire Pacifier</fleet>
  </fleetgroup>
+ <fleetgroup name="Proteron Light Prescence">
+  <fleet chance="70">Proteron Derivative</fleet>
+  <fleet chance="40">Proteron Kahan</fleet>
+  <fleet chance="10">Proteron Archimedes</fleet>
+ </fleetgroup>
  <fleetgroup name="Empire Light Prescence">
   <fleet chance="50">Empire Lancelot</fleet>
   <fleet chance="30">Empire Admonisher</fleet>

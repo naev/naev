@@ -58,7 +58,7 @@ glColour cYellow     = { .r=0.80, .g=0.80, .b=0.00, .a=1. }; /**< Yellow */
 glColour cMidnightBlue = { .r=0.40, .g=0.4, .b=0.60, .a=1. }; /**< Midnight Blue. */
 glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. }; /**< Dark Blue */
 glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. }; /**< Blue */
-glColour cLightBlue  = { .r=0.30, .g=0.30, .b=0.80, .a=1. }; /**< Light Blue */
+glColour cLightBlue  = { .r=0.40, .g=0.40, .b=1., .a=1. }; /**< Light Blue */
 /* Purples. */
 glColour cPurple     = { .r=0.90, .g=0.10, .b=0.90, .a=1. }; /**< Purple */
 /* Browns. */

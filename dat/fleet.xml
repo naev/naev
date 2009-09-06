@@ -55,6 +55,27 @@
    <pilot chance="80" ship="Mule"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Proteron Kahan">
+  <ai>proteron</ai>
+  <faction>Proteron</faction>
+  <pilots>
+   <pilot chance="100" ship="Kahan"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Proteron Archimedes">
+  <ai>proteron</ai>
+  <faction>Proteron</faction>
+  <pilots>
+   <pilot chance="100" ship="Archimedes"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Proteron Derivative">
+  <ai>proteron</ai>
+  <faction>Proteron</faction>
+  <pilots>
+   <pilot chance="100" ship="Derivative"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="FLF Pacifier">
   <ai>flf</ai>
   <faction>FLF</faction>
@@ -291,6 +312,16 @@
    <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Empire Peacemaker">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Peacemaker" chance="100" ship="Peacemaker"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
@@ -302,7 +333,8 @@
    <pilot name="Lancelot" chance="80" ship="Empire Lancelot"></pilot>
    <pilot name="Admonisher" chance="60" ship="Empire Admonisher"></pilot>
    <pilot name="Pacifier" chance="50" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" chance="30" ship="Empire Hawking"></pilot>
+   <pilot name="Hawking" chance="20" ship="Empire Hawking"></pilot>
+   <pilot name="Peacemaker" chance="5" ship="Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lge Attack">
@@ -321,7 +353,7 @@
    <pilot name="Admonisher" chance="60" ship="Empire Admonisher"></pilot>
    <pilot name="Pacifier" chance="50" ship="Empire Pacifier"></pilot>
    <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
-   <pilot name="Hawking" chance="60" ship="Empire Hawking"></pilot>
+   <pilot name="Peacemaker" chance="50" ship="Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Med Attack">

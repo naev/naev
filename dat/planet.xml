@@ -29,6 +29,35 @@
    <population>17000000</population>
   </general>
  </planet>
+ <planet name="Protera Sigma">
+  <GFX>
+   <exterior>oceanic2.png</exterior>
+   <space>M03.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.5</prodfactor>
+   <bar>Rather distinct from traditional Empire bars, the Protera Sigma bar is entirely open and without seats, as the Proteron believe one should stand while eating and drinking. Despite this curiosity, their brews don't stray far from typical Empire faire.</bar>
+   <description>Protera Sigma is the only Proteron colony known to have survived the Incident. One of the earlier Proteron settlements, it has an established shipyard and access to the original blueprints, so Proteron shipbuilding traditions live on.</description>
+   <faction>Proteron</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <tech>
+    <main>12</main>
+    <special>1002</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+   <population>1200000</population>
+  </general>
+ </planet>
  <planet name="Eiroik">
   <GFX>
    <exterior>methane.png</exterior>

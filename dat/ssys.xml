@@ -190,6 +190,29 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="Protera">
+  <fleets>
+   <fleet>Empire Light Prescence</fleet>
+   <fleet>Proteron Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Shakar</jump>
+  </jumps>
+  <pos>
+   <y>-206</y>
+   <x>-100</x>
+  </pos>
+  <planets>
+   <planet>Protera Sigma</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
  <ssys name="Hekaras">
   <fleets>
    <fleet>Empire Light Prescence</fleet>
@@ -571,6 +594,7 @@
   <jumps>
    <jump>Borla</jump>
    <jump>Gamma Polaris</jump>
+   <jump>Protera</jump>
   </jumps>
   <pos>
    <y>-195</y>
