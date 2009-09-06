@@ -19,7 +19,8 @@ include("ai/equip/dvaered.lua")
 --    @param f Faction to which pilot belongs
 --]]
 function equip ( p, f )
-   if f == faction.get( "Empire" ) or f == faction.get( "Goddard" ) then
+   if f == faction.get( "Empire" ) or f == faction.get( "Goddard" ) or
+         f == faction.get( "Proteron" ) then
       equip_empire( p )
    elseif f == faction.get( "Dvaered" ) then
       equip_dvaered( p )
