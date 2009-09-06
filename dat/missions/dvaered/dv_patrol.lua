@@ -33,21 +33,51 @@ else -- default english
    msg_msg[5] = "DV: Patrol finished, return to base."
 end
 
-      
+
+include("scripts/jumpdist.lua")
+
+
+function patrol_systems_filter( s )
+   -- Must have Dvaered
+   if not s:hasPresence( "Dvaered" ) then
+      return false
+   end
+
+   -- Must have FLF
+   if not (s:hasPresence( "FLF ") or s:hasPresence( "Pirate" ) )  then
+      return false
+   end
+
+   return true
+end
+
+
+function get_patrol_systems( n )
+   local t  = getsysatdistance( nil, 1, 2, patrol_systems_filter )
+   local s  = { }
+   s[#s+1]  = t[ rnd.rnd(1,#t) ]
+   local i  = 1
+   while i < n do
+      t        = getsysatdistance( s[#s], 1, 1, patrol_systems_filter )
+      if #t > 0 then
+         s[#s+1]  = t[ rnd.rnd(1,#t) ]
+      end
+      i        = i + 1
+   end
+   return s
+end
 
 -- Create the mission
 function create ()
 
    -- Get systems to patrol
-   num_systems = rnd.int(2,4)
-   systems = {}
-   s = system.get():adjacentSystems()
-   systems[1] = s[rnd.int(1,#s)]
-   for i=2, num_systems do
-      s = systems[i-1]:adjacentSystems()
-      systems[i] = s[rnd.int(1,#s)]
+   num_systems = rnd.rnd(2,4)
+   local systems = get_patrol_systems(num_systems)
+   num_systems = #systems
+   if #systems < 2 then
+      misn.finish(false)
    end
-   system1, system2, system3, system4 = unpack(systems)
+   system1, system2, system3, system4 = unpack( systems )
    base, base_sys = planet.get()
    misn.setMarker(systems[1])
 
@@ -90,7 +120,7 @@ end
 -- Jump hook
 function jump ()
    if misn_stage == 1 then
-      sys = system.get()
+      local sys = system.get()
 
       -- Hack in case it wasn't saved
       if systems == nil then
