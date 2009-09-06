@@ -367,9 +367,6 @@ static int player_newMake (void)
    free(buf);
    xmlCleanupParser();
 
-   /* Monies. */
-   player_credits = RNG(l,h);
-
    /* Time. */
    ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
 
@@ -384,6 +381,9 @@ static int player_newMake (void)
    }
    space_init(sysname);
    free(sysname);
+
+   /* Monies. */
+   player->credits = RNG(l,h);
 
    /* clear the map */
    map_clear();
