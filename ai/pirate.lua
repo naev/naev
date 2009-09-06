@@ -39,7 +39,7 @@ function create ()
       mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], mem.bribe)
       bribe_paid = {
            "\"You're lucky I'm so kind.\"",
-            "\"Life doesn't get easier then this.\"",
+            "\"Life doesn't get easier than this.\"",
             "\"Pleasure doing business.\"",
             "\"See you again, real soon.\""
       }

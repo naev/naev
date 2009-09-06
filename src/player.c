@@ -2630,16 +2630,16 @@ static int player_parse( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Handle cases where ship is missing. */
-   if (player == NULL) {
+   /*if (player == NULL) {
       if (player_nstack == 0) {
          WARN("Player has no ships!");
          return -1;
-      }
+      }*/
 
       /* Just give player a random ship in the stack. */
-      player = &player_stack[player_nstack-1];
-      player_nstack--1;
-   }
+      /*player = &player_stack[player_nstack-1];
+      player_nstack--1;*/
+   /*}*/
 
    /* set global thingies */
    player->credits = player_credits;
