@@ -2637,8 +2637,8 @@ static int player_parse( xmlNodePtr parent )
       }
 
       /* Just give player a random ship in the stack. */
-      player = &player_stack[player_nstack-1];
-      player_nstack--1;
+      player = player_stack[player_nstack-1].p;
+      player_nstack--;
    }
 
    /* set global thingies */
