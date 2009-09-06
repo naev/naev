@@ -44,17 +44,26 @@ glColour cGrey20     = { .r=0.20, .g=0.20, .b=0.20, .a=1. }; /**< Grey 20% */
 glColour cGrey10     = { .r=0.10, .g=0.10, .b=0.10, .a=1. }; /**< Grey 10% */
 glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. }; /**< Black */
 
+/* Greens. */
 glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. }; /**< Green */
+/* Reds. */
 glColour cDarkRed    = { .r=0.60, .g=0.10, .b=0.10, .a=1. }; /**< Dark Red */
 glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. }; /**< Red */
+/* Oranges. */
 glColour cOrange     = { .r=0.90, .g=0.70, .b=0.10, .a=1. }; /**< Orange */
+/* Yellows. */
+glColour cGold       = { .r=1.00, .g=0.84, .b=0.00, .a=1. }; /**< Gold */
 glColour cYellow     = { .r=0.80, .g=0.80, .b=0.00, .a=1. }; /**< Yellow */
+/* Blues. */
+glColour cMidnightBlue = { .r=0.40, .g=0.4, .b=0.60, .a=1. }; /**< Midnight Blue. */
 glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. }; /**< Dark Blue */
 glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. }; /**< Blue */
 glColour cLightBlue  = { .r=0.30, .g=0.30, .b=0.80, .a=1. }; /**< Light Blue */
+/* Purples. */
 glColour cPurple     = { .r=0.90, .g=0.10, .b=0.90, .a=1. }; /**< Purple */
+/* Browns. */
 glColour cBrown      = { .r=0.59, .g=0.28, .b=0.00, .a=1. }; /**< Brown */
-glColour cGold       = { .r=1.00, .g=0.84, .b=0.00, .a=1. }; /**< Gold */
+/* Misc. */
 glColour cSilver     = { .r=0.75, .g=0.75, .b=0.75, .a=1. }; /**< Silver */
 
 
@@ -153,6 +162,10 @@ glColour* col_fromName(const char* name) {
       CHECK_COLOUR(Grey10);
    }
 
+   if (name[0] == 'l' || name[0] == 'L') {
+      CHECK_COLOUR(LightBlue);
+   }
+
    if (name[0] == 'o' || name[0] == 'O') {
       CHECK_COLOUR(Orange);
    }
@@ -175,6 +188,10 @@ glColour* col_fromName(const char* name) {
 
    if (name[0] == 'y' || name[0] == 'Y') {
       CHECK_COLOUR(Yellow);
+   }
+
+   if (name[0] == 'm' || name[0] == 'M') {
+      CHECK_COLOUR(MidnightBlue);
    }
 
 
