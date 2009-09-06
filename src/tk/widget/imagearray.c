@@ -241,16 +241,21 @@ static void iar_render( Widget* iar, double bx, double by )
  */
 static void iar_renderOverlay( Widget* iar, double bx, double by )
 {
+   double x, y;
+
    /*
     * Draw Alt text if applicable.
     */
    if ((iar->dat.iar.alts != NULL) &&
          (iar->dat.iar.alt >= 0) &&
          (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
+
+      /* Calculate position. */
+      x = bx + iar->x + iar->dat.iar.altx;
+      y = by + iar->y + iar->dat.iar.alty;
+
       /* Draw alt text. */
-      toolkit_drawAltText( bx + iar->x + iar->dat.iar.altx,
-            by + iar->y + iar->dat.iar.alty,
-            iar->dat.iar.alts[iar->dat.iar.alt]);
+      toolkit_drawAltText( x, y, iar->dat.iar.alts[iar->dat.iar.alt] );
    }
 }
 

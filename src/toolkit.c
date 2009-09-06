@@ -878,7 +878,7 @@ void toolkit_drawRect( double x, double y,
 void toolkit_drawAltText( double bx, double by, const char *alt )
 {
    double w, h;
-   double x, y;
+   double x, y, o;
    glColour c;
    glColour c2;
 
@@ -894,6 +894,12 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
    /* Choose position. */
    x = bx + 10.;
    y = by - h - gl_smallFont.h - 10.;
+   if (y < -SCREEN_H/2+10) {
+      o  = -(SCREEN_H/2 + y) + 10;
+      y += o;
+   }
+
+   /* Set colours. */
    c.r = cGrey80.r;
    c.g = cGrey80.g;
    c.b = cGrey80.b;
