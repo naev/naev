@@ -31,7 +31,6 @@
    <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>None</location>
-	<done>Tutorial</done>
 	<done>Tutorial Landing</done>
   </avail>
  </mission>
