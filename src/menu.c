@@ -159,6 +159,9 @@ void menu_main (void)
    /* Make the background window a parent of the menu. */
    window_setParent( bwid, wid );
 
+   /* Reset timer. */
+   menu_main_lasttick = SDL_GetTicks();
+
    menu_Open(MENU_MAIN);
 }
 /**
