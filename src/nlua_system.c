@@ -373,7 +373,7 @@ static int systemL_adjacent( lua_State *L )
 
 
 /**
- * @brief Checks to see if a faction has prescence in a system.
+ * @brief Checks to see if a faction has presence in a system.
  *
  * This checks to see if the faction has a possibility of having any ships at all
  *  be randomly generated in the system.
