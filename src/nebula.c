@@ -304,9 +304,9 @@ static void nebu_renderMultitexture( const double dt )
    }
 
    /* Set the colour */
-   col[0] = cPurple.r;
-   col[1] = cPurple.g;
-   col[2] = cPurple.b;
+   col[0] = cBlue.r;
+   col[1] = cBlue.g;
+   col[2] = cBlue.b;
    col[3] = ndt / nebu_dt;
 
    /* Set up the targets */
@@ -398,19 +398,19 @@ static void nebu_genOverlay (void)
 
       /* Alpha overlay. */
       for (i=0; i<18; i++) {
-         data[2*18 + 4*i + 0] = cPurple.r;
-         data[2*18 + 4*i + 1] = cPurple.g;
-         data[2*18 + 4*i + 2] = cPurple.b;
-         data[2*18 + 4*i + 3] = cPurple.a;
+         data[2*18 + 4*i + 0] = cDarkBlue.r;
+         data[2*18 + 4*i + 1] = cDarkBlue.g;
+         data[2*18 + 4*i + 2] = cDarkBlue.b;
+         data[2*18 + 4*i + 3] = cDarkBlue.a;
       }
       data[2*18 + 3] = 0.; /* Origin is transparent. */
 
       /* Solid overlay. */
       for (i=0; i<7; i++) {
-         data[(2+4)*18 + 2*28 + 4*i + 0] = cPurple.r;
-         data[(2+4)*18 + 2*28 + 4*i + 1] = cPurple.g;
-         data[(2+4)*18 + 2*28 + 4*i + 2] = cPurple.b;
-         data[(2+4)*18 + 2*28 + 4*i + 3] = cPurple.a;
+         data[(2+4)*18 + 2*28 + 4*i + 0] = cDarkBlue.r;
+         data[(2+4)*18 + 2*28 + 4*i + 1] = cDarkBlue.g;
+         data[(2+4)*18 + 2*28 + 4*i + 2] = cDarkBlue.b;
+         data[(2+4)*18 + 2*28 + 4*i + 3] = cDarkBlue.a;
       }
 
       gl_vboUnmap( nebu_vboOverlay );
@@ -611,7 +611,7 @@ void nebu_renderPuffs( const double dt, int below_player )
 
          /* Render */
          gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &cPurple );
+               nebu_puffs[i].x, nebu_puffs[i].y, &cLightBlue );
       }
    }
 }
