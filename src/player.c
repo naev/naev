@@ -1146,7 +1146,7 @@ static void player_updateZoom( double dt )
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
       c   = MIN( SCREEN_W, SCREEN_H ) / 2;
-      out = MAX( ZOOM_OUT_MAX, c / nebu_getSightRadius() );
+      out = CLAMP( ZOOM_OUT_MAX, 1., c / nebu_getSightRadius() );
    }
    else {
       out = ZOOM_OUT_MAX;
