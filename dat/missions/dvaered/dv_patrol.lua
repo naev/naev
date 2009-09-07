@@ -72,7 +72,7 @@ function create ()
 
    -- Get systems to patrol
    num_systems = rnd.rnd(2,4)
-   local systems = get_patrol_systems(num_systems)
+   systems = get_patrol_systems(num_systems)
    num_systems = #systems
    if #systems < 2 then
       misn.finish(false)
