@@ -1606,7 +1606,8 @@ static int systems_load (void)
  */
 void space_render( const double dt )
 {
-   if (cur_system == NULL) return;
+   if (cur_system == NULL)
+      return;
 
    if (cur_system->nebu_density > 0.)
       nebu_render(dt);
@@ -1622,7 +1623,8 @@ void space_render( const double dt )
  */
 void space_renderOverlay( const double dt )
 {
-   if (cur_system == NULL) return;
+   if (cur_system == NULL)
+      return;
 
    if (cur_system->nebu_density > 0.)
       nebu_renderOverlay(dt);
