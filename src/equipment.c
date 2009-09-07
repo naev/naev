@@ -848,7 +848,8 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    /* Redo the outfits thingy. */
    if (!regen)
       n = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+   else
+      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    equipment_genLists( wid );
    if (!regen)
       toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
@@ -940,53 +941,53 @@ void equipment_genLists( unsigned int wid )
    }
 
    /* Outfit list. */
-   if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
-      eq_wgt.outfit = NULL;
-      noutfits = MAX(1,player_numOutfits());
-      soutfits = malloc(sizeof(char*)*noutfits);
-      toutfits = malloc(sizeof(glTexture*)*noutfits);
-      player_getOutfits( soutfits, toutfits );
+   eq_wgt.outfit = NULL;
+   noutfits = MAX(1,player_numOutfits());
+   soutfits = malloc(sizeof(char*)*noutfits);
+   toutfits = malloc(sizeof(glTexture*)*noutfits);
+   player_getOutfits( soutfits, toutfits );
+   if (!widget_exists( wid ,EQUIPMENT_OUTFITS ))
       window_addImageArray( wid, 20, -40 - sh - 40,
             sw, sh, EQUIPMENT_OUTFITS, 50., 50.,
             toutfits, soutfits, noutfits, equipment_updateOutfits );
-      /* Set alt text. */
-      if (strcmp(soutfits[0],"None")!=0) {
-         alt = malloc( sizeof(char*) * noutfits );
-         quantity = malloc( sizeof(char*) * noutfits );
-         for (i=0; i<noutfits; i++) {
-            o      = outfit_get( soutfits[i] );
 
-            /* Short description. */
-            if (o->desc_short == NULL)
-               alt[i] = NULL;
-            else {
-               l = strlen(o->desc_short) + 128;
-               alt[i] = malloc( l );
-               p = snprintf( alt[i], l,
-                     "%s\n"
-                     "\n"
-                     "%s",
-                     o->name,
-                     o->desc_short );
-               if (o->mass > 0.)
-                  p += snprintf( &alt[i][p], l-p,
-                        "\n%.0f Tons",
-                        o->mass );
-            }
+   /* Set alt text. */
+   if (strcmp(soutfits[0],"None")!=0) {
+      alt = malloc( sizeof(char*) * noutfits );
+      quantity = malloc( sizeof(char*) * noutfits );
+      for (i=0; i<noutfits; i++) {
+         o      = outfit_get( soutfits[i] );
 
-            /* Quantity. */
-            p = player_outfitOwned(o);
-            l = p / 10 + 4;
-            quantity[i] = malloc( l );
-            snprintf( quantity[i], l, "%d", p );
+         /* Short description. */
+         if (o->desc_short == NULL)
+            alt[i] = NULL;
+         else {
+            l = strlen(o->desc_short) + 128;
+            alt[i] = malloc( l );
+            p = snprintf( alt[i], l,
+                  "%s\n"
+                  "\n"
+                  "%s",
+                  o->name,
+                  o->desc_short );
+            if (o->mass > 0.)
+               p += snprintf( &alt[i][p], l-p,
+                     "\n%.0f Tons",
+                     o->mass );
          }
-         toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
-         toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
+
+         /* Quantity. */
+         p = player_outfitOwned(o);
+         l = p / 10 + 4;
+         quantity[i] = malloc( l );
+         snprintf( quantity[i], l, "%d", p );
       }
+      toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
+      toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
    }
 
-   /* Update window. */
-   equipment_updateOutfits(wid, NULL); /* Will update ships also. */
+/* Update window. */
+equipment_updateOutfits(wid, NULL); /* Will update ships also. */
 }
 /**
  * @brief Updates the player's ship window.

@@ -329,11 +329,11 @@ static void iar_centerSelected( Widget *iar )
    y = iar->dat.iar.selected / iar->dat.iar.xelem;
    ypos = y * h;
    /* Below. */
-   if (ypos-h < iar->dat.iar.pos)
-      iar->dat.iar.pos += (ypos-h) - iar->dat.iar.pos;
+   if (ypos < iar->dat.iar.pos)
+      iar->dat.iar.pos = ypos;
    /* Above. */
-   if (ypos+2.*h > iar->dat.iar.pos + iar->h)
-      iar->dat.iar.pos += (ypos+2.*h) - (iar->dat.iar.pos + iar->h);
+   if (ypos > iar->dat.iar.pos + iar->h)
+      iar->dat.iar.pos = ypos - h*floor(iar->h/h) + 10.;
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
 }
 
