@@ -789,6 +789,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    int regen;
    int q;
    int n;
+   double off;
 
    /* Do not regenerate list by default. */
    regen = 0;
@@ -846,13 +847,13 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    }
 
    /* Redo the outfits thingy. */
-   if (!regen)
-      n = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-   else
+   n   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   off = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+   if (regen)
       window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    equipment_genLists( wid );
-   if (!regen)
-      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
+   toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, off );
 
    /* Update ships. */
    equipment_updateShips( wid, NULL );

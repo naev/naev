@@ -642,6 +642,42 @@ int toolkit_getImageArrayPos( const unsigned int wid, const char* name )
 
 
 /**
+ * @brief Gets the Image Array offset.
+ */
+double toolkit_getImageArrayOffset( const unsigned int wid, const char* name )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1.;
+
+   return wgt->dat.iar.pos;
+}
+
+
+/**
+ * @brief Sets the Image Array offset.
+ */
+int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off )
+{
+   double h;
+   double hmax;
+
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   /* Get dimensions. */
+   iar_getDim( wgt, NULL, &h );
+
+   /* Move if needed. */
+   hmax = h * (wgt->dat.iar.yelem - (int)(wgt->h / h));
+   wgt->dat.iar.pos = CLAMP( 0., hmax, off );
+
+   return 0;
+}
+
+
+/**
  * @brief Sets the active element in the Image Array.
  *
  *    @param wid Window where image array is.
@@ -656,7 +692,7 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
       return -1;
 
    /* Set position. */
-   wgt->dat.iar.selected = CLAMP( 0, wgt->dat.iar.nelements, pos );
+   wgt->dat.iar.selected = CLAMP( 0, wgt->dat.iar.nelements-1, pos );
 
    /* Call callback - dangerous if called from within callback. */
    if (wgt->dat.iar.fptr != NULL)
