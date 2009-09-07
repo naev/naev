@@ -64,6 +64,7 @@ static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
 static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
 static void standings_close( unsigned int wid, char *str );
+static void ship_update( unsigned int wid );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
@@ -190,8 +191,6 @@ static void info_openMain( unsigned int wid )
 static void info_openShip( unsigned int wid )
 {
    int w, h;
-   char buf[1024];
-   int cargo;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -222,6 +221,27 @@ static void info_openShip( unsigned int wid )
          "Cargo Space:\n"
          "Fuel:\n"
          );
+   window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
+         &cBlack, NULL );
+
+   /* Custom widget. */
+   equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
+   info_eq.selected  = player;
+   info_eq.canmodify = 0;
+
+   /* Update ship. */
+   ship_update( wid );
+}
+
+
+/**
+ * @brief Updates the ship stuff.
+ */
+static void ship_update( unsigned int wid )
+{
+   char buf[1024];
+   int cargo;
+
    cargo = pilot_cargoUsed( player ) + pilot_cargoFree( player);
    snprintf( buf, sizeof(buf),
          "%s\n"
@@ -259,13 +279,7 @@ static void info_openShip( unsigned int wid )
          player->energy, player->energy_max, player->energy_regen,
          pilot_cargoUsed( player ), cargo,
          player->fuel, player->fuel_max, pilot_getJumps(player));
-   window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
-         &cBlack, buf );
-
-   /* Custom widget. */
-   equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
-   info_eq.selected  = player;
-   info_eq.canmodify = 0;
+   window_modifyText( wid, "txtDDesc", buf );
 }
 
 
@@ -304,6 +318,10 @@ static void cargo_genList( unsigned int wid )
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
+
+   /* Destroy widget if needed. */
+   if (widget_exists( wid, "lstCargo" ))
+      window_destroyWidget( wid, "lstCargo" );
 
    /* List */
    if (player->ncommodities==0) {
@@ -416,7 +434,7 @@ static void cargo_jettison( unsigned int wid, char* str )
    }
 
    /* We reopen the menu to recreate the list now. */
-   window_destroyWidget( wid, "lstCargo" );
+   ship_update( info_windows[1] );
    cargo_genList( wid );
 }
 
