@@ -290,7 +290,8 @@ static void nebu_renderMultitexture( const double dt )
       temp = cur_nebu[0];
       cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
       cur_nebu[1] = temp;
-      if (cur_nebu[0]+1 >= NEBULA_Z)
+
+      if (cur_nebu[0] >= NEBULA_Z)
          cur_nebu[0] = NEBULA_Z - 2;
       else if (cur_nebu[0] < 0)
          cur_nebu[0] = 1;
