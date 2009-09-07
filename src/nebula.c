@@ -311,6 +311,7 @@ static void nebu_renderMultitexture( const double dt )
    nglActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
    /* Texture 1 */
    nglActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
