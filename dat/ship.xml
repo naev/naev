@@ -161,7 +161,7 @@
   <price>300000</price>
   <fabricator>Robosys</fabricator>
   <tech>9999</tech>
-  <description>A robot drone.</description>
+  <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
   <movement>
    <thrust>320</thrust>
    <turn>200</turn>
