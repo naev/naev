@@ -50,7 +50,7 @@ static int nebu_ph   = 0; /**< BG Padded Nebula height. */
 
 /* Information on rendering */
 static int cur_nebu[2]           = { 0, 1 }; /**< Nebulas currently rendering. */
-static unsigned int last_render  = 0; /**< When they were last rendered. */
+static double nebu_timer         = 0.; /**< Timer since last render. */
 
 /* Nebula properties */
 static double nebu_view = 0.; /**< How far player can see. */
@@ -281,16 +281,12 @@ void nebu_render( const double dt )
  */
 static void nebu_renderMultitexture( const double dt )
 {
-   (void) dt;
-   unsigned int t;
-   double ndt;
    GLfloat col[4];
    int temp;
 
    /* calculate frame to draw */
-   t = SDL_GetTicks();
-   ndt = (t - last_render) / 1000.;
-   if (ndt > nebu_dt) { /* Time to change */
+   nebu_timer -= dt;
+   if (nebu_timer < 0.) { /* Time to change. */
       temp = cur_nebu[0];
       cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
       cur_nebu[1] = temp;
@@ -299,15 +295,15 @@ static void nebu_renderMultitexture( const double dt )
       else if (cur_nebu[0] < 0)
          cur_nebu[0] = 1;
 
-      last_render = t;
-      ndt = 0.;
+      /* Change timer. */
+      nebu_timer = nebu_dt;
    }
 
    /* Set the colour */
    col[0] = cBlue.r;
    col[1] = cBlue.g;
    col[2] = cBlue.b;
-   col[3] = ndt / nebu_dt;
+   col[3] = (nebu_dt - nebu_timer) / nebu_dt;
 
    /* Set up the targets */
    /* Texture 0 */
