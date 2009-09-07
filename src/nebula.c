@@ -287,17 +287,17 @@ static void nebu_renderMultitexture( const double dt )
    /* calculate frame to draw */
    nebu_timer -= dt;
    if (nebu_timer < 0.) { /* Time to change. */
-      temp = cur_nebu[0];
-      cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
-      cur_nebu[1] = temp;
+      temp         = cur_nebu[0] - cur_nebu[1];
+      cur_nebu[1]  = cur_nebu[0];
+      cur_nebu[0] += temp;
 
       if (cur_nebu[0] >= NEBULA_Z)
-         cur_nebu[0] = NEBULA_Z - 2;
+         cur_nebu[0] = cur_nebu[1] - 1;
       else if (cur_nebu[0] < 0)
-         cur_nebu[0] = 1;
+         cur_nebu[0] = cur_nebu[1] + 1;
 
       /* Change timer. */
-      nebu_timer = nebu_dt;
+      nebu_timer += nebu_dt;
    }
 
    /* Set the colour */
@@ -626,7 +626,8 @@ void nebu_prep( double density, double volatility )
    int i;
 
    nebu_view = 1000. - density;  /* At density 1000 you're blind */
-   nebu_dt = 2000. / (density + 100.); /* Faster at higher density */
+   nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
+   nebu_timer = nebu_dt;
 
    nebu_npuffs = density/4.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
