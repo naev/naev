@@ -216,7 +216,8 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanupBar( HealthBar *bar );
 /* Render GUI. */
-static void gui_renderTarget( double dt );
+static void gui_renderPilotTarget( double dt );
+static void gui_renderPlanetTarget( double dt );
 static void gui_renderBorder( double dt );
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
@@ -292,11 +293,11 @@ void player_message ( const char *fmt, ... )
 
 
 /**
- * @brief Renders the background GUI stuff, namely planet target gfx
+ * @brief Renders planet targetting reticle.
  *
  *    @param dt Current delta tick.
  */
-void gui_renderBG( double dt )
+static void gui_renderPlanetTarget( double dt )
 {
    (void) dt;
    double x,y;
@@ -343,7 +344,7 @@ void gui_renderBG( double dt )
  *
  *    @double dt Current delta tick.
  */
-static void gui_renderTarget( double dt )
+static void gui_renderPilotTarget( double dt )
 {
    (void) dt;
    Pilot *p;
@@ -624,7 +625,8 @@ void gui_render( double dt )
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
-   gui_renderTarget(dt);
+   gui_renderPlanetTarget(dt);
+   gui_renderPilotTarget(dt);
 
    /* Lockon warning */
    if (player->lockons > 0)

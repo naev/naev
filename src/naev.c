@@ -629,7 +629,6 @@ static void render_all (void)
    /* BG */
    space_render(dt);
    planets_render();
-   gui_renderBG(dt);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* N */
    pilots_render(dt);

@@ -29,7 +29,6 @@ void gui_cleanup (void);
 /*
  * render
  */
-void gui_renderBG( double dt );
 void gui_render( double dt );
 
 
