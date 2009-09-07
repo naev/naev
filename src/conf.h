@@ -25,6 +25,9 @@ typedef struct PlayerConf_s {
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
 
+   /* Memory usage. */
+   int engineglow; /**< Sets engine glow. */
+
    /* Window dimensions. */
    int width; /**< Width of the window to use. */
    int height; /**< Height of the window to use. */
