@@ -42,6 +42,9 @@
   <outfit name="Drone Fighter">
    <tech>1002</tech>
   </outfit>
+  <ship name="Drone">
+   <tech>1002</tech>
+  </ship>
  </unidiff>
  <unidiff name="heavy_weapons_license">
   <outfit name="Heavy Weapon License">
