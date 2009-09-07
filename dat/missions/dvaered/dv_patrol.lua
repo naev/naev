@@ -120,7 +120,7 @@ end
 -- Jump hook
 function jump ()
    if misn_stage == 1 then
-      local sys = system.get()
+      sys = system.get()
 
       -- Hack in case it wasn't saved
       if systems == nil then
