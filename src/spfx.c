@@ -516,9 +516,7 @@ void spfx_end (void)
    }
 
    /* set the new viewport */
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho( -bx+x*0.5, bx+x*0.5, -by+y*0.5, by+y*0.5, -1., 1. );
+   gl_defViewport();
 }
 
 
