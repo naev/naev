@@ -13,8 +13,6 @@
 #include "SDL_thread.h"
 #include "SDL_rwops.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
 #include <vorbis/vorbisfile.h>
 
 #include "music.h"

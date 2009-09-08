@@ -12,11 +12,6 @@
 #include <math.h>
 #include <sys/stat.h>
 
-#include <AL/alc.h>
-#include <AL/al.h>
-#include <AL/alext.h>
-#include <vorbis/vorbisfile.h>
-
 #include "SDL.h"
 #include "SDL_thread.h"
 #include "SDL_endian.h"
