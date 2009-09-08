@@ -548,7 +548,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
    return count;
 }
 
-
+#ifdef LINUX
 /**
  * @brief A bounded version of strstr
  *
@@ -557,7 +557,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
  *    @param needle The string to search for
  *    @return A pointer to the first occurrence of needle in haystack, or NULL
  */
-static const char *strnstr(const char *haystack, size_t size, const char *needle)
+static const char *strnstr(const char *haystack, const char *needle, size_t size)
 {
    size_t needlesize;
    const char *i, *j, *k, *end, *giveup;
@@ -588,7 +588,7 @@ static const char *strnstr(const char *haystack, size_t size, const char *needle
    /* Fell through the loops, nothing found */
    return NULL;
 }
-
+#endif
 
 #define  conf_saveComment(t)     \
 pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
@@ -647,14 +647,14 @@ int conf_saveConfig ( const char* file )
    if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
       /* See if we can find the generated section and preserve
        * whatever the user wrote before it */
-      const char *tmp = strnstr(old, oldsize, "-- "GENERATED_START_COMMENT"\n");
+      const char *tmp = strnstr(old, "-- "GENERATED_START_COMMENT"\n", oldsize);
       if (tmp != NULL) {
          /* Copy over the user content */
          pos = SDL_min(sizeof(buf), (size_t)(tmp - old));
          memcpy(buf, old, pos);
 
          /* See if we can find the end of the section */
-         tmp = strnstr(tmp, oldsize-pos, "-- "GENERATED_END_COMMENT"\n");
+         tmp = strnstr(tmp, "-- "GENERATED_END_COMMENT"\n", oldsize-pos);
          if (tmp != NULL) {
             /* Everything after this should also be preserved */
             oldfooter = tmp + strlen("-- "GENERATED_END_COMMENT"\n");
