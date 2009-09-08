@@ -613,6 +613,12 @@ static void outfits_buy( unsigned int wid, char* str )
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
    (void) q;
+
+   /* Map check. */
+   if ((outfit_isMap(outfit)) &&
+         map_isMapped( NULL, outfit->u.map.radius ))
+      return 0;
+
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
