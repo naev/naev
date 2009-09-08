@@ -786,13 +786,9 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
 {
    int ret;
    Outfit *o, *ammo;
-   int regen;
    int q;
    int n;
    double off;
-
-   /* Do not regenerate list by default. */
-   regen = 0;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -814,10 +810,6 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
-
-      /* See if should remake. */
-      if (player_outfitOwned(o) == 1)
-         regen = 1;
    }
    /* Add outfit. */
    else {
@@ -840,17 +832,12 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          pilot_addOutfit( eq_wgt.selected, o, slot );
 
       equipment_addAmmo();
-
-      /* See if should remake. */
-      if (player_outfitOwned(o) == 0)
-         regen = 1;
    }
 
    /* Redo the outfits thingy. */
    n   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
    off = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
-   if (regen)
-      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    equipment_genLists( wid );
    toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
    toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, off );
@@ -947,48 +934,49 @@ void equipment_genLists( unsigned int wid )
    soutfits = malloc(sizeof(char*)*noutfits);
    toutfits = malloc(sizeof(glTexture*)*noutfits);
    player_getOutfits( soutfits, toutfits );
-   if (!widget_exists( wid ,EQUIPMENT_OUTFITS ))
+   if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
       window_addImageArray( wid, 20, -40 - sh - 40,
             sw, sh, EQUIPMENT_OUTFITS, 50., 50.,
             toutfits, soutfits, noutfits, equipment_updateOutfits );
 
-   /* Set alt text. */
-   if (strcmp(soutfits[0],"None")!=0) {
-      alt = malloc( sizeof(char*) * noutfits );
-      quantity = malloc( sizeof(char*) * noutfits );
-      for (i=0; i<noutfits; i++) {
-         o      = outfit_get( soutfits[i] );
+      /* Set alt text. */
+      if (strcmp(soutfits[0],"None")!=0) {
+         alt      = malloc( sizeof(char*) * noutfits );
+         quantity = malloc( sizeof(char*) * noutfits );
+         for (i=0; i<noutfits; i++) {
+            o      = outfit_get( soutfits[i] );
 
-         /* Short description. */
-         if (o->desc_short == NULL)
-            alt[i] = NULL;
-         else {
-            l = strlen(o->desc_short) + 128;
-            alt[i] = malloc( l );
-            p = snprintf( alt[i], l,
-                  "%s\n"
-                  "\n"
-                  "%s",
-                  o->name,
-                  o->desc_short );
-            if (o->mass > 0.)
-               p += snprintf( &alt[i][p], l-p,
-                     "\n%.0f Tons",
-                     o->mass );
+            /* Short description. */
+            if (o->desc_short == NULL)
+               alt[i] = NULL;
+            else {
+               l = strlen(o->desc_short) + 128;
+               alt[i] = malloc( l );
+               p = snprintf( alt[i], l,
+                     "%s\n"
+                     "\n"
+                     "%s",
+                     o->name,
+                     o->desc_short );
+               if (o->mass > 0.)
+                  p += snprintf( &alt[i][p], l-p,
+                        "\n%.0f Tons",
+                        o->mass );
+            }
+
+            /* Quantity. */
+            p = player_outfitOwned(o);
+            l = p / 10 + 4;
+            quantity[i] = malloc( l );
+            snprintf( quantity[i], l, "%d", p );
          }
-
-         /* Quantity. */
-         p = player_outfitOwned(o);
-         l = p / 10 + 4;
-         quantity[i] = malloc( l );
-         snprintf( quantity[i], l, "%d", p );
+         toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
+         toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
       }
-      toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
-      toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
    }
 
-/* Update window. */
-equipment_updateOutfits(wid, NULL); /* Will update ships also. */
+   /* Update window. */
+   equipment_updateOutfits(wid, NULL); /* Will update ships also. */
 }
 /**
  * @brief Updates the player's ship window.
