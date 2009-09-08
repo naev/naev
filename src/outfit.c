@@ -233,6 +233,31 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
 
 
 /**
+ * @brief Gets the name of the slot type of an outfit.
+ *
+ *    @param o Outfit to get slot type of.
+ *    @return The human readable name of the slot type.
+ */
+const char *outfit_slotName( const Outfit* o )
+{
+   switch (o->slot) {
+      case OUTFIT_SLOT_NULL:
+         return "NULL";
+      case OUTFIT_SLOT_NA:
+         return "NA";
+      case OUTFIT_SLOT_LOW:
+         return "Low";
+      case OUTFIT_SLOT_MEDIUM:
+         return "Medium";
+      case OUTFIT_SLOT_HIGH:
+         return "High";
+      default:
+         return "Unknown";
+   }
+}
+
+
+/**
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).

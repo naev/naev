@@ -368,6 +368,7 @@ static void outfits_open( unsigned int wid )
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Owned:\n"
          "\n"
+         "Slot:\n"
          "Mass:\n"
          "\n"
          "Price:\n"
@@ -467,6 +468,7 @@ static void outfits_update( unsigned int wid, char* str )
             "NA\n"
             "\n"
             "NA\n"
+            "NA\n"
             "\n"
             "NA\n"
             "NA\n"
@@ -504,12 +506,14 @@ static void outfits_update( unsigned int wid, char* str )
    snprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
+         "%s\n"
          "%.0f tons\n"
          "\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n",
          player_outfitOwned(outfit),
+         outfit_slotName(outfit),
          outfit->mass,
          buf2,
          buf3,
