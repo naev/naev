@@ -2272,6 +2272,10 @@ int player_addEscorts (void)
    Vector2d v;
    unsigned int e;
    Outfit *o;
+   int q;
+
+   /* Clear escorts first. */
+   player_clearEscorts();
 
    for (i=0; i<player->nescorts; i++) {
       a = RNGF() * 2 * M_PI;
@@ -2283,27 +2287,36 @@ int player_addEscorts (void)
       player->escorts[i].id = e; /* Important to update ID. */
 
       /* Update outfit if needed. */
-      if (player->escorts[i].type == ESCORT_TYPE_BAY) {
-         for (j=0; j<player->noutfits; j++) {
-            /* Must have outfit. */
-            if (player->outfits[j]->outfit == NULL)
-               continue;
+      if (player->escorts[i].type != ESCORT_TYPE_BAY)
+         continue;
 
-            /* Must be fighter bay. */
-            if (!outfit_isFighterBay(player->outfits[j]->outfit))
-               continue;
+      for (j=0; j<player->noutfits; j++) {
+         /* Must have outfit. */
+         if (player->outfits[j]->outfit == NULL)
+            continue;
 
-            /* Must not have all deployed. */
-            if (player->outfits[j]->u.ammo.deployed >= outfit_amount(player->outfits[j]->outfit))
-               continue;
+         /* Must be fighter bay. */
+         if (!outfit_isFighterBay(player->outfits[j]->outfit))
+            continue;
 
-            o = outfit_ammo(player->outfits[j]->outfit);
-            if (outfit_isFighter(o) &&
-                  (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
-               player->outfits[j]->u.ammo.deployed += 1;
-               break;
-            }
-         }
+         /* Ship must match. */
+         o = outfit_ammo(player->outfits[j]->outfit);
+         if (!outfit_isFighter(o) ||
+               (strcmp(player->escorts[i].ship,o->u.fig.ship)!=0))
+            continue;
+
+         /* Must not have all deployed. */
+         q = player->outfits[j]->u.ammo.deployed + player->outfits[j]->u.ammo.quantity;
+         if (q >= outfit_amount(player->outfits[j]->outfit))
+            continue;
+
+         /* Mark as deployed. */
+         player->outfits[j]->u.ammo.deployed += 1;
+         DEBUG("Added -> %d", player->outfits[j]->u.ammo.deployed);
+         break;
+      }
+      if (j >= player->noutfits) {
+         WARN("Unable to mark escort as deployed");
       }
    }
 
