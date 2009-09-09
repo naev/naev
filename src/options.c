@@ -26,11 +26,18 @@
 #include "dialogue.h"
 
 
-#define AUDIO_WIDTH  340 /**< Options menu width. */
-#define AUDIO_HEIGHT 200 /**< Options menu height. */
-
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
+
+#define OPT_WINDOWS     3
+
+static unsigned int opt_wid = 0;
+static unsigned int *opt_windows;
+static const char *opt_names[] = {
+   "Video",
+   "Audio",
+   "Input"
+};
 
 
 /*
@@ -46,18 +53,53 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
 /*
  * prototypes
  */
+/* Misc. */
+static void opt_close( unsigned int wid, char *name );
 /* Keybind menu. */
+static void opt_keybinds( unsigned int wid );
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
       int *lw, int *lh, int *bw, int *bh );
 static void menuKeybinds_genList( unsigned int wid );
 static void menuKeybinds_update( unsigned int wid, char *name );
 /* Music. */
+static void opt_audio( unsigned int wid );
 static void opt_setSFXLevel( unsigned int wid, char *str );
 static void opt_setMusicLevel( unsigned int wid, char *str );
 /* Setting keybindings. */
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
 static void opt_setKey( unsigned int wid, char *str );
 static void opt_unsetKey( unsigned int wid, char *str );
+/* Video stuff. */
+static void opt_video( unsigned int wid );
+
+
+/**
+ * @brief Creates the options menu thingy.
+ */
+void opt_menu (void)
+{
+   int w, h;
+
+   /* Dimensions. */
+   w = 600;
+   h = 500;
+
+   /* Create window and tabs. */
+   opt_wid = window_create( "Options", -1, -1, w, h );
+   opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
+         OPT_WINDOWS, opt_names );
+
+   /* Load tabs. */
+   opt_video( opt_windows[0] );
+   opt_audio( opt_windows[1] );
+   opt_keybinds( opt_windows[2] );
+}
+static void opt_close( unsigned int wid, char *name )
+{
+   (void) wid;
+   (void) name;
+   window_destroy( opt_wid );
+}
 
 
 /**
@@ -86,25 +128,16 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
 /**
  * @brief Opens the keybindings menu.
  */
-void opt_menuKeybinds (void)
+static void opt_keybinds( unsigned int wid )
 {
-   unsigned int wid;
-   int w, h;
-   int bw, bh;
-   int lw;
+   int w, h, lw, bw, bh;
 
-   /* Dimensions. */
-   w = 500;
-   h = 300;
-
-   /* Create the window. */
-   wid = window_create( "Keybindings", -1, -1, w, h );
-
+   /* Get dimensions. */
    menuKeybinds_getDim( wid, &w, &h, &lw, NULL, &bw, &bh );
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, bh,
-         "btnClose", "Close", window_close );
+         "btnClose", "Close", opt_close );
    /* Set button. */
    window_addButton( wid, -20 - bw - 20, 20, bw, bh,
          "btnSet", "Set Key", opt_setKey );
@@ -268,38 +301,36 @@ static void opt_setMusicLevel( unsigned int wid, char *str )
 /**
  * @brief Opens the audio settings menu.
  */
-void opt_menuAudio (void)
+static void opt_audio( unsigned int wid )
 {
-   unsigned int wid;
-
-   /* Create the window. */
-   wid = window_create( "Audio", -1, -1, AUDIO_WIDTH, AUDIO_HEIGHT );
+   int w, h;
+   window_dimWindow( wid, &w, &h );
 
    /* Sound fader. */
    if (!sound_disabled) {
       window_addFader( wid, 20, -40, 160, 20, "fadSound", 0., 1.,
             sound_getVolume(), opt_setSFXLevel );
-      window_addText( wid, 200, -40, AUDIO_WIDTH-220, 20, 1, "txtSound",
+      window_addText( wid, 200, -40, w-220, 20, 1, "txtSound",
             NULL, NULL, "Sound Volume" );
    }
    else
-      window_addText( wid, 200, -40, AUDIO_WIDTH-220, 20, 1, "txtSound",
+      window_addText( wid, 200, -40, w-220, 20, 1, "txtSound",
             NULL, NULL, "Sound Disabled" );
 
    /* Music fader. */
    if (!music_disabled) {
       window_addFader( wid, 20, -80, 160, 20, "fadMusic", 0., 1.,
             music_getVolume(), opt_setMusicLevel );
-      window_addText( wid, 200, -80, AUDIO_WIDTH-220, 20, 1, "txtMusic",
+      window_addText( wid, 200, -80, w-220, 20, 1, "txtMusic",
             NULL, NULL, "Music Volume" );
    }
    else
-      window_addText( wid, 200, -80, AUDIO_WIDTH-220, 20, 1, "txtMusic",
+      window_addText( wid, 200, -80, w-220, 20, 1, "txtMusic",
             NULL, NULL, "Music Disabled" );
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", "Close", opt_close );
 }
 
 
@@ -451,4 +482,16 @@ static void opt_unsetKey( unsigned int wid, char *str )
    menuKeybinds_update( parent, NULL );
 }
 
+
+/**
+ * @brief Initializes the video window.
+ */
+static void opt_video( unsigned int wid )
+{
+   (void) wid;
+
+   /* Close button */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", opt_close );
+}
 

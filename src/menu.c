@@ -84,11 +84,8 @@ static void exit_game (void);
 static void menu_death_continue( unsigned int wid, char* str );
 static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
-/* Options menu. */
+/* options button. */
 static void menu_options_button( unsigned int wid, char *str );
-static void menu_options_keybinds( unsigned int wid, char *str );
-static void menu_options_audio( unsigned int wid, char *str );
-static void menu_options_close( unsigned int parent, char* str );
 
 
 /**
@@ -440,53 +437,6 @@ static void menu_options_button( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   menu_options();
-}
-/**
- * @brief Opens the options menu.
- */
-void menu_options (void)
-{
-   unsigned int wid;
-
-   wid = window_create( "Options", -1, -1, OPTIONS_WIDTH, OPTIONS_HEIGHT );
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", menu_options_close );
-   window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnKeybinds", "Keybindings", menu_options_keybinds );
-   window_addButton( wid, -20 - 2 * (BUTTON_WIDTH+20), 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnAudio", "Audio", menu_options_audio );
-   menu_Open(MENU_OPTIONS);
-}
-/**
- * @brief Wrapper for opt_menuKeybinds.
- */
-static void menu_options_keybinds( unsigned int wid, char *str )
-{
-   (void) wid;
-   (void) str;
-   opt_menuKeybinds();
-}
-/**
- * @brief Wrapper for opt_menuAudio.
- */
-static void menu_options_audio( unsigned int wid, char *str )
-{
-   (void) wid;
-   (void) str;
-   opt_menuAudio();
-}
-/**
- * @brief Closes the options menu.
- *    @param str Unused.
- */
-static void menu_options_close( unsigned int wid, char* str )
-{
-   (void) str;
-
-   window_destroy( wid );
-   menu_Close(MENU_OPTIONS);
+   opt_menu();
 }
 

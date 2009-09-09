@@ -8,8 +8,7 @@
 #  define OPTIONS_H
 
 
-void opt_menuKeybinds (void);
-void opt_menuAudio (void);
+void opt_menu (void);
 
 
 #endif /* OPTIONS_H */
