@@ -384,7 +384,7 @@ static void nebu_genOverlay (void)
    gui_getOffset( &gx, &gy );
 
    /* Calculate zoom. */
-   z = 1./conf.zoom_min;
+   z = 1./conf.zoom_far;
 
    /* See if need to generate overlay. */
    if (nebu_vboOverlay == NULL) {

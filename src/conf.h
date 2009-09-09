@@ -52,8 +52,8 @@ typedef struct PlayerConf_s {
    int autorefuel; /**< Whether or not to autorefuel when landing. */
 
    /* Misc. */
-   double zoom_max; /**< Maximum ingame zoom to use. */
-   double zoom_min; /**< Minimum ingame zoom to use. */
+   double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
+   double zoom_near; /**< Minimum ingame zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */

@@ -657,13 +657,13 @@ void space_initStars( int n )
 
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
-   size /= pow2(conf.zoom_min);
+   size /= pow2(conf.zoom_far);
 
    /* Calculate star buffer. */
    w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_min - 1.);
+   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_min - 1.);
+   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
    hw = w / 2.;
    hh = h / 2.;
 
@@ -1690,9 +1690,9 @@ void space_renderStars( const double dt )
 
          /* Calculate some dimensions. */
          w  = (SCREEN_W + 2.*STAR_BUF);
-         w += conf.zoom_stars * (w / conf.zoom_min - 1.);
+         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
          h  = (SCREEN_H + 2.*STAR_BUF);
-         h += conf.zoom_stars * (h / conf.zoom_min - 1.);
+         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
          hw = w/2.;
          hh = h/2.;
 

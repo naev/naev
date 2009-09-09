@@ -55,9 +55,6 @@
 
 #define START_DATA   "dat/start.xml" /**< Module start information file. */
 
-#define ZOOM_OUT_MAX             conf.zoom_min /**< Maximum zoom out. */
-#define ZOOM_IN_MAX              conf.zoom_max /**< Maximum zoom in. */
-
 
 /*
  * player stuff
@@ -1126,7 +1123,7 @@ static void player_updateZoom( double dt )
 {
    Pilot *target;
    double d, x,y, z,tz, dx, dy;
-   double in, out;
+   double far, near;
    double c;
 
    /* Minimum depends on velocity normally.
@@ -1140,16 +1137,16 @@ static void player_updateZoom( double dt )
     *
     * z = A / A_v = 1. / (1 + v/d)
     */
-   d   = sqrt(SCREEN_W*SCREEN_H);
-   in = MAX( ZOOM_OUT_MAX, 1. / (1. + VMOD(player->solid->vel)/d) );
+   d    = sqrt(SCREEN_W*SCREEN_H);
+   near = MAX( conf.zoom_far, 1. / (1. + VMOD(player->solid->vel)/d) );
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
       c   = MIN( SCREEN_W, SCREEN_H ) / 2;
-      out = CLAMP( ZOOM_OUT_MAX, 1., c / nebu_getSightRadius() );
+      far = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
    }
    else {
-      out = ZOOM_OUT_MAX;
+      far = conf.zoom_far;
    }
 
    /*
@@ -1176,7 +1173,7 @@ static void player_updateZoom( double dt )
          tz = z;
    }
    else {
-      tz = in; /* Aim at in. */
+      tz = near; /* Aim at in. */
    }
 
    /* Gradually zoom in/out. */
@@ -1184,7 +1181,7 @@ static void player_updateZoom( double dt )
    d *= dt / dt_mod; /* Remove dt dependence. */
    if (d < 0) /** Speed up if needed. */
       d *= 2.;
-   gl_cameraZoom( CLAMP( out, in, z + d) );
+   gl_cameraZoom( CLAMP( far, near, z + d) );
 }
 
 
@@ -2312,7 +2309,6 @@ int player_addEscorts (void)
 
          /* Mark as deployed. */
          player->outfits[j]->u.ammo.deployed += 1;
-         DEBUG("Added -> %d", player->outfits[j]->u.ammo.deployed);
          break;
       }
       if (j >= player->noutfits) {

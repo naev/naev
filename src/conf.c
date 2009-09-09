@@ -152,8 +152,8 @@ void conf_setDefaults (void)
    conf.autorefuel   = 0;
 
    /* Misc. */
-   conf.zoom_min     = 0.5;
-   conf.zoom_max     = 1.;
+   conf.zoom_far     = 0.5;
+   conf.zoom_near    = 1.;
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
    conf.afterburn_sens = 250;
@@ -252,8 +252,8 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("autorefuel",conf.autorefuel);
 
       /* Misc. */
-      conf_loadFloat("zoom_min",conf.zoom_min);
-      conf_loadFloat("zoom_max",conf.zoom_max);
+      conf_loadFloat("zoom_far",conf.zoom_far);
+      conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
@@ -789,8 +789,9 @@ int conf_saveConfig ( const char* file )
    /* Misc. */
    conf_saveComment("Minimum and maximum zoom factor to use in-game");
    conf_saveComment("At 1.0, no sprites are scaled");
-   conf_saveFloat("zoom_min",conf.zoom_min);
-   conf_saveFloat("zoom_max",conf.zoom_max);
+   conf_saveComment("zoom_far should be less then zoom_near");
+   conf_saveFloat("zoom_far",conf.zoom_far);
+   conf_saveFloat("zoom_near",conf.zoom_near);
    conf_saveEmptyLine();
 
    conf_saveComment("Zooming speed in factor increments per second");
