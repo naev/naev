@@ -588,6 +588,15 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, (w-60)/2, 20,
          "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
+   y -= 50;
+
+
+   /* Features. */
+   window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
+         NULL, &cDConsole, "Fatures" );
+   y -= 30;
+   window_addCheckbox( wid, x, y, (w-60)/2, 20,
+         "chkEngineGlow", "Engine Glow (needs more RAM)", NULL, conf.engineglow );
    y -= 20;
 
 
@@ -670,6 +679,11 @@ static void opt_videoSave( unsigned int wid, char *str )
       opt_needRestart(wid);
    }
 
+   /* FPS. */
+   conf.fps_show = window_checkboxState( wid, "chkFPS" );
+   inp = window_getInput( wid, "inpFPS" );
+   conf.fps_max = atoi(inp);
+
    /* OpenGL. */
    f = window_checkboxState( wid, "chkVSync" );
    if (conf.vsync != f) {
@@ -687,10 +701,12 @@ static void opt_videoSave( unsigned int wid, char *str )
       opt_needRestart(wid);
    }
 
-   /* FPS. */
-   conf.fps_show = window_checkboxState( wid, "chkFPS" );
-   inp = window_getInput( wid, "inpFPS" );
-   conf.fps_max = atoi(inp);
+   /* Features. */
+   f = window_checkboxState( wid, "chkEngineGlow" );
+   if (conf.engineglow != f) {
+      conf.engineglow = f;
+      opt_needRestart(wid);
+   }
 }
 
 /**
@@ -721,6 +737,7 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkVBO", conf.vbo );
    window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
    window_checkboxSet( wid, "chkFPS", conf.fps_show );
+   window_checkboxSet( wid, "chkEngineGlow", conf.engineglow );
 
    /* Just in case - lazy. */
    opt_needRestart(wid);
