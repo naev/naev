@@ -114,12 +114,15 @@ void conf_setDefaults (void)
    /* ndata. */
    conf.ndata        = NULL;
 
-   /* opengl. */
+   /* OpenGL. */
    conf.fsaa         = 1;
    conf.vsync        = 0;
    conf.vbo          = 1;
    conf.mipmaps      = 1;
    conf.compress     = 0;
+
+   /* Memory. */
+   conf.engineglow   = 1;
 
    /* Window. */
    conf.width        = 800;
@@ -212,6 +215,9 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("vbo",conf.vbo);
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
+
+      /* Memory. */
+      conf_loadBool("engineglow",conf.engineglow);
 
       /* Window. */
       w = h = 0;
@@ -713,6 +719,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Texture Compression");
    conf_saveBool("compress",conf.compress);
+   conf_saveEmptyLine();
+
+   /* Memory. */
+   conf_saveComment("If true enables engine glow");
+   conf_saveBool("engineglow",conf.engineglow);
    conf_saveEmptyLine();
 
    /* Window. */
