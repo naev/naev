@@ -125,6 +125,24 @@ int window_checkboxState( const unsigned int wid, const char *name )
 
 
 /**
+ * @brief Sets the checkbox state.
+ *
+ *    @param state State to set checkbox to.
+ *    @return The checkbox state or -1 on error.
+ */
+int window_checkboxSet( const unsigned int wid, const char *name, int state )
+{
+   Widget *wgt;
+   wgt = chk_getWgt(wid, name);
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.chk.state = state;
+   return wgt->dat.chk.state;
+}
+
+
+/**
  * @brief Toggles the checkbox. state.
  */
 static void chk_toggleState( Widget *chk )
