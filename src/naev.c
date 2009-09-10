@@ -531,6 +531,7 @@ static void fps_control (void)
 {
    unsigned int t;
    double delay;
+   double fps_max;
 
    /* dt in s */
    t = SDL_GetTicks();
@@ -540,10 +541,13 @@ static void fps_control (void)
    time = t;
 
    /* if fps is limited */                       
-   if ((conf.fps_max != 0) && (real_dt < 1./conf.fps_max)) {
-      delay = 1./conf.fps_max - real_dt;
-      SDL_Delay( (unsigned int)(delay * 1000) );
-      fps_dt += delay; /* makes sure it displays the proper fps */
+   if (conf.fps_max != 0) {
+      fps_max = 1./(double)conf.fps_max;
+      if (real_dt < fps_max) {
+         delay = fps_max - real_dt;
+         SDL_Delay( (unsigned int)(delay * 1000) );
+         fps_dt += delay; /* makes sure it displays the proper fps */
+      }
    }
 }
 
