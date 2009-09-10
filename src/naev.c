@@ -541,7 +541,7 @@ static void fps_control (void)
    time = t;
 
    /* if fps is limited */                       
-   if (conf.fps_max != 0) {
+   if (!conf.vsync && conf.fps_max != 0) {
       fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
          delay = fps_max - real_dt;
