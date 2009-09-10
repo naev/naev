@@ -78,6 +78,8 @@ static void opt_unsetKey( unsigned int wid, char *str );
 static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, char *str );
 static void opt_videoSave( unsigned int wid, char *str );
+static void opt_videoDefaults( unsigned int wid, char *str );
+static void opt_videoUpdate( unsigned int wid, char *str );
 
 
 /**
@@ -498,7 +500,7 @@ static void opt_video( unsigned int wid )
    (void) wid;
    int i, j;
    char buf[16];
-   int w, h, y, x;
+   int w, h, y, x, l;
    SDL_Rect** modes;
    char **res;
    const char *s;
@@ -513,18 +515,22 @@ static void opt_video( unsigned int wid )
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnApply", "Apply", opt_videoSave );
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnDefaults", "Defaults", opt_videoDefaults );
 
    /* Resolution bits. */
-   y = -40;
-   window_addText( wid, 40, y, 100, 20, 0, "txtSRes",
+   x = 20;
+   y = -60;
+   window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
          NULL, &cDConsole, "Resolution" );
    y -= 40;
-   window_addInput( wid, 20, y, 100, 20, "inpRes", 16, 1 );
+   window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1 );
    snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
    window_setInput( wid, "inpRes", buf );
    window_setInputFilter( wid, "inpRes",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
-   window_addCheckbox( wid, 140, y, 100, 20,
+   window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", "Fullscreen", NULL, conf.fullscreen );
    y -= 30;
    modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
@@ -545,44 +551,49 @@ static void opt_video( unsigned int wid )
       if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
          j = i;
    }
-   window_addList( wid, 20, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
-   y -= 130;
+   window_addList( wid, x, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
+   y -= 150;
 
 
-   /* OpenGL options. */
-   window_addText( wid, 40, y, 100, 20, 0, "txtFPSTitle",
+   /* FPS stuff. */
+   window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
          NULL, &cDConsole, "FPS Control" );
    y -= 30;
    s = "FPS Limit";
-   x = gl_printWidthRaw( NULL, s );
-   window_addText( wid, 20, y, x, 20, 1, "txtSFPS",
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtSFPS",
          NULL, &cBlack, s );
-   window_addInput( wid, 20+x+20, y, 40, 20, "inpFPS", 4, 1 );
+   window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1 );
    snprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    y -= 30;
-   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+   window_addCheckbox( wid, x, y, (w-60)/2, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
    y -= 40;
-   window_addText( wid, 40, y, 100, 20, 0, "txtSGL",
+
+
+   /* OpenGL options. */
+   x = 40+(w-60)/2;
+   y = -60;
+   window_addText( wid, x+20, y, 100, 20, 0, "txtSGL",
          NULL, &cDConsole, "OpenGL" );
    y -= 30;
-   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+   window_addCheckbox( wid, x, y, (w-60)/2, 20,
          "chkVSync", "Vertical Sync", NULL, conf.vsync );
    y -= 20;
-   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+   window_addCheckbox( wid, x, y, (w-60)/2, 20,
          "chkVBO", "VBOs (Disable for compatibility)", NULL, conf.vbo );
    y -= 20;
-   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+   window_addCheckbox( wid, x, y, (w-60)/2, 20,
          "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
    y -= 20;
 
 
    /* Restart text. */
-   window_addText( wid, 20, 20, w-40 - 2*(BUTTON_WIDTH + 20), 30, 1, "txtRestart",
-         &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
+         30, 1, "txtRestart", &gl_smallFont, &cBlack, NULL );
    if (opt_restart)
       opt_needRestart(wid);
 }
@@ -682,5 +693,37 @@ static void opt_videoSave( unsigned int wid, char *str )
    conf.fps_max = atoi(inp);
 }
 
+/**
+ * @brief Sets video defaults.
+ */
+static void opt_videoDefaults( unsigned int wid, char *str )
+{
+   (void) str;
+
+   conf_setVideoDefaults();
+   opt_videoUpdate( wid, NULL );
+}
+
+static void opt_videoUpdate( unsigned int wid, char *str )
+{
+   (void) str;
+   char buf[16];
+
+   /* Inputs. */
+   snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+   window_setInput( wid, "inpRes", buf );
+   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   window_setInput( wid, "inpFPS", buf );
+
+   /* Checkboxkes. */
+   window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
+   window_checkboxSet( wid, "chkVSync", conf.vsync );
+   window_checkboxSet( wid, "chkVBO", conf.vbo );
+   window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
+   window_checkboxSet( wid, "chkFPS", conf.fps_show );
+
+   /* Just in case - lazy. */
+   opt_needRestart(wid);
+}
 
 
