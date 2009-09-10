@@ -516,7 +516,7 @@ static void opt_video( unsigned int wid )
 
    /* Resolution bits. */
    y = -40;
-   window_addText( wid, 20, y, 100, 20, 1, "txtSRes",
+   window_addText( wid, 40, y, 100, 20, 0, "txtSRes",
          NULL, &cDConsole, "Resolution" );
    y -= 40;
    window_addInput( wid, 20, y, 100, 20, "inpRes", 16, 1 );
@@ -546,34 +546,37 @@ static void opt_video( unsigned int wid )
          j = i;
    }
    window_addList( wid, 20, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
-   y -= 140;
+   y -= 130;
 
 
    /* OpenGL options. */
-   window_addText( wid, 20, y, 100, 20, 1, "txtSGL",
-         NULL, &cDConsole, "OpenGL" );
-   y -= 40;
-   window_addCheckbox( wid, 20, y, 100, 20,
-         "chkVSync", "VSync", NULL, conf.vsync );
-   y -= 20;
-   window_addCheckbox( wid, 20, y, 100, 20,
-         "chkVBO", "VBO", NULL, conf.vbo );
-   y -= 20;
-   window_addCheckbox( wid, 20, y, 100, 20,
-         "chkMipmaps", "MipMaps", NULL, conf.mipmaps );
-   y -= 20;
+   window_addText( wid, 40, y, 100, 20, 0, "txtFPSTitle",
+         NULL, &cDConsole, "FPS Control" );
+   y -= 30;
    s = "FPS Limit (0 = unlimited)";
    x = gl_printWidthRaw( NULL, s );
    window_addText( wid, 20, y, x, 20, 1, "txtSFPS",
          NULL, &cBlack, s );
-   window_addInput( wid, 20+x+20, y, 40, 20, "inpFPS", 16, 1 );
+   window_addInput( wid, 20+x+20, y, 40, 20, "inpFPS", 4, 1 );
    snprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    y -= 20;
-   window_addCheckbox( wid, 20, y, 100, 20,
+   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
+   y -= 40;
+   window_addText( wid, 40, y, 100, 20, 0, "txtSGL",
+         NULL, &cDConsole, "OpenGL" );
+   y -= 30;
+   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+         "chkVSync", "VSync (Sync to refresh rate)", NULL, conf.vsync );
+   y -= 20;
+   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+         "chkVBO", "VBO (disable if you see glitches)", NULL, conf.vbo );
+   y -= 20;
+   window_addCheckbox( wid, 20, y, (w-60)/2, 20,
+         "chkMipmaps", "MipMaps (disable for compatibility)", NULL, conf.mipmaps );
    y -= 20;
 
 
