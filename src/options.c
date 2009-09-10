@@ -593,10 +593,10 @@ static void opt_video( unsigned int wid )
 
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
-         NULL, &cDConsole, "Fatures" );
+         NULL, &cDConsole, "Features" );
    y -= 30;
    window_addCheckbox( wid, x, y, (w-60)/2, 20,
-         "chkEngineGlow", "Engine Glow (needs more RAM)", NULL, conf.engineglow );
+         "chkEngineGlow", "Engine Glow (More RAM)", NULL, conf.engineglow );
    y -= 20;
 
 
