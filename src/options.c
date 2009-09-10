@@ -553,7 +553,7 @@ static void opt_video( unsigned int wid )
    window_addText( wid, 40, y, 100, 20, 0, "txtFPSTitle",
          NULL, &cDConsole, "FPS Control" );
    y -= 30;
-   s = "FPS Limit (0 = unlimited)";
+   s = "FPS Limit";
    x = gl_printWidthRaw( NULL, s );
    window_addText( wid, 20, y, x, 20, 1, "txtSFPS",
          NULL, &cBlack, s );
@@ -562,7 +562,7 @@ static void opt_video( unsigned int wid )
    window_setInput( wid, "inpFPS", buf );
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
-   y -= 20;
+   y -= 30;
    window_addCheckbox( wid, 20, y, (w-60)/2, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
    y -= 40;
@@ -570,13 +570,13 @@ static void opt_video( unsigned int wid )
          NULL, &cDConsole, "OpenGL" );
    y -= 30;
    window_addCheckbox( wid, 20, y, (w-60)/2, 20,
-         "chkVSync", "VSync (Sync to refresh rate)", NULL, conf.vsync );
+         "chkVSync", "Vertical Sync", NULL, conf.vsync );
    y -= 20;
    window_addCheckbox( wid, 20, y, (w-60)/2, 20,
-         "chkVBO", "VBO (disable if you see glitches)", NULL, conf.vbo );
+         "chkVBO", "VBOs (Disable for compatibility)", NULL, conf.vbo );
    y -= 20;
    window_addCheckbox( wid, 20, y, (w-60)/2, 20,
-         "chkMipmaps", "MipMaps (disable for compatibility)", NULL, conf.mipmaps );
+         "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
    y -= 20;
 
 
