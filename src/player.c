@@ -1123,7 +1123,7 @@ static void player_updateZoom( double dt )
 {
    Pilot *target;
    double d, x,y, z,tz, dx, dy;
-   double far, near;
+   double zfar, znear;
    double c;
 
    /* Minimum depends on velocity normally.
@@ -1137,16 +1137,16 @@ static void player_updateZoom( double dt )
     *
     * z = A / A_v = 1. / (1 + v/d)
     */
-   d    = sqrt(SCREEN_W*SCREEN_H);
-   near = MAX( conf.zoom_far, 1. / (1. + VMOD(player->solid->vel)/d) );
+   d     = sqrt(SCREEN_W*SCREEN_H);
+   znear = MAX( conf.zoom_far, 1. / (1. + VMOD(player->solid->vel)/d) );
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
-      c   = MIN( SCREEN_W, SCREEN_H ) / 2;
-      far = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
+      c    = MIN( SCREEN_W, SCREEN_H ) / 2;
+      zfar = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
    }
    else {
-      far = conf.zoom_far;
+      zfar = conf.zoom_far;
    }
 
    /*
@@ -1173,7 +1173,7 @@ static void player_updateZoom( double dt )
          tz = z;
    }
    else {
-      tz = near; /* Aim at in. */
+      tz = znear; /* Aim at in. */
    }
 
    /* Gradually zoom in/out. */
@@ -1181,7 +1181,7 @@ static void player_updateZoom( double dt )
    d *= dt / dt_mod; /* Remove dt dependence. */
    if (d < 0) /** Speed up if needed. */
       d *= 2.;
-   gl_cameraZoom( CLAMP( far, near, z + d) );
+   gl_cameraZoom( CLAMP( zfar, znear, z + d) );
 }
 
 
