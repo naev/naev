@@ -67,7 +67,7 @@ static int gl_activated = 0; /**< Whether or not a window is activated. */
  */
 /* gl */
 static int gl_setupAttributes (void);
-static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo );
+static int gl_setupFullscreen( unsigned int *flags );
 static int gl_createWindow( unsigned int flags );
 static int gl_getGLInfo (void);
 static int gl_defState (void);
@@ -347,10 +347,9 @@ static int gl_setupAttributes (void)
  * @brief Tries to set up fullscreen environment.
  *
  *    @param flags Flags to modify.
- *    @param vidinfo Video information.
  *    @return 0 on success.
  */
-static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo )
+static int gl_setupFullscreen( unsigned int *flags )
 {
    int i, j, off, toff, supported;
    SDL_Rect** modes;
@@ -359,12 +358,10 @@ static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo
    supported = 0;
 
    /* Try to use desktop resolution if nothing is specifically set. */
-#if SDL_VERSION_ATLEAST(1,2,10)
-   if (!conf.explicit_dim) {
-      gl_screen.w = vidinfo->current_w;
-      gl_screen.h = vidinfo->current_h;
+   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0) && !conf.explicit_dim) {
+      gl_screen.w = gl_screen.desktop_w;
+      gl_screen.h = gl_screen.desktop_h;
    }
-#endif /* SDL_VERSION_ATLEAST(1,2,10) */
 
    /* Get available modes and see what we can use. */
    modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
@@ -587,11 +584,15 @@ static int gl_hint (void)
 int gl_init (void)
 {
    unsigned int flags;
-   const SDL_VideoInfo *vidinfo;
+   int dw, dh;
 
    /* Defaults. */
+   dw = gl_screen.desktop_w;
+   dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
    flags  = SDL_OPENGL;
+   gl_screen.desktop_w = dw;
+   gl_screen.desktop_h = dh;
 
    /* Load configuration. */
    if (conf.vsync)
@@ -610,24 +611,12 @@ int gl_init (void)
       return -1;
    }
 
-   /* Get the video information. */
-   vidinfo = SDL_GetVideoInfo();
-
    /* Set opengl flags. */
    gl_setupAttributes();
 
    /* See if should set up fullscreen. */
    if (conf.fullscreen)
-      gl_setupFullscreen( &flags, vidinfo );
-
-   /* Check to see if trying to create above screen resolution without player
-    * asking for such a large size. */
-#if SDL_VERSION_ATLEAST(1,2,10)
-   if (!conf.explicit_dim) {
-      gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
-      gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
-   }
-#endif /* SDL_VERSION_ATLEAST(1,2,10) */
+      gl_setupFullscreen( &flags );
 
    /* Create the window. */
    gl_createWindow( flags );

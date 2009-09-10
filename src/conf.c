@@ -157,6 +157,27 @@ void conf_setDefaults (void)
  */
 void conf_setVideoDefaults (void)
 {
+   int w, h, f;
+
+   /* More complex resolution handling. */
+   f = 0;
+   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0)) {
+      /* Try higher resolution. */
+      w = 1024;
+      h = 768;
+
+      /* Fullscreen and fit everything onscreen. */
+      if ((gl_screen.desktop_w <= w) || (gl_screen.desktop_h <= h)) {
+         w = gl_screen.desktop_w;
+         h = gl_screen.desktop_h;
+         f = 1;
+      }
+   }
+   else {
+      w = 800;
+      h = 600;
+   }
+
    /* OpenGL. */
    conf.fsaa         = 1;
    conf.vsync        = 0;
@@ -165,11 +186,11 @@ void conf_setVideoDefaults (void)
    conf.compress     = 0;
 
    /* Window. */
-   conf.width        = 800;
-   conf.height       = 600;
+   conf.fullscreen   = f;
+   conf.width        = w;
+   conf.height       = h;
    conf.explicit_dim = 0;
    conf.scalefactor  = 1.;
-   conf.fullscreen   = 0.;
 
    /* FPS. */
    conf.fps_show     = 0;

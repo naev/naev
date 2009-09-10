@@ -157,6 +157,16 @@ int main( int argc, char** argv )
       return -1;
    }
 
+   /* Get desktop dimensions. */
+#if SDL_VERSION_ATLEAST(1,2,10)
+   const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
+   gl_screen.desktop_w = vidinfo->current_w;
+   gl_screen.desktop_h = vidinfo->current_h;
+#else /* #elif SDL_VERSION_ATLEAST(1,2,10) */
+   gl_screen.desktop_w = 0;
+   gl_screen.desktop_h = 0;
+#endif /* #elif SDL_VERSION_ATLEAST(1,2,10) */
+
    /* We'll be parsing XML. */
    LIBXML_TEST_VERSION
    xmlInitParser();
