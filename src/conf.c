@@ -114,23 +114,6 @@ void conf_setDefaults (void)
    /* ndata. */
    conf.ndata        = NULL;
 
-   /* OpenGL. */
-   conf.fsaa         = 1;
-   conf.vsync        = 0;
-   conf.vbo          = 1;
-   conf.mipmaps      = 1;
-   conf.compress     = 0;
-
-   /* Memory. */
-   conf.engineglow   = 1;
-
-   /* Window. */
-   conf.width        = 800;
-   conf.height       = 600;
-   conf.explicit_dim = 0;
-   conf.scalefactor  = 1.;
-   conf.fullscreen   = 0.;
-
    /* Sound. */
 #if USE_OPENAL
    conf.sound_backend = strdup("openal");
@@ -142,10 +125,6 @@ void conf_setDefaults (void)
    conf.nosound      = 0;
    conf.sound        = 0.4;
    conf.music        = 0.8;
-
-   /* FPS. */
-   conf.fps_show     = 0;
-   conf.fps_max      = 200;
 
    /* Joystick. */
    conf.joystick_ind = -1;
@@ -162,11 +141,42 @@ void conf_setDefaults (void)
    conf.afterburn_sens = 250;
    conf.nosave       = 0;
 
+   /* Video. */
+   conf_setVideoDefaults();
+
    /* Input */
    input_setDefault();
 
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */
+}
+
+
+/**
+ * @brief Sets the video defaults.
+ */
+void conf_setVideoDefaults (void)
+{
+   /* OpenGL. */
+   conf.fsaa         = 1;
+   conf.vsync        = 0;
+   conf.vbo          = 1;
+   conf.mipmaps      = 1;
+   conf.compress     = 0;
+
+   /* Window. */
+   conf.width        = 800;
+   conf.height       = 600;
+   conf.explicit_dim = 0;
+   conf.scalefactor  = 1.;
+   conf.fullscreen   = 0.;
+
+   /* FPS. */
+   conf.fps_show     = 0;
+   conf.fps_max      = 200;
+
+   /* Memory. */
+   conf.engineglow   = 1;
 }
 
 
