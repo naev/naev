@@ -675,8 +675,8 @@ static void opt_videoSave( unsigned int wid, char *str )
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );
-   inp = window_getInput( wid, "inpRes" );
-   conf.fps_max = ABS( atoi(inp) );
+   inp = window_getInput( wid, "inpFPS" );
+   conf.fps_max = atoi(inp);
 }
 
 
