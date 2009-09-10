@@ -24,6 +24,7 @@
 #include "music.h"
 #include "nstd.h"
 #include "dialogue.h"
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -38,6 +39,9 @@ static const char *opt_names[] = {
    "Audio",
    "Input"
 };
+
+
+static int opt_restart = 0;
 
 
 /*
@@ -55,6 +59,7 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
  */
 /* Misc. */
 static void opt_close( unsigned int wid, char *name );
+static void opt_needRestart( unsigned int wid );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
@@ -71,6 +76,8 @@ static void opt_setKey( unsigned int wid, char *str );
 static void opt_unsetKey( unsigned int wid, char *str );
 /* Video stuff. */
 static void opt_video( unsigned int wid );
+static void opt_videoRes( unsigned int wid, char *str );
+static void opt_videoSave( unsigned int wid, char *str );
 
 
 /**
@@ -489,9 +496,137 @@ static void opt_unsetKey( unsigned int wid, char *str )
 static void opt_video( unsigned int wid )
 {
    (void) wid;
+   int i, j;
+   char buf[16];
+   int w, h, y;
+   SDL_Rect** modes;
+   char **res;
+
+   /* Get size. */
+   window_dimWindow( wid, &w, &h );
 
    /* Close button */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", opt_close );
+   window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnApply", "Apply", opt_videoSave );
+
+   /* Resolution bits. */
+   y = -40;
+   window_addText( wid, 20, y, 100, 20, 1, "txtSRes",
+         &gl_smallFont, &cDConsole, "Resolution" );
+   y -= 40;
+   window_addInput( wid, 20, y, 100, 20, "inpRes", 16, 1 );
+   snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+   window_setInput( wid, "inpRes", buf );
+   window_setInputFilter( wid, "inpRes",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_addCheckbox( wid, 140, y, 100, 20,
+         "chkFullscreen", "Fullscreen", NULL, conf.fullscreen );
+   y -= 30;
+   modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+   j = 1;
+   for (i=0; modes[i]; i++) {
+      if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
+         j = 0;
+   }
+   res = malloc( sizeof(char*) * (i+j) );
+   if (j) {
+      res[0] = malloc(16);
+      snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
+      j = 0;
+   }
+   for (i=0; modes[i]; i++) {
+      res[i] = malloc(16);
+      snprintf( res[i], 16, "%dx%d", modes[i]->w, modes[i]->h );
+      if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
+         j = i;
+   }
+   window_addList( wid, 20, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
+   y -= 1200;
+
+
+   /* Restart text. */
+   window_addText( wid, 20, 20, w-40 - 2*(BUTTON_WIDTH + 20), 30, 1, "txtRestart",
+         &gl_smallFont, &cBlack, NULL );
+   if (opt_restart)
+      opt_needRestart(wid);
 }
+
+/**
+ * @brief Marks that needs restart.
+ */
+static void opt_needRestart( unsigned int wid )
+{
+   opt_restart = 1;
+   window_modifyText( wid, "txtRestart",
+         "Restart NAEV for changes to take effect" );
+}
+
+
+/**
+ * @brief Callback when resolution changes.
+ */
+static void opt_videoRes( unsigned int wid, char *str )
+{
+   char *buf;
+   buf = toolkit_getList( wid, str );
+   window_setInput( wid, "inpRes", buf );
+}
+
+
+/**
+ * @brief Saves the video settings.
+ */
+static void opt_videoSave( unsigned int wid, char *str )
+{
+   (void) str;
+   int i, j, s;
+   char *inp, buf[16], width[16], height[16];
+   int w, h, f;
+
+   /* Handle resolution. */
+   inp = window_getInput( wid, "inpRes" );
+   memset( width, '\0', sizeof(width) );
+   memset( height, '\0', sizeof(height) );
+   j = 0;
+   s = 0;
+   for (i=0; i<16; i++) {
+      if (isdigit(inp[i])) {
+         if (j==0)
+            width[s++] = inp[i];
+         else
+            height[s++] = inp[i];
+      }
+      else {
+         j++;
+         s = 0;
+      }
+   }
+   w = atoi(width);
+   h = atoi(height);
+   if ((w==0) || (h==0)) {
+      dialogue_alert( "Height/Width invalid. Should be formatted like 1024x768." );
+      return;
+   }
+   if ((w != conf.width) || (h != conf.height)) {
+      conf.explicit_dim = 1;
+      conf.width  = w;
+      conf.height = h;
+      opt_needRestart(wid);
+      snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+      window_setInput( wid, "inpRes", buf );
+   }
+
+   /* Fullscreen. */
+   f = window_checkboxState( wid, "chkFullscreen" );
+   if (conf.fullscreen != f) {
+      conf.fullscreen = f;
+      opt_needRestart(wid);
+   }
+}
+
+
 
