@@ -498,9 +498,10 @@ static void opt_video( unsigned int wid )
    (void) wid;
    int i, j;
    char buf[16];
-   int w, h, y;
+   int w, h, y, x;
    SDL_Rect** modes;
    char **res;
+   const char *s;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -516,7 +517,7 @@ static void opt_video( unsigned int wid )
    /* Resolution bits. */
    y = -40;
    window_addText( wid, 20, y, 100, 20, 1, "txtSRes",
-         &gl_smallFont, &cDConsole, "Resolution" );
+         NULL, &cDConsole, "Resolution" );
    y -= 40;
    window_addInput( wid, 20, y, 100, 20, "inpRes", 16, 1 );
    snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
@@ -545,7 +546,35 @@ static void opt_video( unsigned int wid )
          j = i;
    }
    window_addList( wid, 20, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
-   y -= 1200;
+   y -= 140;
+
+
+   /* OpenGL options. */
+   window_addText( wid, 20, y, 100, 20, 1, "txtSGL",
+         NULL, &cDConsole, "OpenGL" );
+   y -= 40;
+   window_addCheckbox( wid, 20, y, 100, 20,
+         "chkVSync", "VSync", NULL, conf.vsync );
+   y -= 20;
+   window_addCheckbox( wid, 20, y, 100, 20,
+         "chkVBO", "VBO", NULL, conf.vbo );
+   y -= 20;
+   window_addCheckbox( wid, 20, y, 100, 20,
+         "chkMipmaps", "MipMaps", NULL, conf.mipmaps );
+   y -= 20;
+   s = "FPS Limit (0 = unlimited)";
+   x = gl_printWidthRaw( NULL, s );
+   window_addText( wid, 20, y, x, 20, 1, "txtSFPS",
+         NULL, &cBlack, s );
+   window_addInput( wid, 20+x+20, y, 40, 20, "inpFPS", 16, 1 );
+   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   window_setInput( wid, "inpFPS", buf );
+   window_setInputFilter( wid, "inpFPS",
+         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   y -= 20;
+   window_addCheckbox( wid, 20, y, 100, 20,
+         "chkFPS", "Show FPS", NULL, conf.fps_show );
+   y -= 20;
 
 
    /* Restart text. */
@@ -626,6 +655,28 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.fullscreen = f;
       opt_needRestart(wid);
    }
+
+   /* OpenGL. */
+   f = window_checkboxState( wid, "chkVSync" );
+   if (conf.vsync != f) {
+      conf.vsync = f;
+      opt_needRestart(wid);
+   }
+   f = window_checkboxState( wid, "chkVBO" );
+   if (conf.vbo != f) {
+      conf.vbo = f;
+      opt_needRestart(wid);
+   }
+   f = window_checkboxState( wid, "chkMipmaps" );
+   if (conf.mipmaps != f) {
+      conf.mipmaps = f;
+      opt_needRestart(wid);
+   }
+
+   /* FPS. */
+   conf.fps_show = window_checkboxState( wid, "chkFPS" );
+   inp = window_getInput( wid, "inpRes" );
+   conf.fps_max = ABS( atoi(inp) );
 }
 
 
