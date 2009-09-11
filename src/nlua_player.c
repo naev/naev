@@ -28,6 +28,8 @@
 #include "log.h"
 #include "player.h"
 #include "board.h"
+#include "mission.h"
+#include "event.h"
 
 
 /* player */
@@ -48,6 +50,8 @@ static int playerL_refuel( lua_State *L );
 static int playerL_unboard( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
+static int playerL_misnDone( lua_State *L );
+static int playerL_evtDone( lua_State *L );
 static const luaL_reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -66,6 +70,8 @@ static const luaL_reg playerL_methods[] = {
    { "unboard", playerL_unboard },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
+   { "misnDone", playerL_misnDone },
+   { "evtDone", playerL_evtDone },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg playerL_cond_methods[] = {
@@ -73,6 +79,8 @@ static const luaL_reg playerL_cond_methods[] = {
    { "ship", playerL_shipname },
    { "getFaction", playerL_getFaction },
    { "getRating", playerL_getRating },
+   { "misnDone", playerL_misnDone },
+   { "evtDone", playerL_evtDone },
    {0,0}
 }; /**< Conditional player lua methods. */
 
@@ -418,4 +426,59 @@ static int playerL_addShip( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Checks to see if player has done a mission.
+ *
+ * @usage if player.misnDone( "The Space Family" ) then -- Player finished mission
+ *
+ *    @luaparam name Name of the mission to check.
+ *    @luareturn true if mission was finished, false if it wasn't.
+ * @luafunc misnDone( name )
+ */
+static int playerL_misnDone( lua_State *L )
+{
+   const char *str;
+   int id;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+
+   /* Get mission ID. */
+   id = mission_getID( str );
+   if (id == -1) {
+      NLUA_ERROR(L, "Mission '%s' not found in stack", str);
+      return 0;
+   }
+
+   return player_missionAlreadyDone( id );
+}
+
+
+/**
+ * @brief Checks to see if player has done an event.
+ *
+ * @usage if player.evtDone( "Shipwreck" ) then -- Player finished event
+ *
+ *    @luaparam name Name of the event to check.
+ *    @luareturn true if event was finished, false if it wasn't.
+ * @luafunc evtDone( name )
+ */
+static int playerL_evtDone( lua_State *L )
+{
+   const char *str;
+   int id;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+
+   /* Get event ID. */
+   id = event_dataID( str );
+   if (id == -1) {
+      NLUA_ERROR(L, "Event '%s' not found in stack", str);
+      return 0;
+   }
+
+   return player_eventAlreadyDone( id );
+}
 
