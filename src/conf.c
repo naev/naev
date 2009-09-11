@@ -59,7 +59,7 @@ lua_pop(L,1);
 
 
 /* Global configuration. */
-PlayerConf_t conf;
+PlayerConf_t conf = { .ndata = NULL, .sound_backend = NULL, .joystick_nam = NULL };
 
 /* from main.c */
 extern int nosound;
@@ -112,22 +112,14 @@ void conf_setDefaults (void)
    conf_cleanup();
 
    /* ndata. */
+   if (conf.ndata != NULL)
+      free(conf.ndata);
    conf.ndata        = NULL;
-
-   /* Sound. */
-#if USE_OPENAL
-   conf.sound_backend = strdup("openal");
-#else /* USE_OPENAL */
-   conf.sound_backend = strdup("sdlmix");
-#endif /* USE_OPENAL */
-   conf.al_efx       = 1;
-   conf.al_bufsize   = 128;
-   conf.nosound      = 0;
-   conf.sound        = 0.4;
-   conf.music        = 0.8;
 
    /* Joystick. */
    conf.joystick_ind = -1;
+   if (conf.joystick_nam != NULL)
+      free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
    /* Land. */
@@ -141,6 +133,9 @@ void conf_setDefaults (void)
    conf.afterburn_sens = 250;
    conf.nosave       = 0;
 
+   /* Audio. */
+   conf_setAudioDefaults();
+
    /* Video. */
    conf_setVideoDefaults();
 
@@ -149,6 +144,30 @@ void conf_setDefaults (void)
 
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */
+}
+
+
+/**
+ * @brief Sets the audio defaults.
+ */
+void conf_setAudioDefaults (void)
+{
+   if (conf.sound_backend != NULL) {
+      free(conf.sound_backend);
+      conf.sound_backend = NULL;
+   }
+
+   /* Sound. */
+#if USE_OPENAL
+   conf.sound_backend = strdup("openal");
+#else /* USE_OPENAL */
+   conf.sound_backend = strdup("sdlmix");
+#endif /* USE_OPENAL */
+   conf.al_efx       = 1;
+   conf.al_bufsize   = 128;
+   conf.nosound      = 0;
+   conf.sound        = 0.4;
+   conf.music        = 0.8;
 }
 
 
@@ -208,8 +227,13 @@ void conf_cleanup (void)
 {
    if (conf.ndata != NULL)
       free(conf.ndata);
+   if (conf.sound_backend != NULL)
+      free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
       free(conf.joystick_nam);
+
+   /* Clear memory. */
+   memset( &conf, 0, sizeof(conf) );
 }
 
 
