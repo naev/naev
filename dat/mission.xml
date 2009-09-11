@@ -17,7 +17,7 @@
   </flags>
   <avail>
    <chance>100</chance>
-   <cond>var.peek("tutorial_aborted") ~= true</cond>
+   <cond>var.peek("tutorial_aborted") ~= true and player.evtDone( "Tutorial Features" ) ~= true</cond>
    <location>Land</location>
 	<done>Tutorial</done>
   </avail>
@@ -41,7 +41,6 @@
   </flags>
   <avail>
    <chance>100</chance>
-   <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>None</location>
 	<done>Tutorial Features</done>
   </avail>
