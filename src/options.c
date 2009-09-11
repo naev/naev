@@ -334,8 +334,9 @@ static void opt_audio( unsigned int wid )
    (void) wid;
    int i, j;
    int cw;
-   int w, h, y, x;
+   int w, h, y, x, l;
    char buf[32], **s;
+   const char *str;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -361,6 +362,11 @@ static void opt_audio( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkNosound", "Disable all sound/music", NULL, conf.nosound );
    y -= 30;
+   str = "Backends";
+   l = gl_printWidthRaw( NULL, str );
+   window_addText( wid, x, y, l, 40, 0, "txtSBackends",
+         NULL, NULL, str );
+   l += 10;
    i = 0;
    j = 0;
    s = malloc(sizeof(char*)*2);
@@ -376,8 +382,16 @@ static void opt_audio( unsigned int wid )
 #endif /* USE_SDLMIX */
    if (i==0)
       s[i++] = strdup("none");
-   window_addList( wid, x, y, 100, 40, "lstSound", s, i, j, NULL );
+   window_addList( wid, x+l, y, cw-(x+l), 40, "lstSound", s, i, j, NULL );
    y -= 50;
+
+   /* OpenAL options. */
+   window_addText( wid, x+20, y, cw, 20, 0, "txtSOpenal",
+         NULL, &cDConsole, "OpenAL" );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkEFX", "EFX (More CPU)", NULL, conf.al_efx );
+   y -= 20;
 
 
    /* Sound levels. */
@@ -420,12 +434,14 @@ static void opt_audioSave( unsigned int wid, char *str )
    int f;
    char *s;
 
+   /* General. */
    f = window_checkboxState( wid, "chkNosound" );
    if (conf.nosound != f) {
       conf.nosound = f;
       opt_needRestart();
    }
 
+   /* Backend. */
    s = toolkit_getList( wid, "lstSound" );
    if (conf.sound_backend != NULL) {
       if (strcmp(s,conf.sound_backend)!=0) {
@@ -435,6 +451,13 @@ static void opt_audioSave( unsigned int wid, char *str )
    }
    else {
       conf.sound_backend = strdup(s);
+   }
+
+   /* OpenAL. */
+   f = window_checkboxState( wid, "chkEFX" );
+   if (conf.al_efx != f) {
+      conf.al_efx = f;
+      opt_needRestart();
    }
 }
 
@@ -469,6 +492,7 @@ static void opt_audioUpdate( unsigned int wid, char *str )
 
    /* Checkboxkes. */
    window_checkboxSet( wid, "chkNosound", conf.nosound );
+   window_checkboxSet( wid, "chkEngineGlow", conf.al_efx );
 
    /* List. */
    toolkit_setList( wid, "lstSound",
