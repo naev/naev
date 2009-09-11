@@ -18,6 +18,7 @@ static int lst_mclick( Widget* lst, int button, int x, int y );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
+static Widget *lst_getWgt( const unsigned int wid, char* name );
 static int lst_focus( Widget* lst, double bx, double by );
 static void lst_scroll( Widget* lst, int direction );
 
@@ -344,14 +345,12 @@ static void lst_scroll( Widget* lst, int direction )
 
 
 /**
- * @brief Gets what is selected currently in a list.
- *
- * List includes Image Arrays.
+ * @brief Gets the list widget.
  */
-char* toolkit_getList( const unsigned int wid, char* name )
-{  
+static Widget *lst_getWgt( const unsigned int wid, char* name )
+{
    Widget *wgt = window_getwgt(wid,name);
-  
+
    /* Must be in stack. */
    if (wgt == NULL) {
       WARN("Widget '%s' not found", name);
@@ -363,12 +362,49 @@ char* toolkit_getList( const unsigned int wid, char* name )
       WARN("Widget '%s' is not a list", name);
       return NULL;
    }
+
+   return wgt;
+}
+
+
+/**
+ * @brief Gets what is selected currently in a list.
+ *
+ * List includes Image Arrays.
+ */
+char* toolkit_getList( const unsigned int wid, char* name )
+{  
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return NULL;
   
    /* Nothing selected. */
    if (wgt->dat.lst.selected == -1)
       return NULL;
 
    return wgt->dat.lst.options[ wgt->dat.lst.selected ];
+}
+
+
+/**
+ * @brief Sets the list value by name.
+ */
+char* toolkit_setList( const unsigned int wid, char* name, char* value )
+{
+   int i;
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return NULL;
+
+   for (i=0; i<wgt->dat.lst.noptions; i++) {
+      if (strcmp(wgt->dat.lst.options[i],value)==0) {
+         wgt->dat.lst.selected = i;
+         lst_scroll( wgt, 0 ); /* checks boundries and triggers callback */
+         return value;
+      }
+   }
+
+   return NULL;
 }
 
 
@@ -381,19 +417,9 @@ char* toolkit_getList( const unsigned int wid, char* name )
  */
 int toolkit_getListPos( const unsigned int wid, char* name )
 {
-   Widget *wgt = window_getwgt(wid,name);
-
-   /* Widget must be in stack. */
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", name);
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
       return -1;
-   }
-
-   /* Must be a list. */
-   if (wgt->type != WIDGET_LIST) {
-      WARN("Widget '%s' is not a list", name);
-      return -1;
-   }
 
    return wgt->dat.lst.selected;
 }

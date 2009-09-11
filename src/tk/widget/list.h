@@ -31,6 +31,7 @@ void window_addList( const unsigned int wid,
 /* Misc functions. */
 char* toolkit_getList( const unsigned int wid, char* name );
 int toolkit_getListPos( const unsigned int wid, char* name );
+char* toolkit_setList( const unsigned int wid, char* name, char* value );
 
 
 #endif /* WGT_LIST_H */
