@@ -27,12 +27,12 @@ typedef struct WidgetTextData_ {
 void window_addText( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      const int centered, char* name, /* text is centered? label name */
+      const int centered, const char* name, /* text is centered? label name */
       glFont* font, glColour* colour, const char* string ); /* font, colour and actual text */
 
 /* Misc functions. */
 void window_modifyText( const unsigned int wid,
-      char* name, char* newstring );
+      const char* name, const char* newstring );
 
 
 #endif /* WGT_TEXT_H */
