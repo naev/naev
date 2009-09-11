@@ -332,9 +332,10 @@ static void opt_setMusicLevel( unsigned int wid, char *str )
 static void opt_audio( unsigned int wid )
 {
    (void) wid;
+   int i, j;
    int cw;
    int w, h, y, x;
-   char buf[32];
+   char buf[32], **s;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -350,9 +351,37 @@ static void opt_audio( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", "Defaults", opt_audioDefaults );
 
-   /* Sound levels. */
+   /* General options. */
    cw = (w-60)/2;
    x = 20;
+   y = -60;
+   window_addText( wid, x+20, y, cw, 20, 0, "txtSGeneral",
+         NULL, &cDConsole, "General" );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkNosound", "Disable all sound/music", NULL, conf.nosound );
+   y -= 30;
+   i = 0;
+   j = 0;
+   s = malloc(sizeof(char*)*2);
+#if USE_OPENAL
+   if (strcmp(conf.sound_backend,"openal")==0)
+      j = i;
+   s[i++] = strdup("openal");
+#endif /* USE_PONAL */
+#if USE_SDLMIX
+   if (strcmp(conf.sound_backend,"sdlmix")==0)
+      j = i;
+   s[i++] = strdup("sdlmix");
+#endif /* USE_SDLMIX */
+   if (i==0)
+      s[i++] = strdup("none");
+   window_addList( wid, x, y, 100, 40, "lstSound", s, i, j, NULL );
+   y -= 50;
+
+
+   /* Sound levels. */
+   x = 20 + cw + 20; 
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
          NULL, &cDConsole, "Volume Levels" );
@@ -388,7 +417,25 @@ static void opt_audio( unsigned int wid )
 static void opt_audioSave( unsigned int wid, char *str )
 {
    (void) str;
-   (void) wid;
+   int f;
+   char *s;
+
+   f = window_checkboxState( wid, "chkNosound" );
+   if (conf.nosound != f) {
+      conf.nosound = f;
+      opt_needRestart();
+   }
+
+   s = toolkit_getList( wid, "lstSound" );
+   if (conf.sound_backend != NULL) {
+      if (strcmp(s,conf.sound_backend)!=0) {
+         free(conf.sound_backend);
+         conf.sound_backend = strdup(s);
+      }
+   }
+   else {
+      conf.sound_backend = strdup(s);
+   }
 }
 
 /**
@@ -398,7 +445,14 @@ static void opt_audioDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Set defaults. */
    conf_setAudioDefaults();
+
+   /* Have sound levels affect. */
+   sound_volume(conf.sound);
+	music_volume(conf.music);
+
+   /* Update widgets. */
    opt_audioUpdate( wid, NULL );
 }
 
@@ -412,6 +466,13 @@ static void opt_audioUpdate( unsigned int wid, char *str )
    /* Faders. */
    window_faderValue( wid, "fadSound", sound_getVolume() );
    window_faderValue( wid, "fadMusic", music_getVolume() );
+
+   /* Checkboxkes. */
+   window_checkboxSet( wid, "chkNosound", conf.nosound );
+
+   /* List. */
+   toolkit_setList( wid, "lstSound",
+         (conf.sound_backend==NULL) ? "none" : conf.sound_backend );
 }
 
 
