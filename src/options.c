@@ -292,10 +292,16 @@ static void menuKeybinds_update( unsigned int wid, char *name )
  */
 static void opt_setSFXLevel( unsigned int wid, char *str )
 {
+   char buf[32];
 	double vol;
 
+   /* Set fader. */
    vol = window_getFaderValue(wid, str);
 	sound_volume(vol);
+
+   /* Update message. */
+   snprintf( buf, sizeof(buf), "Sound Volume: %.2f", sound_getVolume() );
+   window_modifyText( wid, "txtSound", buf );
 }
 
 
@@ -307,10 +313,16 @@ static void opt_setSFXLevel( unsigned int wid, char *str )
  */
 static void opt_setMusicLevel( unsigned int wid, char *str )
 {
+   char buf[32];
    double vol;
 
+   /* Update fader. */
    vol = window_getFaderValue(wid, str);
 	music_volume(vol);
+
+   /* Update message. */
+   snprintf( buf, sizeof(buf), "Music Volume: %.2f", music_getVolume() );
+   window_modifyText( wid, "txtMusic", buf );
 }
 
 
@@ -322,7 +334,7 @@ static void opt_audio( unsigned int wid )
    (void) wid;
    int cw;
    int w, h, y, x;
-   char buf[64];
+   char buf[32];
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
