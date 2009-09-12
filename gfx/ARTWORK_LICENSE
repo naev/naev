@@ -55,7 +55,6 @@
        * reroute.png
        * shield.png
        * stabilizer.png
-       * thruster.png
        * lancelot_fighter.png
        * drone_fighter.png
    * planet
@@ -172,7 +171,7 @@
      * store
        * droid.png
 
- * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: GFDL
+ * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: CC-By-SA 3.0
    * outfit
      * store
        * map.png
@@ -182,7 +181,7 @@
      * store
        * solar.png
  
- * Author: Kristian Mølhave, License: CC-by v2.5
+ * Author: Kristian Mølhave, License: CC-By 3.0
    * outfit
      * store
        * nanobond.png
@@ -330,3 +329,8 @@
      * sirius_small.png
      * zalek_small.png
 
+  * Author: AstroMenace (Viewizard), License: GPLv3
+    * gfx
+      * outfit
+        * store
+          * thruster.png
