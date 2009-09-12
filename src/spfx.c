@@ -551,7 +551,7 @@ void spfx_shake( double mod )
  */
 void spfx_getShake( double *x, double *y )
 {
-   if (shake_off) {
+   if (shake_off || paused) {
       *x = 0.;
       *y = 0.;
    }
