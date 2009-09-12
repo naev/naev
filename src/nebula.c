@@ -26,6 +26,7 @@
 #include "pause.h"
 #include "gui.h"
 #include "conf.h"
+#include "spfx.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -37,7 +38,6 @@
 
 
 /* Externs */
-extern Vector2d shake_pos; /**< from spfx.c */
 extern void loadscreen_render( double done, const char *msg ); /**< from naev.c */
 
 
@@ -283,6 +283,7 @@ static void nebu_renderMultitexture( const double dt )
 {
    GLfloat col[4];
    int temp;
+   double sx, sy;
 
    /* calculate frame to draw */
    nebu_timer -= dt;
@@ -339,9 +340,10 @@ static void nebu_renderMultitexture( const double dt )
 
    /* Compensate possible rumble */
    if (!paused) {
+      spfx_getShake( &sx, &sy );
       gl_matrixMode( GL_PROJECTION );
       gl_matrixPush();
-      gl_matrixTranslate( shake_pos.x, shake_pos.y );
+         gl_matrixTranslate( sx, sy );
    }
 
    /* Now render! */
@@ -507,6 +509,7 @@ void nebu_renderOverlay( const double dt )
    double gx, gy;
    double ox, oy;
    double z;
+   double sx, sy;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
@@ -523,8 +526,9 @@ void nebu_renderOverlay( const double dt )
    ox = gx;
    oy = gy;
    if (!paused) {
-      ox += shake_pos.x;
-      oy += shake_pos.y;
+      spfx_getShake( &sx, &sy );
+      ox += sx;
+      oy += sy;
    }
    gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
