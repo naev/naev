@@ -872,18 +872,16 @@ void equipment_addAmmo (void)
          continue;
 
       /* Add ammo if able to. */
-      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
+      ammo = outfit_ammo(o);
+      if (ammo == NULL)
+         continue;
+      q    = player_outfitOwned(ammo);
 
-         /* Get ammo. */
-         ammo = outfit_ammo(o);
-         q    = player_outfitOwned(ammo);
+      /* Add ammo. */
+      q = pilot_addAmmo( p, p->outfits[i], ammo, q );
 
-         /* Add ammo. */
-         q = pilot_addAmmo( p, p->outfits[i], ammo, q );
-
-         /* Remove from player. */
-         player_rmOutfit( ammo, q );
-      }
+      /* Remove from player. */
+      player_rmOutfit( ammo, q );
    }
 }
 /**
@@ -1219,13 +1217,22 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int ret;
    int i;
    Pilot *ship;
-   Outfit *o;
+   Outfit *o, *ammo;
 
    ship = eq_wgt.selected;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
       o = ship->outfits[i]->outfit;
+
+      /* Remove ammo first. */
+      ammo = outfit_ammo(o);
+      if (ammo != NULL) {
+         ret = pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
+         player_addOutfit( ammo, ret );
+      }
+
+      /* Remove rest. */
       ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
       if (ret==0)
          player_addOutfit( o, 1 );
