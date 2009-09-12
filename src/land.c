@@ -1652,6 +1652,9 @@ void land( Planet* p )
    /* Run hooks, run after music in case hook wants to change music. */
    hooks_run("land");
 
+   /* Reset markers if needed. */
+   mission_sysMark();
+
    /* Check land missions. */
    if (!has_visited(VISITED_LAND)) {
       missions_run(MIS_AVAIL_LAND, land_planet->faction,
