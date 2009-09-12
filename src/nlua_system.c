@@ -26,6 +26,7 @@
 
 
 /* System metatable methods */
+static int systemL_cur( lua_State *L );
 static int systemL_get( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
@@ -36,6 +37,7 @@ static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static const luaL_reg system_methods[] = {
+   { "cur", systemL_cur },
    { "get", systemL_get },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
@@ -159,14 +161,29 @@ int lua_issystem( lua_State *L, int ind )
 
 
 /**
+ * @brief Gets the current system.
+ *
+ * @usage sys = system.cur() -- Gets the current system
+ *
+ *    @luareturn Current system.
+ * @luafunc cur()
+ */
+static int systemL_cur( lua_State *L )
+{
+   LuaSystem sys;
+   sys.s = cur_system;
+   lua_pushsystem(L,sys);
+   return 1;
+}
+
+
+/**
  * @brief Gets a system.
  *
  * Behaves differently depending on what you pass as param:
- *    - nil : Gets the current system.
  *    - string : Gets the system by name.
  *    - planet : Gets the system by planet.
  *
- * @usage sys = system.get() -- Gets the current system.
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
  *

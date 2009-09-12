@@ -26,6 +26,7 @@
 
 
 /* Planet metatable methods */
+static int planetL_cur( lua_State *L );
 static int planetL_get( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
@@ -38,6 +39,7 @@ static int planetL_hasCommodities( lua_State *L );
 static int planetL_hasOutfits( lua_State *L );
 static int planetL_hasShipyard( lua_State *L );
 static const luaL_reg planet_methods[] = {
+   { "cur", planetL_cur },
    { "get", planetL_get },
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
@@ -160,6 +162,31 @@ int lua_isplanet( lua_State *L, int ind )
    return ret;
 }
 
+
+/**
+ * @brief Gets the current planet - MUST BE LANDED.
+ *
+ * @usage p,s = planet.cur() -- Gets current planet (assuming landed)
+ *
+ *    @luareturn The planet and system in belongs to.
+ * @luafunc cur()
+ */
+static int planetL_cur( lua_State *L )
+{
+   LuaPlanet planet;
+   LuaSystem sys;
+   if (land_planet != NULL) {
+      planet.p = land_planet;
+      lua_pushplanet(L,planet);
+      sys.s = system_get( planet_getSystem(land_planet->name) );
+      lua_pushsystem(L,sys);
+      return 2;
+   }
+   NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
+   return 0; /* Not landed. */
+}
+
+
 /**
  * @brief Gets a planet.
  *
@@ -171,7 +198,6 @@ int lua_isplanet( lua_State *L, int ind )
  *    - table : Gets random planet belonging to any of the factions in the
  *               table.
  *
- * @usage p,s = planet.get() -- Gets current planet (assuming landed)
  * @usage p,s = planet.get( "Anecu" ) -- Gets planet by name
  * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
  * @usage p,s = planet.get(true) -- Gets completely random planet
