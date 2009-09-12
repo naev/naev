@@ -934,7 +934,7 @@ void player_think( Pilot* pplayer, const double dt )
 
       /* Need fuel. */
       else if (pplayer->fuel < HYPERSPACE_FUEL)
-         player_abortAutonav("Not enough fuel for autonav to continue.");
+         player_abortAutonav("Not enough fuel for autonav to continue");
 
       /* Try to jump. */
       else if (space_canHyperspace(pplayer))
