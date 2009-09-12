@@ -49,9 +49,12 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    int i;
    Window *wdw, *wtmp;
    Widget *wgt;
-   
+  
+   /* Create the Widget. */
    wdw = window_wget(wid);
    wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return NULL;
 
    /* generic */
    wgt->type = WIDGET_TABBEDWINDOW;

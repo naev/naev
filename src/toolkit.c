@@ -141,6 +141,10 @@ Widget* window_newWidget( Window* w, const char *name )
 {
    Widget *wgt, *wlast, *wtmp;
 
+   /* NULL protection. */
+   if (w==NULL)
+      return NULL;
+
    /* Try to find one with the same name first. */
    wlast = NULL;
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
