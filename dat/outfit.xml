@@ -881,7 +881,7 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>9</tech>
-   <mass>2</mass>
+   <mass>0</mass>
    <price>125000</price>
    <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
    <gfx_store>reroute</gfx_store>
@@ -898,7 +898,7 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>13</tech>
-   <mass>2</mass>
+   <mass>0</mass>
    <price>135000</price>
    <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
    <gfx_store>stabilizer</gfx_store>
@@ -916,7 +916,7 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>13</tech>
-   <mass>4</mass>
+   <mass>0</mass>
    <price>130000</price>
    <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
    <gfx_store>thruster</gfx_store>
