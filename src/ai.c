@@ -499,7 +499,7 @@ void ai_destroy( Pilot* p )
  *
  *    @return 0 on no errors.
  */
-int ai_init (void)
+int ai_load (void)
 {
    char** files;
    uint32_t nfiles, i;

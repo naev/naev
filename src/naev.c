@@ -252,9 +252,6 @@ int main( int argc, char** argv )
    music_choose("load");
 
 
-   /* Misc */
-   if (ai_init()) WARN("Error initializing AI");
-
    /* Misc graphics init */
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
@@ -466,7 +463,9 @@ void load_all (void)
    loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
    commodity_load(); /* dep for space */
    loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
-   factions_load(); /* dep for fleet, space, missions */
+   factions_load(); /* dep for fleet, space, missions, AI */
+   loadscreen_render( 2./LOADING_STAGES, "Loading AI..." );
+   ai_load(); /* dep for fleets */
    loadscreen_render( 3./LOADING_STAGES, "Loading Missions..." );
    missions_load(); /* no dep */
    loadscreen_render( 4./LOADING_STAGES, "Loading Events..." );

@@ -13,18 +13,27 @@ include("ai/equip/dvaered.lua")
 
 
 --[[
+-- Some faction definitions for faster lookups.
+--]]
+_eq_emp = faction.get("Empire")
+_eq_god = faction.get("Goddard")
+_eq_pro = faction.get("Proteron")
+_eq_dva = faction.get("Dvaered")
+_eq_pir = faction.get("Pirate")
+
+
+--[[
 -- @brief Equips a pilot
 --
 --    @param p Pilot to equip
 --    @param f Faction to which pilot belongs
 --]]
 function equip ( p, f )
-   if f == faction.get( "Empire" ) or f == faction.get( "Goddard" ) or
-         f == faction.get( "Proteron" ) then
+   if f == _eq_emp or f == _eq_god or f == _eq_pro then
       equip_empire( p )
-   elseif f == faction.get( "Dvaered" ) then
+   elseif f == _eq_dva then
       equip_dvaered( p )
-   elseif f == faction.get( "Pirate" ) then
+   elseif f == _eq_pir then
       equip_pirate( p )
    else
       equip_generic( p )
