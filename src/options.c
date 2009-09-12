@@ -132,7 +132,7 @@ static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
    int cw;
-   int w, h, y, x;
+   int w, h, y, x, by;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -160,12 +160,52 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, "Commit: "GIT_COMMIT );
 #endif /* GIT_COMMIT */
    y -= 50;
+   by = y;
+
+
+   /* Compiletime stuff. */
+   cw = (w-60)/2;
+   y  = by;
+   x  = 20;
+   window_addText( wid, x+20, y, cw, 20, 0, "txtCompile",
+         NULL, &cDConsole, "Compilation Flags" );
+   y -= 30;
+   window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
+         NULL, NULL,
+         ""
+#ifdef DEBUGGING
+         "DEBUG=1\n"
+#ifdef DEBUG_PARANOID
+         "DEBUG_PARANOID=1\n"
+#endif /* DEBUG_PARANOID */
+#endif /* DEBUGGING */
+#if defined(LINUX)
+         "OS=LINUX\n"
+#elif defined(FREEBSD)
+         "OS=FREEBSD\n"
+#elif defined(MACOSX)
+         "OS=MACOSX\n"
+#elif defined(WIN32)
+         "OS=WIN32\n"
+#else
+         "OS=UNKNOWN\n"
+#endif
+#ifdef USE_OPENAL
+         "USE_OPENAL=1\n"
+#endif /* USE_OPENAL */
+#ifdef USE_SDLMIX
+         "USE_SDLMIX=1\n"
+#endif
+#ifdef NDATA_DEF
+         "NDATA_DEF="NDATA_DEF"\n"
+#endif /* NDATA_DEF */
+         );
 
 
    /* Options. */
-   cw = (w-60)/2;
-   x  = 20;
-   window_addText( wid, x, y, cw, 20, 0, "txtSettings",
+   y  = by;
+   x += cw;
+   window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
          NULL, &cDConsole, "Settings" );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
