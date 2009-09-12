@@ -271,7 +271,7 @@ static int pilot_addFleet( lua_State *L )
 {
    Fleet *flt;
    const char *fltname, *fltai;
-   int i, j;
+   int i, j, first;
    unsigned int p;
    double a;
    double d;
@@ -363,27 +363,31 @@ static int pilot_addFleet( lua_State *L )
       a += 2.*M_PI;
 
    /* now we start adding pilots and toss ids into the table we return */
+   first = 1;
    j     = 0;
    lua_newtable(L);
    for (i=0; i<flt->npilots; i++) {
 
       plt = &flt->pilots[i];
 
-      if (RNG(0,100) <= plt->chance) {
+      if (RNG(0,100) > plt->chance)
+         continue;
 
-         /* fleet displacement */
+      /* Fleet displacement - first ship is exact. */
+      if (!first) {
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
-
-         /* Create the pilot. */
-         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
-
-         /* we push each pilot created into a table and return it */
-         lua_pushnumber(L,++j); /* index, starts with 1 */
-         lp.pilot = p;
-         lua_pushpilot(L,lp); /* value = LuaPilot */
-         lua_rawset(L,-3); /* store the value in the table */
+         first = 0;
       }
+
+      /* Create the pilot. */
+      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
+
+      /* we push each pilot created into a table and return it */
+      lua_pushnumber(L,++j); /* index, starts with 1 */
+      lp.pilot = p;
+      lua_pushpilot(L,lp); /* value = LuaPilot */
+      lua_rawset(L,-3); /* store the value in the table */
    }
    return 1;
 }
