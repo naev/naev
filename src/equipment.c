@@ -1225,6 +1225,10 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    for (i=0; i<ship->noutfits; i++) {
       o = ship->outfits[i]->outfit;
 
+      /* Skip null outfits. */
+      if (o==NULL)
+         continue;
+
       /* Remove ammo first. */
       ammo = outfit_ammo(o);
       if (ammo != NULL) {
