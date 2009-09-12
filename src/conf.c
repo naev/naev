@@ -130,8 +130,10 @@ void conf_setDefaults (void)
    conf.zoom_near    = 1.;
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
-   conf.afterburn_sens = 250;
    conf.nosave       = 0;
+
+   /* Gameplay. */
+   conf_setGameplayDefaults();
 
    /* Audio. */
    conf_setAudioDefaults();
@@ -144,6 +146,15 @@ void conf_setDefaults (void)
 
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */
+}
+
+
+/**
+ * @brief Sets the gameplay defaults.
+ */
+void conf_setGameplayDefaults (void)
+{
+   conf.afterburn_sens = 250;
 }
 
 

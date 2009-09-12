@@ -73,6 +73,7 @@ extern PlayerConf_t conf; /**< Player configuration. */
  * loading
  */
 void conf_setDefaults (void);
+void conf_setGameplayDefaults (void);
 void conf_setAudioDefaults (void);
 void conf_setVideoDefaults (void);
 int conf_loadConfig( const char* file );

@@ -30,11 +30,12 @@
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
-#define OPT_WINDOWS     3
+#define OPT_WINDOWS     4
 
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
 static const char *opt_names[] = {
+   "Gameplay",
    "Video",
    "Audio",
    "Input"
@@ -60,29 +61,34 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
 /* Misc. */
 static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
-/* Keybind menu. */
-static void opt_keybinds( unsigned int wid );
-static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
-      int *lw, int *lh, int *bw, int *bh );
-static void menuKeybinds_genList( unsigned int wid );
-static void menuKeybinds_update( unsigned int wid, char *name );
-/* Music. */
+/* Gameplay. */
+static void opt_gameplay( unsigned int wid );
+static void opt_gameplaySave( unsigned int wid, char *str );
+static void opt_gameplayDefaults( unsigned int wid, char *str );
+static void opt_gameplayUpdate( unsigned int wid, char *str );
+/* Video. */
+static void opt_video( unsigned int wid );
+static void opt_videoRes( unsigned int wid, char *str );
+static void opt_videoSave( unsigned int wid, char *str );
+static void opt_videoDefaults( unsigned int wid, char *str );
+static void opt_videoUpdate( unsigned int wid, char *str );
+/* Audio. */
 static void opt_audio( unsigned int wid );
 static void opt_audioSave( unsigned int wid, char *str );
 static void opt_audioDefaults( unsigned int wid, char *str );
 static void opt_audioUpdate( unsigned int wid, char *str );
 static void opt_setSFXLevel( unsigned int wid, char *str );
 static void opt_setMusicLevel( unsigned int wid, char *str );
+/* Keybind menu. */
+static void opt_keybinds( unsigned int wid );
+static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
+      int *lw, int *lh, int *bw, int *bh );
+static void menuKeybinds_genList( unsigned int wid );
+static void menuKeybinds_update( unsigned int wid, char *name );
 /* Setting keybindings. */
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
 static void opt_setKey( unsigned int wid, char *str );
 static void opt_unsetKey( unsigned int wid, char *str );
-/* Video stuff. */
-static void opt_video( unsigned int wid );
-static void opt_videoRes( unsigned int wid, char *str );
-static void opt_videoSave( unsigned int wid, char *str );
-static void opt_videoDefaults( unsigned int wid, char *str );
-static void opt_videoUpdate( unsigned int wid, char *str );
 
 
 /**
@@ -102,9 +108,10 @@ void opt_menu (void)
          OPT_WINDOWS, opt_names );
 
    /* Load tabs. */
-   opt_video(     opt_windows[0] );
-   opt_audio(     opt_windows[1] );
-   opt_keybinds(  opt_windows[2] );
+   opt_gameplay(  opt_windows[0] );
+   opt_video(     opt_windows[1] );
+   opt_audio(     opt_windows[2] );
+   opt_keybinds(  opt_windows[3] );
 
    /* Set as need restart if needed. */
    if (opt_restart)
@@ -115,6 +122,95 @@ static void opt_close( unsigned int wid, char *name )
    (void) wid;
    (void) name;
    window_destroy( opt_wid );
+}
+
+
+/**
+ * @brief Opens the gameplay menu.
+ */
+static void opt_gameplay( unsigned int wid )
+{
+   (void) wid;
+   int cw;
+   int w, h, y, x;
+
+   /* Get size. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Close button */
+   window_addButton( wid, -20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", opt_close );
+   window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnApply", "Apply", opt_gameplaySave );
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnDefaults", "Defaults", opt_gameplayDefaults );
+
+   /* Information. */
+   cw = (w-40);
+   x = 20;
+   y = -60;
+   window_addText( wid, x, y, cw, 20, 1, "txtVersion",
+         NULL, NULL, naev_version(1) );
+   y -= 20;
+#ifdef GIT_COMMIT
+   window_addText( wid, x, y, cw, 20, 1, "txtCommit",
+         NULL, NULL, "Commit: "GIT_COMMIT );
+#endif /* GIT_COMMIT */
+   y -= 50;
+
+
+   /* Options. */
+   cw = (w-60)/2;
+   x  = 20;
+   window_addText( wid, x, y, cw, 20, 0, "txtSettings",
+         NULL, &cDConsole, "Settings" );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkAfterburn", "Enable doubletap afterburn", NULL, conf.afterburn_sens );
+   y -= 20;
+
+   /* Restart text. */
+   window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
+         30, 1, "txtRestart", &gl_smallFont, &cBlack, NULL );
+}
+
+/**
+ * @brief Saves the gameplay options.
+ */
+static void opt_gameplaySave( unsigned int wid, char *str )
+{
+   (void) str;
+   int f;
+
+   f = window_checkboxState( wid, "chkAfterburn" );
+   if (!!conf.afterburn_sens != f) {
+      conf.afterburn_sens = f*250;
+   }
+}
+
+/**
+ * @brief Sets the default gameplay options.
+ */
+static void opt_gameplayDefaults( unsigned int wid, char *str )
+{
+   (void) str;
+
+   conf_setGameplayDefaults();
+   opt_gameplayUpdate( wid, NULL );
+}
+
+/**
+ * @brief Updates the gameplay options.
+ */
+static void opt_gameplayUpdate( unsigned int wid, char *str )
+{
+   (void) str;
+
+   /* Checkboxes. */
+   window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
 }
 
 
@@ -778,6 +874,7 @@ static void opt_needRestart (void)
    /* Modify widgets. */
    window_modifyText( opt_windows[0], "txtRestart", s );
    window_modifyText( opt_windows[1], "txtRestart", s );
+   window_modifyText( opt_windows[2], "txtRestart", s );
 }
 
 
