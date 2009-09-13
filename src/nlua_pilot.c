@@ -378,11 +378,10 @@ static int pilot_addFleet( lua_State *L )
          continue;
 
       /* Fleet displacement - first ship is exact. */
-      if (!first) {
+      if (!first)
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
-         first = 0;
-      }
+      first = 0;
 
       /* Create the pilot. */
       p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
