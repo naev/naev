@@ -155,6 +155,7 @@ void conf_setDefaults (void)
 void conf_setGameplayDefaults (void)
 {
    conf.afterburn_sens = 250;
+   conf.save_compress = 1;
 }
 
 
@@ -324,6 +325,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("autorefuel",conf.autorefuel);
 
       /* Misc. */
+      conf_loadBool("save_compress",conf.save_compress);
       conf_loadFloat("zoom_far",conf.zoom_far);
       conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
@@ -864,6 +866,10 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Misc. */
+   conf_saveComment("Enables compression on savegames");
+   conf_saveBool("save_compress",conf.save_compress);
+   conf_saveEmptyLine();
+
    conf_saveComment("Minimum and maximum zoom factor to use in-game");
    conf_saveComment("At 1.0, no sprites are scaled");
    conf_saveComment("zoom_far should be less then zoom_near");

@@ -211,6 +211,9 @@ static void opt_gameplay( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkAfterburn", "Enable doubletap afterburn", NULL, conf.afterburn_sens );
    y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
+   y -= 20;
 
    /* Restart text. */
    window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
@@ -229,6 +232,8 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    if (!!conf.afterburn_sens != f) {
       conf.afterburn_sens = f*250;
    }
+
+   conf.save_compress = window_checkboxState( wid, "chkCompress" );
 }
 
 /**
@@ -251,6 +256,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
+   window_checkboxSet( wid, "chkCompress", conf.save_compress );
 }
 
 

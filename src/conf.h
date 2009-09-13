@@ -55,6 +55,7 @@ typedef struct PlayerConf_s {
    int autorefuel; /**< Whether or not to autorefuel when landing. */
 
    /* Misc. */
+   int save_compress; /**< Compress savegame. */
    double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
    double zoom_near; /**< Minimum ingame zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
