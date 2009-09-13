@@ -232,6 +232,31 @@ function jump ()
 end
 
 
+function refuelBroadcast ()
+   if refship:alive() then
+      refship:broadcast("Tanker in system, contact if in need of fuel.")
+      misn.timerStart( "refuelBroadcast", 10000 )
+   end
+end
+
+
+function addRefuelShip ()
+   -- Create the pilot
+   refship = pilot.add( "Trader Mule", "empire_refuel" )[1]
+   refship:setFaction("Empire")
+   refship:setFriendly()
+
+   -- Maximize fuel
+   refship:rmOutfit("all") -- Only will have fuel pods
+   local h,m,l = refship:ship():slots()
+   refship:addOutfit( "Fuel Pod", l )
+   refship:setFuel( true ) -- Set fuel to max
+
+   -- Broadcast spam
+   refuelBroadcast()
+end
+
+
 -- Handles collective death
 function col_dead ()
    col_alive = col_alive - 1 -- Another one bites the dust
@@ -249,6 +274,9 @@ function col_dead ()
          misn.setMarker(misn_base_sys)
          misn_stage = 4
       end
+
+      -- Refuel ship enters
+      misn.timerStart( "addRefuelShip", 3000 )
    end
 end
 
