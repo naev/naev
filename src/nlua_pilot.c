@@ -51,6 +51,7 @@ static int pilot_toggleSpawn( lua_State *L );
 static int pilot_getPilots( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
+static int pilotL_id( lua_State *L );
 static int pilotL_alive( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
@@ -79,6 +80,7 @@ static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    /* Info. */
    { "name", pilotL_name },
+   { "id", pilotL_id },
    { "alive", pilotL_alive },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
@@ -547,6 +549,35 @@ static int pilotL_name( lua_State *L )
 
    /* Get name. */
    lua_pushstring(L, p->name);
+   return 1;
+}
+
+/**
+ * @brief Gets the ID of the pilot.
+ *
+ * @usage id = p:id()
+ *
+ *    @luaparam p Pilot to get the ID of.
+ *    @luareturn The ID of the curent pilot.
+ * @luafunc id( p )
+ */
+static int pilotL_id( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+
+   /* Parse parameters. */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get name. */
+   lua_pushnumber(L, p->id);
    return 1;
 }
 
