@@ -230,7 +230,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
 
    f = window_checkboxState( wid, "chkAfterburn" );
    if (!!conf.afterburn_sens != f) {
-      conf.afterburn_sens = f*250;
+      conf.afterburn_sens = (!!f)*250;
    }
 
    conf.save_compress = window_checkboxState( wid, "chkCompress" );

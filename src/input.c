@@ -559,7 +559,7 @@ static void input_key( int keynum, double value, double kabs )
 
          /* double tap accel = afterburn! */
          t = SDL_GetTicks();
-         if ((conf.afterburn_sens!= 0) &&
+         if ((conf.afterburn_sens != 0) &&
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
