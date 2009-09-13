@@ -247,9 +247,13 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *lc, *c, *dc;
 
    /* Render text. */
+   if ((o != NULL) && (lst[0].slot == o->slot)) 
+      c = &cDConsole;
+   else
+      c = &cBlack;
    gl_printMidRaw( &gl_smallFont, w+10.,
          x + SCREEN_W/2.-5., y+h+10. + SCREEN_H/2.,
-         &cBlack, txt );
+         c, txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -280,12 +284,12 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Draw outline. */
       if (i==selected) {
          lc = &cWhite;
-         c = &cGrey80;
+         c  = &cGrey80;
          dc = &cGrey60;
       }
       else {
          lc = toolkit_colLight;
-         c = toolkit_col;
+         c  = toolkit_col;
          dc = toolkit_colDark;
       }
       toolkit_drawOutline( x, y, w, h, 1., lc, c  );
