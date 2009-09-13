@@ -11,6 +11,7 @@ mem.armour_return  = 0 -- At which armour to return to combat
 mem.shield_run     = 0 -- At which shield to run
 mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
+mem.defensive      = true -- Should pilot defend itself
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
 mem.distress       = true -- AI distresses
@@ -120,11 +121,17 @@ function attacked ( attacker )
 
    if task ~= "attack" and task ~= "runaway" then
 
-      -- some taunting
-      taunt( attacker, false )
+      if mem.defensive then
+         -- Some taunting
+         taunt( attacker, false )
 
-      -- now pilot fights back
-      ai.pushtask(0, "attack", attacker)
+         -- Now pilot fights back
+         ai.pushtask(0, "attack", attacker)
+      else
+
+         -- Runaway
+         ai.pushtask(0, "runaway", attacker)
+      end
 
    -- Let attacker profile handle it.
    elseif task == "attack" then
