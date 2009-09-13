@@ -243,6 +243,7 @@ end
 function addRefuelShip ()
    -- Create the pilot
    refship = pilot.add( "Trader Mule", "empire_refuel" )[1]
+   refship:rename("Fuel Tanker")
    refship:setFaction("Empire")
    refship:setFriendly()
 
