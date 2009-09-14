@@ -18,9 +18,11 @@
  */
 /* localised global */
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 #include "log.h" /* for DEBUGGING */
+
 
 /* global */
 #include <string.h> /* strdup */
@@ -210,9 +212,9 @@ int main( int argc, char** argv )
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
+   window_caption();
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
-   window_caption();
 
    /* Display the load screen. */
    loadscreen_load();
@@ -692,9 +694,25 @@ static void display_fps( const double dt )
 static void window_caption (void)
 {
    char buf[PATH_MAX];
+   SDL_RWops *rw;
+   SDL_Surface *sur;
 
+   /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
    SDL_WM_SetCaption(buf, APPNAME);
+
+   /* Set icon. */
+   rw = ndata_rwops( "gfx/icon.png" );
+   if (rw == NULL) {
+      WARN("Icon (gfx/icon.png) not found!");
+      return;
+   }
+   sur = IMG_Load_RW( rw, 1 );
+   if (sur == NULL) {
+      WARN("Unable to load gfx/icon.png!");
+      return;
+   }
+   SDL_WM_SetIcon( sur, NULL );
 }
 
 
