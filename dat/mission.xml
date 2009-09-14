@@ -398,6 +398,26 @@
    <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
   </avail>
  </mission>
+ <mission name="Save the FLF agent">
+  <lua>flf/flf_pre01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Take the Dvared crew home">
+  <lua>dvaered/dv_antiflf01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
  <mission name="NAEV Needs You!">
   <lua>naev_needs_YOU</lua>
   <flags>

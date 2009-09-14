@@ -473,4 +473,34 @@
    <pilot chance="100" ship="Gawain"></pilot>
   </pilots>
  </fleet>
+ <fleet name="FLF Base">
+  <ai>flf</ai>
+  <faction>FLF</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot chance="100" ship="Base"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Base">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot chance="100" ship="Base"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Waypoint">
+  <ai>dummy</ai>
+  <faction>Independent</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot chance="100" ship="Waypoint"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>

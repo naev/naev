@@ -30,4 +30,6 @@
  <commodity name="Prisoners"/>
  <commodity name="Packages"/>
  <commodity name="VIP"/>
+ <commodity name="Gregar"/>
+ <commodity name="Dvaered ship crew"/>
 </Commodities>

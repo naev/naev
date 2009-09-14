@@ -1441,4 +1441,88 @@
    <low />
   </slots>
  </ship>
+ <ship name="Base">
+  <GFX sx="1" sy="1">base</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>0</price>
+  <fabricator>N/A</fabricator>
+  <tech>0</tech>
+  <description>This is a base. You can't buy or fly it. It's for AI use only.</description>
+  <movement>
+   <thrust>0</thrust>
+   <turn>100</turn>
+   <speed>0</speed>
+  </movement>
+  <health>
+   <shield>8000</shield>
+   <armour>5000</armour>
+   <energy>10000</energy>
+   <shield_regen>200</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>500</cpu>
+   <crew>500</crew>
+   <mass>100000</mass>
+   <fuel>0</fuel>
+   <cap_cargo>100</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <high x="1" y="0" h="0" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Waypoint">
+  <GFX>invisible</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Waypoint</class>
+  <price>0</price>
+  <fabricator>BTAxis</fabricator>
+  <tech>0</tech>
+  <description>It's a waypoint. Blame bobbens.</description>
+  <movement>
+   <thrust>0</thrust>
+   <turn>0</turn>
+   <speed>0</speed>
+  </movement>
+  <health>
+   <shield>100</shield>
+   <armour>120</armour>
+   <energy>320</energy>
+   <shield_regen>80</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>0</cpu>
+   <crew>0</crew>
+   <mass>50</mass>
+   <fuel>0</fuel>
+   <cap_cargo>0</cap_cargo>
+  </characteristics>
+  <slots>
+  </slots>
+ </ship>
 </Ships>
