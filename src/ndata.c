@@ -262,14 +262,8 @@ static int ndata_openPackfile (void)
       exit(1);
    }
    ndata_cache = pack_openCache( ndata_filename );
-   if (ndata_cache == NULL) {
+   if (ndata_cache == NULL)
       WARN("Unable to create Packcache from '%s'.", ndata_filename );
-
-      /* Display the not found message. */
-      ndata_notfound();
-
-      exit(1);
-   }
 
    /* Close lock. */
    SDL_mutexV(ndata_lock);
@@ -411,6 +405,12 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       ndata_openPackfile();
    }
 
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL) {
+      *filesize = 0;
+      return NULL;
+   }
+
    /* Get data from packfile. */
    return pack_readfileCached( ndata_cache, filename, filesize );
 }
@@ -435,6 +435,11 @@ SDL_RWops *ndata_rwops( const char* filename )
 
       /* Load the packfile. */
       ndata_openPackfile();
+   }
+
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL) {
+      return NULL;
    }
 
    return pack_rwopsCached( ndata_cache, filename );
@@ -513,6 +518,12 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
       /* Open packfile. */
       ndata_openPackfile();
+   }
+
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL) {
+      *nfiles = 0;
+      return NULL;
    }
 
    /* Load list. */
