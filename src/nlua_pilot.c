@@ -57,6 +57,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_warp( lua_State *L );
+static int pilotL_setVelocity( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
@@ -95,6 +96,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setNoboard", pilotL_setNoboard },
    { "getHealth", pilotL_getHealth },
    { "warp", pilotL_warp },
+   { "setVel", pilotL_setVelocity },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
@@ -704,6 +706,8 @@ static int pilotL_velocity( lua_State *L )
 /**
  * @brief Sets the pilot's position.
  *
+ * @note It clears the pilot's velocity.
+ *
  * @usage p:warp( vec2.new( 300, 200 ) )
  *
  *    @luaparam p Pilot to set the position of.
@@ -730,6 +734,37 @@ static int pilotL_warp( lua_State *L )
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
    vectnull( &p->solid->vel ); /* Clear velocity otherwise it's a bit weird. */
+   return 0;
+}
+
+/**
+ * @brief Sets the pilot's velocity.
+ *
+ * @usage p:setVel( vec2.new( 300, 200 ) )
+ *
+ *    @luaparam p Pilot to set the velocity of.
+ *    @luaparam vel Velocity to set.
+ * @luafunc warp( p, pos )
+ */
+static int pilotL_setVelocity( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+   LuaVector *v;
+
+   /* Parse parameters */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+   v  = luaL_checkvector(L,2);
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Warp pilot to new position. */
+   vectcpy( &p->solid->vel, &v->vec );
    return 0;
 }
 
