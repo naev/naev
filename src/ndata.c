@@ -262,8 +262,14 @@ static int ndata_openPackfile (void)
       exit(1);
    }
    ndata_cache = pack_openCache( ndata_filename );
-   if (ndata_cache == NULL)
+   if (ndata_cache == NULL) {
       WARN("Unable to create Packcache from '%s'.", ndata_filename );
+
+      /* Display the not found message. */
+      ndata_notfound();
+
+      exit(1);
+   }
 
    /* Close lock. */
    SDL_mutexV(ndata_lock);
