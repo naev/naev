@@ -706,8 +706,6 @@ static int pilotL_velocity( lua_State *L )
 /**
  * @brief Sets the pilot's position.
  *
- * @note It clears the pilot's velocity.
- *
  * @usage p:warp( vec2.new( 300, 200 ) )
  *
  *    @luaparam p Pilot to set the position of.
@@ -733,7 +731,6 @@ static int pilotL_warp( lua_State *L )
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
-   vectnull( &p->solid->vel ); /* Clear velocity otherwise it's a bit weird. */
    return 0;
 }
 
@@ -744,7 +741,7 @@ static int pilotL_warp( lua_State *L )
  *
  *    @luaparam p Pilot to set the velocity of.
  *    @luaparam vel Velocity to set.
- * @luafunc warp( p, pos )
+ * @luafunc setVel( p, vel )
  */
 static int pilotL_setVelocity( lua_State *L )
 {
