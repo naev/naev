@@ -50,7 +50,7 @@ function enter()
         flfbajs = pilot.add("FLF Base", "flf", vec2.new(dist * math.cos(angle), dist * math.sin(angle)), false)
         -- Waypoints are 1/3 and 2/3 of the way away, at an angle plus or minus spread degrees from the actual base
         waypunt1 = pilot.add("Waypoint", "dummy", vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2)), false)
-        waypunt2 = pilot.add("Waypoint", "dummy", vec2.new(2 * dist / 3 * math.cos(angle2), 2 * dist / 3 * math.sin(angle2)), false)
+        waypunt2 = pilot.add("Waypoint", "dummy", vec2.new(2 * dist / 3 * math.cos(angle3), 2 * dist / 3 * math.sin(angle3)), false)
 
         waypoint1 = waypunt1[1]
         waypoint2 = waypunt2[1]
