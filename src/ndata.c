@@ -18,6 +18,7 @@
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
+#include <stdarg.h>
 
 #include "SDL.h"
 #include "SDL_mutex.h"
@@ -58,6 +59,7 @@ static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList.
 /*
  * Prototypes.
  */
+static int ndata_isndata( const char *path, ... );
 static void ndata_notfound (void);
 static char** filterList( const char** list, int nlist,
       const char* path, uint32_t* nfiles );
@@ -155,6 +157,34 @@ static void ndata_notfound (void)
 
 
 /**
+ * @brief Checks to see if a file is an ndata.
+ */
+static int ndata_isndata( const char *path, ... )
+{
+   char file[PATH_MAX];
+   va_list ap;
+
+   if (path == NULL)
+      return 0;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(file, PATH_MAX, path, ap);
+      va_end(ap);
+   }
+
+   /* File must exist. */
+   if (!nfile_fileExists(file))
+      return 0;
+
+   /* Must be ndata. */
+   if (pack_check(file))
+      return 0;
+
+   return 1;
+}
+
+
+/**
  * @brief Opens a packfile if needed.
  *
  *    @return 0 on success.
@@ -181,21 +211,21 @@ static int ndata_openPackfile (void)
    if (ndata_filename == NULL) {
       /* Check ndata with version appended. */
 #if VREV < 0
-      if (nfile_fileExists("%s-%d.%d.0-beta%d", NDATA_FILENAME,
+      if (ndata_isndata("%s-%d.%d.0-beta%d", NDATA_FILENAME,
                VMAJOR, VMINOR, ABS(VREV) )) {
          ndata_filename = malloc(PATH_MAX);
          snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
                NDATA_FILENAME, VMAJOR, VMINOR, ABS(VREV) );
       }
 #else /* VREV < 0 */
-      if (nfile_fileExists("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
+      if (ndata_isndata("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
          ndata_filename = malloc(PATH_MAX);
          snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
                NDATA_FILENAME, VMAJOR, VMINOR, VREV );
       }
 #endif /* VREV < 0 */
       /* Check default ndata. */
-      else if (nfile_fileExists(NDATA_DEF))
+      else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
       /* Try to open any ndata in path. */
       else {                                                                 
@@ -222,7 +252,7 @@ static int ndata_openPackfile (void)
    }
 
    /* Open the cache. */
-   if (nfile_fileExists( ndata_filename ) != 1) {
+   if (ndata_isndata( ndata_filename ) != 1) {
       WARN("Cannot find ndata file!");
       WARN("Please specify ndata file with -d or data in the conf file.");
 
@@ -253,7 +283,7 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* If user enforces ndata filename, we'll respect that. */
-   if ((ndata_filename != NULL) && nfile_fileExists(ndata_filename))
+   if (ndata_isndata(ndata_filename))
       return ndata_openPackfile();
 
    /* Set path to configuration. */
