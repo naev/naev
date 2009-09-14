@@ -356,6 +356,7 @@ void loadscreen_load (void)
    /* Must have loading screens */
    if (nload==0) {
       WARN("No loading screens found!");
+      loading = NULL;
       return;
    }
 
@@ -414,7 +415,8 @@ void loadscreen_render( double done, const char *msg )
       y  = -bw/2 - rh - 5.;
 
    /* Draw loading screen image. */
-   gl_blitScale( loading, bx, by, bw, bh, NULL );
+   if (loading != NULL)
+      gl_blitScale( loading, bx, by, bw, bh, NULL );
 
    /* Draw progress bar. */
    /* BG. */
