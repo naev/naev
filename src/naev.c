@@ -694,7 +694,7 @@ static void window_caption (void)
    char buf[PATH_MAX];
 
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-   SDL_WM_SetCaption(buf, NULL );
+   SDL_WM_SetCaption(buf, APPNAME);
 }
 
 

@@ -21,6 +21,7 @@
 
 #include "SDL.h"
 #include "SDL_mutex.h"
+#include "SDL_image.h"
 
 #include "log.h"
 #include "md5.h"
@@ -57,6 +58,7 @@ static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList.
 /*
  * Prototypes.
  */
+static void ndata_notfound (void);
 static char** filterList( const char** list, int nlist,
       const char* path, uint32_t* nfiles );
 
@@ -89,6 +91,66 @@ int ndata_setPath( const char* path )
       free(ndata_filename);
    ndata_filename = (path == NULL) ? NULL : strdup(path);
    return 0;
+}
+
+
+#define NONDATA
+#include "nondata.c"
+/**
+ * @brief Displays an ndata not found message and dies.
+ */
+static void ndata_notfound (void)
+{
+   SDL_Event event;
+   SDL_Surface *sur, *screen;
+   SDL_RWops *rw;
+
+   /* Make sure it's initialized. */
+   if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
+      WARN("Unable to init SDL Video subsystem");
+      return;
+   }
+
+   /* Create the window. */
+   screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
+   if (screen == NULL) {
+      WARN("Unable to set video mode");
+      return;
+   }
+
+   /* Set caption. */
+   SDL_WM_SetCaption( "NAEV - INSERT NDATA", "NAEV" );
+
+   /* Create the surface. */
+   rw  = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
+   sur = IMG_Load_RW( rw, 0 );
+
+   /* Render. */
+   SDL_BlitSurface( sur, NULL, screen, NULL );
+   SDL_Flip(screen);
+
+   /* Infinite loop. */
+   while (1) {
+      SDL_WaitEvent(&event);
+
+      /* Listen on a certain amount of events. */
+      if (event.type == SDL_QUIT)
+         exit(1);
+      else if (event.type == SDL_KEYDOWN) {
+         switch (event.key.keysym.sym) {
+            case SDLK_ESCAPE:
+            case SDLK_q:
+               exit(1);
+
+            default:
+               break;
+         }
+      }
+
+      /* Render. */
+      SDL_BlitSurface( sur, NULL, screen, NULL );
+      SDL_Flip(screen);
+   }
 }
 
 
@@ -164,15 +226,8 @@ static int ndata_openPackfile (void)
       WARN("Cannot find ndata file!");
       WARN("Please specify ndata file with -d or data in the conf file.");
 
-      /* Window users get hand holding. */
-#if HAS_WIN32
-      SDL_Quit(); /* Should destroy window and give focus to MessageBox. */
-      MessageBox( NULL,
-            "ndata file not found.\n"
-            "Please specify ndata file with -d or data in the conf file.",
-            "Cannot find ndata file!",
-            MB_OK | MB_ICONEXCLAMATION );
-#endif /* HAS_WIN32 */
+      /* Display the not found message. */
+      ndata_notfound();
 
       exit(1);
    }
@@ -198,7 +253,7 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* If user enforces ndata filename, we'll respect that. */
-   if (ndata_filename != NULL)
+   if ((ndata_filename != NULL) && nfile_fileExists(ndata_filename))
       return ndata_openPackfile();
 
    /* Set path to configuration. */
