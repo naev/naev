@@ -127,7 +127,7 @@ struct Packcache_s {
 #endif /* HAS_FD */
 
 
-const uint64_t magic =  0x25524573; /**< File magic number: sER% */
+const uint64_t magic = 0x4e41455644415441; /**< File magic number: NAEVDATA */
 
 
 /*
