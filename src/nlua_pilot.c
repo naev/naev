@@ -56,7 +56,7 @@ static int pilotL_alive( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
-static int pilotL_warp( lua_State *L );
+static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_comm( lua_State *L );
@@ -95,7 +95,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setHealth", pilotL_setHealth },
    { "setNoboard", pilotL_setNoboard },
    { "getHealth", pilotL_getHealth },
-   { "warp", pilotL_warp },
+   { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
@@ -706,13 +706,13 @@ static int pilotL_velocity( lua_State *L )
 /**
  * @brief Sets the pilot's position.
  *
- * @usage p:warp( vec2.new( 300, 200 ) )
+ * @usage p:setPos( vec2.new( 300, 200 ) )
  *
  *    @luaparam p Pilot to set the position of.
  *    @luaparam pos Position to set.
- * @luafunc warp( p, pos )
+ * @luafunc setPos( p, pos )
  */
-static int pilotL_warp( lua_State *L )
+static int pilotL_setPosition( lua_State *L )
 {
    LuaPilot *p1;
    Pilot *p;
