@@ -66,6 +66,7 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
+static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
@@ -105,6 +106,7 @@ static const luaL_reg pilotL_methods[] = {
    /* Outfits. */
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
+   { "setFuel", pilotL_setFuel },
    /* Ship. */
    { "shipName", pilotL_shipName },
    { "ship", pilotL_ship },
@@ -376,11 +378,10 @@ static int pilot_addFleet( lua_State *L )
          continue;
 
       /* Fleet displacement - first ship is exact. */
-      if (!first) {
+      if (!first)
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
-         first = 0;
-      }
+      first = 0;
 
       /* Create the pilot. */
       p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
@@ -1137,6 +1138,49 @@ static int pilotL_rmOutfit( lua_State *L )
       q--;
    }
    return 0;
+}
+
+
+/**
+ * @Brief Sets the fuel of a pilot.
+ *
+ * @usage p:setFuel( true ) -- Sets fuel to max
+ *
+ *    @luaparam p Pilot to set fuel of.
+ *    @luaparam f true sets fuel to max, false sets fuel to 0, a number sets
+ *              fuel to that amount in units.
+ *    @luareturn The amount of fuel the pilot has.
+ * @luafunc setFuel( p, f )
+ */
+static int pilotL_setFuel( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get the parameter. */
+   if (lua_isboolean(L,2)) {
+      if (lua_toboolean(L,2))
+         p->fuel = p->fuel_max;
+      else
+         p->fuel = 0.;
+   }
+   else if (lua_isnumber(L,2)) {
+      p->fuel = CLAMP( 0., p->fuel_max, lua_tonumber(L,2) );
+   }
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Return amount of fuel. */
+   lua_pushnumber(L, p->fuel);
+   return 1;
 }
 
 

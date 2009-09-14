@@ -485,11 +485,15 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* See if player really wants to pay. */
-   ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %u credits?", msg, price );
-   if (ret == 0) {
-      dialogue_msg( "Request Fuel", "You decide not to pay." );
-      return;
+   if (price > 0) {
+      ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %u credits?", msg, price );
+      if (ret == 0) {
+         dialogue_msg( "Request Fuel", "You decide not to pay." );
+         return;
+      }
    }
+   else
+      dialogue_msg( "Request Fuel", "%s", msg );
 
    /* Check if he has the money. */
    if (player->credits < price) {
@@ -507,7 +511,8 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    ai_refuel( comm_pilot, player->id );
 
    /* Last message. */
-   dialogue_msg( "Request Fuel", "\"On my way.\"" );
+   if (price > 0)
+      dialogue_msg( "Request Fuel", "\"On my way.\"" );
 }
 
 

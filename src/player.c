@@ -1770,6 +1770,9 @@ void player_hail (void)
 }
 
 
+/**
+ * @brief Sets the ship fire mode.
+ */
 void player_setFireMode( int mode )
 {
    if (player_firemode == mode)
@@ -2135,6 +2138,11 @@ int player_rmOutfit( const Outfit *o, int quantity )
  */
 void player_missionFinished( int id )
 {
+   /* Make sure not already marked. */
+   if (player_missionAlreadyDone(id))
+      return;
+
+   /* Mark as done. */
    missions_ndone++;
    if (missions_ndone > missions_mdone) { /* need to grow */
       missions_mdone += 25;
@@ -2167,6 +2175,11 @@ int player_missionAlreadyDone( int id )
  */
 void player_eventFinished( int id )
 {
+   /* Make sure not already done. */
+   if (player_eventAlreadyDone(id))
+      return;
+
+   /* Add to done. */
    events_ndone++;
    if (events_ndone > events_mdone) { /* need to grow */
       events_mdone += 25;

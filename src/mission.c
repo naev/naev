@@ -21,6 +21,7 @@
 #include "nluadef.h"
 #include "nlua_space.h"
 #include "nlua_faction.h"
+#include "nlua_ship.h"
 #include "rng.h"
 #include "log.h"
 #include "hook.h"
@@ -903,6 +904,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
    LuaPlanet *p;
    LuaSystem *s;
    LuaFaction *f;
+   LuaShip *sh;
    char buf[PATH_MAX];
    const char *name, *str;
    int keynum;
@@ -1016,6 +1018,16 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
             /* key, value */
             break;
          }
+         else if (lua_isship(L,-1)) {
+            sh = lua_toship(L,-1);
+            str = sh->ship->name;
+            if (str == NULL)
+               break;
+            mission_saveData( writer, "ship",
+                  name, str, keynum );
+            /* key, value */
+            break;
+         }
 
       /* Rest gets ignored, like functions, etc... */
       default:
@@ -1069,6 +1081,7 @@ static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    LuaPlanet p;
    LuaSystem s;
    LuaFaction f;
+   LuaShip sh;
    xmlNodePtr node;
    char *name, *type, *buf, *num;
    int keynum;
@@ -1117,6 +1130,10 @@ static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"faction")==0) {
             f.f = faction_get(xml_get(node));
             lua_pushfaction(L,f);
+         }
+         else if (strcmp(type,"ship")==0) {
+            sh.ship = ship_get(xml_get(node));
+            lua_pushship(L,sh);
          }
          else {
             WARN("Unknown lua data type!");
