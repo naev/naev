@@ -452,7 +452,8 @@ void loadscreen_render( double done, const char *msg )
 static void loadscreen_unload (void)
 {
    /* Free the textures */
-   gl_freeTexture(loading);
+   if (loading != NULL)
+      gl_freeTexture(loading);
    loading = NULL;
 }
 
