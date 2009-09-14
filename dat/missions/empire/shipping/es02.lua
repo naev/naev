@@ -125,7 +125,8 @@ function enter ()
       enter_vect:set( d * -x / math.abs(x), d * -y / math.abs(y) )
       p = pilot.add( "Trader Gawain", "dummy", enter_vect )
       for k,v in ipairs(p) do
-         v:warp( enter_vect ) -- Will clear velocity
+         v:setPos( enter_vect )
+         v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
          v:disable()
          v:setFaction( "Empire" )
          hook.pilot( v, "board", "board" )
