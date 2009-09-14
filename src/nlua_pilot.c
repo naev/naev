@@ -44,11 +44,11 @@ extern void ai_destroy( Pilot* p );
 
 
 /* Pilot metatable methods. */
-static int pilot_getPlayer( lua_State *L );
-static int pilot_addFleet( lua_State *L );
-static int pilot_clear( lua_State *L );
-static int pilot_toggleSpawn( lua_State *L );
-static int pilot_getPilots( lua_State *L );
+static int pilotL_getPlayer( lua_State *L );
+static int pilotL_addFleet( lua_State *L );
+static int pilotL_clear( lua_State *L );
+static int pilotL_toggleSpawn( lua_State *L );
+static int pilotL_getPilots( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
@@ -57,6 +57,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_warp( lua_State *L );
+static int pilotL_setVelocity( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
@@ -75,9 +76,9 @@ static int pilotL_shipName( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
-   { "player", pilot_getPlayer },
-   { "add", pilot_addFleet },
-   { "get", pilot_getPilots },
+   { "player", pilotL_getPlayer },
+   { "add", pilotL_addFleet },
+   { "get", pilotL_getPilots },
    { "__eq", pilotL_eq },
    /* Info. */
    { "name", pilotL_name },
@@ -87,14 +88,15 @@ static const luaL_reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    /* System. */
-   { "clear", pilot_clear },
-   { "toggleSpawn", pilot_toggleSpawn },
+   { "clear", pilotL_clear },
+   { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
    { "changeAI", pilotL_changeAI },
    { "setHealth", pilotL_setHealth },
    { "setNoboard", pilotL_setNoboard },
    { "getHealth", pilotL_getHealth },
    { "warp", pilotL_warp },
+   { "setVel", pilotL_setVelocity },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
@@ -234,7 +236,7 @@ int lua_ispilot( lua_State *L, int ind )
  *    @luareturn Pilot pointing to the player.
  * @luafunc player()
  */
-static int pilot_getPlayer( lua_State *L )
+static int pilotL_getPlayer( lua_State *L )
 {
    LuaPilot lp;
 
@@ -271,7 +273,7 @@ static int pilot_getPlayer( lua_State *L )
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add( fleetname, ai, pos, jump )
  */
-static int pilot_addFleet( lua_State *L )
+static int pilotL_addFleet( lua_State *L )
 {
    Fleet *flt;
    const char *fltname, *fltai;
@@ -401,7 +403,7 @@ static int pilot_addFleet( lua_State *L )
  * 
  * @luafunc clear()
  */
-static int pilot_clear( lua_State *L )
+static int pilotL_clear( lua_State *L )
 {
    (void) L;
    pilots_clean();
@@ -418,7 +420,7 @@ static int pilot_clear( lua_State *L )
  *    @luareturn The current spawn state.
  * @luafunc toggleSpawn( enable )
  */
-static int pilot_toggleSpawn( lua_State *L )
+static int pilotL_toggleSpawn( lua_State *L )
 {
    /* Setting it directly. */
    if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
@@ -440,7 +442,7 @@ static int pilot_toggleSpawn( lua_State *L )
  *    @luareturn A table containing the pilots.
  * @luafunc get( f )
  */
-static int pilot_getPilots( lua_State *L )
+static int pilotL_getPilots( lua_State *L )
 {
    int i, j, k;
    int *factions;
@@ -704,6 +706,8 @@ static int pilotL_velocity( lua_State *L )
 /**
  * @brief Sets the pilot's position.
  *
+ * @note It clears the pilot's velocity.
+ *
  * @usage p:warp( vec2.new( 300, 200 ) )
  *
  *    @luaparam p Pilot to set the position of.
@@ -730,6 +734,37 @@ static int pilotL_warp( lua_State *L )
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
    vectnull( &p->solid->vel ); /* Clear velocity otherwise it's a bit weird. */
+   return 0;
+}
+
+/**
+ * @brief Sets the pilot's velocity.
+ *
+ * @usage p:setVel( vec2.new( 300, 200 ) )
+ *
+ *    @luaparam p Pilot to set the velocity of.
+ *    @luaparam vel Velocity to set.
+ * @luafunc warp( p, pos )
+ */
+static int pilotL_setVelocity( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+   LuaVector *v;
+
+   /* Parse parameters */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+   v  = luaL_checkvector(L,2);
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Warp pilot to new position. */
+   vectcpy( &p->solid->vel, &v->vec );
    return 0;
 }
 
