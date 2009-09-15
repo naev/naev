@@ -234,7 +234,10 @@ static void map_update( unsigned int wid )
       /*
        * Right Text
        */
-      window_modifyText( wid, "txtSysname", "Unknown" );
+      if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
+         window_modifyText( wid, "txtSysname", sys->name );
+      else
+         window_modifyText( wid, "txtSysname", "Unknown" );
       window_modifyText( wid, "txtFaction", "Unknown" );
       /* Standing */
       window_moveWidget( wid, "txtSStanding", -20, -100 );
@@ -804,7 +807,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
                sys = system_getIndex( i );
 
                /* must be reachable */
-               if (!space_sysReachable(sys))
+               if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+                     && !space_sysReachable(sys))
                   continue;
 
                /* get position */
@@ -989,18 +993,24 @@ void map_select( StarSystem *sys )
       /* select the current system and make a path to it */
       if (map_path)
          free(map_path);
-      map_path = map_getJumpPath( &map_npath,
-            cur_system->name, sys->name, 0 );
+      map_path  = NULL;
+      map_npath = 0;
 
-      if (map_npath==0)
-         hyperspace_target = -1;
-      else  {
-         /* see if it is a valid hyperspace target */
-         for (i=0; i<cur_system->njumps; i++) {
-            if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
-               planet_target = -1; /* override planet_target */
-               hyperspace_target = i;
-               break;
+      /* Try to make path if is reachable. */
+      if (space_sysReachable(sys)) {
+         map_path = map_getJumpPath( &map_npath,
+               cur_system->name, sys->name, 0 );
+
+         if (map_npath==0)
+            hyperspace_target = -1;
+         else  {
+            /* see if it is a valid hyperspace target */
+            for (i=0; i<cur_system->njumps; i++) {
+               if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
+                  planet_target = -1; /* override planet_target */
+                  hyperspace_target = i;
+                  break;
+               }
             }
          }
       }
