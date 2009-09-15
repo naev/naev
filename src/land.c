@@ -1566,16 +1566,6 @@ void land( Planet* p )
    land_wid = window_create( p->name, -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
-   /* Generate computer missions. */
-   mission_computer = missions_genList( &mission_ncomputer,
-         land_planet->faction, land_planet->name, cur_system->name,
-         MIS_AVAIL_COMPUTER );
-
-   /* Generate spaceport bar missions. */
-   mission_bar = missions_genList( &mission_nbar,
-         land_planet->faction, land_planet->name, cur_system->name,
-         MIS_AVAIL_BAR );
-
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
       news_load();
@@ -1621,9 +1611,32 @@ void land( Planet* p )
    /* Create tabbed window. */
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
 
-   /* Create each tab. */
-   /* Main. */
+   /*
+    * Order here is very important:
+    *
+    *  1) Create main tab - must have decent background.
+    *  2) Set landed, play music and run land hooks - so hooks run well.
+    *  3) Generate missions - so that campaigns are fluid.
+    *  4) Create other tabs - lists depend on NPC and missions.
+    */
+   
+   /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
+
+   /* 2) Set as landed and run hooks. */
+   landed = 1;
+   music_choose("land"); /* Must be before hooks in case hooks change music. */
+   hooks_run("land");
+
+   /* 3) Generate computer and bar missions. */
+   mission_computer = missions_genList( &mission_ncomputer,
+         land_planet->faction, land_planet->name, cur_system->name,
+         MIS_AVAIL_COMPUTER );
+   mission_bar = missions_genList( &mission_nbar,
+         land_planet->faction, land_planet->name, cur_system->name,
+         MIS_AVAIL_BAR );
+
+   /* 4) Create other tabs. */
    /* Basic - bar + missions */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       spaceport_bar_open( land_getWid(LAND_WINDOW_BAR) );
@@ -1642,15 +1655,6 @@ void land( Planet* p )
    /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
-
-   /* player is now officially landed */
-   landed = 1;
-
-   /* Change the music */
-   music_choose("land");
-
-   /* Run hooks, run after music in case hook wants to change music. */
-   hooks_run("land");
 
    /* Reset markers if needed. */
    mission_sysMark();
