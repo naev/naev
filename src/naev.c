@@ -90,6 +90,7 @@ static unsigned int time = 0; /**< used to calculate FPS and movement. */
 static char short_version[64]; /**< Contains version. */
 static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
+static char *binary_path = NULL; /**< argv[0] */
 
 /*
  * FPS stuff.
@@ -136,8 +137,11 @@ void main_loop (void); /* dialogue.c */
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
+
+   /* Save the binary path. */
+   binary_path = argv[0];
    
-   /* print the version */
+   /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
 #ifdef GIT_COMMIT
    DEBUG( " git HEAD at " GIT_COMMIT );
@@ -754,6 +758,15 @@ char *naev_version( int long_version )
    }
 
    return short_version;
+}
+
+
+/**
+ * @brief Returns the naev binary path.
+ */
+char *naev_binary (void)
+{
+   return binary_path;
 }
 
 

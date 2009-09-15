@@ -15,6 +15,9 @@
 
 #include "naev.h"
 
+#if HAS_POSIX
+#include <libgen.h>
+#endif /* HAS_POSIX */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
@@ -59,6 +62,8 @@ static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList.
 /*
  * Prototypes.
  */
+static char *ndata_findInDir( const char *path );
+static int ndata_openPackfile (void);
 static int ndata_isndata( const char *path, ... );
 static void ndata_notfound (void);
 static char** filterList( const char** list, int nlist,
@@ -185,16 +190,65 @@ static int ndata_isndata( const char *path, ... )
 
 
 /**
+ * @brief Tries to find a valid packfile in the directory listed by path.
+ *
+ *    @return Newly allocated ndata name or NULL if not found.
+ */
+static char *ndata_findInDir( const char *path )
+{
+   int i, l;
+   char **files;
+   int nfiles;
+   size_t len;
+   char *ndata_file;
+
+   /* Defaults. */
+   ndata_file = NULL;
+
+   /* Iterate over files. */
+   files = nfile_readDir( &nfiles, path );
+   if (files != NULL) {
+      len   = strlen(NDATA_FILENAME);
+      for (i=0; i<nfiles; i++) {
+
+         /* Didn't match. */
+         if (strncmp(files[i], NDATA_FILENAME, len)!=0)
+            continue;
+
+         /* Formatting. */
+         l           = strlen(files[i]) + strlen(path) + 2;
+         ndata_file  = malloc( l );
+         snprintf( ndata_file, l, "%s/%s", path, files[i] );
+
+         /* Must be packfile. */
+         if (pack_check(ndata_file)) {
+            free(ndata_file);
+            ndata_file = NULL;
+            continue;
+         }
+
+         /* Found it. */
+         break;
+      }
+
+      /* Clean up. */
+      for (i=0; i<nfiles; i++)
+         free(files[i]);
+      free(files);
+   }
+
+   return ndata_file;
+}
+
+
+/**
  * @brief Opens a packfile if needed.
  *
  *    @return 0 on success.
  */
 static int ndata_openPackfile (void)
 {
-   int i;
-   char **files;
-   int nfiles;
-   size_t len;
+   char path[PATH_MAX];
 
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
@@ -228,25 +282,17 @@ static int ndata_openPackfile (void)
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
       /* Try to open any ndata in path. */
-      else {                                                                 
-         files = nfile_readDir( &nfiles, "." );
-         if (files != NULL) {
-            len   = strlen(NDATA_FILENAME);
-            for (i=0; i<nfiles; i++) {
-               if (strncmp(files[i], NDATA_FILENAME, len)==0) {
-                  /* Must be packfile. */
-                  if (pack_check(files[i]))
-                     continue;
+      else {
 
-                  ndata_filename = strdup(files[i]);
-                  break;
-               }
-            }
+         /* Try to find in various paths. */
+         ndata_filename = ndata_findInDir( "." );
 
-            /* Clean up. */
-            for (i=0; i<nfiles; i++)
-               free(files[i]);
-            free(files);
+         /* Keep looking. */
+         if (ndata_filename == NULL) {
+#if HAS_POSIX
+            snprintf( path, PATH_MAX, "%s", dirname( naev_binary() ) );
+            ndata_filename = ndata_findInDir( path );
+#endif /* HAS_POSIX */
          }
       }
    }
