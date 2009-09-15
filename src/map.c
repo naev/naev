@@ -184,13 +184,6 @@ void map_open (void)
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
 
-         
-   /*
-    * The map itself.
-    */
-   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
-
-
    /*
     * Bottom stuff
     *
@@ -202,6 +195,11 @@ void map_open (void)
    /* Situation text */
    window_addText( wid, 140, 10, w - 80 - 30 - 30, 30, 0,
          "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
+
+   /*
+    * The map itself.
+    */
+   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
 }
@@ -225,7 +223,13 @@ static void map_update( unsigned int wid )
       return;
 
    sys = system_getIndex( map_selected );
- 
+
+   /* Not known and no markers. */
+   if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
+         !sys_isKnown(sys) && !space_sysReachable(sys)) {
+      map_selectCur();
+      sys = system_getIndex( map_selected );
+   }
 
    /*
     * Right Text
@@ -1399,6 +1403,8 @@ int map_isMapped( const char* targ_sys, int r )
  */
 void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
+   StarSystem *sys;
+
    /* mark systems as needed */
    mission_sysMark();
 
@@ -1408,6 +1414,12 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 
    /* Set zoom. */
    map_setZoom(zoom);
+
+   /* Make sure selected is sane. */
+   sys = system_getIndex( map_selected );
+   if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
+         !sys_isKnown(sys) && !space_sysReachable(sys))
+      map_selectCur();
 
    window_addCust( wid, x, y, w, h,
          "cstMap", 1, map_render, map_mouse, NULL );
