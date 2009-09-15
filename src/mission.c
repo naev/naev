@@ -352,6 +352,7 @@ void mission_sysMark (void)
    int i;
 
    space_clearMarkers();
+   space_clearComputerMarkers();
 
    for (i=0; i<MISSION_MAX; i++) {
       if ((player_missions[i].id != 0) &&
