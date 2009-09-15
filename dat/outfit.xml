@@ -1043,7 +1043,7 @@
   <general>
    <tech>4</tech>
    <mass>0</mass>
-   <price>7000</price>
+   <price>5000</price>
    <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
    <gfx_store>map</gfx_store>
   </general>
