@@ -18,9 +18,11 @@
  */
 /* localised global */
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 #include "log.h" /* for DEBUGGING */
+
 
 /* global */
 #include <string.h> /* strdup */
@@ -88,6 +90,7 @@ static unsigned int time = 0; /**< used to calculate FPS and movement. */
 static char short_version[64]; /**< Contains version. */
 static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
+static char *binary_path = NULL; /**< argv[0] */
 
 /*
  * FPS stuff.
@@ -134,8 +137,11 @@ void main_loop (void); /* dialogue.c */
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
+
+   /* Save the binary path. */
+   binary_path = argv[0];
    
-   /* print the version */
+   /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
 #ifdef GIT_COMMIT
    DEBUG( " git HEAD at " GIT_COMMIT );
@@ -210,9 +216,9 @@ int main( int argc, char** argv )
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
+   window_caption();
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
-   window_caption();
 
    /* Display the load screen. */
    loadscreen_load();
@@ -354,6 +360,7 @@ void loadscreen_load (void)
    /* Must have loading screens */
    if (nload==0) {
       WARN("No loading screens found!");
+      loading = NULL;
       return;
    }
 
@@ -412,7 +419,8 @@ void loadscreen_render( double done, const char *msg )
       y  = -bw/2 - rh - 5.;
 
    /* Draw loading screen image. */
-   gl_blitScale( loading, bx, by, bw, bh, NULL );
+   if (loading != NULL)
+      gl_blitScale( loading, bx, by, bw, bh, NULL );
 
    /* Draw progress bar. */
    /* BG. */
@@ -448,7 +456,8 @@ void loadscreen_render( double done, const char *msg )
 static void loadscreen_unload (void)
 {
    /* Free the textures */
-   gl_freeTexture(loading);
+   if (loading != NULL)
+      gl_freeTexture(loading);
    loading = NULL;
 }
 
@@ -692,9 +701,25 @@ static void display_fps( const double dt )
 static void window_caption (void)
 {
    char buf[PATH_MAX];
+   SDL_RWops *rw;
+   SDL_Surface *sur;
 
+   /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-   SDL_WM_SetCaption(buf, NULL );
+   SDL_WM_SetCaption(buf, APPNAME);
+
+   /* Set icon. */
+   rw = ndata_rwops( "gfx/icon.png" );
+   if (rw == NULL) {
+      WARN("Icon (gfx/icon.png) not found!");
+      return;
+   }
+   sur = IMG_Load_RW( rw, 1 );
+   if (sur == NULL) {
+      WARN("Unable to load gfx/icon.png!");
+      return;
+   }
+   SDL_WM_SetIcon( sur, NULL );
 }
 
 
@@ -733,6 +758,15 @@ char *naev_version( int long_version )
    }
 
    return short_version;
+}
+
+
+/**
+ * @brief Returns the naev binary path.
+ */
+char *naev_binary (void)
+{
+   return binary_path;
 }
 
 

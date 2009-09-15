@@ -15,12 +15,17 @@
 
 #include "naev.h"
 
+#if HAS_POSIX
+#include <libgen.h>
+#endif /* HAS_POSIX */
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
+#include <stdarg.h>
 
 #include "SDL.h"
 #include "SDL_mutex.h"
+#include "SDL_image.h"
 
 #include "log.h"
 #include "md5.h"
@@ -57,6 +62,10 @@ static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList.
 /*
  * Prototypes.
  */
+static char *ndata_findInDir( const char *path );
+static int ndata_openPackfile (void);
+static int ndata_isndata( const char *path, ... );
+static void ndata_notfound (void);
 static char** filterList( const char** list, int nlist,
       const char* path, uint32_t* nfiles );
 
@@ -92,6 +101,146 @@ int ndata_setPath( const char* path )
 }
 
 
+#define NONDATA
+#include "nondata.c"
+/**
+ * @brief Displays an ndata not found message and dies.
+ */
+static void ndata_notfound (void)
+{
+   SDL_Event event;
+   SDL_Surface *sur, *screen;
+   SDL_RWops *rw;
+
+   /* Make sure it's initialized. */
+   if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
+      WARN("Unable to init SDL Video subsystem");
+      return;
+   }
+
+   /* Create the window. */
+   screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
+   if (screen == NULL) {
+      WARN("Unable to set video mode");
+      return;
+   }
+
+   /* Set caption. */
+   SDL_WM_SetCaption( "NAEV - INSERT NDATA", "NAEV" );
+
+   /* Create the surface. */
+   rw  = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
+   sur = IMG_Load_RW( rw, 0 );
+
+   /* Render. */
+   SDL_BlitSurface( sur, NULL, screen, NULL );
+   SDL_Flip(screen);
+
+   /* Infinite loop. */
+   while (1) {
+      SDL_WaitEvent(&event);
+
+      /* Listen on a certain amount of events. */
+      if (event.type == SDL_QUIT)
+         exit(1);
+      else if (event.type == SDL_KEYDOWN) {
+         switch (event.key.keysym.sym) {
+            case SDLK_ESCAPE:
+            case SDLK_q:
+               exit(1);
+
+            default:
+               break;
+         }
+      }
+
+      /* Render. */
+      SDL_BlitSurface( sur, NULL, screen, NULL );
+      SDL_Flip(screen);
+   }
+}
+
+
+/**
+ * @brief Checks to see if a file is an ndata.
+ */
+static int ndata_isndata( const char *path, ... )
+{
+   char file[PATH_MAX];
+   va_list ap;
+
+   if (path == NULL)
+      return 0;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(file, PATH_MAX, path, ap);
+      va_end(ap);
+   }
+
+   /* File must exist. */
+   if (!nfile_fileExists(file))
+      return 0;
+
+   /* Must be ndata. */
+   if (pack_check(file))
+      return 0;
+
+   return 1;
+}
+
+
+/**
+ * @brief Tries to find a valid packfile in the directory listed by path.
+ *
+ *    @return Newly allocated ndata name or NULL if not found.
+ */
+static char *ndata_findInDir( const char *path )
+{
+   int i, l;
+   char **files;
+   int nfiles;
+   size_t len;
+   char *ndata_file;
+
+   /* Defaults. */
+   ndata_file = NULL;
+
+   /* Iterate over files. */
+   files = nfile_readDir( &nfiles, path );
+   if (files != NULL) {
+      len   = strlen(NDATA_FILENAME);
+      for (i=0; i<nfiles; i++) {
+
+         /* Didn't match. */
+         if (strncmp(files[i], NDATA_FILENAME, len)!=0)
+            continue;
+
+         /* Formatting. */
+         l           = strlen(files[i]) + strlen(path) + 2;
+         ndata_file  = malloc( l );
+         snprintf( ndata_file, l, "%s/%s", path, files[i] );
+
+         /* Must be packfile. */
+         if (pack_check(ndata_file)) {
+            free(ndata_file);
+            ndata_file = NULL;
+            continue;
+         }
+
+         /* Found it. */
+         break;
+      }
+
+      /* Clean up. */
+      for (i=0; i<nfiles; i++)
+         free(files[i]);
+      free(files);
+   }
+
+   return ndata_file;
+}
+
+
 /**
  * @brief Opens a packfile if needed.
  *
@@ -99,10 +248,7 @@ int ndata_setPath( const char* path )
  */
 static int ndata_openPackfile (void)
 {
-   int i;
-   char **files;
-   int nfiles;
-   size_t len;
+   char path[PATH_MAX];
 
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
@@ -119,60 +265,45 @@ static int ndata_openPackfile (void)
    if (ndata_filename == NULL) {
       /* Check ndata with version appended. */
 #if VREV < 0
-      if (nfile_fileExists("%s-%d.%d.0-beta%d", NDATA_FILENAME,
+      if (ndata_isndata("%s-%d.%d.0-beta%d", NDATA_FILENAME,
                VMAJOR, VMINOR, ABS(VREV) )) {
          ndata_filename = malloc(PATH_MAX);
          snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
                NDATA_FILENAME, VMAJOR, VMINOR, ABS(VREV) );
       }
 #else /* VREV < 0 */
-      if (nfile_fileExists("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
+      if (ndata_isndata("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
          ndata_filename = malloc(PATH_MAX);
          snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
                NDATA_FILENAME, VMAJOR, VMINOR, VREV );
       }
 #endif /* VREV < 0 */
       /* Check default ndata. */
-      else if (nfile_fileExists(NDATA_DEF))
+      else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
       /* Try to open any ndata in path. */
-      else {                                                                 
-         files = nfile_readDir( &nfiles, "." );
-         if (files != NULL) {
-            len   = strlen(NDATA_FILENAME);
-            for (i=0; i<nfiles; i++) {
-               if (strncmp(files[i], NDATA_FILENAME, len)==0) {
-                  /* Must be packfile. */
-                  if (pack_check(files[i]))
-                     continue;
+      else {
 
-                  ndata_filename = strdup(files[i]);
-                  break;
-               }
-            }
+         /* Try to find in various paths. */
+         ndata_filename = ndata_findInDir( "." );
 
-            /* Clean up. */
-            for (i=0; i<nfiles; i++)
-               free(files[i]);
-            free(files);
+         /* Keep looking. */
+         if (ndata_filename == NULL) {
+#if HAS_POSIX
+            snprintf( path, PATH_MAX, "%s", dirname( naev_binary() ) );
+            ndata_filename = ndata_findInDir( path );
+#endif /* HAS_POSIX */
          }
       }
    }
 
    /* Open the cache. */
-   if (nfile_fileExists( ndata_filename ) != 1) {
+   if (ndata_isndata( ndata_filename ) != 1) {
       WARN("Cannot find ndata file!");
       WARN("Please specify ndata file with -d or data in the conf file.");
 
-      /* Window users get hand holding. */
-#if HAS_WIN32
-      SDL_Quit(); /* Should destroy window and give focus to MessageBox. */
-      MessageBox( NULL,
-            "ndata file not found.\n"
-            "Please specify ndata file with -d or data in the conf file.",
-            "Cannot find ndata file!",
-            MB_OK | MB_ICONEXCLAMATION );
-#endif /* HAS_WIN32 */
+      /* Display the not found message. */
+      ndata_notfound();
 
       exit(1);
    }
@@ -198,7 +329,7 @@ int ndata_open (void)
    ndata_lock = SDL_CreateMutex();
 
    /* If user enforces ndata filename, we'll respect that. */
-   if (ndata_filename != NULL)
+   if (ndata_isndata(ndata_filename))
       return ndata_openPackfile();
 
    /* Set path to configuration. */
@@ -320,6 +451,12 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       ndata_openPackfile();
    }
 
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL) {
+      *filesize = 0;
+      return NULL;
+   }
+
    /* Get data from packfile. */
    return pack_readfileCached( ndata_cache, filename, filesize );
 }
@@ -344,6 +481,11 @@ SDL_RWops *ndata_rwops( const char* filename )
 
       /* Load the packfile. */
       ndata_openPackfile();
+   }
+
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL) {
+      return NULL;
    }
 
    return pack_rwopsCached( ndata_cache, filename );
@@ -422,6 +564,12 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
       /* Open packfile. */
       ndata_openPackfile();
+   }
+
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL) {
+      *nfiles = 0;
+      return NULL;
    }
 
    /* Load list. */

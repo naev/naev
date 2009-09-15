@@ -59,6 +59,7 @@
 
 
 char *naev_version( int long_version );
+char *naev_binary (void);
 
 
 #endif /* NAEV_H */
