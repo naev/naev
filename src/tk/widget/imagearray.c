@@ -671,6 +671,12 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
    /* Get dimensions. */
    iar_getDim( wgt, NULL, &h );
 
+   /* Ignore fancy stuff if smaller than height. */
+   if (h * wgt->dat.iar.yelem < wgt->h) {
+      wgt->dat.iar.pos = 0.;
+      return 0;
+   }
+
    /* Move if needed. */
    hmax = h * (wgt->dat.iar.yelem - (int)(wgt->h / h));
    wgt->dat.iar.pos = CLAMP( 0., hmax, off );
