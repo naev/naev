@@ -891,7 +891,7 @@ static void opt_video( unsigned int wid )
          "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", "Interpolation (Disable for compatibility)", NULL, conf.interpolate );
+         "chkInterpolate", "Interpolation (Disable for compat.)", NULL, conf.interpolate );
    y -= 50;
 
 
