@@ -174,30 +174,31 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL,
          ""
 #ifdef DEBUGGING
-         "DEBUG=1\n"
 #ifdef DEBUG_PARANOID
-         "DEBUG_PARANOID=1\n"
+         "Debug Paranoid\n"
+#else /* DEBUG_PARANOID */
+         "Debug\n"
 #endif /* DEBUG_PARANOID */
 #endif /* DEBUGGING */
 #if defined(LINUX)
-         "OS=LINUX\n"
+         "Linux\n"
 #elif defined(FREEBSD)
-         "OS=FREEBSD\n"
+         "FreeBSD\n"
 #elif defined(MACOSX)
-         "OS=MACOSX\n"
+         "Mac OS X\n"
 #elif defined(WIN32)
-         "OS=WIN32\n"
+         "Windows\n"
 #else
-         "OS=UNKNOWN\n"
+         "Unknown OS\n"
 #endif
 #ifdef USE_OPENAL
-         "USE_OPENAL=1\n"
+         "With OpenAL\n"
 #endif /* USE_OPENAL */
 #ifdef USE_SDLMIX
-         "USE_SDLMIX=1\n"
+         "With SDL_mixer\n"
 #endif
 #ifdef NDATA_DEF
-         "NDATA_DEF="NDATA_DEF"\n"
+         "ndata: "NDATA_DEF"\n"
 #endif /* NDATA_DEF */
          );
 
