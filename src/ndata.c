@@ -281,6 +281,7 @@ static int ndata_openPackfile (void)
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
+
       /* Try to open any ndata in path. */
       else {
 
