@@ -212,8 +212,8 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = 1;
    conf.vsync        = 0;
-   conf.vbo          = 1;
-   conf.mipmaps      = 1;
+   conf.vbo          = 0; /* Seems to cause a lot of issues. */
+   conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
 
