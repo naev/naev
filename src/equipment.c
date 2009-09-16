@@ -978,7 +978,8 @@ void equipment_genLists( unsigned int wid )
    }
 
    /* Update window. */
-   equipment_updateOutfits(wid, NULL); /* Will update ships also. */
+   equipment_updateOutfits(wid, NULL);
+   equipment_updateShips(wid, NULL);
 }
 /**
  * @brief Updates the player's ship window.
