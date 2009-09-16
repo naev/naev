@@ -1894,6 +1894,11 @@ int player_hasShip( char* shipname )
 {
    int i;
 
+   /* Check current ship. */
+   if ((player != NULL) && (strcmp(player->name,shipname)==0))
+      return 1;
+
+   /* Check stocked ships. */
    for (i=0; i < player_nstack; i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return 1;
