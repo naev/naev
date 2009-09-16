@@ -1313,6 +1313,8 @@ static void misn_accept( unsigned int wid, char* str )
          memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;
+
+         /* Regeneratie list. */
          misn_genList(wid, 0);
       }
 
@@ -1356,6 +1358,9 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
+
+   /* Update the list. */
+   misn_update( wid, NULL );
 }
 /**
  * @brief Updates the mission list.
