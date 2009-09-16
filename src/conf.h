@@ -24,6 +24,7 @@ typedef struct PlayerConf_s {
    int vbo; /**< Use vbo. */
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
+   int interpolate; /**< Use texture interpolation. */
 
    /* Memory usage. */
    int engineglow; /**< Sets engine glow. */

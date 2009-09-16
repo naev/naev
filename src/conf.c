@@ -215,6 +215,7 @@ void conf_setVideoDefaults (void)
    conf.vbo          = 1;
    conf.mipmaps      = 1;
    conf.compress     = 0;
+   conf.interpolate  = 1;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -282,6 +283,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("vbo",conf.vbo);
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
+      conf_loadBool("interpolate",conf.interpolate);
 
       /* Memory. */
       conf_loadBool("engineglow",conf.engineglow);
@@ -787,6 +789,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Texture Compression");
    conf_saveBool("compress",conf.compress);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Texture Interpolation");
+   conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
    /* Memory. */
