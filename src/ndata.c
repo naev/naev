@@ -101,6 +101,15 @@ int ndata_setPath( const char* path )
 }
 
 
+/**
+ * @brief Get the current ndata path.
+ */
+const char* ndata_getPath (void)
+{
+   return ndata_filename;
+}
+
+
 #define NONDATA
 #include "nondata.c"
 /**
@@ -329,12 +338,12 @@ int ndata_open (void)
    /* Create the lock. */
    ndata_lock = SDL_CreateMutex();
 
+   /* Set path to configuration. */
+   ndata_setPath(conf.ndata);
+
    /* If user enforces ndata filename, we'll respect that. */
    if (ndata_isndata(ndata_filename))
       return ndata_openPackfile();
-
-   /* Set path to configuration. */
-   ndata_setPath(conf.ndata);
 
    return 0;
 }

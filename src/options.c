@@ -25,6 +25,7 @@
 #include "nstd.h"
 #include "dialogue.h"
 #include "conf.h"
+#include "ndata.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -131,6 +132,8 @@ static void opt_close( unsigned int wid, char *name )
 static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
+   char buf[PATH_MAX];
+   const char *path;
    int cw;
    int w, h, y, x, by;
 
@@ -159,6 +162,14 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 1, "txtCommit",
          NULL, NULL, "Commit: "GIT_COMMIT );
 #endif /* GIT_COMMIT */
+   y -= 20;
+   path = ndata_getPath();
+   if (path == NULL)
+      snprintf( buf, sizeof(buf), "not using ndata" );
+   else
+      snprintf( buf, sizeof(buf), "ndata: %s", path);
+   window_addText( wid, x, y, cw, 20, 1, "txtNdata",
+         NULL, NULL, buf );
    y -= 50;
    by = y;
 
