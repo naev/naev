@@ -732,10 +732,9 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    window_close( wid, NULL );
 
    /* Update parent window. */
-   parent = window_get("Keybindings");
+   parent = window_getParent( wid );
    window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
-   menuKeybinds_update( parent, NULL );
 
    return 0;
 }
@@ -759,6 +758,7 @@ static void opt_setKey( unsigned int wid, char *str )
    h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
    new_wid = window_create( "Set Keybinding", -1, -1, w, h );
    window_handleEvents( new_wid, opt_setKeyEvent );
+   window_setParent( new_wid, wid );
 
    /* Set text. */
    window_addText( new_wid, 20, -40, w-40, 60, 0, "txtInfo",
@@ -796,10 +796,9 @@ static void opt_unsetKey( unsigned int wid, char *str )
    window_close( wid, NULL );
 
    /* Update parent window. */
-   parent = window_get("Keybindings");
+   parent = window_getParent( wid );
    window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
-   menuKeybinds_update( parent, NULL );
 }
 
 

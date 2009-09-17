@@ -458,6 +458,26 @@ void window_setParent( unsigned int wid, unsigned int parent )
 
 
 /**
+ * @brief Gets the window's parent.
+ *
+ *    @param wid Window to get parent of.
+ *    @return Parent of the window or 0 on error.
+ */
+unsigned int window_getParent( unsigned int wid )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL) 
+      return 0;
+
+   /* Get the parent. */
+   return wdw->parent;
+}
+
+
+/**
  * @brief Sets the default close function of the window.
  *
  * This function is called when the window is closed.
