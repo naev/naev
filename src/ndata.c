@@ -345,6 +345,10 @@ int ndata_open (void)
    if (ndata_isndata(ndata_filename))
       return ndata_openPackfile();
 
+   if (ndata_filename != NULL)
+      free(ndata_filename);
+   ndata_filename = NULL;
+
    return 0;
 }
 
