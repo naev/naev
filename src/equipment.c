@@ -419,7 +419,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 {
    int i;
    glColour *c, tc;
-   int text_width, xoff;
+   int text_width, xoff, yoff;
    const char *display;
    int subtitle;
 
@@ -482,16 +482,17 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 
          if (display != NULL) {
             text_width = gl_printWidthRaw( &gl_smallFont, display );
-            xoff = (text_width - w)/2;
+            xoff = -(text_width - w)/2;
+            yoff = h + 2.;
             tc.r = 1.;
             tc.g = 1.;
             tc.b = 1.;
             tc.a = 0.5;
-            toolkit_drawRect( x-xoff-5, y - gl_smallFont.h - 5,
+            toolkit_drawRect( x+xoff-5, y -3. + yoff,
                   text_width+10, gl_smallFont.h+5,
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
-                  x-xoff + SCREEN_W/2., y - gl_smallFont.h -2. + SCREEN_H/2.,
+                  x+xoff + SCREEN_W/2., y + SCREEN_H/2. + yoff,
                   c, display );
          }
       }
