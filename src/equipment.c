@@ -419,7 +419,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 {
    int i;
    glColour *c, tc;
-   int text_width, xoff, yoff;
+   int text_width, xoff, yoff, top;
    const char *display;
    int subtitle;
 
@@ -439,6 +439,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          display = NULL;
          if ((i==mover) && (wgt->canmodify)) {
             if (lst[i].outfit != NULL) {
+               top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], lst[i].outfit, 0 );
                if (display != NULL)
                   c = &cRed;
@@ -449,6 +450,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             }
             else if ((wgt->outfit != NULL) &&
                   (lst->slot == wgt->outfit->slot)) {
+               top = 0;
                display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
                if (display != NULL)
                   c = &cRed;
@@ -459,6 +461,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             }
          }
          else if (lst[i].outfit != NULL) {
+            top = 1;
             if (outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) {
                if ((lst[i].u.ammo.outfit == NULL) ||
@@ -483,7 +486,10 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          if (display != NULL) {
             text_width = gl_printWidthRaw( &gl_smallFont, display );
             xoff = -(text_width - w)/2;
-            yoff = h + 2.;
+            if (top)
+               yoff = h + 2;
+            else
+               yoff = -gl_smallFont.h - 3;
             tc.r = 1.;
             tc.g = 1.;
             tc.b = 1.;
