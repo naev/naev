@@ -9,6 +9,16 @@
  *
  * Optimizes to minimize the opens and frees, plus tries to read from the
  *  filesystem instead always looking for a packfile.
+ *
+ * Detection in a nutshell:
+ *
+ *  1) CLI option
+ *  2) conf.lua option
+ *  3) Current dir laid out.
+ *  4) ndata-$VERSION
+ *  5) Makefile version
+ *  6) ./ndata*
+ *  7) dirname(argv[0])/ndata* (binary path)
  */
 
 #include "ndata.h"
