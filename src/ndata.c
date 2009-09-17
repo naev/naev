@@ -12,9 +12,12 @@
  *
  * Detection in a nutshell:
  *
+ *
+ * -- DONE AT INIT --
  *  1) CLI option
  *  2) conf.lua option
- *  3) Current dir laid out.
+ * -- DONE AS NEEDED --
+ *  3) Current dir laid out (does not work well when iterating through directories)
  *  4) ndata-$VERSION
  *  5) Makefile version
  *  6) ./ndata*
