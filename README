@@ -1,7 +1,6 @@
 
    NAEV README
 
-
    X.) DEPENDENCIES
 
       X.1) Debian
@@ -13,6 +12,8 @@
             * libxml2
             * libfreetype6
             * libpng12-0
+            * libopenal1
+            * libvorbis0a >=1.2.1 (Moot if binary is statically-linked.)
 
          X.1.2) Source
             * libsdl1.2-dev
@@ -22,22 +23,84 @@
             * libxml2-dev
             * libfreetype6-dev
             * libpng12-dev
+            * libopenal-dev
+            * libvorbis-dev >=1.2.1 (Older versions will work if using
+               static-linking makefile.)
+            * binutils-dev
 
+    X.) COMPILING
+
+      NAEV's build system is rather simple - Install the dependencies
+      and then run make, and you're done.
+
+      However, many Linux distributions package antiquated versions of
+      libvorbis that are incompatible with NAEV.
+
+      To resolve this, static-linking patches for the Makefile have been
+      included, as well as static versions of libvorbis libaries.
+
+      These are only included in release tarballs, if compiling from git,
+      please download and extract http://deiz2.ath.cx/naev/libvorbis.tar.gz
+         Example: wget http://deiz2.ath.cx/naev/libvorbis.tar.gz
+         tar -xf libvorbis.tar.gz
+
+      The included static libraries are libvorbis 1.2.3, sourced from
+      Gentoo, but should work on all systems.
+
+         Assuming a 32-bit system, starting in the base dir:
+            patch -p1 < libvorbis/libvorbis-32.patch
+
+         If you wish to change the default ndata path, you can uncomment
+         the NDATA_DEF line in the Makefile and set it as applicable.
+            Example: NDATA_DEF := \"/usr/share/games/naev/ndata\"
+
+         Compilation can now proceed, simply type make and the compilation
+         should finish without issue.
+            One libxml warning is common. The cause has been fixed and it
+            will be incorporated in new libxml releases.
+
+         This will produce two files, naev and ndata. The naev binary will
+         search for ndata in the working and the binary directories.
+
+      Note: While only one audio backend needs to be compiled in, it's wise
+      to compile with both enabled to provide a fallback.
+
+    X.) INSTALLATION
+
+      NAEV currently does not support 'make install', and will do nothing
+      beyond building the binary and ndata.
+
+      If you wish to create a .desktop for your desktop environment, logos
+      from 16x16 to 128x128 can be found in extras/logos
+
+      A manpage is also included. As a game, NAEV's manpage is a man(6) and
+      usually belongs in /usr/share/man/man6, though this may vary.
+
+    X.) CRASHES
+
+      If NAEV is crashing during gameplay, please file a bug report after
+      reading http://code.google.com/p/naev/wiki/Debugging.
+      If NAEV crashes on launch with an error such as 'undefined symbol:
+      ov_read_filter', your version of libvorbis is outdated, please see
+      the appropriate FAQ entry: http://code.google.com/p/naev/wiki/FAQ
 
     X.) KEYBINDINGS
 
       X.0) Introduction
          X.0.0) About
-            NAEV uses a dynamic keybinding system that allows you to configure 
-            the keybinds to joystick, keyboard or a mixture of both.
+            NAEV uses a dynamic keybinding system that allows you to set 
+            the keybindings to joystick, keyboard or a mixture of both.
+
+            This can changed via ~/.naev/conf.lua, or with the in-game editor.
+
          X.0.1) Joystick
-            If you are using a joystick you'll have to tell NAEV which joystick
+            If you have a joystick you'll have to tell NAEV which joystick
             to use.  You can either use the -j or -J parameter from the
-            commandline or put it in the conf file.
+            command-line or put it in the conf.lua file.
             Examples:
                naev -j 0
                naev -J "Precision"
-               joystick = "Precision" # in conf file
+               joystick = "Precision" # in conf.lua
          X.0.2) Syntax
             KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
                   [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
@@ -54,38 +117,8 @@
             accel = { type = "jbutton", key = 0 }
             see conf.example for more examples
 
-        X.1) Movement
-         X.1.1) accel : accelerates the ship. default: up arrow.
-         X.1.2) left : turns the ship left. default: left arrow.
-         X.1.3) right : turns the ship right. default: right arrow.
-         X.1.4) reverse : makes the ship face the direction it's coming from.
-            default: down arrow
-         X.1.5) afterburner : uses the ship's afetrburner. default: double tap
-            and hold up arrow
-
-      X.2) Combat
-         X.2.1) primary : fires primary weapons. default: spacebar.
-         X.2.2) target : targets next ship. default: tab
-         X.2.3) target_nearest : targets closest hostile ship. default: r
-         X.2.4) face : faces the target. default: a
-         X.2.5) board : board the target. default: b
-         X.2.6) secondary : fires secondary weapon. default: left shift
-         X.2.7) secondary_next : switches to the next secondary weapon.
-            default: w
-
-      X.3) Space
-         X.3.1) target_planet : cycles through planets. default: p
-         X.3.2) land : attempts to land or targets nearest planet. default: l
-         X.3.3) thyperspace : cycle through hyperspace routes. default: h
-         X.3.4) jump : attempt to enter hyperspace. default: j
-         X.3.5) starmap : opens the stellar map. default: m
-
-      X.4) Gui
-         X.4.1) mapzoomin : zooms in the minimap. default: 9.
-         X.4.2) mapzoomout : zooms out in the minimap. default: 0.
-         X.4.3) screenshot : takes a screenshot. default: keypad -
-         X.4.4) pause : pauses the game. default: z
-         X.4.5) menu : opens the menu. default: escape
-         X.4.6) info : opens the character information window. default: i
+        X.1) Keys
+            For an exhaustive list of default keybindings, please see
+            http://code.google.com/p/naev/wiki/Keybinds
 
 
