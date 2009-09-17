@@ -24,6 +24,10 @@ typedef struct PlayerConf_s {
    int vbo; /**< Use vbo. */
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
+   int interpolate; /**< Use texture interpolation. */
+
+   /* Memory usage. */
+   int engineglow; /**< Sets engine glow. */
 
    /* Window dimensions. */
    int width; /**< Width of the window to use. */
@@ -52,11 +56,16 @@ typedef struct PlayerConf_s {
    int autorefuel; /**< Whether or not to autorefuel when landing. */
 
    /* Misc. */
-   double zoom_max; /**< Maximum ingame zoom to use. */
-   double zoom_min; /**< Minimum ingame zoom to use. */
+   int save_compress; /**< Compress savegame. */
+   double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
+   double zoom_near; /**< Minimum ingame zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
+   int nosave; /**< Disables conf saving. */
+
+   /* Debugging. */
+   int fpu_except;
 
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
@@ -66,6 +75,9 @@ extern PlayerConf_t conf; /**< Player configuration. */
  * loading
  */
 void conf_setDefaults (void);
+void conf_setGameplayDefaults (void);
+void conf_setAudioDefaults (void);
+void conf_setVideoDefaults (void);
 int conf_loadConfig( const char* file );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);

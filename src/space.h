@@ -44,7 +44,7 @@ typedef enum PlanetClass_ {
    PLANET_CLASS_L,   /**< Marginal */
    PLANET_CLASS_M,   /**< Terrestrial */
    PLANET_CLASS_N,   /**< Reducing */
-   PLANET_CLASS_O,   /**< Pelagic */
+   PLANET_CLASS_O,   /**< Pelagic - Aquatic */
    PLANET_CLASS_P,   /**< Glaciated */
    PLANET_CLASS_Q,   /**< Variable */
    PLANET_CLASS_R,   /**< Rogue */

@@ -143,6 +143,11 @@ Press yes to abort the tutorial, or no to continue it.]]
 end
 
 function create()
+
+   var.push("version", 040)
+   -- Hack to add lasers
+   pilot.player():addOutfit( "Laser Cannon", 2 )
+
    if forced == 1 then
       start()
    else
@@ -413,7 +418,8 @@ function boardOver()
    tk.msg(title[4], text[13])
    hyena = pilot.add("Pirate Hyena")
    for k,v in ipairs(hyena) do
-       v:rmOutfit("Laser Cannon", 1) -- Make it weaker
+       v:rmOutfit("all") -- Make weaker
+       v:addOutfit("Laser Cannon", 2)
        hook.pilot(v, "death", "hyenaWait")
        hook.pilot(v, "jump", "hyenaWait") -- Treat jump as dead
    end
@@ -474,12 +480,14 @@ end
 function succeed()
    tk.msg("Tutorial Skipped", "You're a little early, but since you're here, I'll let you proceed with the next stage of the tutorial.")
    misn.finish(true)
+   var.push("version", 040)
 end
 
 function abort()
    tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
+   var.push("version", 040)
 end
 
 function reject()

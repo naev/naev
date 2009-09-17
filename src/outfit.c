@@ -233,6 +233,31 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
 
 
 /**
+ * @brief Gets the name of the slot type of an outfit.
+ *
+ *    @param o Outfit to get slot type of.
+ *    @return The human readable name of the slot type.
+ */
+const char *outfit_slotName( const Outfit* o )
+{
+   switch (o->slot) {
+      case OUTFIT_SLOT_NULL:
+         return "NULL";
+      case OUTFIT_SLOT_NA:
+         return "NA";
+      case OUTFIT_SLOT_LOW:
+         return "Low";
+      case OUTFIT_SLOT_MEDIUM:
+         return "Medium";
+      case OUTFIT_SLOT_HIGH:
+         return "High";
+      default:
+         return "Unknown";
+   }
+}
+
+
+/**
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
@@ -269,12 +294,8 @@ int outfit_isBeam( const Outfit* o )
  */
 int outfit_isLauncher( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB) ||
-         (o->type==OUTFIT_TYPE_TURRET_DUMB)     ||
-         (o->type==OUTFIT_TYPE_MISSILE_SEEK)    ||
-         (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART) ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM)   ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
+   return ( (o->type==OUTFIT_TYPE_LAUNCHER) ||
+         (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) );
 }
 /**
  * @brief Checks if outfit is ammo for a launcher.
@@ -283,12 +304,8 @@ int outfit_isLauncher( const Outfit* o )
  */
 int outfit_isAmmo( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB_AMMO)  ||
-         (o->type==OUTFIT_TYPE_TURRET_DUMB_AMMO)     ||
-         (o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)     ||
-         (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)    ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
+   return ( (o->type==OUTFIT_TYPE_AMMO)  ||
+         (o->type==OUTFIT_TYPE_TURRET_AMMO) );
 }
 /**
  * @brief Checks if outfit is a seeking weapon.
@@ -297,10 +314,9 @@ int outfit_isAmmo( const Outfit* o )
  */
 int outfit_isSeeker( const Outfit* o )
 {
-   if ((o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)     ||
-         (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)    ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO))
+   if (((o->type==OUTFIT_TYPE_AMMO)     ||
+            (o->type==OUTFIT_TYPE_TURRET_AMMO) ) &&
+         (o->u.amm.ai > 0))
       return 1;
    return 0;
 }
@@ -313,7 +329,7 @@ int outfit_isTurret( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_TURRET_BOLT)  ||
          (o->type==OUTFIT_TYPE_TURRET_BEAM)     ||
-         (o->type==OUTFIT_TYPE_TURRET_DUMB) );
+         (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) );
 }
 /**
  * @brief Checks if outfit is a ship modification.
@@ -564,18 +580,10 @@ const char* outfit_getType( const Outfit* o )
          "Beam Cannon",
          "Bolt Turret",
          "Beam Turret",
-         "Dumb Missile",
-         "Dumb Missile Ammunition",
-         "Projectile Turret",
-         "Projectile Turret Ammunition",
-         "Seeker Missile",
-         "Seeker Missile Ammunition",
-         "Smart Seeker Missile",
-         "Smart Seeker Missile Ammunition",
-         "Swarm Missile",
-         "Swarm Missile Ammunition Pack",
-         "Smart Swarm Missile",
-         "Smart Swarm Missile Ammunition Pack",
+         "Launcher",
+         "Ammunition",
+         "Turret Launcher",
+         "Turret Ammunition",
          "Ship Modification",
          "Afterburner",
          "Jammer",
@@ -671,18 +679,10 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("beam",OUTFIT_TYPE_BEAM);
    O_CMP("turret bolt",OUTFIT_TYPE_TURRET_BOLT);
    O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
-   O_CMP("missile dumb",OUTFIT_TYPE_MISSILE_DUMB);
-   O_CMP("missile dumb ammo",OUTFIT_TYPE_MISSILE_DUMB_AMMO);
-   O_CMP("turret dumb",OUTFIT_TYPE_TURRET_DUMB);
-   O_CMP("turret dumb ammo",OUTFIT_TYPE_TURRET_DUMB_AMMO);
-   O_CMP("missile seek",OUTFIT_TYPE_MISSILE_SEEK);
-   O_CMP("missile seek ammo",OUTFIT_TYPE_MISSILE_SEEK_AMMO);
-   O_CMP("missile smart",OUTFIT_TYPE_MISSILE_SEEK_SMART);
-   O_CMP("missile smart ammo",OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO);
-   O_CMP("missile swarm",OUTFIT_TYPE_MISSILE_SWARM);
-   O_CMP("missile swarm ammo",OUTFIT_TYPE_MISSILE_SWARM_AMMO);
-   O_CMP("missile swarm smart",OUTFIT_TYPE_MISSILE_SWARM_SMART);
-   O_CMP("missile swarm smart ammo",OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO);
+   O_CMP("launcher",OUTFIT_TYPE_LAUNCHER);
+   O_CMP("ammo",OUTFIT_TYPE_AMMO);
+   O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
+   O_CMP("turret ammo",OUTFIT_TYPE_TURRET_AMMO);
    O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
    O_CMP("fighter bay",OUTFIT_TYPE_FIGHTER_BAY);
@@ -1018,11 +1018,12 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    /* Defaults. */
+   temp->slot              = OUTFIT_SLOT_NA;
    temp->u.amm.spfx_armour = -1;
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->u.amm.ai          = -1;
 
    do { /* load all the data */
       /* Basic */
@@ -1081,6 +1082,15 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, node );
          continue;
       }
+      if (xml_isNode(node,"ai")) {
+         buf = xml_get(node);
+         if (strcmp(buf,"dumb")==0)
+            temp->u.amm.ai = 0;
+         else if (strcmp(buf,"seek")==0)
+            temp->u.amm.ai = 1;
+         else if (strcmp(buf,"smart")==0)
+            temp->u.amm.ai = 2;
+      }
    } while (xml_nextNode(node));
 
    /* Post-processing */
@@ -1116,6 +1126,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.amm.duration==0,"duration");
    MELEMENT(temp->u.amm.damage==0,"damage");
    /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
+   MELEMENT(temp->u.amm.ai<0,"ai");
 #undef MELEMENT
 }
 

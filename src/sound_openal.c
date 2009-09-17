@@ -12,11 +12,6 @@
 #include <math.h>
 #include <sys/stat.h>
 
-#include <AL/alc.h>
-#include <AL/al.h>
-#include <AL/alext.h>
-#include <vorbis/vorbisfile.h>
-
 #include "SDL.h"
 #include "SDL_thread.h"
 #include "SDL_endian.h"
@@ -121,6 +116,7 @@ static int al_groupidgen    = 0; /**< Used to create group IDs. */
 /*
  * Loading.
  */
+static const char* vorbis_getErr( int err );
 static int al_enableEFX (void);
 /*
  * Wav loading.
@@ -161,6 +157,11 @@ static int ovpack_close( void *datasource )
    SDL_RWops *rw = datasource;
    return SDL_RWclose( rw );
 }
+static int ovpack_closeFake( void *datasource )
+{  
+   (void) datasource;
+   return 0;
+}
 static long ovpack_tell( void *datasource )
 {  
    SDL_RWops *rw = datasource;
@@ -175,7 +176,7 @@ ov_callbacks sound_al_ovcall = {
 ov_callbacks sound_al_ovcall_noclose = {
    .read_func  = ovpack_read,
    .seek_func  = ovpack_seek,
-   .close_func = NULL,
+   .close_func = ovpack_closeFake,
    .tell_func  = ovpack_tell
 }; /**< Vorbis call structure to handl rwops without closing. */
 
@@ -745,6 +746,27 @@ wav_err:
 
 
 /**
+ * @brief Gets the vorbisfile error in human readable form..
+ */
+static const char* vorbis_getErr( int err )
+{
+   switch (err) {
+      case OV_EREAD:       return "A read from media returned an error.";
+      case OV_EFAULT:      return "Internal logic fault; indicates a bug or heap/stack corruption.";
+      case OV_EIMPL:       return "Feature not implemented.";
+      case OV_EINVAL:      return "Either an invalid argument, or incompletely initialized argument passed to libvorbisfile call";
+      case OV_ENOTVORBIS:  return "Bitstream is not Vorbis data.";
+      case OV_EBADHEADER:  return "Invalid Vorbis bitstream header.";
+      case OV_EVERSION:    return "Vorbis version mismatch.";
+      case OV_EBADLINK:    return "The given link exists in the Vorbis data stream, but is not decipherable due to garbacge or corruption.";
+      case OV_ENOSEEK:     return "The given stream is not seekable.";
+
+      default: return "Unknown vorbisfile error.";
+   }
+}
+
+
+/**
  * @brief Loads an ogg file from a tested format if possible.
  *
  *    @param snd Sound to load ogg into.
@@ -752,6 +774,7 @@ wav_err:
  */
 static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
 {
+   int ret;
    long i;
    int section;
    vorbis_info *info;
@@ -760,8 +783,9 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    char *buf;
 
    /* Finish opening the file. */
-   if (ov_test_open(vf)) {
-      WARN("Failed to finish loading OGG file.");
+   ret = ov_test_open(vf);
+   if (ret) {
+      WARN("Failed to finish loading OGG file: %s", vorbis_getErr(ret) );
       return -1;
    }
 
@@ -840,7 +864,12 @@ int sound_al_load( alSound *snd, const char *filename )
    alGetBufferi( snd->u.al.buf, AL_BITS, &bits );
    alGetBufferi( snd->u.al.buf, AL_CHANNELS, &channels );
    alGetBufferi( snd->u.al.buf, AL_SIZE, &size );
-   snd->length = (double)size / (double)(freq * (bits/8) * channels);
+   if ((freq==0) || (bits==0) || (channels==0)) {
+      WARN("Something went wrong when loading sound file '%s'.", filename);
+      snd->length = 0;
+   }
+   else
+      snd->length = (double)size / (double)(freq * (bits/8) * channels);
 
    /* Check for errors. */
    al_checkErr();

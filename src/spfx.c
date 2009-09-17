@@ -52,7 +52,7 @@
  */
 /* shake aka rumble */
 static double shake_rad = 0.; /**< Current shake radius (0 = no shake). */
-Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. Used in nebula.c */
+static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static int shake_off = 1; /**< 1 if shake is not active. */
 
@@ -516,9 +516,7 @@ void spfx_end (void)
    }
 
    /* set the new viewport */
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho( -bx+x*0.5, bx+x*0.5, -by+y*0.5, by+y*0.5, -1., 1. );
+   gl_defViewport();
 }
 
 
@@ -542,6 +540,25 @@ void spfx_shake( double mod )
 
    /* Notify that rumble is active. */
    shake_off = 0;
+}
+
+
+/**
+ * @brief Gets the current shake position.
+ *
+ *    @param[out] X X shake position.
+ *    @param[out] Y Y shake position.
+ */
+void spfx_getShake( double *x, double *y )
+{
+   if (shake_off || paused) {
+      *x = 0.;
+      *y = 0.;
+   }
+   else {
+      *x = shake_pos.x;
+      *y = shake_pos.y;
+   }
 }
 
 

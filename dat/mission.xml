@@ -17,7 +17,7 @@
   </flags>
   <avail>
    <chance>100</chance>
-   <cond>var.peek("tutorial_aborted") ~= true</cond>
+   <cond>var.peek("tutorial_aborted") ~= true and player.evtDone( "Tutorial Features" ) ~= true</cond>
    <location>Land</location>
 	<done>Tutorial</done>
   </avail>
@@ -31,8 +31,18 @@
    <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>None</location>
-	<done>Tutorial</done>
 	<done>Tutorial Landing</done>
+  </avail>
+ </mission>
+ <mission name="Tutorial Features">
+  <lua>tutorial-features</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+	<done>Tutorial Features</done>
   </avail>
  </mission>
  <mission name="Cargo">
@@ -304,7 +314,7 @@
   <avail>
    <priority>4</priority>
    <cond>player.getRating() &gt; 50 and system.get():hasPresence("Pirate")</cond>
-   <chance>5</chance>
+   <chance>10</chance>
    <done>Empire HCVL</done>
    <location>Bar</location>
    <faction>Empire</faction>

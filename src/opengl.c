@@ -67,7 +67,7 @@ static int gl_activated = 0; /**< Whether or not a window is activated. */
  */
 /* gl */
 static int gl_setupAttributes (void);
-static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo );
+static int gl_setupFullscreen( unsigned int *flags );
 static int gl_createWindow( unsigned int flags );
 static int gl_getGLInfo (void);
 static int gl_defState (void);
@@ -328,9 +328,9 @@ void gl_checkHandleError( const char *func, int line )
 static int gl_setupAttributes (void)
 {
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
-   if (gl_has(OPENGL_FSAA)) {
+   if (conf.fsaa > 1) {
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, gl_screen.fsaa);
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, conf.fsaa);
    }
    if (gl_has(OPENGL_VSYNC))
 #if SDL_VERSION_ATLEAST(1,3,0)
@@ -347,10 +347,9 @@ static int gl_setupAttributes (void)
  * @brief Tries to set up fullscreen environment.
  *
  *    @param flags Flags to modify.
- *    @param vidinfo Video information.
  *    @return 0 on success.
  */
-static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo )
+static int gl_setupFullscreen( unsigned int *flags )
 {
    int i, j, off, toff, supported;
    SDL_Rect** modes;
@@ -359,12 +358,10 @@ static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo
    supported = 0;
 
    /* Try to use desktop resolution if nothing is specifically set. */
-#if SDL_VERSION_ATLEAST(1,2,10)
-   if (!conf.explicit_dim) {
-      gl_screen.w = vidinfo->current_w;
-      gl_screen.h = vidinfo->current_h;
+   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0) && !conf.explicit_dim) {
+      gl_screen.w = gl_screen.desktop_w;
+      gl_screen.h = gl_screen.desktop_h;
    }
-#endif /* SDL_VERSION_ATLEAST(1,2,10) */
 
    /* Get available modes and see what we can use. */
    modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
@@ -434,9 +431,8 @@ static int gl_createWindow( unsigned int flags )
    /* Actually creating the screen. */
    if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
       /* Try again possibly disabling FSAA. */
-      if (gl_has(OPENGL_FSAA)) {
+      if (conf.fsaa > 1) {
          LOG("Unable to create OpenGL window: Trying without FSAA.");
-         gl_screen.flags &= ~OPENGL_FSAA;
          SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
          SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
       }
@@ -460,14 +456,14 @@ static int gl_createWindow( unsigned int flags )
  */
 static int gl_getGLInfo (void)
 {
-   int doublebuf, fsaa;
+   int doublebuf;
 
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
    SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
    SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
    SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
-   SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &fsaa );
+   SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &gl_screen.fsaa );
    if (doublebuf)
       gl_screen.flags |= OPENGL_DOUBLEBUF;
    /* Calculate real depth. */
@@ -483,7 +479,7 @@ static int gl_getGLInfo (void)
    DEBUG("r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d",
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? "yes" : "no",
-         fsaa, gl_screen.tex_max);
+         gl_screen.fsaa, gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
    DEBUG("Version: %s", glGetString(GL_VERSION));
 
@@ -491,9 +487,9 @@ static int gl_getGLInfo (void)
    if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
       WARN("Missing texture units (%d required, %d found)",
             OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
-   if (gl_has(OPENGL_FSAA) && (fsaa != gl_screen.fsaa))
+   if ((conf.fsaa > 1) && (gl_screen.fsaa != conf.fsaa))
       WARN("Unable to get requested FSAA level (%d requested, got %d)",
-            gl_screen.fsaa, fsaa );
+            conf.fsaa, gl_screen.fsaa );
 
    return 0;
 }
@@ -588,17 +584,19 @@ static int gl_hint (void)
 int gl_init (void)
 {
    unsigned int flags;
-   const SDL_VideoInfo *vidinfo;
+   int dw, dh;
 
    /* Defaults. */
+   dw = gl_screen.desktop_w;
+   dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
    flags  = SDL_OPENGL;
+   gl_screen.desktop_w = dw;
+   gl_screen.desktop_h = dh;
 
    /* Load configuration. */
    if (conf.vsync)
       gl_screen.flags |= OPENGL_VSYNC;
-   if (conf.fsaa > 1)
-      gl_screen.fsaa = conf.fsaa;
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
    gl_setScale( conf.scalefactor );
@@ -613,24 +611,12 @@ int gl_init (void)
       return -1;
    }
 
-   /* Get the video information. */
-   vidinfo = SDL_GetVideoInfo();
-
    /* Set opengl flags. */
    gl_setupAttributes();
 
    /* See if should set up fullscreen. */
    if (conf.fullscreen)
-      gl_setupFullscreen( &flags, vidinfo );
-
-   /* Check to see if trying to create above screen resolution without player
-    * asking for such a large size. */
-#if SDL_VERSION_ATLEAST(1,2,10)
-   if (!conf.explicit_dim) {
-      gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
-      gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
-   }
-#endif /* SDL_VERSION_ATLEAST(1,2,10) */
+      gl_setupFullscreen( &flags );
 
    /* Create the window. */
    gl_createWindow( flags );

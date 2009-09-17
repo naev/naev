@@ -87,10 +87,10 @@ static int cli_print( lua_State *L ) {
    int i;
    char buf[LINE_LENGTH];
    int p;
+   const char *s;
    p = 0;
    lua_getglobal(L, "tostring");
    for (i=1; i<=n; i++) {
-      const char *s;
       lua_pushvalue(L, -1);  /* function to be called */
       lua_pushvalue(L, i);   /* value to print */
       lua_call(L, 1, 1);
@@ -240,18 +240,18 @@ int cli_init (void)
       return 0;
 
    /* Calculate size. */
-   cli_width  = SCREEN_W - 100;
-   cli_height = SCREEN_H - 100;
+   cli_width   = SCREEN_W - 100;
+   cli_height  = SCREEN_H - 100;
 
    /* Create the state. */
-   cli_state = nlua_newState();
+   cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
    nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 
    /* Set the font. */
-   cli_font = malloc( sizeof(glFont) );
+   cli_font    = malloc( sizeof(glFont) );
    gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
 
    /* Clear the buffer. */
@@ -313,16 +313,17 @@ static void cli_input( unsigned int wid, char *unused )
 
    /* Set up state. */
    L = cli_state;
+   /* Set up for concat. */
+   if (!cli_firstline) {         /* o */
+      lua_pushliteral(L, "\n");  /* o \n */
+   }
    /* Load the string. */
-   lua_pushstring( L, str );
-   /* Concat string if needed. */
-   if (!cli_firstline) {
-      lua_pushliteral(L, "\n");  /* add a new line... */
-      lua_insert(L, -2);  /* ...between the two lines */
-      lua_concat(L, 3);  /* join them */
+   lua_pushstring( L, str );     /* s */
+   /* Concat. */
+   if (!cli_firstline) {         /* o \n s */
+      lua_concat(L, 3);          /* s */
    }
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
-   lua_remove(L,-2); /**< Remove the string. */
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;
@@ -342,8 +343,10 @@ static void cli_input( unsigned int wid, char *unused )
    }
    /* Print results - all went well. */
    else if (status == 0) {
+      lua_remove(L,1);
       if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
          cli_addMessage( lua_tostring(L, -1) );
+         lua_pop(L,1);
       }
       if (lua_gettop(L) > 0) {
          lua_getglobal(L, "print");

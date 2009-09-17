@@ -47,6 +47,8 @@ void window_addImageArray( const unsigned int wid,
 char* toolkit_getImageArray( const unsigned int wid, const char* name );
 int toolkit_getImageArrayPos( const unsigned int wid, const char* name );
 int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos );
+double toolkit_getImageArrayOffset( const unsigned int wid, const char* name );
+int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off );
 int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt );
 int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
       char **quantity );

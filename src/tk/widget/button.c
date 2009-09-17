@@ -15,6 +15,7 @@
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
+static Widget* btn_get( const unsigned int wid, const char* name );
 
 
 /**
@@ -41,6 +42,8 @@ void window_addButton( const unsigned int wid,
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
 
    /* generic */
    wgt->type = WIDGET_BUTTON;
@@ -68,6 +71,27 @@ void window_addButton( const unsigned int wid,
       toolkit_nextFocus();
 }
 
+/**
+ * @brief Gets a button widget.
+ */
+static Widget* btn_get( const unsigned int wid, const char* name )
+{
+   Widget *wgt;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return NULL;
+
+   /* Check type. */
+   if (wgt->type != WIDGET_BUTTON) {
+      DEBUG("Widget '%s' isn't a button", name);
+      return NULL;
+   }
+
+   return wgt;
+}
+
 
 /**
  * @brief Disables a button.
@@ -79,16 +103,10 @@ void window_disableButton( const unsigned int wid, char* name )
 {
    Widget *wgt;
 
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   /* Get the widget. */
+   wgt = btn_get( wid, name );
    if (wgt == NULL)
       return;
-
-   /* Check type. */
-   if (wgt->type != WIDGET_BUTTON) {
-      DEBUG("Trying to disable a non-button widget '%s'", name);
-      return;
-   }
 
    /* Disable button. */
    wgt->dat.btn.disabled = 1;
@@ -106,16 +124,10 @@ void window_enableButton( const unsigned int wid, char *name )
 {
    Widget *wgt;
   
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   /* Get the widget. */
+   wgt = btn_get( wid, name );
    if (wgt == NULL)
       return;
-
-   /* Check type. */
-   if (wgt->type != WIDGET_BUTTON) {
-      DEBUG("Trying to enable a non-button widget '%s'", name);
-      return;
-   }
 
    /* Enable button. */
    wgt->dat.btn.disabled = 0;
@@ -135,16 +147,10 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
 
    Widget *wgt;
   
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   /* Get the widget. */
+   wgt = btn_get( wid, name );
    if (wgt == NULL)
       return;
-
-   /* Check type. */
-   if (wgt->type != WIDGET_BUTTON) {
-      DEBUG("Trying to enable a non-button widget '%s'", name);
-      return;
-   }
 
    if (wgt->dat.btn.display != NULL)
       free(wgt->dat.btn.display);
@@ -163,6 +169,10 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
 {
    (void) mod;
+
+   /* Don't grab disabled events. */
+   if (btn->dat.btn.disabled)
+      return 0;
 
    if (key == SDLK_RETURN)
       if (btn->dat.btn.fptr != NULL) {

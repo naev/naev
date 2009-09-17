@@ -39,18 +39,10 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_BEAM, /**< Fixed beam cannon. */
    OUTFIT_TYPE_TURRET_BOLT, /**< Rotary bolt turret. */
    OUTFIT_TYPE_TURRET_BEAM, /**< Rotary beam turret. */
-   OUTFIT_TYPE_MISSILE_DUMB, /**< Dumb missile launcher. */
-   OUTFIT_TYPE_MISSILE_DUMB_AMMO, /**< Dumb missile ammo. */
-   OUTFIT_TYPE_TURRET_DUMB, /**< Dumb missile turret launcher. */
-   OUTFIT_TYPE_TURRET_DUMB_AMMO, /**< Dumb missile turrent ammo. */
-   OUTFIT_TYPE_MISSILE_SEEK, /**< Seeker missile launcher. */
-   OUTFIT_TYPE_MISSILE_SEEK_AMMO, /**< Seeker missile ammo. */
-   OUTFIT_TYPE_MISSILE_SEEK_SMART, /**< ATM equivalent to SEEK */
-   OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO, /** ATM equivalent to SEEK_AMMO */
-   OUTFIT_TYPE_MISSILE_SWARM, /**< @todo Swarm missile launcher. */
-   OUTFIT_TYPE_MISSILE_SWARM_AMMO, /**< @todo Swarm missile ammo. */
-   OUTFIT_TYPE_MISSILE_SWARM_SMART, /**< @todo same as SWARM */
-   OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO, /**< @todo same as SWARM_AMMO */
+   OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
+   OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
+   OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
+   OUTFIT_TYPE_TURRET_AMMO, /**< Turrent launcher ammo. */
    OUTFIT_TYPE_MODIFCATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
@@ -166,6 +158,7 @@ typedef struct OutfitAmmoData_ {
    double duration; /**< How long the ammo lives. */
    double lockon; /**< time it takes to lock on the target */
    double resist; /**< lowers chance of jamming by this amount */
+   int ai; /**< Smartness of ammo. */
 
    double accuracy; /**< desviation accuracy */
    double speed; /**< maximum speed */
@@ -335,6 +328,7 @@ const char* outfit_getTypeBroad( const Outfit* o );
 /*
  * get data from outfit
  */
+const char *outfit_slotName( const Outfit* o );
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );

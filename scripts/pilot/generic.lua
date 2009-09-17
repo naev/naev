@@ -61,6 +61,6 @@ end
 --]]
 function pilot_outfitAddSet( p, set )
    for k,v in ipairs(set) do
-      p:addOutfit( v[1], v[2] )
+      p:addOutfit( v )
    end
 end

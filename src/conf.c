@@ -59,7 +59,7 @@ lua_pop(L,1);
 
 
 /* Global configuration. */
-PlayerConf_t conf;
+PlayerConf_t conf = { .ndata = NULL, .sound_backend = NULL, .joystick_nam = NULL };
 
 /* from main.c */
 extern int nosound;
@@ -84,12 +84,11 @@ static void print_usage( char **argv );
  */
 static void print_usage( char **argv )
 {
-   LOG("Usage: %s [OPTIONS]", argv[0]);
+   LOG("Usage: %s [OPTIONS] [DATA]", argv[0]);
    LOG("Options are:");
    LOG("   -f, --fullscreen      activate fullscreen");
    LOG("   -F n, --fps n         limit frames per second to n");
    LOG("   -V, --vsync           enable vsync");
-   LOG("   -d s, --data s        set the data file to be s");
    LOG("   -W n                  set width to n");
    LOG("   -H n                  set height to n");
    LOG("   -j n, --joystick n    use joystick n");
@@ -98,7 +97,7 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G                    regenerates the nebula (slow)");
+   LOG("   -G, --generate         regenerates the nebula (slow)");
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -112,21 +111,62 @@ void conf_setDefaults (void)
    conf_cleanup();
 
    /* ndata. */
+   if (conf.ndata != NULL)
+      free(conf.ndata);
    conf.ndata        = NULL;
 
-   /* opengl. */
-   conf.fsaa         = 1;
-   conf.vsync        = 0;
-   conf.vbo          = 1;
-   conf.mipmaps      = 1;
-   conf.compress     = 0;
+   /* Joystick. */
+   conf.joystick_ind = -1;
+   if (conf.joystick_nam != NULL)
+      free(conf.joystick_nam);
+   conf.joystick_nam = NULL;
 
-   /* Window. */
-   conf.width        = 800;
-   conf.height       = 600;
-   conf.explicit_dim = 0;
-   conf.scalefactor  = 1.;
-   conf.fullscreen   = 0.;
+   /* Land. */
+   conf.autorefuel   = 0;
+
+   /* Misc. */
+   conf.zoom_far     = 0.5;
+   conf.zoom_near    = 1.;
+   conf.zoom_speed   = 0.25;
+   conf.zoom_stars   = 1.;
+   conf.nosave       = 0;
+
+   /* Gameplay. */
+   conf_setGameplayDefaults();
+
+   /* Audio. */
+   conf_setAudioDefaults();
+
+   /* Video. */
+   conf_setVideoDefaults();
+
+   /* Input */
+   input_setDefault();
+
+   /* Debugging. */
+   conf.fpu_except   = 0; /* Causes many issues. */
+}
+
+
+/**
+ * @brief Sets the gameplay defaults.
+ */
+void conf_setGameplayDefaults (void)
+{
+   conf.afterburn_sens = 250;
+   conf.save_compress = 1;
+}
+
+
+/**
+ * @brief Sets the audio defaults.
+ */
+void conf_setAudioDefaults (void)
+{
+   if (conf.sound_backend != NULL) {
+      free(conf.sound_backend);
+      conf.sound_backend = NULL;
+   }
 
    /* Sound. */
 #if USE_OPENAL
@@ -139,27 +179,56 @@ void conf_setDefaults (void)
    conf.nosound      = 0;
    conf.sound        = 0.4;
    conf.music        = 0.8;
+}
+
+
+/**
+ * @brief Sets the video defaults.
+ */
+void conf_setVideoDefaults (void)
+{
+   int w, h, f;
+
+   /* More complex resolution handling. */
+   f = 0;
+   if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0)) {
+      /* Try higher resolution. */
+      w = 1024;
+      h = 768;
+
+      /* Fullscreen and fit everything onscreen. */
+      if ((gl_screen.desktop_w <= w) || (gl_screen.desktop_h <= h)) {
+         w = gl_screen.desktop_w;
+         h = gl_screen.desktop_h;
+         f = 1;
+      }
+   }
+   else {
+      w = 800;
+      h = 600;
+   }
+
+   /* OpenGL. */
+   conf.fsaa         = 1;
+   conf.vsync        = 0;
+   conf.vbo          = 0; /* Seems to cause a lot of issues. */
+   conf.mipmaps      = 0; /* Also cause for issues. */
+   conf.compress     = 0;
+   conf.interpolate  = 1;
+
+   /* Window. */
+   conf.fullscreen   = f;
+   conf.width        = w;
+   conf.height       = h;
+   conf.explicit_dim = 0;
+   conf.scalefactor  = 1.;
 
    /* FPS. */
    conf.fps_show     = 0;
    conf.fps_max      = 200;
 
-   /* Joystick. */
-   conf.joystick_ind = -1;
-   conf.joystick_nam = NULL;
-
-   /* Land. */
-   conf.autorefuel   = 0;
-
-   /* Misc. */
-   conf.zoom_min     = 0.5;
-   conf.zoom_max     = 1.;
-   conf.zoom_speed   = 0.25;
-   conf.zoom_stars   = 1.;
-   conf.afterburn_sens = 250;
-
-   /* Input */
-   input_setDefault();
+   /* Memory. */
+   conf.engineglow   = 1;
 }
 
 
@@ -170,8 +239,13 @@ void conf_cleanup (void)
 {
    if (conf.ndata != NULL)
       free(conf.ndata);
+   if (conf.sound_backend != NULL)
+      free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
       free(conf.joystick_nam);
+
+   /* Clear memory. */
+   memset( &conf, 0, sizeof(conf) );
 }
 
 
@@ -208,6 +282,10 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("vbo",conf.vbo);
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
+      conf_loadBool("interpolate",conf.interpolate);
+
+      /* Memory. */
+      conf_loadBool("engineglow",conf.engineglow);
 
       /* Window. */
       w = h = 0;
@@ -248,11 +326,16 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("autorefuel",conf.autorefuel);
 
       /* Misc. */
-      conf_loadFloat("zoom_min",conf.zoom_min);
-      conf_loadFloat("zoom_max",conf.zoom_max);
+      conf_loadBool("save_compress",conf.save_compress);
+      conf_loadFloat("zoom_far",conf.zoom_far);
+      conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
+      conf_loadBool("conf_nosave",conf.nosave);
+
+      /* Debugging. */
+      conf_loadBool("fpu_except",conf.fpu_except);
 
 
       /*
@@ -342,6 +425,14 @@ int conf_loadConfig ( const char* file )
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
             }
          }
+         /* Handle "none". */
+         else if (lua_isstring(L,-1)) {
+            str = lua_tostring(L,-1);
+            if (strcmp(str,"none")) {
+               input_setKeybind( keybindNames[i],
+                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
+            }
+         }
          /* clean up after table stuff */
          lua_pop(L,1);
       }
@@ -367,7 +458,6 @@ void conf_parseCLI( int argc, char** argv )
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
       { "vsync", no_argument, 0, 'V' },
-      { "data", required_argument, 0, 'd' },
       { "joystick", required_argument, 0, 'j' },
       { "Joystick", required_argument, 0, 'J' },
       { "width", required_argument, 0, 'W' },
@@ -376,10 +466,11 @@ void conf_parseCLI( int argc, char** argv )
       { "sound", no_argument, 0, 'S' },
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
+      { "generate", no_argument, 0, 'G' },
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
-   int option_index = 0;
+   int option_index = 1;
    int c = 0;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:Ghv",
@@ -393,9 +484,6 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 'V':
             conf.vsync = 1;
-            break;
-         case 'd': 
-            conf.ndata = strdup(optarg);
             break;
          case 'j':
             conf.joystick_ind = atoi(optarg);
@@ -435,6 +523,11 @@ void conf_parseCLI( int argc, char** argv )
             print_usage(argv);
             exit(EXIT_SUCCESS);
       }
+   }
+
+   /** @todo handle multiple ndata. */
+   if (optind < argc) {
+      conf.ndata = strdup( argv[ optind ] );
    }
 }
 
@@ -541,7 +634,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
  *    @param needle The string to search for
  *    @return A pointer to the first occurrence of needle in haystack, or NULL
  */
-static const char *strnstr(const char *haystack, size_t size, const char *needle)
+static const char *nstrnstr(const char *haystack, const char *needle, size_t size)
 {
    size_t needlesize;
    const char *i, *j, *k, *end, *giveup;
@@ -623,18 +716,22 @@ int conf_saveConfig ( const char* file )
 
    pos = 0;
 
+   /* User doesn't want to save the config. */
+   if (conf.nosave)
+      return 0;
+
    /* Read the old configuration, if possible */
    if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
       /* See if we can find the generated section and preserve
        * whatever the user wrote before it */
-      const char *tmp = strnstr(old, oldsize, "-- "GENERATED_START_COMMENT"\n");
+      const char *tmp = nstrnstr(old, "-- "GENERATED_START_COMMENT"\n", oldsize);
       if (tmp != NULL) {
          /* Copy over the user content */
          pos = SDL_min(sizeof(buf), (size_t)(tmp - old));
          memcpy(buf, old, pos);
 
          /* See if we can find the end of the section */
-         tmp = strnstr(tmp, oldsize-pos, "-- "GENERATED_END_COMMENT"\n");
+         tmp = nstrnstr(tmp, "-- "GENERATED_END_COMMENT"\n", oldsize-pos);
          if (tmp != NULL) {
             /* Everything after this should also be preserved */
             oldfooter = tmp + strlen("-- "GENERATED_END_COMMENT"\n");
@@ -693,6 +790,15 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Texture Compression");
    conf_saveBool("compress",conf.compress);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Texture Interpolation");
+   conf_saveBool("interpolate",conf.interpolate);
+   conf_saveEmptyLine();
+
+   /* Memory. */
+   conf_saveComment("If true enables engine glow");
+   conf_saveBool("engineglow",conf.engineglow);
    conf_saveEmptyLine();
 
    /* Window. */
@@ -767,10 +873,15 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Misc. */
+   conf_saveComment("Enables compression on savegames");
+   conf_saveBool("save_compress",conf.save_compress);
+   conf_saveEmptyLine();
+
    conf_saveComment("Minimum and maximum zoom factor to use in-game");
    conf_saveComment("At 1.0, no sprites are scaled");
-   conf_saveFloat("zoom_min",conf.zoom_min);
-   conf_saveFloat("zoom_max",conf.zoom_max);
+   conf_saveComment("zoom_far should be less then zoom_near");
+   conf_saveFloat("zoom_far",conf.zoom_far);
+   conf_saveFloat("zoom_near",conf.zoom_near);
    conf_saveEmptyLine();
 
    conf_saveComment("Zooming speed in factor increments per second");
@@ -785,6 +896,14 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
    conf_saveEmptyLine();
 
+   conf_saveComment("Save the config everytime game exits (rewriting this bit)");
+   conf_saveInt("conf_nosave",conf.nosave);
+   conf_saveEmptyLine();
+
+   /* Debugging. */
+   conf_saveComment("Enables FPU exceptions - only works on DEBUG builds");
+   conf_saveBool("fpu_except",conf.fpu_except);
+   conf_saveEmptyLine();
 
    /*
     * Keybindings.
@@ -814,7 +933,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if (typename == NULL || key == SDLK_UNKNOWN) {
-         conf_saveString(*keybind,NULL);
+         conf_saveString(*keybind,"none");
          continue;
       }
 

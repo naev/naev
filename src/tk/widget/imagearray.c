@@ -59,6 +59,8 @@ void window_addImageArray( const unsigned int wid,
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
 
    /* generic */
    wgt->type   = WIDGET_IMAGEARRAY;
@@ -124,6 +126,7 @@ static void iar_render( Widget* iar, double bx, double by )
    glColour *c, *dc, *lc, tc;
    int is_selected;
    int tw;
+   double d;
 
    /*
     * Calculations.
@@ -146,7 +149,11 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Scrollbar.
     */
-   scroll_pos = iar->dat.iar.pos / (h * (yelem - (int)(iar->h / h)));
+   d          = h * (yelem - (int)(iar->h / h));
+   if (fabs(d) < 1e-05)
+      scroll_pos = 0.;
+   else
+      scroll_pos = iar->dat.iar.pos / d;
    toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
 
    /*
@@ -236,16 +243,21 @@ static void iar_render( Widget* iar, double bx, double by )
  */
 static void iar_renderOverlay( Widget* iar, double bx, double by )
 {
+   double x, y;
+
    /*
     * Draw Alt text if applicable.
     */
    if ((iar->dat.iar.alts != NULL) &&
          (iar->dat.iar.alt >= 0) &&
          (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
+
+      /* Calculate position. */
+      x = bx + iar->x + iar->dat.iar.altx;
+      y = by + iar->y + iar->dat.iar.alty;
+
       /* Draw alt text. */
-      toolkit_drawAltText( bx + iar->x + iar->dat.iar.altx,
-            by + iar->y + iar->dat.iar.alty,
-            iar->dat.iar.alts[iar->dat.iar.alt]);
+      toolkit_drawAltText( x, y, iar->dat.iar.alts[iar->dat.iar.alt] );
    }
 }
 
@@ -319,11 +331,11 @@ static void iar_centerSelected( Widget *iar )
    y = iar->dat.iar.selected / iar->dat.iar.xelem;
    ypos = y * h;
    /* Below. */
-   if (ypos-h < iar->dat.iar.pos)
-      iar->dat.iar.pos += (ypos-h) - iar->dat.iar.pos;
+   if (ypos < iar->dat.iar.pos)
+      iar->dat.iar.pos = ypos;
    /* Above. */
-   if (ypos+2.*h > iar->dat.iar.pos + iar->h)
-      iar->dat.iar.pos += (ypos+2.*h) - (iar->dat.iar.pos + iar->h);
+   if (ypos > iar->dat.iar.pos + iar->h)
+      iar->dat.iar.pos = ypos - h*floor(iar->h/h) + 10.;
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
 }
 
@@ -550,7 +562,10 @@ static void iar_focus( Widget* iar, double bx, double by )
    else {
       /* Get bar position (center). */
       hmax = h * (yelem - (int)(iar->h / h));
-      scroll_pos = iar->dat.iar.pos / hmax;
+      if (fabs(hmax) < 1e-05)
+         scroll_pos = 0.;
+      else
+         scroll_pos = iar->dat.iar.pos / hmax;
       y = iar->h - (iar->h - 30.) * scroll_pos - 15.;
 
       /* Click below the bar. */
@@ -629,6 +644,48 @@ int toolkit_getImageArrayPos( const unsigned int wid, const char* name )
 
 
 /**
+ * @brief Gets the Image Array offset.
+ */
+double toolkit_getImageArrayOffset( const unsigned int wid, const char* name )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1.;
+
+   return wgt->dat.iar.pos;
+}
+
+
+/**
+ * @brief Sets the Image Array offset.
+ */
+int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off )
+{
+   double h;
+   double hmax;
+
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   /* Get dimensions. */
+   iar_getDim( wgt, NULL, &h );
+
+   /* Ignore fancy stuff if smaller than height. */
+   if (h * wgt->dat.iar.yelem < wgt->h) {
+      wgt->dat.iar.pos = 0.;
+      return 0;
+   }
+
+   /* Move if needed. */
+   hmax = h * (wgt->dat.iar.yelem - (int)(wgt->h / h));
+   wgt->dat.iar.pos = CLAMP( 0., hmax, off );
+
+   return 0;
+}
+
+
+/**
  * @brief Sets the active element in the Image Array.
  *
  *    @param wid Window where image array is.
@@ -643,7 +700,7 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
       return -1;
 
    /* Set position. */
-   wgt->dat.iar.selected = CLAMP( 0, wgt->dat.iar.nelements, pos );
+   wgt->dat.iar.selected = CLAMP( 0, wgt->dat.iar.nelements-1, pos );
 
    /* Call callback - dangerous if called from within callback. */
    if (wgt->dat.iar.fptr != NULL)

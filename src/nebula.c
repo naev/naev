@@ -26,6 +26,7 @@
 #include "pause.h"
 #include "gui.h"
 #include "conf.h"
+#include "spfx.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -37,7 +38,6 @@
 
 
 /* Externs */
-extern Vector2d shake_pos; /**< from spfx.c */
 extern void loadscreen_render( double done, const char *msg ); /**< from naev.c */
 
 
@@ -50,7 +50,7 @@ static int nebu_ph   = 0; /**< BG Padded Nebula height. */
 
 /* Information on rendering */
 static int cur_nebu[2]           = { 0, 1 }; /**< Nebulas currently rendering. */
-static unsigned int last_render  = 0; /**< When they were last rendered. */
+static double nebu_timer         = 0.; /**< Timer since last render. */
 
 /* Nebula properties */
 static double nebu_view = 0.; /**< How far player can see. */
@@ -281,39 +281,38 @@ void nebu_render( const double dt )
  */
 static void nebu_renderMultitexture( const double dt )
 {
-   (void) dt;
-   unsigned int t;
-   double ndt;
    GLfloat col[4];
    int temp;
+   double sx, sy;
 
    /* calculate frame to draw */
-   t = SDL_GetTicks();
-   ndt = (t - last_render) / 1000.;
-   if (ndt > nebu_dt) { /* Time to change */
-      temp = cur_nebu[0];
-      cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
-      cur_nebu[1] = temp;
-      if (cur_nebu[0]+1 >= NEBULA_Z)
-         cur_nebu[0] = NEBULA_Z - 2;
-      else if (cur_nebu[0] < 0)
-         cur_nebu[0] = 1;
+   nebu_timer -= dt;
+   if (nebu_timer < 0.) { /* Time to change. */
+      temp         = cur_nebu[0] - cur_nebu[1];
+      cur_nebu[1]  = cur_nebu[0];
+      cur_nebu[0] += temp;
 
-      last_render = t;
-      ndt = 0.;
+      if (cur_nebu[0] >= NEBULA_Z)
+         cur_nebu[0] = cur_nebu[1] - 1;
+      else if (cur_nebu[0] < 0)
+         cur_nebu[0] = cur_nebu[1] + 1;
+
+      /* Change timer. */
+      nebu_timer += nebu_dt;
    }
 
    /* Set the colour */
-   col[0] = cPurple.r;
-   col[1] = cPurple.g;
-   col[2] = cPurple.b;
-   col[3] = ndt / nebu_dt;
+   col[0] = cBlue.r;
+   col[1] = cBlue.g;
+   col[2] = cBlue.b;
+   col[3] = (nebu_dt - nebu_timer) / nebu_dt;
 
    /* Set up the targets */
    /* Texture 0 */
    nglActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
    /* Texture 1 */
    nglActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
@@ -341,9 +340,10 @@ static void nebu_renderMultitexture( const double dt )
 
    /* Compensate possible rumble */
    if (!paused) {
+      spfx_getShake( &sx, &sy );
       gl_matrixMode( GL_PROJECTION );
       gl_matrixPush();
-      gl_matrixTranslate( shake_pos.x, shake_pos.y );
+         gl_matrixTranslate( sx, sy );
    }
 
    /* Now render! */
@@ -386,7 +386,7 @@ static void nebu_genOverlay (void)
    gui_getOffset( &gx, &gy );
 
    /* Calculate zoom. */
-   z = 1./conf.zoom_min;
+   z = 1./conf.zoom_far;
 
    /* See if need to generate overlay. */
    if (nebu_vboOverlay == NULL) {
@@ -398,19 +398,19 @@ static void nebu_genOverlay (void)
 
       /* Alpha overlay. */
       for (i=0; i<18; i++) {
-         data[2*18 + 4*i + 0] = cPurple.r;
-         data[2*18 + 4*i + 1] = cPurple.g;
-         data[2*18 + 4*i + 2] = cPurple.b;
-         data[2*18 + 4*i + 3] = cPurple.a;
+         data[2*18 + 4*i + 0] = cDarkBlue.r;
+         data[2*18 + 4*i + 1] = cDarkBlue.g;
+         data[2*18 + 4*i + 2] = cDarkBlue.b;
+         data[2*18 + 4*i + 3] = cDarkBlue.a;
       }
       data[2*18 + 3] = 0.; /* Origin is transparent. */
 
       /* Solid overlay. */
       for (i=0; i<7; i++) {
-         data[(2+4)*18 + 2*28 + 4*i + 0] = cPurple.r;
-         data[(2+4)*18 + 2*28 + 4*i + 1] = cPurple.g;
-         data[(2+4)*18 + 2*28 + 4*i + 2] = cPurple.b;
-         data[(2+4)*18 + 2*28 + 4*i + 3] = cPurple.a;
+         data[(2+4)*18 + 2*28 + 4*i + 0] = cDarkBlue.r;
+         data[(2+4)*18 + 2*28 + 4*i + 1] = cDarkBlue.g;
+         data[(2+4)*18 + 2*28 + 4*i + 2] = cDarkBlue.b;
+         data[(2+4)*18 + 2*28 + 4*i + 3] = cDarkBlue.a;
       }
 
       gl_vboUnmap( nebu_vboOverlay );
@@ -509,6 +509,7 @@ void nebu_renderOverlay( const double dt )
    double gx, gy;
    double ox, oy;
    double z;
+   double sx, sy;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
@@ -525,8 +526,9 @@ void nebu_renderOverlay( const double dt )
    ox = gx;
    oy = gy;
    if (!paused) {
-      ox += shake_pos.x;
-      oy += shake_pos.y;
+      spfx_getShake( &sx, &sy );
+      ox += sx;
+      oy += sy;
    }
    gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
@@ -611,7 +613,7 @@ void nebu_renderPuffs( const double dt, int below_player )
 
          /* Render */
          gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &cPurple );
+               nebu_puffs[i].x, nebu_puffs[i].y, &cLightBlue );
       }
    }
 }
@@ -629,7 +631,8 @@ void nebu_prep( double density, double volatility )
    int i;
 
    nebu_view = 1000. - density;  /* At density 1000 you're blind */
-   nebu_dt = 2000. / (density + 100.); /* Faster at higher density */
+   nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
+   nebu_timer = nebu_dt;
 
    nebu_npuffs = density/4.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);

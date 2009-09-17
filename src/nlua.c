@@ -130,9 +130,28 @@ static int nlua_packfileLoader( lua_State* L )
    char *buf;
    uint32_t bufsize;
 
+   /* Get parameters. */
    filename = luaL_checkstring(L,1);
 
-   /* try to locate the data */
+   /* Check to see if already included. */
+   lua_getglobal( L, "_include" );
+   if (!lua_isnil(L,-1)) {
+      lua_getfield(L,-1,filename);
+      /* Already included. */
+      if (!lua_isnil(L,-1)) {
+         lua_pop(L,1);
+         return 0;
+      }
+      lua_pop(L,1);
+   }
+   /* Must create new _include table. */
+   else {
+      lua_newtable(L);
+      lua_setglobal(L, "_include");
+   }
+   lua_pop(L,1);
+
+   /* Try to locate the data */
    buf = ndata_read( filename, &bufsize );
    if (buf == NULL) {
       lua_pushfstring(L, "%s not found in ndata.", filename);
@@ -145,6 +164,12 @@ static int nlua_packfileLoader( lua_State* L )
       lua_error(L);
       return 1;
    }
+
+   /* Mark as loaded. */
+   lua_getglobal(L, "_include");
+   lua_pushboolean(L, 1);
+   lua_setfield(L, -2, filename);
+   lua_pop(L, 2);
 
    /* cleanup, success */
    free(buf);

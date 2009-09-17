@@ -17,7 +17,6 @@
    *) Escorts available for hire
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
-   *) Have configuration save stuff and be able to configure keybindings.
    *) Secondary weapon revamp
       *) Players should be able to configure what outfit they want as secondary
       *) Players should also be able to set hotkeys for secondary weapons
@@ -57,6 +56,11 @@
       *) objects always in sight (depending on resolution)
    *) Allow creating collision masks to make collision more realistic.
    *) Improve font system to handle unicode
+   *) Different optimization strategies
+      *) Optimize for CPU/Memory (different levels)
+      *) Optimize cache for loading
+   *) Testing improvements
+      *) Allow console to reload data (to avoid restarts)
 
 
    MAYBE... SOMEDAY...

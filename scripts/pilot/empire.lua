@@ -1,4 +1,6 @@
 include("scripts/pilot/generic.lua")
+include("ai/equip/helper.lua")
+include("ai/equip/outfits.lua")
 
 
 --[[
@@ -20,8 +22,7 @@ function empire_create( empire_create )
 
    -- Choose warship type
    local z = rnd.rnd()
-   local p
-   local o
+   local p, o
    local ship_name
    if z < 0.5 then
       p,o = empire_createHawking( empire_create )
@@ -58,110 +59,6 @@ function empire_createEmpty( ship )
 end
 
 
--- Gets a generic empire outfit
-function empire_outfitGeneric( p, o )
-   local r = rnd.rnd()
-   if r < 0.25 then -- Get cannon
-      return empire_outfitCannon( p, o )
-   elseif r < 0.5 then -- Get turret
-      return empire_outfitTurret( p, o )
-   elseif r < 0.8 then -- Get special weapon
-      return empire_outfitSecondary( p, o )
-   else
-      return empire_outfitModification( p, o )
-   end
-end
-
-
--- Gets a Warship empire outfit
-function empire_outfitWarship( p, o )
-   local r = rnd.rnd()
-   if r < 0.25 then -- Get turret
-      return empire_outfitTurret( p, o )
-   elseif r < 0.4 then -- Get special weapon
-      return empire_outfitSecondary( p, o )
-   else
-      return empire_outfitModification( p, o )
-   end
-end
-
-
--- Tries to add a turret
-function empire_outfitTurret( p, o )
-   local turrets = {
-      "Heavy Ion Turret",
-      "Laser Turret MK2"
-   }
-   return pilot_outfitAdd( p, o, turrets )
-end
-
-
--- Tries to add a cannon
-function empire_outfitCannon( p, o )
-   local cannons = {
-      "Ripper MK2",
-      "Laser Cannon MK2",
-      "Ion Cannon",
-   }
-   return pilot_outfitAdd( p, o, cannons )
-end
-
-
--- Tries to add a secondary weapon
-function empire_outfitSecondary( p, o )
-   local sec = {
-      "150mm Railgun",
-      "Headhunter Launcher",
-      "EMP Grenade Launcher",
-   }
-   return pilot_outfitAdd( p, o, sec )
-end
-
-
--- Tries to add a ranged weapon
-function empire_outfitRanged( p, o )
-   local sec = {
-      { "Headhunter Launcher", { "Headhunter Missile", 10 } }
-   }
-   return pilot_outfitAdd( p, o, sec )
-end
-
-
--- Tries to add a modification
-function empire_outfitModification( p, o )
-   local mods = {
-      -- Shield
-      "Shield Capacitor",
-      "Shield Booster",
-      -- Armour
-      "Plasteel Plating",
-      "Nanobond Plating",
-      "Droid Repair Crew",
-      -- Energy
-      "Solar Panel",
-      "Battery",
-      -- Movement stuff
-      "Engine Reroute",
-      "Improved Stabilizer",
-      "Steering Thrusters",
-   }
-   return pilot_outfitAdd( p, o, mods )
-end
-
-function empire_outfitWarshipBase( p, o )
-   local armour = {
-      "Plasteel Plating",
-      "Nanobond Plating"
-   }
-   local reactor = {
-      "Reactor Class II",
-      "Reactor Class III",
-   }
-   pilot_outfitAdd( p, o, { "Milspec Jammer" } )
-   pilot_outfitAdd( p, o, armour )
-   pilot_outfitAdd( p, o, reactor )
-end
-
 
 -- Creates an Empire Hawking warship
 function empire_createHawking( empire_create )
@@ -171,31 +68,36 @@ function empire_createHawking( empire_create )
    end
 
    -- Create the empire ship
-   local p
+   local p, s, olist
    if empire_create then
-      p = empire_createEmpty( "Empire Hawking" )
+      p     = empire_createEmpty( "Empire Hawking" )
+      s     = p:ship()
+      olist = nil
    else
-      p = "Empire Hawking"
+      p     = "Empire Hawking"
+      s     = ship.get(p)
+      olist = { }
    end
 
-   -- Kestrel gets some good stuff
-   local o = {}
-   empire_outfitWarshipBase(p,o)
-   empire_outfitTurret(p,o)
-   empire_outfitTurret(p,o)
-   empire_outfitRanged(p,o)
-   empire_outfitModification(p,o)
-   -- Might not have enough room for these last three
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
-   empire_outfitWarship(p,o)
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
 
-   return p,o
+   -- Kestrel gets some good stuff
+   primary        = { "Heavy Ion Turret", "150mm Railgun Turret" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh-2
+   use_secondary  = 2
+   medium         = equip_mediumHig()
+   low            = equip_lowHig()
+   apu            = equip_apuHig()
+
+   -- FInally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
 end
 
 
@@ -207,27 +109,36 @@ function empire_createPacifier( empire_create )
    end
 
    -- Create the empire ship
-   local p
+   local p, s, olist
    if empire_create then
-      p = empire_createEmpty( "Empire Pacifier" )
+      p     = empire_createEmpty( "Empire Pacifier" )
+      s     = p:ship()
+      olist = nil
    else
-      p = "Empire Pacifier"
+      p     = "Empire Pacifier"
+      s     = ship.get(p)
+      olist = { }
    end
 
-   -- Make sure Admonisher has at least one cannon
-   local o = {}
-   empire_outfitCannon(p,o)
-   empire_outfitSecondary(p,o)
-   empire_outfitModification(p,o)
-   -- Probably won't have much room left
-   empire_outfitGeneric(p,o)
-   empire_outfitGeneric(p,o)
-   empire_outfitGeneric(p,o)
-   empire_outfitGeneric(p,o)
-   empire_outfitGeneric(p,o)
-   empire_outfitGeneric(p,o)
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
 
-   return p,o
+   -- Pacifier isn't bad either
+   primary        = { "150mm Railgun", "Ripper MK2", "Heavy Ion Turret" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh-2
+   use_secondary  = 2
+   medium         = equip_mediumMed()
+   low            = equip_lowMed()
+   apu            = equip_apuMed()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
 end
 
 

@@ -1,8 +1,34 @@
--- @brief Fetches an array of systems exactly n jumps away from the given system sys
+
+
+--[[
+-- @brief Fetches an array of systems from min to max jumps away from the given
+--       system sys.
+--
+-- A following example to get closest system with shipyard (to max of 10):
+--
+-- @code
+-- local i, t
+-- while i < 10 do
+--    t = getsysatdistance( target, i, i,
+--          function(s)
+--             for k,v in s:planets() do
+--                if v:hasShipyard()
+--                   return true
+--                end
+--             end
+--             return false
+--          end )
+-- end
+-- local target_system = t[ rnd.rnd(1,#t) ]
+-- @endcode
+--
 --    @param sys System to calculate distance from or nil to use current system
---    @param n Number of jumps to get systems
+--    @param min Min distance to check for.
+--    @param max Maximum distance to check for.
+--    @param filter Optional filter function to use for more details.
 --    @return The table of systems n jumps away from sys
-function getsysatdistance( sys, min, max )
+--]]
+function getsysatdistance( sys, min, max, filter )
    -- Get default parameters
    if sys == nil then
       sys = system.get()
@@ -11,15 +37,16 @@ function getsysatdistance( sys, min, max )
       max = min
    end
    -- Begin iteration
-   return _getsysatdistance( sys, min, max, sys, max, {} )
+   return _getsysatdistance( sys, min, max, sys, max, {}, filter )
 end
 
+
 -- The first call to this function should always have n >= max
-function _getsysatdistance( target, min, max, sys, n, t )
+function _getsysatdistance( target, min, max, sys, n, t, filter )
    if n == 0 then -- This is a leaf call - perform checks and add if appropriate
       local d
       d = target:jumpDist(sys)
-      if d >= min and d <= max then
+      if d >= min and d <= max and (filter == nil or filter(sys)) then
          local seen = false
          for i, j in ipairs(t) do -- Check if the system is already in our array
             if j == sys then

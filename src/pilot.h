@@ -43,6 +43,7 @@
 #define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
 #define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
 #define PILOT_HOOK_JUMP    4 /**< Pilot jumped. */
+#define PILOT_HOOK_HAIL    5 /**< Pilot is hailed. */
 
 
 /* damage */
@@ -312,6 +313,7 @@ double pilot_face( Pilot* p, const double dir );
  */
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn );
 int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
 /* Changes with checks. */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );

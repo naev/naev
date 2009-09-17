@@ -55,7 +55,6 @@
        * reroute.png
        * shield.png
        * stabilizer.png
-       * thruster.png
        * lancelot_fighter.png
        * drone_fighter.png
    * planet
@@ -159,6 +158,7 @@
      * space
        * headhunter.png
        * mace.png
+       * macelauncher.png
      * store
        * mace.png
    * spfx
@@ -171,7 +171,7 @@
      * store
        * droid.png
 
- * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: GFDL
+ * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: CC-By-SA 3.0
    * outfit
      * store
        * map.png
@@ -181,7 +181,7 @@
      * store
        * solar.png
  
- * Author: Kristian Mølhave, License: CC-by v2.5
+ * Author: Kristian Mølhave, License: CC-By 3.0
    * outfit
      * store
        * nanobond.png
@@ -283,11 +283,20 @@
          * laser2-end.png
          * plasma2.png
          * plasma2-end.png
+         * headhunter.png
+         * seeker.png
+         * caesar.png
        * store
          * cpu_i.png
          * cpu_ii.png
          * cpu_iii.png
          * biometal.png
+         * seekerlauncher.png
+         * seeker.png
+         * headhunterlauncher.png
+         * headhunter.png
+         * caesarlauncher.png
+         * caesar.png
      * spfx
        * plas2.png
        * plam2.png
@@ -320,3 +329,8 @@
      * sirius_small.png
      * zalek_small.png
 
+  * Author: AstroMenace (Viewizard), License: GPLv3
+    * gfx
+      * outfit
+        * store
+          * thruster.png

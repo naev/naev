@@ -164,7 +164,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s )
    uint8_t *t;
 
    /* alloc memory for just enough bits to hold all the data we need */
-   size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);;
+   size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);
    t = malloc(size);
    if (t==NULL) {
       WARN("Out of Memory");

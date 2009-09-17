@@ -46,6 +46,8 @@ void window_addCheckbox( const unsigned int wid,
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
 
    /* generic */
    wgt->type = WIDGET_CHECKBOX;
@@ -120,6 +122,24 @@ int window_checkboxState( const unsigned int wid, const char *name )
    if (wgt == NULL)
       return -1;
 
+   return wgt->dat.chk.state;
+}
+
+
+/**
+ * @brief Sets the checkbox state.
+ *
+ *    @param state State to set checkbox to.
+ *    @return The checkbox state or -1 on error.
+ */
+int window_checkboxSet( const unsigned int wid, const char *name, int state )
+{
+   Widget *wgt;
+   wgt = chk_getWgt(wid, name);
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.chk.state = state;
    return wgt->dat.chk.state;
 }
 

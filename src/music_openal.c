@@ -13,8 +13,6 @@
 #include "SDL_thread.h"
 #include "SDL_rwops.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
 #include <vorbis/vorbisfile.h>
 
 #include "music.h"
@@ -719,7 +717,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    music_vorbis.info = ov_info( &music_vorbis.stream, -1 );
 
    /* Get replaygain information. */
-   vc = ov_comment( &music_vorbis.stream, -1 );
+   vc             = ov_comment( &music_vorbis.stream, -1 );
    track_gain_db  = 0.;
    track_peak     = 1.;
    rg             = 0;

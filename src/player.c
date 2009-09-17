@@ -55,9 +55,6 @@
 
 #define START_DATA   "dat/start.xml" /**< Module start information file. */
 
-#define ZOOM_OUT_MAX             conf.zoom_min /**< Maximum zoom out. */
-#define ZOOM_IN_MAX              conf.zoom_max /**< Maximum zoom in. */
-
 
 /*
  * player stuff
@@ -244,7 +241,7 @@ void player_new (void)
    factions_reset();
    map_cleanup();
 
-   player_name = dialogue_input( "Player Name", 1, 20,
+   player_name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
 
    /* Player cancelled dialogue. */
@@ -367,9 +364,6 @@ static int player_newMake (void)
    free(buf);
    xmlCleanupParser();
 
-   /* Monies. */
-   player_credits = RNG(l,h);
-
    /* Time. */
    ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
 
@@ -378,12 +372,15 @@ static int player_newMake (void)
    player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
    /* Try to create the pilot, if fails reask for player name. */
-   if (player_newShip( ship, x, y, 0., 0., RNGF() * 2.*M_PI ) != 0) {
+   if (player_newShip( ship, x, y, 0., 0., RNGF() * 2.*M_PI, NULL ) != 0) {
       player_new();
       return -1;
    }
    space_init(sysname);
    free(sysname);
+
+   /* Monies. */
+   player->credits = RNG(l,h);
 
    /* clear the map */
    map_clear();
@@ -403,11 +400,13 @@ static int player_newMake (void)
  * @sa player_newShipMake
  */
 int player_newShip( Ship* ship, double px, double py,
-      double vx, double vy, double dir )
+      double vx, double vy, double dir, const char *def_name )
 {
    char* ship_name;
+   int i, len;
 
    /* temporary values while player doesn't exist */
+   player_credits = (player != NULL) ? player->credits : 0;
    player_ship    = ship;
    player_px      = px;
    player_py      = py;
@@ -418,8 +417,21 @@ int player_newShip( Ship* ship, double px, double py,
          "Please name your brand new %s %s:", ship->fabricator, ship->name );
 
    /* Dialogue cancelled. */
-   if (ship_name == NULL)
-      return -1;
+   if (ship_name == NULL) {
+      /* No default name, fail. */
+      if (def_name == NULL)
+         return -1;
+
+      /* Add default name. */
+      i = 2;
+      len = strlen(def_name)+10;
+      ship_name = malloc( len );
+      strncpy( ship_name, def_name, len );
+      while (player_hasShip(ship_name)) {
+         snprintf( ship_name, len, "%s %d", def_name, i );
+         i++;
+      }
+   }
 
    /* Must not have same name. */
    if (player_hasShip(ship_name)) {
@@ -442,42 +454,34 @@ static void player_newShipMake( char* name )
 {
    Vector2d vp, vv;
    unsigned int flags;
+   PlayerShip_t *ship;
 
    /* store the current ship if it exists */
    flags = PILOT_PLAYER;
-   if (player != NULL) {
-      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
-      player_stack[player_nstack].p = pilot_copy( player );
-      player_stack[player_nstack].loc = strdup( land_planet->name );
-      player_nstack++;
-
-      player_credits = player->credits;
-      pilot_destroy( player );
-
-      /* No outfits. */
-      flags |= PILOT_NO_OUTFITS;
-   }
 
    /* in case we're respawning */
    player_rmFlag(PLAYER_CREATING);
 
-   /* hackish position setting */
-   vect_cset( &vp, player_px, player_py );
-   vect_cset( &vv, player_vx, player_vy );
-
    /* create the player */
-   pilot_create( player_ship, name, faction_get("Player"), NULL,
-         player_dir,  &vp, &vv, flags );
-   gl_cameraBind( &player->solid->pos ); /* set opengl camera */
+   if (player == NULL) {
+      /* Hackish position setting */
+      vect_cset( &vp, player_px, player_py );
+      vect_cset( &vv, player_vx, player_vy );
 
-   /* copy cargo over. */
-   if (player_nstack > 0) { /* not during creation though. */
-      pilot_moveCargo( player, player_stack[player_nstack-1].p );
-
-      /* recalculate stats after cargo movement. */
-      pilot_calcStats( player );
-      pilot_calcStats( player_stack[player_nstack-1].p );
+      /* CCreate the player. */
+      pilot_create( player_ship, name, faction_get("Player"), NULL,
+            player_dir, &vp, &vv, flags );
    }
+   else {
+      /* Grow memory. */
+      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
+      ship = &player_stack[player_nstack];
+      /* CReate the ship. */
+      ship->p = pilot_createEmpty( player_ship, name, faction_get("Player"), NULL, flags );
+      ship->loc = strdup( land_planet->name );;
+      player_nstack++;
+   }
+   gl_cameraBind( &player->solid->pos ); /* set opengl camera */
 
    /* money. */
    player->credits = player_credits;
@@ -930,7 +934,7 @@ void player_think( Pilot* pplayer, const double dt )
 
       /* Need fuel. */
       else if (pplayer->fuel < HYPERSPACE_FUEL)
-         player_abortAutonav("Not enough fuel for autonav to continue.");
+         player_abortAutonav("Not enough fuel for autonav to continue");
 
       /* Try to jump. */
       else if (space_canHyperspace(pplayer))
@@ -1119,7 +1123,7 @@ static void player_updateZoom( double dt )
 {
    Pilot *target;
    double d, x,y, z,tz, dx, dy;
-   double in, out;
+   double zfar, znear;
    double c;
 
    /* Minimum depends on velocity normally.
@@ -1133,16 +1137,16 @@ static void player_updateZoom( double dt )
     *
     * z = A / A_v = 1. / (1 + v/d)
     */
-   d   = sqrt(SCREEN_W*SCREEN_H);
-   in = MAX( ZOOM_OUT_MAX, 1. / (1. + VMOD(player->solid->vel)/d) );
+   d     = sqrt(SCREEN_W*SCREEN_H);
+   znear = MAX( conf.zoom_far, 1. / (1. + VMOD(player->solid->vel)/d) );
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
-      c   = MIN( SCREEN_W, SCREEN_H ) / 2;
-      out = MAX( ZOOM_OUT_MAX, c / nebu_getSightRadius() );
+      c    = MIN( SCREEN_W, SCREEN_H ) / 2;
+      zfar = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
    }
    else {
-      out = ZOOM_OUT_MAX;
+      zfar = conf.zoom_far;
    }
 
    /*
@@ -1169,7 +1173,7 @@ static void player_updateZoom( double dt )
          tz = z;
    }
    else {
-      tz = in; /* Aim at in. */
+      tz = znear; /* Aim at in. */
    }
 
    /* Gradually zoom in/out. */
@@ -1177,7 +1181,7 @@ static void player_updateZoom( double dt )
    d *= dt / dt_mod; /* Remove dt dependence. */
    if (d < 0) /** Speed up if needed. */
       d *= 2.;
-   gl_cameraZoom( CLAMP( out, in, z + d) );
+   gl_cameraZoom( CLAMP( zfar, znear, z + d) );
 }
 
 
@@ -1205,16 +1209,16 @@ void player_secondaryNext (void)
 
       /* Make sure it isn't the same as the current one. */
       if ((player->secondary != NULL) &&
-            (player->secondary->outfit == o))
+            (player->secondary->outfit == o)) {
+         if (player->secondary == player->outfits[i])
+            found = 1;
          continue;
+      }
 
       /* No secondary, grab first. */
       if (found==1) {
          player->secondary = player->outfits[i];
          return;
-      }
-      else if (player->secondary == player->outfits[i]) {
-         found = 1;
       }
    }
    player->secondary = NULL;
@@ -1240,16 +1244,16 @@ void player_secondaryPrev (void)
 
       /* Make sure it isn't the same as the current one. */
       if ((player->secondary != NULL) &&
-            (player->secondary->outfit == o))
+            (player->secondary->outfit == o)) {
+         if (player->secondary == player->outfits[i])
+            found = 1;
          continue;
+      }
 
       /* No secondary, grab first. */
       if (found==1) {
          player->secondary = player->outfits[i];
          return;
-      }
-      else if (player->secondary == player->outfits[i]) {
-         found = 1;
       }
    }
    player->secondary = NULL;
@@ -1262,7 +1266,6 @@ void player_secondaryPrev (void)
 void player_targetPlanet (void)
 {
    /* Clean up some stuff. */
-   hyperspace_target = -1;
    player_rmFlag(PLAYER_LANDACK);
 
    /* Find next planet target. */
@@ -1767,6 +1770,9 @@ void player_hail (void)
 }
 
 
+/**
+ * @brief Sets the ship fire mode.
+ */
 void player_setFireMode( int mode )
 {
    if (player_firemode == mode)
@@ -1888,6 +1894,11 @@ int player_hasShip( char* shipname )
 {
    int i;
 
+   /* Check current ship. */
+   if ((player != NULL) && (strcmp(player->name,shipname)==0))
+      return 1;
+
+   /* Check stocked ships. */
    for (i=0; i < player_nstack; i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return 1;
@@ -2132,6 +2143,11 @@ int player_rmOutfit( const Outfit *o, int quantity )
  */
 void player_missionFinished( int id )
 {
+   /* Make sure not already marked. */
+   if (player_missionAlreadyDone(id))
+      return;
+
+   /* Mark as done. */
    missions_ndone++;
    if (missions_ndone > missions_mdone) { /* need to grow */
       missions_mdone += 25;
@@ -2164,6 +2180,11 @@ int player_missionAlreadyDone( int id )
  */
 void player_eventFinished( int id )
 {
+   /* Make sure not already done. */
+   if (player_eventAlreadyDone(id))
+      return;
+
+   /* Add to done. */
    events_ndone++;
    if (events_ndone > events_mdone) { /* need to grow */
       events_mdone += 25;
@@ -2266,6 +2287,10 @@ int player_addEscorts (void)
    Vector2d v;
    unsigned int e;
    Outfit *o;
+   int q;
+
+   /* Clear escorts first. */
+   player_clearEscorts();
 
    for (i=0; i<player->nescorts; i++) {
       a = RNGF() * 2 * M_PI;
@@ -2277,27 +2302,35 @@ int player_addEscorts (void)
       player->escorts[i].id = e; /* Important to update ID. */
 
       /* Update outfit if needed. */
-      if (player->escorts[i].type == ESCORT_TYPE_BAY) {
-         for (j=0; j<player->noutfits; j++) {
-            /* Must have outfit. */
-            if (player->outfits[j]->outfit == NULL)
-               continue;
+      if (player->escorts[i].type != ESCORT_TYPE_BAY)
+         continue;
 
-            /* Must be fighter bay. */
-            if (!outfit_isFighterBay(player->outfits[j]->outfit))
-               continue;
+      for (j=0; j<player->noutfits; j++) {
+         /* Must have outfit. */
+         if (player->outfits[j]->outfit == NULL)
+            continue;
 
-            /* Must not have all deployed. */
-            if (player->outfits[j]->u.ammo.deployed >= outfit_amount(player->outfits[j]->outfit))
-               continue;
+         /* Must be fighter bay. */
+         if (!outfit_isFighterBay(player->outfits[j]->outfit))
+            continue;
 
-            o = outfit_ammo(player->outfits[j]->outfit);
-            if (outfit_isFighter(o) &&
-                  (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
-               player->outfits[j]->u.ammo.deployed += 1;
-               break;
-            }
-         }
+         /* Ship must match. */
+         o = outfit_ammo(player->outfits[j]->outfit);
+         if (!outfit_isFighter(o) ||
+               (strcmp(player->escorts[i].ship,o->u.fig.ship)!=0))
+            continue;
+
+         /* Must not have all deployed. */
+         q = player->outfits[j]->u.ammo.deployed + player->outfits[j]->u.ammo.quantity;
+         if (q >= outfit_amount(player->outfits[j]->outfit))
+            continue;
+
+         /* Mark as deployed. */
+         player->outfits[j]->u.ammo.deployed += 1;
+         break;
+      }
+      if (j >= player->noutfits) {
+         WARN("Unable to mark escort as deployed");
       }
    }
 
@@ -2561,6 +2594,9 @@ static int player_parse( xmlNodePtr parent )
 
    xmlr_attr(parent,"name",player_name);
 
+   /* Make sure player is NULL. */
+   player = NULL;
+
    /* Must get planet first. */
    node = parent->xmlChildrenNode;
    do {
@@ -2620,10 +2656,16 @@ static int player_parse( xmlNodePtr parent )
 
    } while (xml_nextNode(node));
 
-   /* Make sure player exists. */
+   /* Handle cases where ship is missing. */
    if (player == NULL) {
-      WARN("Savegame has no primary ship node!");
-      return -1;
+      if (player_nstack == 0) {
+         WARN("Player has no ships!");
+         return -1;
+      }
+
+      /* Just give player a random ship in the stack. */
+      player = player_stack[player_nstack-1].p;
+      player_nstack--;
    }
 
    /* set global thingies */
@@ -2843,6 +2885,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    char *name, *model, *loc, *q, *id;
    int i, n;
    double fuel;
+   Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node, cur;
    int quantity;
@@ -2853,14 +2896,21 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 
+   /* Get the ship. */
+   ship_parsed = ship_get(model);
+   if (ship_parsed == NULL) {
+      WARN("Player ship '%s' not found", model);
+      return 0;
+   }
+
    /* player is currently on this ship */
    if (is_player != 0) {
-      pilot_create( ship_get(model), name, faction_get("Player"), NULL, 0., NULL, NULL,
+      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL,
             PILOT_PLAYER | PILOT_NO_OUTFITS );
       ship = player;
    }
    else
-      ship = pilot_createEmpty( ship_get(model), name, faction_get("Player"), NULL,
+      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL,
             PILOT_PLAYER | PILOT_NO_OUTFITS );
 
    free(name);

@@ -153,6 +153,7 @@ void equipment_open( unsigned int wid )
    /* Sane defaults. */
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
+   eq_wgt.selected      = NULL;
 
    /* Add ammo. */
    equipment_addAmmo();
@@ -166,7 +167,7 @@ void equipment_open( unsigned int wid )
          "Sell Ship", equipment_sellShip );
    window_addButton( wid, -20 - (20+bw)*2, 20,
          bw, bh, "btnChangeShip",
-         "Swap Ships", equipment_transChangeShip );
+         "Swap Ship", equipment_transChangeShip );
    window_addButton( wid, -20 - (20+bw)*3, 20,
          bw, bh, "btnUnequipShip",
          "Unequip", equipment_unequipShip );
@@ -246,9 +247,13 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *lc, *c, *dc;
 
    /* Render text. */
+   if ((o != NULL) && (lst[0].slot == o->slot)) 
+      c = &cDConsole;
+   else
+      c = &cBlack;
    gl_printMidRaw( &gl_smallFont, w+10.,
          x + SCREEN_W/2.-5., y+h+10. + SCREEN_H/2.,
-         &cBlack, txt );
+         c, txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -279,12 +284,12 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Draw outline. */
       if (i==selected) {
          lc = &cWhite;
-         c = &cGrey80;
+         c  = &cGrey80;
          dc = &cGrey60;
       }
       else {
          lc = toolkit_colLight;
-         c = toolkit_col;
+         c  = toolkit_col;
          dc = toolkit_colDark;
       }
       toolkit_drawOutline( x, y, w, h, 1., lc, c  );
@@ -785,12 +790,9 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
 {
    int ret;
    Outfit *o, *ammo;
-   int regen;
    int q;
    int n;
-
-   /* Do not regenerate list by default. */
-   regen = 0;
+   double off;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -812,10 +814,6 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
-
-      /* See if should remake. */
-      if (player_outfitOwned(o) == 1)
-         regen = 1;
    }
    /* Add outfit. */
    else {
@@ -838,19 +836,15 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          pilot_addOutfit( eq_wgt.selected, o, slot );
 
       equipment_addAmmo();
-
-      /* See if should remake. */
-      if (player_outfitOwned(o) == 0)
-         regen = 1;
    }
 
    /* Redo the outfits thingy. */
-   if (!regen)
-      n = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   n   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   off = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
    window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    equipment_genLists( wid );
-   if (!regen)
-      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
+   toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, off );
 
    /* Update ships. */
    equipment_updateShips( wid, NULL );
@@ -882,18 +876,16 @@ void equipment_addAmmo (void)
          continue;
 
       /* Add ammo if able to. */
-      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
+      ammo = outfit_ammo(o);
+      if (ammo == NULL)
+         continue;
+      q    = player_outfitOwned(ammo);
 
-         /* Get ammo. */
-         ammo = outfit_ammo(o);
-         q    = player_outfitOwned(ammo);
+      /* Add ammo. */
+      q = pilot_addAmmo( p, p->outfits[i], ammo, q );
 
-         /* Add ammo. */
-         q = pilot_addAmmo( p, p->outfits[i], ammo, q );
-
-         /* Remove from player. */
-         player_rmOutfit( ammo, q );
-      }
+      /* Remove from player. */
+      player_rmOutfit( ammo, q );
    }
 }
 /**
@@ -939,18 +931,19 @@ void equipment_genLists( unsigned int wid )
    }
 
    /* Outfit list. */
+   eq_wgt.outfit = NULL;
+   noutfits = MAX(1,player_numOutfits());
+   soutfits = malloc(sizeof(char*)*noutfits);
+   toutfits = malloc(sizeof(glTexture*)*noutfits);
+   player_getOutfits( soutfits, toutfits );
    if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
-      eq_wgt.outfit = NULL;
-      noutfits = MAX(1,player_numOutfits());
-      soutfits = malloc(sizeof(char*)*noutfits);
-      toutfits = malloc(sizeof(glTexture*)*noutfits);
-      player_getOutfits( soutfits, toutfits );
       window_addImageArray( wid, 20, -40 - sh - 40,
             sw, sh, EQUIPMENT_OUTFITS, 50., 50.,
             toutfits, soutfits, noutfits, equipment_updateOutfits );
+
       /* Set alt text. */
       if (strcmp(soutfits[0],"None")!=0) {
-         alt = malloc( sizeof(char*) * noutfits );
+         alt      = malloc( sizeof(char*) * noutfits );
          quantity = malloc( sizeof(char*) * noutfits );
          for (i=0; i<noutfits; i++) {
             o      = outfit_get( soutfits[i] );
@@ -985,7 +978,8 @@ void equipment_genLists( unsigned int wid )
    }
 
    /* Update window. */
-   equipment_updateOutfits(wid, NULL); /* Will update ships also. */
+   equipment_updateOutfits(wid, NULL);
+   equipment_updateShips(wid, NULL);
 }
 /**
  * @brief Updates the player's ship window.
@@ -1068,7 +1062,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          ship->energy_max, ship->energy_regen,
          /* Misc. */
          pilot_cargoUsed(ship), cargo,
-         ship->fuel, ship->fuel_max, pilot_getJumps(player),
+         ship->fuel, ship->fuel_max, pilot_getJumps(ship),
          /* Transportation. */
          buf2,
          loc, sysname );
@@ -1228,13 +1222,26 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int ret;
    int i;
    Pilot *ship;
-   Outfit *o;
+   Outfit *o, *ammo;
 
    ship = eq_wgt.selected;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
       o = ship->outfits[i]->outfit;
+
+      /* Skip null outfits. */
+      if (o==NULL)
+         continue;
+
+      /* Remove ammo first. */
+      ammo = outfit_ammo(o);
+      if (ammo != NULL) {
+         ret = pilot_rmAmmo( ship, ship->outfits[i], outfit_amount(o) );
+         player_addOutfit( ammo, ret );
+      }
+
+      /* Remove rest. */
       ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
       if (ret==0)
          player_addOutfit( o, 1 );

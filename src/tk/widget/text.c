@@ -36,11 +36,13 @@ static void txt_cleanup( Widget* txt );
 void window_addText( const unsigned int wid,
                      const int x, const int y,
                      const int w, const int h,
-                     const int centered, char* name,
+                     const int centered, const char* name,
                      glFont* font, glColour* colour, const char* string )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
 
    /* generic */
    wgt->type = WIDGET_TEXT;
@@ -76,7 +78,7 @@ static void txt_render( Widget* txt, double bx, double by )
    if (txt->dat.txt.centered)
       gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + (double)SCREEN_W/2. + txt->x,
-            by + (double)SCREEN_H/2. + txt->y,
+            by + (double)SCREEN_H/2. + txt->y + (txt->h - txt->dat.txt.font->h)/2.,
             txt->dat.txt.colour, txt->dat.txt.text );
    else
       gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
@@ -106,7 +108,7 @@ static void txt_cleanup( Widget* txt )
  *    @param newstring String to set for the text widget.
  */
 void window_modifyText( const unsigned int wid,
-      char* name, char* newstring )
+      const char* name, const char* newstring )
 {  
    Widget *wgt;
    

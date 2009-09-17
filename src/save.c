@@ -27,6 +27,7 @@
 #include "unidiff.h"
 #include "nlua_var.h"
 #include "event.h"
+#include "conf.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -104,7 +105,7 @@ int save_all (void)
    xmlTextWriterPtr writer;
 
    /* Create the writer. */
-   writer = xmlNewTextWriterDoc(&doc, 1);
+   writer = xmlNewTextWriterDoc(&doc, conf.save_compress);
    if (writer == NULL) {
       ERR("testXmlwriterDoc: Error creating the xml writer");
       return -1;
@@ -193,7 +194,7 @@ void load_game_menu (void)
       len = strlen(files[i]);
 
       /* no save extension */
-      if ((len < 6) || strcmp(&files[i][len-3],".ns")) {
+      if ((len < 5) || strcmp(&files[i][len-3],".ns")) {
          free(files[i]);
          memmove( &files[i], &files[i+1], sizeof(char*) * (nfiles-i-1) );
          nfiles--;

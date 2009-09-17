@@ -559,20 +559,21 @@ static void input_key( int keynum, double value, double kabs )
 
          /* double tap accel = afterburn! */
          t = SDL_GetTicks();
-         if ((conf.afterburn_sens!= 0) &&
+         if ((conf.afterburn_sens != 0) &&
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
-         else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+         else if (value==KEY_RELEASE)
             player_afterburnOver();
 
-         if (value==KEY_PRESS) input_accelLast = t;
+         if (value==KEY_PRESS)
+            input_accelLast = t;
       }
    /* Afterburning. */
-   } else if (KEY("afterburn") && INGAME() && NOHYP() && NODEAD()) {
-      if (value==KEY_PRESS)
+   } else if (KEY("afterburn") && INGAME()) {
+      if ((value==KEY_PRESS) && NOHYP() && NODEAD())
          player_afterburn();
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+      else if (value==KEY_RELEASE)
          player_afterburnOver();
 
    /* turning left */
@@ -768,7 +769,7 @@ static void input_key( int keynum, double value, double kabs )
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();
    /* pause the games */
-   } else if (KEY("pause") && NOHYP()) {
+   } else if (KEY("pause")) {
       if (value==KEY_PRESS) {
          if (!toolkit_isOpen()) {
             if (paused)

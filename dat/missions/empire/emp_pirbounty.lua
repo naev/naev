@@ -11,7 +11,7 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar information
-   bar_desc = "You see an Empire Official handing out bounty information. There seems to be a crowd around him interested."
+   bar_desc = "You see an Empire Official handing out bounty information. There seems to be an interested crowd gathering around."
 
    -- Mission details
    misn_title  = "Pirate Bounty near %s"

@@ -141,6 +141,10 @@ Widget* window_newWidget( Window* w, const char *name )
 {
    Widget *wgt, *wlast, *wtmp;
 
+   /* NULL protection. */
+   if (w==NULL)
+      return NULL;
+
    /* Try to find one with the same name first. */
    wlast = NULL;
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -750,73 +754,55 @@ void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
       glColour* c, glColour* lc )
 {
-   int i;
-   static GLfloat lines[9*2], colours[9*4];
+   static GLfloat lines[4][2], colours[4][4];
 
    /* Set shade model. */
    glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
 
-   /* Lines. */
-   /* x */
-   lines[4]  = x;
-   lines[0]  = lines[4] - b;
-   lines[2]  = lines[0];
-   lines[6]  = lines[4] + w;
-   lines[8]  = lines[6] + b;
-   lines[10] = lines[8];
-   lines[12] = lines[6];
-   lines[14] = lines[4];
-   lines[16] = lines[0];
-   /* y */
-   lines[1]  = y;
-   lines[3]  = lines[1] + h;
-   lines[5]  = lines[3] + b;
-   lines[7]  = lines[5];
-   lines[9]  = lines[3];
-   lines[11] = lines[1];
-   lines[13] = lines[1] - b;
-   lines[15] = lines[13];
-   lines[17] = lines[1];
+   x -= b, w += 2 * b;
+   y -= b, h += 2 * b;
+   lc = lc ? lc : c;
 
-   /* Colours. */
-   if (!lc) {
-      for (i=0; i<9; i++) {
-         colours[4*i + 0] = c->r;
-         colours[4*i + 1] = c->g;
-         colours[4*i + 2] = c->b;
-         colours[4*i + 3] = c->a;
-      }
-   }
-   else {
-      colours[0] = lc->r;
-      colours[1] = lc->g;
-      colours[2] = lc->b;
-      colours[3] = lc->a;
-      for (i=0; i<4; i++) {
-         colours[4 + 4*i + 0] = c->r;
-         colours[4 + 4*i + 1] = c->g;
-         colours[4 + 4*i + 2] = c->b;
-         colours[4 + 4*i + 3] = c->a;
-      }
-      for (i=0; i<4; i++) {
-         colours[20 + 4*i + 0] = lc->r;
-         colours[20 + 4*i + 1] = lc->g;
-         colours[20 + 4*i + 2] = lc->b;
-         colours[20 + 4*i + 3] = lc->a;
-      }
-   }
+   /* Lines. */
+   lines[0][0]   = x;
+   lines[0][1]   = y;
+   colours[0][0] = lc->r;
+   colours[0][1] = lc->g;
+   colours[0][2] = lc->b;
+   colours[0][3] = lc->a;
+
+   lines[1][0]   = x;
+   lines[1][1]   = y + h;
+   colours[1][0] = c->r;
+   colours[1][1] = c->g;
+   colours[1][2] = c->b;
+   colours[1][3] = c->a;
+
+   lines[2][0]   = x + w;
+   lines[2][1]   = y + h;
+   colours[2][0] = c->r;
+   colours[2][1] = c->g;
+   colours[2][2] = c->b;
+   colours[2][3] = c->a;
+
+   lines[3][0]   = x + w;
+   lines[3][1]   = y;
+   colours[3][0] = lc->r;
+   colours[3][1] = lc->g;
+   colours[3][2] = lc->b;
+   colours[3][3] = lc->a;
+
 
    /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLfloat) * 2*9, lines );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(GLfloat) * 4*9, colours );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(lines), lines );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
-         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
-   glDrawArrays( GL_LINE_STRIP, 0, 9 );
+   glDrawArrays( GL_LINE_LOOP, 0, 4 );
 
    /* Deactivate VBO. */
    gl_vboDeactivate();
@@ -896,7 +882,7 @@ void toolkit_drawRect( double x, double y,
 void toolkit_drawAltText( double bx, double by, const char *alt )
 {
    double w, h;
-   double x, y;
+   double x, y, o;
    glColour c;
    glColour c2;
 
@@ -912,6 +898,12 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
    /* Choose position. */
    x = bx + 10.;
    y = by - h - gl_smallFont.h - 10.;
+   if (y < -SCREEN_H/2+10) {
+      o  = -(SCREEN_H/2 + y) + 10;
+      y += o;
+   }
+
+   /* Set colours. */
    c.r = cGrey80.r;
    c.g = cGrey80.g;
    c.b = cGrey80.b;
@@ -1383,8 +1375,8 @@ void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
 
    /* scrollbar background */
    toolkit_drawRect( x, y, w, h, toolkit_colDark, toolkit_col );
-   toolkit_drawOutline( x, y, w, h, 1., toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( x, y, w, h, 2., toolkit_colDark, NULL );
+   /* toolkit_drawOutline( x, y, w, h,  0., toolkit_colDark, NULL ); */
+   /* toolkit_drawOutline( x, y, w, h, 0., toolkit_colLight, toolkit_col ); */
 
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);

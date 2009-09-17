@@ -216,7 +216,8 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanupBar( HealthBar *bar );
 /* Render GUI. */
-static void gui_renderTarget( double dt );
+static void gui_renderPilotTarget( double dt );
+static void gui_renderPlanetTarget( double dt );
 static void gui_renderBorder( double dt );
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
@@ -292,14 +293,15 @@ void player_message ( const char *fmt, ... )
 
 
 /**
- * @brief Renders the background GUI stuff, namely planet target gfx
+ * @brief Renders planet targetting reticle.
  *
  *    @param dt Current delta tick.
  */
-void gui_renderBG( double dt )
+static void gui_renderPlanetTarget( double dt )
 {
    (void) dt;
    double x,y;
+   double sx, sy;
    glColour *c;
    Planet* planet;
 
@@ -323,8 +325,11 @@ void gui_renderBG( double dt )
 
    c = faction_getColour(planet->faction);
 
-   x = planet->pos.x - planet->gfx_space->sw/2.;
-   y = planet->pos.y + planet->gfx_space->sh/2.;
+   /* Get shake into account. */
+   spfx_getShake( &sx, &sy );
+
+   x = planet->pos.x - planet->gfx_space->sw/2. - sx;
+   y = planet->pos.y + planet->gfx_space->sh/2. - sy;
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
 
    x += planet->gfx_space->sw;
@@ -343,12 +348,13 @@ void gui_renderBG( double dt )
  *
  *    @double dt Current delta tick.
  */
-static void gui_renderTarget( double dt )
+static void gui_renderPilotTarget( double dt )
 {
    (void) dt;
    Pilot *p;
    glColour *c;
    double x, y;
+   double sx, sy;
 
    /* Player is most likely dead. */
    if (gui.gfx_targetPilot == NULL)
@@ -383,8 +389,11 @@ static void gui_renderTarget( double dt )
    else
       c = faction_getColour(p->faction);
 
-   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
-   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+   /* Get shake into account. */
+   spfx_getShake( &sx, &sy );
+
+   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2. - sx;
+   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. - sy;
    gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
 
    x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
@@ -624,7 +633,8 @@ void gui_render( double dt )
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
-   gui_renderTarget(dt);
+   gui_renderPlanetTarget(dt);
+   gui_renderPilotTarget(dt);
 
    /* Lockon warning */
    if (player->lockons > 0)

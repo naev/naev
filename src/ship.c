@@ -22,6 +22,7 @@
 #include "ndata.h"
 #include "toolkit.h"
 #include "array.h"
+#include "conf.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -31,7 +32,7 @@
 #define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
 #define SHIP_3DGFX   "gfx/ship/3d/" /**< Location of ship 3d graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
-#define SHIP_3DEXT   ".obj" /**< Ship 3d graphics extension format. */
+#define SHIP_3DEXT   ".obj" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Target graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communicatio graphic extension. */
@@ -372,10 +373,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
 
          /* Load the engine sprite .*/
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
-         temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
-         if (temp->gfx_engine == NULL)
-            WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
+         if (conf.engineglow) {
+            snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+            temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+            if (temp->gfx_engine == NULL)
+               WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
+         }
 
          /* Load target graphic. */
          snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_TARGET SHIP_EXT, base, base );

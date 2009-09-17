@@ -37,6 +37,8 @@ void window_addRect( const unsigned int wid,
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
 
    /* generic */
    wgt->type   = WIDGET_RECT;

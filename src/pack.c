@@ -127,7 +127,7 @@ struct Packcache_s {
 #endif /* HAS_FD */
 
 
-const uint64_t magic =  0x25524573; /**< File magic number: sER% */
+const uint64_t magic = 0x4e41455644415441; /**< File magic number: NAEVDATA */
 
 
 /*
@@ -360,8 +360,12 @@ int pack_check( const char* filename )
 {
    int ret;
    char *buf;
+   uint64_t end64;
    
    buf = malloc(sizeof(magic));
+
+   /* Must convert magic. */
+   end64 = ntohll(magic);
 
 #if HAS_FD
    int fd = open( filename, O_RDONLY );
@@ -376,7 +380,6 @@ int pack_check( const char* filename )
       return -1;
    }
 
-   ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
    close(fd);
 #else /* not HAS_FD */
    FILE* file = fopen( filename, "rb" );
@@ -385,16 +388,17 @@ int pack_check( const char* filename )
       return -1;
    }
 
-   buf = malloc(sizeof(magic));
    if (fread( buf, 1, sizeof(magic), file ) != sizeof(magic)) {
       WARN("Error reading magic number: %s", strerror(errno));
       free(buf);
       return -1;
    }
 
-   ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
    fclose( file );
 #endif /* HAS_FD */
+
+   /* Compare. */
+   ret = (memcmp(buf,&end64,sizeof(magic))==0) ? 0 : 1 ;
 
    free(buf);
 
@@ -635,7 +639,7 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
    int bytes;
 
    if ((file->pos + count) > file->end)
-      count = file->end - file->pos; /* can't go past end */
+      count = MAX(file->end - file->pos, 0); /* can't go past end */
    if (count == 0)
       return 0;
 
@@ -696,7 +700,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
    target = base + offset;
 
    /* Limit checks. */
-   if ((target < file->start) || (target >= file->end))
+   if (target < file->start)
       return -1;
 
 #if HAS_FD
@@ -958,7 +962,7 @@ static int packrw_seek( SDL_RWops *rw, int offset, int whence )
    else
       return -1;
 
-   return pack_seek( packfile, offset, whence );
+   return pack_seek( packfile, offset, wh );
 }
 #if SDL_VERSION_ATLEAST(1,3,0)
 static size_t packrw_read( SDL_RWops *rw, void *ptr, size_t size, size_t maxnum )

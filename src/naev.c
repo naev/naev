@@ -18,17 +18,23 @@
  */
 /* localised global */
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 #include "log.h" /* for DEBUGGING */
 
+
 /* global */
 #include <string.h> /* strdup */
+#if !(HAS_WIN32) && defined(DEBUGGING)
+#include <fenv.h>
+#endif /* !(HAS_WIN32) && defined(DEBUGGING) */
 #if HAS_LINUX && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <bfd.h>
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 
 /* local */
@@ -73,7 +79,6 @@
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
-#define VERSION_LEN     10 /**< Maximum length of the version file. */
 #define FONT_SIZE       12 /**< Normal font size. */
 #define FONT_SIZE_SMALL 10 /**< Small font size. */
 
@@ -82,8 +87,10 @@
 
 static int quit = 0; /**< For primary loop */
 static unsigned int time = 0; /**< used to calculate FPS and movement. */
-static char version[VERSION_LEN]; /**< Contains version. */
+static char short_version[64]; /**< Contains version. */
+static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
+static char *binary_path = NULL; /**< argv[0] */
 
 /*
  * FPS stuff.
@@ -92,6 +99,10 @@ static double fps_dt  = 1.; /**< Display fps accumulator. */
 static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
 
+#if HAS_LINUX && defined(DEBUGGING)
+static bfd *abfd = NULL;
+static asymbol **syms = NULL;
+#endif /* HAS_LINUX && defined(DEBUGGING) */
 
 /*
  * prototypes
@@ -104,7 +115,7 @@ static void load_all (void);
 static void unload_all (void);
 static void display_fps( const double dt );
 static void window_caption (void);
-static void debug_sigInit (void);
+static void debug_sigInit (const char *executable);
 /* update */
 static void fps_control (void);
 static void update_all (void);
@@ -126,16 +137,21 @@ void main_loop (void); /* dialogue.c */
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
+
+   /* Save the binary path. */
+   binary_path = argv[0];
    
-   /* print the version */
-   snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
-   LOG( " "APPNAME" v%s", version );
+   /* Print the version */
+   LOG( " "APPNAME" v%s", naev_version(0) );
+#ifdef GIT_COMMIT
+   DEBUG( " git HEAD at " GIT_COMMIT );
+#endif /* GIT_COMMIT */
 
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);
 
    /* Set up debug signal handlers. */
-   debug_sigInit();
+   debug_sigInit(argv[0]);
 
    /* Create the home directory if needed. */
    if (nfile_dirMakeExist("%s", nfile_basePath()))
@@ -146,6 +162,16 @@ int main( int argc, char** argv )
       WARN("Unable to initialize SDL Video: %s", SDL_GetError());
       return -1;
    }
+
+   /* Get desktop dimensions. */
+#if SDL_VERSION_ATLEAST(1,2,10)
+   const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
+   gl_screen.desktop_w = vidinfo->current_w;
+   gl_screen.desktop_h = vidinfo->current_h;
+#else /* #elif SDL_VERSION_ATLEAST(1,2,10) */
+   gl_screen.desktop_w = 0;
+   gl_screen.desktop_h = 0;
+#endif /* #elif SDL_VERSION_ATLEAST(1,2,10) */
 
    /* We'll be parsing XML. */
    LIBXML_TEST_VERSION
@@ -159,6 +185,12 @@ int main( int argc, char** argv )
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
+
+   /* Enable FPU exceptions. */
+#if !(HAS_WIN32) && defined(DEBUGGING)
+   if (conf.fpu_except)
+      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
+#endif /* DEBUGGING */
 
    /* Open data. */
    if (ndata_open() != 0)
@@ -184,9 +216,9 @@ int main( int argc, char** argv )
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
+   window_caption();
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
-   window_caption();
 
    /* Display the load screen. */
    loadscreen_load();
@@ -225,9 +257,6 @@ int main( int argc, char** argv )
    if (sound_init()) WARN("Problem setting up sound!");
    music_choose("load");
 
-
-   /* Misc */
-   if (ai_init()) WARN("Error initializing AI");
 
    /* Misc graphics init */
    if (nebu_init() != 0) { /* Initializes the nebula */
@@ -331,11 +360,12 @@ void loadscreen_load (void)
    /* Must have loading screens */
    if (nload==0) {
       WARN("No loading screens found!");
+      loading = NULL;
       return;
    }
 
    /* Set the zoom. */
-   gl_cameraZoom( conf.zoom_min );
+   gl_cameraZoom( conf.zoom_far );
 
    /* Load the texture */
    snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
@@ -364,7 +394,8 @@ void loadscreen_render( double done, const char *msg )
    double x,y, w,h, rh;
 
    /* Clear background. */
-   glClear(GL_COLOR_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
    /* Draw stars. */
    space_renderStars( 0. );
@@ -388,7 +419,8 @@ void loadscreen_render( double done, const char *msg )
       y  = -bw/2 - rh - 5.;
 
    /* Draw loading screen image. */
-   gl_blitScale( loading, bx, by, bw, bh, NULL );
+   if (loading != NULL)
+      gl_blitScale( loading, bx, by, bw, bh, NULL );
 
    /* Draw progress bar. */
    /* BG. */
@@ -424,7 +456,8 @@ void loadscreen_render( double done, const char *msg )
 static void loadscreen_unload (void)
 {
    /* Free the textures */
-   gl_freeTexture(loading);
+   if (loading != NULL)
+      gl_freeTexture(loading);
    loading = NULL;
 }
 
@@ -439,7 +472,9 @@ void load_all (void)
    loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
    commodity_load(); /* dep for space */
    loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
-   factions_load(); /* dep for fleet, space, missions */
+   factions_load(); /* dep for fleet, space, missions, AI */
+   loadscreen_render( 2./LOADING_STAGES, "Loading AI..." );
+   ai_load(); /* dep for fleets */
    loadscreen_render( 3./LOADING_STAGES, "Loading Missions..." );
    missions_load(); /* no dep */
    loadscreen_render( 4./LOADING_STAGES, "Loading Events..." );
@@ -486,7 +521,7 @@ void main_loop (void)
    tk = toolkit_isOpen();
 
    /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    fps_control(); /* everyone loves fps control */
 
@@ -514,6 +549,7 @@ static void fps_control (void)
 {
    unsigned int t;
    double delay;
+   double fps_max;
 
    /* dt in s */
    t = SDL_GetTicks();
@@ -523,10 +559,13 @@ static void fps_control (void)
    time = t;
 
    /* if fps is limited */                       
-   if ((conf.fps_max != 0) && (real_dt < 1./conf.fps_max)) {
-      delay = 1./conf.fps_max - real_dt;
-      SDL_Delay( (unsigned int)(delay * 1000) );
-      fps_dt += delay; /* makes sure it displays the proper fps */
+   if (!conf.vsync && conf.fps_max != 0) {
+      fps_max = 1./(double)conf.fps_max;
+      if (real_dt < fps_max) {
+         delay = fps_max - real_dt;
+         SDL_Delay( (unsigned int)(delay * 1000) );
+         fps_dt += delay; /* makes sure it displays the proper fps */
+      }
    }
 }
 
@@ -612,7 +651,6 @@ static void render_all (void)
    /* BG */
    space_render(dt);
    planets_render();
-   gui_renderBG(dt);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* N */
    pilots_render(dt);
@@ -663,30 +701,72 @@ static void display_fps( const double dt )
 static void window_caption (void)
 {
    char buf[PATH_MAX];
+   SDL_RWops *rw;
+   SDL_Surface *sur;
 
+   /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-   SDL_WM_SetCaption(buf, NULL );
+   SDL_WM_SetCaption(buf, APPNAME);
+
+   /* Set icon. */
+   rw = ndata_rwops( "gfx/icon.png" );
+   if (rw == NULL) {
+      WARN("Icon (gfx/icon.png) not found!");
+      return;
+   }
+   sur = IMG_Load_RW( rw, 1 );
+   if (sur == NULL) {
+      WARN("Unable to load gfx/icon.png!");
+      return;
+   }
+   SDL_WM_SetIcon( sur, NULL );
 }
 
 
-static char human_version[50]; /**< Stores the human readable version string. */
 /**
  * @brief Returns the version in a human readable string.
  *
+ *    @param long_version Returns the long version if it's long.
  *    @return The human readable version string.
  */
-char *naev_version (void)
+char *naev_version( int long_version )
 {
-   if (human_version[0] == '\0')
-      snprintf( human_version, 50, " "APPNAME" v%s%s - %s", version,
-#ifdef DEBUGGING
-            " debug",
-#else /* DEBUGGING */
-            "",
-#endif /* DEBUGGING */
-            ndata_name() );
+   /* Set short version if needed. */
+   if (short_version[0] == '\0')
+      snprintf( short_version, sizeof(short_version),
+#if VREV < 0
+            "%d.%d.0-beta%d",
+            VMAJOR, VMINOR, ABS(VREV)
+#else /* VREV < 0 */
+            "%d.%d.%d",
+            VMAJOR, VMINOR, VREV
+#endif /* VREV < 0 */
+            );
 
-   return human_version;
+   /* Set up the long version. */
+   if (long_version) {
+      if (human_version[0] == '\0')
+         snprintf( human_version, sizeof(human_version),
+               " "APPNAME" v%s%s - %s", short_version,
+#ifdef DEBUGGING
+               " debug",
+#else /* DEBUGGING */
+               "",
+#endif /* DEBUGGING */
+               ndata_name() );
+      return human_version;
+   }
+
+   return short_version;
+}
+
+
+/**
+ * @brief Returns the naev binary path.
+ */
+char *naev_binary (void)
+{
+   return binary_path;
 }
 
 
@@ -751,6 +831,37 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
    return strsignal(sig);
 }
 
+static void debug_translateAddress(const char *symbol, bfd_vma address)
+{
+   const char *file, *func;
+   unsigned int line;
+   asection *section;
+
+   for (section = abfd->sections; section != NULL; section = section->next) {
+      if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
+         continue;
+
+      bfd_vma vma = bfd_get_section_vma(abfd, section);
+      bfd_size_type size = bfd_get_section_size(section);
+      if (address < vma || address >= vma + size)
+         continue;
+
+      if (!bfd_find_nearest_line(abfd, section, syms, address - vma,
+            &file, &func, &line))
+         continue;
+
+      do {
+         if (func == NULL || func[0] == '\0') func = "??";
+         if (file == NULL || file[0] == '\0') file = "??";
+         DEBUG("%s %s(...):%u %s", symbol, func, line, file);
+      } while (bfd_find_inliner_info(abfd, &file, &func, &line));
+
+      return;
+   }
+
+   DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
+}
+
 
 /**
  * @brief Backtrace signal handler for Linux.
@@ -773,9 +884,10 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    DEBUG("NAEV recieved %s!",
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++)
-      DEBUG("   %s", symbols[i]);
+       debug_translateAddress(symbols[i], (bfd_vma)buf[i]);
    DEBUG("Report this to project maintainer with the backtrace.");
 
+   /* Always exit. */
    exit(1);
 }
 #endif /* HAS_LINUX && defined(DEBUGGING) */
@@ -784,10 +896,31 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 /**
  * @brief Sets up the SignalHandler for Linux.
  */
-static void debug_sigInit (void)
+static void debug_sigInit( const char *executable )
 {
 #if HAS_LINUX && defined(DEBUGGING)
+   char **matching;
    struct sigaction sa, so;
+
+   bfd_init();
+
+   /* Read the executable */
+   abfd = bfd_openr(executable, NULL);
+   assert(abfd != NULL);
+
+   bfd_check_format_matches(abfd, bfd_object, &matching);
+
+   /* Read symbols */
+   if (bfd_get_file_flags(abfd) & HAS_SYMS) {
+      long symcount;
+      unsigned int size;
+
+      /* static */
+      symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
+      if (symcount == 0) /* dynamic */
+         symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
+      assert(symcount >= 0);
+   }
 
    /* Set up handler. */
    sa.sa_handler   = NULL;
@@ -805,5 +938,7 @@ static void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
+#else /* HAS_LINUX && defined(DEBUGGING) */
+   (void) executable;
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 }

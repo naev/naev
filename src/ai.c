@@ -81,6 +81,8 @@
 #include "nlua_space.h"
 #include "nlua_vec2.h"
 #include "nlua_rnd.h"
+#include "nlua_pilot.h"
+#include "nlua_faction.h"
 #include "board.h"
 
 
@@ -120,6 +122,7 @@
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
 static int nprofiles = 0; /**< Number of AI_Profiles loaded. */
+static lua_State *equip_L = NULL; /**< Equipment state. */
 
 
 /*
@@ -138,6 +141,7 @@ static int ai_loadProfile( const char* filename );
 static void ai_freetask( Task* t );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
+static int ai_loadEquip (void);
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 void ai_refuel( Pilot* refueler, unsigned int target ); /* comm.c */
@@ -495,7 +499,7 @@ void ai_destroy( Pilot* p )
  *
  *    @return 0 on no errors.
  */
-int ai_init (void)
+int ai_load (void)
 {
    char** files;
    uint32_t nfiles, i;
@@ -525,6 +529,39 @@ int ai_init (void)
 
    /* More clean up. */
    free(files);
+
+   /* Load equipment thingy. */
+   return ai_loadEquip();
+}
+
+
+/**
+ * @brief Loads the equipment selector script.
+ */
+static int ai_loadEquip (void)
+{
+   char *buf;
+   uint32_t bufsize;
+   const char *filename = "ai/equip/equip.lua";
+   lua_State *L;
+
+   /* Create new state. */
+   equip_L = nlua_newState();
+   L = equip_L;
+
+   /* Prepare state. */
+   nlua_loadStandard(L,0);
+
+   /* Load the file. */
+   buf = ndata_read( filename, &bufsize );
+   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+      ERR("Error loading file: %s\n"
+          "%s\n"
+          "Most likely Lua file has improper syntax, please check",
+            filename, lua_tostring(L,-1));
+      return -1;
+   }
+   free(buf);
 
    return 0;
 }
@@ -779,16 +816,33 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
  */
 static void ai_create( Pilot* pilot, char *param )
 {
+   LuaPilot lp;
+   LuaFaction lf;
    lua_State *L;
-
-   ai_setPilot( pilot );
-   L = cur_pilot->ai->L;
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
       aiL_status = AI_STATUS_CREATE;
 
+   /* Prepare AI. */
+   ai_setPilot( pilot );
+
+   /* Create equipment first. */
+   if (!pilot_isFlag(pilot, PILOT_EMPTY)) {
+      L = equip_L;
+      lua_getglobal(L, "equip");
+      lp.pilot = cur_pilot->id;
+      lua_pushpilot(L,lp); 
+      lf.f = cur_pilot->faction;
+      lua_pushfaction(L,lf);
+      if (lua_pcall(L, 2, 0, 0)) { /* Error has occurred. */
+         WARN("Pilot '%s' equip -> '%s': %s", cur_pilot->name, "equip", lua_tostring(L,-1));
+         lua_pop(L,1);
+      }
+   }
+
    /* Prepare stack. */
+   L = cur_pilot->ai->L;
    lua_getglobal(L, "create");
 
    /* Parse parameter. */
@@ -1819,7 +1873,7 @@ static int aiL_aim( lua_State *L )
    /* Check if should recalculate weapon speed with secondary weapon. */
    if ((cur_pilot->secondary != NULL) &&
          outfit_isBolt(cur_pilot->secondary->outfit) &&
-         (cur_pilot->secondary->outfit->type == OUTFIT_TYPE_MISSILE_DUMB)) {
+         (cur_pilot->secondary->outfit->type == OUTFIT_TYPE_LAUNCHER)) {
       speed  = cur_pilot->weap_speed + outfit_speed(cur_pilot->secondary->outfit);
       speed /= 2.;
    }
@@ -1883,8 +1937,10 @@ static int outfit_isMelee( Pilot *p, PilotOutfitSlot *o )
 {
    (void) p;
    if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit) ||
-         (o->outfit->type == OUTFIT_TYPE_MISSILE_DUMB) ||
-         (o->outfit->type == OUTFIT_TYPE_TURRET_DUMB))
+         (((o->outfit->type == OUTFIT_TYPE_LAUNCHER) ||
+           (o->outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)) &&
+          (o->outfit->u.lau.ammo->u.amm.ai == 0)))
+
       return 1;
    return 0;
 }
@@ -1897,10 +1953,10 @@ static int outfit_isRanged( Pilot *p, PilotOutfitSlot *o )
 {
    (void) p;
    if (outfit_isFighterBay(o->outfit) ||
-         (outfit_isLauncher(o->outfit) &&
-            (o->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))) {
+         (((o->outfit->type == OUTFIT_TYPE_LAUNCHER) ||
+           (o->outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)) &&
+          (o->outfit->u.lau.ammo->u.amm.ai > 0)))
       return 1;
-   }
    return 0;
 }
 /**
@@ -1980,7 +2036,7 @@ static int aiL_secondary( lua_State *L )
 
          /* Only if r == 1 in case of dumb turrets. */
          if (r == 1) {
-            if ((po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))
+            if (po->outfit->u.lau.ammo->u.amm.ai > 0)
                lua_pushstring( L, "Smart" );
             else
                lua_pushstring( L, "Dumb" );

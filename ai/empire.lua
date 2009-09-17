@@ -34,7 +34,7 @@ function create ()
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( "\"I suppose I could spare some fuel for %d credits\"", mem.refuel )
+      mem.refuel_msg = string.format( "\"I suppose I could spare some fuel for %d credits.\"", mem.refuel )
    end
 
    -- See if can be bribed

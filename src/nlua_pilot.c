@@ -20,6 +20,7 @@
 #include "nluadef.h"
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
+#include "nlua_ship.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -43,18 +44,20 @@ extern void ai_destroy( Pilot* p );
 
 
 /* Pilot metatable methods. */
-static int pilot_getPlayer( lua_State *L );
-static int pilot_addFleet( lua_State *L );
-static int pilot_clear( lua_State *L );
-static int pilot_toggleSpawn( lua_State *L );
-static int pilot_getPilots( lua_State *L );
+static int pilotL_getPlayer( lua_State *L );
+static int pilotL_addFleet( lua_State *L );
+static int pilotL_clear( lua_State *L );
+static int pilotL_toggleSpawn( lua_State *L );
+static int pilotL_getPilots( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
+static int pilotL_id( lua_State *L );
 static int pilotL_alive( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
-static int pilotL_warp( lua_State *L );
+static int pilotL_setPosition( lua_State *L );
+static int pilotL_setVelocity( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
@@ -64,42 +67,51 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
+static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_shipName( lua_State *L );
-static int pilotL_shipClass( lua_State *L );
-static int pilotL_shipSlots( lua_State *L );
+static int pilotL_ship( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
-   { "player", pilot_getPlayer },
-   { "add", pilot_addFleet },
-   { "clear", pilot_clear },
-   { "toggleSpawn", pilot_toggleSpawn },
-   { "get", pilot_getPilots },
+   /* General. */
+   { "player", pilotL_getPlayer },
+   { "add", pilotL_addFleet },
+   { "get", pilotL_getPilots },
    { "__eq", pilotL_eq },
+   /* Info. */
    { "name", pilotL_name },
+   { "id", pilotL_id },
    { "alive", pilotL_alive },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
-   { "warp", pilotL_warp },
-   { "broadcast", pilotL_broadcast },
-   { "comm", pilotL_comm },
+   /* System. */
+   { "clear", pilotL_clear },
+   { "toggleSpawn", pilotL_toggleSpawn },
+   /* Modify. */
+   { "changeAI", pilotL_changeAI },
+   { "setHealth", pilotL_setHealth },
+   { "setNoboard", pilotL_setNoboard },
+   { "getHealth", pilotL_getHealth },
+   { "setPos", pilotL_setPosition },
+   { "setVel", pilotL_setVelocity },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
    { "disable", pilotL_disable },
+   /* Talk. */
+   { "broadcast", pilotL_broadcast },
+   { "comm", pilotL_comm },
+   /* Outfits. */
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
-   { "changeAI", pilotL_changeAI },
-   { "setHealth", pilotL_setHealth },
-   { "setNoboard", pilotL_setNoboard },
-   { "getHealth", pilotL_getHealth },
+   { "setFuel", pilotL_setFuel },
+   /* Ship. */
    { "shipName", pilotL_shipName },
-   { "shipClass", pilotL_shipClass },
-   { "shipSlots", pilotL_shipSlots },
+   { "ship", pilotL_ship },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -129,6 +141,9 @@ int nlua_loadPilot( lua_State *L, int readonly )
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, PILOT_METATABLE);
+
+   /* Pilot always loads ship. */
+   nlua_loadShip(L,readonly);
 
    return 0;
 }
@@ -221,7 +236,7 @@ int lua_ispilot( lua_State *L, int ind )
  *    @luareturn Pilot pointing to the player.
  * @luafunc player()
  */
-static int pilot_getPlayer( lua_State *L )
+static int pilotL_getPlayer( lua_State *L )
 {
    LuaPilot lp;
 
@@ -258,11 +273,11 @@ static int pilot_getPlayer( lua_State *L )
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add( fleetname, ai, pos, jump )
  */
-static int pilot_addFleet( lua_State *L )
+static int pilotL_addFleet( lua_State *L )
 {
    Fleet *flt;
    const char *fltname, *fltai;
-   int i, j;
+   int i, j, first;
    unsigned int p;
    double a;
    double d;
@@ -354,27 +369,30 @@ static int pilot_addFleet( lua_State *L )
       a += 2.*M_PI;
 
    /* now we start adding pilots and toss ids into the table we return */
+   first = 1;
    j     = 0;
    lua_newtable(L);
    for (i=0; i<flt->npilots; i++) {
 
       plt = &flt->pilots[i];
 
-      if (RNG(0,100) <= plt->chance) {
+      if (RNG(0,100) > plt->chance)
+         continue;
 
-         /* fleet displacement */
+      /* Fleet displacement - first ship is exact. */
+      if (!first)
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
+      first = 0;
 
-         /* Create the pilot. */
-         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
+      /* Create the pilot. */
+      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
 
-         /* we push each pilot created into a table and return it */
-         lua_pushnumber(L,++j); /* index, starts with 1 */
-         lp.pilot = p;
-         lua_pushpilot(L,lp); /* value = LuaPilot */
-         lua_rawset(L,-3); /* store the value in the table */
-      }
+      /* we push each pilot created into a table and return it */
+      lua_pushnumber(L,++j); /* index, starts with 1 */
+      lp.pilot = p;
+      lua_pushpilot(L,lp); /* value = LuaPilot */
+      lua_rawset(L,-3); /* store the value in the table */
    }
    return 1;
 }
@@ -385,7 +403,7 @@ static int pilot_addFleet( lua_State *L )
  * 
  * @luafunc clear()
  */
-static int pilot_clear( lua_State *L )
+static int pilotL_clear( lua_State *L )
 {
    (void) L;
    pilots_clean();
@@ -402,7 +420,7 @@ static int pilot_clear( lua_State *L )
  *    @luareturn The current spawn state.
  * @luafunc toggleSpawn( enable )
  */
-static int pilot_toggleSpawn( lua_State *L )
+static int pilotL_toggleSpawn( lua_State *L )
 {
    /* Setting it directly. */
    if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
@@ -424,7 +442,7 @@ static int pilot_toggleSpawn( lua_State *L )
  *    @luareturn A table containing the pilots.
  * @luafunc get( f )
  */
-static int pilot_getPilots( lua_State *L )
+static int pilotL_getPilots( lua_State *L )
 {
    int i, j, k;
    int *factions;
@@ -534,6 +552,35 @@ static int pilotL_name( lua_State *L )
 
    /* Get name. */
    lua_pushstring(L, p->name);
+   return 1;
+}
+
+/**
+ * @brief Gets the ID of the pilot.
+ *
+ * @usage id = p:id()
+ *
+ *    @luaparam p Pilot to get the ID of.
+ *    @luareturn The ID of the curent pilot.
+ * @luafunc id( p )
+ */
+static int pilotL_id( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+
+   /* Parse parameters. */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get name. */
+   lua_pushnumber(L, p->id);
    return 1;
 }
 
@@ -659,13 +706,13 @@ static int pilotL_velocity( lua_State *L )
 /**
  * @brief Sets the pilot's position.
  *
- * @usage p:warp( vec2.new( 300, 200 ) )
+ * @usage p:setPos( vec2.new( 300, 200 ) )
  *
  *    @luaparam p Pilot to set the position of.
  *    @luaparam pos Position to set.
- * @luafunc warp( p, pos )
+ * @luafunc setPos( p, pos )
  */
-static int pilotL_warp( lua_State *L )
+static int pilotL_setPosition( lua_State *L )
 {
    LuaPilot *p1;
    Pilot *p;
@@ -684,7 +731,37 @@ static int pilotL_warp( lua_State *L )
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
-   vectnull( &p->solid->vel ); /* Clear velocity otherwise it's a bit weird. */
+   return 0;
+}
+
+/**
+ * @brief Sets the pilot's velocity.
+ *
+ * @usage p:setVel( vec2.new( 300, 200 ) )
+ *
+ *    @luaparam p Pilot to set the velocity of.
+ *    @luaparam vel Velocity to set.
+ * @luafunc setVel( p, vel )
+ */
+static int pilotL_setVelocity( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+   LuaVector *v;
+
+   /* Parse parameters */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+   v  = luaL_checkvector(L,2);
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Warp pilot to new position. */
+   vectcpy( &p->solid->vel, &v->vec );
    return 0;
 }
 
@@ -956,8 +1033,9 @@ static int pilotL_disable( lua_State *L )
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
+ *    @lusparam q Amount of the outfit to add (defaults to 1).
  *    @luareturn True is outfit was added successfully.
- * @luafunc addOutfit( p, outfit )
+ * @luafunc addOutfit( p, outfit, q )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
@@ -1002,8 +1080,16 @@ static int pilotL_addOutfit( lua_State *L )
       if (o->slot != p->outfits[i]->slot)
          continue;
 
-      /* Add outfit. */
-      ret = pilot_addOutfit( p, o, p->outfits[i] );
+      /* Test if can add outfit. */
+      ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
+      if (ret) {
+         lua_pushboolean(L, 0);
+         return 1;
+      }
+
+      /* Add outfit - already tested. */
+      ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
+      pilot_calcStats( p );
 
       /* Add ammo if needed. */
       if ((ret==0) && (outfit_ammo(o) != NULL))
@@ -1058,6 +1144,7 @@ static int pilotL_rmOutfit( lua_State *L )
       for (i=0; i<p->noutfits; i++) {
          pilot_rmOutfitRaw( p, p->outfits[i] );
       }
+      pilot_calcStats( p ); /* Recalculate stats. */
       return 0;
    }
 
@@ -1068,7 +1155,7 @@ static int pilotL_rmOutfit( lua_State *L )
       return 0;
    }
    
-   /* Add outfit. */
+   /* Remove the outfit outfit. */
    for (i=0; i<p->noutfits; i++) {
       /* Must still need to remove. */
       if (q <= 0)
@@ -1084,6 +1171,50 @@ static int pilotL_rmOutfit( lua_State *L )
    }
    return 0;
 }
+
+
+/**
+ * @Brief Sets the fuel of a pilot.
+ *
+ * @usage p:setFuel( true ) -- Sets fuel to max
+ *
+ *    @luaparam p Pilot to set fuel of.
+ *    @luaparam f true sets fuel to max, false sets fuel to 0, a number sets
+ *              fuel to that amount in units.
+ *    @luareturn The amount of fuel the pilot has.
+ * @luafunc setFuel( p, f )
+ */
+static int pilotL_setFuel( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get the parameter. */
+   if (lua_isboolean(L,2)) {
+      if (lua_toboolean(L,2))
+         p->fuel = p->fuel_max;
+      else
+         p->fuel = 0.;
+   }
+   else if (lua_isnumber(L,2)) {
+      p->fuel = CLAMP( 0., p->fuel_max, lua_tonumber(L,2) );
+   }
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Return amount of fuel. */
+   lua_pushnumber(L, p->fuel);
+   return 1;
+}
+
 
 /**
  * @brief Changes the pilot's AI.
@@ -1260,18 +1391,19 @@ static int pilotL_shipName( lua_State *L )
 
 
 /**
- * @brief Gets the name of the pilot's ship class.
+ * @brief Gets the pilot's ship.
  *
- * @usage shipclass = p:shipClass()
+ * @usage s = p:ship()
  *
- *    @luaparam p Pilot to get ship class name.
- *    @luareturn The name of the pilot's ship class.
- * @luafunc shipClass( p )
+ *    @luaparam p Pilot to get ship of.
+ *    @luareturn The ship of the pilot.
+ * @luafunc ship( p )
  */
-static int pilotL_shipClass( lua_State *L )
+static int pilotL_ship( lua_State *L )
 {
    LuaPilot *lp;
    Pilot *p;
+   LuaShip ls;
 
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
@@ -1281,37 +1413,10 @@ static int pilotL_shipClass( lua_State *L )
       return 0;
    }
 
-   lua_pushstring(L, ship_class(p->ship));
+   /* Create the ship. */
+   ls.ship = p->ship;
+   lua_pushship(L, ls);
    return 1;
 }
 
-
-/**
- * @brief Gets the amount of the pilot's ship slots.
- *
- * @usage slots_high, slots_medium, slots_low = p:shipSlots()
- *
- *    @luaparam p Pilot to get ship slots of.
- *    @luareturn Number of high, medium and low slots.
- * @luafunc shipSlots( p )
- */
-static int pilotL_shipSlots( lua_State *L )
-{
-   LuaPilot *lp;
-   Pilot *p;
-
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
-   /* Push slot numbers. */
-   lua_pushnumber(L, p->outfit_nhigh);
-   lua_pushnumber(L, p->outfit_nmedium);
-   lua_pushnumber(L, p->outfit_nlow);
-   return 3;
-}
 

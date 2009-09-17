@@ -2,9 +2,9 @@
 <Systems>
  <ssys name="Draygar">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -25,8 +25,8 @@
  </ssys>
  <ssys name="NGC-7723">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7783</jump>
@@ -47,10 +47,10 @@
  </ssys>
  <ssys name="Raelid">
   <fleets>
-   <fleet>Empire Medium Prescence</fleet>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-	<fleet>Pirate Light Prescence</fleet>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+	<fleet>Pirate Token Presence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -75,9 +75,9 @@
  </ssys>
  <ssys name="Delta Pavonis">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Medium Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Cygnus</jump>
@@ -100,7 +100,7 @@
  </ssys>
  <ssys name="Zylex">
   <fleets>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Sigur</jump>
@@ -141,12 +141,14 @@
  </ssys>
  <ssys name="Apez">
   <fleets>
-   <fleet>Empire Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Arcturus</jump>
 	<jump>Gamma Polaris</jump>
+	<jump>Hekaras</jump>
+	<jump>Zied</jump>
   </jumps>
   <pos>
    <y>-320</y>
@@ -164,8 +166,9 @@
  </ssys>
  <ssys name="Arcturus">
   <fleets>
-   <fleet>Empire Heavy Prescence</fleet>
-   <fleet>Trader Heavy Prescence</fleet>
+   <fleet>Empire Heavy Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+	<fleet>Pirate Token Presence</fleet>
   </fleets>
   <jumps>
    <jump>Goddard</jump>
@@ -187,9 +190,77 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="Protera">
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Proteron Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Shakar</jump>
+  </jumps>
+  <pos>
+   <y>-206</y>
+   <x>-100</x>
+  </pos>
+  <planets>
+   <planet>Protera Sigma</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Hekaras">
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Apez</jump>
+  </jumps>
+  <pos>
+   <y>-280</y>
+   <x>0</x>
+  </pos>
+  <planets>
+   <planet>Hurada</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+  <ssys name="Zied">
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Apez</jump>
+  </jumps>
+  <pos>
+   <y>-340</y>
+   <x>-10</x>
+  </pos>
+  <planets>
+   <planet>Bon Sebb</planet>
+	<planet>Saturn VI</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
  <ssys name="Sirou">
   <fleets>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Gamma Polaris</jump>
@@ -208,8 +279,8 @@
  </ssys>
  <ssys name="NGC-7690">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -230,8 +301,8 @@
  </ssys>
  <ssys name="NGC-7693">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7723</jump>
@@ -251,7 +322,7 @@
  </ssys>
  <ssys name="NGC-8037">
   <fleets>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Sigur</jump>
@@ -271,8 +342,8 @@
  <ssys name="Doranthex">
   <fleets>
    <fleet>FLF Light Guerrilla</fleet>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Torg</jump>
@@ -298,12 +369,13 @@
  <ssys name="Tarsus">
   <fleets>
    <fleet>FLF Light Guerrilla</fleet>
-   <fleet>Dvaered Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Dakron</jump>
-	<jump>Doranthex</jump>
+   <jump>Doranthex</jump>
+   <jump>Verex</jump>
   </jumps>
   <pos>
    <y>-403</y>
@@ -321,7 +393,162 @@
  </ssys>
  <ssys name="NGC-7843">
   <fleets>
-   <fleet>Pirate Heavy Prescence</fleet>
+   <fleet>Pirate Heavy Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>NGC-7723</jump>
+   <jump>New Haven</jump>
+  </jumps>
+  <pos>
+   <y>235</y>
+   <x>155</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>100</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>120</stars>
+  </general>
+ </ssys>
+ <ssys name="NGC-7843">
+  <fleets>
+   <fleet>Pirate Heavy Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>NGC-7723</jump>
+   <jump>New Haven</jump>
+  </jumps>
+  <pos>
+   <y>235</y>
+   <x>155</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>100</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>120</stars>
+  </general>
+ </ssys>
+ <ssys name="Verex">
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Tarsus</jump>
+   <jump>Ginger</jump>
+   <jump>Darkstone</jump>
+   <jump>Blunderbuss</jump>
+  </jumps>
+  <pos>
+   <y>-453</y>
+   <x>207</x>
+  </pos>
+  <planets>
+  	<planet>Verex III</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Ginger">
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Verex</jump>
+  </jumps>
+  <pos>
+   <y>-505</y>
+   <x>237</x>
+  </pos>
+  <planets>
+  	<planet>Ullnorn</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Darkstone">
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Verex</jump>
+   <jump>Beeklo</jump>
+  </jumps>
+  <pos>
+   <y>-535</y>
+   <x>180</x>
+  </pos>
+  <planets>
+  	<planet>Varia</planet>
+  	<planet>Stalwart Station</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Blunderbuss">
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Verex</jump>
+  </jumps>
+  <pos>
+   <y>-491</y>
+   <x>140</x>
+  </pos>
+  <planets>
+  	<planet>Utsuwa</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Beeklo">
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Darkstone</jump>
+  </jumps>
+  <pos>
+   <y>-565</y>
+   <x>240</x>
+  </pos>
+  <planets>
+  	<planet>Totoran</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="NGC-7843">
+  <fleets>
+   <fleet>Pirate Heavy Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7723</jump>
@@ -341,7 +568,7 @@
  </ssys>
  <ssys name="Arcanis">
   <fleets>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Zylex</jump>
@@ -361,12 +588,13 @@
  </ssys>
  <ssys name="Shakar">
   <fleets>
-   <fleet>Empire Medium Prescence</fleet>
-   <fleet>Trader Heavy Prescence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
   </fleets>
   <jumps>
    <jump>Borla</jump>
    <jump>Gamma Polaris</jump>
+   <jump>Protera</jump>
   </jumps>
   <pos>
    <y>-195</y>
@@ -384,7 +612,7 @@
  </ssys>
  <ssys name="NGC-7968">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Mizar</jump>
@@ -404,7 +632,7 @@
  </ssys>
  <ssys name="Doeston">
   <fleets>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Arandon</jump>
@@ -429,8 +657,8 @@
  </ssys>
  <ssys name="Torg">
   <fleets>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -452,10 +680,10 @@
  </ssys>
  <ssys name="Ogat">
   <fleets>
-   <fleet>Dvaered Heavy Prescence</fleet>
-	<fleet>Empire Light Prescence</fleet>
-   <fleet>Trader Heavy Prescence</fleet>
-   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+	<fleet>Empire Light Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Pirate Token Presence</fleet>
   </fleets>
   <jumps>
    <jump>Goddard</jump>
@@ -479,7 +707,7 @@
  </ssys>
  <ssys name="C-00">
   <fleets>
-   <fleet>Collective Medium Prescence</fleet>
+   <fleet>Collective Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>C-28</jump>
@@ -518,7 +746,7 @@
  </ssys>
  <ssys name="C-28">
   <fleets>
-   <fleet>Collective Medium Prescence</fleet>
+   <fleet>Collective Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>C-00</jump>
@@ -542,7 +770,7 @@
  </ssys>
  <ssys name="Sigur">
   <fleets>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-8037</jump>
@@ -563,8 +791,8 @@
  </ssys>
  <ssys name="NGC-7414">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -584,8 +812,9 @@
  </ssys>
  <ssys name="NGC-7273">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+	<fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -606,9 +835,9 @@
  </ssys>
  <ssys name="Dune">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -631,9 +860,9 @@
  </ssys>
  <ssys name="Coriolis">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Dune</jump>
@@ -655,8 +884,8 @@
  </ssys>
  <ssys name="Slaccid">
   <fleets>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
    <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -677,9 +906,9 @@
  </ssys>
  <ssys name="Gamma Polaris">
   <fleets>
-   <fleet>Trader Heavy Prescence</fleet>
-   <fleet>Empire Heavy Prescence</fleet>
-   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Empire Heavy Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Qex</jump>
@@ -687,6 +916,7 @@
    <jump>Shakar</jump>
 	<jump>Arcturus</jump>
 	<jump>Apez</jump>
+	<jump>Koralis</jump>
   </jumps>
   <pos>
    <y>-296</y>
@@ -703,11 +933,36 @@
    <stars>500</stars>
   </general>
  </ssys>
+ 
+  <ssys name="Koralis">
+  <fleets>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Qex</jump>
+	<jump>Gamma Polaris</jump>
+  </jumps>
+  <pos>
+   <y>-330</y>
+   <x>-222</x>
+  </pos>
+  <planets>
+   <planet>Paxsor</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ 
  <ssys name="Cygnus">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Medium Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
@@ -728,9 +983,9 @@
  </ssys>
  <ssys name="Tau Prime">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Medium Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
@@ -772,8 +1027,8 @@
  </ssys>
  <ssys name="Capricorn">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7690</jump>
@@ -794,7 +1049,7 @@
  </ssys>
  <ssys name="Haven">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7968</jump>
@@ -813,7 +1068,7 @@
  </ssys>
  <ssys name="C-43">
   <fleets>
-   <fleet>Collective Medium Prescence</fleet>
+   <fleet>Collective Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>C-14</jump>
@@ -838,9 +1093,9 @@
  </ssys>
  <ssys name="NGC-7291">
   <fleets>
-   <fleet>Collective Light Prescence</fleet>
-   <fleet>Empire Heavy Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Collective Light Presence</fleet>
+   <fleet>Empire Heavy Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7273</jump>
@@ -863,7 +1118,7 @@
  </ssys>
  <ssys name="Borla">
   <fleets>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Shakar</jump>
@@ -882,9 +1137,9 @@
  </ssys>
  <ssys name="Mizar">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
@@ -905,7 +1160,7 @@
  </ssys>
  <ssys name="NGC-7132">
   <fleets>
-   <fleet>Collective Light Prescence</fleet>
+   <fleet>Collective Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -943,9 +1198,9 @@
  </ssys>
  <ssys name="Draconis">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -968,8 +1223,8 @@
  </ssys>
  <ssys name="Eneguoz">
   <fleets>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Qex</jump>
@@ -991,7 +1246,7 @@
  </ssys>
  <ssys name="Myad">
   <fleets>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Doeston</jump>
@@ -1011,8 +1266,8 @@
  </ssys>
  <ssys name="NGC-6938">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7273</jump>
@@ -1031,12 +1286,13 @@
  </ssys>
  <ssys name="Klantar">
   <fleets>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Dakron</jump>
+   <jump>Massia</jump>
   </jumps>
   <pos>
    <y>-421</y>
@@ -1052,11 +1308,34 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="Massia">
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+  <jumps>
+   <jump>Klantar</jump>
+  </jumps>
+  <pos>
+   <y>-470</y>
+   <x>330</x>
+  </pos>
+  <planets>
+   <planet>Sinclair</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
  <ssys name="Alteris">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -1098,8 +1377,8 @@
  </ssys>
  <ssys name="Dakron">
   <fleets>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1141,8 +1420,8 @@
  </ssys>
  <ssys name="Toaxis">
   <fleets>
-   <fleet>Dvaered Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1162,8 +1441,8 @@
  </ssys>
  <ssys name="Tuoladis">
   <fleets>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1184,8 +1463,8 @@
  </ssys>
  <ssys name="Hakoi">
   <fleets>
-   <fleet>Trader Medium Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Eneguoz</jump>
@@ -1206,7 +1485,7 @@
  </ssys>
  <ssys name="New Haven">
   <fleets>
-   <fleet>Pirate Heavy Prescence</fleet>
+   <fleet>Pirate Heavy Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7843</jump>
@@ -1244,7 +1523,7 @@
  </ssys>
  <ssys name="C-14">
   <fleets>
-   <fleet>Collective Medium Prescence</fleet>
+   <fleet>Collective Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>C-00</jump>
@@ -1267,8 +1546,8 @@
  </ssys>
  <ssys name="Uhriabi">
   <fleets>
-   <fleet>Empire Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Qex</jump>
@@ -1287,15 +1566,40 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="Gilligan's Light">
+  <fleets>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+	<fleet>Dvaered Light Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Theras</jump>
+  </jumps>
+  <pos>
+   <y>-267</y>
+   <x>470</x>
+  </pos>
+  <planets>
+   <planet>Dawn</planet>
+   <planet>Dusk</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>400</stars>
+  </general>
+ </ssys>
  <ssys name="Theras">
   <fleets>
-   <fleet>Dvaered Light Prescence</fleet>
-   <fleet>Trader Medium Prescence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Dakron</jump>
    <jump>Haleb</jump>
+   <jump>Gilligan's Light</jump>
   </jumps>
   <pos>
    <y>-323</y>
@@ -1348,9 +1652,9 @@
  </ssys>
  <ssys name="NGC-7324">
   <fleets>
-   <fleet>Pirate Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Alteris</jump>
@@ -1370,9 +1674,9 @@
  </ssys>
  <ssys name="Eridani">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Mizar</jump>
@@ -1395,7 +1699,7 @@
  </ssys>
  <ssys name="C-59">
   <fleets>
-   <fleet>Collective Medium Prescence</fleet>
+   <fleet>Collective Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>C-28</jump>
@@ -1418,8 +1722,8 @@
  </ssys>
  <ssys name="Haleb">
   <fleets>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Medium Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1444,8 +1748,8 @@
  </ssys>
  <ssys name="Norpin">
   <fleets>
-   <fleet>Dvaered Light Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1467,9 +1771,9 @@
  </ssys>
  <ssys name="Vlexon">
   <fleets>
-   <fleet>Empire Light Prescence</fleet>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Medium Prescence</fleet>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
 	<fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1491,14 +1795,15 @@
  </ssys>
  <ssys name="Qex">
   <fleets>
-   <fleet>Empire Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
-   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Uhriabi</jump>
    <jump>Gamma Polaris</jump>
    <jump>Eneguoz</jump>
+	<jump>Koralis</jump>
   </jumps>
   <pos>
    <y>-383</y>
@@ -1516,8 +1821,8 @@
  </ssys>
  <ssys name="NGC-7789">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Empire Patrol Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Dune</jump>
@@ -1536,8 +1841,8 @@
  </ssys>
  <ssys name="Zacron">
   <fleets>
-   <fleet>Dvaered Medium Prescence</fleet>
-   <fleet>Trader Light Prescence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
    <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
@@ -1559,10 +1864,10 @@
  </ssys>
  <ssys name="Goddard">
   <fleets>
-   <fleet>Pirate Light Prescence</fleet>
-   <fleet>Trader Heavy Prescence</fleet>
-   <fleet>Goddard Prescence</fleet>
-   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Goddard Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>

@@ -184,13 +184,6 @@ void map_open (void)
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
 
-         
-   /*
-    * The map itself.
-    */
-   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
-
-
    /*
     * Bottom stuff
     *
@@ -202,6 +195,11 @@ void map_open (void)
    /* Situation text */
    window_addText( wid, 140, 10, w - 80 - 30 - 30, 30, 0,
          "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
+
+   /*
+    * The map itself.
+    */
+   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
 }
@@ -225,7 +223,13 @@ static void map_update( unsigned int wid )
       return;
 
    sys = system_getIndex( map_selected );
- 
+
+   /* Not known and no markers. */
+   if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
+         !sys_isKnown(sys) && !space_sysReachable(sys)) {
+      map_selectCur();
+      sys = system_getIndex( map_selected );
+   }
 
    /*
     * Right Text
@@ -234,7 +238,10 @@ static void map_update( unsigned int wid )
       /*
        * Right Text
        */
-      window_modifyText( wid, "txtSysname", "Unknown" );
+      if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
+         window_modifyText( wid, "txtSysname", sys->name );
+      else
+         window_modifyText( wid, "txtSysname", "Unknown" );
       window_modifyText( wid, "txtFaction", "Unknown" );
       /* Standing */
       window_moveWidget( wid, "txtSStanding", -20, -100 );
@@ -804,7 +811,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
                sys = system_getIndex( i );
 
                /* must be reachable */
-               if (!space_sysReachable(sys))
+               if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+                     && !space_sysReachable(sys))
                   continue;
 
                /* get position */
@@ -989,18 +997,24 @@ void map_select( StarSystem *sys )
       /* select the current system and make a path to it */
       if (map_path)
          free(map_path);
-      map_path = map_getJumpPath( &map_npath,
-            cur_system->name, sys->name, 0 );
+      map_path  = NULL;
+      map_npath = 0;
 
-      if (map_npath==0)
-         hyperspace_target = -1;
-      else  {
-         /* see if it is a valid hyperspace target */
-         for (i=0; i<cur_system->njumps; i++) {
-            if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
-               planet_target = -1; /* override planet_target */
-               hyperspace_target = i;
-               break;
+      /* Try to make path if is reachable. */
+      if (space_sysReachable(sys)) {
+         map_path = map_getJumpPath( &map_npath,
+               cur_system->name, sys->name, 0 );
+
+         if (map_npath==0)
+            hyperspace_target = -1;
+         else  {
+            /* see if it is a valid hyperspace target */
+            for (i=0; i<cur_system->njumps; i++) {
+               if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
+                  planet_target = -1; /* override planet_target */
+                  hyperspace_target = i;
+                  break;
+               }
             }
          }
       }
@@ -1389,6 +1403,8 @@ int map_isMapped( const char* targ_sys, int r )
  */
 void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
+   StarSystem *sys;
+
    /* mark systems as needed */
    mission_sysMark();
 
@@ -1398,6 +1414,12 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 
    /* Set zoom. */
    map_setZoom(zoom);
+
+   /* Make sure selected is sane. */
+   sys = system_getIndex( map_selected );
+   if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
+         !sys_isKnown(sys) && !space_sysReachable(sys))
+      map_selectCur();
 
    window_addCust( wid, x, y, w, h,
          "cstMap", 1, map_render, map_mouse, NULL );

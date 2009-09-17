@@ -263,11 +263,11 @@
    <tech>8</tech>
    <license>Heavy Weapon License</license>
    <mass>20</mass>
-   <price>85000</price>
+   <price>55000</price>
    <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
    <gfx_store>railgun</gfx_store>
   </general>
-  <specific type="bolt" secondary="1">
+  <specific type="bolt">
    <cpu>16</cpu>
    <gfx>mass</gfx>
    <sound>mass</sound>
@@ -316,7 +316,7 @@
    <tech>11</tech>
    <license>Medium Weapon License</license>
    <mass>12</mass>
-   <price>95000</price>
+   <price>35000</price>
    <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>ripper</gfx_store>
   </general>
@@ -394,9 +394,9 @@
    <mass>10</mass>
    <price>25000</price>
    <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>seekerlauncher</gfx_store>
   </general>
-  <specific type="missile seek" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Seeker Missile</ammo>
    <delay>1800</delay>
@@ -409,20 +409,21 @@
    <mass>1</mass>
    <price>800</price>
    <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>seeker</gfx_store>
   </general>
-  <specific type="missile seek ammo">
-   <gfx>missile</gfx>
+  <specific type="ammo">
+   <gfx>seeker</gfx>
    <sound>seeker</sound>
    <sound_hit>medexp1</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">5</duration>
-   <lockon>1</lockon>
+   <lockon>0.5</lockon>
    <thrust>400</thrust>
    <turn>60</turn>
    <speed>800</speed>
    <damage type="kinetic">20</damage>
+   <ai>seek</ai>
   </specific>
  </outfit>
  <outfit name="Headhunter Launcher">
@@ -433,9 +434,9 @@
    <mass>12</mass>
    <price>40000</price>
    <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>headhunterlauncher</gfx_store>
   </general>
-  <specific type="missile smart" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
    <delay>2000</delay>
@@ -449,21 +450,22 @@
    <mass>1</mass>
    <price>2000</price>
    <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>headhunter</gfx_store>
   </general>
-  <specific type="missile smart ammo">
+  <specific type="ammo">
    <gfx>headhunter</gfx>
    <sound>missile</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
-   <lockon>0.5</lockon>
+   <lockon>0.25</lockon>
    <resist>5</resist>
    <thrust>325</thrust>
    <turn>90</turn>
    <speed>550</speed>
    <damage type="kinetic">20</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
  <outfit name="Banshee Launcher">
@@ -476,7 +478,7 @@
    <gfx_store>bansheelauncher</gfx_store>
    <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
   </general>
-  <specific type="missile dumb" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Banshee Rocket</ammo>
    <delay>375</delay>
@@ -492,7 +494,7 @@
    <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
    <gfx_store>banshee</gfx_store>
   </general>
-  <specific type="missile dumb ammo">
+  <specific type="ammo">
    <gfx>banshee</gfx>
    <sound>missile</sound>
    <sound_hit>bansheeexp</sound_hit>
@@ -503,6 +505,7 @@
    <thrust>0</thrust>
    <speed>600</speed>
    <damage type="emp">15</damage>
+   <ai>dumb</ai>
   </specific>
  </outfit>
  <outfit name="Mace Launcher">
@@ -513,9 +516,9 @@
    <mass>10</mass>
    <price>19000</price>
    <description>A base for launching Dvaered Mace rockets.</description>
-   <gfx_store>mace</gfx_store>
+   <gfx_store>macelauncher</gfx_store>
   </general>
-  <specific type="missile dumb" secondary="1">
+  <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Mace Rocket</ammo>
    <delay>2000</delay>
@@ -531,7 +534,7 @@
    <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
    <gfx_store>mace</gfx_store>
   </general>
-  <specific type="missile dumb ammo">
+  <specific type="ammo">
    <gfx>mace</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
@@ -541,6 +544,48 @@
    <thrust>300</thrust>
    <speed>1000</speed>
    <damage type="kinetic">44</damage>
+   <ai>dumb</ai>
+  </specific>
+ </outfit>
+ <outfit name="Caesar IV Launcher">
+  <general>
+   <slot>high</slot>
+   <tech>9</tech>
+   <license>Heavy Weapon License</license>
+   <mass>30</mass>
+   <price>120000</price>
+   <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 5 seconds, besting older mechanisms by a substantial margin.</description>
+   <gfx_store>caesarlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>16</cpu>
+   <ammo>Caesar IV Missile</ammo>
+   <delay>5000</delay>
+   <amount>6</amount>
+  </specific>
+ </outfit>
+ <outfit name="Caesar IV Missile">
+  <general>
+   <tech>9</tech>
+   <license>Heavy Weapon License</license>
+   <mass>3</mass>
+   <price>15000</price>
+   <description>The Caesar line hasn't changed much since its inception, and the Caesar IV holds the line. Known primarily for its immense explosive payload, its electronics are somewhat antiquated, making it</description>
+   <gfx_store>caesar</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>caesar</gfx>
+   <sound>mace</sound>
+   <sound_hit>lrgexp0</sound_hit>
+   <spfx_shield>ExpL</spfx_shield>
+   <spfx_armour>ExpL</spfx_armour>
+   <duration blowup="armour">12</duration>
+   <lockon>2</lockon>
+   <thrust>125</thrust>
+   <turn>20</turn>
+   <speed>350</speed>
+   <damage type="kinetic">140</damage>
+   <ai>seek</ai>
   </specific>
  </outfit>
  <outfit name="EMP Grenade Launcher">
@@ -552,7 +597,7 @@
    <gfx_store>empgrenadelauncher</gfx_store>
    <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
   </general>
-  <specific type="turret dumb" secondary="1">
+  <specific type="turret launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>EMP Grenade</ammo>
    <delay>2000</delay>
@@ -567,7 +612,7 @@
    <gfx_store>empgrenade</gfx_store>
    <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
-  <specific type="turret dumb ammo">
+  <specific type="turret ammo">
    <gfx spin="0.3">empgrenade</gfx>
    <sound>grenadefire</sound>
    <sound_hit>empexplode</sound_hit>
@@ -577,6 +622,7 @@
    <thrust>0</thrust>
    <speed>400</speed>
    <damage type="emp">50</damage>
+   <ai>dumb</ai>
   </specific>
  </outfit>
 <!-- Energy-Related Outfits -->
@@ -823,7 +869,7 @@
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <cpu>-15</cpu>
+   <cpu>-5</cpu>
    <armour_regen>100</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
@@ -835,7 +881,7 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>9</tech>
-   <mass>2</mass>
+   <mass>0</mass>
    <price>125000</price>
    <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
    <gfx_store>reroute</gfx_store>
@@ -852,15 +898,15 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>13</tech>
-   <mass>2</mass>
+   <mass>0</mass>
    <price>135000</price>
    <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
    <cpu>-2</cpu>
-   <speed>20</speed>
-   <speed_rel>5</speed_rel>
+   <speed>3</speed>
+   <speed_rel>15</speed_rel>
    <turn_rel>3</turn_rel>
    <energy_regen>-10</energy_regen>
   </specific>
@@ -870,7 +916,7 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>13</tech>
-   <mass>4</mass>
+   <mass>0</mass>
    <price>130000</price>
    <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
    <gfx_store>thruster</gfx_store>
@@ -973,18 +1019,18 @@
    <tech>3</tech>
    <mass>5</mass>
    <price>15000</price>
-   <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by a jump. Without these, long-range interstellar trade would slow to a crawl.</description>
+   <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by two jumps. Without these, long-range interstellar trade would slow to a crawl.</description>
    <gfx_store>fuel_pod</gfx_store>
   </general>
   <specific type="modification">
-   <fuel>100</fuel>
+   <fuel>200</fuel>
   </specific>
  </outfit>
  <outfit name="Cargo Pod">
   <general>
    <slot>low</slot>
    <tech>6</tech>
-   <mass>15</mass>
+   <mass>3</mass>
    <price>35000</price>
    <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
    <gfx_store>cargo_pod</gfx_store>
@@ -997,7 +1043,7 @@
   <general>
    <tech>4</tech>
    <mass>0</mass>
-   <price>7000</price>
+   <price>5000</price>
    <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
    <gfx_store>map</gfx_store>
   </general>
@@ -1015,7 +1061,7 @@
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>8</cpu>
+   <cpu>4</cpu>
    <range>400</range>
    <chance>20</chance>
    <energy>15</energy>
@@ -1031,7 +1077,7 @@
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>18</cpu>
+   <cpu>8</cpu>
    <range>600</range>
    <chance>40</chance>
    <energy>30</energy>

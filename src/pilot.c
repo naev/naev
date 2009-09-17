@@ -883,8 +883,12 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       for (i=0; i<p->outfit_nhigh; i++) {
          slot = &p->outfit_high[i];
 
+         /* No outfit. */
+         if (slot->outfit == NULL)
+            continue;
+
          /* Not what we are looking for. */
-         if (slot->outfit != w->outfit)
+         if (outfit_delay(slot->outfit) != outfit_delay(w->outfit))
             continue;
 
          /* Launcher only counts with ammo. */
@@ -898,6 +902,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          }
          q++;
       }
+
+      /* Q must be valid. */
+      if (q == 0)
+         return 0;
 
       /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
       if (mint > outfit_delay(w->outfit) * ((q-1) / q))
@@ -950,7 +958,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - sanity check for the player */
-      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==p->target))
+      if ((w->outfit->u.lau.ammo->u.amm.ai > 0) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */
@@ -1046,9 +1054,17 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       player_abortAutonav("Sustaining Damage");
 
    /*
+    * EMP don't do damage if pilot is disabled.
+    */
+   if (pilot_isDisabled(p) && (dtype == DAMAGE_TYPE_EMP)) {
+      dmg        = 0.;
+      dam_mod    = 0.;
+   }
+
+   /*
     * Shields take entire blow.
     */
-   if (p->shield-damage_shield > 0.) {
+   else if (p->shield-damage_shield > 0.) {
       dmg        = damage_shield;
       p->shield -= damage_shield;
       dam_mod    = damage_shield/p->shield_max;
@@ -1070,11 +1086,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dmg        = damage_armour;
       p->armour -= damage_armour;
    }
-
-   /* EMP don't kill. */
-   if (!pilot_isPlayer(p) && (dtype == DAMAGE_TYPE_EMP) &&
-         (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
-      p->armour = MIN(p->armour + dmg, PILOT_DISABLED_ARMOR * p->armour_max - 1.);
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
@@ -1136,8 +1147,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       /* knock back effect is dependent on both damage and mass of the weapon 
        * should probably get turned into a partial conservative collision */
       vect_cadd( &p->solid->vel,
-            knockback * (w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.)),
-            knockback * (w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.)) );
+            knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
+            knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
    return dmg;
 }
@@ -1566,7 +1577,7 @@ void pilot_update( Pilot* pilot, const double dt )
    }
 
    /* update the solid */
-   (*pilot->solid->update)( pilot->solid, dt );
+   pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,  
          pilot->ship->gfx_space, pilot->solid->dir );
 
@@ -1812,6 +1823,43 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 }
 
 
+/**
+ * @brief Tests to see if an outfit can be added.
+ *
+ *    @param pilot Pilot to add outfit to.
+ *    @param outfit Outfit to add.
+ *    @param s Slot adding outfit to.
+ *    @param warn Whether or not should generate a warning.
+ *    @return 0 if can add, -1 if can't.
+ */
+int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn )
+{
+   const char *str;
+
+   /* See if slot has space. */
+   if (s->outfit != NULL) {
+      if (warn)
+         WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
+               pilot->name, outfit->name );
+      return -1;
+   }
+   else if ((outfit_cpu(outfit) > 0) &&
+         (pilot->cpu < outfit_cpu(outfit))) {
+      if (warn)
+         WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
+               pilot->name, outfit->name );
+      return -1;
+   }
+   else if ((str = pilot_canEquip( pilot, s, outfit, 1)) != NULL) {
+      if (warn)
+         WARN( "Pilot '%s': Trying to add outfit but %s",
+               pilot->name, str );
+      return -1;
+   }
+   return 0;
+}
+
+
 
 /**
  * @brief Adds an outfit to the pilot.
@@ -1823,27 +1871,14 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
-   const char *str;
    int ret;
 
-   /* See if slot has space. */
-   if (s->outfit != NULL) {
-      WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
-            pilot->name, outfit->name );
+   /* Test to see if outfit can be added. */
+   ret = pilot_addOutfitTest( pilot, outfit, s, 1 );
+   if (ret != 0)
       return -1;
-   }
-   else if ((outfit_cpu(outfit) > 0) &&
-         (pilot->cpu < outfit_cpu(outfit))) {
-      WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
-            pilot->name, outfit->name );
-      return -1;
-   }
-   else if ((str = pilot_canEquip( pilot, s, outfit, 1)) != NULL) {
-      WARN( "Pilot '%s': Trying to add outfit but %s",
-            pilot->name, str );
-      return -1;
-   }
 
+   /* Add outfit. */
    ret = pilot_addOutfitRaw( pilot, outfit, s );
 
    /* recalculate the stats */
@@ -2336,8 +2371,14 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Set weapon range and speed */
-   pilot->weap_range = wrange / (double)nweaps;
-   pilot->weap_speed = wspeed / (double)nweaps;
+   if (nweaps > 0) {
+      pilot->weap_range = wrange / (double)nweaps;
+      pilot->weap_speed = wspeed / (double)nweaps;
+   }
+   else {
+      pilot->weap_range = 0.;
+      pilot->weap_speed = 0.;
+   }
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -2780,47 +2821,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
       p++;
    }
-   /* Second pass add outfits. */
-   p = 0;
-   for (i=0; i<pilot->outfit_nlow; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL)) {
-         pilot_addOutfitRaw( pilot, ship->outfit_low[i].data, pilot->outfits[p] );
-         /* Add ammo if necessary. */
-         if (!(flags & PILOT_PLAYER) &&
-               (outfit_isLauncher(ship->outfit_low[i].data) ||
-                  (outfit_isFighterBay(ship->outfit_low[i].data))))
-            pilot_addAmmo( pilot, pilot->outfits[p],
-                  outfit_ammo(ship->outfit_low[i].data),
-                  outfit_amount(ship->outfit_low[i].data));
-      }
-      p++;
-   }
-   for (i=0; i<pilot->outfit_nmedium; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL)) {
-         pilot_addOutfitRaw( pilot, ship->outfit_medium[i].data, pilot->outfits[p] );
-         /* Add ammo if necessary. */
-         if (!(flags & PILOT_PLAYER) &&
-               (outfit_isLauncher(ship->outfit_medium[i].data) ||
-                  (outfit_isFighterBay(ship->outfit_medium[i].data))))
-            pilot_addAmmo( pilot, pilot->outfits[p],
-                  outfit_ammo(ship->outfit_medium[i].data),
-                  outfit_amount(ship->outfit_medium[i].data));
-      }
-      p++;
-   }
-   for (i=0; i<pilot->outfit_nhigh; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_high[i].data != NULL)) {
-         pilot_addOutfitRaw( pilot, ship->outfit_high[i].data, pilot->outfits[p] );
-         /* Add ammo if necessary. */
-         if (!(flags & PILOT_PLAYER) &&
-               (outfit_isLauncher(ship->outfit_high[i].data) ||
-                  (outfit_isFighterBay(ship->outfit_high[i].data))))
-            pilot_addAmmo( pilot, pilot->outfits[p],
-                  outfit_ammo(ship->outfit_high[i].data),
-                  outfit_amount(ship->outfit_high[i].data));
-      }
-      p++;
-   }
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
@@ -2863,17 +2863,17 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
          pilot_setFlag(pilot,PILOT_CARRIED);
    }
 
-   /* AI */
-   pilot->target = pilot->id; /* Self = no target. */
-   if (ai != NULL)
-      ai_pinit( pilot, ai ); /* Must run before ai_create */
-
    /* Clear timers. */
    pilot_clearTimers(pilot);
 
    /* Update the x and y sprite positions. */
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
+
+   /* AI */
+   pilot->target = pilot->id; /* Self = no target. */
+   if (ai != NULL)
+      ai_pinit( pilot, ai ); /* Must run before ai_create */
 }
 
 
@@ -2891,23 +2891,26 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
       const unsigned int flags )
 {
    Pilot *dyn;
-   
+
+   /* Allocate pilot memory. */
    dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN("Unable to allocate memory");
       return 0;
    }
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
-   /* see if memory needs to grow */
+   /* See if memory needs to grow */
    if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
       pilot_mstack += PILOT_CHUNK;
       pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
    }
 
-   /* set the pilot in the stack */
+   /* Set the pilot in the stack -- must be there before initializing */
    pilot_stack[pilot_nstack] = dyn;
    pilot_nstack++; /* there's a new pilot */
+  
+   /* Initialize the pilot. */
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
    return dyn->id;
 }

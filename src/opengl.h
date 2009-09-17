@@ -47,12 +47,13 @@
 #define OPENGL_FULLSCREEN  (1<<0) /**< Fullscreen. */
 #define OPENGL_DOUBLEBUF   (1<<1) /**< Doublebuffer. */
 #define OPENGL_VSYNC       (1<<2) /**< Sync to monitor vertical refresh rate. */
-#define OPENGL_FSAA        (1<<3) /**< Full Screen Anti Aliasing. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
 /**
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
+   int desktop_w; /**< Desktop width. */
+   int desktop_h; /**< Desktop height. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
    int nw; /**< Scaled window width. */

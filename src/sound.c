@@ -217,18 +217,13 @@ int sound_init (void)
       return 0;
    }
 
-   /* Initialize subsystems. */
+   /* Initialize sound backend. */
    ret = sound_sys_init();
    if (ret != 0) {
       sound_disabled = 1;
       music_disabled = 1;
       WARN("Sound disabled.");
       return ret;
-   }
-   ret = music_init();
-   if (ret != 0) {
-      music_disabled = 1;
-      WARN("Music disabled.");
    }
 
    /* Create voice lock. */
@@ -241,6 +236,13 @@ int sound_init (void)
    ret = sound_makeList();
    if (ret != 0)
       return ret;
+
+   /* Initialize music. */
+   ret = music_init();
+   if (ret != 0) {
+      music_disabled = 1;
+      WARN("Music disabled.");
+   }
 
    /* Set volume. */
    if ((conf.sound > 1.) || (conf.sound < 0.))

@@ -43,17 +43,25 @@
  * reader crap
  */
 #define xmlr_int(n,s,i) \
-if (xml_isNode(n,s)) { i = xml_getInt(n); continue; }
+   if (xml_isNode(n,s)) { \
+      i = xml_getInt(n); continue; }
 #define xmlr_long(n,s,l) \
-if (xml_isNode(n,s)) { l = xml_getLong(n); continue; }
+   if (xml_isNode(n,s)) { \
+      l = xml_getLong(n); continue; }
 #define xmlr_float(n,s,f) \
-if (xml_isNode(n,s)) { f = xml_getFloat(n); continue; }
+   if (xml_isNode(n,s)) { \
+      f = xml_getFloat(n); continue; }
 #define xmlr_str(n,s,str) \
-if (xml_isNode(n,s)) { str = xml_get(n); continue; }
+   if (xml_isNode(n,s)) { \
+      str = xml_get(n); continue; }
 #define xmlr_strd(n,s,str) \
-if (xml_isNode(n,s)) { str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }
+   if (xml_isNode(n,s)) { \
+      if (str != NULL) { \
+         WARN("Node '%s' already loaded and being trying to replace '%s' with '%s'", \
+               s, str, xml_raw(n) ); } \
+      str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }
 #define xmlr_attr(n,s,a) \
-a = xml_nodeProp(n,s)
+   a = xml_nodeProp(n,s)
 
 /*
  * writer crap

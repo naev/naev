@@ -64,7 +64,7 @@ AI_Profile* ai_getProfile( char* name );
 /*
  * init/exit
  */
-int ai_init (void);
+int ai_load (void);
 void ai_exit (void);
 
 

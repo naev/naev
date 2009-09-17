@@ -41,7 +41,8 @@
 typedef enum UniHunkTargetType_ {
    HUNK_TARGET_NONE,
    HUNK_TARGET_SYSTEM,
-   HUNK_TARGET_OUTFIT
+   HUNK_TARGET_OUTFIT,
+   HUNK_TARGET_SHIP
 } UniHunkTargetType_t;
 
 
@@ -72,6 +73,7 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_FLEET_REMOVE,
    HUNK_TYPE_FLEETGROUP_ADD,
    HUNK_TYPE_FLEETGROUP_REMOVE,
+   HUNK_TYPE_SHIP_TECH,
    HUNK_TYPE_OUTFIT_TECH
 } UniHunkType_t;
 
@@ -130,6 +132,7 @@ static UniDiff_t* diff_get( const char *name );
 static UniDiff_t *diff_newDiff (void);
 static int diff_removeDiff( UniDiff_t *diff );
 static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
+static int diff_patchShip( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patchOutfit( UniDiff_t *diff, xmlNodePtr node );
 static int diff_patch( xmlNodePtr parent );
 static int diff_patchHunk( UniHunk_t *hunk );
@@ -334,6 +337,66 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
 
 /**
+ * @brief Patches a ship.
+ *
+ *    @param diff Diff that is doing the patching.
+ *    @param node Node containing the ship.
+ *    @return 0 on success.
+ */
+static int diff_patchShip( UniDiff_t *diff, xmlNodePtr node )
+{
+   UniHunk_t base, hunk;
+   xmlNodePtr cur;
+   Ship *s;
+
+   /* Set the target. */
+   memset(&base, 0, sizeof(UniHunk_t));
+   base.target.type = HUNK_TARGET_SHIP;
+   xmlr_attr(node,"name",base.target.u.name);
+   if (base.target.u.name==NULL) {
+      WARN("Unidiff '%s' has an ship node without a 'name' tag", diff->name);
+      return -1;
+   }
+
+   /* Make sure ship exists. */
+   s = ship_get(base.target.u.name);
+   if (s == NULL) {
+      WARN("Unidiff '%s' ship '%s' to patch does not exist",
+            diff->name, base.target.u.name );
+      return -1;
+   }
+
+   /* Now parse the possible changes. */
+   cur = node->xmlChildrenNode;
+   do {
+      if (xml_isNode(cur,"tech")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Outfit type is constant. */
+         hunk.type = HUNK_TYPE_SHIP_TECH;
+
+         /* Get the data. */
+         hunk.u.i.old = s->tech;
+         hunk.u.i.new = xml_getInt(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+      }
+   } while (xml_nextNode(cur));
+
+   /* Clean up some stuff. */
+   free(base.target.u.name);
+   base.target.u.name = NULL;
+
+   return 0;
+}
+
+
+/**
  * @brief Patches an outfit.
  *
  *    @param diff Diff that is doing the patching.
@@ -418,6 +481,8 @@ static int diff_patch( xmlNodePtr parent )
          diff_patchSystem( diff, node );
       else if (xml_isNode(node, "outfit"))
          diff_patchOutfit( diff, node );
+      else if (xml_isNode(node, "ship"))
+         diff_patchShip( diff, node );
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
@@ -469,6 +534,7 @@ static int diff_patch( xmlNodePtr parent )
  */
 static int diff_patchHunk( UniHunk_t *hunk )
 {
+   Ship *s;
    Outfit *o;
    int i;
 
@@ -496,6 +562,18 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_FLEETGROUP_REMOVE:
          return system_rmFleetGroup( system_get(hunk->target.u.name),
                hunk->u.fleetgroup );
+
+      /* Changing a ship's technology. */
+      case HUNK_TYPE_SHIP_TECH:
+         s = ship_get(hunk->target.u.name);
+         if (s==NULL)
+            return -1;
+         s->tech = hunk->u.i.new;
+         /* Invert it so when it gets removed it works. */
+         i = hunk->u.i.old;
+         hunk->u.i.old = hunk->u.i.new;
+         hunk->u.i.new = i;
+         return 0;
 
       /* Changing an outfit's technology. */
       case HUNK_TYPE_OUTFIT_TECH:
@@ -653,6 +731,7 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
 
          /* Doesn't need invert. */
+         case HUNK_TYPE_SHIP_TECH:
          case HUNK_TYPE_OUTFIT_TECH:
             break;
 

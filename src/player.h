@@ -65,7 +65,7 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
  */
 void player_new (void);
 int player_newShip( Ship* ship, double px, double py,
-      double vx, double vy, double dir );
+      double vx, double vy, double dir, const char *def_name );
 void player_cleanup (void);
 int gui_load (const char* name);
 

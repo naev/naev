@@ -43,6 +43,7 @@ void spfx_clear (void);
 void spfx_begin( const double dt );
 void spfx_end (void);
 void spfx_shake( double mod );
+void spfx_getShake( double *x, double *y );
 
 
 /*

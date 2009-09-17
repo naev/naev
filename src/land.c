@@ -368,6 +368,7 @@ static void outfits_open( unsigned int wid )
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Owned:\n"
          "\n"
+         "Slot:\n"
          "Mass:\n"
          "\n"
          "Price:\n"
@@ -467,6 +468,7 @@ static void outfits_update( unsigned int wid, char* str )
             "NA\n"
             "\n"
             "NA\n"
+            "NA\n"
             "\n"
             "NA\n"
             "NA\n"
@@ -504,12 +506,14 @@ static void outfits_update( unsigned int wid, char* str )
    snprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
+         "%s\n"
          "%.0f tons\n"
          "\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n",
          player_outfitOwned(outfit),
+         outfit_slotName(outfit),
          outfit->mass,
          buf2,
          buf3,
@@ -613,6 +617,12 @@ static void outfits_buy( unsigned int wid, char* str )
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
    (void) q;
+
+   /* Map check. */
+   if ((outfit_isMap(outfit)) &&
+         map_isMapped( NULL, outfit->u.map.radius ))
+      return 0;
+
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
@@ -921,10 +931,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       dialogue_alert( "Insufficient credits!" );
       return;
    }
-   else if (pilot_hasDeployed(player)) {
-      dialogue_alert( "You can't leave your fighters stranded. Recall them before buying a new ship." );
-      return;
-   }
 
    /* Must have license. */
    if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
@@ -933,11 +939,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
 
-   /* we now move cargo to the new ship */
-   if (pilot_cargoUsed(player) > ship->cap_cargo) {
-      dialogue_alert("You won't have enough space to move your current cargo into the new ship.");
-      return; 
-   }
    credits2str( buf, ship->price, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
          "Do you really want to spend %s on a new ship?", buf )==0)
@@ -945,7 +946,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* player just gots a new ship */
    if (player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
-         0., 0., player->solid->dir ) != 0) {
+         0., 0., player->solid->dir, NULL ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -1312,6 +1313,8 @@ static void misn_accept( unsigned int wid, char* str )
          memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;
+
+         /* Regeneratie list. */
          misn_genList(wid, 0);
       }
 
@@ -1355,6 +1358,9 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
+
+   /* Update the list. */
+   misn_update( wid, NULL );
 }
 /**
  * @brief Updates the mission list.
@@ -1411,14 +1417,17 @@ static unsigned int refuel_price (void)
 static void spaceport_refuel( unsigned int wid, char *str )
 {
    (void)str;
+   unsigned int price;
 
-   if (player->credits < refuel_price()) { /* player is out of money after landing */
+   price = refuel_price();
+
+   if (player->credits < price) { /* player is out of money after landing */
       dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }
 
-   player->credits -= refuel_price();
-   player->fuel = player->fuel_max;
+   player->credits  -= price;
+   player->fuel      = player->fuel_max;
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_destroyWidget( wid, "btnRefuel" );
       window_destroyWidget( wid, "txtRefuel" );
@@ -1432,6 +1441,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
 void land_checkAddRefuel (void)
 {
    char buf[32], cred[16];
+   unsigned int w;
 
    /* Check to see if fuel conditions are met. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC))
@@ -1444,6 +1454,9 @@ void land_checkAddRefuel (void)
    /* Autorefuel. */
    if (conf.autorefuel) {
       spaceport_refuel( land_windows[0], "btnRefuel" );
+      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      if (w > 0)
+         equipment_updateShips( w, NULL ); /* Must update counter. */
       if (player->fuel >= player->fuel_max)
          return;
    }
@@ -1558,16 +1571,6 @@ void land( Planet* p )
    land_wid = window_create( p->name, -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
-   /* Generate computer missions. */
-   mission_computer = missions_genList( &mission_ncomputer,
-         land_planet->faction, land_planet->name, cur_system->name,
-         MIS_AVAIL_COMPUTER );
-
-   /* Generate spaceport bar missions. */
-   mission_bar = missions_genList( &mission_nbar,
-         land_planet->faction, land_planet->name, cur_system->name,
-         MIS_AVAIL_BAR );
-
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
       news_load();
@@ -1613,9 +1616,32 @@ void land( Planet* p )
    /* Create tabbed window. */
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
 
-   /* Create each tab. */
-   /* Main. */
+   /*
+    * Order here is very important:
+    *
+    *  1) Create main tab - must have decent background.
+    *  2) Set landed, play music and run land hooks - so hooks run well.
+    *  3) Generate missions - so that campaigns are fluid.
+    *  4) Create other tabs - lists depend on NPC and missions.
+    */
+   
+   /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
+
+   /* 2) Set as landed and run hooks. */
+   landed = 1;
+   music_choose("land"); /* Must be before hooks in case hooks change music. */
+   hooks_run("land");
+
+   /* 3) Generate computer and bar missions. */
+   mission_computer = missions_genList( &mission_ncomputer,
+         land_planet->faction, land_planet->name, cur_system->name,
+         MIS_AVAIL_COMPUTER );
+   mission_bar = missions_genList( &mission_nbar,
+         land_planet->faction, land_planet->name, cur_system->name,
+         MIS_AVAIL_BAR );
+
+   /* 4) Create other tabs. */
    /* Basic - bar + missions */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       spaceport_bar_open( land_getWid(LAND_WINDOW_BAR) );
@@ -1635,14 +1661,8 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
-   /* player is now officially landed */
-   landed = 1;
-
-   /* Change the music */
-   music_choose("land");
-
-   /* Run hooks, run after music in case hook wants to change music. */
-   hooks_run("land");
+   /* Reset markers if needed. */
+   mission_sysMark();
 
    /* Check land missions. */
    if (!has_visited(VISITED_LAND)) {

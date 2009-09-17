@@ -114,8 +114,8 @@ static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
 static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
 static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
-static unsigned long nstars = 0; /**< total stars */
-static unsigned long mstars = 0; /**< memory stars are taking */
+static unsigned int nstars = 0; /**< total stars */
+static unsigned int mstars = 0; /**< memory stars are taking */
 
 
 /*
@@ -651,24 +651,25 @@ static void space_addFleet( Fleet* fleet, int init )
  */
 void space_initStars( int n )
 {
-   unsigned long i, size;
+   unsigned int i;
    GLfloat w, h, hw, hh;
+   double size;
 
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
-   size /= conf.zoom_min;
+   size /= pow2(conf.zoom_far);
 
    /* Calculate star buffer. */
    w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_min - 1.);
+   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
    h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_min - 1.);
+   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
    hw = w / 2.;
    hh = h / 2.;
 
    /* Calculate stars. */
    size  *= n;
-   nstars = (unsigned long)((double)(size)/(800.*640.));
+   nstars = (unsigned int)(size/(800.*600.));
 
    if (mstars < nstars) {
       /* Create data. */
@@ -1474,7 +1475,7 @@ int space_load (void)
 static int system_calcSecurity( StarSystem *sys )
 {
    int i;
-   double guard, hostile, c;
+   double guard, hostile, c, mod;
    Fleet *f;
 
    /* Do not run while loading to speed up. */
@@ -1487,12 +1488,13 @@ static int system_calcSecurity( StarSystem *sys )
 
    /* Calculate hostiles/friendlies. */
    for (i=0; i<sys->nfleets; i++) {
-      f = sys->fleets[i].fleet;
-      c = (double)sys->fleets[i].chance / 100.;
+      f     = sys->fleets[i].fleet;
+      c     = (double)sys->fleets[i].chance / 100.;
+      mod   = c * f->pilot_avg * pow(f->mass_avg, 1./3.);
       if (fleet_isFlag(f, FLEET_FLAG_GUARD))
-         guard += c * f->pilot_avg;
+         guard    += mod;
       else if (faction_getPlayerDef(f->faction) < 0)
-         hostile += c * f->pilot_avg;
+         hostile  += mod;
    }
 
    /* Set security. */
@@ -1604,7 +1606,8 @@ static int systems_load (void)
  */
 void space_render( const double dt )
 {
-   if (cur_system == NULL) return;
+   if (cur_system == NULL)
+      return;
 
    if (cur_system->nebu_density > 0.)
       nebu_render(dt);
@@ -1620,7 +1623,8 @@ void space_render( const double dt )
  */
 void space_renderOverlay( const double dt )
 {
-   if (cur_system == NULL) return;
+   if (cur_system == NULL)
+      return;
 
    if (cur_system->nebu_density > 0.)
       nebu_renderOverlay(dt);
@@ -1634,7 +1638,7 @@ void space_renderOverlay( const double dt )
  */
 void space_renderStars( const double dt )
 {
-   unsigned long i;
+   unsigned int i;
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
@@ -1686,9 +1690,9 @@ void space_renderStars( const double dt )
 
          /* Calculate some dimensions. */
          w  = (SCREEN_W + 2.*STAR_BUF);
-         w += conf.zoom_stars * (w / conf.zoom_min - 1.);
+         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
          h  = (SCREEN_H + 2.*STAR_BUF);
-         h += conf.zoom_stars * (h / conf.zoom_min - 1.);
+         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
          hw = w/2.;
          hh = h/2.;
 

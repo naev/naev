@@ -29,6 +29,7 @@ void window_addCheckbox( const unsigned int wid,
 /* Misc functions. */
 void window_checkboxCaption( const unsigned int wid, const char *name, char *display );
 int window_checkboxState( const unsigned int wid, const char *name );
+int window_checkboxSet( const unsigned int wid, const char *name, int state );
 
 
 #endif /* WGT_CHECKBOX_H */

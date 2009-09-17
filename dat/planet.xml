@@ -29,6 +29,35 @@
    <population>17000000</population>
   </general>
  </planet>
+ <planet name="Protera Sigma">
+  <GFX>
+   <exterior>oceanic2.png</exterior>
+   <space>M03.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.5</prodfactor>
+   <bar>Rather distinct from traditional Empire bars, the Protera Sigma bar is entirely open and without seats, as the Proteron believe one should stand while eating and drinking. Despite this curiosity, their brews don't stray far from typical Empire faire.</bar>
+   <description>Protera Sigma is the only Proteron colony known to have survived the Incident. One of the earlier Proteron settlements, it has an established shipyard and access to the original blueprints, so Proteron shipbuilding traditions live on.</description>
+   <faction>Proteron</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <tech>
+    <main>12</main>
+    <special>1002</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+   <population>1200000</population>
+  </general>
+ </planet>
  <planet name="Eiroik">
   <GFX>
    <exterior>methane.png</exterior>
@@ -48,6 +77,61 @@
    <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
   </general>
  </planet>
+ <planet name="Hurada">
+  <GFX>
+   <exterior>desertic4.png</exterior>
+   <space>H01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.2</prodfactor>
+   <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
+   <description>A formerly-promising world; following intense volcanic activity, Hurada's orbit decayed, increasing surface temperatures severely and all but eradicating natural surface life. Hurada only maintains a population due to its proximity to Arcturus, providing affordable housing for reserve military troops.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>H</class>
+   <population>12000</population>
+  </general>
+ </planet>
+ 
+  <planet name="Bon Sebb">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M06.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.2</prodfactor>
+   <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past, when it was a frontier world.</bar>
+   <description>While Bon Sebb was once a popular tourist destination, the stop in neighbouring Apez, with its well-known Dowue Syndrome, has resulted in the tourism industry waning. It is now primarily known for its all-natural crops and herbal remedies.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>M</class>
+   <population>40000</population>
+  </general>
+ </planet>
+ 
  <planet name="S23491">
   <GFX>
    <exterior>station01.png</exterior>
@@ -97,7 +181,6 @@
    <population>318000</population>
   </general>
  </planet>
- 
   <planet name="Arcturus Gamma">
   <GFX>
    <exterior>station03.png</exterior>
@@ -120,10 +203,10 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>14</main>
+    <main>15</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>31</services>
    <class>1</class>
    <population>52000</population>
   </general>
@@ -294,7 +377,7 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>7</services>
    <class>A</class>
    <population>40000</population>
   </general>
@@ -383,6 +466,36 @@
    <population>350000</population>
   </general>
  </planet>
+ 
+  <planet name="Paxsor">
+  <GFX>
+   <exterior>mining6.png</exterior>
+   <space>G01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
+   <description>Paxsor is the primary Nexus mining asset within Empire spaced, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>G</class>
+   <population>65000</population>
+  </general>
+ </planet>
+ 
  <planet name="Omega Station">
   <GFX>
    <exterior>station00.png</exterior>
@@ -412,7 +525,7 @@
  </planet>
  <planet name="Emperor's Fist">
   <GFX>
-   <exterior>mining3.png</exterior>
+   <exterior>mining5.png</exterior>
    <space>C00.png</space>
   </GFX>
   <pos>
@@ -421,7 +534,7 @@
   </pos>
   <general>
    <prodfactor>0.4</prodfactor>
-   <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady f low of patrons, largely consisting of off-duty terraforming workers.</bar>
+   <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
    <description>Emperor's Fist is intended to be the new homeworld of the Emperor himself since the last one was destroyed in the Incident. It's a massive project that is attempting to completely transform a C-class world into that which is suitable for the highest ranks of the Empire's aristocracy. Currently it possesses few amenities beyond the Starport.</description>
    <faction>Empire</faction>
    <tech>
@@ -461,8 +574,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade.</bar>
-   <description>Arrakis is a desert planet with no natural precipitation.</description>
+   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
+   <description>Arrakis is a desert planet with no natural precipitation. The locals are continuously discussing sandworms, though you're not sure what to make of it.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -563,7 +676,7 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
+   <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
    <description>Jorlan is a small moon that orbits Haleb IV. It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent down to Haleb IV every dozen STU when the climate conditions are favorable, as outside of that narrow window, intense winds capable of severely damaging most ships persist.</description>
    <faction>Frontier</faction>
    <commodities>
@@ -633,7 +746,7 @@
    </tech>
    <services>7</services>
    <class>P</class>
-   <population>2500</population>
+   <population>4500</population>
   </general>
  </planet>
  <planet name="Nova Shakar">
@@ -841,7 +954,7 @@
     <special>0</special>
    </tech>
    <services>15</services>
-   <class>A</class>
+   <class>O</class>
    <population>930000</population>
   </general>
  </planet>
@@ -950,7 +1063,7 @@
     <main>12</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>15</services>
    <class>O</class>
    <population>450000</population>
   </general>
@@ -1002,6 +1115,35 @@
    <population>14000</population>
   </general>
  </planet>
+ <planet name="Sinclair">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.3</prodfactor>
+   <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The planet that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
+   <bar>Sinclair's spaceport bar is run by entrepreneurs, not warriors. But being entrepreneurs, they recognize the value of catering to the locals and to those that pass through, and so it is that this bar has a large holoportrait of Godfried Sinclair hanging over the bar, and his family's weapon can be seen on various decorative fixtures.</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>8</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+   <population>130000</population>
+  </general>
+ </planet>
  <planet name="Nor">
   <GFX>
    <exterior>gas.png</exterior>
@@ -1013,8 +1155,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>There's nothing remarkable about the Nor spaceport bar. It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed. It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
+   <bar>Typical of poorer Dvaered mining worlds, the Nor spaceport bar is cavernous, sparsely decorated and full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed. Its abundance of gas and ore make it a strategic location and a prime target for the FLF. Due to repeated attacks and sabotage attempts, the Dvaered military has increased the frequency of patrols.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -1067,6 +1209,23 @@
    <class>J</class>
   </general>
  </planet>
+ <planet name="Saturn VI">
+  <GFX>
+   <space>J00.png</space>
+  </GFX>
+  <pos>
+   <y>240</y>
+   <x>220</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <class>J</class>
+  </general>
+ </planet>
  <planet name="Anecu">
   <GFX>
    <exterior>aquatic.png</exterior>
@@ -1093,7 +1252,7 @@
     <special>0</special>
    </tech>
    <services>31</services>
-   <class>M</class>
+   <class>O</class>
    <population>70000</population>
   </general>
  </planet>
@@ -1122,6 +1281,202 @@
    <services>3</services>
    <class>M</class>
    <population>2000000</population>
+  </general>
+ </planet>
+ <planet name="Dawn">
+  <GFX>
+   <exterior>oceanic2.png</exterior>
+   <space>O01.png</space>
+  </GFX>
+  <pos>
+   <y>500</y>
+   <x>400</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Gilligan's Light was one of the first systems to ever be chosen for a colonization project, and Dawn was the first world on which humans set foot in this sector of space. Dawn served as a staging point for further colonization of the Frontier during the first expansion of mankind, and as such had a lead start in planetary development. With the advent of hyperspace travel, Dawn found itself the local capital of the Frontier worlds. This status is strictly symbolic, but it explains why the FLF have chosen to rally around Gilligan's Light.</description>
+   <bar>Dawn's bar has a rustic feel to it, as the locals have made a point of keeping the style close to what was the prevalent design in the early expansion era. Other than that, this bar doesn't have much to set it apart from others. The noise, the smell and the drunks are features that are commonplace throughout the galaxy.</bar>
+   <faction>Frontier</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>O</class>
+   <population>4000000</population>
+  </general>
+ </planet>
+ <planet name="Dusk">
+  <GFX>
+   <space>P01.png</space>
+  </GFX>
+  <pos>
+   <y>-80</y>
+   <x>-90</x>
+  </pos>
+  <general>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>0</services>
+   <class>P</class>
+  </general>
+ </planet>
+ <planet name="Verex III">
+  <GFX>
+   <exterior>desertic2.png</exterior>
+   <space>H01.png</space>
+  </GFX>
+  <pos>
+   <y>-300</y>
+   <x>-100</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <commodities>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>0</services>
+   <class>H</class>
+   </general>
+ </planet>
+ <planet name="Ullnorn">
+  <GFX>
+   <exterior>lava.png</exterior>
+   <space>D00.png</space>
+  </GFX>
+  <pos>
+   <y>500</y>
+   <x>400</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
+   <bar>This is a bar. It has to be, because you usually don't have to pay for muddy rainwater. It doesn't seem this place is frequented by its patrons for the purpose of entertainment, because there are no recreational facilities, not even a jukebox. The few appointments are welded to the floor, and everything else is either made out of steel or has steel bars covering it. Clearly, this is a place where fists meet faces. Maybe you shouldn't stay here too long...</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>Y</class>
+   <population>10000</population>
+  </general>
+ </planet>
+ <planet name="Varia">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M04.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
+   <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <tech>
+    <main>5</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>M</class>
+   <population>500000000</population>
+  </general>
+ </planet>
+ <planet name="Stalwart Station">
+  <GFX>
+   <exterior>station04.png</exterior>
+   <space>003.png</space>
+  </GFX>
+  <pos>
+   <y>-800</y>
+   <x>300</x>
+  </pos>
+  <general>
+   <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
+   <bar>This bar is the only public facility on the station. It is here that free merchants come to do business as well as relax. The bar also doubles as a modest hotel, so at least you won't have to sleep on your ship. Of course, the only difference is that your ship isn't as noisy...</bar>
+   <prodfactor>0.8</prodfactor>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>7</main>
+    <special>0</special>
+   </tech>
+   <services>13</services>
+   <class>25</class>
+   <population>12000</population>
+  </general>
+ </planet>
+ <planet name="Utsuwa">
+  <GFX>
+   <exterior>mining3.png</exterior>
+   <space>K00.png</space>
+  </GFX>
+  <pos>
+   <y>80</y>
+   <x>-80</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Many people who live in the Empire think of the Dvaered as unsophisticated, brawny louts who spend all day down in the mines and all night picking fights with each other. This is a stereotype, and it's hardly a fair description of Dvaered society as a whole, but it happens to be absolutely accurate when it comes to the Dvaereds on Utsuwa. The colony on this planet is a full-time mining operation, and all who live on Utsuwa work in the mining industry or its peripherals. Needless to say, House Dvaered gets a significant amount of its raw resources from here.</description>
+   <bar>This bar is a miner's bar, alpha and omega. Virtually all its patrons are miners, and they do what miners do, which is drink, fight, and talk about miner things. Fortunately, the owner of the bar is considerate of outside visitors, so in addition to Miner's Ale, Miner's Vodka, Miner's Whiskey and Bloody Miners you can also order a light beer, which has a little wooden miner's pickaxe in it.</bar>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>3</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>K</class>
+   <population>400000</population>
+  </general>
+ </planet>
+ <planet name="Totoran">
+  <GFX>
+   <exterior>traderoom.png</exterior>
+   <space>P02.png</space>
+  </GFX>
+  <pos>
+   <y>80</y>
+   <x>-80</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>Welcome to Totoran, home of the galaxy's biggest and best fighting tournament: The Crimson Gauntlet! With 34 major rankings and 17 deadly arenas, there is always a fight to suit your tastes! Feel the adrenaline rush as you watch the head-to-head duels, team melees and blind hunts careen to their violent finales! Sponsor a contestant, invest in his equipment, see him obliterate his opponents and win a fortune! Snacks available at all licensed outlets.</description>
+   <bar>This bar is always full of people, some crowding around the many holovid pillars to watch the fights in the tournament, others drinking their sorrows away if their contestant was unlucky. The air is buzzing with excitement, and it's hard to make oneself heard over the din. For this reason, orders are placed through terminals projected onto the table surface, and drinks are served from a small dispenser in the middle of the table. Obviously, this establishment is making a lot of money.</bar>
+   <faction>Dvaered</faction>
+   <tech>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <services>11</services>
+   <class>P</class>
+   <population>2000000000</population>
   </general>
  </planet>
 </Planets>

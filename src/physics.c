@@ -48,7 +48,7 @@ double angle_diff( const double ref, double a )
    /* Filter offsets. */
    d  = (d < M_PI)  ? d : d - 2.*M_PI;
    d  = (d > -M_PI) ? d : d + 2.*M_PI;
-   return d;;
+   return d;
 }
 /**
  * @brief Limits the speed of an object.
@@ -358,9 +358,9 @@ static void rk4_update (Solid *obj, const double dt)
 
    /* Sanity check. */
    if (obj->dir >= 2.*M_PI)
-      obj->dir -= 2*M_PI;
+      obj->dir -= 2.*M_PI;
    else if (obj->dir < 0.)
-      obj->dir += 2*M_PI;
+      obj->dir += 2.*M_PI;
 }
 #endif /* !HAS_FREEBSD */
 
@@ -377,6 +377,8 @@ static void rk4_update (Solid *obj, const double dt)
 void solid_init( Solid* dest, const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel )
 {
+   memset(dest, 0, sizeof(Solid));
+
    dest->mass = mass;
 
    /* Set direction velocity. */
@@ -389,7 +391,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
    /* Set direction. */
    dest->dir = dir;
    if ((dest->dir > 2.*M_PI) || (dest->dir < 0.))
-      dest->dir = fmod(dest->dir, 2*M_PI);
+      dest->dir = fmod(dest->dir, 2.*M_PI);
 
    /* Set velocity. */
    if (vel == NULL)
