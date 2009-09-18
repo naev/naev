@@ -58,6 +58,7 @@ void window_close( unsigned int wid, char *str );
 void window_destroy( const unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );
 void window_setParent( unsigned int wid, unsigned int parent );
+unsigned int window_getParent( unsigned int wid );
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) );
 
 

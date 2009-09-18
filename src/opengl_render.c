@@ -33,6 +33,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "gui.h"
+#include "conf.h"
 
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
@@ -260,8 +261,13 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat vertex[4*2], tex[4*2], col[4*4];
    GLfloat mcol[4] = { 0., 0., 0. };
 
+   /* No interpolation. */
+   if (!conf.interpolate) {
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      return;
+   }
+
    /* Corner cases. */
-   /*
    if (inter == 1.) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
       return;
@@ -270,7 +276,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
       gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
-   */
 
    /* No multitexture. */
    if (nglActiveTexture == NULL) {

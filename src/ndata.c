@@ -9,6 +9,19 @@
  *
  * Optimizes to minimize the opens and frees, plus tries to read from the
  *  filesystem instead always looking for a packfile.
+ *
+ * Detection in a nutshell:
+ *
+ *
+ * -- DONE AT INIT --
+ *  1) CLI option
+ *  2) conf.lua option
+ * -- DONE AS NEEDED --
+ *  3) Current dir laid out (does not work well when iterating through directories)
+ *  4) ndata-$VERSION
+ *  5) Makefile version
+ *  6) ./ndata*
+ *  7) dirname(argv[0])/ndata* (binary path)
  */
 
 #include "ndata.h"
@@ -98,6 +111,15 @@ int ndata_setPath( const char* path )
       free(ndata_filename);
    ndata_filename = (path == NULL) ? NULL : strdup(path);
    return 0;
+}
+
+
+/**
+ * @brief Get the current ndata path.
+ */
+const char* ndata_getPath (void)
+{
+   return ndata_filename;
 }
 
 
@@ -281,6 +303,7 @@ static int ndata_openPackfile (void)
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
+
       /* Try to open any ndata in path. */
       else {
 
@@ -328,12 +351,16 @@ int ndata_open (void)
    /* Create the lock. */
    ndata_lock = SDL_CreateMutex();
 
+   /* Set path to configuration. */
+   ndata_setPath(conf.ndata);
+
    /* If user enforces ndata filename, we'll respect that. */
    if (ndata_isndata(ndata_filename))
       return ndata_openPackfile();
 
-   /* Set path to configuration. */
-   ndata_setPath(conf.ndata);
+   if (ndata_filename != NULL)
+      free(ndata_filename);
+   ndata_filename = NULL;
 
    return 0;
 }

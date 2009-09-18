@@ -241,7 +241,7 @@ void player_new (void)
    factions_reset();
    map_cleanup();
 
-   player_name = dialogue_input( "Player Name", 1, 20,
+   player_name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
 
    /* Player cancelled dialogue. */
@@ -1894,6 +1894,11 @@ int player_hasShip( char* shipname )
 {
    int i;
 
+   /* Check current ship. */
+   if ((player != NULL) && (strcmp(player->name,shipname)==0))
+      return 1;
+
+   /* Check stocked ships. */
    for (i=0; i < player_nstack; i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return 1;

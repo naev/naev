@@ -25,6 +25,7 @@
 #include "nstd.h"
 #include "dialogue.h"
 #include "conf.h"
+#include "ndata.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -131,6 +132,8 @@ static void opt_close( unsigned int wid, char *name )
 static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
+   char buf[PATH_MAX];
+   const char *path;
    int cw;
    int w, h, y, x, by;
 
@@ -159,6 +162,14 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 1, "txtCommit",
          NULL, NULL, "Commit: "GIT_COMMIT );
 #endif /* GIT_COMMIT */
+   y -= 20;
+   path = ndata_getPath();
+   if (path == NULL)
+      snprintf( buf, sizeof(buf), "not using ndata" );
+   else
+      snprintf( buf, sizeof(buf), "ndata: %s", path);
+   window_addText( wid, x, y, cw, 20, 1, "txtNdata",
+         NULL, NULL, buf );
    y -= 50;
    by = y;
 
@@ -174,30 +185,31 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL,
          ""
 #ifdef DEBUGGING
-         "DEBUG=1\n"
 #ifdef DEBUG_PARANOID
-         "DEBUG_PARANOID=1\n"
+         "Debug Paranoid\n"
+#else /* DEBUG_PARANOID */
+         "Debug\n"
 #endif /* DEBUG_PARANOID */
 #endif /* DEBUGGING */
 #if defined(LINUX)
-         "OS=LINUX\n"
+         "Linux\n"
 #elif defined(FREEBSD)
-         "OS=FREEBSD\n"
+         "FreeBSD\n"
 #elif defined(MACOSX)
-         "OS=MACOSX\n"
+         "Mac OS X\n"
 #elif defined(WIN32)
-         "OS=WIN32\n"
+         "Windows\n"
 #else
-         "OS=UNKNOWN\n"
+         "Unknown OS\n"
 #endif
 #ifdef USE_OPENAL
-         "USE_OPENAL=1\n"
+         "With OpenAL\n"
 #endif /* USE_OPENAL */
 #ifdef USE_SDLMIX
-         "USE_SDLMIX=1\n"
+         "With SDL_mixer\n"
 #endif
 #ifdef NDATA_DEF
-         "NDATA_DEF="NDATA_DEF"\n"
+         "ndata: "NDATA_DEF"\n"
 #endif /* NDATA_DEF */
          );
 
@@ -720,10 +732,9 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    window_close( wid, NULL );
 
    /* Update parent window. */
-   parent = window_get("Keybindings");
+   parent = window_getParent( wid );
    window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
-   menuKeybinds_update( parent, NULL );
 
    return 0;
 }
@@ -747,6 +758,7 @@ static void opt_setKey( unsigned int wid, char *str )
    h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
    new_wid = window_create( "Set Keybinding", -1, -1, w, h );
    window_handleEvents( new_wid, opt_setKeyEvent );
+   window_setParent( new_wid, wid );
 
    /* Set text. */
    window_addText( new_wid, 20, -40, w-40, 60, 0, "txtInfo",
@@ -784,10 +796,9 @@ static void opt_unsetKey( unsigned int wid, char *str )
    window_close( wid, NULL );
 
    /* Update parent window. */
-   parent = window_get("Keybindings");
+   parent = window_getParent( wid );
    window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
-   menuKeybinds_update( parent, NULL );
 }
 
 
@@ -889,6 +900,9 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkInterpolate", "Interpolation (Disable for compat.)", NULL, conf.interpolate );
    y -= 50;
 
 
@@ -1006,6 +1020,11 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.mipmaps = f;
       opt_needRestart();
    }
+   f = window_checkboxState( wid, "chkInterpolate" );
+   if (conf.interpolate != f) {
+      conf.interpolate = f;
+      opt_needRestart();
+   }
 
    /* Features. */
    f = window_checkboxState( wid, "chkEngineGlow" );
@@ -1042,6 +1061,7 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkVSync", conf.vsync );
    window_checkboxSet( wid, "chkVBO", conf.vbo );
    window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
+   window_checkboxSet( wid, "chkInterpolate", conf.interpolate );
    window_checkboxSet( wid, "chkFPS", conf.fps_show );
    window_checkboxSet( wid, "chkEngineGlow", conf.engineglow );
 

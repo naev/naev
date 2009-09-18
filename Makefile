@@ -19,7 +19,7 @@ USE_SDLMIX ?= 1
 
 
 # Data path
-#NDATA_DEF := \"../ndata\"
+#NDATA_DEF := \"/usr/share/games/naev/ndata\"
 
 
 ifeq ($(OS),LINUX)

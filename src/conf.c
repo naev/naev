@@ -84,12 +84,11 @@ static void print_usage( char **argv );
  */
 static void print_usage( char **argv )
 {
-   LOG("Usage: %s [OPTIONS]", argv[0]);
+   LOG("Usage: %s [OPTIONS] [DATA]", argv[0]);
    LOG("Options are:");
    LOG("   -f, --fullscreen      activate fullscreen");
    LOG("   -F n, --fps n         limit frames per second to n");
    LOG("   -V, --vsync           enable vsync");
-   LOG("   -d s, --data s        set the data file to be s");
    LOG("   -W n                  set width to n");
    LOG("   -H n                  set height to n");
    LOG("   -j n, --joystick n    use joystick n");
@@ -98,7 +97,7 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G                    regenerates the nebula (slow)");
+   LOG("   -G, --generate         regenerates the nebula (slow)");
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -212,9 +211,10 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = 1;
    conf.vsync        = 0;
-   conf.vbo          = 1;
-   conf.mipmaps      = 1;
+   conf.vbo          = 0; /* Seems to cause a lot of issues. */
+   conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
+   conf.interpolate  = 1;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -282,6 +282,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("vbo",conf.vbo);
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
+      conf_loadBool("interpolate",conf.interpolate);
 
       /* Memory. */
       conf_loadBool("engineglow",conf.engineglow);
@@ -457,7 +458,6 @@ void conf_parseCLI( int argc, char** argv )
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
       { "vsync", no_argument, 0, 'V' },
-      { "data", required_argument, 0, 'd' },
       { "joystick", required_argument, 0, 'j' },
       { "Joystick", required_argument, 0, 'J' },
       { "width", required_argument, 0, 'W' },
@@ -466,10 +466,11 @@ void conf_parseCLI( int argc, char** argv )
       { "sound", no_argument, 0, 'S' },
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
+      { "generate", no_argument, 0, 'G' },
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
-   int option_index = 0;
+   int option_index = 1;
    int c = 0;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:Ghv",
@@ -483,9 +484,6 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 'V':
             conf.vsync = 1;
-            break;
-         case 'd': 
-            conf.ndata = strdup(optarg);
             break;
          case 'j':
             conf.joystick_ind = atoi(optarg);
@@ -525,6 +523,11 @@ void conf_parseCLI( int argc, char** argv )
             print_usage(argv);
             exit(EXIT_SUCCESS);
       }
+   }
+
+   /** @todo handle multiple ndata. */
+   if (optind < argc) {
+      conf.ndata = strdup( argv[ optind ] );
    }
 }
 
@@ -787,6 +790,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Texture Compression");
    conf_saveBool("compress",conf.compress);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Texture Interpolation");
+   conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
    /* Memory. */

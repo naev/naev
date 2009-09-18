@@ -407,7 +407,7 @@
   <general>
    <tech>2</tech>
    <mass>1</mass>
-   <price>800</price>
+   <price>400</price>
    <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
    <gfx_store>seeker</gfx_store>
   </general>
@@ -448,7 +448,7 @@
    <tech>5</tech>
    <license>Medium Weapon License</license>
    <mass>1</mass>
-   <price>2000</price>
+   <price>800</price>
    <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
    <gfx_store>headhunter</gfx_store>
   </general>
@@ -490,7 +490,7 @@
    <tech>6</tech>
    <license>Medium Weapon License</license>
    <mass>0</mass>
-   <price>100</price>
+   <price>70</price>
    <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
    <gfx_store>banshee</gfx_store>
   </general>
@@ -530,7 +530,7 @@
    <tech>2</tech>
    <license>Medium Weapon License</license>
    <mass>2</mass>
-   <price>700</price>
+   <price>200</price>
    <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
    <gfx_store>mace</gfx_store>
   </general>
@@ -569,7 +569,7 @@
    <tech>9</tech>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
-   <price>15000</price>
+   <price>3000</price>
    <description>The Caesar line hasn't changed much since its inception, and the Caesar IV holds the line. Known primarily for its immense explosive payload, its electronics are somewhat antiquated, making it</description>
    <gfx_store>caesar</gfx_store>
   </general>
@@ -608,7 +608,7 @@
   <general>
    <tech>6</tech>
    <mass>1</mass>
-   <price>600</price>
+   <price>300</price>
    <gfx_store>empgrenade</gfx_store>
    <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
@@ -1030,7 +1030,7 @@
   <general>
    <slot>low</slot>
    <tech>6</tech>
-   <mass>15</mass>
+   <mass>3</mass>
    <price>35000</price>
    <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
    <gfx_store>cargo_pod</gfx_store>
@@ -1043,7 +1043,7 @@
   <general>
    <tech>4</tech>
    <mass>0</mass>
-   <price>7000</price>
+   <price>5000</price>
    <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
    <gfx_store>map</gfx_store>
   </general>

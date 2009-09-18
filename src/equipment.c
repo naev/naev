@@ -419,7 +419,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 {
    int i;
    glColour *c, tc;
-   int text_width, xoff;
+   int text_width, xoff, yoff, top;
    const char *display;
    int subtitle;
 
@@ -439,6 +439,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          display = NULL;
          if ((i==mover) && (wgt->canmodify)) {
             if (lst[i].outfit != NULL) {
+               top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], lst[i].outfit, 0 );
                if (display != NULL)
                   c = &cRed;
@@ -449,6 +450,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             }
             else if ((wgt->outfit != NULL) &&
                   (lst->slot == wgt->outfit->slot)) {
+               top = 0;
                display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
                if (display != NULL)
                   c = &cRed;
@@ -459,6 +461,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             }
          }
          else if (lst[i].outfit != NULL) {
+            top = 1;
             if (outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) {
                if ((lst[i].u.ammo.outfit == NULL) ||
@@ -482,16 +485,20 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 
          if (display != NULL) {
             text_width = gl_printWidthRaw( &gl_smallFont, display );
-            xoff = (text_width - w)/2;
+            xoff = -(text_width - w)/2;
+            if (top)
+               yoff = h + 2;
+            else
+               yoff = -gl_smallFont.h - 3;
             tc.r = 1.;
             tc.g = 1.;
             tc.b = 1.;
             tc.a = 0.5;
-            toolkit_drawRect( x-xoff-5, y - gl_smallFont.h - 5,
+            toolkit_drawRect( x+xoff-5, y -3. + yoff,
                   text_width+10, gl_smallFont.h+5,
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
-                  x-xoff + SCREEN_W/2., y - gl_smallFont.h -2. + SCREEN_H/2.,
+                  x+xoff + SCREEN_W/2., y + SCREEN_H/2. + yoff,
                   c, display );
          }
       }
@@ -978,7 +985,8 @@ void equipment_genLists( unsigned int wid )
    }
 
    /* Update window. */
-   equipment_updateOutfits(wid, NULL); /* Will update ships also. */
+   equipment_updateOutfits(wid, NULL);
+   equipment_updateShips(wid, NULL);
 }
 /**
  * @brief Updates the player's ship window.

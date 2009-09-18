@@ -91,6 +91,8 @@ static char short_version[64]; /**< Contains version. */
 static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
 static char *binary_path = NULL; /**< argv[0] */
+static SDL_Surface *naev_icon = NULL; /**< Icon. */
+
 
 /*
  * FPS stuff.
@@ -336,8 +338,12 @@ int main( int argc, char** argv )
    gl_exit(); /* kills video output */
    sound_exit(); /* kills the sound */
    news_exit(); /* destroys the news. */
-   SDL_Quit(); /* quits SDL */
 
+   /* Free the icon. */
+   if (naev_icon)
+      free(naev_icon);
+
+   SDL_Quit(); /* quits SDL */
 
    /* all is well */
    exit(EXIT_SUCCESS);
@@ -702,7 +708,6 @@ static void window_caption (void)
 {
    char buf[PATH_MAX];
    SDL_RWops *rw;
-   SDL_Surface *sur;
 
    /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
@@ -714,12 +719,12 @@ static void window_caption (void)
       WARN("Icon (gfx/icon.png) not found!");
       return;
    }
-   sur = IMG_Load_RW( rw, 1 );
-   if (sur == NULL) {
+   naev_icon = IMG_Load_RW( rw, 1 );
+   if (naev_icon == NULL) {
       WARN("Unable to load gfx/icon.png!");
       return;
    }
-   SDL_WM_SetIcon( sur, NULL );
+   SDL_WM_SetIcon( naev_icon, NULL );
 }
 
 

@@ -252,7 +252,8 @@ static void board_stealFuel( unsigned int wdw, char* str )
       return;
    }
 
-   if (board_fail(wdw)) return;
+   if (board_fail(wdw))
+      return;
 
    /* Steal fuel. */
    player->fuel += p->fuel;
@@ -260,7 +261,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
 
    /* Make sure doesn't overflow. */
    if (player->fuel > player->fuel_max) {
-      p->fuel = player->fuel_max - player->fuel;
+      p->fuel      = player->fuel - player->fuel_max;
       player->fuel = player->fuel_max;
    }
 
