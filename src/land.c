@@ -1374,6 +1374,9 @@ static void misn_update( unsigned int wid, char* str )
    Mission* misn;
    char txt[256], *buf;
 
+   /* Clear computer markers. */
+   space_clearComputerMarkers();
+
    /* Update date stuff. */
    buf = ntime_pretty(0);
    snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player->cargo_free );
