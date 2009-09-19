@@ -25,6 +25,45 @@
                                                    when timer is up. */
 
 
+/**
+ * @brief Represents ship statistics, properties ship can use.
+ *
+ * All these values are represented as per ones [0:2] that represent
+ *  the modulation of the base value.
+ *
+ * Example:
+ *  0.7 would lower by 30% the base value.
+ *  1.2 would increase by 20% the base value.
+ */
+typedef struct ShipStats_ {
+   /* Scout type. */
+   double sensor_range; /**< Sensor detection range. */
+   double sensor_jam; /**< Sensor detection countermeasures. */
+   double jam_range; /**< Range of jammer effect. */
+   double jam_chance; /**< Possibility of jamming missile. */
+
+   /* Bomber type. */
+   double launch_rate; /**< Fire rate of launchers. */
+   double launch_range; /**< Range of launchers. */
+   double seeker_unjam; /**< Ability to avoid jamming. */
+   double ammo_capacity; /**< Capacity of launchers. */
+
+   /* Corvette type. */
+   double afterburner_energy; /**< Energy used by afterburner. */
+
+   /* Carrier type. */
+   double fighterbay_cpu; /**< CPU usage by fighter bays. */
+   double fighterbay_rate; /**< Launch rate of fighter bay. */
+
+   /* Freighter-type. */
+   double cargo_inertia; /**< Lowers the effect of cargo mass. */
+   double jump_delay; /**< Modulates the jump delay. */
+} ShipStats;
+
+
+/*
+ * Needed because some outfittypes call other outfits.
+ */
 struct Outfit_;
 
 
