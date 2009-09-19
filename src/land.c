@@ -752,7 +752,7 @@ static void shipyard_open( unsigned int wid )
          "imgTarget", NULL, 1 );
 
    /* stat text */
-   window_addText( wid, -40, -50, 100, 200, 0, "txtStats",
+   window_addText( wid, -40, -170, 100, 200, 0, "txtStats",
          &gl_smallFont, &cBlack, NULL );
 
    /* text */
@@ -897,7 +897,7 @@ static void shipyard_update( unsigned int wid, char* str )
          ship->cpu,
          ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->mass,
-         pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
+         pow( ship->mass, 1./2.5 ) / 5. * ship->stats.jump_delay, /**< @todo make this more portable. */
          ship->thrust / ship->mass,
          ship->speed,
          ship->turn,
