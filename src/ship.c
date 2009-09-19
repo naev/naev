@@ -53,8 +53,6 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  * Prototypes
  */
 static int ship_compareTech( const void *arg1, const void *arg2 );
-static void ship_initStats( ShipStats *s );
-static int ship_parseStats( Ship *temp, xmlNodePtr parent );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -290,31 +288,14 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
- * @brief Initializes the ship's stats.
- *
- *    @brief ShipStats to initialize stats.
- */
-static void ship_initStats( ShipStats *s )
-{
-   /* Set everything to 1 to not affect. */
-   s->jump_delay = 1.;
-}
-
-
-/**
  * @brief Parses the ship stats.
  *
- *    @param temp Ship to parse stats for.
+ *    @param s ShipStats to parse stats for.
  *    @param parent Statistics node.
  */
-static int ship_parseStats( Ship *temp, xmlNodePtr parent )
+int ship_statsParse( ShipStats *s, xmlNodePtr parent )
 {
-   int i;
    xmlNodePtr node;
-   ShipStats *s;
-   
-   /* For comfortability. */
-   s = &temp->stats;
 
    /* Parse information. */
    node = parent->xmlChildrenNode;
@@ -322,23 +303,32 @@ static int ship_parseStats( Ship *temp, xmlNodePtr parent )
       xmlr_float(node,"jump_delay",s->jump_delay);
    } while (xml_nextNode(node));
 
+   /* Success. */
+   return 0;
+}
+
+
+/**
+ * @brief Writes the ship statistics description.
+ *
+ *    @param s Ship stats to use.
+ *    @param buf Buffer to write to.
+ *    @param len Space left in the buffer.
+ *    @return Number of characters written.
+ */
+int ship_statsDesc( ShipStats *s, char *buf, int len )
+{
+   int i;
+
    /* Set stat text. */
    i = 0;
 #define DESC_ADD(x, s) \
-if ((x) != 0.) { \
-   if (temp->desc_stats == NULL) \
-      temp->desc_stats = malloc( STATS_DESC_MAX ); \
-   i += snprintf( &temp->desc_stats[i], STATS_DESC_MAX-i, \
-         "%s%+.0f%% "s, (i==0) ? "" : "\n", x ); \
-}
+   i += snprintf( &buf[i], len-i, \
+         "%+.0f%% "s"\n", x );
    DESC_ADD(s->jump_delay,"Jump time");
 #undef DESC_ADD
 
-   /* Sanitize input. */
-   s->jump_delay = s->jump_delay / 100;
-
-   /* Success. */
-   return 0;
+   return i;
 }
 
 
@@ -360,7 +350,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
-   ship_initStats(&temp->stats);
 
    /* Defaults. */
    str[0] = '\0';
@@ -564,7 +553,13 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       /* Parse ship stats. */
       if (xml_isNode(node,"stats")) {
-         ship_parseStats( temp, node );
+         ship_statsParse( &temp->stats, node );
+         temp->desc_stats = malloc( STATS_DESC_MAX );
+         i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX );
+         if (i <= 0) {
+            free( temp->desc_stats );
+            temp->desc_stats = NULL;
+         }
          continue;
       }
 

@@ -11,6 +11,7 @@
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
+#include "nxml.h"
 
 
 /* target gfx dimensions */
@@ -142,6 +143,11 @@ typedef struct Ship_ {
 int ships_load (void);
 void ships_free (void);
 
+/*
+ * stats
+ */
+int ship_statsParse( ShipStats *s, xmlNodePtr parent );
+int ship_statsDesc( ShipStats *s, char *buf, int len );
 
 /*
  * get
