@@ -773,7 +773,7 @@ static void widget_kill( Widget *wgt )
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           glColour* c, glColour* lc )
 {
-   static GLfloat lines[4][2];
+   GLint lines[4][2];
    glColour colours[4];
 
    /* Set shade model. */
@@ -784,19 +784,19 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    lc = lc ? lc : c;
 
    /* Lines. */
-   lines[0][0]   = x;
+   lines[0][0]   = x;      /* left-up */
    lines[0][1]   = y;
    colours[0]    = *lc;
 
-   lines[1][0]   = x;
+   lines[1][0]   = x;      /* left-down */
    lines[1][1]   = y + h;
    colours[1]    = *c;
 
-   lines[2][0]   = x + w;
+   lines[2][0]   = x + w;  /* right-down */
    lines[2][1]   = y + h;
    colours[2]    = *c;
 
-   lines[3][0]   = x + w;
+   lines[3][0]   = x + w;  /* right-up */
    lines[3][1]   = y;
    colours[3]    = *lc;
 
@@ -805,11 +805,12 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, 
+                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
-   glDrawArrays( GL_LINE_LOOP, 0, 4 );
+   glDrawArrays( GL_LINE_STRIP, 0, 4 );
 
    /* Deactivate VBO. */
    gl_vboDeactivate();
@@ -829,49 +830,40 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 void toolkit_drawRect( int x, int y, int w, int h,
                        glColour* c, glColour* lc )
 {
-   GLfloat vertex[2*4], colours[4*4];
+   GLint vertex[4][2];
+   glColour colours[4];
 
    /* Set shade model. */
    glShadeModel( (lc) ? GL_SMOOTH : GL_FLAT );
 
-   /* Set up the vertex. */
-   vertex[0] = x;
-   vertex[1] = y;
-   vertex[2] = vertex[0];
-   vertex[3] = vertex[1] + h;
-   vertex[4] = vertex[0] + w;
-   vertex[5] = vertex[1];
-   vertex[6] = vertex[4];
-   vertex[7] = vertex[3];
+   lc = lc == NULL ? c : lc;
 
-   /* Set up the colours. */
-   if (lc == NULL)
-      lc = c;
-   colours[0]  = c->r;
-   colours[1]  = c->g;
-   colours[2]  = c->b;
-   colours[3]  = c->a;
-   colours[4]  = lc->r;
-   colours[5]  = lc->g;
-   colours[6]  = lc->b;
-   colours[7]  = lc->a;
-   colours[8]  = c->r;
-   colours[9]  = c->g;
-   colours[10] = c->b;
-   colours[11] = c->a;
-   colours[12] = lc->r;
-   colours[13] = lc->g;
-   colours[14] = lc->b;
-   colours[15] = lc->a;
+   /* Set up vertices and colours. */
+   vertex[0][0] = x;        /* left-up */
+   vertex[0][1] = y;
+   colours[0]   = *c;
+
+   vertex[1][0] = x;        /* left-down */
+   vertex[1][1] = y + h;
+   colours[1]   = *lc;
+
+   vertex[2][0] = x + w;    /* right-up */
+   vertex[2][1] = y;
+   colours[2]   = *c;
+
+   vertex[3][0] = x + w;    /* right-down */
+   vertex[3][1] = y + h;
+   colours[3]   = *lc;
 
    /* Upload to the VBO. */
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLfloat) * 2*4, vertex );
-   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(GLfloat) * 4*4, colours );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(vertex), vertex );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY,
+                         0, 2, GL_INT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
-         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
