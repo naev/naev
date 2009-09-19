@@ -2687,6 +2687,7 @@ static int player_parse( xmlNodePtr parent )
 
    /* initialize the system */
    music_choose("takeoff");
+   planet = pnt->name;
    space_init( planet_getSystem(planet) );
    map_clear(); /* sets the map up */
 
