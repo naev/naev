@@ -24,10 +24,10 @@ else -- default english
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[You meet up with Lt. Commander Dimitri.
-"We managed to capture the drone after you located it.  It didn't seem to be in good health.  Our scientists are studying it as we speak, but we've found something strange in it.  Some sort of weird wireless module.  We'd like you to go run through the Collective systems to see if you can pick up any strange wireless communications.  Just do a quick run through, be careful of the Collective though.  You interested in doing the run?  It'll be dangerous."]]
-   text[2] = [["Just run through some systems while keeping your communications system on logging.  We'll parse the results when you get back.  With just visiting 2 or 3 Collective systems it should be more then enough.  Good luck."]]
+"We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to go run through the Collective systems to see if you can pick up any strange wireless communications. Just do a quick run through, be careful of the Collective though. You interested in doing the run? It'll be dangerous."]]
+   text[2] = [["Just run through some systems while keeping your communications system on logging. We'll parse the results when you get back. With just visiting 2 or 3 Collective systems it should be more then enough. Don't forget to carry enough fuel, 5 or 6 jumps should be enough. Good luck."]]
    text[3] = [[After landing Lt. Commander Dimitri greets you on the land pad.
-"I suppose all went well?  Those drones can really give a beating.  We'll have the researchers start looking at your logs right away.  Meet me in the bar again in a while."]]
+"I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]
 end
 
 
@@ -46,7 +46,7 @@ function accept ()
    -- Accept mission
    misn.accept()
 
-   misn_stage = 0      
+   misn_stage = 0
    systems_visited = 0 -- Number of Collective systems visited
    misn_base,misn_base_sys = planet.get("Omega Station")
 
@@ -85,7 +85,7 @@ end
 function land()
    local pnt = planet.get()
 
-   if misn_stage == 1 and  pnt == misn_base then
+   if misn_stage == 1 and pnt == misn_base then
       tk.msg( title[3], text[3] )
       player.modFaction("Empire",5)
       misn.finish(true)

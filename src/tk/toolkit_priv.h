@@ -69,7 +69,7 @@ typedef enum WidgetStatus_ {
 
 /**
  * @struct Widget
- *                                                                  
+ *
  * @brief Represents a widget.
  */
 typedef struct Widget_ {
@@ -84,10 +84,10 @@ typedef struct Widget_ {
    unsigned int wdw; /**< Widget's parent window. */
 
    /* Position and dimensions. */
-   double x; /**< X position within the window. */
-   double y; /**< Y position within the window. */
-   double w; /**< Widget width. */
-   double h; /**< Widget height. */
+   int x; /**< X position within the window. */
+   int y; /**< Y position within the window. */
+   int w; /**< Widget width. */
+   int h; /**< Widget height. */
 
    unsigned int flags; /**< Widget flags. */
 
@@ -135,8 +135,8 @@ typedef struct Widget_ {
 
 
 /**
- * @struct Window                                                   
- *                                                                  
+ * @struct Window
+ *
  * @brief Represents a graphical window.
  */
 typedef struct Window_ {
@@ -156,10 +156,10 @@ typedef struct Window_ {
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
    /* Position and dimensions. */
-   double x; /**< X position of the window. */
-   double y; /**< Y position of the window. */
-   double w; /**< Window width. */
-   double h; /**< Window height. */
+   int x; /**< X position of the window. */
+   int y; /**< Y position of the window. */
+   int w; /**< Window width. */
+   int h; /**< Window height. */
 
    int focus; /**< Current focused widget. */
    Widget *widgets; /**< Widget storage. */
@@ -183,15 +183,14 @@ void toolkit_nextFocus (void);
 
 
 /* Render stuff. */
-void toolkit_drawOutline( double x, double y,
-      double w, double h, double b,
-      glColour* c, glColour* lc );
-void toolkit_drawScrollbar( double x, double y, double w, double h, double pos );
-void toolkit_clip( double x, double y, double w, double h );
-void toolkit_unclip (void);
-void toolkit_drawRect( double x, double y,
-      double w, double h, glColour* c, glColour* lc );
-void toolkit_drawAltText( double bx, double by, const char *alt );
+void toolkit_drawOutline( int x, int y, int w, int h, int b,
+                          glColour* c, glColour* lc );
+void toolkit_drawScrollbar( int x, int y, int w, int h, double pos );
+void toolkit_clip( int x, int y, int w, int h );
+void toolkit_unclip ( void );
+void toolkit_drawRect( int x, int y, int w, int h,
+                       glColour* c, glColour* lc );
+void toolkit_drawAltText( int bx, int by, const char *alt );
 
 
 /* Input stuff. */

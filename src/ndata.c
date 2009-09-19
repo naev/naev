@@ -270,8 +270,6 @@ static char *ndata_findInDir( const char *path )
  */
 static int ndata_openPackfile (void)
 {
-   char path[PATH_MAX];
-
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
 
@@ -313,6 +311,7 @@ static int ndata_openPackfile (void)
          /* Keep looking. */
          if (ndata_filename == NULL) {
 #if HAS_POSIX
+            char path[PATH_MAX];
             snprintf( path, PATH_MAX, "%s", dirname( naev_binary() ) );
             ndata_filename = ndata_findInDir( path );
 #endif /* HAS_POSIX */
@@ -323,7 +322,8 @@ static int ndata_openPackfile (void)
    /* Open the cache. */
    if (ndata_isndata( ndata_filename ) != 1) {
       WARN("Cannot find ndata file!");
-      WARN("Please specify ndata file with -d or data in the conf file.");
+      WARN("Please run with ndata path suffix or specify in conf.lua.");
+      WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
 
       /* Display the not found message. */
       ndata_notfound();
