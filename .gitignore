@@ -16,3 +16,16 @@ docs/lua/*.html
 docs/lua/*.css
 docs/lua/modules/*
 docs/lua/*.luadoc
+*.in
+*Makefile
+*.deps/
+src/stamp-h1
+src/config.h
+build/*
+aclocal.m4
+autom4te.cache/*
+config.log
+config.status
+configure
+
+
