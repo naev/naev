@@ -117,7 +117,7 @@ static void load_all (void);
 static void unload_all (void);
 static void display_fps( const double dt );
 static void window_caption (void);
-static void debug_sigInit (const char *executable);
+static void debug_sigInit (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
@@ -153,7 +153,7 @@ int main( int argc, char** argv )
    SDL_Init(0);
 
    /* Set up debug signal handlers. */
-   debug_sigInit(argv[0]);
+   debug_sigInit();
 
    /* Create the home directory if needed. */
    if (nfile_dirMakeExist("%s", nfile_basePath()))
@@ -907,7 +907,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 /**
  * @brief Sets up the SignalHandler for Linux.
  */
-static void debug_sigInit( const char *executable )
+static void debug_sigInit( void )
 {
 #if HAS_LINUX && defined(DEBUGGING)
    char **matching;
@@ -916,7 +916,7 @@ static void debug_sigInit( const char *executable )
    bfd_init();
 
    /* Read the executable */
-   abfd = bfd_openr(executable, NULL);
+   abfd = bfd_openr("/proc/self/exe", NULL);
    if (abfd != NULL) {
       bfd_check_format_matches(abfd, bfd_object, &matching);
 
