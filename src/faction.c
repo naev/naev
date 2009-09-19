@@ -585,11 +585,16 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    memset( temp, 0, sizeof(Faction) );
 
    temp->name = xml_nodeProp(parent,"name");
-   if (temp->name == NULL) WARN("Faction from "FACTION_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Faction from "FACTION_DATA" has invalid or no name");
 
    player = 0;
    node = parent->xmlChildrenNode;
    do {
+
+      /* Only care about nodes. */
+      xml_onlyNodes(node);
+
       /* Can be 0 or negative, so we have to take that into account. */
       if (xml_isNode(node,"player")) {
          temp->player_def = xml_getFloat(node);
@@ -598,8 +603,10 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       xmlr_strd(node,"longname",temp->longname);
-      if (xml_isNode(node, "colour"))
+      if (xml_isNode(node, "colour")) {
          temp->colour = col_fromName(xml_raw(node));
+         continue;
+      }
 
       if (xml_isNode(node,"logo")) {
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
@@ -616,6 +623,12 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          faction_setFlag(temp, FACTION_INVISIBLE);
          continue;
       }
+
+      /* Avoid warnings. */
+      if (xml_isNode(node,"allies") || xml_isNode(node,"enemies"))
+         continue;
+
+      DEBUG("Unknown node '%s' in faction '%s'",node->name,temp->name);
    } while (xml_nextNode(node));
 
    if (player==0)
