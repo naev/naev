@@ -28,8 +28,12 @@
 /**
  * @brief Represents ship statistics, properties ship can use.
  *
- * All these values are represented as per ones [0:2] that represent
- *  the modulation of the base value.
+ * These values for outfits/ships are in percent, so 25 would be +25%,
+ *  -25 would be -25% and so on.
+ *
+ * However for pilots these are normalized and centered around 1 so they are
+ *  in the [0:2] range, with 1. being default. This value then modulates the
+ *  stat's base value.
  *
  * Example:
  *  0.7 would lower by 30% the base value.
