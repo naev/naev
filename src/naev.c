@@ -856,8 +856,10 @@ static void debug_translateAddress(const char *symbol, bfd_vma address)
          continue;
 
       do {
-         if (func == NULL || func[0] == '\0') func = "??";
-         if (file == NULL || file[0] == '\0') file = "??";
+         if (func == NULL || func[0] == '\0')
+            func = "??";
+         if (file == NULL || file[0] == '\0')
+            file = "??";
          DEBUG("%s %s(...):%u %s", symbol, func, line, file);
       } while (bfd_find_inliner_info(abfd, &file, &func, &line));
 
@@ -883,13 +885,17 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    void *buf[64];
    char **symbols;
 
-   num = backtrace(buf, 64);
-   symbols = backtrace_symbols(buf, num);
+   num      = backtrace(buf, 64);
+   symbols  = backtrace_symbols(buf, num);
 
    DEBUG("NAEV recieved %s!",
          debug_sigCodeToStr(info->si_signo, info->si_code) );
-   for (i=0; i<num; i++)
-       debug_translateAddress(symbols[i], (bfd_vma)buf[i]);
+   for (i=0; i<num; i++) {
+      if (abfd != NULL)
+         debug_translateAddress(symbols[i], (bfd_vma)buf[i]);
+      else
+         DEBUG("   %s", symbols[i]);
+   }
    DEBUG("Report this to project maintainer with the backtrace.");
 
    /* Always exit. */
@@ -911,20 +917,20 @@ static void debug_sigInit( const char *executable )
 
    /* Read the executable */
    abfd = bfd_openr(executable, NULL);
-   assert(abfd != NULL);
+   if (abfd != NULL) {
+      bfd_check_format_matches(abfd, bfd_object, &matching);
 
-   bfd_check_format_matches(abfd, bfd_object, &matching);
+      /* Read symbols */
+      if (bfd_get_file_flags(abfd) & HAS_SYMS) {
+         long symcount;
+         unsigned int size;
 
-   /* Read symbols */
-   if (bfd_get_file_flags(abfd) & HAS_SYMS) {
-      long symcount;
-      unsigned int size;
-
-      /* static */
-      symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
-      if (symcount == 0) /* dynamic */
-         symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
-      assert(symcount >= 0);
+         /* static */
+         symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
+         if (symcount == 0) /* dynamic */
+            symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
+         assert(symcount >= 0);
+      }
    }
 
    /* Set up handler. */
