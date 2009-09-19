@@ -1454,11 +1454,16 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(Outfit) );
 
    temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
-   if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
    do { /* load all the data */
+
+      /* Only handle nodes. */
+      xml_onlyNodes();
+
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
@@ -1485,8 +1490,10 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             }
 
          } while (xml_nextNode(cur));
+         continue;
       }
-      else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
+      
+      if (xml_isNode(node,"specific")) { /* has to be processed seperately */
 
          /* get the type */
          prop = xml_nodeProp(node,"type");
@@ -1526,7 +1533,11 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             outfit_parseSMap( temp, node );
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
+
+         continue;
       }
+
+      DEBUG("Unknown node '%s' in outfit '%s'", node->name, temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
