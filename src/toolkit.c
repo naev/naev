@@ -810,7 +810,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
-   glDrawArrays( GL_LINE_STRIP, 0, 4 );
+   glDrawArrays( GL_LINE_LOOP, 0, 4 );
 
    /* Deactivate VBO. */
    gl_vboDeactivate();
