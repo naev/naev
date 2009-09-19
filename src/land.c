@@ -752,7 +752,7 @@ static void shipyard_open( unsigned int wid )
          "imgTarget", NULL, 1 );
 
    /* stat text */
-   window_addText( wid, -40, -170, 100, 200, 0, "txtStats",
+   window_addText( wid, -40, -170, 128, 200, 0, "txtStats",
          &gl_smallFont, &cBlack, NULL );
 
    /* text */
