@@ -770,11 +770,11 @@ static void widget_kill( Widget *wgt )
  *    @param c Colour.
  *    @param lc Light colour.
  */
-void toolkit_drawOutline( double x, double y, 
-      double w, double h, double b,
-      glColour* c, glColour* lc )
+void toolkit_drawOutline( int x, int y, int w, int h, int b,
+                          glColour* c, glColour* lc )
 {
-   static GLfloat lines[4][2], colours[4][4];
+   static GLfloat lines[4][2];
+   glColour colours[4];
 
    /* Set shade model. */
    glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
@@ -786,32 +786,19 @@ void toolkit_drawOutline( double x, double y,
    /* Lines. */
    lines[0][0]   = x;
    lines[0][1]   = y;
-   colours[0][0] = lc->r;
-   colours[0][1] = lc->g;
-   colours[0][2] = lc->b;
-   colours[0][3] = lc->a;
+   colours[0]    = *lc;
 
    lines[1][0]   = x;
    lines[1][1]   = y + h;
-   colours[1][0] = c->r;
-   colours[1][1] = c->g;
-   colours[1][2] = c->b;
-   colours[1][3] = c->a;
+   colours[1]    = *c;
 
    lines[2][0]   = x + w;
    lines[2][1]   = y + h;
-   colours[2][0] = c->r;
-   colours[2][1] = c->g;
-   colours[2][2] = c->b;
-   colours[2][3] = c->a;
+   colours[2]    = *c;
 
    lines[3][0]   = x + w;
    lines[3][1]   = y;
-   colours[3][0] = lc->r;
-   colours[3][1] = lc->g;
-   colours[3][2] = lc->b;
-   colours[3][3] = lc->a;
-
+   colours[3]    = *lc;
 
    /* Upload to the VBO. */
    gl_vboSubData( toolkit_vbo, 0, sizeof(lines), lines );
@@ -839,8 +826,8 @@ void toolkit_drawOutline( double x, double y,
  *    @param c Colour.
  *    @param lc Light colour.
  */
-void toolkit_drawRect( double x, double y,
-      double w, double h, glColour* c, glColour* lc )
+void toolkit_drawRect( int x, int y, int w, int h,
+                       glColour* c, glColour* lc )
 {
    GLfloat vertex[2*4], colours[4*4];
 
@@ -899,7 +886,7 @@ void toolkit_drawRect( double x, double y,
  *    @param by Y position to draw at.
  *    @param alt Text to draw.
  */
-void toolkit_drawAltText( double bx, double by, const char *alt )
+void toolkit_drawAltText( int bx, int by, const char *alt )
 {
    double w, h;
    double x, y, o;
@@ -946,7 +933,7 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
  *    @param w Width of the rectangle.
  *    @param h Height of the rectangle.
  */
-void toolkit_clip( double x, double y, double w, double h )
+void toolkit_clip( int x, int y, int w, int h )
 {
    double rx, ry, rw, rh;
    rx = (x + (double)SCREEN_W/2) / gl_screen.mxscale;
@@ -1389,7 +1376,7 @@ void window_renderOverlay( Window *w )
  *    @param h Height of the scrollbar.
  *    @param pos Position at [0:1].
  */
-void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
+void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
 {
    double sy;
 
