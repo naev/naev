@@ -5,6 +5,7 @@ AC_PREREQ([2.63])
 AC_INIT([naev], [0.4.0], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
+AC_CONFIG_AUX_DIR([build])
 
 AM_INIT_AUTOMAKE([foreign])
 
@@ -302,11 +303,13 @@ AS_IF([test "$have_sdlmixer" = "yes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
+SHAVE_INIT([.], [enable])
 AC_CONFIG_FILES([Makefile
 		 lib/Makefile
 		 lib/csparse/Makefile
 		 lib/lua/Makefile
 		 src/Makefile
 		 src/tk/Makefile
-		 src/tk/widget/Makefile])
+		 src/tk/widget/Makefile
+		 shave])
 AC_OUTPUT
