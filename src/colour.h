@@ -7,6 +7,7 @@
 #ifndef COLOUR_H
 #  define COLOUR_H
 
+#include <GL/gl.h>
 
 /**
  * @struct glColour
@@ -14,11 +15,11 @@
  * @brief reperesents a colour via it's RGBA values.
  */
 typedef struct glColour_ {
-   double r; /**< Red value of the colour (0 to 1). */
-   double g; /**< Green value of the colour (0 to 1). */
-   double b; /**< Blue value of the colour (0 to 1). */
-   double a; /**< Alpha value of the colour (0 to 1). */
-} glColour;
+   GLfloat r; /**< Red value of the colour (0 to 1). */
+   GLfloat g; /**< Green value of the colour (0 to 1). */
+   GLfloat b; /**< Blue value of the colour (0 to 1). */
+   GLfloat a; /**< Alpha value of the colour (0 to 1). */
+} __attribute__((packed)) glColour;
 
 /*
  * default colors
