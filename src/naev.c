@@ -102,7 +102,7 @@ static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
 
 #if HAS_LINUX && defined(DEBUGGING)
-static bfd *abfd = NULL;
+static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 
