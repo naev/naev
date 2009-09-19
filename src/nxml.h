@@ -21,8 +21,8 @@
 /**
  * @brief Only handle nodes.
  */
-#define xml_onlyNodes()    \
-   if ((node==NULL) || (node->type!=XML_NODE_START)) \
+#define xml_onlyNodes(n)    \
+   if (((n)==NULL) || ((n)->type!=XML_NODE_START)) \
       continue;
 
 /* checks to see if node n is of name s */

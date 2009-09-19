@@ -719,7 +719,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
    do { /* load all the data */
 
       /* Only handle nodes. */
-      xml_onlyNodes();
+      xml_onlyNodes(node);
 
       if (xml_isNode(node,"lua")) {
          snprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );

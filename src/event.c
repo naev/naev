@@ -388,6 +388,10 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    do { /* load all the data */
+
+      /* Only check nodes. */
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"lua")) {
          snprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
@@ -405,6 +409,8 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
          free(buf);
          lua_close(L);
 #endif /* DEBUGGING */
+
+         continue;
       }
 
       /* Trigger. */
@@ -415,6 +421,8 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
             temp->trigger = EVENT_TRIGGER_ENTER;
          else
             WARN("Event '%s' has invalid 'trigger' parameter: %s", temp->name, buf);
+
+         continue;
       }
 
       /* Flags. */
@@ -424,18 +432,20 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
             if (xml_isNode(cur,"unique"))
                temp->flags |= EVENT_FLAG_UNIQUE;
          } while (xml_nextNode(cur));
+         continue;
       }
 
-
       /* Condition. */
-      else if (xml_isNode(node,"cond"))
-         temp->cond = xml_getStrd(node);
+      xmlr_strd(node,"cond",temp->cond);
 
       /* Get chance. */
-      else if (xml_isNode(node,"chance"))
-         temp->chance = xml_getFloat(node) / 100.;
+      xmlr_float(node,"chance",temp->chance);
 
+      DEBUG("Unknown node '%s' in event '%s'", node->name, temp->name);
    } while (xml_nextNode(node));
+
+   /* Process. */
+   temp->chance /= 100.;
 
 #define MELEMENT(o,s) \
    if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)

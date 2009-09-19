@@ -361,7 +361,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    do { /* load all the data */
 
       /* Only handle nodes. */
-      xml_onlyNodes();
+      xml_onlyNodes(node);
 
       if (xml_isNode(node,"GFX")) {
 
