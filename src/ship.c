@@ -53,6 +53,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  * Prototypes
  */
 static int ship_compareTech( const void *arg1, const void *arg2 );
+static void ship_initStats( Ship *temp );
 static int ship_parseStats( Ship *temp, xmlNodePtr parent );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
@@ -289,6 +290,23 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
+ * @brief Initializes the ship's stats.
+ *
+ *    @brief Ship to initialize stats.
+ */
+static void ship_initStats( Ship *temp )
+{
+   ShipStats *s;
+   
+   /* For comfortability. */
+   s = &temp->stats;
+
+   /* Set everything to 1 to not affect. */
+   s->jump_delay = 1.;
+}
+
+
+/**
  * @brief Parses the ship stats.
  *
  *    @param temp Ship to parse stats for.
@@ -347,6 +365,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
+   ship_initStats(temp);
 
    /* Defaults. */
    str[0] = '\0';
