@@ -322,7 +322,8 @@ static int ndata_openPackfile (void)
    /* Open the cache. */
    if (ndata_isndata( ndata_filename ) != 1) {
       WARN("Cannot find ndata file!");
-      WARN("Please specify ndata file with -d or data in the conf file.");
+      WARN("Please run with ndata path suffix or specify in conf.lua.");
+      WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
 
       /* Display the not found message. */
       ndata_notfound();
