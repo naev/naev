@@ -303,7 +303,7 @@ AS_IF([test "$have_sdlmixer" = "yes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
-SHAVE_INIT([.], [enable])
+SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
 		 lib/Makefile
 		 lib/csparse/Makefile
@@ -311,5 +311,5 @@ AC_CONFIG_FILES([Makefile
 		 src/Makefile
 		 src/tk/Makefile
 		 src/tk/widget/Makefile
-		 shave])
+		 build/shave])
 AC_OUTPUT
