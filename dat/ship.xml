@@ -270,6 +270,9 @@
    <low />
    <low />
   </slots>
+  <stats>
+   <jump_delay>-25</jump_delay>
+  </stats>
  </ship>
  <ship name="Mule">
   <GFX sx="10" sy="10">mule</GFX>

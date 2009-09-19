@@ -74,6 +74,21 @@ typedef struct ShipOutfitSlot_ {
 
 
 /**
+ * @brief Represents ship statistics, properties ship can use.
+ *
+ * All these values are represented as per ones [0:2] that represent
+ *  the modulation of the base value.
+ *
+ * Example:
+ *  0.7 would lower by 30% the base value.
+ *  1.2 would increase by 20% the base value.
+ */
+typedef struct ShipStats_ {
+   double jump_delay; /**< Modulates the jump delay. */
+} ShipStats;
+
+
+/**
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
@@ -129,6 +144,10 @@ typedef struct Ship_ {
 
    /* mounts */
    double mangle; /**< Mount angle to simplify mount calculations. */
+
+   /* Statistics. */
+   char *desc_stats; /**< Ship statistics information. */
+   ShipStats stats; /**< Ship statistics properties. */
 } Ship;
 
 

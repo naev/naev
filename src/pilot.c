@@ -2718,8 +2718,15 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  */
 double pilot_hyperspaceDelay( Pilot *p )
 {
+   double val;
+
    /* Calculate jump delay. */
-   return pow( p->solid->mass, 1./2.5 ) / 5.;
+   val  = pow( p->solid->mass, 1./2.5 ) / 5.;
+
+   /* Modulate by stats. */
+   val *= p->ship->stats.jump_delay;
+
+   return val;
 }
 
 

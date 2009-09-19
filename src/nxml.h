@@ -18,6 +18,13 @@
 #define XML_NODE_START  1 
 #define XML_NODE_TEXT   3
 
+/**
+ * @brief Only handle nodes.
+ */
+#define xml_onlyNodes()    \
+   if ((node==NULL) || (node->type!=XML_NODE_START)) \
+      continue;
+
 /* checks to see if node n is of name s */
 #define xml_isNode(n,s)    \
    ((n!=NULL) && ((n)->type==XML_NODE_START) && \
