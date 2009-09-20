@@ -83,7 +83,6 @@ function create ()
    systems = get_patrol_systems(num_systems)
    num_systems = #systems
    if #systems < 2 then
-      print("failed to create dv_patrol mission")
       misn.finish(false)
    end
    system1, system2, system3, system4 = unpack( systems )
