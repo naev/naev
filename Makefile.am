@@ -7,17 +7,17 @@ DATA_ARCHIVE = ndata
 EXTRA_DIST = LICENSE conf.example
 CLEANFILES = pack $(DATA_ARCHIVE)
 
-V          = @
-Q          = $(V:1=)
-QUIET_PACK = $(Q:@=@echo ' PACK   '$@;)
+V             = @
+Q             = $(V:1=)
+QUIET_PACK    = $(Q:@=@echo ' PACK   '$@;)
+
+.PHONY: install-ndata
 
 pack:
-	cd utils/pack && make
+	$(MAKE) -C utils/pack
 
 VERSION:
 	echo $(VERSION) > $@
-
-ndata: $(DATA_ARCHIVE)
 
 $(DATA_ARCHIVE): pack VERSION
 	$(QUIET_PACK)./pack $(DATA_ARCHIVE) AUTHORS VERSION \
@@ -27,3 +27,16 @@ $(DATA_ARCHIVE): pack VERSION
 		find scripts -type f -name '*.lua'; \
 		find dat     -type f); \
 	rm -f VERSION
+
+install-ndata: $(DATA_ARCHIVE)
+	ndata="$(DESTDIR)$(ndata_path)"; \
+	dir=`echo "$$ndata" | sed 's/\(.*\)[\/\\].*/\1/'`; \
+	echo " $(MKDIR_P) $$dir"; \
+	$(MKDIR_P) "$$dir"; \
+	echo " $(INSTALL_DATA) -c $(DATA_ARCHIVE) $$ndata"; \
+	$(INSTALL_DATA) -c "$(DATA_ARCHIVE)" "$$ndata"
+
+install-data-hook:
+	if test -e dat && test -e gfx; then \
+	  $(MAKE) install-ndata; \
+	fi

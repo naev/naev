@@ -136,6 +136,7 @@ AC_MSG_RESULT([$ndata_path])
 AS_IF([test -z "$ndata_path" || test "$ndata_path" = "yes"], [
   AC_ERROR([The data path must be explicitly specified])
 ])
+AC_SUBST([ndata_path])
 
 #
 # Checks for libraries.
