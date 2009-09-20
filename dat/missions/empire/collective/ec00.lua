@@ -24,13 +24,13 @@ else -- default english
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[You approach the Lt. Commander.
-"Hello %s, we have a reconnaissance you might be interested.  Commander Soldner said you'd make a good candidate for the mission.  You up for the challenge?"]]
-   text[2] = [["I don't think we've met.  I'm Lt. Commander Dimitri.  If all goes well you'll be reporting to me for the next assignments."
-"You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots.  They're a recent menace, had the timing to arrive more or less when the Incident happened, otherwise they would have been wiped out by the Emperor's Armada without sweating.  They completely wiped out all human life in the first worlds they hit like Eiroik.  We managed to stop them here, in %s and afterwards constructed this base.  Since then it's been more or less a stalemate."]]
-   text[3] = [["This week Collective activity has increased heavily around NGC-7291.  We've been trying to contain them, but reports detect that a scout broke through.  The scout was last detected near %s.  We expect it to not have gone far.  You are to locate the scout and report back to %s in the %s system.  It seems like the Collective is planning something and we want to follow their game a bit more"
-"It is of vital important that you do not engage the drone.  Report back as soon as you locate it."]]
+"Hello %s, we have a reconnaissance you might be interested. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]
+   text[2] = [["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments."
+"You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace, had the timing to arrive more or less when the Incident happened, otherwise they would have been wiped out by the Emperor's Armada without sweating. They completely wiped out all human life in the first worlds they hit like Eiroik. We managed to stop them here, in %s and afterwards constructed this base. Since then it's been more or less a stalemate."]]
+   text[3] = [["This week Collective activity has increased heavily around NGC-7291. We've been trying to contain them, but reports detect that a scout broke through. The scout was last detected near %s. We expect it to not have gone far. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a bit more"
+"It is of vital important that you do not engage the drone. Report back as soon as you locate it."]]
    text[4] = [[After landing you head to the Empire military headquarters and find Sgt. Dimitri there.
-"Well it seems like the drone has some strange fixation with %s.  We aren't quite sure what to make of it, but intelligence is on it.  Report back at the bar in bit and we'll see what we can do about the Collective"]]
+"Well it seems like the drone has some strange fixation with %s. We aren't quite sure what to make of it, but intelligence is on it. Report back at the bar in bit and we'll see what we can do about the Collective"]]
    msg_killdrone = "Mission Failed: You weren't supposed to kill the drone!"
 end
 
