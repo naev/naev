@@ -36,6 +36,7 @@ static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
+static int systemL_security( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -48,6 +49,7 @@ static const luaL_reg system_methods[] = {
    { "adjacentSystems", systemL_adjacent },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
+   { "security", systemL_security },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -463,6 +465,26 @@ static int systemL_planets( lua_State *L )
       lua_rawset(L,-3);
    }
 
+   return 1;
+}
+
+
+/**
+ * @brief Gets the security level in a system.
+ *
+ * @usage sec = sys:security()
+ *
+ *    @luaparam s System to get security level of.
+ *    @luareturn The security level in sys.
+ * @luafunc security( s )
+ */
+static int systemL_security( lua_State *L )
+{
+   LuaSystem *sys;
+
+   sys = luaL_checksystem(L,1);
+
+   lua_pushnumber(L, sys->s->security );
    return 1;
 }
 
