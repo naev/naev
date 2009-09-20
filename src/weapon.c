@@ -73,6 +73,7 @@ typedef struct Weapon_ {
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
+   double dam_mod; /**< Damage modifier. */
    int voice; /**< Weapon's voice. */
    double lockon; /**< some weapons have a lockon delay */
    double life; /**< Total life. */
@@ -1005,7 +1006,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
+   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage) );
 
    /* Get the layer. */
    spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1051,7 +1052,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dtype  = outfit_damageType(w->outfit);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
+   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage) );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->lockon == -1.) {
@@ -1101,6 +1102,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    /* Create basic features */
    w = malloc(sizeof(Weapon));
    memset(w, 0, sizeof(Weapon));
+   w->dam_mod = 1.; /* Default of 100% damage. */
    w->faction = parent->faction; /* non-changeable */
    w->parent = parent->id; /* non-changeable */
    w->target = target; /* non-changeable */
@@ -1152,10 +1154,16 @@ static Weapon* weapon_create( const Outfit* outfit,
 
          /* Calculate accuarcy. */
          acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
-         if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-            acc *= 2. - parent->stats.accuracy_turret; /* Invert. */
-         else
-            acc *= 2. - parent->stats.accuracy_forward; /* Invert. */
+
+         /* Stat modifiers. */
+         if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
+            acc         *= 2. - parent->stats.accuracy_turret; /* Invert. */
+            w->dam_mod  *= parent->stats.damage_turret;
+         }
+         else {
+            acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
+            w->dam_mod  *= parent->stats.damage_forward;
+         }
 
          /* Calculate direction. */
          rdir += RNG_2SIGMA() * acc;
