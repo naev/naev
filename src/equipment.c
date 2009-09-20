@@ -942,7 +942,8 @@ void equipment_genLists( unsigned int wid )
          s  = player_getShip( sships[i]);
          if (s->ship->desc_stats != NULL) {
             alt[i] = malloc( 256 );
-            l = snprintf( alt[i], 256, "Ship Stats\n%s", s->ship->desc_stats );
+            l  = snprintf( alt[i], 256, "Ship Stats" );
+            l += ship_statsDesc( &s->stats, &alt[i][l], 256-l, 1, 1 );
          }
          else
             alt[i] = NULL;

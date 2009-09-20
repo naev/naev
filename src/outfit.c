@@ -1205,7 +1205,7 @@ if ((x) != 0.) \
 #undef DESC_ADD0
 #undef DESC_ADD
    i += ship_statsDesc( &temp->u.mod.stats,
-         &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1 );
+         &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1, 0 );
 
    /* More processing. */
    temp->u.mod.thrust_rel /= 100.;
