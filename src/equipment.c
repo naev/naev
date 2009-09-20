@@ -943,7 +943,6 @@ void equipment_genLists( unsigned int wid )
          if (s->ship->desc_stats != NULL) {
             alt[i] = malloc( 256 );
             l = snprintf( alt[i], 256, "Ship Stats\n%s", s->ship->desc_stats );
-            alt[i][l-1] = '\0'; /* Remove trailing newline. */
          }
          else
             alt[i] = NULL;

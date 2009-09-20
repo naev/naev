@@ -314,9 +314,10 @@ int ship_statsParse( ShipStats *s, xmlNodePtr parent )
  *    @param s Ship stats to use.
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
+ *    @param newline Add a newline at start.
  *    @return Number of characters written.
  */
-int ship_statsDesc( ShipStats *s, char *buf, int len )
+int ship_statsDesc( ShipStats *s, char *buf, int len, int newline )
 {
    int i;
 
@@ -325,7 +326,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len )
 #define DESC_ADD(x, s) \
    if (x != 0.) \
       i += snprintf( &buf[i], len-i, \
-            "%+.0f%% "s"\n", x );
+            "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", x );
    DESC_ADD(s->jump_delay,"Jump time");
 #undef DESC_ADD
 
@@ -556,7 +557,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       if (xml_isNode(node,"stats")) {
          ship_statsParse( &temp->stats, node );
          temp->desc_stats = malloc( STATS_DESC_MAX );
-         i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX );
+         i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
          if (i <= 0) {
             free( temp->desc_stats );
             temp->desc_stats = NULL;

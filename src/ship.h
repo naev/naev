@@ -147,7 +147,7 @@ void ships_free (void);
  * stats
  */
 int ship_statsParse( ShipStats *s, xmlNodePtr parent );
-int ship_statsDesc( ShipStats *s, char *buf, int len );
+int ship_statsDesc( ShipStats *s, char *buf, int len, int newline );
 
 /*
  * get
