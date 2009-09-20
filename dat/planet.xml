@@ -970,7 +970,7 @@
   <general>
    <prodfactor>0.6</prodfactor>
    <bar>The Norpin II bar isn't the safest place around. With a deep-seated loathing of the Dvaered, the local citizens have brawled with Dvaered soldiers on numerous occasions.</bar>
-   <description>Norpin II is truly at the edge of the frontier, a barely-habitable world being mined and terraformed, though the latter is being as cheaply as possible, resulting in very poor conditions. The Dvaered are loathed here, and it's rumored that the local shipyard is a major source of FLF vessels.</description>
+   <description>Norpin II is truly at the edge of the frontier, a barely-habitable world being mined and terraformed, though the latter is being done as cheaply as possible, resulting in very poor conditions. The Dvaered are loathed here, and it's rumored that the local shipyard is a major source of FLF vessels.</description>
    <faction>Frontier</faction>
    <commodities>
     <commodity>Food</commodity>
