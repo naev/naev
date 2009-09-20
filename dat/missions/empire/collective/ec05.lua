@@ -20,7 +20,7 @@
       3) Ran away
 
    Not too happy with the text (it chews it all up for you), but then again,
-    I'm no writer.  Hopefully someone can clean it up a bit someday.
+    I'm no writer. Hopefully someone can clean it up a bit someday.
 
 ]]--
 
@@ -41,26 +41,26 @@ else -- default english
    title[4] = "Mission Accomplished"
    title[5] = "Mission Failure"
    text = {}
-   text[1] = [[As you enter the bar you can't seem to see Lt. Commander Dimitri.  You look a bit around for him when you feel a heavy hand fall on your shoulder.  It seems like two armed soldiers are here to escort you somewhere, and from the looks of their weapons, they mean business.  You have no choice other then to comply.
-They start leading you away from the bar through some hallways you've never been through.  Must be all those 'Authorized Personnel Only' signs and the armed guards that didn't make them too appealing.
+   text[1] = [[As you enter the bar you can't seem to see Lt. Commander Dimitri. You look a bit around for him when you feel a heavy hand fall on your shoulder. It seems like two armed soldiers are here to escort you somewhere, and from the looks of their weapons, they mean business. You have no choice other then to comply.
+They start leading you away from the bar through some hallways you've never been through. Must be all those 'Authorized Personnel Only' signs and the armed guards that didn't make them too appealing.
 Finally they toss you into what seems to be an interrogation room, telling you just to wait there.]]
-   text[2] = [[After what seems to be a decaSTU you hear the door open.  You see a condecorated women walk in with two soldiers at the door.  She seems to be a Commodore from the insignia on her uniform.
-"Hello, I'm Commodore Keer, I've taken over the Collective issue.  I have heard about your success in the previous missions and would like to offer you more continued work.  However further proceedings must be kept in strict confidentiality for the interest of the Empire.  You willing to go all the way with this?"]]
+   text[2] = [[After what seems to be a decaSTU you hear the door open. You see a condecorated women walk in with two soldiers at the door. She seems to be a Commodore from the insignia on her uniform.
+"Hello, I'm Commodore Keer, I've taken over the Collective issue. I have heard about your success in the previous missions and would like to offer you more continued work. However further proceedings must be kept in strict confidentiality for the interest of the Empire. You willing to go all the way with this?"]]
    text[3] = [[You accept and she then dismisses both of the soldiers who proceed to wait outside.
-"We've been following Lt. Commander Dimitri's progress since he started at %s.  The datapad you brought back has confirmed what we have suspected.  We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data.  You don't understand right?  Let me explain."]]
-   text[4] = [["The Collective was actually a project for the Empire, they were supposed to  be the ultimate weapon in flexibility and offense.  Commodore Welsh was in charge of the secret science facility on %s.  Shortly after the Incident we stopped hearing from the science facility.  We sent a recon and were met with hostile Collective drones.  It seems like the project had been a success, but the traitor Welsh went rogue.  Under normal circumstances we would have easily crushed the Collective, but after the incident these are hardly normal circumstances."
-She goes on, "Things have gone out of hand.  We have had chances to crush Welsh, but he seems to always have evaded us and struck us where we were weakest.  We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]
-   text[5] = [[She now clears her throat, "This operation has been dubbed 'Operation Black Trinity'.  We have reason to believe that the ESS Trinity has been operating with the traitor Welsh.  The ESS Trinity is commanded by Captain Zakred.  You will form part of a assault team with primary objective of arresting Zakred.  If all goes to worse, you are ordered to kill Zakred.  He must not escape."
-"We'll be sending you with a small force.  You just stick around and if any trouble arises, take the ESS Trinity down.  Zakred is currently doing some maneuver exercises in %s.  You will have to find him there.  The other ships will follow your lead to %s.  Good luck."]]
+"We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand right?  Let me explain."]]
+   text[4] = [["The Collective was actually a project for the Empire, they were supposed to  be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on %s. Shortly after the Incident we stopped hearing from the science facility. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the incident these are hardly normal circumstances."
+She goes on, "Things have gone out of hand. We have had chances to crush Welsh, but he seems to always have evaded us and struck us where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]
+   text[5] = [[She now clears her throat, "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of a assault team with primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape."
+"We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently doing some maneuver exercises in %s. You will have to find him there. The other ships will follow your lead to %s. Good luck."]]
    text[6] = [[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-"Congratulations on the success %s.  We never really expected to take Zakred alive.  Good riddance.  The next step is to begin an all out attack on Collective territory.  Meet up in the bar when you're ready.  We'll need all available pilots."]]
+"Congratulations on the success %s. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]]
    text[7] = [[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-"You weren't supposed to let the Trinity get away!  Now we have no cards to play, we must wait for the Collective response or new information before being able to continue.  We'll notify you if we have something you can do for us, but for now we just wait."]]
+"You weren't supposed to let the Trinity get away!  Now we have no cards to play, we must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]]
    -- Conversation between pilots
    talk = {}
    talk[1] = "ESS Trinity:  Please turn off your engines and prepare to be boarded."
    talk[2] = "You will never take me alive!"
-   talk[3] = "Very well then.  All units engage ESS Trinity."
+   talk[3] = "Very well then. All units engage ESS Trinity."
    talk[4] = "Incoming collective drones detected."
    talk[5] = "Mission Success: Return to base."
    talk[6] = "Mission Failure: Return to base."
