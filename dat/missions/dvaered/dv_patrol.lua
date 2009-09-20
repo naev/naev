@@ -44,7 +44,7 @@ function patrol_systems_filter( s )
    end
 
    -- Must have FLF
-   if not (s:hasPresence( "FLF ") or s:hasPresence( "Pirate" ) )  then
+   if s:security() > 75 then
       return false
    end
 
