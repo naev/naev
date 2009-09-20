@@ -668,6 +668,8 @@ void ships_free (void)
          free(s->fabricator);
       if (s->license != NULL)
          free(s->license);
+      if (s->desc_stats != NULL)
+         free(s->desc_stats);
 
       /* Free outfits. */
       if (s->outfit_low != NULL)
