@@ -2678,6 +2678,9 @@ static int player_parse( xmlNodePtr parent )
 
    /* set player in system */
    pnt = planet_get( planet );
+   /* Get random planet if it's NULL. */
+   if (pnt == NULL)
+      pnt = planet_get( space_getRndPlanet() );
    /* In case the planet does not exist, we need to update some variables.
     * While we're at it, we'll also make sure the system exists as well. */
    hunting  = 1;
