@@ -394,6 +394,8 @@ AC_CONFIG_FILES([Makefile
 		 src/Makefile
 		 src/tk/Makefile
 		 src/tk/widget/Makefile
+		 utils/Makefile
+		 utils/pack/Makefile
 		 build/shave])
 AC_OUTPUT
 
