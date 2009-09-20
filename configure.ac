@@ -77,15 +77,12 @@ AC_ARG_ENABLE([debug],
     case "$enableval" in
       no)
 	enable_debug=no
-	enable_paranoid_debug=no
 	;;
       paranoid)
-        enable_debug=yes
-	enable_paranoid_debug=yes
+        enable_debug=paranoid
         ;;
       *)
 	enable_debug=yes
-	enable_paranoid_debug=no
 	;;
     esac
   ], [
@@ -272,7 +269,7 @@ AS_IF([test "$enable_debug" = "yes"], [
 NAEV_CFLAGS=""
 NAEV_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 
-AS_IF([test "$enable_debug" = "yes"], [
+AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
   case "$host" in
@@ -281,7 +278,7 @@ AS_IF([test "$enable_debug" = "yes"], [
       ;;
   esac
 ])
-AS_IF([test "$enable_paranoid_debug" = "yes"], [
+AS_IF([test "$enable_debug" = "paranoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
 
@@ -406,3 +403,5 @@ echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
+echo
+AC_MSG_NOTICE([debug mode:  $enable_debug])
