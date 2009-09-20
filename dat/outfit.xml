@@ -1052,7 +1052,8 @@
    <gfx_store>cpu_iii</gfx_store>
   </general>
   <specific type="modification">
-   <accuracy_turret>25</accuracy_turret>
+   <accuracy_turret>15</accuracy_turret>
+   <firerate_turret>-10</firerate_turret>
   </specific>
  </outfit>
  <outfit name="Star Map">
