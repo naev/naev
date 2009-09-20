@@ -223,6 +223,8 @@ AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
 SDLIMAGE_CFLAGS=
 SDLIMAGE_LIBS="$LIBS"
 LIBS="$OLD_LIBS"
+AC_SUBST([SDLIMAGE_CFLAGS])
+AC_SUBST([SDLIMAGE_LIBS])
 
 # OpenGL
 AS_IF([test "$have_darwin" = "yes"], [
@@ -327,6 +329,11 @@ AS_IF([test "$have_posix" = "yes"], [
 AC_SUBST([LIBLUA_CFLAGS])
 
 #
+# Checks for headers
+#
+AC_CHECK_HEADERS([fenv.h])
+
+#
 # Checks for typedefs, structures, and compiler characteristics.
 #
 AC_TYPE_OFF_T
@@ -336,6 +343,14 @@ AC_TYPE_UINT16_T
 AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
+
+#
+# Checks for functions
+#
+OLD_LIBS="$LIBS"
+LIBS="-lm"
+AC_CHECK_FUNCS([feenableexcept])
+LIBS="$OLD_LIBS"
 
 #
 # Defines in config.h
