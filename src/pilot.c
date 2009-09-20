@@ -932,7 +932,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target );
+            &vp, &p->solid->vel, p, p->target );
    }
 
    /*
@@ -947,7 +947,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->u.beamid = beam_start( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target, w );
+            &vp, &p->solid->vel, p, p->target, w );
    }
 
    /*
@@ -971,7 +971,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       p->energy -= outfit_energy(w->u.ammo.outfit);
       weapon_add( w->u.ammo.outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target );
+            &vp, &p->solid->vel, p, p->target );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
@@ -1314,10 +1314,10 @@ int pilot_hasDeployed( Pilot *p )
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type of the explosion.
  *    @param damage Amount of damage by the explosion.
- *    @param parent ID of the pilot exploding.
+ *    @param parent The exploding pilot.
  */
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, unsigned int parent )
+      DamageType dtype, double damage, const Pilot *parent )
 {
    int i;
    double rx, ry;
@@ -1350,7 +1350,7 @@ void pilot_explode( double x, double y, double radius,
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, parent, dtype, damage );
+         pilot_hit( p, &s, (parent!=NULL)?parent->id:0, dtype, damage );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
@@ -1439,7 +1439,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->ship->gfx_space->sw/2. + a,
                DAMAGE_TYPE_KINETIC,
                MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.))),
-               0, EXPL_MODE_SHIP );
+               NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
@@ -2343,6 +2343,8 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo * q;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass * q;
          /* stats. */
+         s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
+         s->accuracy_turret   += o->u.mod.stats.accuracy_turret * q;
          s->jump_delay        += o->u.mod.stats.jump_delay * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
@@ -2382,7 +2384,9 @@ void pilot_calcStats( Pilot* pilot )
    }
 
    /* Normalize stats. */
-   s->jump_delay = s->jump_delay/100. + 1.;
+   s->accuracy_forward  = s->accuracy_forward/100. + 1.;
+   s->accuracy_turret   = s->accuracy_turret/100. + 1.;
+   s->jump_delay        = s->jump_delay/100. + 1.;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

@@ -118,7 +118,7 @@ static int beam_idgen = 0; /**< Beam identifier generator. */
 /* static */
 static Weapon* weapon_create( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int parent, const unsigned int target );
+      const Pilot *parent, const unsigned int target );
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
@@ -129,7 +129,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
-      unsigned int parent, int mode );
+      const Pilot *parent, int mode );
 static int weapon_checkCanHit( Weapon* w, Pilot *p );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
@@ -314,7 +314,8 @@ static void think_seeker( Weapon* w, const double dt )
    Vector2d v;
    double t;
 
-   if (w->target == w->parent) return; /* no self shooting */
+   if (w->target == w->parent)
+      return; /* no self shooting */
 
    p = pilot_get(w->target); /* no null pilot_nstack */
    if (p==NULL) {
@@ -1083,25 +1084,25 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
- *    @param parent Shooter ID.
+ *    @param parent Shooter.
  *    @param target Target ID of the shooter.
  *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int parent, const unsigned int target )
+      const Pilot* parent, const unsigned int target )
 {
    Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
-   double x,y, t, dist;
+   double x,y, acc, t, dist;
    Weapon* w;
 
    /* Create basic features */
    w = malloc(sizeof(Weapon));
    memset(w, 0, sizeof(Weapon));
-   w->faction = pilot_get(parent)->faction; /* non-changeable */
-   w->parent = parent; /* non-changeable */
+   w->faction = parent->faction; /* non-changeable */
+   w->parent = parent->id; /* non-changeable */
    w->target = target; /* non-changeable */
    w->outfit = outfit; /* non-changeable */
    w->update = weapon_update;
@@ -1149,7 +1150,15 @@ static Weapon* weapon_create( const Outfit* outfit,
          else /* fire straight */
             rdir = dir;
 
-         rdir += RNG_2SIGMA() * outfit->u.blt.accuracy/2. * 1./180.*M_PI;
+         /* Calculate accuarcy. */
+         acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
+         if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
+            acc *= parent->stats.accuracy_turret;
+         else
+            acc *= parent->stats.accuracy_forward;
+
+         /* Calculate direction. */
+         rdir += RNG_2SIGMA() * acc;
          if (rdir < 0.)
             rdir += 2.*M_PI;
          else if (rdir >= 2.*M_PI)
@@ -1295,7 +1304,7 @@ static Weapon* weapon_create( const Outfit* outfit,
  */
 void weapon_add( const Outfit* outfit, const double dir,
       const Vector2d* pos, const Vector2d* vel,
-      unsigned int parent, unsigned int target )
+      const Pilot *parent, unsigned int target )
 {
    WeaponLayer layer;
    Weapon *w;
@@ -1309,7 +1318,7 @@ void weapon_add( const Outfit* outfit, const double dir,
       return;
    }
 
-   layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    w = weapon_create( outfit, dir, pos, vel, parent, target );
 
    /* set the proper layer */
@@ -1361,7 +1370,7 @@ void weapon_add( const Outfit* outfit, const double dir,
  *    @param dir Direction of the shooter.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
- *    @param parent Pilot ID of the shooter.
+ *    @param parent Pilot shooter.
  *    @param target Target ID that is getting shot.
  *    @param mount Mount on the ship.
  *    @return The identifier of the beam weapon.
@@ -1370,7 +1379,7 @@ void weapon_add( const Outfit* outfit, const double dir,
  */
 int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int parent, const unsigned int target,
+      const Pilot *parent, const unsigned int target,
       const PilotOutfitSlot *mount )
 {
    WeaponLayer layer;
@@ -1384,7 +1393,7 @@ int beam_start( const Outfit* outfit,
       return -1;
    }
 
-   layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    w = weapon_create( outfit, dir, pos, vel, parent, target );
    w->ID = ++beam_idgen;
    w->mount = mount;
@@ -1608,7 +1617,7 @@ void weapon_exit (void)
  */
 void weapon_explode( double x, double y, double radius,
       DamageType dtype, double damage,
-      unsigned int parent, int mode )
+      const Pilot *parent, int mode )
 {
    (void)dtype;
    (void)damage;
@@ -1617,9 +1626,12 @@ void weapon_explode( double x, double y, double radius,
 }
 
 
+/**
+ * @brief Explodes all the things on a layer.
+ */
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
-      unsigned int parent, int mode )
+      const Pilot *parent, int mode )
 {
    (void)parent;
    int i;

@@ -300,6 +300,8 @@ int ship_statsParse( ShipStats *s, xmlNodePtr parent )
    /* Parse information. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      xmlr_float(node,"accuracy_forward",s->accuracy_forward);
+      xmlr_float(node,"accuracy_turret",s->accuracy_turret);
       xmlr_float(node,"jump_delay",s->jump_delay);
    } while (xml_nextNode(node));
 
@@ -329,6 +331,8 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
+   DESC_ADD(s->accuracy_forward,"Accuracy (Forward)");
+   DESC_ADD(s->accuracy_turret,"Accuracy (Turret)");
    DESC_ADD(s->jump_delay,"Jump time");
 #undef DESC_ADD
 
