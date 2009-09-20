@@ -73,7 +73,7 @@ AS_IF([test "x$prefix" = "xNONE"], [
 AC_MSG_CHECKING([whether to enable additional debugging options])
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
-		 [enable additional debugging options]), [
+		 [enable additional debugging options (default: yes)]), [
     case "$enableval" in
       no)
 	enable_debug=no
@@ -86,7 +86,7 @@ AC_ARG_ENABLE([debug],
 	;;
     esac
   ], [
-    enable_debug=no
+    enable_debug=yes
   ])
 AC_MSG_RESULT([$enable_debug])
 
