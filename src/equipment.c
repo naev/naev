@@ -912,6 +912,7 @@ void equipment_genLists( unsigned int wid )
    char **alt;
    char **quantity;
    Outfit *o;
+   Pilot *s;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -934,6 +935,20 @@ void equipment_genLists( unsigned int wid )
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 64./96.*128., 64.,
             tships, sships, nships, equipment_updateShips );
+
+      /* Ship stats in alt text. */
+      alt   = malloc( sizeof(char*) * nships );
+      for (i=0; i<nships; i++) {
+         s  = player_getShip( sships[i]);
+         if (s->ship->desc_stats != NULL) {
+            alt[i] = malloc( 256 );
+            l = snprintf( alt[i], 256, "Ship Stats\n%s", s->ship->desc_stats );
+            alt[i][l-1] = '\0'; /* Remove trailing newline. */
+         }
+         else
+            alt[i] = NULL;
+      }
+      toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
 
    /* Outfit list. */

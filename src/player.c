@@ -1916,6 +1916,9 @@ Pilot* player_getShip( char* shipname )
 {
    int i;
 
+   if ((player != NULL) && (strcmp(shipname,player->name)==0))
+      return player;
+
    for (i=0; i < player_nstack; i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return player_stack[i].p;
