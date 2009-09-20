@@ -797,8 +797,8 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    int ret;
    Outfit *o, *ammo;
    int q;
-   int n;
-   double off;
+   int nout, nship;
+   double offout, offship;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -845,12 +845,17 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    }
 
    /* Redo the outfits thingy. */
-   n   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-   off = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+   nout   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   offout = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+   nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+   offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
    window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+   window_destroyWidget( wid, EQUIPMENT_SHIPS );
    equipment_genLists( wid );
-   toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, off );
+   toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, nout );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offout );
+   toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
 
    /* Update ships. */
    equipment_updateShips( wid, NULL );
@@ -940,13 +945,13 @@ void equipment_genLists( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s  = player_getShip( sships[i]);
-         if (s->ship->desc_stats != NULL) {
-            alt[i] = malloc( 256 );
-            l  = snprintf( alt[i], 256, "Ship Stats" );
-            l += ship_statsDesc( &s->stats, &alt[i][l], 256-l, 1, 1 );
-         }
-         else
+         alt[i] = malloc( 256 );
+         l = snprintf( alt[i], 256, "Ship Stats" );
+         p = ship_statsDesc( &s->stats, &alt[i][l], 256-l, 1, 1 );
+         if (p == 0) {
+            free(alt[i]);
             alt[i] = NULL;
+         }
       }
       toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
@@ -1271,6 +1276,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    pilot_calcStats( ship );
 
    /* Regenerate list. */
+   window_destroyWidget( wid, EQUIPMENT_SHIPS );
    window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    equipment_genLists( wid );
 }

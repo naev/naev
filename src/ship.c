@@ -334,7 +334,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    /* Set stat text. */
    i = 0;
 #define DESC_ADD(x, s) \
-   if (x != 0.) \
+   if ((pilot && (x!=1.)) || (!pilot && (x!=0.))) \
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
