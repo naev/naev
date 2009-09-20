@@ -586,12 +586,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    pos = snprintf( alt, sizeof(alt),
          "%s\n"
          "\n"
-         "%s\n",
+         "%s",
          o->name,
          o->desc_short );
    if (o->mass > 0.)
       pos += snprintf( &alt[pos], sizeof(alt)-pos,
-            "%.0f Tons",
+            "\n%.0f Tons",
             o->mass );
 
    /* Draw the text. */
