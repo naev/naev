@@ -2384,8 +2384,8 @@ void pilot_calcStats( Pilot* pilot )
    }
 
    /* Normalize stats. */
-   s->accuracy_forward  = s->accuracy_forward/100. + 1.;
-   s->accuracy_turret   = s->accuracy_turret/100. + 1.;
+   s->accuracy_forward  = -s->accuracy_forward/100. + 1.; /* Translate to "spread". */
+   s->accuracy_turret   = -s->accuracy_turret/100. + 1.; /* Translate to "spread". */
    s->jump_delay        = s->jump_delay/100. + 1.;
 
    /* Give the pilot his health proportion back */
