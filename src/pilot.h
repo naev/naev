@@ -221,6 +221,9 @@ typedef struct Pilot_ {
    double energy_regen; /**< Energy regeneration rate (per second). */
    double energy_tau; /**< Tau regeneration rate for energy. */
 
+   /* Ship statistics. */
+   ShipStats stats; /**< Pilot's copy of ship statistics. */
+
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
    void (*update)(struct Pilot_*, const double); /**< updates the pilot */

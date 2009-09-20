@@ -586,12 +586,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    pos = snprintf( alt, sizeof(alt),
          "%s\n"
          "\n"
-         "%s\n",
+         "%s",
          o->name,
          o->desc_short );
    if (o->mass > 0.)
       pos += snprintf( &alt[pos], sizeof(alt)-pos,
-            "%.0f Tons",
+            "\n%.0f Tons",
             o->mass );
 
    /* Draw the text. */
@@ -912,6 +912,7 @@ void equipment_genLists( unsigned int wid )
    char **alt;
    char **quantity;
    Outfit *o;
+   Pilot *s;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -934,6 +935,20 @@ void equipment_genLists( unsigned int wid )
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 64./96.*128., 64.,
             tships, sships, nships, equipment_updateShips );
+
+      /* Ship stats in alt text. */
+      alt   = malloc( sizeof(char*) * nships );
+      for (i=0; i<nships; i++) {
+         s  = player_getShip( sships[i]);
+         if (s->ship->desc_stats != NULL) {
+            alt[i] = malloc( 256 );
+            l  = snprintf( alt[i], 256, "Ship Stats" );
+            l += ship_statsDesc( &s->stats, &alt[i][l], 256-l, 1, 1 );
+         }
+         else
+            alt[i] = NULL;
+      }
+      toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
 
    /* Outfit list. */

@@ -27,6 +27,7 @@
 #include "ndata.h"
 #include "spfx.h"
 #include "array.h"
+#include "ship.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -1164,6 +1165,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
    } while (xml_nextNode(node));
+   /* stats */
+   ship_statsParse( &temp->u.mod.stats, parent );
 
    /* Process some variables. */
    temp->u.mod.armour_regen /= 60.;
@@ -1201,6 +1204,8 @@ if ((x) != 0.) \
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
+   i += ship_statsDesc( &temp->u.mod.stats,
+         &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1, 0 );
 
    /* More processing. */
    temp->u.mod.thrust_rel /= 100.;
@@ -1454,11 +1459,16 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(Outfit) );
 
    temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
-   if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
    do { /* load all the data */
+
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
@@ -1485,8 +1495,10 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             }
 
          } while (xml_nextNode(cur));
+         continue;
       }
-      else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
+      
+      if (xml_isNode(node,"specific")) { /* has to be processed seperately */
 
          /* get the type */
          prop = xml_nodeProp(node,"type");
@@ -1526,7 +1538,11 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             outfit_parseSMap( temp, node );
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
+
+         continue;
       }
+
+      DEBUG("Unknown node '%s' in outfit '%s'", node->name, temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \

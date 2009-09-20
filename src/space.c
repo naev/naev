@@ -879,6 +879,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
+
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"GFX")) {
          cur = node->children;
          do {
@@ -891,6 +895,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->gfx_exterior = strdup(str);
             }
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"pos")) {
          cur = node->children;
@@ -904,6 +909,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->pos.y = xml_getFloat(cur);
             }
          } while(xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"general")) {
          cur = node->children;
@@ -965,7 +971,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->ncommodities * sizeof(Commodity*));
             }
          } while(xml_nextNode(cur));
+         continue;
       }
+
+      DEBUG("Unknown node '%s' in planet '%s'",node->name,planet->name);
    } while (xml_nextNode(node));
 
 
@@ -1265,6 +1274,10 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    node  = parent->xmlChildrenNode;
 
    do { /* load all the data */
+
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"pos")) {
          cur = node->children;
          do {
@@ -1277,6 +1290,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                sys->pos.y = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"general")) {
          cur = node->children;
@@ -1300,6 +1314,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                sys->nebu_density = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
+         continue;
       }
       /* loads all the planets */
       else if (xml_isNode(node,"planets")) {
@@ -1308,6 +1323,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
             if (xml_isNode(cur,"planet"))
                system_addPlanet( sys, xml_get(cur) );
          } while (xml_nextNode(cur));
+         continue;
       }
       /* loads all the fleets */
       else if (xml_isNode(node,"fleets")) {
@@ -1355,7 +1371,14 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                }
             }
          } while (xml_nextNode(cur));
+         continue;
       }
+
+      /* Avoid warning. */
+      if (xml_isNode(node,"jumps"))
+         continue;
+
+      DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Star System '%s' missing '"s"' element", sys->name)

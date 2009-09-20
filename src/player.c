@@ -1916,6 +1916,9 @@ Pilot* player_getShip( char* shipname )
 {
    int i;
 
+   if ((player != NULL) && (strcmp(shipname,player->name)==0))
+      return player;
+
    for (i=0; i < player_nstack; i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return player_stack[i].p;
@@ -2591,6 +2594,7 @@ static int player_parse( xmlNodePtr parent )
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
+   int i, hunting;
 
    xmlr_attr(parent,"name",player_name);
 
@@ -2674,9 +2678,20 @@ static int player_parse( xmlNodePtr parent )
 
    /* set player in system */
    pnt = planet_get( planet );
-   if (pnt == NULL) {
-      WARN("Planet '%s' not found, starting player on random planet.", planet);
-      pnt = planet_get( space_getRndPlanet() );
+   /* In case the planet does not exist, we need to update some variables.
+    * While we're at it, we'll also make sure the system exists as well. */
+   hunting  = 1;
+   i        = 0;
+   while (hunting && (i<100)) {
+      planet = pnt->name;
+      if (planet_getSystem( planet ) == NULL) {
+         WARN("Planet '%s' found, but its system isn't. Trying again.", planet);
+         pnt = planet_get( space_getRndPlanet() );
+      }
+      else {
+         hunting = 0;
+      }
+      i++;
    }
    sw = pnt->gfx_space->sw;
    sh = pnt->gfx_space->sh;

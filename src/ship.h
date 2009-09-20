@@ -11,6 +11,7 @@
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
+#include "nxml.h"
 
 
 /* target gfx dimensions */
@@ -129,6 +130,10 @@ typedef struct Ship_ {
 
    /* mounts */
    double mangle; /**< Mount angle to simplify mount calculations. */
+
+   /* Statistics. */
+   char *desc_stats; /**< Ship statistics information. */
+   ShipStats stats; /**< Ship statistics properties. */
 } Ship;
 
 
@@ -138,6 +143,11 @@ typedef struct Ship_ {
 int ships_load (void);
 void ships_free (void);
 
+/*
+ * stats
+ */
+int ship_statsParse( ShipStats *s, xmlNodePtr parent );
+int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
 
 /*
  * get

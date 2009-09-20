@@ -2260,6 +2260,10 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
+   ShipStats *s;
+
+   /* Comfortability. */
+   s = &pilot->stats;
 
    /*
     * set up the basic stuff
@@ -2289,6 +2293,8 @@ void pilot_calcStats( Pilot* pilot )
    /* Jamming */
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
+   /* Stats. */
+   memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
 
    /* cargo has to be reset */
    pilot_calcCargo(pilot);
@@ -2336,6 +2342,8 @@ void pilot_calcStats( Pilot* pilot )
          /* misc */
          pilot->cargo_free    += o->u.mod.cargo * q;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass * q;
+         /* stats. */
+         s->jump_delay        += o->u.mod.stats.jump_delay * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
@@ -2372,6 +2380,9 @@ void pilot_calcStats( Pilot* pilot )
       pilot->weap_range = 0.;
       pilot->weap_speed = 0.;
    }
+
+   /* Normalize stats. */
+   s->jump_delay = s->jump_delay/100. + 1.;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -2718,8 +2729,15 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  */
 double pilot_hyperspaceDelay( Pilot *p )
 {
+   double val;
+
    /* Calculate jump delay. */
-   return pow( p->solid->mass, 1./2.5 ) / 5.;
+   val  = pow( p->solid->mass, 1./2.5 ) / 5.;
+
+   /* Modulate by stats. */
+   val *= p->stats.jump_delay;
+
+   return val;
 }
 
 

@@ -139,25 +139,29 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    temp->faction = -1;
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
-   if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Fleet in "FLEET_DATA" has invalid or no name");
 
    do { /* load all the data */
+      xml_onlyNodes(node);
 
       /* Set faction. */
-      if (xml_isNode(node,"faction"))
+      if (xml_isNode(node,"faction")) {
          temp->faction = faction_get(xml_get(node));
+         continue;
+      }
 
       /* Set AI. */
-      else if (xml_isNode(node,"ai"))
-         temp->ai = xml_getStrd(node);
+      xmlr_strd(node,"ai",temp->ai);
 
       /* Set flags. */
-      else if (xml_isNode(node,"flags")){
+      if (xml_isNode(node,"flags")){
          cur = node->children;     
          do {
             if (xml_isNode(cur,"guard"))
                fleet_setFlag(temp, FLEET_FLAG_GUARD);
          } while (xml_nextNode(cur));
+         continue;
       }
 
       /* Load pilots. */
@@ -208,7 +212,10 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
          /* Resize to minimum. */
          temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
+         continue;
       }
+
+      DEBUG("Unknown node '%s' in fleet '%s'",node->name,temp->name);
    } while (xml_nextNode(node));
 
    /* Calculate average amount of pilots. */
@@ -309,6 +316,8 @@ static int fleet_parseGroup( FleetGroup *fltgrp, xmlNodePtr parent )
    node = parent->children;
    mem = 0;
    do {
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"fleet")) {
 
          /* See if memory must grow. */

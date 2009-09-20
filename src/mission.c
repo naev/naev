@@ -709,13 +709,18 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
    /* get the name */
    temp->name = xml_nodeProp(parent,"name");
-   if (temp->name == NULL) WARN("Mission in "MISSION_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Mission in "MISSION_DATA" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
    char str[PATH_MAX] = "\0";
 
    do { /* load all the data */
+
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"lua")) {
          snprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
@@ -733,6 +738,8 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
          free(buf);
          lua_close(L);
 #endif /* DEBUGGING */
+
+         continue;
       }
       else if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
@@ -740,6 +747,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             if (xml_isNode(cur,"unique"))
                mis_setFlag(temp,MISSION_UNIQUE);
          } while (xml_nextNode(cur));
+         continue;
       }
       else if (xml_isNode(node,"avail")) { /* mission availability */
          cur = node->children;
@@ -762,7 +770,10 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"done",temp->avail.done);
             xmlr_int(cur,"priority",temp->avail.priority);
          } while (xml_nextNode(cur));
+         continue;
       }
+
+      DEBUG("Unknown node '%s' in mission '%s'",node->name,temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \

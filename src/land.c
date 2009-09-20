@@ -751,6 +751,10 @@ static void shipyard_open( unsigned int wid )
    window_addImage( wid, -40-128, -50-96,
          "imgTarget", NULL, 1 );
 
+   /* stat text */
+   window_addText( wid, -40, -170, 128, 200, 0, "txtStats",
+         &gl_smallFont, &cBlack, NULL );
+
    /* text */
    buf = "Model:\n"
          "Class:\n"
@@ -848,7 +852,8 @@ static void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n" );
-      window_modifyText( wid,  "txtDDesc", buf );
+      window_modifyText( wid, "txtDDesc", buf );
+      window_modifyImage( wid, "txtStats", NULL );
       return;
    }
 
@@ -858,6 +863,7 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyImage( wid, "imgTarget", ship->gfx_target );
 
    /* update text */
+   window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
    credits2str( buf2, ship->price, 2 );
    credits2str( buf3, player->credits, 2 );
@@ -891,7 +897,7 @@ static void shipyard_update( unsigned int wid, char* str )
          ship->cpu,
          ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->mass,
-         pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
+         pow( ship->mass, 1./2.5 ) / 5. * (ship->stats.jump_delay/100.+1.), /**< @todo make this more portable. */
          ship->thrust / ship->mass,
          ship->speed,
          ship->turn,

@@ -41,8 +41,9 @@
 #define BUTTON_WIDTH  80 /**< Button width in ship view window. */
 #define BUTTON_HEIGHT 30 /**< Button height in ship view window. */
 
-
 #define CHUNK_SIZE    32 /**< Rate at which to allocate memory. */
+
+#define STATS_DESC_MAX 128 /**< Maximum length for statistics description. */
 
 
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
@@ -287,6 +288,55 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
+ * @brief Parses the ship stats.
+ *
+ *    @param s ShipStats to parse stats for.
+ *    @param parent Statistics node.
+ */
+int ship_statsParse( ShipStats *s, xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   /* Parse information. */
+   node = parent->xmlChildrenNode;
+   do { /* load all the data */
+      xmlr_float(node,"jump_delay",s->jump_delay);
+   } while (xml_nextNode(node));
+
+   /* Success. */
+   return 0;
+}
+
+
+/**
+ * @brief Writes the ship statistics description.
+ *
+ *    @param s Ship stats to use.
+ *    @param buf Buffer to write to.
+ *    @param len Space left in the buffer.
+ *    @param newline Add a newline at start.
+ *    @param pilot Stats come from a pilot.
+ *    @return Number of characters written.
+ */
+int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
+{
+   int i;
+
+   /* Set stat text. */
+   i = 0;
+#define DESC_ADD(x, s) \
+   if (x != 0.) \
+      i += snprintf( &buf[i], len-i, \
+            "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
+            (pilot) ? (x-1.)*100. : x );
+   DESC_ADD(s->jump_delay,"Jump time");
+#undef DESC_ADD
+
+   return i;
+}
+
+
+/**
  * @brief Extracts the ingame ship from an XML node.
  *
  *    @param temp Ship to load data into.
@@ -316,6 +366,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* Load data. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+
+      /* Only handle nodes. */
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"GFX")) {
 
          /* Get base graphic name. */
@@ -376,6 +430,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Get the comm graphic for future loading. */
          snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
          temp->gfx_comm = strdup(str);
+
+         continue;
       }
 
       xmlr_strd(node,"GUI",temp->gui);
@@ -496,7 +552,22 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                h++;
             }
          } while (xml_nextNode(cur));
+         continue;
       }
+
+      /* Parse ship stats. */
+      if (xml_isNode(node,"stats")) {
+         ship_statsParse( &temp->stats, node );
+         temp->desc_stats = malloc( STATS_DESC_MAX );
+         i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX, 0, 0 );
+         if (i <= 0) {
+            free( temp->desc_stats );
+            temp->desc_stats = NULL;
+         }
+         continue;
+      }
+
+      DEBUG("Unknown '%s' node in ship '%s'", node->name, temp->name );
    } while (xml_nextNode(node));
 
    /* Post processing. */
