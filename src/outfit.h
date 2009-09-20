@@ -40,6 +40,7 @@
  *  1.2 would increase by 20% the base value.
  */
 typedef struct ShipStats_ {
+#if 0
    /* Scout type. */
    double sensor_range; /**< Sensor detection range. */
    double sensor_jam; /**< Sensor detection countermeasures. */
@@ -61,6 +62,7 @@ typedef struct ShipStats_ {
 
    /* Freighter-type. */
    double cargo_inertia; /**< Lowers the effect of cargo mass. */
+#endif
    double jump_delay; /**< Modulates the jump delay. */
 } ShipStats;
 
