@@ -1153,9 +1153,9 @@ static Weapon* weapon_create( const Outfit* outfit,
          /* Calculate accuarcy. */
          acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
          if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-            acc *= parent->stats.accuracy_turret;
+            acc *= 2. - parent->stats.accuracy_turret; /* Invert. */
          else
-            acc *= parent->stats.accuracy_forward;
+            acc *= 2. - parent->stats.accuracy_forward; /* Invert. */
 
          /* Calculate direction. */
          rdir += RNG_2SIGMA() * acc;

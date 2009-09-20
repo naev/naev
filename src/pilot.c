@@ -2396,11 +2396,11 @@ void pilot_calcStats( Pilot* pilot )
     * Normalize stats.
     */
    /* Fighter. */
-   s->accuracy_forward  = -s->accuracy_forward/100. + 1.; /* Translate to "spread". */
+   s->accuracy_forward  = s->accuracy_forward/100. + 1.; /* Translate to "spread". */
    s->damage_forward    = s->damage_forward/100. + 1.;
    s->firerate_forward  = s->firerate_forward/100. + 1.;
    /* Cruiser. */
-   s->accuracy_turret   = -s->accuracy_turret/100. + 1.; /* Translate to "spread". */
+   s->accuracy_turret   = s->accuracy_turret/100. + 1.; /* Translate to "spread". */
    s->damage_turret     = s->damage_turret/100. + 1.;
    s->firerate_turret   = s->firerate_turret/100. + 1.;
    /* Freighter. */
