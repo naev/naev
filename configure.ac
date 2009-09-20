@@ -124,7 +124,7 @@ AC_ARG_WITH([sdlmixer],
 AC_MSG_RESULT([$with_sdlmixer])
 
 # --with-ndata
-ndata_path="$datadir/$PACKAGE_NAME/ndata-$VERSION"
+ndata_path="$datadir/$PACKAGE_NAME/ndata"
 eval ndata_path="$ndata_path" # expand ${datarootdir}
 eval ndata_path="$ndata_path" # expand ${prefix}
 

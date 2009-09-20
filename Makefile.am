@@ -2,7 +2,7 @@ SUBDIRS = lib src
 
 dist_man6_MANS = naev.6
 
-DATA_ARCHIVE = ndata-$(VERSION)
+DATA_ARCHIVE = ndata
 
 EXTRA_DIST = LICENSE conf.example
 CLEANFILES = pack $(DATA_ARCHIVE)
