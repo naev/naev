@@ -475,7 +475,7 @@ static int systemL_planets( lua_State *L )
  * @usage sec = sys:security()
  *
  *    @luaparam s System to get security level of.
- *    @luareturn The security level in sys.
+ *    @luareturn The security level in sys (in % -> 25 = 25%).
  * @luafunc security( s )
  */
 static int systemL_security( lua_State *L )
@@ -484,7 +484,7 @@ static int systemL_security( lua_State *L )
 
    sys = luaL_checksystem(L,1);
 
-   lua_pushnumber(L, sys->s->security );
+   lua_pushnumber(L, sys->s->security * 100. );
    return 1;
 }
 
