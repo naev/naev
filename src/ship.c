@@ -323,8 +323,9 @@ int ship_statsDesc( ShipStats *s, char *buf, int len )
    /* Set stat text. */
    i = 0;
 #define DESC_ADD(x, s) \
-   i += snprintf( &buf[i], len-i, \
-         "%+.0f%% "s"\n", x );
+   if (x != 0.) \
+      i += snprintf( &buf[i], len-i, \
+            "%+.0f%% "s"\n", x );
    DESC_ADD(s->jump_delay,"Jump time");
 #undef DESC_ADD
 
