@@ -25,5 +25,5 @@ $(DATA_ARCHIVE): pack VERSION
 		find gfx     -type f -name '*.png'; \
 		find snd     -type f \( -name '*.ogg' -o -name '*.wav' \); \
 		find scripts -type f -name '*.lua'; \
-		find dat     -type f -name '*.lua'); \
+		find dat     -type f); \
 	rm -f VERSION
