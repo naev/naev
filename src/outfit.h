@@ -65,10 +65,14 @@ typedef struct ShipStats_ {
 #endif
 
    /* Fighter type. */
-   double accuracy_forward;
+   double accuracy_forward; /**< Accuracy of forward mounts. */
+   double damage_forward; /**< Damage of forward mounts. */
+   double firerate_forward; /**< Rate of fire of forward mounts. */
 
    /* Cruiser type. */
-   double accuracy_turret;
+   double accuracy_turret; /**< Accuracy of turrets. */
+   double damage_turret; /**< Damage of turrets. */
+   double firerate_turret; /**< Rate of fire of turrets. */
 
    /* Freighter-type. */
    double jump_delay; /**< Modulates the jump delay. */
