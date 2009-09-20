@@ -51,14 +51,19 @@ have_windows=no
 have_darwin=no
 
 case "$host" in
-  *-*-mingw*)
+  *-mingw*)
     have_windows=yes
     have_posix=no
     ;;
-  *-*-darwin*)
+  *-darwin*)
     have_darwin=yes
     ;;
 esac
+
+# Fix missing prefix
+AS_IF([test "x$prefix" = "xNONE"], [
+  prefix="$ac_default_prefix"
+])
 
 #
 # Checks for command-line arguments
@@ -93,14 +98,11 @@ AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
   AC_HELP_STRING([--with-openal],
 		 [use the OpenAL sound backend (default: yes)]), [
-    case "$withval" in
-      no)
-	with_openal=no
-	;;
-      *)
-	with_openal=yes
-	;;
-    esac
+    AS_IF([test "$withval" = "yes"], [
+      with_openal=yes
+    ], [
+      with_openal=no
+    ])
   ], [
     with_openal=yes
   ])
@@ -111,18 +113,29 @@ AC_MSG_CHECKING([whether to use SDL_mixer])
 AC_ARG_WITH([sdlmixer],
   AC_HELP_STRING([--with-sdlmixer],
 		 [use the SDL_mixer sound backend (default: yes)]), [
-    case "$withval" in
-      no)
-	with_sdlmixer=no
-	;;
-      *)
-	with_sdlmixer=yes
-	;;
-    esac
+    AS_IF([test "$withval" = "yes"], [
+      with_sdlmixer=yes
+    ], [
+      with_sdlmixer=no
+    ])
   ], [
     with_sdlmixer=yes
   ])
 AC_MSG_RESULT([$with_sdlmixer])
+
+# --with-ndata
+ndata_path="$datadir/$PACKAGE_NAME/ndata-$VERSION"
+eval ndata_path="$ndata_path" # expand ${datarootdir}
+eval ndata_path="$ndata_path" # expand ${prefix}
+
+AC_MSG_CHECKING([for path to ndata])
+AC_ARG_WITH([ndata-path],
+  AC_HELP_STRING([--with-ndata-path=PATH], [path to the ndata file]),
+  [ndata_path="$withval"], [])
+AC_MSG_RESULT([$ndata_path])
+AS_IF([test -z "$ndata_path" || test "$ndata_path" = "yes"], [
+  AC_ERROR([The data path must be explicitly specified])
+])
 
 #
 # Checks for libraries.
@@ -339,14 +352,39 @@ AC_DEFINE_UNQUOTED([VMAJOR], [$VMAJOR], [Define to the major version component])
 AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
 AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
 
+# USE_OPENAL
 AS_IF([test "$have_openal" = "yes"], [
   AC_DEFINE([USE_OPENAL], 1, [Define to 1 if using OpenAL])
 ])
 
+# USE_SDLMIX
 AS_IF([test "$have_sdlmixer" = "yes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
+# Operating system
+case "$host" in
+  *-linux*)
+    AC_DEFINE([LINUX], 1, [Define to 1 if running on Linux])
+    ;;
+  *-freebsd*)
+    AC_DEFINE([FREEBSD], 1, [Define to 1 if running on FreeBSD])
+    ;;
+  *-mingw*)
+    AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
+    ;;
+  *-darwin*)
+    AC_DEFINE([MACOSX], 1, [Define to 1 if running on Mac OS X])
+    ;;
+esac
+
+# NDATA_DEF
+AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
+		   [Define to the path to the data file])
+
+#
+# Output
+#
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
 		 lib/Makefile
@@ -358,6 +396,9 @@ AC_CONFIG_FILES([Makefile
 		 build/shave])
 AC_OUTPUT
 
+echo
+AC_MSG_NOTICE([prefix:      $prefix])
+AC_MSG_NOTICE([ndata:       $ndata_path])
 echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])
