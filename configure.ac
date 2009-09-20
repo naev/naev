@@ -64,6 +64,7 @@ esac
 # Checks for command-line arguments
 #
 
+# --enable-debug
 AC_MSG_CHECKING([whether to enable additional debugging options])
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
@@ -86,6 +87,42 @@ AC_ARG_ENABLE([debug],
     enable_debug=no
   ])
 AC_MSG_RESULT([$enable_debug])
+
+# --with-openal
+AC_MSG_CHECKING([whether to use OpenAL])
+AC_ARG_WITH([openal],
+  AC_HELP_STRING([--with-openal],
+		 [use the OpenAL sound backend (default: yes)]), [
+    case "$withval" in
+      no)
+	with_openal=no
+	;;
+      *)
+	with_openal=yes
+	;;
+    esac
+  ], [
+    with_openal=yes
+  ])
+AC_MSG_RESULT([$with_openal])
+
+# --with-sdlmixer
+AC_MSG_CHECKING([whether to use SDL_mixer])
+AC_ARG_WITH([sdlmixer],
+  AC_HELP_STRING([--with-sdlmixer],
+		 [use the SDL_mixer sound backend (default: yes)]), [
+    case "$withval" in
+      no)
+	with_sdlmixer=no
+	;;
+      *)
+	with_sdlmixer=yes
+	;;
+    esac
+  ], [
+    with_sdlmixer=yes
+  ])
+AC_MSG_RESULT([$with_sdlmixer])
 
 #
 # Checks for libraries.
@@ -115,49 +152,56 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
 ])
 
 # OpenAL
-AS_IF([test "$have_darwin" = "yes"], [
-  have_openal="yes"
-  OPENAL_AL_H="<OpenAL/al.h>"
-  OPENAL_ALC_H="<OpenAL/alc.h>"
-  OPENAL_CFLAGS=
-  OPENAL_LIBS="-framework OpenAL"
-], [
-  AS_IF([test "$have_windows" = "yes"], [
+AS_IF([test "$with_openal" = "yes"], [
+  AS_IF([test "$have_darwin" = "yes"], [
     have_openal="yes"
     OPENAL_AL_H="<OpenAL/al.h>"
     OPENAL_ALC_H="<OpenAL/alc.h>"
     OPENAL_CFLAGS=
-    OPENAL_LIBS="-lOpenAL32"
+    OPENAL_LIBS="-framework OpenAL"
   ], [
-    PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
+    AS_IF([test "$have_windows" = "yes"], [
+      have_openal="yes"
+      OPENAL_AL_H="<OpenAL/al.h>"
+      OPENAL_ALC_H="<OpenAL/alc.h>"
+      OPENAL_CFLAGS=
+      OPENAL_LIBS="-lOpenAL32"
+    ], [
+      PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
 
-    AS_IF([test "$have_openal" = "no"], [
-      AC_ERROR([OpenAL not found])
+      AS_IF([test "$have_openal" = "no"], [
+	AC_ERROR([OpenAL not found])
+      ])
+
+      OPENAL_AL_H="<AL/al.h>"
+      OPENAL_ALC_H="<AL/alc.h>"
     ])
-
-    OPENAL_AL_H="<AL/al.h>"
-    OPENAL_ALC_H="<AL/alc.h>"
   ])
+  AC_DEFINE_UNQUOTED([OPENAL_AL_H], [$OPENAL_AL_H],
+		     [Define to the equivalent of <AL/al.h> on your system])
+  AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [$OPENAL_ALC_H],
+		     [Define to the equivalent of <AL/alc.h> on your system])
+], [
+  have_openal=no
 ])
-
-AC_DEFINE_UNQUOTED([OPENAL_AL_H], [$OPENAL_AL_H],
-                   [Define to the equivalent of <AL/al.h> on your system])
-AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [$OPENAL_ALC_H],
-                   [Define to the equivalent of <AL/alc.h> on your system])
 
 # SDL_mixer
-OLD_LIBS="$LIBS"
-LIBS=""
-AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
-	       [have_sdlmixer=yes], [have_sdlmixer=no])
-AS_IF([test "$have_sdlmixer" = "yes"], [
-  SDLMIXER_CFLAGS=
-  SDLMIXER_LIBS="$LIBS"
+AS_IF([test "$with_sdlmixer" = "yes"], [
+  OLD_LIBS="$LIBS"
+  LIBS=""
+  AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
+		 [have_sdlmixer=yes], [have_sdlmixer=no])
+  AS_IF([test "$have_sdlmixer" = "yes"], [
+    SDLMIXER_CFLAGS=
+    SDLMIXER_LIBS="$LIBS"
+  ], [
+    SDLMIXER_CFLAGS=
+    SDLMIXER_LIBS=
+  ])
+  LIBS="$OLD_LIBS"
 ], [
-  SDLMIXER_CFLAGS=
-  SDLMIXER_LIBS=
+  have_sdlmixer=no
 ])
-LIBS="$OLD_LIBS"
 
 # SDL_image
 OLD_LIBS="$LIBS"
@@ -313,3 +357,8 @@ AC_CONFIG_FILES([Makefile
 		 src/tk/widget/Makefile
 		 build/shave])
 AC_OUTPUT
+
+echo
+AC_MSG_NOTICE([sound backends:])
+AC_MSG_NOTICE([  OpenAL:    $have_openal])
+AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
