@@ -868,6 +868,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    int minp;
    double q, mint;
    int is_launcher;
+   double rate_mod;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
@@ -876,8 +877,24 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* See if is launcher. */
    is_launcher = outfit_isLauncher(w->outfit);
 
+   /* Calculate rate modifier. */
+   switch (w->outfit->type) {
+      case OUTFIT_TYPE_BOLT:
+         rate_mod = 2. - p->stats.firerate_forward; /* invert. */
+         break;
+      case OUTFIT_TYPE_TURRET_BOLT:
+         rate_mod = 2. - p->stats.firerate_turret; /* invert. */
+         break;
+
+      default:
+         rate_mod = 1.;
+         break;
+   }
+
    /* Count the outfits and current one - only affects non-beam. */
    if (!outfit_isBeam(w->outfit)) {
+
+      /* Calculate last time weapon was fired. */
       q     = 0.;
       minp  = -1;
       for (i=0; i<p->outfit_nhigh; i++) {
@@ -908,7 +925,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          return 0;
 
       /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
-      if (mint > outfit_delay(w->outfit) * ((q-1) / q))
+      if (mint > rate_mod * outfit_delay(w->outfit) * ((q-1) / q))
          return 0;
    }
 
@@ -1002,7 +1019,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    }
 
    /* Reset timer. */
-   w->timer += outfit_delay( w->outfit );
+   w->timer += rate_mod * outfit_delay( w->outfit );
 
    return 0;
 }
