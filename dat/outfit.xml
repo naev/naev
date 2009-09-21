@@ -1043,7 +1043,7 @@
  </outfit>
  <outfit name="Targetting Computer (Advanced)">
   <general>
-   <typename>Weapon Mod</typename>
+   <typename>Weapon Modifier</typename>
    <slot>low</slot>
    <tech>12</tech>
    <mass>10</mass>
@@ -1058,7 +1058,7 @@
  </outfit>
  <outfit name="Power Regulation Override">
   <general>
-   <typename>Weapon Mod</typename>
+   <typename>Weapon Modifier</typename>
    <slot>low</slot>
    <tech>9</tech>
    <mass>0</mass>
@@ -1069,8 +1069,29 @@
   <specific type="modification">
    <damage_turret>15</damage_turret>
    <damage_forward>15</damage_forward>
-   <accuracy_turret>-10</accuracy_turret>
-   <accuracy_forward>-10</accuracy_forward>
+   <accuracy_turret>-5</accuracy_turret>
+   <accuracy_forward>-5</accuracy_forward>
+   <energy_turret>10</energy_turret>
+   <energy_forward>10</energy_forward>
+  </specific>
+ </outfit>
+ <outfit name="Improved Refrigeration Cycle">
+  <general>
+   <typename>Weapon Modfier</typename>
+   <slot>low</slot>
+   <tech>8</tech>
+   <mass>5</mass>
+   <price>90000</price>
+   <description>By adding an auxiliary cooling deposit with cooling fluid.</description>
+   <gfx_store>cpu_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <firerate_turret>15</firerate_turret>
+   <firerate_forward>15</firerate_forward>
+   <accuracy_turret>-5</accuracy_turret>
+   <accuracy_forward>-5</accuracy_forward>
+   <damage_turret>-5</damage_turret>
+   <damage_forward>-5</damage_forward>
   </specific>
  </outfit>
  <outfit name="Star Map">
