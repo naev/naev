@@ -868,7 +868,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    int minp;
    double q, mint;
    int is_launcher;
-   double rate_mod;
+   double rate_mod, energy_mod;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
@@ -880,14 +880,17 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* Calculate rate modifier. */
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BOLT:
-         rate_mod = 2. - p->stats.firerate_forward; /* invert. */
+         rate_mod   = 2. - p->stats.firerate_forward; /* invert. */
+         energy_mod = p->stats.energy_forward;
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
-         rate_mod = 2. - p->stats.firerate_turret; /* invert. */
+         rate_mod   = 2. - p->stats.firerate_turret; /* invert. */
+         energy_mod = p->stats.energy_turret;
          break;
 
       default:
-         rate_mod = 1.;
+         rate_mod   = 1.;
+         energy_mod = 1.;
          break;
    }
 
@@ -944,10 +947,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    if (outfit_isBolt(w->outfit)) {
       
       /* enough energy? */
-      if (outfit_energy(w->outfit) > p->energy)
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->outfit);
+      p->energy -= outfit_energy(w->outfit)*energy_mod;
       weapon_add( w->outfit, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
    }
@@ -958,7 +961,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    else if (outfit_isBeam(w->outfit)) {
 
       /* Check if enough energy to last a second. */
-      if (outfit_energy(w->outfit) > p->energy)
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
       /** @todo Handle warmup stage. */
@@ -983,10 +986,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          return 0;
 
       /* enough energy? */
-      if (outfit_energy(w->u.ammo.outfit) > p->energy)
+      if (outfit_energy(w->u.ammo.outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->u.ammo.outfit);
+      p->energy -= outfit_energy(w->u.ammo.outfit)*energy_mod;
       weapon_add( w->u.ammo.outfit, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
 
@@ -2366,10 +2369,12 @@ void pilot_calcStats( Pilot* pilot )
          s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
          s->damage_forward    += o->u.mod.stats.damage_forward * q;
          s->firerate_forward  += o->u.mod.stats.firerate_forward * q;
+         s->energy_forward    += o->u.mod.stats.energy_forward * q;
          /* Cruiser. */
          s->accuracy_turret   += o->u.mod.stats.accuracy_turret * q;
          s->damage_turret     += o->u.mod.stats.damage_turret * q;
          s->firerate_turret   += o->u.mod.stats.firerate_turret * q;
+         s->energy_turret     += o->u.mod.stats.energy_turret * q;
          /* Freighter. */
          s->jump_delay        += o->u.mod.stats.jump_delay * q;
       }
@@ -2413,13 +2418,15 @@ void pilot_calcStats( Pilot* pilot )
     * Normalize stats.
     */
    /* Fighter. */
-   s->accuracy_forward  = s->accuracy_forward/100. + 1.; /* Translate to "spread". */
+   s->accuracy_forward  = s->accuracy_forward/100. + 1.;
    s->damage_forward    = s->damage_forward/100. + 1.;
    s->firerate_forward  = s->firerate_forward/100. + 1.;
+   s->energy_forward    = s->energy_forward/100. + 1.;
    /* Cruiser. */
-   s->accuracy_turret   = s->accuracy_turret/100. + 1.; /* Translate to "spread". */
+   s->accuracy_turret   = s->accuracy_turret/100. + 1.;
    s->damage_turret     = s->damage_turret/100. + 1.;
    s->firerate_turret   = s->firerate_turret/100. + 1.;
+   s->energy_turret     = s->energy_turret/100. + 1.;
    /* Freighter. */
    s->jump_delay        = s->jump_delay/100. + 1.;
 
