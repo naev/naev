@@ -852,7 +852,6 @@
    <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
   </general>
   <specific type="modification">
-   <cpu>-6</cpu>
    <armour>300</armour>
    <armour_regen>60</armour_regen>
    <mass_rel>20</mass_rel>
@@ -869,7 +868,6 @@
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <cpu>-5</cpu>
    <armour_regen>100</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
