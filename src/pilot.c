@@ -38,7 +38,7 @@
 #include "ntime.h"
 
 
-#define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
+#define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
 

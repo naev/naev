@@ -38,9 +38,9 @@
 #define SPFX_GFX_PRE    "gfx/spfx/" /**< location of the graphic */
 #define SPFX_GFX_SUF    ".png" /**< Suffix of graphics. */
 
-#define CHUNK_SIZE      32 /**< Chunk size to allocate spfx bases. */
+#define CHUNK_SIZE      128 /**< Chunk size to allocate spfx bases. */
 
-#define SPFX_CHUNK      32 /**< chunk to alloc when needed */
+#define SPFX_CHUNK      1024 /**< chunk to alloc when needed */
 
 #define SHAKE_VEL_MOD   0.0008 /**< Shake modifier. */
 

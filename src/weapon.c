@@ -33,7 +33,7 @@
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK          256 /**< Size to increase array with */
+#define WEAPON_CHUNK          1024 /**< Size to increase array with */
 
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
@@ -1352,11 +1352,11 @@ void weapon_add( const Outfit* outfit, const double dir,
       switch (layer) {
          case WEAPON_LAYER_BG:
             (*mLayer) += WEAPON_CHUNK;
-            curLayer = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
+            curLayer   = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
          case WEAPON_LAYER_FG:
             (*mLayer) += WEAPON_CHUNK;
-            curLayer = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
+            curLayer   = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
       }
       curLayer[(*nLayer)++] = w;
