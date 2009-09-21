@@ -1060,11 +1060,11 @@
   <general>
    <typename>Weapon Mod</typename>
    <slot>low</slot>
-   <tech>9</slot>
+   <tech>9</tech>
    <mass>0</mass>
    <price>65000</price>
    <description>This modification on the power regulation of the weapon subsystems increases the power flow to the weapons subsystems allowing weapons to deliver stronger blasts. The side effects is that this makes the weapons more unstable and more prone to missing.</description>
-   <gfx_store>cpu_iii</gfx_stare>
+   <gfx_store>cpu_iii</gfx_store>
   </general>
   <specific type="modification">
    <damage_turret>15</damage_turret>
