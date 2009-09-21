@@ -35,6 +35,8 @@
 #define BUTTON_WIDTH 200 /**< Default button width. */
 #define BUTTON_HEIGHT 40 /**< Default button height. */
 
+#define SHIP_ALT_MAX 256 /**< Maximum ship alt text. */
+
 
 /*
  * equipment stuff
@@ -930,7 +932,7 @@ void equipment_addAmmo (void)
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, l, p;
+   int i, j, l, p;
    char **sships;
    glTexture **tships;
    int nships;
@@ -944,6 +946,8 @@ static void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
+   double mod_energy, mod_damage, mod_shots;
+   double eps, dps, shots;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -971,11 +975,43 @@ static void equipment_genLists( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s  = player_getShip( sships[i]);
-         alt[i] = malloc( 256 );
-         l = snprintf( alt[i], 256, "Ship Stats" );
-         p = ship_statsDesc( &s->stats, &alt[i][l], 256-l, 1, 1 );
-         if (p == 0) {
-            free(alt[i]);
+         alt[i] = malloc( SHIP_ALT_MAX );
+         dps = 0.;
+         eps = 0.;
+         for (j=0; j<s->noutfits; j++) {
+            o = s->outfits[j]->outfit;
+            if (o==NULL)
+               continue;
+            switch (o->type) {
+               case OUTFIT_TYPE_BOLT:
+                  mod_energy = s->stats.energy_forward;
+                  mod_damage = s->stats.damage_forward;
+                  mod_shots  = s->stats.firerate_forward;
+                  break;
+               case OUTFIT_TYPE_TURRET_BOLT:
+                  mod_energy = s->stats.energy_turret;
+                  mod_damage = s->stats.damage_turret;
+                  mod_shots  = s->stats.firerate_turret;
+                  break;
+               default:
+                  continue;
+            }
+            shots = 1. / (mod_shots * outfit_delay(o));
+            dps  += shots * mod_damage * outfit_damage(o);
+            eps  += shots * mod_energy * outfit_energy(o);
+         }
+         l  = snprintf( alt[i], SHIP_ALT_MAX, "Ship Stats" );
+         p  = l;
+         if (dps > 0.)
+            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
+                  "\n%.2f DPS [%.2f EPS]", dps, eps );
+         if (s->jam_chance > 0.)
+            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
+                  "\n%.0f%% Jam [%.0f Range]",
+                  s->jam_chance*100., s->jam_range );
+         l += ship_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1, 1 );
+         if (p == l) {
+            free( alt[i] );
             alt[i] = NULL;
          }
       }
