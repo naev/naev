@@ -1046,7 +1046,7 @@
    <typename>Weapon Modifier</typename>
    <slot>low</slot>
    <tech>12</tech>
-   <mass>10</mass>
+   <mass>15</mass>
    <price>125000</price>
    <description>This outfit improves your targetting subsystem for your turrets allowing them to track faster targets and fire more precise shots. The downside is that this introduces a delay in the fire speed of </description>
    <gfx_store>cpu_iii</gfx_store>
@@ -1056,23 +1056,49 @@
    <firerate_turret>-10</firerate_turret>
   </specific>
  </outfit>
+ <outfit name="Forward Shock Absorbers">
+  <general>
+   <typename>Weapon Modifier</typename>
+   <slot>low</slot>
+   <tech>5</tech>
+   <mass>1</mass>
+   <price>35000</price>
+   <description>These shock absorbers are attached to the forward mounts, allowing dampening of the pertorbations that can cause misses.</description>
+   <gfx_store>cpu_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <accuracy_forward>15</accuracy_forward>
+  </specific>
+ </outfit>
  <outfit name="Power Regulation Override">
   <general>
    <typename>Weapon Modifier</typename>
    <slot>low</slot>
    <tech>9</tech>
    <mass>0</mass>
-   <price>65000</price>
-   <description>This modification on the power regulation of the weapon subsystems increases the power flow to the weapons subsystems allowing weapons to deliver stronger blasts. The side effects is that this makes the weapons more unstable and more prone to missing.</description>
+   <price>55000</price>
+   <description>This modification on the power regulation of the forward weapon subsystems increases the power flow to the weapons subsystems allowing weapons to deliver stronger blasts. The side effects is that this makes the weapons more unstable and more prone to missing.</description>
    <gfx_store>cpu_iii</gfx_store>
   </general>
   <specific type="modification">
-   <damage_turret>15</damage_turret>
    <damage_forward>15</damage_forward>
-   <accuracy_turret>-5</accuracy_turret>
    <accuracy_forward>-5</accuracy_forward>
-   <energy_turret>10</energy_turret>
-   <energy_forward>10</energy_forward>
+   <energy_forward>5</energy_forward>
+  </specific>
+ </outfit>
+ <outfit name="Genetic-tek Power Regulator">
+  <general>
+   <typename>Weapon Modfier</typename>
+   <slot>low</slot>
+   <tech>11</tech>
+   <mass>3</mass>
+   <price>130000</price>
+   <gfx_store>cpu_iii</gfx_store>
+   <description>The Genetic-tek Power Regulator replaces the main functionality of your standard turret subsystem power regulator. It uses advanced genetic neural networking to conserve energy usage and make the turrets more efficient.</description>
+  </general>
+  <specific type="modification">
+   <firerate_turret>-5</firerate_turret>
+   <energy_turret>-10</energy_turret>
   </specific>
  </outfit>
  <outfit name="Improved Refrigeration Cycle">
@@ -1082,16 +1108,13 @@
    <tech>8</tech>
    <mass>5</mass>
    <price>90000</price>
-   <description>By adding an auxiliary cooling deposit with cooling fluid, the ship can keep it's weapon subsystems cooler then normal, allowing it to bypass the regulated fire times. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage.</description>
+   <description>By adding an auxiliary cooling deposit with cooling fluid, the ship can keep it's weapon subsystems cooler then normal, allowing it to bypass the regulated fire times. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage. Only the turrets are affected by this modification.</description>
    <gfx_store>cpu_iii</gfx_store>
   </general>
   <specific type="modification">
    <firerate_turret>15</firerate_turret>
-   <firerate_forward>15</firerate_forward>
    <accuracy_turret>-5</accuracy_turret>
-   <accuracy_forward>-5</accuracy_forward>
    <damage_turret>-5</damage_turret>
-   <damage_forward>-5</damage_forward>
   </specific>
  </outfit>
  <outfit name="Star Map">
