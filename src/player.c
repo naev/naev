@@ -697,6 +697,9 @@ void player_cleanup (void)
    /* Reset some player stuff. */
    player_credits = 0;
    player_crating = 0;
+
+   /* Stop the sounds. */
+   sound_stopAll();
 }
 
 
