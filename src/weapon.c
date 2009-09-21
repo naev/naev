@@ -1157,11 +1157,11 @@ static Weapon* weapon_create( const Outfit* outfit,
 
          /* Stat modifiers. */
          if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
-            acc         *= 2. - parent->stats.accuracy_turret; /* Invert. */
+            acc         *= 2. - parent->stats.accuracy_turret/2.; /* Invert. */
             w->dam_mod  *= parent->stats.damage_turret;
          }
          else {
-            acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
+            acc         *= 2. - parent->stats.accuracy_forward/2.; /* Invert. */
             w->dam_mod  *= parent->stats.damage_forward;
          }
 

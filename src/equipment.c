@@ -53,6 +53,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
       int *ew, int *eh,
       int *cw, int *ch, int *bw, int *bh );
 /* Widget. */
+static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p );
@@ -797,8 +798,6 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    int ret;
    Outfit *o, *ammo;
    int q;
-   int nout, nship;
-   double offout, offship;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -845,23 +844,50 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    }
 
    /* Redo the outfits thingy. */
-   nout   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-   offout = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
-   nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
-   offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
-   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
-   window_destroyWidget( wid, EQUIPMENT_SHIPS );
-   equipment_genLists( wid );
-   toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, nout );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offout );
-   toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
+   equipment_regenLists( wid, 1, 1 );
 
    /* Update ships. */
    equipment_updateShips( wid, NULL );
 
    return 0;
 }
+
+
+/**
+ * @brief Regenerates the equipment window lists.
+ */
+void equipment_regenLists( unsigned int wid, int outfits, int ships )
+{
+   int nout, nship;
+   double offout, offship;
+
+   /* Save positions. */
+   if (outfits) {
+      nout   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+      offout = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+   }
+   if (ships) {
+      nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+      offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
+      window_destroyWidget( wid, EQUIPMENT_SHIPS );
+   }
+
+   /* Regenerate lists. */
+   equipment_genLists( wid );
+
+   /* Restore positions. */
+   if (outfits) {
+      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, nout );
+      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offout );
+   }
+   if (ships) {
+      toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+      toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
+   }
+}
+
+
 /**
  * @brief Adds all the ammo it can to the player.
  */
@@ -902,7 +928,7 @@ void equipment_addAmmo (void)
 /**
  * @brief Generates a new ship/outfit lists if needed.
  */
-void equipment_genLists( unsigned int wid )
+static void equipment_genLists( unsigned int wid )
 {
    int i, l, p;
    char **sships;
@@ -1196,9 +1222,11 @@ static void equipment_changeShip( unsigned int wid )
    /* Swap ship. */
    player_swapShip(shipname);
 
-   /* Destroy widget. */
-   window_destroyWidget( wid, EQUIPMENT_SHIPS );
-   equipment_genLists( wid );
+   /* Regenerate ship widget. */
+   equipment_regenLists( wid, 0, 1 );
+   /* Focus new ship. */
+   toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, 0 );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
 }
 /**
  * @brief Player attempts to transport his ship to the planet he is at.
@@ -1276,9 +1304,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    pilot_calcStats( ship );
 
    /* Regenerate list. */
-   window_destroyWidget( wid, EQUIPMENT_SHIPS );
-   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
-   equipment_genLists( wid );
+   equipment_regenLists( wid, 1, 1 );
 }
 /**
  * @brief Player tries to sell a ship.
@@ -1314,8 +1340,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    player_rmShip( shipname );
 
    /* Destroy widget - must be before widget. */
-   window_destroyWidget( wid, EQUIPMENT_SHIPS );
-   equipment_genLists( wid );
+   equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",

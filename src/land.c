@@ -605,8 +605,7 @@ static void outfits_buy( unsigned int wid, char* str )
    /* Update equipment. */
    equipment_addAmmo();
    w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   window_destroyWidget( w, EQUIPMENT_OUTFITS );
-   equipment_genLists( w );
+   equipment_regenLists( w, 1, 0 );
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -661,8 +660,7 @@ static void outfits_sell( unsigned int wid, char* str )
 
    /* Update equipment. */
    w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   window_destroyWidget( w, EQUIPMENT_OUTFITS );
-   equipment_genLists( w );
+   equipment_regenLists( w, 1, 0 );
 }
 /**
  * @brief Gets the current modifier status.
@@ -964,8 +962,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Update equipment. */
    w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   window_destroyWidget( w, EQUIPMENT_SHIPS );
-   equipment_genLists( w );
+   equipment_regenLists( w, 0, 1 );
 }
 
 

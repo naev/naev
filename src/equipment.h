@@ -30,7 +30,7 @@ void equipment_cleanup (void);
  * Misc.
  */
 void equipment_addAmmo (void);
-void equipment_genLists( unsigned int wid );
+void equipment_regenLists( unsigned int wid, int outfits, int ships );
 void equipment_updateShips( unsigned int wid, char* str );
 void equipment_updateOutfits( unsigned int wid, char* str );
 
