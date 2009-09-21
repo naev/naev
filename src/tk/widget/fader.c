@@ -120,16 +120,16 @@ static void fad_render( Widget* fad, double bx, double by )
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
 {
    double d;
-   (void) x;
-   (void) y;
+   (void) rx;
+   (void) ry;
 
    /* Must be scrolling. */
    if (fad->status != WIDGET_STATUS_SCROLLING)
       return 0;
 
    /* Set the fader value. */
-   d = (fad->w > fad->h) ? rx / fad->w : ry / fad->h;
-   fad_setValue(fad, fad->dat.fad.value + d);
+   d = (fad->w > fad->h) ? (double)x / fad->w : (double)y / fad->h;
+   fad_setValue(fad, d);
 
    return 1;
 }
@@ -155,17 +155,23 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
       kx = fad->w * pos - 5;
       kw = 15;
 
-      /* See if is scrolling. */
-      if ((x >= kx) && (x < kx + kw))
-         fad->status = WIDGET_STATUS_SCROLLING;
+      /* Out of bounds, jump the knob. */
+      if ((x < kx) || (x >= kx + kw))
+         fad_setValue(fad, (double)x / fad->w );
+
+      /* Always scroll. */
+      fad->status = WIDGET_STATUS_SCROLLING;
    }
    else {
       ky = fad->h * pos - 5;
       kh = 15;
 
-      /* See if is scrolling. */
-      if ((y >= ky) && (y < ky + kh))
-         fad->status = WIDGET_STATUS_SCROLLING;
+      /* Out of bounds, jump the knob. */
+      if ((y < ky) || (y >= ky + kh))
+         fad_setValue(fad, (double)y / fad->h );
+
+      /* Always scroll. */
+      fad->status = WIDGET_STATUS_SCROLLING;
    }
 
    return 0;
@@ -199,15 +205,20 @@ double window_getFaderValue( const unsigned int wid, char* name )
 
 
 /**
- * @brief Changes fader value
+ * @brief Changes fader value.
  *
- *    @param fad Fader to set value of.
+ *    @param fad Fader to set value of in per one [0:1].
  *    @param value Value to set fader to.
  */
 static void fad_setValue( Widget *fad, double value )
 {
-   /* Sanity check and value set. */
-   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max, value );
+   /* Set value. */
+   fad->dat.fad.value  = value * (fad->dat.fad.max - fad->dat.fad.min);
+   fad->dat.fad.value += fad->dat.fad.min;
+
+   /* Sanity check. */
+   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max,
+         fad->dat.fad.value );
 
    /* Run function if needed. */
    if (fad->dat.fad.fptr != NULL)
