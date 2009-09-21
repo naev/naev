@@ -1043,17 +1043,34 @@
  </outfit>
  <outfit name="Targetting Computer (Advanced)">
   <general>
-   <typename>Forward Weapon Mod</typename>
+   <typename>Weapon Mod</typename>
    <slot>low</slot>
    <tech>12</tech>
    <mass>10</mass>
    <price>125000</price>
-   <description>Does stuff.</description>
+   <description>This outfit improves your targetting subsystem for your turrets allowing them to track faster targets and fire more precise shots. The downside is that this introduces a delay in the fire speed of </description>
    <gfx_store>cpu_iii</gfx_store>
   </general>
   <specific type="modification">
    <accuracy_turret>15</accuracy_turret>
    <firerate_turret>-10</firerate_turret>
+  </specific>
+ </outfit>
+ <outfit name="Power Regulation Override">
+  <general>
+   <typename>Weapon Mod</typename>
+   <slot>low</slot>
+   <tech>9</slot>
+   <mass>0</mass>
+   <price>65000</price>
+   <description>This modification on the power regulation of the weapon subsystems increases the power flow to the weapons subsystems allowing weapons to deliver stronger blasts. The side effects is that this makes the weapons more unstable and more prone to missing.</description>
+   <gfx_store>cpu_iii</gfx_stare>
+  </general>
+  <specific type="modification">
+   <damage_turret>15</damage_turret>
+   <damage_forward>15</damage_forward>
+   <accuracy_turret>-10</accuracy_turret>
+   <accuracy_forward>-10</accuracy_forward>
   </specific>
  </outfit>
  <outfit name="Star Map">
