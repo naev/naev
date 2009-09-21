@@ -1041,7 +1041,7 @@
    <cargo>15</cargo>
   </specific>
  </outfit>
- <outfit name="Targetting Computer (Advanced)">
+ <outfit name="Targeting Computer (Advanced)">
   <general>
    <typename>Weapon Modifier</typename>
    <slot>low</slot>
@@ -1082,7 +1082,7 @@
    <tech>8</tech>
    <mass>5</mass>
    <price>90000</price>
-   <description>By adding an auxiliary cooling deposit with cooling fluid.</description>
+   <description>By adding an auxiliary cooling deposit with cooling fluid, the ship can keep it's weapon subsystems cooler then normal, allowing it to bypass the regulated fire times. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage.</description>
    <gfx_store>cpu_iii</gfx_store>
   </general>
   <specific type="modification">
