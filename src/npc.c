@@ -160,6 +160,10 @@ unsigned int npc_add_event( char *evt, char *func, char *name,
  */
 static int npc_rm( NPC_t *npc )
 {
+   npc_free(npc);
+
+   array_erase( npc_array, &npc[0], &npc[1] );
+
    return 0;
 }
 
@@ -315,7 +319,8 @@ void npc_clear (void)
       npc_free( &npc_array[i] );
    }
 
-   /* Second pass clears array. */
+   /* Resize down. */
+   array_resize( npc_array, 0 );
 }
 
 
