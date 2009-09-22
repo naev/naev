@@ -160,6 +160,7 @@
      * llama.png
      * mule.png
      * pacifier.png
+     * quicksilver.png
      * vendetta.png
      * vendetta-pirate.png
  
@@ -277,6 +278,9 @@
      * kestrel_pirate_comm.png
      * peacemaker.png
      * peacemaker_target.png
+   * loading
+     * kestrel_pirate.png
+     * peacemaker.png
 
  * Author: Renderwahn, License: CC-by v3.0
    * gfx
