@@ -1039,15 +1039,15 @@
    <cargo>15</cargo>
   </specific>
  </outfit>
- <outfit name="Targeting Computer (Advanced)">
+ <outfit name="Targeting Array">
   <general>
-   <typename>Weapon Modifier</typename>
+   <typename>Weapon Modifier (Turret)</typename>
    <slot>low</slot>
    <tech>12</tech>
    <mass>15</mass>
    <price>125000</price>
-   <description>This outfit improves your targetting subsystem for your turrets allowing them to track faster targets and fire more precise shots. The downside is that this introduces a delay in the fire speed of </description>
-   <gfx_store>cpu_iii</gfx_store>
+   <description>An improved targeting array allows your turrets to more quickly acquire targets, and minimizes accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
+   <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
    <accuracy_turret>25</accuracy_turret>
@@ -1056,13 +1056,13 @@
  </outfit>
  <outfit name="Forward Shock Absorbers">
   <general>
-   <typename>Weapon Modifier</typename>
+   <typename>Weapon Modifier (Forward)</typename>
    <slot>low</slot>
    <tech>5</tech>
    <mass>1</mass>
    <price>35000</price>
-   <description>These shock absorbers are attached to the forward mounts, allowing dampening of the pertorbations that can cause misses.</description>
-   <gfx_store>cpu_iii</gfx_store>
+   <description>These shock absorbers are attached to the forward mounts, isolating them from the hull and providing increased accuracy.</description>
+   <gfx_store>accuracy_forward</gfx_store>
   </general>
   <specific type="modification">
    <accuracy_forward>15</accuracy_forward>
@@ -1070,13 +1070,13 @@
  </outfit>
  <outfit name="Power Regulation Override">
   <general>
-   <typename>Weapon Modifier</typename>
+   <typename>Weapon Modifier (Forward)</typename>
    <slot>low</slot>
    <tech>9</tech>
    <mass>0</mass>
    <price>55000</price>
-   <description>This modification on the power regulation of the forward weapon subsystems increases the power flow to the weapons subsystems allowing weapons to deliver stronger blasts. The side effects is that this makes the weapons more unstable and more prone to missing.</description>
-   <gfx_store>cpu_iii</gfx_store>
+   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in decreased accuracy.</description>
+   <gfx_store>damage_forward</gfx_store>
   </general>
   <specific type="modification">
    <damage_forward>15</damage_forward>
@@ -1084,15 +1084,15 @@
    <energy_forward>5</energy_forward>
   </specific>
  </outfit>
- <outfit name="Genetic-tek Power Regulator">
+ <outfit name="Improved Power Regulator">
   <general>
-   <typename>Weapon Modfier</typename>
+   <typename>Weapon Modfier (Turret)</typename>
    <slot>low</slot>
    <tech>11</tech>
    <mass>3</mass>
    <price>130000</price>
-   <gfx_store>cpu_iii</gfx_store>
-   <description>The Genetic-tek Power Regulator replaces the main functionality of your standard turret subsystem power regulator. It uses advanced genetic neural networking to conserve energy usage and make the turrets more efficient.</description>
+   <gfx_store>efficiency_turret</gfx_store>
+   <description>Improved power regulation allows your turrets to waste less power when firing, though feeding turrets the bare minimum wattage results in a slightly decreased rate of fire.</description>
   </general>
   <specific type="modification">
    <firerate_turret>-5</firerate_turret>
@@ -1101,13 +1101,13 @@
  </outfit>
  <outfit name="Improved Refrigeration Cycle">
   <general>
-   <typename>Weapon Modfier</typename>
+   <typename>Weapon Modfier (Turret)</typename>
    <slot>low</slot>
    <tech>8</tech>
    <mass>5</mass>
    <price>90000</price>
-   <description>By adding an auxiliary cooling deposit with cooling fluid, the ship can keep it's weapon subsystems cooler then normal, allowing it to bypass the regulated fire times. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage. Only the turrets are affected by this modification.</description>
-   <gfx_store>cpu_iii</gfx_store>
+   <description>By adding an auxiliary coolant reservoir, the ship can keep is able to dissipate heat more quickly, allowing it to exceed standard firing rates. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage. Only the turrets are affected by this modification.</description>
+   <gfx_store>firerate_turret</gfx_store>
   </general>
   <specific type="modification">
    <firerate_turret>15</firerate_turret>
