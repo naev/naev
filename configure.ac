@@ -15,6 +15,20 @@ AM_INIT_AUTOMAKE([foreign])
 ifdef([__unix__], define([__unix__], [[__unix__]]))
 
 #
+# Utility functions
+#
+
+# If A='$B' and B='hello', then "expand_variable A" will cause A='hello'
+expand_variable()
+{
+  while true; do
+    eval local value=\$$1
+    eval "$1=\"$value\""
+    expr "$value" : '\(^\$\|.*[^\\]\$\)' >/dev/null 2>&1 || break
+  done
+}
+
+#
 # Checks for programs.
 #
 AC_PROG_CC
@@ -61,8 +75,11 @@ case "$host" in
 esac
 
 # Fix missing prefix
-AS_IF([test "x$prefix" = "xNONE"], [
+AS_IF([test "$prefix" = "NONE"], [
   prefix="$ac_default_prefix"
+])
+AS_IF([test "$exec_prefix" = "NONE"], [
+  exec_prefix="$prefix"
 ])
 
 #
@@ -122,8 +139,7 @@ AC_MSG_RESULT([$with_sdlmixer])
 
 # --with-ndata
 ndata_path="$datadir/$PACKAGE_NAME/ndata"
-eval ndata_path="$ndata_path" # expand ${datarootdir}
-eval ndata_path="$ndata_path" # expand ${prefix}
+expand_variable ndata_path
 
 AC_MSG_CHECKING([for path to ndata])
 AC_ARG_WITH([ndata-path],
