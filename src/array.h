@@ -29,6 +29,8 @@ typedef struct {
 
 void *_array_create_helper(size_t e_size);
 void *_array_grow_helper(void **a, size_t e_size);
+void _array_resize_helper(void **a, size_t e_size, int new_size);
+void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
 
@@ -56,11 +58,23 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 #define array_create(basic_type) \
       ((basic_type *)(_array_create_helper(sizeof(basic_type))))
 
+/** @brief Resizes the array to accomodate new_size elements.
+ * NOTE: Invalidates all iterators. */
+#define array_resize(ptr_array, new_size) \
+   (_array_resize_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]), new_size))
 /** @brief Increases the number of elements by one and returns the last element.
  * NOTE: Invalidates all iterators. */
 #define array_grow(ptr_array) \
       (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
-/** @brief Shrinks memory to fit only `size' elements.
+/** @brief Adds a new element at the end of the array.
+ * NOTE: Invalidates all iterators. */
+#define array_push_back(ptr_array, element) \
+   do array_grow(ptr_array) = element; while (0)
+/** @brief Erases elements in interval [first, last)
+ * NOTE: Invalidates all iterators. */
+#define array_erase(ptr_array, first, last) \
+      (_array_erase_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]), (void *)(first), (void *)(last)))
+/** @brief Shrinks memory to fit only `_size' elements.
  * NOTE: Invalidates all iterators. */
 #define array_shrink(ptr_array) \
       (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
