@@ -300,6 +300,17 @@ int ship_statsParse( ShipStats *s, xmlNodePtr parent )
    /* Parse information. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      /* Fighter. */
+      xmlr_float(node,"accuracy_forward",s->accuracy_forward);
+      xmlr_float(node,"damage_forward",s->damage_forward);
+      xmlr_float(node,"firerate_forward",s->firerate_forward);
+      xmlr_float(node,"energy_forward",s->energy_forward);
+      /* Cruiser. */
+      xmlr_float(node,"accuracy_turret",s->accuracy_turret);
+      xmlr_float(node,"damage_turret",s->damage_turret);
+      xmlr_float(node,"firerate_turret",s->firerate_turret);
+      xmlr_float(node,"energy_turret",s->energy_turret);
+      /* Freighter. */
       xmlr_float(node,"jump_delay",s->jump_delay);
    } while (xml_nextNode(node));
 
@@ -325,10 +336,21 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    /* Set stat text. */
    i = 0;
 #define DESC_ADD(x, s) \
-   if (x != 0.) \
+   if ((pilot && (x!=1.)) || (!pilot && (x!=0.))) \
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
+   /* Fighter Stuff. */
+   DESC_ADD(s->accuracy_forward,"Accuracy (Forward)");
+   DESC_ADD(s->damage_forward,"Damage (Forward)");
+   DESC_ADD(s->firerate_forward,"Fire Rate (Forward)");
+   DESC_ADD(s->energy_forward,"Energy Usage (Forward)");
+   /* Cruiser Stuff. */
+   DESC_ADD(s->accuracy_turret,"Accuracy (Turret)");
+   DESC_ADD(s->damage_turret,"Damage (Turret)");
+   DESC_ADD(s->firerate_turret,"Fire Rate (Turret)");
+   DESC_ADD(s->energy_turret,"Energy Usage (Turret)");
+   /* Freighter Stuff. */
    DESC_ADD(s->jump_delay,"Jump time");
 #undef DESC_ADD
 
@@ -668,6 +690,8 @@ void ships_free (void)
          free(s->fabricator);
       if (s->license != NULL)
          free(s->license);
+      if (s->desc_stats != NULL)
+         free(s->desc_stats);
 
       /* Free outfits. */
       if (s->outfit_low != NULL)

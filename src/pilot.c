@@ -38,7 +38,7 @@
 #include "ntime.h"
 
 
-#define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
+#define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
 
@@ -868,6 +868,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    int minp;
    double q, mint;
    int is_launcher;
+   double rate_mod, energy_mod;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
@@ -876,8 +877,27 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* See if is launcher. */
    is_launcher = outfit_isLauncher(w->outfit);
 
+   /* Calculate rate modifier. */
+   switch (w->outfit->type) {
+      case OUTFIT_TYPE_BOLT:
+         rate_mod   = 2. - p->stats.firerate_forward; /* invert. */
+         energy_mod = p->stats.energy_forward;
+         break;
+      case OUTFIT_TYPE_TURRET_BOLT:
+         rate_mod   = 2. - p->stats.firerate_turret; /* invert. */
+         energy_mod = p->stats.energy_turret;
+         break;
+
+      default:
+         rate_mod   = 1.;
+         energy_mod = 1.;
+         break;
+   }
+
    /* Count the outfits and current one - only affects non-beam. */
    if (!outfit_isBeam(w->outfit)) {
+
+      /* Calculate last time weapon was fired. */
       q     = 0.;
       minp  = -1;
       for (i=0; i<p->outfit_nhigh; i++) {
@@ -908,7 +928,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          return 0;
 
       /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
-      if (mint > outfit_delay(w->outfit) * ((q-1) / q))
+      if (mint > rate_mod * outfit_delay(w->outfit) * ((q-1) / q))
          return 0;
    }
 
@@ -927,12 +947,12 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    if (outfit_isBolt(w->outfit)) {
       
       /* enough energy? */
-      if (outfit_energy(w->outfit) > p->energy)
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->outfit);
+      p->energy -= outfit_energy(w->outfit)*energy_mod;
       weapon_add( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target );
+            &vp, &p->solid->vel, p, p->target );
    }
 
    /*
@@ -941,13 +961,13 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    else if (outfit_isBeam(w->outfit)) {
 
       /* Check if enough energy to last a second. */
-      if (outfit_energy(w->outfit) > p->energy)
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->u.beamid = beam_start( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target, w );
+            &vp, &p->solid->vel, p, p->target, w );
    }
 
    /*
@@ -966,12 +986,12 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          return 0;
 
       /* enough energy? */
-      if (outfit_energy(w->u.ammo.outfit) > p->energy)
+      if (outfit_energy(w->u.ammo.outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->u.ammo.outfit);
+      p->energy -= outfit_energy(w->u.ammo.outfit)*energy_mod;
       weapon_add( w->u.ammo.outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target );
+            &vp, &p->solid->vel, p, p->target );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
@@ -1002,7 +1022,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    }
 
    /* Reset timer. */
-   w->timer += outfit_delay( w->outfit );
+   w->timer += rate_mod * outfit_delay( w->outfit );
 
    return 0;
 }
@@ -1314,10 +1334,10 @@ int pilot_hasDeployed( Pilot *p )
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type of the explosion.
  *    @param damage Amount of damage by the explosion.
- *    @param parent ID of the pilot exploding.
+ *    @param parent The exploding pilot.
  */
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, unsigned int parent )
+      DamageType dtype, double damage, const Pilot *parent )
 {
    int i;
    double rx, ry;
@@ -1350,7 +1370,7 @@ void pilot_explode( double x, double y, double radius,
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, parent, dtype, damage );
+         pilot_hit( p, &s, (parent!=NULL)?parent->id:0, dtype, damage );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
@@ -1439,7 +1459,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->ship->gfx_space->sw/2. + a,
                DAMAGE_TYPE_KINETIC,
                MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.))),
-               0, EXPL_MODE_SHIP );
+               NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
@@ -2261,6 +2281,8 @@ void pilot_calcStats( Pilot* pilot )
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
    ShipStats *s;
+   int nfirerate_turret, nfirerate_forward;
+   int njammers;
 
    /* Comfortability. */
    s = &pilot->stats;
@@ -2302,9 +2324,13 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * now add outfit changes
     */
-   nweaps = 0;
-   wrange = wspeed = 0.;
-   pilot->mass_outfit = 0.;
+   nfirerate_forward = nfirerate_turret = 0;
+   nweaps               = 0;
+   wrange = wspeed      = 0.;
+   pilot->mass_outfit   = 0.;
+   njammers             = 0;
+   pilot->jam_range     = 0.;
+   pilot->jam_chance    = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       slot = pilot->outfits[i];
       o    = slot->outfit;
@@ -2342,18 +2368,35 @@ void pilot_calcStats( Pilot* pilot )
          /* misc */
          pilot->cargo_free    += o->u.mod.cargo * q;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass * q;
-         /* stats. */
+         /*
+          * Stats.
+          */
+         /* Fighter. */
+         s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
+         s->damage_forward    += o->u.mod.stats.damage_forward * q;
+         s->energy_forward    += o->u.mod.stats.energy_forward * q;
+         if (o->u.mod.stats.firerate_forward != 0.) {
+            s->firerate_forward  += o->u.mod.stats.firerate_forward * q;
+            nfirerate_forward    += q;
+         }
+         /* Cruiser. */
+         s->accuracy_turret   += o->u.mod.stats.accuracy_turret * q;
+         s->damage_turret     += o->u.mod.stats.damage_turret * q;
+         s->energy_turret     += o->u.mod.stats.energy_turret * q;
+         if (o->u.mod.stats.firerate_turret != 0.) {
+            s->firerate_turret   += o->u.mod.stats.firerate_turret * q;
+            nfirerate_turret     += q;;
+         }
+         /* Freighter. */
          s->jump_delay        += o->u.mod.stats.jump_delay * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
-         if (pilot->jam_chance < o->u.jam.chance) { /* substitute */
-            /** @todo make more jammers improve overall */
-            pilot->jam_range  = o->u.jam.range;
-            pilot->jam_chance = o->u.jam.chance;
-         }
-         pilot->energy_regen -= o->u.jam.energy;
+         pilot->jam_range        += o->u.jam.range * q;
+         pilot->jam_chance       += o->u.jam.chance * q;
+         pilot->energy_regen     -= o->u.jam.energy * q;
+         njammers                += q;;
       }
       if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
             !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
@@ -2381,8 +2424,50 @@ void pilot_calcStats( Pilot* pilot )
       pilot->weap_speed = 0.;
    }
 
-   /* Normalize stats. */
-   s->jump_delay = s->jump_delay/100. + 1.;
+   /*
+    * Calculate jammers.
+    *
+    * Range is averaged.
+    * Diminishing return on chance.
+    *  chance = p * exp( -0.2 * (n-1) )
+    *  1x 20% -> 20%
+    *  2x 20% -> 32%
+    *  2x 40% -> 65%
+    *  6x 40% -> 88%
+    */
+   if (njammers > 1) {
+      pilot->jam_range  /= (double)njammers;
+      pilot->jam_chance *= exp( -0.2 * (double)(njammers-1) );
+   }
+
+   /* 
+    * Normalize stats.
+    */
+   /* Fighter. */
+   s->accuracy_forward  = s->accuracy_forward/100. + 1.;
+   s->damage_forward    = s->damage_forward/100. + 1.;
+   s->energy_forward    = s->energy_forward/100. + 1.;
+   /* Fire rate:
+    *  amount = p * exp( -0.15 * (n-1) )
+    *  1x 15% -> 15%
+    *  2x 15% -> 25.82%
+    *  3x 15% -> 33.33%
+    *  6x 15% -> 42.51%
+    */
+   s->firerate_forward  = s->firerate_forward/100.;
+   if (nfirerate_forward > 0)
+      s->firerate_forward *= exp( -0.15 * (double)(nfirerate_forward-1) );
+   s->firerate_forward += 1.;
+   /* Cruiser. */
+   s->accuracy_turret   = s->accuracy_turret/100. + 1.;
+   s->damage_turret     = s->damage_turret/100. + 1.;
+   s->energy_turret     = s->energy_turret/100. + 1.;
+   s->firerate_turret   = s->firerate_turret/100.;
+   if (nfirerate_turret > 0)
+      s->firerate_turret  *= exp( -0.15 * (double)(nfirerate_turret-1) );
+   s->firerate_turret  += 1.;
+   /* Freighter. */
+   s->jump_delay        = s->jump_delay/100. + 1.;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

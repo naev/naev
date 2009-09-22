@@ -37,15 +37,23 @@ end
 include("scripts/jumpdist.lua")
 
 
-function patrol_systems_filter( s )
+function patrol_systems_filter( s, data )
    -- Must have Dvaered
    if not s:hasPresence( "Dvaered" ) then
       return false
    end
 
    -- Must have FLF
-   if not (s:hasPresence( "FLF ") or s:hasPresence( "Pirate" ) )  then
+   if s:security() > 95 then
       return false
+   end
+
+   -- Must not already be in list
+   local found = false
+   for k,v in ipairs(data) do
+      if s == v then
+         return false
+      end
    end
 
    return true
@@ -53,12 +61,12 @@ end
 
 
 function get_patrol_systems( n )
-   local t  = getsysatdistance( nil, 1, 2, patrol_systems_filter )
    local s  = { }
+   local t  = getsysatdistance( nil, 1, 3, patrol_systems_filter, s )
    s[#s+1]  = t[ rnd.rnd(1,#t) ]
    local i  = 1
    while i < n do
-      t        = getsysatdistance( s[#s], 1, 1, patrol_systems_filter )
+      t        = getsysatdistance( s[#s], 1, 1, patrol_systems_filter, s )
       if #t > 0 then
          s[#s+1]  = t[ rnd.rnd(1,#t) ]
       end

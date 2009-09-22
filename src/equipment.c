@@ -35,6 +35,8 @@
 #define BUTTON_WIDTH 200 /**< Default button width. */
 #define BUTTON_HEIGHT 40 /**< Default button height. */
 
+#define SHIP_ALT_MAX 256 /**< Maximum ship alt text. */
+
 
 /*
  * equipment stuff
@@ -53,6 +55,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
       int *ew, int *eh,
       int *cw, int *ch, int *bw, int *bh );
 /* Widget. */
+static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p );
@@ -797,8 +800,6 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    int ret;
    Outfit *o, *ammo;
    int q;
-   int n;
-   double off;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -845,18 +846,50 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    }
 
    /* Redo the outfits thingy. */
-   n   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-   off = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
-   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
-   equipment_genLists( wid );
-   toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, off );
+   equipment_regenLists( wid, 1, 1 );
 
    /* Update ships. */
    equipment_updateShips( wid, NULL );
 
    return 0;
 }
+
+
+/**
+ * @brief Regenerates the equipment window lists.
+ */
+void equipment_regenLists( unsigned int wid, int outfits, int ships )
+{
+   int nout, nship;
+   double offout, offship;
+
+   /* Save positions. */
+   if (outfits) {
+      nout   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+      offout = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+   }
+   if (ships) {
+      nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+      offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
+      window_destroyWidget( wid, EQUIPMENT_SHIPS );
+   }
+
+   /* Regenerate lists. */
+   equipment_genLists( wid );
+
+   /* Restore positions. */
+   if (outfits) {
+      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, nout );
+      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offout );
+   }
+   if (ships) {
+      toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+      toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
+   }
+}
+
+
 /**
  * @brief Adds all the ammo it can to the player.
  */
@@ -897,9 +930,9 @@ void equipment_addAmmo (void)
 /**
  * @brief Generates a new ship/outfit lists if needed.
  */
-void equipment_genLists( unsigned int wid )
+static void equipment_genLists( unsigned int wid )
 {
-   int i, l, p;
+   int i, j, l, p;
    char **sships;
    glTexture **tships;
    int nships;
@@ -913,6 +946,8 @@ void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
+   double mod_energy, mod_damage, mod_shots;
+   double eps, dps, shots;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -940,13 +975,45 @@ void equipment_genLists( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s  = player_getShip( sships[i]);
-         if (s->ship->desc_stats != NULL) {
-            alt[i] = malloc( 256 );
-            l  = snprintf( alt[i], 256, "Ship Stats" );
-            l += ship_statsDesc( &s->stats, &alt[i][l], 256-l, 1, 1 );
+         alt[i] = malloc( SHIP_ALT_MAX );
+         dps = 0.;
+         eps = 0.;
+         for (j=0; j<s->noutfits; j++) {
+            o = s->outfits[j]->outfit;
+            if (o==NULL)
+               continue;
+            switch (o->type) {
+               case OUTFIT_TYPE_BOLT:
+                  mod_energy = s->stats.energy_forward;
+                  mod_damage = s->stats.damage_forward;
+                  mod_shots  = 2. - s->stats.firerate_forward;
+                  break;
+               case OUTFIT_TYPE_TURRET_BOLT:
+                  mod_energy = s->stats.energy_turret;
+                  mod_damage = s->stats.damage_turret;
+                  mod_shots  = 2. - s->stats.firerate_turret;
+                  break;
+               default:
+                  continue;
+            }
+            shots = 1. / (mod_shots * outfit_delay(o));
+            dps  += shots * mod_damage * outfit_damage(o);
+            eps  += shots * mod_energy * outfit_energy(o);
          }
-         else
+         l  = snprintf( alt[i], SHIP_ALT_MAX, "Ship Stats" );
+         p  = l;
+         if (dps > 0.)
+            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
+                  "\n%.2f DPS [%.2f EPS]", dps, eps );
+         if (s->jam_chance > 0.)
+            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
+                  "\n%.0f%% Jam [%.0f Range]",
+                  s->jam_chance*100., s->jam_range );
+         l += ship_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1, 1 );
+         if (p == l) {
+            free( alt[i] );
             alt[i] = NULL;
+         }
       }
       toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
@@ -1191,9 +1258,11 @@ static void equipment_changeShip( unsigned int wid )
    /* Swap ship. */
    player_swapShip(shipname);
 
-   /* Destroy widget. */
-   window_destroyWidget( wid, EQUIPMENT_SHIPS );
-   equipment_genLists( wid );
+   /* Regenerate ship widget. */
+   equipment_regenLists( wid, 0, 1 );
+   /* Focus new ship. */
+   toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, 0 );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
 }
 /**
  * @brief Player attempts to transport his ship to the planet he is at.
@@ -1271,8 +1340,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    pilot_calcStats( ship );
 
    /* Regenerate list. */
-   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
-   equipment_genLists( wid );
+   equipment_regenLists( wid, 1, 1 );
 }
 /**
  * @brief Player tries to sell a ship.
@@ -1308,8 +1376,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    player_rmShip( shipname );
 
    /* Destroy widget - must be before widget. */
-   window_destroyWidget( wid, EQUIPMENT_SHIPS );
-   equipment_genLists( wid );
+   equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",

@@ -307,7 +307,7 @@ void pilot_shootStop( Pilot* p, const int secondary );
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, unsigned int parent );
+      DamageType dtype, double damage, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 
 

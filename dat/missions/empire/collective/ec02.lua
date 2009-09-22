@@ -78,7 +78,7 @@ function land()
       -- Some text
       tk.msg( title[1], string.format(text[4], misn_target:name()) )
       misn_stage = 1
-      misn.setDesc( string.format(misn_desc[1], misn_base:name(), misn_base_sys:name() ))
+      misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
       misn.setMarker(misn_base_sys)
 
    -- Return bit

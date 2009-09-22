@@ -23,14 +23,14 @@ else -- default english
    title[2] = "Eiroik"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you.  He seems a bit more nervous then usual.
-"We haven't heard from the commando team, we have to assume the worst.  It seems like Collective presence has also been incremented around %s.  We need you to go check for survivors.  Would you be willing to embark on another dangerous mission?"]]
-   text[2] = [["We'll send extra forces to %s to try to weaken the blockade.  You'll have to fly through and land on %s and see if there are any survivors.  The increased drone patrols will pose an issue, be very careful, this is going to be no walk in the park."]]
-   text[3] = [[The atmosphere once again starts giving your shields a workout as you land.  You spend a while flying low until you sensors pick up a reading of possible life forms.  The silhouette of the transport ship is barely visible.  It seems like they were detected and massacred.  You try to see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
-   text[4] = [[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship.  Stealing from the dead isn't pleasant business, but if it gets you out alive you figure it's good enough.]]
-   text[5] = [[You spend a while searching until you find a datapad on one of the corpses, ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship.  You have been spotted!  Time to hit the afterburner, you've got one right?]]
+   text[1] = [[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+"We haven't heard from the commando team, we have to assume the worst. It seems like Collective presence has also been incremented around %s. We need you to go check for survivors. Would you be willing to embark on another dangerous mission?"]]
+   text[2] = [["We'll send extra forces to %s to try to weaken the blockade. You'll have to fly through and land on %s and see if there are any survivors. The increased drone patrols will pose an issue, be very careful, this is going to be no walk in the park."]]
+   text[3] = [[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until you sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. It seems like they were detected and massacred. You try to see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
+   text[4] = [[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive you figure it's good enough.]]
+   text[5] = [[You spend a while searching until you find a datapad on one of the corpses, ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. You have been spotted!  Time to hit the afterburner, you've got one right?]]
    text[6] = [[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
-"No survivors eh?  I had that gut feeling.  At least you were able to salvage something?  Good, at least it'll make these deaths not be completely futile.  Meet me in the bar in a while.  We're going to try to process this datapad.  It'll hopefully have the final results."]]
+"No survivors eh?  I had that gut feeling. At least you were able to salvage something?  Good, at least it'll make these deaths not be completely futile. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]
 end
 
 

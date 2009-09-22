@@ -9,6 +9,7 @@
 
 
 #include "outfit.h"
+#include "pilot.h"
 
 
 #define EXPL_MODE_SHIP     (1<<0) /**< Affects ships. */
@@ -18,10 +19,10 @@
 
 void expl_explode( double x, double y, double vx, double vy,
       double radius, DamageType dtype, double damage,
-      unsigned int parent, int mode );
+      const Pilot *parent, int mode );
 void expl_explodeDamage( double x, double y, double radius,
       DamageType dtype, double damage,
-      unsigned int parent, int mode );
+      const Pilot *parent, int mode );
 
 
 #endif /* EXPLOSION_H */

@@ -906,11 +906,11 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c.r = cGrey80.r;
    c.g = cGrey80.g;
    c.b = cGrey80.b;
-   c.a = 0.7;
+   c.a = 0.8;
    c2.r = cGrey30.r;
    c2.g = cGrey30.g;
    c2.b = cGrey30.b;
-   c2.a = 0.5;
+   c2.a = 0.7;
    toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
    toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
    gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );

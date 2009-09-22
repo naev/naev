@@ -35,12 +35,12 @@ static int exp_l = -1; /**< Large explosion spfx. */
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type.
  *    @param damage Damage amount.
- *    @param parent Parent of the explosion, 0 is none.
+ *    @param parent Parent of the explosion, NULL is none.
  *    @param mode Defines the explosion behaviour.
  */
 void expl_explode( double x, double y, double vx, double vy,
       double radius, DamageType dtype, double damage,
-      unsigned int parent, int mode )
+      const Pilot *parent, int mode )
 {
    int i, n;
    double a, d;
@@ -97,7 +97,7 @@ void expl_explode( double x, double y, double vx, double vy,
  */
 void expl_explodeDamage( double x, double y, double radius,
       DamageType dtype, double damage,
-      unsigned int parent, int mode )
+      const Pilot *parent, int mode )
 {
    /* Explosion affects ships. */
    if (mode & EXPL_MODE_SHIP)

@@ -102,6 +102,10 @@
      * ancestor_dvaered.png
      * ancestor_pirate.png
      * ancestor_target.png
+     * archimedes.png
+     * archimedes_target.png
+     * derivative.png
+     * derivative_target.png
      * drone.png
      * drone_target.png
      * gawain.png
@@ -114,6 +118,8 @@
      * hawking_target.png
      * hyena.png
      * hyena_target.png
+     * kahan.png
+     * kahan_target.png
      * lancelot.png
      * lancelot_empire.png
      * lancelot_target.png
@@ -124,17 +130,27 @@
      * pacifier.png
      * pacifier_empire.png
      * pacifier_target.png
+     * quicksilver.png
+     * quicksilver_target.png
      * schroedinger.png
      * schroedinger_target.png
      * vendetta.png
      * vendetta_dvaered.png
      * vendetta_pirate.png
      * vendetta_target.png
+     * vigilance.png
+     * vigilance_dvaered.png
+     * vigilance_target.png
+     * watson.png
+     * watson_target.png
    * loading
-     * admonisher-pirate.png
      * admonisher.png
      * ancestor-pirate.png
+     * admonisher-pirate.png
      * ancestor.png
+     * ancestor-pirate.png
+     * archimedes.png
+     * derivative.png
      * drone.png
      * gawain.png
      * goddard.png
@@ -144,8 +160,9 @@
      * llama.png
      * mule.png
      * pacifier.png
-     * vendetta-pirate.png
+     * quicksilver.png
      * vendetta.png
+     * vendetta-pirate.png
  
  * Author: Joel Hans, License: PD
    * planet
@@ -259,6 +276,11 @@
      * kestrel_target.png
      * kestrel_pirate.png
      * kestrel_pirate_comm.png
+     * peacemaker.png
+     * peacemaker_target.png
+   * loading
+     * kestrel_pirate.png
+     * peacemaker.png
 
  * Author: Renderwahn, License: CC-by v3.0
    * gfx
@@ -334,3 +356,8 @@
       * outfit
         * store
           * thruster.png
+          * accuracy_forward.png
+          * accuracy_turret.png
+          * damage_forward.png
+          * efficiency_turret.png
+          * firerate_turret.png

@@ -32,13 +32,13 @@ else -- default english
    title[4] = "Mission Failure"
    text = {}
    text[1] = [[You meet up once more with Commander Soldner at the bar.
-"Hello again %s.  Still interested in doing another mission?  This one will be more dangerous."]]
-   text[2] = [[Commander Soldner continues, "We've had reports that a transport vessel was under attack while transporting a VIP.  It managed to escape but the engine ended up giving out in the %s system.  The ship is now disabled and we need someone to board the ship and rescue the VIP.  There's been many FLF ships detected near the sector and we've managed to get a Dvaered escort for you."
-"You're going to have to fly to the %s system, board the transport ship to rescue the VIP and fly back.  There's most likely going to be combat, that's where the Dvaereds will come in.  Their mission will be to attempt to distract and neutralize all possible hostiles.  You must not let the transport ship get destroyed before you rescue the VIP."]]
-   text[3] = [["Be careful with the Dvaered, they can be a bit blunt and might accidentally destroy the transport ship.  If mission goes well you'll be paid %d credits when you return with the VIP.  Good luck pilot."]]
-   text[4] = [[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard.  Looks like there is no one else aboard.]]
-   text[5] = [[You land at the starport.  It looks like the VIP has already recovered.  He thanks your profusely before heading off.  You proceed to pay Commander Soldner a visit.  He seems to be happy.
-"It seems like you managed to pull it off.  I had my doubts at first, but you've proven to be a very good pilot.  I'm putting the good word with the Dvaered for you.  Hopefully they'll start offering you work also.  We have no more missions for you now, but check in periodically in case we have a job for you."]]
+"Hello again %s. Still interested in doing another mission?  This one will be more dangerous."]]
+   text[2] = [[Commander Soldner continues, "We've had reports that a transport vessel was under attack while transporting a VIP. It managed to escape but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There's been many FLF ships detected near the sector and we've managed to get a Dvaered escort for you."
+"You're going to have to fly to the %s system, board the transport ship to rescue the VIP and fly back. There's most likely going to be combat, that's where the Dvaereds will come in. Their mission will be to attempt to distract and neutralize all possible hostiles. You must not let the transport ship get destroyed before you rescue the VIP."]]
+   text[3] = [["Be careful with the Dvaered, they can be a bit blunt and might accidentally destroy the transport ship. If mission goes well you'll be paid %d credits when you return with the VIP. Good luck pilot."]]
+   text[4] = [[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]
+   text[5] = [[You land at the starport. It looks like the VIP has already recovered. He thanks your profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy.
+"It seems like you managed to pull it off. I had my doubts at first, but you've proven to be a very good pilot. I'm putting the good word with the Dvaered for you. Hopefully they'll start offering you work also. We have no more missions for you now, but check in periodically in case we have a job for you."]]
    msg = {}
    msg[1] = "MISSION FAILED: VIP is dead."
    msg[2] = "MISSION FAILED: You left the VIP abandoned."

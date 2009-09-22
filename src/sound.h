@@ -40,6 +40,7 @@ double sound_getVolume (void);
 int sound_play( int sound );
 int sound_playPos( int sound, double px, double py, double vx, double vy );
 void sound_stop( int voice );
+void sound_stopAll (void);
 int sound_updatePos( int voice, double px, double py, double vx, double vy );
 int sound_updateListener( double dir, double px, double py,
       double vx, double vy );

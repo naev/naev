@@ -63,6 +63,20 @@ typedef struct ShipStats_ {
    /* Freighter-type. */
    double cargo_inertia; /**< Lowers the effect of cargo mass. */
 #endif
+
+   /* Fighter type. */
+   double accuracy_forward; /**< Accuracy of forward mounts. */
+   double damage_forward; /**< Damage of forward mounts. */
+   double firerate_forward; /**< Rate of fire of forward mounts. */
+   double energy_forward; /**< Consumption rate of forward mounts. */
+
+   /* Cruiser type. */
+   double accuracy_turret; /**< Accuracy of turrets. */
+   double damage_turret; /**< Damage of turrets. */
+   double firerate_turret; /**< Rate of fire of turrets. */
+   double energy_turret; /**< Consumption rate of turrets. */
+
+   /* Freighter-type. */
    double jump_delay; /**< Modulates the jump delay. */
 } ShipStats;
 

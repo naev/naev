@@ -529,6 +529,29 @@ void sound_resume (void)
 
 
 /**
+ * @brief Stops all the playing voices.
+ */
+void sound_stopAll (void)
+{
+   alVoice *v;
+
+   if (sound_disabled)
+      return;
+
+   /* Make sure there are voices. */
+   if (voice_active==NULL)
+      return;
+
+   voiceLock();
+   for (v=voice_active; v!=NULL; v=v->next) {
+      sound_sys_stop( v );
+      v->state = VOICE_STOPPED;
+   }
+   voiceUnlock();
+}
+
+
+/**
  * @brief Stops a voice from playing.
  *
  *    @param voice Identifier of the voice to stop.
