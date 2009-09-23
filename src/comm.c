@@ -220,7 +220,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
 
    /* Create the ship image. */
-   window_addRect( wid, 20, -30, GRAPHIC_WIDTH, GRAPHIC_HEIGHT + y + 5,
+   window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
    window_addImage( wid, 20 + (GRAPHIC_WIDTH-comm_graphic->w)/2,
          -30 - (GRAPHIC_HEIGHT-comm_graphic->h)/2,
