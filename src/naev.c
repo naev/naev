@@ -949,7 +949,5 @@ static void debug_sigInit( void )
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
-#else /* HAS_LINUX && defined(DEBUGGING) */
-   (void) executable;
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 }
