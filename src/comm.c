@@ -210,7 +210,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    y = gl_defFont.h*2 + 15;
    if (logo != NULL) {
       w += logo->w;
-      y = MAX( y, logo->w );
+      y  = MAX( y, logo->h );
    }
    x = (GRAPHIC_WIDTH - w) / 2;
 
@@ -231,7 +231,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       window_addImage( wid, x, -30 - GRAPHIC_HEIGHT - 5,
             "imgFaction", logo, 0 );
       x += logo->w + 10;
-      y -= (logo->w - (gl_defFont.h*2 + 15)) / 2;
+      y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
    }
    
    /* Name. */
