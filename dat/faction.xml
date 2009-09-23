@@ -61,6 +61,7 @@
   </enemies>
  </faction>
  <faction name="Pirate">
+  <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
   <player>-20</player>
   <colour>red</colour>
