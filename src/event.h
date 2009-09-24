@@ -54,6 +54,8 @@ void events_update( double dt );
 /*
  * Triggering.
  */
+lua_State *event_runStart( unsigned int eventid, const char *func );
+int event_runFunc( unsigned int eventid, const char *func, int nargs );
 int event_run( unsigned int eventid, const char *func );
 void events_trigger( EventTrigger_t trigger );
 

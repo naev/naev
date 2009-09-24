@@ -65,7 +65,6 @@ static int misn_delete = 0; /**< if 1 delete current mission */
  */
 /* static */
 static void misn_setEnv( Mission *misn );
-static int misn_runTopStack( Mission *misn, const char *func);
 /* externed */
 int misn_run( Mission *misn, const char *func );
 /* external */
@@ -164,7 +163,8 @@ int misn_tryRun( Mission *misn, const char *func )
       lua_pop(misn->L,1);
       return 0;
    }
-   return misn_runTopStack( misn, func );
+   misn_setEnv( misn );
+   return misn_runFunc( misn, func, 0 );
 }
 
 
@@ -179,8 +179,8 @@ int misn_tryRun( Mission *misn, const char *func )
 int misn_run( Mission *misn, const char *func )
 {
    /* Run the function. */
-   lua_getglobal( misn->L, func );
-   return misn_runTopStack( misn, func );
+   misn_runStart( misn, func );
+   return misn_runFunc( misn, func, 0 );
 }
 
 
@@ -198,17 +198,10 @@ static void misn_setEnv( Mission *misn )
 
 
 /**
- * @brief Runs the function at the top of the stack.
- *
- *    @param misn Mission that owns the function.
- *    @param func Name of the function to call.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ * @brief Sets up the mission to run misn_runFunc.
  */
-static int misn_runTopStack( Mission *misn, const char *func)
+lua_State *misn_runStart( Mission *misn, const char *func )
 {
-   int i, ret;
-   const char* err;
    lua_State *L;
 
    /* Set environment. */
@@ -216,8 +209,30 @@ static int misn_runTopStack( Mission *misn, const char *func)
 
    /* Set the Lua state. */
    L = cur_mission->L;
+   lua_getglobal( L, func );
 
-   ret = lua_pcall(L, 0, 0, 0);
+   return L;
+}
+
+
+/**
+ * @brief Runs a mission set up with misn_runStart.
+ *
+ *    @param misn Mission that owns the function.
+ *    @param func Name of the function to call.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *            and 0 normally.
+ */
+int misn_runFunc( Mission *misn, const char *func, int nargs )
+{
+   int i, ret;
+   const char* err;
+   lua_State *L;
+
+   /* For comfort. */
+   L = misn->L;
+
+   ret = lua_pcall(L, nargs, 0, 0);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if (strcmp(err,"Mission Done")!=0)

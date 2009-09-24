@@ -88,12 +88,10 @@ int nlua_loadEvt( lua_State *L )
 
 
 /**
- * @brief Runs the Lua for an event.
+ * @brief Sets up the Lua environment to run a function.
  */
-int event_runLua( Event_t *ev, const char *func )
+lua_State *event_setupLua( Event_t *ev, const char *func )
 {
-   int ret;
-   const char* err;
    lua_State *L;
 
    /* Load event. */
@@ -105,7 +103,33 @@ int event_runLua( Event_t *ev, const char *func )
    /* Get function. */
    lua_getglobal(L, func );
 
-   ret = lua_pcall(L, 0, 0, 0);
+   return L;
+}
+
+
+/**
+ * @brief Runs the Lua for an event.
+ */
+int event_runLua( Event_t *ev, const char *func )
+{
+   event_setupLua( ev, func );
+   return event_runLuaFunc( ev, func, 0 );
+}
+
+
+/**
+ * @brief Runs a Lua func with nargs.
+ */
+int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
+{
+   int ret;
+   const char* err;
+   lua_State *L;
+
+   /* Comfortability. */
+   L = ev->L;
+
+   ret = lua_pcall(L, nargs, 0, 0);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if (strcmp(err,"Event Done")!=0) {

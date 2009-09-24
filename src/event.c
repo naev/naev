@@ -81,10 +81,61 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
 /*
  * Prototypes.
  */
+static Event_t *event_get( unsigned int eventid );
 static int event_alreadyRunning( int data );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
 static int event_create( int dataid );
+
+
+/**
+ * @brief Gets an event.
+ */
+static Event_t *event_get( unsigned int eventid )
+{
+   int i;
+   Event_t *ev;
+
+   /* Iterate. */
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (ev->id == eventid)
+         return ev;
+   }
+
+   WARN( "Event '%u' not found in stack.", eventid );
+   return NULL;
+}
+
+
+/**
+ * @brief Starts running a function, allows programmer to set up arguments.
+ */
+lua_State *event_runStart( unsigned int eventid, const char *func )
+{
+   Event_t *ev;
+
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return NULL;
+
+   return event_setupLua( ev, func );
+}
+
+
+/**
+ * @brief Runs a function previously set up with event_runStart.
+ */
+int event_runFunc( unsigned int eventid, const char *func, int nargs )
+{
+   Event_t *ev;
+
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return 0;
+
+   return event_runLuaFunc( ev, func, nargs );
+}
 
 
 /**
@@ -96,17 +147,13 @@ static int event_create( int dataid );
  */
 int event_run( unsigned int eventid, const char *func )
 {
-   int i;
    Event_t *ev;
 
-   for (i=0; i<event_nactive; i++) {
-      ev = &event_active[i];
-      if (ev->id == eventid)
-         return event_runLua( ev, func );
-   }
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return -1;
 
-   WARN( "Event '%u' not found in stack.", eventid );
-   return -1;
+   return event_runLua( ev, func );
 }
 
 
@@ -118,17 +165,13 @@ int event_run( unsigned int eventid, const char *func )
  */
 const char *event_getData( unsigned int eventid )
 {
-   int i;
    Event_t *ev;
 
-   for (i=0; i<event_nactive; i++) {
-      ev = &event_active[i];
-      if (ev->id == eventid)
-         return event_data[ ev->data ].name;
-   }
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return NULL;
 
-   WARN("Event ID '%u' not valid.", eventid);
-   return NULL;
+   return event_data[ ev->data ].name;
 }
 
 
@@ -140,17 +183,13 @@ const char *event_getData( unsigned int eventid )
  */
 int event_isUnique( unsigned int eventid )
 {
-   int i;
    Event_t *ev;
 
-   for (i=0; i<event_nactive; i++) {
-      ev = &event_active[i];
-      if (ev->id == eventid)
-         return !!(event_data[ ev->data ].flags & EVENT_FLAG_UNIQUE);
-   }
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return -1;
 
-   WARN("Event ID '%u' not valid.", eventid);
-   return 0;
+   return !!(event_data[ ev->data ].flags & EVENT_FLAG_UNIQUE);
 }
 
 
