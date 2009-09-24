@@ -210,7 +210,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    y = gl_defFont.h*2 + 15;
    if (logo != NULL) {
       w += logo->w;
-      y = MAX( y, logo->w );
+      y  = MAX( y, logo->h );
    }
    x = (GRAPHIC_WIDTH - w) / 2;
 
@@ -220,10 +220,10 @@ static unsigned int comm_open( glTexture *gfx, int faction,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
 
    /* Create the ship image. */
-   window_addRect( wid, 20, -30, GRAPHIC_WIDTH, GRAPHIC_HEIGHT + y + 5,
+   window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
-   window_addImage( wid, 20 + (GRAPHIC_WIDTH-comm_graphic->w)/2,
-         -30 - (GRAPHIC_HEIGHT-comm_graphic->h)/2,
+   window_addImage( wid, 20 + (GRAPHIC_WIDTH-(int)comm_graphic->w)/2,
+         -30 - (GRAPHIC_HEIGHT-(int)comm_graphic->h)/2,
          "imgGFX", comm_graphic, 0 );
 
    /* Faction logo. */
@@ -231,7 +231,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       window_addImage( wid, x, -30 - GRAPHIC_HEIGHT - 5,
             "imgFaction", logo, 0 );
       x += logo->w + 10;
-      y -= (logo->w - (gl_defFont.h*2 + 15)) / 2;
+      y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
    }
    
    /* Name. */

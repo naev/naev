@@ -19,6 +19,7 @@
   </enemies>
  </faction>
  <faction name="Proteron">
+  <logo>proteron</logo>
   <longname>House Proteron</longname>
   <player>3</player>
   <colour>purple</colour>
@@ -31,6 +32,7 @@
   </enemies>
  </faction>
  <faction name="Frontier">
+  <logo>frontier</logo>
   <longname>Frontier Alliance</longname>
   <player>3</player>
   <colour>yellow</colour>
@@ -43,6 +45,7 @@
   </enemies>
  </faction>
  <faction name="Trader">
+  <logo>trader</logo>
   <longname>Space Traders Guild</longname>
   <player>3</player>
   <allies>
@@ -58,6 +61,7 @@
   </enemies>
  </faction>
  <faction name="Pirate">
+  <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
   <player>-20</player>
   <colour>red</colour>
@@ -111,6 +115,7 @@
   </enemies>
  </faction>
  <faction name="FLF">
+  <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
   <player>-10</player>
   <enemies>
