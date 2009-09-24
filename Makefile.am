@@ -1,15 +1,12 @@
 SUBDIRS = lib src
 DIST_SUBDIRS = lib src
 
-if HAVE_DOCS
-SUBDIRS += docs
-endif
-
 if HAVE_UTILS
 SUBDIRS += utils
 endif
 
 dist_man6_MANS = naev.6
+dist_doc_DATA = AUTHORS README TODO
 
 DATA_ARCHIVE = ndata
 PACK	     = utils/pack/pack$(EXEEXT)
@@ -74,10 +71,12 @@ docs:
 
 help:
 	@echo "Possible targets are:"
-	@echo "       all - builds everything"
-	@echo "     ndata - creates the ndata file"
-	@echo "      docs - creates the doxygen documentation"
-	@echo "     clean - removes binaries and object files"
-	@echo " distclean - does clean and removes files created by configure"
-	@echo "   install - installs naev"
-	@echo " uninstall - removes previously installed files"
+	@echo "        all - builds everything"
+	@echo "      ndata - creates the ndata file"
+	@echo "       docs - creates the doxygen documentation"
+	@echo "      clean - removes binaries and object files"
+	@echo "    install - installs naev"
+	@echo "  uninstall - removes previously installed files"
+	@echo " dist-bzip2 - creates a source tarball"
+	@echo "  distcheck - checks if the created tarball works properly"
+	@echo "  distclean - does clean and removes files created by configure"
