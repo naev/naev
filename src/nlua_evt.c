@@ -280,7 +280,7 @@ static int evt_npcRm( lua_State *L )
    int ret;
 
    id = luaL_checklong(L, 1);
-   ret = npc_rm_event( cur_event->id, id );
+   ret = npc_rm_event( id, cur_event->id );
 
    if (ret != 0)
       NLUA_ERROR(L, "Invalid NPC ID!");
