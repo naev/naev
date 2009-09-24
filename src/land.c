@@ -1171,8 +1171,8 @@ static void bar_approach( unsigned int wid, char *str )
    /* Ignore news. */
    pos--;
 
-   if (npc_approach( pos ))
-      bar_genList( wid );
+   npc_approach( pos );
+   bar_genList( wid ); /* Always just in case. */
 
    /* Reset markers. */
    mission_sysMark();
@@ -1615,6 +1615,7 @@ void land( Planet* p )
    /* 2) Set as landed and run hooks. */
    landed = 1;
    music_choose("land"); /* Must be before hooks in case hooks change music. */
+   events_trigger( EVENT_TRIGGER_LAND );
    hooks_run("land");
 
    /* 3) Generate computer and bar missions. */

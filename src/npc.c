@@ -244,6 +244,62 @@ int npc_rm_mission( unsigned int id, Mission *misn )
 
 
 /**
+ * @brief Removes all the npc belonging to an event.
+ */
+int npc_rm_parentEvent( unsigned int id )
+{
+   int i, n;
+   NPC_t *npc;
+
+   if (npc_array == NULL)
+      return 0;
+
+   n = 0;
+   for (i=0; i<array_size(npc_array); i++) {
+      npc = &npc_array[i];
+      if (npc->type != NPC_TYPE_EVENT)
+         continue;
+      if (npc->u.e.id != id )
+         continue;
+
+      /* Invalidates iterators. */
+      npc_rm( npc );
+      n++;
+   }
+
+   return n;
+}
+
+
+/**
+ * @brief Removes all the npc belonging to a mission.
+ */
+int npc_rm_parentMission( Mission *misn )
+{
+   int i, n;
+   NPC_t *npc;
+
+   if (npc_array == NULL)
+      return 0;
+
+   n = 0;
+   for (i=0; i<array_size(npc_array); i++) {
+      npc = &npc_array[i];
+      if (npc->type != NPC_TYPE_MISSION)
+         continue;
+      if (npc->u.m.misn->id != misn->id )
+         continue;
+
+      /* Invalidates iterators. */
+      npc_rm( npc );
+      n++;
+   }
+
+   return n;
+}
+
+
+/**
  * @brief NPC compare function.
  */
 static int npc_compare( const void *arg1, const void *arg2 )

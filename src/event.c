@@ -33,6 +33,7 @@
 #include "cond.h"
 #include "hook.h"
 #include "player.h"
+#include "npc.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
@@ -222,8 +223,11 @@ static void event_cleanup( Event_t *ev )
    /* Destroy Lua. */
    lua_close(ev->L);
 
-   /* Free events. */
+   /* Free hooks. */
    hook_rmEventParent(ev->id);
+
+   /* Free NPC. */
+   npc_rm_parentEvent(ev->id);
 
    /* Free timers. */
    for (i=0; i<EVENT_TIMER_MAX; i++) {
@@ -419,6 +423,8 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
          
          if (strcmp(buf,"enter")==0)
             temp->trigger = EVENT_TRIGGER_ENTER;
+         else if (strcmp(buf,"land")==0)
+            temp->trigger = EVENT_TRIGGER_LAND;
          else
             WARN("Event '%s' has invalid 'trigger' parameter: %s", temp->name, buf);
 

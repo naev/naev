@@ -33,6 +33,7 @@
 #include "space.h"
 #include "cond.h"
 #include "gui_osd.h"
+#include "npc.h"
 
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
@@ -477,9 +478,11 @@ void mission_cleanup( Mission* misn )
 {
    int i;
 
-   /* Hooks. */
-   if (misn->id != 0)
+   /* Hooks and missions. */
+   if (misn->id != 0) {
       hook_rmMisnParent( misn->id ); /* remove existing hooks */
+      npc_rm_parentMission( misn ); /* remove existing npc */
+   }
 
    /* Data. */
    if (misn->title != NULL)

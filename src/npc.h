@@ -25,6 +25,8 @@ unsigned int npc_add_event( unsigned int evt, const char *func, const char *name
  */
 int npc_rm_event( unsigned int id, unsigned int evt );
 int npc_rm_mission( unsigned int id, Mission *misn );
+int npc_rm_parentEvent( unsigned int id );
+int npc_rm_parentMission( Mission *misn );
 
 /*
  * Control.
