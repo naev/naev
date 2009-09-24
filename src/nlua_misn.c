@@ -37,6 +37,7 @@
 #include "nluadef.h"
 #include "music.h"
 #include "gui_osd.h"
+#include "npc.h"
 
 
 /**
@@ -92,6 +93,8 @@ static int misn_jetCargo( lua_State *L );
 static int misn_osdCreate( lua_State *L );
 static int misn_osdDestroy( lua_State *L );
 static int misn_osdActive( lua_State *L );
+static int misn_npcAdd( lua_State *L );
+static int misn_npcRm( lua_State *L );
 static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -110,6 +113,8 @@ static const luaL_reg misn_methods[] = {
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
+   { "npcAdd", misn_npcAdd },
+   { "npcRm", misn_npcRm },
    {0,0}
 }; /**< Mission lua methods. */
 
@@ -783,6 +788,75 @@ static int misn_osdActive( lua_State *L )
    if (cur_mission->osd != 0)
       osd_active( cur_mission->osd, n );
 
+   return 0;
+}
+
+
+/**
+ * @brief Adds an NPC.
+ *
+ * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
+ *
+ *    @luaparam func Name of the function to run when approaching.
+ *    @luaparam name Name of the NPC
+ *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
+ *    @luaparam desc Description assosciated to the NPC.
+ *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
+ *    @luareturn The ID of the NPC to pass to npcRm.
+ * @luafunc npcAdd( func, name, portrait, desc, priority )
+ */
+static int misn_npcAdd( lua_State *L )
+{                                                                         
+   unsigned int id;
+   int priority;
+   const char *func, *name, *gfx, *desc;
+   char portrait[PATH_MAX];
+
+   /* Handle parameters. */
+   func = luaL_checkstring(L, 1);
+   name = luaL_checkstring(L, 2);
+   gfx  = luaL_checkstring(L, 3);
+   desc = luaL_checkstring(L, 4);
+
+   /* Optional priority. */
+   if (lua_gettop(L) > 4)
+      priority = luaL_checkint( L, 5 );
+   else
+      priority = 5;
+
+   /* Set path. */
+   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+
+   /* Add npc. */
+   id = npc_add_mission( cur_mission, func, name, priority, portrait, desc );
+
+   /* Return ID. */
+   if (id > 0) {
+      lua_pushnumber( L, id );
+      return 1;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Removes an NPC.
+ *
+ * @usage misn.npcRm( npc_id )
+ *
+ *    @luaparam id ID of the NPC to remove.
+ * @luafunc npcRm( id )
+ */
+static int misn_npcRm( lua_State *L )
+{  
+   unsigned int id;
+   int ret;
+   
+   id = luaL_checklong(L, 1);
+   ret = npc_rm_mission( id, cur_mission );
+   
+   if (ret != 0)
+      NLUA_ERROR(L, "Invalid NPC ID!");
    return 0;
 }
 
