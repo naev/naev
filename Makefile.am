@@ -12,7 +12,7 @@ V             = @
 Q             = $(V:1=)
 QUIET_PACK    = $(Q:@=@echo ' PACK   '$@;)
 
-.PHONY: install-ndata
+.PHONY: docs help install-ndata
 
 $(PACK):
 	$(MAKE) -C utils/pack
@@ -38,12 +38,29 @@ $(DATA_ARCHIVE): $(PACK) VERSION
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \
 	dir=$$(echo "$$ndata" | sed 's/\(.*\)[\/\\].*/\1/'); \
-	echo " $(MKDIR_P) $$dir"; \
+	echo " $(MKDIR_P) '$$dir'"; \
 	$(MKDIR_P) "$$dir"; \
-	echo " $(INSTALL_DATA) -c $(DATA_ARCHIVE) $$ndata"; \
+	echo " $(INSTALL_DATA) -c '$(DATA_ARCHIVE)' '$$ndata'"; \
 	$(INSTALL_DATA) -c "$(DATA_ARCHIVE)" "$$ndata"
 
 install-data-hook:
 	if test -e $(top_srcdir)/dat && test -e $(top_srcdir)/gfx; then \
 	  $(MAKE) install-ndata; \
 	fi
+
+uninstall-hook:
+	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \
+	rm -rf "$(DESTDIR)$(pkgdatadir)"
+
+docs:
+	$(MAKE) -C docs
+
+help:
+	@echo "Possible targets are:"
+	@echo "       all - builds everything"
+	@echo "     ndata - creates the ndata file"
+	@echo "      docs - creates the doxygen documentation"
+	@echo "     clean - removes binaries and object files"
+	@echo " distclean - does clean and removes files created by configure"
+	@echo "   install - installs naev"
+	@echo " uninstall - removes previously installed files"
