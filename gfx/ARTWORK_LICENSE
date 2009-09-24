@@ -291,6 +291,8 @@
        * debris3.png
        * debris4.png
        * debris5.png
+     * logo
+       * pirate_small.png
 
  * Author: Sean Hildebrand, License: CC-by v3.0
    * gui
@@ -361,3 +363,11 @@
           * damage_forward.png
           * efficiency_turret.png
           * firerate_turret.png
+
+  * Author: Enigmatic, License: CC-by v3.0
+    * gfx
+      * logo
+        * flf_small.png
+        * frontier_small.png
+        * proteron_small.png
+        * trader_small.png
