@@ -28,6 +28,7 @@
 #include "event.h"
 #include "mission.h"
 #include "player.h"
+#include "npc.h"
 
 
 /**
@@ -58,11 +59,15 @@ static int evt_delete = 0; /**< if 1 delete current event */
 static int evt_misnStart( lua_State *L );
 static int evt_timerStart( lua_State *L );
 static int evt_timerStop( lua_State *L );
+static int evt_npcAdd( lua_State *L );
+static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
 static const luaL_reg evt_methods[] = {
    { "misnStart", evt_misnStart },
    { "timerStart", evt_timerStart },
    { "timerStop", evt_timerStop },
+   { "npcAdd", evt_npcAdd },
+   { "npcRm", evt_npcRm },
    { "finish", evt_finish },
    {0,0}
 }; /**< Mission lua methods. */
@@ -210,6 +215,75 @@ static int evt_timerStop( lua_State *L )
       }
    }
 
+   return 0;
+}
+
+
+/**
+ * @brief Adds an NPC.
+ *
+ * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
+ *
+ *    @luaparam func Name of the function to run when approaching.
+ *    @luaparam name Name of the NPC
+ *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
+ *    @luaparam desc Description assosciated to the NPC.
+ *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
+ *    @luareturn The ID of the NPC to pass to npcRm.
+ * @luafunc npcAdd( func, name, portrait, desc, priority )
+ */
+static int evt_npcAdd( lua_State *L )
+{
+   unsigned int id;
+   int priority;
+   const char *func, *name, *gfx, *desc;
+   char portrait[PATH_MAX];
+
+   /* Handle parameters. */
+   func = luaL_checkstring(L, 1);
+   name = luaL_checkstring(L, 2);
+   gfx  = luaL_checkstring(L, 3);
+   desc = luaL_checkstring(L, 4);
+
+   /* Optional priority. */
+   if (lua_gettop(L) > 4)
+      priority = luaL_checkint( L, 5 );
+   else
+      priority = 5;
+ 
+   /* Set path. */
+   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+
+   /* Add npc. */
+   id = npc_add_event( cur_event->id, func, name, priority, portrait, desc );
+
+   /* Return ID. */
+   if (id > 0) {
+      lua_pushnumber( L, id );
+      return 1;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Removes an NPC.
+ *
+ * @usage evt.npcRm( npc_id )
+ *
+ *    @luaparam id ID of the NPC to remove.
+ * @luafunc npcRm( id )
+ */
+static int evt_npcRm( lua_State *L )
+{
+   unsigned int id;
+   int ret;
+
+   id = luaL_checklong(L, 1);
+   ret = npc_rm_event( cur_event->id, id );
+
+   if (ret != 0)
+      NLUA_ERROR(L, "Invalid NPC ID!");
    return 0;
 }
 

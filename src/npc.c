@@ -128,8 +128,8 @@ static unsigned int npc_add_giver( Mission *misn )
 /**
  * @brief Adds a mission NPC to the mission computer.
  */
-unsigned int npc_add_mission( Mission *misn, char *func, char *name,
-      int priority, char *portrait, char *desc )
+unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
+      int priority, const char *portrait, const char *desc )
 {
    NPC_t npc;
 
@@ -149,8 +149,8 @@ unsigned int npc_add_mission( Mission *misn, char *func, char *name,
 /**
  * @brief Adds a event NPC to the mission computer.
  */
-unsigned int npc_add_event( unsigned int evt, char *func, char *name,
-      int priority, char *portrait, char *desc )
+unsigned int npc_add_event( unsigned int evt, const char *func, const char *name,
+      int priority, const char *portrait, const char *desc )
 {
    NPC_t npc;
 
