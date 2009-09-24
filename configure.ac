@@ -24,7 +24,7 @@ expand_variable()
   while true; do
     eval local value=\$$1
     eval "$1=\"$value\""
-    expr "$value" : '\(^\$\|.*[^\\]\$\)' >/dev/null 2>&1 || break
+    echo "$value" | grep -qE '(^|[^\\])\$' || break
   done
 }
 
