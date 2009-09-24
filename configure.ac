@@ -44,9 +44,27 @@ AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
 
 #
+# Checks for build environment
+#
+AC_MSG_CHECKING([whether we are building utils])
+AS_IF([test -d "utils"], [
+  have_utils="yes"
+], [
+  have_utils="no"
+])
+AC_MSG_RESULT([$have_utils])
+
+AC_MSG_CHECKING([whether we are have docs])
+AS_IF([test -d "docs"], [
+  have_docs="yes"
+], [
+  have_docs="no"
+])
+AC_MSG_RESULT([$have_docs])
+
+#
 # Platform checks
 #
-
 AC_CANONICAL_HOST
 
 AC_MSG_CHECKING([[if we need a __unix__ define]])
@@ -420,22 +438,29 @@ AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
 
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
+AM_CONDITIONAL([HAVE_UTILS], [test "$have_utils" = "yes"])
+AM_CONDITIONAL([HAVE_DOCS], [test "$have_docs" = "yes"])
 
 #
 # Output
 #
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
-		 docs/Makefile
 		 lib/Makefile
 		 lib/csparse/Makefile
 		 lib/lua/Makefile
 		 src/Makefile
 		 src/tk/Makefile
 		 src/tk/widget/Makefile
-		 utils/Makefile
-		 utils/pack/Makefile
 		 build/shave])
+AS_IF([test "$have_utils" = "yes"], [
+  AC_CONFIG_FILES([utils/Makefile
+		   utils/pack/Makefile])
+])
+AS_IF([test "$have_docs" = "yes"], [
+  AC_CONFIG_FILES([docs/Makefile])
+])
+
 AC_OUTPUT
 
 echo

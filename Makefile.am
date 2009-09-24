@@ -1,4 +1,13 @@
-SUBDIRS = lib src utils
+SUBDIRS = lib src
+DIST_SUBDIRS = lib src
+
+if HAVE_DOCS
+SUBDIRS += docs
+endif
+
+if HAVE_UTILS
+SUBDIRS += utils
+endif
 
 dist_man6_MANS = naev.6
 
@@ -20,6 +29,7 @@ $(PACK):
 VERSION:
 	echo $(VERSION) > $@
 
+if HAVE_UTILS
 $(DATA_ARCHIVE): $(PACK) VERSION
 	$(QUIET_PACK)\
 	test -f $(top_srcdir)/VERSION || mv -n VERSION "$(top_srcdir)"; \
@@ -34,6 +44,13 @@ $(DATA_ARCHIVE): $(PACK) VERSION
 	     find dat     -type f); \
 	test -f $(abs_top_builddir)/VERSION \
 	  || mv -n VERSION "$(abs_top_builddir)"
+else
+$(DATA_ARCHIVE):
+	@echo "***"
+	@echo "*** You must clone the full git repo to create $(DATA_ARCHIVE)"
+	@echo "***"
+	@false
+endif
 
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \
