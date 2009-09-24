@@ -40,6 +40,9 @@ AS_IF([test -z "$CUT"],[
   AC_ERROR([cut not found])
 ])
 
+AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
+AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
+
 #
 # Platform checks
 #
@@ -412,10 +415,18 @@ AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
 		   [Define to the path to the data file])
 
 #
+# Automake conditionals
+#
+
+AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
+AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
+
+#
 # Output
 #
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
+		 docs/Makefile
 		 lib/Makefile
 		 lib/csparse/Makefile
 		 lib/lua/Makefile
