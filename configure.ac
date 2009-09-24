@@ -47,15 +47,15 @@ AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
 # Checks for build environment
 #
 AC_MSG_CHECKING([whether we are building utils])
-AS_IF([test -d "utils"], [
+AS_IF([test -d "$srcdir/utils"], [
   have_utils="yes"
 ], [
   have_utils="no"
 ])
 AC_MSG_RESULT([$have_utils])
 
-AC_MSG_CHECKING([whether we are have docs])
-AS_IF([test -d "docs"], [
+AC_MSG_CHECKING([whether we have docs])
+AS_IF([test -d "$srcdir/docs"], [
   have_docs="yes"
 ], [
   have_docs="no"
@@ -300,7 +300,7 @@ AC_DEFINE_UNQUOTED([OPENGL_GLU_H], [$OPENGL_GLU_H],
 GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
 GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
 
-AS_IF([test "$enable_debug" = "yes"], [
+AS_IF([test "$enable_debug" != "no"], [
   GLOBAL_CFLAGS="$GLOBAL_CFLAGS -DLUA_USE_APICHECK"
 ])
 
