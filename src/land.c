@@ -1033,7 +1033,6 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   int i;
    glTexture **portraits;
    char **names;
    int w, h, iw, ih, bw, bh;
@@ -1049,7 +1048,8 @@ static int bar_genList( unsigned int wid )
    /* Set up missions. */
    if (mission_portrait == NULL)
       mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
-   if (mission_nbar <= 0) {
+   n = npc_getArraySize();
+   if (n <= 0) {
       n            = 1;
       portraits    = malloc(sizeof(glTexture*));
       portraits[0] = mission_portrait;
@@ -1057,16 +1057,13 @@ static int bar_genList( unsigned int wid )
       names[0]     = strdup("News");
    }
    else {
-      n            = mission_nbar+1;
+      n            = n+1;
       portraits    = malloc( sizeof(glTexture*) * n );
       portraits[0] = mission_portrait;
+      npc_getTextureArray( &portraits[1], n-1 );
       names        = malloc( sizeof(char*) * n );
       names[0]     = strdup("News");
-      for (i=0; i<mission_nbar; i++) {
-         names[i+1]     = (mission_bar[i].npc != NULL) ?
-            strdup( mission_bar[i].npc ) : NULL;
-         portraits[i+1] = mission_bar[i].portrait;
-      }
+      npc_getNameArray( &names[1], n-1 );
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 64, 48,
@@ -1136,11 +1133,11 @@ static void bar_update( unsigned int wid, char* str )
    window_enableButton( wid, "btnApproach" );
 
    /* Set portrait. */
-   window_modifyText(  wid, "txtPortrait", mission_bar[pos].npc );
-   window_modifyImage( wid, "imgPortrait", mission_bar[pos].portrait );
+   window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ) );
 
    /* Set mission description. */
-   window_modifyText(  wid, "txtMission",  mission_bar[pos].desc );
+   window_modifyText(  wid, "txtMission", npc_getDesc( pos ));
 }
 /**
  * @brief Closes the mission computer window.
@@ -1162,10 +1159,7 @@ static void bar_close( unsigned int wid, char *name )
 static void bar_approach( unsigned int wid, char *str )
 {
    (void) str;
-   Mission* misn;
    int pos;
-   int i;
-   int ret;
 
    /* Get position. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -1177,26 +1171,8 @@ static void bar_approach( unsigned int wid, char *str )
    /* Ignore news. */
    pos--;
 
-   /* Make sure player can accept the mission. */
-   for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL) break;
-   if (i >= MISSION_MAX) {
-      dialogue_alert("You have too many active missions.");
-      return;
-   }
-
-   /* Get mission. */
-   misn = &mission_bar[pos];
-   ret  = mission_accept( misn );
-   if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
-      if (ret==-1)
-         mission_cleanup( &mission_bar[pos] );
-      memmove( &mission_bar[pos], &mission_bar[pos+1],
-            sizeof(Mission) * (mission_nbar-pos-1) );
-      mission_nbar--;
-
-      bar_genList(wid);
-   }
+   if (npc_approach( pos ))
+      bar_genList( wid );
 
    /* Reset markers. */
    mission_sysMark();
@@ -1311,7 +1287,7 @@ static void misn_accept( unsigned int wid, char* str )
       ret = mission_accept( misn );
       if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
          if (ret==-1)
-            mission_cleanup( &mission_bar[pos] );
+            mission_cleanup( &mission_computer[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;
