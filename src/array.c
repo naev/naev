@@ -17,6 +17,7 @@ void *_array_create_helper(size_t e_size)
 
 static void _array_resize_container(_private_container **c_, size_t e_size, int new_size)
 {
+   assert( new_size >= 0 );
    _private_container *c = *c_;
 
    if (new_size > c->_reserved) {
