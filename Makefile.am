@@ -3,10 +3,10 @@ SUBDIRS = lib src utils
 dist_man6_MANS = naev.6
 
 DATA_ARCHIVE = ndata
-PACK	     = utils/pack/pack
+PACK	     = utils/pack/pack$(EXEEXT)
 
 EXTRA_DIST = LICENSE conf.example
-CLEANFILES = pack $(DATA_ARCHIVE)
+CLEANFILES = $(DATA_ARCHIVE)
 
 V             = @
 Q             = $(V:1=)
