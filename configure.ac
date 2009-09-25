@@ -48,17 +48,17 @@ AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
 #
 AC_MSG_CHECKING([whether we are building utils])
 AS_IF([test -d "$srcdir/utils"], [
-  have_utils="yes"
+  have_utils=yes
 ], [
-  have_utils="no"
+  have_utils=no
 ])
 AC_MSG_RESULT([$have_utils])
 
 AC_MSG_CHECKING([whether we have docs])
 AS_IF([test -d "$srcdir/docs"], [
-  have_docs="yes"
+  have_docs=yes
 ], [
-  have_docs="no"
+  have_docs=no
 ])
 AC_MSG_RESULT([$have_docs])
 
@@ -80,20 +80,6 @@ AC_COMPILE_IFELSE([
   AC_DEFINE([__unix__], 1,
 [Define to 1 if running on a UNIX-like system where __unix__ is missing])
 ])
-
-have_posix=yes
-have_windows=no
-have_darwin=no
-
-case "$host" in
-  *-mingw*)
-    have_windows=yes
-    have_posix=no
-    ;;
-  *-darwin*)
-    have_darwin=yes
-    ;;
-esac
 
 # Fix missing prefix
 AS_IF([test "$prefix" = "NONE"], [
@@ -201,30 +187,31 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
 
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
-  AS_IF([test "$have_darwin" = "yes"], [
-    have_openal="yes"
-    OPENAL_AL_H="<OpenAL/al.h>"
-    OPENAL_ALC_H="<OpenAL/alc.h>"
-    OPENAL_CFLAGS=
-    OPENAL_LIBS="-framework OpenAL"
-  ], [
-    AS_IF([test "$have_windows" = "yes"], [
-      have_openal="yes"
+  case "$host" in
+    *-darwin*)
+      have_openal=yes
       OPENAL_AL_H="<OpenAL/al.h>"
       OPENAL_ALC_H="<OpenAL/alc.h>"
       OPENAL_CFLAGS=
-      OPENAL_LIBS="-lOpenAL32"
-    ], [
-      PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
-
-      AS_IF([test "$have_openal" = "no"], [
-	AC_ERROR([OpenAL not found])
-      ])
-
+      OPENAL_LIBS="-framework OpenAL"
+      ;;
+    *-mingw*)
       OPENAL_AL_H="<AL/al.h>"
       OPENAL_ALC_H="<AL/alc.h>"
-    ])
-  ])
+      OPENAL_CFLAGS=
+      OLD_LIBS="$LIBS"
+      LIBS=
+      AC_SEARCH_LIBS([alGenSources], [OpenAL32],
+		     [have_openal=yes], [have_openal=no])
+      OPENAL_LIBS="$LIBS"
+      LIBS="$OLD_LIBS"
+      ;;
+    *)
+      PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
+      OPENAL_AL_H="<AL/al.h>"
+      OPENAL_ALC_H="<AL/alc.h>"
+      ;;
+  esac
   AC_DEFINE_UNQUOTED([OPENAL_AL_H], [$OPENAL_AL_H],
 		     [Define to the equivalent of <AL/al.h> on your system])
   AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [$OPENAL_ALC_H],
@@ -236,7 +223,7 @@ AS_IF([test "$with_openal" = "yes"], [
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
   OLD_LIBS="$LIBS"
-  LIBS=""
+  LIBS=
   AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
 		 [have_sdlmixer=yes], [have_sdlmixer=no])
   AS_IF([test "$have_sdlmixer" = "yes"], [
@@ -253,7 +240,7 @@ AS_IF([test "$with_sdlmixer" = "yes"], [
 
 # SDL_image
 OLD_LIBS="$LIBS"
-LIBS=""
+LIBS=
 AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
   AC_ERROR([SDL_image not found])
 ])
@@ -303,7 +290,7 @@ case "$host" in
     OPENGL_GLU_H="<GL/glu.h>"
     OPENGL_CFLAGS=
     OLD_LIBS="$LIBS"
-    LIBS=""
+    LIBS=
     AC_SEARCH_LIBS([glGenTextures], [GL], [], [
       AC_ERROR([OpenGL not found])
     ])
@@ -333,7 +320,7 @@ AS_IF([test "$enable_debug" != "no"], [
 ])
 
 # naev
-NAEV_CFLAGS=""
+NAEV_CFLAGS=
 NAEV_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 
 AS_IF([test "$enable_debug" != "no"], [
@@ -385,11 +372,14 @@ AC_SUBST([NAEV_LIBS])
 # liblua
 LIBLUA_CFLAGS="$GLOBAL_CFLAGS"
 
-AS_IF([test "$have_posix" = "yes"], [
-  LIBLUA_CFLAGS="$LIBLUA_CFLAGS -DLUA_USE_POSIX"
-], [
-  LIBLUA_CFLAGS="$LIBLUA_CFLAGS -DLUA_ANSI"
-])
+case "$host" in
+  *-mingw*)
+    LIBLUA_CFLAGS="$LIBLUA_CFLAGS -DLUA_ANSI"
+    ;;
+  *)
+    LIBLUA_CFLAGS="$LIBLUA_CFLAGS -DLUA_USE_POSIX"
+    ;;
+esac
 
 AC_SUBST([LIBLUA_CFLAGS])
 
