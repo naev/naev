@@ -337,7 +337,7 @@ AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
   case "$host" in
     *-linux-gnu)
-      NAEV_LIBS="$NAEV_LIBS -lbfd"
+      NAEV_LIBS="$NAEV_LIBS -lbfd -rdynamic"
       ;;
   esac
 ])
