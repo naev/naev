@@ -176,8 +176,8 @@ PKG_CHECK_MODULES([FREETYPE], [freetype2], [], [
 ])
 
 # vorbisfile
-PKG_CHECK_MODULES([VORBISFILE], [vorbisfile >= 1.2.1], [], [
-  AC_ERROR([vorbisfile >= 1.2.1 not found])
+PKG_CHECK_MODULES([VORBISFILE], [vorbisfile], [], [
+  AC_ERROR([vorbisfile not found])
 ])
 
 # libpng
@@ -405,6 +405,14 @@ AC_TYPE_UINT8_T
 OLD_LIBS="$LIBS"
 LIBS="-lm"
 AC_CHECK_FUNCS([feenableexcept])
+LIBS="$OLD_LIBS"
+
+OLD_CFLAGS="$CFLAGS"
+OLD_LIBS="$LIBS"
+CFLAGS="$VORBISFILE_CFLAGS"
+LIBS="$VORBISFILE_LIBS"
+AC_CHECK_FUNCS([ov_read_filter])
+CFLAGS="$OLD_CFLAGS"
 LIBS="$OLD_LIBS"
 
 #

@@ -122,7 +122,9 @@ static ALfloat music_vol = 1.; /**< Current volume level. */
 /*
  * prototypes
  */
+#ifdef HAVE_OV_READ_FILTER
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
+#endif /* HAVE_OV_READ_FILTER */
 static void music_kill (void);
 static int music_thread( void* unused );
 static int stream_loadBuffer( ALuint buffer );
@@ -502,6 +504,7 @@ static int music_thread( void* unused )
 }
 
 
+#ifdef HAVE_OV_READ_FILTER
 /**
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
@@ -538,6 +541,7 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
             pcm[i][j] *= scale_factor;
    }
 }
+#endif /* HAVE_OV_READ_FILTER */
 
 
 /**
@@ -561,6 +565,7 @@ static int stream_loadBuffer( ALuint buffer )
    size = 0;
    while (size < music_bufSize) { /* fille up the entire data buffer */
 
+#ifdef HAVE_OV_READ_FILTER
       result = ov_read_filter(
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
@@ -571,6 +576,16 @@ static int stream_loadBuffer( ALuint buffer )
             &section,               /* current bitstream */
             rg_filter,              /* filter function */
             &music_vorbis );        /* filter parameter */
+#else /* HAVE_OV_READ_FILTER */
+      result = ov_read(
+            &music_vorbis.stream,   /* stream */
+            &music_buf[size],       /* data */
+            music_bufSize - size,   /* amount to read */
+            VORBIS_ENDIAN,          /* big endian? */
+            2,                      /* 16 bit */
+            1,                      /* signed */
+            &section );             /* current bitstream */
+#endif /* HAVE_OV_READ_FILTER */
 
       /* End of file. */
       if (result == 0) {
