@@ -28,6 +28,20 @@ expand_variable()
   done
 }
 
+# Temporarily changes the value of a variable, until it is restored later.
+# $1: name of variable
+# $2: temporary value
+define([VAR_SAVE], [
+  OLD_$1="$$1"
+  $1=$2
+])
+
+# Restores the saved variable.
+# $1: name of variable
+define([VAR_RESTORE], [
+  $1="$OLD_$1"
+])
+
 #
 # Checks for programs.
 #
@@ -199,12 +213,11 @@ AS_IF([test "$with_openal" = "yes"], [
       OPENAL_AL_H="<AL/al.h>"
       OPENAL_ALC_H="<AL/alc.h>"
       OPENAL_CFLAGS=
-      OLD_LIBS="$LIBS"
-      LIBS=
+      VAR_SAVE([LIBS])
       AC_SEARCH_LIBS([alGenSources], [OpenAL32],
 		     [have_openal=yes], [have_openal=no])
       OPENAL_LIBS="$LIBS"
-      LIBS="$OLD_LIBS"
+      VAR_RESTORE([LIBS])
       ;;
     *)
       PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
@@ -222,8 +235,7 @@ AS_IF([test "$with_openal" = "yes"], [
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
-  OLD_LIBS="$LIBS"
-  LIBS=
+  VAR_SAVE([LIBS])
   AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
 		 [have_sdlmixer=yes], [have_sdlmixer=no])
   AS_IF([test "$have_sdlmixer" = "yes"], [
@@ -233,20 +245,19 @@ AS_IF([test "$with_sdlmixer" = "yes"], [
     SDLMIXER_CFLAGS=
     SDLMIXER_LIBS=
   ])
-  LIBS="$OLD_LIBS"
+  VAR_RESTORE([LIBS])
 ], [
   have_sdlmixer=no
 ])
 
 # SDL_image
-OLD_LIBS="$LIBS"
-LIBS=
+VAR_SAVE([LIBS])
 AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
   AC_ERROR([SDL_image not found])
 ])
 SDLIMAGE_CFLAGS=
 SDLIMAGE_LIBS="$LIBS"
-LIBS="$OLD_LIBS"
+VAR_RESTORE([LIBS])
 AC_SUBST([SDLIMAGE_CFLAGS])
 AC_SUBST([SDLIMAGE_LIBS])
 
@@ -266,8 +277,7 @@ case "$host" in
     OPENGL_GL_H="<GL/gl.h>"
     OPENGL_GLU_H="<GL/glu.h>"
     OPENGL_CFLAGS=
-    OLD_LIBS="$LIBS"
-    LIBS="-lopengl32"
+    VAR_SAVE([LIBS], ["-lopengl32"])
     AC_MSG_CHECKING([for glGenTextures in libopengl32])
     AC_TRY_LINK([#include <GL/gl.h>], [glGenTextures (1, 0);], [], [
       AC_MSG_RESULT([no])
@@ -282,15 +292,14 @@ case "$host" in
     ])
     AC_MSG_RESULT([yes])
     OPENGL_LIBS="$LIBS"
-    LIBS="$OLD_LIBS"
+    VAR_RESTORE([LIBS])
     ;;
 
   *)
     OPENGL_GL_H="<GL/gl.h>"
     OPENGL_GLU_H="<GL/glu.h>"
     OPENGL_CFLAGS=
-    OLD_LIBS="$LIBS"
-    LIBS=
+    VAR_SAVE([LIBS])
     AC_SEARCH_LIBS([glGenTextures], [GL], [], [
       AC_ERROR([OpenGL not found])
     ])
@@ -298,7 +307,7 @@ case "$host" in
       AC_ERROR([GLU not found])
     ])
     OPENGL_LIBS="$LIBS"
-    LIBS="$OLD_LIBS"
+    VAR_RESTORE([LIBS])
     ;;
 esac
 
@@ -402,18 +411,15 @@ AC_TYPE_UINT8_T
 #
 # Checks for functions
 #
-OLD_LIBS="$LIBS"
-LIBS="-lm"
+VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])
-LIBS="$OLD_LIBS"
+VAR_RESTORE([LIBS])
 
-OLD_CFLAGS="$CFLAGS"
-OLD_LIBS="$LIBS"
-CFLAGS="$VORBISFILE_CFLAGS"
-LIBS="$VORBISFILE_LIBS"
+VAR_SAVE([CFLAGS], ["$VORBISFILE_CFLAGS"])
+VAR_SAVE([LIBS],   ["$VORBISFILE_LIBS"])
 AC_CHECK_FUNCS([ov_read_filter])
-CFLAGS="$OLD_CFLAGS"
-LIBS="$OLD_LIBS"
+VAR_RESTORE([CFLAGS])
+VAR_RESTORE([LIBS])
 
 #
 # Defines in config.h
