@@ -303,7 +303,7 @@ static void cli_input( unsigned int wid, char *unused )
    str = window_getInput( wid, "inpInput" );
 
    /* Ignore useless stuff. */
-   if ((str == NULL) || (str[0] == '\0'))
+   if (str == NULL)
       return;
 
    /* Put the message in the console. */
