@@ -398,10 +398,10 @@ void loadscreen_render( double done, const char *msg )
    glColour col;
    double bx,by, bw,bh;
    double x,y, w,h, rh;
+   SDL_Event event;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
    /* Draw stars. */
    space_renderStars( 0. );
@@ -453,6 +453,9 @@ void loadscreen_render( double done, const char *msg )
 
    /* Flip buffers. */
    SDL_GL_SwapBuffers();
+
+   /* Get rid of events again. */
+   while (SDL_PollEvent(&event));
 }
 
 
