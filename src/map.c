@@ -314,8 +314,8 @@ static void map_update( unsigned int wid )
       window_modifyImage( wid, "imgFaction", logo );
       if (logo != NULL) {
          window_moveWidget( wid, "imgFaction",
-               -(90-logo->w)/2-20-logo->w, y-logo->h );
-         y -= logo->h + 10;
+               -(90-logo->w)/2-20-logo->w, y-(64-logo->h)/2-logo->h );
+         y -= 64 + 10;
       }
 
       /* Modify the text */
