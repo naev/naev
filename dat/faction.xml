@@ -98,6 +98,7 @@
  </faction>
  <faction name="Collective">
   <static />
+  <logo>collective</logo>
   <player>-100</player>
   <colour>silver</colour>
   <enemies>

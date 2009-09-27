@@ -627,6 +627,35 @@ char* toolkit_getImageArray( const unsigned int wid, const char* name )
 
 
 /**
+ * @brief Sets an image array based on value.
+ */
+int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem )
+{
+   int i;
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   /* Case NULL. */
+   if (elem == NULL) {
+      wgt->dat.iar.selected = -1;
+      return 0;
+   }
+
+   /* Try to find the element. */
+   for (i=0; i<wgt->dat.iar.nelements; i++) {
+      if (strcmp(elem,wgt->dat.iar.captions[i])==0) {
+         wgt->dat.iar.selected = i;
+         return 0;
+      }
+   }
+
+   /* Element not found. */
+   return -1;
+}
+
+
+/**
  * @brief Gets what is selected currently in an Image Array.
  *
  *    @param wid Window where image array is.

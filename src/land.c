@@ -1830,6 +1830,9 @@ void takeoff( int delay )
    if (!landed)
       return;
 
+   /* In case we had paused messy sounds. */
+   sound_stopAll();
+
    /* ze music */
    music_choose("takeoff");
 

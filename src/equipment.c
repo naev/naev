@@ -860,8 +860,10 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
+   int ret;
    int nout, nship;
    double offout, offship;
+   char *s, selship[PATH_MAX];
 
    /* Save positions. */
    if (outfits) {
@@ -872,6 +874,8 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    if (ships) {
       nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
+      s      = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+      strncpy( selship, s, sizeof(selship) );
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
    }
 
@@ -886,6 +890,13 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    if (ships) {
       toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
       toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
+      /* Try to maintain same ship selected. */
+      s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+      if ((s != NULL) && (selship != NULL) && (strcmp(s,selship)!=0)) {
+         ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
+         if (ret != 0) /* Failed to maintain. */
+            toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+      }
    }
 }
 
