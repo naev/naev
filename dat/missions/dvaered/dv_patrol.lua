@@ -31,6 +31,9 @@ else -- default english
    msg_msg[3] = "MISSION FAILED: Fled from the heat of battle."
    msg_msg[4] = "DV: System clear, continue patrol."
    msg_msg[5] = "DV: Patrol finished, return to base."
+   osd_msg = {}
+   osd_msg[1] = "Patrol the %s system"
+   osd_msg[2] = "Return to %s in the %s system"
 end
 
 
@@ -43,7 +46,7 @@ function patrol_systems_filter( s, data )
       return false
    end
 
-   -- Must have FLF
+   -- Must not be safe
    if s:security() > 95 then
       return false
    end
@@ -119,6 +122,14 @@ function accept ()
       -- Update the description.
       misn.setDesc( string.format( misn_desc[2], systems[1]:name() ) )
 
+      -- Set the OSD
+      local osd_table = {}
+      for k,v in ipairs(systems) do
+         osd_table[ #osd_table+1 ] = string.format( osd_msg[1], v:name() )
+      end
+      osd_table[ #osd_table+1 ] = string.format( osd_msg[2], base:name(), base_sys:name() )
+      misn.osdCreate( "Dvaered Patrol", osd_table ) 
+
       -- Set the hooks
       hook.land( "land" )
       hook.enter( "jump" )
@@ -138,6 +149,7 @@ function jump ()
       -- Check to see if system is next
       if sys == systems[visited+1] then
          visited = visited + 1
+         misn.osdActive( visited )
 
          -- Get the next goal
          setNextGoal()
