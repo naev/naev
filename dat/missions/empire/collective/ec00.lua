@@ -12,7 +12,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   bar_desc = "You see an Empire Lt. Commander who seems to be motioningi you over to the counter."
+   bar_desc = "You see an Empire Lt. Commander who seems to be motioning you over to the counter."
    misn_title = "Collective Scout"
    misn_reward = "None"
    misn_desc = {}

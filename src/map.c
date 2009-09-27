@@ -156,6 +156,7 @@ void map_open (void)
    window_addText( wid, -20, -20, 100, 20, 1, "txtSysname",
          &gl_defFont, &cDConsole, cur->name );
    /* Faction */
+   window_addImage( wid, -20-64, -60-64, "imgFaction", NULL, 0 );
    window_addText( wid, -20, -60, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
    window_addText( wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
@@ -212,11 +213,12 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, y, h;
+   int f, y, h, multiple_faction;
    double standing, nstanding;
    unsigned int services;
    char buf[PATH_MAX];
    int p;
+   glTexture *logo;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -242,6 +244,9 @@ static void map_update( unsigned int wid )
          window_modifyText( wid, "txtSysname", sys->name );
       else
          window_modifyText( wid, "txtSysname", "Unknown" );
+      window_modifyImage( wid, "imgFaction", NULL );
+      window_moveWidget( wid, "txtSFaction", -20, -60 );
+      window_moveWidget( wid, "txtFaction", -20, -60-gl_smallFont.h-5 );
       window_modifyText( wid, "txtFaction", "Unknown" );
       /* Standing */
       window_moveWidget( wid, "txtSStanding", -20, -100 );
@@ -273,6 +278,7 @@ static void map_update( unsigned int wid )
    standing  = 0.;
    nstanding = 0.;
    f         = -1;
+   multiple_faction = 0;
    for (i=0; i<sys->nplanets; i++) {
       if ((f==-1) && (sys->planets[i]->faction>0)) {
          f = sys->planets[i]->faction;
@@ -282,10 +288,14 @@ static void map_update( unsigned int wid )
       else if (f != sys->planets[i]->faction && /** @todo more verbosity */
             (sys->planets[i]->faction>0)) {
          snprintf( buf, PATH_MAX, "Multiple" );
+         multiple_faction = 1;
          break;
       }
    }
    if (f == -1) {
+      window_modifyImage( wid, "imgFaction", NULL );
+      window_moveWidget( wid, "txtSFaction", -20, -60 );
+      window_moveWidget( wid, "txtFaction", -20, -60-gl_smallFont.h-5 );
       window_modifyText( wid, "txtFaction", "NA" );
       window_moveWidget( wid, "txtSStanding", -20, -100 );
       window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
@@ -297,14 +307,29 @@ static void map_update( unsigned int wid )
       if (i==sys->nplanets) /* saw them all and all the same */
          snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
+      y = -60;
+
+      /* Modify the image. */
+      logo = faction_logoSmall(f);
+      window_modifyImage( wid, "imgFaction", logo );
+      if (logo != NULL) {
+         window_moveWidget( wid, "imgFaction",
+               -(90-logo->w)/2-20-logo->w, y-(64-logo->h)/2-logo->h );
+         y -= 64 + 10;
+      }
+
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
       window_modifyText( wid, "txtStanding",
             faction_getStanding( standing / nstanding ) );
 
       /* Lower text if needed */
+      window_moveWidget( wid, "txtSFaction", -20, y );
+      window_moveWidget( wid, "txtFaction", -20, y-gl_smallFont.h-5 );
       h = gl_printHeightRaw( &gl_smallFont, 80, buf );
-      y = -100 - (h - gl_smallFont.h);
+      window_moveWidget( wid, "txtSStanding", -20, y );
+      window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
+      y -= 40 + (h - gl_smallFont.h);
       window_moveWidget( wid, "txtSStanding", -20, y );
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }

@@ -2385,7 +2385,8 @@ void pilot_calcStats( Pilot* pilot )
          s->energy_turret     += o->u.mod.stats.energy_turret * q;
          if (o->u.mod.stats.firerate_turret != 0.) {
             s->firerate_turret   += o->u.mod.stats.firerate_turret * q;
-            nfirerate_turret     += q;;
+            if (o->u.mod.stats.firerate_turret > 0.) /* Only modulate bonuses. */
+               nfirerate_turret     += q;
          }
          /* Freighter. */
          s->jump_delay        += o->u.mod.stats.jump_delay * q;

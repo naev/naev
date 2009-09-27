@@ -1164,6 +1164,7 @@ static Weapon* weapon_create( const Outfit* outfit,
             acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
             w->dam_mod  *= parent->stats.damage_forward;
          }
+         acc = MAX( 0., acc ); /* Make sure it doesn't become negative. */
 
          /* Calculate direction. */
          rdir += RNG_2SIGMA() * acc;

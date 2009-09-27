@@ -605,13 +605,14 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
 void gui_render( double dt )
 {
    int i, j;
-   double x;
+   double w,h, x;
    char str[10];
    Pilot* p;
    glColour* c, col;
    glFont* f;
    StarSystem *sys;
    int q;
+   glTexture *logo;
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -806,6 +807,18 @@ void gui_render( double dt )
             gui.target_faction.x,
             gui.target_faction.y,
             NULL, faction_name(p->faction) );
+
+      /* Faction logo. */
+      logo = faction_logoSmall( p->faction );
+      if (logo != NULL) {
+         x = MAX( logo->w, logo->h );
+         w = 24. * logo->w / x;
+         h = 24. * logo->h / x;
+         gl_blitScale( logo,
+               gui.target_name.x + gui.target_name.w - w - 2.,
+               gui.target_name.y + gl_defFont.h - h - 2.,
+               w, h, NULL );
+      }
 
       /* target status */
       if (pilot_isDisabled(p)) /* pilot is disabled */
