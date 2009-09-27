@@ -371,9 +371,11 @@ AS_IF([test "$have_sdlmixer" = "yes"], [
   NAEV_LIBS="$NAEV_LIBS $SDLMIXER_LIBS"
 ])
 
-AS_IF([test "$have_windows" = "yes"], [
-  NAEV_CFLAGS="$NAEV_CFLAGS -mwindows"
-])
+case "$host" in
+  *-mingw*)
+    NAEV_LIBS="$NAEV_LIBS -lwsock32 -mwindows"
+    ;;
+esac
 
 AC_SUBST([NAEV_CFLAGS])
 AC_SUBST([NAEV_LIBS])
