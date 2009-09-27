@@ -605,7 +605,7 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
 void gui_render( double dt )
 {
    int i, j;
-   double w,h, x;
+   double x;
    char str[10];
    Pilot* p;
    glColour* c, col;
@@ -809,15 +809,11 @@ void gui_render( double dt )
             NULL, faction_name(p->faction) );
 
       /* Faction logo. */
-      logo = faction_logoSmall( p->faction );
+      logo = faction_logoTiny( p->faction );
       if (logo != NULL) {
-         x = MAX( logo->w, logo->h );
-         w = 24. * logo->w / x;
-         h = 24. * logo->h / x;
-         gl_blitScale( logo,
-               gui.target_name.x + gui.target_name.w - w - 2.,
-               gui.target_name.y + gl_defFont.h - h - 2.,
-               w, h, NULL );
+         gl_blitStatic( logo,
+               gui.target_name.x + gui.target_name.w - logo->w - 2.,
+               gui.target_name.y + gl_defFont.h - logo->h - 2., NULL );
       }
 
       /* target status */

@@ -20,6 +20,7 @@ int* faction_getAll( int *n );
 char* faction_name( int f );
 char* faction_longname( int f );
 glTexture* faction_logoSmall( int f );
+glTexture* faction_logoTiny( int f );
 glColour* faction_colour( int f );
 int* faction_getEnemies( int f, int *n );
 int* faction_getAllies( int f, int *n );
