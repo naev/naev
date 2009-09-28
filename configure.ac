@@ -178,6 +178,9 @@ AC_SUBST([ndata_path])
 
 # SDL
 AM_PATH_SDL
+AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
+  AC_ERROR([SDL not found])
+])
 
 # libxml2
 PKG_CHECK_MODULES([XML], [libxml-2.0], [], [
