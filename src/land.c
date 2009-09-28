@@ -37,6 +37,7 @@
 #include "conf.h"
 #include "gui.h"
 #include "equipment.h"
+#include "npc.h"
 
 
 /* global/main window */
@@ -103,10 +104,8 @@ static Mission* mission_computer = NULL; /**< Missions at the computer. */
 static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
- * mission bar stack
+ * Bar stuff.
  */
-static Mission* mission_bar = NULL; /**< Missions at the spaceport bar. */
-static int mission_nbar = 0; /**< Number of missions at the spaceport bar. */
 static glTexture *mission_portrait = NULL; /**< Mission portrait. */
 
 /*
@@ -145,13 +144,13 @@ static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
 /* spaceport bar */
-static void spaceport_bar_getDim( int wid,
+static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
-static void spaceport_bar_open( unsigned int wid );
-static int spaceport_bar_genList( unsigned int wid );
-static void spaceport_bar_update( unsigned int wid, char* str );
-static void spaceport_bar_close( unsigned int wid, char* str );
-static void spaceport_bar_approach( unsigned int wid, char* str );
+static void bar_open( unsigned int wid );
+static int bar_genList( unsigned int wid );
+static void bar_update( unsigned int wid, char* str );
+static void bar_close( unsigned int wid, char* str );
+static void bar_approach( unsigned int wid, char* str );
 static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
@@ -969,7 +968,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 /**
  * @brief Gets the dimensions of the spaceport bar window.
  */
-static void spaceport_bar_getDim( int wid,
+static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh )
 {
    /* Get window dimensions. */
@@ -986,15 +985,15 @@ static void spaceport_bar_getDim( int wid,
 /**
  * @brief Opens the spaceport bar window.
  */
-static void spaceport_bar_open( unsigned int wid )
+static void bar_open( unsigned int wid )
 {
    int w, h, iw, ih, bw, bh, dh, th;
 
    /* Set window functions. */
-   window_onClose( wid, spaceport_bar_close );
+   window_onClose( wid, bar_close );
 
    /* Get dimensions. */
-   spaceport_bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
    dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
    /* Buttons */
@@ -1003,7 +1002,7 @@ static void spaceport_bar_open( unsigned int wid )
          "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
-         "Approach", spaceport_bar_approach );
+         "Approach", bar_approach );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
@@ -1024,7 +1023,7 @@ static void spaceport_bar_open( unsigned int wid )
          "txtMission", &gl_smallFont, &cBlack, NULL );
 
    /* Generate the mission list. */
-   spaceport_bar_genList( wid );
+   bar_genList( wid );
 }
 
 /**
@@ -1032,16 +1031,15 @@ static void spaceport_bar_open( unsigned int wid )
  *
  *    @param wid Window to create mission list for.
  */
-static int spaceport_bar_genList( unsigned int wid )
+static int bar_genList( unsigned int wid )
 {
-   int i;
    glTexture **portraits;
    char **names;
    int w, h, iw, ih, bw, bh;
    int n;
 
    /* Get dimensions. */
-   spaceport_bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" ))
@@ -1050,7 +1048,8 @@ static int spaceport_bar_genList( unsigned int wid )
    /* Set up missions. */
    if (mission_portrait == NULL)
       mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
-   if (mission_nbar <= 0) {
+   n = npc_getArraySize();
+   if (n <= 0) {
       n            = 1;
       portraits    = malloc(sizeof(glTexture*));
       portraits[0] = mission_portrait;
@@ -1058,23 +1057,20 @@ static int spaceport_bar_genList( unsigned int wid )
       names[0]     = strdup("News");
    }
    else {
-      n            = mission_nbar+1;
+      n            = n+1;
       portraits    = malloc( sizeof(glTexture*) * n );
       portraits[0] = mission_portrait;
+      npc_getTextureArray( &portraits[1], n-1 );
       names        = malloc( sizeof(char*) * n );
       names[0]     = strdup("News");
-      for (i=0; i<mission_nbar; i++) {
-         names[i+1]     = (mission_bar[i].npc != NULL) ?
-            strdup( mission_bar[i].npc ) : NULL;
-         portraits[i+1] = mission_bar[i].portrait;
-      }
+      npc_getNameArray( &names[1], n-1 );
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 64, 48,
-         portraits, names, n, spaceport_bar_update );
+         portraits, names, n, bar_update );
 
    /* write the outfits stuff */
-   spaceport_bar_update( wid, NULL );
+   bar_update( wid, NULL );
 
    return 0;
 }
@@ -1083,14 +1079,14 @@ static int spaceport_bar_genList( unsigned int wid )
  *    @param wid Window to update the outfits in.
  *    @param str Unused.
  */
-static void spaceport_bar_update( unsigned int wid, char* str )
+static void bar_update( unsigned int wid, char* str )
 {
    (void) str;
    int pos;
    int w, h, iw, ih, bw, bh, dh;
 
    /* Get dimensions. */
-   spaceport_bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
    dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
    /* Get array. */
@@ -1137,18 +1133,18 @@ static void spaceport_bar_update( unsigned int wid, char* str )
    window_enableButton( wid, "btnApproach" );
 
    /* Set portrait. */
-   window_modifyText(  wid, "txtPortrait", mission_bar[pos].npc );
-   window_modifyImage( wid, "imgPortrait", mission_bar[pos].portrait );
+   window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ) );
 
    /* Set mission description. */
-   window_modifyText(  wid, "txtMission",  mission_bar[pos].desc );
+   window_modifyText(  wid, "txtMission", npc_getDesc( pos ));
 }
 /**
  * @brief Closes the mission computer window.
  *    @param wid Window to close.
  *    @param name Unused.
  */
-static void spaceport_bar_close( unsigned int wid, char *name )
+static void bar_close( unsigned int wid, char *name )
 {
    (void) wid;
    (void) name;
@@ -1160,13 +1156,10 @@ static void spaceport_bar_close( unsigned int wid, char *name )
 /**
  * @brief Approaches guy in mission computer.
  */
-static void spaceport_bar_approach( unsigned int wid, char *str )
+static void bar_approach( unsigned int wid, char *str )
 {
    (void) str;
-   Mission* misn;
    int pos;
-   int i;
-   int ret;
 
    /* Get position. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -1178,26 +1171,8 @@ static void spaceport_bar_approach( unsigned int wid, char *str )
    /* Ignore news. */
    pos--;
 
-   /* Make sure player can accept the mission. */
-   for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL) break;
-   if (i >= MISSION_MAX) {
-      dialogue_alert("You have too many active missions.");
-      return;
-   }
-
-   /* Get mission. */
-   misn = &mission_bar[pos];
-   ret  = mission_accept( misn );
-   if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
-      if (ret==-1)
-         mission_cleanup( &mission_bar[pos] );
-      memmove( &mission_bar[pos], &mission_bar[pos+1],
-            sizeof(Mission) * (mission_nbar-pos-1) );
-      mission_nbar--;
-
-      spaceport_bar_genList(wid);
-   }
+   npc_approach( pos );
+   bar_genList( wid ); /* Always just in case. */
 
    /* Reset markers. */
    mission_sysMark();
@@ -1312,7 +1287,7 @@ static void misn_accept( unsigned int wid, char* str )
       ret = mission_accept( misn );
       if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
          if (ret==-1)
-            mission_cleanup( &mission_bar[pos] );
+            mission_cleanup( &mission_computer[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;
@@ -1581,6 +1556,9 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
       news_load();
 
+   /* Clear the NPC. */
+   npc_clear();
+
    /* Set window map to invald. */
    for (i=0; i<LAND_NUMWINDOWS; i++)
       land_windowsMap[i] = -1;
@@ -1637,20 +1615,19 @@ void land( Planet* p )
    /* 2) Set as landed and run hooks. */
    landed = 1;
    music_choose("land"); /* Must be before hooks in case hooks change music. */
+   events_trigger( EVENT_TRIGGER_LAND );
    hooks_run("land");
 
    /* 3) Generate computer and bar missions. */
    mission_computer = missions_genList( &mission_ncomputer,
          land_planet->faction, land_planet->name, cur_system->name,
          MIS_AVAIL_COMPUTER );
-   mission_bar = missions_genList( &mission_nbar,
-         land_planet->faction, land_planet->name, cur_system->name,
-         MIS_AVAIL_BAR );
+   npc_generate(); /**< Generate bar npc. */
 
    /* 4) Create other tabs. */
    /* Basic - bar + missions */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
-      spaceport_bar_open( land_getWid(LAND_WINDOW_BAR) );
+      bar_open( land_getWid(LAND_WINDOW_BAR) );
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    }
    /* Outfits. */
@@ -1795,7 +1772,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
                torun_hook = "shipyard";
                break;
             case LAND_WINDOW_BAR:
-               spaceport_bar_update( w, NULL );
+               bar_update( w, NULL );
                to_visit   = VISITED_BAR;
                torun_hook = "bar";
                break;
@@ -1936,12 +1913,7 @@ void land_cleanup (void)
    mission_ncomputer = 0;
 
    /* Clean up bar missions. */
-   for (i=0; i<mission_nbar; i++)
-      mission_cleanup( &mission_bar[i] );
-   if (mission_bar != NULL)
-      free(mission_bar);
-   mission_bar    = NULL;
-   mission_nbar   = 0;
+   npc_freeAll();
 }
 
 

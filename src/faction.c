@@ -56,6 +56,7 @@ typedef struct Faction_ {
 
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
+   glTexture *logo_tiny; /**< Tiny logo. */
    glColour *colour;
 
    /* Enemies */
@@ -172,7 +173,7 @@ char* faction_longname( int f )
 
 
 /**
- * @brief Gets the faction's small logo.
+ * @brief Gets the faction's small logo (64x64 or smaller).
  *
  *    @param f Faction to get the logo of.
  *    @return The faction's small logo image.
@@ -184,6 +185,22 @@ glTexture* faction_logoSmall( int f )
       return NULL;
    }
    return faction_stack[f].logo_small;
+}
+
+
+/**
+ * @brief Gets the faction's tiny logo (24x24 or smaller).
+ *
+ *    @param f Faction to get the logo of.
+ *    @return The faction's tiny logo image.
+ */
+glTexture* faction_logoTiny( int f )
+{
+   if ((f < 0) || (f >= faction_nstack)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   return faction_stack[f].logo_tiny;
 }
 
 
@@ -611,6 +628,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node,"logo")) {
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
          temp->logo_small = gl_newImage(buf, 0);
+         snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
+         temp->logo_tiny = gl_newImage(buf, 0);
          continue;
       }
 
@@ -833,6 +852,8 @@ void factions_free (void)
          free(faction_stack[i].longname);
       if (faction_stack[i].logo_small != NULL)
          gl_freeTexture(faction_stack[i].logo_small);
+      if (faction_stack[i].logo_tiny != NULL)
+         gl_freeTexture(faction_stack[i].logo_tiny);
       if (faction_stack[i].nallies > 0)
          free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0)

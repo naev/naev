@@ -32,7 +32,8 @@ typedef struct Event_s {
  */
 typedef enum EventTrigger_s {
    EVENT_TRIGGER_NULL, /**< Invalid trigger. */
-   EVENT_TRIGGER_ENTER /**< Entering a system (jump/takeoff). */
+   EVENT_TRIGGER_ENTER, /**< Entering a system (jump/takeoff). */
+   EVENT_TRIGGER_LAND /**< Landing on a system. */
 } EventTrigger_t;
 
 
@@ -53,6 +54,8 @@ void events_update( double dt );
 /*
  * Triggering.
  */
+lua_State *event_runStart( unsigned int eventid, const char *func );
+int event_runFunc( unsigned int eventid, const char *func, int nargs );
 int event_run( unsigned int eventid, const char *func );
 void events_trigger( EventTrigger_t trigger );
 

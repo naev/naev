@@ -12,7 +12,10 @@
 
 
 /* Run Lua for an event. */
+lua_State *event_setupLua( Event_t *ev, const char *func );
+int event_runLuaFunc( Event_t *ev, const char *func, int nargs );
 int event_runLua( Event_t *ev, const char *func );
+
 
 
 /* individual library stuff */

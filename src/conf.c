@@ -343,7 +343,15 @@ int conf_loadConfig ( const char* file )
        */
       for (i=0; strcmp(keybindNames[i],"end"); i++) {
          lua_getglobal(L, keybindNames[i]);
-         if (lua_istable(L, -1)) { /* it's a table */
+         /* Handle "none". */
+         if (lua_isstring(L,-1)) {
+            str = lua_tostring(L,-1);
+            if (strcmp(str,"none")==0) {
+               input_setKeybind( keybindNames[i],
+                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
+            }
+         }
+         else if (lua_istable(L, -1)) { /* it's a table */
             /* gets the event type */
             lua_pushstring(L, "type");
             lua_gettable(L, -2);
@@ -423,14 +431,6 @@ int conf_loadConfig ( const char* file )
             }
             else {
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
-            }
-         }
-         /* Handle "none". */
-         else if (lua_isstring(L,-1)) {
-            str = lua_tostring(L,-1);
-            if (strcmp(str,"none")) {
-               input_setKeybind( keybindNames[i],
-                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
             }
          }
          /* clean up after table stuff */
@@ -932,7 +932,7 @@ int conf_saveConfig ( const char* file )
          default:                typename = NULL;        break;
       }
       /* Write a nil if an unknown type */
-      if (typename == NULL || key == SDLK_UNKNOWN) {
+      if ((typename == NULL) || (key == SDLK_UNKNOWN)) {
          conf_saveString(*keybind,"none");
          continue;
       }

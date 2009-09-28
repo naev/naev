@@ -12,7 +12,7 @@ if lang == "es" then
 else -- default english
 
    planetname = "Durea" -- The planet where SHITMAN lives
-   planet = planet.get(planetname)
+   pnt = planet.get(planetname)
    sysname = "Capricorn" -- The system the planet is part of
    sys = system.get(sysname)
    sysname2 = "Uhriabi" -- The system where the ship is
@@ -71,6 +71,46 @@ else -- default english
    
    -- Aborted mission
 
+   -- NPC stuff
+   jorek_npc = {}
+   jorek_npc["name"] = "An unpleasant man."
+   jorek_npc["portrait"] = "jorek"
+   jorek_npc["desc"] = "A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for."
+   jorek_title = {}
+   jorek_title[1] = "An unpleasant man"
+   jorek_title[2] = "Jorek's scorn"
+   jorek_title[3] = "Dismissal"
+   jorek_text = {}
+   jorek_text[1] = [[You join the man at his table. He doesn't particularly seem to welcome your company, though, because he gives you a look most people would reserve for particularly unwelcome guests. Determined not to let that get to you, you ask him if his name is indeed Jorek.
+   "Yeah, that's me," he replies. "What'd ya want, kid?"
+   You explain to him that you've come to see to his special needs. This earns you a sneer from Jorek. "Ha! So you're running errands for the little lady, are you? Oh don't tell me, I've got a pretty good idea what it is you want from me." He leans onto the table, bringing his face closer to yours. "Listen, buddy. I don't know if you noticed, but people are watchin' me. And you too, now that you're talkin' to me. Those goons over there? Yeah, they're here for me. Used to be fancy undercover agents, but I've been sittin' on my ass here for a long time and they figured out I was on to them, so they replaced 'em with a bunch of grunts. Cheaper, see."
+   "And it's not just them," Jorek continues. "On your way here, did you see the flotilla of 'patrol ships' hangin' around? You guessed it, they're waitin' for me to split this joint. I'm HOT, kid. If I step onto your ship, you'll be hot too. And you have absolutely no problem with that, is that what you're tellin' me?]]
+   jorek_text[2] = [[Jorek roars with laughter. "Hah! Yeah, I'm sure you don't! I know what you're thinkin', I do. You'll take me outta here, pull a heroic bust past them Empire ships, save me, and the day while you're at it, then earn your stripes with the lady, am I right? Syeah, I bet you'd take on the world for a pretty face and a coy smile." He doesn't so much as make an attempt to keep the mocking tone out of his voice.
+   "Well, good for you. You're a real hero, right enough. But you know what? I'm stayin' put. I don't care if you have the vixen's approval. I'm not gettin' on some random Joe's boat just so he can get us both blasted to smithereens."
+   Your patience with Jorek's abuse is finally at an end, and you heatedly make it clear to him that your abilities as a pilot aren't deserving of this treatment. Jorek, however, seems unimpressed. He tells you to stick it where the sun doesn't shine, gets up from his chair and squarely deposits himself at another table. Unwilling to stoop to his level, you choose not to follow him.]]
+   jorek_text[3] = [[Jorek exhales derisively. "No, I thought not. Probably thought this was going to be a walk in the park, didn't you? But when the chips are down, you back out. Wouldn't want to mess with be big scary Empire, would we?" He raises his voice for this, taunting the military personnel in the bar. They don't show any sign of having even heard Jorek speak. Jorek snorts, then focuses his attention back on you.
+   "I've got no use for wusses like yourself. Go on, get out of here. Go back to your ship and beat it off this rock. Maybe you should consider gettin' yourself a desk job, eh?"
+   With that, Jorek leaves your table and sits down at a nearby empty one. Clearly this conversation is over, and you're not going to get anything more out of him.]]
+   jorek_text[4] = [[Jorek pointedly ignores you. It doesn't seem like he's willing to give you the time of day any longer. You decide not to push your luck.]]
+   off_npc = {}
+   off_npc["name"] = "Officer at the bar"
+   off_npc["portrait"] = "empire1"
+   off_npc["desc"] = "You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though..."
+   off_title = { "You were ignored" }
+   off_text = { "You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up." }
+   sol1_npc = {}
+   sol1_npc["name"] = "Soldier at the news kiosk"
+   sol1_npc["portrait"] = "empire2"
+   sol1_npc["desc"] = "You see a soldier at a news kiosk. For some reason, he keeps reading the same articles over and over again."
+   sol1_title = { "You were shooed away" }
+   sol1_text = { "Leave me alone. Can't you see I'm busy?" }
+   sol2_npc = {}
+   sol2_npc["name"] = "Card-playing soldier"
+   sol2_npc["portrait"] = "empire2"
+   sol2_npc["desc"] = "Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game."
+   sol2_title = { "They didn't need a third man" }
+   sol2_text = { "They don't seem to appreciate your company. You decide to leave them to their game." }
+
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
@@ -110,8 +150,7 @@ function accept()
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
         misn.setMarker(sys, "misc")
-        var.push("shadowrun", 2) -- Signal for helper missions and this mission
-        var.push("shadowrun_planet", planetname) -- Information for helper missions
+        shadowrun = 2
     else
         tk.msg(title[1], refusal)
         var.push("shadowrun", 1) -- For future appearances of this mission
@@ -119,14 +158,42 @@ function accept()
     end
 
     hook.land("land")
-    hook.takeoff("takeoff")
     hook.enter("enter")
 end
 
 function land()
+   local landed = planet.cur()
+   if pnt == landed then
+      misn.npcAdd( "jorek", jorek_npc["name"], jorek_npc["portrait"], jorek_npc["desc"] )
+      misn.npcAdd( "officer", off_npc["name"], off_npc["portrait"], off_npc["desc"] )
+      misn.npcAdd( "soldier1", sol1_npc["name"], sol1_npc["portrait"], sol1_npc["desc"] )
+      misn.npcAdd( "soldier2", sol2_npc["name"], sol2_npc["portrait"], sol2_npc["desc"] )
+      misn.npcAdd( "soldier2", sol2_npc["name"], sol2_npc["portrait"], sol2_npc["desc"] )
+   end
 end
 
-function takeoff()
+-- Talking to Jorek
+function jorek()
+   if shadowrun == 2 then
+      if tk.yesno( jorek_title[1], jorek_text[1] ) then
+         tk.msg( jorek_title[2], jorek_text[2] )
+      else
+         tk.msg( jorek_title[2], jorek_text[3] )
+      end
+      shadowrun = 3
+   else
+      tk.msg( jorek_title[3], jorek_text[4] )
+   end
+end
+
+function officer()
+   tk.msg( off_title[1], off_text[1] )
+end
+function soldier1()
+   tk.msg( sol1_title[1], sol1_text[1] )
+end
+function soldier2()
+   tk.msg( sol2_title[1], sol2_text[1] )
 end
 
 function enter()
@@ -147,11 +214,11 @@ function enter()
     end
 
     -- Random(?) pirate attacks when get closer to your system, and heavier ones when you fly away from it after meeting SHITMAN
-    if system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and var.peek("shadowrun") == 2 then
+    if system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()
         pilot.toggleSpawn(false)
         pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0), false)
-    elseif system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and var.peek("shadowrun") == 3 then
+    elseif system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
         pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0), false)
@@ -164,7 +231,7 @@ function enter()
     if system.get() == sys then
         pilot.clear()
         pilot.toggleSpawn(false)
-        planetpos = planet:pos()
+        planetpos = pnt:pos()
         empire1 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(40,0), false)
         empire2 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,25), false)
         empire3 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,40), false)
@@ -176,7 +243,7 @@ function enter()
     end
 
     -- Handle the Kestrel that's the last stop on this mission
-    if var.peek("shadowrun") >= 2 and system.get() == sys2 then
+    if shadowrun >= 2 and system.get() == sys2 then
         mypos = vec2.new(-1500, 600)
         targship = pilot.add("Pirate Kestrel", "def", mypos, false)
         targship[1]:rename(shipname)
@@ -192,7 +259,7 @@ function enter()
 end
 
 function board()
-    if var.peek("shadowrun") == 2 then
+    if shadowrun == 2 then
         -- player reports in without SHITMAN
         tk.msg(title[4], string.format(text[6], shipname, shipname, shipname, shipname))
         var.push("shadowrun_failed", true)
@@ -207,8 +274,9 @@ function board()
     targship[1]:setHealth(100, 100)
     targship[1]:changeAI("flee")
 
-    var.pop("shadowrun")
-    var.pop("shadowrun_planet")
+    if var.peek("shadowrun") then
+       var.pop("shadowrun") -- in case it was used
+    end
     misn.finish(true)
 end
 
