@@ -34,39 +34,79 @@ end
 
 function enter()
     if system.cur() == destsys then
-        -- Add FLF base and waypoints
-        dist = 1000 -- distance of the FLF base
+        dist = 3000 -- distance of the FLF base
         spread = 23 -- max degrees off-course for waypoints
-        
-        pilot.toggleSpawn(false)
-        pilot.clear()
-        faction.get("FLF"):modPlayerRaw(0) -- FLF is neutral to the player for this mission
-        
+
         angle = var.peek("flfbase_angle")
         angle2 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         angle3 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         
-        -- Base is far away in a random direction
-        flfbajs = pilot.add("FLF Base", "flf", vec2.new(dist * math.cos(angle), dist * math.sin(angle)), false)
+        pilot.toggleSpawn(false)
+        pilot.clear()
+
+        faction.get("FLF"):modPlayerRaw(0) -- FLF is neutral to the player for this mission
+
+        -- Pilot is to hyper in somewhere far away from the base.
+        
+        player.pilot():setPos(dist * vec2.new(math.cos(angle), dist * math.sin(angle)))
+
+        -- Add FLF base waypoints
+        -- Base is at 0,0
         -- Waypoints are 1/3 and 2/3 of the way away, at an angle plus or minus spread degrees from the actual base
+        waypunt0 = pilot.add("Waypoint", "dummy", vec2.new(0,0), false) -- The base will be spawned in the origin, but not until the player is close to this waypoint.
         waypunt1 = pilot.add("Waypoint", "dummy", vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2)), false)
         waypunt2 = pilot.add("Waypoint", "dummy", vec2.new(2 * dist / 3 * math.cos(angle3), 2 * dist / 3 * math.sin(angle3)), false)
-
+        
+        waypoint0 = waypunt0[1]
         waypoint1 = waypunt1[1]
         waypoint2 = waypunt2[1]
-        flfbase = flfbajs[1]
         
         waypoint1:setInvincible(true)
         waypoint2:setInvincible(true)
         
         -- Add FLF ships that are to guide the player to the FLF base
-        flfsheep = pilot.add("FLF Vendetta", "dummy", vec2.new(0,0), false)
-        flfship = flfsheep[1]
+        flftimer = evt.timerStart("spawnflf", 3000)
         
-        flfbase:rmOutfit("all")
-        flfbase:addOutfit("Ripper MK2", 8)
+        spawnbase()
         
     end
+end
+
+function spawnflf()
+    fleetFLF = pilot.add("FLF Vendetta", "dummy", player.pilot():pos(), true)
+    flfship = fleetFLF[1]
+    evt.timerStart("toPoint2", 2000)
+end
+
+function toPoint2()
+    flfship:changeAI(string.format("escort*%u", waypoint2:id()))
+    waytimer1 = evt.timerStart("toPoint1", 1000)
+end
+
+function toPoint1()
+    if vec2.dist(flfship:pos(), waypoint2:pos()) < 300 then
+        flfship:changeAI(string.format("escort*%u", waypoint1:id()))
+        waytimer0 = evt.timerStart("toPoint0", 1000)
+    else
+        waytimer1 = evt.timerStart("toPoint1", 1000)
+    end
+end
+
+function toPoint0()
+    if vec2.dist(flfship:pos(), waypoint1:pos()) < 300 then
+        flfship:changeAI(string.format("escort*%u", waypoint0:id()))
+        -- basetimer = evt.timerStart("spawnbase", 1000)
+    else
+        waytimer0 = evt.timerStart("toPoint0", 1000)
+    end
+end
+
+function spawnbase()
+    -- TODO: add distance conditional
+    baseFLF = pilot.add("FLF Base", "dummy", vec2.new(0,0), false)
+    flfbase = baseFLF[1]
+    flfbase:rmOutfit("all")
+    flfbase:addOutfit("Ripper MK2", 8)
 end
 
 function abort()
