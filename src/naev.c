@@ -26,9 +26,11 @@
 
 /* global */
 #include <string.h> /* strdup */
-#if !(HAS_WIN32) && defined(DEBUGGING)
+
+#if defined(HAVE_FENV_H) && defined(DEBUGGING)
 #include <fenv.h>
-#endif /* !(HAS_WIN32) && defined(DEBUGGING) */
+#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
+
 #if HAS_LINUX && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
@@ -82,11 +84,11 @@
 #define FONT_SIZE       12 /**< Normal font size. */
 #define FONT_SIZE_SMALL 10 /**< Small font size. */
 
-#define NAEV_INIT_DELAY 3000 /**< Minimum amount of time to wait with loading screen */
+#define NAEV_INIT_DELAY 3000 /**< Minimum amount of time_ms to wait with loading screen */
 
 
 static int quit = 0; /**< For primary loop */
-static unsigned int time = 0; /**< used to calculate FPS and movement. */
+static unsigned int time_ms = 0; /**< used to calculate FPS and movement. */
 static char short_version[64]; /**< Contains version. */
 static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
@@ -189,7 +191,7 @@ int main( int argc, char** argv )
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
    /* Enable FPU exceptions. */
-#if !(HAS_WIN32) && defined(DEBUGGING)
+#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
       feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
 #endif /* DEBUGGING */
@@ -225,7 +227,7 @@ int main( int argc, char** argv )
    /* Display the load screen. */
    loadscreen_load();
    loadscreen_render( 0., "Initializing subsystems..." );
-   time = SDL_GetTicks();
+   time_ms = SDL_GetTicks();
 
 
    /*
@@ -281,9 +283,9 @@ int main( int argc, char** argv )
    menu_main();
 
    /* Force a minimum delay with loading screen */
-   if ((SDL_GetTicks() - time) < NAEV_INIT_DELAY)
-      SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time) );
-   time = SDL_GetTicks(); /* initializes the time */
+   if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
+      SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
+   time_ms = SDL_GetTicks(); /* initializes the time_ms */
    /* 
     * main loop
     */
@@ -562,10 +564,10 @@ static void fps_control (void)
 
    /* dt in s */
    t = SDL_GetTicks();
-   real_dt  = (double)(t - time); /* Get the elapsed ms. */
+   real_dt  = (double)(t - time_ms); /* Get the elapsed ms. */
    real_dt /= 1000.; /* Convert to seconds. */
    game_dt  = real_dt * dt_mod; /* Apply the modifier. */
-   time = t;
+   time_ms = t;
 
    /* if fps is limited */                       
    if (!conf.vsync && conf.fps_max != 0) {
@@ -910,7 +912,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 /**
  * @brief Sets up the SignalHandler for Linux.
  */
-static void debug_sigInit( void )
+static void debug_sigInit (void)
 {
 #if HAS_LINUX && defined(DEBUGGING)
    char **matching;
