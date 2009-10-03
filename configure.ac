@@ -178,6 +178,9 @@ AC_SUBST([ndata_path])
 
 # SDL
 AM_PATH_SDL
+AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
+  AC_ERROR([SDL not found])
+])
 
 # libxml2
 PKG_CHECK_MODULES([XML], [libxml-2.0], [], [
@@ -323,14 +326,24 @@ AC_DEFINE_UNQUOTED([OPENGL_GLU_H], [$OPENGL_GLU_H],
 # global
 GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
 GLOBAL_CFLAGS="$GLOBAL_CFLAGS -I\"\$(top_srcdir)/src\""
+GLOBAL_LIBS=
 
 AS_IF([test "$enable_debug" != "no"], [
   GLOBAL_CFLAGS="$GLOBAL_CFLAGS -DLUA_USE_APICHECK"
 ])
 
+case "$host" in
+  *-mingw*)
+    GLOBAL_LIBS="$NAEV_LIBS -lwsock32"
+    ;;
+esac
+
+AC_SUBST([GLOBAL_CFLAGS])
+AC_SUBST([GLOBAL_LIBS])
+
 # naev
-NAEV_CFLAGS=
-NAEV_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
+NAEV_CFLAGS="$GLOBAL_CFLAGS"
+NAEV_LIBS="$GLOBAL_LIBS \$(top_builddir)/src/tk/widget/libwidget.a"
 
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
@@ -351,7 +364,7 @@ CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
 LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
 
-NAEV_CFLAGS="$NAEV_CFLAGS $GLOBAL_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
+NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
 NAEV_CFLAGS="$NAEV_CFLAGS $XML_CFLAGS $FREETYPE_CFLAGS $LUA_CFLAGS"
 NAEV_CFLAGS="$NAEV_CFLAGS $VORBISFILE_CFLAGS $OPENGL_CFLAGS $PNG_CFLAGS"
 NAEV_CFLAGS="$NAEV_CFLAGS $SDLIMAGE_CFLAGS"
@@ -373,7 +386,7 @@ AS_IF([test "$have_sdlmixer" = "yes"], [
 
 case "$host" in
   *-mingw*)
-    NAEV_LIBS="$NAEV_LIBS -lwsock32 -mwindows"
+    NAEV_LIBS="$NAEV_LIBS -mwindows"
     ;;
 esac
 
@@ -393,6 +406,13 @@ case "$host" in
 esac
 
 AC_SUBST([LIBLUA_CFLAGS])
+
+# utils/pack
+PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS"
+PACK_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS"
+
+AC_SUBST([PACK_CFLAGS])
+AC_SUBST([PACK_LIBS])
 
 #
 # Checks for headers
