@@ -68,6 +68,7 @@ naev_SOURCES = \
 	nlua_vec2.c \
 	nmath.c \
 	nondata.c \
+	npc.c \
 	ntime.c \
 	nxml.c \
 	opengl.c \
@@ -162,6 +163,7 @@ naev_SOURCES = \
 	nluadef.h \
 	nmath.h \
 	nopenal.h \
+	npc.h \
 	nstd.h \
 	ntime.h \
 	nxml.h \
