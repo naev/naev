@@ -601,10 +601,12 @@ static void opt_audioSave( unsigned int wid, char *str )
       if (strcmp(s,conf.sound_backend)!=0) {
          free(conf.sound_backend);
          conf.sound_backend = strdup(s);
+         opt_needRestart();
       }
    }
    else {
       conf.sound_backend = strdup(s);
+      opt_needRestart();
    }
 
    /* OpenAL. */
