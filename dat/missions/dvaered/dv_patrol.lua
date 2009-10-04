@@ -84,11 +84,11 @@ function create ()
    -- Get systems to patrol
    num_systems = rnd.rnd(2,4)
    systems = get_patrol_systems(num_systems)
+   systems["__save"] = true -- Save the systems
    num_systems = #systems
    if #systems < 2 then
       misn.finish(false)
    end
-   system1, system2, system3, system4 = unpack( systems )
    base, base_sys = planet.get()
    misn.setMarker(systems[1])
 
@@ -140,11 +140,6 @@ end
 function jump ()
    if misn_stage == 1 then
       sys = system.get()
-
-      -- Hack in case it wasn't saved
-      if systems == nil then
-         systems = { system1, system2, system3, system4 }
-      end
 
       -- Check to see if system is next
       if sys == systems[visited+1] then
