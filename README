@@ -30,51 +30,22 @@
 
     X.) COMPILING
 
-      NAEV's build system is rather simple - Install the dependencies
-      and then run make, and you're done.
+      Run: 
 
-      However, many Linux distributions package antiquated versions of
-      libvorbis that are incompatible with NAEV.
+      ./autogen.sh && ./configure
+      make
 
-      To resolve this, static-linking patches for the Makefile are
-      available, as well as static versions of the libvorbis libaries.
+      If you need special settings you should pass flags to configure, using -h
+      will tell you what it supports.
 
-      If you need to compile statically, please download and extract
-      http://deiz2.ath.cx/naev/libvorbis.tar.gz into NAEV's directory.
-         Example: wget http://deiz2.ath.cx/naev/libvorbis.tar.gz
-         tar -xf libvorbis.tar.gz
-
-      The included static libraries are libvorbis 1.2.3, sourced from
-      Gentoo, but should work on all systems.
-
-         Assuming a 32-bit system, starting in the base dir:
-            patch -p1 < libvorbis/libvorbis-32.patch
-
-         If you wish to change the default ndata path, you can uncomment
-         the NDATA_DEF line in the Makefile and set it as applicable.
-            Example: NDATA_DEF := \"/usr/share/games/naev/ndata\"
-
-         Compilation can now proceed, simply type make and the compilation
-         should finish without issue.
-            One libxml warning is common. The cause has been fixed and it
-            will be incorporated in new libxml releases.
-
-         This will produce two files, naev and ndata. The naev binary will
-         search for ndata in the working and the binary directories.
-
-      Note: While only one audio backend needs to be compiled in, it's wise
-      to compile with both enabled to provide a fallback.
 
     X.) INSTALLATION
 
-      NAEV currently does not support 'make install', and will do nothing
-      beyond building the binary and ndata.
+      NAEV currently supports make install which will install everything that
+      is needed.
 
       If you wish to create a .desktop for your desktop environment, logos
       from 16x16 to 128x128 can be found in extras/logos
-
-      A manpage is also included. As a game, NAEV's manpage is a man(6) and
-      usually belongs in /usr/share/man/man6, though this may vary.
 
     X.) CRASHES
 
@@ -85,6 +56,9 @@
       the appropriate FAQ entry: http://code.google.com/p/naev/wiki/FAQ
 
     X.) KEYBINDINGS
+
+      You can now changhe keybindings in game which may be more comfortable for
+      you then editting the configuration file.
 
       X.0) Introduction
          X.0.0) About
