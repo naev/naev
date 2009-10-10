@@ -140,7 +140,7 @@ int nebu_init (void)
       nebu_sur = loadNebula( nebu_file );
       if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
          WARN("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)",
-               nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
+               nebu_sur->w, nebu_sur->h, nebu_w, nebu_h );
 
       /* Load the texture */
       nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, nebu_textures[i] );
