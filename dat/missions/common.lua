@@ -10,6 +10,9 @@ common = {}
 
 
 --[[
+         COMBAT TIER STUFF
+--]]
+--[[
    @brief Calculates the mission combat tier.
 
    Calculations are done with ally and enemy values at the instance where they
@@ -145,6 +148,67 @@ common.checkTierCombat = function( tier )
 
    -- Check against mission tier
    return common.calcPlayerCombatTier() >= tier
+end
+
+
+
+--[[
+      REWARD STUFF
+--]]
+function _calcTierReward( tier )
+   local low, high
+   if tier <= 0 then
+      low  = 0
+      high = 0
+   elseif tier == 1 then
+      low  = 0
+      high = 50
+   elseif tier == 2 then
+      low  = 50
+      high = 100
+   elseif tier == 3 then
+      low  = 100
+      high = 150
+   elseif tier == 4 then
+      low  = 150
+      high = 200
+   elseif tier == 5 then
+      low  = 200
+      high = 250
+   elseif tier == 6 then
+      low  = 250
+      high = 275
+   else
+      low  = 275
+      high = 300
+   end
+   return low, high
+end
+--[[
+   @brief Calculates the monetary reward based on the tiers of the mission
+
+   @usage low, high = common.calcMonetaryReward()
+
+      @return The amount of money the player should be paid as an interval.
+--]]
+common.calcMonetaryReward = function ()
+   local low  = 0
+   local high = 0
+   local l,h
+   local tiers = {}
+
+   -- Get tiers
+   tiers[ #tiers+1 ] = common.getTierCombat()
+
+   -- Calculate money
+   for k,v in ipairs(tiers) do
+      l, h = _calcTierReward( v )
+      low  = low + l
+      high = high + h
+   end
+
+   -- Return total amount
+   return low, high
 end
 
 
