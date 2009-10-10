@@ -203,13 +203,15 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    Uint8 saved_alpha;
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
-   /* No need for POT with extension. */
-   if (gl_tex_ext_npot)
-      return surface;
-
-   /* Make size power of two */
-   potw = gl_pot(surface->w);
-   poth = gl_pot(surface->h);
+   /* Make size power of two. */
+   if (gl_tex_ext_npot) { /* No real need, but there's some issue with bypassing this function. */
+      potw = surface->w;
+      poth = surface->h;
+   }
+   else {
+      potw = gl_pot(surface->w);
+      poth = gl_pot(surface->h);
+   }
 
    /* we must blit with an SDL_Rect */
    rtemp.x = rtemp.y = 0;
