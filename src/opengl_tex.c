@@ -655,6 +655,17 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
 
 /**
+ * @brief Checks to see if OpenGL needs POT textures.
+ *
+ *    @return 0 if OpenGL doesn't needs POT textures.
+ */
+int gl_needPOT (void)
+{
+   return !gl_tex_ext_npot;
+}
+
+
+/**
  * @brief Initializes the opengl texture subsystem.
  *
  *    @return 0 on success.

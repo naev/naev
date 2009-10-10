@@ -113,10 +113,16 @@ int nebu_init (void)
    }
 
    /* Set expected sizes */
-   nebu_w = SCREEN_W;
-   nebu_h = SCREEN_H;
-   nebu_pw = gl_pot(nebu_w);
-   nebu_ph = gl_pot(nebu_h);
+   nebu_w  = SCREEN_W;
+   nebu_h  = SCREEN_H;
+   if (gl_needPOT()) {
+      nebu_pw = gl_pot(nebu_w);
+      nebu_ph = gl_pot(nebu_h);
+   }
+   else {
+      nebu_pw = nebu_w;
+      nebu_ph = nebu_h;
+   }
 
    nebu_generatePuffs();
 
