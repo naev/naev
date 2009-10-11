@@ -168,8 +168,15 @@ int intro_display( const char *text, const char *mus )
                if (event.key.keysym.sym == SDLK_ESCAPE)
                   offset = max * (intro_font.h + 5.);
 
-               /* Only Handle space from here down. */
-               else if (!nstd_isspace(event.key.keysym.sym))
+               /* Down arrow recovers. */
+               else if (event.key.keysym.sym == SDLK_DOWN) {
+                  offset -= 250.;
+                  break;
+               }
+
+               /* Only Handle space or up arrow from here down. */
+               else if ((event.key.keysym.sym != SDLK_UP) &&
+                     !nstd_isspace(event.key.keysym.sym))
                   break;
 
                /* Purpose fallthrough. */
