@@ -246,6 +246,7 @@ int cli_init (void)
    /* Create the state. */
    cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
+   nlua_loadTk( cli_state, 0 );
    nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
