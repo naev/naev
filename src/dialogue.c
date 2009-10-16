@@ -50,6 +50,7 @@ static void dialogue_msgClose( unsigned int wid, char* str );
 static void dialogue_YesNoClose( unsigned int wid, char* str );
 static void dialogue_inputClose( unsigned int wid, char* str );
 static void dialogue_inputCancel( unsigned int wid, char* str );
+static void dialogue_choiceClose( unsigned int wid, char* str );
 /* secondary loop hack */
 static int loop_done; /**< Used to indicate the secondary loop is finished. */
 static int toolkit_loop (void);
@@ -416,6 +417,83 @@ static void dialogue_inputCancel( unsigned int wid, char* str )
 {
    input_cancelled = 1;
    dialogue_inputClose(wid,str);
+}
+
+
+static unsigned int choice_wid = 0; /**< Stores the choice window id. */
+static char *choice_result; /**< Pointer to the choice result. */
+static int nopts; /**< Counter variable. */
+/**
+ * @brief Create the choice dialog. Need to add choices with below method.
+ *
+ *    @param caption Caption to use for the dialogue.
+ *    @param msg Message to display.
+ *    @param opts The number of options.
+ */
+void dialogue_makeChoice( const char *caption, const char *msg, int opts )
+{
+   int w,h;
+   glFont* font;
+
+   choice_result = NULL;
+   nopts = opts;
+   font = dialogue_getSize( caption, msg, &w, &h );
+   
+   /* create window */
+   choice_wid = window_create( caption, -1, -1, w, h+100+40*nopts );
+   /* text */
+   window_addText( choice_wid, 20, -40, w-40, h,  0, "txtYesNo",
+         font, &cBlack, msg );
+}
+/**
+ * @brief Add a choice to the dialog.
+ *
+ *    @param caption Caption to use for the dialogue (for sizing).
+ *    @param msg Message to display (for sizing).
+ *    @param *opt The value of the option.
+ */
+void dialogue_addChoice( const char *caption, const char *msg, const char *opt)
+{
+   int w,h;
+   glFont* font;
+
+   if (nopts < 1)
+      return;
+
+   font = dialogue_getSize( caption, msg, &w, &h );
+   
+   /* buttons. Add one for each option in the menu. */
+   window_addButton( choice_wid, w/2-125, nopts*40, 250, 30, (char *) opt,
+         (char *) opt, dialogue_choiceClose );
+   nopts --;
+
+}
+/**
+ * @brief Run the dialog and return the clicked string.
+ */
+char *dialogue_runChoice (void)
+{
+   /* tricky secondary loop */
+   dialogue_open++;
+   toolkit_loop();
+   
+   return choice_result;
+}
+/**
+ * @brief Closes a choice dialogue.
+ *    @param wid Window being closed.
+ *    @param str Stored to choice_result.
+ */
+static void dialogue_choiceClose( unsigned int wid, char* str )
+{
+   choice_result = str;
+   
+   /* destroy the window */
+   window_destroy( wid );
+   choice_wid = 0;
+
+   loop_done = 1;
+   dialogue_open--;
 }
 
 
