@@ -21,14 +21,14 @@ void map_close (void);
 int map_isOpen (void);
 
 /* misc */
-void map_select( StarSystem *sys );
+void map_select( StarSystem *sys, char shifted );
 void map_cleanup (void);
 void map_clear (void);
 void map_jump (void);
 
 /* manipulate universe stuff */
-StarSystem** map_getJumpPath( int* njumps,
-      const char* sysstart, const char* sysend, int ignore_known );
+StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
+     const char* sysend, int ignore_known, StarSystem** old_data );
 int map_map( const char* targ_sys, int r );
 int map_isMapped( const char* targ_sys, int r );
 

@@ -592,8 +592,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    int i,j, n,m;
-   double x,y,r, tx,ty;
-   StarSystem *sys, *jsys, *hsys;
+   double x,y,r, tx,ty, fuel;
+   StarSystem *sys, *jsys, *hsys, *lsys;
    glColour *col, c;
    GLfloat vertex[8*(2+4)];
    int sw, sh;
@@ -662,36 +662,13 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
-      /* cheaply use transparency instead of actually calculating
-       * from where to where the line must go :) */  
+      col = &cDarkBlue;
+      /* first we draw all of the paths. */  
       for (j=0; j<sys->njumps; j++) {
 
          jsys = system_getIndex( sys->jumps[j] );
          if (hyperspace_target != -1)
             hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
-
-         n = map_inPath(jsys);
-         m = map_inPath(sys);
-         /* set the colours */
-         /* is the route the current one? */
-         if ((hyperspace_target != -1) && 
-               ( ((cur_system==sys) && (j==hyperspace_target)) ||
-                  ((cur_system==jsys) &&
-                     (sys==hsys )))) {
-            if (player->fuel < HYPERSPACE_FUEL)
-               col = &cRed;
-            else
-               col = &cGreen;
-         }
-         /* is the route part of the path? */
-         else if ((n > 0) && (m > 0)) {
-            if ((n == 2) || (m == 2)) /* out of fuel */
-               col = &cRed;
-            else
-               col = &cYellow;
-         }
-         else
-            col = &cDarkBlue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -721,7 +698,57 @@ static void map_render( double bx, double by, double w, double h, void *data )
       }
       glShadeModel( GL_FLAT );
    }
-
+   
+   /* Now we'll draw over the lines with the new pathways. */
+   if (map_path)
+   {
+      lsys = cur_system;
+      glShadeModel(GL_SMOOTH);
+      col = &cGreen;
+      fuel = player->fuel;
+      
+      for (j=0; j<map_npath; j++)
+      {
+         jsys = map_path[j];
+         if (fuel == player->fuel)
+            col = &cGreen;
+         else if (fuel < 100.)
+            col = &cRed;
+         else
+            col = &cYellow;
+         fuel -= 100;
+         
+         /* Draw the lines. */
+         vertex[0]  = x + lsys->pos.x * map_zoom;
+         vertex[1]  = y + lsys->pos.y * map_zoom;
+         vertex[2]  = vertex[0] + (jsys->pos.x - lsys->pos.x)/2. * map_zoom;
+         vertex[3]  = vertex[1] + (jsys->pos.y - lsys->pos.y)/2. * map_zoom;
+         vertex[4]  = x + jsys->pos.x * map_zoom;
+         vertex[5]  = y + jsys->pos.y * map_zoom;
+         vertex[6]  = col->r;
+         vertex[7]  = col->g;
+         vertex[8]  = col->b;
+         vertex[9]  = 0.;
+         vertex[10] = col->r;
+         vertex[11] = col->g;
+         vertex[12] = col->b;
+         vertex[13] = col->a;
+         vertex[14] = col->r;
+         vertex[15] = col->g;
+         vertex[16] = col->b;
+         vertex[17] = 0.;
+         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+         gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+               sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINE_STRIP, 0, 3 );
+         gl_vboDeactivate();
+         
+         lsys = jsys;
+      }
+      
+      glShadeModel( GL_FLAT );
+   }
 
    /*
     * Second pass - System names
@@ -846,7 +873,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
 
-                  map_select( sys );
+                  map_select( sys, (SDL_GetModState() & KMOD_SHIFT) );
                   break;
                }
             }
@@ -1006,7 +1033,7 @@ void map_jump (void)
  *
  *    @param sys System to select.
  */
-void map_select( StarSystem *sys )
+void map_select( StarSystem *sys, char shifted )
 {
    unsigned int wid;
    int i;
@@ -1020,15 +1047,23 @@ void map_select( StarSystem *sys )
       map_selected = sys - systems_stack;
 
       /* select the current system and make a path to it */
-      if (map_path)
-         free(map_path);
-      map_path  = NULL;
-      map_npath = 0;
+      if (!shifted) {
+          if (map_path)
+             free(map_path);
+          map_path  = NULL;
+          map_npath = 0;
+      }
 
       /* Try to make path if is reachable. */
       if (space_sysReachable(sys)) {
-         map_path = map_getJumpPath( &map_npath,
-               cur_system->name, sys->name, 0 );
+         if (!shifted) {
+             map_path = map_getJumpPath( &map_npath,
+                   cur_system->name, sys->name, 0 , NULL);
+         }
+         else {
+             map_path = map_getJumpPath( &map_npath,
+                   cur_system->name, sys->name, 0 , map_path);
+         }
 
          if (map_npath==0)
             hyperspace_target = -1;
@@ -1209,12 +1244,13 @@ void map_setZoom(double zoom)
  *    @param sysstart Name of the system to start from.
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems are known.
+ *    @param the old star system (if we're merely extending the list)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
-StarSystem** map_getJumpPath( int* njumps,
-      const char* sysstart, const char* sysend, int ignore_known )
+StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
+    const char* sysend, int ignore_known, StarSystem** old_data )
 {
-   int i, j, cost;
+   int i, j, cost, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
 
@@ -1227,11 +1263,19 @@ StarSystem** map_getJumpPath( int* njumps,
    /* initial and target systems */
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
+   
+   ojumps = 0;
+   if (old_data) {
+      ssys = system_get( old_data[ (*njumps)-1 ]->name );
+      ojumps = *njumps;
+   }
 
    /* system target must be known and reachable */
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
       (*njumps) = 0;
+      if (old_data)
+         free( old_data );
       return NULL;
    }
 
@@ -1286,8 +1330,13 @@ StarSystem** map_getJumpPath( int* njumps,
    /* build path backwards if not broken from loop. */
    if (j <= MAP_LOOP_PROT) {
       (*njumps) = A_g(cur);
-      res = malloc( sizeof(StarSystem*) * (*njumps) );
-      for (i=0; i<(*njumps); i++) {
+      if (old_data == NULL)
+         res = malloc( sizeof(StarSystem*) * (*njumps) );
+      else {
+         *njumps = *njumps + ojumps;
+         res = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
+      }
+      for (i=0; i<((*njumps)-ojumps); i++) {
          res[(*njumps)-i-1] = cur->sys;
          cur = cur->parent;
       }
@@ -1295,6 +1344,8 @@ StarSystem** map_getJumpPath( int* njumps,
    else {
       (*njumps) = 0;
       res = NULL;
+      if (old_data != NULL)
+         free( old_data );
    }
 
    /* free the linked lists */
