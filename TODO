@@ -61,6 +61,8 @@
       *) Optimize cache for loading
    *) Testing improvements
       *) Allow console to reload data (to avoid restarts)
+   *) ^F for maps.
+   *) Tech packages.
 
 
    MAYBE... SOMEDAY...
