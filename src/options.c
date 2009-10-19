@@ -339,7 +339,7 @@ static void menuKeybinds_genList( unsigned int wid )
    for (i=0; strcmp(keybindNames[i],"end"); i++);
    str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
-      l = 32;
+      l = 64;
       str[j] = malloc(sizeof(char) * l);
       key = input_getKeybind( keybindNames[j], &type, &mod );
       switch (type) {
@@ -388,7 +388,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    KeybindType type;
    SDLMod mod;
    char buf[1024];
-   char binding[32];
+   char binding[64];
 
    /* Get the keybind. */
    selected = toolkit_getList( wid, "lstKeybinds" );
@@ -412,12 +412,12 @@ static void menuKeybinds_update( unsigned int wid, char *name )
       case KEYBIND_KEYBOARD:
          /* SDL_GetKeyName returns lowercase which is ugly. */
          if (nstd_isalpha(key))
-            snprintf(binding, 32, "keyboard:   %s%s%c",
+            snprintf(binding, sizeof(binding), "keyboard:   %s%s%c",
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   nstd_toupper(key));
          else
-            snprintf(binding, 32, "keyboard:   %s%s%s",
+            snprintf(binding, sizeof(binding), "keyboard:   %s%s%s",
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   SDL_GetKeyName(key));
