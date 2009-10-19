@@ -12,7 +12,7 @@
  */
 
 #if USE_OPENAL
-#include <AL/al.h>
+#include OPENAL_AL_H
 #endif /* USE_OPENAL */
 
 #if USE_SDLMIX

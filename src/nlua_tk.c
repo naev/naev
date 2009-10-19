@@ -26,10 +26,12 @@
 static int tk_msg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
+static int tk_choice( lua_State *L );
 static const luaL_reg tk_methods[] = {
    { "msg", tk_msg },
    { "yesno", tk_yesno },
    { "input", tk_input },
+   { "choice", tk_choice },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -142,4 +144,37 @@ static int tk_input( lua_State *L )
       lua_pushnil(L);
    return 1;
 }
-
+/**
+ * @brief Creates a window with a number of selectable options
+ *
+ * @usage foo = tk.choice( "Title", "Ready to go?", "Yes", "No" )
+ *
+ *    @luaparam title Title of the window.
+ *    @luaparam msg Minimum characters to accept (must be greater than 0).
+ *    @luaparam choices Option choices.
+ * @luafunc choice( title, msg, ... )
+ */
+static int tk_choice( lua_State *L )
+{
+   int ret, opts, i;
+   const char *title, *str, *result;
+   NLUA_MIN_ARGS(3);
+   
+   opts = lua_gettop(L) - 2;
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
+   
+   dialogue_makeChoice( title, str, opts );
+   for (i=0; i<opts; i++)
+      dialogue_addChoice( title, str, luaL_checkstring(L,i+3) );
+   result = dialogue_runChoice();
+   
+   ret = -1;
+   for (i=0; i<opts && ret==-1; i++) {
+      if (strcmp(result, luaL_checkstring(L,i+3)) == 0) 
+         ret = i;
+   }
+   
+   lua_pushnumber(L,ret);
+   return 1;
+}

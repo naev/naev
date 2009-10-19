@@ -11,14 +11,8 @@
 
 #include "ncompat.h"
 
-#if HAS_MACOSX
-#include <alc.h>
-#include <al.h>
-#else /* HAS_MACOSX */
-#include <AL/alc.h>
-#include <AL/al.h>
-#endif /* HAS_MACOSX */
-
+#include OPENAL_ALC_H
+#include OPENAL_AL_H
 
 /*
  * EFX stuff.

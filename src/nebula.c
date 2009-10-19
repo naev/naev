@@ -113,10 +113,16 @@ int nebu_init (void)
    }
 
    /* Set expected sizes */
-   nebu_w = SCREEN_W;
-   nebu_h = SCREEN_H;
-   nebu_pw = gl_pot(nebu_w);
-   nebu_ph = gl_pot(nebu_h);
+   nebu_w  = SCREEN_W;
+   nebu_h  = SCREEN_H;
+   if (gl_needPOT()) {
+      nebu_pw = gl_pot(nebu_w);
+      nebu_ph = gl_pot(nebu_h);
+   }
+   else {
+      nebu_pw = nebu_w;
+      nebu_ph = nebu_h;
+   }
 
    nebu_generatePuffs();
 
@@ -140,7 +146,7 @@ int nebu_init (void)
       nebu_sur = loadNebula( nebu_file );
       if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
          WARN("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)",
-               nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
+               nebu_sur->w, nebu_sur->h, nebu_w, nebu_h );
 
       /* Load the texture */
       nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, nebu_textures[i] );

@@ -39,6 +39,12 @@ static glTexList* texture_list = NULL; /**< Texture list. */
 
 
 /*
+ * Extensions.
+ */
+static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two. */
+
+
+/*
  * prototypes
  */
 /* misc */
@@ -197,9 +203,15 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    Uint8 saved_alpha;
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
-   /* Make size power of two */
-   potw = gl_pot(surface->w);
-   poth = gl_pot(surface->h);
+   /* Make size power of two. */
+   if (gl_tex_ext_npot) { /* No real need, but there's some issue with bypassing this function. */
+      potw = surface->w;
+      poth = surface->h;
+   }
+   else {
+      potw = gl_pot(surface->w);
+      poth = gl_pot(surface->h);
+   }
 
    /* we must blit with an SDL_Rect */
    rtemp.x = rtemp.y = 0;
@@ -643,12 +655,26 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
 
 /**
+ * @brief Checks to see if OpenGL needs POT textures.
+ *
+ *    @return 0 if OpenGL doesn't needs POT textures.
+ */
+int gl_needPOT (void)
+{
+   return !gl_tex_ext_npot;
+}
+
+
+/**
  * @brief Initializes the opengl texture subsystem.
  *
  *    @return 0 on success.
  */
 int gl_initTextures (void)
 {
+   if (gl_hasVersion(2,0) || gl_hasExt("GL_ARB_texture_non_power_of_two"))
+      gl_tex_ext_npot = 1;
+
    return 0;
 }
 
