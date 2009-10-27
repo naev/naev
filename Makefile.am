@@ -17,7 +17,7 @@ CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 .PHONY: docs help install-ndata
 
-all-local: ndata $(NAEV)
+all-local: $(NAEV)
 
 $(NAEV):
 	@echo "  LN    $(NAEV)"

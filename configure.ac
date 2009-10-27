@@ -449,8 +449,8 @@ VAR_RESTORE([LIBS])
 # Misc checks
 #
 AC_MSG_CHECKING([for the current Git commit identifier])
-AS_IF([test -n "$GIT" && test -d .git], [
-  GIT_COMMIT=$($GIT describe --always)
+AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
+  GIT_COMMIT=$(cd "$srcdir" && "$GIT" describe --always)
   AC_MSG_RESULT([$GIT_COMMIT])
 ], [
   GIT_COMMIT=
