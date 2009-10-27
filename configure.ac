@@ -46,6 +46,7 @@ define([VAR_RESTORE], [
 # Checks for programs.
 #
 AC_PROG_CC
+AC_PROG_LN_S
 AC_PROG_RANLIB
 PKG_PROG_PKG_CONFIG
 

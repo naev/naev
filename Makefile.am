@@ -10,15 +10,22 @@ dist_doc_DATA = AUTHORS README TODO
 
 DATA_ARCHIVE = ndata
 PACK	     = utils/pack/pack$(EXEEXT)
+NAEV	     = naev$(EXEEXT)
 
 EXTRA_DIST = LICENSE conf.example
-CLEANFILES = $(DATA_ARCHIVE)
+CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 V             = @
 Q             = $(V:1=)
 QUIET_PACK    = $(Q:@=@echo ' PACK   '$@;)
 
 .PHONY: docs help install-ndata
+
+all-local: ndata $(NAEV)
+
+$(NAEV):
+	@echo " $(LN_S) 'src/$(NAEV)' '$(NAEV)'"
+	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(PACK):
 	$(MAKE) -C utils/pack
