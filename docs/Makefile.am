@@ -1,6 +1,6 @@
-.PHONY: all lua doxy
+.PHONY: doxy lua
 
-all: doxy lua
+all-local: doxy lua
 
 if HAVE_DOXYGEN
 doxy:
