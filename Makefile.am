@@ -15,16 +15,12 @@ NAEV	     = naev$(EXEEXT)
 EXTRA_DIST = LICENSE conf.example
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
-V             = @
-Q             = $(V:1=)
-QUIET_PACK    = $(Q:@=@echo ' PACK   '$@;)
-
 .PHONY: docs help install-ndata
 
 all-local: ndata $(NAEV)
 
 $(NAEV):
-	@echo " $(LN_S) 'src/$(NAEV)' '$(NAEV)'"
+	@echo "  LN    $(NAEV)"
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(PACK):
@@ -35,7 +31,7 @@ VERSION:
 
 if HAVE_UTILS
 $(DATA_ARCHIVE): $(PACK) VERSION
-	$(QUIET_PACK)\
+	@echo " PACK   $(DATA_ARCHIVE)"
 	test -f $(top_srcdir)/VERSION || mv -n VERSION "$(top_srcdir)"; \
 	cd "$(top_srcdir)" && \
 	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)" \
