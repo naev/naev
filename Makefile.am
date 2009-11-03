@@ -10,15 +10,18 @@ dist_doc_DATA = AUTHORS README TODO
 
 DATA_ARCHIVE = ndata
 PACK	     = utils/pack/pack$(EXEEXT)
+NAEV	     = naev$(EXEEXT)
 
 EXTRA_DIST = LICENSE conf.example
-CLEANFILES = $(DATA_ARCHIVE)
-
-V             = @
-Q             = $(V:1=)
-QUIET_PACK    = $(Q:@=@echo ' PACK   '$@;)
+CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 .PHONY: docs help install-ndata
+
+all-local: $(NAEV)
+
+$(NAEV):
+	@echo "  LN    $(NAEV)"
+	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
 $(PACK):
 	$(MAKE) -C utils/pack
@@ -28,7 +31,7 @@ VERSION:
 
 if HAVE_UTILS
 $(DATA_ARCHIVE): $(PACK) VERSION
-	$(QUIET_PACK)\
+	@echo " PACK   $(DATA_ARCHIVE)"
 	test -f $(top_srcdir)/VERSION || mv -n VERSION "$(top_srcdir)"; \
 	cd "$(top_srcdir)" && \
 	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)" \
@@ -51,7 +54,7 @@ endif
 
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \
-	dir=$$(echo "$$ndata" | sed 's/\(.*\)[\/\\].*/\1/'); \
+	dir=$$(echo "$$ndata" | $(SED) 's/\(.*\)[\/\\].*/\1/'); \
 	echo " $(MKDIR_P) '$$dir'"; \
 	$(MKDIR_P) "$$dir"; \
 	echo " $(INSTALL_DATA) -c '$(DATA_ARCHIVE)' '$$ndata'"; \

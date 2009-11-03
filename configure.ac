@@ -46,6 +46,7 @@ define([VAR_RESTORE], [
 # Checks for programs.
 #
 AC_PROG_CC
+AC_PROG_LN_S
 AC_PROG_RANLIB
 PKG_PROG_PKG_CONFIG
 
@@ -56,6 +57,7 @@ AS_IF([test -z "$CUT"],[
 
 AC_CHECK_PROG([DOXYGEN], [doxygen], [doxygen])
 AC_CHECK_PROG([LUADOC], [luadoc], [luadoc])
+AC_CHECK_PROG([GIT], [git], [git])
 
 #
 # Checks for build environment
@@ -444,6 +446,18 @@ VAR_RESTORE([CFLAGS])
 VAR_RESTORE([LIBS])
 
 #
+# Misc checks
+#
+AC_MSG_CHECKING([for the current Git commit identifier])
+AS_IF([test -n "$GIT" && test -d "$srcdir/.git"], [
+  GIT_COMMIT=$(cd "$srcdir" && "$GIT" describe --always --tags)
+  AC_MSG_RESULT([$GIT_COMMIT])
+], [
+  GIT_COMMIT=
+  AC_MSG_RESULT([unknown])
+])
+
+#
 # Defines in config.h
 #
 
@@ -485,6 +499,12 @@ esac
 # NDATA_DEF
 AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
 		   [Define to the path to the data file])
+
+# GIT_COMMIT
+AS_IF([test -n "$GIT_COMMIT"], [
+  AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
+		     [Define to the current Git commit identifier])
+])
 
 #
 # Automake conditionals

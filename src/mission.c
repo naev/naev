@@ -892,8 +892,8 @@ static int mission_saveData( xmlTextWriterPtr writer,
 {
    xmlw_startElem(writer,"data");
 
-   xmlw_attr(writer,"type",type);
-   xmlw_attr(writer,"name",name);
+   xmlw_attr(writer,"type","%s",type);
+   xmlw_attr(writer,"name","%s",name);
    if (keynum)
       xmlw_attr(writer,"keynum","1");
    xmlw_str(writer,"%s",value);
@@ -967,7 +967,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
          /* Start the table. */
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
-         xmlw_attr(writer,"name",name);
+         xmlw_attr(writer,"name","%s",name);
          if (keynum)
             xmlw_attr(writer,"keynum","1");
          lua_pushnil(L); /* key, value, nil */
@@ -1206,16 +1206,16 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_startElem(writer,"mission");
 
          /* data and id are attributes becaues they must be loaded first */
-         xmlw_attr(writer,"data",player_missions[i].data->name);
+         xmlw_attr(writer,"data","%s",player_missions[i].data->name);
          xmlw_attr(writer,"id","%u",player_missions[i].id);
 
-         xmlw_elem(writer,"title",player_missions[i].title);
-         xmlw_elem(writer,"desc",player_missions[i].desc);
-         xmlw_elem(writer,"reward",player_missions[i].reward);
+         xmlw_elem(writer,"title","%s",player_missions[i].title);
+         xmlw_elem(writer,"desc","%s",player_missions[i].desc);
+         xmlw_elem(writer,"reward","%s",player_missions[i].reward);
          if (player_missions[i].sys_marker != NULL) {
             xmlw_startElem(writer,"marker");
             xmlw_attr(writer,"type","%d",player_missions[i].sys_markerType);
-            xmlw_str(writer,player_missions[i].sys_marker);
+            xmlw_str(writer,"%s",player_missions[i].sys_marker);
             xmlw_endElem(writer); /* "marker" */
          }
 
@@ -1251,7 +1251,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
             /* Save messages. */
             for (j=0; j<nitems; j++) {
-               xmlw_elem(writer,"msg",items[j]);
+               xmlw_elem(writer,"msg","%s",items[j]);
             }
             xmlw_endElem(writer); /* "osd" */
          }

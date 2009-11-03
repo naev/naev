@@ -27,6 +27,9 @@
 
 #include "ncompat.h"
 
+#include <limits.h>
+#include <math.h>
+
 
 #define APPNAME            "NAEV" /**< Application name. */
 
@@ -48,7 +51,7 @@
 
 /* For inferior OS. */
 #ifndef M_PI
-# define M_PI           3.14159265358979323846
+#  define M_PI          3.14159265358979323846
 #endif /* M_PI */
 #ifndef M_SQRT1_2
 #  define M_SQRT1_2     0.70710678118654752440
