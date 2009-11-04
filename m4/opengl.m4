@@ -32,7 +32,7 @@ AC_DEFUN([NAEV_PATH_OPENGL], [
   OPENGL_GLU_LIBS=
   AS_IF([test -n "$OPENGL_GL_H" && test -n "$OPENGL_GLU_H"], [
     OLD_LIBS="$LIBS"
-    for lib in "-lGL" "-lopengl32" "-framework OpenGL"; do
+    for lib in "-framework OpenGL" "-lGL" "-lopengl32"; do
       LIBS="$OLD_LIBS $lib"
       AC_MSG_CHECKING([for glGenTextures in $lib])
       AC_TRY_LINK([#include OPENGL_GL_H], [glGenTextures (1, 0);], [
@@ -43,7 +43,7 @@ AC_DEFUN([NAEV_PATH_OPENGL], [
 	AC_MSG_RESULT([no])
       ])
     done
-    for lib in "-lGLU" "-lglu32" "-framework OpenGL"; do
+    for lib in "-framework OpenGL" "-lGLU" "-lglu32"; do
       LIBS="$OLD_LIBS $lib"
       AC_MSG_CHECKING([for glOrtho2D in $lib])
       AC_TRY_LINK([#include OPENGL_GLU_H], [gluOrtho2D (.0, .0, .0, .0);], [
