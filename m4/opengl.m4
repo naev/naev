@@ -1,7 +1,12 @@
-# #defines OPENGL_GL_H and OPENGL_GLU_H, and sets OPENGL_CFLAGS/OPENGL_LIBS
-# $1: code to run if found
-# $2: code to run if not found
-AC_DEFUN([NAEV_PATH_OPENGL], [
+# Configure headers/flags for OpenGL
+# Unavowed <unavowed@vexillium.org>
+
+dnl AM_PATH_OPENGL([ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
+dnl
+dnl AC_DEFINE OPENGL_GL_H/OPENGL_GLU_H to the equivalent of
+dnl <GL/gl.h>/<GL/glu.h> so you can do #include OPENGL_GL_H.  Define
+dnl OPENGL_CFLAGS and OPENGL_LIBS.
+AC_DEFUN([AM_PATH_OPENGL], [
   OPENGL_CFLAGS=
   OPENGL_LIBS=
 
