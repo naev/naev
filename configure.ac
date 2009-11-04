@@ -268,59 +268,9 @@ AC_SUBST([SDLIMAGE_CFLAGS])
 AC_SUBST([SDLIMAGE_LIBS])
 
 # OpenGL
-case "$host" in
-  *-darwin*)
-    OPENGL_GL_H="<OpenGL/gl.h>"
-    OPENGL_GLU_H="<OpenGL/glu.h>"
-    OPENGL_CFLAGS=
-    OPENGL_LIBS="-framework OpenGL"
-    ;;
-
-  *-mingw*)
-    # On Windows, OpenGL uses the stdcall convention, which means that
-    # AC_SEARCH_LIBS may not be used.  This special case uses AC_TRY_LINK
-    # instead.
-    OPENGL_GL_H="<GL/gl.h>"
-    OPENGL_GLU_H="<GL/glu.h>"
-    OPENGL_CFLAGS=
-    VAR_SAVE([LIBS], ["-lopengl32"])
-    AC_MSG_CHECKING([for glGenTextures in libopengl32])
-    AC_TRY_LINK([#include <GL/gl.h>], [glGenTextures (1, 0);], [], [
-      AC_MSG_RESULT([no])
-      AC_ERROR([OpenGL not found])
-    ])
-    AC_MSG_RESULT([yes])
-    LIBS="$LIBS -lglu32"
-    AC_MSG_CHECKING([for glOrtho2D in libglu])
-    AC_TRY_LINK([#include <GL/glu.h>], [gluOrtho2D (.0, .0, .0, .0);], [], [
-      AC_MSG_RESULT([no])
-      AC_ERROR([GLU not found])
-    ])
-    AC_MSG_RESULT([yes])
-    OPENGL_LIBS="$LIBS"
-    VAR_RESTORE([LIBS])
-    ;;
-
-  *)
-    OPENGL_GL_H="<GL/gl.h>"
-    OPENGL_GLU_H="<GL/glu.h>"
-    OPENGL_CFLAGS=
-    VAR_SAVE([LIBS])
-    AC_SEARCH_LIBS([glGenTextures], [GL], [], [
-      AC_ERROR([OpenGL not found])
-    ])
-    AC_SEARCH_LIBS([gluOrtho2D], [GLU], [], [
-      AC_ERROR([GLU not found])
-    ])
-    OPENGL_LIBS="$LIBS"
-    VAR_RESTORE([LIBS])
-    ;;
-esac
-
-AC_DEFINE_UNQUOTED([OPENGL_GL_H], [$OPENGL_GL_H],
-                   [Define to the equivalent of <GL/gl.h> on your system])
-AC_DEFINE_UNQUOTED([OPENGL_GLU_H], [$OPENGL_GLU_H],
-                   [Define to the equivalent of <GL/glu.h> on your system])
+NAEV_PATH_OPENGL([], [
+  AC_MSG_ERROR([OpenGL not found])
+])
 
 #
 # Compiler flags
