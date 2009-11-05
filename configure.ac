@@ -134,7 +134,12 @@ AC_MSG_RESULT([$enable_debug])
 AS_IF([test "$enable_debug" != "no"], [
   case "$host" in
     *-linux-gnu)
-      AC_CHECK_LIB([bfd], [bfd_init], [], [
+      AC_CHECK_LIB([bfd], [bfd_init], [
+	AC_CHECK_HEADERS([bfd.h], [], [
+	  AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
+	  enable_debug=no
+	])
+      ], [
 	AC_WARN([debug mode is enabled but libbfd is missing; disabling])
 	enable_debug=no
       ])
