@@ -13,35 +13,35 @@ AC_DEFUN([AM_PATH_OPENGL], [
   # First check for headers
   for header in "GL/gl.h" "OpenGL/gl.h"; do
     AC_CHECK_HEADER([$header], [
-      OPENGL_GL_H="$header"
+      ac_cv_opengl_gl_h="$header"
       break
     ])
   done
   for header in "GL/glu.h" "OpenGL/glu.h"; do
     AC_CHECK_HEADER([$header], [
-      OPENGL_GLU_H="$header"
+      ac_cv_opengl_glu_h="$header"
       break
     ])
   done
-  AS_IF([test -n "$OPENGL_GL_H"], [
-    AC_DEFINE_UNQUOTED([OPENGL_GL_H], [<$OPENGL_GL_H>],
+  AS_IF([test -n "$ac_cv_opengl_gl_h"], [
+    AC_DEFINE_UNQUOTED([OPENGL_GL_H], [<$ac_cv_opengl_gl_h>],
 		       [Define to the equivalent of <GL/gl.h> on your system])
   ])
-  AS_IF([test -n "$OPENGL_GLU_H"], [
-    AC_DEFINE_UNQUOTED([OPENGL_GLU_H], [<$OPENGL_GLU_H>],
+  AS_IF([test -n "$ac_cv_opengl_glu_h"], [
+    AC_DEFINE_UNQUOTED([OPENGL_GLU_H], [<$ac_cv_opengl_glu_h>],
 		       [Define to the equivalent of <GL/glu.h> on your system])
   ])
 
   # Then check for libs
-  OPENGL_GL_LIBS=
-  OPENGL_GLU_LIBS=
-  AS_IF([test -n "$OPENGL_GL_H" && test -n "$OPENGL_GLU_H"], [
+  ac_cv_opengl_gl_libs=
+  ac_cv_opengl_glu_libs=
+  AS_IF([test -n "$ac_cv_opengl_gl_h" && test -n "$ac_cv_opengl_glu_h"], [
     OLD_LIBS="$LIBS"
     for lib in "-framework OpenGL" "-lGL" "-lopengl32"; do
       LIBS="$OLD_LIBS $lib"
       AC_MSG_CHECKING([for glGenTextures in $lib])
       AC_TRY_LINK([#include OPENGL_GL_H], [glGenTextures (1, 0);], [
-	OPENGL_GL_LIBS="$lib"
+	ac_cv_opengl_gl_libs="$lib"
 	AC_MSG_RESULT([yes])
 	break
       ], [
@@ -52,7 +52,7 @@ AC_DEFUN([AM_PATH_OPENGL], [
       LIBS="$OLD_LIBS $lib"
       AC_MSG_CHECKING([for glOrtho2D in $lib])
       AC_TRY_LINK([#include OPENGL_GLU_H], [gluOrtho2D (.0, .0, .0, .0);], [
-	OPENGL_GLU_LIBS="$lib"
+	ac_cv_opengl_glu_libs="$lib"
 	AC_MSG_RESULT([yes])
 	break
       ], [
@@ -62,10 +62,10 @@ AC_DEFUN([AM_PATH_OPENGL], [
 
     LIBS="$OLD_LIBS"
 
-    AS_IF([test "$OPENGL_GL_LIBS" != "$OPENGL_GLU_LIBS"], [
-      OPENGL_LIBS="$OPENGL_GL_LIBS $OPENGL_GLU_LIBS"
+    AS_IF([test "$ac_cv_opengl_gl_libs" != "$ac_cv_opengl_glu_libs"], [
+      OPENGL_LIBS="$ac_cv_opengl_gl_libs $ac_cv_opengl_glu_libs"
     ], [
-      OPENGL_LIBS="$OPENGL_GL_LIBS"
+      OPENGL_LIBS="$ac_cv_opengl_gl_libs"
     ])
   ])
 
