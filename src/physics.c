@@ -248,15 +248,15 @@ static void simple_update (Solid *obj, const double dt)
    vx = obj->vel.x;
    vy = obj->vel.y;
 
-   if (obj->force.mod) { /* force applied on object */
+   if (obj->force_x != 0.) { /* force applied on object */
       ax = obj->force_x / obj->mass;
       /*ay = obj->force_x / obj->mass;*/
 
       vx += ax*cos(obj->dir) * dt;
-      vy += ay*cos(obj->dir) * dt;
+      vy += ax*sin(obj->dir) * dt;
 
       px += vx*dt + 0.5*ax * dt*dt;
-      py += vy*dt + 0.5*ay * dt*dt;
+      py += vy*dt; /* + 0.5*ay * dt*dt; */
 
       obj->vel.mod = MOD(vx,vy);
       obj->vel.angle = ANGLE(vx,vy);
