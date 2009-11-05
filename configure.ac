@@ -207,36 +207,7 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
 
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
-  case "$host" in
-    *-darwin*)
-      have_openal=yes
-      OPENAL_AL_H="<OpenAL/al.h>"
-      OPENAL_ALC_H="<OpenAL/alc.h>"
-      OPENAL_CFLAGS=
-      OPENAL_LIBS="-framework OpenAL"
-      ;;
-    *-mingw*)
-      OPENAL_AL_H="<AL/al.h>"
-      OPENAL_ALC_H="<AL/alc.h>"
-      OPENAL_CFLAGS=
-      VAR_SAVE([LIBS])
-      AC_SEARCH_LIBS([alGenSources], [OpenAL32],
-		     [have_openal=yes], [have_openal=no])
-      OPENAL_LIBS="$LIBS"
-      VAR_RESTORE([LIBS])
-      ;;
-    *)
-      PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
-      OPENAL_AL_H="<AL/al.h>"
-      OPENAL_ALC_H="<AL/alc.h>"
-      ;;
-  esac
-  AC_DEFINE_UNQUOTED([OPENAL_AL_H], [$OPENAL_AL_H],
-		     [Define to the equivalent of <AL/al.h> on your system])
-  AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [$OPENAL_ALC_H],
-		     [Define to the equivalent of <AL/alc.h> on your system])
-], [
-  have_openal=no
+  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
 ])
 
 # SDL_mixer
