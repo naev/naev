@@ -111,10 +111,10 @@ AS_IF([test "$exec_prefix" = "NONE"], [
 #
 
 # --enable-debug
-AC_MSG_CHECKING([whether to enable additional debugging options])
+AC_MSG_CHECKING([whether to enable debug mode])
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
-		 [enable additional debugging options (default: yes)]), [
+		 [enable debug mode (default: yes)]), [
     case "$enableval" in
       no)
 	enable_debug=no
@@ -130,6 +130,17 @@ AC_ARG_ENABLE([debug],
     enable_debug=yes
   ])
 AC_MSG_RESULT([$enable_debug])
+
+AS_IF([test "$enable_debug" != "no"], [
+  case "$host" in
+    *-linux-gnu)
+      AC_CHECK_LIB([bfd], [bfd_init], [], [
+	AC_WARN([debug mode is enabled but libbfd is missing; disabling])
+	enable_debug=no
+      ])
+      ;;
+  esac
+])
 
 # --with-openal
 AC_MSG_CHECKING([whether to use OpenAL])
