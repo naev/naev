@@ -2383,7 +2383,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_elem(writer,"time","%d",ntime_get());
 
    /* Current ship. */
-   xmlw_elem(writer,"location",land_planet->name);
+   xmlw_elem(writer,"location","%s",land_planet->name);
    player_saveShip( writer, player, NULL ); /* current ship */
 
    /* Ships. */
@@ -2405,7 +2405,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Licenses. */
    xmlw_startElem(writer,"licenses");
    for (i=0; i<player_nlicenses; i++)
-      xmlw_elem(writer,"license",player_licenses[i]);
+      xmlw_elem(writer,"license","%s",player_licenses[i]);
    xmlw_endElem(writer); /* "licenses" */
 
    xmlw_endElem(writer); /* "player" */
@@ -2415,7 +2415,7 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<missions_ndone; i++) {
       m = mission_get(missions_done[i]);
       if (m != NULL) /* In case mission name changes between versions */
-         xmlw_elem(writer,"done",m->name);
+         xmlw_elem(writer,"done","%s",m->name);
    }
    xmlw_endElem(writer); /* "missions_done" */
 
@@ -2424,7 +2424,7 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<events_ndone; i++) {
       ev = event_dataName(events_done[i]);
       if (ev != NULL) /* In case mission name changes between versions */
-         xmlw_elem(writer,"done",ev);
+         xmlw_elem(writer,"done","%s",ev);
    }
    xmlw_endElem(writer); /* "events_done" */
 
@@ -2477,7 +2477,8 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_attr(writer,"name","%s",ship->name);
    xmlw_attr(writer,"model","%s",ship->ship->name);
 
-   if (loc != NULL) xmlw_elem(writer,"location",loc);
+   if (loc != NULL)
+      xmlw_elem(writer,"location","%s",loc);
 
    /* save the fuel */
    xmlw_elem(writer,"fuel","%f",ship->fuel);
