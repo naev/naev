@@ -255,7 +255,7 @@ static int vectorL_add( lua_State *L )
  *    @luaparam x X coordinate or vector to subtract.
  *    @luaparam y Y coordinate or nil to subtract.
  *    @luareturn The result of the vector operation.
- * @luafunc sub v, x, y )
+ * @luafunc sub( v, x, y )
  */
 static int vectorL_sub( lua_State *L )
 {
