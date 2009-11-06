@@ -307,7 +307,7 @@ static int vectorL_mul( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( &vout.vec, v1->vec.x * mod, v1->vec.x * mod );
+   vect_cset( &vout.vec, v1->vec.x * mod, v1->vec.y * mod );
    lua_pushvector( L, vout );
    return 1;
 }
@@ -335,7 +335,7 @@ static int vectorL_div( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( &vout.vec, v1->vec.x / mod, v1->vec.x / mod );
+   vect_cset( &vout.vec, v1->vec.x / mod, v1->vec.y / mod );
    lua_pushvector( L, vout );
    return 1;
 }
