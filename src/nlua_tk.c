@@ -147,11 +147,12 @@ static int tk_input( lua_State *L )
 /**
  * @brief Creates a window with a number of selectable options
  *
- * @usage foo = tk.choice( "Title", "Ready to go?", "Yes", "No" )
+ * @usage chosen, num = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return "No", 2
  *
  *    @luaparam title Title of the window.
  *    @luaparam msg Minimum characters to accept (must be greater than 0).
  *    @luaparam choices Option choices.
+ *    @luareturn Returns the name of the choice chosen and the number of the choice.
  * @luafunc choice( title, msg, ... )
  */
 static int tk_choice( lua_State *L )
@@ -160,7 +161,7 @@ static int tk_choice( lua_State *L )
    const char *title, *str, *result;
    NLUA_MIN_ARGS(3);
    
-   opts = lua_gettop(L) - 2;
+   opts  = lua_gettop(L) - 2;
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
    
@@ -172,7 +173,7 @@ static int tk_choice( lua_State *L )
    ret = -1;
    for (i=0; i<opts && ret==-1; i++) {
       if (strcmp(result, luaL_checkstring(L,i+3)) == 0) 
-         ret = i;
+         ret = i+1; /* Lua uses 1 as first index. */
    }
    
    lua_pushnumber(L,ret);

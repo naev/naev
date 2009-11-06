@@ -700,15 +700,13 @@ static void map_render( double bx, double by, double w, double h, void *data )
    }
    
    /* Now we'll draw over the lines with the new pathways. */
-   if (map_path)
-   {
+   if (map_path != NULL) {
       lsys = cur_system;
       glShadeModel(GL_SMOOTH);
       col = &cGreen;
       fuel = player->fuel;
       
-      for (j=0; j<map_npath; j++)
-      {
+      for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
          if (fuel == player->fuel)
             col = &cGreen;
@@ -1058,11 +1056,11 @@ void map_select( StarSystem *sys, char shifted )
       if (space_sysReachable(sys)) {
          if (!shifted) {
              map_path = map_getJumpPath( &map_npath,
-                   cur_system->name, sys->name, 0 , NULL);
+                   cur_system->name, sys->name, 0 , NULL );
          }
          else {
              map_path = map_getJumpPath( &map_npath,
-                   cur_system->name, sys->name, 0 , map_path);
+                   cur_system->name, sys->name, 0 , map_path );
          }
 
          if (map_npath==0)
@@ -1070,8 +1068,8 @@ void map_select( StarSystem *sys, char shifted )
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
-               if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
-                  planet_target = -1; /* override planet_target */
+               if (map_path[0] == system_getIndex(cur_system->jumps[i])) {
+                  planet_target     = -1; /* override planet_target */
                   hyperspace_target = i;
                   break;
                }
@@ -1265,8 +1263,8 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    esys = system_get(sysend); /* goal */
    
    ojumps = 0;
-   if (old_data) {
-      ssys = system_get( old_data[ (*njumps)-1 ]->name );
+   if ((old_data != NULL) && (*njumps>0)) {
+      ssys   = system_get( old_data[ (*njumps)-1 ]->name );
       ojumps = *njumps;
    }
 
@@ -1274,7 +1272,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
       (*njumps) = 0;
-      if (old_data)
+      if (old_data != NULL)
          free( old_data );
       return NULL;
    }

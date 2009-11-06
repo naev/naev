@@ -88,6 +88,10 @@ Contributions
    Peter Johnson <zid@zid.yggdrasil.sk>
       * Sped up nebula generation by a lot
 
+   Unavowed <unavowed@vexillium.org>
+      * Ported NAEV's build system to autotools.
+    Probably the cleanest autotools implementation I've ever seen.
+
 
 Testers
 ---------------------------------------

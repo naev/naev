@@ -5,6 +5,7 @@ AC_PREREQ([2.61])
 AC_INIT([naev], [0.4.0], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
 
 AM_INIT_AUTOMAKE([foreign])
@@ -41,6 +42,21 @@ define([VAR_SAVE], [
 define([VAR_RESTORE], [
   $1="$OLD_$1"
 ])
+
+#
+# Checks for variables
+#
+
+# Fix missing prefix
+AS_IF([test "$prefix" = "NONE"], [
+  prefix="$ac_default_prefix"
+])
+AS_IF([test "$exec_prefix" = "NONE"], [
+  exec_prefix="$prefix"
+])
+
+# Check if we have custom CFLAGS
+AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
 
 #
 # Checks for programs.
@@ -97,23 +113,15 @@ AC_COMPILE_IFELSE([
 [Define to 1 if running on a UNIX-like system where __unix__ is missing])
 ])
 
-# Fix missing prefix
-AS_IF([test "$prefix" = "NONE"], [
-  prefix="$ac_default_prefix"
-])
-AS_IF([test "$exec_prefix" = "NONE"], [
-  exec_prefix="$prefix"
-])
-
 #
 # Checks for command-line arguments
 #
 
 # --enable-debug
-AC_MSG_CHECKING([whether to enable additional debugging options])
+AC_MSG_CHECKING([whether to enable debug mode])
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
-		 [enable additional debugging options (default: yes)]), [
+		 [enable debug mode (default: yes)]), [
     case "$enableval" in
       no)
 	enable_debug=no
@@ -129,6 +137,30 @@ AC_ARG_ENABLE([debug],
     enable_debug=yes
   ])
 AC_MSG_RESULT([$enable_debug])
+
+AS_IF([test "$enable_debug" != "no"], [
+  AS_IF([test "$have_custom_cflags" = "no"], [
+    # Undo the default CFLAGS set by autoconf
+    AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
+      CFLAGS="-g"
+    ], [
+      CFLAGS=
+    ])
+  ])
+  case "$host" in
+    *-linux-gnu)
+      AC_CHECK_LIB([bfd], [bfd_init], [
+	AC_CHECK_HEADERS([bfd.h], [], [
+	  AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
+	  enable_debug=no
+	])
+      ], [
+	AC_WARN([debug mode is enabled but libbfd is missing; disabling])
+	enable_debug=no
+      ])
+      ;;
+  esac
+])
 
 # --with-openal
 AC_MSG_CHECKING([whether to use OpenAL])
@@ -206,36 +238,7 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
 
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
-  case "$host" in
-    *-darwin*)
-      have_openal=yes
-      OPENAL_AL_H="<OpenAL/al.h>"
-      OPENAL_ALC_H="<OpenAL/alc.h>"
-      OPENAL_CFLAGS=
-      OPENAL_LIBS="-framework OpenAL"
-      ;;
-    *-mingw*)
-      OPENAL_AL_H="<AL/al.h>"
-      OPENAL_ALC_H="<AL/alc.h>"
-      OPENAL_CFLAGS=
-      VAR_SAVE([LIBS])
-      AC_SEARCH_LIBS([alGenSources], [OpenAL32],
-		     [have_openal=yes], [have_openal=no])
-      OPENAL_LIBS="$LIBS"
-      VAR_RESTORE([LIBS])
-      ;;
-    *)
-      PKG_CHECK_MODULES([OPENAL], [openal], [have_openal=yes], [have_openal=no])
-      OPENAL_AL_H="<AL/al.h>"
-      OPENAL_ALC_H="<AL/alc.h>"
-      ;;
-  esac
-  AC_DEFINE_UNQUOTED([OPENAL_AL_H], [$OPENAL_AL_H],
-		     [Define to the equivalent of <AL/al.h> on your system])
-  AC_DEFINE_UNQUOTED([OPENAL_ALC_H], [$OPENAL_ALC_H],
-		     [Define to the equivalent of <AL/alc.h> on your system])
-], [
-  have_openal=no
+  AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
 ])
 
 # SDL_mixer
@@ -267,59 +270,9 @@ AC_SUBST([SDLIMAGE_CFLAGS])
 AC_SUBST([SDLIMAGE_LIBS])
 
 # OpenGL
-case "$host" in
-  *-darwin*)
-    OPENGL_GL_H="<OpenGL/gl.h>"
-    OPENGL_GLU_H="<OpenGL/glu.h>"
-    OPENGL_CFLAGS=
-    OPENGL_LIBS="-framework OpenGL"
-    ;;
-
-  *-mingw*)
-    # On Windows, OpenGL uses the stdcall convention, which means that
-    # AC_SEARCH_LIBS may not be used.  This special case uses AC_TRY_LINK
-    # instead.
-    OPENGL_GL_H="<GL/gl.h>"
-    OPENGL_GLU_H="<GL/glu.h>"
-    OPENGL_CFLAGS=
-    VAR_SAVE([LIBS], ["-lopengl32"])
-    AC_MSG_CHECKING([for glGenTextures in libopengl32])
-    AC_TRY_LINK([#include <GL/gl.h>], [glGenTextures (1, 0);], [], [
-      AC_MSG_RESULT([no])
-      AC_ERROR([OpenGL not found])
-    ])
-    AC_MSG_RESULT([yes])
-    LIBS="$LIBS -lglu32"
-    AC_MSG_CHECKING([for glOrtho2D in libglu])
-    AC_TRY_LINK([#include <GL/glu.h>], [gluOrtho2D (.0, .0, .0, .0);], [], [
-      AC_MSG_RESULT([no])
-      AC_ERROR([GLU not found])
-    ])
-    AC_MSG_RESULT([yes])
-    OPENGL_LIBS="$LIBS"
-    VAR_RESTORE([LIBS])
-    ;;
-
-  *)
-    OPENGL_GL_H="<GL/gl.h>"
-    OPENGL_GLU_H="<GL/glu.h>"
-    OPENGL_CFLAGS=
-    VAR_SAVE([LIBS])
-    AC_SEARCH_LIBS([glGenTextures], [GL], [], [
-      AC_ERROR([OpenGL not found])
-    ])
-    AC_SEARCH_LIBS([gluOrtho2D], [GLU], [], [
-      AC_ERROR([GLU not found])
-    ])
-    OPENGL_LIBS="$LIBS"
-    VAR_RESTORE([LIBS])
-    ;;
-esac
-
-AC_DEFINE_UNQUOTED([OPENGL_GL_H], [$OPENGL_GL_H],
-                   [Define to the equivalent of <GL/gl.h> on your system])
-AC_DEFINE_UNQUOTED([OPENGL_GLU_H], [$OPENGL_GLU_H],
-                   [Define to the equivalent of <GL/glu.h> on your system])
+AM_PATH_OPENGL([], [
+  AC_MSG_ERROR([OpenGL not found])
+])
 
 #
 # Compiler flags

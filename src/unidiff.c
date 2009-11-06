@@ -814,7 +814,7 @@ int diff_save( xmlTextWriterPtr writer )
    for (i=0; i<diff_nstack; i++) {
       diff = &diff_stack[i];
 
-      xmlw_elem(writer, "diff", diff->name);
+      xmlw_elem(writer, "diff", "%s", diff->name);
    }
    xmlw_endElem(writer); /* "diffs" */
 
