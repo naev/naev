@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = --install -I m4
+
 SUBDIRS = lib src
 DIST_SUBDIRS = lib src
 
