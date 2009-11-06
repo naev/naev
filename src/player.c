@@ -2354,7 +2354,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
    for (i=0; i<player->nescorts; i++) {
       xmlw_startElem(writer, "escort");
       xmlw_attr(writer,"type","bay"); /**< @todo other types. */
-      xmlw_str(writer, player->escorts[i].ship);
+      xmlw_str(writer, "%s", player->escorts[i].ship);
       xmlw_endElem(writer); /* "escort" */
    }
 
@@ -2377,7 +2377,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"player");
 
    /* Standard player details. */
-   xmlw_attr(writer,"name",player_name);
+   xmlw_attr(writer,"name","%s",player_name);
    xmlw_elem(writer,"rating","%f",player_crating);
    xmlw_elem(writer,"credits","%d",player->credits);
    xmlw_elem(writer,"time","%d",ntime_get());
@@ -2397,7 +2397,7 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<player_noutfits; i++) {
       xmlw_startElem(writer,"outfit");
       xmlw_attr(writer,"quantity","%d",player_outfits[i].q);
-      xmlw_str(writer,player_outfits[i].o->name);
+      xmlw_str(writer,"%s",player_outfits[i].o->name);
       xmlw_endElem(writer); /* "outfit" */
    }
    xmlw_endElem(writer); /* "outfits" */
@@ -2449,10 +2449,10 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
    if ((outfit_ammo(o) != NULL) &&
          (slot->u.ammo.outfit != NULL) &&
          (slot->u.ammo.quantity > 0)) {
-      xmlw_attr(writer,"ammo",slot->u.ammo.outfit->name);
+      xmlw_attr(writer,"ammo","%s",slot->u.ammo.outfit->name);
       xmlw_attr(writer,"quantity","%d", slot->u.ammo.quantity);
    }
-   xmlw_str(writer,o->name);
+   xmlw_str(writer,"%s",o->name);
    xmlw_endElem(writer); /* "outfit" */
 
    return 0;
@@ -2474,8 +2474,8 @@ static int player_saveShip( xmlTextWriterPtr writer,
    int found;
 
    xmlw_startElem(writer,"ship");
-   xmlw_attr(writer,"name",ship->name);
-   xmlw_attr(writer,"model",ship->ship->name);
+   xmlw_attr(writer,"name","%s",ship->name);
+   xmlw_attr(writer,"model","%s",ship->ship->name);
 
    if (loc != NULL) xmlw_elem(writer,"location",loc);
 
@@ -2539,7 +2539,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
       xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
       if (ship->commodities[i].id > 0)
          xmlw_attr(writer,"id","%d",ship->commodities[i].id);
-      xmlw_str(writer,ship->commodities[i].commodity->name);
+      xmlw_str(writer,"%s",ship->commodities[i].commodity->name);
 
       xmlw_endElem(writer); /* commodity */
    }

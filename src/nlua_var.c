@@ -115,7 +115,7 @@ int var_save( xmlTextWriterPtr writer )
    for (i=0; i<var_nstack; i++) {
       xmlw_startElem(writer,"var");
 
-      xmlw_attr(writer,"name",var_stack[i].name);
+      xmlw_attr(writer,"name","%s",var_stack[i].name);
 
       switch (var_stack[i].type) {
          case MISN_VAR_NIL:
@@ -131,7 +131,7 @@ int var_save( xmlTextWriterPtr writer )
             break;
          case MISN_VAR_STR:
             xmlw_attr(writer,"type","str");
-            xmlw_str(writer,var_stack[i].d.str);
+            xmlw_str(writer,"%s",var_stack[i].d.str);
             break;
       }
 
