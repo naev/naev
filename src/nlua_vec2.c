@@ -214,7 +214,7 @@ static int vectorL_new( lua_State *L )
  */
 static int vectorL_add( lua_State *L )
 {
-   LuaVector *v1, *v2;
+   LuaVector vout, *v1, *v2;
    double x, y;
 
    /* Get self. */
@@ -234,8 +234,8 @@ static int vectorL_add( lua_State *L )
    else NLUA_INVALID_PARAMETER();
 
    /* Actually add it */
-   vect_cadd( &v1->vec, x, y );
-   lua_pushvalue(L,1);
+   vect_cset( &vout.vec, v1->vec.x + x, v1->vec.y + y );
+   lua_pushvector( L, vout );
    return 1;
 }
 
@@ -259,7 +259,7 @@ static int vectorL_add( lua_State *L )
  */
 static int vectorL_sub( lua_State *L )
 {
-   LuaVector *v1, *v2;
+   LuaVector vout, *v1, *v2;
    double x, y;
 
    /* Get self. */
@@ -279,8 +279,8 @@ static int vectorL_sub( lua_State *L )
    else NLUA_INVALID_PARAMETER();
 
    /* Actually add it */
-   vect_cadd( &v1->vec, -x, -y );
-   lua_pushvalue(L,1);
+   vect_cset( &vout.vec, v1->vec.x - x, v1->vec.y - y );
+   lua_pushvector( L, vout );
    return 1;
 }
 
@@ -299,7 +299,7 @@ static int vectorL_sub( lua_State *L )
  */
 static int vectorL_mul( lua_State *L )
 {
-   LuaVector *v1;
+   LuaVector vout, *v1;
    double mod;
 
    /* Get parameters. */
@@ -307,8 +307,8 @@ static int vectorL_mul( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( &v1->vec, v1->vec.x * mod, v1->vec.x * mod );
-   lua_pushvalue(L,1);
+   vect_cset( &vout.vec, v1->vec.x * mod, v1->vec.x * mod );
+   lua_pushvector( L, vout );
    return 1;
 }
 
@@ -327,7 +327,7 @@ static int vectorL_mul( lua_State *L )
  */
 static int vectorL_div( lua_State *L )
 {
-   LuaVector *v1;
+   LuaVector vout, *v1;
    double mod;
 
    /* Get parameters. */
@@ -335,8 +335,8 @@ static int vectorL_div( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( &v1->vec, v1->vec.x / mod, v1->vec.x / mod );
-   lua_pushvalue(L,1);
+   vect_cset( &vout.vec, v1->vec.x / mod, v1->vec.x / mod );
+   lua_pushvector( L, vout );
    return 1;
 }
 
