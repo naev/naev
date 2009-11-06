@@ -44,6 +44,21 @@ define([VAR_RESTORE], [
 ])
 
 #
+# Checks for variables
+#
+
+# Fix missing prefix
+AS_IF([test "$prefix" = "NONE"], [
+  prefix="$ac_default_prefix"
+])
+AS_IF([test "$exec_prefix" = "NONE"], [
+  exec_prefix="$prefix"
+])
+
+# Check if we have custom CFLAGS
+AS_IF([test -n "$CFLAGS"], [have_custom_cflags=yes], [have_custom_cflags=no])
+
+#
 # Checks for programs.
 #
 AC_PROG_CC
@@ -98,14 +113,6 @@ AC_COMPILE_IFELSE([
 [Define to 1 if running on a UNIX-like system where __unix__ is missing])
 ])
 
-# Fix missing prefix
-AS_IF([test "$prefix" = "NONE"], [
-  prefix="$ac_default_prefix"
-])
-AS_IF([test "$exec_prefix" = "NONE"], [
-  exec_prefix="$prefix"
-])
-
 #
 # Checks for command-line arguments
 #
@@ -132,6 +139,14 @@ AC_ARG_ENABLE([debug],
 AC_MSG_RESULT([$enable_debug])
 
 AS_IF([test "$enable_debug" != "no"], [
+  AS_IF([test "$have_custom_cflags" = "no"], [
+    # Undo the default CFLAGS set by autoconf
+    AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
+      CFLAGS="-g"
+    ], [
+      CFLAGS=
+    ])
+  ])
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
