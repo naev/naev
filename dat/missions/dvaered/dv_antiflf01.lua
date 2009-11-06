@@ -20,7 +20,7 @@ function create()
 end
 
 function abort()
-    tk.msg("Can't abort", "You cannot abort this mission.")
+    misn.finish(false)
 end
 
-misn.finish(false)
+misn.finish(false) -- deleteme

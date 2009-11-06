@@ -67,10 +67,10 @@ function broadcastFLF()
 end
 
 function boardFLF()
-    evt.misnStart("Save the FLF agent") 
     shipDV:setNoboard(true)
     evt.timerStop(timerFLF)
     player.unboard()
+    evt.misnStart("Save the FLF agent") 
 end
 
 function deathDV()
@@ -82,10 +82,10 @@ function deathDV()
 end
 
 function boardDV()
-    evt.misnStart("Take the Dvared crew home") 
     shipFLF:setNoboard(true)
     evt.timerStop(timerDV)
     player.unboard()
+    evt.misnStart("Take the Dvared crew home") 
 end
 
 function deathFLF()

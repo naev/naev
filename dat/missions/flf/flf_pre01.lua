@@ -8,34 +8,38 @@ if lang == "es" then
 else -- default english
    title = {}
    text = {}
+   misn_desc = {}
    
-   title[1] = "Gregar joins the party"
-   text[1] = [[A haggard-looking man emerges from the airlock. He says, "Thank goodness you're here. My name is Gregar, I'm with the Frontier Liberation Front. I mean you no harm." He licks his lips in hesitation before continuing. "I have come under attack from a Dvaered patrol. I wasn't violating any laws, and we're not even in Dvaered territory! Anyway, my ship is unable to fly."
+    title[1] = "Gregar joins the party"
+    text[1] = [[A haggard-looking man emerges from the airlock. He says, "Thank goodness you're here. My name is Gregar, I'm with the Frontier Liberation Front. I mean you no harm." He licks his lips in hesitation before continuing. "I have come under attack from a Dvaered patrol. I wasn't violating any laws, and we're not even in Dvaered territory! Anyway, my ship is unable to fly."
     You help Gregar to your cockpit and install him in a vacant seat. He is obviously very tired, but he forces himself to speak. "Listen, I was on my way back from a mission when those Dvaered bastards jumped me. I know this is a lot to ask, but I have little choice seeing how my ship is a lost cause. Can you take me the rest of the way? It's not far. We have a secret base in the %s system. Fly there and contact my comrades. They will take you the rest of the way."
-   With that, Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]
+    With that, Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]
    
-   misn_title = "Save the FLF agent"
-   misn_desc = "Take Gregar, the FLF agent to the %s system and make contact with the FLF"
+    misn_title = "Deal with the FLF agent"
+    misn_desc[1] = "Take Gregar, the FLF agent to the %s system and make contact with the FLF"
+    misn_desc[2] = "Alternatively, turn Gregar in to the nearest Dvaered base"
 end
 
 function create()
-    misn.accept()
+    misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 
     destsysname = var.peek("flfbase_sysname")
     destsys = system.get(destsysname)
     
     tk.msg(title[1], string.format(text[1], destsysname))
     
-    misn.setTitle(misn_title)
-    misn.setDesc(string.format(misn_desc, destsysname))
+    misn.osdCreate(misn_title, {string.format(misn_desc[1], destsysname), misn_desc[2]})
     
     hook.enter("enter")
+    hook.land("land")
 end
 
+-- Handle the FLF encounter, Gregar's intervention, and ultimately the search for the base.
+-- Q: How far do sensors reach in the nebula?
 function enter()
     if system.cur() == destsys then
         dist = 3000 -- distance of the FLF base
-        spread = 23 -- max degrees off-course for waypoints
+        spread = 45 -- max degrees off-course for waypoints
 
         angle = var.peek("flfbase_angle")
         angle2 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
@@ -48,7 +52,12 @@ function enter()
 
         -- Pilot is to hyper in somewhere far away from the base.
         
-        player.pilot():setPos(dist * vec2.new(math.cos(angle), dist * math.sin(angle)))
+        player.pilot():setPos(vec2.new(dist * math.cos(angle), dist * math.sin(angle)))
+
+        -- Add FLF ships that are to guide the player to the FLF base
+        spawnflf()
+
+        player.pilot():setPos(player.pilot():pos - 2 * player.pilot:vel()) -- Compensate for hyperjump
 
         -- Add FLF base waypoints
         -- Base is at 0,0
@@ -64,18 +73,21 @@ function enter()
         waypoint1:setInvincible(true)
         waypoint2:setInvincible(true)
         
-        -- Add FLF ships that are to guide the player to the FLF base
-        flftimer = evt.timerStart("spawnflf", 3000)
         
         spawnbase()
         
     end
 end
 
+-- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
+function land()
+    
+end
+
 function spawnflf()
     fleetFLF = pilot.add("FLF Vendetta", "dummy", player.pilot():pos(), true)
     flfship = fleetFLF[1]
-    evt.timerStart("toPoint2", 2000)
+    --evt.timerStart("toPoint2", 2000)
 end
 
 function toPoint2()
@@ -103,12 +115,9 @@ end
 
 function spawnbase()
     -- TODO: add distance conditional
-    baseFLF = pilot.add("FLF Base", "dummy", vec2.new(0,0), false)
-    flfbase = baseFLF[1]
-    flfbase:rmOutfit("all")
-    flfbase:addOutfit("Ripper MK2", 8)
+    diff.apply("FLF_base")
 end
 
 function abort()
-    var.peek()
+    misn.finish(false)
 end
