@@ -46,6 +46,7 @@ extern void ai_destroy( Pilot* p );
 /* Pilot metatable methods. */
 static int pilotL_getPlayer( lua_State *L );
 static int pilotL_addFleet( lua_State *L );
+static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
@@ -78,6 +79,7 @@ static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
    { "add", pilotL_addFleet },
+   { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "__eq", pilotL_eq },
    /* Info. */
@@ -395,6 +397,31 @@ static int pilotL_addFleet( lua_State *L )
       lua_rawset(L,-3); /* store the value in the table */
    }
    return 1;
+}
+/**
+ * @brief Removes a pilot without explosions or anything.
+ *
+ * @usage p:rm() -- pilot will be destroyed
+ *
+ *    @luaparam p Pilot to remove.
+ * @luafunc rm( p )
+ */
+static int pilotL_remove( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Deletes the pilot. */
+   pilot_setFlag(p,PILOT_DELETE);
+   return 0;
 }
 /**
  * @brief Clears the current system of pilots.  Used for epic battles and such.
