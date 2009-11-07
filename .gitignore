@@ -27,5 +27,4 @@ autom4te.cache/*
 config.log
 config.status
 configure
-
-
+m4/*.m4
