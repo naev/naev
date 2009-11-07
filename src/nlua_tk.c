@@ -150,7 +150,7 @@ static int tk_input( lua_State *L )
  * @usage chosen, num = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return "No", 2
  *
  *    @luaparam title Title of the window.
- *    @luaparam msg Mesasge to display.
+ *    @luaparam msg Message to display.
  *    @luaparam choices Option choices.
  *    @luareturn Returns the name of the choice chosen and the number of the choice.
  * @luafunc choice( title, msg, ... )

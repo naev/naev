@@ -310,11 +310,12 @@ Pilot* pilot_get( const unsigned int id )
 {
    int m;
 
-   if (id==PLAYER_ID) return player; /* special case player */
+   if (id==PLAYER_ID)
+      return player; /* special case player */
   
    m = pilot_getStackPos(id);
 
-   if (m==-1)
+   if ((m==-1) || (pilot_isFlag(pilot_stack[m], PILOT_DELETE)))
       return NULL;
    else
       return pilot_stack[m];
