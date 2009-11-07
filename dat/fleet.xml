@@ -90,6 +90,15 @@
    <pilot chance="100" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
+ <fleet name="FLF Vendetta Trio">
+  <ai>flf</ai>
+  <faction>FLF</faction>
+  <pilots>
+   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot chance="100" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="FLF Sml Force">
   <ai>flf</ai>
   <faction>FLF</faction>
