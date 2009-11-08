@@ -93,7 +93,7 @@ function land ()
          misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
 
          -- We'll take off right away again
-         misn.takeoff()
+         player.takeoff()
       end
    elseif landed == ret and misn_stage == 1 then
 

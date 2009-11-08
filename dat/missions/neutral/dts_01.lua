@@ -237,7 +237,7 @@ function celebrate_victory()
          misn.finish( true)
       else
          tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
-         misn.takeoff()
+         player.takeoff()
       end
 
 end

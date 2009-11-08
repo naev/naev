@@ -30,6 +30,7 @@
 #include "board.h"
 #include "mission.h"
 #include "event.h"
+#include "land.h"
 
 
 /* player */
@@ -48,6 +49,7 @@ static int playerL_getPilot( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_unboard( lua_State *L );
+static int playerL_takeoff( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_misnDone( lua_State *L );
@@ -68,6 +70,7 @@ static const luaL_reg playerL_methods[] = {
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "unboard", playerL_unboard },
+   { "takeoff", playerL_takeoff },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
    { "misnDone", playerL_misnDone },
@@ -353,6 +356,22 @@ static int playerL_unboard( lua_State *L )
 {
    (void) L;
    board_unboard();
+   return 0;
+}
+
+
+/**
+ * @brief Forces the player to take off if he is landed.
+ *
+ * @luafunc takeoff()
+ */
+static int playerL_takeoff( lua_State *L )
+{
+   (void) L;
+
+   if (landed)
+      landed = 0;
+
    return 0;
 }
 
