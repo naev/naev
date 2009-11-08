@@ -28,7 +28,7 @@ else -- default english
     Before you have a chance to ask him what he thinks he's doing, Gregar begins tuning your communications array, and soon finds the frequency he wants.
     "FLF sentinel formation, this is Lt. Gregar Fletcher, authorization code six-six-niner-four-seven-Gamma-Foxtrot! Cease fire, I repeat, cease fire!" He then turns to you. "Same to you. Stop shooting. This is a misunderstanding, they're not your enemies."]]
     
-    title[3] = "Gregar puts an end to hostilities"
+    title[3] = ""
     text[3] = [[You are skeptical at first, but a few seconds later it becomes apparent that the FLF fighters have indeed ceased firing. Then, there is an incoming comm from the lead ship.
     "This is FLF sentinel Alpha. Lt. Fletcher, authorization code verified. Why are you with that civilian? Where is your ship? And why didn't you contact us right away?"
     "Apologies, Alpha. It's a long story. For now, let me just tell you that you can trust the pilot of this ship. He has kindly helped me out of a desperate situation, and without him I probably would never have returned alive. Request you escort us to Sindbad."
@@ -36,7 +36,13 @@ else -- default english
     With that, Alpha breaks the connection. It seems you have little choice but to do as he says if you ever want to take Gregar to his destination.]]
     
     title[4] = "Gregar leaves the party"
-    text[4] = [[]]
+    text[4] = [[You and Gregar step out of your airlock and onto Sindbad station. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with mistrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
+    "All right, Mr. %s," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason why you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]]
+
+    title[5] = ""
+    text[5] = [[The moment of tension passes, and the officer leans back in his chair.
+    "That threat delivered, I should at least extend my gratitude for helping one of ours in his time of need, though you had no reason to do so. That's why I will allow you to move freely on this station, at least to some extent, and I will allow you to leave when you please, as well as to return if you see the need. Who knows, maybe if you hit it off with the personnel stationed here, we might even come to consider you a friend."
+    You exchange a few more polite words with the officer, then leave his office. As you head back to your ship, you consider your position. You have gained access to a center of FLF activity. Should you want to make an enemy of House Dvaered, perhaps this would be a good place to start...]]
     
     commmsg = "Nothing personal, mate, but we're expecting someone and you ain't him. No witnesses!"
     
@@ -50,8 +56,8 @@ else -- default english
     Would you like to do so?]]
     turnintitle[2] = "Another criminal caught"
     turnintext[2] = [[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar and take him away before he even comprehends what's going on.
-    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaisons."
-    The officer turns and leaves without even waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]
+    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
+    The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]
     
     misn_title = "Deal with the FLF agent"
     misn_desc[1] = "Take Gregar, the FLF agent to the %s system and make contact with the FLF"
@@ -70,7 +76,7 @@ function create()
     
     misn.osdCreate(misn_title, {string.format(misn_desc[1], destsysname), misn_desc[2]})
     
-    misn.addCargo("Gregar", 1)
+    gregar = misn.addCargo("Gregar", 0)
     
     hook.enter("enter")
     hook.land("land")
@@ -124,19 +130,20 @@ end
 function land()
     -- Case FLF base
     if planet.get():name() == "Sindbad" then
-        tk.msg(title[4], text[4])
+        tk.msg(title[4], string.format(text[4], player.name()))
+        tk.msg(title[4], text[5])
         var.push("flfbase_intro", 1)
         var.pop("flfbase_angle")
-        misn.jetCargo("Gregar")
+        misn.jetCargo(gregar)
         misn.finish(true)
-    end
     -- Case Dvaered planet
     elseif planet.get():faction():name() == "Dvaered" then
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
+            faction.get("Dvaered"):modPlayerRaw(5)
             var.push("flfbase_intro", 0)
             var.pop("flfbase_angle")
-            misn.jetCargo("Gregar")
+            misn.jetCargo(gregar)
             misn.finish(true)
         end
     end
@@ -149,20 +156,23 @@ end
 -- Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
 -- If the player has destroyed the FLF ships, nothing happens and a flag is set. In this case, the player can only do the Dvaered side of the mini-campaign.
 function wakeUpGregarYouLazyBugger()
+    flfdead = true -- Prevents failure if ALL the ships are dead.
     for i, j in ipairs(fleetFLF) do
-        j:setInvincible(true)
-        j:setFriendly()
-        j:changeAI("flf_nojump")
-        flfship = j -- This is going to be the reference ship for conditionals.
+        if j:alive() then
+            j:setInvincible(true)
+            j:setFriendly()
+            j:setHealth(100,100)
+            j:changeAI("flf_nojump")
+            flfship = j -- This is going to be the reference ship for conditionals.
+            flfdead = false
+        end
     end
-    if flfship:alive() then
+    if not flfdead then
         tk.msg(title[2], text[2])
-        tk.msg(title[3], text[3])
+        tk.msg(title[2], text[3])
         faction.get("FLF"):modPlayerRaw(100)
         misn.timerStart("toPoint2", 2000)
-        misn.timerStart("outOfRange", 4000)
-    else
-        flfdead = true
+        OORT = misn.timerStart("outOfRange", 4000)
     end
 end
 
@@ -171,7 +181,7 @@ function toPoint2()
     for i, j in ipairs(fleetFLF) do
         j:changeAI(string.format("escort*%u", waypoint2:id()))
     end
-    waytimer1 = misn.timerStart("toPoint1", 1000)
+    misn.timerStart("toPoint1", 1000)
 end
 
 -- Part of the escort script
@@ -180,9 +190,9 @@ function toPoint1()
         for i, j in ipairs(fleetFLF) do
             j:changeAI(string.format("escort*%u", waypoint1:id()))
         end
-        waytimer0 = misn.timerStart("toPoint0", 1000)
+        misn.timerStart("toPoint0", 1000)
     else
-        waytimer1 = misn.timerStart("toPoint1", 1000)
+        misn.timerStart("toPoint1", 1000)
     end
 end
 
@@ -192,9 +202,9 @@ function toPoint0()
         for i, j in ipairs(fleetFLF) do
             j:changeAI(string.format("escort*%u", waypoint0:id()))
         end
-        basetimer = misn.timerStart("spawnbase", 1000)
+        misn.timerStart("spawnbase", 1000)
     else
-        waytimer0 = misn.timerStart("toPoint0", 1000)
+        misn.timerStart("toPoint0", 1000)
     end
 end
 
@@ -202,21 +212,21 @@ end
 function spawnbase()
     if vec2.dist(flfship:pos(), waypoint0:pos()) < 1000 then
         diff.apply("FLF_base")
-        misn.timerStop("outOfRange")
+        misn.timerStop(OORT)
     else
-        basetimer = misn.timerStart("spawnbase", 1000)
+        misn.timerStart("spawnbase", 1000)
     end
 end
 
 -- Check if the player is still with his escorts
 function outOfRange()
     if vec2.dist(flfship:pos(), player.pilot():pos()) < 1000 then
-        misn.timerStart("outOfRange", 2000)
+        OORT = misn.timerStart("outOfRange", 2000)
     else
         -- TODO: handle mission failure due to distance to escorts
         tk.msg(contacttitle, contacttext)
         for i, j in ipairs(fleetFLF) do
-            j:setHealth(0, 0) -- Should really just remove them, not kill them.
+            j:rm()
         end
     end
 end

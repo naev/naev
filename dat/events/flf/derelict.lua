@@ -71,13 +71,14 @@ function boardFLF()
     evt.timerStop(timerFLF)
     player.unboard()
     evt.misnStart("Save the FLF agent") 
+    boarded = true
 end
 
 function deathDV()
     evt.timerStop(timerDV)
     destroyed = true
     if shipFLF:alive() == false then
-        destroyevent()
+        evt.finish(true)
     end
 end
 
@@ -86,24 +87,21 @@ function boardDV()
     evt.timerStop(timerDV)
     player.unboard()
     evt.misnStart("Take the Dvared crew home") 
+    boarded = true
 end
 
 function deathFLF()
     evt.timerStop(timerFLF)
     destroyed = true
     if shipDV:alive() == false then
-        destroyevent()
+        evt.finish(true)
     end
 end
 
 function enter()
     if boarded == true then
-        destroyevent()
+        evt.finish(true)
     else
         evt.finish(false)
     end
-end
-
-function destroyevent()
-    evt.finish(true)
 end
