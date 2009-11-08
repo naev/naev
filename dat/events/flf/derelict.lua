@@ -70,7 +70,7 @@ function boardFLF()
     shipDV:setNoboard(true)
     evt.timerStop(timerFLF)
     player.unboard()
-    evt.misnStart("Save the FLF agent") 
+    evt.misnStart("Deal with the FLF agent") 
     boarded = true
 end
 
@@ -86,7 +86,7 @@ function boardDV()
     shipFLF:setNoboard(true)
     evt.timerStop(timerDV)
     player.unboard()
-    evt.misnStart("Take the Dvared crew home") 
+    evt.misnStart("Take the Dvaered crew home") 
     boarded = true
 end
 

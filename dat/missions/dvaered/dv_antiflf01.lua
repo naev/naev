@@ -1,6 +1,12 @@
 --[[
 -- This is the first mission in the anti-FLF Dvaered campaign. The player is tasked with ferrying home some Dvaered people.
 -- stack variable flfbase_flfshipkilled: Used to determine whether the player destroyed the FLF derelict, as requested.
+-- stack variable flfbase_intro:
+--      1 - The player has turned in the FLF agent
+--      2 - The player has rescued the FLF agent. (not used in this script)
+--      3 - The player has betrayed the FLF after rescuing the agent (not used in this script)
+--      4 - The player has found the FLF base and sided with Dvaered
+--      5 - The player has sided with the FLF. Use this as the conditional for the FLF string.
 --]]
 
 -- localization stuff, translators would work here
@@ -10,7 +16,7 @@ else -- default english
     title = {}
     text = {}
     
-    title[1] = "A crew in need is a crew indeed"
+    title[1] = "A Dvaered crew in need is a Dvaered crew indeed"
     text[1] = [["Your arrival is timely, citizen," the Dvaered commanding officer tells you. "Listen up. We were in a firefight with a rogue terrorist, but the bastard knocked out our engines and most of our primary systems before we could nail him. Fortunately, I think we inflicted serious damage on him as well, so he should still be around here somewhere. My sensors are down, though, so I can't tell for certain."
     The officer draws himself up and assumes the talking-to-subordinates tone that is so typical for Dvaered commanders. "Citizen! You are hereby charged to scout the area, dispose of the enemy ship, then deliver me and my crew to the nearest Dvaered controlled system!"]]
     
@@ -28,7 +34,7 @@ else -- default english
     "Incidentally, citizen. The Dvaered authorities are preparing a campaign against the FLF terrorists. You seem to be an able pilot, and we need a civilian ship as part of our strategy. If you are interested, seek out the official Dvaered liaison."
     When he is gone, you find yourself wondering what this campaign he mentioned is all about. There is one way to find out - if you are up to it...]]
     
-    misn_title = "Ferry the Dvaered crew"
+    misn_title = "Take the Dvaered crew home"
     misn_desc = {"Take the Dvaered crew on board your ship to any Dvaered controlled world or station"}
     
 end
@@ -55,7 +61,7 @@ function land()
         end
     end
     misn.jetCargo(DVcrew)
-    var.push("flfbase_intro", 0)
+    var.push("flfbase_intro", 1)
     var.pop("flfbase_flfshipkilled")
     misn.finish(true)
 end

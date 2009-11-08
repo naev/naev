@@ -1,9 +1,11 @@
 --[[
 -- This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
 -- stack variable flfbase_intro:
---      0 - The player has turned in the FLF agent (or destroyed his ship, in case of the VD route).
---      1 - The player has rescued the FLF agent.
---      2 - The player has betrayed the FLF after rescuing the agent (not used in this script)
+--      1 - The player has turned in the FLF agent
+--      2 - The player has rescued the FLF agent. (not used in this script)
+--      3 - The player has betrayed the FLF after rescuing the agent (not used in this script)
+--      4 - The player has found the FLF base and sided with Dvaered
+--      5 - The player has sided with the FLF. Use this as the conditional for the FLF string.
 --]]
 
 -- localization stuff, translators would work here
@@ -132,7 +134,7 @@ function land()
     if planet.get():name() == "Sindbad" then
         tk.msg(title[4], string.format(text[4], player.name()))
         tk.msg(title[4], text[5])
-        var.push("flfbase_intro", 1)
+        var.push("flfbase_intro", 2)
         var.pop("flfbase_angle")
         var.pop("flfbase_flfshipkilled")
         misn.jetCargo(gregar)
@@ -142,7 +144,7 @@ function land()
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
             faction.get("Dvaered"):modPlayerRaw(5)
-            var.push("flfbase_intro", 0)
+            var.push("flfbase_intro", 1)
             var.pop("flfbase_angle")
             var.pop("flfbase_flfshipkilled")
             misn.jetCargo(gregar)
