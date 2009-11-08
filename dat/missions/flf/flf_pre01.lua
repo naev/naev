@@ -1,7 +1,7 @@
 --[[
 -- This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
 -- stack variable flfbase_intro:
---      0 - The player has turned in the FLF agent.
+--      0 - The player has turned in the FLF agent (or destroyed his ship, in case of the VD route).
 --      1 - The player has rescued the FLF agent.
 --      2 - The player has betrayed the FLF after rescuing the agent (not used in this script)
 --]]
@@ -49,7 +49,7 @@ else -- default english
     contacttitle = "You have lost contact with your escorts!"
     contacttext = [[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of telling where they went.
     
-    You have failed to reach the FLF's hidden base.]]
+You have failed to reach the FLF's hidden base.]]
     
     turnintitle[1] = "An opportunity to uphold the law"
     turnintext[1] = [[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
@@ -134,6 +134,7 @@ function land()
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 1)
         var.pop("flfbase_angle")
+        var.pop("flfbase_flfshipkilled")
         misn.jetCargo(gregar)
         misn.finish(true)
     -- Case Dvaered planet
@@ -143,6 +144,7 @@ function land()
             faction.get("Dvaered"):modPlayerRaw(5)
             var.push("flfbase_intro", 0)
             var.pop("flfbase_angle")
+            var.pop("flfbase_flfshipkilled")
             misn.jetCargo(gregar)
             misn.finish(true)
         end
@@ -234,6 +236,6 @@ end
 function abort()
     var.pop("flfbase_angle")
     var.pop("flfbase_sysname")
-    misn.jetCargo("Gregar")
+    var.pop("flfbase_flfshipkilled")
     misn.finish(false)
 end

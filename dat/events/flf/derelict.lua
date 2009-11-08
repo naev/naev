@@ -93,6 +93,7 @@ end
 function deathFLF()
     evt.timerStop(timerFLF)
     destroyed = true
+    var.push("flfbase_flfshipkilled", true)
     if shipDV:alive() == false then
         evt.finish(true)
     end
