@@ -85,7 +85,6 @@ static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
 static int misn_timerStart( lua_State *L );
 static int misn_timerStop( lua_State *L );
-static int misn_takeoff( lua_State *L );
 static int misn_addCargo( lua_State *L );
 static int misn_rmCargo( lua_State *L );
 static int misn_jetCargo( lua_State *L );
@@ -105,7 +104,6 @@ static const luaL_reg misn_methods[] = {
    { "finish", misn_finish },
    { "timerStart", misn_timerStart },
    { "timerStop", misn_timerStop },
-   { "takeoff", misn_takeoff },
    { "addCargo", misn_addCargo },
    { "rmCargo", misn_rmCargo },
    { "jetCargo", misn_jetCargo },
@@ -609,22 +607,6 @@ static int misn_timerStop( lua_State *L )
          cur_mission->tfunc[t] = NULL;
       }
    }
-
-   return 0;
-}
-
-
-/**
- * @brief Forces the player to take off if he is landed.
- *
- * @luafunc takeoff()
- */
-static int misn_takeoff( lua_State *L )
-{
-   (void) L;
-
-   if (landed)
-      landed = 0;
 
    return 0;
 }
