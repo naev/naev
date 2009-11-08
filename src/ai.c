@@ -827,8 +827,8 @@ static void ai_create( Pilot* pilot, char *param )
    /* Prepare AI. */
    ai_setPilot( pilot );
 
-   /* Create equipment first. */
-   if (!pilot_isFlag(pilot, PILOT_EMPTY)) {
+   /* Create equipment first - only if creating for the first time. */
+   if ((aiL_status==AI_STATUS_CREATE) || !pilot_isFlag(pilot, PILOT_EMPTY)) {
       L = equip_L;
       lua_getglobal(L, "equip");
       lp.pilot = cur_pilot->id;
