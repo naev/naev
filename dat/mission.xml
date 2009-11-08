@@ -344,7 +344,7 @@
   </avail>
  </mission>
  <mission name="Deal with the FLF agent">
-  <lua>neutral/flf_pre01</lua>
+  <lua>flf/flf_pre01</lua>
   <flags>
    <unique />
   </flags>
