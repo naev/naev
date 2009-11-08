@@ -1284,7 +1284,7 @@ static int pilotL_changeAI( lua_State *L )
  * This recovers the pilot's disabled state, although he may become disabled afterwards.
  *
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
- * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% shield
+ * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% armour
  *
  *    @luaparam p Pilot to set health of.
  *    @luaparam armour Value to set armour to, should be double from 0-100 (in percent).
