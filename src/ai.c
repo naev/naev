@@ -2323,7 +2323,7 @@ static int aiL_distress( lua_State *L )
 static int aiL_credits( lua_State *L )
 {
    if (aiL_status != AI_STATUS_CREATE) {
-      NLUA_ERROR(L, "This function must be called in \"create\" only.");
+      /*NLUA_ERROR(L, "This function must be called in \"create\" only.");*/
       return 0;
    }
 
@@ -2343,7 +2343,7 @@ static int aiL_cargo( lua_State *L )
    const char *s;
 
    if (aiL_status != AI_STATUS_CREATE) {
-      NLUA_ERROR(L, "This function must be called in \"create\" only.");
+      /*NLUA_ERROR(L, "This function must be called in \"create\" only.");*/
       return 0;
    }
 
