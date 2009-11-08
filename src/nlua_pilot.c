@@ -57,8 +57,10 @@ static int pilotL_alive( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
+static int pilotL_dir( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
+static int pilotL_setDir( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
@@ -89,6 +91,7 @@ static const luaL_reg pilotL_methods[] = {
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
+   { "dir", pilotL_dir },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -99,6 +102,7 @@ static const luaL_reg pilotL_methods[] = {
    { "getHealth", pilotL_getHealth },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
+   { "setDir", pilotL_setDir },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
@@ -731,6 +735,36 @@ static int pilotL_velocity( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's direction;
+ *
+ * @usage d = p:dir()
+ *
+ *    @luaparam p Pilot to get the direction of.
+ *    @luareturn The pilot's current direction as a number (in grad).
+ * @luafunc dir( p )
+ */
+static int pilotL_dir( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+   LuaVector v;
+
+   /* Parse parameters */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Push direction. */
+   lua_pushnumber( L, p->solid->dir * 180. / M_PI );
+   return 1;
+}
+
+/**
  * @brief Sets the pilot's position.
  *
  * @usage p:setPos( vec2.new( 300, 200 ) )
@@ -789,6 +823,39 @@ static int pilotL_setVelocity( lua_State *L )
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->vel, &v->vec );
+   return 0;
+}
+
+/**
+ * @brief Sets the pilot's direction.
+ *
+ * @note Right is 0, top is 90, left is 180, bottom is 270.
+ *
+ * @usage p:setDir( 180. )
+ *
+ *    @luaparam p Pilot to set the direction of.
+ *    @luaparam dir Direction to set.
+ * @luafunc setDir( p, dir )
+ */
+static int pilotL_setDir( lua_State *L )
+{
+   LuaPilot *p1;
+   Pilot *p;
+   double d;
+
+   /* Parse parameters */
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
+   d  = luaL_checknumber(L,2);
+
+   /* Pilot must exist. */
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Set direction. */
+   p->solid->dir = fmodf( d, 2*M_PI );
    return 0;
 }
 
