@@ -1859,8 +1859,8 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
    else if (p1 > p2)
       return -1;
 
-   /* Same. */
-   return 0;
+   /* In case of tie sort by name so they don't flip or something. */
+   return strcmp( ps1->p->name, ps2->p->name );
 }
 
 
