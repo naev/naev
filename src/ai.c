@@ -827,8 +827,8 @@ static void ai_create( Pilot* pilot, char *param )
    /* Prepare AI. */
    ai_setPilot( pilot );
 
-   /* Create equipment first. */
-   if (!pilot_isFlag(pilot, PILOT_EMPTY)) {
+   /* Create equipment first - only if creating for the first time. */
+   if ((aiL_status==AI_STATUS_CREATE) || !pilot_isFlag(pilot, PILOT_EMPTY)) {
       L = equip_L;
       lua_getglobal(L, "equip");
       lp.pilot = cur_pilot->id;
@@ -2323,7 +2323,7 @@ static int aiL_distress( lua_State *L )
 static int aiL_credits( lua_State *L )
 {
    if (aiL_status != AI_STATUS_CREATE) {
-      NLUA_ERROR(L, "This function must be called in \"create\" only.");
+      /*NLUA_ERROR(L, "This function must be called in \"create\" only.");*/
       return 0;
    }
 
@@ -2343,7 +2343,7 @@ static int aiL_cargo( lua_State *L )
    const char *s;
 
    if (aiL_status != AI_STATUS_CREATE) {
-      NLUA_ERROR(L, "This function must be called in \"create\" only.");
+      /*NLUA_ERROR(L, "This function must be called in \"create\" only.");*/
       return 0;
    }
 
