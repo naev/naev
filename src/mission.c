@@ -156,8 +156,10 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    memset(mission,0,sizeof(Mission));
 
    /* Create id if needed. */
-   mission->id = (genid) ? mission_genID() : 0;
-   mission->data = misn;
+   mission->id    = (genid) ? mission_genID() : 0;
+   mission->data  = misn;
+   mission->title = strdup(misn->name);
+   mission->desc  = strdup("No description.");
 
    /* Init the timers. */
    for (i=0; i<MISSION_TIMER_MAX; i++) {

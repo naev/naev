@@ -273,7 +273,7 @@ static void setOSD (void)
       return;
 
    /* Needs title and description. */
-   if ((cur_mission->title==NULL) || (cur_mission->desc==NULL))
+   if ((cur_mission->desc==NULL) || (strcmp(cur_mission->desc,"No description.")))
       return;
 
    /* Mission must be accepted. */
