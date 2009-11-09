@@ -685,6 +685,10 @@ void spfx_render( const int layer )
          spfx_stack = spfx_stack_back;
          spfx_nstack = spfx_nstack_back;
          break;
+
+      default:
+         WARN("Rendering invalid SPFX layer.");
+         return;
    }
 
    /* Now render the layer */

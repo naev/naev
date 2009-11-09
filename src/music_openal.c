@@ -140,7 +140,7 @@ static int music_thread( void* unused )
    (void)unused;
 
    int ret;
-   int active; /* active buffer */
+   int active = 0; /* active buffer */
    ALint state;
    ALuint removed[2];
    ALenum value;

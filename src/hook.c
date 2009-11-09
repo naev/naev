@@ -636,6 +636,7 @@ static int hook_parse( xmlNodePtr base )
          /* Unknown. */
          else {
             WARN("Hook of unknown type '%s' found, skipping.", stype);
+            type = HOOK_TYPE_NULL;
             free(stype);
          }
 

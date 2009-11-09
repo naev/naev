@@ -215,6 +215,9 @@ static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity )
          normalize2(pdata->buffer[i]);
       }
    }
+   else {
+      i = 0;
+   }
 
    while(--i) {
       j = RNG(0, 255);
