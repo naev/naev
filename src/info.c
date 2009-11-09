@@ -614,8 +614,6 @@ static void mission_menu_genList( unsigned int wid, int first )
       if (player_missions[i].id != 0)
          misn_names[j++] = strdup(player_missions[i].title);
    if (j==0) { /* no missions */
-      free(misn_names);
-      misn_names = malloc(sizeof(char*));                                 
       misn_names[0] = strdup("No Missions");                              
       j = 1;
    }
@@ -636,7 +634,7 @@ static void mission_menu_update( unsigned int wid, char* str )
    Mission* misn;
 
    active_misn = toolkit_getList( wid, "lstMission" );
-   if (strcmp(active_misn,"No Missions")==0) {
+   if ((active_misn==NULL) || (strcmp(active_misn,"No Missions")==0)) {
       window_modifyText( wid, "txtReward", "None" );
       window_modifyText( wid, "txtDesc",
             "You currently have no active missions." );
