@@ -773,6 +773,8 @@ static int misn_osdDestroy( lua_State *L )
 /**
  * @brief Sets active in mission OSD.
  *
+ * @note Uses Lua indexes, so 1 is first member, 2 is second and so on.
+ *
  *    @luaparam n Element of the OSD to make active. 
  * @luafunc osdActive( n )
  */
@@ -781,6 +783,7 @@ static int misn_osdActive( lua_State *L )
    int n;
 
    n = luaL_checkint(L,1);
+   n = n-1; /* Convert to C index. */
 
    if (cur_mission->osd != 0)
       osd_active( cur_mission->osd, n );
