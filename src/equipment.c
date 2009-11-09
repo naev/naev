@@ -97,9 +97,9 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    if (sh != NULL)
       *sh = (*h - 100)/2;
    if (ow != NULL)
-      *ow = *sw;
+      *ow = (sw!=NULL) ? *sw : 0;
    if (oh != NULL)
-      *oh = *sh;
+      *oh = (sh!=NULL) ? *sh : 0;
 
    /* Calculate slot widget. */
    if (ew != NULL)
@@ -109,13 +109,13 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 
    /* Calculate custom widget. */
    if (cw != NULL)
-      *cw = *w - 20 - *sw - 20 - *ew - 20.;
+      *cw = *w - 20 - (sw!=NULL?*sw:0) - 20 - (ew!=NULL?*ew:0) - 20.;
    if (ch != NULL)
       *ch = *h - 100;
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - 20 - *sw - 40 - 20 - 60) / 4;
+      *bw = (*w - 20 - (sw!=NULL?*sw:0) - 40 - 20 - 60) / 4;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }

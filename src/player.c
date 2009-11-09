@@ -295,8 +295,12 @@ static int player_newMake (void)
    xmlDocPtr doc;
 
    /* Sane defaults. */
-   sysname = NULL;
+   sysname        = NULL;
    player_mission = NULL;
+   l              = 0;
+   h              = 0;
+   tl             = 0;
+   th             = 0;
 
    /* Try to read teh file. */
    buf = ndata_read( START_DATA, &bufsize );
@@ -365,7 +369,12 @@ static int player_newMake (void)
    xmlCleanupParser();
 
    /* Time. */
-   ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
+   if ((tl==0) && (th==0)) {
+      WARN("Time not set by module.");
+      ntime_set(0);
+   }
+   else
+      ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
 
    /* Welcome message - must be before space_init. */
    player_message( "Welcome to "APPNAME"!" );
@@ -380,7 +389,12 @@ static int player_newMake (void)
    free(sysname);
 
    /* Monies. */
-   player->credits = RNG(l,h);
+   if ((l==0) && (h==0)) {
+      WARN("Credits not set by module.");
+      player->credits = 0;
+   }
+   else
+      player->credits = RNG(l,h);
 
    /* clear the map */
    map_clear();
@@ -2986,6 +3000,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr(cur,"slot",q);
+               n = -1;
                if (q != NULL) {
                   n = atoi(q);
                   free(q);
@@ -3003,6 +3018,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr(cur,"slot",q);
+               n = -1;
                if (q != NULL) {
                   n = atoi(q);
                   free(q);
@@ -3020,6 +3036,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr(cur,"slot",q);
+               n = -1;
                if (q != NULL) {
                   n = atoi(q);
                   free(q);
