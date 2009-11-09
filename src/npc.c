@@ -265,6 +265,7 @@ int npc_rm_parentEvent( unsigned int id )
 
       /* Invalidates iterators. */
       npc_rm( npc );
+      i--;
       n++;
    }
 
@@ -293,6 +294,7 @@ int npc_rm_parentMission( Mission *misn )
 
       /* Invalidates iterators. */
       npc_rm( npc );
+      i--;
       n++;
    }
 
