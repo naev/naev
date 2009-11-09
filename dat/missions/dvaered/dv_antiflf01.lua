@@ -35,8 +35,9 @@ else -- default english
     When he is gone, you find yourself wondering what this campaign he mentioned is all about. There is one way to find out - if you are up to it...]]
     
     misn_title = "Take the Dvaered crew home"
-    misn_desc = {"Take the Dvaered crew on board your ship to any Dvaered controlled world or station"}
-    
+    osd_desc = {"Take the Dvaered crew on board your ship to any Dvaered controlled world or station"}
+
+    misn_desc = "Take the Dvaered crew on board your ship to any Dvaered controlled world or station."
 end
 
 function create()
@@ -44,7 +45,9 @@ function create()
     
     tk.msg(title[1], text[1])
     
-    misn.osdCreate(misn_title, misn_desc)
+    misn.osdCreate(misn_title, osd_desc)
+    misn.setDesc(misn_desc)
+    misn.setTitle(misn_title)
     
     DVcrew = misn.addCargo("Dvaered ship crew", 0)
     

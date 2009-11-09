@@ -16,7 +16,7 @@ else -- default english
     text = {}
     turnintitle = {}
     turnintext = {}
-    misn_desc = {}
+    osd_desc = {}
    
     title[1] = "Gregar joins the party"
     text[1] = [[A haggard-looking man emerges from the airlock. He says, "Thank goodness you're here. My name is Gregar, I'm with the Frontier Liberation Front. I mean you no harm." He licks his lips in hesitation before continuing. "I have come under attack from a Dvaered patrol. I wasn't violating any laws, and we're not even in Dvaered territory! Anyway, my ship is unable to fly."
@@ -46,7 +46,7 @@ else -- default english
     "That threat delivered, I should at least extend my gratitude for helping one of ours in his time of need, though you had no reason to do so. That's why I will allow you to move freely on this station, at least to some extent, and I will allow you to leave when you please, as well as to return if you see the need. Who knows, maybe if you hit it off with the personnel stationed here, we might even come to consider you a friend."
     You exchange a few more polite words with the officer, then leave his office. As you head back to your ship, you consider your position. You have gained access to a center of FLF activity. Should you want to make an enemy of House Dvaered, perhaps this would be a good place to start...]]
     
-    commmsg = "Nothing personal, mate, but we're expecting someone and you ain't him. No witnesses!"
+    comm_msg = "Nothing personal, mate, but we're expecting someone and you ain't him. No witnesses!"
     
     contacttitle = "You have lost contact with your escorts!"
     contacttext = [[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of telling where they went.
@@ -62,8 +62,10 @@ You have failed to reach the FLF's hidden base.]]
     The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]
     
     misn_title = "Deal with the FLF agent"
-    misn_desc[1] = "Take Gregar, the FLF agent to the %s system and make contact with the FLF"
-    misn_desc[2] = "Alternatively, turn Gregar in to the nearest Dvaered base"
+    osd_desc[1] = "Take Gregar, the FLF agent to the %s system and make contact with the FLF"
+    osd_desc[2] = "Alternatively, turn Gregar in to the nearest Dvaered base"
+    
+    misn_desc = "You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered."
 end
 
 function create()
@@ -76,7 +78,10 @@ function create()
     
     tk.msg(title[1], string.format(text[1], destsysname))
     
-    misn.osdCreate(misn_title, {string.format(misn_desc[1], destsysname), misn_desc[2]})
+    misn.osdCreate(misn_title, {string.format(osd_desc[1], destsysname), osd_desc[2]})
+    misn.setDesc(misn_desc)
+    misn.setTitle(misn_title)
+    misn.setMarker(system.get(destsysname), "misc")
     
     gregar = misn.addCargo("Gregar", 0)
     
@@ -154,7 +159,7 @@ function land()
 end
 
 function commFLF()
-    fleetFLF[1]:comm(commmsg)
+    fleetFLF[1]:comm(comm_msg)
 end
 
 -- Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
