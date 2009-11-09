@@ -187,7 +187,7 @@ end
 
 function flightOver()
    -- Update OSD
-   misn.osdActive(1)
+   misn.osdActive(2)
 
    -- Update mission stuff
    misn_stage = 2
@@ -377,7 +377,7 @@ end
 function llamaDisabled()
    -- Update OSD
    
-   misn.osdActive(1)
+   misn.osdActive(2)
 
    misn_stage = 5
    tk.msg(title[4], string.format(text[10], naev.getKey("board")))
@@ -397,7 +397,7 @@ end
 
 function llamaBoard()
    -- Update OSD
-   misn.osdActive(2)
+   misn.osdActive(3)
 
    misn_stage = 6
    tk.msg(title[4], text[12])

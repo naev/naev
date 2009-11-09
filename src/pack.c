@@ -767,7 +767,7 @@ static void* pack_readfilePack( Packfile_t *file,
    /* check the md5 */
    md5_state_t md5;
    md5_byte_t *md5val = malloc(16);
-   md5_byte_t *md5fd = malloc(16);
+   md5_byte_t *md5fd  = malloc(16);
    md5_init(&md5);
    md5_append( &md5, buf, bytes );
    md5_finish(&md5, md5val);
@@ -776,7 +776,7 @@ static void* pack_readfilePack( Packfile_t *file,
 #else /* not HAS_FD */
    if ((bytes = fread( md5fd, 1, 16, file->fp )) == -1)
 #endif /* HAS_FD */
-      WARN("Failure to read MD5, continuing anyways...");
+      WARN("Failure to read MD5 (Expected %d bytes got %d bytes), continuing anyways...", 16, bytes);
    else if (memcmp( md5val, md5fd, 16 ))
       WARN("MD5 gives different value, possible memory corruption, continuing...");
    free(md5val);

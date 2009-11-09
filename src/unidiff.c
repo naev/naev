@@ -268,6 +268,10 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
          /* Get the type. */
          buf = xml_get(cur);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_PLANET_ADD;
          else if (strcmp(buf,"remove")==0)
@@ -293,10 +297,18 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
          /* Get the type. */
          buf = xml_get(cur);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_FLEET_ADD;
          else if (strcmp(buf,"remove")==0)
             hunk.type = HUNK_TYPE_FLEET_REMOVE;
+         else {
+            WARN("Unknown hunk type.");
+            hunk.type = HUNK_TYPE_NONE;
+         }
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -315,6 +327,10 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
          /* Get the type. */
          buf = xml_get(cur);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
          else if (strcmp(buf,"remove")==0)

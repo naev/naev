@@ -233,7 +233,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    ret = lua_pcall(L, nargs, 0, 0);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if (strcmp(err,"Mission Done")!=0)
+      if ((err==NULL) || (strcmp(err,"Mission Done")!=0))
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
       else
@@ -773,6 +773,8 @@ static int misn_osdDestroy( lua_State *L )
 /**
  * @brief Sets active in mission OSD.
  *
+ * @note Uses Lua indexes, so 1 is first member, 2 is second and so on.
+ *
  *    @luaparam n Element of the OSD to make active. 
  * @luafunc osdActive( n )
  */
@@ -781,6 +783,7 @@ static int misn_osdActive( lua_State *L )
    int n;
 
    n = luaL_checkint(L,1);
+   n = n-1; /* Convert to C index. */
 
    if (cur_mission->osd != 0)
       osd_active( cur_mission->osd, n );

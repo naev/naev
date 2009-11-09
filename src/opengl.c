@@ -384,7 +384,7 @@ static int gl_setupFullscreen( unsigned int *flags )
       }
    }
    /* makes sure fullscreen mode is supported */
-   if (((*flags) & SDL_FULLSCREEN) && !supported) {
+   if ((modes!=NULL) && ((*flags) & SDL_FULLSCREEN) && !supported) {
 
       /* try to get closest aproximation to mode asked for */
       off = -1;

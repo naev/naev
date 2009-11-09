@@ -1329,6 +1329,7 @@ static void gui_renderPlanet( int ind )
 
    /* Check if in range. */
    if (gui.radar.shape == RADAR_RECT) {
+      x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
          return;

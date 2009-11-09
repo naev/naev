@@ -459,8 +459,9 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       /* Trigger. */
       else if (xml_isNode(node,"trigger")) {
          buf = xml_get(node);
-         
-         if (strcmp(buf,"enter")==0)
+         if (buf == NULL)
+            WARN("Event '%s': Null trigger type.", temp->name);
+         else if (strcmp(buf,"enter")==0)
             temp->trigger = EVENT_TRIGGER_ENTER;
          else if (strcmp(buf,"land")==0)
             temp->trigger = EVENT_TRIGGER_LAND;

@@ -546,7 +546,7 @@ void player_swapShip( char* shipname )
 int player_shipPrice( char* shipname )
 {
    int i;
-   Pilot *ship;
+   Pilot *ship = NULL;
 
    if (strcmp(shipname,player->name)==0) {
       ship = player;
@@ -2961,6 +2961,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr(cur,"quantity",q);
+               n = 0;
                if (q != NULL) {
                   n = atoi(q);
                   free(q);
@@ -3074,8 +3075,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* add it to the stack if it's not what the player is in */
    if (is_player == 0) {
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
-      player_stack[player_nstack].p = ship;
-      player_stack[player_nstack].loc = strdup(loc);
+      player_stack[player_nstack].p    = ship;
+      player_stack[player_nstack].loc  = (loc!=NULL) ? strdup(loc) : strdup("Uknown");
       player_nstack++;
    }
 

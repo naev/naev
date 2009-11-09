@@ -144,7 +144,7 @@ function jump ()
       -- Check to see if system is next
       if sys == systems[visited+1] then
          visited = visited + 1
-         misn.osdActive( visited )
+         misn.osdActive( visited+1 )
 
          -- Get the next goal
          setNextGoal()

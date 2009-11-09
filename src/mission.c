@@ -662,8 +662,13 @@ Mission* missions_genList( int *n, int faction,
    }
 
    /* Sort. */
-   qsort( tmp, m, sizeof(Mission), mission_compare );
-   (*n) = m;
+   if (tmp != NULL) {
+      qsort( tmp, m, sizeof(Mission), mission_compare );
+      (*n) = m;
+   }
+   else {
+      (*n) = 0;
+   }
    return tmp;
 }
 
@@ -1068,14 +1073,14 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
  */
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
-   int ret;
+   int ret = 0;
 
    lua_pushstring(L,"_G");
    lua_pushnil(L);
    /* str, nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
       /* str, key, value */
-      ret = mission_persistDataNode( L, writer, 0 );
+      ret |= mission_persistDataNode( L, writer, 0 );
       /* str, key */
    }
    /* str */

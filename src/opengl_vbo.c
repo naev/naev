@@ -136,6 +136,8 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
          usage = GL_STREAM_DRAW;
       else if (vbo->type == NGL_VBO_STATIC)
          usage = GL_STATIC_DRAW;
+      else
+         usage = GL_STREAM_DRAW;
 
       /* Get new data. */
       nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );

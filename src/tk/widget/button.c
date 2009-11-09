@@ -206,11 +206,6 @@ static void btn_render( Widget* btn, double bx, double by )
    }
    else {
       switch (btn->status) {
-         case WIDGET_STATUS_NORMAL:
-            lc = &cGrey80;
-            c = &cGrey60;
-            dc = &cGrey40;
-            break;
          case WIDGET_STATUS_MOUSEOVER:
             lc = &cGrey90;
             c = &cGrey70;
@@ -221,7 +216,11 @@ static void btn_render( Widget* btn, double bx, double by )
             c = &cGrey50;
             dc = &cGrey70;
             break;
+         case WIDGET_STATUS_NORMAL:
          default:
+            lc = &cGrey80;
+            c = &cGrey60;
+            dc = &cGrey40;
             break;
       }
    }
