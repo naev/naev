@@ -118,7 +118,7 @@ static void iar_getDim( Widget* iar, double *w, double *h )
  */
 static void iar_render( Widget* iar, double bx, double by )
 {
-   int i,j;
+   int i,j, pos;
    double x,y, w,h, xcurs,ycurs;
    double scroll_pos;
    int xelem, yelem;
@@ -165,11 +165,14 @@ static void iar_render( Widget* iar, double bx, double by )
       xcurs = x + xspace + (double)SCREEN_W/2.;
       for (i=0; i<xelem; i++) {
 
+         /* Get position. */
+         pos = j*xelem + i;
+
          /* Out of elements. */
-         if ((j*xelem + i) >= iar->dat.iar.nelements)
+         if ((pos) >= iar->dat.iar.nelements)
             break;
 
-         is_selected = (iar->dat.iar.selected == j*xelem + i) ? 1 : 0;
+         is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
          if (is_selected)
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
@@ -177,22 +180,23 @@ static void iar_render( Widget* iar, double bx, double by )
                   w - 4., h - 4., &cDConsole, NULL );
 
          /* image */
-         if (iar->dat.iar.images[j*xelem + i] != NULL)
-            gl_blitScale( iar->dat.iar.images[j*xelem + i],
+         if (iar->dat.iar.images[pos] != NULL)
+            gl_blitScale( iar->dat.iar.images[pos],
                   xcurs + 5., ycurs + gl_smallFont.h + 7.,
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* caption */
-         gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                  (is_selected) ? &cBlack : &cWhite,
-                  iar->dat.iar.captions[j*xelem + i] );
+         if (iar->dat.iar.captions[pos] != NULL)
+            gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
+                     (is_selected) ? &cBlack : &cWhite,
+                     iar->dat.iar.captions[pos] );
 
          /* quantity. */
          if (iar->dat.iar.quantity != NULL) {
-            if (iar->dat.iar.quantity[j*xelem + i] != NULL) {
+            if (iar->dat.iar.quantity[pos] != NULL) {
                /* Rectangle to hilight better. */
                tw = gl_printWidthRaw( &gl_smallFont,
-                     iar->dat.iar.quantity[j*xelem + i] );
+                     iar->dat.iar.quantity[pos] );
                tc.r = cBlack.r;
                tc.g = cBlack.g;
                tc.b = cBlack.b;
@@ -203,7 +207,7 @@ static void iar_render( Widget* iar, double bx, double by )
                /* Quantity number. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                      xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
-                     &cWhite, iar->dat.iar.quantity[j*xelem + i] );
+                     &cWhite, iar->dat.iar.quantity[pos] );
             }
          }
 
