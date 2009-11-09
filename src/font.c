@@ -55,11 +55,16 @@ static int font_limitSize( const glFont *ft_font, int *width,
  *    @param width Actual width it takes up.
  *    @param text Text to parse.
  *    @param max Max to look for.
+ *    @return Number of characters that fit.
  */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max )
 {
    int n, i;
+
+   /* Avoid segfaults. */
+   if (text == NULL)
+      return 0;
 
    /* limit size */
    n = 0;

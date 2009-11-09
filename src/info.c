@@ -612,7 +612,7 @@ static void mission_menu_genList( unsigned int wid, int first )
    j = 0;
    for (i=0; i<MISSION_MAX; i++)
       if (player_missions[i].id != 0)
-         misn_names[j++] = strdup(player_missions[i].title);
+         misn_names[j++] = (player_missions[i].title!=NULL) ? strdup(player_missions[i].title) : NULL;
    if (j==0) { /* no missions */
       misn_names[0] = strdup("No Missions");                              
       j = 1;
