@@ -333,6 +333,10 @@ void spfx_add( int effect,
       cur_spfx = &spfx_stack_back[spfx_nstack_back];
       spfx_nstack_back++;
    }
+   else {
+      WARN("Invalid SPFX layer.");
+      return;
+   }
 
    /* The actual adding of the spfx */
    cur_spfx->effect = effect;

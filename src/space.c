@@ -614,7 +614,7 @@ static void space_addFleet( Fleet* fleet, int init )
       }
    }
 
-   for (i=0; i < fleet->npilots; i++)
+   for (i=0; i < fleet->npilots; i++) {
       plt = &fleet->pilots[i];
       if (RNG(0,100) <= plt->chance) {
          /* other ships in the fleet should start split up */
@@ -641,6 +641,7 @@ static void space_addFleet( Fleet* fleet, int init )
          /* Create the pilot. */
          fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
       }
+   }
 }
 
 
@@ -1265,6 +1266,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
+   flags          = 0;
    sys->faction   = -1;
    planet         = NULL;
    size           = 0;
@@ -1381,13 +1383,13 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
    } while (xml_nextNode(node));
 
-#define MELEMENT(o,s)      if ((o) == 0) WARN("Star System '%s' missing '"s"' element", sys->name)
+#define MELEMENT(o,s)      if (o) WARN("Star System '%s' missing '"s"' element", sys->name)
    if (sys->name == NULL) WARN("Star System '%s' missing 'name' tag", sys->name);
-   MELEMENT(flags&FLAG_XSET,"x");
-   MELEMENT(flags&FLAG_YSET,"y");
-   MELEMENT(sys->stars,"stars");
-   MELEMENT(flags&FLAG_ASTEROIDSSET,"asteroids");
-   MELEMENT(flags&FLAG_INTERFERENCESET,"inteference");
+   MELEMENT((flags&FLAG_XSET)==0,"x");
+   MELEMENT((flags&FLAG_YSET)==0,"y");
+   MELEMENT(sys->stars==0,"stars");
+   MELEMENT((flags&FLAG_ASTEROIDSSET)==0,"asteroids");
+   MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
 
    /* post-processing */
@@ -1432,7 +1434,10 @@ static void system_parseJumps( const xmlNodePtr parent )
          sys = &systems_stack[i];
          break;
       }
-   if (i==systems_nstack) WARN("System '%s' was not found in the stack for some reason",name);
+   if (i==systems_nstack) {
+      WARN("System '%s' was not found in the stack for some reason",name);
+      return;
+   }
    free(name); /* no more need for it */
 
    node  = parent->xmlChildrenNode;
@@ -1905,6 +1910,9 @@ int space_addMarker( const char *sys, SysMarker type )
       case SYSMARKER_CARGO:
          markers = &ssys->markers_cargo;
          break;
+      default:
+         WARN("Unknown marker type.");
+         return;
    }
 
    /* Decrement markers. */

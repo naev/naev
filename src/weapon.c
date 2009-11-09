@@ -505,6 +505,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
       default:
          WARN("Unknown weapon layer!");
+         return;
    }
 
    i = 0;
@@ -640,6 +641,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
       default:
          WARN("Unknown weapon layer!");
+         return;
    }
 
    for (i=0; i<(*nlayer); i++)
@@ -1538,6 +1540,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 
       default:
          WARN("Unknown weapon layer!");
+         return;
    }
 
    for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the curent position */
