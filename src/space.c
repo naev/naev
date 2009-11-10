@@ -429,11 +429,16 @@ Planet* planet_get( const char* planetname )
 {
    int i;
 
+   if (planetname==NULL) {
+      WARN("Trying to find NULL planet...");
+      return NULL;
+   }
+
    for (i=0; i<planet_nstack; i++)
       if (strcmp(planet_stack[i].name,planetname)==0)
          return &planet_stack[i];
 
-   DEBUG("Planet '%s' not found in the universe", planetname);
+   WARN("Planet '%s' not found in the universe", planetname);
    return NULL;
 }
 
@@ -1912,7 +1917,7 @@ int space_addMarker( const char *sys, SysMarker type )
          break;
       default:
          WARN("Unknown marker type.");
-         return;
+         return -1;
    }
 
    /* Decrement markers. */
@@ -1951,6 +1956,9 @@ int space_rmMarker( const char *sys, SysMarker type )
       case SYSMARKER_CARGO:
          markers = &ssys->markers_cargo;
          break;
+      default:
+         WARN("Unknown marker type.");
+         return -1;
    }
 
    /* Decrement markers. */

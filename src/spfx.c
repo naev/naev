@@ -499,25 +499,9 @@ void spfx_begin( const double dt )
  */
 void spfx_end (void)
 {
-   GLdouble bx, by, x, y;
-
    /* Save cycles. */
    if (shake_off == 1)
       return;
-
-   /* set defaults */
-   bx = SCREEN_W/2;
-   by = SCREEN_H/2;
-
-   /* shake stuff */
-   if (!paused) {
-      x = shake_pos.x;
-      y = shake_pos.y;  
-   }
-   else {
-      x = 0.;
-      y = 0.;
-   }
 
    /* set the new viewport */
    gl_defViewport();

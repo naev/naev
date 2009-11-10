@@ -313,7 +313,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - *iw - 80) / 2;
+      *bw = (*w - (iw!=NULL?*iw:0) - 80) / 2;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }
@@ -1319,6 +1319,7 @@ static void misn_genList( unsigned int wid, int first )
 
    /* list */
    j = 1; /* make sure we don't accidently free the memory twice. */
+   misn_names = NULL;
    if (mission_ncomputer > 0) { /* there are missions */
       misn_names = malloc(sizeof(char*) * mission_ncomputer);
       j = 0;
@@ -1326,7 +1327,7 @@ static void misn_genList( unsigned int wid, int first )
          if (mission_computer[i].title != NULL)
             misn_names[j++] = strdup(mission_computer[i].title);
    }
-   if ((mission_ncomputer==0) || (j==0)) { /* no missions. */
+   if ((misn_names==NULL) || (mission_ncomputer==0) || (j==0)) { /* no missions. */
       if (j==0)
          free(misn_names);
       misn_names = malloc(sizeof(char*));

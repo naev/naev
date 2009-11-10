@@ -1191,6 +1191,7 @@ static void gui_renderPilot( const Pilot* p )
    if (gui.radar.shape==RADAR_RECT) {
       w = gui.radar.w/2.;
       h = gui.radar.h/2.;
+      rc = 0;
    }
    else if (gui.radar.shape==RADAR_CIRCLE) {
       w = gui.radar.w;
@@ -1326,6 +1327,8 @@ static void gui_renderPlanet( int ind )
    cy = (int)((planet->pos.y - player->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
       rc = (int)(gui.radar.w*gui.radar.w);
+   else
+      rc = 0;
 
    /* Check if in range. */
    if (gui.radar.shape == RADAR_RECT) {

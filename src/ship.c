@@ -396,6 +396,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Get base graphic name. */
          buf = xml_get(node);
+         if (buf==NULL) {
+            WARN("Ship '%s': GFX element is NULL", temp->name);
+            continue;
+         }
 
          /* Get sprite size. */
          xmlr_attr(node, "sx", stmp );
