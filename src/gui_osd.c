@@ -31,7 +31,7 @@ typedef struct OSD_s {
    struct OSD_s *next; /**< Next OSD in the linked list. */
 
    unsigned int id; /**< OSD id. */
-   char *title;
+   char *title; /**< Title of the OSD. */
 
    char **msg; /**< Stored messages. */
    OSDmsg_s *items; /**< Items on the list. */

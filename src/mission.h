@@ -36,9 +36,9 @@
  * @brief Different type of system markers.
  */
 typedef enum SysMarker_ {
-   SYSMARKER_MISC,
-   SYSMARKER_RUSH,
-   SYSMARKER_CARGO
+   SYSMARKER_MISC, /**< Miscellaneous marker. */
+   SYSMARKER_RUSH, /**< Rush mission marker. */
+   SYSMARKER_CARGO /**< Cargo mission marker. */
 } SysMarker;
 
 
@@ -46,8 +46,8 @@ typedef enum SysMarker_ {
  * @brief Defines the availability of a mission.
  */
 typedef struct MissionAvail_s {
-   int loc; /* location */
-   int chance; /* chance of it appearing */
+   int loc; /**< Location of the mission. */
+   int chance; /**< Chance of it appearing, last two digits represent %, first digit represents times it can appear (if 0 it behaves like once). */
 
    /* for specific cases */
    char *planet; /**< Planet name. */

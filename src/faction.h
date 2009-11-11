@@ -11,7 +11,7 @@
 #include "colour.h"
 
 
-#define FACTION_PLAYER  0
+#define FACTION_PLAYER  0  /**< Hardcoded player faction identifier. */
 
 
 /* get stuff */

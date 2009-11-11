@@ -61,7 +61,7 @@ typedef struct Hook_ {
          int (*func)( void *data ); /**< C function to run. */
          void *data; /**< Data to pass to C function. */
       } func; /**< Normal C function hook. */
-   } u;
+   } u; /**< Type specific data. */
 } Hook;
 
 
