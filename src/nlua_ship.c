@@ -152,6 +152,10 @@ int lua_isship( lua_State *L, int ind )
  * @brief Gets a ship.
  *
  * @usage s = ship.get( "Hyena" ) -- Gets the hyena
+ *
+ *    @luaparam s Name of the ship to get.
+ *    @luareturn The ship matching name or nil if error.
+ * @luafunc get( s )
  */
 static int shipL_get( lua_State *L )
 {

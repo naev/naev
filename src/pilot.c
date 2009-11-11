@@ -1233,7 +1233,7 @@ void pilot_runHook( Pilot* p, int hook_type )
 int pilot_dock( Pilot *p, Pilot *target, int deployed )
 {
    int i;
-   Outfit *o;
+   Outfit *o = NULL;
 
    /* Must be close. */
    if (vect_dist(&p->solid->pos, &target->solid->pos) >
@@ -1271,7 +1271,7 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
          break;
       }
    }
-   if (i >= target->noutfits)
+   if ((o==NULL) || (i >= target->noutfits))
       return -1;
 
    /* Add the pilot's outfit. */

@@ -172,7 +172,7 @@ extern unsigned int economy_getPrice( const Commodity *com,
  */
 static void commodity_exchange_open( unsigned int wid )
 {
-   int i;
+   int i, ngoods;
    char **goods;
    int w, h;
 
@@ -204,12 +204,20 @@ static void commodity_exchange_open( unsigned int wid )
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* goods list */
-   goods = malloc(sizeof(char*) * land_planet->ncommodities);
-   for (i=0; i<land_planet->ncommodities; i++)
-      goods[i] = strdup(land_planet->commodities[i]->name);
+   if (land_planet->ncommodities > 0) {
+      goods = malloc(sizeof(char*) * land_planet->ncommodities);
+      for (i=0; i<land_planet->ncommodities; i++)
+         goods[i] = strdup(land_planet->commodities[i]->name);
+      ngoods = land_planet->ncommodities;
+   }
+   else {
+      goods    = malloc( sizeof(char*) );
+      goods[0] = strdup("None");
+      ngoods   = 1;
+   }
    window_addList( wid, 20, -40,
          w-BUTTON_WIDTH-60, h-80-BUTTON_HEIGHT,
-         "lstGoods", goods, land_planet->ncommodities, 0, commodity_update );
+         "lstGoods", goods, ngoods, 0, commodity_update );
 
    /* update */
    commodity_update(wid, NULL);
@@ -227,6 +235,15 @@ static void commodity_update( unsigned int wid, char* str )
    Commodity *com;
 
    comname = toolkit_getList( wid, "lstGoods" );
+   if ((comname==NULL) || (strcmp( comname, "None" )==0)) {
+      snprintf( buf, PATH_MAX,
+         "NA Tons\n"
+         "NA Credits/Ton\n"
+         "\n"
+         "NA Tons\n" );
+      window_modifyText( wid, "txtDInfo", buf );
+      window_modifyText( wid, "txtDesc", "No outfits available." );
+   }
    com = commodity_get( comname );
 
    /* modify text */
@@ -313,7 +330,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - *iw - 80) / 2;
+      *bw = (*w - (iw!=NULL?*iw:0) - 80) / 2;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }
@@ -1319,6 +1336,7 @@ static void misn_genList( unsigned int wid, int first )
 
    /* list */
    j = 1; /* make sure we don't accidently free the memory twice. */
+   misn_names = NULL;
    if (mission_ncomputer > 0) { /* there are missions */
       misn_names = malloc(sizeof(char*) * mission_ncomputer);
       j = 0;
@@ -1326,7 +1344,7 @@ static void misn_genList( unsigned int wid, int first )
          if (mission_computer[i].title != NULL)
             misn_names[j++] = strdup(mission_computer[i].title);
    }
-   if ((mission_ncomputer==0) || (j==0)) { /* no missions. */
+   if ((misn_names==NULL) || (mission_ncomputer==0) || (j==0)) { /* no missions. */
       if (j==0)
          free(misn_names);
       misn_names = malloc(sizeof(char*));

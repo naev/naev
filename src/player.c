@@ -295,6 +295,7 @@ static int player_newMake (void)
    xmlDocPtr doc;
 
    /* Sane defaults. */
+   ship           = NULL;
    sysname        = NULL;
    player_mission = NULL;
    l              = 0;
@@ -325,7 +326,8 @@ static int player_newMake (void)
       if (xml_isNode(node, "player")) { /* we are interested in the player */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"ship")) ship = ship_get( xml_get(cur) );
+            if (xml_isNode(cur,"ship"))
+               ship = ship_get( xml_get(cur) );
             else if (xml_isNode(cur,"credits")) { /* monies range */
                tmp = cur->children;
                do {
@@ -381,6 +383,10 @@ static int player_newMake (void)
    player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
    /* Try to create the pilot, if fails reask for player name. */
+   if (ship==NULL) {
+      WARN("Ship not set by module.");
+      return -1;
+   }
    if (player_newShip( ship, x, y, 0., 0., RNGF() * 2.*M_PI, NULL ) != 0) {
       player_new();
       return -1;
@@ -482,17 +488,17 @@ static void player_newShipMake( char* name )
       vect_cset( &vp, player_px, player_py );
       vect_cset( &vv, player_vx, player_vy );
 
-      /* CCreate the player. */
+      /* Create the player. */
       pilot_create( player_ship, name, faction_get("Player"), NULL,
             player_dir, &vp, &vv, flags );
    }
    else {
       /* Grow memory. */
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
-      ship = &player_stack[player_nstack];
-      /* CReate the ship. */
-      ship->p = pilot_createEmpty( player_ship, name, faction_get("Player"), NULL, flags );
-      ship->loc = strdup( land_planet->name );;
+      ship        = &player_stack[player_nstack];
+      /* Create the ship. */
+      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), NULL, flags );
+      ship->loc   = strdup( land_planet->name );
       player_nstack++;
    }
    gl_cameraBind( &player->solid->pos ); /* set opengl camera */
@@ -892,7 +898,7 @@ void player_startAutonav (void)
 void player_abortAutonav( char *reason )
 {
    /* No point if player is beyond aborting. */
-   if ((player != NULL) && pilot_isFlag(player, PILOT_HYPERSPACE))
+   if ((player==NULL) || ((player != NULL) && pilot_isFlag(player, PILOT_HYPERSPACE)))
       return;
 
    if (player_isFlag(PLAYER_AUTONAV)) {
@@ -1859,8 +1865,8 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
    else if (p1 > p2)
       return -1;
 
-   /* Same. */
-   return 0;
+   /* In case of tie sort by name so they don't flip or something. */
+   return strcmp( ps1->p->name, ps2->p->name );
 }
 
 
@@ -2619,6 +2625,10 @@ static int player_parse( xmlNodePtr parent )
    /* Make sure player is NULL. */
    player = NULL;
 
+   /* Sane defaults. */
+   planet = NULL;
+   player_time = 0;
+
    /* Must get planet first. */
    node = parent->xmlChildrenNode;
    do {
@@ -2692,6 +2702,8 @@ static int player_parse( xmlNodePtr parent )
 
    /* set global thingies */
    player->credits = player_credits;
+   if (player_time==0)
+      WARN("Save has no time information, setting to 0.");
    ntime_set(player_time);
 
    /* set player in system */
@@ -2932,6 +2944,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
+
+   /* Sane defaults. */
+   loc = NULL;
 
    /* Get the ship. */
    ship_parsed = ship_get(model);
