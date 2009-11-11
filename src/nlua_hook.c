@@ -206,7 +206,7 @@ static int hook_time( lua_State *L )
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luareturn Hook identifier.
- * @luafunc jump( funcname )
+ * @luafunc jumpout( funcname )
  */
 static int hook_jumpout( lua_State *L )
 {
@@ -218,7 +218,7 @@ static int hook_jumpout( lua_State *L )
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luareturn Hook identifier.
- * @luafunc jump( funcname )
+ * @luafunc jumpin( funcname )
  */
 static int hook_jumpin( lua_State *L )
 {
