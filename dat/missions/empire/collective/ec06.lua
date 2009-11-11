@@ -233,7 +233,7 @@ end
 
 
 function refuelBroadcast ()
-   if refship:alive() then
+   if refship:exists() then
       refship:broadcast("Tanker in system, contact if in need of fuel.")
       misn.timerStart( "refuelBroadcast", 10000 )
    end

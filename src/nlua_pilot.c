@@ -53,7 +53,7 @@ static int pilotL_getPilots( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
-static int pilotL_alive( lua_State *L );
+static int pilotL_exists( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -87,7 +87,7 @@ static const luaL_reg pilotL_methods[] = {
    /* Info. */
    { "name", pilotL_name },
    { "id", pilotL_id },
-   { "alive", pilotL_alive },
+   { "exists", pilotL_exists },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -616,15 +616,17 @@ static int pilotL_id( lua_State *L )
 }
 
 /**
- * @brief Checks to see if pilot is still alive.
+ * @brief Checks to see if pilot is still in the system and alive.
  *
- * @usage if p:alive() then -- Pilot is still alive
+ * Pilots cease to exist if they die or jump out.
  *
- *    @luaparam p Pilot to check to see if is still alive.
- *    @luareturn true if pilot is still alive.
- * @luafunc alive( p )
+ * @usage if p:exists() then -- Pilot still exists
+ *
+ *    @luaparam p Pilot to check to see if is still exists.
+ *    @luareturn true if pilot is still exists.
+ * @luafunc exists( p )
  */
-static int pilotL_alive( lua_State *L )
+static int pilotL_exists( lua_State *L )
 {
    LuaPilot *lp;
    Pilot *p;
@@ -633,7 +635,7 @@ static int pilotL_alive( lua_State *L )
    lp = luaL_checkpilot(L,1);
    p  = pilot_get( lp->pilot );
 
-   /* Check if is alive. */
+   /* Check if the pilot exists. */
    lua_pushboolean(L, p!=NULL);
    return 1;
 }
