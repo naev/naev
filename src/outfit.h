@@ -251,10 +251,13 @@ typedef struct OutfitModificationData_ {
 
    /* health */
    double armour; /**< Maximum armour modifier. */
+   double armour_rel; /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
    double shield; /**< Maximum shield modifier. */
+   double shield_rel; /**< Relative to shield base modifier. */
    double shield_regen; /**< Shield regeneration modifier. */
    double energy; /**< Maximum energy modifier. */
+   double energy_rel; /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double cpu; /**< CPU modifier. */
 
