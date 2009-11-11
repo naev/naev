@@ -841,7 +841,10 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
    return strsignal(sig);
 }
 
-static void debug_translateAddress(const char *symbol, bfd_vma address)
+/**
+ * @brief Translates and displays the address as something humans can enjoy.
+ */
+static void debug_translateAddress( const char *symbol, bfd_vma address )
 {
    const char *file, *func;
    unsigned int line;
@@ -897,7 +900,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++) {
       if (abfd != NULL)
-         debug_translateAddress(symbols[i], (bfd_vma)buf[i]);
+         debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
       else
          DEBUG("   %s", symbols[i]);
    }
