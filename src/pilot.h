@@ -132,7 +132,7 @@ typedef struct PilotOutfitSlot_ {
    union {
       int beamid; /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo; /**< Ammo for launchers. */
-   } u;
+   } u; /**< Stores type specific datae. */
 } PilotOutfitSlot;
 
 

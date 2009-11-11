@@ -57,7 +57,7 @@ typedef struct Faction_ {
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
    glTexture *logo_tiny; /**< Tiny logo. */
-   glColour *colour;
+   glColour *colour; /**< Faction specific colour. */
 
    /* Enemies */
    int *enemies; /**< Enemies by ID of the faction. */

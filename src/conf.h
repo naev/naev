@@ -65,7 +65,7 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
 
    /* Debugging. */
-   int fpu_except;
+   int fpu_except; /**< Enable FPU exceptions? */
 
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */

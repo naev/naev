@@ -94,11 +94,11 @@ static int music_forced             = 0; /**< Whether or not music is force stop
  * saves the music to ram in this structure
  */
 typedef struct alMusic_ {
-   char name[64]; /* name */
-   SDL_RWops *rw;
-   OggVorbis_File stream;
-   vorbis_info* info;
-   ALenum format;
+   char name[64]; /**< Song name. */
+   SDL_RWops *rw; /**< RWops file reading from. */
+   OggVorbis_File stream; /**< Vorbis file stream. */
+   vorbis_info* info; /**< Information of the stream. */
+   ALenum format; /**< Stream format. */
    /* Replygain information. */
    ALfloat rg_scale_factor; /**< Scale factor. */
    ALfloat rg_max_scale; /**< Maximum scale factor before clipping. */
