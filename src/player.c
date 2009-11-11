@@ -1474,7 +1474,7 @@ void player_brokeHyperspace (void)
    double d;
 
    /* First run jump hook. */
-   hooks_run( "jump" );
+   hooks_run( "jumpout" );
 
    /* calculates the time it takes, call before space_init */
    d  = pilot_hyperspaceDelay( player );
@@ -1513,6 +1513,7 @@ void player_brokeHyperspace (void)
    }
 
    /* run the jump hooks */
+   hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
 
