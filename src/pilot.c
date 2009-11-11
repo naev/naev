@@ -2041,11 +2041,20 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          if ((o->u.mod.armour < 0) &&
                (fabs(o->u.mod.armour) > p->armour_max))
             return "Insufficient armour";
+         if ((o->u.mod.armour_rel < 0.) &&
+               (fabs(o->u.mod.armour_rel * p->ship->armour) > p->armour_max))
+            return "Insufficient armour";
          if ((o->u.mod.shield < 0) &&
                (fabs(o->u.mod.shield) > p->shield_max))
             return "Insufficient shield";
+         if ((o->u.mod.shield_rel < 0.) &&
+               (fabs(o->u.mod.shield_rel * p->ship->shield) > p->shield_max))
+            return "Insufficient shield";
          if ((o->u.mod.energy < 0) &&
                (fabs(o->u.mod.energy) > p->armour_max))
+            return "Insufficient energy";
+         if ((o->u.mod.energy_rel < 0.) &&
+               (fabs(o->u.mod.energy_rel * p->ship->energy) > p->energy_max))
             return "Insufficient energy";
          /* Regen. */
          if ((o->u.mod.armour_regen < 0) &&
@@ -2281,6 +2290,7 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
+   double arel, srel, erel; /* relative health bonuses. */
    ShipStats *s;
    int nfirerate_turret, nfirerate_forward;
    int njammers;
@@ -2332,6 +2342,9 @@ void pilot_calcStats( Pilot* pilot )
    njammers             = 0;
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
+   arel                 = 0.;
+   srel                 = 0.;
+   erel                 = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       slot = pilot->outfits[i];
       o    = slot->outfit;
@@ -2360,10 +2373,13 @@ void pilot_calcStats( Pilot* pilot )
          /* health */
          pilot->armour_max    += o->u.mod.armour * q;
          pilot->armour_regen  += o->u.mod.armour_regen * q;
+         arel                 += o->u.mod.armour_rel * q;
          pilot->shield_max    += o->u.mod.shield * q;
          pilot->shield_regen  += o->u.mod.shield_regen * q;
+         srel                 += o->u.mod.shield_rel * q;
          pilot->energy_max    += o->u.mod.energy * q;
          pilot->energy_regen  += o->u.mod.energy_regen * q;
+         erel                 += o->u.mod.energy_rel * q;
          /* fuel */
          pilot->fuel_max      += o->u.mod.fuel * q;
          /* misc */
@@ -2470,6 +2486,11 @@ void pilot_calcStats( Pilot* pilot )
    s->firerate_turret  += 1.;
    /* Freighter. */
    s->jump_delay        = s->jump_delay/100. + 1.;
+
+   /* Increase health by relative bonuses. */
+   pilot->armour_max += arel * pilot->ship->armour;
+   pilot->shield_max += srel * pilot->ship->shield;
+   pilot->energy_max += erel * pilot->ship->energy;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

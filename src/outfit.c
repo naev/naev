@@ -1154,8 +1154,11 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"speed_rel",temp->u.mod.speed_rel);
       /* health */
       xmlr_float(node,"armour",temp->u.mod.armour);
+      xmlr_float(node,"armour_rel",temp->u.mod.armour_rel);
       xmlr_float(node,"shield",temp->u.mod.shield);
+      xmlr_float(node,"shield_rel",temp->u.mod.shield_rel);
       xmlr_float(node,"energy",temp->u.mod.energy);
+      xmlr_float(node,"energy_rel",temp->u.mod.energy_rel);
       xmlr_float(node,"fuel",temp->u.mod.fuel);
       xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
       xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
@@ -1192,8 +1195,11 @@ if ((x) != 0.) \
    DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );
    DESC_ADD0( temp->u.mod.speed_rel, "%% Maximum Speed" );
    DESC_ADD0( temp->u.mod.armour, "Armour" );
+   DESC_ADD0( temp->u.mod.armour_rel, "%% Armour" );
    DESC_ADD0( temp->u.mod.shield, "Shield" );
+   DESC_ADD0( temp->u.mod.shield_rel, "%% Shield" );
    DESC_ADD0( temp->u.mod.energy, "Energy" );
+   DESC_ADD0( temp->u.mod.energy_rel, "%% Energy" );
    DESC_ADD0( temp->u.mod.fuel, "Fuel" );
    DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
@@ -1211,6 +1217,9 @@ if ((x) != 0.) \
    temp->u.mod.thrust_rel /= 100.;
    temp->u.mod.turn_rel   /= 100.;
    temp->u.mod.speed_rel  /= 100.;
+   temp->u.mod.armour_rel /= 100.;
+   temp->u.mod.shield_rel /= 100.;
+   temp->u.mod.energy_rel /= 100.;
    temp->u.mod.mass_rel   /= 100.;
    temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
