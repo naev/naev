@@ -1473,6 +1473,9 @@ void player_brokeHyperspace (void)
 {
    double d;
 
+   /* First run jump hook. */
+   hooks_run( "jump" );
+
    /* calculates the time it takes, call before space_init */
    d  = pilot_hyperspaceDelay( player );
    d += RNG_1SIGMA() * 0.2 * d;

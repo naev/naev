@@ -40,12 +40,14 @@ static Event_t *running_event = NULL; /**< Current running event. */
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_time( lua_State *L );
+static int hook_jump( lua_State *L );
 static int hook_enter( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "time", hook_time },
+   { "jump", hook_jump },
    { "enter", hook_enter },
    { "pilot", hook_pilot },
    {0,0}
@@ -195,6 +197,18 @@ static int hook_takeoff( lua_State *L )
 static int hook_time( lua_State *L )
 {
    hook_generic( L, "time", 1 );
+   return 0;
+}
+/**
+ * @brief Hooks the function to the player jumping (before changing systems).
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc jump( funcname )
+ */
+static int hook_jump( lua_State *L )
+{
+   hook_generic( L, "jump", 1 );
    return 0;
 }
 /**
