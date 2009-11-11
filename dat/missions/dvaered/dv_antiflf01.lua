@@ -3,8 +3,8 @@
 -- stack variable flfbase_flfshipkilled: Used to determine whether the player destroyed the FLF derelict, as requested.
 -- stack variable flfbase_intro:
 --      1 - The player has turned in the FLF agent
---      2 - The player has rescued the FLF agent. (not used in this script)
---      3 - The player has betrayed the FLF after rescuing the agent (not used in this script)
+--      2 - The player has rescued the FLF agent.
+--      3 - The player has betrayed the FLF after rescuing the agent
 --      4 - The player has found the FLF base and sided with Dvaered
 --      5 - The player has sided with the FLF. Use this as the conditional for the FLF string.
 --]]

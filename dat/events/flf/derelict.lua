@@ -44,7 +44,6 @@ function create()
     destroyed = false
 
     -- Set a bunch of vars, for no real reason
-    var.push("flfbase_angle", rnd.rnd() * 2 * math.pi)
     var.push("flfbase_sysname", "Sigur") -- Caution: if you change this, change the location for base Sindbad in unidiff.xml as well!
     
     hook.pilot(shipDV, "board", "boardDV")

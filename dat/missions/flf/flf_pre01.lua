@@ -2,8 +2,8 @@
 -- This is the first "prelude" mission leading to the FLF campaign. The player takes a FLF agent onboard, then either turns him in to the Dvaered or delivers him to a hidden FLF base.
 -- stack variable flfbase_intro:
 --      1 - The player has turned in the FLF agent
---      2 - The player has rescued the FLF agent. (not used in this script)
---      3 - The player has betrayed the FLF after rescuing the agent (not used in this script)
+--      2 - The player has rescued the FLF agent.
+--      3 - The player has betrayed the FLF after rescuing the agent
 --      4 - The player has found the FLF base and sided with Dvaered
 --      5 - The player has sided with the FLF. Use this as the conditional for the FLF string.
 --]]
@@ -72,6 +72,7 @@ function create()
     misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 
     flfdead = false -- Flag to check if the player destroyed the FLF sentinels
+    basefound = false -- Flag to keep track if the player has seen the base
     
     destsysname = var.peek("flfbase_sysname")
     destsys = system.get(destsysname)
@@ -95,7 +96,7 @@ function enter()
         dist = 15000 -- distance of the FLF base from the player jump-in point
         spread = 45 -- max degrees off-course for waypoints
 
-        angle = var.peek("flfbase_angle")
+        angle = rnd.rnd() * 2 * math.pi
         angle2 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         angle3 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         
@@ -140,7 +141,6 @@ function land()
         tk.msg(title[4], string.format(text[4], player.name()))
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
-        var.pop("flfbase_angle")
         var.pop("flfbase_flfshipkilled")
         misn.jetCargo(gregar)
         misn.finish(true)
@@ -149,8 +149,11 @@ function land()
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
             faction.get("Dvaered"):modPlayerRaw(5)
-            var.push("flfbase_intro", 1)
-            var.pop("flfbase_angle")
+            if basefound then
+                var.push("flfbase_intro", 4)
+            else
+                var.push("flfbase_intro", 1)
+            done
             var.pop("flfbase_flfshipkilled")
             misn.jetCargo(gregar)
             misn.finish(true)
@@ -221,6 +224,7 @@ end
 function spawnbase()
     if vec2.dist(flfship:pos(), waypoint0:pos()) < 1000 then
         diff.apply("FLF_base")
+        basefound = true
         misn.timerStop(OORT)
     else
         misn.timerStart("spawnbase", 1000)
@@ -241,7 +245,6 @@ function outOfRange()
 end
 
 function abort()
-    var.pop("flfbase_angle")
     var.pop("flfbase_sysname")
     var.pop("flfbase_flfshipkilled")
     misn.finish(false)
