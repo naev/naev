@@ -172,7 +172,7 @@ extern unsigned int economy_getPrice( const Commodity *com,
  */
 static void commodity_exchange_open( unsigned int wid )
 {
-   int i;
+   int i, ngoods;
    char **goods;
    int w, h;
 
@@ -204,12 +204,20 @@ static void commodity_exchange_open( unsigned int wid )
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* goods list */
-   goods = malloc(sizeof(char*) * land_planet->ncommodities);
-   for (i=0; i<land_planet->ncommodities; i++)
-      goods[i] = strdup(land_planet->commodities[i]->name);
+   if (land_planet->ncommodities > 0) {
+      goods = malloc(sizeof(char*) * land_planet->ncommodities);
+      for (i=0; i<land_planet->ncommodities; i++)
+         goods[i] = strdup(land_planet->commodities[i]->name);
+      ngoods = land_planet->ncommodities;
+   }
+   else {
+      goods    = malloc( sizeof(char*) );
+      goods[0] = strdup("None");
+      ngoods   = 1;
+   }
    window_addList( wid, 20, -40,
          w-BUTTON_WIDTH-60, h-80-BUTTON_HEIGHT,
-         "lstGoods", goods, land_planet->ncommodities, 0, commodity_update );
+         "lstGoods", goods, ngoods, 0, commodity_update );
 
    /* update */
    commodity_update(wid, NULL);
@@ -227,6 +235,15 @@ static void commodity_update( unsigned int wid, char* str )
    Commodity *com;
 
    comname = toolkit_getList( wid, "lstGoods" );
+   if ((comname==NULL) || (strcmp( comname, "None" )==0)) {
+      snprintf( buf, PATH_MAX,
+         "NA Tons\n"
+         "NA Credits/Ton\n"
+         "\n"
+         "NA Tons\n" );
+      window_modifyText( wid, "txtDInfo", buf );
+      window_modifyText( wid, "txtDesc", "No outfits available." );
+   }
    com = commodity_get( comname );
 
    /* modify text */
