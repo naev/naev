@@ -71,10 +71,10 @@ int cond_check( const char* cond )
          lua_strlen(cond_L,-1), "Lua Conditional");
    switch (ret) {
       case  LUA_ERRSYNTAX:
-         WARN("Lua conditional syntax error");
+         WARN("Lua conditional syntax error: %s", lua_tostring(cond_L, -1));
          goto cond_err;
       case LUA_ERRMEM:
-         WARN("Lua Conditional ran out of memory");
+         WARN("Lua Conditional ran out of memory: %s", lua_tostring(cond_L, -1));
          goto cond_err;
       default:
          break;
@@ -87,10 +87,10 @@ int cond_check( const char* cond )
          WARN("Lua Conditional had a runtime error: %s", lua_tostring(cond_L, -1));
          goto cond_err;
       case LUA_ERRMEM:
-         WARN("Lua Conditional ran out of memory");
+         WARN("Lua Conditional ran out of memory: %s", lua_tostring(cond_L, -1));
          goto cond_err;
       case LUA_ERRERR:
-         WARN("Lua Conditional had an error while handling error function");
+         WARN("Lua Conditional had an error while handling error function: %s", lua_tostring(cond_L, -1));
          goto cond_err;
       default:
          break;
