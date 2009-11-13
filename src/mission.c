@@ -250,6 +250,7 @@ static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname )
 {
    MissionData* misn;
+   int c;
 
    misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
@@ -274,9 +275,15 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* Must meet Lua condition. */
-   if ((misn->avail.cond != NULL) &&
-         !cond_check(misn->avail.cond))
-      return 0;
+   if (misn->avail.cond != NULL) {
+      c = cond_check(misn->avail.cond);
+      if (c < 0) {
+         WARN("Conditional for mission '%s' failed to run", misn->name);
+         return 0;
+      }
+      else if (!c)
+         return 0;
+   }
 
    /* Must meet previous mission requirements. */
    if ((misn->avail.done != NULL) &&

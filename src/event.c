@@ -375,7 +375,7 @@ static int event_alreadyRunning( int data )
  */
 void events_trigger( EventTrigger_t trigger )
 {
-   int i;
+   int i, c;
 
    for (i=0; i<event_ndata; i++) {
       /* Make sure trigger matches. */
@@ -392,8 +392,15 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* Test conditional. */
-      if ((event_data[i].cond != NULL) && !cond_check(event_data[i].cond))
-         continue;
+      if (event_data[i].cond != NULL) {
+         c = cond_check(event_data[i].cond);
+         if (c<0) {
+            WARN("Conditional for event '%s' failed to run.", event_data[i].name);
+            continue;
+         }
+         else if (!c)
+            continue;
+      }
 
       /* Create the event. */
       event_create( i );
