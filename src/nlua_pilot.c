@@ -1425,7 +1425,10 @@ static int pilotL_setNoboard( lua_State *L )
    }
 
    /* Handle parameters. */
-   disable = !lua_toboolean(L, 2);
+   if (lua_isnil(L, 2))
+      disable = 1;
+   else
+      disable = lua_toboolean(L, 2);
 
    /* See if should mark as boarded. */
    if (disable)
@@ -1462,7 +1465,10 @@ static int pilotL_setNodisable( lua_State *L )
    }
 
    /* Handle parameters. */
-   disable = !lua_toboolean(L, 2);
+   if (lua_isnil(L, 2))
+      disable = 1;
+   else
+      disable = lua_toboolean(L, 2);
 
    /* See if should mark as boarded. */
    if (disable)
