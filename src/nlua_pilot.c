@@ -1403,6 +1403,8 @@ static int pilotL_setHealth( lua_State *L )
 /**
  * @brief Sets the ability to board the pilot.
  *
+ * No parameter is equivalent to true.
+ *
  * @usage p:setNoboard( true ) -- Pilot can not be boarded by anyone
  *
  *    @luaparam p Pilot to set disable boarding.
@@ -1425,7 +1427,10 @@ static int pilotL_setNoboard( lua_State *L )
    }
 
    /* Handle parameters. */
-   disable = !lua_toboolean(L, 2);
+   if (lua_isnil(L, 2))
+      disable = 1;
+   else
+      disable = lua_toboolean(L, 2);
 
    /* See if should mark as boarded. */
    if (disable)
@@ -1439,6 +1444,8 @@ static int pilotL_setNoboard( lua_State *L )
 
 /**
  * @brief Sets the ability of the pilot to be disabled.
+ *
+ * No parameter is equivalent to true.
  *
  * @usage p:setNodisable( true ) -- Pilot can not be disabled anymore.
  *
@@ -1462,7 +1469,10 @@ static int pilotL_setNodisable( lua_State *L )
    }
 
    /* Handle parameters. */
-   disable = !lua_toboolean(L, 2);
+   if (lua_isnil(L, 2))
+      disable = 1;
+   else
+      disable = lua_toboolean(L, 2);
 
    /* See if should mark as boarded. */
    if (disable)
