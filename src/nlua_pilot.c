@@ -1481,7 +1481,7 @@ static int pilotL_shipName( lua_State *L )
    }
 
    /** Return the ship name. */
-   lua_pushstring(L, p->ship->name);
+   lua_pushstring(L, p->name);
    return 1;
 }
 
