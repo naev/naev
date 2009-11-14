@@ -74,6 +74,7 @@ static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
+static int pilotL_setNodisable( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
@@ -98,6 +99,7 @@ static const luaL_reg pilotL_methods[] = {
    { "changeAI", pilotL_changeAI },
    { "setHealth", pilotL_setHealth },
    { "setNoboard", pilotL_setNoboard },
+   { "setNodisable", pilotL_setNodisable },
    { "getHealth", pilotL_getHealth },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
@@ -1430,6 +1432,43 @@ static int pilotL_setNoboard( lua_State *L )
       pilot_setFlag(p, PILOT_NOBOARD);
    else
       pilot_rmFlag(p, PILOT_NOBOARD);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the ability of the pilot to be disabled.
+ *
+ * @usage p:setNodisable( true ) -- Pilot can not be disabled anymore.
+ *
+ *    @luaparam p Pilot to set disable disabling.
+ *    @luaparam nodisable If true it disallows disabled of the pilot, otherwise
+ *              it allows disabling which is the default.
+ * @luafunc setNodisable( p, disable )
+ */
+static int pilotL_setNodisable( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   int disable;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Handle parameters. */
+   disable = !lua_toboolean(L, 2);
+
+   /* See if should mark as boarded. */
+   if (disable)
+      pilot_setFlag(p, PILOT_NODISABLE);
+   else
+      pilot_rmFlag(p, PILOT_NODISABLE);
 
    return 0;
 }
