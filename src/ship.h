@@ -78,11 +78,12 @@ typedef struct ShipOutfitSlot_ {
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
-   char* name; /**< ship name */
-   ShipClass class; /**< ship class */
+   char* name; /**< Ship name */
+   char* base_type; /**< Ship's base type, basically used for figuring out what ships are related. */
+   ShipClass class; /**< Ship class */
 
    /* store stuff */
-   unsigned int price; /**< cost to buy */
+   unsigned int price; /**< Cost to buy */
    int tech; /**< Tech needed for it to be available.  See space.h. */
    char* license; /**< License needed to buy it. */
    char* fabricator; /**< company that makes it */

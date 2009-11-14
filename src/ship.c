@@ -465,6 +465,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->sound = sound_get( xml_get(node) );
          continue;
       }
+      xmlr_strd(node,"base_type",temp->base_type);
       if (xml_isNode(node,"class")) {
          temp->class = ship_classFromString( xml_get(node) );
          continue;
@@ -605,6 +606,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)
    MELEMENT(temp->name==NULL,"name");
+   MELEMENT(temp->base_type==NULL,"base_type");
    MELEMENT(temp->gfx_space==NULL,"GFX");
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
