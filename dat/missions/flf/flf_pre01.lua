@@ -90,7 +90,7 @@ end
 
 -- Handle the FLF encounter, Gregar's intervention, and ultimately the search for the base.
 function enter()
-    if system.cur() == destsys and not flfdead then
+    if system.cur() == destsys and not flfdead and not basefound then
         dist = 15000 -- distance of the FLF base from the player jump-in point
         spread = 45 -- max degrees off-course for waypoints
 
