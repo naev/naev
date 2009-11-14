@@ -1109,7 +1109,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    }
 
    /* Disabled always run before dead to ensure crating boost. */
-   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
+   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
          (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour)) { /* disabled */
 
       /* If hostile, must remove counter. */
@@ -3319,7 +3319,7 @@ void pilots_update( double dt )
       }
 
       /* See if should think. */
-      if (p->think && !pilot_isDisabled(p)) {
+      if (p->think && !pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_DEAD)) {
 
          /* Hyperspace gets special treatment */
          if (pilot_isFlag(p, PILOT_HYP_PREP))

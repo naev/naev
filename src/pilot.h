@@ -60,11 +60,13 @@
 #define PILOT_ESCORT       (1<<1) /**< Pilot is an escort. */
 #define PILOT_CARRIED      (1<<2) /**< Pilot usually resides in a fighter bay. */
 #define PILOT_CREATED_AI   (1<<3) /** Pilot has already created AI. */
-#define PILOT_EMPTY        (1<<5) /**< Do not add pilot to stack. */
-#define PILOT_NO_OUTFITS   (1<<6) /**< Do not create the pilot with outfits. */
-#define PILOT_HASTURRET    (1<<8) /**< Pilot has turrets. */
-#define PILOT_HASBEAMS     (1<<9) /**< Pilot has beam weapons. */
+#define PILOT_EMPTY        (1<<4) /**< Do not add pilot to stack. */
+#define PILOT_NO_OUTFITS   (1<<5) /**< Do not create the pilot with outfits. */
+#define PILOT_HASTURRET    (1<<6) /**< Pilot has turrets. */
+#define PILOT_HASBEAMS     (1<<7) /**< Pilot has beam weapons. */
+#define PILOT_UNUSED_8     (1<<8)
 /* dynamic */
+#define PILOT_NODISABLE    (1<<9) /**< Pilot can't be disabled. */
 #define PILOT_INVINCIBLE   (1<<10) /**< Pilot can't be hit ever. */
 #define PILOT_HOSTILE      (1<<11) /**< Pilot is hostile to the player. */
 #define PILOT_FRIENDLY     (1<<12) /**< Pilot is friendly to the player. */
@@ -81,11 +83,12 @@
 #define PILOT_DISTRESSED   (1<<23) /**< Pilot has distressed once already. */
 #define PILOT_REFUELING    (1<<24) /**< Pilot is trying to refueling. */
 #define PILOT_REFUELBOARDING (1<<25) /**< Pilot is actively refueling. */
-#define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */
-#define PILOT_DEAD         (1<<27) /**< Pilot is in it's dying throes */
-#define PILOT_DEATH_SOUND  (1<<28) /**< Pilot just did death explosion. */
-#define PILOT_EXPLODED     (1<<29) /**< Pilot did final death explosion. */
-#define PILOT_DELETE       (1<<30) /**< Pilot will get deleted asap. */
+#define PILOT_UNUSED_26    (1<<26)
+#define PILOT_DISABLED     (1<<27) /**< Pilot is disabled. */
+#define PILOT_DEAD         (1<<28) /**< Pilot is in it's dying throes */
+#define PILOT_DEATH_SOUND  (1<<29) /**< Pilot just did death explosion. */
+#define PILOT_EXPLODED     (1<<30) /**< Pilot did final death explosion. */
+#define PILOT_DELETE       (1<<31) /**< Pilot will get deleted asap. */
 
 /* makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
