@@ -25,6 +25,7 @@
 /* Ship metatable methods. */
 static int shipL_get( lua_State *L );
 static int shipL_name( lua_State *L );
+static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_CPU( lua_State *L );
@@ -32,6 +33,7 @@ static int shipL_outfitCPU( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "get", shipL_get },
    { "name", shipL_name },
+   { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "slots", shipL_slots },
    { "cpu", shipL_CPU },
@@ -200,6 +202,35 @@ static int shipL_name( lua_State *L )
 
    /** Return the ship name. */
    lua_pushstring(L, s->name);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ship's base type.
+ *
+ * For example "Empire Lancelot" and "Lancelot" are both of the base type "Lancelot".
+ *
+ * @usage type = s:baseType()
+ *
+ *    @luaparam s Ship to get the ship base type.
+ *    @luareturn The name of the ship base type.
+ * @luafunc baseType( s )
+ */
+static int shipL_baseType( lua_State *L )
+{
+   LuaShip *ls;
+   Ship *s;
+
+   /* Get the ship. */
+   ls = luaL_checkship(L,1);
+   s  = ls->ship;
+   if (s==NULL) {
+      NLUA_ERROR(L,"Ship is invalid.");
+      return 0;
+   }
+
+   lua_pushstring(L, s->base_type);
    return 1;
 }
 

@@ -2,6 +2,7 @@
 <Ships>
  <!-- Light Craft -->
  <ship name="Llama">
+  <base_type>Llama</base_type>
   <GFX>llama</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -40,6 +41,7 @@
   </slots>
  </ship>
  <ship name="Hyena">
+  <base_type>Hyena</base_type>
   <GFX>hyena</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -77,6 +79,7 @@
   </slots>
  </ship>
  <ship name="Schroedinger">
+  <base_type>Schroedinger</base_type>
   <GFX>schroedinger</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -115,6 +118,7 @@
   </slots>
  </ship>
  <ship name="Gawain">
+  <base_type>Gawain</base_type>
   <GFX>gawain</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -154,6 +158,7 @@
   </slots>
  </ship>
  <ship name="Drone">
+  <base_type>Drone</base_type>
   <GFX>drone</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -192,6 +197,7 @@
  </ship>
  <!-- Cargo Haulers -->
  <ship name="Koala">
+  <base_type>Koala</base_type>
   <GFX>koala</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -232,6 +238,7 @@
   </slots>
  </ship>
  <ship name="Quicksilver">
+  <base_type>Quicksilver</base_type>
   <GFX sx="10" sy="10">quicksilver</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -275,6 +282,7 @@
   </stats>
  </ship>
  <ship name="Mule">
+  <base_type>Mule</base_type>
   <GFX sx="10" sy="10">mule</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -321,6 +329,7 @@
  </ship>
  <!-- Fighters -->
  <ship name="Derivative">
+  <base_type>Derivative</base_type>
   <GFX>derivative</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -360,6 +369,7 @@
   </slots>
  </ship>
  <ship name="Lancelot">
+  <base_type>Lancelot</base_type>
   <GFX>lancelot</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -402,6 +412,7 @@
   </slots>
  </ship>
  <ship name="Empire Lancelot">
+  <base_type>Lancelot</base_type>
   <GFX>lancelot_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -444,6 +455,7 @@
   </slots>
  </ship>
  <ship name="Vendetta">
+  <base_type>Vendetta</base_type>
   <GFX>vendetta</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -485,6 +497,7 @@
   </slots>
  </ship>
  <ship name="Dvaered Vendetta">
+  <base_type>Vendetta</base_type>
   <GFX>vendetta_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -525,6 +538,7 @@
   </slots>
  </ship>
  <ship name="Pirate Vendetta">
+  <base_type>Vendetta</base_type>
   <GFX>vendetta_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -565,6 +579,7 @@
   </slots>
  </ship>
  <ship name="Ancestor">
+  <base_type>Ancestor</base_type>
   <GFX>ancestor</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -605,6 +620,7 @@
   </slots>
  </ship>
  <ship name="Dvaered Ancestor">
+  <base_type>Ancestor</base_type>
   <GFX>ancestor_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -645,6 +661,7 @@
   </slots>
  </ship>
  <ship name="Pirate Ancestor">
+  <base_type>Ancestor</base_type>
   <GFX>ancestor_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -685,6 +702,7 @@
  </ship>
  <!-- Corvettes -->
  <ship name="Admonisher">
+  <base_type>Admonisher</base_type>
   <GFX>admonisher</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -729,6 +747,7 @@
   </slots>
  </ship>
  <ship name="Pirate Admonisher">
+  <base_type>Admonisher</base_type>
   <GFX>admonisher_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -772,6 +791,7 @@
   </slots>
  </ship>
  <ship name="Empire Admonisher">
+  <base_type>Admonisher</base_type>
   <GFX>admonisher_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -816,6 +836,7 @@
   </slots>
  </ship>
  <ship name="Vigilance">
+  <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -862,6 +883,7 @@
   </slots>
  </ship>
  <ship name="Dvaered Vigilance">
+  <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -908,6 +930,7 @@
   </slots>
  </ship>
  <ship name="Kahan">
+  <base_type>Kahan</base_type>
   <GFX sx="10" sy="10">kahan</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -953,6 +976,7 @@
   </slots>
  </ship>
  <ship name="Pacifier">
+  <base_type>Pacifier</base_type>
   <GFX sx="10" sy="10">pacifier</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -998,6 +1022,7 @@
   </slots>
  </ship>
  <ship name="Empire Pacifier">
+  <base_type>Pacifier</base_type>
   <GFX sx="10" sy="10">pacifier_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1044,6 +1069,7 @@
  </ship>
  <!-- Cruisers -->
  <ship name="Kestrel">
+  <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1092,6 +1118,7 @@
   </slots>
  </ship>
  <ship name="Pirate Kestrel">
+  <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1139,6 +1166,7 @@
   </slots>
  </ship>
  <ship name="Archimedes">
+  <base_type>Archimedes</base_type>
   <GFX sx="12" sy="12">archimedes</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1190,6 +1218,7 @@
   </slots>
  </ship>
  <ship name="Hawking">
+  <base_type>Hawking</base_type>
   <GFX sx="12" sy="12">hawking</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1240,6 +1269,7 @@
   </slots>
  </ship>
  <ship name="Empire Hawking">
+  <base_type>Hawking</base_type>
   <GFX  sx="12" sy="12">hawking_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1290,6 +1320,7 @@
   </slots>
  </ship>
  <ship name="Goddard">
+  <base_type>Goddard</base_type>
   <GFX sx="12" sy="12">goddard</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1341,6 +1372,7 @@
   </slots>
  </ship>
  <ship name="Dvaered Goddard">
+  <base_type>Goddard</base_type>
   <GFX sx="12" sy="12">goddard_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -1392,6 +1424,7 @@
   </slots>
  </ship>
  <ship name="Peacemaker">
+  <base_type>Peacemaker</base_type>
   <GFX sx="12" sy="12">peacemaker</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
