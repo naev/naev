@@ -90,25 +90,32 @@ static int write_png( const char *file_name, png_bytep *rows,
  */
 void gl_screenshot( const char *filename )
 {
-   SDL_Surface *screen = SDL_GetVideoSurface();
-   unsigned rowbytes = screen->w * 4;
-   unsigned char screenbuf[screen->h][rowbytes], *rows[screen->h];
-   int i;
+   GLubyte *screenbuf;
+   png_bytep *rows;
+   int i, w, h;
+
+   /* Allocate data. */
+   w           = gl_screen.rw;
+   h           = gl_screen.rh;
+   screenbuf   = malloc( sizeof(GLubyte) * 3 * w*h );
+   rows        = malloc( sizeof(png_bytep) * h );
 
    /* Read pixels from buffer -- SLOW. */
-   glReadPixels( 0, 0, screen->w, screen->h,
-         GL_RGBA, GL_UNSIGNED_BYTE, screenbuf );
+   glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
 
    /* Convert data. */
-   for (i = 0; i < screen->h; i++)
-      rows[i] = screenbuf[screen->h - i - 1];
+   for (i = 0; i < h; i++)
+      rows[i] = &screenbuf[ (h - i - 1) * (3*w) ];
 
    /* Save PNG. */
-   write_png( filename, rows, screen->w, screen->h,
-         PNG_COLOR_TYPE_RGBA, 8);
+   write_png( filename, rows, w, h, PNG_COLOR_TYPE_RGB, 8);
 
    /* Check to see if an error occured. */
    gl_checkErr();
+
+   /* Free memory. */
+   free( screenbuf );
+   free( rows );
 }
 
 
