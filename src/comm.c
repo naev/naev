@@ -82,9 +82,11 @@ int comm_openPilot( unsigned int pilot )
    const char *msg;
    unsigned int wid;
    int run;
+   Pilot *p;
 
    /* Get the pilot. */
-   comm_pilot = pilot_get( pilot );
+   p           = pilot_get( pilot );
+   comm_pilot  = p;
    if (comm_pilot == NULL)
       return -1;
   
@@ -112,6 +114,7 @@ int comm_openPilot( unsigned int pilot )
    if (run > 0) {
       /* Reopen window in case something changed. */
       comm_close( wid, NULL );
+      comm_pilot = p;
       comm_openPilotWindow();
    }
 
