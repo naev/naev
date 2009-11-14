@@ -313,6 +313,33 @@
    <pilot name="Goddard" chance="40" ship="Dvaered Goddard"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Dvaered Small Patrol">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Big Patrol">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Dvaered Strike Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
@@ -524,6 +551,16 @@
   </flags>
   <pilots>
    <pilot chance="100" ship="Base"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Independent Vendetta Quartet">
+  <ai>flf</ai>
+  <faction>Independent</faction>
+  <pilots>
+   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot chance="100" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Waypoint">

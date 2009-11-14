@@ -119,6 +119,7 @@
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
   <player>-10</player>
+  <colour>orange</colour>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
