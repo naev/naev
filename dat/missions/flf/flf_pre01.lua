@@ -135,7 +135,7 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if planet.get():name() == "Sindbad" then
+    if planet.cur():name() == "Sindbad" then
         tk.msg(title[4], string.format(text[4], player.name()))
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
@@ -143,7 +143,7 @@ function land()
         misn.jetCargo(gregar)
         misn.finish(true)
     -- Case Dvaered planet
-    elseif planet.get():faction():name() == "Dvaered" then
+    elseif planet.cur():faction():name() == "Dvaered" then
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
             faction.get("Dvaered"):modPlayerRaw(5)
