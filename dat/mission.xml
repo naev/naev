@@ -361,7 +361,7 @@
   <avail>
    <chance>100</chance>
    <location>Bar</location>
-   <cond>planet.get():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
+   <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
@@ -382,7 +382,18 @@
   <avail>
    <chance>100</chance>
    <location>Bar</location>
-   <cond>planet.get():faction() == faction.get("Dvaered") and planet.get():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
+   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
+  </avail>
+ </mission>
+ <mission name="Destroy the FLF base!">
+  <lua>dvaered/dv_antiflf03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
   </avail>
  </mission>
  <mission name="NAEV Needs You!">

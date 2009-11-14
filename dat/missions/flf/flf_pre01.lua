@@ -149,6 +149,7 @@ function land()
             faction.get("Dvaered"):modPlayerRaw(5)
             if basefound then
                 var.push("flfbase_intro", 3)
+                diff.remove("FLF_base")
             else
                 var.push("flfbase_intro", 1)
             end

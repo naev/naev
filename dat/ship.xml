@@ -1484,8 +1484,8 @@
   <class>Cruiser</class>
   <price>0</price>
   <fabricator>N/A</fabricator>
-  <tech>0</tech>
-  <description>This is a base. You can't buy or fly it. It's for AI use only.</description>
+  <tech>10000000000</tech>
+  <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
   <movement>
    <thrust>0</thrust>
    <turn>100</turn>
@@ -1536,8 +1536,8 @@
   <class>Waypoint</class>
   <price>0</price>
   <fabricator>BTAxis</fabricator>
-  <tech>0</tech>
-  <description>It's a waypoint. Blame bobbens.</description>
+  <tech>10000000000</tech>
+  <description>It's a waypoint. Blame bobbens. Just... Don't buy it.</description>
   <movement>
    <thrust>0</thrust>
    <turn>0</turn>
