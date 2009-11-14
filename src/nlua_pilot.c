@@ -630,13 +630,22 @@ static int pilotL_exists( lua_State *L )
 {
    LuaPilot *lp;
    Pilot *p;
+   int exists;
 
    /* Parse parameters. */
    lp = luaL_checkpilot(L,1);
    p  = pilot_get( lp->pilot );
 
+   /* Must still be kicking and alive. */
+   if (p==NULL)
+      exists = 0;
+   else if (pilot_isFlag( p, PILOT_DEAD ))
+      exists = 0;
+   else
+      exists = 1;
+
    /* Check if the pilot exists. */
-   lua_pushboolean(L, p!=NULL);
+   lua_pushboolean(L, exists);
    return 1;
 }
 
