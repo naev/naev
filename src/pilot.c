@@ -1212,13 +1212,19 @@ void pilot_dead( Pilot* p )
  *
  *    @param p Pilot to run the hook.
  *    @param hook_type Type of hook to run.
+ *    @return The number of hooks run.
  */
-void pilot_runHook( Pilot* p, int hook_type )
+int pilot_runHook( Pilot* p, int hook_type )
 {
-   int i;
-   for (i=0; i<p->nhooks; i++)
-      if (p->hooks[i].type == hook_type)
+   int i, run;
+   run = 0;
+   for (i=0; i<p->nhooks; i++) {
+      if (p->hooks[i].type == hook_type) {
          hook_runID( p->hooks[i].id );
+         run++;
+      }
+   }
+   return run;
 }
 
 

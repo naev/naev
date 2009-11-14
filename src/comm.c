@@ -47,6 +47,8 @@ extern int pilot_nstack;
 /* Static. */
 static unsigned int comm_open( glTexture *gfx, int faction,
       int override, int bribed, char *name );
+static unsigned int comm_openPilotWindow (void);
+static void comm_addPilotSpecialButtons( unsigned int wid );
 static void comm_close( unsigned int wid, char *unused );
 static void comm_bribePilot( unsigned int wid, char *unused );
 static void comm_bribePlanet( unsigned int wid, char *unused );
@@ -79,6 +81,7 @@ int comm_openPilot( unsigned int pilot )
 {
    const char *msg;
    unsigned int wid;
+   int run;
 
    /* Get the pilot. */
    comm_pilot = pilot_get( pilot );
@@ -101,6 +104,28 @@ int comm_openPilot( unsigned int pilot )
    /* Set up for the comm_get* functions. */
    ai_setPilot( comm_pilot );
 
+   /* Create the pilot window. */
+   wid = comm_openPilotWindow();
+
+   /* Run hooks if needed. */
+   run = pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+   if (run > 0) {
+      /* Reopen window in case something changed. */
+      comm_close( wid, NULL );
+      comm_openPilotWindow();
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Creates the pilot window.
+ */
+static unsigned int comm_openPilotWindow (void)
+{
+   unsigned int wid;
+
    /* Create the generic comm window. */
    wid = comm_open( ship_loadCommGFX( comm_pilot->ship ),
          comm_pilot->faction,
@@ -109,6 +134,19 @@ int comm_openPilot( unsigned int pilot )
          comm_pilot->name );
 
    /* Add special buttons. */
+   comm_addPilotSpecialButtons( wid );
+
+   return wid;
+}
+
+
+/**
+ * @brief Adds the pilot special buttons to a window.
+ *
+ *    @param wid Window to add pilot special buttons to.
+ */
+static void comm_addPilotSpecialButtons( unsigned int wid )
+{
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
    if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
@@ -120,11 +158,6 @@ int comm_openPilot( unsigned int pilot )
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
             "Refuel", comm_requestFuel );
-
-   /* Run hooks if needed. */
-   pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
-
-   return 0;
 }
 
 
