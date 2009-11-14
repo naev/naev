@@ -139,6 +139,7 @@ function jump ()
          trinity = pilot.add("Trinity", "noidle", v)
          trinity = trinity[1]
          trinity:setFaction("Empire") -- Starts out non-hostile
+         trinity:setNodisable(true)
          hook.pilot( trinity, "death", "trinity_kill" )
          hook.pilot( trinity, "jump", "trinity_jump" )
 

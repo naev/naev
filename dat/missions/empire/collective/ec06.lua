@@ -192,8 +192,10 @@ function jump ()
             -- Handle special ships
             if v == "Starfire" then
                starfire = pilots[1]
+               starfire:setNodisable(true)
             elseif v == "Trinity" then
                trinity = pilots[1]
+               trinity:setNodisable(true)
             end
 
             -- Count amount created
