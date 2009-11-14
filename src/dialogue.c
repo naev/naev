@@ -422,7 +422,7 @@ static void dialogue_inputCancel( unsigned int wid, char* str )
 
 static unsigned int choice_wid = 0; /**< Stores the choice window id. */
 static char *choice_result; /**< Pointer to the choice result. */
-static int nopts; /**< Counter variable. */
+static int choice_nopts; /**< Counter variable. */
 /**
  * @brief Create the choice dialog. Need to add choices with below method.
  *
@@ -435,14 +435,14 @@ void dialogue_makeChoice( const char *caption, const char *msg, int opts )
    int w,h;
    glFont* font;
 
-   choice_result = NULL;
-   nopts = opts;
-   font = dialogue_getSize( caption, msg, &w, &h );
+   choice_result  = NULL;
+   choice_nopts   = opts;
+   font           = dialogue_getSize( caption, msg, &w, &h );
    
    /* create window */
-   choice_wid = window_create( caption, -1, -1, w, h+100+40*nopts );
+   choice_wid     = window_create( caption, -1, -1, w, h+100+40*choice_nopts );
    /* text */
-   window_addText( choice_wid, 20, -40, w-40, h,  0, "txtYesNo",
+   window_addText( choice_wid, 20, -40, w-40, h,  0, "txtChoice",
          font, &cBlack, msg );
 }
 /**
@@ -457,19 +457,23 @@ void dialogue_addChoice( const char *caption, const char *msg, const char *opt)
    int w,h;
    glFont* font;
 
-   if (nopts < 1)
+   if (choice_nopts < 1)
       return;
 
    font = dialogue_getSize( caption, msg, &w, &h );
    
    /* buttons. Add one for each option in the menu. */
-   window_addButton( choice_wid, w/2-125, nopts*40, 250, 30, (char *) opt,
+   window_addButton( choice_wid, w/2-125, choice_nopts*40, 250, 30, (char *) opt,
          (char *) opt, dialogue_choiceClose );
-   nopts --;
+   choice_nopts --;
 
 }
 /**
  * @brief Run the dialog and return the clicked string.
+ *
+ * @note The returned string is _ONLY_ valid for _ONE_ frame. Copy it if you want it to last more then a frame.
+ *
+ *    @return The string chosen.
  */
 char *dialogue_runChoice (void)
 {

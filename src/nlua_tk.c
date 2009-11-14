@@ -147,12 +147,12 @@ static int tk_input( lua_State *L )
 /**
  * @brief Creates a window with a number of selectable options
  *
- * @usage chosen, num = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return "No", 2
+ * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return "No", 2
  *
  *    @luaparam title Title of the window.
  *    @luaparam msg Message to display.
  *    @luaparam choices Option choices.
- *    @luareturn Returns the name of the choice chosen and the number of the choice.
+ *    @luareturn Returns the number of the choice and the name of the choice chosen.
  * @luafunc choice( title, msg, ... )
  */
 static int tk_choice( lua_State *L )
@@ -180,5 +180,6 @@ static int tk_choice( lua_State *L )
    }
 
    lua_pushnumber(L,ret);
-   return 1;
+   lua_pushstring(L,result);
+   return 2;
 }
