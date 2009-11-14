@@ -1443,7 +1443,7 @@ static int pilotL_setNoboard( lua_State *L )
  * @usage p:setNodisable( true ) -- Pilot can not be disabled anymore.
  *
  *    @luaparam p Pilot to set disable disabling.
- *    @luaparam nodisable If true it disallows disabled of the pilot, otherwise
+ *    @luaparam disable If true it disallows disabled of the pilot, otherwise
  *              it allows disabling which is the default.
  * @luafunc setNodisable( p, disable )
  */
