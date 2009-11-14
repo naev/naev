@@ -350,7 +350,7 @@ static int factionL_playerstanding( lua_State *L )
    lua_pushnumber(L, n);
    lua_pushstring(L, faction_getStanding(n));
 
-   return 1;
+   return 2;
 }
 
 /**
