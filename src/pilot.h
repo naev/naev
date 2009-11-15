@@ -83,7 +83,7 @@
 #define PILOT_DISTRESSED   (1<<23) /**< Pilot has distressed once already. */
 #define PILOT_REFUELING    (1<<24) /**< Pilot is trying to refueling. */
 #define PILOT_REFUELBOARDING (1<<25) /**< Pilot is actively refueling. */
-#define PILOT_UNUSED_26    (1<<26)
+#define PILOT_MANUAL_CONTROL (1<<26) /**< Pilot is under manual control of a mission or event. */
 #define PILOT_DISABLED     (1<<27) /**< Pilot is disabled. */
 #define PILOT_DEAD         (1<<28) /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  (1<<29) /**< Pilot just did death explosion. */

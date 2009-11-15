@@ -55,6 +55,7 @@
 
 
 #include "ai.h"
+#include "ai_extra.h"
 
 #include "naev.h"
 
@@ -138,19 +139,9 @@ extern int pilot_nstack;
 /* Internal C routines */
 static void ai_run( lua_State *L, const char *funcname );
 static int ai_loadProfile( const char* filename );
-static void ai_freetask( Task* t );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
 static int ai_loadEquip (void);
-/* External C routines */
-void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
-void ai_refuel( Pilot* refueler, unsigned int target ); /* comm.c */
-void ai_getDistress( Pilot* p, const Pilot* distressed ); /* pilot.c */
-/* C Routines made External */
-int ai_pinit( Pilot *p, const char *ai );
-void ai_destroy( Pilot* p );
-void ai_think( Pilot* pilot, const double dt ); /* pilot.c */
-void ai_setPilot( Pilot *p ); /* escort.c */
 
 
 /*
@@ -471,6 +462,20 @@ int ai_pinit( Pilot *p, const char *ai )
 
 
 /**
+ * @brief Clears the pilot's tasks.
+ *
+ *    @param p Pilot to clear tasks of.
+ */
+void ai_cleartasks( Pilot* p )
+{
+   /* Clean up tasks. */
+   if (p->task)
+      ai_freetask( p->task );
+   p->task = NULL;
+}
+
+
+/**
  * @brief Destroys the ai part of the pilot
  *
  *    @param[in] p Pilot to destroy it's AI part.
@@ -487,10 +492,8 @@ void ai_destroy( Pilot* p )
    lua_settable(L,-3);
    lua_pop(L,1);
 
-   /* Clean up tasks. */
-   if (p->task)
-      ai_freetask( p->task );
-   p->task = NULL;
+   /* Clear the tasks. */
+   ai_cleartasks( p );
 }
 
 
@@ -694,7 +697,8 @@ void ai_think( Pilot* pilot, const double dt )
    cur_pilot->target = cur_pilot->id;
 
    /* control function if pilot is idle or tick is up */
-   if ((cur_pilot->tcontrol < 0.) || (cur_pilot->task == NULL)) {
+   if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
+         ((cur_pilot->tcontrol < 0.) || (cur_pilot->task == NULL))) {
       ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
       cur_pilot->tcontrol = lua_tonumber(L,-1);
@@ -764,7 +768,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    t = malloc(sizeof(Task));
    t->next     = NULL;
    t->name     = strdup("refuel");
-   t->dtype    = TYPE_INT;
+   t->dtype    = TASKDATA_INT;
    t->dat.num  = target;
 
    /* Prepend the task. */
@@ -870,22 +874,47 @@ static void ai_create( Pilot* pilot, char *param )
 }
 
 
-/*
- * internal use C functions
+/**
+ * @brief Creates a new AI task.
  */
+Task *ai_newtask( Pilot *p, const char *func, int pos )
+{
+   Task *t, *pointer;
+   
+   /* Create the new task. */
+   t        = malloc(sizeof(Task));
+   t->next  = NULL;
+   t->name  = strdup(func);
+   t->dtype = TASKDATA_NULL;
+
+   /* Attach the task. */
+   if ((pos == 1) && (p->task != NULL)) { /* put at the end */
+      for (pointer = p->task; pointer->next != NULL; pointer = pointer->next);
+      pointer->next = t;
+   }
+   else { /* default put at the beginning */
+      t->next = p->task;
+      p->task = t;
+   }
+
+   return t;
+}
+
+
 /**
  * @brief Frees an AI task.
  *
  *    @param t Task to free.
  */
-static void ai_freetask( Task* t )
+void ai_freetask( Task* t )
 {
    if (t->next != NULL) {
       ai_freetask(t->next); /* yay recursive freeing */
       t->next = NULL;
    }
 
-   if (t->name) free(t->name);
+   if (t->name)
+      free(t->name);
    free(t);
 }
 
@@ -917,32 +946,28 @@ static int aiL_pushtask( lua_State *L )
    NLUA_MIN_ARGS(2);
    int pos;
    const char *func;
-   Task *t, *pointer;
+   Task *t;
+   LuaVector *lv;
 
    /* Parse basic parameters. */
    pos   = luaL_checkint(L,1);
    func  = luaL_checkstring(L,2);
 
-   t = malloc(sizeof(Task));
-   t->next = NULL;
-   t->name = strdup(func);
-   t->dtype = TYPE_NULL;
+   /* Creates a new AI task. */
+   t = ai_newtask( cur_pilot, func, pos );
 
+   /* Set the data. */
    if (lua_gettop(L) > 2) {
       if (lua_isnumber(L,3)) {
-         t->dtype = TYPE_INT;
+         t->dtype = TASKDATA_INT;
          t->dat.num = (unsigned int)lua_tonumber(L,3);
       }
+      else if (lua_isvector(L,3)) {
+         t->dtype = TASKDATA_VEC2;
+         lv       = lua_tovector(L,3);
+         vectcpy( &t->dat.vec, &lv->vec );
+      }
       else NLUA_INVALID_PARAMETER();
-   }
-
-   if (pos == 1) { /* put at the end */
-      for (pointer = cur_pilot->task; pointer->next != NULL; pointer = pointer->next);
-      pointer->next = t;
-   }
-   else { /* default put at the beginning */
-      t->next = cur_pilot->task;
-      cur_pilot->task = t;
    }
 
    return 0;
@@ -1006,14 +1031,21 @@ static int aiL_getplayer( lua_State *L )
  */
 static int aiL_gettarget( lua_State *L )
 {
+   LuaVector lv;
+
    /* Must have a task. */
    if (cur_pilot->task == NULL)
       return 0;
 
    /* Pask task type. */
    switch (cur_pilot->task->dtype) {
-      case TYPE_INT:
+      case TASKDATA_INT:
          lua_pushnumber(L, cur_pilot->task->dat.num);
+         return 1;
+
+      case TASKDATA_VEC2:
+         lv.vec = cur_pilot->task->dat.vec;
+         lua_pushvector(L, lv);
          return 1;
 
       default:
@@ -1728,10 +1760,12 @@ static int aiL_hyperspace( lua_State *L )
 {
    int dist;
    
-   pilot_shootStop( cur_pilot, 0 );
-   pilot_shootStop( cur_pilot, 1 );
    dist = space_hyperspace(cur_pilot);
-   if (dist == 0.) return 0;
+   if (dist == 0.) {
+      pilot_shootStop( cur_pilot, 0 );
+      pilot_shootStop( cur_pilot, 1 );
+      return 0;
+   }
 
    lua_pushnumber(L,dist);
    return 1;

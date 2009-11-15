@@ -26,6 +26,8 @@
 #include "pilot.h"
 #include "player.h"
 #include "space.h"
+#include "ai.h"
+#include "ai_extra.h"
 
 
 /*
@@ -38,9 +40,7 @@ extern int pilot_nstack;
 /*
  * Prototypes.
  */
-/* External. */
-extern int ai_pinit( Pilot *p, const char *ai );
-extern void ai_destroy( Pilot* p );
+static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 
 
 /* Pilot metatable methods. */
@@ -77,6 +77,15 @@ static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNodisable( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_ship( lua_State *L );
+static int pilotL_idle( lua_State *L );
+static int pilotL_control( lua_State *L );
+static int pilotL_memory( lua_State *L );
+static int pilotL_cleartask( lua_State *L );
+static int pilotL_goto( lua_State *L );
+static int pilotL_brake( lua_State *L );
+static int pilotL_attack( lua_State *L );
+static int pilotL_runaway( lua_State *L );
+static int pilotL_hyperspace( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
@@ -118,6 +127,16 @@ static const luaL_reg pilotL_methods[] = {
    { "setFuel", pilotL_setFuel },
    /* Ship. */
    { "ship", pilotL_ship },
+   /* Manual AI control. */
+   { "idle", pilotL_idle },
+   { "control", pilotL_control },
+   { "memory", pilotL_memory },
+   { "cleartask", pilotL_cleartask },
+   { "goto", pilotL_goto },
+   { "brake", pilotL_brake },
+   { "attack", pilotL_attack },
+   { "runaway", pilotL_runaway },
+   { "hyperspace", pilotL_hyperspace },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -194,6 +213,28 @@ LuaPilot* luaL_checkpilot( lua_State *L, int ind )
       return lua_topilot(L,ind);
    luaL_typerror(L, ind, PILOT_METATABLE);
    return NULL;
+}
+/**
+ * @brief Makes sure the pilot is valid or raises a Lua error.
+ *
+ *    @param L State currently running.
+ *    @param ind Index of the pilot to validate.
+ *    @return The pilot (doesn't return if fails - raises Lua error ).
+ */
+static Pilot* luaL_validpilot( lua_State *L, int ind )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,ind);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return NULL;
+   }
+
+   return p;
 }
 /**
  * @brief Pushes a pilot on the stack.
@@ -412,16 +453,10 @@ static int pilotL_addFleet( lua_State *L )
  */
 static int pilotL_remove( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Deletes the pilot. */
    pilot_setFlag(p,PILOT_DELETE);
@@ -568,18 +603,10 @@ static int pilotL_eq( lua_State *L )
  */
 static int pilotL_name( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
 
    /* Parse parameters. */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Get name. */
    lua_pushstring(L, p->name);
@@ -597,18 +624,10 @@ static int pilotL_name( lua_State *L )
  */
 static int pilotL_id( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
 
    /* Parse parameters. */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Get name. */
    lua_pushnumber(L, p->id);
@@ -660,20 +679,12 @@ static int pilotL_exists( lua_State *L )
  */
 static int pilotL_rename( lua_State *L )
 {
-   LuaPilot *p1;
    const char *name;
    Pilot *p;
 
    /* Parse parameters */
-   p1    = luaL_checkpilot(L,1);
-   p     = pilot_get( p1->pilot );
+   p     = luaL_validpilot(L,1);
    name  = luaL_checkstring(L,2);
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
 
    /* Change name. */
    if (p->name != NULL)
@@ -694,19 +705,11 @@ static int pilotL_rename( lua_State *L )
  */
 static int pilotL_position( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
    LuaVector v;
 
    /* Parse parameters */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p     = luaL_validpilot(L,1);
 
    /* Push position. */
    vectcpy( &v.vec, &p->solid->pos );
@@ -725,19 +728,11 @@ static int pilotL_position( lua_State *L )
  */
 static int pilotL_velocity( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
    LuaVector v;
 
    /* Parse parameters */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p     = luaL_validpilot(L,1);
 
    /* Push velocity. */
    vectcpy( &v.vec, &p->solid->vel );
@@ -756,19 +751,11 @@ static int pilotL_velocity( lua_State *L )
  */
 static int pilotL_dir( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
    LuaVector v;
 
    /* Parse parameters */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p     = luaL_validpilot(L,1);
 
    /* Push direction. */
    lua_pushnumber( L, p->solid->dir * 180. / M_PI );
@@ -786,20 +773,12 @@ static int pilotL_dir( lua_State *L )
  */
 static int pilotL_setPosition( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
    LuaVector *v;
 
    /* Parse parameters */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-   v  = luaL_checkvector(L,2);
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p     = luaL_validpilot(L,1);
+   v     = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
@@ -817,20 +796,12 @@ static int pilotL_setPosition( lua_State *L )
  */
 static int pilotL_setVelocity( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
    LuaVector *v;
 
    /* Parse parameters */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-   v  = luaL_checkvector(L,2);
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p     = luaL_validpilot(L,1);
+   v     = luaL_checkvector(L,2);
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->vel, &v->vec );
@@ -850,20 +821,12 @@ static int pilotL_setVelocity( lua_State *L )
  */
 static int pilotL_setDir( lua_State *L )
 {
-   LuaPilot *p1;
    Pilot *p;
    double d;
 
    /* Parse parameters */
-   p1 = luaL_checkpilot(L,1);
-   p  = pilot_get( p1->pilot );
-   d  = luaL_checknumber(L,2);
-
-   /* Pilot must exist. */
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p     = luaL_validpilot(L,1);
+   d     = luaL_checknumber(L,2);
 
    /* Set direction. */
    p->solid->dir = fmodf( d*M_PI/180., 2*M_PI );
@@ -884,21 +847,13 @@ static int pilotL_setDir( lua_State *L )
 static int pilotL_broadcast( lua_State *L )
 {
    Pilot *p;
-   LuaPilot *lp;
    const char *msg;
    int ignore_int;
 
    /* Parse parameters. */
-   lp    = luaL_checkpilot(L,1);
-   msg   = luaL_checkstring(L,2);
-   ignore_int = lua_toboolean(L,3);
-
-   /* Check to see if pilot is valid. */
-   p = pilot_get(lp->pilot);
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p           = luaL_validpilot(L,1);
+   msg         = luaL_checkstring(L,2);
+   ignore_int  = lua_toboolean(L,3);
 
    /* Broadcast message. */
    pilot_broadcast( p, msg, ignore_int );
@@ -921,12 +876,12 @@ static int pilotL_broadcast( lua_State *L )
 static int pilotL_comm( lua_State *L )
 {
    Pilot *p, *t;
-   LuaPilot *lp, *target;
+   LuaPilot *target;
    const char *msg;
    int ignore_int;
 
    /* Parse parameters. */
-   lp    = luaL_checkpilot(L,1);
+   p = luaL_validpilot(L,1);
    if (lua_isstring(L,2)) {
       target = NULL;
       msg   = luaL_checkstring(L,2);
@@ -939,11 +894,6 @@ static int pilotL_comm( lua_State *L )
    }
 
    /* Check to see if pilot is valid. */
-   p = pilot_get(lp->pilot);
-   if (p == NULL) {
-      NLUA_ERROR(L,"Pilot param 1 not found in pilot stack!");
-      return 0;
-   }
    if (target == NULL)
       t = player;
    else {
@@ -972,13 +922,12 @@ static int pilotL_comm( lua_State *L )
 static int pilotL_setFaction( lua_State *L )
 {
    Pilot *p;
-   LuaPilot *lp;
    LuaFaction *f;
    int fid;
    const char *faction;
 
    /* Parse parameters. */
-   lp = luaL_checkpilot(L,1);
+   p = luaL_validpilot(L,1);
    if (lua_isstring(L,2)) {
       faction = lua_tostring(L,2);
       fid = faction_get(faction);
@@ -988,13 +937,6 @@ static int pilotL_setFaction( lua_State *L )
       fid = f->f;
    }
    else NLUA_INVALID_PARAMETER();
-
-   /* Get pilot/faction. */
-   p = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
 
    /* Set the new faction. */
    p->faction = fid;
@@ -1013,16 +955,10 @@ static int pilotL_setFaction( lua_State *L )
  */
 static int pilotL_setHostile( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Set as hostile. */
    pilot_rmFlag(p, PILOT_FRIENDLY);
@@ -1042,16 +978,10 @@ static int pilotL_setHostile( lua_State *L )
  */
 static int pilotL_setFriendly( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Remove hostile and mark as friendly. */
    pilot_setFriendly(p);
@@ -1073,17 +1003,11 @@ static int pilotL_setFriendly( lua_State *L )
  */
 static int pilotL_setInvincible( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
    int state;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Get state. */
    if (lua_gettop(L) > 1)
@@ -1111,16 +1035,10 @@ static int pilotL_setInvincible( lua_State *L )
  */
 static int pilotL_disable( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Disable the pilot. */
    p->shield = 0.;
@@ -1145,22 +1063,14 @@ static int pilotL_disable( lua_State *L )
 static int pilotL_addOutfit( lua_State *L )
 {
    int i;
-   LuaPilot *lp;
    Pilot *p;
    const char *outfit;
    Outfit *o;
    int ret;
    int q;
 
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
    /* Get parameters. */
+   p      = luaL_validpilot(L,1);
    outfit = luaL_checkstring(L,2);
    q      = 1;
    if (lua_gettop(L) > 2)
@@ -1224,21 +1134,13 @@ static int pilotL_addOutfit( lua_State *L )
 static int pilotL_rmOutfit( lua_State *L )
 {
    int i;
-   LuaPilot *lp;
    Pilot *p;
    const char *outfit;
    Outfit *o;
    int q;
 
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
    /* Get parameters. */
+   p      = luaL_validpilot(L,1);
    outfit = luaL_checkstring(L,2);
    q      = 1;
    if (lua_gettop(L) > 2)
@@ -1291,16 +1193,10 @@ static int pilotL_rmOutfit( lua_State *L )
  */
 static int pilotL_setFuel( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p = luaL_validpilot(L,1);
 
    /* Get the parameter. */
    if (lua_isboolean(L,2)) {
@@ -1330,20 +1226,12 @@ static int pilotL_setFuel( lua_State *L )
  */
 static int pilotL_changeAI( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
    const char *str;
    int ret;
 
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
    /* Get parameters. */
+   p  = luaL_validpilot(L,1);
    str = luaL_checkstring(L,2);
 
    /* Get rid of current AI. */
@@ -1371,19 +1259,11 @@ static int pilotL_changeAI( lua_State *L )
  */
 static int pilotL_setHealth( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
    double a, s;
 
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
    /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
    a  = luaL_checknumber(L, 2);
    s  = luaL_checknumber(L, 3);
    a /= 100.;
@@ -1414,20 +1294,12 @@ static int pilotL_setHealth( lua_State *L )
  */
 static int pilotL_setNoboard( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
    int disable;
 
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
    /* Handle parameters. */
-   if (lua_isnil(L, 2))
+   p  = luaL_validpilot(L,1);
+   if (lua_gettop(L)==1)
       disable = 1;
    else
       disable = lua_toboolean(L, 2);
@@ -1456,20 +1328,12 @@ static int pilotL_setNoboard( lua_State *L )
  */
 static int pilotL_setNodisable( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
    int disable;
 
-   /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
-
    /* Handle parameters. */
-   if (lua_isnil(L, 2))
+   p  = luaL_validpilot(L,1);
+   if (lua_gettop(L)==1)
       disable = 1;
    else
       disable = lua_toboolean(L, 2);
@@ -1495,16 +1359,10 @@ static int pilotL_setNodisable( lua_State *L )
  */
 static int pilotL_getHealth( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p  = luaL_validpilot(L,1);
 
    /* Return parameters. */
    lua_pushnumber(L, p->armour / p->armour_max * 100. );
@@ -1525,17 +1383,11 @@ static int pilotL_getHealth( lua_State *L )
  */
 static int pilotL_ship( lua_State *L )
 {
-   LuaPilot *lp;
    Pilot *p;
    LuaShip ls;
 
    /* Get the pilot. */
-   lp = luaL_checkpilot(L,1);
-   p  = pilot_get(lp->pilot);
-   if (p==NULL) {
-      NLUA_ERROR(L,"Pilot is invalid.");
-      return 0;
-   }
+   p  = luaL_validpilot(L,1);
 
    /* Create the ship. */
    ls.ship = p->ship;
@@ -1543,4 +1395,289 @@ static int pilotL_ship( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Checks to see if the pilot is idle.
+ *
+ * @usage idle = p:idle() -- Returns true if the pilot is idle
+ *
+ *    @luaparam p Pilot to check to see if is idle.
+ *    @luareturn true if pilot is idle, false otherwise
+ * @luafunc idle( p )
+ */
+static int pilotL_idle( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Check to see if is idle. */
+   lua_pushboolean(L, p->task==0);
+   return 1;
+}
+
+
+/**
+ * @brief Sets manual control of the pilot.
+ *
+ * @usage p:control() -- Same as p:control(true), enables manual control of the pilot
+ * @usage p:control(false) -- Restarts AI control of the pilot
+ *
+ *    @luaparam p Pilot to change manual control settings.
+ *    @luaparam enable If true or nil enables pilot manual control, otherwise enables automatic AI.
+ * @luafunc control( p, enable )
+ */
+static int pilotL_control( lua_State *L )
+{
+   Pilot *p;
+   int enable;
+
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   if (lua_gettop(L)==1)
+      enable = 1;
+   else
+      enable = lua_toboolean(L, 2);
+
+   /* See if should mark as boarded. */
+   if (enable)
+      pilot_setFlag(p, PILOT_MANUAL_CONTROL);
+   else
+      pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
+
+   /* Clear task. */
+   pilotL_cleartask( L );
+
+   return 0;
+}
+
+
+/**
+ * @brief Copies a value between two states.
+ */
+static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
+{
+   switch (lua_type( from, ind )) {
+      case LUA_TNIL:
+         lua_pushnil(to);
+         break;
+      case LUA_TNUMBER:
+         lua_pushnumber(to, lua_tonumber(from, ind));
+         break;
+      case LUA_TBOOLEAN:
+         lua_pushboolean(to, lua_toboolean(from, ind));
+         break;
+      case LUA_TSTRING:
+         lua_pushstring(to, lua_tostring(from, ind));
+         break;
+
+      default:
+         NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
+         break;
+   }
+}
+
+
+/**
+ * @brief Changes a parameter in the pilot's memory.
+ *
+ *    @luafunc p Pilot to change memory of.
+ *    @luafunc key Key of the memory part to change.
+ *    @luafunc value Value to set to.
+ * @luafunc memory( p, key, value )
+ */
+static int pilotL_memory( lua_State *L )
+{
+   lua_State *pL;
+   Pilot *p;
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Set the pilot's memory. */
+   if (p->ai == NULL) {
+      NLUA_ERROR(L,"Pilot does not have AI.");
+      return 0;
+   }
+   pL = p->ai->L;
+
+   /* */
+   lua_getglobal(pL, "pilotmem");
+   /* pilotmem */
+   lua_pushnumber(pL, p->id);
+   /* pilotmem, id */
+   lua_gettable(pL, -2);
+   /* pilotmem, table */
+   lua_copyvalue(pL, L, 2);
+   /* pilotmem, table, key */
+   lua_copyvalue(pL, L, 3);
+   /* pilotmem, table, key, value */
+   lua_settable(pL, -3);
+   /* pilotmem, table */
+   lua_pop(L,2);
+   /* */
+
+   return 0;
+}
+
+
+/**
+ * @brief Clears all the tasks of the pilot.
+ *
+ * @usage p:cleartask()
+ *
+ *    @luaparam p Pilot to clear tasks of.
+ * @luafunc cleartask( p )
+ */
+static int pilotL_cleartask( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Clean up tasks. */
+   ai_cleartasks( p );
+
+   return 0;
+}
+
+
+/**
+ * @brief Does a new task.
+ */
+static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
+{
+   Task *t;
+
+   /* Must be on manual control. */
+   if (!pilot_isFlag( p, PILOT_MANUAL_CONTROL)) {
+      NLUA_ERROR( L, "Pilot is not on manual control." );
+      return 0;
+   }
+
+   /* Creates the new task. */
+   t = ai_newtask( p, task, 1 );
+
+   return t;
+}
+
+
+/**
+ * @brief Makes the pilot goto a position.
+ *
+ *    @luaparam p Pilot to tell to go to a position.
+ *    @luaparam v Vector target for the pilot.
+ * @luafunc goto( p, v )
+ */
+static int pilotL_goto( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+   LuaVector *lv;
+
+   /* Get parameters. */
+   p  = luaL_validpilot(L,1);
+   lv = luaL_checkvector(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "goto" );
+   t->dtype = TASKDATA_VEC2;
+   vectcpy( &t->dat.vec, &lv->vec );
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot brake.
+ *
+ *    @luaparam p Pilot to tell to brake.
+ * @luafunc brake( p )
+ */
+static int pilotL_brake( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+
+   /* Get parameters. */
+   p = luaL_validpilot(L,1);
+
+   /* Set the task. */
+   t = pilotL_newtask( L, p, "brake" );
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot attack another pilot.
+ *
+ *    @luaparam p Pilot to tell to attack another pilot.
+ *    @luaparam pt Target pilot to attack.
+ * @luafunc attack( p, tp )
+ */
+static int pilotL_attack( lua_State *L )
+{
+   Pilot *p, *pt;
+   Task *t;
+
+   /* Get parameters. */
+   p  = luaL_validpilot(L,1);
+   pt = luaL_validpilot(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "attack" );
+   t->dtype = TASKDATA_INT;
+   t->dat.num = pt->id;
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot runaway from another pilot.
+ *
+ *    @luaparam p Pilot to tell to runaway from another pilot.
+ *    @luaparam pt Target pilot to runaway from.
+ * @luafunc runaway( p, tp )
+ */
+static int pilotL_runaway( lua_State *L )
+{
+   Pilot *p, *pt;
+   Task *t;
+
+   /* Get parameters. */
+   p  = luaL_validpilot(L,1);
+   pt = luaL_validpilot(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "__runaway" );
+   t->dtype = TASKDATA_INT;
+   t->dat.num = pt->id;
+
+   return 0;
+}
+
+
+/**
+ * @brief Tells the pilot to hyperspace.
+ *
+ *    @luaparam p Pilot to tell to hyperspace.
+ * @luafunc hyperspace( p )
+ */
+static int pilotL_hyperspace( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+
+   /* Get parameters. */
+   p = luaL_validpilot(L,1);
+
+   /* Set the task. */
+   t = pilotL_newtask( L, p, "__hyperspace" );
+
+   return 0;
+}
 

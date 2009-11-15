@@ -11,6 +11,8 @@
 /* yay lua */
 #include "lua.h"
 
+#include "physics.h"
+
 
 #define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
 #define MAX_DIR_ERR     0.5*M_PI/180. /**< Maximum direction error. */
@@ -26,7 +28,11 @@
  *
  * @brief Task data types.
  */
-typedef enum TaskData_ { TYPE_NULL, TYPE_INT } TaskData;
+typedef enum TaskData_ {
+   TASKDATA_NULL,
+   TASKDATA_INT,
+   TASKDATA_VEC2
+} TaskData;
 
 /**
  * @struct Task
@@ -40,6 +46,7 @@ typedef struct Task_ {
    TaskData dtype; /**< Data type. */
    union {
       unsigned int num; /**< Pilot ID, etc... */
+      Vector2d vec; /**< Vector. */
    } dat; /**< Stores the data. */
 } Task;
 

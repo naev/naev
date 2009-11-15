@@ -24,8 +24,8 @@ control_rate   = 2
 
 -- Required "control" function
 function control ()
-   task = ai.taskname()
-   enemy = ai.getenemy()
+   local task = ai.taskname()
+   local enemy = ai.getenemy()
 
    -- Reset distress if not fighting/running
    if task ~= "attack" and task ~= "runaway" then
@@ -84,7 +84,7 @@ function control ()
          return
       end
 
-      dist = ai.dist( target )
+      local dist = ai.dist( target )
 
       -- Should return to combat?
       if mem.aggressive and ((mem.shield_return > 0 and ai.pshield() >= mem.shield_return) or
@@ -113,8 +113,8 @@ end
 
 -- Required "attacked" function
 function attacked ( attacker )
-   task = ai.taskname()
-   target = ai.target()
+   local task = ai.taskname()
+   local target = ai.target()
 
    -- Notify that pilot has been attacked before
    mem.attacked = true
@@ -147,7 +147,7 @@ end
 
 -- Default task to run when idle
 function idle ()
-   planet = ai.landplanet()
+   local planet = ai.landplanet()
    -- planet must exist
    if planet == nil or mem.land_planet == false then
       ai.settimer(0, rnd.int(1000, 3000))
@@ -205,13 +205,13 @@ function distress ( pilot, attacker )
       return
    end
 
-   task = ai.taskname()
+   local task = ai.taskname()
    -- If not attacking nor fleeing, begin attacking
    if task ~= "attack" and task ~= "runaway" then
       ai.pushtask( 0, "attack", t )
    -- We're sort of busy
    elseif task == "attack" then
-      target = ai.target()
+      local target = ai.target()
 
       if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
          ai.pushtask( 0, "attack", t )
