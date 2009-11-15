@@ -503,7 +503,7 @@ static int hook_needSave( Hook *h )
 {
    int i;
    char *nosave[] = {
-         "death", "board", "disable", "jump", /* pilot hooks */
+         "death", "board", "disable", "jump", "attacked", "idle", /* pilot hooks */
          "end" };
  
    /* Impossible to save functions. */
