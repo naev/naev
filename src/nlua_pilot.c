@@ -1426,6 +1426,11 @@ static int pilotL_idle( lua_State *L )
  *
  *    @luaparam p Pilot to change manual control settings.
  *    @luaparam enable If true or nil enables pilot manual control, otherwise enables automatic AI.
+ * @luasee goto
+ * @luasee brake
+ * @luasee hyperspace
+ * @luasee attack
+ * @luasee runaway
  * @luafunc control( p, enable )
  */
 static int pilotL_control( lua_State *L )
@@ -1567,8 +1572,11 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
 /**
  * @brief Makes the pilot goto a position.
  *
+ * @onote Pilot must be under manual control for this to work.
+ *
  *    @luaparam p Pilot to tell to go to a position.
  *    @luaparam v Vector target for the pilot.
+ * @luasee control
  * @luafunc goto( p, v )
  */
 static int pilotL_goto( lua_State *L )
@@ -1593,7 +1601,10 @@ static int pilotL_goto( lua_State *L )
 /**
  * @brief Makes the pilot brake.
  *
+ * @onote Pilot must be under manual control for this to work.
+ *
  *    @luaparam p Pilot to tell to brake.
+ * @luasee control
  * @luafunc brake( p )
  */
 static int pilotL_brake( lua_State *L )
@@ -1614,9 +1625,12 @@ static int pilotL_brake( lua_State *L )
 /**
  * @brief Makes the pilot attack another pilot.
  *
+ * @onote Pilot must be under manual control for this to work.
+ *
  *    @luaparam p Pilot to tell to attack another pilot.
  *    @luaparam pt Target pilot to attack.
- * @luafunc attack( p, tp )
+ * @luasee control
+ * @luafunc attack( p, pt )
  */
 static int pilotL_attack( lua_State *L )
 {
@@ -1640,7 +1654,8 @@ static int pilotL_attack( lua_State *L )
  * @brief Makes the pilot runaway from another pilot.
  *
  *    @luaparam p Pilot to tell to runaway from another pilot.
- *    @luaparam pt Target pilot to runaway from.
+ *    @luaparam tp Target pilot to runaway from.
+ * @luasee control
  * @luafunc runaway( p, tp )
  */
 static int pilotL_runaway( lua_State *L )
@@ -1664,7 +1679,10 @@ static int pilotL_runaway( lua_State *L )
 /**
  * @brief Tells the pilot to hyperspace.
  *
+ * @onote Pilot must be under manual control for this to work.
+ *
  *    @luaparam p Pilot to tell to hyperspace.
+ * @luasee control
  * @luafunc hyperspace( p )
  */
 static int pilotL_hyperspace( lua_State *L )
