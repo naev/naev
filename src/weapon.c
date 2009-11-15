@@ -29,6 +29,8 @@
 #include "opengl.h"
 #include "explosion.h"
 #include "gui.h"
+#include "ai.h"
+#include "ai_extra.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -47,10 +49,6 @@
  */
 extern Pilot** pilot_stack;
 extern int pilot_nstack;
-/*
- * ai stuff
- */
-extern void ai_attacked( Pilot* attacked, const unsigned int attacker ); /**< Triggers the "attacked" function in the ai */
 
 
 /*
