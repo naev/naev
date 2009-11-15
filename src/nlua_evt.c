@@ -135,10 +135,10 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
       if ((err==NULL) || (strcmp(err,"Event Done")!=0)) {
          WARN("Event '%s' -> '%s': %s",
                event_getData(ev->id), func, (err) ? err : "unknown error");
-         lua_pop(L, 1);
       }
       else
          ret = 1;
+      lua_pop(L, 1);
    }
 
    /* Time to remove the event. */

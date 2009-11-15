@@ -1443,8 +1443,13 @@ void land_checkAddRefuel (void)
    unsigned int w;
 
    /* Check to see if fuel conditions are met. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC))
+   if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+      if (!widget_exists( land_windows[0], "txtRefuel" ))
+         window_addText( land_windows[0], -20, 20 + (BUTTON_HEIGHT + 20) + 20,
+                  200, gl_defFont.h, 1, "txtRefuel",
+                  &gl_defFont, &cBlack, "No refueling services." );
       return;
+   }
 
    /* Full fuel. */
    if (player->fuel >= player->fuel_max)

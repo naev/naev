@@ -191,7 +191,7 @@ static int planetL_cur( lua_State *L )
  * @brief Gets a planet.
  *
  * Possible values of param:
- *    - nil : Gets the current landed planet or nil if there is none.
+ *    - nil : -OBSOLETE- Gets the current landed planet or nil if there is none. Use planet.cur() instead.
  *    - bool : Gets a random planet.
  *    - faction : Gets random planet belonging to faction matching the number.
  *    - string : Gets the planet by name.

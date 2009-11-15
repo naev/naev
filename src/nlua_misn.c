@@ -238,6 +238,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
                cur_mission->data->name, func, (err) ? err : "unknown error");
       else
          ret = 1;
+      lua_pop(L,1);
    }
 
    /* mission is finished */

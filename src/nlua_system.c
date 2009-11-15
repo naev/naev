@@ -183,6 +183,7 @@ static int systemL_cur( lua_State *L )
  * @brief Gets a system.
  *
  * Behaves differently depending on what you pass as param:
+ *    - nil : -OBSOLETE- Gets the current system. Use system.cur() instead.
  *    - string : Gets the system by name.
  *    - planet : Gets the system by planet.
  *
