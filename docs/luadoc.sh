@@ -16,12 +16,13 @@ sed -n '
 	s|^ *\* *@luamod *\(.*\)|module "\1"|p
 #rename some tags:
 	s|^ *\* *@brief|-- @description|p
+	s|^ *\* *@luasee|-- @see|p
 	s|^ *\* *@luaparam|-- @param|p
 	s|^ *\* *@luareturn|-- @return|p #we accept both @luareturn & @return 
 #keep tags luadoc understands:
 #	s|^ *\* *@param|-- @param|p # use luaparam, param reserved for C arguments
-	s|^ *\* *@see|-- @see|p
-	s|^ *\* *@return|-- @return|p
+#	s|^ *\* *@see|-- @see|p # use luasee
+#	s|^ *\* *@return|-- @return|p # use luareturn
 	s|^ *\* *@usage|-- @usage|p
 	s|^ *\* *@description|-- @description|p
 	s|^ *\* *@name|-- @name|p
