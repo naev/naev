@@ -706,8 +706,11 @@ void ai_think( Pilot* pilot, const double dt )
    }
 
    /* pilot has a currently running task */
-   if (cur_pilot->task)
+   if (cur_pilot->task) {
       ai_run(L, cur_pilot->task->name);
+      if ((cur_pilot->task==NULL) && pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
+         pilot_runHook( cur_pilot, PILOT_HOOK_IDLE );
+   }
 
    /* make sure pilot_acc and pilot_turn are legal */
    pilot_acc   = CLAMP( 0., 1., pilot_acc );
@@ -742,6 +745,12 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    /* Must have an AI profile. */
    if (attacked->ai == NULL)
       return;
+
+   /* Behaves differently if manually overriden. */
+   if (pilot_isFlag( cur_pilot, PILOT_MANUAL_CONTROL )) {
+      pilot_runHook( cur_pilot, PILOT_HOOK_ATTACKED );
+      return;
+   }
 
    ai_setPilot(attacked);
    L = cur_pilot->ai->L;

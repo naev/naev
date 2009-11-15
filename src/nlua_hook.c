@@ -241,12 +241,14 @@ static int hook_enter( lua_State *L )
 /**
  * @brief Hooks the function to a specific pilot.
  *
- * You can hook to different actions.  Curently hook system only supports:
- *    - "death" : triggered when pilot dies.
- *    - "board" : triggered when pilot is boarded.
- *    - "disable" : triggered when pilot is disabled.
- *    - "jump" : triggered when pilot jumps to hyperspace.
- *    - "hail" : triggered when pilot is hailed.
+ * You can hook to different actions.  Curently hook system only supports:<br />
+ *    - "death" : triggered when pilot dies.<br />
+ *    - "board" : triggered when pilot is boarded.<br />
+ *    - "disable" : triggered when pilot is disabled.<br />
+ *    - "jump" : triggered when pilot jumps to hyperspace.<br />
+ *    - "hail" : triggered when pilot is hailed.<br />
+ *    - "attacked" : triggered when the pilot is attacked in manual control <br />
+ *    - "idle" : triggered when the pilot becomes idle in manual control <br />
  *
  *    @luaparam pilot Pilot identifier to hook.
  *    @luaparam type One of the supported hook types.
@@ -271,6 +273,8 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"disable")==0) type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"jump")==0) type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0) type = PILOT_HOOK_HAIL;
+   else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
+   else if (strcmp(hook_type,"idle")==0) type = PILOT_HOOK_IDLE;
    else { /* hook_type not valid */
       NLUA_DEBUG("Invalid pilot hook type: '%s'", hook_type);
       return 0;

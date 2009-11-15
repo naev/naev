@@ -44,6 +44,8 @@
 #define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
 #define PILOT_HOOK_JUMP    4 /**< Pilot jumped. */
 #define PILOT_HOOK_HAIL    5 /**< Pilot is hailed. */
+#define PILOT_HOOK_ATTACKED 6 /**< Pilot is in manual override and is being attacked. */
+#define PILOT_HOOK_IDLE    7 /**< Pilot is in manual override and has just become idle. */
 
 
 /* damage */
