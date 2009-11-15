@@ -265,8 +265,10 @@ int space_canHyperspace( Pilot* p)
  */
 int space_hyperspace( Pilot* p )
 {
-   if (p->fuel < HYPERSPACE_FUEL) return -3;
-   if (!space_canHyperspace(p)) return -1;
+   if (p->fuel < HYPERSPACE_FUEL)
+      return -3;
+   if (!space_canHyperspace(p))
+      return -1;
 
    /* pilot is now going to get automatically ready for hyperspace */
    pilot_setFlag(p, PILOT_HYP_PREP);

@@ -36,6 +36,7 @@
 #include "board.h"
 #include "debris.h"
 #include "ntime.h"
+#include "ai_extra.h"
 
 
 #define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
@@ -63,12 +64,6 @@ static double sensor_curRange = 0.; /**< Current base sensor range, used to calc
 /*
  * prototyes
  */
-/* external */
-extern void ai_getDistress( Pilot* p, const Pilot* distressed ); /**< from ai.c */
-extern AI_Profile* ai_pinit( Pilot *p, const char *ai ); /**< from ai.c */
-extern void ai_destroy( Pilot* p ); /**< from ai.c */
-extern void ai_think( Pilot* pilot, const double dt ); /**< from ai.c */
-/* internal */
 /* update. */
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 static void pilot_hyperspace( Pilot* pilot, double dt );

@@ -22,6 +22,7 @@
 #include "nlua.h"
 #include "player.h"
 #include "opengl.h"
+#include "ai.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */
@@ -55,9 +56,6 @@ static void comm_bribePlanet( unsigned int wid, char *unused );
 static void comm_requestFuel( unsigned int wid, char *unused );
 static int comm_getNumber( double *val, char* str );
 static const char* comm_getString( char *str );
-/* Extern. */
-extern void ai_refuel( Pilot* refueler, unsigned int target ); /**< ai.c */
-extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**

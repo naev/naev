@@ -7,6 +7,57 @@
 
 
 --[[
+-- Brakes the ship
+--]]
+function brake ()
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.poptask()
+   end
+end
+
+
+--[[
+-- Goes to a target position
+--]]
+function goto ()
+   local target   = ai.target()
+   local dir      = ai.face( target )
+   local dist     = ai.dist( target )
+   local bdist    = ai.minbrakedist()
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
+      ai.accel()
+
+   -- Need to start braking
+   elseif dist < bdist then
+      ai.poptask()
+      ai.pushtask(0, "brake")
+   end
+end
+
+
+--[[
+-- Tries to runaway and jump asap.
+--]]
+function __runaway ()
+   runaway()
+   ai.hyperspace()
+end
+
+
+--[[
+-- Tries to hyperspace asap.
+--]]
+function __hyperspace ()
+   hyperspace()
+   ai.hyperspace()
+end
+
+
+--[[
 -- Attempts to land on a planet.
 --]]
 function land ()
@@ -17,10 +68,10 @@ function land ()
       return
    end
 
-   target   = mem.land
-   dir      = ai.face( target )
-   dist     = ai.dist( target )
-   bdist    = ai.minbrakedist()
+   local target   = mem.land
+   local dir      = ai.face( target )
+   local dist     = ai.dist( target )
+   local bdist    = ai.minbrakedist()
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -43,8 +94,8 @@ function landstop ()
    end
 end
 function landwait ()
-   target = mem.land
-   dist   = ai.dist( target )
+   local target = mem.land
+   local dist   = ai.dist( target )
 
    -- In case for some reason landed far away
    if dist > 50 then
@@ -63,7 +114,7 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway ()
-   target = ai.target()
+   local target = ai.target()
 
    -- Target must exist
    if not ai.exists(target) then
@@ -74,8 +125,8 @@ function runaway ()
    -- Good to set the target for distress calls
    ai.settarget( target )
 
-   dist  = ai.dist(target)
-   dir   = ai.face(target, true)
+   local dist  = ai.dist(target)
+   local dir   = ai.face(target, true)
    ai.accel()
 
    --[[
@@ -86,7 +137,7 @@ function runaway ()
    ]]--
 
    -- See if we have some turret to use
-   secondary, special = ai.secondary("melee")
+   local secondary, special = ai.secondary("melee")
    if special == "Turret" then
       if dist < ai.getweaprange(true) then
          ai.shoot(true)
@@ -94,7 +145,6 @@ function runaway ()
    end
 
    if ai.hasturrets() then
-      dist = ai.dist( target )
       if dist < ai.getweaprange() then
          ai.shoot(false, 1)
       end
@@ -113,7 +163,7 @@ end
 -- end
 --]]
 function hyperspace ()
-   dir = ai.face(-1) -- face away from (0,0)
+   local dir = ai.face(-1) -- face away from (0,0)
    if (dir < 10) then
       ai.accel()
    end
@@ -124,7 +174,7 @@ end
 -- Boards the target
 --]]
 function board ()
-   target = ai.target()
+   local target = ai.target()
 
    -- Make sure pilot exists
    if not ai.exists(target) then
@@ -140,9 +190,9 @@ function board ()
 
    -- Get ready to board
    ai.settarget(target)
-   dir   = ai.face(target)
-   dist  = ai.dist(target)
-   bdist = ai.minbrakedist(target)
+   local dir   = ai.face(target)
+   local dist  = ai.dist(target)
+   local bdist = ai.minbrakedist(target)
 
    -- See if must brake or approach
    if dist < bdist then
@@ -173,7 +223,7 @@ function boardstop ()
 
    -- Set target
    ai.settarget(target)
-   vel = ai.relvel(target)
+   local vel = ai.relvel(target)
 
    if vel < 10 then
       -- Try to board
@@ -200,7 +250,7 @@ end
 function refuel ()
 
    -- Get the target
-   target = ai.target()
+   local target = ai.target()
 
    -- make sure pilot exists
    if not ai.exists(target) then
@@ -216,9 +266,9 @@ function refuel ()
 
    -- Get ready to board
    ai.settarget(target)
-   dir   = ai.face(target)
-   dist  = ai.dist(target)
-   bdist = ai.minbrakedist(target)
+   local dir   = ai.face(target)
+   local dist  = ai.dist(target)
+   local bdist = ai.minbrakedist(target)
 
    -- See if must brake or approach
    if dist < bdist then
@@ -232,7 +282,7 @@ end
 -- Attempts to brake on the target.
 --]]
 function refuelstop ()
-   target = ai.target()
+   local target = ai.target()
 
    -- make sure pilot exists
    if not ai.exists(target) then
