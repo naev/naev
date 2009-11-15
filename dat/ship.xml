@@ -1529,36 +1529,4 @@
    <low />
   </slots>
  </ship>
- <ship name="Waypoint">
-  <GFX>invisible</GFX>
-  <GUI>minimal</GUI>
-  <sound>engine</sound>
-  <class>Waypoint</class>
-  <price>0</price>
-  <fabricator>BTAxis</fabricator>
-  <tech>10000000000</tech>
-  <description>It's a waypoint. Blame bobbens. Just... Don't buy it.</description>
-  <movement>
-   <thrust>0</thrust>
-   <turn>0</turn>
-   <speed>0</speed>
-  </movement>
-  <health>
-   <shield>100</shield>
-   <armour>120</armour>
-   <energy>320</energy>
-   <shield_regen>80</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1000</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>0</cpu>
-   <crew>0</crew>
-   <mass>50</mass>
-   <fuel>0</fuel>
-   <cap_cargo>0</cap_cargo>
-  </characteristics>
-  <slots>
-  </slots>
- </ship>
 </Ships>

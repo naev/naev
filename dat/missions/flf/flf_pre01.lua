@@ -116,16 +116,9 @@ function enter()
         -- Add FLF base waypoints
         -- Base is at 0,0
         -- Waypoints are 1/3 and 2/3 of the way away, at an angle plus or minus spread degrees from the actual base
-        waypunt0 = pilot.add("Waypoint", "dummy", vec2.new(0,0), false) -- The base will be spawned in the origin, but not until the player is close to this waypoint.
-        waypunt1 = pilot.add("Waypoint", "dummy", vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2)), false)
-        waypunt2 = pilot.add("Waypoint", "dummy", vec2.new(2 * dist / 3 * math.cos(angle3), 2 * dist / 3 * math.sin(angle3)), false)
-        
-        waypoint0 = waypunt0[1]
-        waypoint1 = waypunt1[1]
-        waypoint2 = waypunt2[1]
-        
-        waypoint1:setInvincible(true)
-        waypoint2:setInvincible(true)
+        waypoint0 = vec2.new(0,0) -- The base will be spawned in the origin, but not until the player is close to this waypoint.
+        waypoint1 = vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2))
+        waypoint2 = vec2.new(2 * dist / 3 * math.cos(angle3), 2 * dist / 3 * math.sin(angle3))
         
         misn.timerStart("commFLF", 2000)
         misn.timerStart("wakeUpGregarYouLazyBugger", 20000) -- 20s before Gregar wakes up
@@ -190,16 +183,21 @@ end
 -- Part of the escort script
 function toPoint2()
     for i, j in ipairs(fleetFLF) do
-        j:changeAI(string.format("escort*%u", waypoint2:id()))
+        if j:exists() then
+            j:control()
+            j:goto(waypoint2)
+        end
     end
     misn.timerStart("toPoint1", 1000)
 end
 
 -- Part of the escort script
 function toPoint1()
-    if vec2.dist(flfship:pos(), waypoint2:pos()) < 300 then
+    if vec2.dist(flfship:pos(), waypoint2) < 300 then
         for i, j in ipairs(fleetFLF) do
-            j:changeAI(string.format("escort*%u", waypoint1:id()))
+            if j:exists() then
+                j:goto(waypoint1)
+            end
         end
         misn.timerStart("toPoint0", 1000)
     else
@@ -209,9 +207,11 @@ end
 
 -- Part of the escort script
 function toPoint0()
-    if vec2.dist(flfship:pos(), waypoint1:pos()) < 300 then
+    if vec2.dist(flfship:pos(), waypoint1) < 300 then
         for i, j in ipairs(fleetFLF) do
-            j:changeAI(string.format("escort*%u", waypoint0:id()))
+            if j:exists() then
+                j:goto(waypoint0)
+            end
         end
         misn.timerStart("spawnbase", 1000)
     else
@@ -221,7 +221,7 @@ end
 
 -- Part of the escort script
 function spawnbase()
-    if vec2.dist(flfship:pos(), waypoint0:pos()) < 1000 then
+    if vec2.dist(flfship:pos(), waypoint0) < 1000 then
         diff.apply("FLF_base")
         basefound = true
         misn.timerStop(OORT)
@@ -238,7 +238,9 @@ function outOfRange()
         -- TODO: handle mission failure due to distance to escorts
         tk.msg(contacttitle, contacttext)
         for i, j in ipairs(fleetFLF) do
-            j:rm()
+            if j:exists() then
+                j:rm()
+            end
         end
     end
 end
