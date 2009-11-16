@@ -1579,7 +1579,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
  *    @luaparam brake If true (or nil) brakes the pilot near target position,
  *              otherwise pops the task when it is about to brake.
  * @luasee control
- * @luafunc goto( p, v )
+ * @luafunc goto( p, v, brake )
  */
 static int pilotL_goto( lua_State *L )
 {
