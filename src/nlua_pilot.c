@@ -83,6 +83,7 @@ static int pilotL_memory( lua_State *L );
 static int pilotL_cleartask( lua_State *L );
 static int pilotL_goto( lua_State *L );
 static int pilotL_brake( lua_State *L );
+static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
@@ -134,6 +135,7 @@ static const luaL_reg pilotL_methods[] = {
    { "cleartask", pilotL_cleartask },
    { "goto", pilotL_goto },
    { "brake", pilotL_brake },
+   { "follow", pilotL_follow },
    { "attack", pilotL_attack },
    { "runaway", pilotL_runaway },
    { "hyperspace", pilotL_hyperspace },
@@ -1428,6 +1430,7 @@ static int pilotL_idle( lua_State *L )
  *    @luaparam enable If true or nil enables pilot manual control, otherwise enables automatic AI.
  * @luasee goto
  * @luasee brake
+ * @luasee follow
  * @luasee hyperspace
  * @luasee attack
  * @luasee runaway
@@ -1487,9 +1490,9 @@ static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
 /**
  * @brief Changes a parameter in the pilot's memory.
  *
- *    @luafunc p Pilot to change memory of.
- *    @luafunc key Key of the memory part to change.
- *    @luafunc value Value to set to.
+ *    @luaparam p Pilot to change memory of.
+ *    @luaparam key Key of the memory part to change.
+ *    @luaparam value Value to set to.
  * @luafunc memory( p, key, value )
  */
 static int pilotL_memory( lua_State *L )
@@ -1572,7 +1575,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
 /**
  * @brief Makes the pilot goto a position.
  *
- * @onote Pilot must be under manual control for this to work.
+ * Pilot must be under manual control for this to work.
  *
  *    @luaparam p Pilot to tell to go to a position.
  *    @luaparam v Vector target for the pilot.
@@ -1597,7 +1600,7 @@ static int pilotL_goto( lua_State *L )
       brake = 1;
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, (brake) ? "__goto_brake" : "__goto" );
+   t        = pilotL_newtask( L, p, (brake) ? "goto" : "__goto_nobrake" );
    t->dtype = TASKDATA_VEC2;
    vectcpy( &t->dat.vec, &lv->vec );
 
@@ -1608,7 +1611,7 @@ static int pilotL_goto( lua_State *L )
 /**
  * @brief Makes the pilot brake.
  *
- * @onote Pilot must be under manual control for this to work.
+ * Pilot must be under manual control for this to work.
  *
  *    @luaparam p Pilot to tell to brake.
  * @luasee control
@@ -1623,7 +1626,35 @@ static int pilotL_brake( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Set the task. */
-   t = pilotL_newtask( L, p, "__brake" );
+   t = pilotL_newtask( L, p, "brake" );
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot follow another pilot.
+ *
+ * Pilot must be under manual control for this to work.
+ *
+ *    @luaparam p Pilot to tell to follow another pilot.
+ *    @luaparam pt Target pilot to follow.
+ * @luasee control
+ * @luafunc follow( p, pt )
+ */
+static int pilotL_follow( lua_State *L )
+{
+   Pilot *p, *pt;
+   Task *t;
+
+   /* Get parameters. */
+   p  = luaL_validpilot(L,1);
+   pt = luaL_validpilot(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "follow" );
+   t->dtype = TASKDATA_INT;
+   t->dat.num = pt->id;
 
    return 0;
 }
@@ -1632,7 +1663,7 @@ static int pilotL_brake( lua_State *L )
 /**
  * @brief Makes the pilot attack another pilot.
  *
- * @onote Pilot must be under manual control for this to work.
+ * Pilot must be under manual control for this to work.
  *
  *    @luaparam p Pilot to tell to attack another pilot.
  *    @luaparam pt Target pilot to attack.
@@ -1686,7 +1717,7 @@ static int pilotL_runaway( lua_State *L )
 /**
  * @brief Tells the pilot to hyperspace.
  *
- * @onote Pilot must be under manual control for this to work.
+ * Pilot must be under manual control for this to work.
  *
  *    @luaparam p Pilot to tell to hyperspace.
  * @luasee control

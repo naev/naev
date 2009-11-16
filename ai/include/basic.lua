@@ -9,7 +9,7 @@
 --[[
 -- Brakes the ship
 --]]
-function __brake ()
+function brake ()
    ai.brake()
    if ai.isstopped() then
       ai.stop()
@@ -21,7 +21,7 @@ end
 --[[
 -- Goes to a target position
 --]]
-function __goto ()
+function __goto_nobrake ()
    local target   = ai.target()
    local dir      = ai.face( target )
    local dist     = ai.dist( target )
@@ -41,7 +41,7 @@ end
 --[[
 -- Goes to a target position
 --]]
-function __goto_brake ()
+function goto ()
    local target   = ai.target()
    local dir      = ai.face( target )
    local dist     = ai.dist( target )
@@ -54,7 +54,38 @@ function __goto_brake ()
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
-      ai.pushtask(0, "__brake")
+      ai.pushtask(0, "brake")
+   end
+end
+
+
+--[[
+-- Follows it's target.
+--]]
+function follow ()
+   local target = ai.target()
+
+   -- Will just float without a target to escort.
+   if not ai.exists(target) then
+      return
+   end
+   
+   local dir   = ai.face(target)
+   local dist  = ai.dist(target)
+   local bdist = ai.minbrakedist()
+
+   -- Close enough.
+   if ai.isstopped() and dist < 300 then
+      return
+
+   -- Brake
+   elseif dist+100 < bdist then
+      ai.pushtask(0, "brake")
+
+   -- Must approach
+   elseif dir < 10 and dist > 300 then
+      ai.accel()
+
    end
 end
 
