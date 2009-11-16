@@ -147,14 +147,14 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
  * @brief Hooks the function to the player landing.
  *
  * Can also be used to hook the various subparts of the landing menu. Possible targets
- *  for where are:
- *   - "land" - when landed (default with no parameter )
- *   - "outfits" - when visited outfitter
- *   - "shipyard" - when visited shipyard
- *   - "bar" - when visited bar
- *   - "mission" - when visited mission computer
- *   - "commodity" - when visited commodity exchange
- *   - "equipment" - when visiting equipment place
+ *  for where are:<br />
+ *   - "land" - when landed (default with no parameter )<br />
+ *   - "outfits" - when visited outfitter<br />
+ *   - "shipyard" - when visited shipyard<br />
+ *   - "bar" - when visited bar<br />
+ *   - "mission" - when visited mission computer<br />
+ *   - "commodity" - when visited commodity exchange<br />
+ *   - "equipment" - when visiting equipment place<br />
  *
  * @usage hook.land( "my_function" ) -- Land calls my_function
  * @usage hook.land( "my_function", "equipment" ) -- Calls my_function at equipment screen
