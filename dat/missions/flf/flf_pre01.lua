@@ -98,27 +98,24 @@ function enter()
         angle2 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         angle3 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         
-        pilot.toggleSpawn(false)
-        pilot.clear()
-
-        faction.get("FLF"):modPlayerRaw(0) -- FLF is neutral to the player for this mission
-
-        -- Pilot is to hyper in somewhere far away from the base.
-        
-        player.pilot():setPos(vec2.new(dist * math.cos(angle), dist * math.sin(angle)))
-
-        -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos(), false)
-        faction.get("FLF"):modPlayerRaw(-200)
-        
-        player.pilot():setPos(player.pilot():pos() - player.pilot():vel() / 2.2) -- Compensate for hyperjump
-
-        -- Add FLF base waypoints
+        -- Set FLF base waypoints
         -- Base is at 0,0
         -- Waypoints are 1/3 and 2/3 of the way away, at an angle plus or minus spread degrees from the actual base
         waypoint0 = vec2.new(0,0) -- The base will be spawned in the origin, but not until the player is close to this waypoint.
         waypoint1 = vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2))
         waypoint2 = vec2.new(2 * dist / 3 * math.cos(angle3), 2 * dist / 3 * math.sin(angle3))
+
+        pilot.toggleSpawn(false)
+        pilot.clear()
+
+        -- Pilot is to hyper in somewhere far away from the base.
+        player.pilot():setPos(vec2.new(dist * math.cos(angle), dist * math.sin(angle)))
+
+        -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
+        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos(), false)
+        player.pilot():setPos(player.pilot():pos() - player.pilot():vel() / 2.2) -- Compensate for hyperjump
+
+        faction.get("FLF"):modPlayerRaw(-200)
         
         misn.timerStart("commFLF", 2000)
         misn.timerStart("wakeUpGregarYouLazyBugger", 20000) -- 20s before Gregar wakes up
@@ -175,48 +172,23 @@ function wakeUpGregarYouLazyBugger()
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
         faction.get("FLF"):modPlayerRaw(100)
-        misn.timerStart("toPoint2", 2000)
+        misn.timerStart("annai", 2000)
         OORT = misn.timerStart("outOfRange", 4000)
     end
 end
 
--- Part of the escort script
-function toPoint2()
+-- Fly the FLF ships through their waypoints
+function annai()
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
+            flfship = j
             j:control()
-            j:goto(waypoint2)
+            j:goto(waypoint2, false)
+            j:goto(waypoint1, false)
+            j:goto(waypoint0)
         end
     end
-    misn.timerStart("toPoint1", 1000)
-end
-
--- Part of the escort script
-function toPoint1()
-    if vec2.dist(flfship:pos(), waypoint2) < 300 then
-        for i, j in ipairs(fleetFLF) do
-            if j:exists() then
-                j:goto(waypoint1)
-            end
-        end
-        misn.timerStart("toPoint0", 1000)
-    else
-        misn.timerStart("toPoint1", 1000)
-    end
-end
-
--- Part of the escort script
-function toPoint0()
-    if vec2.dist(flfship:pos(), waypoint1) < 300 then
-        for i, j in ipairs(fleetFLF) do
-            if j:exists() then
-                j:goto(waypoint0)
-            end
-        end
-        misn.timerStart("spawnbase", 1000)
-    else
-        misn.timerStart("toPoint0", 1000)
-    end
+    misn.timerStart("spawnbase", 1000)
 end
 
 -- Part of the escort script

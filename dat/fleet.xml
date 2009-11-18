@@ -111,6 +111,15 @@
    <pilot chance="100" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
+ <fleet name="FLF Ancestor Trio">
+  <ai>flf</ai>
+  <faction>FLF</faction>
+  <pilots>
+   <pilot chance="100" ship="Ancestor"></pilot>
+   <pilot chance="100" ship="Ancestor"></pilot>
+   <pilot chance="100" ship="Ancestor"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="FLF Sml Force">
   <ai>flf</ai>
   <faction>FLF</faction>
@@ -549,16 +558,6 @@
    <pilot chance="100" ship="Vendetta"></pilot>
    <pilot chance="100" ship="Vendetta"></pilot>
    <pilot chance="100" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Waypoint">
-  <ai>dummy</ai>
-  <faction>Independent</faction>
-  <flags>
-   <guard />
-  </flags>
-  <pilots>
-   <pilot chance="100" ship="Waypoint"></pilot>
   </pilots>
  </fleet>
 </Fleets>

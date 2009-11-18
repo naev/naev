@@ -52,13 +52,13 @@ else -- default english
     Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]]
     
     title[3] = "FLF base? What FLF base?"
-    text[5] = [[    When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches as air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
+    text[5] = [[    When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
     "Well met, citizen %s," Urnus tells you. "Cigar? Oh. Well, suit yourself. Anyway, I wanted to personally thank you for your role in the recent victory against the FLF. If it hadn't been for the information you provided we might have never smoked out their nest! In addition, your efforts on the battlefield have helped to secure our victory. House Dvaered recognizes accomplishments like that, citizen."
     The Colonel walks to a cabinet in his office and takes out a small box. From the box, he produces a couple of credit chips as well as a small metal pin in the shape of a star.
     "This is a reward for your services. The money speaks for itself, of course. As for the pin, it's a civilian commendation, the Star of Valor. Think of it as a badge of honor. It isn't a medal, but it's considered a mark of prestige among the Dvaered citizenry nonetheless. You will certainly enjoy greater respect when you wear this on your lapel, at least as long as you're in Dvaered space."]]
     
     text[6] = [[    Colonel Urnus returns to his seat.
-    "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hiddne base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
+    "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]]
     
@@ -67,6 +67,12 @@ else -- default english
     
     failtitle[1] = "You ran away!"
     failtext[1] = "You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!"
+    
+    failtitle[2] = "The flagship is dead!"
+    failtext[2] = "The HDSF Obstinate has been destroyed by the FLF defending forces! This mission can no longer be completed."
+    
+    flagattack = "This is Obstinate, we're under fire!"
+    phasetwo = "This is Obstinate. Launching bombers."
     
     npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job to you that involves fighting the Frontier Liberation Front."
     
@@ -98,7 +104,7 @@ function accept()
     if tk.yesno(title[1], txt) then
         misn.accept()
         tk.msg(title[2], string.format(text[2], destsysname))
-        tk.msg(title[2], string.format(text[3], destsysname, pilot.name()))
+        tk.msg(title[2], string.format(text[3], destsysname, player.name()))
         tk.msg(title[2], string.format(text[4], destsysname))
 
         osd_desc[1] = string.format(osd_desc[1], destsysname)
@@ -124,6 +130,11 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
         fleetFLF = {}
+        fleetDV = {}
+        bombers = {}
+        fleetpos = {}
+        fightersDV = {}
+        fighterpos = {}
         
         player.pilot():setPos(player.pilot():pos() + vec2.new(0,-2000)) -- Translate to jump out near the Obstinate, not Sindbad.
         player.pilot():setPos(player.pilot():pos() + player.pilot():vel() / 8) -- Compensate for hyperjump
@@ -131,18 +142,22 @@ function enter()
         misn.osdActive(2)
         var.pop("flfbase_sysname")
         missionstarted = true
-        
-        spawnbase()
-        spawnDV()
+        wavefirst = true
         
         DVbombers = 7 -- Amount of initial Dvaered bombers
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
-        FLFfighters = 7 -- Amount of FLF fighter wings
-        FLFbombers = 5 -- Amount of FLF bomber wings
-        FLFdead = 0 -- Max: (FLFfighters + FLFbombers) * 3
+        deathsFLF = 0
+        time = 0
+        stage = 0
+        stepsize = math.pi / 10 -- The amount of points on the circle for the circular patrol
+        angle = math.pi * 1.5 - stepsize
+        
+        spawnbase()
+        spawnDV()
 
-        misn.timerStart("spawnFLF", 10000)
-        misn.timerStart("spawnFLF", 10000)
+        idle()
+        misn.timerStart("spawnFLFfighters", 10000)
+        misn.timerStart("spawnFLFfighters", 15000)
         controller = misn.timerStart("control", 1000)
         
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
@@ -154,7 +169,7 @@ end
 
 function land()
     if victorious then
-        tk.msg(title[3], text[5])
+        tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
         faction.get("Dvaered"):modPlayerRaw(5)
         player.pay(100000) -- 100K
@@ -173,59 +188,151 @@ function spawnbase()
     base:setHostile()
     base:setNodisable(true)
     base:rename("Sindbad")
+    hook.pilot(base, "death", "deathBase")
+end
+
+function deathBase()
+    misn.osdActive(4)
+    misn.setMarker(system.get(DVsys), "misc")
+
+    for i, j in ipairs(bombers) do
+        if j:exists() then
+            j:control(false)
+            j:changeAI("flee")
+        end
+    end
+
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            j:control(false)
+            j:changeAI("flee")
+        end
+    end
+
+    for i, j in ipairs(fightersDV) do
+        if j:exists() then
+            j:control(false)
+            j:changeAI("flee")
+        end
+    end
+    
+    obstinate:control(false)
+    obstinate:changeAI("flee")
+
+    missionstarted = false
+    victorious = true
 end
 
 -- Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
 function spawnDV()
-    obstinate = pilot.add("Dvaered Goddard", "dummy", vec2.new(0,-2000), false)
-    obstinate = obstinate[1]
+    updatepos()
+
+    obstinate = pilot.add("Dvaered Goddard", "dvaered_nojump", fleetpos[1], false)[1]
     obstinate:rename("Obstinate")
     obstinate:setDir(90)
     obstinate:setFriendly()
+    obstinate:setNodisable(true)
+    obstinate:control()
+    obstinate:rmOutfit("all")
+    obstinate:addOutfit("Engine Reroute")
+    obstinate:addOutfit("Shield Booster")
+    obstinate:addOutfit("Shield Booster")
+    obstinate:addOutfit("Ion Cannon")
+    obstinate:addOutfit("Ion Cannon")
+    obstinate:addOutfit("Ion Cannon")
+    obstinate:addOutfit("Ion Cannon")
+    hook.pilot(obstinate, "attacked", "attackedObstinate")
+    hook.pilot(obstinate, "death", "deathObstinate")
+    hook.pilot(obstinate, "idle", "idle")
     
-    fleetDV = pilot.add("Dvaered Vigilance", "dummy", vec2.new(110, -2000), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vigilance", "dummy", vec2.new(-110, -2000), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vigilance", "dummy", vec2.new(0, -2120), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
+    local i = 1
+    while i <= 4 do
+        vigilance = pilot.add("Dvaered Vigilance", "dvaered_nojump", fleetpos[i + 1], false)[1]
+        vigilance:setDir(90)
+        vigilance:setFriendly()
+        vigilance:control()
+        hook.pilot(vigilance, "attacked", "attacked")
+        hook.pilot(vigilance, "death", "deathDV")
+        fleetDV[#fleetDV + 1] = vigilance
+        i = i + 1
+    end
     
-    fleetDV = pilot.add("Dvaered Vendetta", string.format("escort*%u", obstinate:id()), vec2.new(120, -2000), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vendetta", string.format("escort*%u", obstinate:id()), vec2.new(130, -1980), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vendetta", string.format("escort*%u", obstinate:id()), vec2.new(140, -2000), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vendetta", string.format("escort*%u", obstinate:id()), vec2.new(100, -2000), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vendetta", string.format("escort*%u", obstinate:id()), vec2.new(90, -1980), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
-    fleetDV = pilot.add("Dvaered Vendetta", string.format("escort*%u", obstinate:id()), vec2.new(80, -2000), false)[1]
-    fleetDV:setDir(90)
-    fleetDV:setFriendly()
+    local i = 1
+    while i <= 6 do
+        vendetta = pilot.add("Dvaered Vendetta", "dvaered_nojump", fighterpos[i], false)[1]
+        vendetta:setDir(90)
+        vendetta:setFriendly()
+        vendetta:control()
+        hook.pilot(vendetta, "death", "deathDV")
+        fightersDV[#fightersDV + 1] = vendetta
+        i = i + 1
+    end
 end
 
-function spawnFLF()
-    if FLFfighters > 0 then
-        FLFfighters = FLFfighters - 1
-        wingFLF = pilot.add("FLF Vendetta Trio", string.format("escort*%u", obstinate:id()), base:pos(), false)
-        for i, j in ipairs(wingFLF) do
-            fleetFLF[#fleetFLF + 1] = j
-            hook.pilot(j, "death", "deathFLF")
-            j:setNodisable(true)
+function spawnFLFfighters()
+    wavefirst = true
+    local targets = {}
+    wingFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", base:pos(), false)
+    for i, j in ipairs(wingFLF) do
+        fleetFLF[#fleetFLF + 1] = j
+        hook.pilot(j, "death", "deathFLF")
+        j:setNodisable(true)
+        j:control()
+        for i, j in ipairs(fleetDV) do
+            if j:exists() then
+                targets[#targets + 1] = j
+            end
+        end
+        targets[#targets + 1] = player.pilot()
+        targets[#targets + 1] = obstinate
+
+        j:attack(targets[rnd.rnd(#targets - 1) + 1])
+    end
+end
+
+function spawnFLFbombers()
+    local targets = {}
+    wingFLF = pilot.add("FLF Ancestor Trio", "flf_nojump", base:pos(), false)
+    for i, j in ipairs(wingFLF) do
+        fleetFLF[#fleetFLF + 1] = j
+        hook.pilot(j, "death", "deathFLF")
+        j:setNodisable(true)
+        j:control()
+        for i, j in ipairs(fleetDV) do
+            if j:exists() then
+                targets[#targets + 1] = j
+            end
+        end
+        targets[#targets + 1] = player.pilot()
+        targets[#targets + 1] = obstinate
+
+        j:attack(targets[rnd.rnd(#targets - 1) + 1])
+    end
+end
+
+function deathFLF()
+    deathsFLF = deathsFLF + 1
+    if deathsFLF == #fleetFLF then
+        time = 0 -- Immediately recall the Dvaered escorts
+        stage = stage + 1
+        fleetFLF = {}
+        deathsFLF = 0
+        if stage == 1 then
+            misn.timerStart("spawnFLFbombers", 9000)
+            misn.timerStart("spawnFLFfighters", 13000)
+        elseif stage == 2 then
+            misn.timerStart("spawnFLFfighters", 9000)
+            misn.timerStart("spawnFLFbombers", 11000)
+            misn.timerStart("spawnFLFbombers", 13000)
+        else
+            pilot.broadcast(obstinate, phasetwo, true)
+            misn.osdActive(3)
+            spawnDVbomber()
         end
     end
 end
 
--- Spawns the initial bombers.
+-- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
     bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos(), false)[1]
     bomber:rmOutfit("all")
@@ -233,33 +340,50 @@ function spawnDVbomber()
     bomber:addOutfit("Imperator Launcher", 1)
     bomber:addOutfit("Engine Reroute", 1)
     bomber:addOutfit("Laser Cannon", 3)
-    bomber:setDir(90)
     bomber:setNodisable(true)
     bomber:setFriendly()
     bomber:control()
     bomber:attack(base)
     bombers[#bombers + 1] = bomber
-    rearmed[#rearmed + 1] = false
-    spawns = spawns - 1
     hook.pilot(bomber, "death", "deathDVbomber")
-    if spawns > 0 then
+    DVbombers = DVbombers - 1
+    if DVbombers > 0 then
         spawner = misn.timerStart("spawnDVbomber", 3000)
     end
 end 
 
 -- Tries to whip the AI into behaving in a specific way
 function control()
-    -- DV bombers
+    if time > 0 then
+        time = time - 1000
+    end
     
-    -- FLF wings
+    -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            if (vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0 or j:idle()) then
+                j:control()
+                j:goto(fleetpos[i + 1])
+            end
+        end
+    end
     
-    controller = misn.timerStart("control", 800)
+    for i, j in ipairs(fightersDV) do
+        if j:exists() then
+            if (vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0 or j:idle()) then
+                j:control()
+                j:goto(fighterpos[i])
+            end
+        end
+    end
+    
+    controller = misn.timerStart("control", 1000)
 end
 
 -- Replaces lost bombers. The supply is limited, though.
 function deathDVbomber()
-    if reinforcements > 0 then
-        reinforcements = reinforcements - 1
+    if DVreinforcements > 0 then
+        DVreinforcements = DVreinforcements - 1
         for i, j in ipairs(bombers) do
             if not j:exists() then
                 bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos(), false)[1]
@@ -268,9 +392,11 @@ function deathDVbomber()
                 bomber:addOutfit("Imperator Launcher", 1)
                 bomber:addOutfit("Engine Reroute", 1)
                 bomber:addOutfit("Laser Cannon", 3)
-                bomber:setDir(90)
                 bomber:setNodisable(true)
-                hook.pilot(bomber, "death", "deathDV")
+                bomber:setFriendly()
+                bomber:control()
+                bomber:attack(base)
+                hook.pilot(bomber, "death", "deathDVbomber")
                 bombers[i] = bomber
             end
         end
@@ -279,7 +405,86 @@ end
 
 -- Handle mission failure.
 function deathObstinate()
+    tk.msg(failtitle[2], failtext[2])
+
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            j:control(false)
+            j:changeAI("flee")
+        end
+    end
+
+    for i, j in ipairs(fightersDV) do
+        if j:exists() then
+            j:control(false)
+            j:changeAI("flee")
+        end
+    end
+
     abort()
+end
+
+function attackedObstinate()
+    if wavefirst then
+        pilot.broadcast(obstinate, flagattack, true)
+        wavefirst = false
+    end
+    attacked()
+end
+
+-- Make escorts fight back, then return to their positions
+function attacked()
+    time = 3000
+    
+    for i, j in ipairs(fleetDV) do
+        if j:exists() and vec2.dist(j:pos(), base:pos()) > 1000 and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
+            j:control(false)
+        end
+    end
+    
+    for i, j in ipairs(fightersDV) do
+        if j:exists() and vec2.dist(j:pos(), base:pos()) > 1000 and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
+            j:control(false)
+        end
+    end
+end
+
+-- Re-target the FLF units when a Dvaered ship dies
+function deathDV()
+    local targets = {}
+
+    for k, l in ipairs(fleetDV) do
+        if l:exists() then
+            targets[#targets + 1] = l
+        end
+    end
+    targets[#targets + 1] = player.pilot()
+
+    for i, j in ipairs(fleetFLF) do
+        if j:exists() then
+            j:attack(targets[rnd.rnd(#targets - 1) + 1])
+        end
+    end
+end
+
+function idle()
+    updatepos()
+    obstinate:goto(fleetpos[1], false)
+end
+
+function updatepos()
+    angle = (angle + stepsize) % (2 * math.pi)
+    fleetpos[1] = vec2.new(math.cos(angle) * 2000, math.sin(angle) * 2000)
+    fleetpos[2] = fleetpos[1] + vec2.new(110, 0)
+    fleetpos[3] = fleetpos[1] + vec2.new(-110, 0)
+    fleetpos[4] = fleetpos[1] + vec2.new(0, -120)
+    fleetpos[5] = fleetpos[1] + vec2.new(0, 120)
+    fighterpos[1] = fleetpos[2] + vec2.new(60, 0)
+    fighterpos[2] = fleetpos[2] + vec2.new(100, 0)
+    fighterpos[3] = fleetpos[2] + vec2.new(80, -50)
+    fighterpos[4] = fleetpos[3] + vec2.new(-60, 0)
+    fighterpos[5] = fleetpos[3] + vec2.new(-100, 0)
+    fighterpos[6] = fleetpos[3] + vec2.new(-80, -50)
 end
 
 function abort()
