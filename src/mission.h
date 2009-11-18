@@ -29,7 +29,7 @@
 /* actual flags */
 #define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
 
-#define MISSION_TIMER_MAX     4 /**< Maximum amount of timers in a mission. */
+#define MISSION_TIMER_MAX     10 /**< Maximum amount of timers in a mission. */
 
 
 /**
