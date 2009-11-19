@@ -87,6 +87,12 @@ int comm_openPilot( unsigned int pilot )
    comm_pilot  = p;
    if (comm_pilot == NULL)
       return -1;
+
+   /* Must not be jumping. */
+   if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
+      player_message("%s is jumping.", comm_pilot->name);
+      return 0;
+   }
   
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
@@ -370,6 +376,12 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    /* Mark as bribed and don't allow bribing again. */
    pilot_setFlag( comm_pilot, PILOT_BRIBED );
    pilot_rmHostile( comm_pilot );
+
+   /* Stop hyperspace if necessary. */
+   pilot_rmFlag( comm_pilot, PILOT_HYP_PREP );
+   pilot_rmFlag( comm_pilot, PILOT_HYP_BEGIN );
+
+   /* Don't allow rebribe. */
    L = comm_pilot->ai->L;
    lua_getglobal(L, "mem");
    lua_pushnumber(L, 0);
