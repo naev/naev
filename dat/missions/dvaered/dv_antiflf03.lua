@@ -216,6 +216,8 @@ function deathBase()
         end
     end
     
+    misn.timerStop(controller)
+    
     obstinate:control(false)
     obstinate:changeAI("flee")
 
