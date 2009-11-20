@@ -164,7 +164,6 @@ function wakeUpGregarYouLazyBugger()
             j:setFriendly()
             j:setHealth(100,100)
             j:changeAI("flf_nojump")
-            flfship = j -- This is going to be the reference ship for conditionals.
             flfdead = false
         end
     end
@@ -181,7 +180,6 @@ end
 function annai()
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
-            flfship = j
             j:control()
             j:goto(waypoint2, false)
             j:goto(waypoint1, false)
@@ -204,7 +202,13 @@ end
 
 -- Check if the player is still with his escorts
 function outOfRange()
-    if vec2.dist(flfship:pos(), player.pilot():pos()) < 1000 then
+    local mindist = 2000 -- definitely OOR.
+    for i, j in ipairs(fleetFLF) do
+        if j:exists() then
+            mindist = min(mindist, vec2.dist(j:pos(), player.pilot():pos())
+        end
+    end
+    if mindist < 1000 then
         OORT = misn.timerStart("outOfRange", 2000)
     else
         -- TODO: handle mission failure due to distance to escorts
