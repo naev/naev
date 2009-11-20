@@ -188,7 +188,7 @@ function annai()
             j:goto(waypoint0)
         end
     end
-    misn.timerStart("spawnbase", 1000)
+    spawner = misn.timerStart("spawnbase", 1000)
 end
 
 -- Part of the escort script
@@ -198,7 +198,7 @@ function spawnbase()
         basefound = true
         misn.timerStop(OORT)
     else
-        misn.timerStart("spawnbase", 1000)
+        spawner = misn.timerStart("spawnbase", 1000)
     end
 end
 
@@ -214,6 +214,7 @@ function outOfRange()
                 j:rm()
             end
         end
+        misn.timerStop(spawner)
     end
 end
 
