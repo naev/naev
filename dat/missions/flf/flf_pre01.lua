@@ -133,16 +133,11 @@ function land()
         misn.jetCargo(gregar)
         misn.finish(true)
     -- Case Dvaered planet
-    elseif planet.cur():faction():name() == "Dvaered" then
+    elseif planet.cur():faction():name() == "Dvaered" and not basefound then
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
             faction.get("Dvaered"):modPlayerRaw(5)
-            if basefound then
-                var.push("flfbase_intro", 3)
-                diff.remove("FLF_base")
-            else
-                var.push("flfbase_intro", 1)
-            end
+            var.push("flfbase_intro", 1)
             var.pop("flfbase_flfshipkilled")
             misn.jetCargo(gregar)
             misn.finish(true)
@@ -164,7 +159,6 @@ function wakeUpGregarYouLazyBugger()
             j:setFriendly()
             j:setHealth(100,100)
             j:changeAI("flf_nojump")
-            flfship = j -- This is going to be the reference ship for conditionals.
             flfdead = false
         end
     end
@@ -179,32 +173,47 @@ end
 
 -- Fly the FLF ships through their waypoints
 function annai()
+    local poss = {}
+    poss[1] = vec2.new(0,70)
+    poss[2] = vec2.new(50, -50)
+    poss[3] = vec2.new(-50, -50)
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
-            flfship = j
             j:control()
             j:goto(waypoint2, false)
             j:goto(waypoint1, false)
-            j:goto(waypoint0)
+            j:goto(poss[i])
         end
     end
-    misn.timerStart("spawnbase", 1000)
+    spawner = misn.timerStart("spawnbase", 1000)
 end
 
 -- Part of the escort script
 function spawnbase()
-    if vec2.dist(flfship:pos(), waypoint0) < 1000 then
+    local mindist = 2000 -- definitely OOR.
+    for i, j in ipairs(fleetFLF) do
+            mindist = math.min(mindist, vec2.dist(j:pos(), waypoint0))
+        if j:exists() then
+        end
+    end
+    if mindist < 1000 then
         diff.apply("FLF_base")
         basefound = true
         misn.timerStop(OORT)
     else
-        misn.timerStart("spawnbase", 1000)
+        spawner = misn.timerStart("spawnbase", 1000)
     end
 end
 
 -- Check if the player is still with his escorts
 function outOfRange()
-    if vec2.dist(flfship:pos(), player.pilot():pos()) < 1000 then
+    local mindist = 2000 -- definitely OOR.
+    for i, j in ipairs(fleetFLF) do
+        if j:exists() then
+            mindist = math.min(mindist, vec2.dist(j:pos(), player.pilot():pos()))
+        end
+    end
+    if mindist < 1000 then
         OORT = misn.timerStart("outOfRange", 2000)
     else
         -- TODO: handle mission failure due to distance to escorts
@@ -214,6 +223,7 @@ function outOfRange()
                 j:rm()
             end
         end
+        misn.timerStop(spawner)
     end
 end
 
