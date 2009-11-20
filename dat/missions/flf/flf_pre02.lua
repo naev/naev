@@ -208,6 +208,7 @@ function takeoff()
         if escarmor[i] > 0 then
             j:rename("FLF Wingman")
             j:setFriendly()
+            j:setNodisable(true)
             hook.pilot(j, "death", "FLFdeath")
             if not loyalFLF then
                 j:setFaction("FLF")
