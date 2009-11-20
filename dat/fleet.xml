@@ -541,7 +541,7 @@
   </pilots>
  </fleet>
  <fleet name="FLF Base">
-  <ai>flf_nojump</ai>
+  <ai>base</ai>
   <faction>FLF</faction>
   <flags>
    <guard />
