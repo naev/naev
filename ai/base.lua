@@ -28,6 +28,13 @@ function control ()
 end
 
 
+function attacked( attacker )
+   if ai.taskname() ~= "attack" then
+      ai.pushtask(0, "attack", attacker)
+   end
+end
+
+
 function attack ()
    -- make sure pilot exists
    if not ai.exists(target) then
