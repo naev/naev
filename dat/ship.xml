@@ -1478,13 +1478,14 @@
   </slots>
  </ship>
  <ship name="Base">
+  <base_type>Base</base_type>
   <GFX sx="1" sy="1">base</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>0</price>
+  <price>1</price>
   <fabricator>N/A</fabricator>
-  <tech>10000000000</tech>
+  <tech>9999</tech>
   <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
   <movement>
    <thrust>0</thrust>
@@ -1503,7 +1504,7 @@
    <cpu>500</cpu>
    <crew>500</crew>
    <mass>100000</mass>
-   <fuel>0</fuel>
+   <fuel>1</fuel>
    <cap_cargo>100</cap_cargo>
   </characteristics>
   <slots>

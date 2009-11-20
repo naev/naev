@@ -342,7 +342,7 @@
    <tech>100000000</tech>
    <license>Medium Weapon License</license>
    <mass>12</mass>
-   <price>0</price>
+   <price>1</price>
    <description>Specially modified ripper for bases. Not for sale (I hope).</description>
    <gfx_store>ripper</gfx_store>
   </general>
