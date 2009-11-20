@@ -193,7 +193,7 @@ end
 
 -- Part of the escort script
 function spawnbase()
-    if vec2.dist(flfship:pos(), waypoint0:pos()) < 1000 then
+    if vec2.dist(flfship:pos(), waypoint0) < 1000 then
         diff.apply("FLF_base")
         basefound = true
         misn.timerStop(OORT)
