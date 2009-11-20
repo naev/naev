@@ -1665,8 +1665,11 @@ static int pilotL_follow( lua_State *L )
  *
  * Pilot must be under manual control for this to work.
  *
+ * @usage p:attack( another_pilot ) -- Attack another pilot
+ * @usage p:attack() -- Attack nearest pilot.
+ *
  *    @luaparam p Pilot to tell to attack another pilot.
- *    @luaparam pt Target pilot to attack.
+ *    @luaparam pt Target pilot to attack (or nil to attack nearest enemy).
  * @luasee control
  * @luafunc attack( p, pt )
  */
@@ -1674,15 +1677,24 @@ static int pilotL_attack( lua_State *L )
 {
    Pilot *p, *pt;
    Task *t;
+   unsigned int pid;
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
-   pt = luaL_validpilot(L,2);
+   if (lua_gettop(L) == 1) {
+      pid = pilot_getNearestEnemy( p );
+      if (pid == 0) /* No enemy found. */
+         return 0;
+   }
+   else {
+      pt  = luaL_validpilot(L,2);
+      pid = pt->id;
+   }
 
    /* Set the task. */
    t        = pilotL_newtask( L, p, "attack" );
    t->dtype = TASKDATA_INT;
-   t->dat.num = pt->id;
+   t->dat.num = pid;
 
    return 0;
 }
