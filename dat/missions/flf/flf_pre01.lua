@@ -173,12 +173,16 @@ end
 
 -- Fly the FLF ships through their waypoints
 function annai()
+    local poss = {}
+    poss[1] = vec2.new(0,70)
+    poss[2] = vec2.new(50, -50)
+    poss[3] = vec2.new(-50, -50)
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
             j:control()
             j:goto(waypoint2, false)
             j:goto(waypoint1, false)
-            j:goto(waypoint0)
+            j:goto(poss[i])
         end
     end
     spawner = misn.timerStart("spawnbase", 1000)
@@ -200,7 +204,7 @@ function outOfRange()
     local mindist = 2000 -- definitely OOR.
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
-            mindist = min(mindist, vec2.dist(j:pos(), player.pilot():pos())
+            mindist = min(mindist, vec2.dist(j:pos(), player.pilot():pos()))
         end
     end
     if mindist < 1000 then
