@@ -346,7 +346,7 @@
    <description>Specially modified ripper for bases. Not for sale (I hope).</description>
    <gfx_store>ripper</gfx_store>
   </general>
-  <specific type="bolt">
+  <specific type="turret bolt">
    <cpu>12</cpu>
    <gfx>ripper</gfx>390
    <sound>ripper</sound>
