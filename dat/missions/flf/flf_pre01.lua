@@ -190,7 +190,13 @@ end
 
 -- Part of the escort script
 function spawnbase()
-    if vec2.dist(flfship:pos(), waypoint0) < 1000 then
+    local mindist = 2000 -- definitely OOR.
+    for i, j in ipairs(fleetFLF) do
+            mindist = math.min(mindist, vec2.dist(j:pos(), waypoint0))
+        if j:exists() then
+        end
+    end
+    if mindist < 1000 then
         diff.apply("FLF_base")
         basefound = true
         misn.timerStop(OORT)
@@ -204,7 +210,7 @@ function outOfRange()
     local mindist = 2000 -- definitely OOR.
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
-            mindist = min(mindist, vec2.dist(j:pos(), player.pilot():pos()))
+            mindist = math.min(mindist, vec2.dist(j:pos(), player.pilot():pos()))
         end
     end
     if mindist < 1000 then
