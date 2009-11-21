@@ -798,6 +798,10 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 {
    lua_State *L;
 
+   /* Ignore distress signals when under manual control. */
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Set up the environment. */
    ai_setPilot(p);
    L = cur_pilot->ai->L;
