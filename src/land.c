@@ -1193,6 +1193,12 @@ static void bar_approach( unsigned int wid, char *str )
 
    /* Reset markers. */
    mission_sysMark();
+
+   /* Mission forced take off. */
+   if (landed == 0) {
+      landed = 1; /* ugly hack to make takeoff not complain. */
+      takeoff(0);
+   }
 }
 /**
  * @brief Loads the news.
