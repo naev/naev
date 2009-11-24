@@ -96,9 +96,11 @@ function accept()
     misn.setMarker(system.get(sysname1), "misc")
     
     talked = false
+    stopping = false
     
     hook.land("land")
     hook.jumpin("jumpin")
+    hook.takeoff("takeoff")
 end
 
 function land()
@@ -116,30 +118,35 @@ function jumpin()
         pinnacle:rename(shipname)
         pinnacle:setInvincible(true)
         pinnacle:control()
-        pinnacle:goto(vec2.new( 400, -400))
+        pinnacle:goto(vec2.new( 400, -400), false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
     end
 end
 
 function idle()
-    pinnacle:goto(vec2.new( 400,  400))
-    pinnacle:goto(vec2.new(-400,  400))
-    pinnacle:goto(vec2.new(-400, -400))
-    pinnacle:goto(vec2.new( 400, -400))
+    if stopping then
+        pinnacle:disable()
+    else
+        pinnacle:goto(vec2.new( 400,  400), false)
+        pinnacle:goto(vec2.new(-400,  400), false)
+        pinnacle:goto(vec2.new(-400, -400), false)
+        pinnacle:goto(vec2.new( 400, -400), false)
+    end
 end
 
 function hail()
     if talked then
         tk.msg(title[4], string.format(text[4], shipname, shipname))
-        pinnacle:disable()
+        pinnacle:cleartask()
+        pinnacle:brake()
+        stopping = true
         hook.pilot(pinnacle, "board", "board")
     end
 end
 
 function board()
     tk.msg(title[5], string.format(text[5], shipname))
-    misn.jetCargo(carg_id)
     player.unboard()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
@@ -157,20 +164,24 @@ function talkthieves()
     talked = true
     carg_id = misn.addCargo("The Baron's holopainting", 0)
 
-    player.takeoff()
-    
     misn.osdActive(2)
     misn.setMarker(system.get(sysname2), "misc")
-    
-    vendetta1 = pilot.add("Dvaered Vendetta", "dvaered_nojump", vec2.new(500,0), false)[1]
-    vendetta2 = pilot.add("Dvaered Vendetta", "dvaered_nojump", vec2.new(-500,0), false)[1]
-    vendetta1:rename("Dvaered Police Vendetta")
-    vendetta2:rename("Dvaered Police Vendetta")
-    vendetta1:control()
-    vendetta2:control()
-    vendetta1:attack(player.pilot())
-    vendetta2:attack(player.pilot())
-    vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.pilot():ship():name(), planetname), true)
+
+    player.takeoff()
+end
+
+function takeoff()
+    if talked and system.cur() == system.get(sysname1) then
+        vendetta1 = pilot.add("Dvaered Vendetta", "dvaered_nojump", vec2.new(500,0), false)[1]
+        vendetta2 = pilot.add("Dvaered Vendetta", "dvaered_nojump", vec2.new(-500,0), false)[1]
+        vendetta1:rename("Dvaered Police Vendetta")
+        vendetta2:rename("Dvaered Police Vendetta")
+        vendetta1:control()
+        vendetta2:control()
+        vendetta1:attack(player.pilot())
+        vendetta2:attack(player.pilot())
+        vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.pilot():ship():name(), planetname), true)
+    end
 end
 
 function abort()
