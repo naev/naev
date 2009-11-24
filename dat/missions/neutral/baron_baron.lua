@@ -82,7 +82,6 @@ end
 
 function accept()
     tk.msg(title[2], string.format(text[2], planetname, planetname, sysname2, shipname, shipname, planetname))
-    tk.msg("Difficulty", "Reference ship for this mission: TODO") -- deleteme
     
     misn.accept()
     
@@ -147,6 +146,7 @@ end
 
 function board()
     tk.msg(title[5], string.format(text[5], shipname))
+    player.refuel()
     player.unboard()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
