@@ -10,6 +10,15 @@
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
+ <event name="Baroncomm">
+  <lua>neutral/baroncomm</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>system.cur():security() &gt;= 75</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>

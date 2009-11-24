@@ -18,6 +18,14 @@
    <enemy>Collective</enemy>
   </enemies>
  </faction>
+ <faction name="Civilian">
+  <player>1</player>
+  <colour>black</colour>
+  <allies>
+  </allies>
+  <enemies>
+  </enemies>
+ </faction>
  <faction name="Proteron">
   <logo>proteron</logo>
   <longname>House Proteron</longname>

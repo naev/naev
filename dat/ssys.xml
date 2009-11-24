@@ -1426,6 +1426,7 @@
   </fleets>
   <jumps>
    <jump>Raelid</jump>
+   <jump>Ingot</jump>
   </jumps>
   <pos>
    <y>-149</y>
@@ -1880,6 +1881,25 @@
   </pos>
   <planets>
    <planet>Zhiru</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Ingot">
+  <fleets>
+  </fleets>
+  <jumps>
+   <jump>Toaxis</jump>
+  </jumps>
+  <pos>
+   <y>-200</y>
+   <x>430</x>
+  </pos>
+  <planets>
   </planets>
   <general>
    <asteroids>0</asteroids>

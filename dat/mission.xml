@@ -332,6 +332,16 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="Baron">
+  <lua>neutral/baron_baron</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
  <mission name="Shadowrun">
   <lua>neutral/shadowrun</lua>
   <flags>

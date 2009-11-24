@@ -10,6 +10,13 @@
    <pilot chance="100" ship="Goddard"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Civilian Hyena">
+  <ai>trader</ai>
+  <faction>Civilian</faction>
+  <pilots>
+   <pilot chance="100" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
