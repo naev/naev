@@ -2945,6 +2945,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    Outfit *o;
    int ret;
    const char *str;
+   Commodity *com;
    
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3080,8 +3081,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                if (id != NULL)
                   free(id);
 
+               /* Get the commodity. */
+               com = commodity_get(xml_get(cur));
+               if (com == NULL) {
+                  WARN("Unknown commodity '%s' detected, removing.", xml_get(cur));
+                  continue;
+               }
+
                /* actually add the cargo with id hack */
-               pilot_addCargo( ship, commodity_get(xml_get(cur)), quantity );
+               pilot_addCargo( ship, com, quantity );
                if (i != 0)
                   ship->commodities[ ship->ncommodities-1 ].id = i;
             }
