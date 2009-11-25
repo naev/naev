@@ -214,7 +214,7 @@ function choose_ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       if factions["Collective"] then
-         ambient = { "collective1", "collective2" }
+         ambient = { "collective1", "collective2", "automat" }
       elseif factions["Empire"] then
          ambient = { "empire2", "empire2", "empire2",
                "empire1", "empire1", "empire1" }
