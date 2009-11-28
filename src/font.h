@@ -12,15 +12,29 @@
 
 
 /**
+ * @brief Represents a character in the font.
+ */
+typedef struct glFontChar_s {
+   int w; /**< Width of the character. */
+   double tx; /**< X offset within the texture. */
+   double ty; /**< Y offset within the texture. */
+   double tw; /**< Width within the texture. */
+   double th; /**< Height within the texture. */
+   double adv_x; /**< X advancement. */
+   double adv_y; /**< Y advancement. */
+} glFontChar;
+
+
+/**
  * @struct glFont
  *
  * @brief Represents a font in memory.
  */
-typedef struct glFont_ {
+typedef struct glFont_s {
    int h; /**< Font height. */
-   int* w; /**< Width of each font member. */
-   GLuint *textures; /**< Textures in the font. */
-   GLuint list_base; /**< Display list base. */
+   GLuint texture; /**< Font atlas. */
+   gl_vbo *vbo; /**< VBO assosciated. */
+   glFontChar *chars; /**< Characters in the font. */
 } glFont;
 extern glFont gl_defFont; /**< default font */
 extern glFont gl_smallFont; /**< small font */
