@@ -781,7 +781,7 @@ static void gl_fontRenderCharacter( const glFont* font, int ch )
 {
    double y;
 
-   GLubyte ind[6];
+   GLushort ind[6];
    /*
     * Global  Local
     * 0--1      0--1 4
@@ -791,11 +791,11 @@ static void gl_fontRenderCharacter( const glFont* font, int ch )
     */
    /*
    ind[0] = 4*ch + 0;
-   ind[1] = 4*ch + 1;
-   ind[2] = 4*ch + 2;
-   ind[3] = 4*ch + 3;
+   ind[1] = 4*ch + 2;
+   ind[2] = 4*ch + 1;
+   ind[3] = 4*ch + 2;
    ind[4] = 4*ch + 1;
-   ind[5] = 4*ch + 2;
+   ind[5] = 4*ch + 3;
    */
    ind[0] = 4*ch + 0;
    ind[1] = 4*ch + 1;
@@ -803,8 +803,8 @@ static void gl_fontRenderCharacter( const glFont* font, int ch )
    ind[3] = 4*ch + 3;
 
    /* Draw the element. */
-   /*glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, ind );*/
-   glDrawElements( GL_QUADS, 4, GL_UNSIGNED_BYTE, ind );
+   /*glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );*/
+   glDrawElements( GL_QUADS, 4, GL_UNSIGNED_SHORT, ind );
 
    /* Translate matrix. */
    gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );
