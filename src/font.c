@@ -45,6 +45,10 @@ typedef struct font_char_s {
    int off_y;
    int adv_x;
    int adv_y;
+   GLfloat tx;
+   GLfloat ty;
+   GLfloat tw;
+   GLfloat th;
 } font_char_t;
 
 
@@ -301,7 +305,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    x += (double)(width - n)/2.;
 
    /* Render it. */
-   gl_fontRenderStart(ft_font, x+(width-n), y, c);
+   gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
       gl_fontRenderCharacter( ft_font, text[i] );
    gl_fontRenderEnd();
@@ -546,7 +550,6 @@ int gl_printHeight( const glFont *ft_font,
 static int font_makeChar( font_char_t *c, FT_Face face, char ch )
 {
    FT_Bitmap bitmap;
-   GLubyte* expanded_data;
    FT_GlyphSlot slot;
    int w,h;
    int i,j;
@@ -566,24 +569,13 @@ static int font_makeChar( font_char_t *c, FT_Face face, char ch )
    w = bitmap.width;
    h = bitmap.rows;
 
-   /* memory for textured data
-    * bitmap is using two channels, one for luminosity and one for alpha */
-   expanded_data = (GLubyte*) malloc(sizeof(GLubyte)*2* w*h + 1);
-   for (j=0; j < h; j++) {
-      for (i=0; i < w; i++ ) {
-         expanded_data[2*(i+j*w)] = 0xcf; /* Set LUMINANCE to constant. */
-         expanded_data[2*(i+j*w)+1] = /* Alpha varies with bitmap. */
-               ((i>=bitmap.width) || (j>=bitmap.rows)) ?
-                  0 : bitmap.buffer[i + bitmap.width*j];
-      }
-   }
-
    /* Store data. */
-   c->data  = expanded_data;
+   c->data = malloc( sizeof(GLubyte) * w*h );
+   memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
    c->w     = w;
    c->h     = h;
    c->off_x = slot->bitmap_left;
-   c->off_y = slot->bitmap_top-bitmap.rows;
+   c->off_y = slot->bitmap_top;
    c->adv_x = slot->advance.x >> 6;
    c->adv_y = slot->advance.y >> 6;
    return 0;
@@ -600,9 +592,10 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    int x, y, x_off, y_off;
    int total_w, total_h, total_A;
    int w, h, avg_w, max_h;
-   int rows;
+   int rows, offset;
    GLubyte *data;
    GLfloat *data_vbo;
+   GLfloat tx, ty, tw, th, vx, vy, vw, vh;
 
    /* Render characters into software. */
    total_w  = 0;
@@ -611,11 +604,11 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    max_h    = 0;
    for (i=0; i<128; i++) {
       font_makeChar( &chars[i], face, i );
-      total_w  += chars[i].w;
-      total_h  += chars[i].off_y + chars[i].h;
-      total_A  += chars[i].w * chars[i].h;
-      if (chars[i].h + chars[i].off_y > max_h)
-         max_h = chars[i].h + chars[i].off_y;
+      total_w += chars[i].w;
+      total_h += chars[i].off_y + chars[i].h;
+      total_A += chars[i].w * chars[i].h;
+      if (chars[i].h > max_h)
+         max_h = chars[i].h;
    }
 
    /* Calculate how to fit them.
@@ -639,7 +632,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    y_off = 0;
    for (i=0; i<128; i++) {
       /* Check if need to skip to newline. */
-      if (x_off+chars[i].w > w) {
+      if (x_off + chars[i].w > w) {
          x_off  = 0;
          y_off += max_h;
       }
@@ -647,19 +640,23 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       /* Render character. */
       for (y=0; y<chars[i].h; y++) {
          for (x=0; x<chars[i].w; x++) {
-            data[ ((y_off+y)*w + x+x_off)*2     ] = chars[i].data[ (y*chars[i].w + x)*2     ];
-            data[ ((y_off+y)*w + x+x_off)*2 + 1 ] = chars[i].data[ (y*chars[i].w + x)*2 + 1 ];
+            offset  = (y_off + y) * w;
+            offset += x_off + x;
+            data[ offset*2     ] = 0xcf; /* Constant luminance. */
+            data[ offset*2 + 1 ] = chars[i].data[ y*chars[i].w + x ];
          }
       }
 
       /* Store character information. */
-      font->chars[i].w  = chars[i].w;
-      font->chars[i].tx = (double)x_off      / (double)w;
-      font->chars[i].ty = (double)y_off      / (double)h;
-      font->chars[i].tw = (double)chars[i].w / (double)w;
-      font->chars[i].th = (double)chars[i].h / (double)h;
+      font->chars[i].w     = chars[i].w;
       font->chars[i].adv_x = chars[i].adv_x;
       font->chars[i].adv_y = chars[i].adv_y;
+
+      /* Store temporary information. */
+      chars[i].tx = (GLfloat) x_off      / (GLfloat) w;
+      chars[i].ty = (GLfloat) y_off      / (GLfloat) h;
+      chars[i].tw = (GLfloat) chars[i].w / (GLfloat) w;
+      chars[i].th = (GLfloat) chars[i].h / (GLfloat) h;
 
       /* Displace offset. */
       x_off += chars[i].w;
@@ -681,7 +678,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
    /* Upload data. */
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, w, h, 0,
          GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
 
    /* Check for errors. */
@@ -691,24 +688,56 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    n           = sizeof(GLfloat) * (8+8) * 128;
    data_vbo    = malloc( n );
    for (i=0; i<128; i++) {
+      /* We do something like the following for vertex coordinates.
+       *
+       *
+       *  +----------------- top reference   \  <------- font->h
+       *  |                                  |
+       *  |                                  | --- off_y
+       *  +----------------- glyph top       /
+       *  |
+       *  |
+       *  +----------------- glyph bottom
+       *  |
+       *  v   y
+       *
+       *
+       *  +----+------------->  x
+       *  |    |
+       *  |    glyph start
+       *  |
+       *  side reference
+       *
+       *  \----/
+       *   off_x
+       */
+      /* Temporary variables. */
+      tx = chars[i].tx;
+      ty = chars[i].ty;
+      tw = chars[i].tw;
+      th = chars[i].th;
+      vx = chars[i].off_x;
+      vy = chars[i].off_y - chars[i].h;
+      vw = chars[i].w;
+      vh = chars[i].h;
       /* Texture coords. */
-      data_vbo[ 8*i + 0 ] = font->chars[i].tx; /* Top left. */
-      data_vbo[ 8*i + 1 ] = font->chars[i].ty;
-      data_vbo[ 8*i + 2 ] = font->chars[i].tw; /* Top right. */
-      data_vbo[ 8*i + 3 ] = font->chars[i].ty;
-      data_vbo[ 8*i + 4 ] = font->chars[i].tw; /* Bottom right. */
-      data_vbo[ 8*i + 5 ] = font->chars[i].th;
-      data_vbo[ 8*i + 6 ] = font->chars[i].tx; /* Bottom left. */
-      data_vbo[ 8*i + 7 ] = font->chars[i].th;
+      data_vbo[ 8*i + 0 ] = tx;      /* Top left. */
+      data_vbo[ 8*i + 1 ] = ty;
+      data_vbo[ 8*i + 2 ] = tx + tw; /* Top right. */
+      data_vbo[ 8*i + 3 ] = ty;
+      data_vbo[ 8*i + 4 ] = tx + tw; /* Bottom right. */
+      data_vbo[ 8*i + 5 ] = ty + th;
+      data_vbo[ 8*i + 6 ] = tx;      /* Bottom left. */
+      data_vbo[ 8*i + 7 ] = ty + th;
       /* Vertex coords. */
-      data_vbo[ 8*128 + 8*i + 0 ] = font->chars[i].tx; /* Top left. */
-      data_vbo[ 8*128 + 8*i + 1 ] = font->chars[i].ty;
-      data_vbo[ 8*128 + 8*i + 2 ] = font->chars[i].tw; /* Top right. */
-      data_vbo[ 8*128 + 8*i + 3 ] = font->chars[i].ty;
-      data_vbo[ 8*128 + 8*i + 4 ] = font->chars[i].tw; /* Bottom right. */
-      data_vbo[ 8*128 + 8*i + 5 ] = font->chars[i].th;
-      data_vbo[ 8*128 + 8*i + 6 ] = font->chars[i].tx; /* Bottom left. */
-      data_vbo[ 8*128 + 8*i + 7 ] = font->chars[i].th;
+      data_vbo[ 8*128 + 8*i + 0 ] = vx;    /* Top left. */
+      data_vbo[ 8*128 + 8*i + 1 ] = vy+vh;
+      data_vbo[ 8*128 + 8*i + 2 ] = vx+vw; /* Top right. */
+      data_vbo[ 8*128 + 8*i + 3 ] = vy+vh;
+      data_vbo[ 8*128 + 8*i + 4 ] = vx+vw; /* Bottom right. */
+      data_vbo[ 8*128 + 8*i + 5 ] = vy;
+      data_vbo[ 8*128 + 8*i + 6 ] = vx;    /* Bottom left. */
+      data_vbo[ 8*128 + 8*i + 7 ] = vy;
    }
    font->vbo   = gl_vboCreateStatic( n, data_vbo );
 
@@ -760,24 +789,25 @@ static void gl_fontRenderCharacter( const glFont* font, int ch )
     * |/ |      |/ / |
     * 2--3      2 3--5
     */
+   /*
    ind[0] = 4*ch + 0;
    ind[1] = 4*ch + 1;
    ind[2] = 4*ch + 2;
-   ind[3] = 4*ch + 2;
+   ind[3] = 4*ch + 3;
    ind[4] = 4*ch + 1;
-   ind[5] = 4*ch + 3;
-
-   /* Calculate Y advancement. */
-   y = font->chars[ch].adv_y;
-
-   /* Translate matrix. */
-   gl_matrixTranslate( font->chars[ch].adv_x, y );
+   ind[5] = 4*ch + 2;
+   */
+   ind[0] = 4*ch + 0;
+   ind[1] = 4*ch + 1;
+   ind[2] = 4*ch + 2;
+   ind[3] = 4*ch + 3;
 
    /* Draw the element. */
-   glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, ind );
+   /*glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, ind );*/
+   glDrawElements( GL_QUADS, 4, GL_UNSIGNED_BYTE, ind );
 
    /* Translate matrix. */
-   gl_matrixTranslate( font->chars[ch].adv_x, -y );
+   gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );
 }
 
 
