@@ -15,11 +15,6 @@
  * @brief Represents a character in the font.
  */
 typedef struct glFontChar_s {
-   int w; /**< Width of the character. */
-   double tx; /**< X offset within the texture. */
-   double ty; /**< Y offset within the texture. */
-   double tw; /**< Width within the texture. */
-   double th; /**< Height within the texture. */
    double adv_x; /**< X advancement. */
    double adv_y; /**< Y advancement. */
 } glFontChar;

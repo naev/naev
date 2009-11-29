@@ -91,9 +91,9 @@ static int font_limitSize( const glFont *ft_font, int *width,
    /* limit size */
    n = 0;
    for (i=0; text[i] != '\0'; i++) {
-      n += ft_font->chars[ (int)text[i] ].w;
+      n += ft_font->chars[ (int)text[i] ].adv_x;
       if (n > max) {
-         n -= ft_font->chars[ (int)text[i] ].w; /* actual size */
+         n -= ft_font->chars[ (int)text[i] ].adv_x; /* actual size */
          break;
       }
    }
@@ -133,7 +133,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       }
 
       /* Increase size. */
-      n += ft_font->chars[ (int)text[i] ].w;
+      n += ft_font->chars[ (int)text[i] ].adv_x;
 
       /* Save last space. */
       if (text[i] == ' ')
@@ -370,8 +370,6 @@ int gl_printTextRaw( const glFont *ft_font,
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   bx -= (double)SCREEN_W/2.;
-   by -= (double)SCREEN_H/2.;
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
@@ -382,7 +380,7 @@ int gl_printTextRaw( const glFont *ft_font,
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
       for (i=0; i < ret; i++)
-         gl_fontRenderCharacter( ft_font, text[i] );
+         gl_fontRenderCharacter( ft_font, text[p+i] );
       gl_fontRenderEnd();
 
       if (text[p+i] == '\0')
@@ -448,7 +446,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       ft_font = &gl_defFont;
 
    for (n=0,i=0; i<(int)strlen(text); i++)
-      n += ft_font->chars[ (int)text[i] ].w;
+      n += ft_font->chars[ (int)text[i] ].adv_x;
 
    return n;
 }
@@ -648,7 +646,6 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       }
 
       /* Store character information. */
-      font->chars[i].w     = chars[i].w;
       font->chars[i].adv_x = chars[i].adv_x;
       font->chars[i].adv_y = chars[i].adv_y;
 
