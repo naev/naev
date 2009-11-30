@@ -634,14 +634,36 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
     * rows^2 = Wtotal / Hmax
     * rows = sqrt( Wtotal / Hmax )
     */
-   n     = ceil( sqrt( (double)total_w / (double)max_h ) );
-   w     = ceil( total_w / n ) + 1;
-   h     = ceil( max_h * n ) + 1;
+    n = ceil( sqrt( (double)total_w / (double)max_h ) );
+    w = ceil( total_w / n ) + 1;
+    h = ceil( max_h * n ) + 1;
 
    /* Check if need to be POT. */
    if (gl_needPOT()) {
       w = gl_pot(w);
       h = gl_pot(h);
+   }
+
+   /* Test fit - formula isn't perfect. */
+   x_off = 0;
+   y_off = 0;
+   for (i=0; i<128; i++) {
+      if (x_off + chars[i].w >= w) {
+         x_off  = 0;
+         y_off += max_h;
+
+         /* Check for overflow. */
+         if (y_off + max_h >= h) {
+            h += max_h;
+
+            /* POT needs even more. */
+            if (gl_needPOT())
+               h = gl_pot(h);
+         }
+      }
+
+      /* Displace offset. */
+      x_off += chars[i].w;
    }
 
    /* Generate the texture. */
@@ -653,8 +675,6 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       if (x_off + chars[i].w >= w) {
          x_off  = 0;
          y_off += max_h;
-         if (y_off + max_h >= h)
-            WARN("Overflowing font texture - this shouldn't happen.");
       }
 
       /* Render character. */
