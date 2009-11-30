@@ -60,8 +60,6 @@ glFont gl_smallFont; /**< Small font. */
 /*
  * prototypes
  */
-static void glFontMakeDList( FT_Face face, char ch,
-      GLuint list_base, GLuint *tex_base, int *width_base );
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
 /* Render. */
@@ -570,15 +568,13 @@ static int font_makeChar( font_char_t *c, FT_Face face, char ch )
    FT_Bitmap bitmap;
    FT_GlyphSlot slot;
    int w,h;
-   int i,j;
-   double x,y;
 
    slot = face->glyph; /* Small shortcut. */
 
    /* Load the glyph. */
    if (FT_Load_Char( face, ch, FT_LOAD_RENDER )) {
       WARN("FT_Load_Char failed.");
-      return;
+      return -1;
    }
 
    bitmap = slot->bitmap; /* to simplify */
@@ -608,23 +604,19 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    font_char_t chars[128];
    int i, n;
    int x, y, x_off, y_off;
-   int total_w, total_h, total_A;
-   int w, h, avg_w, max_h;
-   int rows, offset;
+   int total_w;
+   int w, h, max_h;
+   int offset;
    GLubyte *data;
    GLfloat *data_vbo;
    GLfloat tx, ty, tw, th, vx, vy, vw, vh;
 
    /* Render characters into software. */
    total_w  = 0;
-   total_h  = 0;
-   total_A  = 0;
    max_h    = 0;
    for (i=0; i<128; i++) {
       font_makeChar( &chars[i], face, i );
       total_w += chars[i].w;
-      total_h += chars[i].off_y + chars[i].h;
-      total_A += chars[i].w * chars[i].h;
       if (chars[i].h > max_h)
          max_h = chars[i].h;
    }
@@ -634,9 +626,9 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
     * rows^2 = Wtotal / Hmax
     * rows = sqrt( Wtotal / Hmax )
     */
-    n = ceil( sqrt( (double)total_w / (double)max_h ) );
-    w = ceil( total_w / n ) + 1;
-    h = ceil( max_h * n ) + 1;
+   n = ceil( sqrt( (double)total_w / (double)max_h ) );
+   w = ceil( total_w / n ) + 1;
+   h = ceil( max_h * n ) + 1;
 
    /* Check if need to be POT. */
    if (gl_needPOT()) {
@@ -786,6 +778,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    /* Free the data. */
    free(data);
    free(data_vbo);
+
+   return 0;
 }
 
 
@@ -822,7 +816,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state )
 {
    GLushort ind[6];
-   double y, a;
+   double a;
 
    /* Handle escape sequences. */
    if (ch == '\e') /* Start sequence. */
@@ -895,7 +889,6 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    FT_Library library;
    FT_Face face;
    uint32_t bufsize;
-   int i;
    FT_Byte* buf;
 
    /* Get default font if not set. */
