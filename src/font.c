@@ -645,14 +645,16 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    }
 
    /* Generate the texture. */
-   data  = calloc( w*h, 2 );
+   data  = calloc( w*h*2, 1 );
    x_off = 0;
    y_off = 0;
    for (i=0; i<128; i++) {
       /* Check if need to skip to newline. */
-      if (x_off + chars[i].w > w) {
+      if (x_off + chars[i].w >= w) {
          x_off  = 0;
          y_off += max_h;
+         if (y_off + max_h >= h)
+            WARN("Overflowing font texture - this shouldn't happen.");
       }
 
       /* Render character. */
