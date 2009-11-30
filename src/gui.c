@@ -139,6 +139,18 @@ typedef struct HealthBar_ {
  * @brief Represents the ingame player graphical user interface.
  */
 typedef struct GUI_ {
+   /* Border intersections. */
+   double tl; /**< Top left. */
+   double tr; /**< Top right. */
+   double bl; /**< Bottom left. */
+   double br; /**< Bottom right. */
+   double ref_right;
+   double ref_top;
+   double ref_left;
+   double ref_bottom;
+   double border_h;
+   double border_w;
+
    /* graphics */
    glTexture *gfx_frame; /**< Frame of the GUI. */
    glTexture *gfx_targetPilot; /**< Graphics used to target pilot. */
@@ -434,7 +446,7 @@ static void gui_renderBorder( double dt )
 
    /* Get player position. */
    pos   = &player->solid->pos;
-   hw    = SCREEN_W/2;  
+   hw    = SCREEN_W/2; 
    hh    = SCREEN_H/2;
 
    /* Interference. */
@@ -469,21 +481,23 @@ static void gui_renderBorder( double dt )
             a += 2.*M_PI;
 
          /* Handle by quadrant. */
-         if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+            cx = 2. * (hw-7.) * (gui.ref_top - a) / gui.border_w;
             cy = hh-7.;
          }
-         else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
+         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
             cx = -hw+7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (gui.ref_left - a) / gui.border_h;
          }
-         else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+            cx = 2. * (hw-7.) * (a - gui.ref_bottom) / gui.border_w;
             cy = -hh+7.;
          }
-         else {
+         else { /* Right. */
+            if (a > gui.tr)
+               a -= 2.*M_PI;
             cx = hw-7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (a - gui.ref_right) / gui.border_h;
          }
 
 
@@ -546,21 +560,23 @@ static void gui_renderBorder( double dt )
             a += 2.*M_PI;
 
          /* Handle by quadrant. */
-         if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+            cx = 2. * (hw-7.) * (gui.ref_top - a) / gui.border_w;
             cy = hh-7.;
          }
-         else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
+         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
             cx = -hw+7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (gui.ref_left - a) / gui.border_h;
          }
-         else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+            cx = 2. * (hw-7.) * (a - gui.ref_bottom) / gui.border_w;
             cy = -hh+7.;
          }
-         else {
+         else { /* Right. */
+            if (a > gui.tr)
+               a -= 2.*M_PI;
             cx = hw-7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (a - gui.ref_right) / gui.border_h;
          }
 
          /* Set up colours. */
@@ -1608,6 +1624,28 @@ int gui_init (void)
     * OSD
     */
    osd_setup( 30., SCREEN_H-90., 150., 300. );
+
+   /*
+    * Borders.
+    */
+   gui.tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
+   if (gui.tl < 0.)
+      gui.tl += 2*M_PI;
+   gui.tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
+   if (gui.tr < 0.)
+      gui.tr += 2*M_PI;
+   gui.bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
+   if (gui.bl < 0.)
+      gui.bl += 2*M_PI;
+   gui.br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
+   if (gui.br < 0.)
+      gui.br += 2*M_PI;
+   gui.border_h   = gui.bl - gui.tl;
+   gui.border_w   = gui.tl - gui.tr;
+   gui.ref_right  = 0.;
+   gui.ref_top    = gui.tr + gui.border_w/2.;
+   gui.ref_left   = gui.tl + gui.border_h/2.;
+   gui.ref_bottom = gui.bl + gui.border_w/2.;
 
    return 0;
 }
