@@ -101,6 +101,7 @@ void gl_screenshot( const char *filename )
    rows        = malloc( sizeof(png_bytep) * h );
 
    /* Read pixels from buffer -- SLOW. */
+   glPixelStorei(GL_PACK_ALIGNMENT, 1); /* Force them to pack the bytes. */
    glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
 
    /* Convert data. */
