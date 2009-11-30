@@ -675,6 +675,9 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       if (x_off + chars[i].w >= w) {
          x_off  = 0;
          y_off += max_h;
+
+         if (y_off + max_h >= h)
+            WARN("Font is still too small - something went wrong.");
       }
 
       /* Render character. */
