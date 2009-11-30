@@ -28,7 +28,8 @@ typedef struct glFontChar_s {
 typedef struct glFont_s {
    int h; /**< Font height. */
    GLuint texture; /**< Font atlas. */
-   gl_vbo *vbo; /**< VBO assosciated. */
+   gl_vbo *vbo_tex; /**< VBO assosciated to texture coordinates. */
+   gl_vbo *vbo_vert; /**< VBO assosciated to vertex coordinates. */
    glFontChar *chars; /**< Characters in the font. */
 } glFont;
 extern glFont gl_defFont; /**< default font */

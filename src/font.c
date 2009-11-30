@@ -608,8 +608,10 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    int w, h, max_h;
    int offset;
    GLubyte *data;
-   GLfloat *data_vbo;
-   GLfloat tx, ty, tw, th, vx, vy, vw, vh;
+   GLfloat *vbo_tex;
+   GLint *vbo_vert;
+   GLfloat tx, ty, tw, th;
+   GLint vx, vy, vw, vh;
 
    /* Render characters into software. */
    total_w  = 0;
@@ -719,8 +721,9 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    gl_checkErr();
 
    /* Create the VBOs. */
-   n           = sizeof(GLfloat) * (8+8) * 128;
-   data_vbo    = malloc( n );
+   n           = 8 * 128;
+   vbo_tex     = malloc(sizeof(GLfloat) * n);
+   vbo_vert    = malloc(sizeof(GLint) * n);
    for (i=0; i<128; i++) {
       /* We do something like the following for vertex coordinates.
        *
@@ -755,29 +758,31 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       vw = chars[i].w;
       vh = chars[i].h;
       /* Texture coords. */
-      data_vbo[ 8*i + 0 ] = tx;      /* Top left. */
-      data_vbo[ 8*i + 1 ] = ty;
-      data_vbo[ 8*i + 2 ] = tx + tw; /* Top right. */
-      data_vbo[ 8*i + 3 ] = ty;
-      data_vbo[ 8*i + 4 ] = tx + tw; /* Bottom right. */
-      data_vbo[ 8*i + 5 ] = ty + th;
-      data_vbo[ 8*i + 6 ] = tx;      /* Bottom left. */
-      data_vbo[ 8*i + 7 ] = ty + th;
+      vbo_tex[  8*i + 0 ] = tx;      /* Top left. */
+      vbo_tex[  8*i + 1 ] = ty;
+      vbo_tex[  8*i + 2 ] = tx + tw; /* Top right. */
+      vbo_tex[  8*i + 3 ] = ty;
+      vbo_tex[  8*i + 4 ] = tx + tw; /* Bottom right. */
+      vbo_tex[  8*i + 5 ] = ty + th;
+      vbo_tex[  8*i + 6 ] = tx;      /* Bottom left. */
+      vbo_tex[  8*i + 7 ] = ty + th;
       /* Vertex coords. */
-      data_vbo[ 8*128 + 8*i + 0 ] = vx;    /* Top left. */
-      data_vbo[ 8*128 + 8*i + 1 ] = vy+vh;
-      data_vbo[ 8*128 + 8*i + 2 ] = vx+vw; /* Top right. */
-      data_vbo[ 8*128 + 8*i + 3 ] = vy+vh;
-      data_vbo[ 8*128 + 8*i + 4 ] = vx+vw; /* Bottom right. */
-      data_vbo[ 8*128 + 8*i + 5 ] = vy;
-      data_vbo[ 8*128 + 8*i + 6 ] = vx;    /* Bottom left. */
-      data_vbo[ 8*128 + 8*i + 7 ] = vy;
+      vbo_vert[ 8*i + 0 ] = vx;    /* Top left. */
+      vbo_vert[ 8*i + 1 ] = vy+vh;
+      vbo_vert[ 8*i + 2 ] = vx+vw; /* Top right. */
+      vbo_vert[ 8*i + 3 ] = vy+vh;
+      vbo_vert[ 8*i + 4 ] = vx+vw; /* Bottom right. */
+      vbo_vert[ 8*i + 5 ] = vy;
+      vbo_vert[ 8*i + 6 ] = vx;    /* Bottom left. */
+      vbo_vert[ 8*i + 7 ] = vy;
    }
-   font->vbo   = gl_vboCreateStatic( n, data_vbo );
+   font->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*n, vbo_tex );
+   font->vbo_vert = gl_vboCreateStatic( sizeof(GLint)*n, vbo_vert );
 
    /* Free the data. */
    free(data);
-   free(data_vbo);
+   free(vbo_tex);
+   free(vbo_vert);
 
    return 0;
 }
@@ -805,8 +810,8 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
       COLOUR(*c);
 
    /* Activate the appropriate VBOs. */
-   gl_vboActivateOffset( font->vbo, GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( font->vbo, GL_VERTEX_ARRAY, 128*8*sizeof(GLfloat), 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
 }
 
 
@@ -962,7 +967,10 @@ void gl_freeFont( glFont* font )
    if (font->chars != NULL)
       free(font->chars);
    font->chars = NULL;
-   if (font->vbo != NULL)
-      gl_vboDestroy(font->vbo);
-   font->vbo = NULL;
+   if (font->vbo_tex != NULL)
+      gl_vboDestroy(font->vbo_tex);
+   font->vbo_tex = NULL;
+   if (font->vbo_vert != NULL)
+      gl_vboDestroy(font->vbo_vert);
+   font->vbo_vert = NULL;
 }
