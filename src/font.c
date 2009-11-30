@@ -66,7 +66,7 @@ static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
-static void gl_fontRenderCharacter( const glFont* font, int ch );
+static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
 
 
@@ -132,6 +132,15 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          continue;
       }
 
+      /* Ignore escape sequence. */
+      if (text[i] == '\e') {
+         if (text[i+1] != '\0')
+            i += 2;
+         else
+            i += 1;
+         continue;
+      }
+
       /* Increase size. */
       n += ft_font->chars[ (int)text[i] ].adv_x;
 
@@ -166,7 +175,7 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   int i;
+   int i, s;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -174,7 +183,7 @@ void gl_printRaw( const glFont *ft_font,
    /* Render it. */
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; text[i] != '\0'; i++)
-      gl_fontRenderCharacter( ft_font, text[i] );
+      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 }
 
@@ -224,7 +233,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   int ret, i;
+   int ret, i, s;
 
    ret = 0; /* default return value */
 
@@ -237,7 +246,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    /* Render it. */
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
-      gl_fontRenderCharacter( ft_font, text[i] );
+      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 
    return 0;
@@ -293,7 +302,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       const glColour* c, const char *text )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-   int n, ret, i;
+   int n, ret, i, s;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -307,7 +316,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    /* Render it. */
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
-      gl_fontRenderCharacter( ft_font, text[i] );
+      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 
    return 0;
@@ -364,7 +373,7 @@ int gl_printTextRaw( const glFont *ft_font,
       double bx, double by,
       glColour* c, const char *text )
 {
-   int ret, i, p;
+   int ret, i, p, s;
    double x,y;
 
    if (ft_font == NULL)
@@ -380,7 +389,7 @@ int gl_printTextRaw( const glFont *ft_font,
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
       for (i=0; i < ret; i++)
-         gl_fontRenderCharacter( ft_font, text[p+i] );
+         s = gl_fontRenderCharacter( ft_font, text[p+i], c, s );
       gl_fontRenderEnd();
 
       if (text[p+i] == '\0')
@@ -445,8 +454,19 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   for (n=0,i=0; i<(int)strlen(text); i++)
+   for (n=0,i=0; i<(int)strlen(text); i++) {
+      /* Ignore escape sequence. */
+      if (text[i] == '\e') {
+         if (text[i+1] != '\0')
+            i += 2;
+         else
+            i += 1;
+         continue;
+      }
+
+      /* Increment width. */
       n += ft_font->chars[ (int)text[i] ].adv_x;
+   }
 
    return n;
 }
@@ -774,11 +794,32 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 /**
  * @brief Renders a character.
  */
-static void gl_fontRenderCharacter( const glFont* font, int ch )
+static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state )
 {
-   double y;
-
    GLushort ind[6];
+   double y, a;
+
+   /* Handle escape sequences. */
+   if (ch == '\e') /* Start sequence. */
+      return 1;
+   if (state == 1) {
+      a = (c==NULL) ? 1. : c->a;
+      switch (ch) {
+         /* Colours. */
+         case 'r': ACOLOUR(cRed,a); break;
+         case 'g': ACOLOUR(cGreen,a); break;
+         case 'b': ACOLOUR(cBlue,a); break;
+         /* Reset state. */
+         case '0':
+             if (c==NULL)
+                glColor4d( 1., 1., 1., 1. );
+             else
+                COLOUR(*c);
+             break;
+      }
+      return 0;
+   }
+
    /*
     * Global  Local
     * 0--1      0--1 4
@@ -798,6 +839,8 @@ static void gl_fontRenderCharacter( const glFont* font, int ch )
 
    /* Translate matrix. */
    gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );
+
+   return 0;
 }
 
 
