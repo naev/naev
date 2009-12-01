@@ -4,7 +4,7 @@
   <ai>goddard</ai>
   <faction>Goddard</faction>
   <strength>300</strength>
- <flags>
+  <flags>
    <guard />
   </flags>
   <pilots>
