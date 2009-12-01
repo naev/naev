@@ -33,11 +33,7 @@ static int planetL_name( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_class( lua_State *L );
 static int planetL_position( lua_State *L );
-static int planetL_hasServices( lua_State *L );
-static int planetL_hasBasic( lua_State *L );
-static int planetL_hasCommodities( lua_State *L );
-static int planetL_hasOutfits( lua_State *L );
-static int planetL_hasShipyard( lua_State *L );
+static int planetL_services( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
@@ -47,11 +43,7 @@ static const luaL_reg planet_methods[] = {
    { "faction", planetL_faction },
    { "class", planetL_class },
    { "pos", planetL_position },
-   { "hasServices", planetL_hasServices },
-   { "hasBasic", planetL_hasBasic },
-   { "hasCommodities", planetL_hasCommodities },
-   { "hasOutfits", planetL_hasOutfits },
-   { "hasShipyard", planetL_hasShipyard },
+   { "services", planetL_services },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -374,84 +366,65 @@ static int planetL_class(lua_State *L )
 /**
  * @brief Checks if a planet has services (any flag besides SERVICE_LAND).
  *
- * @usage if p:hasServices() then -- Planet has services
- *    @luaparam p Planet to get the services of.
- *    @luareturn True f the planets has services.
- * @luafunc hasServices( p )
- */
-static int planetL_hasServices( lua_State *L )
-{
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   lua_pushboolean(L, (p->p->services & (~PLANET_SERVICE_LAND)));
-   return 1;
-}
-
-
-/**
- * @brief Checks if a planet has basic services (spaceport bar, mission computer).
+ * Possible services are:<br />
+ *  - "land"<br />
+ *  - "inhabited"<br />
+ *  - "refuel"<br />
+ *  - "bar"<br />
+ *  - "missions"<br />
+ *  - "commodity"<br />
+ *  - "outfits"<br />
+ *  - "shipyard"<br />
  *
- * @usage if p:hasBasic() then -- Planet has basic service
+ * @usage if #p:services() > 0 then -- Planet has services
+ * @usage if p:serivces()["refuel"] then -- PLanet has refuel service.
+ * #usage if p:services()["shipyard"] then -- Planet has shipyard service.
  *    @luaparam p Planet to get the services of.
- *    @luareturn True f the planets has basic services.
- * @luafunc hasBasic( p )
+ *    @luareturn Table containing all the services.
+ * @luafunc services( p )
  */
-static int planetL_hasBasic( lua_State *L )
+static int planetL_services( lua_State *L )
 {
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_INHABITED));
-   return 1;
-}
+   LuaPlanet *lp;
+   Planet *p;
+   lp = luaL_checkplanet(L,1);
+   p  = lp->p;
 
-
-/**
- * @brief Checks if a planet has commodities exchange service.
- *
- * @usage if p:hasCommodities() then -- Planet has commodity exchange services
- *    @luaparam p Planet to get the services of.
- *    @luareturn True f the planets has commodity exchange service.
- * @luafunc hasCommodities( p )
- */
-static int planetL_hasCommodities( lua_State *L )
-{
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_COMMODITY));
-   return 1;
-}
-
-
-/**
- * @brief Checks if a planet has outfit services.
- *
- * @usage if p:hasOutfits() then -- Planet has outfit services
- *    @luaparam p Planet to get the services of.
- *    @luareturn True f the planets has outfitting services.
- * @luafunc hasOutfits( p )
- */
-static int planetL_hasOutfits( lua_State *L )
-{
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_OUTFITS));
-   return 1;
-}
-
-
-/**
- * @brief Checks if a planet has shipyard services.
- *
- * @usage if p:hasShipyard() then -- Planet has shipyard service
- *    @luaparam p Planet to get the services of.
- *    @luareturn True f the planets has shipyard services.
- * @luafunc hasShipyard( p )
- */
-static int planetL_hasShipyard( lua_State *L )
-{
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_SHIPYARD));
+   /* Return result in table */
+   lua_newtable(L);
+      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
+   if (planet_hasService(p, PLANET_SERVICE_LAND)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"land"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_INHABITED)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"inhabited"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_REFUEL)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"refuel"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_BAR)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"bar"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_MISSIONS)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"missions"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_COMMODITY)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"commodity"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_OUTFITS)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"outfits"); /* key */
+   }
+   if (planet_hasService(p, PLANET_SERVICE_SHIPYARD)) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,"shipyard"); /* key */
+   }
    return 1;
 }
 
