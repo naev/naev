@@ -1340,12 +1340,12 @@ void player_land (void)
          if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
             if (!areEnemies( player->faction, planet->faction ) ||  /* friendly */
                   planet->bribed ) { /* Bribed. */
-               player_message( "\e%c%s> Permission to land granted.", faction_getColourChar(planet->faction), planet->name );
+               player_message( "\e%c%s>\e0 Permission to land granted.", faction_getColourChar(planet->faction), planet->name );
                player_setFlag(PLAYER_LANDACK);
                player_playSound(snd_nav,1);
             }
             else /* Hostile */
-               player_message( "\e%c%s> Landing request denied.", faction_getColourChar(planet->faction), planet->name );
+               player_message( "\e%c%s>\e0 Landing request denied.", faction_getColourChar(planet->faction), planet->name );
          }
          else { /* No shoes, no shirt, no lifeforms, no service. */
             player_message( "Ready to land on %s.", planet->name );
