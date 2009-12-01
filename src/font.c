@@ -639,7 +639,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    h = ceil( max_h * n ) + 1;
 
    /* Check if need to be POT. */
-   if (gl_needPOT()) {
+   if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
       w = gl_pot(w);
       h = gl_pot(h);
    }
@@ -657,8 +657,9 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
             h += max_h;
 
             /* POT needs even more. */
-            if (gl_needPOT())
+            if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
                h = gl_pot(h);
+            }
          }
       }
 
