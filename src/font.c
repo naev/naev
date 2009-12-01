@@ -147,8 +147,12 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          lastspace = i;
 
       /* Check if out of bounds. */
-      if (n > width)
-         return lastspace;
+      if (n > width) {
+         if (lastspace > 0)
+            return lastspace;
+         else
+            return i-1;
+      }
 
       /* Check next character. */
       i++;
@@ -392,7 +396,9 @@ int gl_printTextRaw( const glFont *ft_font,
 
       if (text[p+i] == '\0')
          break;
-      p += i + 1;
+      p += i;
+      if ((text[p+i] != '\n') && (text[p+i] != ' '))
+         p++; /* Skip "empty char". */
       y -= 1.5*(double)ft_font->h; /* move position down */
    }
 
@@ -710,8 +716,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
    /* Clamp texture .*/
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
    /* Upload data. */
    glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, w, h, 0,
