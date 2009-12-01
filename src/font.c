@@ -397,7 +397,7 @@ int gl_printTextRaw( const glFont *ft_font,
       if (text[p+i] == '\0')
          break;
       p += i;
-      if ((text[p+i] != '\n') && (text[p+i] != ' '))
+      if ((text[p] == '\n') || (text[p] == ' '))
          p++; /* Skip "empty char". */
       y -= 1.5*(double)ft_font->h; /* move position down */
    }
