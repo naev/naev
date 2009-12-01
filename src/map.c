@@ -339,7 +339,7 @@ static void map_update( unsigned int wid )
    if (sys->nfleets == 0)
       snprintf(buf, PATH_MAX, "NA" );
    else
-      snprintf(buf, PATH_MAX, "%.0fGP/%.0fHP", sys->presenceGuard, sys->presenceHostile);
+      snprintf(buf, PATH_MAX, "\eg%.0f \e0/ \er%.0f", sys->presenceGuard, sys->presenceHostile);
    window_moveWidget( wid, "txtSSecurity", -20, y );
    window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtSecurity", buf );
