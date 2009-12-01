@@ -36,7 +36,7 @@ function control ()
    if task == "none" then
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
-         ai.hostile(target) -- Should be done before taunting
+         ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask(0, "attack", enemy)
       else
