@@ -268,9 +268,9 @@ function choose_combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1" }
+      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1", "battlesomething2" }
    else
-      combat = { "galacticbattle", "flf_battle1", "battlesomething1" }
+      combat = { "galacticbattle", "flf_battle1", "battlesomething1", "battlesomething2" }
    end
 
    -- Make sure it's not already in the list or that we have to stop the
