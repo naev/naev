@@ -144,10 +144,6 @@ typedef struct GUI_ {
    double tr; /**< Top right. */
    double bl; /**< Bottom left. */
    double br; /**< Bottom right. */
-   double ref_right;
-   double ref_top;
-   double ref_left;
-   double ref_bottom;
    double border_h;
    double border_w;
 
@@ -482,22 +478,22 @@ static void gui_renderBorder( double dt )
 
          /* Handle by quadrant. */
          if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
-            cx = 2. * (hw-7.) * (gui.ref_top - a) / gui.border_w;
+            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
             cy = hh-7.;
          }
          else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
             cx = -hw+7.;
-            cy = 2. * (hh-7.) * (gui.ref_left - a) / gui.border_h;
+            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
          }
          else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
-            cx = 2. * (hw-7.) * (a - gui.ref_bottom) / gui.border_w;
+            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
             cy = -hh+7.;
          }
          else { /* Right. */
             if (a > gui.tr)
                a -= 2.*M_PI;
             cx = hw-7.;
-            cy = 2. * (hh-7.) * (a - gui.ref_right) / gui.border_h;
+            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
          }
 
 
@@ -561,22 +557,22 @@ static void gui_renderBorder( double dt )
 
          /* Handle by quadrant. */
          if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
-            cx = 2. * (hw-7.) * (gui.ref_top - a) / gui.border_w;
+            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
             cy = hh-7.;
          }
          else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
             cx = -hw+7.;
-            cy = 2. * (hh-7.) * (gui.ref_left - a) / gui.border_h;
+            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
          }
          else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
-            cx = 2. * (hw-7.) * (a - gui.ref_bottom) / gui.border_w;
+            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
             cy = -hh+7.;
          }
          else { /* Right. */
             if (a > gui.tr)
                a -= 2.*M_PI;
             cx = hw-7.;
-            cy = 2. * (hh-7.) * (a - gui.ref_right) / gui.border_h;
+            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
          }
 
          /* Set up colours. */
@@ -1642,10 +1638,6 @@ int gui_init (void)
       gui.br += 2*M_PI;
    gui.border_h   = gui.bl - gui.tl;
    gui.border_w   = gui.tl - gui.tr;
-   gui.ref_right  = 0.;
-   gui.ref_top    = gui.tr + gui.border_w/2.;
-   gui.ref_left   = gui.tl + gui.border_h/2.;
-   gui.ref_bottom = gui.bl + gui.border_w/2.;
 
    return 0;
 }
