@@ -82,7 +82,7 @@ int nlua_loadPlanet( lua_State *L, int readonly )
  *
  * @code
  * p,s = planet.get() -- Get current planet and system
- * if p:services() > 0 then -- planet has services
+ * if p:services()["inhabited"] > 0 then -- planet is inhabited
  *    v = p:pos() -- Get the position
  *    -- Do other stuff
  * end
@@ -364,7 +364,7 @@ static int planetL_class(lua_State *L )
 
 
 /**
- * @brief Checks if a planet has services (any flag besides SERVICE_LAND).
+ * @brief Checks for planet services.
  *
  * Possible services are:<br />
  *  - "land"<br />
