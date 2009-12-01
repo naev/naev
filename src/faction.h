@@ -33,6 +33,7 @@ double faction_getPlayerDef( int f );
 char* faction_getStanding( double mod );
 char *faction_getStandingBroad( double mod );
 glColour* faction_getColour( int f );
+char faction_getColourChar( int f );
 
 /* works with only factions */
 int areEnemies( int a, int b );
