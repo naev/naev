@@ -160,6 +160,8 @@ typedef struct StarSystem_ {
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
    double security; /**< % of security in this system. */
+   double presenceGuard; /**< Guard presence in this system. */
+   double presenceHostile; /**< Hostile presence in this system.  */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */

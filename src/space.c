@@ -1532,6 +1532,10 @@ static int system_calcSecurity( StarSystem *sys )
          hostile  += mod;
    }
 
+   /* Set presence */
+   sys->presenceGuard = guard;
+   sys->presenceHostile = hostile;
+
    /* Set security. */
    if (guard == 0.)
       sys->security = 0.;
