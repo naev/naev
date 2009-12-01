@@ -3,7 +3,8 @@
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
-  <flags>
+  <strength>300</strength>
+ <flags>
    <guard />
   </flags>
   <pilots>
@@ -13,6 +14,7 @@
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
+  <strength>50</strength>
   <pilots>
    <pilot chance="100" ship="Llama"></pilot>
   </pilots>
@@ -20,6 +22,7 @@
  <fleet name="Trader Koala">
   <ai>trader</ai>
   <faction>Trader</faction>
+  <strength>60</strength>
   <pilots>
    <pilot chance="100" ship="Koala"></pilot>
   </pilots>
@@ -27,6 +30,7 @@
  <fleet name="Trader Mule">
   <ai>trader</ai>
   <faction>Trader</faction>
+  <strength>70</strength>
   <pilots>
    <pilot chance="100" ship="Mule"></pilot>
   </pilots>
@@ -34,6 +38,7 @@
  <fleet name="Trader Gawain">
   <ai>trader</ai>
   <faction>Trader</faction>
+  <strength>20</strength>
   <pilots>
    <pilot chance="100" ship="Gawain"></pilot>
   </pilots>
@@ -41,6 +46,7 @@
  <fleet name="Trader Quicksilver">
   <ai>trader</ai>
   <faction>Trader</faction>
+  <strength>40</strength>
   <pilots>
    <pilot chance="100" ship="Quicksilver"></pilot>
   </pilots>
@@ -48,6 +54,7 @@
  <fleet name="Sml Trader Convoy">
   <ai>trader</ai>
   <faction>Trader</faction>
+  <strength>200</strength>
   <pilots>
    <pilot chance="100" ship="Llama"></pilot>
    <pilot chance="80" ship="Llama"></pilot>
@@ -58,6 +65,7 @@
  <fleet name="Proteron Kahan">
   <ai>proteron</ai>
   <faction>Proteron</faction>
+  <strength>180</strength>
   <pilots>
    <pilot chance="100" ship="Kahan"></pilot>
   </pilots>
@@ -65,6 +73,7 @@
  <fleet name="Proteron Archimedes">
   <ai>proteron</ai>
   <faction>Proteron</faction>
+  <strength>220</strength>
   <pilots>
    <pilot chance="100" ship="Archimedes"></pilot>
   </pilots>
@@ -72,6 +81,7 @@
  <fleet name="Proteron Derivative">
   <ai>proteron</ai>
   <faction>Proteron</faction>
+  <strength>25</strength>
   <pilots>
    <pilot chance="100" ship="Derivative"></pilot>
   </pilots>
@@ -79,6 +89,7 @@
  <fleet name="FLF Pacifier">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>170</strength>
   <pilots>
    <pilot chance="100" ship="Pacifier"></pilot>
   </pilots>
@@ -86,6 +97,7 @@
  <fleet name="FLF Vendetta">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>70</strength>
   <pilots>
    <pilot chance="100" ship="Vendetta"></pilot>
   </pilots>
@@ -93,6 +105,7 @@
  <fleet name="FLF Sml Force">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>250</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="80" ship="Hyena"></pilot>
@@ -103,6 +116,7 @@
  <fleet name="FLF Med Force">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>350</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="80" ship="Hyena"></pilot>
@@ -116,6 +130,7 @@
  <fleet name="FLF Lge Force">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>500</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="80" ship="Hyena"></pilot>
@@ -133,6 +148,7 @@
  <fleet name="Pirate Hyena">
   <ai>pirate</ai>
   <faction>Pirate</faction>
+  <strength>25</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
   </pilots>
@@ -140,6 +156,7 @@
  <fleet name="Pirate Hyena Pack">
   <ai>pirate</ai>
   <faction>Pirate</faction>
+  <strength>90</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="100" ship="Hyena"></pilot>
@@ -151,6 +168,7 @@
  <fleet name="Pirate Admonisher">
   <ai>pirate</ai>
   <faction>Pirate</faction>
+  <strength>150</strength>
   <pilots>
    <pilot name="Admonisher" chance="100" ship="Pirate Admonisher"></pilot>
   </pilots>
@@ -158,6 +176,7 @@
  <fleet name="Pirate Vendetta">
   <ai>pirate</ai>
   <faction>Pirate</faction>
+  <strength>70</strength>
   <pilots>
    <pilot name="Vendetta" chance="100" ship="Pirate Vendetta"></pilot>
   </pilots>
@@ -165,6 +184,7 @@
  <fleet name="Pirate Ancestor">
   <ai>pirate</ai>
   <faction>Pirate</faction>
+  <strength>40</strength>
   <pilots>
    <pilot name="Ancestor" chance="100" ship="Pirate Ancestor"></pilot>
   </pilots>
@@ -172,6 +192,7 @@
  <fleet name="Pirate Kestrel">
   <ai>pirate</ai>
   <faction>Pirate</faction>
+  <strength>200</strength>
   <pilots>
    <pilot name="Kestrel" chance="100" ship="Pirate Kestrel"></pilot>
   </pilots>
@@ -179,6 +200,7 @@
  <fleet name="Collective Drone">
   <ai>collective</ai>
   <faction>Collective</faction>
+  <strength>40</strength>
   <pilots>
    <pilot chance="100" ship="Drone"></pilot>
   </pilots>
@@ -186,6 +208,7 @@
  <fleet name="Collective Lge Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
+  <strength>500</strength>
   <pilots>
    <pilot chance="100" ship="Drone"></pilot>
    <pilot chance="100" ship="Drone"></pilot>
@@ -212,6 +235,7 @@
  <fleet name="Collective Sml Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
+  <strength>200</strength>
   <pilots>
    <pilot chance="100" ship="Drone"></pilot>
    <pilot chance="90" ship="Drone"></pilot>
@@ -224,6 +248,7 @@
  <fleet name="Dvaered Vendetta">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>70</strength>
   <flags>
    <guard />
   </flags>
@@ -234,6 +259,7 @@
  <fleet name="Dvaered Ancestor">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>30</strength>
   <flags>
    <guard />
   </flags>
@@ -244,6 +270,7 @@
   <fleet name="Dvaered Vigilance">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>170</strength>
   <flags>
    <guard />
   </flags>
@@ -254,6 +281,7 @@
  <fleet name="Dvaered Goddard">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>240</strength>
   <flags>
    <guard />
   </flags>
@@ -266,6 +294,7 @@
  <fleet name="Dvaered Sml Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>200</strength>
   <flags>
    <guard />
   </flags>
@@ -279,6 +308,7 @@
  <fleet name="Dvaered Med Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>300</strength>
   <flags>
    <guard />
   </flags>
@@ -295,6 +325,7 @@
  <fleet name="Empire Lancelot">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>60</strength>
   <flags>
    <guard />
   </flags>
@@ -305,6 +336,7 @@
  <fleet name="Empire Hawking">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>270</strength>
   <flags>
    <guard />
   </flags>
@@ -315,6 +347,7 @@
  <fleet name="Empire Peacemaker">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>340</strength>
   <flags>
    <guard />
   </flags>
@@ -325,6 +358,7 @@
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>260</strength>
   <flags>
    <guard />
   </flags>
@@ -340,6 +374,7 @@
  <fleet name="Empire Lge Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>600</strength>
   <pilots>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
@@ -359,6 +394,7 @@
  <fleet name="Empire Med Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>400</strength>
   <pilots>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
@@ -373,6 +409,7 @@
  <fleet name="Empire Sml Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>100</strength>
   <pilots>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
    <pilot name="Lancelot" chance="80" ship="Empire Lancelot"></pilot>
@@ -383,6 +420,7 @@
  <fleet name="Empire Pacifier">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>170</strength>
   <flags>
    <guard />
   </flags>
@@ -393,6 +431,7 @@
  <fleet name="Empire Admonisher">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <strength>150</strength>
   <flags>
    <guard />
   </flags>
@@ -403,6 +442,7 @@
  <fleet name="Trinity">
   <ai>collective</ai>
   <faction>Collective</faction>
+  <strength>400</strength>
   <pilots>
    <pilot name="ESS Trinity" chance="100" ship="Empire Hawking"></pilot>
   </pilots>
@@ -410,6 +450,7 @@
  <fleet name="Starfire">
   <ai>collective</ai>
   <faction>Collective</faction>
+  <strength>300</strength>
   <pilots>
    <pilot name="Starfire" chance="100" ship="Goddard"></pilot>
   </pilots>
@@ -417,6 +458,7 @@
  <fleet name="Mercenary Pacifier">
   <ai>generic</ai>
   <faction>Mercenary</faction>
+  <strength>150</strength>
   <pilots>
    <pilot chance="100" ship="Pacifier"></pilot>
   </pilots>
@@ -424,6 +466,7 @@
  <fleet name="Mercenary Ancestor">
   <ai>generic</ai>
   <faction>Mercenary</faction>
+  <strength>30</strength>
   <pilots>
    <pilot chance="100" ship="Ancestor"></pilot>
   </pilots>
@@ -431,6 +474,7 @@
  <fleet name="Mercenary Vendetta">
   <ai>generic</ai>
   <faction>Mercenary</faction>
+  <strength>70</strength>
   <pilots>
    <pilot chance="100" ship="Vendetta"></pilot>
   </pilots>
@@ -438,6 +482,7 @@
  <fleet name="DTS Raiders">
   <ai>pirate</ai>
   <faction>Raider</faction>
+  <strength>170</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="100" ship="Hyena"></pilot>
@@ -462,6 +507,7 @@
  <fleet name="DTS Defense Fleet">
   <ai>empire</ai>
   <faction>Trader</faction>
+  <strength>140</strength>
   <pilots>
    <pilot chance="100" ship="Mule"></pilot>
    <pilot chance="100" ship="Mule"></pilot>
