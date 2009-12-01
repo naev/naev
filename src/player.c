@@ -1337,7 +1337,7 @@ void player_land (void)
          return;
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-         if (planet_hasService(planet,PLANET_SERVICE_BASIC)) { /* Basic services */
+         if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
             if (!areEnemies( player->faction, planet->faction ) ||  /* friendly */
                   planet->bribed ) { /* Bribed. */
                player_message( "\e%c%s> Permission to land granted.", faction_getColourChar(planet->faction), planet->name );

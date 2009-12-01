@@ -1297,7 +1297,7 @@ static glColour *gui_getPlanetColour( int i )
    col = faction_getColour(planet->faction);
    if (i == planet_target)
       col = &cRadar_tPlanet;
-   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
       col = &cInert; /* Override non-hostile planets without service. */
    
    return col;

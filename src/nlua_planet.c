@@ -400,7 +400,7 @@ static int planetL_hasBasic( lua_State *L )
 {
    LuaPlanet *p;
    p = luaL_checkplanet(L,1);
-   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_BASIC));
+   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_INHABITED));
    return 1;
 }
 
