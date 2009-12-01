@@ -535,7 +535,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
 
    /* Only really affects player atm. */
    if (target == PLAYER_ID)
-      player_message( "Comm %s> \"%s\"", p->name, msg );
+      player_message( "\egComm %s>\e0 \"%s\"", p->name, msg );
 }
 
 
@@ -556,7 +556,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
    if (!ignore_int && !pilot_inRangePilot( player, p ))
       return;
 
-   player_message( "Broadcast %s> \"%s\"", p->name, msg );
+   player_message( "\erBroadcast %s>\e0 \"%s\"", p->name, msg );
 }
 
 

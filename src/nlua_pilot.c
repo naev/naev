@@ -754,7 +754,6 @@ static int pilotL_velocity( lua_State *L )
 static int pilotL_dir( lua_State *L )
 {
    Pilot *p;
-   LuaVector v;
 
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
@@ -1484,6 +1483,7 @@ static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
          NLUA_ERROR(from,"Unsupported value of type '%s'", lua_typename(from, ind));
          break;
    }
+   return 0;
 }
 
 

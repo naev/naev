@@ -23,6 +23,7 @@
 #include "player.h"
 #include "opengl.h"
 #include "ai.h"
+#include "ai_extra.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */

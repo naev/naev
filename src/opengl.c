@@ -576,6 +576,7 @@ static int gl_hint (void)
    mod = GL_NICEST;
 
    /* Do some hinting. */
+   glHint(GL_PERSPECTIVE_CORRECTION_HINT, mod);
    if (nglGenerateMipmap != NULL)
       glHint(GL_GENERATE_MIPMAP_HINT, mod);
    if (nglCompressedTexImage2D != NULL)
