@@ -597,7 +597,7 @@ static void space_addFleet( Fleet* fleet, int init )
       /* Get friendly planet to land on. */
       planet = NULL;
       for (i=0; i<cur_system->nplanets; i++)
-         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
                !areEnemies(fleet->faction,cur_system->planets[i]->faction)) {
             planet = cur_system->planets[i];
             break;
@@ -937,7 +937,29 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             }
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
-               planet->services = xml_getInt(cur); /* flags gotten by data */
+               ccur = cur->children;
+               planet->services = 0;
+               do {
+                  xml_onlyNodes(ccur);
+
+                  if (xml_isNode(ccur, "land"))
+                     planet->services |= PLANET_SERVICE_LAND;
+                  else if (xml_isNode(ccur, "refuel"))
+                     planet->services |= PLANET_SERVICE_REFUEL | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "bar"))
+                     planet->services |= PLANET_SERVICE_BAR | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "missions"))
+                     planet->services |= PLANET_SERVICE_MISSIONS | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "commodity"))
+                     planet->services |= PLANET_SERVICE_COMMODITY | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "outfits"))
+                     planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;
+                  else if (xml_isNode(ccur, "shipyard"))
+                     planet->services |= PLANET_SERVICE_SHIPYARD | PLANET_SERVICE_INHABITED;
+                  else
+                     WARN("Planet '%s' has unknown services tag '%s'", planet->name, ccur->name);
+
+               } while (xml_nextNode(ccur));
             }
             else if (xml_isNode(cur, "tech")) {
                ccur = cur->children;
@@ -996,18 +1018,18 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    MELEMENT(planet->gfx_space==NULL,"GFX space");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
          planet->gfx_exterior==NULL,"GFX exterior");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
          (planet->population==0), "population");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
          (planet->prodfactor==0.), "prodfactor");
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
          planet->description==NULL,"desription");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
          planet->bar_description==NULL,"bar");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
          (flags&FLAG_FACTIONSET)==0,"faction");
    MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
    MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||

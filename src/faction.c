@@ -400,6 +400,24 @@ glColour* faction_getColour( int f )
 }
 
 
+/**
+ * @brief Gets the faction character assosciated to it's standing with the player.
+ *
+ * Use this to do something like "\e%c", faction_getColourChar( some_faction ) in the
+ *  font print routines.
+ *
+ *    @param f Faction to get the colour of based on player's standing.
+ *    @return The character assosciated to the faction.
+ */
+char faction_getColourChar( int f )
+{
+   if (f<0) return 'I';
+   else if (areEnemies(FACTION_PLAYER,f)) return 'H';
+   else if (areAllies(FACTION_PLAYER,f)) return 'F';
+   else return 'N';
+}
+
+
 #define STANDING(m,s)  if (mod >= m) return s /**< Hack to get standings easily. */
 /**
  * @brief Get's the player's standing in human readable form.

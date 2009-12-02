@@ -1449,7 +1449,7 @@ void land_checkAddRefuel (void)
    unsigned int w;
 
    /* Check to see if fuel conditions are met. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
       if (!widget_exists( land_windows[0], "txtRefuel" ))
          window_addText( land_windows[0], -20, 20 + (BUTTON_HEIGHT + 20) + 20,
                   200, gl_defFont.h, 1, "txtRefuel",
@@ -1582,7 +1582,7 @@ void land( Planet* p )
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Generate the news. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
 
    /* Clear the NPC. */
@@ -1597,10 +1597,13 @@ void land( Planet* p )
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
    names[j++] = land_windowNames[LAND_WINDOW_MAIN];
-   /* Basic - bar + missions */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+   /* Bar. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR)) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
       names[j++] = land_windowNames[LAND_WINDOW_BAR];
+   }
+   /* Missions. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS)) {
       land_windowsMap[LAND_WINDOW_MISSION] = j;
       names[j++] = land_windowNames[LAND_WINDOW_MISSION];
    }
@@ -1655,10 +1658,10 @@ void land( Planet* p )
 
    /* 4) Create other tabs. */
    /* Basic - bar + missions */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       bar_open( land_getWid(LAND_WINDOW_BAR) );
+   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
-   }
    /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );

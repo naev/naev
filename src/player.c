@@ -379,8 +379,8 @@ static int player_newMake (void)
       ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
 
    /* Welcome message - must be before space_init. */
-   player_message( "Welcome to "APPNAME"!" );
-   player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
+   player_message( "\egWelcome to "APPNAME"!" );
+   player_message( "\eg v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
    /* Try to create the pilot, if fails reask for player name. */
    if (ship==NULL) {
@@ -883,7 +883,7 @@ void player_startAutonav (void)
       return;
 
    if (player->fuel < HYPERSPACE_FUEL) {
-      player_message("Not enough fuel to jump for autonav.");
+      player_message("\erNot enough fuel to jump for autonav.");
       return;
    }
 
@@ -903,9 +903,9 @@ void player_abortAutonav( char *reason )
 
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
-         player_message("Autonav aborted: %s!", reason);
+         player_message("\erAutonav aborted: %s!", reason);
       else
-         player_message("Autonav aborted!");
+         player_message("\erAutonav aborted!");
       player_rmFlag(PLAYER_AUTONAV);
 
       /* Get rid of acceleration. */
@@ -918,7 +918,7 @@ void player_abortAutonav( char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player);
-         player_message("Aborting hyperspace sequence.");
+         player_message("\erAborting hyperspace sequence.");
       }
    }
 }
@@ -954,6 +954,11 @@ void player_think( Pilot* pplayer, const double dt )
       /* Abort if lockons detected. */
       if (pplayer->lockons > 0)
          player_abortAutonav("Missile Lockon Detected");
+
+	  /* If we're already at the target. */
+	  else if (hyperspace_target == -1) {
+         player_abortAutonav("Target changed to current system");
+      }
 
       /* Need fuel. */
       else if (pplayer->fuel < HYPERSPACE_FUEL)
@@ -1326,26 +1331,26 @@ void player_land (void)
 
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
-      player_message("There are no planets to land on.");
+      player_message( "\erThere are no planets to land on." );
       return;
    }
 
    if (planet_target >= 0) { /* attempt to land */
       planet = cur_system->planets[planet_target];
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-         player_message( "You can't land here." );
+         player_message( "\erYou can't land here." );
          return;
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-         if (planet_hasService(planet,PLANET_SERVICE_BASIC)) { /* Basic services */
+         if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
             if (!areEnemies( player->faction, planet->faction ) ||  /* friendly */
                   planet->bribed ) { /* Bribed. */
-               player_message( "%s> Permission to land granted.", planet->name );
+               player_message( "\e%c%s>\e0 Permission to land granted.", faction_getColourChar(planet->faction), planet->name );
                player_setFlag(PLAYER_LANDACK);
                player_playSound(snd_nav,1);
             }
             else /* Hostile */
-               player_message( "%s> Landing request denied.", planet->name );
+               player_message( "\e%c%s>\e0 Landing request denied.", faction_getColourChar(planet->faction), planet->name );
          }
          else { /* No shoes, no shirt, no lifeforms, no service. */
             player_message( "Ready to land on %s.", planet->name );
@@ -1355,11 +1360,11 @@ void player_land (void)
          return;
       }
       else if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
-         player_message("You are too far away to land on %s.", planet->name);
+         player_message("\erYou are too far away to land on %s.", planet->name);
          return;
       } else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
             (double)pow2(MAX_HYPERSPACE_VEL)) {
-         player_message("You are going too fast to land on %s.", planet->name);
+         player_message("\erYou are going too fast to land on %s.", planet->name);
          return;
       }
 
@@ -1376,7 +1381,7 @@ void player_land (void)
    else { /* get nearest planet target */
 
       if (cur_system->nplanets == 0) {
-         player_message("There are no planets to land on.");
+         player_message("\erThere are no planets to land on.");
          return;
       }
 
@@ -1443,20 +1448,20 @@ void player_jump (void)
    /* Already jumping, so we break jump. */
    if (pilot_isFlag(player, PILOT_HYP_PREP)) {
       pilot_hyperspaceAbort(player);
-      player_message("Aborting hyperspace sequence.");
+      player_message("\erAborting hyperspace sequence.");
       return;
    }
 
    i = space_hyperspace(player);
 
    if (i == -1)
-      player_message("You are too close to gravity centers to initiate hyperspace.");
+      player_message("\erYou are too close to gravity centers to initiate hyperspace.");
    else if (i == -2)
-      player_message("You are moving too fast to enter hyperspace.");
+      player_message("\erYou are moving too fast to enter hyperspace.");
    else if (i == -3)
-      player_message("You do not have enough fuel to hyperspace jump.");
+      player_message("\erYou do not have enough fuel to hyperspace jump.");
    else {
-      player_message("Preparing for hyperspace.");
+      player_message("\ebPreparing for hyperspace.");
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
@@ -1503,11 +1508,11 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (hyperspace_target == -1) {
-         player_message( "Autonav arrived at destination.");
+         player_message( "\ebAutonav arrived at destination.");
          player_rmFlag(PLAYER_AUTONAV);
       }
       else {
-         player_message( "Autonav continuing until destination (%d jump%s left).",
+         player_message( "\ebAutonav continuing until destination (%d jump%s left).",
                map_npath, (map_npath==1) ? "" : "s" );
       }
    }

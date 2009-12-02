@@ -431,6 +431,7 @@ void pilot_rmFriendly( Pilot *p );
 int pilot_isHostile( const Pilot *p );
 int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
+char pilot_getFactionColourChar( const Pilot *p );
 
 
 /*

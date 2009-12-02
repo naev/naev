@@ -180,7 +180,7 @@ int comm_openPlanet( Planet *planet )
    unsigned int wid;
 
    /* Must not be disabled. */
-   if (!planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+   if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
       player_message("%s does not respond.", planet->name);
       return 0;
    }
