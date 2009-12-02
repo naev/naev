@@ -123,7 +123,7 @@ function choose_land ()
    elseif class == "P" then
       mus = { "snow" }
    else
-      if pnt:hasServices() then
+      if pnt:services()["inhabited"] then
          mus = { "cosmostation", "upbeat" }
       else
          mus = { "agriculture" }
