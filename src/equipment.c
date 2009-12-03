@@ -270,7 +270,7 @@ void equipment_open( unsigned int wid )
    equipment_slotWidget( wid, 20 + sw + 40, -40, ew, eh, &eq_wgt );
    eq_wgt.canmodify = 1;
 
-   /* Custom widget. */
+   /* Custom widget (ship information). */
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
 }
@@ -469,6 +469,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
 /**
  * @brief Renders an outfit column.
+ * @param mover Slot for which mouseover is active
  */
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
