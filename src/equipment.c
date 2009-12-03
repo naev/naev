@@ -93,8 +93,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str, const char* click
    int outfit_n;
    PilotOutfitSlot* slots;
 
-   if (strcmp(str, EQUIPMENT_OUTFITS) != 0)
-   {
+   if (strcmp(str, EQUIPMENT_OUTFITS) != 0) {
       WARN("equipment_rightClickOutfits for wrong window %s. Expected %s.", str, EQUIPMENT_OUTFITS);
       return;
    }
@@ -126,8 +125,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str, const char* click
    }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
-   for (i = 0; i < outfit_n; i++)
-   {
+   for (i = 0; i < outfit_n; i++) {
       if (slots[i].outfit == NULL)
       {
          /* Bingo! */
