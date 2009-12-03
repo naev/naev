@@ -168,7 +168,7 @@ void map_open (void)
          &gl_smallFont, &cBlack, NULL );
    /* Security. */
    window_addText( wid, -20, -140, 90, 20, 0, "txtSSecurity",
-         &gl_smallFont, &cDConsole, "Security:" );
+         &gl_smallFont, &cDConsole, "Presence:" );
    window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtSecurity",
          &gl_smallFont, &cBlack, NULL );
    /* Planets */
