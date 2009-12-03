@@ -85,13 +85,50 @@ static unsigned int equipment_transportPrice( char *shipname );
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void equipment_rightClickOutfits( unsigned int wid, char* str, const char* image )
+void equipment_rightClickOutfits( unsigned int wid, char* str, const char* clicked_outfit )
 {
+   Outfit* o;
+   int i;
+   int outfit_n;
+   PilotOutfitSlot* slots;
+
    /* Did the user click on background? */
-   if (image == NULL)
+   if (clicked_outfit == NULL)
       return;
 
-   printf("DEBUG: right click image = %s\n", image);
+   o = outfit_get(clicked_outfit);
+   if (o == NULL)
+      return;
+
+   /* Figure out which slot this stuff fits into */
+   switch (o->slot) {
+      case OUTFIT_SLOT_LOW:
+         outfit_n = eq_wgt.selected->outfit_nlow;
+         slots = eq_wgt.selected->outfit_low;
+         break;
+      case OUTFIT_SLOT_MEDIUM:
+         outfit_n = eq_wgt.selected->outfit_nmedium;
+         slots = eq_wgt.selected->outfit_medium;
+         break;
+      case OUTFIT_SLOT_HIGH:
+         outfit_n = eq_wgt.selected->outfit_nhigh;
+         slots = eq_wgt.selected->outfit_high;
+         break;
+      default:
+         return;
+   }
+
+   /* Loop through outfit slots of the right type, try to find an empty one */
+   for (i = 0; i < outfit_n; i++)
+   {
+      if (slots[i].outfit == NULL)
+      {
+         /* Bingo! */
+         eq_wgt.outfit = o;
+         equipment_swapSlot( wid, &slots[i] );
+         return;
+      }
+   }
 }
 
 /**
@@ -190,24 +227,24 @@ void equipment_open( unsigned int wid )
 
    /* text */
    buf = "Name:\n"
-         "Model:\n"
-         "Class:\n"
-         "Value:\n"
-         "\n"
-         "Mass:\n"
-         "Jump Time:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         "\n"
-         "Transportation:\n"
-         "Where:";
+      "Model:\n"
+      "Class:\n"
+      "Value:\n"
+      "\n"
+      "Mass:\n"
+      "Jump Time:\n"
+      "Thrust:\n"
+      "Speed:\n"
+      "Turn:\n"
+      "\n"
+      "Shield:\n"
+      "Armour:\n"
+      "Energy:\n"
+      "Cargo Space:\n"
+      "Fuel:\n"
+      "\n"
+      "Transportation:\n"
+      "Where:";
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
@@ -447,7 +484,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          if ((outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) &&
                ((lst[i].u.ammo.outfit == NULL) ||
-                  (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
+                (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
             subtitle = 1;
       }
       /* Draw bottom. */
@@ -587,7 +624,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    }
    else {
       slot = &p->outfit_low[ wgt->mouseover -
-            p->outfit_nhigh - p->outfit_nmedium ];
+         p->outfit_nhigh - p->outfit_nmedium ];
    }
 
    /* For comfortability. */
@@ -1161,26 +1198,26 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s Credits\n"
          "%s%s",
          /* Generic. */
-         ship->name,
-         ship->ship->name,
-         ship_class(ship->ship),
-         buf3,
-         /* Movement. */
-         ship->solid->mass,
-         pilot_hyperspaceDelay( ship ),
-         ship->thrust/ship->solid->mass,
-         ship->speed,
-         ship->turn,
-         /* Health. */
-         ship->shield_max, ship->shield_regen,
-         ship->armour_max, ship->armour_regen,
-         ship->energy_max, ship->energy_regen,
-         /* Misc. */
-         pilot_cargoUsed(ship), cargo,
-         ship->fuel, ship->fuel_max, pilot_getJumps(ship),
-         /* Transportation. */
-         buf2,
-         loc, sysname );
+      ship->name,
+      ship->ship->name,
+      ship_class(ship->ship),
+      buf3,
+      /* Movement. */
+      ship->solid->mass,
+      pilot_hyperspaceDelay( ship ),
+      ship->thrust/ship->solid->mass,
+      ship->speed,
+      ship->turn,
+      /* Health. */
+      ship->shield_max, ship->shield_regen,
+      ship->armour_max, ship->armour_regen,
+      ship->energy_max, ship->energy_regen,
+      /* Misc. */
+      pilot_cargoUsed(ship), cargo,
+      ship->fuel, ship->fuel_max, pilot_getJumps(ship),
+      /* Transportation. */
+      buf2,
+      loc, sysname );
    window_modifyText( wid, "txtDDesc", buf );
 
    /* button disabling */
@@ -1393,7 +1430,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Check if player really wants to sell. */
    if (!dialogue_YesNo( "Sell Ship",
-         "Are you sure you want to sell your ship %s for %s credits?", shipname, buf)) {
+            "Are you sure you want to sell your ship %s for %s credits?", shipname, buf)) {
       return;
    }
 
