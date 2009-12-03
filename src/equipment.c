@@ -81,6 +81,22 @@ static unsigned int equipment_transportPrice( char *shipname );
 
 
 /**
+ * @brief Handles right-click on unequipped outfit.
+ *    @param wid Window to update.
+ *    @param str Unused.
+ */
+void equipment_rightClickOutfits( unsigned int wid, char* str, int image )
+{
+   /* Did the user click on background? */
+   if (image == -1)
+      return;
+
+   printf("DEBUG: right click image = %d\n", image);
+   return;
+
+}
+
+/**
  * @brief Gets the window dimensions.
  */
 static void equipment_getDim( unsigned int wid, int *w, int *h,
@@ -938,6 +954,8 @@ void equipment_addAmmo (void)
       player_rmOutfit( ammo, q );
    }
 }
+
+
 /**
  * @brief Generates a new ship/outfit lists if needed.
  */
@@ -980,7 +998,7 @@ static void equipment_genLists( unsigned int wid )
          player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, 64./96.*128., 64.,
-            tships, sships, nships, equipment_updateShips );
+            tships, sships, nships, equipment_updateShips, NULL );
 
       /* Ship stats in alt text. */
       alt   = malloc( sizeof(char*) * nships );
@@ -1038,7 +1056,7 @@ static void equipment_genLists( unsigned int wid )
    if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
       window_addImageArray( wid, 20, -40 - sh - 40,
             sw, sh, EQUIPMENT_OUTFITS, 50., 50.,
-            toutfits, soutfits, noutfits, equipment_updateOutfits );
+            toutfits, soutfits, noutfits, equipment_updateOutfits, equipment_rightClickOutfits );
 
       /* Set alt text. */
       if (strcmp(soutfits[0],"None")!=0) {
@@ -1209,6 +1227,7 @@ void equipment_updateOutfits( unsigned int wid, char* str )
    /* Also update ships. */
    equipment_updateShips(wid, NULL);
 }
+
 /**
  * @brief Changes or transport depending on what is active.
  *    @param wid Window player is attempting to change ships in.

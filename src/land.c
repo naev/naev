@@ -417,7 +417,7 @@ static void outfits_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarOutfits", 64, 64,
-         toutfits, soutfits, noutfits, outfits_update );
+         toutfits, soutfits, noutfits, outfits_update, equipment_rightClickOutfits );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
@@ -822,7 +822,7 @@ static void shipyard_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", 64./96.*128., 64.,
-         tships, sships, nships, shipyard_update );
+         tships, sships, nships, shipyard_update, NULL );
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
@@ -1084,7 +1084,7 @@ static int bar_genList( unsigned int wid )
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 64, 48,
-         portraits, names, n, bar_update );
+         portraits, names, n, bar_update, NULL );
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
