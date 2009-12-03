@@ -32,7 +32,7 @@ typedef struct WidgetImageArrayData_ {
    int iw; /**< Image width to use. */
    int ih; /**< Image height to use. */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-   void (*rmptr) (unsigned int,char*,int); /**< Right click callback. */
+   void (*rmptr) (unsigned int,char*,const char*); /**< Right click callback. */
 } WidgetImageArrayData;
 
 
@@ -43,7 +43,7 @@ void window_addImageArray( const unsigned int wid,
       char* name, const int iw, const int ih, /* name and image sizes */
       glTexture** tex, char** caption, int nelem, /* elements */    
       void (*call) (unsigned int,char*), /* update callback */
-      void (*rmcall) (unsigned int,char*,int) ); /* right click callback */
+      void (*rmcall) (unsigned int,char*,const char*) ); /* right click callback */
 
 /* Misc functions. */
 char* toolkit_getImageArray( const unsigned int wid, const char* name );

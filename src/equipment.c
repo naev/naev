@@ -85,15 +85,13 @@ static unsigned int equipment_transportPrice( char *shipname );
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void equipment_rightClickOutfits( unsigned int wid, char* str, int image )
+void equipment_rightClickOutfits( unsigned int wid, char* str, const char* image )
 {
    /* Did the user click on background? */
-   if (image == -1)
+   if (image == NULL)
       return;
 
-   printf("DEBUG: right click image = %d\n", image);
-   return;
-
+   printf("DEBUG: right click image = %s\n", image);
 }
 
 /**

@@ -27,6 +27,7 @@ static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
+static char* toolkit_getNameById( Widget *wgt, int elem );
 /* Clean up. */
 static void iar_cleanup( Widget* iar );
 
@@ -56,7 +57,7 @@ void window_addImageArray( const unsigned int wid,
                            char* name, const int iw, const int ih,
                            glTexture** tex, char** caption, int nelem,
                            void (*call) (unsigned int wdw, char* wgtname),
-                           void (*rmcall) (unsigned int wdw, char* wgtname, int image) )
+                           void (*rmcall) (unsigned int wdw, char* wgtname, const char* image) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -368,7 +369,7 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
          return 1;
       case SDL_BUTTON_RIGHT:
          if (iar->dat.iar.rmptr != NULL)
-	    iar->dat.iar.rmptr( iar->wdw, iar->name, iar_focusImage( iar, x, y ) );
+	    iar->dat.iar.rmptr( iar->wdw, iar->name, toolkit_getNameById( iar, iar_focusImage( iar, x, y) ) );
          return 1;
 
       default:
@@ -614,6 +615,26 @@ static Widget *iar_getWidget( const unsigned int wid, const char *name )
 }
 
 
+/**
+ * @brief Gets the name of the element.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param elem The element in the image array.
+ *    @return The name of the selected object.
+ */
+static char* toolkit_getNameById( Widget *wgt, int elem )
+{
+   if (wgt == NULL)
+      return NULL;
+
+   /* Nothing selected. */
+   if (elem == -1)
+      return NULL;
+
+   return wgt->dat.iar.captions[ elem ];
+}
+
 
 /**
  * @brief Gets what is selected currently in an Image Array.
@@ -628,11 +649,7 @@ char* toolkit_getImageArray( const unsigned int wid, const char* name )
    if (wgt == NULL)
       return NULL;
 
-   /* Nothing selected. */
-   if (wgt->dat.iar.selected == -1)
-      return NULL;
-
-   return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
+   return toolkit_getNameById( wgt, wgt->dat.iar.selected );
 }
 
 
