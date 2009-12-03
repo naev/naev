@@ -956,9 +956,8 @@ void player_think( Pilot* pplayer, const double dt )
          player_abortAutonav("Missile Lockon Detected");
 
 	  /* If we're already at the target. */
-	  else if (hyperspace_target == -1) {
+      else if (hyperspace_target == -1)
          player_abortAutonav("Target changed to current system");
-      }
 
       /* Need fuel. */
       else if (pplayer->fuel < HYPERSPACE_FUEL)
