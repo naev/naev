@@ -139,6 +139,7 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
+static void outfits_rmouse( unsigned int wid, char* widget_name, const char* name);
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
@@ -418,7 +419,7 @@ static void outfits_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarOutfits", 64, 64,
-         toutfits, soutfits, noutfits, outfits_update, NULL );
+         toutfits, soutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
@@ -591,6 +592,20 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 
    return 1;
 }
+
+
+/**
+ * @brief Player right-clicks on an outfit.
+ *    @param wid Window player is buying ship from.
+ *    @param widget_name Name of the window. (unused)
+ *    @param shipname Name of the ship the player wants to buy. (unused)
+ */
+static void outfits_rmouse( unsigned int wid, char* widget_name, const char* outfitname)
+{
+    (void)outfitname;
+    outfits_buy( wid, widget_name );
+}
+
 /**
  * @brief Attempts to buy the outfit that is selected.
  *    @param wid Window buying outfit from.
