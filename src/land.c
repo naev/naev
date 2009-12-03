@@ -143,6 +143,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
+static void shipyard_rmouse( unsigned int wid, char* widget_name, const char* shipname);
 /* spaceport bar */
 static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
@@ -822,7 +823,7 @@ static void shipyard_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", 64./96.*128., 64.,
-         tships, sships, nships, shipyard_update, NULL );
+         tships, sships, nships, shipyard_update, shipyard_rmouse );
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
@@ -931,6 +932,19 @@ static void shipyard_update( unsigned int wid, char* str )
    else
       window_enableButton( wid, "btnBuyShip");
 }
+
+/**
+ * @brief Player right-clicks on a ship.
+ *    @param wid Window player is buying ship from.
+ *    @param widget_name Name of the window. (unused)
+ *    @param shipname Name of the ship the player wants to buy. (unused)
+ */
+static void shipyard_rmouse( unsigned int wid, char* widget_name, const char* shipname)
+{
+    (void)shipname; /* get rid of the "unused parameter" warning */
+    return shipyard_buy(wid, widget_name);
+}
+
 /**
  * @brief Player attempts to buy a ship.
  *    @param wid Window player is buying ship from.
