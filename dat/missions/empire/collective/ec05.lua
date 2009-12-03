@@ -44,7 +44,7 @@ else -- default english
    text[1] = [[As you enter the bar you can't seem to see Lt. Commander Dimitri. You look a bit around for him when you feel a heavy hand fall on your shoulder. It seems like two armed soldiers are here to escort you somewhere, and from the looks of their weapons, they mean business. You have no choice other then to comply.
 They start leading you away from the bar through some hallways you've never been through. Must be all those 'Authorized Personnel Only' signs and the armed guards that didn't make them too appealing.
 Finally they toss you into what seems to be an interrogation room, telling you just to wait there.]]
-   text[2] = [[After what seems to be a decaSTU you hear the door open. You see a condecorated women walk in with two soldiers at the door. She seems to be a Commodore from the insignia on her uniform.
+   text[2] = [[After what seems to be a decaSTU you hear the door open. You see a decorated woman walk in with two soldiers at the door. She seems to be a Commodore from the insignia on her uniform.
 "Hello, I'm Commodore Keer, I've taken over the Collective issue. I have heard about your success in the previous missions and would like to offer you more continued work. However further proceedings must be kept in strict confidentiality for the interest of the Empire. You willing to go all the way with this?"]]
    text[3] = [[You accept and she then dismisses both of the soldiers who proceed to wait outside.
 "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand right?  Let me explain."]]
