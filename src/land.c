@@ -139,12 +139,12 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
-static void outfits_rmouse( unsigned int wid, char* widget_name, const char* name);
+static void outfits_rmouse( unsigned int wid, char* widget_name );
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
-static void shipyard_rmouse( unsigned int wid, char* widget_name, const char* shipname);
+static void shipyard_rmouse( unsigned int wid, char* widget_name );
 /* spaceport bar */
 static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
@@ -600,9 +600,8 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
  *    @param widget_name Name of the window. (unused)
  *    @param shipname Name of the ship the player wants to buy. (unused)
  */
-static void outfits_rmouse( unsigned int wid, char* widget_name, const char* outfitname)
+static void outfits_rmouse( unsigned int wid, char* widget_name )
 {
-    (void)outfitname;
     outfits_buy( wid, widget_name );
 }
 
@@ -954,9 +953,8 @@ static void shipyard_update( unsigned int wid, char* str )
  *    @param widget_name Name of the window. (unused)
  *    @param shipname Name of the ship the player wants to buy. (unused)
  */
-static void shipyard_rmouse( unsigned int wid, char* widget_name, const char* shipname)
+static void shipyard_rmouse( unsigned int wid, char* widget_name )
 {
-    (void)shipname; /* get rid of the "unused parameter" warning */
     return shipyard_buy(wid, widget_name);
 }
 

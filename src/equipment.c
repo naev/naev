@@ -78,6 +78,7 @@ static void equipment_changeShip( unsigned int wid );
 static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static unsigned int equipment_transportPrice( char *shipname );
+static void equipment_rightClickOutfits( unsigned int wid, char* str );
 
 
 /**
@@ -86,17 +87,14 @@ static unsigned int equipment_transportPrice( char *shipname );
  *    @param str Widget name. Must be EQUIPMENT_OUTFITS.
  *    @param clicked_outfit Name of the outfit the user right-clicked on.
  */
-void equipment_rightClickOutfits( unsigned int wid, char* str, const char* clicked_outfit )
+void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
+   (void)str;
    Outfit* o;
    int i;
    int outfit_n;
    PilotOutfitSlot* slots;
-
-   if (strcmp(str, EQUIPMENT_OUTFITS) != 0) {
-      WARN("equipment_rightClickOutfits for wrong window %s. Expected %s.", str, EQUIPMENT_OUTFITS);
-      return;
-   }
+   const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background? */
    if (clicked_outfit == NULL)
