@@ -417,7 +417,7 @@ static void outfits_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarOutfits", 64, 64,
-         toutfits, soutfits, noutfits, outfits_update, equipment_rightClickOutfits );
+         toutfits, soutfits, noutfits, outfits_update, NULL );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
