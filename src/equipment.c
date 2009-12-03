@@ -87,6 +87,7 @@ static unsigned int equipment_transportPrice( char *shipname );
  */
 void equipment_rightClickOutfits( unsigned int wid, char* str, const char* clicked_outfit )
 {
+   (void) str;
    Outfit* o;
    int i;
    int outfit_n;
