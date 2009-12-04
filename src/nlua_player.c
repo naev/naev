@@ -363,6 +363,9 @@ static int playerL_unboard( lua_State *L )
 /**
  * @brief Forces the player to take off if he is landed.
  *
+ * Assume the pilot is still landed until the current running function returns
+ *  If you want to create pilots on take off please hook the takeoff/land hooks.
+ *
  * @luafunc takeoff()
  */
 static int playerL_takeoff( lua_State *L )
