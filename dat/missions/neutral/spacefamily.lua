@@ -105,7 +105,7 @@ end
 -- Checks if the parameter system has planets you can land on. Return true if so, false otherwise.
 function haslandable(sys)
    for a, b in pairs(sys:planets()) do
-      if b:hasServices() then return true
+      if b:services()["inhabited"] then return true
       end
    end
    return false
@@ -114,7 +114,7 @@ end
 -- Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
 function getlandable(sys)
    for a, b in pairs(sys:planets()) do
-      if b:hasServices() then return b
+      if b:services()["inhabited"] then return b
       end
    end
    return nil
@@ -149,7 +149,7 @@ function getlandablesystems( systems )
    t = {}
    for k,v in ipairs(systems) do
       for k,p in ipairs(v:planets()) do
-         if p:hasServices() then
+         if p:services()["inhabited"] then
             t[#t+1] = v
             break
          end

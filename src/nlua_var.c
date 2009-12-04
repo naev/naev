@@ -322,7 +322,7 @@ static int var_pop( lua_State *L )
          return 0;
       } 
 
-   NLUA_DEBUG("Var '%s' not found in stack", str);
+   /*NLUA_DEBUG("Var '%s' not found in stack", str);*/
    return 0;
 }
 /**

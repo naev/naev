@@ -379,6 +379,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
    /* Defaults. */
    str[0] = '\0';
+   temp->thrust = -1;
+   temp->speed  = -1;
 
    /* Get name. */
    xmlr_attr(parent,"name",temp->name);
@@ -614,9 +616,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
-   MELEMENT(temp->thrust==0,"thrust");
+   MELEMENT(temp->thrust==-1,"thrust");
    MELEMENT(temp->turn==0,"turn");
-   MELEMENT(temp->speed==0,"speed");
+   MELEMENT(temp->speed==-1,"speed");
    MELEMENT(temp->armour==0,"armour");
    MELEMENT(temp->shield==0,"shield");
    MELEMENT(temp->shield_regen==0,"shield_regen");

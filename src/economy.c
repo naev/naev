@@ -379,7 +379,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    p = 0.;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      if (planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+      if (planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
          /*
           * Calculate production.
           */

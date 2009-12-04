@@ -353,6 +353,59 @@
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
   </avail>
  </mission>
+ <mission name="Deal with the FLF agent">
+  <lua>flf/flf_pre01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Disrupt the Dvaered Patrols">
+  <lua>flf/flf_pre02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
+  </avail>
+ </mission>
+ <mission name="Take the Dvaered crew home">
+  <lua>dvaered/dv_antiflf01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Lure out the FLF">
+  <lua>dvaered/dv_antiflf02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
+  </avail>
+ </mission>
+ <mission name="Destroy the FLF base!">
+  <lua>dvaered/dv_antiflf03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
+  </avail>
+ </mission>
  <mission name="NAEV Needs You!">
   <lua>naev_needs_YOU</lua>
   <flags>
