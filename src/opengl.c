@@ -101,6 +101,7 @@ void gl_screenshot( const char *filename )
    rows        = malloc( sizeof(png_bytep) * h );
 
    /* Read pixels from buffer -- SLOW. */
+   glPixelStorei(GL_PACK_ALIGNMENT, 1); /* Force them to pack the bytes. */
    glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
 
    /* Convert data. */
@@ -575,6 +576,7 @@ static int gl_hint (void)
    mod = GL_NICEST;
 
    /* Do some hinting. */
+   glHint(GL_PERSPECTIVE_CORRECTION_HINT, mod);
    if (nglGenerateMipmap != NULL)
       glHint(GL_GENERATE_MIPMAP_HINT, mod);
    if (nglCompressedTexImage2D != NULL)

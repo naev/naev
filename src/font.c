@@ -34,6 +34,24 @@
 #define FONT_DEF  "dat/font.ttf" /**< Default font path. */
 
 
+/**
+ * @brief Stores a font character.
+ */
+typedef struct font_char_s {
+   GLubyte *data;
+   int w;
+   int h;
+   int off_x;
+   int off_y;
+   int adv_x;
+   int adv_y;
+   GLfloat tx;
+   GLfloat ty;
+   GLfloat tw;
+   GLfloat th;
+} font_char_t;
+
+
 /* default font */
 glFont gl_defFont; /**< Default font. */
 glFont gl_smallFont; /**< Small font. */
@@ -42,10 +60,12 @@ glFont gl_smallFont; /**< Small font. */
 /*
  * prototypes
  */
-static void glFontMakeDList( FT_Face face, char ch,
-      GLuint list_base, GLuint *tex_base, int *width_base );
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
+/* Render. */
+static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
+static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
+static void gl_fontRenderEnd (void);
 
 
 /**
@@ -69,9 +89,9 @@ static int font_limitSize( const glFont *ft_font, int *width,
    /* limit size */
    n = 0;
    for (i=0; text[i] != '\0'; i++) {
-      n += ft_font->w[ (int)text[i] ];
+      n += ft_font->chars[ (int)text[i] ].adv_x;
       if (n > max) {
-         n -= ft_font->w[ (int)text[i] ]; /* actual size */
+         n -= ft_font->chars[ (int)text[i] ].adv_x; /* actual size */
          break;
       }
    }
@@ -110,16 +130,29 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          continue;
       }
 
+      /* Ignore escape sequence. */
+      if (text[i] == '\e') {
+         if (text[i+1] != '\0')
+            i += 2;
+         else
+            i += 1;
+         continue;
+      }
+
       /* Increase size. */
-      n += ft_font->w[ (int)text[i] ];
+      n += ft_font->chars[ (int)text[i] ].adv_x;
 
       /* Save last space. */
       if (text[i] == ' ')
          lastspace = i;
 
       /* Check if out of bounds. */
-      if (n > width)
-         return lastspace;
+      if (n > width) {
+         if (lastspace > 0)
+            return lastspace;
+         else
+            return i-1;
+      }
 
       /* Check next character. */
       i++;
@@ -144,26 +177,16 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text )
 {
+   int i, s;
+
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   glEnable(GL_TEXTURE_2D);
-
-   glListBase(ft_font->list_base);
-
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix(); /* translation matrix */
-      glTranslated( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.), 0);
-
-   if (c==NULL) glColor4d( 1., 1., 1., 1. );
-   else COLOUR(*c);
-   glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);
-
-   glPopMatrix(); /* translation matrix */
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
+   /* Render it. */
+   gl_fontRenderStart(ft_font, x, y, c);
+   for (i=0; text[i] != '\0'; i++)
+      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
+   gl_fontRenderEnd();
 }
 
 
@@ -212,34 +235,21 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const char *text )
 {
-   int ret;
+   int ret, i, s;
 
    ret = 0; /* default return value */
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   /* limit size */
+   /* Limit size. */
    ret = font_limitSize( ft_font, NULL, text, max );
 
-   /* display the text */
-   glEnable(GL_TEXTURE_2D);
-
-   glListBase(ft_font->list_base);
-
-   glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
-   glPushMatrix(); /* translation matrix */
-      glTranslated( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.), 0);
-
-   if (c==NULL) glColor4d( 1., 1., 1., 1. );
-   else COLOUR(*c);
-   glCallLists(ret, GL_UNSIGNED_BYTE, text);
-
-   glPopMatrix(); /* translation matrix */
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
+   /* Render it. */
+   gl_fontRenderStart(ft_font, x, y, c);
+   for (i=0; i < ret; i++)
+      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
+   gl_fontRenderEnd();
 
    return 0;
 }
@@ -294,7 +304,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       const glColour* c, const char *text )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-   int n, ret;
+   int n, ret, i, s;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -305,24 +315,11 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    ret = font_limitSize( ft_font, &n, text, width );
    x += (double)(width - n)/2.;
 
-   /* display the text */
-   glEnable(GL_TEXTURE_2D);
-
-   glListBase(ft_font->list_base);
-
-   glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
-   glPushMatrix(); /* translation matrix */
-      glTranslated( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.), 0);
-
-   if (c==NULL) glColor4d( 1., 1., 1., 1. );
-   else COLOUR(*c);
-   glCallLists(ret, GL_UNSIGNED_BYTE, text);
-
-   glPopMatrix(); /* translation matrix */
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
+   /* Render it. */
+   gl_fontRenderStart(ft_font, x, y, c);
+   for (i=0; i < ret; i++)
+      s = gl_fontRenderCharacter( ft_font, text[i], c, s );
+   gl_fontRenderEnd();
 
    return 0;
 }
@@ -378,44 +375,33 @@ int gl_printTextRaw( const glFont *ft_font,
       double bx, double by,
       glColour* c, const char *text )
 {
-   int i, p;
+   int ret, i, p, s;
    double x,y;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   bx -= (double)SCREEN_W/2.;
-   by -= (double)SCREEN_H/2.;
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
-   /* prepare ze opengl */
-   glEnable(GL_TEXTURE_2D);
-   glListBase(ft_font->list_base);
-   if (c==NULL) glColor4d( 1., 1., 1., 1. );
-   else COLOUR(*c);
-
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
-      i = gl_printWidthForText( ft_font, &text[p], width );
+      ret = gl_printWidthForText( ft_font, &text[p], width );
 
-      glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
-      glPushMatrix(); /* translation matrix */
-         glTranslated( round(x), round(y), 0);
-
-      glCallLists(i, GL_UNSIGNED_BYTE, &text[p]); /* the actual displaying */
-
-      glPopMatrix(); /* translation matrix */
+      /* Render it. */
+      gl_fontRenderStart(ft_font, x, y, c);
+      for (i=0; i < ret; i++)
+         s = gl_fontRenderCharacter( ft_font, text[p+i], c, s );
+      gl_fontRenderEnd();
 
       if (text[p+i] == '\0')
          break;
-      p += i + 1;
+      p += i;
+      if ((text[p] == '\n') || (text[p] == ' '))
+         p++; /* Skip "empty char". */
       y -= 1.5*(double)ft_font->h; /* move position down */
    }
 
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
 
    return 0;
 }
@@ -472,8 +458,19 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   for (n=0,i=0; i<(int)strlen(text); i++)
-      n += ft_font->w[ (int)text[i] ];
+   for (n=0,i=0; i<(int)strlen(text); i++) {
+      /* Ignore escape sequence. */
+      if (text[i] == '\e') {
+         if (text[i+1] != '\0')
+            i += 2;
+         else
+            i += 1;
+         continue;
+      }
+
+      /* Increment width. */
+      n += ft_font->chars[ (int)text[i] ].adv_x;
+   }
 
    return n;
 }
@@ -571,101 +568,329 @@ int gl_printHeight( const glFont *ft_font,
  *
  */
 /**
- * @brief Makes the font display list.
- *
- * Basically taken from NeHe lesson 43
- * http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=43
  */
-static void glFontMakeDList( FT_Face face, char ch,
-      GLuint list_base, GLuint *tex_base, int* width_base )
+static int font_makeChar( font_char_t *c, FT_Face face, char ch )
 {
    FT_Bitmap bitmap;
-   GLubyte* expanded_data;
    FT_GlyphSlot slot;
    int w,h;
-   int i,j;
-   double x,y;
 
    slot = face->glyph; /* Small shortcut. */
 
    /* Load the glyph. */
    if (FT_Load_Char( face, ch, FT_LOAD_RENDER )) {
       WARN("FT_Load_Char failed.");
-      return;
+      return -1;
    }
 
    bitmap = slot->bitmap; /* to simplify */
 
    /* need the POT wrapping for opengl */
-   w = gl_pot(bitmap.width);
-   h = gl_pot(bitmap.rows);
+   w = bitmap.width;
+   h = bitmap.rows;
 
-   /* memory for textured data
-    * bitmap is using two channels, one for luminosity and one for alpha */
-   expanded_data = (GLubyte*) malloc(sizeof(GLubyte)*2* w*h + 1);
-   for (j=0; j < h; j++) {
-      for (i=0; i < w; i++ ) {
-         expanded_data[2*(i+j*w)] = 0xcf; /* Set LUMINANCE to constant. */
-         expanded_data[2*(i+j*w)+1] = /* Alpha varies with bitmap. */
-               ((i>=bitmap.width) || (j>=bitmap.rows)) ?
-                  0 : bitmap.buffer[i + bitmap.width*j];
+   /* Store data. */
+   c->data = malloc( sizeof(GLubyte) * w*h );
+   memcpy( c->data, bitmap.buffer, sizeof(GLubyte) * w*h );
+   c->w     = w;
+   c->h     = h;
+   c->off_x = slot->bitmap_left;
+   c->off_y = slot->bitmap_top;
+   c->adv_x = slot->advance.x >> 6;
+   c->adv_y = slot->advance.y >> 6;
+   return 0;
+}
+
+
+/**
+ * @brief Generates the font's texture atlas.
+ */
+static int font_genTextureAtlas( glFont* font, FT_Face face )
+{
+   font_char_t chars[128];
+   int i, n;
+   int x, y, x_off, y_off;
+   int total_w;
+   int w, h, max_h;
+   int offset;
+   GLubyte *data;
+   GLfloat *vbo_tex;
+   GLint *vbo_vert;
+   GLfloat tx, ty, tw, th;
+   GLint vx, vy, vw, vh;
+
+   /* Render characters into software. */
+   total_w  = 0;
+   max_h    = 0;
+   for (i=0; i<128; i++) {
+      font_makeChar( &chars[i], face, i );
+      total_w += chars[i].w;
+      if (chars[i].h > max_h)
+         max_h = chars[i].h;
+   }
+
+   /* Calculate how to fit them.
+    * rows * Hmax = Wtotal / rows
+    * rows^2 = Wtotal / Hmax
+    * rows = sqrt( Wtotal / Hmax )
+    */
+   n = ceil( sqrt( (double)total_w / (double)max_h ) );
+   w = ceil( total_w / n ) + 1;
+   h = ceil( max_h * n ) + 1;
+
+   /* Check if need to be POT. */
+   if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
+      w = gl_pot(w);
+      h = gl_pot(h);
+   }
+
+   /* Test fit - formula isn't perfect. */
+   x_off = 0;
+   y_off = 0;
+   for (i=0; i<128; i++) {
+      if (x_off + chars[i].w >= w) {
+         x_off  = 0;
+         y_off += max_h;
+
+         /* Check for overflow. */
+         if (y_off + max_h >= h) {
+            h += max_h;
+
+            /* POT needs even more. */
+            if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
+               h = gl_pot(h);
+            }
+         }
       }
+
+      /* Displace offset. */
+      x_off += chars[i].w;
    }
 
-   /* creating the opengl texture */
-   glBindTexture( GL_TEXTURE_2D, tex_base[(int)ch]);
-   if (gl_screen.scale == 1.) {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   /* Generate the texture. */
+   data  = calloc( w*h*2, 1 );
+   x_off = 0;
+   y_off = 0;
+   for (i=0; i<128; i++) {
+      /* Check if need to skip to newline. */
+      if (x_off + chars[i].w >= w) {
+         x_off  = 0;
+         y_off += max_h;
+
+         if (y_off + max_h >= h)
+            WARN("Font is still too small - something went wrong.");
+      }
+
+      /* Render character. */
+      for (y=0; y<chars[i].h; y++) {
+         for (x=0; x<chars[i].w; x++) {
+            offset  = (y_off + y) * w;
+            offset += x_off + x;
+            data[ offset*2     ] = 0xcf; /* Constant luminance. */
+            data[ offset*2 + 1 ] = chars[i].data[ y*chars[i].w + x ];
+         }
+      }
+
+      /* Store character information. */
+      font->chars[i].adv_x = chars[i].adv_x;
+      font->chars[i].adv_y = chars[i].adv_y;
+
+      /* Store temporary information. */
+      chars[i].tx = (GLfloat) x_off      / (GLfloat) w;
+      chars[i].ty = (GLfloat) y_off      / (GLfloat) h;
+      chars[i].tw = (GLfloat) chars[i].w / (GLfloat) w;
+      chars[i].th = (GLfloat) chars[i].h / (GLfloat) h;
+
+      /* Displace offset. */
+      x_off += chars[i].w;
+
+      /* Free memory. */
+      free(chars[i].data);
    }
-   else {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+   /* Create the font texture. */
+   glGenTextures( 1, &font->texture );
+   glBindTexture( GL_TEXTURE_2D, font->texture );
+
+   /* Shouldn't ever scale - we'll generate appropriate size font. */
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+   /* Clamp texture .*/
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+   /* Upload data. */
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, w, h, 0,
+         GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data );
+
+   /* Check for errors. */
+   gl_checkErr();
+
+   /* Create the VBOs. */
+   n           = 8 * 128;
+   vbo_tex     = malloc(sizeof(GLfloat) * n);
+   vbo_vert    = malloc(sizeof(GLint) * n);
+   for (i=0; i<128; i++) {
+      /* We do something like the following for vertex coordinates.
+       *
+       *
+       *  +----------------- top reference   \  <------- font->h
+       *  |                                  |
+       *  |                                  | --- off_y
+       *  +----------------- glyph top       /
+       *  |
+       *  |
+       *  +----------------- glyph bottom
+       *  |
+       *  v   y
+       *
+       *
+       *  +----+------------->  x
+       *  |    |
+       *  |    glyph start
+       *  |
+       *  side reference
+       *
+       *  \----/
+       *   off_x
+       */
+      /* Temporary variables. */
+      tx = chars[i].tx;
+      ty = chars[i].ty;
+      tw = chars[i].tw;
+      th = chars[i].th;
+      vx = chars[i].off_x;
+      vy = chars[i].off_y - chars[i].h;
+      vw = chars[i].w;
+      vh = chars[i].h;
+      /* Texture coords. */
+      vbo_tex[  8*i + 0 ] = tx;      /* Top left. */
+      vbo_tex[  8*i + 1 ] = ty;
+      vbo_tex[  8*i + 2 ] = tx + tw; /* Top right. */
+      vbo_tex[  8*i + 3 ] = ty;
+      vbo_tex[  8*i + 4 ] = tx + tw; /* Bottom right. */
+      vbo_tex[  8*i + 5 ] = ty + th;
+      vbo_tex[  8*i + 6 ] = tx;      /* Bottom left. */
+      vbo_tex[  8*i + 7 ] = ty + th;
+      /* Vertex coords. */
+      vbo_vert[ 8*i + 0 ] = vx;    /* Top left. */
+      vbo_vert[ 8*i + 1 ] = vy+vh;
+      vbo_vert[ 8*i + 2 ] = vx+vw; /* Top right. */
+      vbo_vert[ 8*i + 3 ] = vy+vh;
+      vbo_vert[ 8*i + 4 ] = vx+vw; /* Bottom right. */
+      vbo_vert[ 8*i + 5 ] = vy;
+      vbo_vert[ 8*i + 6 ] = vx;    /* Bottom left. */
+      vbo_vert[ 8*i + 7 ] = vy;
    }
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
-         GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, expanded_data );
+   font->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*n, vbo_tex );
+   font->vbo_vert = gl_vboCreateStatic( sizeof(GLint)*n, vbo_vert );
 
-   free(expanded_data); /* no use for this anymore */
+   /* Free the data. */
+   free(data);
+   free(vbo_tex);
+   free(vbo_vert);
 
-   /* creating of the display list */
-   glNewList(list_base+ch,GL_COMPILE);
+   return 0;
+}
 
-   /* corrects a spacing flaw between letters and
-    * downwards correction for letters like g or y */
-   glPushMatrix();
-      glTranslated( (double)slot->bitmap_left, (double)(slot->bitmap_top-bitmap.rows), 0. );
 
-   /* take into account opengl POT wrapping */
-   x = (double)bitmap.width/(double)w;
-   y = (double)bitmap.rows/(double)h;
+/**
+ * @brief Starts the rendering engine.
+ */
+static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c )
+{
+   /* Enable textures. */
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, font->texture);
 
-   /* draw the texture mapped QUAD */
-   glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
-   glBegin( GL_QUADS );
+   /* Set up matrix. */
+   gl_matrixMode(GL_MODELVIEW);
+   gl_matrixPush();
+      gl_matrixTranslate( round(x-(double)SCREEN_W/2.),
+            round(y-(double)SCREEN_H/2.) );
 
-      glTexCoord2d( 0., 0. );
-         glVertex2d( 0., (double)bitmap.rows );
+   /* Handle colour. */
+   if (c==NULL)
+      glColor4d( 1., 1., 1., 1. );
+   else
+      COLOUR(*c);
 
-      glTexCoord2d( x, 0. );
-         glVertex2d( (double)bitmap.width, (double)bitmap.rows );
+   /* Activate the appropriate VBOs. */
+   gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+}
 
-      glTexCoord2d( x, y );
-         glVertex2d( (double)bitmap.width, 0. );
 
-      glTexCoord2d( 0., y );
-         glVertex2d( 0., 0. );
+/**
+ * @brief Renders a character.
+ */
+static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state )
+{
+   GLushort ind[6];
+   double a;
 
-   glEnd(); /* GL_QUADS */
+   /* Handle escape sequences. */
+   if (ch == '\e') /* Start sequence. */
+      return 1;
+   if (state == 1) {
+      a = (c==NULL) ? 1. : c->a;
+      switch (ch) {
+         /* Colours. */
+         case 'r': ACOLOUR(cRed,a); break;
+         case 'g': ACOLOUR(cGreen,a); break;
+         case 'b': ACOLOUR(cBlue,a); break;
+         case 'y': ACOLOUR(cYellow,a); break;
+         case 'w': ACOLOUR(cWhite,a); break;
+         case 'F': ACOLOUR(cFriend,a); break;
+         case 'H': ACOLOUR(cHostile,a); break;
+         case 'N': ACOLOUR(cNeutral,a); break;
+         case 'I': ACOLOUR(cInert,a); break;
+         /* Reset state. */
+         case '0':
+             if (c==NULL)
+                glColor4d( 1., 1., 1., 1. );
+             else
+                COLOUR(*c);
+             break;
+      }
+      return 0;
+   }
 
-   glPopMatrix(); /* translation matrix */
-   glTranslated( (double)(slot->advance.x >> 6), (double)(slot->advance.y >> 6), 0. );
-   width_base[(int)ch] = slot->advance.x >> 6;
+   /*
+    * Global  Local
+    * 0--1      0--1 4
+    * | /|  =>  | / /|
+    * |/ |      |/ / |
+    * 3--2      2 3--5
+    */
+   ind[0] = 4*ch + 0;
+   ind[1] = 4*ch + 1;
+   ind[2] = 4*ch + 3;
+   ind[3] = 4*ch + 1;
+   ind[4] = 4*ch + 3;
+   ind[5] = 4*ch + 2;
 
-   /* end of display list */
-   glEndList();
+   /* Draw the element. */
+   glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
 
+   /* Translate matrix. */
+   gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );
+
+   return 0;
+}
+
+
+/**
+ * @brief Ends the rendering engine.
+ */
+static void gl_fontRenderEnd (void)
+{
+   gl_vboDeactivate();
+   gl_matrixPop();
+   glDisable(GL_TEXTURE_2D);
+
+   /* Check for errors. */
    gl_checkErr();
 }
 
@@ -682,7 +907,6 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    FT_Library library;
    FT_Face face;
    uint32_t bufsize;
-   int i;
    FT_Byte* buf;
 
    /* Get default font if not set. */
@@ -697,10 +921,9 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    }
 
    /* Allocage. */
-   font->textures = malloc(sizeof(GLuint)*128);
-   font->w = malloc(sizeof(int)*128);
+   font->chars = malloc(sizeof(glFontChar)*128);
    font->h = (int)floor((double)h * gl_screen.scale);
-   if ((font->textures==NULL) || (font->w==NULL)) {
+   if (font->chars==NULL) {
       WARN("Out of memory!");
       return;
    }
@@ -735,13 +958,8 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
       WARN("FT_Select_Charmap failed to change character mapping.");
 
-   /* have OpenGL allocate space for the textures / display list */
-   font->list_base = glGenLists(128);
-   glGenTextures( 128, font->textures );
-
-   /* create each of the font display lists */
-   for (i=0; i<128; i++)
-      glFontMakeDList( face, i, font->list_base, font->textures, font->w );
+   /* Generate the font atlas. */
+   font_genTextureAtlas( font, face );
 
    /* we can now free the face and library */
    FT_Done_Face(face);
@@ -758,8 +976,14 @@ void gl_freeFont( glFont* font )
 {
    if (font == NULL)
       font = &gl_defFont;
-   glDeleteLists(font->list_base,128);
-   glDeleteTextures(128,font->textures);
-   free(font->textures);
-   free(font->w);
+   glDeleteTextures(1,&font->texture);
+   if (font->chars != NULL)
+      free(font->chars);
+   font->chars = NULL;
+   if (font->vbo_tex != NULL)
+      gl_vboDestroy(font->vbo_tex);
+   font->vbo_tex = NULL;
+   if (font->vbo_vert != NULL)
+      gl_vboDestroy(font->vbo_vert);
+   font->vbo_vert = NULL;
 }

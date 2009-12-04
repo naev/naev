@@ -204,7 +204,7 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Make size power of two. */
-   if (gl_tex_ext_npot) { /* No real need, but there's some issue with bypassing this function. */
+   if (!gl_needPOT()) { /* No real need, but there's some issue with bypassing this function. */
       potw = surface->w;
       poth = surface->h;
    }

@@ -1746,7 +1746,7 @@ static int aiL_getlandplanet( lua_State *L )
 
    /* Copy friendly planet.s */
    for (nplanets=0, i=0; i<cur_system->nplanets; i++)
-      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
             !areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
          planets[nplanets++] = cur_system->planets[i];
 

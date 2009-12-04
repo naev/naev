@@ -23,6 +23,7 @@
 #include "player.h"
 #include "opengl.h"
 #include "ai.h"
+#include "ai_extra.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */
@@ -110,6 +111,9 @@ int comm_openPilot( unsigned int pilot )
    /* Set up for the comm_get* functions. */
    ai_setPilot( comm_pilot );
 
+   /* Have pilot stop hailing. */
+   pilot_rmFlag( comm_pilot, PILOT_HAILING );
+
    /* Create the pilot window. */
    wid = comm_openPilotWindow();
 
@@ -179,7 +183,7 @@ int comm_openPlanet( Planet *planet )
    unsigned int wid;
 
    /* Must not be disabled. */
-   if (!planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+   if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
       player_message("%s does not respond.", planet->name);
       return 0;
    }

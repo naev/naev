@@ -8,6 +8,9 @@
 #  define GUI_H
 
 
+#include "opengl.h"
+
+
 /*
  * enums
  */
@@ -40,6 +43,7 @@ void gui_setDefaults (void);
 void player_message( const char *fmt, ... );
 void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
+glTexture* gui_hailIcon (void);
 
 
 #endif /* GUI_H */

@@ -27,6 +27,7 @@ static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
+static char* toolkit_getNameById( Widget *wgt, int elem );
 /* Clean up. */
 static void iar_cleanup( Widget* iar );
 
@@ -55,7 +56,8 @@ void window_addImageArray( const unsigned int wid,
                            const int w, const int h, /* size */
                            char* name, const int iw, const int ih,
                            glTexture** tex, char** caption, int nelem,
-                           void (*call) (unsigned int wdw, char* wgtname) )
+                           void (*call) (unsigned int wdw, char* wgtname),
+                           void (*rmcall) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -88,6 +90,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
+   wgt->dat.iar.rmptr      = rmcall;
    wgt->dat.iar.xelem      = floor((w - 10.) / (double)(wgt->dat.iar.iw+10));
    wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
          (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
@@ -364,6 +367,11 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
       case SDL_BUTTON_WHEELDOWN:
          iar_scroll( iar, -1 );
          return 1;
+      case SDL_BUTTON_RIGHT:
+         iar_focus( iar, x, y );
+         if (iar->dat.iar.rmptr != NULL)
+	    iar->dat.iar.rmptr( iar->wdw, iar->name );
+         return 1;
 
       default:
          break;
@@ -608,6 +616,26 @@ static Widget *iar_getWidget( const unsigned int wid, const char *name )
 }
 
 
+/**
+ * @brief Gets the name of the element.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param elem The element in the image array.
+ *    @return The name of the selected object.
+ */
+static char* toolkit_getNameById( Widget *wgt, int elem )
+{
+   if (wgt == NULL)
+      return NULL;
+
+   /* Nothing selected. */
+   if (elem == -1)
+      return NULL;
+
+   return wgt->dat.iar.captions[ elem ];
+}
+
 
 /**
  * @brief Gets what is selected currently in an Image Array.
@@ -622,11 +650,7 @@ char* toolkit_getImageArray( const unsigned int wid, const char* name )
    if (wgt == NULL)
       return NULL;
 
-   /* Nothing selected. */
-   if (wgt->dat.iar.selected == -1)
-      return NULL;
-
-   return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
+   return toolkit_getNameById( wgt, wgt->dat.iar.selected );
 }
 
 

@@ -139,10 +139,12 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
+static void outfits_rmouse( unsigned int wid, char* widget_name );
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
+static void shipyard_rmouse( unsigned int wid, char* widget_name );
 /* spaceport bar */
 static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
@@ -417,7 +419,7 @@ static void outfits_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarOutfits", 64, 64,
-         toutfits, soutfits, noutfits, outfits_update );
+         toutfits, soutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
@@ -590,6 +592,19 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 
    return 1;
 }
+
+
+/**
+ * @brief Player right-clicks on an outfit.
+ *    @param wid Window player is buying ship from.
+ *    @param widget_name Name of the window. (unused)
+ *    @param shipname Name of the ship the player wants to buy. (unused)
+ */
+static void outfits_rmouse( unsigned int wid, char* widget_name )
+{
+    outfits_buy( wid, widget_name );
+}
+
 /**
  * @brief Attempts to buy the outfit that is selected.
  *    @param wid Window buying outfit from.
@@ -822,7 +837,7 @@ static void shipyard_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", 64./96.*128., 64.,
-         tships, sships, nships, shipyard_update );
+         tships, sships, nships, shipyard_update, shipyard_rmouse );
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
@@ -931,6 +946,18 @@ static void shipyard_update( unsigned int wid, char* str )
    else
       window_enableButton( wid, "btnBuyShip");
 }
+
+/**
+ * @brief Player right-clicks on a ship.
+ *    @param wid Window player is buying ship from.
+ *    @param widget_name Name of the window. (unused)
+ *    @param shipname Name of the ship the player wants to buy. (unused)
+ */
+static void shipyard_rmouse( unsigned int wid, char* widget_name )
+{
+    return shipyard_buy(wid, widget_name);
+}
+
 /**
  * @brief Player attempts to buy a ship.
  *    @param wid Window player is buying ship from.
@@ -1084,7 +1111,7 @@ static int bar_genList( unsigned int wid )
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 64, 48,
-         portraits, names, n, bar_update );
+         portraits, names, n, bar_update, NULL );
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
@@ -1193,6 +1220,12 @@ static void bar_approach( unsigned int wid, char *str )
 
    /* Reset markers. */
    mission_sysMark();
+
+   /* Mission forced take off. */
+   if (landed == 0) {
+      landed = 1; /* ugly hack to make takeoff not complain. */
+      takeoff(0);
+   }
 }
 /**
  * @brief Loads the news.
@@ -1443,7 +1476,7 @@ void land_checkAddRefuel (void)
    unsigned int w;
 
    /* Check to see if fuel conditions are met. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
       if (!widget_exists( land_windows[0], "txtRefuel" ))
          window_addText( land_windows[0], -20, 20 + (BUTTON_HEIGHT + 20) + 20,
                   200, gl_defFont.h, 1, "txtRefuel",
@@ -1576,7 +1609,7 @@ void land( Planet* p )
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Generate the news. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
 
    /* Clear the NPC. */
@@ -1591,10 +1624,13 @@ void land( Planet* p )
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
    names[j++] = land_windowNames[LAND_WINDOW_MAIN];
-   /* Basic - bar + missions */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+   /* Bar. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR)) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
       names[j++] = land_windowNames[LAND_WINDOW_BAR];
+   }
+   /* Missions. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS)) {
       land_windowsMap[LAND_WINDOW_MISSION] = j;
       names[j++] = land_windowNames[LAND_WINDOW_MISSION];
    }
@@ -1649,10 +1685,10 @@ void land( Planet* p )
 
    /* 4) Create other tabs. */
    /* Basic - bar + missions */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       bar_open( land_getWid(LAND_WINDOW_BAR) );
+   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
-   }
    /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );

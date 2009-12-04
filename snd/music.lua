@@ -123,7 +123,7 @@ function choose_land ()
    elseif class == "P" then
       mus = { "snow" }
    else
-      if pnt:hasServices() then
+      if pnt:services()["inhabited"] then
          mus = { "cosmostation", "upbeat" }
       else
          mus = { "agriculture" }
@@ -214,7 +214,7 @@ function choose_ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       if factions["Collective"] then
-         ambient = { "collective1" }
+         ambient = { "collective1", "collective2", "automat" }
       elseif factions["Empire"] then
          ambient = { "empire2", "empire2", "empire2",
                "empire1", "empire1", "empire1" }
@@ -268,9 +268,9 @@ function choose_combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1" }
+      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1", "battlesomething2" }
    else
-      combat = { "galacticbattle", "flf_battle1", "battlesomething1" }
+      combat = { "galacticbattle", "flf_battle1", "battlesomething1", "battlesomething2" }
    end
 
    -- Make sure it's not already in the list or that we have to stop the

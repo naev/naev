@@ -276,7 +276,7 @@ function hailEvent()
     -- TODO: Hailing event
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then
-            tk.msg("TODO", "bobbens, add the stupid comm features")
+            j:hailPlayer()
             hook.pilot(j, "hail", "hail")
         end
     end

@@ -37,6 +37,7 @@
 #include "debris.h"
 #include "ntime.h"
 #include "ai_extra.h"
+#include "faction.h"
 
 
 #define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
@@ -509,6 +510,23 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 
 
 /**
+ * @brief Gets the faction colour char, works like faction_getColourChar but for a pilot.
+ *
+ * @sa faction_getColourChar
+ */
+char pilot_getFactionColourChar( const Pilot *p )
+{
+   if (pilot_isDisabled(p))
+      return 'I';
+   else if (pilot_isFlag(p, PILOT_BRIBED))
+      return 'N';
+   else if (pilot_isFlag(p, PILOT_HOSTILE))
+      return 'H';
+   return faction_getColourChar(p->faction);
+}
+
+
+/**
  * @brief Have pilot send a message to another.
  *
  *    @param p Pilot sending message.
@@ -519,6 +537,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int )
 {
    Pilot *t;
+   char c;
 
    /* Makes no sense with no player atm. */
    if (player==NULL)
@@ -534,8 +553,10 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
       return;
 
    /* Only really affects player atm. */
-   if (target == PLAYER_ID)
-      player_message( "Comm %s> \"%s\"", p->name, msg );
+   if (target == PLAYER_ID) {
+      c = pilot_getFactionColourChar( p );
+      player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
+   }
 }
 
 
@@ -548,6 +569,8 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
  */
 void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 {
+   char c;
+
    /* Only display if player exists and is in range. */
    if (player==NULL)
       return;
@@ -556,7 +579,8 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
    if (!ignore_int && !pilot_inRangePilot( player, p ))
       return;
 
-   player_message( "Broadcast %s> \"%s\"", p->name, msg );
+   c = pilot_getFactionColourChar( p );
+   player_message( "\e%cBroadcast %s>\e0 \"%s\"", c, p->name, msg );
 }
 
 
@@ -589,7 +613,7 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
    /* Check if planet is in range. */
    for (i=0; i<cur_system->nplanets; i++) {
-      if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_BASIC) &&
+      if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
             (!ignore_int && pilot_inRangePlanet(p, i)) &&
             !areEnemies(p->faction, cur_system->planets[i]->faction)) {
          r = 1;
@@ -1390,8 +1414,10 @@ void pilot_explode( double x, double y, double radius,
  */
 void pilot_render( Pilot* p, const double dt )
 {
-   (void) dt;
+   glTexture *ico_hail;
+   int sx, sy;
 
+   /* Base ship. */
    if (p->ship->gfx_engine != NULL)
       gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
             1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
@@ -1400,6 +1426,27 @@ void pilot_render( Pilot* p, const double dt )
       gl_blitSprite( p->ship->gfx_space,
             p->solid->pos.x, p->solid->pos.y,
             p->tsx, p->tsy, NULL );
+
+   /* Render the hailing graphic if needed. */
+   if (pilot_isFlag( p, PILOT_HAILING )) {
+      ico_hail = gui_hailIcon();
+      if (ico_hail != NULL) {
+         /* Handle animation. */
+         p->htimer -= dt;
+         sx = (int)ico_hail->sx;
+         sy = (int)ico_hail->sy;
+         if (p->htimer < 0.) {
+            p->htimer = .1;
+            p->hail_pos++;
+            p->hail_pos %= sx*sy;
+         }
+         /* Render. */
+         gl_blitSprite( ico_hail,
+               p->solid->pos.x + (p->ship->gfx_space->sw + ico_hail->sw)/2.,
+               p->solid->pos.y + (p->ship->gfx_space->sh + ico_hail->sh)/2.,
+               p->hail_pos % sx, p->hail_pos / sx, NULL );
+      }
+   }
 }
 
 
