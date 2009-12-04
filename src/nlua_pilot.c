@@ -1754,7 +1754,7 @@ static int pilotL_hyperspace( lua_State *L )
 
 
 /**
- * @brief Marks the player as hailing the pilot.
+ * @brief Marks the pilot as hailing the player.
  *
  * Automatically deactivated when pilot is hailed.
  *
