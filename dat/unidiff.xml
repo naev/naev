@@ -56,4 +56,9 @@
    <tech>1002</tech>
   </outfit>
  </unidiff>
+ <unidiff name="FLF_base">
+  <system name="Sigur">
+   <planet name="Sindbad">add</planet>
+  </system>
+ </unidiff>
 </unidiffs>

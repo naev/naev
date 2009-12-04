@@ -307,6 +307,7 @@
   <jumps>
    <jump>NGC-7723</jump>
 	<jump>Coriolis</jump>
+	<jump>Haven</jump>
   </jumps>
   <pos>
    <y>134</y>
@@ -322,7 +323,6 @@
  </ssys>
  <ssys name="NGC-8037">
   <fleets>
-   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Sigur</jump>
@@ -610,13 +610,13 @@
    <stars>500</stars>
   </general>
  </ssys>
- <ssys name="NGC-7968">
+ <ssys name="Thorndyke">
   <fleets>
    <fleet>Pirate Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Mizar</jump>
-   <jump>Haven</jump>
+   <jump>Pilatis</jump>
   </jumps>
   <pos>
    <y>83</y>
@@ -770,7 +770,6 @@
  </ssys>
  <ssys name="Sigur">
   <fleets>
-   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-8037</jump>
@@ -1047,16 +1046,34 @@
    <stars>200</stars>
   </general>
  </ssys>
+ <ssys name="Pilatis">
+  <fleets>
+  </fleets>
+  <jumps>
+   <jump>Thorndyke</jump>
+  </jumps>
+  <pos>
+   <y>122</y>
+   <x>277</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>300</interference>
+   <nebula volatility="0">200</nebula>
+   <stars>300</stars>
+  </general>
+ </ssys>
  <ssys name="Haven">
   <fleets>
    <fleet>Pirate Medium Presence</fleet>
   </fleets>
   <jumps>
-   <jump>NGC-7968</jump>
+   <jump>NGC-7693</jump>
   </jumps>
   <pos>
-   <y>122</y>
-   <x>277</x>
+   <y>180</y>
+   <x>0</x>
   </pos>
   <planets/>
   <general>
@@ -1137,14 +1154,15 @@
  </ssys>
  <ssys name="Mizar">
   <fleets>
-   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Pirate Light Presence</fleet>
    <fleet>Trader Light Presence</fleet>
    <fleet>Empire Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
    <jump>Eridani</jump>
-   <jump>NGC-7968</jump>
+   <jump>Thorndyke</jump>
   </jumps>
   <pos>
    <y>19</y>
@@ -1201,6 +1219,7 @@
    <fleet>Pirate Light Presence</fleet>
    <fleet>Trader Light Presence</fleet>
    <fleet>Empire Medium Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -1379,7 +1398,7 @@
   <fleets>
    <fleet>Dvaered Medium Presence</fleet>
    <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Medium Guerrilla</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Klantar</jump>
@@ -1844,7 +1863,7 @@
   <fleets>
    <fleet>Dvaered Medium Presence</fleet>
    <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Medium Guerrilla</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Raelid</jump>
@@ -1903,7 +1922,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>50</interference>
    <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>

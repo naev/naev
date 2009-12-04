@@ -186,7 +186,7 @@
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>20000</price>
-   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devesating.</description>
+   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
@@ -330,6 +330,32 @@
    <speed>700</speed>
    <range>600</range>
    <falloff>450</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <accuracy>10</accuracy>
+   <energy>23.75</energy>
+   <damage type="energy">22.5</damage>
+  </specific>
+ </outfit>
+ <outfit name="Base Ripper MK2">
+  <general>
+   <slot>high</slot>
+   <tech>100000000</tech>
+   <license>Medium Weapon License</license>
+   <mass>12</mass>
+   <price>1</price>
+   <description>Specially modified ripper for bases. Not for sale (I hope).</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>12</cpu>
+   <gfx>ripper</gfx>390
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1260</delay>
+   <speed>700</speed>
+   <range>900</range>
+   <falloff>650</falloff>
    <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>23.75</energy>
@@ -585,6 +611,47 @@
    <turn>20</turn>
    <speed>350</speed>
    <damage type="kinetic">140</damage>
+   <ai>seek</ai>
+  </specific>
+ </outfit>
+ <outfit name="Imperator Launcher">
+  <general>
+   <slot>high</slot>
+   <tech>10</tech>
+   <license>Heavy Weapon License</license>
+   <mass>34</mass>
+   <price>160000</price>
+   <description>While the Imperator's launcher is an ugly affair (it doesn't fit any ship hull known to man), no-one will laugh at a captain fielding it, lest they be brutally removed from existence.</description>
+   <gfx_store>caesarlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>20</cpu>
+   <ammo>Imperator Missile</ammo>
+   <delay>7000</delay>
+   <amount>5</amount>
+  </specific>
+ </outfit>
+ <outfit name="Imperator Missile">
+  <general>
+   <tech>9</tech>
+   <license>Heavy Weapon License</license>
+   <mass>3</mass>
+   <price>9000</price>
+   <description>The Imperator employs an unconventional, semi-nuclear warhead. Its destructive power is immense, but its complicated design makes it less cost-effective than the Caesar IV.</description>
+   <gfx_store>caesar</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>caesar</gfx>
+   <sound>mace</sound>
+   <sound_hit>lrgexp0</sound_hit>
+   <spfx_shield>ExpL</spfx_shield>
+   <spfx_armour>ExpL</spfx_armour>
+   <duration blowup="armour">12</duration>
+   <lockon>2</lockon>
+   <thrust>125</thrust>
+   <turn>20</turn>
+   <speed>350</speed>
+   <damage type="kinetic">300</damage>
    <ai>seek</ai>
   </specific>
  </outfit>

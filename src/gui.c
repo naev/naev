@@ -139,6 +139,14 @@ typedef struct HealthBar_ {
  * @brief Represents the ingame player graphical user interface.
  */
 typedef struct GUI_ {
+   /* Border intersections. */
+   double tl; /**< Top left. */
+   double tr; /**< Top right. */
+   double bl; /**< Bottom left. */
+   double br; /**< Bottom right. */
+   double border_h;
+   double border_w;
+
    /* graphics */
    glTexture *gfx_frame; /**< Frame of the GUI. */
    glTexture *gfx_targetPilot; /**< Graphics used to target pilot. */
@@ -171,6 +179,8 @@ typedef struct GUI_ {
    Vector2d frame; /**< Global frame position. */
    Vector2d target; /**< Global target position. */
 
+   /* icons. */
+   glTexture *ico_hail; /**< Hail icon. */
 } GUI;
 static GUI gui = { .gfx_frame = NULL,
    .gfx_targetPilot = NULL,
@@ -181,7 +191,8 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
 #define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
-double mesg_timeout = 5.; /**< How long it takes for a message to timeout. */
+static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
+static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
 int mesg_max = 5; /**< Maximum messages onscreen */
 /**
  * @struct Mesg
@@ -434,7 +445,7 @@ static void gui_renderBorder( double dt )
 
    /* Get player position. */
    pos   = &player->solid->pos;
-   hw    = SCREEN_W/2;  
+   hw    = SCREEN_W/2; 
    hh    = SCREEN_H/2;
 
    /* Interference. */
@@ -469,21 +480,23 @@ static void gui_renderBorder( double dt )
             a += 2.*M_PI;
 
          /* Handle by quadrant. */
-         if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
             cy = hh-7.;
          }
-         else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
+         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
             cx = -hw+7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
          }
-         else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
             cy = -hh+7.;
          }
-         else {
+         else { /* Right. */
+            if (a > gui.tr)
+               a -= 2.*M_PI;
             cx = hw-7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
          }
 
 
@@ -546,21 +559,23 @@ static void gui_renderBorder( double dt )
             a += 2.*M_PI;
 
          /* Handle by quadrant. */
-         if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
             cy = hh-7.;
          }
-         else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
+         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
             cx = -hw+7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
          }
-         else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
-            cx = cos(a) * (hw-7.) * M_SQRT2;
+         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
             cy = -hh+7.;
          }
-         else {
+         else { /* Right. */
+            if (a > gui.tr)
+               a -= 2.*M_PI;
             cx = hw-7.;
-            cy = sin(a) * (hh-7.) * M_SQRT2;
+            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
          }
 
          /* Set up colours. */
@@ -1034,7 +1049,7 @@ static void gui_renderMessages( double dt )
 
          /* Draw with variable alpha. */
          else {
-            if (mesg_stack[i].t - mesg_timeout/2 < 0.)
+            if (mesg_stack[i].t - mesg_fadeout < 0.)
                c.a = mesg_stack[i].t / (mesg_timeout/2.);
             else
                c.a = 1.;
@@ -1285,7 +1300,7 @@ static glColour *gui_getPlanetColour( int i )
    col = faction_getColour(planet->faction);
    if (i == planet_target)
       col = &cRadar_tPlanet;
-   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
       col = &cInert; /* Override non-hostile planets without service. */
    
    return col;
@@ -1608,6 +1623,29 @@ int gui_init (void)
     * OSD
     */
    osd_setup( 30., SCREEN_H-90., 150., 300. );
+
+   /*
+    * Borders.
+    */
+   gui.tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
+   if (gui.tl < 0.)
+      gui.tl += 2*M_PI;
+   gui.tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
+   if (gui.tr < 0.)
+      gui.tr += 2*M_PI;
+   gui.bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
+   if (gui.bl < 0.)
+      gui.bl += 2*M_PI;
+   gui.br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
+   if (gui.br < 0.)
+      gui.br += 2*M_PI;
+   gui.border_h   = gui.bl - gui.tl;
+   gui.border_w   = gui.tl - gui.tr;
+
+   /*
+    * Icons.
+    */
+   gui.ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
 
    return 0;
 }
@@ -2125,6 +2163,11 @@ void gui_free (void)
 
    /* Clean up the osd. */
    osd_exit();
+
+   /* Free icons. */
+   if (gui.ico_hail != NULL)
+      gl_freeTexture( gui.ico_hail );
+   gui.ico_hail = NULL;
 }
 
 
@@ -2153,3 +2196,13 @@ void gui_getOffset( double *x, double *y )
    *x = gui_xoff;
    *y = gui_yoff;
 }
+
+
+/**
+ * @brief Gets the hail icon texture.
+ */
+glTexture* gui_hailIcon (void)
+{
+   return gui.ico_hail;
+}
+

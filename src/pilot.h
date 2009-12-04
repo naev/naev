@@ -66,8 +66,8 @@
 #define PILOT_NO_OUTFITS   (1<<5) /**< Do not create the pilot with outfits. */
 #define PILOT_HASTURRET    (1<<6) /**< Pilot has turrets. */
 #define PILOT_HASBEAMS     (1<<7) /**< Pilot has beam weapons. */
-#define PILOT_UNUSED_8     (1<<8)
 /* dynamic */
+#define PILOT_HAILING      (1<<8) /***< Pilot is hailing the player. */
 #define PILOT_NODISABLE    (1<<9) /**< Pilot can't be disabled. */
 #define PILOT_INVINCIBLE   (1<<10) /**< Pilot can't be hit ever. */
 #define PILOT_HOSTILE      (1<<11) /**< Pilot is hostile to the player. */
@@ -263,15 +263,6 @@ typedef struct Pilot_ {
    double weap_range; /**< Average range of primary weapons */
    double weap_speed; /**< Average speed of primary weapons */
 
-   /* Misc */
-   uint32_t flags; /**< used for AI and others */
-   double ptimer; /**< generic timer for internal pilot use */
-   int lockons; /**< Stores how many seeking weapons are targetting pilot */
-   int *mounted; /**< Number of mounted outfits on the mount. */
-   double player_damage; /**< Accumulates damage done by player for hostileness.
-                              In per one of max shield + armour. */
-   double engine_glow; /**< Amount of engine glow to display. */
-
    /* Hook attached to the pilot */
    PilotHook *hooks; /**< Pilot hooks. */
    int nhooks; /**< Number of pilot hooks. */
@@ -287,6 +278,17 @@ typedef struct Pilot_ {
    double tcontrol; /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */
    Task* task; /**< current action */
+
+   /* Misc */
+   uint32_t flags; /**< used for AI and others */
+   double ptimer; /**< generic timer for internal pilot use */
+   double htimer; /**< Hail animation timer. */
+   int hail_pos; /**< Hail animation position. */
+   int lockons; /**< Stores how many seeking weapons are targetting pilot */
+   int *mounted; /**< Number of mounted outfits on the mount. */
+   double player_damage; /**< Accumulates damage done by player for hostileness.
+                              In per one of max shield + armour. */
+   double engine_glow; /**< Amount of engine glow to display. */
 } Pilot;
 
 
@@ -431,6 +433,7 @@ void pilot_rmFriendly( Pilot *p );
 int pilot_isHostile( const Pilot *p );
 int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
+char pilot_getFactionColourChar( const Pilot *p );
 
 
 /*

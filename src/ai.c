@@ -798,6 +798,10 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 {
    lua_State *L;
 
+   /* Ignore distress signals when under manual control. */
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Set up the environment. */
    ai_setPilot(p);
    L = cur_pilot->ai->L;
@@ -1742,7 +1746,7 @@ static int aiL_getlandplanet( lua_State *L )
 
    /* Copy friendly planet.s */
    for (nplanets=0, i=0; i<cur_system->nplanets; i++)
-      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
             !areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
          planets[nplanets++] = cur_system->planets[i];
 

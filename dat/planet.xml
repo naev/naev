@@ -24,7 +24,15 @@
     <main>5</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>M</class>
    <population>17000000</population>
   </general>
@@ -53,7 +61,15 @@
     <main>12</main>
     <special>1002</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>M</class>
    <population>1200000</population>
   </general>
@@ -68,7 +84,9 @@
    <x>73</x>
   </pos>
   <general>
-   <services>1</services>
+   <services>
+    <land />
+   </services>
    <tech>
     <main>0</main>
     <special>0</special>
@@ -98,7 +116,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>H</class>
    <population>12000</population>
   </general>
@@ -126,7 +150,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>M</class>
    <population>40000</population>
   </general>
@@ -142,7 +172,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -176,7 +206,15 @@
     <main>15</main>
     <special>1002</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>1</class>
    <population>318000</population>
   </general>
@@ -206,7 +244,15 @@
     <main>15</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>1</class>
    <population>52000</population>
   </general>
@@ -235,7 +281,13 @@
     <main>7</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>P</class>
    <population>27000</population>
   </general>
@@ -258,7 +310,12 @@
     <main>7</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+   </services>
    <class>1</class>
    <population>7000</population>
   </general>
@@ -281,7 +338,12 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+   </services>
    <class>0</class>
    <population>700</population>
   </general>
@@ -295,7 +357,7 @@
    <x>-57</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -324,7 +386,13 @@
     <main>7</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>0</class>
    <population>12000</population>
   </general>
@@ -351,7 +419,13 @@
     <main>4</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>H</class>
    <population>20000</population>
   </general>
@@ -377,7 +451,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>A</class>
    <population>40000</population>
   </general>
@@ -405,7 +485,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>K</class>
    <population>15000</population>
   </general>
@@ -433,7 +519,15 @@
     <main>8</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>M</class>
    <population>400000</population>
   </general>
@@ -461,7 +555,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>G</class>
    <population>350000</population>
   </general>
@@ -490,12 +590,17 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>G</class>
    <population>65000</population>
   </general>
  </planet>
- 
  <planet name="Omega Station">
   <GFX>
    <exterior>station00.png</exterior>
@@ -518,7 +623,14 @@
     <main>9</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>0</class>
    <population>14000</population>
   </general>
@@ -541,7 +653,12 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+   </services>
    <class>C</class>
    <population>127000</population>
   </general>
@@ -555,7 +672,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -585,7 +702,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>H</class>
    <population>32000</population>
   </general>
@@ -613,7 +736,14 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>A</class>
    <population>60000</population>
   </general>
@@ -641,7 +771,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>L</class>
    <population>2000</population>
   </general>
@@ -656,7 +792,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -688,7 +824,14 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>D</class>
    <population>5000000</population>
   </general>
@@ -715,7 +858,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>G</class>
    <population>170000</population>
   </general>
@@ -744,7 +893,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>P</class>
    <population>4500</population>
   </general>
@@ -773,7 +928,14 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>M</class>
    <population>812000</population>
   </general>
@@ -804,7 +966,15 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>M</class>
   </general>
  </planet>
@@ -818,7 +988,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -850,7 +1020,15 @@
     <main>10</main>
     <special>1001</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>M</class>
    <population>13000000</population>
   </general>
@@ -865,7 +1043,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -897,7 +1075,15 @@
     <main>13</main>
     <special>9009</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>D</class>
    <population>9000</population>
   </general>
@@ -926,7 +1112,15 @@
     <main>9</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>0</class>
    <population>4000</population>
   </general>
@@ -953,7 +1147,14 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>O</class>
    <population>930000</population>
   </general>
@@ -982,7 +1183,15 @@
     <main>8</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>H</class>
    <population>260000</population>
   </general>
@@ -1005,7 +1214,13 @@
     <main>3</main>
     <special>0</special>
    </tech>
-   <services>11</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <outfits />
+   </services>
    <class>0</class>
    <population>3000</population>
   </general>
@@ -1034,7 +1249,14 @@
     <main>7</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>P</class>
    <population>125000</population>
   </general>
@@ -1063,7 +1285,14 @@
     <main>12</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>O</class>
    <population>450000</population>
   </general>
@@ -1077,7 +1306,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -1110,7 +1339,15 @@
     <main>15</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>0</class>
    <population>14000</population>
   </general>
@@ -1139,7 +1376,15 @@
     <main>8</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>M</class>
    <population>130000</population>
   </general>
@@ -1168,7 +1413,13 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>I</class>
    <population>130000</population>
   </general>
@@ -1183,7 +1434,7 @@
    <x>0</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -1201,7 +1452,7 @@
    <x>23</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -1218,7 +1469,7 @@
    <x>220</x>
   </pos>
   <general>
-   <services>0</services>
+   <services />
    <tech>
     <main>0</main>
     <special>0</special>
@@ -1251,7 +1502,15 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+    <shipyard />
+   </services>
    <class>O</class>
    <population>70000</population>
   </general>
@@ -1278,7 +1537,12 @@
     <main>6</main>
     <special>0</special>
    </tech>
-   <services>3</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+   </services>
    <class>M</class>
    <population>2000000</population>
   </general>
@@ -1305,7 +1569,13 @@
     <main>4</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>O</class>
    <population>4000000</population>
   </general>
@@ -1323,7 +1593,7 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>0</services>
+   <services />
    <class>P</class>
   </general>
  </planet>
@@ -1344,7 +1614,7 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <services>0</services>
+   <services />
    <class>H</class>
    </general>
  </planet>
@@ -1369,7 +1639,13 @@
     <main>4</main>
     <special>0</special>
    </tech>
-   <services>7</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+   </services>
    <class>Y</class>
    <population>10000</population>
   </general>
@@ -1397,7 +1673,14 @@
     <main>5</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>M</class>
    <population>500000000</population>
   </general>
@@ -1423,7 +1706,13 @@
     <main>7</main>
     <special>0</special>
    </tech>
-   <services>13</services>
+   <services>
+    <land />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>25</class>
    <population>12000</population>
   </general>
@@ -1451,7 +1740,14 @@
     <main>3</main>
     <special>0</special>
    </tech>
-   <services>15</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <commodity />
+    <outfits />
+   </services>
    <class>K</class>
    <population>400000</population>
   </general>
@@ -1474,9 +1770,41 @@
     <main>4</main>
     <special>0</special>
    </tech>
-   <services>11</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+    <missions />
+    <outfits />
+   </services>
    <class>P</class>
    <population>2000000000</population>
+  </general>
+ </planet>
+ <planet name="Sindbad">
+  <GFX>
+   <exterior>station04.png</exterior>
+   <space>000.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <description>From the outside, FLF station Sindbad looks like a piece of junk. This suits the FLF, as their base isn't meant to stand out. The more travelers believe that the station is just another carcass floating in space, the better. On the inside however, Sindbad looks, well, it still looks like a piece of junk. The FLF have limited resources, and the fact that they have a secret, autonomous outpost at all must be considered an achievement. Still, Sindbad is more than a token resistance. The base has all the facilities and defensive capabilities that befit a structure its size, and while stealth remains the FLF's best protection from their Dvaered oppressors, Sindbad can defend itself if need be.</description>
+   <bar>The FLF don't have much use for leisures, so it's debatable whether this place can be called a bar. Still, it provides space to sit and talk, and it serves a liquid that seems different from industrial acid, in that it doesn't burn a hole through your stomach. The people here are mostly hard-faced men, and the topics of conversation are limited to the Dvaered and the FLF's cause.</bar>
+   <faction>FLF</faction>
+   <tech>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <commodities>
+    <commodity>Ore</commodity>
+   </commodities>
+   <services>31</services>
+   <class>0</class>
+   <population>1000</population>
   </general>
  </planet>
 </Planets>
