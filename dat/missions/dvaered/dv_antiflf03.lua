@@ -330,6 +330,7 @@ function deathFLF()
             pilot.broadcast(obstinate, phasetwo, true)
             misn.osdActive(3)
             spawnDVbomber()
+            misn.timerStart("engageBase", 30000)
         end
     end
 end
@@ -353,6 +354,15 @@ function spawnDVbomber()
         spawner = misn.timerStart("spawnDVbomber", 3000)
     end
 end 
+
+-- Makes remaining escorts engage the base
+function engageBase()
+    for i, j in ipairs(fleetFLF) do
+        if j:exists() and base:exists() then
+            j:attack(base)
+        end
+    end
+end
 
 -- Tries to whip the AI into behaving in a specific way
 function control()
