@@ -1760,7 +1760,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  * @usage p:hailPlayer() -- Player will be informed he's being hailed and pilot will have an icon
  *    @luaparam p Pilot to hail the player.
- *    @luaparam enable If true hails the pilot, if false disables the fail. Defaults to true.
+ *    @luaparam enable If true hails the pilot, if false disables the hailing. Defaults to true.
  * @luafunc hailPlayer( p, enable )
  */
 static int pilotL_hailPlayer( lua_State *L )
