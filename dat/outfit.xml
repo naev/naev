@@ -186,7 +186,7 @@
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>20000</price>
-   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devesating.</description>
+   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">

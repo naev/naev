@@ -57,7 +57,7 @@ void window_addImageArray( const unsigned int wid,
                            char* name, const int iw, const int ih,
                            glTexture** tex, char** caption, int nelem,
                            void (*call) (unsigned int wdw, char* wgtname),
-                           void (*rmcall) (unsigned int wdw, char* wgtname, const char* image) )
+                           void (*rmcall) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -370,7 +370,7 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
       case SDL_BUTTON_RIGHT:
          iar_focus( iar, x, y );
          if (iar->dat.iar.rmptr != NULL)
-	    iar->dat.iar.rmptr( iar->wdw, iar->name, toolkit_getNameById( iar, iar_focusImage( iar, x, y) ) );
+	    iar->dat.iar.rmptr( iar->wdw, iar->name );
          return 1;
 
       default:

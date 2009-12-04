@@ -139,10 +139,12 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
+static void outfits_rmouse( unsigned int wid, char* widget_name );
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
+static void shipyard_rmouse( unsigned int wid, char* widget_name );
 /* spaceport bar */
 static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
@@ -417,7 +419,7 @@ static void outfits_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarOutfits", 64, 64,
-         toutfits, soutfits, noutfits, outfits_update, NULL );
+         toutfits, soutfits, noutfits, outfits_update, outfits_rmouse );
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
@@ -590,6 +592,19 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 
    return 1;
 }
+
+
+/**
+ * @brief Player right-clicks on an outfit.
+ *    @param wid Window player is buying ship from.
+ *    @param widget_name Name of the window. (unused)
+ *    @param shipname Name of the ship the player wants to buy. (unused)
+ */
+static void outfits_rmouse( unsigned int wid, char* widget_name )
+{
+    outfits_buy( wid, widget_name );
+}
+
 /**
  * @brief Attempts to buy the outfit that is selected.
  *    @param wid Window buying outfit from.
@@ -822,7 +837,7 @@ static void shipyard_open( unsigned int wid )
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", 64./96.*128., 64.,
-         tships, sships, nships, shipyard_update, NULL );
+         tships, sships, nships, shipyard_update, shipyard_rmouse );
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
@@ -931,6 +946,18 @@ static void shipyard_update( unsigned int wid, char* str )
    else
       window_enableButton( wid, "btnBuyShip");
 }
+
+/**
+ * @brief Player right-clicks on a ship.
+ *    @param wid Window player is buying ship from.
+ *    @param widget_name Name of the window. (unused)
+ *    @param shipname Name of the ship the player wants to buy. (unused)
+ */
+static void shipyard_rmouse( unsigned int wid, char* widget_name )
+{
+    return shipyard_buy(wid, widget_name);
+}
+
 /**
  * @brief Player attempts to buy a ship.
  *    @param wid Window player is buying ship from.
