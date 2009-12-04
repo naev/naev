@@ -16,7 +16,7 @@ end
 
 -- Make the ship hail the player
 function hailme()
-    tk.msg("TODO", "bobbens, fix your shit.")
+    hyena:hailPlayer()
     hook.pilot(hyena, "hail", "hail")
 end
 
