@@ -93,7 +93,7 @@ function neutralevent()
     -- Pick a random message from the list, display it, unboard.
     tk.msg(ntitle, ntext[rnd.rnd(1, #ntext)])
     player.unboard()
-    destroyeevent()
+    destroyevent()
 end
 
 function goodevent()
