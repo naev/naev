@@ -57,8 +57,7 @@ else -- default english
     -- Mission details
     misn_title = "Baron"
     misn_reward = "A tidy sum of money"
-    misn_desc = {}
-    misn_desc[1] = ""
+    misn_desc = "You've been hired as a courier for one Baron Sauterfeldt. Your job is to transport a holopainting from a Dvaered world to the Baron's ship."
     
     credits = 40000 -- 40K
 
@@ -87,6 +86,7 @@ function accept()
     
     misn.setTitle(misn_title)
     misn.setReward(misn_reward)
+    misn.setDesc(misn_desc)
     
     osd_msg[1] = string.format(osd_msg[1], sysname1, planetname)
     osd_msg[2] = string.format(osd_msg[2], sysname2, shipname)
