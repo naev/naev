@@ -2,7 +2,7 @@
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
-  <chance>3</chance>
+  <chance>20</chance>
   <cond>next(system.get():faction()) ~= nil</cond>
  </event>
  <event name="Unique">
