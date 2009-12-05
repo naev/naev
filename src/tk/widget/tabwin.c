@@ -13,12 +13,14 @@
 
 #include "toolkit.h"
 #include "font.h"
+#include "input.h"
 
 
 #define TAB_HEIGHT   30
 
 
 static int tab_mouse( Widget* tab, SDL_Event *event );
+static int tab_key( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
@@ -114,6 +116,9 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    /* First handle event internally. */
    if (event->type == SDL_MOUSEBUTTONDOWN)
       tab_mouse( tab, event );
+   if (event->type == SDL_KEYDOWN) {
+      tab_key( tab, event );
+   }
 
 
    /* Give event to window. */
@@ -168,6 +173,77 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
             tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
          break;
       }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Handles key events.
+ */
+static int tab_key( Widget* tab, SDL_Event *event )
+{
+   int change = -1;
+
+   SDLKey key;
+   SDLMod mod;
+
+   /* Event info. */
+   key = event->key.keysym.sym;
+   mod = event->key.keysym.mod;
+
+   SDLKey bind_key;
+   SDLMod bind_mod;
+
+   bind_key = input_getKeybind("switchtab1", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 0;
+   }
+   bind_key = input_getKeybind("switchtab2", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 1;
+   }
+   bind_key = input_getKeybind("switchtab3", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 2;
+   }
+   bind_key = input_getKeybind("switchtab4", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 3;
+   }
+   bind_key = input_getKeybind("switchtab5", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 4;
+   }
+   bind_key = input_getKeybind("switchtab6", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 5;
+   }
+   bind_key = input_getKeybind("switchtab7", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 6;
+   }
+   bind_key = input_getKeybind("switchtab8", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 7;
+   }
+   bind_key = input_getKeybind("switchtab9", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 8;
+   }
+   bind_key = input_getKeybind("switchtab0", NULL, &bind_mod);
+   if (key == bind_key && mod == bind_mod) {
+       change = 9;
+   }
+
+   /* Switch to the selected tab if it exists. */
+   if ((change != -1) && (change < tab->dat.tab.ntabs)) {
+      tab->dat.tab.active = change;
+      /* Create event. */
+      if (tab->dat.tab.onChange != NULL)
+          tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
+      return 1;
    }
 
    return 0;
