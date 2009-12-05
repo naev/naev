@@ -390,7 +390,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
   </avail>
@@ -401,7 +401,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
   </avail>
