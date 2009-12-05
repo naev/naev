@@ -133,7 +133,7 @@ function badevent()
         player.pilot():setHealth(30, 0)
     elseif event == 2 then
         tk.msg(btitle, btext[2])
-        player.pilot().setFuel(false)
+        player.pilot():setFuel(false)
     elseif event == 3 then
         tk.msg(btitle, btext[3])
         v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300), false)[1]
