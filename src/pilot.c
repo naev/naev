@@ -2297,7 +2297,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 /**
  * @brief Gets all the outfits in nice text form.
  *    
- *    @param pilot Pilot to get the oufits from.
+ *    @param pilot Pilot to get the outfits from.
  */
 char* pilot_getOutfits( Pilot* pilot )
 {
@@ -2564,9 +2564,9 @@ static void pilot_updateMass( Pilot *pilot )
 
 
 /**
- * @brief Gets the piilot's free cargo space.
+ * @brief Gets the pilot's free cargo space.
  *
- *    @param p Pilot to get the the free space of.
+ *    @param p Pilot to get the free space of.
  *    @return Free cargo space on pilot.
  */
 int pilot_cargoFree( Pilot* p )

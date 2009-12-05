@@ -39,7 +39,7 @@
  */
 typedef struct Keybind_ {
    const char *name; /**< keybinding name, taken from keybindNames */
-   KeybindType type; /**< type, defined in playe.h */
+   KeybindType type; /**< type, defined in player.h */
    SDLKey key; /**< key/axis/button event number */
    SDLMod mod; /**< Key modifiers (where applicable). */
 } Keybind;

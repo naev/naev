@@ -5,7 +5,7 @@
 /**
  * @file land.c
  *
- * @brief Handles all the landing menus and actionsv.
+ * @brief Handles all the landing menus and actions.
  */
 
 
