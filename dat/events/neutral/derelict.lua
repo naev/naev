@@ -101,7 +101,7 @@ function goodevent()
     event = rnd.rnd(1, #gtext)
     if event == 1 then
         tk.msg(gtitle, gtext[1])
-        player.pay(rnd.rnd(5000,30000) --5K - 30K
+        player.pay(rnd.rnd(5000,30000)) --5K - 30K
     elseif event == 2 then
         tk.msg(gtitle, gtext[2])
         player.addOutfit("Star Map", 1)
