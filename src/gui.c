@@ -193,7 +193,7 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 #define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
 static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
 static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
-int mesg_max = 5; /**< Maximum messages onscreen */
+static int mesg_max = 5; /**< Maximum messages onscreen */
 /**
  * @struct Mesg
  * 
@@ -1050,7 +1050,7 @@ static void gui_renderMessages( double dt )
          /* Draw with variable alpha. */
          else {
             if (mesg_stack[i].t - mesg_fadeout < 0.)
-               c.a = mesg_stack[i].t / (mesg_timeout/2.);
+               c.a = mesg_stack[i].t / mesg_fadeout;
             else
                c.a = 1.;
             gl_print( NULL, x, y, &c, "%s", mesg_stack[i].str );
