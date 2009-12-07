@@ -195,7 +195,7 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 static int mesg_max        = 128; /**< Maximum messages onscreen */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
 static int mesg_viewpoint  = -1; /**< Position of viewing. */
-static double mesg_timeout = 30.; /**< Timeout length. */
+static double mesg_timeout = 15.; /**< Timeout length. */
 static double mesg_fade    = 5.; /**< Fade length. */
 /**
  * @struct Mesg
