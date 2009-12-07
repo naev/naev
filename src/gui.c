@@ -179,6 +179,8 @@ typedef struct GUI_ {
    Vector2d frame; /**< Global frame position. */
    Vector2d target; /**< Global target position. */
 
+   /* icons. */
+   glTexture *ico_hail; /**< Hail icon. */
 } GUI;
 static GUI gui = { .gfx_frame = NULL,
    .gfx_targetPilot = NULL,
@@ -189,8 +191,9 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
 #define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
-double mesg_timeout = 5.; /**< How long it takes for a message to timeout. */
-int mesg_max = 5; /**< Maximum messages onscreen */
+static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
+static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
+static int mesg_max = 5; /**< Maximum messages onscreen */
 /**
  * @struct Mesg
  * 
@@ -1046,8 +1049,8 @@ static void gui_renderMessages( double dt )
 
          /* Draw with variable alpha. */
          else {
-            if (mesg_stack[i].t - mesg_timeout/2 < 0.)
-               c.a = mesg_stack[i].t / (mesg_timeout/2.);
+            if (mesg_stack[i].t - mesg_fadeout < 0.)
+               c.a = mesg_stack[i].t / mesg_fadeout;
             else
                c.a = 1.;
             gl_print( NULL, x, y, &c, "%s", mesg_stack[i].str );
@@ -1639,6 +1642,11 @@ int gui_init (void)
    gui.border_h   = gui.bl - gui.tl;
    gui.border_w   = gui.tl - gui.tr;
 
+   /*
+    * Icons.
+    */
+   gui.ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
+
    return 0;
 }
 
@@ -2155,6 +2163,11 @@ void gui_free (void)
 
    /* Clean up the osd. */
    osd_exit();
+
+   /* Free icons. */
+   if (gui.ico_hail != NULL)
+      gl_freeTexture( gui.ico_hail );
+   gui.ico_hail = NULL;
 }
 
 
@@ -2183,3 +2196,13 @@ void gui_getOffset( double *x, double *y )
    *x = gui_xoff;
    *y = gui_yoff;
 }
+
+
+/**
+ * @brief Gets the hail icon texture.
+ */
+glTexture* gui_hailIcon (void)
+{
+   return gui.ico_hail;
+}
+

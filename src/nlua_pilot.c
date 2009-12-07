@@ -87,6 +87,7 @@ static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
+static int pilotL_hailPlayer( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
@@ -139,6 +140,8 @@ static const luaL_reg pilotL_methods[] = {
    { "attack", pilotL_attack },
    { "runaway", pilotL_runaway },
    { "hyperspace", pilotL_hyperspace },
+   /* Misc. */
+   { "hailPlayer", pilotL_hailPlayer },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -1748,4 +1751,46 @@ static int pilotL_hyperspace( lua_State *L )
 
    return 0;
 }
+
+
+/**
+ * @brief Marks the pilot as hailing the player.
+ *
+ * Automatically deactivated when pilot is hailed.
+ *
+ * @usage p:hailPlayer() -- Player will be informed he's being hailed and pilot will have an icon
+ *    @luaparam p Pilot to hail the player.
+ *    @luaparam enable If true hails the pilot, if false disables the hailing. Defaults to true.
+ * @luafunc hailPlayer( p, enable )
+ */
+static int pilotL_hailPlayer( lua_State *L )
+{
+   Pilot *p;
+   int enable;
+   char c;
+
+   /* Get parameters. */
+   p = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 1)
+      enable = lua_toboolean(L,3);
+   else
+      enable = 1;
+
+
+   /* Set the flag. */
+   if (enable) {
+      /* Send message. */
+      c = pilot_getFactionColourChar( p );
+      player_message( "\e%c%s\e0 is hailing you.", c, p->name );
+
+      /* Set flag. */
+      pilot_setFlag( p, PILOT_HAILING );
+   }
+   else
+      pilot_rmFlag( p, PILOT_HAILING );
+
+   return 0;
+}
+
+
 

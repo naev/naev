@@ -1414,8 +1414,10 @@ void pilot_explode( double x, double y, double radius,
  */
 void pilot_render( Pilot* p, const double dt )
 {
-   (void) dt;
+   glTexture *ico_hail;
+   int sx, sy;
 
+   /* Base ship. */
    if (p->ship->gfx_engine != NULL)
       gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
             1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
@@ -1424,6 +1426,27 @@ void pilot_render( Pilot* p, const double dt )
       gl_blitSprite( p->ship->gfx_space,
             p->solid->pos.x, p->solid->pos.y,
             p->tsx, p->tsy, NULL );
+
+   /* Render the hailing graphic if needed. */
+   if (pilot_isFlag( p, PILOT_HAILING )) {
+      ico_hail = gui_hailIcon();
+      if (ico_hail != NULL) {
+         /* Handle animation. */
+         p->htimer -= dt;
+         sx = (int)ico_hail->sx;
+         sy = (int)ico_hail->sy;
+         if (p->htimer < 0.) {
+            p->htimer = .1;
+            p->hail_pos++;
+            p->hail_pos %= sx*sy;
+         }
+         /* Render. */
+         gl_blitSprite( ico_hail,
+               p->solid->pos.x + (p->ship->gfx_space->sw + ico_hail->sw)/2.,
+               p->solid->pos.y + (p->ship->gfx_space->sh + ico_hail->sh)/2.,
+               p->hail_pos % sx, p->hail_pos / sx, NULL );
+      }
+   }
 }
 
 
@@ -2274,7 +2297,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 /**
  * @brief Gets all the outfits in nice text form.
  *    
- *    @param pilot Pilot to get the oufits from.
+ *    @param pilot Pilot to get the outfits from.
  */
 char* pilot_getOutfits( Pilot* pilot )
 {
@@ -2541,9 +2564,9 @@ static void pilot_updateMass( Pilot *pilot )
 
 
 /**
- * @brief Gets the piilot's free cargo space.
+ * @brief Gets the pilot's free cargo space.
  *
- *    @param p Pilot to get the the free space of.
+ *    @param p Pilot to get the free space of.
  *    @return Free cargo space on pilot.
  */
 int pilot_cargoFree( Pilot* p )

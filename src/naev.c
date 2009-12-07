@@ -94,6 +94,7 @@ static char human_version[256]; /**< Human readable version. */
 static glTexture *loading; /**< Loading screen. */
 static char *binary_path = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
+static int fps_skipped = 0; /**< Skipped last frame? */
 
 
 /*
@@ -591,8 +592,9 @@ static void update_all (void)
    double tempdt;
    static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
-   if (real_dt > 0.25) { /* slow timers down and rerun calculations */
+   if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)game_dt*1000);
+      fps_skipped = 1;
       return;
    }
    else if (game_dt > fps_min) { /* we'll force a minimum of 50 FPS */
@@ -614,6 +616,8 @@ static void update_all (void)
    }
    else /* Standard, just update with the last dt */
       update_routine(game_dt);
+
+   fps_skipped = 0;
 }
 
 

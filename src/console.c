@@ -43,7 +43,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /*
  * Buffers.
  */
-#define BUF_LINES          256 /**< Number of lines in the buffer. */
+#define BUF_LINES          128 /**< Number of lines in the buffer. */
 #define LINE_LENGTH        80 /**< Length of lines in the buffer. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
@@ -148,7 +148,9 @@ static void cli_addMessage( const char *msg )
 
    /* Move viewport if needed. */
    n = (cli_cursor - cli_viewport) % BUF_LINES;
-   if ((n+1)*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
+   if (cli_cursor < cli_viewport)
+      n += BUF_LINES;
+   if (n*(cli_font->h+5) > cli_height-80-BUTTON_HEIGHT)
       cli_viewport = (cli_viewport+1) % BUF_LINES;
 }
 
