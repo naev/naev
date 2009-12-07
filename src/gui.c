@@ -262,7 +262,8 @@ void gui_setDefaults (void)
 void player_messageRaw ( const char *str )
 {
    /* Move pointer. */
-   mesg_pointer = (mesg_pointer + 1) % mesg_max;
+   mesg_pointer   = (mesg_pointer + 1) % mesg_max;
+   mesg_viewpoint = mesg_pointer;
 
    /* add the new one */
    strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
@@ -283,7 +284,8 @@ void player_message ( const char *fmt, ... )
       return;
 
    /* Move pointer. */
-   mesg_pointer = (mesg_pointer + 1) % mesg_max;
+   mesg_pointer   = (mesg_pointer + 1) % mesg_max;
+   mesg_viewpoint = mesg_pointer;
 
    /* add the new one */
    va_start(ap, fmt);
