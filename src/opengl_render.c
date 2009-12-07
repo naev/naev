@@ -106,6 +106,10 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    GLfloat vertex[4*2], col[4*4];
 
    /* Set the vertex. */
+   /*   1--2
+    *   |  |
+    *   3--4
+    */
    vertex[0] = (GLfloat)x;
    vertex[4] = vertex[0];
    vertex[2] = vertex[0] + (GLfloat)w;
@@ -140,6 +144,76 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+
+   /* Check errors. */
+   gl_checkErr();
+}
+
+
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param x X position to render rectangle at.
+ *    @param y Y position to render rectangle at.
+ *    @param w Rectangle width.
+ *    @param h Rectangle height.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
+{
+   GLfloat vx, vy, vxw, vyh;
+   GLfloat vertex[5*2], col[5*4];
+
+   /* Helper variables. */
+   vx  = (GLfloat) x;
+   vy  = (GLfloat) y;
+   vxw = vx + (GLfloat) w;
+   vyh = vy + (GLfloat) h;
+
+   /* Set the vertex. */
+   vertex[0] = vx;
+   vertex[1] = vy;
+   vertex[2] = vxw;
+   vertex[3] = vy;
+   vertex[4] = vxw;
+   vertex[5] = vyh;
+   vertex[6] = vx;
+   vertex[7] = vyh;
+   vertex[8] = vx;
+   vertex[9] = vy;
+   gl_vboSubData( gl_renderVBO, 0, sizeof(vertex), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set the colour. */
+   col[0] = c->r;
+   col[1] = c->g;
+   col[2] = c->b;
+   col[3] = c->a;
+   col[4] = col[0];
+   col[5] = col[1];
+   col[6] = col[2];
+   col[7] = col[3];
+   col[8] = col[0];
+   col[9] = col[1];
+   col[10] = col[2];
+   col[11] = col[3];
+   col[12] = col[0];
+   col[13] = col[1];
+   col[14] = col[2];
+   col[15] = col[3];
+   col[16] = col[0];
+   col[17] = col[1];
+   col[18] = col[2];
+   col[19] = col[3];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, sizeof(col), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_LINE_STRIP, 0, 5 );
 
    /* Clear state. */
    gl_vboDeactivate();

@@ -191,7 +191,7 @@ static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX        128 /**< Maxmimu message length. */
+#define MESG_SIZE_MAX        256 /**< Maxmimu message length. */
 static int mesg_max        = 128; /**< Maximum messages onscreen */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
 static int mesg_viewpoint  = 0; /**< Position of viewing. */
@@ -1060,12 +1060,15 @@ void gui_clearMessages (void)
 static void gui_renderMessages( double dt )
 {
    (void) dt;
-   double x, y;
-   int i, m;
+   double x, y, h, hs;
+   int i, m, o;
+   glColour c;
 
+   /* Coordinate translation. */
    x = gui.mesg.x;
    y = gui.mesg.y;
 
+   /* Render text. */
    for (i=0; i<conf.mesg_visible; i++) {
       /* Reference translation. */
       m  = (mesg_viewpoint - i) % mesg_max;
@@ -1074,10 +1077,35 @@ static void gui_renderMessages( double dt )
 
       /* Only handle non-NULL messages. */
       if (mesg_stack[m].str[0] != '\0')
-         gl_print( NULL, x, y, NULL, "%s", mesg_stack[m].str );
+         gl_printMaxRaw( NULL, gui.mesg.w, x, y, NULL, mesg_stack[m].str );
 
       /* Increase position. */
       y += (double)gl_defFont.h*1.2;
+   }
+
+   /* Render position. */
+   if (mesg_viewpoint != mesg_pointer) {
+      /* Set up matrix. */
+      x = gui.mesg.x - SCREEN_W/2.;
+      y = gui.mesg.y - SCREEN_H/2.;
+
+      /* Data. */
+      h  = conf.mesg_visible*gl_defFont.h*1.2;
+      hs = h*(double)conf.mesg_visible/(double)mesg_max;
+      o  = mesg_pointer - mesg_viewpoint;
+      if (o < 0)
+         o += mesg_max;
+      c.r = 1.;
+      c.g = 1.;
+      c.b = 1.;
+
+      /* Border. */
+      c.a = 0.2;
+      gl_renderRect( x + gui.mesg.w, y, 10, h, &c );
+
+      /* Inside. */
+      c.a = 0.5;
+      gl_renderRect( x + gui.mesg.w, y + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)) , 10, hs, &c );
    }
 }
 
@@ -1623,6 +1651,7 @@ int gui_init (void)
     */
    gui.mesg.x = 20;
    gui.mesg.y = 30;
+   gui.mesg.w = SCREEN_W - 400;
    if (mesg_stack == NULL) {
       mesg_stack = calloc(mesg_max, sizeof(Mesg));
       if (mesg_stack == NULL) {
