@@ -194,7 +194,9 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 #define MESG_SIZE_MAX        256 /**< Maxmimu message length. */
 static int mesg_max        = 128; /**< Maximum messages onscreen */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
-static int mesg_viewpoint  = 0; /**< Position of viewing. */
+static int mesg_viewpoint  = -1; /**< Position of viewing. */
+static double mesg_timeout = 30.; /**< Timeout length. */
+static double mesg_fade    = 5.; /**< Fade length. */
 /**
  * @struct Mesg
  * 
@@ -202,6 +204,7 @@ static int mesg_viewpoint  = 0; /**< Position of viewing. */
  */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
+   double t;
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 
@@ -260,6 +263,12 @@ void gui_messageScrollUp( int lines )
 {
    int o;
 
+   /* Handle hacks. */
+   if (mesg_viewpoint == -1) {
+      mesg_viewpoint = mesg_pointer;
+      return;
+   }
+
    /* Get offset. */
    o  = mesg_pointer - mesg_viewpoint;
    if (o < 0)
@@ -284,6 +293,14 @@ void gui_messageScrollDown( int lines )
 {
    int o;
 
+   /* Handle hacks. */
+   if (mesg_viewpoint == mesg_pointer) {
+      mesg_viewpoint = -1;
+      return;
+   }
+   else if (mesg_viewpoint == -1)
+      return;
+
    /* Get offset. */
    o  = mesg_pointer - mesg_viewpoint;
    if (o < 0)
@@ -307,10 +324,12 @@ void player_messageRaw ( const char *str )
 {
    /* Move pointer. */
    mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   mesg_viewpoint++;
+   if (mesg_viewpoint != -1)
+      mesg_viewpoint++;
 
    /* add the new one */
    strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
+   mesg_stack[mesg_pointer].t = mesg_timeout;
 }
 
 /**
@@ -328,12 +347,14 @@ void player_message ( const char *fmt, ... )
 
    /* Move pointer. */
    mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   mesg_viewpoint++;
+   if (mesg_viewpoint != -1)
+      mesg_viewpoint++;
 
    /* add the new one */
    va_start(ap, fmt);
    vsnprintf( mesg_stack[mesg_pointer].str, MESG_SIZE_MAX, fmt, ap );
    va_end(ap);
+   mesg_stack[mesg_pointer].t = mesg_timeout;
 }
 
 
@@ -1047,8 +1068,6 @@ static void gui_renderRadar( double dt )
 void gui_clearMessages (void)
 {
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
-   mesg_pointer   = 0;
-   mesg_viewpoint = 0;
 }
 
 
@@ -1059,35 +1078,34 @@ void gui_clearMessages (void)
  */
 static void gui_renderMessages( double dt )
 {
-   (void) dt;
-   double x, y, h, hs;
-   int i, m, o;
-   glColour c;
+   double x, y, h, hs, vx, vy;
+   int v, i, m, o;
+   glColour c, cb;
 
    /* Coordinate translation. */
    x = gui.mesg.x;
    y = gui.mesg.y;
 
-   /* Render text. */
-   for (i=0; i<conf.mesg_visible; i++) {
-      /* Reference translation. */
-      m  = (mesg_viewpoint - i) % mesg_max;
-      if (m < 0)
-         m += mesg_max;
+   /* Handle viewpoint hacks. */
+   v = mesg_viewpoint;
+   if (v == -1)
+      v = mesg_pointer;
 
-      /* Only handle non-NULL messages. */
-      if (mesg_stack[m].str[0] != '\0')
-         gl_printMaxRaw( NULL, gui.mesg.w, x, y, NULL, mesg_stack[m].str );
+   /* Colour. */
+   c.r = 1.;
+   c.g = 1.;
+   c.b = 1.;
 
-      /* Increase position. */
-      y += (double)gl_defFont.h*1.2;
-   }
+   if (mesg_viewpoint != -1) {
+      /* Colour. */
+      cb.r = 0.;
+      cb.g = 0.;
+      cb.b = 0.;
+      cb.a = 0.4;
 
-   /* Render position. */
-   if (mesg_viewpoint != mesg_pointer) {
-      /* Set up matrix. */
-      x = gui.mesg.x - SCREEN_W/2.;
-      y = gui.mesg.y - SCREEN_H/2.;
+      /* Set up position. */
+      vx = gui.mesg.x - SCREEN_W/2.;
+      vy = gui.mesg.y - SCREEN_H/2.;
 
       /* Data. */
       h  = conf.mesg_visible*gl_defFont.h*1.2;
@@ -1095,17 +1113,52 @@ static void gui_renderMessages( double dt )
       o  = mesg_pointer - mesg_viewpoint;
       if (o < 0)
          o += mesg_max;
-      c.r = 1.;
-      c.g = 1.;
-      c.b = 1.;
 
+      /* Render background. */
+      gl_renderRect( vx-2., vy-2., gui.mesg.w-13., h+4., &cb );
+   }
+
+   /* Render text. */
+   for (i=0; i<conf.mesg_visible; i++) {
+      /* Reference translation. */
+      m  = (v - i) % mesg_max;
+      if (m < 0)
+         m += mesg_max;
+
+      /* Timer handling. */
+      if ((mesg_viewpoint != -1) || (mesg_stack[m].t >= 0.)) {
+         /* Decrement timer. */
+         if (mesg_viewpoint == -1) {
+            mesg_stack[m].t -= dt;
+
+            /* Handle fading out. */
+            if (mesg_stack[m].t - mesg_fade < 0.)
+               c.a = mesg_stack[m].t / mesg_fade;
+            else
+               c.a = 1.;
+         }
+         else
+            c.a = 1.;
+
+         /* Only handle non-NULL messages. */
+         if (mesg_stack[m].str[0] != '\0') {
+            gl_printMaxRaw( NULL, gui.mesg.w - 15., x, y, &c, mesg_stack[m].str );
+         }
+      }
+
+      /* Increase position. */
+      y += (double)gl_defFont.h*1.2;
+   }
+
+   /* Render position. */
+   if (mesg_viewpoint != -1) {
       /* Border. */
       c.a = 0.2;
-      gl_renderRect( x + gui.mesg.w, y, 10, h, &c );
+      gl_renderRect( vx + gui.mesg.w-10., vy, 10, h, &c );
 
       /* Inside. */
       c.a = 0.5;
-      gl_renderRect( x + gui.mesg.w, y + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)) , 10, hs, &c );
+      gl_renderRect( vx + gui.mesg.w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
    }
 }
 
