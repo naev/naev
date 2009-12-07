@@ -75,7 +75,7 @@ typedef struct Faction_ {
 
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
-static int faction_nstack = 0; /**< Number of factions in the faction stack. */
+int faction_nstack = 0;
 
 
 /*

@@ -19,6 +19,7 @@
 #include "mission.h"
 #include "colour.h"
 #include "player.h"
+#include "faction.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -338,8 +339,12 @@ static void map_update( unsigned int wid )
    y -= 40;
    if (sys->nfleets == 0)
       snprintf(buf, PATH_MAX, "NA" );
-   else
-      snprintf(buf, PATH_MAX, "\eg%.0f \e0/ \er%.0f", sys->presenceGuard, sys->presenceHostile);
+   else {
+      buf[0] = '\0';
+      for(i = 0; i < faction_nstack; i++)
+         if(sys->presence[i] > 0)
+            snprintf(buf + strlen(buf), PATH_MAX, "%s: %.0f\n", faction_name(i), sys->presence[i]);
+   }
    window_moveWidget( wid, "txtSSecurity", -20, y );
    window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtSecurity", buf );
@@ -360,7 +365,7 @@ static void map_update( unsigned int wid )
 
       window_modifyText( wid, "txtPlanets", buf );
    }
-   y -= 40;
+   y -= 100;
    window_moveWidget( wid, "txtSPlanets", -20, y );
    window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
 

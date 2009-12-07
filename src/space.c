@@ -1299,6 +1299,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->faction   = -1;
    planet         = NULL;
    size           = 0;
+   sys->presence  = NULL;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
@@ -1532,39 +1533,31 @@ int space_load (void)
 static int system_calcSecurity( StarSystem *sys )
 {
    int i;
-   double guard, hostile, c, mod;
+   double c, mod;
    Fleet *f;
 
    /* Do not run while loading to speed up. */
    if (systems_loading)
       return 0;
 
-   /* Defaults. */
-   guard    = 0.;
-   hostile  = 0.;
+   /* Initialise the array if it doesn't exist. */
+   if(sys->presence == NULL)
+      sys->presence = malloc(faction_nstack * sizeof(double));
 
-   /* Calculate hostiles/friendlies. */
+   /* Defaults. */
+   for(i = 0; i < faction_nstack; i++)
+      sys->presence[i] = 0;
+
+   /* Calculate presence. */
    for (i=0; i<sys->nfleets; i++) {
       f     = sys->fleets[i].fleet;
       c     = (double)sys->fleets[i].chance / 100.;
       mod   = c * f->strength;
-      if (fleet_isFlag(f, FLEET_FLAG_GUARD))
-         guard    += mod;
-      else if (faction_getPlayerDef(f->faction) < 0)
-         hostile  += mod;
+      sys->presence[f->faction] += mod;
    }
 
-   /* Set presence */
-   sys->presenceGuard = guard;
-   sys->presenceHostile = hostile;
-
    /* Set security. */
-   if (guard == 0.)
-      sys->security = 0.;
-   else if (hostile == 0.)
-      sys->security = 1.;
-   else
-      sys->security = guard / (hostile + guard);
+   sys->security = 0.;
 
    return 0;
 }
