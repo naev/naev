@@ -190,10 +190,13 @@ static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
+#define MESG_SIZE_MAX   128 /**< Maxmimu message length. */
 static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
 static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
-static int mesg_max = 5; /**< Maximum messages onscreen */
+static int mesg_max = 16; /**< Maximum messages onscreen */
+static int mesg_visible = 5; /**< Number of visible messages. */
+static int mesg_pointer = 0; /**< Current pointer message is at (for when scrolling. */
+static int mesg_viewpoint = 0; /**< Position of viewing. */
 /**
  * @struct Mesg
  * 
@@ -247,7 +250,7 @@ static void gui_renderInterference( double dt );
 void gui_setDefaults (void)
 {
    gui.radar.res = RADAR_RES_DEFAULT;
-   memset( mesg_stack, 0, mesg_max * sizeof(Mesg));
+   memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
 
 
@@ -258,20 +261,12 @@ void gui_setDefaults (void)
  */
 void player_messageRaw ( const char *str )
 {
-   int i;
-
-   /* copy old messages back */
-   for (i=1; i<mesg_max; i++) {
-      if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
-         strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
-         mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
-      }
-   }
+   /* Move pointer. */
+   mesg_pointer = (mesg_pointer + 1) % mesg_max;
 
    /* add the new one */
-   strncpy( mesg_stack[0].str, str, MESG_SIZE_MAX );
-
-   mesg_stack[0].t = mesg_timeout;
+   strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
+   mesg_stack[mesg_pointer].t = mesg_timeout;
 }
 
 /**
@@ -282,24 +277,20 @@ void player_messageRaw ( const char *str )
 void player_message ( const char *fmt, ... )
 {
    va_list ap;
-   int i;
 
-   if (fmt == NULL) return; /* message not valid */
+   /* Must be non-null. */
+   if (fmt == NULL)
+      return;
 
-   /* copy old messages back */
-   for (i=1; i<mesg_max; i++) {
-      if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
-         strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
-         mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
-      }
-   }
+   /* Move pointer. */
+   mesg_pointer = (mesg_pointer + 1) % mesg_max;
 
    /* add the new one */
    va_start(ap, fmt);
-   vsnprintf( mesg_stack[0].str, MESG_SIZE_MAX, fmt, ap );
+   vsnprintf( mesg_stack[mesg_pointer].str, MESG_SIZE_MAX, fmt, ap );
    va_end(ap);
 
-   mesg_stack[0].t = mesg_timeout;
+   mesg_stack[mesg_pointer].t = mesg_timeout;
 }
 
 
@@ -1013,9 +1004,8 @@ static void gui_renderRadar( double dt )
 void gui_clearMessages (void)
 {
    int i;
-   for (i=0; i<mesg_max; i++) {
+   for (i=0; i<mesg_max; i++)
       mesg_stack[i].t = -1.;
-   }
 }
 
 
@@ -1028,37 +1018,41 @@ static void gui_renderMessages( double dt )
 {
    double x, y;
    glColour c;
-   int i;
+   int i, m;
 
    x = gui.mesg.x;
-   y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
+   y = gui.mesg.y;
    c.r = c.g = c.b = 1.;
 
-   for (i=mesg_max-1; i>=0; i--) {
-      y -= (double)gl_defFont.h*1.2;
+   for (i=0; i<mesg_visible; i++) {
+      /* Reference translation. */
+      m  = (mesg_viewpoint - i) % mesg_max;
+      if (m < 0)
+         m += mesg_max;
 
       /* Only handle non-NULL messages. */
-      if (mesg_stack[i].str[0] != '\0') {
+      if (mesg_stack[m].str[0] != '\0') {
 
          /* Decrement timer. */
-         mesg_stack[i].t -= dt;
+         mesg_stack[m].t -= dt;
 
          /* Set to NULL if timer is up. */
-         if (mesg_stack[i].t < 0.)
-            mesg_stack[i].str[0] = '\0';
+         if (mesg_stack[m].t < 0.)
+            mesg_stack[m].str[0] = '\0';
 
          /* Draw with variable alpha. */
          else {
-            if (mesg_stack[i].t - mesg_fadeout < 0.)
-               c.a = mesg_stack[i].t / mesg_fadeout;
+            if (mesg_stack[m].t - mesg_fadeout < 0.)
+               c.a = mesg_stack[m].t / mesg_fadeout;
             else
                c.a = 1.;
-            gl_print( NULL, x, y, &c, "%s", mesg_stack[i].str );
+            gl_print( NULL, x, y, &c, "%s", mesg_stack[m].str );
          }
       }
+
+      /* Increase position. */
+      y += (double)gl_defFont.h*1.2;
    }
-
-
 }
 
 
