@@ -66,7 +66,7 @@ const char *keybindNames[] = {
    /* Space navigation. */
    "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
    /* Communication. */
-   "hail",
+   "log_up", "log_down", "hail",
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
    "console",
@@ -119,6 +119,8 @@ const char *keybindDescription[] = {
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
    /* Communication. */
+   "Scrolls the log upwards.",
+   "Scrolls the log downwards.",
    "Attempts to initialize communication with your targetted ship.",
    /* Misc. */
    "Zooms in on your radar.",
@@ -212,6 +214,8 @@ void input_setDefault (void)
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE );
    /* Communication. */
+   input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, KMOD_ALL );
+   input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, KMOD_ALL );
    input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE );
    /* Misc. */
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL );
@@ -750,6 +754,14 @@ static void input_key( int keynum, double value, double kabs )
    /*
     * Communication.
     */
+   } else if (KEY("log_up") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) {
+         gui_messageScrollUp(5);
+      }
+   } else if (KEY("log_down") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) {
+         gui_messageScrollDown(5);
+      }
    } else if (KEY("hail") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
          player_hail();

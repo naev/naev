@@ -190,13 +190,13 @@ static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX   128 /**< Maxmimu message length. */
+#define MESG_SIZE_MAX        128 /**< Maxmimu message length. */
 static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
 static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
-static int mesg_max = 16; /**< Maximum messages onscreen */
-static int mesg_visible = 5; /**< Number of visible messages. */
-static int mesg_pointer = 0; /**< Current pointer message is at (for when scrolling. */
-static int mesg_viewpoint = 0; /**< Position of viewing. */
+static int mesg_max        = 64; /**< Maximum messages onscreen */
+static int mesg_visible    = 5; /**< Number of visible messages. */
+static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
+static int mesg_viewpoint  = 0; /**< Position of viewing. */
 /**
  * @struct Mesg
  * 
@@ -255,6 +255,53 @@ void gui_setDefaults (void)
 
 
 /**
+ * @brief Scrolls up the message box.
+ *
+ *    @param lines Number of lines to scroll up.
+ */
+void gui_messageScrollUp( int lines )
+{
+   int o;
+
+   /* Get offset. */
+   o  = mesg_pointer - mesg_viewpoint;
+   if (o < 0)
+      o += mesg_max;
+   o = mesg_max - 2*mesg_visible - o;
+
+   /* Calculate max line movement. */
+   if (lines > o)
+      lines = o;
+
+   /* Move viewpoint. */
+   mesg_viewpoint = (mesg_viewpoint - lines) % mesg_max;
+}
+
+
+/**
+ * @brief Scrolls up the message box.
+ *
+ *    @param lines Number of lines to scroll up.
+ */
+void gui_messageScrollDown( int lines )
+{
+   int o;
+
+   /* Get offset. */
+   o  = mesg_pointer - mesg_viewpoint;
+   if (o < 0)
+      o += mesg_max;
+
+   /* Calculate max line movement. */
+   if (lines > o)
+      lines = o;
+
+   /* Move viewpoint. */
+   mesg_viewpoint = (mesg_viewpoint + lines) % mesg_max;
+}
+
+
+/**
  * @brief Adds a mesg to the queue to be displayed on screen.
  *
  *    @param str Message to add.
@@ -263,7 +310,7 @@ void player_messageRaw ( const char *str )
 {
    /* Move pointer. */
    mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   mesg_viewpoint = mesg_pointer;
+   mesg_viewpoint++;
 
    /* add the new one */
    strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
@@ -285,7 +332,7 @@ void player_message ( const char *fmt, ... )
 
    /* Move pointer. */
    mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   mesg_viewpoint = mesg_pointer;
+   mesg_viewpoint++;
 
    /* add the new one */
    va_start(ap, fmt);

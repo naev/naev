@@ -34,13 +34,19 @@ void gui_cleanup (void);
  */
 void gui_render( double dt );
 
+/*
+ * Messages.
+ */
+void player_message( const char *fmt, ... );
+void gui_clearMessages (void);
+void gui_messageScrollUp( int lines );
+void gui_messageScrollDown( int lines );
+
 
 /*
  * misc
  */
-void gui_clearMessages (void);
 void gui_setDefaults (void);
-void player_message( const char *fmt, ... );
 void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
