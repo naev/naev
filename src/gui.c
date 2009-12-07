@@ -191,8 +191,6 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
 #define MESG_SIZE_MAX        128 /**< Maxmimu message length. */
-static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
-static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
 static int mesg_max        = 64; /**< Maximum messages onscreen */
 static int mesg_visible    = 5; /**< Number of visible messages. */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
@@ -204,7 +202,6 @@ static int mesg_viewpoint  = 0; /**< Position of viewing. */
  */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
-   double t; /**< Timer related to message. */
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 
@@ -314,7 +311,6 @@ void player_messageRaw ( const char *str )
 
    /* add the new one */
    strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
-   mesg_stack[mesg_pointer].t = mesg_timeout;
 }
 
 /**
@@ -338,8 +334,6 @@ void player_message ( const char *fmt, ... )
    va_start(ap, fmt);
    vsnprintf( mesg_stack[mesg_pointer].str, MESG_SIZE_MAX, fmt, ap );
    va_end(ap);
-
-   mesg_stack[mesg_pointer].t = mesg_timeout;
 }
 
 
@@ -1052,9 +1046,9 @@ static void gui_renderRadar( double dt )
  */
 void gui_clearMessages (void)
 {
-   int i;
-   for (i=0; i<mesg_max; i++)
-      mesg_stack[i].t = -1.;
+   memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
+   mesg_pointer   = 0;
+   mesg_viewpoint = 0;
 }
 
 
@@ -1065,13 +1059,12 @@ void gui_clearMessages (void)
  */
 static void gui_renderMessages( double dt )
 {
+   (void) dt;
    double x, y;
-   glColour c;
    int i, m;
 
    x = gui.mesg.x;
    y = gui.mesg.y;
-   c.r = c.g = c.b = 1.;
 
    for (i=0; i<mesg_visible; i++) {
       /* Reference translation. */
@@ -1080,24 +1073,8 @@ static void gui_renderMessages( double dt )
          m += mesg_max;
 
       /* Only handle non-NULL messages. */
-      if (mesg_stack[m].str[0] != '\0') {
-
-         /* Decrement timer. */
-         mesg_stack[m].t -= dt;
-
-         /* Set to NULL if timer is up. */
-         if (mesg_stack[m].t < 0.)
-            mesg_stack[m].str[0] = '\0';
-
-         /* Draw with variable alpha. */
-         else {
-            if (mesg_stack[m].t - mesg_fadeout < 0.)
-               c.a = mesg_stack[m].t / mesg_fadeout;
-            else
-               c.a = 1.;
-            gl_print( NULL, x, y, &c, "%s", mesg_stack[m].str );
-         }
-      }
+      if (mesg_stack[m].str[0] != '\0')
+         gl_print( NULL, x, y, NULL, "%s", mesg_stack[m].str );
 
       /* Increase position. */
       y += (double)gl_defFont.h*1.2;
