@@ -950,6 +950,10 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
    if (shooter == NULL)
       return;
 
+   /* Must not be disabled. */
+   if (pilot_isDisabled(p))
+      return;
+
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
 
