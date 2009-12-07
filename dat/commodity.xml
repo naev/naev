@@ -30,4 +30,8 @@
  <commodity name="Prisoners"/>
  <commodity name="Packages"/>
  <commodity name="VIP"/>
+ <commodity name="The Baron's holopainting"/>
+ <commodity name="Gregar"/>
+ <commodity name="Dvaered ship crew"/>
+ <commodity name="FLF IFF Transponder"/>
 </Commodities>

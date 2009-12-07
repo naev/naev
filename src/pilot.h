@@ -29,10 +29,10 @@
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
 #define HYPERSPACE_VEL           HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.5 /**< Minimum entering distance. */
-#define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.6 /**< Maxmimu entering distance. */
+#define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.6 /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 
-#define PILOT_SIZE_APROX      0.8   /**< aproximation for pilot size */
+#define PILOT_SIZE_APROX      0.8   /**< approximation for pilot size */
 #define PILOT_DISABLED_ARMOR  0.3   /**< armour % that gets it disabled */
 #define PILOT_REFUEL_TIME     3. /**< Time to complete refueling. */
 #define PILOT_REFUEL_RATE     HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
@@ -66,8 +66,8 @@
 #define PILOT_NO_OUTFITS   (1<<5) /**< Do not create the pilot with outfits. */
 #define PILOT_HASTURRET    (1<<6) /**< Pilot has turrets. */
 #define PILOT_HASBEAMS     (1<<7) /**< Pilot has beam weapons. */
-#define PILOT_UNUSED_8     (1<<8)
 /* dynamic */
+#define PILOT_HAILING      (1<<8) /***< Pilot is hailing the player. */
 #define PILOT_NODISABLE    (1<<9) /**< Pilot can't be disabled. */
 #define PILOT_INVINCIBLE   (1<<10) /**< Pilot can't be hit ever. */
 #define PILOT_HOSTILE      (1<<11) /**< Pilot is hostile to the player. */
@@ -131,13 +131,13 @@ typedef struct PilotOutfitSlot_ {
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
    double timer; /**< Used to store when it was last used. */
-   int quantity; /**< Quantty. */
+   int quantity; /**< Quantity. */
 
    /* Type-specific data. */
    union {
       int beamid; /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo; /**< Ammo for launchers. */
-   } u; /**< Stores type specific datae. */
+   } u; /**< Stores type specific data. */
 } PilotOutfitSlot;
 
 
@@ -145,7 +145,7 @@ typedef struct PilotOutfitSlot_ {
  * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
-   Commodity* commodity; /**< Assosciated commodity. */
+   Commodity* commodity; /**< Associated commodity. */
    int quantity; /**< Amount player has. */
    unsigned int id; /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;
@@ -156,7 +156,7 @@ typedef struct PilotCommodity_ {
  */
 typedef struct PilotHook_ {
    int type; /**< Type of hook. */
-   int id; /**< Hook ID assosciated with pilot hook. */
+   int id; /**< Hook ID associated with pilot hook. */
 } PilotHook;
 
 
@@ -192,7 +192,7 @@ typedef struct Pilot_ {
 
    int faction; /**< Pilot's faction. */
 
-   /* Object caracteristics */
+   /* Object characteristics */
    Ship* ship; /**< ship pilot is flying */
    Solid* solid; /**< associated solid (physics) */
    double mass_cargo; /**< Amount of cargo mass added. */
@@ -263,15 +263,6 @@ typedef struct Pilot_ {
    double weap_range; /**< Average range of primary weapons */
    double weap_speed; /**< Average speed of primary weapons */
 
-   /* Misc */
-   uint32_t flags; /**< used for AI and others */
-   double ptimer; /**< generic timer for internal pilot use */
-   int lockons; /**< Stores how many seeking weapons are targetting pilot */
-   int *mounted; /**< Number of mounted outfits on the mount. */
-   double player_damage; /**< Accumulates damage done by player for hostileness.
-                              In per one of max shield + armour. */
-   double engine_glow; /**< Amount of engine glow to display. */
-
    /* Hook attached to the pilot */
    PilotHook *hooks; /**< Pilot hooks. */
    int nhooks; /**< Number of pilot hooks. */
@@ -287,6 +278,17 @@ typedef struct Pilot_ {
    double tcontrol; /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */
    Task* task; /**< current action */
+
+   /* Misc */
+   uint32_t flags; /**< used for AI and others */
+   double ptimer; /**< generic timer for internal pilot use */
+   double htimer; /**< Hail animation timer. */
+   int hail_pos; /**< Hail animation position. */
+   int lockons; /**< Stores how many seeking weapons are targeting pilot */
+   int *mounted; /**< Number of mounted outfits on the mount. */
+   double player_damage; /**< Accumulates damage done by player for hostileness.
+                              In per one of max shield + armour. */
+   double engine_glow; /**< Amount of engine glow to display. */
 } Pilot;
 
 

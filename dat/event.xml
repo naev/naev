@@ -2,7 +2,7 @@
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
-  <chance>3</chance>
+  <chance>10</chance>
   <cond>next(system.get():faction()) ~= nil</cond>
  </event>
  <event name="Unique">
@@ -10,10 +10,28 @@
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
+ <event name="Baroncomm">
+  <lua>neutral/baroncomm</lua>
+  <trigger>enter</trigger>
+  <chance>4</chance>
+  <cond>system.cur():security() &gt;= 75</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>
   <chance>3</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ <event name="FLF/DV Derelicts">
+  <lua>flf/derelict</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>player.getFaction("Dvaered") &gt; 0 and player.getRating() &gt; 0 and system.cur() == system.get("Arcanis")</cond>
   <flags>
    <unique />
   </flags>
