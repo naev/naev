@@ -94,7 +94,7 @@ function accept()
       hook.land( "land" ) -- only hook after accepting
       hook.time( "timeup" )
    else
-      tk.msg( msg_title[2], msg_title[2] )
+      tk.msg( msg_title[2], msg_msg [2] )
       misn.finish()
    end
 end
