@@ -320,16 +320,39 @@ void gui_messageScrollDown( int lines )
  *
  *    @param str Message to add.
  */
-void player_messageRaw ( const char *str )
+void player_messageRaw( const char *str )
 {
-   /* Move pointer. */
-   mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   if (mesg_viewpoint != -1)
-      mesg_viewpoint++;
+   int i, p, l;
 
-   /* add the new one */
-   strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
-   mesg_stack[mesg_pointer].t = mesg_timeout;
+   /* Get length. */
+   l = strlen(str);
+   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. );
+   p = 0;
+   while (p < l) {
+      /* Move pointer. */
+      mesg_pointer   = (mesg_pointer + 1) % mesg_max;
+      if (mesg_viewpoint != -1)
+         mesg_viewpoint++;
+
+      /* Buffer overrun safety. */
+      if (i > MESG_SIZE_MAX)
+         i = MESG_SIZE_MAX;
+
+      /* Add the new one */
+      if (p == 0)
+         strncpy( mesg_stack[mesg_pointer].str, &str[p], i );
+      else {
+         mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
+         strncpy( &mesg_stack[mesg_pointer].str[1], &str[p], i );
+      }
+      mesg_stack[mesg_pointer].t = mesg_timeout;
+
+      /* Get length. */
+      i  = gl_printWidthForText( NULL, &str[p], gui.mesg.w - 15. );
+      p += i;
+      if ((str[p] == '\n') || (str[p] == ' '))
+         p++; /* Skip "empty char". */
+   }
 }
 
 /**
@@ -337,24 +360,22 @@ void player_messageRaw ( const char *str )
  *
  *    @param fmt String with formatting like printf.
  */
-void player_message ( const char *fmt, ... )
+void player_message( const char *fmt, ... )
 {
    va_list ap;
+   char buf[1024];
 
    /* Must be non-null. */
    if (fmt == NULL)
       return;
 
-   /* Move pointer. */
-   mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   if (mesg_viewpoint != -1)
-      mesg_viewpoint++;
-
-   /* add the new one */
+   /* Add the new one */
    va_start(ap, fmt);
-   vsnprintf( mesg_stack[mesg_pointer].str, MESG_SIZE_MAX, fmt, ap );
+   vsnprintf( buf, sizeof(buf), fmt, ap );
    va_end(ap);
-   mesg_stack[mesg_pointer].t = mesg_timeout;
+
+   /* Add the message. */
+   player_messageRaw( buf );
 }
 
 
@@ -1142,7 +1163,10 @@ static void gui_renderMessages( double dt )
 
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str[0] != '\0') {
-            gl_printMaxRaw( NULL, gui.mesg.w - 15., x, y, &c, mesg_stack[m].str );
+            if (mesg_stack[m].str[0] == '\t')
+               gl_printMaxRaw( NULL, gui.mesg.w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
+            else
+               gl_printMaxRaw( NULL, gui.mesg.w - 15., x, y, &c, mesg_stack[m].str );
          }
       }
 
