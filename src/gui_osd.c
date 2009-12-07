@@ -145,7 +145,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
             snprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
          }
 
-         /* Go t onext line. */
+         /* Go to next line. */
          n += s + 1;
          j++;
       }
