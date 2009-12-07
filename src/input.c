@@ -140,6 +140,7 @@ const char *keybindDescription[] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
+static int input_afterburnerButton  = 0; /**< Used to see if afterburner button is pressed. */
 
 
 /*
@@ -567,7 +568,7 @@ static void input_key( int keynum, double value, double kabs )
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
-         else if (value==KEY_RELEASE)
+         else if ((value==KEY_RELEASE) && !input_afterburnerButton)
             player_afterburnOver();
 
          if (value==KEY_PRESS)
@@ -575,10 +576,14 @@ static void input_key( int keynum, double value, double kabs )
       }
    /* Afterburning. */
    } else if (KEY("afterburn") && INGAME()) {
-      if ((value==KEY_PRESS) && NOHYP() && NODEAD())
+      if ((value==KEY_PRESS) && NOHYP() && NODEAD()) {
          player_afterburn();
-      else if (value==KEY_RELEASE)
+         input_afterburnerButton = 1;
+      }
+      else if (value==KEY_RELEASE) {
          player_afterburnOver();
+         input_afterburnerButton = 0;
+      }
 
    /* turning left */
    } else if (KEY("left")) {
