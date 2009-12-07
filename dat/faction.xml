@@ -210,4 +210,11 @@
   <allies />
   <enemies />
  </faction>
+ <faction name="Four Winds">
+  <invisible />
+  <static />
+  <player>0</player>
+  <allies />
+  <enemies />
+ </faction>
 </Factions>

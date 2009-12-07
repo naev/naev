@@ -19,6 +19,14 @@
    <unique />
   </flags>
  </event>
+ <event name="Shadowcomm">
+  <lua>neutral/shadowcomm</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>

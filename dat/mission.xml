@@ -353,6 +353,16 @@
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
   </avail>
  </mission>
+ <mission name="Shadow Strike">
+  <lua>neutral/shadowstrike</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
  <mission name="Deal with the FLF agent">
   <lua>flf/flf_pre01</lua>
   <flags>

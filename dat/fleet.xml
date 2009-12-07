@@ -567,4 +567,18 @@
    <pilot chance="100" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Four Winds Vendetta">
+  <ai>trader</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot chance="100" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Seiryuu">
+  <ai>trader</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Seiryuu" chance="100" ship="Pirate Kestrel"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>
