@@ -47,6 +47,7 @@
 #include "music.h"
 #include "nmath.h"
 #include "gui_osd.h"
+#include "conf.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -191,8 +192,7 @@ static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
 #define MESG_SIZE_MAX        128 /**< Maxmimu message length. */
-static int mesg_max        = 64; /**< Maximum messages onscreen */
-static int mesg_visible    = 5; /**< Number of visible messages. */
+static int mesg_max        = 128; /**< Maximum messages onscreen */
 static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
 static int mesg_viewpoint  = 0; /**< Position of viewing. */
 /**
@@ -264,7 +264,7 @@ void gui_messageScrollUp( int lines )
    o  = mesg_pointer - mesg_viewpoint;
    if (o < 0)
       o += mesg_max;
-   o = mesg_max - 2*mesg_visible - o;
+   o = mesg_max - 2*conf.mesg_visible - o;
 
    /* Calculate max line movement. */
    if (lines > o)
@@ -1066,7 +1066,7 @@ static void gui_renderMessages( double dt )
    x = gui.mesg.x;
    y = gui.mesg.y;
 
-   for (i=0; i<mesg_visible; i++) {
+   for (i=0; i<conf.mesg_visible; i++) {
       /* Reference translation. */
       m  = (mesg_viewpoint - i) % mesg_max;
       if (m < 0)

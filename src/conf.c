@@ -124,6 +124,9 @@ void conf_setDefaults (void)
    /* Land. */
    conf.autorefuel   = 0;
 
+   /* GUI. */
+   conf.mesg_visible = 5;
+
    /* Misc. */
    conf.zoom_far     = 0.5;
    conf.zoom_near    = 1.;
@@ -324,6 +327,11 @@ int conf_loadConfig ( const char* file )
 
       /* Land. */
       conf_loadBool("autorefuel",conf.autorefuel);
+
+      /* GUI. */
+      conf_loadInt("mesg_visible",conf.mesg_visible);
+      if (conf.mesg_visible <= 0)
+         conf.mesg_visible = 5;
 
       /* Misc. */
       conf_loadBool("save_compress",conf.save_compress);
@@ -870,6 +878,11 @@ int conf_saveConfig ( const char* file )
    /* Land. */
    conf_saveComment("Whether or not to autorefuel");
    conf_saveBool("autorefuel",conf.autorefuel);
+   conf_saveEmptyLine();
+
+   /* GUI. */
+   conf_saveComment("Number of lines visible in the comm window.");
+   conf_saveInt("mesg_visible",conf.mesg_visible);
    conf_saveEmptyLine();
 
    /* Misc. */

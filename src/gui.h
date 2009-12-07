@@ -41,6 +41,8 @@ void player_message( const char *fmt, ... );
 void gui_clearMessages (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
+void gui_messageSetVisible( int lines );
+int gui_messageGetVisible (void);
 
 
 /*

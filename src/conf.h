@@ -55,6 +55,9 @@ typedef struct PlayerConf_s {
    /* Land. */
    int autorefuel; /**< Whether or not to autorefuel when landing. */
 
+   /* GUI. */
+   int mesg_visible; /**< Amount of visible messages. */
+
    /* Misc. */
    int save_compress; /**< Compress savegame. */
    double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
