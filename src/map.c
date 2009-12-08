@@ -218,6 +218,8 @@ static void map_update( unsigned int wid )
    int f, y, h, multiple_faction;
    double standing, nstanding;
    unsigned int services;
+   int l;
+   char t;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
@@ -344,9 +346,9 @@ static void map_update( unsigned int wid )
       buf[0] = '\0';
       for(i = 0; i < faction_nstack; i++)
          if(sys->presence[i] > 0) {
-            long long int l = strlen(buf);
+            l = strlen(buf);
             buf[l++] = '\e';
-            char t = faction_getColourChar(i);
+            t = faction_getColourChar(i);
             /* Use map grey instead of default neutral colour */
             buf[l++] = (t == 'N' ? 'm' : t);
             snprintf((buf + l), (PATH_MAX - l), "%s: %.0f\n", faction_name(i), sys->presence[i]);
