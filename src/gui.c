@@ -335,15 +335,15 @@ void player_messageRaw( const char *str )
          mesg_viewpoint++;
 
       /* Buffer overrun safety. */
-      if (i > MESG_SIZE_MAX)
-         i = MESG_SIZE_MAX;
+      if (i > MESG_SIZE_MAX-1)
+         i = MESG_SIZE_MAX-1;
 
       /* Add the new one */
       if (p == 0)
-         snprintf( mesg_stack[mesg_pointer].str, (i + 1), "%s", &str[p] );
+         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], (i + 1), "%s", &str[p] );
+         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
 
