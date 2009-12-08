@@ -58,7 +58,6 @@ void player_board (void)
    unsigned int wdw;
    char c;
    
-   c = pilot_getFactionColourChar( p );
 
    if (player->target==PLAYER_ID) {
       player_message("\erYou need a target to board first!");
@@ -66,6 +65,7 @@ void player_board (void)
    }
 
    p = pilot_get(player->target);
+   c = pilot_getFactionColourChar( p );
 
    if (!pilot_isDisabled(p)) {
       player_message("\erYou cannot board a ship that isn't disabled!");
