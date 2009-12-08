@@ -89,7 +89,7 @@ else -- default english
     
     misn_title = "Disrupt the Dvaered Patrols"
     misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out their security patrols. Note that you must do this mission in a Fighter, Scout or Yacht class ship."
-    misn_rwrd = "Justice?"
+    misn_rwrd = "A chance to make friends out of the FLF."
     osd_desc[1] = ""
     osd_desc[2] = "Wait for the Dvaered patrol to arrive and engage"
     FLFosd[1] = "Fly to the %s system"
