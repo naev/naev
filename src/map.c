@@ -56,7 +56,6 @@ extern int systems_nstack;
  * prototypes
  */
 static void map_update( unsigned int wid );
-static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h, void *data );
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -435,31 +434,6 @@ static void map_update( unsigned int wid )
 int map_isOpen (void)
 {
    return window_exists(MAP_WDWNAME);
-}
-
-
-/**
- * @brief Checks to see if a system is part of the path.
- *
- *    @param sys System to check.
- *    @return 1 if system is part of the path, 2 if system is part of the path
- *          but pilot won't have enough fuel and 0 if system is not part of the
- *          path.
- */
-static int map_inPath( StarSystem *sys )
-{
-   int i, f;
-
-   f = pilot_getJumps(player) - 1;
-   for (i=0; i<map_npath; i++)
-      if (map_path[i] == sys) {
-         if (i > f) {
-            return 2;
-         }
-         else
-            return 1;
-      }
-   return 0;
 }
 
 
