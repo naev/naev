@@ -361,7 +361,7 @@ end
 function commFLF()
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
-            j:broadcast(flfcomm, true)
+            j:broadcast(string.format(flfcomm, player.name()), true)
         end
     end
 end
