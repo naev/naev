@@ -280,6 +280,9 @@ typedef struct Pilot_ {
    Task* task; /**< current action */
 
    /* Misc */
+   double comm_msgTimer; /**< Message timer for the comm. */
+   double comm_msgWidth; /**< Width of the message. */
+   char *comm_msg; /**< Comm message to display overhead. */
    uint32_t flags; /**< used for AI and others */
    double ptimer; /**< generic timer for internal pilot use */
    double htimer; /**< Hail animation timer. */

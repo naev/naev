@@ -38,6 +38,7 @@
 #include "ntime.h"
 #include "ai_extra.h"
 #include "faction.h"
+#include "font.h"
 
 
 #define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
@@ -78,6 +79,7 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
 void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
 /* misc */
+static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_updateMass( Pilot *pilot );
 
@@ -527,6 +529,22 @@ char pilot_getFactionColourChar( const Pilot *p )
 
 
 /**
+ * @brief Sets the overhead communication message of the pilot.
+ */
+static void pilot_setCommMsg( Pilot *p, const char *s )
+{
+   /* Free previous message. */
+   if (p->comm_msg != NULL)
+      free(p->comm_msg);
+
+   /* Duplicate the message. */
+   p->comm_msg       = strdup(s);
+   p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
+   p->comm_msgTimer  = 15.;
+}
+
+
+/**
  * @brief Have pilot send a message to another.
  *
  *    @param p Pilot sending message.
@@ -557,6 +575,9 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
       c = pilot_getFactionColourChar( p );
       player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
    }
+
+   /* Set comm message. */
+   pilot_setCommMsg( p, msg );
 }
 
 
@@ -581,6 +602,9 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 
    c = pilot_getFactionColourChar( p );
    player_message( "\e%cBroadcast %s>\e0 \"%s\"", c, p->name, msg );
+
+   /* Set comm message. */
+   pilot_setCommMsg( p, msg );
 }
 
 
@@ -1415,6 +1439,9 @@ void pilot_explode( double x, double y, double radius,
 void pilot_render( Pilot* p, const double dt )
 {
    glTexture *ico_hail;
+   double x, y, z;
+   double cx, cy;
+   double gx, gy;
    int sx, sy;
 
    /* Base ship. */
@@ -1445,6 +1472,29 @@ void pilot_render( Pilot* p, const double dt )
                p->solid->pos.x + PILOT_SIZE_APROX*p->ship->gfx_space->sw/2.,
                p->solid->pos.y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
+      }
+   }
+
+   /* Text ontop if needed. */
+   if (p->comm_msg != NULL) {
+      gl_cameraGet( &cx, &cy );
+      gui_getOffset( &gx, &gy );
+
+      /* Position transformation. */
+      gl_cameraZoomGet( &z );
+      x = (p->solid->pos.x - cx + gx) * z;
+      y = (p->solid->pos.y - cy + gy) * z;
+
+      /* Display the text. */
+      p->comm_msgTimer -= dt;
+      if (p->comm_msgTimer < 0.) {
+         free(p->comm_msg);
+         p->comm_msg = NULL;
+      }
+      else {
+         gl_printRaw( NULL, x - p->comm_msgWidth/2. + SCREEN_W/2.,
+               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + SCREEN_H/2.,
+               NULL, p->comm_msg );
       }
    }
 }
@@ -3238,6 +3288,10 @@ void pilot_free( Pilot* p )
       free(p->escorts[i].ship);
    if (p->escorts)
       free(p->escorts);
+
+   /* Free comm message. */
+   if (p->comm_msg != NULL)
+      free(p->comm_msg);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
