@@ -19,6 +19,9 @@
 #define TAB_HEIGHT   30
 
 
+/*
+ * Prototypes.
+ */
 static int tab_mouse( Widget* tab, SDL_Event *event );
 static int tab_key( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
