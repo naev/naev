@@ -255,6 +255,14 @@ function addRefuelShip ()
    refship:addOutfit( "Fuel Pod", l )
    refship:setFuel( true ) -- Set fuel to max
 
+   -- Add some escorts
+   refesc = {}
+   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
+   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
+   for k,v in ipairs(refesc) do
+      v:setFriendly()
+   end
+
    -- Broadcast spam
    refuelBroadcast()
 end
