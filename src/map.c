@@ -346,7 +346,9 @@ static void map_update( unsigned int wid )
          if(sys->presence[i] > 0) {
             long long int l = strlen(buf);
             buf[l++] = '\e';
-            buf[l++] = faction_getColourChar(i);
+            char t = faction_getColourChar(i);
+            /* Use map grey instead of default neutral colour */
+            buf[l++] = (t == 'N' ? 'm' : t);
             snprintf((buf + l), (PATH_MAX - l), "%s: %.0f\n", faction_name(i), sys->presence[i]);
          }
    }
