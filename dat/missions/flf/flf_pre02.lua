@@ -362,6 +362,7 @@ function commFLF()
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
             j:broadcast(string.format(flfcomm, player.name()), true)
+            break
         end
     end
 end
