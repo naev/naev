@@ -89,6 +89,7 @@ else -- default english
     
     misn_title = "Disrupt the Dvaered Patrols"
     misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out their security patrols. Note that you must do this mission in a Fighter, Scout or Yacht class ship."
+    misn_rwrd = "Justice?"
     osd_desc[1] = ""
     osd_desc[2] = "Wait for the Dvaered patrol to arrive and engage"
     FLFosd[1] = "Fly to the %s system"
@@ -132,6 +133,7 @@ function accept()
             misn.setDesc(misn_desc)
             misn.setTitle(misn_title)
             misn.setMarker(system.get(sysname[encounters]), "misc")
+            misn.setReward(misn_rwrd)
             
             escarmor = {100, 100, 100, 100}
             escshield = {100, 100, 100, 100}
