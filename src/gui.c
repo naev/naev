@@ -326,7 +326,8 @@ void player_messageRaw( const char *str )
 
    /* Get length. */
    l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. );
+   /* +1 for the null character. */
+   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. ) + 1;
    p = 0;
    while (p < l) {
       /* Move pointer. */
