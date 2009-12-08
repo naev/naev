@@ -48,6 +48,7 @@ extern glColour cDarkBlue;
 extern glColour cBlue;
 extern glColour cLightBlue;
 extern glColour cPurple;
+extern glColour cDarkPurple;
 extern glColour cBrown;
 extern glColour cGold;
 extern glColour cSilver;

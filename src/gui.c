@@ -2307,7 +2307,7 @@ void gui_setRadarRel( int mod )
    gui.radar.res += mod * RADAR_RES_INTERVAL;
    gui.radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui.radar.res );
 
-   player_message( "Radar set to %dx.", (int)gui.radar.res );
+   player_message( "\epRadar set to %dx.", (int)gui.radar.res );
 }
 
 

@@ -274,9 +274,9 @@ void weapon_toggleSafety (void)
    weapon_safety = !weapon_safety;
 
    if (weapon_safety)
-      player_message( "Enabling weapon safety." );
+      player_message( "\ebEnabling weapon safety." );
    else
-      player_message( "Disabling weapon safety." );
+      player_message( "\ebDisabling weapon safety." );
 }
 
 

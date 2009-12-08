@@ -887,7 +887,7 @@ void player_startAutonav (void)
       return;
    }
 
-   player_message("Autonav initialized.");
+   player_message("\epAutonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
 }
 
@@ -918,7 +918,7 @@ void player_abortAutonav( char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player);
-         player_message("\erAborting hyperspace sequence.");
+         player_message("\epAborting hyperspace sequence.");
       }
    }
 }
@@ -1352,7 +1352,7 @@ void player_land (void)
                player_message( "\e%c%s>\e0 Landing request denied.", faction_getColourChar(planet->faction), planet->name );
          }
          else { /* No shoes, no shirt, no lifeforms, no service. */
-            player_message( "Ready to land on %s.", planet->name );
+            player_message( "\epReady to land on %s.", planet->name );
             player_setFlag(PLAYER_LANDACK);
             player_playSound(snd_nav,1);
          }
@@ -1460,7 +1460,7 @@ void player_jump (void)
    else if (i == -3)
       player_message("\erYou do not have enough fuel to hyperspace jump.");
    else {
-      player_message("\ebPreparing for hyperspace.");
+      player_message("\epPreparing for hyperspace.");
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
@@ -1507,11 +1507,11 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (hyperspace_target == -1) {
-         player_message( "\ebAutonav arrived at destination.");
+         player_message( "\epAutonav arrived at destination.");
          player_rmFlag(PLAYER_AUTONAV);
       }
       else {
-         player_message( "\ebAutonav continuing until destination (%d jump%s left).",
+         player_message( "\epAutonav continuing until destination (%d jump%s left).",
                map_npath, (map_npath==1) ? "" : "s" );
       }
    }
@@ -1797,7 +1797,7 @@ void player_hail (void)
    else if(planet_target != -1)
       comm_openPlanet( cur_system->planets[ planet_target ] );
    else
-      player_message("Who are you hailing?");
+      player_message("\erNo target selected to hail.");
 }
 
 
@@ -1812,11 +1812,11 @@ void player_setFireMode( int mode )
    player_firemode = mode;
 
    if (player_firemode == 0)
-      player_message("Fire mode set to all weapons.");
+      player_message("\epFire mode set to all weapons.");
    else if (player_firemode == 1)
-      player_message("Fire mode set to turret weapons.");
+      player_message("\epFire mode set to turret weapons.");
    else if (player_firemode == 2)
-      player_message("Fire mode set to forward weapons.");
+      player_message("\epFire mode set to forward weapons.");
 }
 
 

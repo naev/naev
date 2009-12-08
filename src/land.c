@@ -1917,7 +1917,7 @@ void takeoff( int delay )
    if (delay)
       ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
    nt = ntime_pretty(0);
-   player_message("Taking off from %s on %s.", land_planet->name, nt);
+   player_message("\epTaking off from %s on %s.", land_planet->name, nt);
    free(nt);
 
    /* initialize the new space */
