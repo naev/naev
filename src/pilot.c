@@ -540,7 +540,7 @@ static void pilot_setCommMsg( Pilot *p, const char *s )
    /* Duplicate the message. */
    p->comm_msg       = strdup(s);
    p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
-   p->comm_msgTimer  = 15.;
+   p->comm_msgTimer  = 5.;
 }
 
 
