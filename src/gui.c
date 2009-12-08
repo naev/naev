@@ -326,8 +326,7 @@ void player_messageRaw( const char *str )
 
    /* Get length. */
    l = strlen(str);
-   /* +1 for the null character. */
-   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. ) + 1;
+   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. );
    p = 0;
    while (p < l) {
       /* Move pointer. */
@@ -341,10 +340,10 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0)
-         strncpy( mesg_stack[mesg_pointer].str, &str[p], i );
+         snprintf( mesg_stack[mesg_pointer].str, i, "%s", &str[p] );
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         strncpy( &mesg_stack[mesg_pointer].str[1], &str[p], i );
+         snprintf( &mesg_stack[mesg_pointer].str[1], i, "%s", &str[p] );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
 
