@@ -340,10 +340,10 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0)
-         snprintf( mesg_stack[mesg_pointer].str, i, "%s", &str[p] );
+         snprintf( mesg_stack[mesg_pointer].str, (i + 1), "%s", &str[p] );
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], i, "%s", &str[p] );
+         snprintf( &mesg_stack[mesg_pointer].str[1], (i + 1), "%s", &str[p] );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
 
