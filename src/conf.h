@@ -55,12 +55,21 @@ typedef struct PlayerConf_s {
    /* Land. */
    int autorefuel; /**< Whether or not to autorefuel when landing. */
 
-   /* Misc. */
-   int save_compress; /**< Compress savegame. */
+   /* GUI. */
+   int mesg_visible; /**< Amount of visible messages. */
+
+   /* Keyrepeat. */
+   unsigned int repeat_delay; /**< Time in ms before start repeating. */
+   unsigned int repeat_freq; /**< Time in ms between each repeat once started repeating. */
+
+   /* Zoom. */
    double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
    double zoom_near; /**< Minimum ingame zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
+
+   /* Misc. */
+   int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int nosave; /**< Disables conf saving. */
 

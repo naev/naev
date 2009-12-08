@@ -45,10 +45,10 @@ typedef struct font_char_s {
    int off_y;
    int adv_x;
    int adv_y;
-   GLfloat tx;
-   GLfloat ty;
-   GLfloat tw;
-   GLfloat th;
+   int tx;
+   int ty;
+   int tw;
+   int th;
 } font_char_t;
 
 
@@ -616,7 +616,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    GLubyte *data;
    GLfloat *vbo_tex;
    GLint *vbo_vert;
-   GLfloat tx, ty, tw, th;
+   GLfloat tx, ty, txw, tyh;
+   GLfloat fw, fh;
    GLint vx, vy, vw, vh;
 
    /* Render characters into software. */
@@ -696,10 +697,10 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       font->chars[i].adv_y = chars[i].adv_y;
 
       /* Store temporary information. */
-      chars[i].tx = (GLfloat) x_off      / (GLfloat) w;
-      chars[i].ty = (GLfloat) y_off      / (GLfloat) h;
-      chars[i].tw = (GLfloat) chars[i].w / (GLfloat) w;
-      chars[i].th = (GLfloat) chars[i].h / (GLfloat) h;
+      chars[i].tx = x_off;
+      chars[i].ty = y_off;
+      chars[i].tw = chars[i].w;
+      chars[i].th = chars[i].h;
 
       /* Displace offset. */
       x_off += chars[i].w;
@@ -756,23 +757,25 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
        *   off_x
        */
       /* Temporary variables. */
-      tx = chars[i].tx;
-      ty = chars[i].ty;
-      tw = chars[i].tw;
-      th = chars[i].th;
-      vx = chars[i].off_x;
-      vy = chars[i].off_y - chars[i].h;
-      vw = chars[i].w;
-      vh = chars[i].h;
+      fw  = (GLfloat) w;
+      fh  = (GLfloat) h;
+      tx  = (GLfloat)chars[i].tx / fw;
+      ty  = (GLfloat)chars[i].ty / fh;
+      txw = (GLfloat)(chars[i].tx + chars[i].tw) / fw;
+      tyh = (GLfloat)(chars[i].ty + chars[i].th) / fh;
+      vx  = chars[i].off_x;
+      vy  = chars[i].off_y - chars[i].h;
+      vw  = chars[i].w;
+      vh  = chars[i].h;
       /* Texture coords. */
-      vbo_tex[  8*i + 0 ] = tx;      /* Top left. */
+      vbo_tex[  8*i + 0 ] = tx;  /* Top left. */
       vbo_tex[  8*i + 1 ] = ty;
-      vbo_tex[  8*i + 2 ] = tx + tw; /* Top right. */
+      vbo_tex[  8*i + 2 ] = txw; /* Top right. */
       vbo_tex[  8*i + 3 ] = ty;
-      vbo_tex[  8*i + 4 ] = tx + tw; /* Bottom right. */
-      vbo_tex[  8*i + 5 ] = ty + th;
-      vbo_tex[  8*i + 6 ] = tx;      /* Bottom left. */
-      vbo_tex[  8*i + 7 ] = ty + th;
+      vbo_tex[  8*i + 4 ] = txw; /* Bottom right. */
+      vbo_tex[  8*i + 5 ] = tyh;
+      vbo_tex[  8*i + 6 ] = tx;  /* Bottom left. */
+      vbo_tex[  8*i + 7 ] = tyh;
       /* Vertex coords. */
       vbo_vert[ 8*i + 0 ] = vx;    /* Top left. */
       vbo_vert[ 8*i + 1 ] = vy+vh;
@@ -839,7 +842,7 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
          /* Colours. */
          case 'r': ACOLOUR(cRed,a); break;
          case 'g': ACOLOUR(cGreen,a); break;
-         case 'b': ACOLOUR(cBlue,a); break;
+         case 'b': ACOLOUR(cLightBlue,a); break;
          case 'y': ACOLOUR(cYellow,a); break;
          case 'w': ACOLOUR(cWhite,a); break;
          /* Fancy states. */

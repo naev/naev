@@ -66,7 +66,7 @@ const char *keybindNames[] = {
    /* Space navigation. */
    "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
    /* Communication. */
-   "hail",
+   "log_up", "log_down", "hail",
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
    "console", "switchtab1", "switchtab2", "switchtab3", "switchtab4",
@@ -121,6 +121,8 @@ const char *keybindDescription[] = {
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
    /* Communication. */
+   "Scrolls the log upwards.",
+   "Scrolls the log downwards.",
    "Attempts to initialize communication with your targetted ship.",
    /* Misc. */
    "Zooms in on your radar.",
@@ -150,12 +152,21 @@ const char *keybindDescription[] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
+static int input_afterburnerButton  = 0; /**< Used to see if afterburner button is pressed. */
+
+
+/*
+ * Key repeat hack.
+ */
+static int repeat_key                  = -1; /**< Key to repeat. */
+static unsigned int repeat_keyTimer    = 0;  /**< Repeat timer. */
+static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 
 
 /*
  * from player.c
  */
-extern double player_left; /**< player.c */
+extern double player_left;  /**< player.c */
 extern double player_right; /**< player.c */
 
 
@@ -175,6 +186,7 @@ static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
  */
 static void input_keyConvGen (void);
 static void input_keyConvDestroy (void);
+static void input_key( int keynum, double value, double kabs, int repeat );
 
 
 /**
@@ -224,6 +236,8 @@ void input_setDefault (void)
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE );
    /* Communication. */
+   input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, KMOD_ALL );
+   input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, KMOD_ALL );
    input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE );
    /* Misc. */
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL );
@@ -257,6 +271,9 @@ void input_init (void)
 
    /* We need unicode for the input widget. */
    SDL_EnableUNICODE(1);
+
+   /* Key repeat fscks up stuff like double tap. */
+   SDL_EnableKeyRepeat( 0, 0 );
 
 #ifdef DEBUGGING
    /* To avoid stupid segfaults like in the 0.3.6 release. */
@@ -541,6 +558,34 @@ const char* input_getKeybindDescription( const char *keybind )
 }
 
 
+/**
+ * @brief Handles key repeating.
+ */
+void input_update (void)
+{
+   unsigned int t;
+
+   /* Must not be disabled. */
+   if (conf.repeat_delay == 0)
+      return;
+
+   /* Key must be repeating. */
+   if (repeat_key == -1)
+      return;
+
+   /* Get time. */
+   t = SDL_GetTicks();
+
+   /* Should be repeating. */
+   if (repeat_keyTimer + conf.repeat_delay + repeat_keyCounter*conf.repeat_freq > t)
+      return;
+
+   /* Key repeat. */
+   repeat_keyCounter++;
+   input_key( repeat_key, KEY_PRESS, 0., 1 );
+}
+
+
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
@@ -556,16 +601,29 @@ const char* input_getKeybindDescription( const char *keybind )
  *    @param value The value of the keypress (defined above).
  *    @param kabs The absolute value.
  */
-static void input_key( int keynum, double value, double kabs )
+static void input_key( int keynum, double value, double kabs, int repeat )
 {
    unsigned int t;
 
+   /* Repetition stuff. */
+   if (conf.repeat_delay != 0) {
+      if ((value == KEY_PRESS) && !repeat) {
+         repeat_key        = keynum;
+         repeat_keyTimer   = SDL_GetTicks();
+         repeat_keyCounter = 0;
+      }
+      else if (value == KEY_RELEASE) {
+         repeat_key        = -1;
+         repeat_keyTimer   = 0;
+         repeat_keyCounter = 0;
+      }
+   }
 
    /*
     * movement
     */
    /* accelerating */
-   if (KEY("accel")) {
+   if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
          player_abortAutonav(NULL);
          player_accel(kabs);
@@ -585,21 +643,25 @@ static void input_key( int keynum, double value, double kabs )
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
-         else if (value==KEY_RELEASE)
+         else if ((value==KEY_RELEASE) && !input_afterburnerButton)
             player_afterburnOver();
 
          if (value==KEY_PRESS)
             input_accelLast = t;
       }
    /* Afterburning. */
-   } else if (KEY("afterburn") && INGAME()) {
-      if ((value==KEY_PRESS) && NOHYP() && NODEAD())
+   } else if (KEY("afterburn") && INGAME() && !repeat) {
+      if ((value==KEY_PRESS) && NOHYP() && NODEAD()) {
          player_afterburn();
-      else if (value==KEY_RELEASE)
+         input_afterburnerButton = 1;
+      }
+      else if (value==KEY_RELEASE) {
          player_afterburnOver();
+         input_afterburnerButton = 0;
+      }
 
    /* turning left */
-   } else if (KEY("left")) {
+   } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_LEFT); 
@@ -619,7 +681,7 @@ static void input_key( int keynum, double value, double kabs )
       }
 
    /* turning right */
-   } else if (KEY("right")) {
+   } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_RIGHT);
@@ -639,7 +701,7 @@ static void input_key( int keynum, double value, double kabs )
       }
    
    /* turn around to face vel */
-   } else if (KEY("reverse")) {
+   } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_REVERSE);
@@ -652,7 +714,7 @@ static void input_key( int keynum, double value, double kabs )
     * combat
     */
    /* shooting primary weapon */
-   } else if (KEY("primary") && NODEAD()) {
+   } else if (KEY("primary") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) { 
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_PRIMARY);
@@ -675,7 +737,7 @@ static void input_key( int keynum, double value, double kabs )
    } else if (INGAME() && NODEAD() && KEY("target_clear")) {
       if (value==KEY_PRESS) player_targetClear();
    /* face the target */
-   } else if (KEY("face")) {
+   } else if (KEY("face") && !repeat) {
       if (value==KEY_PRESS) { 
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_FACE);
@@ -684,12 +746,12 @@ static void input_key( int keynum, double value, double kabs )
          player_rmFlag(PLAYER_FACE);
 
    /* board them ships */
-   } else if (KEY("board") && INGAME() && NOHYP() && NODEAD()) {
+   } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_board();
       }
-   } else if (KEY("safety") && INGAME()) {
+   } else if (KEY("safety") && INGAME() && !repeat) {
       if (value==KEY_PRESS)
          weapon_toggleSafety();
 
@@ -697,28 +759,28 @@ static void input_key( int keynum, double value, double kabs )
    /* 
     * Weapon selection.
     */
-   } else if (KEY("weap_all") && INGAME() && NODEAD()) {
+   } else if (KEY("weap_all") && INGAME() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) player_setFireMode( 0 );
-   } else if (KEY("weap_turret") && INGAME() && NODEAD()) {
+   } else if (KEY("weap_turret") && INGAME() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) player_setFireMode( 1 );
-   } else if (KEY("weap_forward") && INGAME() && NODEAD()) {
+   } else if (KEY("weap_forward") && INGAME() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) player_setFireMode( 2 );
 
 
    /*
     * Escorts.
     */
-   } else if (INGAME() && NODEAD() && KEY("e_targetNext")) {
+   } else if (INGAME() && NODEAD() && KEY("e_targetNext") && !repeat) {
       if (value==KEY_PRESS) player_targetEscort(0);
-   } else if (INGAME() && NODEAD() && KEY("e_targetPrev")) {
+   } else if (INGAME() && NODEAD() && KEY("e_targetPrev") && !repeat) {
       if (value==KEY_PRESS) player_targetEscort(1);
-   } else if (INGAME() && NODEAD() && KEY("e_attack")) {
+   } else if (INGAME() && NODEAD() && KEY("e_attack") && !repeat) {
       if (value==KEY_PRESS) escorts_attack(player);
-   } else if (INGAME() && NODEAD() && KEY("e_hold")) {
+   } else if (INGAME() && NODEAD() && KEY("e_hold") && !repeat) {
       if (value==KEY_PRESS) escorts_hold(player);
-   } else if (INGAME() && NODEAD() && KEY("e_return")) {
+   } else if (INGAME() && NODEAD() && KEY("e_return") && !repeat) {
       if (value==KEY_PRESS) escorts_return(player);
-   } else if (INGAME() && NODEAD() && KEY("e_clear")) {
+   } else if (INGAME() && NODEAD() && KEY("e_clear") && !repeat) {
       if (value==KEY_PRESS) escorts_clear(player);
 
 
@@ -726,7 +788,7 @@ static void input_key( int keynum, double value, double kabs )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NOHYP() && NODEAD()) {
+   } else if (KEY("secondary") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_SECONDARY);
@@ -760,9 +822,9 @@ static void input_key( int keynum, double value, double kabs )
          player_abortAutonav(NULL);
          player_targetHyperspace();
       }
-   } else if (KEY("starmap") && NOHYP() && NODEAD()) {
+   } else if (KEY("starmap") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) map_open();
-   } else if (KEY("jump") && INGAME()) {
+   } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_jump();
@@ -772,7 +834,15 @@ static void input_key( int keynum, double value, double kabs )
    /*
     * Communication.
     */
-   } else if (KEY("hail") && INGAME() && NOHYP() && NODEAD()) {
+   } else if (KEY("log_up") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) {
+         gui_messageScrollUp(5);
+      }
+   } else if (KEY("log_down") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) {
+         gui_messageScrollDown(5);
+      }
+   } else if (KEY("hail") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_hail();
       }
@@ -791,7 +861,7 @@ static void input_key( int keynum, double value, double kabs )
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();
    /* pause the games */
-   } else if (KEY("pause")) {
+   } else if (KEY("pause") && !repeat) {
       if (value==KEY_PRESS) {
          if (!toolkit_isOpen()) {
             if (paused)
@@ -801,21 +871,21 @@ static void input_key( int keynum, double value, double kabs )
          }
       }
    /* toggle speed mode */
-   } else if (KEY("speed")) {
+   } else if (KEY("speed") && !repeat) {
       if (value==KEY_PRESS) {
          if (dt_mod == 1.) pause_setSpeed(2.);
          else pause_setSpeed(1.);
       }
    /* opens a small menu */
-   } else if (KEY("menu") && NODEAD()) {
+   } else if (KEY("menu") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) menu_small();
    
    /* shows pilot information */
-   } else if (KEY("info") && NOHYP() && NODEAD()) {
+   } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) menu_info();
 
    /* Opens the Lua console. */
-   } else if (KEY("console") && NODEAD()) {
+   } else if (KEY("console") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) cli_open();
    }
 }
@@ -828,7 +898,7 @@ static void input_key( int keynum, double value, double kabs )
 /* prototypes */
 static void input_joyaxis( const SDLKey axis, const int value );
 static void input_joyevent( const int event, const SDLKey button );
-static void input_keyevent( const int event, const SDLKey key, const SDLMod mod );
+static void input_keyevent( const int event, const SDLKey key, const SDLMod mod, const int repeat );
 
 /*
  * joystick
@@ -847,14 +917,14 @@ static void input_joyaxis( const SDLKey axis, const int value )
          if ((input_keybinds[i]->type == KEYBIND_JAXISPOS)
                && (value >= 0)) {
             k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
-            input_key( i, k, fabs(((double)value)/32767.) );
+            input_key( i, k, fabs(((double)value)/32767.), 0 );
          }
 
          /* Negative axis keybinding. */
          if ((input_keybinds[i]->type == KEYBIND_JAXISNEG)
                && (value <= 0)) {
             k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
-            input_key( i, k, fabs(((double)value)/32767.) );
+            input_key( i, k, fabs(((double)value)/32767.), 0 );
          }
       }
    }
@@ -870,7 +940,7 @@ static void input_joyevent( const int event, const SDLKey button )
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if ((input_keybinds[i]->type == KEYBIND_JBUTTON) &&
             (input_keybinds[i]->key == button))
-         input_key(i, event, -1.);
+         input_key(i, event, -1., 0);
 }
 
 
@@ -883,7 +953,7 @@ static void input_joyevent( const int event, const SDLKey button )
  *    @param key Key generating the event.
  *    @param mod Modifiers active when event was generated.
  */
-static void input_keyevent( const int event, SDLKey key, const SDLMod mod )
+static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const int repeat )
 {
    int i;
    SDLMod mod_filtered;
@@ -897,7 +967,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod )
          if ((input_keybinds[i]->mod == mod_filtered) ||
                (input_keybinds[i]->mod == KMOD_ALL) ||
                (event == KEY_RELEASE)) /**< Release always gets through. */
-            input_key(i, event, -1.);
+            input_key(i, event, -1., repeat);
             /* No break so all keys get pressed if needed. */
       }
    }
@@ -935,11 +1005,11 @@ void input_handle( SDL_Event* event )
          break;
 
       case SDL_KEYDOWN:
-         input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod);
+         input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
       case SDL_KEYUP:
-         input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod);
+         input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
    }
 }

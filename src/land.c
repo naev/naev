@@ -1913,9 +1913,6 @@ void takeoff( int delay )
    player->shield = player->shield_max;
    player->energy = player->energy_max;
 
-   /* Clear messages first. */
-   gui_clearMessages();
-
    /* time goes by, triggers hook before takeoff */
    if (delay)
       ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );

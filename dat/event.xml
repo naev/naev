@@ -2,7 +2,7 @@
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
-  <chance>20</chance>
+  <chance>10</chance>
   <cond>next(system.get():faction()) ~= nil</cond>
  </event>
  <event name="Unique">
@@ -31,7 +31,7 @@
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>player.getFaction("Dvaered") &gt; 0 and player.getRating() &gt; 0 and system.cur() == system.get("Arcanis")</cond>
+  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 10 and system.cur() == system.get("Surano")</cond>
   <flags>
    <unique />
   </flags>

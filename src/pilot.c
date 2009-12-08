@@ -38,6 +38,7 @@
 #include "ntime.h"
 #include "ai_extra.h"
 #include "faction.h"
+#include "font.h"
 
 
 #define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
@@ -58,8 +59,10 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 
 /* misc */
-static double sensor_curRange = 0.; /**< Current base sensor range, used to calculate
+static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
+static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
+static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
 
 
 /*
@@ -78,6 +81,7 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
 void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
 /* misc */
+static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_updateMass( Pilot *pilot );
 
@@ -527,6 +531,22 @@ char pilot_getFactionColourChar( const Pilot *p )
 
 
 /**
+ * @brief Sets the overhead communication message of the pilot.
+ */
+static void pilot_setCommMsg( Pilot *p, const char *s )
+{
+   /* Free previous message. */
+   if (p->comm_msg != NULL)
+      free(p->comm_msg);
+
+   /* Duplicate the message. */
+   p->comm_msg       = strdup(s);
+   p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
+   p->comm_msgTimer  = pilot_commTimeout;
+}
+
+
+/**
  * @brief Have pilot send a message to another.
  *
  *    @param p Pilot sending message.
@@ -557,6 +577,9 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
       c = pilot_getFactionColourChar( p );
       player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
    }
+
+   /* Set comm message. */
+   pilot_setCommMsg( p, msg );
 }
 
 
@@ -581,6 +604,9 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 
    c = pilot_getFactionColourChar( p );
    player_message( "\e%cBroadcast %s>\e0 \"%s\"", c, p->name, msg );
+
+   /* Set comm message. */
+   pilot_setCommMsg( p, msg );
 }
 
 
@@ -1414,8 +1440,7 @@ void pilot_explode( double x, double y, double radius,
  */
 void pilot_render( Pilot* p, const double dt )
 {
-   glTexture *ico_hail;
-   int sx, sy;
+   (void) dt;
 
    /* Base ship. */
    if (p->ship->gfx_engine != NULL)
@@ -1426,6 +1451,21 @@ void pilot_render( Pilot* p, const double dt )
       gl_blitSprite( p->ship->gfx_space,
             p->solid->pos.x, p->solid->pos.y,
             p->tsx, p->tsy, NULL );
+}
+
+
+/**
+ * @brief Renders the pilot overlay.
+ *
+ *    @param p Pilot to render.
+ *    @param dt Current deltatick.
+ */
+void pilot_renderOverlay( Pilot* p, const double dt )
+{
+   glTexture *ico_hail;
+   double x, y;
+   int sx, sy;
+   glColour c;
 
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {
@@ -1442,9 +1482,38 @@ void pilot_render( Pilot* p, const double dt )
          }
          /* Render. */
          gl_blitSprite( ico_hail,
-               p->solid->pos.x + (p->ship->gfx_space->sw + ico_hail->sw)/2.,
-               p->solid->pos.y + (p->ship->gfx_space->sh + ico_hail->sh)/2.,
+               p->solid->pos.x + PILOT_SIZE_APROX*p->ship->gfx_space->sw/2.,
+               p->solid->pos.y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
+      }
+   }
+
+   /* Text ontop if needed. */
+   if (p->comm_msg != NULL) {
+
+      /* Coordinate translation. */
+      gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
+
+      /* Display the text. */
+      p->comm_msgTimer -= dt;
+      if (p->comm_msgTimer < 0.) {
+         free(p->comm_msg);
+         p->comm_msg = NULL;
+      }
+      else {
+         /* Colour. */
+         c.r = 1.;
+         c.g = 1.;
+         c.b = 1.;
+         if (p->comm_msgTimer - pilot_commFade < 0.)
+            c.a = p->comm_msgTimer / pilot_commFade;
+         else
+            c.a = 1.;
+
+         /* Display text. */
+         gl_printRaw( NULL, x - p->comm_msgWidth/2. + SCREEN_W/2.,
+               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + SCREEN_H/2.,
+               &c, p->comm_msg );
       }
    }
 }
@@ -3004,9 +3073,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {
-      pilot->think  = player_think; /* players don't need to think! :P */
-      pilot->update = player_update; /* Players get special update. */
-      pilot->render = NULL; /* render will get called from player_think */
+      pilot->think            = player_think; /* players don't need to think! :P */
+      pilot->update           = player_update; /* Players get special update. */
+      pilot->render           = NULL; /* render will get called from player_think */
+      pilot->render_overlay   = NULL;
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
       if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
          player = pilot;
@@ -3014,9 +3084,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       }
    }
    else {
-      pilot->think  = ai_think;
-      pilot->update = pilot_update;
-      pilot->render = pilot_render;
+      pilot->think            = ai_think;
+      pilot->update           = pilot_update;
+      pilot->render           = pilot_render;
+      pilot->render_overlay   = pilot_renderOverlay;
    }
 
    /* Set enter hyperspace flag if needed. */
@@ -3239,6 +3310,10 @@ void pilot_free( Pilot* p )
    if (p->escorts)
       free(p->escorts);
 
+   /* Free comm message. */
+   if (p->comm_msg != NULL)
+      free(p->comm_msg);
+
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );
 #endif /* DEBUGGING */
@@ -3399,9 +3474,23 @@ void pilots_render( double dt )
 {
    int i;
    for (i=0; i<pilot_nstack; i++) {
-      if (player == pilot_stack[i]) continue; /* skip player */
       if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i], dt);
+   }
+}
+
+
+/**
+ * @brief Renders all the pilots overlays.
+ *
+ *    @param dt Current delta tick.
+ */
+void pilots_renderOverlay( double dt )
+{
+   int i;
+   for (i=0; i<pilot_nstack; i++) {
+      if (pilot_stack[i]->render_overlay != NULL) /* render */
+         pilot_stack[i]->render_overlay(pilot_stack[i], dt);
    }
 }
 

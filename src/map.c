@@ -1261,11 +1261,20 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    /* initial and target systems */
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
-   
+
+   /* Set up. */
    ojumps = 0;
    if ((old_data != NULL) && (*njumps>0)) {
       ssys   = system_get( old_data[ (*njumps)-1 ]->name );
       ojumps = *njumps;
+   }
+
+   /* Check self. */
+   if (ssys == esys) {
+      (*njumps) = 0;
+      if (old_data != NULL)
+         free( old_data );
+      return NULL;
    }
 
    /* system target must be known and reachable */
