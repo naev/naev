@@ -59,8 +59,10 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 
 /* misc */
-static double sensor_curRange = 0.; /**< Current base sensor range, used to calculate
+static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
+static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
+static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
 
 
 /*
@@ -540,7 +542,7 @@ static void pilot_setCommMsg( Pilot *p, const char *s )
    /* Duplicate the message. */
    p->comm_msg       = strdup(s);
    p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
-   p->comm_msgTimer  = 5.;
+   p->comm_msgTimer  = pilot_commTimeout;
 }
 
 
@@ -1463,6 +1465,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
    glTexture *ico_hail;
    double x, y;
    int sx, sy;
+   glColour c;
 
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {
@@ -1488,6 +1491,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
    /* Text ontop if needed. */
    if (p->comm_msg != NULL) {
 
+      /* Coordinate translation. */
       gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
 
       /* Display the text. */
@@ -1497,9 +1501,19 @@ void pilot_renderOverlay( Pilot* p, const double dt )
          p->comm_msg = NULL;
       }
       else {
+         /* Colour. */
+         c.r = 1.;
+         c.g = 1.;
+         c.b = 1.;
+         if (p->comm_msgTimer - pilot_commFade < 0.)
+            c.a = p->comm_msgTimer / pilot_commFade;
+         else
+            c.a = 1.;
+
+         /* Display text. */
          gl_printRaw( NULL, x - p->comm_msgWidth/2. + SCREEN_W/2.,
                y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + SCREEN_H/2.,
-               NULL, p->comm_msg );
+               &c, p->comm_msg );
       }
    }
 }
