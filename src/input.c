@@ -69,7 +69,9 @@ const char *keybindNames[] = {
    "log_up", "log_down", "hail",
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
-   "console",
+   "console", "switchtab1", "switchtab2", "switchtab3", "switchtab4",
+   "switchtab5", "switchtab6", "switchtab7", "switchtab8", "switchtab9",
+   "switchtab0",
    /* Must terminate in "end". */
    "end"
 }; /**< Names of possible keybindings. */
@@ -131,6 +133,16 @@ const char *keybindDescription[] = {
    "Opens the small ingame menu.",
    "Opens the information menu.",
    "Opens the Lua console.",
+   "Switches to tab 1.",
+   "Switches to tab 2.",
+   "Switches to tab 3.",
+   "Switches to tab 4.",
+   "Switches to tab 5.",
+   "Switches to tab 6.",
+   "Switches to tab 7.",
+   "Switches to tab 8.",
+   "Switches to tab 9.",
+   "Switches to tab 10.",
    NULL /* To match sentinel. */
 }; /**< Descriptions of the keybindings. Should be in the same position as the
         matching keybinding name. */
@@ -236,6 +248,16 @@ void input_setDefault (void)
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_ALL );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE );
    input_setKeybind( "console", KEYBIND_KEYBOARD, SDLK_F2, KMOD_ALL );
+   input_setKeybind( "switchtab1", KEYBIND_KEYBOARD, SDLK_1, KMOD_LALT );
+   input_setKeybind( "switchtab2", KEYBIND_KEYBOARD, SDLK_2, KMOD_LALT );
+   input_setKeybind( "switchtab3", KEYBIND_KEYBOARD, SDLK_3, KMOD_LALT );
+   input_setKeybind( "switchtab4", KEYBIND_KEYBOARD, SDLK_4, KMOD_LALT );
+   input_setKeybind( "switchtab5", KEYBIND_KEYBOARD, SDLK_5, KMOD_LALT );
+   input_setKeybind( "switchtab6", KEYBIND_KEYBOARD, SDLK_6, KMOD_LALT );
+   input_setKeybind( "switchtab7", KEYBIND_KEYBOARD, SDLK_7, KMOD_LALT );
+   input_setKeybind( "switchtab8", KEYBIND_KEYBOARD, SDLK_8, KMOD_LALT );
+   input_setKeybind( "switchtab9", KEYBIND_KEYBOARD, SDLK_9, KMOD_LALT );
+   input_setKeybind( "switchtab0", KEYBIND_KEYBOARD, SDLK_0, KMOD_LALT );
 }
 
 

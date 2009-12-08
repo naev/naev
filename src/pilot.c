@@ -576,10 +576,10 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    if (target == PLAYER_ID) {
       c = pilot_getFactionColourChar( p );
       player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
-   }
 
-   /* Set comm message. */
-   pilot_setCommMsg( p, msg );
+      /* Set comm message. */
+      pilot_setCommMsg( p, msg );
+   }
 }
 
 
