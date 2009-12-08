@@ -30,7 +30,7 @@ else -- default english
     Benito waves his hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]
     
     title[2] = "Patrol-B-gone"
-    text[2] = [[    "I'm happy to hear that. It's good to know we still have the support from the common man. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to feel us more secure! I think you can see where this is going. You will have to go out there and make it so the Dvaered don't patrol anymore."
+    text[2] = [[    "I'm happy to hear that. It's good to know we still have the support from the common man. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will have to go out there and make it so the Dvaered don't patrol anymore."
     You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles, and makes a pacifying gesture.
     "Calm down, it's not as bad as it sounds. You won't be out there alone. We're sending along a wing of experienced fighters, so you're not on your own. We really want those patrols gone, you know. We're just testing your loyalty at the same time, that's all. Now, I should warn you. In line with most of our tactics, this mission will be a surgical strike, hit-and-run operation. That means we work with small, fast ships. We go in, get the job done and disappear. This time will be no different."]]
     
@@ -97,7 +97,7 @@ else -- default english
     DVosd[1] = "Destroy your wingmen!"
     DVosd[2] = "Fly to the %s system and land on %s"
         
-    npc_desc = "There is a low-ranking officr of the Frontier Liberation Front sitting at one at the tables. He seems somewhat more receptive than most people in the bar."
+    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. He seems somewhat more receptive than most people in the bar."
     
 end
 
