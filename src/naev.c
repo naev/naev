@@ -537,6 +537,8 @@ void main_loop (void)
 
    fps_control(); /* everyone loves fps control */
 
+   input_update(); /* handle key repeats. */
+
    sound_update( real_dt ); /* Update sounds. */
    if (tk) toolkit_update(); /* to simulate key repetition */
    if (!menu_isOpen(MENU_MAIN)) {

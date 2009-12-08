@@ -23,10 +23,11 @@
 #include "input.h"
 #include "nstd.h"
 #include "dialogue.h"
+#include "conf.h"
 
 
-#define INPUT_DELAY     500 /**< Delay before starting to repeat. */
-#define INPUT_FREQ       30 /**< Interval between repetition. */
+#define INPUT_DELAY      conf.repeat_delay /**< Delay before starting to repeat. */
+#define INPUT_FREQ       conf.repeat_freq /**< Interval between repetition. */
 
 
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
