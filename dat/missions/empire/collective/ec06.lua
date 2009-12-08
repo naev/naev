@@ -99,7 +99,7 @@ function jump ()
 
    if misn_stage == 0 then
 
-      offset = 500
+      offset = 1000
 
       -- Entering target system?
       if sys == misn_target_sys then
@@ -118,7 +118,7 @@ function jump ()
          spawn_vect = enter_vect.new( x, y )
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
-            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
             pilots = pilot.add( v, "def", spawn_vect )
             for k,v in ipairs(pilots) do
                v:setFriendly()
@@ -135,7 +135,7 @@ function jump ()
          -- Count amount created
          col_alive = 0
          for k,v in ipairs(col_fleets) do
-            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
             pilots = pilot.add( v, "def", spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
@@ -166,7 +166,7 @@ function jump ()
          spawn_vect = enter_vect.new( x, y )
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
-            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
             pilots = pilot.add( v, "def", spawn_vect )
             for k,v in ipairs(pilot) do
                v:setFriendly()
@@ -186,7 +186,7 @@ function jump ()
          -- Add pilots
          col_alive = 0
          for k,v in ipairs(col_fleets) do
-            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
             pilots = pilot.add( v, "def", spawn_vect )
 
             -- Handle special ships
