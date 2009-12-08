@@ -342,8 +342,12 @@ static void map_update( unsigned int wid )
    else {
       buf[0] = '\0';
       for(i = 0; i < faction_nstack; i++)
-         if(sys->presence[i] > 0)
-            snprintf(buf + strlen(buf), PATH_MAX, "%s: %.0f\n", faction_name(i), sys->presence[i]);
+         if(sys->presence[i] > 0) {
+            long long int l = strlen(buf);
+            buf[l++] = '\e';
+            buf[l++] = faction_getColourChar(i);
+            snprintf((buf + l), (PATH_MAX - l), "%s: %.0f\n", faction_name(i), sys->presence[i]);
+         }
    }
    window_moveWidget( wid, "txtSSecurity", -20, y );
    window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
