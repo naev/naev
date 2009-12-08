@@ -28,6 +28,12 @@ void gl_cameraZoomGet( double * zoom );
 
 
 /*
+ * Coordinate translation.
+ */
+void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
+
+
+/*
  * Rendering.
  */
 /* blits texture */

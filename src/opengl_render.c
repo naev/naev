@@ -484,6 +484,28 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 
 
 /**
+ * @brief Convertes ingame coordinates to screen coordinates.
+ *
+ *    @param[out] nx New screen X coord.
+ *    @param[out] ny New screen Y coord.
+ *    @param bx Game X coord to translate.
+ *    @param by Game Y coord to translate.
+ */
+void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
+{
+   double cx,cy, gx,gy;
+
+   /* Get parameters. */
+   gl_cameraGet( &cx, &cy );
+   gui_getOffset( &gx, &gy );
+
+   /* calculate position - we'll use relative coords to player */
+   *nx = (bx - cx + gx) * gl_cameraZ;
+   *ny = (by - cy + gy) * gl_cameraZ;
+}
+
+
+/**
  * @brief Blits a sprite, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all
@@ -499,15 +521,10 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, w,h, tx,ty, cx,cy, gx,gy;
+   double x,y, w,h, tx,ty;
 
-   /* Get parameters. */
-   gl_cameraGet( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-
-   /* calculate position - we'll use relative coords to player */
-   x = (bx - cx - sprite->sw/2. + gx) * gl_cameraZ;
-   y = (by - cy - sprite->sh/2. + gy) * gl_cameraZ;
+   /* Translate coords. */
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*gl_cameraZ;
@@ -548,15 +565,10 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       const int sx, const int sy, const glColour *c )
 {
-   double x,y, w,h, tx,ty, cx,cy, gx,gy;
+   double x,y, w,h, tx,ty;
 
-   /* Get parameters. */
-   gl_cameraGet( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-
-   /* calculate position - we'll use relative coords to player */
-   x = (bx - cx - sa->sw/2. + gx) * gl_cameraZ;
-   y = (by - cy - sa->sh/2. + gy) * gl_cameraZ;
+   /* Translate coords. */
+   gl_gameToScreenCoords( &x, &y, bx - sa->sw/2., by - sa->sh/2. );
 
    /* Scaled sprite dimensions. */
    w = sa->sw*gl_cameraZ;

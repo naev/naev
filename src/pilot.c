@@ -1439,9 +1439,7 @@ void pilot_explode( double x, double y, double radius,
 void pilot_render( Pilot* p, const double dt )
 {
    glTexture *ico_hail;
-   double x, y, z;
-   double cx, cy;
-   double gx, gy;
+   double x, y;
    int sx, sy;
 
    /* Base ship. */
@@ -1477,13 +1475,8 @@ void pilot_render( Pilot* p, const double dt )
 
    /* Text ontop if needed. */
    if (p->comm_msg != NULL) {
-      gl_cameraGet( &cx, &cy );
-      gui_getOffset( &gx, &gy );
 
-      /* Position transformation. */
-      gl_cameraZoomGet( &z );
-      x = (p->solid->pos.x - cx + gx) * z;
-      y = (p->solid->pos.y - cy + gy) * z;
+      gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
 
       /* Display the text. */
       p->comm_msgTimer -= dt;
