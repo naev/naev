@@ -231,8 +231,9 @@ typedef struct Pilot_ {
 
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
-   void (*update)(struct Pilot_*, const double); /**< updates the pilot */
-   void (*render)(struct Pilot_*, const double); /**< for rendering the pilot */
+   void (*update)(struct Pilot_*, const double); /**< Updates the pilot. */
+   void (*render)(struct Pilot_*, const double); /**< For rendering the pilot. */
+   void (*render_overlay)(struct Pilot_*, const double); /**< For rendering the pilot overlay. */
 
    /* Outfit management */
    /* Global outfits. */
@@ -406,7 +407,9 @@ void pilot_setTurn( Pilot *p, double turn );
 void pilot_update( Pilot* pilot, const double dt );
 void pilots_update( double dt );
 void pilots_render( double dt );
+void pilots_renderOverlay( double dt );
 void pilot_render( Pilot* pilot, const double dt );
+void pilot_renderOverlay( Pilot* p, const double dt );
 
 
 /*

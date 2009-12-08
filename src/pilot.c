@@ -1438,9 +1438,7 @@ void pilot_explode( double x, double y, double radius,
  */
 void pilot_render( Pilot* p, const double dt )
 {
-   glTexture *ico_hail;
-   double x, y;
-   int sx, sy;
+   (void) dt;
 
    /* Base ship. */
    if (p->ship->gfx_engine != NULL)
@@ -1451,6 +1449,20 @@ void pilot_render( Pilot* p, const double dt )
       gl_blitSprite( p->ship->gfx_space,
             p->solid->pos.x, p->solid->pos.y,
             p->tsx, p->tsy, NULL );
+}
+
+
+/**
+ * @brief Renders the pilot overlay.
+ *
+ *    @param p Pilot to render.
+ *    @param dt Current deltatick.
+ */
+void pilot_renderOverlay( Pilot* p, const double dt )
+{
+   glTexture *ico_hail;
+   double x, y;
+   int sx, sy;
 
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {
@@ -3047,9 +3059,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {
-      pilot->think  = player_think; /* players don't need to think! :P */
-      pilot->update = player_update; /* Players get special update. */
-      pilot->render = NULL; /* render will get called from player_think */
+      pilot->think            = player_think; /* players don't need to think! :P */
+      pilot->update           = player_update; /* Players get special update. */
+      pilot->render           = NULL; /* render will get called from player_think */
+      pilot->render_overlay   = NULL;
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
       if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
          player = pilot;
@@ -3057,9 +3070,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       }
    }
    else {
-      pilot->think  = ai_think;
-      pilot->update = pilot_update;
-      pilot->render = pilot_render;
+      pilot->think            = ai_think;
+      pilot->update           = pilot_update;
+      pilot->render           = pilot_render;
+      pilot->render_overlay   = pilot_renderOverlay;
    }
 
    /* Set enter hyperspace flag if needed. */
@@ -3446,9 +3460,23 @@ void pilots_render( double dt )
 {
    int i;
    for (i=0; i<pilot_nstack; i++) {
-      if (player == pilot_stack[i]) continue; /* skip player */
       if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i], dt);
+   }
+}
+
+
+/**
+ * @brief Renders all the pilots overlays.
+ *
+ *    @param dt Current delta tick.
+ */
+void pilots_renderOverlay( double dt )
+{
+   int i;
+   for (i=0; i<pilot_nstack; i++) {
+      if (pilot_stack[i]->render_overlay != NULL) /* render */
+         pilot_stack[i]->render_overlay(pilot_stack[i], dt);
    }
 }
 
