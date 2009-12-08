@@ -46,5 +46,10 @@ void input_handle( SDL_Event* event );
 void input_init (void);
 void input_exit (void);
 
+/*
+ * Updating.
+ */
+void input_update (void);
+
 
 #endif /* INPUT_H */
