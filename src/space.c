@@ -92,6 +92,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
  */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
+extern int faction_nstack;
 
 
 /*

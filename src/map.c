@@ -51,6 +51,7 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 /* space.c */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
+extern int faction_nstack;
 
 
 /*

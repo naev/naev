@@ -65,8 +65,4 @@ char *naev_version( int long_version );
 char *naev_binary (void);
 
 
-// Major HAX
-extern int faction_nstack; /**< Number of factions in the faction stack. */
-
-
 #endif /* NAEV_H */
