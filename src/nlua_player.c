@@ -32,6 +32,7 @@
 #include "event.h"
 #include "land.h"
 #include "nlua_system.h"
+#include "map.h"
 
 
 /* player */
