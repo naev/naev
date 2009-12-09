@@ -265,7 +265,7 @@ function checkPatrol()
         else
             spawnie = misn.timerStart("spawnBigDV", 12000)
             dv_patrol = var.peek("dv_patrol")
-            if fv_patrol ~= nil then
+            if dv_patrol ~= nil then
                 if var.peek("dv_patrol") >= 3 then
                     hailie = misn.timerStart("hailEvent", 20000)
                 end
