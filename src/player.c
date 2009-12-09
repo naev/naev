@@ -1802,6 +1802,35 @@ void player_hail (void)
 
 
 /**
+ * @brief Automatically tries to hail a pilot that hailed the player.
+ */
+void player_autohail (void)
+{
+   int i;
+   Pilot *p;
+
+   /* Find pilot to autohail. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be hailing. */
+      if (pilot_isFlag(p, PILOT_HAILING))
+         break;
+   }
+
+   /* Not found any. */
+   if (i >= pilot_nstack) {
+      player_message("\erYou haven't been hailed by any pilots.");
+      return;
+   }
+
+   /* Try o hail. */
+   player->target = p->id;
+   player_hail();
+}
+
+
+/**
  * @brief Sets the ship fire mode.
  */
 void player_setFireMode( int mode )
