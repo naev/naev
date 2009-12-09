@@ -31,6 +31,7 @@
 #include "mission.h"
 #include "event.h"
 #include "land.h"
+#include "nlua_system.h"
 
 
 /* player */
@@ -54,6 +55,7 @@ static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_evtDone( lua_State *L );
+static int playerL_teleport( lua_State *L );
 static const luaL_reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -75,6 +77,7 @@ static const luaL_reg playerL_methods[] = {
    { "addShip", playerL_addShip },
    { "misnDone", playerL_misnDone },
    { "evtDone", playerL_evtDone },
+   { "teleport", playerL_teleport },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg playerL_cond_methods[] = {
@@ -503,4 +506,30 @@ static int playerL_evtDone( lua_State *L )
 
    return player_eventAlreadyDone( id );
 }
+
+
+/**
+ * @brief Teleports the player to a new system.
+ *
+ * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to arcanis.
+ *
+ *    @luaparam sys System to teleport the player to.
+ * @luafunc teleport( sys )
+ */
+static int playerL_teleport( lua_State *L )
+{
+   LuaSystem *sys;
+
+   /* Get a system. */
+   sys = luaL_checksystem(L,1);
+
+   /* Go to the new system. */
+   space_init( sys->s->name );
+
+   /* Map gets deformed when jumping this way. */
+   map_clear();
+
+   return 0;
+}
+
 
