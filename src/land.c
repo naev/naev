@@ -1889,6 +1889,9 @@ void takeoff( int delay )
    if (!landed)
       return;
 
+   /* Refuel if needed. */
+   land_checkAddRefuel();
+
    /* In case we had paused messy sounds. */
    sound_stopAll();
 
