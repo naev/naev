@@ -2012,7 +2012,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    /* Add outfit. */
    ret = pilot_addOutfitRaw( pilot, outfit, s );
 
-   /* recalculate the stats */
+   /* Recalculate the stats */
    pilot_calcStats(pilot);
 
    return ret;
