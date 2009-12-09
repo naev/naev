@@ -22,7 +22,8 @@
  <event name="Shadowcomm">
   <lua>neutral/shadowcomm</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>3</chance>
+  <cond>player.misnDone("Shadowrun") and not var.peek("shadowrun_failed")</cond>
   <flags>
    <unique />
   </flags>
