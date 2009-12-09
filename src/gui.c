@@ -145,8 +145,6 @@ typedef struct GUI_ {
    double tr; /**< Top right. */
    double bl; /**< Bottom left. */
    double br; /**< Bottom right. */
-   double border_h;
-   double border_w;
 
    /* graphics */
    glTexture *gfx_frame; /**< Frame of the GUI. */
@@ -229,6 +227,7 @@ static void rect_parse( const xmlNodePtr parent,
 static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanupBar( HealthBar *bar );
+static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget( double dt );
 static void gui_renderPlanetTarget( double dt );
@@ -495,6 +494,52 @@ static void gui_renderPilotTarget( double dt )
 
 
 /**
+ * @brief Gets the intersection with the border.
+ *
+ * http://en.wikipedia.org/wiki/Intercept_theorem
+ *
+ *    @param[out] cx X intersection.
+ *    @param[out] cy Y intersection.
+ *    @param rx Center X position of intersection.
+ *    @param ry Center Y position of intersection.
+ *    @param hw Screen half-width.
+ *    @param hh Screen half-height.
+ */
+static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh )
+{
+   double a;
+   double w, h;
+
+   /* Get angle. */
+   a = atan2( ry, rx );
+   if (a < 0.)
+      a += 2.*M_PI;
+
+   /* Helpers. */
+   w = hw-7.;
+   h = hh-7.;
+
+   /* Handle by quadrant. */
+   if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+      *cx = h * (rx/ry);
+      *cy = h;
+   }
+   else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
+      *cx = -w;
+      *cy = -w * (ry/rx);
+   }
+   else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+      *cx = -h * (rx/ry);
+      *cy = -h;
+   }
+   else { /* Right. */
+      *cx = w;
+      *cy = w * (ry/rx);
+   }
+}
+
+
+/**
  * @brief Renders the ships/planets in the border.
  *
  *    @param dt Current delta tick.
@@ -507,20 +552,18 @@ static void gui_renderBorder( double dt )
    Pilot *plt;
    Planet *pnt;
    glTexture *tex;
-   Vector2d *pos;
    int hw, hh;
    int cw, ch;
    double rx,ry, crx,cry;
    double cx,cy;
    glColour *col;
-   double a, int_a;
+   double int_a;
    GLfloat vertex[5*2], colours[5*4];
 
    /* Get zoom. */
    gl_cameraZoomGet( &z );
 
    /* Get player position. */
-   pos   = &player->solid->pos;
    hw    = SCREEN_W/2; 
    hh    = SCREEN_H/2;
 
@@ -537,8 +580,8 @@ static void gui_renderBorder( double dt )
          continue;
 
       /* Get relative positions. */
-      rx = (pnt->pos.x - player->solid->pos.x) * z;
-      ry = (pnt->pos.y - player->solid->pos.y) * z;
+      rx = (pnt->pos.x - player->solid->pos.x)*z;
+      ry = (pnt->pos.y - player->solid->pos.y)*z;
 
       /* Correct for offset. */
       crx = rx - gui_xoff;
@@ -550,31 +593,9 @@ static void gui_renderBorder( double dt )
 
       /* Check if out of range. */
       if ((ABS(crx) > cw) || (ABS(cry) > ch)) {
-         /* Get angle. */
-         a = atan2( ry, rx );
-         if (a < 0.)
-            a += 2.*M_PI;
 
-         /* Handle by quadrant. */
-         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
-            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
-            cy = hh-7.;
-         }
-         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
-            cx = -hw+7.;
-            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
-         }
-         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
-            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
-            cy = -hh+7.;
-         }
-         else { /* Right. */
-            if (a > gui.tr)
-               a -= 2.*M_PI;
-            cx = hw-7.;
-            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
-         }
-
+         /* Get border intersection. */
+         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          /* Set up colours. */
          col = gui_getPlanetColour(i);
@@ -629,30 +650,9 @@ static void gui_renderBorder( double dt )
 
       /* Check if out of range. */
       if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
-         /* Get angle. */
-         a = atan2( ry, rx );
-         if (a < 0.)
-            a += 2.*M_PI;
 
-         /* Handle by quadrant. */
-         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
-            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
-            cy = hh-7.;
-         }
-         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
-            cx = -hw+7.;
-            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
-         }
-         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
-            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
-            cy = -hh+7.;
-         }
-         else { /* Right. */
-            if (a > gui.tr)
-               a -= 2.*M_PI;
-            cx = hw-7.;
-            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
-         }
+         /* Get border intersection. */
+         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          /* Set up colours. */
          col = gui_getPilotColour(plt);
@@ -1765,8 +1765,6 @@ int gui_init (void)
    gui.br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
    if (gui.br < 0.)
       gui.br += 2*M_PI;
-   gui.border_h   = gui.bl - gui.tl;
-   gui.border_w   = gui.tl - gui.tr;
 
    /*
     * Icons.
