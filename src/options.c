@@ -135,7 +135,8 @@ static void opt_gameplay( unsigned int wid )
    char buf[PATH_MAX];
    const char *path;
    int cw;
-   int w, h, y, x, by;
+   int w, h, y, x, by, l;
+   char *s;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -225,11 +226,20 @@ static void opt_gameplay( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
+   y -= 50;
+   s = "Visible messages";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtSMSG",
+         NULL, &cBlack, s );
+   window_addInput( wid, x+l+20, y, 40, 20, "inpMSG", 4, 1 );
    y -= 20;
 
    /* Restart text. */
    window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
          30, 1, "txtRestart", &gl_smallFont, &cBlack, NULL );
+
+   /* Update. */
+   opt_gameplayUpdate( wid, NULL );
 }
 
 /**
@@ -239,13 +249,20 @@ static void opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
+   char *inp;
 
+   /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
    if (!!conf.afterburn_sens != f) {
       conf.afterburn_sens = (!!f)*250;
    }
-
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
+
+   /* Input boxes. */
+   inp = window_getInput( wid, "inpMSG" );
+   conf.mesg_visible = atoi(inp);
+   if (conf.mesg_visible == 0)
+      conf.mesg_visible = 5;
 }
 
 /**
@@ -265,10 +282,15 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 static void opt_gameplayUpdate( unsigned int wid, char *str )
 {
    (void) str;
+   char buf[16];
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
+
+   /* Input boxes. */
+   snprintf( buf, sizeof(buf), "%d", conf.mesg_visible );
+   window_setInput( wid, "inpMSG", buf );
 }
 
 

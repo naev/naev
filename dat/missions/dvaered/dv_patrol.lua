@@ -89,7 +89,7 @@ function create ()
    if #systems < 2 then
       misn.finish(false)
    end
-   base, base_sys = planet.get()
+   base, base_sys = planet.cur()
    misn.setMarker(systems[1])
 
    -- Create the description.
@@ -139,7 +139,7 @@ end
 -- Jump hook
 function jump ()
    if misn_stage == 1 then
-      sys = system.get()
+      sys = system.cur()
 
       -- Check to see if system is next
       if sys == systems[visited+1] then
@@ -205,7 +205,7 @@ end
 
 -- Land hook
 function land ()
-   landed = planet.get()
+   landed = planet.cur()
    if misn_stage == 2 and landed == base then
       player.pay( reward )
       tk.msg( msg_title[1], string.format( msg_msg[1], reward ))

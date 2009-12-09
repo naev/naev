@@ -1889,6 +1889,9 @@ void takeoff( int delay )
    if (!landed)
       return;
 
+   /* Refuel if needed. */
+   land_checkAddRefuel();
+
    /* In case we had paused messy sounds. */
    sound_stopAll();
 
@@ -1913,14 +1916,11 @@ void takeoff( int delay )
    player->shield = player->shield_max;
    player->energy = player->energy_max;
 
-   /* Clear messages first. */
-   gui_clearMessages();
-
    /* time goes by, triggers hook before takeoff */
    if (delay)
       ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
    nt = ntime_pretty(0);
-   player_message("Taking off from %s on %s.", land_planet->name, nt);
+   player_message("\epTaking off from %s on %s.", land_planet->name, nt);
    free(nt);
 
    /* initialize the new space */

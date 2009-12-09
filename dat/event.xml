@@ -40,7 +40,7 @@
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>player.getFaction("Dvaered") &gt; 0 and player.getRating() &gt; 0 and system.cur() == system.get("Arcanis")</cond>
+  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 10 and system.cur() == system.get("Surano")</cond>
   <flags>
    <unique />
   </flags>

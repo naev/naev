@@ -32,7 +32,7 @@
 function getsysatdistance( sys, min, max, filter, data )
    -- Get default parameters
    if sys == nil then
-      sys = system.get()
+      sys = system.cur()
    end
    if max == nil then
       max = min
@@ -45,11 +45,10 @@ end
 -- The first call to this function should always have n >= max
 function _getsysatdistance( target, min, max, sys, n, t, filter, data )
    if n == 0 then -- This is a leaf call - perform checks and add if appropriate
-      local d
-      d = target:jumpDist(sys)
+      local d = target:jumpDist(sys)
 
       -- Check bounds
-      if d < min and d > max then
+      if d < min or d > max then
          return t
       end
 

@@ -124,11 +124,20 @@ void conf_setDefaults (void)
    /* Land. */
    conf.autorefuel   = 0;
 
-   /* Misc. */
+   /* GUI. */
+   conf.mesg_visible = 5;
+
+   /* Repeat. */
+   conf.repeat_delay = 500;
+   conf.repeat_freq  = 30;
+
+   /* Dynamic zoom. */
    conf.zoom_far     = 0.5;
    conf.zoom_near    = 1.;
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
+
+   /* Misc. */
    conf.nosave       = 0;
 
    /* Gameplay. */
@@ -325,12 +334,23 @@ int conf_loadConfig ( const char* file )
       /* Land. */
       conf_loadBool("autorefuel",conf.autorefuel);
 
-      /* Misc. */
-      conf_loadBool("save_compress",conf.save_compress);
+      /* GUI. */
+      conf_loadInt("mesg_visible",conf.mesg_visible);
+      if (conf.mesg_visible <= 0)
+         conf.mesg_visible = 5;
+
+      /* Key repeat. */
+      conf_loadInt("repeat_delay",conf.repeat_delay);
+      conf_loadInt("repeat_freq",conf.repeat_freq);
+
+      /* Zoom. */
       conf_loadFloat("zoom_far",conf.zoom_far);
       conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
+
+      /* Misc. */
+      conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadBool("conf_nosave",conf.nosave);
 
@@ -872,11 +892,19 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("autorefuel",conf.autorefuel);
    conf_saveEmptyLine();
 
-   /* Misc. */
-   conf_saveComment("Enables compression on savegames");
-   conf_saveBool("save_compress",conf.save_compress);
+   /* GUI. */
+   conf_saveComment("Number of lines visible in the comm window.");
+   conf_saveInt("mesg_visible",conf.mesg_visible);
    conf_saveEmptyLine();
 
+   /* Key repeat. */
+   conf_saveComment("Delay in ms before starting to repeat (0 disables)");
+   conf_saveInt("repeat_delay",conf.repeat_delay);
+   conf_saveComment("Delay in ms between repeats once it starts to repeat");
+   conf_saveInt("repeat_freq",conf.repeat_freq);
+   conf_saveEmptyLine();
+
+   /* Zoom. */
    conf_saveComment("Minimum and maximum zoom factor to use in-game");
    conf_saveComment("At 1.0, no sprites are scaled");
    conf_saveComment("zoom_far should be less then zoom_near");
@@ -890,6 +918,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Zooming modulation factor for the starry background");
    conf_saveFloat("zoom_stars",conf.zoom_stars);
+   conf_saveEmptyLine();
+
+   /* Misc. */
+   conf_saveComment("Enables compression on savegames");
+   conf_saveBool("save_compress",conf.save_compress);
    conf_saveEmptyLine();
 
    conf_saveComment("Afterburner sensitivity");

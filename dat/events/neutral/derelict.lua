@@ -44,8 +44,8 @@ else -- default english
 
     --=== MISSION EVENTS ===--
     -- Add the name of your mission to this list. It will automatically have a chance of triggering from the derelict. The event handles unboarding.
-    missions = {}
---    missions[1] = ""
+    missionlist = {}
+--    missionlist[1] = ""
 end 
 
 
@@ -167,7 +167,7 @@ end
 
 function missionevent()
     -- Fetch all missions that haven't been flagged as done yet.
-    local mymissions
+    local mymissions = {}
     
     for i, mission in ipairs(missionlist) do
         if not player.misnDone(mission) then

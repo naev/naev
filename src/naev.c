@@ -537,6 +537,8 @@ void main_loop (void)
 
    fps_control(); /* everyone loves fps control */
 
+   input_update(); /* handle key repeats. */
+
    sound_update( real_dt ); /* Update sounds. */
    if (tk) toolkit_update(); /* to simulate key repetition */
    if (!menu_isOpen(MENU_MAIN)) {
@@ -676,6 +678,7 @@ static void render_all (void)
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
    spfx_end();
+   pilots_renderOverlay(dt);
    gui_render(dt);
    display_fps( real_dt ); /* Exception. */
 }

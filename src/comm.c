@@ -79,6 +79,7 @@ int comm_isOpen (void)
 int comm_openPilot( unsigned int pilot )
 {
    const char *msg;
+   char c;
    unsigned int wid;
    int run;
    Pilot *p;
@@ -86,18 +87,20 @@ int comm_openPilot( unsigned int pilot )
    /* Get the pilot. */
    p           = pilot_get( pilot );
    comm_pilot  = p;
+   c = pilot_getFactionColourChar( p );
+
    if (comm_pilot == NULL)
       return -1;
 
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
-      player_message("%s is jumping.", comm_pilot->name);
+      player_message("\e%c%s\er is jumping and can't respond.", c, comm_pilot->name);
       return 0;
    }
   
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
-      player_message("%s does not respond.", comm_pilot->name);
+      player_message("\e%c%s\er does not respond.", c, comm_pilot->name);
       return 0;
    }
 

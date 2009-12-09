@@ -56,35 +56,38 @@ void player_board (void)
 {  
    Pilot *p;
    unsigned int wdw;
+   char c;
+   
 
    if (player->target==PLAYER_ID) {
-      player_message("You need a target to board first!");
+      player_message("\erYou need a target to board first!");
       return;
    }
 
    p = pilot_get(player->target);
+   c = pilot_getFactionColourChar( p );
 
    if (!pilot_isDisabled(p)) {
-      player_message("You cannot board a ship that isn't disabled!");
+      player_message("\erYou cannot board a ship that isn't disabled!");
       return;
    }
    else if (vect_dist(&player->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
-      player_message("You are too far away to board your target.");
+      player_message("\erYou are too far away to board your target.");
       return;
    }
    else if ((pow2(VX(player->solid->vel)-VX(p->solid->vel)) +
             pow2(VY(player->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message("You are going too fast to board the ship.");
+      player_message("\erYou are going too fast to board the ship.");
       return;
    }
    else if (pilot_isFlag(p,PILOT_NOBOARD)) {
-      player_message("Target ship can not be boarded.");
+      player_message("\erTarget ship can not be boarded.");
       return;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message("Your target cannot be boarded again.");
+      player_message("\erYour target cannot be boarded again.");
       return;
    }
    /* We'll recover it if it's the pilot's ex-escort. */
@@ -92,7 +95,7 @@ void player_board (void)
       /* Try to recover. */
       pilot_dock( p, player, 0 );
       if (pilot_isFlag(p, PILOT_DELETE )) { /* Hack to see if it boarded. */
-         player_message("You recover %s into your fighter bay.", p->name);
+         player_message("\epYou recover \eg%s\ep into your fighter bay.", p->name);
          return;
       }
    }
@@ -100,7 +103,7 @@ void player_board (void)
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED); 
-   player_message("Boarding ship %s.", p->name);
+   player_message("\epBoarding ship \e%c%s\e0.", c, p->name);
 
 
    /*
@@ -179,7 +182,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    p = pilot_get(player->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
-      player_message("The ship has no credits.");
+      player_message("\epThe ship has no credits.");
       return;
    }
 
@@ -188,7 +191,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    player->credits += p->credits;
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
-   player_message("You manage to steal the ship's credits.");
+   player_message("\epYou manage to steal the ship's credits.");
 }
 
 
@@ -207,11 +210,11 @@ static void board_stealCargo( unsigned int wdw, char* str )
    p = pilot_get(player->target);
 
    if (p->ncommodities==0) { /* no cargo */
-      player_message("The ship has no cargo.");
+      player_message("\epThe ship has no cargo.");
       return;
    }
    else if (pilot_cargoFree(player) <= 0) {
-      player_message("You have no room for cargo.");
+      player_message("\erYou have no room for the ship's cargo.");
       return;
    }
 
@@ -226,7 +229,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message("You manage to steal the ship's cargo.");
+   player_message("\epYou manage to steal the ship's cargo.");
 }
 
 
@@ -244,11 +247,11 @@ static void board_stealFuel( unsigned int wdw, char* str )
    p = pilot_get(player->target);
 
    if (p->fuel <= 0.) { /* no fuel. */
-      player_message("The ship has no fuel.");
+      player_message("\epThe ship has no fuel.");
       return;
    }
    else if (player->fuel == player->fuel_max) {
-      player_message("Your ship is at maximum fuel capacity.");
+      player_message("\erYour ship is at maximum fuel capacity.");
       return;
    }
 
@@ -266,7 +269,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
    }
 
    board_update( wdw );
-   player_message("You manage to steal the ship's fuel.");
+   player_message("\epYou manage to steal the ship's fuel.");
 }
 
 
@@ -318,9 +321,9 @@ static int board_fail( unsigned int wdw )
    if (ret == 0)
       return 0;
    else if (ret < 0) /* killed ship. */
-      player_message("You have tripped the ship's self destruct mechanism!");
+      player_message("\epYou have tripped the ship's self destruct mechanism!");
    else /* you just got locked out */
-      player_message("The ship's security system locks %s out.",
+      player_message("\epThe ship's security system locks %s out.",
             (player->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
