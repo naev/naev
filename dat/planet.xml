@@ -1708,9 +1708,7 @@
    </tech>
    <services>
     <land />
-    <bar />
-    <missions />
-    <commodity />
+    <refuel />
     <outfits />
    </services>
    <class>25</class>
