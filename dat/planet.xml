@@ -2023,8 +2023,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>2</range>
+   <value>0</value>
+   <range>0</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>

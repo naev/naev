@@ -11,7 +11,6 @@
   <player>3</player>
   <colour>cyan</colour>
   <allies>
-   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -45,7 +44,6 @@
   <player>3</player>
   <colour>yellow</colour>
   <allies>
-   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -57,9 +55,6 @@
   <longname>Space Traders Guild</longname>
   <player>3</player>
   <allies>
-   <ally>Independent</ally>
-   <ally>Empire</ally>
-   <ally>Frontier</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -93,7 +88,6 @@
   <allies>
    <ally>Dvaered</ally>
    <ally>Za'lek</ally>
-   <ally>Trader</ally>
    <ally>Sirius</ally>
    <ally>Goddard</ally>
    <ally>Proteron</ally>
