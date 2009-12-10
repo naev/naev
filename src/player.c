@@ -549,6 +549,9 @@ void player_swapShip( char* shipname )
          /* Copy position back. */
          vectcpy( &player->solid->pos, &v );
 
+         /* Fill the tank. */
+         land_checkAddRefuel();         
+
          gl_cameraBind( &player->solid->pos ); /* don't forget the camera */
          return;
       }
@@ -1798,6 +1801,35 @@ void player_hail (void)
       comm_openPlanet( cur_system->planets[ planet_target ] );
    else
       player_message("\erNo target selected to hail.");
+}
+
+
+/**
+ * @brief Automatically tries to hail a pilot that hailed the player.
+ */
+void player_autohail (void)
+{
+   int i;
+   Pilot *p;
+
+   /* Find pilot to autohail. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be hailing. */
+      if (pilot_isFlag(p, PILOT_HAILING))
+         break;
+   }
+
+   /* Not found any. */
+   if (i >= pilot_nstack) {
+      player_message("\erYou haven't been hailed by any pilots.");
+      return;
+   }
+
+   /* Try o hail. */
+   player->target = p->id;
+   player_hail();
 }
 
 

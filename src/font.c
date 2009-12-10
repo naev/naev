@@ -840,12 +840,12 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
       a = (c==NULL) ? 1. : c->a;
       switch (ch) {
          /* Colours. */
-         case 'r': ACOLOUR(cRed,a); break;
-         case 'g': ACOLOUR(cGreen,a); break;
-         case 'b': ACOLOUR(cLightBlue,a); break;
-         case 'y': ACOLOUR(cYellow,a); break;
-         case 'w': ACOLOUR(cWhite,a); break;
-         case 'p': ACOLOUR(cDarkPurple,a); break;
+         case 'r': ACOLOUR(cFontRed,a); break;
+         case 'g': ACOLOUR(cFontGreen,a); break;
+         case 'b': ACOLOUR(cFontBlue,a); break;
+         case 'y': ACOLOUR(cFontYellow,a); break;
+         case 'w': ACOLOUR(cFontWhite,a); break;
+         case 'p': ACOLOUR(cFontPurple,a); break;
          /* Fancy states. */
          case 'F': ACOLOUR(cFriend,a); break;
          case 'H': ACOLOUR(cHostile,a); break;

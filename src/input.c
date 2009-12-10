@@ -66,7 +66,7 @@ const char *keybindNames[] = {
    /* Space navigation. */
    "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
    /* Communication. */
-   "log_up", "log_down", "hail",
+   "log_up", "log_down", "hail", "autohail",
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
    "console", "switchtab1", "switchtab2", "switchtab3", "switchtab4",
@@ -124,6 +124,7 @@ const char *keybindDescription[] = {
    "Scrolls the log upwards.",
    "Scrolls the log downwards.",
    "Attempts to initialize communication with your targetted ship.",
+   "Automatically initialize communication with a ship that hailed you.",
    /* Misc. */
    "Zooms in on your radar.",
    "Zooms out on your radar.",
@@ -239,6 +240,7 @@ void input_setDefault (void)
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, KMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, KMOD_ALL );
    input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE );
+   input_setKeybind( "autohail", KEYBIND_KEYBOARD, SDLK_y, KMOD_LCTRL );
    /* Misc. */
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_ALL );
@@ -845,6 +847,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("hail") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_hail();
+      }
+   } else if (KEY("autohail") && INGAME() && NOHYP() && NODEAD() && !repeat) {
+      if (value==KEY_PRESS) {
+         player_autohail();
       }
 
 

@@ -78,7 +78,16 @@ extern glColour cShield;
 extern glColour cArmour;
 extern glColour cEnergy;
 extern glColour cFuel;
-
+/* Deiz's Super Font Palette */
+extern glColour cFontRed;
+extern glColour cFontGreen;
+extern glColour cFontBlue;
+extern glColour cFontYellow;
+extern glColour cFontWhite;
+extern glColour cFontPurple;
+extern glColour cFontFriendly;
+extern glColour cFontHostile;
+extern glColour cFontNeutral;
 
 glColour* col_fromName( const char* name );
 

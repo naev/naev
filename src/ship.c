@@ -341,10 +341,10 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
    /* Fighter Stuff. */
-   DESC_ADD(s->accuracy_forward,"Accuracy (Forward)");
-   DESC_ADD(s->damage_forward,"Damage (Forward)");
-   DESC_ADD(s->firerate_forward,"Fire Rate (Forward)");
-   DESC_ADD(s->energy_forward,"Energy Usage (Forward)");
+   DESC_ADD(s->accuracy_forward,"Accuracy (Cannon)");
+   DESC_ADD(s->damage_forward,"Damage (Cannon)");
+   DESC_ADD(s->firerate_forward,"Fire Rate (Cannon)");
+   DESC_ADD(s->energy_forward,"Energy Usage (Cannon)");
    /* Cruiser Stuff. */
    DESC_ADD(s->accuracy_turret,"Accuracy (Turret)");
    DESC_ADD(s->damage_turret,"Damage (Turret)");
