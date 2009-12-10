@@ -1184,6 +1184,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dam_mod   = 0.;
 
       if (!pilot_isFlag(p, PILOT_DEAD)) {
+         pilot_setFlag( p, PILOT_DISABLED ); /* Player isn't disabled so we must disable here. */
          pilot_dead(p);
 
          /* adjust the combat rating based on pilot mass and ditto faction */

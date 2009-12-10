@@ -93,6 +93,17 @@ glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armo
 glColour cEnergy        =  { .r = 0.2, .g = 0.8, .b = 0.2, .a = 1.  }; /**< Energy bar colour. */
 glColour cFuel          =  { .r = 0.9, .g = 0.1, .b = 0.4, .a = 1.  }; /**< Fuel bar colour. */
 
+/* Deiz's Super Font Palette */
+
+glColour cFontRed       =  { .r = .8, .g = 0.25, .b = 0.25, .a = 1. };
+glColour cFontGreen     =  { .r = 0.6, .g = 0.8, .b = 0.25, .a = 1. };
+glColour cFontBlue      =  { .r = 0.25, .g = 0.6, .b = 0.8, .a = 1. };
+glColour cFontYellow    =  { .r = 0.9, .g = 0.7, .b = 0.25, .a = 1. };
+glColour cFontWhite     =  { .r = 0.8, .g = 0.8, .b = 0.8, .a = 1.  };
+glColour cFontPurple    =  { .r = 0.7, .g = 0.35, .b = 0.7, .a = 1.  };
+glColour cFontFriendly  =  { .r = 0.6, .g = 0.8, .b = 0.25, .a = 1. };
+glColour cFontHostile   =  { .r = .8, .g = 0.25, .b = 0.25, .a = 1. };
+glColour cFontNeutral   =  { .r = 0.2, .g = 0.2, .b = 0.8, .a = 1.  };
 
 /**
  * @brief Changes colourspace from HSV to RGB.
