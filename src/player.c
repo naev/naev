@@ -530,6 +530,9 @@ void player_swapShip( char* shipname )
          /* move cargo over */
          pilot_moveCargo( ship, player );
 
+         /* Fill the tank. */
+         land_checkAddRefuel();         
+
          /* Store position. */
          vectcpy( &v, &player->solid->pos );
 
