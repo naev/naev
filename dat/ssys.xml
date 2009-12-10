@@ -56,7 +56,7 @@
    <jump>Tau Prime</jump>
    <jump>Toaxis</jump>
    <jump>Zacron</jump>
-	<jump>Draconis</jump>
+	<jump>Surano</jump>
 	<jump>Arcanis</jump>
   </jumps>
   <pos>
@@ -1160,7 +1160,7 @@
    <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
-   <jump>Draconis</jump>
+   <jump>Surano</jump>
    <jump>Eridani</jump>
    <jump>Thorndyke</jump>
   </jumps>
@@ -1223,15 +1223,36 @@
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
-   <jump>Mizar</jump>
-	<jump>Raelid</jump>
   </jumps>
   <pos>
-   <y>-33</y>
-   <x>220</x>
+   <y>-40</y>
+   <x>190</x>
   </pos>
   <planets>
    <planet>Zabween</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>100</interference>
+   <nebula volatility="0">100</nebula>
+   <stars>600</stars>
+  </general>
+ </ssys>
+ <ssys name="Surano">
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Raelid</jump>
+   <jump>Mizar</jump>
+  </jumps>
+  <pos>
+   <y>-40</y>
+   <x>250</x>
+  </pos>
+  <planets>
   </planets>
   <general>
    <asteroids>0</asteroids>

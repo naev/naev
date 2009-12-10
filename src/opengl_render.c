@@ -106,6 +106,10 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    GLfloat vertex[4*2], col[4*4];
 
    /* Set the vertex. */
+   /*   1--2
+    *   |  |
+    *   3--4
+    */
    vertex[0] = (GLfloat)x;
    vertex[4] = vertex[0];
    vertex[2] = vertex[0] + (GLfloat)w;
@@ -140,6 +144,76 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+
+   /* Check errors. */
+   gl_checkErr();
+}
+
+
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param x X position to render rectangle at.
+ *    @param y Y position to render rectangle at.
+ *    @param w Rectangle width.
+ *    @param h Rectangle height.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
+{
+   GLfloat vx, vy, vxw, vyh;
+   GLfloat vertex[5*2], col[5*4];
+
+   /* Helper variables. */
+   vx  = (GLfloat) x;
+   vy  = (GLfloat) y;
+   vxw = vx + (GLfloat) w;
+   vyh = vy + (GLfloat) h;
+
+   /* Set the vertex. */
+   vertex[0] = vx;
+   vertex[1] = vy;
+   vertex[2] = vxw;
+   vertex[3] = vy;
+   vertex[4] = vxw;
+   vertex[5] = vyh;
+   vertex[6] = vx;
+   vertex[7] = vyh;
+   vertex[8] = vx;
+   vertex[9] = vy;
+   gl_vboSubData( gl_renderVBO, 0, sizeof(vertex), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set the colour. */
+   col[0] = c->r;
+   col[1] = c->g;
+   col[2] = c->b;
+   col[3] = c->a;
+   col[4] = col[0];
+   col[5] = col[1];
+   col[6] = col[2];
+   col[7] = col[3];
+   col[8] = col[0];
+   col[9] = col[1];
+   col[10] = col[2];
+   col[11] = col[3];
+   col[12] = col[0];
+   col[13] = col[1];
+   col[14] = col[2];
+   col[15] = col[3];
+   col[16] = col[0];
+   col[17] = col[1];
+   col[18] = col[2];
+   col[19] = col[3];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, sizeof(col), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_LINE_STRIP, 0, 5 );
 
    /* Clear state. */
    gl_vboDeactivate();
@@ -410,6 +484,28 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 
 
 /**
+ * @brief Convertes ingame coordinates to screen coordinates.
+ *
+ *    @param[out] nx New screen X coord.
+ *    @param[out] ny New screen Y coord.
+ *    @param bx Game X coord to translate.
+ *    @param by Game Y coord to translate.
+ */
+void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
+{
+   double cx,cy, gx,gy;
+
+   /* Get parameters. */
+   gl_cameraGet( &cx, &cy );
+   gui_getOffset( &gx, &gy );
+
+   /* calculate position - we'll use relative coords to player */
+   *nx = (bx - cx + gx) * gl_cameraZ;
+   *ny = (by - cy + gy) * gl_cameraZ;
+}
+
+
+/**
  * @brief Blits a sprite, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all
@@ -425,15 +521,10 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, w,h, tx,ty, cx,cy, gx,gy;
+   double x,y, w,h, tx,ty;
 
-   /* Get parameters. */
-   gl_cameraGet( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-
-   /* calculate position - we'll use relative coords to player */
-   x = (bx - cx - sprite->sw/2. + gx) * gl_cameraZ;
-   y = (by - cy - sprite->sh/2. + gy) * gl_cameraZ;
+   /* Translate coords. */
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
 
    /* Scaled sprite dimensions. */
    w = sprite->sw*gl_cameraZ;
@@ -474,15 +565,10 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       const int sx, const int sy, const glColour *c )
 {
-   double x,y, w,h, tx,ty, cx,cy, gx,gy;
+   double x,y, w,h, tx,ty;
 
-   /* Get parameters. */
-   gl_cameraGet( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-
-   /* calculate position - we'll use relative coords to player */
-   x = (bx - cx - sa->sw/2. + gx) * gl_cameraZ;
-   y = (by - cy - sa->sh/2. + gy) * gl_cameraZ;
+   /* Translate coords. */
+   gl_gameToScreenCoords( &x, &y, bx - sa->sw/2., by - sa->sh/2. );
 
    /* Scaled sprite dimensions. */
    w = sa->sw*gl_cameraZ;

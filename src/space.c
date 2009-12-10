@@ -755,7 +755,7 @@ void space_init ( const char* sysname )
       cur_system = systems_stack+i;
 
       nt = ntime_pretty(0);
-      player_message("Entering System %s on %s.", sysname, nt);
+      player_message("\epEntering System %s on %s.", sysname, nt);
       free(nt);
 
       /* Handle background */

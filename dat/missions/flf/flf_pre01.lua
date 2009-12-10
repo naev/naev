@@ -192,8 +192,8 @@ end
 function spawnbase()
     local mindist = 2000 -- definitely OOR.
     for i, j in ipairs(fleetFLF) do
-            mindist = math.min(mindist, vec2.dist(j:pos(), waypoint0))
         if j:exists() then
+            mindist = math.min(mindist, vec2.dist(j:pos(), waypoint0))
         end
     end
     if mindist < 1000 then

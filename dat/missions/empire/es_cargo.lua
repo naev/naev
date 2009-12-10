@@ -54,12 +54,12 @@ function create()
 
    -- mission generics
    misn_type = "Cargo"
-   i = rnd.int(1)
+   i = rnd.rnd(1)
    misn.setTitle( string.format(title[i+1], pnt:name()) )
 
    -- more mission specifics
-   carg_mass = rnd.int( 10, 30 )
-   i = rnd.int(12)
+   carg_mass = rnd.rnd( 10, 30 )
+   i = rnd.rnd(12)
    if i < 5 then
       carg_type = "Food"
    elseif i < 8 then
@@ -73,13 +73,13 @@ function create()
    end
 
    misn_time = time.get() + time.units(5) +
-         rnd.int(time.units(6), time.units(8)) * misn_dist
+         rnd.rnd(time.units(6), time.units(8)) * misn_dist
    misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
          pnt:name(), sys:name(),
          time.str(misn_time), time.str(misn_time-time.get())) )
-   reward = misn_dist * carg_mass * (500+rnd.int(250)) +
-         carg_mass * (250+rnd.int(150)) +
-         rnd.int(2500)
+   reward = misn_dist * carg_mass * (500+rnd.rnd(250)) +
+         carg_mass * (250+rnd.rnd(150)) +
+         rnd.rnd(2500)
    misn.setReward( string.format( misn_reward, reward ) )
 end
 
@@ -94,7 +94,7 @@ function accept()
       hook.land( "land" ) -- only hook after accepting
       hook.time( "timeup" )
    else
-      tk.msg( msg_title[2], msg_title[2] )
+      tk.msg( msg_title[2], msg_msg [2] )
       misn.finish()
    end
 end
@@ -118,7 +118,7 @@ function land()
 
          -- increase faction
          if player.getFaction("Empire") < 50 then
-            player.modFaction("Empire", rnd.int(5))
+            player.modFaction("Empire", rnd.rnd(5))
          end
 
          misn.finish(true)

@@ -28,6 +28,12 @@ void gl_cameraZoomGet( double * zoom );
 
 
 /*
+ * Coordinate translation.
+ */
+void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
+
+
+/*
  * Rendering.
  */
 /* blits texture */
@@ -68,6 +74,7 @@ void gl_drawCircleInRect( const double x, const double y, const double r,
       const glColour *c, int filled );
 
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
+void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
 
 
 #endif /* OPENGL_RENDER_H */

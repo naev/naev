@@ -1802,7 +1802,11 @@
    <commodities>
     <commodity>Ore</commodity>
    </commodities>
-   <services>31</services>
+   <services>
+    <land />
+    <refuel />
+    <bar />
+   </services>
    <class>0</class>
    <population>1000</population>
   </general>

@@ -62,6 +62,7 @@ glColour cLightBlue  = { .r=0.40, .g=0.40, .b=1.00, .a=1. }; /**< Light Blue */
 glColour cCyan       = { .r=0.00, .g=1.00, .b=1.00, .a=1. }; /* Cyan. */
 /* Purples. */
 glColour cPurple     = { .r=0.90, .g=0.10, .b=0.90, .a=1. }; /**< Purple */
+glColour cDarkPurple = { .r=0.68, .g=0.18, .b=0.64, .a=1. }; /**< Dark Purple */
 /* Browns. */
 glColour cBrown      = { .r=0.59, .g=0.28, .b=0.00, .a=1. }; /**< Brown */
 /* Misc. */

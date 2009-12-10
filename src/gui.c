@@ -47,6 +47,7 @@
 #include "music.h"
 #include "nmath.h"
 #include "gui_osd.h"
+#include "conf.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -144,8 +145,6 @@ typedef struct GUI_ {
    double tr; /**< Top right. */
    double bl; /**< Bottom left. */
    double br; /**< Bottom right. */
-   double border_h;
-   double border_w;
 
    /* graphics */
    glTexture *gfx_frame; /**< Frame of the GUI. */
@@ -190,13 +189,12 @@ static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX   128 /**< Maxmimu message length. */
-static double mesg_timeout = 30.; /**< How long it takes for a message to timeout. */
-static double mesg_fadeout = 5.; /**< When it sohuld start fading out. */
-static int mesg_max = 16; /**< Maximum messages onscreen */
-static int mesg_visible = 5; /**< Number of visible messages. */
-static int mesg_pointer = 0; /**< Current pointer message is at (for when scrolling. */
-static int mesg_viewpoint = 0; /**< Position of viewing. */
+#define MESG_SIZE_MAX        256 /**< Maxmimu message length. */
+static int mesg_max        = 128; /**< Maximum messages onscreen */
+static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
+static int mesg_viewpoint  = -1; /**< Position of viewing. */
+static double mesg_timeout = 15.; /**< Timeout length. */
+static double mesg_fade    = 5.; /**< Fade length. */
 /**
  * @struct Mesg
  * 
@@ -204,7 +202,7 @@ static int mesg_viewpoint = 0; /**< Position of viewing. */
  */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
-   double t; /**< Timer related to message. */
+   double t;
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 
@@ -229,6 +227,7 @@ static void rect_parse( const xmlNodePtr parent,
 static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanupBar( HealthBar *bar );
+static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget( double dt );
 static void gui_renderPlanetTarget( double dt );
@@ -255,19 +254,104 @@ void gui_setDefaults (void)
 
 
 /**
+ * @brief Scrolls up the message box.
+ *
+ *    @param lines Number of lines to scroll up.
+ */
+void gui_messageScrollUp( int lines )
+{
+   int o;
+
+   /* Handle hacks. */
+   if (mesg_viewpoint == -1) {
+      mesg_viewpoint = mesg_pointer;
+      return;
+   }
+
+   /* Get offset. */
+   o  = mesg_pointer - mesg_viewpoint;
+   if (o < 0)
+      o += mesg_max;
+   o = mesg_max - 2*conf.mesg_visible - o;
+
+   /* Calculate max line movement. */
+   if (lines > o)
+      lines = o;
+
+   /* Move viewpoint. */
+   mesg_viewpoint = (mesg_viewpoint - lines) % mesg_max;
+}
+
+
+/**
+ * @brief Scrolls up the message box.
+ *
+ *    @param lines Number of lines to scroll up.
+ */
+void gui_messageScrollDown( int lines )
+{
+   int o;
+
+   /* Handle hacks. */
+   if (mesg_viewpoint == mesg_pointer) {
+      mesg_viewpoint = -1;
+      return;
+   }
+   else if (mesg_viewpoint == -1)
+      return;
+
+   /* Get offset. */
+   o  = mesg_pointer - mesg_viewpoint;
+   if (o < 0)
+      o += mesg_max;
+
+   /* Calculate max line movement. */
+   if (lines > o)
+      lines = o;
+
+   /* Move viewpoint. */
+   mesg_viewpoint = (mesg_viewpoint + lines) % mesg_max;
+}
+
+
+/**
  * @brief Adds a mesg to the queue to be displayed on screen.
  *
  *    @param str Message to add.
  */
-void player_messageRaw ( const char *str )
+void player_messageRaw( const char *str )
 {
-   /* Move pointer. */
-   mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   mesg_viewpoint = mesg_pointer;
+   int i, p, l;
 
-   /* add the new one */
-   strncpy( mesg_stack[mesg_pointer].str, str, MESG_SIZE_MAX );
-   mesg_stack[mesg_pointer].t = mesg_timeout;
+   /* Get length. */
+   l = strlen(str);
+   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. );
+   p = 0;
+   while (p < l) {
+      /* Move pointer. */
+      mesg_pointer   = (mesg_pointer + 1) % mesg_max;
+      if (mesg_viewpoint != -1)
+         mesg_viewpoint++;
+
+      /* Buffer overrun safety. */
+      if (i > MESG_SIZE_MAX-1)
+         i = MESG_SIZE_MAX-1;
+
+      /* Add the new one */
+      if (p == 0)
+         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+      else {
+         mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
+         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+      }
+      mesg_stack[mesg_pointer].t = mesg_timeout;
+
+      /* Get length. */
+      i  = gl_printWidthForText( NULL, &str[p], gui.mesg.w - 15. );
+      p += i;
+      if ((str[p] == '\n') || (str[p] == ' '))
+         p++; /* Skip "empty char". */
+   }
 }
 
 /**
@@ -275,24 +359,22 @@ void player_messageRaw ( const char *str )
  *
  *    @param fmt String with formatting like printf.
  */
-void player_message ( const char *fmt, ... )
+void player_message( const char *fmt, ... )
 {
    va_list ap;
+   char buf[1024];
 
    /* Must be non-null. */
    if (fmt == NULL)
       return;
 
-   /* Move pointer. */
-   mesg_pointer   = (mesg_pointer + 1) % mesg_max;
-   mesg_viewpoint = mesg_pointer;
-
-   /* add the new one */
+   /* Add the new one */
    va_start(ap, fmt);
-   vsnprintf( mesg_stack[mesg_pointer].str, MESG_SIZE_MAX, fmt, ap );
+   vsnprintf( buf, sizeof(buf), fmt, ap );
    va_end(ap);
 
-   mesg_stack[mesg_pointer].t = mesg_timeout;
+   /* Add the message. */
+   player_messageRaw( buf );
 }
 
 
@@ -412,6 +494,52 @@ static void gui_renderPilotTarget( double dt )
 
 
 /**
+ * @brief Gets the intersection with the border.
+ *
+ * http://en.wikipedia.org/wiki/Intercept_theorem
+ *
+ *    @param[out] cx X intersection.
+ *    @param[out] cy Y intersection.
+ *    @param rx Center X position of intersection.
+ *    @param ry Center Y position of intersection.
+ *    @param hw Screen half-width.
+ *    @param hh Screen half-height.
+ */
+static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh )
+{
+   double a;
+   double w, h;
+
+   /* Get angle. */
+   a = atan2( ry, rx );
+   if (a < 0.)
+      a += 2.*M_PI;
+
+   /* Helpers. */
+   w = hw-7.;
+   h = hh-7.;
+
+   /* Handle by quadrant. */
+   if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+      *cx = h * (rx/ry);
+      *cy = h;
+   }
+   else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
+      *cx = -w;
+      *cy = -w * (ry/rx);
+   }
+   else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+      *cx = -h * (rx/ry);
+      *cy = -h;
+   }
+   else { /* Right. */
+      *cx = w;
+      *cy = w * (ry/rx);
+   }
+}
+
+
+/**
  * @brief Renders the ships/planets in the border.
  *
  *    @param dt Current delta tick.
@@ -424,20 +552,18 @@ static void gui_renderBorder( double dt )
    Pilot *plt;
    Planet *pnt;
    glTexture *tex;
-   Vector2d *pos;
    int hw, hh;
    int cw, ch;
    double rx,ry, crx,cry;
    double cx,cy;
    glColour *col;
-   double a, int_a;
+   double int_a;
    GLfloat vertex[5*2], colours[5*4];
 
    /* Get zoom. */
    gl_cameraZoomGet( &z );
 
    /* Get player position. */
-   pos   = &player->solid->pos;
    hw    = SCREEN_W/2; 
    hh    = SCREEN_H/2;
 
@@ -454,8 +580,8 @@ static void gui_renderBorder( double dt )
          continue;
 
       /* Get relative positions. */
-      rx = (pnt->pos.x - player->solid->pos.x) * z;
-      ry = (pnt->pos.y - player->solid->pos.y) * z;
+      rx = (pnt->pos.x - player->solid->pos.x)*z;
+      ry = (pnt->pos.y - player->solid->pos.y)*z;
 
       /* Correct for offset. */
       crx = rx - gui_xoff;
@@ -467,31 +593,9 @@ static void gui_renderBorder( double dt )
 
       /* Check if out of range. */
       if ((ABS(crx) > cw) || (ABS(cry) > ch)) {
-         /* Get angle. */
-         a = atan2( ry, rx );
-         if (a < 0.)
-            a += 2.*M_PI;
 
-         /* Handle by quadrant. */
-         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
-            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
-            cy = hh-7.;
-         }
-         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
-            cx = -hw+7.;
-            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
-         }
-         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
-            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
-            cy = -hh+7.;
-         }
-         else { /* Right. */
-            if (a > gui.tr)
-               a -= 2.*M_PI;
-            cx = hw-7.;
-            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
-         }
-
+         /* Get border intersection. */
+         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          /* Set up colours. */
          col = gui_getPlanetColour(i);
@@ -546,30 +650,9 @@ static void gui_renderBorder( double dt )
 
       /* Check if out of range. */
       if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
-         /* Get angle. */
-         a = atan2( ry, rx );
-         if (a < 0.)
-            a += 2.*M_PI;
 
-         /* Handle by quadrant. */
-         if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
-            cx = 2. * (hw-7.) * (M_PI/2. - a) / gui.border_w;
-            cy = hh-7.;
-         }
-         else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
-            cx = -hw+7.;
-            cy = 2. * (hh-7.) * (M_PI - a) / gui.border_h;
-         }
-         else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
-            cx = 2. * (hw-7.) * (a - 3./2.*M_PI) / gui.border_w;
-            cy = -hh+7.;
-         }
-         else { /* Right. */
-            if (a > gui.tr)
-               a -= 2.*M_PI;
-            cx = hw-7.;
-            cy = 2. * (hh-7.) * (a - 0.) / gui.border_h;
-         }
+         /* Get border intersection. */
+         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          /* Set up colours. */
          col = gui_getPilotColour(plt);
@@ -1005,9 +1088,7 @@ static void gui_renderRadar( double dt )
  */
 void gui_clearMessages (void)
 {
-   int i;
-   for (i=0; i<mesg_max; i++)
-      mesg_stack[i].t = -1.;
+   memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
 
 
@@ -1018,42 +1099,90 @@ void gui_clearMessages (void)
  */
 static void gui_renderMessages( double dt )
 {
-   double x, y;
-   glColour c;
-   int i, m;
+   double x, y, h, hs, vx, vy;
+   int v, i, m, o;
+   glColour c, cb;
 
+   /* Coordinate translation. */
    x = gui.mesg.x;
    y = gui.mesg.y;
-   c.r = c.g = c.b = 1.;
 
-   for (i=0; i<mesg_visible; i++) {
+   /* Handle viewpoint hacks. */
+   v = mesg_viewpoint;
+   if (v == -1)
+      v = mesg_pointer;
+
+   /* Colour. */
+   c.r = 1.;
+   c.g = 1.;
+   c.b = 1.;
+
+   if (mesg_viewpoint != -1) {
+      /* Colour. */
+      cb.r = 0.;
+      cb.g = 0.;
+      cb.b = 0.;
+      cb.a = 0.4;
+
+      /* Set up position. */
+      vx = gui.mesg.x - SCREEN_W/2.;
+      vy = gui.mesg.y - SCREEN_H/2.;
+
+      /* Data. */
+      h  = conf.mesg_visible*gl_defFont.h*1.2;
+      hs = h*(double)conf.mesg_visible/(double)mesg_max;
+      o  = mesg_pointer - mesg_viewpoint;
+      if (o < 0)
+         o += mesg_max;
+
+      /* Render background. */
+      gl_renderRect( vx-2., vy-2., gui.mesg.w-13., h+4., &cb );
+   }
+
+   /* Render text. */
+   for (i=0; i<conf.mesg_visible; i++) {
       /* Reference translation. */
-      m  = (mesg_viewpoint - i) % mesg_max;
+      m  = (v - i) % mesg_max;
       if (m < 0)
          m += mesg_max;
 
-      /* Only handle non-NULL messages. */
-      if (mesg_stack[m].str[0] != '\0') {
-
+      /* Timer handling. */
+      if ((mesg_viewpoint != -1) || (mesg_stack[m].t >= 0.)) {
          /* Decrement timer. */
-         mesg_stack[m].t -= dt;
+         if (mesg_viewpoint == -1) {
+            mesg_stack[m].t -= dt;
 
-         /* Set to NULL if timer is up. */
-         if (mesg_stack[m].t < 0.)
-            mesg_stack[m].str[0] = '\0';
-
-         /* Draw with variable alpha. */
-         else {
-            if (mesg_stack[m].t - mesg_fadeout < 0.)
-               c.a = mesg_stack[m].t / mesg_fadeout;
+            /* Handle fading out. */
+            if (mesg_stack[m].t - mesg_fade < 0.)
+               c.a = mesg_stack[m].t / mesg_fade;
             else
                c.a = 1.;
-            gl_print( NULL, x, y, &c, "%s", mesg_stack[m].str );
+         }
+         else
+            c.a = 1.;
+
+         /* Only handle non-NULL messages. */
+         if (mesg_stack[m].str[0] != '\0') {
+            if (mesg_stack[m].str[0] == '\t')
+               gl_printMaxRaw( NULL, gui.mesg.w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
+            else
+               gl_printMaxRaw( NULL, gui.mesg.w - 15., x, y, &c, mesg_stack[m].str );
          }
       }
 
       /* Increase position. */
       y += (double)gl_defFont.h*1.2;
+   }
+
+   /* Render position. */
+   if (mesg_viewpoint != -1) {
+      /* Border. */
+      c.a = 0.2;
+      gl_renderRect( vx + gui.mesg.w-10., vy, 10, h, &c );
+
+      /* Inside. */
+      c.a = 0.5;
+      gl_renderRect( vx + gui.mesg.w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
    }
 }
 
@@ -1599,6 +1728,7 @@ int gui_init (void)
     */
    gui.mesg.x = 20;
    gui.mesg.y = 30;
+   gui.mesg.w = SCREEN_W - 400;
    if (mesg_stack == NULL) {
       mesg_stack = calloc(mesg_max, sizeof(Mesg));
       if (mesg_stack == NULL) {
@@ -1635,8 +1765,6 @@ int gui_init (void)
    gui.br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
    if (gui.br < 0.)
       gui.br += 2*M_PI;
-   gui.border_h   = gui.bl - gui.tl;
-   gui.border_w   = gui.tl - gui.tr;
 
    /*
     * Icons.
@@ -2177,7 +2305,7 @@ void gui_setRadarRel( int mod )
    gui.radar.res += mod * RADAR_RES_INTERVAL;
    gui.radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui.radar.res );
 
-   player_message( "Radar set to %dx.", (int)gui.radar.res );
+   player_message( "\epRadar set to %dx.", (int)gui.radar.res );
 }
 
 

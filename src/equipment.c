@@ -855,6 +855,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    int ret;
    Outfit *o, *ammo;
    int q;
+   double f;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -894,8 +895,17 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
 
       /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
-      if (ret == 1)
+      if (ret == 1) {
+         /* Handle possible fuel changes. */
+         f = eq_wgt.selected->fuel;
+
+         /* Add the outfit. */
          pilot_addOutfit( eq_wgt.selected, o, slot );
+
+         /* Don't "gain" fuel. */
+         if (eq_wgt.selected->fuel > f)
+            eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
+      }
 
       equipment_addAmmo();
    }

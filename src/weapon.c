@@ -274,9 +274,9 @@ void weapon_toggleSafety (void)
    weapon_safety = !weapon_safety;
 
    if (weapon_safety)
-      player_message( "Enabling weapon safety." );
+      player_message( "\ebEnabling weapon safety." );
    else
-      player_message( "Disabling weapon safety." );
+      player_message( "\ebDisabling weapon safety." );
 }
 
 
@@ -948,6 +948,10 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
    /* Must be a valid shooter. */
    if (shooter == NULL)
+      return;
+
+   /* Must not be disabled. */
+   if (pilot_isDisabled(p))
       return;
 
    /* Player is handled differently. */

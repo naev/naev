@@ -324,6 +324,10 @@ static int load_game( const char* file )
    missions_cleanup();
    events_cleanup();
 
+   /* Welcome message - must be before space_init. */
+   player_message( "\egWelcome to "APPNAME"!" );
+   player_message( "\eg v%d.%d.%d", VMAJOR, VMINOR, VREV );
+
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
    player_load(node);
