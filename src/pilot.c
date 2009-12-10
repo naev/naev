@@ -1483,8 +1483,8 @@ void pilot_renderOverlay( Pilot* p, const double dt )
          }
          /* Render. */
          gl_blitSprite( ico_hail,
-               p->solid->pos.x + PILOT_SIZE_APROX*p->ship->gfx_space->sw/2.,
-               p->solid->pos.y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.,
+               p->solid->pos.x + PILOT_SIZE_APROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
+               p->solid->pos.y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }

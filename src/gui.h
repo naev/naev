@@ -32,6 +32,7 @@ void gui_cleanup (void);
 /*
  * render
  */
+void gui_renderReticles( double dt );
 void gui_render( double dt );
 
 /*

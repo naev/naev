@@ -387,7 +387,6 @@ static void gui_renderPlanetTarget( double dt )
 {
    (void) dt;
    double x,y;
-   double sx, sy;
    glColour *c;
    Planet* planet;
 
@@ -411,11 +410,8 @@ static void gui_renderPlanetTarget( double dt )
 
    c = faction_getColour(planet->faction);
 
-   /* Get shake into account. */
-   spfx_getShake( &sx, &sy );
-
-   x = planet->pos.x - planet->gfx_space->sw/2. - sx;
-   y = planet->pos.y + planet->gfx_space->sh/2. - sy;
+   x = planet->pos.x - planet->gfx_space->sw/2.;
+   y = planet->pos.y + planet->gfx_space->sh/2.;
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
 
    x += planet->gfx_space->sw;
@@ -440,7 +436,6 @@ static void gui_renderPilotTarget( double dt )
    Pilot *p;
    glColour *c;
    double x, y;
-   double sx, sy;
 
    /* Player is most likely dead. */
    if (gui.gfx_targetPilot == NULL)
@@ -475,11 +470,8 @@ static void gui_renderPilotTarget( double dt )
    else
       c = faction_getColour(p->faction);
 
-   /* Get shake into account. */
-   spfx_getShake( &sx, &sy );
-
-   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2. - sx;
-   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. - sy;
+   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
+   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
    gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
 
    x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
@@ -687,6 +679,18 @@ static void gui_renderBorder( double dt )
 }
 
 
+/**
+ * @brief Renders the gui targetting reticles.
+ *
+ * @param dt Current deltatick.
+ */
+void gui_renderReticles( double dt )
+{
+   gui_renderPlanetTarget(dt);
+   gui_renderPilotTarget(dt);
+}
+
+
 static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
 /**
  * @brief Renders the player's GUI.
@@ -725,8 +729,6 @@ void gui_render( double dt )
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
-   gui_renderPlanetTarget(dt);
-   gui_renderPilotTarget(dt);
 
    /* Lockon warning */
    if (player->lockons > 0)

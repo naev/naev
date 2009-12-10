@@ -1824,6 +1824,9 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
 
          /* Must regenerate outfits. */
          switch (i) {
+            case LAND_WINDOW_MAIN:
+               land_checkAddRefuel();
+               break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
                outfits_updateQuantities( w );

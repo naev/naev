@@ -873,10 +873,16 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
             player_addOutfit( ammo, q );
       }
 
+      /* Handle possible fuel changes. */
+      f = eq_wgt.selected->fuel;
+
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
+
+      /* Don't "gain" fuel. */
+      eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
    }
    /* Add outfit. */
    else {
@@ -903,8 +909,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          pilot_addOutfit( eq_wgt.selected, o, slot );
 
          /* Don't "gain" fuel. */
-         if (eq_wgt.selected->fuel > f)
-            eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
+         eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
       }
 
       equipment_addAmmo();
@@ -1392,8 +1397,12 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int i;
    Pilot *ship;
    Outfit *o, *ammo;
+   double f;
 
    ship = eq_wgt.selected;
+
+   /* Handle possible fuel changes. */
+   f = eq_wgt.selected->fuel;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
@@ -1416,7 +1425,11 @@ static void equipment_unequipShip( unsigned int wid, char* str )
          player_addOutfit( o, 1 );
    }
 
+   /* Recalculate stats. */
    pilot_calcStats( ship );
+
+   /* Don't "gain" fuel. */
+   eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
 
    /* Regenerate list. */
    equipment_regenLists( wid, 1, 1 );
