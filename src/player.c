@@ -530,9 +530,6 @@ void player_swapShip( char* shipname )
          /* move cargo over */
          pilot_moveCargo( ship, player );
 
-         /* Fill the tank. */
-         land_checkAddRefuel();         
-
          /* Store position. */
          vectcpy( &v, &player->solid->pos );
 
@@ -551,6 +548,9 @@ void player_swapShip( char* shipname )
 
          /* Copy position back. */
          vectcpy( &player->solid->pos, &v );
+
+         /* Fill the tank. */
+         land_checkAddRefuel();         
 
          gl_cameraBind( &player->solid->pos ); /* don't forget the camera */
          return;
