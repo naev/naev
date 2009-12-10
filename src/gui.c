@@ -687,6 +687,18 @@ static void gui_renderBorder( double dt )
 }
 
 
+/**
+ * @brief Renders the gui targetting reticles.
+ *
+ * @param dt Current deltatick.
+ */
+void gui_renderReticles( double dt )
+{
+   gui_renderPlanetTarget(dt);
+   gui_renderPilotTarget(dt);
+}
+
+
 static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
 /**
  * @brief Renders the player's GUI.
@@ -725,8 +737,6 @@ void gui_render( double dt )
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
-   gui_renderPlanetTarget(dt);
-   gui_renderPilotTarget(dt);
 
    /* Lockon warning */
    if (player->lockons > 0)

@@ -678,6 +678,7 @@ static void render_all (void)
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
    spfx_end();
+   gui_renderReticles(dt);
    pilots_renderOverlay(dt);
    gui_render(dt);
    display_fps( real_dt ); /* Exception. */
