@@ -1485,8 +1485,13 @@ void land_checkAddRefuel (void)
    }
 
    /* Full fuel. */
-   if (player->fuel >= player->fuel_max)
+   if (player->fuel >= player->fuel_max) {
+      if (widget_exists( land_windows[0], "btnRefuel" ))
+         window_destroyWidget( land_windows[0], "btnRefuel" );
+      if (widget_exists( land_windows[0], "txtRefuel" ))
+         window_destroyWidget( land_windows[0], "txtRefuel" );
       return;
+   }
 
    /* Autorefuel. */
    if (conf.autorefuel) {
