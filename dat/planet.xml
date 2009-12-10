@@ -2047,4 +2047,11 @@
    <population>1000</population>
   </general>
  </planet>
+ <asset name="Empire Patrol 100">
+  <general>
+   <faction>Empire</faction>
+  </general>
+  <value>100</value>
+  <range>0</range>
+ </asset>
 </Planets>
