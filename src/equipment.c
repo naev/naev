@@ -903,8 +903,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          pilot_addOutfit( eq_wgt.selected, o, slot );
 
          /* Don't "gain" fuel. */
-         if (eq_wgt.selected->fuel > f)
-            eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
+         eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
       }
 
       equipment_addAmmo();
