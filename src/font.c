@@ -845,7 +845,7 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
          case 'b': ACOLOUR(cFontBlue,a); break;
          case 'y': ACOLOUR(cFontYellow,a); break;
          case 'w': ACOLOUR(cFontWhite,a); break;
-         case 'p': ACOLOUR(cDarkPurple,a); break;
+         case 'p': ACOLOUR(cFontPurple,a); break;
          /* Fancy states. */
          case 'F': ACOLOUR(cFriend,a); break;
          case 'H': ACOLOUR(cHostile,a); break;
