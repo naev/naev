@@ -88,6 +88,10 @@ typedef struct Planet_ {
    int population; /**< Population of the planet. */
    double prodfactor; /**< Default Production factor of the planet. */
    double cur_prodfactor; /**< Current real production factor of the planet. */
+
+   /* Asset details. */
+   double presenceAmount; /**< The amount of presence this asset exerts. */
+   int presenceRange; /**< The range of presence exertion of this asset. */
   
    /* Landing details. */
    char* description; /**< planet description */
@@ -232,6 +236,8 @@ int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
+void addPresence( StarSystem *sys, int faction, double amount, int range );
+void system_addAllPlanetsPresence( StarSystem *sys );
 extern char* stardate;
 
 

@@ -882,6 +882,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    memset( planet, 0, sizeof(Planet) );
    planet->faction = -1;
    flags = 0;
+   planet->presenceAmount = 0;
+   planet->presenceRange = 0;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -917,6 +919,14 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                flags |= FLAG_YSET;
                planet->pos.y = xml_getFloat(cur);
             }
+         } while(xml_nextNode(cur));
+         continue;
+      }
+      else if (xml_isNode(node, "presence")) {
+         cur = node->children;
+         do {
+            xmlr_float(cur, "value", planet->presenceAmount);
+            xmlr_int(cur, "range", planet->presenceRange);
          } while(xml_nextNode(cur));
          continue;
       }
@@ -1521,6 +1531,10 @@ int space_load (void)
    for (i=0; i<systems_nstack; i++)
       system_calcSecurity(&systems_stack[i]);
 
+   /* Apply all the presences. */
+   for (i=0; i<systems_nstack; i++)
+      system_addAllPlanetsPresence(&systems_stack[i]);
+
    return 0;
 }
 
@@ -1534,27 +1548,16 @@ int space_load (void)
 static int system_calcSecurity( StarSystem *sys )
 {
    int i;
-   double c, mod;
-   Fleet *f;
 
    /* Do not run while loading to speed up. */
    if (systems_loading)
       return 0;
 
    /* Initialise the array if it doesn't exist. */
-   if(sys->presence == NULL)
+   if(sys->presence == NULL) {
       sys->presence = malloc(faction_nstack * sizeof(double));
-
-   /* Defaults. */
-   for(i = 0; i < faction_nstack; i++)
-      sys->presence[i] = 0;
-
-   /* Calculate presence. */
-   for (i=0; i<sys->nfleets; i++) {
-      f     = sys->fleets[i].fleet;
-      c     = (double)sys->fleets[i].chance / 100.;
-      mod   = c * f->strength;
-      sys->presence[f->faction] += mod;
+      for(i = 0; i < faction_nstack; i++)
+         sys->presence[i] = 0;
    }
 
    /* Set security. */
@@ -2048,6 +2051,43 @@ int space_sysLoad( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+
+/**
+ * @brief Adds (or removes) some presence to a system.
+ *
+ *    @param sys Pointer to the system to add to or remove from.
+ *    @param faction The index of the faction to alter presence for.
+ *    @param amount The amount of presence to add (negative to subtract).
+ *    @param range The range of spill of the presence.
+ */
+void addPresence( StarSystem *sys, int faction, double amount, int range ) {
+   int i, curSpill;
+
+   /* Add the presence to the system. */
+   sys->presence[faction] += amount;
+
+   /* Add the spill. */
+   /* TODO */
+
+   return;
+}
+
+
+/**
+ * @brief Go through all the planets and call addPresence().
+ *
+ *    @param sys Pointer to the system to process.
+ */
+void system_addAllPlanetsPresence( StarSystem *sys ) {
+   int i;
+
+   for(i = 0; i < sys->nplanets; i++) {
+      addPresence( sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+   }
+
+   return;
 }
 
 
