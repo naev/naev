@@ -9,6 +9,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
@@ -46,6 +50,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>Rather distinct from traditional Empire bars, the Protera Sigma bar is entirely open and without seats, as the Proteron believe one should stand while eating and drinking. Despite this curiosity, their brews don't stray far from typical Empire faire.</bar>
@@ -83,6 +91,10 @@
    <y>239</y>
    <x>73</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services>
     <land />
@@ -104,6 +116,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.2</prodfactor>
    <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
@@ -137,6 +153,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.2</prodfactor>
    <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past, when it was a frontier world.</bar>
@@ -171,6 +191,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -190,6 +214,10 @@
    <y>77</y>
    <x>-42</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar. A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, it is nonetheless kept immaculately clean. You can only imagine how luxurious the Emperor's personal bar must be.</bar>
@@ -228,6 +256,10 @@
    <y>120</y>
    <x>80</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained, and full of off-duty Empire soldiers.</bar>
@@ -267,6 +299,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices. They are meant to bring warmth and energy in the cold corridors of the base.</bar>
@@ -301,6 +337,10 @@
    <y>17</y>
    <x>394</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty. Though Dvaereds do like to drink, all outpost personnel are under standing orders to remain on alert, given the threat of FLF attack.</bar>
@@ -329,6 +369,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most personnel.</bar>
@@ -356,6 +400,10 @@
    <y>-17</y>
    <x>-57</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -374,6 +422,10 @@
    <y>54</y>
    <x>47</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.8</prodfactor>
    <bar>The Tau Prime algae has a powerful odour which pervades the bar. The air is wreathed in the smell, such that you can taste it. It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, though the liquors the bar serves happen to be made with processed algae.</bar>
@@ -406,6 +458,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.2</prodfactor>
    <bar>The Lost Drunk isn't much of a bar. The high price of most beverages and the low population results in few customers. From what you can see it's mainly shipping pilots and the odd mercenary sitting apart from each other. Not a jolly place.</bar>
@@ -439,6 +495,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The drinks served in the Furnace, as the bar calls itself, are a rather curious sort. They are generally very strong and served at a warm temperature. The house specialties also contain volcanic ash which is harvested on the planet surface. A strange bar indeed.</bar>
@@ -471,6 +531,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
@@ -505,6 +569,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>While not nearly as pristine as many Empire bars, the Praxis bar is remarkably well-kept for a Dvaered bar.</bar>
@@ -541,6 +609,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The spaceport bar is carved from a rich mineral deposit lending the walls a glimmering, reflective quality. The local brews often include minerals in their production process, giving them a rich, somewhat saline taste.</bar>
@@ -576,6 +648,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
@@ -610,6 +686,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
@@ -644,6 +724,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
@@ -671,6 +755,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -689,6 +777,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
@@ -722,6 +814,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
@@ -757,6 +853,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
@@ -791,6 +891,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -810,6 +914,10 @@
    <y>120</y>
    <x>-97</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
@@ -845,6 +953,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>The one word that would describe the Jorcan spaceport bar would be dust. It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces. A coarse soot has coated your palm just holding your drink. You wonder if it will ever wash off.</bar>
@@ -878,6 +990,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the standard Dvaered grogs.</bar>
@@ -913,6 +1029,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
@@ -949,6 +1069,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.6</prodfactor>
    <population>150000</population>
@@ -987,6 +1111,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -1006,6 +1134,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous ship, stripped and refitted in the form of a bar. It's surprisingly comfortable and cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
@@ -1042,6 +1174,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -1061,6 +1197,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.6</prodfactor>
    <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
@@ -1097,6 +1237,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>The bar walls are decorated with pictures of Empire soldiers who have fallen in the fight against Haven and piracy in general. It has become customary for the Empire to post pictures of the fallen, honouring those who gave their lives protecting the Empire's ideals. They are working on another addition to be able to fit more pictures.</bar>
@@ -1134,6 +1278,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.6</prodfactor>
    <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
@@ -1168,6 +1316,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.6</prodfactor>
    <bar>The Norpin II bar isn't the safest place around. With a deep-seated loathing of the Dvaered, the local citizens have brawled with Dvaered soldiers on numerous occasions.</bar>
@@ -1205,6 +1357,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.2</prodfactor>
    <bar>The Raelid bar fits the Dvaered stereotype well. It's one of the more prominent areas as soon as you exit the docking area, and, as many Dvaered bars seem to be, it's much larger than it functionally needs to be. Far from the spotless bars of Polaris Prime, it's encrusted with dirt and you can sense the presence of other patrons by their smell alone. Truly, a Dvaered bar.</bar>
@@ -1234,6 +1390,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <bar>The Dowue Spaceport Bar is better known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. The dangers, even with protective goggles, of the Dowue Syndrome persuade most people to stay indoors, and the bar lies in the heart of the spaceport.</bar>
@@ -1270,6 +1430,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The Antican bar is a rather lavish affair, quite in contrast to the stark exterior of the orbiting military station. Serving some of the Empire's finest food and drink, this Arcturian bar is often a traveller's introduction to Empire cuisine.</bar>
@@ -1305,6 +1469,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -1323,6 +1491,10 @@
    <y>-53</y>
    <x>-77</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.8</prodfactor>
    <bar>The Darkshed canteen is decorated with all sorts of odd artifacts that chronicle trends in spaceship outfitting in the years since the station was established. Scale models of many popular ships hang from the ceiling.</bar>
@@ -1361,6 +1533,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The planet that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
@@ -1398,6 +1574,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>Typical of poorer Dvaered mining worlds, the Nor spaceport bar is cavernous, sparsely decorated and full of drunken Dvaereds trying to forget their hard labour.</bar>
@@ -1433,6 +1613,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -1451,6 +1635,10 @@
    <y>17</y>
    <x>23</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -1468,6 +1656,10 @@
    <y>240</y>
    <x>220</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <services />
    <tech>
@@ -1486,6 +1678,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <bar>The spaceport bar is approximately 3 kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
@@ -1524,6 +1720,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <bar>This bar is the standard-issue model that can be found on unpopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the amenities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis planets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the planet's harsh environment.</bar>
@@ -1556,6 +1756,10 @@
    <y>500</y>
    <x>400</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <description>Gilligan's Light was one of the first systems to ever be chosen for a colonization project, and Dawn was the first world on which humans set foot in this sector of space. Dawn served as a staging point for further colonization of the Frontier during the first expansion of mankind, and as such had a lead start in planetary development. With the advent of hyperspace travel, Dawn found itself the local capital of the Frontier worlds. This status is strictly symbolic, but it explains why the FLF have chosen to rally around Gilligan's Light.</description>
@@ -1588,6 +1792,10 @@
    <y>-80</y>
    <x>-90</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <tech>
     <main>0</main>
@@ -1606,6 +1814,10 @@
    <y>-300</y>
    <x>-100</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <commodities>
@@ -1627,6 +1839,10 @@
    <y>500</y>
    <x>400</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
@@ -1659,6 +1875,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
@@ -1694,6 +1914,10 @@
    <y>-800</y>
    <x>300</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
    <bar>This bar is the only public facility on the station. It is here that free merchants come to do business as well as relax. The bar also doubles as a modest hotel, so at least you won't have to sleep on your ship. Of course, the only difference is that your ship isn't as noisy...</bar>
@@ -1726,6 +1950,10 @@
    <y>80</y>
    <x>-80</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <description>Many people who live in the Empire think of the Dvaered as unsophisticated, brawny louts who spend all day down in the mines and all night picking fights with each other. This is a stereotype, and it's hardly a fair description of Dvaered society as a whole, but it happens to be absolutely accurate when it comes to the Dvaereds on Utsuwa. The colony on this planet is a full-time mining operation, and all who live on Utsuwa work in the mining industry or its peripherals. Needless to say, House Dvaered gets a significant amount of its raw resources from here.</description>
@@ -1761,6 +1989,10 @@
    <y>80</y>
    <x>-80</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <description>Welcome to Totoran, home of the galaxy's biggest and best fighting tournament: The Crimson Gauntlet! With 34 major rankings and 17 deadly arenas, there is always a fight to suit your tastes! Feel the adrenaline rush as you watch the head-to-head duels, team melees and blind hunts careen to their violent finales! Sponsor a contestant, invest in his equipment, see him obliterate his opponents and win a fortune! Snacks available at all licensed outlets.</description>
@@ -1790,6 +2022,10 @@
    <y>0</y>
    <x>0</x>
   </pos>
+  <presence>
+   <value>30</value>
+   <range>2</range>
+  </presence>
   <general>
    <prodfactor>0.4</prodfactor>
    <description>From the outside, FLF station Sindbad looks like a piece of junk. This suits the FLF, as their base isn't meant to stand out. The more travelers believe that the station is just another carcass floating in space, the better. On the inside however, Sindbad looks, well, it still looks like a piece of junk. The FLF have limited resources, and the fact that they have a secret, autonomous outpost at all must be considered an achievement. Still, Sindbad is more than a token resistance. The base has all the facilities and defensive capabilities that befit a structure its size, and while stealth remains the FLF's best protection from their Dvaered oppressors, Sindbad can defend itself if need be.</description>
