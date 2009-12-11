@@ -13,9 +13,9 @@
    <y>-148</y>
    <x>201</x>
   </pos>
-  <planets>
-   <planet>Anecu</planet>
-  </planets>
+  <assets>
+   <asset>Anecu</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -37,7 +37,7 @@
    <y>198</y>
    <x>85</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -63,9 +63,9 @@
    <y>-137</y>
    <x>269</x>
   </pos>
-  <planets>
-   <planet>Raelid Outpost</planet>
-  </planets>
+  <assets>
+   <asset>Raelid Outpost</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -88,9 +88,9 @@
    <y>-55</y>
    <x>38</x>
   </pos>
-  <planets>
-   <planet>Caladan</planet>
-  </planets>
+  <assets>
+   <asset>Caladan</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -111,7 +111,7 @@
    <y>-91</y>
    <x>434</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -131,7 +131,7 @@
    <y>43</y>
    <x>566</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>600</interference>
@@ -154,9 +154,9 @@
    <y>-320</y>
    <x>-80</x>
   </pos>
-  <planets>
-   <planet>Dowue</planet>
-  </planets>
+  <assets>
+   <asset>Dowue</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -179,10 +179,10 @@
    <y>-246</y>
    <x>-40</x>
   </pos>
-  <planets>
-  	<planet>Antica</planet>
-	<planet>Arcturus Gamma</planet>
-  </planets>
+  <assets>
+  	<asset>Antica</asset>
+	<asset>Arcturus Gamma</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -203,9 +203,9 @@
    <y>-206</y>
    <x>-100</x>
   </pos>
-  <planets>
-   <planet>Protera Sigma</planet>
-  </planets>
+  <assets>
+   <asset>Protera Sigma</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -225,9 +225,9 @@
    <y>-280</y>
    <x>0</x>
   </pos>
-  <planets>
-   <planet>Hurada</planet>
-  </planets>
+  <assets>
+   <asset>Hurada</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -247,10 +247,10 @@
    <y>-340</y>
    <x>-10</x>
   </pos>
-  <planets>
-   <planet>Bon Sebb</planet>
-	<planet>Saturn VI</planet>
-  </planets>
+  <assets>
+   <asset>Bon Sebb</asset>
+	<asset>Saturn VI</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -269,7 +269,7 @@
    <y>-267</y>
    <x>-215</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -291,7 +291,7 @@
    <y>110</y>
    <x>-5</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -313,7 +313,7 @@
    <y>134</y>
    <x>81</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -331,7 +331,7 @@
    <y>19</y>
    <x>368</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -356,9 +356,9 @@
    <y>-353</y>
    <x>187</x>
   </pos>
-  <planets>
-   <planet>Doranthex Prime</planet>
-  </planets>
+  <assets>
+   <asset>Doranthex Prime</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -381,9 +381,9 @@
    <y>-403</y>
    <x>247</x>
   </pos>
-  <planets>
-  	<planet>Valt</planet>
-  </planets>
+  <assets>
+  	<asset>Valt</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -403,7 +403,7 @@
    <y>235</y>
    <x>155</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -423,7 +423,7 @@
    <y>235</y>
    <x>155</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -446,9 +446,9 @@
    <y>-453</y>
    <x>207</x>
   </pos>
-  <planets>
-  	<planet>Verex III</planet>
-  </planets>
+  <assets>
+  	<asset>Verex III</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -468,9 +468,9 @@
    <y>-505</y>
    <x>237</x>
   </pos>
-  <planets>
-  	<planet>Ullnorn</planet>
-  </planets>
+  <assets>
+  	<asset>Ullnorn</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -491,10 +491,10 @@
    <y>-535</y>
    <x>180</x>
   </pos>
-  <planets>
-  	<planet>Varia</planet>
-  	<planet>Stalwart Station</planet>
-  </planets>
+  <assets>
+  	<asset>Varia</asset>
+  	<asset>Stalwart Station</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -514,9 +514,9 @@
    <y>-491</y>
    <x>140</x>
   </pos>
-  <planets>
-  	<planet>Utsuwa</planet>
-  </planets>
+  <assets>
+  	<asset>Utsuwa</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -536,9 +536,9 @@
    <y>-565</y>
    <x>240</x>
   </pos>
-  <planets>
-  	<planet>Totoran</planet>
-  </planets>
+  <assets>
+  	<asset>Totoran</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -558,7 +558,7 @@
    <y>235</y>
    <x>155</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -578,7 +578,7 @@
    <y>-57</y>
    <x>333</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>200</interference>
@@ -600,9 +600,9 @@
    <y>-195</y>
    <x>-170</x>
   </pos>
-  <planets>
-   <planet>Nova Shakar</planet>
-  </planets>
+  <assets>
+   <asset>Nova Shakar</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -622,7 +622,7 @@
    <y>83</y>
    <x>223</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>150</interference>
@@ -645,9 +645,9 @@
    <y>-43</y>
    <x>513</x>
   </pos>
-  <planets>
-   <planet>Cerberus</planet>
-  </planets>
+  <assets>
+   <asset>Cerberus</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>400</interference>
@@ -668,9 +668,9 @@
    <y>-387</y>
    <x>140</x>
   </pos>
-  <planets>
-   <planet>Jorcan</planet>
-  </planets>
+  <assets>
+   <asset>Jorcan</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -695,9 +695,9 @@
    <y>-250</y>
    <x>150</x>
   </pos>
-  <planets>
-  	<planet>Praxis</planet>
-  </planets>
+  <assets>
+  	<asset>Praxis</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -717,9 +717,9 @@
    <y>167</y>
    <x>-296</x>
   </pos>
-  <planets>
-   <planet>S00000</planet>
-  </planets>
+  <assets>
+   <asset>S00000</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -736,7 +736,7 @@
    <y>64</y>
    <x>677</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>700</interference>
@@ -758,9 +758,9 @@
    <y>99</y>
    <x>-265</x>
   </pos>
-  <planets>
-   <planet>S38729</planet>
-  </planets>
+  <assets>
+   <asset>S38729</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -780,7 +780,7 @@
    <y>-15</y>
    <x>435</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>350</interference>
@@ -801,7 +801,7 @@
    <y>82</y>
    <x>-82</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -824,7 +824,7 @@
    <y>-15</y>
    <x>-32</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -847,9 +847,9 @@
    <y>90</y>
    <x>130</x>
   </pos>
-  <planets>
-   <planet>Arrakis</planet>
-  </planets>
+  <assets>
+   <asset>Arrakis</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -873,7 +873,7 @@
    <y>73</y>
    <x>46</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -895,7 +895,7 @@
    <y>-376</y>
    <x>483</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -921,10 +921,10 @@
    <y>-296</y>
    <x>-172</x>
   </pos>
-  <planets>
-   <planet>Emperor's Fist</planet>
-   <planet>Polaris Prime</planet>
-  </planets>
+  <assets>
+   <asset>Emperor's Fist</asset>
+   <asset>Polaris Prime</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -946,9 +946,9 @@
    <y>-330</y>
    <x>-222</x>
   </pos>
-  <planets>
-   <planet>Paxsor</planet>
-  </planets>
+  <assets>
+   <asset>Paxsor</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -970,9 +970,9 @@
    <y>-81</y>
    <x>60</x>
   </pos>
-  <planets>
-   <planet>Torloth</planet>
-  </planets>
+  <assets>
+   <asset>Torloth</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -995,10 +995,10 @@
    <y>-94</y>
    <x>197</x>
   </pos>
-  <planets>
-   <planet>Tau Prime</planet>
-   <planet>Tau Station</planet>
-  </planets>
+  <assets>
+   <asset>Tau Prime</asset>
+   <asset>Tau Station</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -1016,7 +1016,7 @@
    <y>128</y>
    <x>590</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>800</interference>
@@ -1036,9 +1036,9 @@
    <y>148</y>
    <x>-54</x>
   </pos>
-  <planets>
-   <planet>Durea</planet>
-  </planets>
+  <assets>
+   <asset>Durea</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1056,7 +1056,7 @@
    <y>122</y>
    <x>277</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -1075,7 +1075,7 @@
    <y>180</y>
    <x>0</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -1097,10 +1097,10 @@
    <y>47</y>
    <x>-262</x>
   </pos>
-  <planets>
-   <planet>S23491</planet>
-   <planet>Eiroik</planet>
-  </planets>
+  <assets>
+   <asset>S23491</asset>
+   <asset>Eiroik</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1123,9 +1123,9 @@
    <y>23</y>
    <x>-117</x>
   </pos>
-  <planets>
-   <planet>Omega Station</planet>
-  </planets>
+  <assets>
+   <asset>Omega Station</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1144,7 +1144,7 @@
    <y>-143</y>
    <x>-222</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1168,7 +1168,7 @@
    <y>19</y>
    <x>197</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -1189,7 +1189,7 @@
    <y>55</y>
    <x>-169</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1206,7 +1206,7 @@
    <y>60</y>
    <x>497</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>450</interference>
@@ -1228,9 +1228,9 @@
    <y>-40</y>
    <x>190</x>
   </pos>
-  <planets>
-   <planet>Zabween</planet>
-  </planets>
+  <assets>
+   <asset>Zabween</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -1252,8 +1252,8 @@
    <y>-40</y>
    <x>250</x>
   </pos>
-  <planets>
-  </planets>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -1274,9 +1274,9 @@
    <y>-431</y>
    <x>-117</x>
   </pos>
-  <planets>
-   <planet>Oma</planet>
-  </planets>
+  <assets>
+   <asset>Oma</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1296,7 +1296,7 @@
    <y>-104</y>
    <x>549</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>350</interference>
@@ -1316,7 +1316,7 @@
    <y>-61</y>
    <x>-111</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1338,9 +1338,9 @@
    <y>-421</y>
    <x>346</x>
   </pos>
-  <planets>
-   <planet>Nor</planet>
-  </planets>
+  <assets>
+   <asset>Nor</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1361,9 +1361,9 @@
    <y>-470</y>
    <x>330</x>
   </pos>
-  <planets>
-   <planet>Sinclair</planet>
-  </planets>
+  <assets>
+   <asset>Sinclair</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1387,10 +1387,10 @@
    <y>23</y>
    <x>47</x>
   </pos>
-  <planets>
-   <planet>Darkshed</planet>
-   <planet>Ozogo X</planet>
-  </planets>
+  <assets>
+   <asset>Darkshed</asset>
+   <asset>Ozogo X</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1407,7 +1407,7 @@
    <y>-78</y>
    <x>636</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>500</interference>
@@ -1431,9 +1431,9 @@
    <y>-370</y>
    <x>302</x>
   </pos>
-  <planets>
-   <planet>Thar</planet>
-  </planets>
+  <assets>
+   <asset>Thar</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1450,7 +1450,7 @@
    <y>8</y>
    <x>642</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>650</interference>
@@ -1472,7 +1472,7 @@
    <y>-149</y>
    <x>387</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>200</interference>
@@ -1494,7 +1494,7 @@
    <y>-302</y>
    <x>243</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1514,9 +1514,9 @@
    <y>-465</y>
    <x>-150</x>
   </pos>
-  <planets>
-   <planet>Em 5</planet>
-  </planets>
+  <assets>
+   <asset>Em 5</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1535,9 +1535,9 @@
    <y>307</y>
    <x>156</x>
   </pos>
-  <planets>
-   <planet>New Haven</planet>
-  </planets>
+  <assets>
+   <asset>New Haven</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -1554,7 +1554,7 @@
    <y>136</y>
    <x>751</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>800</interference>
@@ -1575,9 +1575,9 @@
    <y>72</y>
    <x>-331</x>
   </pos>
-  <planets>
-   <planet>S49281</planet>
-  </planets>
+  <assets>
+   <asset>S49281</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1597,9 +1597,9 @@
    <y>-376</y>
    <x>-117</x>
   </pos>
-  <planets>
-   <planet>Uhriabi-17</planet>
-  </planets>
+  <assets>
+   <asset>Uhriabi-17</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1620,10 +1620,10 @@
    <y>-267</y>
    <x>470</x>
   </pos>
-  <planets>
-   <planet>Dawn</planet>
-   <planet>Dusk</planet>
-  </planets>
+  <assets>
+   <asset>Dawn</asset>
+   <asset>Dusk</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1646,9 +1646,9 @@
    <y>-323</y>
    <x>383</x>
   </pos>
-  <planets>
-   <planet>Cetrat</planet>
-  </planets>
+  <assets>
+   <asset>Cetrat</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -1666,7 +1666,7 @@
    <y>145</y>
    <x>682</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>950</interference>
@@ -1683,7 +1683,7 @@
    <y>264</y>
    <x>52</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -1705,7 +1705,7 @@
    <y>50</y>
    <x>-31</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1728,9 +1728,9 @@
    <y>40</y>
    <x>131</x>
   </pos>
-  <planets>
-   <planet>Selphod</planet>
-  </planets>
+  <assets>
+   <asset>Selphod</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -1751,9 +1751,9 @@
    <y>95</y>
    <x>-214</x>
   </pos>
-  <planets>
-   <planet>S72839</planet>
-  </planets>
+  <assets>
+   <asset>S72839</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1775,11 +1775,11 @@
    <y>-337</y>
    <x>459</x>
   </pos>
-  <planets>
-   <planet>Haleb IV</planet>
-   <planet>Jorlan</planet>
-   <planet>Raglan Outpost</planet>
-  </planets>
+  <assets>
+   <asset>Haleb IV</asset>
+   <asset>Jorlan</asset>
+   <asset>Raglan Outpost</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1800,9 +1800,9 @@
    <y>-427</y>
    <x>449</x>
   </pos>
-  <planets>
-  	<planet>Norpin II</planet>
-  </planets>
+  <assets>
+  	<asset>Norpin II</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1824,9 +1824,9 @@
    <y>-309</y>
    <x>115</x>
   </pos>
-  <planets>
-   <planet>Vlexair</planet>
-  </planets>
+  <assets>
+   <asset>Vlexair</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1850,9 +1850,9 @@
    <y>-383</y>
    <x>-185</x>
   </pos>
-  <planets>
-   <planet>Ammu</planet>
-  </planets>
+  <assets>
+   <asset>Ammu</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1872,7 +1872,7 @@
    <y>156</y>
    <x>176</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1895,7 +1895,7 @@
    <y>-224</y>
    <x>239</x>
   </pos>
-  <planets/>
+  <assets/>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -1919,10 +1919,10 @@
    <y>-194</y>
    <x>37</x>
   </pos>
-  <planets>
-   <planet>Zhiru</planet>
+  <assets>
+   <asset>Zhiru</asset>
    <asset>Empire Patrol 100</asset>
-  </planets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1940,8 +1940,8 @@
    <y>-200</y>
    <x>430</x>
   </pos>
-  <planets>
-  </planets>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>

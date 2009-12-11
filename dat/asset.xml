@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Planets>
- <planet name="Caladan">
+<Assets>
+ <asset name="Caladan">
   <GFX>
    <exterior>oceanic.png</exterior>
    <space>M01.png</space>
@@ -40,8 +40,8 @@
    <class>M</class>
    <population>17000000</population>
   </general>
- </planet>
- <planet name="Protera Sigma">
+ </asset>
+ <asset name="Protera Sigma">
   <GFX>
    <exterior>oceanic2.png</exterior>
    <space>M03.png</space>
@@ -81,8 +81,8 @@
    <class>M</class>
    <population>1200000</population>
   </general>
- </planet>
- <planet name="Eiroik">
+ </asset>
+ <asset name="Eiroik">
   <GFX>
    <exterior>methane.png</exterior>
    <space>J01.png</space>
@@ -106,8 +106,8 @@
    <class>J</class>
    <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
   </general>
- </planet>
- <planet name="Hurada">
+ </asset>
+ <asset name="Hurada">
   <GFX>
    <exterior>desertic4.png</exterior>
    <space>H01.png</space>
@@ -142,9 +142,9 @@
    <class>H</class>
    <population>12000</population>
   </general>
- </planet>
+ </asset>
  
-  <planet name="Bon Sebb">
+  <asset name="Bon Sebb">
   <GFX>
    <exterior>forest.png</exterior>
    <space>M06.png</space>
@@ -180,9 +180,9 @@
    <class>M</class>
    <population>40000</population>
   </general>
- </planet>
+ </asset>
  
- <planet name="S23491">
+ <asset name="S23491">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -204,8 +204,8 @@
    <class>3</class>
    <faction>Collective</faction>
   </general>
- </planet>
- <planet name="Polaris Prime">
+ </asset>
+ <asset name="Polaris Prime">
   <GFX>
    <exterior>traderoom.png</exterior>
    <space>002.png</space>
@@ -246,8 +246,8 @@
    <class>1</class>
    <population>318000</population>
   </general>
- </planet>
-  <planet name="Arcturus Gamma">
+ </asset>
+  <asset name="Arcturus Gamma">
   <GFX>
    <exterior>station03.png</exterior>
    <space>002.png</space>
@@ -288,9 +288,9 @@
    <class>1</class>
    <population>52000</population>
   </general>
- </planet>
+ </asset>
  
- <planet name="Selphod">
+ <asset name="Selphod">
   <GFX>
    <exterior>snow.png</exterior>
    <space>P00.png</space>
@@ -327,8 +327,8 @@
    <class>P</class>
    <population>27000</population>
   </general>
- </planet>
- <planet name="Raglan Outpost">
+ </asset>
+ <asset name="Raglan Outpost">
   <GFX>
    <exterior>station00.png</exterior>
    <space>000.png</space>
@@ -359,8 +359,8 @@
    <class>1</class>
    <population>7000</population>
   </general>
- </planet>
- <planet name="Cerberus">
+ </asset>
+ <asset name="Cerberus">
   <GFX>
    <exterior>traderoom.png</exterior>
    <space>003.png</space>
@@ -391,8 +391,8 @@
    <class>0</class>
    <population>700</population>
   </general>
- </planet>
- <planet name="Haleb IV">
+ </asset>
+ <asset name="Haleb IV">
   <GFX>
    <space>I00.png</space>
   </GFX>
@@ -412,8 +412,8 @@
    </tech>
    <class>I</class>
   </general>
- </planet>
- <planet name="Tau Station">
+ </asset>
+ <asset name="Tau Station">
   <GFX>
    <exterior>station04.png</exterior>
    <space>000.png</space>
@@ -448,8 +448,8 @@
    <class>0</class>
    <population>12000</population>
   </general>
- </planet>
- <planet name="Oma">
+ </asset>
+ <asset name="Oma">
   <GFX>
    <exterior>desertic2.png</exterior>
    <space>H01.png</space>
@@ -485,8 +485,8 @@
    <class>H</class>
    <population>20000</population>
   </general>
- </planet>
- <planet name="Doranthex Prime">
+ </asset>
+ <asset name="Doranthex Prime">
   <GFX>
    <exterior>lava.png</exterior>
    <space>A01.png</space>
@@ -521,8 +521,8 @@
    <class>A</class>
    <population>40000</population>
   </general>
- </planet>
-  <planet name="Valt">
+ </asset>
+  <asset name="Valt">
   <GFX>
    <exterior>mining2.png</exterior>
    <space>K00.png</space>
@@ -559,8 +559,8 @@
    <class>K</class>
    <population>15000</population>
   </general>
- </planet>
-  <planet name="Praxis">
+ </asset>
+  <asset name="Praxis">
   <GFX>
    <exterior>oceanic2.png</exterior>
    <space>M00.png</space>
@@ -599,8 +599,8 @@
    <class>M</class>
    <population>400000</population>
   </general>
- </planet>
- <planet name="Torloth">
+ </asset>
+ <asset name="Torloth">
   <GFX>
    <exterior>mining2.png</exterior>
    <space>G00.png</space>
@@ -637,9 +637,9 @@
    <class>G</class>
    <population>350000</population>
   </general>
- </planet>
+ </asset>
  
-  <planet name="Paxsor">
+  <asset name="Paxsor">
   <GFX>
    <exterior>mining6.png</exterior>
    <space>G01.png</space>
@@ -676,8 +676,8 @@
    <class>G</class>
    <population>65000</population>
   </general>
- </planet>
- <planet name="Omega Station">
+ </asset>
+ <asset name="Omega Station">
   <GFX>
    <exterior>station00.png</exterior>
    <space>000.png</space>
@@ -714,8 +714,8 @@
    <class>0</class>
    <population>14000</population>
   </general>
- </planet>
- <planet name="Emperor's Fist">
+ </asset>
+ <asset name="Emperor's Fist">
   <GFX>
    <exterior>mining5.png</exterior>
    <space>C00.png</space>
@@ -746,8 +746,8 @@
    <class>C</class>
    <population>127000</population>
   </general>
- </planet>
- <planet name="Tau Prime">
+ </asset>
+ <asset name="Tau Prime">
   <GFX>
    <space>M02.png</space>
   </GFX>
@@ -767,8 +767,8 @@
    </tech>
    <class>M</class>
   </general>
- </planet>
- <planet name="Arrakis">
+ </asset>
+ <asset name="Arrakis">
   <GFX>
    <exterior>desertic.png</exterior>
    <space>H00.png</space>
@@ -804,8 +804,8 @@
    <class>H</class>
    <population>32000</population>
   </general>
- </planet>
- <planet name="Ammu">
+ </asset>
+ <asset name="Ammu">
   <GFX>
    <exterior>lava.png</exterior>
    <space>A00.png</space>
@@ -843,8 +843,8 @@
    <class>A</class>
    <population>60000</population>
   </general>
- </planet>
- <planet name="Thar">
+ </asset>
+ <asset name="Thar">
   <GFX>
    <exterior>mining4.png</exterior>
    <space>L00.png</space>
@@ -881,8 +881,8 @@
    <class>L</class>
    <population>2000</population>
   </general>
- </planet>
- <planet name="S38729">
+ </asset>
+ <asset name="S38729">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -904,8 +904,8 @@
    <class>3</class>
    <faction>Collective</faction>
   </general>
- </planet>
- <planet name="Jorlan">
+ </asset>
+ <asset name="Jorlan">
   <GFX>
    <exterior>traderoom.png</exterior>
    <space>D01.png</space>
@@ -943,8 +943,8 @@
    <class>D</class>
    <population>5000000</population>
   </general>
- </planet>
- <planet name="Jorcan">
+ </asset>
+ <asset name="Jorcan">
   <GFX>
    <exterior>mining.png</exterior>
    <space>G01.png</space>
@@ -980,8 +980,8 @@
    <class>G</class>
    <population>170000</population>
   </general>
- </planet>
- <planet name="Vlexair">
+ </asset>
+ <asset name="Vlexair">
   <GFX>
    <exterior>snow.png</exterior>
    <space>P01.png</space>
@@ -1019,8 +1019,8 @@
    <class>P</class>
    <population>4500</population>
   </general>
- </planet>
- <planet name="Nova Shakar">
+ </asset>
+ <asset name="Nova Shakar">
   <GFX>
    <exterior>forest2.png</exterior>
    <space>M05.png</space>
@@ -1059,8 +1059,8 @@
    <class>M</class>
    <population>812000</population>
   </general>
- </planet>
- <planet name="Em 5">
+ </asset>
+ <asset name="Em 5">
   <GFX>
    <exterior>oceanic2.png</exterior>
    <space>M03.png</space>
@@ -1101,8 +1101,8 @@
    </services>
    <class>M</class>
   </general>
- </planet>
- <planet name="S72839">
+ </asset>
+ <asset name="S72839">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -1124,8 +1124,8 @@
    <class>3</class>
    <faction>Collective</faction>
   </general>
- </planet>
- <planet name="Zhiru">
+ </asset>
+ <asset name="Zhiru">
   <GFX>
    <exterior>oceanic.png</exterior>
    <space>M04.png</space>
@@ -1164,8 +1164,8 @@
    <class>M</class>
    <population>13000000</population>
   </general>
- </planet>
- <planet name="S00000">
+ </asset>
+ <asset name="S00000">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -1187,8 +1187,8 @@
    <class>3</class>
    <faction>Collective</faction>
   </general>
- </planet>
- <planet name="New Haven">
+ </asset>
+ <asset name="New Haven">
   <GFX>
    <exterior>gas.png</exterior>
    <space>D00.png</space>
@@ -1227,8 +1227,8 @@
    <class>D</class>
    <population>9000</population>
   </general>
- </planet>
- <planet name="Zabween">
+ </asset>
+ <asset name="Zabween">
   <GFX>
    <exterior>station00.png</exterior>
    <space>000.png</space>
@@ -1268,8 +1268,8 @@
    <class>0</class>
    <population>4000</population>
   </general>
- </planet>
- <planet name="Cetrat">
+ </asset>
+ <asset name="Cetrat">
   <GFX>
    <exterior>aquatic2.png</exterior>
    <space>O01.png</space>
@@ -1306,8 +1306,8 @@
    <class>O</class>
    <population>930000</population>
   </general>
- </planet>
-  <planet name="Norpin II">
+ </asset>
+  <asset name="Norpin II">
   <GFX>
    <exterior>desertic3.png</exterior>
    <space>H02.png</space>
@@ -1347,8 +1347,8 @@
    <class>H</class>
    <population>260000</population>
   </general>
- </planet>
- <planet name="Raelid Outpost">
+ </asset>
+ <asset name="Raelid Outpost">
   <GFX>
    <exterior>station02.png</exterior>
    <space>002.png</space>
@@ -1380,8 +1380,8 @@
    <class>0</class>
    <population>3000</population>
   </general>
- </planet>
- <planet name="Dowue">
+ </asset>
+ <asset name="Dowue">
   <GFX>
    <exterior>snow.png</exterior>
    <space>P02.png</space>
@@ -1420,8 +1420,8 @@
    <class>P</class>
    <population>125000</population>
   </general>
- </planet>
-  <planet name="Antica">
+ </asset>
+  <asset name="Antica">
   <GFX>
    <exterior>aquatic3.png</exterior>
    <space>O01.png</space>
@@ -1460,8 +1460,8 @@
    <class>O</class>
    <population>450000</population>
   </general>
- </planet>
- <planet name="Uhriabi-17">
+ </asset>
+ <asset name="Uhriabi-17">
   <GFX>
    <space>J02.png</space>
   </GFX>
@@ -1481,8 +1481,8 @@
    </tech>
    <class>J</class>
   </general>
- </planet>
- <planet name="Darkshed">
+ </asset>
+ <asset name="Darkshed">
   <GFX>
    <exterior>station05.png</exterior>
    <space>002.png</space>
@@ -1523,8 +1523,8 @@
    <class>0</class>
    <population>14000</population>
   </general>
- </planet>
- <planet name="Sinclair">
+ </asset>
+ <asset name="Sinclair">
   <GFX>
    <exterior>forest.png</exterior>
    <space>M00.png</space>
@@ -1564,8 +1564,8 @@
    <class>M</class>
    <population>130000</population>
   </general>
- </planet>
- <planet name="Nor">
+ </asset>
+ <asset name="Nor">
   <GFX>
    <exterior>gas.png</exterior>
    <space>I01.png</space>
@@ -1603,8 +1603,8 @@
    <class>I</class>
    <population>130000</population>
   </general>
- </planet>
- <planet name="S49281">
+ </asset>
+ <asset name="S49281">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -1626,8 +1626,8 @@
    <class>3</class>
    <faction>Collective</faction>
   </general>
- </planet>
- <planet name="Ozogo X">
+ </asset>
+ <asset name="Ozogo X">
   <GFX>
    <space>J00.png</space>
   </GFX>
@@ -1647,8 +1647,8 @@
    </tech>
    <class>J</class>
   </general>
- </planet>
- <planet name="Saturn VI">
+ </asset>
+ <asset name="Saturn VI">
   <GFX>
    <space>J00.png</space>
   </GFX>
@@ -1668,8 +1668,8 @@
    </tech>
    <class>J</class>
   </general>
- </planet>
- <planet name="Anecu">
+ </asset>
+ <asset name="Anecu">
   <GFX>
    <exterior>aquatic.png</exterior>
    <space>O00.png</space>
@@ -1710,8 +1710,8 @@
    <class>O</class>
    <population>70000</population>
   </general>
- </planet>
- <planet name="Durea">
+ </asset>
+ <asset name="Durea">
   <GFX>
    <exterior>snow.png</exterior>
    <space>G01.png</space>
@@ -1746,8 +1746,8 @@
    <class>M</class>
    <population>2000000</population>
   </general>
- </planet>
- <planet name="Dawn">
+ </asset>
+ <asset name="Dawn">
   <GFX>
    <exterior>oceanic2.png</exterior>
    <space>O01.png</space>
@@ -1783,8 +1783,8 @@
    <class>O</class>
    <population>4000000</population>
   </general>
- </planet>
- <planet name="Dusk">
+ </asset>
+ <asset name="Dusk">
   <GFX>
    <space>P01.png</space>
   </GFX>
@@ -1804,8 +1804,8 @@
    <services />
    <class>P</class>
   </general>
- </planet>
- <planet name="Verex III">
+ </asset>
+ <asset name="Verex III">
   <GFX>
    <exterior>desertic2.png</exterior>
    <space>H01.png</space>
@@ -1829,8 +1829,8 @@
    <services />
    <class>H</class>
    </general>
- </planet>
- <planet name="Ullnorn">
+ </asset>
+ <asset name="Ullnorn">
   <GFX>
    <exterior>lava.png</exterior>
    <space>D00.png</space>
@@ -1865,8 +1865,8 @@
    <class>Y</class>
    <population>10000</population>
   </general>
- </planet>
- <planet name="Varia">
+ </asset>
+ <asset name="Varia">
   <GFX>
    <exterior>forest.png</exterior>
    <space>M04.png</space>
@@ -1904,8 +1904,8 @@
    <class>M</class>
    <population>500000000</population>
   </general>
- </planet>
- <planet name="Stalwart Station">
+ </asset>
+ <asset name="Stalwart Station">
   <GFX>
    <exterior>station04.png</exterior>
    <space>003.png</space>
@@ -1940,8 +1940,8 @@
    <class>25</class>
    <population>12000</population>
   </general>
- </planet>
- <planet name="Utsuwa">
+ </asset>
+ <asset name="Utsuwa">
   <GFX>
    <exterior>mining3.png</exterior>
    <space>K00.png</space>
@@ -1979,8 +1979,8 @@
    <class>K</class>
    <population>400000</population>
   </general>
- </planet>
- <planet name="Totoran">
+ </asset>
+ <asset name="Totoran">
   <GFX>
    <exterior>traderoom.png</exterior>
    <space>P02.png</space>
@@ -2012,8 +2012,8 @@
    <class>P</class>
    <population>2000000000</population>
   </general>
- </planet>
- <planet name="Sindbad">
+ </asset>
+ <asset name="Sindbad">
   <GFX>
    <exterior>station04.png</exterior>
    <space>000.png</space>
@@ -2046,7 +2046,7 @@
    <class>0</class>
    <population>1000</population>
   </general>
- </planet>
+ </asset>
  <asset name="Empire Patrol 100">
   <general>
    <faction>Empire</faction>
@@ -2056,4 +2056,4 @@
    <range>0</range>
   </presence>
  </asset>
-</Planets>
+</Assets>

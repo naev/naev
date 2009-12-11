@@ -572,6 +572,10 @@ static void gui_renderBorder( double dt )
 
    /* Draw planets. */
    for (i=0; i<cur_system->nplanets; i++) {
+      /* Check that it's real. */
+      if(cur_system->planets[i]->real == ASSET_UNREAL)
+         continue;
+
       pnt = cur_system->planets[i];
       tex = pnt->gfx_space;
 
@@ -1026,7 +1030,7 @@ static void gui_renderRadar( double dt )
     * planets
     */
    for (i=0; i<cur_system->nplanets; i++)
-      if (i != planet_target)
+      if(cur_system->planets[i]->real == ASSET_REAL && i != planet_target)
          gui_renderPlanet( i );
    if (planet_target > -1)
       gui_renderPlanet( planet_target );

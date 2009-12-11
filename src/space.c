@@ -36,13 +36,13 @@
 #include "conf.h"
 
 
-#define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
-#define XML_PLANET_TAG        "planet" /**< Individual planet xml tag. */
+#define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
+#define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 
 #define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
-#define PLANET_DATA           "dat/planet.xml" /**< XML file containing planets. */
+#define PLANET_DATA           "dat/asset.xml" /**< XML file containing planets. */
 #define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
 
 #define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
@@ -884,6 +884,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    flags = 0;
    planet->presenceAmount = 0;
    planet->presenceRange = 0;
+   planet->real = ASSET_UNREAL;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -909,6 +910,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"pos")) {
+         planet->real = ASSET_REAL;
          cur = node->children;
          do {
             if (xml_isNode(cur,"x")) {
@@ -1026,28 +1028,31 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
  * verification
  */
 #define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
-   MELEMENT(planet->gfx_space==NULL,"GFX space");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->gfx_exterior==NULL,"GFX exterior");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (planet->population==0), "population");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (planet->prodfactor==0.), "prodfactor");
-   MELEMENT((flags&FLAG_XSET)==0,"x");
-   MELEMENT((flags&FLAG_YSET)==0,"y");
-   MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->description==NULL,"desription");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
-         planet->bar_description==NULL,"bar");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (flags&FLAG_FACTIONSET)==0,"faction");
-   MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-   MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
-            planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
-         (flags&FLAG_TECHSET)==0, "tech" );
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-         (planet->ncommodities==0),"commodity" );
+   /* Issue warnings on missing items only it the asset is real. */
+   if(planet->real == ASSET_REAL) {
+      MELEMENT(planet->gfx_space==NULL,"GFX space");
+      MELEMENT((flags&FLAG_XSET)==0,"x");
+      MELEMENT((flags&FLAG_YSET)==0,"y");
+      MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
+      MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+          planet->gfx_exterior==NULL,"GFX exterior");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+          (planet->population==0), "population");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+          (planet->prodfactor==0.), "prodfactor");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+          planet->description==NULL,"desription");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
+          planet->bar_description==NULL,"bar");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+          (flags&FLAG_FACTIONSET)==0,"faction");
+      MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
+             planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
+          (flags&FLAG_TECHSET)==0, "tech" );
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+          (planet->ncommodities==0),"commodity" );
+   }
 #undef MELEMENT
 
    return 0;
@@ -1359,11 +1364,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      /* loads all the planets */
-      else if (xml_isNode(node,"planets")) {
+      /* Loads all the assets. */
+      else if (xml_isNode(node,"assets")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"planet"))
+            if (xml_isNode(cur,"asset"))
                system_addPlanet( sys, xml_get(cur) );
          } while (xml_nextNode(cur));
          continue;
@@ -1802,10 +1807,12 @@ void planets_render (void)
    if (cur_system==NULL) return;
 
    int i;
-   for (i=0; i < cur_system->nplanets; i++)
-      gl_blitSprite( cur_system->planets[i]->gfx_space,
-            cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
-            0, 0, NULL );
+   for (i=0; i < cur_system->nplanets; i++) {
+      if (cur_system->planets[i]->real == ASSET_REAL)
+         gl_blitSprite( cur_system->planets[i]->gfx_space,
+               cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
+               0, 0, NULL );
+   }
 }
 
 
@@ -2076,7 +2083,7 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
 
 
 /**
- * @brief Go through all the planets and call addPresence().
+ * @brief Go through all the assets and call addPresence().
  *
  *    @param sys Pointer to the system to process.
  */
@@ -2084,7 +2091,8 @@ void system_addAllPlanetsPresence( StarSystem *sys ) {
    int i;
 
    for(i = 0; i < sys->nplanets; i++)
-      addPresence( sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+      addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+
 
    return;
 }
