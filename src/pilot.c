@@ -2996,7 +2996,7 @@ int pilot_hasCredits( Pilot *p, int amount )
 
    ul = (unsigned long) ABS(amount);
 
-   return (ul >= p->credits);
+   return (ul <= p->credits);
 }
 
 

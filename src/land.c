@@ -1453,7 +1453,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
 
    price = refuel_price();
 
-   if (player_hasCredits( price )) { /* player is out of money after landing */
+   if (!player_hasCredits( price )) { /* player is out of money after landing */
       dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }

@@ -368,7 +368,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    }
 
    /* Check if has the money. */
-   if (!player_modCredits( price )) {
+   if (!player_hasCredits( price )) {
       dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
       return;
    }
