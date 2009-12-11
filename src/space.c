@@ -2070,9 +2070,7 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param range The range of spill of the presence.
  */
 void addPresence( StarSystem *sys, int faction, double amount, int range ) {
-   int i, curSpill;
-
-   /* Add the presence to the system. */
+   /* Add the presence to the current system. */
    sys->presence[faction] += amount;
 
    /* Add the spill. */
