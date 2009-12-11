@@ -579,7 +579,7 @@
   <general>
    <prodfactor>0.7</prodfactor>
    <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
-   <description>Paxsor is the primary Nexus mining asset within Empire spaced, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
+   <description>Paxsor is the primary Nexus mining asset within Empire space, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
