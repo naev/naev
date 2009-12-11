@@ -2083,9 +2083,8 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
 void system_addAllPlanetsPresence( StarSystem *sys ) {
    int i;
 
-   for(i = 0; i < sys->nplanets; i++) {
+   for(i = 0; i < sys->nplanets; i++)
       addPresence( sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
-   }
 
    return;
 }
