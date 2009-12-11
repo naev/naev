@@ -2051,7 +2051,9 @@
   <general>
    <faction>Empire</faction>
   </general>
-  <value>100</value>
-  <range>0</range>
+  <presence>
+   <value>100</value>
+   <range>0</range>
+  </presence>
  </asset>
 </Planets>
