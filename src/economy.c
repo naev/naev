@@ -88,17 +88,17 @@ unsigned int economy_getPrice( const Commodity *com,
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
  */
-void credits2str( char *str, unsigned int credits, int decimals )
+void credits2str( char *str, unsigned long credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, 32, "%d", credits );
+      snprintf( str, 32, "%lu", credits );
    else if (credits >= 1000000000)
       snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)                
       snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000)              
       snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
-   else snprintf (str, 16, "%d", credits );
+   else snprintf (str, 16, "%lu", credits );
 }
 
 

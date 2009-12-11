@@ -368,12 +368,12 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    }
 
    /* Check if has the money. */
-   if (player->credits < price) {
+   if (!player_modCredits( price )) {
       dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
       return;
    }
 
-   player->credits -= price;
+   player_modCredits( -price );
    str = comm_getString( "bribe_paid" );
    if (str == NULL)
       dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
@@ -469,13 +469,13 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
    }
 
    /* Check if has the money. */
-   if (player->credits < price) {
+   if (!player_hasCredits( price )) {
       dialogue_msg("Bribe Starport", "You don't have enough credits for the bribery.");
       return;
    }
 
    /* Pay the money. */
-   player->credits -= price;
+   player_modCredits( -price );
    dialogue_msg("Bribe Starport", "You have permission to dock.");
 
    /* Mark as bribed and don't allow bribing again. */
@@ -549,15 +549,15 @@ static void comm_requestFuel( unsigned int wid, char *unused )
       dialogue_msg( "Request Fuel", "%s", msg );
 
    /* Check if he has the money. */
-   if (player->credits < price) {
+   if (!player_hasCredits( price )) {
       dialogue_msg( "Request Fuel", "You need %u more credits!",
             price - player->credits);
       return;
    }
 
    /* Take money. */
-   player->credits      -= price;
-   comm_pilot->credits  += price;
+   player_modCredits( -price );
+   pilot_modCredits( comm_pilot, price );
 
    /* Start refueling. */
    pilot_setFlag(comm_pilot, PILOT_REFUELING);

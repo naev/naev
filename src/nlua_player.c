@@ -166,7 +166,7 @@ static int playerL_pay( lua_State *L )
    int money;
 
    money = luaL_checkint(L,1);
-   player->credits += money;
+   player_modCredits( money );
 
    return 0;
 }

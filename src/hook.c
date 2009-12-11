@@ -647,7 +647,7 @@ static int hook_parse( xmlNodePtr base )
 
             /* Type specific. */
             if (type == HOOK_TYPE_MISN) {
-               xmlr_long(cur,"parent",parent);
+               xmlr_uint(cur,"parent",parent);
                xmlr_str(cur,"func",func);
             }
          } while (xml_nextNode(cur));

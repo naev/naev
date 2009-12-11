@@ -188,7 +188,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
 
    if (board_fail(wdw)) return;
 
-   player->credits += p->credits;
+   player_modCredits( p->credits );
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
    player_message("\epYou manage to steal the ship's credits.");

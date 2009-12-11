@@ -277,7 +277,7 @@ static void commodity_buy( unsigned int wid, char* str )
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
-   if (player->credits < q * price) {
+   if (!player_hasCredits( q * price )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
@@ -287,7 +287,7 @@ static void commodity_buy( unsigned int wid, char* str )
    }
 
    q = pilot_addCargo( player, com, q );
-   player->credits -= q * price;
+   player_modCredits( -q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
@@ -309,7 +309,7 @@ static void commodity_sell( unsigned int wid, char* str )
    price = economy_getPrice(com, cur_system, land_planet);
 
    q = pilot_rmCargo( player, com, q );
-   player->credits += q * price;
+   player_modCredits( q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
@@ -563,7 +563,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* not enough $$ */
-   else if (q*outfit->price > player->credits) {
+   else if (!player_hasCredits( q*outfit->price )) {
       if (errmsg != 0) {
          credits2str( buf, q*outfit->price - player->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
@@ -628,7 +628,7 @@ static void outfits_buy( unsigned int wid, char* str )
       return;
 
    /* Actually buy the outfit. */
-   player->credits -= outfit->price * player_addOutfit( outfit, q );
+   player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
    outfits_updateQuantities(wid);
@@ -684,7 +684,7 @@ static void outfits_sell( unsigned int wid, char* str )
    if (outfit_canSell( outfit, q, 1 ) == 0)
       return;
 
-   player->credits += outfit->price * player_rmOutfit( outfit, q );
+   player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
    outfits_updateQuantities(wid);
@@ -941,7 +941,7 @@ static void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (ship->price > player->credits)
+   if (!player_hasCredits( ship->price ))
       window_disableButton( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
@@ -974,7 +974,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    ship = ship_get( shipname );
 
    /* Must have enough money. */
-   if (ship->price > player->credits) {
+   if (!player_hasCredits( ship->price )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
@@ -997,7 +997,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       /* Player actually aborted naming process. */
       return;
    }
-   player->credits -= ship->price; /* ouch, paying is hard */
+   player_modCredits( -ship->price ); /* ouch, paying is hard */
    land_checkAddRefuel();
 
    /* Update shipyard. */
@@ -1453,12 +1453,12 @@ static void spaceport_refuel( unsigned int wid, char *str )
 
    price = refuel_price();
 
-   if (player->credits < price) { /* player is out of money after landing */
+   if (player_hasCredits( price )) { /* player is out of money after landing */
       dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }
 
-   player->credits  -= price;
+   player_modCredits( -price );
    player->fuel      = player->fuel_max;
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_destroyWidget( wid, "btnRefuel" );
@@ -1527,7 +1527,7 @@ void land_checkAddRefuel (void)
    }
    
    /* Make sure player can click it. */
-   if (player->credits < refuel_price())
+   if (!player_hasCredits( refuel_price() ))
       window_disableButton( land_windows[0], "btnRefuel" );
 }
 
