@@ -1308,6 +1308,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    xmlNodePtr cur, node;
    uint32_t flags;
    int size;
+   int i;
 
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
@@ -1315,7 +1316,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->faction   = -1;
    planet         = NULL;
    size           = 0;
-   sys->presence  = NULL;
+   sys->presence  = malloc(faction_nstack * sizeof(double));
+   for(i = 0; i < faction_nstack; i++)
+      sys->presence[i] = 0;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
@@ -1552,18 +1555,9 @@ int space_load (void)
  */
 static int system_calcSecurity( StarSystem *sys )
 {
-   int i;
-
    /* Do not run while loading to speed up. */
    if (systems_loading)
       return 0;
-
-   /* Initialise the array if it doesn't exist. */
-   if(sys->presence == NULL) {
-      sys->presence = malloc(faction_nstack * sizeof(double));
-      for(i = 0; i < faction_nstack; i++)
-         sys->presence[i] = 0;
-   }
 
    /* Set security. */
    sys->security = 0.;
