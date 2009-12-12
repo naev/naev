@@ -34,6 +34,7 @@
 #include "fleet.h"
 #include "mission.h"
 #include "conf.h"
+#include "queue.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -2071,6 +2072,10 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param range The range of spill of the presence.
  */
 void addPresence( StarSystem *sys, int faction, double amount, int range ) {
+   int i, curSpill;
+   Queue q, qn;
+   StarSystem *cur;
+
    /* Check that we have a sane faction. (-1 == bobbens == insane)*/
    if(faction < 0 || faction >= faction_nstack)
       return;
@@ -2078,8 +2083,54 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
    /* Add the presence to the current system. */
    sys->presence[faction] += amount;
 
+   /* If there's no range, we're done here. */
+   if(range < 0)
+      return;
+
    /* Add the spill. */
-   /* TODO */
+   sys->spilled = 1;
+   curSpill = 0;
+   q = q_create();
+   qn = q_create();
+
+   /* Create the initial queue consisting of sys adjacencies. */
+   for(i = 0; i < sys->njumps; i++)
+      if(system_getIndex(sys->jumps[i])->spilled == 0) {
+         q_enqueue(q, system_getIndex(sys->jumps[i]));
+         system_getIndex(sys->jumps[i])->spilled = 1;
+      }
+
+   while(curSpill < range) {
+      /* Check to see if we've finished this range. */
+      if(q_isEmpty(q)) {
+         curSpill++;
+         q_destroy(q);
+         q = qn;
+         qn = q_create();
+      }
+
+      /* Pull one off the queue. */
+      cur = q_dequeue(q);
+
+      /* Enqueue all its adjancencies. */
+      for(i = 0; i < cur->njumps; i++)
+         if(system_getIndex(cur->jumps[i])->spilled == 0) {
+            q_enqueue(qn, system_getIndex(cur->jumps[i]));
+            system_getIndex(cur->jumps[i])->spilled = 1;
+         }
+
+      /* Spill some presence. */
+      cur->presence[faction] += amount / (2 + curSpill);
+   }
+
+   /* Destroy the queues. */
+   q_destroy(q);
+   q_destroy(qn);
+
+   /* Reset the spilled variable. */
+   for(i = 0; i < systems_nstack; i++) {
+      systems_stack[i].spilled = 0;
+   }
 
    return;
 }

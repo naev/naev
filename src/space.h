@@ -172,6 +172,7 @@ typedef struct StarSystem_ {
    double *prices; /**< Handles the prices in the system. */
    double security; /**< % of security in this system. */
    double *presence; /**< Pointer to an array of presences in this system. */
+   int spilled; /**< If the system has been spilled to yet. */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
