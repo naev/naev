@@ -1832,7 +1832,7 @@
   </fleets>
   <jumps>
    <jump>Theras</jump>
-	<jump>Slaccid</jump>
+   <jump>Slaccid</jump>
   </jumps>
   <pos>
    <y>-337</y>
@@ -1842,6 +1842,12 @@
    <asset>Haleb IV</asset>
    <asset>Jorlan</asset>
    <asset>Raglan Outpost</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
