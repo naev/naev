@@ -1785,6 +1785,7 @@ static int pilotL_hailPlayer( lua_State *L )
 
       /* Set flag. */
       pilot_setFlag( p, PILOT_HAILING );
+      player_hailStart();
    }
    else
       pilot_rmFlag( p, PILOT_HAILING );

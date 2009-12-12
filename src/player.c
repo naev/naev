@@ -86,6 +86,7 @@ static int player_gui_group    = 0; /**< Player gui sound group. */
 int snd_target    = -1; /**< Sound when targetting. */
 int snd_jump      = -1; /**< Sound when can jump. */
 int snd_nav       = -1; /**< Sound when changing nav computer. */
+int snd_hail      = -1; /**< Sound when being hailed. */
 /* Hyperspace sounds. */
 int snd_hypPowUp  = -1; /**< Hyperspace power up sound. */
 int snd_hypEng    = -1; /**< Hyperspace engine sound. */
@@ -93,6 +94,8 @@ int snd_hypPowDown = -1; /**< Hyperspace power down sound. */
 int snd_hypPowUpJump = -1; /**< Hyperspace Power up to jump sound. */
 int snd_hypJump   = -1; /**< Hyperspace jump sound. */
 static int player_lastEngineSound = -1; /**< Last engine sound. */
+static int player_hailCounter = 0; /**< Number of times to play the hail. */
+static double player_hailTimer = 0.; /**< Timer for hailing. */
 
 
 /* 
@@ -743,6 +746,7 @@ static void player_initSound (void)
    snd_target           = sound_get("target");
    snd_jump             = sound_get("jump");
    snd_nav              = sound_get("nav");
+   snd_hail             = sound_get("hail");
    snd_hypPowUp         = sound_get("hyperspace_powerup");
    snd_hypEng           = sound_get("hyperspace_engine");
    snd_hypPowDown       = sound_get("hyperspace_powerdown");
@@ -1163,6 +1167,16 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          pplayer->solid->pos.x, pplayer->solid->pos.y,
          pplayer->solid->vel.x, pplayer->solid->vel.y );
 
+   /* See if must playe hail sound. */
+   if (player_hailCounter > 0) {
+      player_hailTimer -= dt;
+      if (player_hailTimer < 0.) {
+         player_playSound( snd_hail, 1 );
+         player_hailCounter--;
+         player_hailTimer = 3.;
+      }
+   }
+
    /* Update zoom. */
    player_updateZoom( dt );
 }
@@ -1457,6 +1471,15 @@ void player_targetHyperspace (void)
          map_select( system_getIndex( cur_system->jumps[hyperspace_target]),0);
    }
 
+}
+
+
+/**
+ * @brief Starts the hail sounds.
+ */
+void player_hailStart (void)
+{
+   player_hailCounter = 5;
 }
 
 
