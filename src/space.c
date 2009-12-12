@@ -2065,6 +2065,10 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param range The range of spill of the presence.
  */
 void addPresence( StarSystem *sys, int faction, double amount, int range ) {
+   /* Check that we have a sane faction. (-1 == bobbens == insane)*/
+   if(faction < 0 || faction >= faction_nstack)
+      return;
+
    /* Add the presence to the current system. */
    sys->presence[faction] += amount;
 
