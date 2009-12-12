@@ -53,6 +53,7 @@ extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
 extern int snd_target; /**< Sound when targetting. */
 extern int snd_jump; /**< Sound when can jump. */
 extern int snd_nav; /**< Sound when changing nav computer. */
+extern int snd_hail; /**< Hail sound. */
 extern int snd_hypPowUp; /**< Hyperspace power up sound. */
 extern int snd_hypEng; /**< Hyperspace engine sound. */
 extern int snd_hypPowDown; /**< Hyperspace power down sound. */
@@ -86,6 +87,7 @@ void player_warp( const double x, const double y );
 const char* player_rating (void);
 int player_hasCredits( int amount );
 unsigned long player_modCredits( int amount );
+void player_hailStart (void);
 /* Sounds. */
 void player_playSound( int sound, int once );
 void player_stopSound (void);
