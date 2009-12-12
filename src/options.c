@@ -105,6 +105,9 @@ void opt_menu (void)
 
    /* Create window and tabs. */
    opt_wid = window_create( "Options", -1, -1, w, h );
+   window_setCancel( opt_wid, opt_close );
+
+   /* Create tabbed window. */
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, opt_names );
 

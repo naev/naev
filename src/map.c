@@ -130,6 +130,7 @@ void map_open (void)
 
    /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
+   window_setCancel( wid, window_close );
 
    /* 
     * SIDE TEXT
