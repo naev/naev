@@ -92,11 +92,15 @@ void credits2str( char *str, unsigned long credits, int decimals )
 {
    if (decimals < 0)
       snprintf( str, 32, "%lu", credits );
-   else if (credits >= 1000000000)
+   else if (credits >= 1000000000000000UL)
+      snprintf( str, 16, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+   else if (credits >= 1000000000000UL)
+      snprintf( str, 16, "%.*fT", decimals, (double)credits / 1000000000000. );
+   else if (credits >= 1000000000UL)
       snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
-   else if (credits >= 1000000)                
+   else if (credits >= 1000000UL)
       snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
-   else if (credits >= 1000)              
+   else if (credits >= 1000UL)
       snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
    else snprintf (str, 16, "%lu", credits );
 }
@@ -114,7 +118,7 @@ Commodity* commodity_get( const char* name )
    for (i=0; i<commodity_nstack; i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
-   
+
    WARN("Commodity '%s' not found in stack", name);
    return NULL;
 }
@@ -177,7 +181,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 /**
  * @brief Throws cargo out in space graphically.
  *
- *    @param pilot ID of the pilot throwing the stuff out 
+ *    @param pilot ID of the pilot throwing the stuff out
  *    @param com Commodity to throw out.
  *    @param quantity Quantity thrown out.
  */
@@ -204,7 +208,7 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
       a  = 2. * M_PI * RNGF();
       vx = bvx + r*cos(a);
       vy = bvy + r*sin(a);
-      
+
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
    }
@@ -222,7 +226,7 @@ int commodity_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
-  
+
    /* Load the file. */
    buf = ndata_read( COMMODITY_DATA, &bufsize);
    if (buf == NULL)
@@ -308,7 +312,7 @@ unsigned int economy_getPrice( const Commodity *com,
 
    /* Get position in stack. */
    k = com - commodity_stack;
-  
+
    /* Find what commodity that is. */
    for (i=0; i<econ_nprices; i++)
       if (econ_comm[i] == k)
@@ -434,7 +438,7 @@ static int econ_createGMatrix (void)
          R     = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
          R     = 1./R; /* Must be inverted. */
          Rsum += R;
-         
+
          /* Matrix is symetrical and non-diagonal is negative. */
          ret = cs_entry( M, i, sys->jumps[j], -R );
          if (ret != 1)
@@ -566,7 +570,7 @@ int economy_update( unsigned int dt )
       offset = 0.5 - min * scale;
       */
 
-      /* 
+      /*
        * I'm not sure I like the filtering of the results, but it would take
        * much more work to get a sane system working without the need of post
        * filtering.
