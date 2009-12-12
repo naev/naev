@@ -41,7 +41,8 @@
 #include "font.h"
 
 
-#define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MAX 128 /**< Maximum chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MIN 2048 /**< Minimum chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
 
@@ -3187,7 +3188,10 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
 
    /* See if memory needs to grow */
    if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
-      pilot_mstack += PILOT_CHUNK;
+      if (pilot_mstack == 0)
+         pilot_mstack = PILOT_CHUNK_MIN;
+      else
+         pilot_mstack += MIN( pilot_mstack, PILOT_CHUNK_MAX );
       pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
    }
 
