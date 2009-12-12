@@ -34,15 +34,16 @@
 #include "fleet.h"
 #include "mission.h"
 #include "conf.h"
+#include "queue.h"
 
 
-#define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
-#define XML_PLANET_TAG        "planet" /**< Individual planet xml tag. */
+#define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
+#define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 
 #define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
-#define PLANET_DATA           "dat/planet.xml" /**< XML file containing planets. */
+#define PLANET_DATA           "dat/asset.xml" /**< XML file containing planets. */
 #define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
 
 #define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
@@ -884,6 +885,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    flags = 0;
    planet->presenceAmount = 0;
    planet->presenceRange = 0;
+   planet->real = ASSET_UNREAL;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -909,6 +911,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"pos")) {
+         planet->real = ASSET_REAL;
          cur = node->children;
          do {
             if (xml_isNode(cur,"x")) {
@@ -1026,28 +1029,37 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
  * verification
  */
 #define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
-   MELEMENT(planet->gfx_space==NULL,"GFX space");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->gfx_exterior==NULL,"GFX exterior");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (planet->population==0), "population");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (planet->prodfactor==0.), "prodfactor");
-   MELEMENT((flags&FLAG_XSET)==0,"x");
-   MELEMENT((flags&FLAG_YSET)==0,"y");
-   MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->description==NULL,"desription");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
-         planet->bar_description==NULL,"bar");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (flags&FLAG_FACTIONSET)==0,"faction");
-   MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-   MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
-            planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
-         (flags&FLAG_TECHSET)==0, "tech" );
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-         (planet->ncommodities==0),"commodity" );
+   /* Issue warnings on missing items only it the asset is real. */
+   if(planet->real == ASSET_REAL) {
+      MELEMENT(planet->gfx_space==NULL,"GFX space");
+      MELEMENT((flags&FLAG_XSET)==0,"x");
+      MELEMENT((flags&FLAG_YSET)==0,"y");
+      MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
+      MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+          planet->gfx_exterior==NULL,"GFX exterior");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+          (planet->population==0), "population");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+          (planet->prodfactor==0.), "prodfactor");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+          planet->description==NULL,"desription");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
+          planet->bar_description==NULL,"bar");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+          (flags&FLAG_FACTIONSET)==0,"faction");
+      MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
+             planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
+          (flags&FLAG_TECHSET)==0, "tech" );
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+          (planet->ncommodities==0),"commodity" );
+   } else { /* The asset is unreal, so set some NULLs. */
+      planet->gfx_space = NULL;
+      planet->gfx_exterior = NULL;
+      planet->description = NULL;
+      planet->bar_description = NULL;
+      planet->commodities = NULL;
+   }
 #undef MELEMENT
 
    return 0;
@@ -1303,6 +1315,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    xmlNodePtr cur, node;
    uint32_t flags;
    int size;
+   int i;
 
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
@@ -1310,7 +1323,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->faction   = -1;
    planet         = NULL;
    size           = 0;
-   sys->presence  = NULL;
+   sys->presence  = malloc(faction_nstack * sizeof(double));
+   for(i = 0; i < faction_nstack; i++)
+      sys->presence[i] = 0;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
@@ -1359,11 +1374,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      /* loads all the planets */
-      else if (xml_isNode(node,"planets")) {
+      /* Loads all the assets. */
+      else if (xml_isNode(node,"assets")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"planet"))
+            if (xml_isNode(cur,"asset"))
                system_addPlanet( sys, xml_get(cur) );
          } while (xml_nextNode(cur));
          continue;
@@ -1547,18 +1562,9 @@ int space_load (void)
  */
 static int system_calcSecurity( StarSystem *sys )
 {
-   int i;
-
    /* Do not run while loading to speed up. */
    if (systems_loading)
       return 0;
-
-   /* Initialise the array if it doesn't exist. */
-   if(sys->presence == NULL) {
-      sys->presence = malloc(faction_nstack * sizeof(double));
-      for(i = 0; i < faction_nstack; i++)
-         sys->presence[i] = 0;
-   }
 
    /* Set security. */
    sys->security = 0.;
@@ -1802,10 +1808,12 @@ void planets_render (void)
    if (cur_system==NULL) return;
 
    int i;
-   for (i=0; i < cur_system->nplanets; i++)
-      gl_blitSprite( cur_system->planets[i]->gfx_space,
-            cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
-            0, 0, NULL );
+   for (i=0; i < cur_system->nplanets; i++) {
+      if (cur_system->planets[i]->real == ASSET_REAL)
+         gl_blitSprite( cur_system->planets[i]->gfx_space,
+               cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
+               0, 0, NULL );
+   }
 }
 
 
@@ -1854,6 +1862,7 @@ void space_exit (void)
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
 
+      free(systems_stack[i].presence);
       free(systems_stack[i].planets);
    }
    free(systems_stack);
@@ -2064,28 +2073,80 @@ int space_sysLoad( xmlNodePtr parent )
  */
 void addPresence( StarSystem *sys, int faction, double amount, int range ) {
    int i, curSpill;
+   Queue q, qn;
+   StarSystem *cur;
 
-   /* Add the presence to the system. */
+   /* Check that we have a sane faction. (-1 == bobbens == insane)*/
+   if(faction < 0 || faction >= faction_nstack)
+      return;
+
+   /* Add the presence to the current system. */
    sys->presence[faction] += amount;
 
+   /* If there's no range, we're done here. */
+   if(range < 0)
+      return;
+
    /* Add the spill. */
-   /* TODO */
+   sys->spilled = 1;
+   curSpill = 0;
+   q = q_create();
+   qn = q_create();
+
+   /* Create the initial queue consisting of sys adjacencies. */
+   for(i = 0; i < sys->njumps; i++)
+      if(system_getIndex(sys->jumps[i])->spilled == 0) {
+         q_enqueue(q, system_getIndex(sys->jumps[i]));
+         system_getIndex(sys->jumps[i])->spilled = 1;
+      }
+
+   while(curSpill < range) {
+      /* Check to see if we've finished this range. */
+      if(q_isEmpty(q)) {
+         curSpill++;
+         q_destroy(q);
+         q = qn;
+         qn = q_create();
+      }
+
+      /* Pull one off the queue. */
+      cur = q_dequeue(q);
+
+      /* Enqueue all its adjancencies. */
+      for(i = 0; i < cur->njumps; i++)
+         if(system_getIndex(cur->jumps[i])->spilled == 0) {
+            q_enqueue(qn, system_getIndex(cur->jumps[i]));
+            system_getIndex(cur->jumps[i])->spilled = 1;
+         }
+
+      /* Spill some presence. */
+      cur->presence[faction] += amount / (2 + curSpill);
+   }
+
+   /* Destroy the queues. */
+   q_destroy(q);
+   q_destroy(qn);
+
+   /* Reset the spilled variable. */
+   for(i = 0; i < systems_nstack; i++) {
+      systems_stack[i].spilled = 0;
+   }
 
    return;
 }
 
 
 /**
- * @brief Go through all the planets and call addPresence().
+ * @brief Go through all the assets and call addPresence().
  *
  *    @param sys Pointer to the system to process.
  */
 void system_addAllPlanetsPresence( StarSystem *sys ) {
    int i;
 
-   for(i = 0; i < sys->nplanets; i++) {
-      addPresence( sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
-   }
+   for(i = 0; i < sys->nplanets; i++)
+      addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+
 
    return;
 }

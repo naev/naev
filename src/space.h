@@ -21,6 +21,9 @@
 
 #define PLANET_TECH_MAX       8 /**< Amount of special techs a planet can have. */
 
+#define ASSET_UNREAL          0 /**< The asset is "unreal". */
+#define ASSET_REAL            1 /**< The asset is "real". */
+
 
 /**
  * @brief Different planet classes.
@@ -92,6 +95,7 @@ typedef struct Planet_ {
    /* Asset details. */
    double presenceAmount; /**< The amount of presence this asset exerts. */
    int presenceRange; /**< The range of presence exertion of this asset. */
+   int real; /**< If the asset is tangible or not. */
   
    /* Landing details. */
    char* description; /**< planet description */
@@ -168,6 +172,7 @@ typedef struct StarSystem_ {
    double *prices; /**< Handles the prices in the system. */
    double security; /**< % of security in this system. */
    double *presence; /**< Pointer to an array of presences in this system. */
+   int spilled; /**< If the system has been spilled to yet. */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
