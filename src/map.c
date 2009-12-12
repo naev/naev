@@ -219,7 +219,7 @@ static void map_update( unsigned int wid )
    double standing, nstanding;
    unsigned int services;
    int l;
-   int hasPresence;
+   int hasPresence, hasPlanets;
    char t;
    char buf[PATH_MAX];
    int p;
@@ -361,24 +361,25 @@ static void map_update( unsigned int wid )
    window_modifyText( wid, "txtSecurity", buf );
 
    /* Get planets */
-   if (sys->nplanets == 0) {
-      strncpy( buf, "None", PATH_MAX );
-      window_modifyText( wid, "txtPlanets", buf );
-   }
-   else {
-      p = 0;
-      buf[0] = '\0';
-      if (sys->nplanets > 0)
-         if(sys->planets[0]->real == ASSET_REAL)
-            p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
-      for (i=1; i<sys->nplanets; i++) {
-         if(sys->planets[i]->real == ASSET_UNREAL)
-            continue;
-         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
+   hasPlanets = 0;
+   p = 0;
+   buf[0] = '\0';
+   if (sys->nplanets > 0)
+      if(sys->planets[0]->real == ASSET_REAL) {
+         hasPlanets = 1;
+         p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
       }
-
-      window_modifyText( wid, "txtPlanets", buf );
+   for (i=1; i<sys->nplanets; i++) {
+      if(sys->planets[i]->real == ASSET_UNREAL)
+         continue;
+      hasPlanets = 1;
+      p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
    }
+   if(hasPlanets == 0)
+      strncpy( buf, "None", PATH_MAX );
+
+   window_modifyText( wid, "txtPlanets", buf );
+
    y -= 100;
    window_moveWidget( wid, "txtSPlanets", -20, y );
    window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
@@ -641,7 +642,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* If system is known fill it. */
-      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
+      if (sys_isKnown(sys) && (system_hasPlanet(sys))) {
          /* Planet colours */
          if (!sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;
