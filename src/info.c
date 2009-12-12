@@ -92,6 +92,9 @@ void menu_info (void)
 
    /* Create the window. */
    info_wid = window_create( "Info", -1, -1, w, h );
+   window_setCancel( info_wid, info_close );
+
+   /* Create tabbewd window. */
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
          INFO_WINDOWS, info_names );
 
