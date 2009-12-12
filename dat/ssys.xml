@@ -780,7 +780,9 @@
    <y>-15</y>
    <x>435</x>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Empire Fear 100</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>350</interference>
@@ -1450,7 +1452,9 @@
    <y>8</y>
    <x>642</x>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Empire Patrol 100</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>650</interference>

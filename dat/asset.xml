@@ -2054,4 +2054,13 @@
    <range>0</range>
   </presence>
  </asset>
+ <asset name="Empire Fear 100">
+  <general>
+   <faction>Empire</faction>
+  </general>
+  <presence>
+   <value>-100</value>
+   <range>1</range>
+  </presence>
+ </asset>
 </Assets>
