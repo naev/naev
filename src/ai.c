@@ -548,6 +548,10 @@ static int ai_loadEquip (void)
    const char *filename = "ai/equip/equip.lua";
    lua_State *L;
 
+   /* Make sure doesn't already exist. */
+   if (equip_L != NULL)
+      lua_close(equip_L);
+
    /* Create new state. */
    equip_L = nlua_newState();
    L = equip_L;
@@ -667,11 +671,18 @@ AI_Profile* ai_getProfile( char* name )
 void ai_exit (void)
 {
    int i;
+
+   /* Free AI profiles. */
    for (i=0; i<nprofiles; i++) {
       free(profiles[i].name);
       lua_close(profiles[i].L);
    }
    free(profiles);
+
+   /* Free equipment Lua. */
+   if (equip_L != NULL)
+      lua_close(equip_L);
+   equip_L = NULL;
 }
 
 
