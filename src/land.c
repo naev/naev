@@ -945,7 +945,8 @@ static void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (!player_hasCredits( ship->price ))
+   if (!player_hasCredits( ship->price ) ||
+         ((ship->license != NULL) && !player_hasLicense(ship->license)))
       window_disableButton( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
