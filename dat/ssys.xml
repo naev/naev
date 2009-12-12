@@ -153,9 +153,9 @@
   </fleets>
   <jumps>
    <jump>Arcturus</jump>
-	<jump>Gamma Polaris</jump>
-	<jump>Hekaras</jump>
-	<jump>Zied</jump>
+    <jump>Gamma Polaris</jump>
+    <jump>Hekaras</jump>
+    <jump>Zied</jump>
   </jumps>
   <pos>
    <y>-320</y>
@@ -175,20 +175,20 @@
   <fleets>
    <fleet>Empire Heavy Presence</fleet>
    <fleet>Trader Heavy Presence</fleet>
-	<fleet>Pirate Token Presence</fleet>
+    <fleet>Pirate Token Presence</fleet>
   </fleets>
   <jumps>
    <jump>Goddard</jump>
-	<jump>Gamma Polaris</jump>
-	<jump>Apez</jump>
+    <jump>Gamma Polaris</jump>
+    <jump>Apez</jump>
   </jumps>
   <pos>
    <y>-246</y>
    <x>-40</x>
   </pos>
   <assets>
-  	<asset>Antica</asset>
-	<asset>Arcturus Gamma</asset>
+    <asset>Antica</asset>
+    <asset>Arcturus Gamma</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -256,7 +256,7 @@
   </pos>
   <assets>
    <asset>Bon Sebb</asset>
-	<asset>Saturn VI</asset>
+    <asset>Saturn VI</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -293,7 +293,7 @@
   <jumps>
    <jump>Coriolis</jump>
    <jump>Capricorn</jump>
-	<jump>NGC-7414</jump>
+    <jump>NGC-7414</jump>
   </jumps>
   <pos>
    <y>110</y>
@@ -315,8 +315,8 @@
   </fleets>
   <jumps>
    <jump>NGC-7723</jump>
-	<jump>Coriolis</jump>
-	<jump>Haven</jump>
+    <jump>Coriolis</jump>
+    <jump>Haven</jump>
   </jumps>
   <pos>
    <y>134</y>
@@ -464,7 +464,7 @@
    <x>207</x>
   </pos>
   <assets>
-  	<asset>Verex III</asset>
+    <asset>Verex III</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -486,7 +486,7 @@
    <x>237</x>
   </pos>
   <assets>
-  	<asset>Ullnorn</asset>
+    <asset>Ullnorn</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -509,8 +509,8 @@
    <x>180</x>
   </pos>
   <assets>
-  	<asset>Varia</asset>
-  	<asset>Stalwart Station</asset>
+    <asset>Varia</asset>
+    <asset>Stalwart Station</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -532,7 +532,7 @@
    <x>140</x>
   </pos>
   <assets>
-  	<asset>Utsuwa</asset>
+    <asset>Utsuwa</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -554,7 +554,7 @@
    <x>240</x>
   </pos>
   <assets>
-  	<asset>Totoran</asset>
+    <asset>Totoran</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -590,7 +590,7 @@
   </fleets>
   <jumps>
    <jump>Zylex</jump>
-	<jump>Raelid</jump>
+    <jump>Raelid</jump>
   </jumps>
   <pos>
    <y>-57</y>
@@ -707,9 +707,9 @@
   </fleets>
   <jumps>
    <jump>Goddard</jump>
-	<jump>Vlexon</jump>
-	<jump>Zacron</jump>
-	<jump>Doranthex</jump>
+    <jump>Vlexon</jump>
+    <jump>Zacron</jump>
+    <jump>Doranthex</jump>
   </jumps>
   <pos>
    <y>-250</y>
@@ -820,7 +820,7 @@
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
-	<jump>NGC-7690</jump>
+    <jump>NGC-7690</jump>
   </jumps>
   <pos>
    <y>82</y>
@@ -839,7 +839,7 @@
   <fleets>
    <fleet>Pirate Medium Presence</fleet>
    <fleet>Trader Light Presence</fleet>
-	<fleet>Empire Patrol Presence</fleet>
+    <fleet>Empire Patrol Presence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -894,7 +894,7 @@
    <jump>Dune</jump>
    <jump>Alteris</jump>
    <jump>NGC-7690</jump>
-	<jump>NGC-7693</jump>
+    <jump>NGC-7693</jump>
   </jumps>
   <pos>
    <y>73</y>
@@ -916,8 +916,8 @@
    <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
-	<jump>Haleb</jump>
-	<jump>Norpin</jump>
+    <jump>Haleb</jump>
+    <jump>Norpin</jump>
   </jumps>
   <pos>
    <y>-376</y>
@@ -942,9 +942,9 @@
    <jump>Qex</jump>
    <jump>Sirou</jump>
    <jump>Shakar</jump>
-	<jump>Arcturus</jump>
-	<jump>Apez</jump>
-	<jump>Koralis</jump>
+    <jump>Arcturus</jump>
+    <jump>Apez</jump>
+    <jump>Koralis</jump>
   </jumps>
   <pos>
    <y>-296</y>
@@ -969,7 +969,7 @@
   </fleets>
   <jumps>
    <jump>Qex</jump>
-	<jump>Gamma Polaris</jump>
+    <jump>Gamma Polaris</jump>
   </jumps>
   <pos>
    <y>-330</y>
@@ -1471,9 +1471,9 @@
   </fleets>
   <jumps>
    <jump>Klantar</jump>
-	<jump>Doranthex</jump>
-	<jump>Theras</jump>
-	<jump>Tarsus</jump>
+    <jump>Doranthex</jump>
+    <jump>Theras</jump>
+    <jump>Tarsus</jump>
   </jumps>
   <pos>
    <y>-370</y>
@@ -1671,7 +1671,7 @@
   <fleets>
    <fleet>Trader Medium Presence</fleet>
    <fleet>FLF Light Guerrilla</fleet>
-	<fleet>Dvaered Light Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
   </fleets>
   <jumps>
    <jump>Theras</jump>
@@ -1683,7 +1683,9 @@
   <assets>
    <asset>Dawn</asset>
    <asset>Dusk</asset>
-  </assets>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+ </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1708,6 +1710,10 @@
   </pos>
   <assets>
    <asset>Cetrat</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1863,14 +1869,14 @@
    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
-	<jump>Slaccid</jump>
+    <jump>Slaccid</jump>
   </jumps>
   <pos>
    <y>-427</y>
    <x>449</x>
   </pos>
   <assets>
-  	<asset>Norpin II</asset>
+    <asset>Norpin II</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1884,10 +1890,10 @@
    <fleet>Empire Light Presence</fleet>
    <fleet>Dvaered Medium Presence</fleet>
    <fleet>Trader Medium Presence</fleet>
-	<fleet>FLF Light Guerrilla</fleet>
+    <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
-	<jump>Ogat</jump>
+    <jump>Ogat</jump>
   </jumps>
   <pos>
    <y>-309</y>
@@ -1916,7 +1922,7 @@
    <jump>Uhriabi</jump>
    <jump>Gamma Polaris</jump>
    <jump>Eneguoz</jump>
-	<jump>Koralis</jump>
+    <jump>Koralis</jump>
   </jumps>
   <pos>
    <y>-383</y>
@@ -1989,7 +1995,7 @@
   <jumps>
    <jump>Delta Pavonis</jump>
    <jump>Arcturus</jump>
-	<jump>Ogat</jump>
+    <jump>Ogat</jump>
   </jumps>
   <pos>
    <y>-194</y>
