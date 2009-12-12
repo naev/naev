@@ -37,7 +37,8 @@
    <y>198</y>
    <x>85</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -50,14 +51,14 @@
    <fleet>Empire Light Presence</fleet>
    <fleet>Dvaered Medium Presence</fleet>
    <fleet>Trader Light Presence</fleet>
-	<fleet>Pirate Token Presence</fleet>
+   <fleet>Pirate Token Presence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
    <jump>Toaxis</jump>
    <jump>Zacron</jump>
-	<jump>Surano</jump>
-	<jump>Arcanis</jump>
+   <jump>Surano</jump>
+   <jump>Arcanis</jump>
   </jumps>
   <pos>
    <y>-137</y>
@@ -65,6 +66,10 @@
   </pos>
   <assets>
    <asset>Raelid Outpost</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -111,7 +116,8 @@
    <y>-91</y>
    <x>434</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -131,7 +137,8 @@
    <y>43</y>
    <x>566</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>600</interference>
@@ -269,7 +276,8 @@
    <y>-267</y>
    <x>-215</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -291,7 +299,8 @@
    <y>110</y>
    <x>-5</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -313,7 +322,8 @@
    <y>134</y>
    <x>81</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -331,7 +341,8 @@
    <y>19</y>
    <x>368</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -349,8 +360,8 @@
    <jump>Torg</jump>
    <jump>Dakron</jump>
    <jump>Tuoladis</jump>
-	<jump>Ogat</jump>
-	<jump>Tarsus</jump>
+   <jump>Ogat</jump>
+   <jump>Tarsus</jump>
   </jumps>
   <pos>
    <y>-353</y>
@@ -358,6 +369,8 @@
   </pos>
   <assets>
    <asset>Doranthex Prime</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -382,7 +395,9 @@
    <x>247</x>
   </pos>
   <assets>
-  	<asset>Valt</asset>
+   <asset>Valt</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -403,7 +418,8 @@
    <y>235</y>
    <x>155</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -423,7 +439,8 @@
    <y>235</y>
    <x>155</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -558,7 +575,8 @@
    <y>235</y>
    <x>155</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -578,7 +596,8 @@
    <y>-57</y>
    <x>333</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>200</interference>
@@ -622,7 +641,8 @@
    <y>83</y>
    <x>223</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>150</interference>
@@ -681,7 +701,7 @@
  <ssys name="Ogat">
   <fleets>
    <fleet>Dvaered Medium Presence</fleet>
-	<fleet>Empire Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
    <fleet>Trader Heavy Presence</fleet>
    <fleet>Pirate Token Presence</fleet>
   </fleets>
@@ -696,7 +716,8 @@
    <x>150</x>
   </pos>
   <assets>
-  	<asset>Praxis</asset>
+   <asset>Praxis</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -736,7 +757,8 @@
    <y>64</y>
    <x>677</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>700</interference>
@@ -781,7 +803,8 @@
    <x>435</x>
   </pos>
   <assets>
-   <asset>Empire Fear 100</asset>
+   <asset>Empire Presence -100</asset>
+   <asset>Empire Presence -100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -803,7 +826,8 @@
    <y>82</y>
    <x>-82</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -826,7 +850,8 @@
    <y>-15</y>
    <x>-32</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -875,7 +900,8 @@
    <y>73</y>
    <x>46</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -897,7 +923,8 @@
    <y>-376</y>
    <x>483</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1018,7 +1045,8 @@
    <y>128</y>
    <x>590</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>800</interference>
@@ -1058,7 +1086,8 @@
    <y>122</y>
    <x>277</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -1077,7 +1106,8 @@
    <y>180</y>
    <x>0</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
@@ -1146,7 +1176,8 @@
    <y>-143</y>
    <x>-222</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1170,7 +1201,8 @@
    <y>19</y>
    <x>197</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
@@ -1191,7 +1223,8 @@
    <y>55</y>
    <x>-169</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1208,7 +1241,8 @@
    <y>60</y>
    <x>497</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>450</interference>
@@ -1298,7 +1332,8 @@
    <y>-104</y>
    <x>549</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>350</interference>
@@ -1318,7 +1353,8 @@
    <y>-61</y>
    <x>-111</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1342,6 +1378,11 @@
   </pos>
   <assets>
    <asset>Nor</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1365,6 +1406,10 @@
   </pos>
   <assets>
    <asset>Sinclair</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1409,7 +1454,8 @@
    <y>-78</y>
    <x>636</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>500</interference>
@@ -1435,6 +1481,12 @@
   </pos>
   <assets>
    <asset>Thar</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1453,7 +1505,6 @@
    <x>642</x>
   </pos>
   <assets>
-   <asset>Empire Patrol 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1476,7 +1527,8 @@
    <y>-149</y>
    <x>387</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>200</interference>
@@ -1498,7 +1550,10 @@
    <y>-302</y>
    <x>243</x>
   </pos>
-  <assets/>
+  <assets>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1558,7 +1613,8 @@
    <y>136</y>
    <x>751</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>800</interference>
@@ -1670,7 +1726,8 @@
    <y>145</y>
    <x>682</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>950</interference>
@@ -1687,7 +1744,8 @@
    <y>264</y>
    <x>52</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -1709,7 +1767,8 @@
    <y>50</y>
    <x>-31</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1830,6 +1889,9 @@
   </pos>
   <assets>
    <asset>Vlexair</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1876,7 +1938,8 @@
    <y>156</y>
    <x>176</x>
   </pos>
-  <assets/>
+  <assets>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -1893,13 +1956,16 @@
   <jumps>
    <jump>Raelid</jump>
    <jump>Tuoladis</jump>
-	<jump>Ogat</jump>
+   <jump>Ogat</jump>
   </jumps>
   <pos>
    <y>-224</y>
    <x>239</x>
   </pos>
-  <assets/>
+  <assets>
+   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence 100</asset>
+  </assets>
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
@@ -1925,7 +1991,6 @@
   </pos>
   <assets>
    <asset>Zhiru</asset>
-   <asset>Empire Patrol 100</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>

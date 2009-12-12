@@ -11,7 +11,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -52,7 +52,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -93,7 +93,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services>
@@ -118,7 +118,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.2</prodfactor>
@@ -155,7 +155,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.2</prodfactor>
@@ -193,7 +193,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -216,7 +216,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -258,7 +258,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -301,7 +301,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -339,7 +339,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -371,7 +371,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -402,7 +402,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -424,7 +424,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.8</prodfactor>
@@ -460,7 +460,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.2</prodfactor>
@@ -497,7 +497,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -533,7 +533,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -571,7 +571,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -611,7 +611,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -650,7 +650,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -688,7 +688,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -726,7 +726,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -757,7 +757,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -779,7 +779,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -816,7 +816,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -893,7 +893,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -916,7 +916,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -955,7 +955,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -992,7 +992,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -1031,7 +1031,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.5</prodfactor>
@@ -1071,7 +1071,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.6</prodfactor>
@@ -1113,7 +1113,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -1136,7 +1136,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -1176,7 +1176,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -1199,7 +1199,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.6</prodfactor>
@@ -1239,7 +1239,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -1280,7 +1280,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.6</prodfactor>
@@ -1318,7 +1318,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.6</prodfactor>
@@ -1359,7 +1359,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.2</prodfactor>
@@ -1392,7 +1392,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1432,7 +1432,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -1471,7 +1471,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -1493,7 +1493,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.8</prodfactor>
@@ -1535,7 +1535,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -1576,7 +1576,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.3</prodfactor>
@@ -1615,7 +1615,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -1637,7 +1637,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -1658,7 +1658,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <services />
@@ -1680,7 +1680,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1722,7 +1722,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1758,7 +1758,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1794,7 +1794,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <tech>
@@ -1816,7 +1816,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1841,7 +1841,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1877,7 +1877,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1916,7 +1916,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
@@ -1950,7 +1950,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1989,7 +1989,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>2</range>
+   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -2045,22 +2045,27 @@
    <population>1000</population>
   </general>
  </asset>
- <asset name="Empire Patrol 100">
+
+
+
+
+
+ <asset name="Empire Presence -100">
   <general>
    <faction>Empire</faction>
+  </general>
+  <presence>
+   <value>-1000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="FLF Presence 100">
+  <general>
+   <faction>FLF</faction>
   </general>
   <presence>
    <value>100</value>
    <range>0</range>
-  </presence>
- </asset>
- <asset name="Empire Fear 100">
-  <general>
-   <faction>Empire</faction>
-  </general>
-  <presence>
-   <value>-100</value>
-   <range>1</range>
   </presence>
  </asset>
 </Assets>

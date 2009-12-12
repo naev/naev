@@ -112,6 +112,7 @@
  <fleet name="FLF Vendetta Trio">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>150</strength>
   <pilots>
    <pilot chance="100" ship="Vendetta"></pilot>
    <pilot chance="100" ship="Vendetta"></pilot>
@@ -121,6 +122,7 @@
  <fleet name="FLF Vendetta Sextet">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>250</strength>
   <pilots>
    <pilot chance="100" ship="Vendetta"></pilot>
    <pilot chance="100" ship="Vendetta"></pilot>
@@ -133,6 +135,7 @@
  <fleet name="FLF Ancestor Trio">
   <ai>flf</ai>
   <faction>FLF</faction>
+  <strength>150</strength>
   <pilots>
    <pilot chance="100" ship="Ancestor"></pilot>
    <pilot chance="100" ship="Ancestor"></pilot>
@@ -153,7 +156,7 @@
  <fleet name="FLF Med Force">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>350</strength>
+  <strength>300</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="80" ship="Hyena"></pilot>
@@ -167,7 +170,7 @@
  <fleet name="FLF Lge Force">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>500</strength>
+  <strength>400</strength>
   <pilots>
    <pilot chance="100" ship="Hyena"></pilot>
    <pilot chance="80" ship="Hyena"></pilot>
