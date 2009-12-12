@@ -2152,3 +2152,18 @@ void system_addAllPlanetsPresence( StarSystem *sys ) {
 }
 
 
+/**
+ * @brief See if the system has a planet or station.
+ *
+ *    @param sys Pointer to the system to process.
+ *    @return 0 If empty; otherwise 1.
+ */
+int system_hasPlanet( StarSystem *sys ) {
+   int i;
+
+   for(i = 0; i < sys->nplanets; i++)
+      if(sys->planets[i]->real == ASSET_REAL)
+         return 1;
+
+   return 0;
+}

@@ -641,7 +641,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* If system is known fill it. */
-      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
+      if (sys_isKnown(sys) && (system_hasPlanet(sys))) {
          /* Planet colours */
          if (!sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;
