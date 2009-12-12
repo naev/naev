@@ -1855,6 +1855,7 @@ void space_exit (void)
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
 
+      free(systems_stack[i].presence);
       free(systems_stack[i].planets);
    }
    free(systems_stack);
