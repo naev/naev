@@ -102,7 +102,8 @@ void credits2str( char *str, unsigned long credits, int decimals )
       snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000UL)
       snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
-   else snprintf (str, 16, "%lu", credits );
+   else 
+      snprintf (str, 16, "%lu", credits );
 }
 
 

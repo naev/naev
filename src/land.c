@@ -96,7 +96,7 @@ static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
- 
+
 /*
  * mission computer stack
  */
@@ -194,7 +194,7 @@ static void commodity_exchange_open( unsigned int wid )
 
    /* text */
    window_addText( wid, -20, -40, BUTTON_WIDTH, 60, 0,
-         "txtSInfo", &gl_smallFont, &cDConsole, 
+         "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market price:\n"
          "\n"
@@ -853,7 +853,7 @@ static void shipyard_update( unsigned int wid, char* str )
    char *shipname;
    Ship* ship;
    char buf[PATH_MAX], buf2[16], buf3[16];
-   
+
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
    /* No ships */
@@ -1525,7 +1525,7 @@ void land_checkAddRefuel (void)
             BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
    }
-   
+
    /* Make sure player can click it. */
    if (!player_hasCredits( refuel_price() ))
       window_disableButton( land_windows[0], "btnRefuel" );
@@ -1672,7 +1672,7 @@ void land( Planet* p )
     *  3) Generate missions - so that campaigns are fluid.
     *  4) Create other tabs - lists depend on NPC and missions.
     */
-   
+
    /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
@@ -1766,7 +1766,7 @@ static void land_createMainTab( unsigned int wid )
     */
    window_addImage( wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
-         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0, 
+         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
 
    /*
@@ -1960,7 +1960,7 @@ void land_cleanup (void)
    land_planet    = NULL;
    landed         = 0;
    land_visited   = 0;
-  
+
    /* Destroy window. */
    if (land_wid > 0)
       window_destroy(land_wid);
