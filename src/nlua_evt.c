@@ -119,6 +119,9 @@ int event_runLua( Event_t *ev, const char *func )
 
 /**
  * @brief Runs a Lua func with nargs.
+ *
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *            and 0 normally.
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 {
@@ -135,6 +138,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
       if ((err==NULL) || (strcmp(err,"Event Done")!=0)) {
          WARN("Event '%s' -> '%s': %s",
                event_getData(ev->id), func, (err) ? err : "unknown error");
+         ret = -1;
       }
       else
          ret = 1;
@@ -143,6 +147,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 
    /* Time to remove the event. */
    if (evt_delete) {
+      ret = 2;
       event_remove( cur_event->id );
    }
 
