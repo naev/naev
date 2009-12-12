@@ -36,7 +36,7 @@ void hook_rmEventParent( unsigned int parent );
  *    - "equipment" - when visiting equipment place
  */
 int hooks_run( const char* stack );
-void hook_runID( unsigned int id ); /* runs hook of specific id */
+int hook_runID( unsigned int id ); /* runs hook of specific id */
 
 /* destroys hooks */
 void hook_cleanup (void);

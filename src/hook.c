@@ -124,9 +124,11 @@ static int hook_runMisn( Hook *hook )
    misn = &player_missions[i];
 
    /* Run mission code. */
-   if (misn_run( misn, hook->u.misn.func ) < 0) /* error has occured */
+   if (misn_run( misn, hook->u.misn.func ) < 0) { /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
             hook->id, hook->u.misn.func);
+      return -1;
+   }
 
    return 0;
 }
@@ -143,8 +145,10 @@ static int hook_runEvent( Hook *hook )
    int ret, id;
    id = hook->id;
    ret = event_run( hook->u.event.parent, hook->u.event.func );
-   if (ret != 0)
+   if (ret != 0) {
       hook_rm( id );
+      return -1;
+   }
    return 0;
 }
 
@@ -160,8 +164,10 @@ static int hook_runFunc( Hook *hook )
    int ret, id;
    id = hook->id;
    ret = hook->u.func.func( hook->u.func.data );
-   if (ret != 0)
+   if (ret != 0) {
       hook_rm( id );
+      return -1;
+   }
    return 0;
 }
 
@@ -394,7 +400,7 @@ void hook_rmEventParent( unsigned int parent )
  */
 int hooks_run( const char* stack )
 {
-   int i;
+   int i, ret;
 
    /* Don't update if player is dead. */
    if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -403,7 +409,9 @@ int hooks_run( const char* stack )
    hook_runningstack = 1; /* running hooks */
    for (i=0; i<hook_nstack; i++)
       if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
-         hook_run( &hook_stack[i] );
+         ret = hook_run( &hook_stack[i] );
+         if (ret)
+            WARN("Hook '%d' of stack '%s' failed to run!", hook_stack[i].id, stack);
       }
    hook_runningstack = 0; /* not running hooks anymore */
 
@@ -423,14 +431,14 @@ int hooks_run( const char* stack )
  *    @param id Identifier of the hook to run.
  *    @return The ID of the hook or 0 if it got deleted.
  */
-void hook_runID( unsigned int id )
+int hook_runID( unsigned int id )
 {
    Hook *h;
    int i, ret;
 
    /* Don't update if player is dead. */
    if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
-      return;
+      return 0;
 
    /* Try to find the hook and run it. */
    ret = 0;
@@ -443,8 +451,12 @@ void hook_runID( unsigned int id )
       }
 
    /* Hook not found. */
-   if (ret == 0)
-      DEBUG("Attempting to run hook of id '%d' which is not in the stack", id);
+   if (ret == 0) {
+      WARN("Attempting to run hook of id '%d' which is not in the stack", id);
+      return -1;
+   }
+
+   return 0;
 }
 
 
