@@ -218,6 +218,7 @@ static void map_update( unsigned int wid )
    double standing, nstanding;
    unsigned int services;
    int l;
+   int hasPresence;
    char t;
    char buf[PATH_MAX];
    int p;
@@ -337,22 +338,23 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
 
-   /* Get security. */
+   /* Get presence. */
    y -= 40;
-   if (sys->nfleets == 0)
-      snprintf(buf, PATH_MAX, "NA" );
-   else {
-      buf[0] = '\0';
-      for(i = 0; i < faction_nstack; i++)
-         if(sys->presence[i] > 0) {
-            l = strlen(buf);
-            buf[l++] = '\e';
-            t = faction_getColourChar(i);
-            /* Use map grey instead of default neutral colour */
-            buf[l++] = (t == 'N' ? 'm' : t);
-            snprintf((buf + l), (PATH_MAX - l), "%s: %.0f\n", faction_name(i), sys->presence[i]);
-         }
-   }
+   hasPresence = 0;
+   buf[0] = '\0';
+   for(i = 0; i < faction_nstack; i++)
+      if(sys->presence[i] > 0) {
+         hasPresence = 1;
+         l = strlen(buf);
+         buf[l++] = '\e';
+         t = faction_getColourChar(i);
+         /* Use map grey instead of default neutral colour */
+         buf[l++] = (t == 'N' ? 'm' : t);
+         snprintf((buf + l), (PATH_MAX - l), "%s: %.0f\n", faction_name(i), sys->presence[i]);
+      }
+   if(hasPresence == 0)
+      snprintf(buf, PATH_MAX, "N/A");
+
    window_moveWidget( wid, "txtSSecurity", -20, y );
    window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtSecurity", buf );
