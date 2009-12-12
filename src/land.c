@@ -653,6 +653,10 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
          map_isMapped( NULL, outfit->u.map.radius ))
       return 0;
 
+   /* License check. */
+   if (outfit_isLicense(outfit))
+      return 0;
+
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
