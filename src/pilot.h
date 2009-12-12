@@ -255,7 +255,7 @@ typedef struct Pilot_ {
    double jam_chance; /**< Jam chance. */
 
    /* Cargo */
-   unsigned int credits; /**< monies the pilot has */
+   unsigned long credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
    int ncommodities; /**< number of commodities. */
    int cargo_free; /**< Free commodity space. */
@@ -362,6 +362,8 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 
 
 /* Misc. */
+int pilot_hasCredits( Pilot *p, int amount );
+unsigned long pilot_modCredits( Pilot *p, int amount );
 int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );

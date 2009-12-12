@@ -35,7 +35,8 @@
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK          1024 /**< Size to increase array with */
+#define WEAPON_CHUNK_MAX      16384 /**< Maximum size to increase array with */
+#define WEAPON_CHUNK_MIN      256 /**< Minimum size to increase array with */
 
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
@@ -1354,13 +1355,16 @@ void weapon_add( const Outfit* outfit, const double dir,
    if (*mLayer > *nLayer) /* more memory alloced than needed */
       curLayer[(*nLayer)++] = w;
    else { /* need to allocate more memory */
+      if ((*mLayer) == 0)
+         (*mLayer) = WEAPON_CHUNK_MIN;
+      else
+         (*mLayer) += MIN( (*mLayer), WEAPON_CHUNK_MAX );
+
       switch (layer) {
          case WEAPON_LAYER_BG:
-            (*mLayer) += WEAPON_CHUNK;
             curLayer   = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
          case WEAPON_LAYER_FG:
-            (*mLayer) += WEAPON_CHUNK;
             curLayer   = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
       }
@@ -1432,13 +1436,16 @@ int beam_start( const Outfit* outfit,
    if (*mLayer > *nLayer) /* more memory alloced than needed */
       curLayer[(*nLayer)++] = w;
    else { /* need to allocate more memory */
+      if ((*mLayer) == 0)
+         (*mLayer) = WEAPON_CHUNK_MIN;
+      else
+         (*mLayer) += MIN( (*mLayer), WEAPON_CHUNK_MAX );
+
       switch (layer) {
          case WEAPON_LAYER_BG:
-            (*mLayer) += WEAPON_CHUNK;
             curLayer = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
          case WEAPON_LAYER_FG:
-            (*mLayer) += WEAPON_CHUNK;
             curLayer = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
       }

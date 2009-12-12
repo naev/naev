@@ -84,6 +84,8 @@ void player_message ( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
+int player_hasCredits( int amount );
+unsigned long player_modCredits( int amount );
 /* Sounds. */
 void player_playSound( int sound, int once );
 void player_stopSound (void);

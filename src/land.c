@@ -96,7 +96,7 @@ static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
- 
+
 /*
  * mission computer stack
  */
@@ -194,7 +194,7 @@ static void commodity_exchange_open( unsigned int wid )
 
    /* text */
    window_addText( wid, -20, -40, BUTTON_WIDTH, 60, 0,
-         "txtSInfo", &gl_smallFont, &cDConsole, 
+         "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market price:\n"
          "\n"
@@ -277,7 +277,7 @@ static void commodity_buy( unsigned int wid, char* str )
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
-   if (player->credits < q * price) {
+   if (!player_hasCredits( q * price )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
@@ -287,7 +287,7 @@ static void commodity_buy( unsigned int wid, char* str )
    }
 
    q = pilot_addCargo( player, com, q );
-   player->credits -= q * price;
+   player_modCredits( -q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
@@ -309,7 +309,7 @@ static void commodity_sell( unsigned int wid, char* str )
    price = economy_getPrice(com, cur_system, land_planet);
 
    q = pilot_rmCargo( player, com, q );
-   player->credits += q * price;
+   player_modCredits( q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
@@ -563,7 +563,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* not enough $$ */
-   else if (q*outfit->price > player->credits) {
+   else if (!player_hasCredits( q*outfit->price )) {
       if (errmsg != 0) {
          credits2str( buf, q*outfit->price - player->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
@@ -628,7 +628,7 @@ static void outfits_buy( unsigned int wid, char* str )
       return;
 
    /* Actually buy the outfit. */
-   player->credits -= outfit->price * player_addOutfit( outfit, q );
+   player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
    outfits_updateQuantities(wid);
@@ -651,6 +651,10 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
    /* Map check. */
    if ((outfit_isMap(outfit)) &&
          map_isMapped( NULL, outfit->u.map.radius ))
+      return 0;
+
+   /* License check. */
+   if (outfit_isLicense(outfit))
       return 0;
 
    /* has no outfits to sell */
@@ -684,7 +688,7 @@ static void outfits_sell( unsigned int wid, char* str )
    if (outfit_canSell( outfit, q, 1 ) == 0)
       return;
 
-   player->credits += outfit->price * player_rmOutfit( outfit, q );
+   player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
    outfits_updateQuantities(wid);
@@ -853,7 +857,7 @@ static void shipyard_update( unsigned int wid, char* str )
    char *shipname;
    Ship* ship;
    char buf[PATH_MAX], buf2[16], buf3[16];
-   
+
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
    /* No ships */
@@ -941,7 +945,8 @@ static void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (ship->price > player->credits)
+   if (!player_hasCredits( ship->price ) ||
+         ((ship->license != NULL) && !player_hasLicense(ship->license)))
       window_disableButton( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
@@ -974,7 +979,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    ship = ship_get( shipname );
 
    /* Must have enough money. */
-   if (ship->price > player->credits) {
+   if (!player_hasCredits( ship->price )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
@@ -997,7 +1002,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       /* Player actually aborted naming process. */
       return;
    }
-   player->credits -= ship->price; /* ouch, paying is hard */
+   player_modCredits( -ship->price ); /* ouch, paying is hard */
    land_checkAddRefuel();
 
    /* Update shipyard. */
@@ -1453,12 +1458,12 @@ static void spaceport_refuel( unsigned int wid, char *str )
 
    price = refuel_price();
 
-   if (player->credits < price) { /* player is out of money after landing */
+   if (!player_hasCredits( price )) { /* player is out of money after landing */
       dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }
 
-   player->credits  -= price;
+   player_modCredits( -price );
    player->fuel      = player->fuel_max;
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_destroyWidget( wid, "btnRefuel" );
@@ -1525,9 +1530,9 @@ void land_checkAddRefuel (void)
             BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
    }
-   
+
    /* Make sure player can click it. */
-   if (player->credits < refuel_price())
+   if (!player_hasCredits( refuel_price() ))
       window_disableButton( land_windows[0], "btnRefuel" );
 }
 
@@ -1672,7 +1677,7 @@ void land( Planet* p )
     *  3) Generate missions - so that campaigns are fluid.
     *  4) Create other tabs - lists depend on NPC and missions.
     */
-   
+
    /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
@@ -1766,7 +1771,7 @@ static void land_createMainTab( unsigned int wid )
     */
    window_addImage( wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
-         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0, 
+         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
 
    /*
@@ -1960,7 +1965,7 @@ void land_cleanup (void)
    land_planet    = NULL;
    landed         = 0;
    land_visited   = 0;
-  
+
    /* Destroy window. */
    if (land_wid > 0)
       window_destroy(land_wid);

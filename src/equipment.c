@@ -1247,7 +1247,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    else {
       if (strcmp(land_planet->name,loc)) { /* ship not here */
          window_buttonCaption( wid, "btnChangeShip", "Transport" );
-         if (price > player->credits)
+         if (!player_hasCredits( price ))
             window_disableButton( wid, "btnChangeShip" );
          else
             window_enableButton( wid, "btnChangeShip" );
@@ -1368,7 +1368,7 @@ static void equipment_transportShip( unsigned int wid )
       dialogue_alert( "Your ship '%s' is already here.", shipname );
       return;
    }
-   else if (player->credits < price) { /* not enough money */
+   else if (!player_hasCredits( price )) { /* not enough money. */
       credits2str( buf, price-player->credits, 2 );
       dialogue_alert( "You need %d more credits to transport '%s' here.",
             buf, shipname );
@@ -1383,7 +1383,7 @@ static void equipment_transportShip( unsigned int wid )
       return;
 
    /* success */
-   player->credits -= price;
+   player_modCredits( -price );
    land_checkAddRefuel();
    player_setLoc( shipname, land_planet->name );
 }
@@ -1463,7 +1463,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Sold. */
    name = strdup(shipname);
-   player->credits += price;
+   player_modCredits( price );
    land_checkAddRefuel();
    player_rmShip( shipname );
 

@@ -41,7 +41,8 @@
 #include "font.h"
 
 
-#define PILOT_CHUNK     128 /**< Chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MAX 2048 /**< Minimum chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
 
@@ -2984,6 +2985,53 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 
 
 /**
+ * @brief Checks to see if the pilot has at least a certain amount of credits.
+ *
+ *    @param p Pilot to check to see if he has enough credits.
+ *    @param amount Amount to check for.
+ *    @return 1 if he has enough, 0 otherwise.
+ */
+int pilot_hasCredits( Pilot *p, int amount )
+{
+   unsigned long ul;
+
+   ul = (unsigned long) ABS(amount);
+
+   return (ul <= p->credits);
+}
+
+
+/**
+ * @brief Modifies the amount of credits the pilot has.
+ *
+ *    @param p Pilot to modify amount of credits of.
+ *    @param amount QUantity of credits to give/take.
+ *    @return Amount of credits the pilot has.
+ */
+unsigned long pilot_modCredits( Pilot *p, int amount )
+{
+   unsigned long ul;
+
+   ul = (unsigned long) ABS(amount);
+
+   if (amount > 0) {
+      if (ULONG_MAX-p->credits < ul)
+         p->credits = ULONG_MAX;
+      else
+         p->credits += ul;
+   }
+   else if (amount < 0) {
+      if (ul > p->credits)
+         p->credits = 0;
+      else
+         p->credits -= ul;
+   }
+
+   return p->credits;
+}
+
+
+/**
  * @brief Initialize pilot.
  *
  *    @param pilot Pilot to initialise.
@@ -3140,7 +3188,10 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
 
    /* See if memory needs to grow */
    if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
-      pilot_mstack += PILOT_CHUNK;
+      if (pilot_mstack == 0)
+         pilot_mstack = PILOT_CHUNK_MIN;
+      else
+         pilot_mstack += MIN( pilot_mstack, PILOT_CHUNK_MAX );
       pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
    }
 

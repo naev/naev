@@ -66,7 +66,7 @@ static double player_py       = 0.; /**< Temporary Y position. */
 static double player_vx       = 0.; /**< Temporory X velocity. */
 static double player_vy       = 0.; /**< Temporary Y velocity. */
 static double player_dir      = 0.; /**< Temporary direction. */
-static int player_credits     = 0; /**< Temporary hack for when creating. */
+static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_mission   = NULL; /**< More hack. */
 int player_enemies            = 0; /**< Number of enemies player has in system. */
 
@@ -426,7 +426,7 @@ int player_newShip( Ship* ship, double px, double py,
    int i, len;
 
    /* temporary values while player doesn't exist */
-   player_credits = (player != NULL) ? player->credits : 0;
+   player_creds = (player != NULL) ? player->credits : 0;
    player_ship    = ship;
    player_px      = px;
    player_py      = py;
@@ -504,8 +504,8 @@ static void player_newShipMake( char* name )
    gl_cameraBind( &player->solid->pos ); /* set opengl camera */
 
    /* money. */
-   player->credits = player_credits;
-   player_credits = 0;
+   player->credits = player_creds;
+   player_creds = 0;
 }
 
 
@@ -718,7 +718,7 @@ void player_cleanup (void)
    pilots_cleanAll();
 
    /* Reset some player stuff. */
-   player_credits = 0;
+   player_creds   = 0;
    player_crating = 0;
 
    /* Stop the sounds. */
@@ -831,6 +831,30 @@ const char* player_rating (void)
    else if (player_crating < 5000.) return player_ratings[8];
    else if (player_crating < 10000.) return player_ratings[9];
    else return player_ratings[10];
+}
+
+
+/**
+ * @brief Checks to see if the player has enough credits.
+ *
+ *    @param amount Amount of credits to check to see if the player has.
+ *    @return 1 if the player has enough credits.
+ */
+int player_hasCredits( int amount )
+{
+   return pilot_hasCredits( player, amount );
+}
+
+
+/**
+ * @brief Modifies the amount of credits the player has.
+ *
+ *    @param amount Quantity to modify player's credits by.
+ *    @return Amount of credits the player has.
+ */
+unsigned long player_modCredits( int amount )
+{
+   return pilot_modCredits( player, amount );
 }
 
 
@@ -2439,8 +2463,8 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player_name);
    xmlw_elem(writer,"rating","%f",player_crating);
-   xmlw_elem(writer,"credits","%d",player->credits);
-   xmlw_elem(writer,"time","%d",ntime_get());
+   xmlw_elem(writer,"credits","%lu",player->credits);
+   xmlw_elem(writer,"time","%u",ntime_get());
 
    /* Current ship. */
    xmlw_elem(writer,"location","%s",land_planet->name);
@@ -2681,8 +2705,8 @@ static int player_parse( xmlNodePtr parent )
 
       /* global stuff */
       xmlr_float(node,"rating",player_crating);
-      xmlr_int(node,"credits",player_credits);
-      xmlr_long(node,"time",player_time);
+      xmlr_ulong(node,"credits",player_creds);
+      xmlr_uint(node,"time",player_time);
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1, planet);
@@ -2741,7 +2765,7 @@ static int player_parse( xmlNodePtr parent )
    }
 
    /* set global thingies */
-   player->credits = player_credits;
+   player->credits = player_creds;
    if (player_time==0)
       WARN("Save has no time information, setting to 0.");
    ntime_set(player_time);

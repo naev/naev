@@ -43,7 +43,7 @@ void economy_destroy (void);
 /* 
  * Misc stuff.
  */
-void credits2str( char *str, unsigned int credits, int decimals );
+void credits2str( char *str, unsigned long credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 
 
