@@ -70,6 +70,7 @@ static unsigned int menu_main_lasttick = 0;
 /* Generic. */
 static void menu_exit( unsigned int wid, char* str );
 /* main menu */
+static void main_menu_promptClose( unsigned int wid, char *unused );
 void menu_main_close (void); /**< Externed in save.c */
 static void menu_main_nebu( double x, double y, double w, double h, void *data );
 static void menu_main_load( unsigned int wid, char* str );
@@ -138,6 +139,9 @@ void menu_main (void)
    /* create menu window */
    wid = window_create( "Main Menu", -1, offset_wdw,
          MAIN_WIDTH, MAIN_HEIGHT );
+   window_setCancel( wid, main_menu_promptClose );
+
+   /* Buttons. */
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*4,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load Game", menu_main_load );
@@ -161,6 +165,18 @@ void menu_main (void)
 
    menu_Open(MENU_MAIN);
 }
+
+
+/**
+ * @brief Main menu closing prompt.
+ */
+static void main_menu_promptClose( unsigned int wid, char *unused )
+{
+   if (dialogue_YesNo( "Quit", "Are you sure you want to quit "APPNAME"?" ))
+      menu_exit( wid, unused );
+}
+
+
 /**
  * @brief Renders the nebula.
  */
