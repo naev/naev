@@ -187,6 +187,7 @@ void load_game_menu (void)
 
    /* window */
    wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   window_setCancel( wid, load_menu_close );
 
    /* load the saves */
    files = nfile_readDir( &nfiles, "%ssaves", nfile_basePath() );
