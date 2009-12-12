@@ -183,6 +183,7 @@ void gl_printRaw( const glFont *ft_font,
       ft_font = &gl_defFont;
 
    /* Render it. */
+   s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; text[i] != '\0'; i++)
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
@@ -246,6 +247,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    ret = font_limitSize( ft_font, NULL, text, max );
 
    /* Render it. */
+   s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
@@ -316,6 +318,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    x += (double)(width - n)/2.;
 
    /* Render it. */
+   s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
@@ -384,6 +387,7 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
+   s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       ret = gl_printWidthForText( ft_font, &text[p], width );
