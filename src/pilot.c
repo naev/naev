@@ -1263,11 +1263,13 @@ void pilot_dead( Pilot* p )
  */
 int pilot_runHook( Pilot* p, int hook_type )
 {
-   int i, run;
+   int i, run, ret;
    run = 0;
    for (i=0; i<p->nhooks; i++) {
       if (p->hooks[i].type == hook_type) {
-         hook_runID( p->hooks[i].id );
+         ret = hook_runID( p->hooks[i].id );
+         if (ret)
+            WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
          run++;
       }
    }
