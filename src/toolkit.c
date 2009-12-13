@@ -1728,7 +1728,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    key = event->key.keysym.sym;
    mod = event->key.keysym.mod;
 
-   /* hack to simulate key repetition */
+   /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
       toolkit_regKey(key, event->key.keysym.unicode);
    else if (event->type == SDL_KEYUP)

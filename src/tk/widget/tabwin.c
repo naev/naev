@@ -224,10 +224,18 @@ static int tab_key( Widget* tab, SDL_Event *event )
    /* Handle keypresses. */
    switch (key) {
       case SDLK_TAB:
-         if (mod)
-            change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
-         else
-            toolkit_nextFocus( wdw );
+         if (mod & (KMOD_LSHIFT | KMOD_RSHIFT)) {
+            if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+               change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+            else
+               change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+         }
+         else {
+            if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+               toolkit_prevFocus( wdw );
+            else
+               toolkit_nextFocus( wdw );
+         }
          ret = 1;
          break;
    
