@@ -203,7 +203,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
 
    /* Event info. */
    key = event->key.keysym.sym;
-   mod = event->key.keysym.mod;
+   mod = input_translateMod( event->key.keysym.mod );
 
    /* Handle tab changing. */
    change = -1;

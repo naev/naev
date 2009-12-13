@@ -41,6 +41,11 @@ const char* input_getKeybindDescription( const char *keybind );
 const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod );
 
 /*
+ * Misc.
+ */
+SDLMod input_translateMod( SDLMod mod );
+
+/*
  * handle input
  */
 void input_handle( SDL_Event* event );

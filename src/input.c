@@ -558,6 +558,27 @@ const char* input_getKeybindDescription( const char *keybind )
 
 
 /**
+ * @brief Translates SDL modifier to NAEV modifier.
+ *
+ *    @param mod SDL modifier to translate.
+ *    @return NAEV modifier.
+ */
+SDLMod input_translateMod( SDLMod mod )
+{
+   SDLMod mod_filtered = 0;
+   if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
+      mod_filtered |= NMOD_SHIFT;
+   if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+      mod_filtered |= NMOD_CTRL;
+   if (mod & (KMOD_LALT | KMOD_RALT))
+      mod_filtered |= NMOD_ALT;
+   if (mod & (KMOD_LMETA | KMOD_RMETA))
+      mod_filtered |= NMOD_META;
+   return mod_filtered;
+}
+
+
+/**
  * @brief Handles key repeating.
  */
 void input_update (void)
@@ -962,15 +983,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
    SDLMod mod_filtered;
 
    /* Filter to "NAEV" modifiers. */
-   mod_filtered = 0;
-   if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
-      mod_filtered |= NMOD_SHIFT;
-   if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-      mod_filtered |= NMOD_CTRL;
-   if (mod & (KMOD_LALT | KMOD_RALT))
-      mod_filtered |= NMOD_ALT;
-   if (mod & (KMOD_LMETA | KMOD_RMETA))
-      mod_filtered |= NMOD_META;
+   mod_filtered = input_translateMod(mod);
 
    for (i=0; strcmp(keybindNames[i],"end"); i++) {
       if ((input_keybinds[i]->type == KEYBIND_KEYBOARD) &&
