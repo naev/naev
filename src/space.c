@@ -2100,15 +2100,13 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
          system_getIndex(sys->jumps[i])->spilled = 1;
       }
 
-   while(curSpill < range) {
-      /* Check to see if we've finished this range. */
-      if(q_isEmpty(q)) {
-         curSpill++;
-         q_destroy(q);
-         q = qn;
-         qn = q_create();
-      }
+   /* If it's empty, something's wrong. */
+   if(q_isEmpty(q)) {
+      WARN("q is empty after getting adjancies of %s.", sys->name);
+      return;
+   }
 
+   while(curSpill < range) {
       /* Pull one off the queue. */
       cur = q_dequeue(q);
 
@@ -2121,6 +2119,14 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
 
       /* Spill some presence. */
       cur->presence[faction] += amount / (2 + curSpill);
+
+      /* Check to see if we've finished this range. */
+      if(q_isEmpty(q)) {
+         curSpill++;
+         q_destroy(q);
+         q = qn;
+         qn = q_create();
+      }
    }
 
    /* Destroy the queues. */
