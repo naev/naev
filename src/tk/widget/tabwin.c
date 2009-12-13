@@ -198,6 +198,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
    SDLKey key, bind_key;
    SDLMod mod, bind_mod;
    Window *wdw;
+   int ret;
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -216,29 +217,34 @@ static int tab_key( Widget* tab, SDL_Event *event )
    CHECK_CHANGE( "switchtab9", 8 );
    CHECK_CHANGE( "switchtab0", 9 );
 
-   /* Switch to the selected tab if it exists. */
-   if ((change != -1) && (change < tab->dat.tab.ntabs)) {
-      tab->dat.tab.active = change;
-      /* Create event. */
-      if (tab->dat.tab.onChange != NULL)
-          tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
-      return 1;
-   }
-
    /* Window. */
+   ret = 0;
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
 
    /* Handle keypresses. */
    switch (key) {
       case SDLK_TAB:
-         toolkit_nextFocus( wdw );
+         if (mod)
+            change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+         else
+            toolkit_nextFocus( wdw );
+         ret = 1;
          break;
    
       default:
          break;
    }
 
-   return 0;
+   /* Switch to the selected tab if it exists. */
+   if ((change != -1) && (change < tab->dat.tab.ntabs)) {
+      tab->dat.tab.active = change;
+      /* Create event. */
+      if (tab->dat.tab.onChange != NULL)
+          tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
+      ret = 1;
+   }
+
+   return ret;
 }
 #undef CHECK_CHANGE
 

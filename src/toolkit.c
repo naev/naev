@@ -1762,7 +1762,10 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Handle other cases where event might be used by the window. */
    switch (key) {
       case SDLK_TAB:
-         toolkit_nextFocus( wdw );
+         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+            toolkit_prevFocus( wdw );
+         else
+            toolkit_nextFocus( wdw );
          break;
 
       case SDLK_RETURN:
@@ -1951,19 +1954,54 @@ void toolkit_nextFocus( Window *wdw )
    /* See what to focus. */
    next = (wdw->focus == -1);
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (toolkit_isFocusable(wgt)) {
+      if (!toolkit_isFocusable(wgt))
+         continue;
 
-         if (next) {
-            wdw->focus = wgt->id;
-            return;
-         }
-         else if (wdw->focus == wgt->id)
-            next = 1;
+      if (next) {
+         wdw->focus = wgt->id;
+         return;
       }
+      else if (wdw->focus == wgt->id)
+         next = 1;
    }
 
    /* Focus nothing. */
    wdw->focus = -1;
+   return;
+}
+
+
+/**
+ * @brief Focus previous widget.
+ */
+void toolkit_prevFocus( Window *wdw )
+{
+   Widget *wgt, *prev;
+
+   /* See what to focus. */
+   prev = NULL;
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (!toolkit_isFocusable(wgt))
+         continue;
+
+      /* See if we found the current one. */
+      if (wdw->focus == wgt->id) {
+         if (prev == NULL)
+            wdw->focus = -1;
+         else
+            wdw->focus = prev->id;
+         return;
+      }
+
+      /* Store last focusable widget. */
+      prev = wgt;
+   }
+
+   /* Focus nothing. */
+   if (prev == NULL)
+      wdw->focus = -1;
+   else
+      wdw->focus = prev->id;
    return;
 }
 
