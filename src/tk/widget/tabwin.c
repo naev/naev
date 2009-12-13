@@ -126,12 +126,12 @@ static int tab_raw( Widget* tab, SDL_Event *event )
 
    /* Took the event. */
    if (ret)
-      return 1;
+      return ret;
 
    /* Give event to window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
-      WARN("Active window in widget '%s' not found in stack.", tab->name);
+      WARN("Active window in window '%s' not found in stack.", tab->name);
       return 0;
    }
 
