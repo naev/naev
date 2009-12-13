@@ -185,60 +185,34 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 /**
  * @brief Handles key events.
  */
+#define CHECK_CHANGE(n,v)  \
+bind_key = input_getKeybind(n, NULL, &bind_mod); \
+if ((key == bind_key) && (mod == bind_mod)) \
+   change = v
 static int tab_key( Widget* tab, SDL_Event *event )
 {
-   int change = -1;
-
+   int change;
    SDLKey key;
    SDLMod mod;
+   SDLKey bind_key;
+   SDLMod bind_mod;
 
    /* Event info. */
    key = event->key.keysym.sym;
    mod = event->key.keysym.mod;
 
-   SDLKey bind_key;
-   SDLMod bind_mod;
-
-   bind_key = input_getKeybind("switchtab1", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 0;
-   }
-   bind_key = input_getKeybind("switchtab2", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 1;
-   }
-   bind_key = input_getKeybind("switchtab3", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 2;
-   }
-   bind_key = input_getKeybind("switchtab4", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 3;
-   }
-   bind_key = input_getKeybind("switchtab5", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 4;
-   }
-   bind_key = input_getKeybind("switchtab6", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 5;
-   }
-   bind_key = input_getKeybind("switchtab7", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 6;
-   }
-   bind_key = input_getKeybind("switchtab8", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 7;
-   }
-   bind_key = input_getKeybind("switchtab9", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 8;
-   }
-   bind_key = input_getKeybind("switchtab0", NULL, &bind_mod);
-   if (key == bind_key && mod == bind_mod) {
-       change = 9;
-   }
+   /* Handle tab changing. */
+   change = -1;
+   CHECK_CHANGE( "switchtab1", 0 );
+   CHECK_CHANGE( "switchtab2", 1 );
+   CHECK_CHANGE( "switchtab3", 2 );
+   CHECK_CHANGE( "switchtab4", 3 );
+   CHECK_CHANGE( "switchtab5", 4 );
+   CHECK_CHANGE( "switchtab6", 5 );
+   CHECK_CHANGE( "switchtab7", 6 );
+   CHECK_CHANGE( "switchtab8", 7 );
+   CHECK_CHANGE( "switchtab9", 8 );
+   CHECK_CHANGE( "switchtab0", 9 );
 
    /* Switch to the selected tab if it exists. */
    if ((change != -1) && (change < tab->dat.tab.ntabs)) {
@@ -251,6 +225,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
 
    return 0;
 }
+#undef CHECK_CHANGE
 
 
 /**
