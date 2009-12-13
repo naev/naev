@@ -92,10 +92,12 @@ void credits2str( char *str, unsigned long credits, int decimals )
 {
    if (decimals < 0)
       snprintf( str, 32, "%lu", credits );
+#if __WORDSIZE >= 64
    else if (credits >= 1000000000000000UL)
       snprintf( str, 16, "%.*fQ", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000UL)
       snprintf( str, 16, "%.*fT", decimals, (double)credits / 1000000000000. );
+#endif /* __WORDSIZE >= 64 */
    else if (credits >= 1000000000UL)
       snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000UL)
