@@ -86,6 +86,7 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
       int *lw, int *lh, int *bw, int *bh );
 static void menuKeybinds_genList( unsigned int wid );
 static void menuKeybinds_update( unsigned int wid, char *name );
+static void opt_keyDefaults( unsigned int wid, char *str );
 /* Setting keybindings. */
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
 static void opt_setKey( unsigned int wid, char *str );
@@ -275,8 +276,16 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Ask user. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default gameplay settings?" ))
+      return;
+
+   /* Restore. */
    conf_setGameplayDefaults();
    opt_gameplayUpdate( wid, NULL );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Gameplay settings restored to defaults.");
 }
 
 /**
@@ -336,6 +345,9 @@ static void opt_keybinds( unsigned int wid )
    /* Set button. */
    window_addButton( wid, -20 - bw - 20, 20, bw, bh,
          "btnSet", "Set Key", opt_setKey );
+   /* Restore deafaults button. */
+   window_addButton( wid, -20, 20+bh+20, bw, bh,
+         "btnDefaults", "Defaults", opt_keyDefaults );
 
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
@@ -347,6 +359,10 @@ static void opt_keybinds( unsigned int wid )
    menuKeybinds_genList( wid );
 }
 
+
+/**
+ * @brief Generates the keybindings list.
+ */
 static void menuKeybinds_genList( unsigned int wid )
 {
    int i, j, l;
@@ -461,6 +477,29 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    /* Update text. */
    snprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
    window_modifyText( wid, "txtDesc", buf );
+}
+
+
+/**
+ * @brief Restores the key defaults.
+ */
+static void opt_keyDefaults( unsigned int wid, char *str )
+{
+   (void) str;
+
+   /* Ask user if he wants to. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default keybindings?" ))
+      return;
+
+   /* Restore defaults. */
+   input_setDefault();
+
+   /* Regenerate list widget. */
+   window_destroyWidget( wid, "lstKeybinds" );
+   menuKeybinds_genList( wid );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Keybindings restored to defaults.");
 }
 
 
@@ -650,6 +689,10 @@ static void opt_audioDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Ask user. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default audio settings?" ))
+      return;
+
    /* Set defaults. */
    conf_setAudioDefaults();
 
@@ -659,6 +702,9 @@ static void opt_audioDefaults( unsigned int wid, char *str )
 
    /* Update widgets. */
    opt_audioUpdate( wid, NULL );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Audio settings restored to defaults.");
 }
 
 /**
@@ -1079,8 +1125,16 @@ static void opt_videoDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Ask user. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default video settings?" ))
+      return;
+
+   /* Restore settings. */
    conf_setVideoDefaults();
    opt_videoUpdate( wid, NULL );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Video settings restored to defaults.");
 }
 
 static void opt_videoUpdate( unsigned int wid, char *str )
