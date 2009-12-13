@@ -365,8 +365,8 @@ static void opt_keybinds( unsigned int wid )
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int i, j, l;
-   char **str;
+   int i, j, l, p;
+   char **str, mod_text[64];
    SDLKey key;
    KeybindType type;
    SDLMod mod;
@@ -385,11 +385,27 @@ static void menuKeybinds_genList( unsigned int wid )
       key = input_getKeybind( keybindNames[j], &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
+            /* Generate mod text. */
+            if (mod == NMOD_ALL)
+               snprintf( mod_text, sizeof(mod_text), "any+" );
+            else {
+               p = 0;
+               mod_text[0] = '\0';
+               if (mod & NMOD_SHIFT)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+               if (mod & NMOD_CTRL)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+               if (mod & NMOD_ALT)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+               if (mod & NMOD_META)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+            }
+
             /* SDL_GetKeyName returns lowercase which is ugly. */
             if (nstd_isalpha(key))
-               snprintf(str[j], l, "%s <%c>", keybindNames[j], nstd_toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", keybindNames[j], mod_text, nstd_toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s>", keybindNames[j], SDL_GetKeyName(key) );
+               snprintf(str[j], l, "%s <%s%s>", keybindNames[j], mod_text, SDL_GetKeyName(key) );
             break;
          case KEYBIND_JAXISPOS:
             snprintf(str[j], l, "%s <ja+%d>", keybindNames[j], key);
