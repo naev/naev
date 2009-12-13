@@ -690,7 +690,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    unsigned int parent;
    KeybindType type;
    int key;
-   SDLMod mod;
+   SDLMod mod, ev_mod;
    const char *str;
 
    /* See how to handle it. */
@@ -717,9 +717,19 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          }
          type = KEYBIND_KEYBOARD;
          if (window_checkboxState( wid, "chkAny" ))
-            mod = KMOD_ALL;
-         else
-            mod  = event->key.keysym.mod & ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE);
+            mod = NMOD_ALL;
+         else {
+            ev_mod = event->key.keysym.mod;
+            mod    = 0;
+            if (ev_mod & (KMOD_LSHIFT | KMOD_RSHIFT))
+               mod |= NMOD_SHIFT;
+            if (ev_mod & (KMOD_LCTRL | KMOD_RCTRL))
+               mod |= NMOD_CTRL;
+            if (ev_mod & (KMOD_LALT | KMOD_RALT))
+               mod |= NMOD_ALT;
+            if (ev_mod & (KMOD_LMETA | KMOD_RMETA))
+               mod |= NMOD_META;
+         }
          /* Set key. */
          opt_lastKeyPress = key;
          break;
@@ -732,13 +742,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          else
             return 0; /* Not handled. */
          key  = event->jaxis.axis;
-         mod  = KMOD_ALL;
+         mod  = NMOD_ALL;
          break;
 
       case SDL_JOYBUTTONDOWN:
          type = KEYBIND_JBUTTON;
          key  = event->jbutton.button;
-         mod  = KMOD_ALL;
+         mod  = NMOD_ALL;
          break;
 
       /* Not handled. */

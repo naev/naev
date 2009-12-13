@@ -368,7 +368,7 @@ int conf_loadConfig ( const char* file )
             str = lua_tostring(L,-1);
             if (strcmp(str,"none")==0) {
                input_setKeybind( keybindNames[i],
-                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
+                     KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
          }
          else if (lua_istable(L, -1)) { /* it's a table */
@@ -428,23 +428,28 @@ int conf_loadConfig ( const char* file )
 
                /* Set modifier, probably should be able to handle two at a time. */
                if (mod != NULL) {
-                  if (strcmp(mod,"lctrl")==0)         m = KMOD_LCTRL;
-                  else if (strcmp(mod,"rctrl")==0)    m = KMOD_RCTRL;
-                  else if (strcmp(mod,"lshift")==0)   m = KMOD_LSHIFT;
-                  else if (strcmp(mod,"rshift")==0)   m = KMOD_RSHIFT;
-                  else if (strcmp(mod,"lalt")==0)     m = KMOD_LALT;
-                  else if (strcmp(mod,"ralt")==0)     m = KMOD_RALT;
-                  else if (strcmp(mod,"lmeta")==0)    m = KMOD_LMETA;
-                  else if (strcmp(mod,"rmeta")==0)    m = KMOD_RMETA;
-                  else if (strcmp(mod,"any")==0)      m = KMOD_ALL;
-                  else if (strcmp(mod,"none")==0)     m = 0;
+                  /* The "rctrl/lctrl" friends are for compat with 0.4.0 and older, remove around 0.5.0 or so. */
+                  if      (strcmp(mod,"ctrl")==0)    m = NMOD_CTRL;
+                  else if (strcmp(mod,"lctrl")==0)   m = NMOD_CTRL; /* compat. */
+                  else if (strcmp(mod,"rctrl")==0)   m = NMOD_CTRL; /* compat. */
+                  else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
+                  else if (strcmp(mod,"lshift")==0)  m = NMOD_SHIFT; /* compat. */
+                  else if (strcmp(mod,"rshift")==0)  m = NMOD_SHIFT; /* compat. */
+                  else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
+                  else if (strcmp(mod,"lalt")==0)    m = NMOD_ALT; /* compat. */
+                  else if (strcmp(mod,"ralt")==0)    m = NMOD_ALT; /* compat. */
+                  else if (strcmp(mod,"meta")==0)    m = NMOD_META;
+                  else if (strcmp(mod,"lmeta")==0)   m = NMOD_META; /* compat. */
+                  else if (strcmp(mod,"rmeta")==0)   m = NMOD_META; /* compat. */
+                  else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
+                  else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
                      WARN("Unknown keybinding mod of type %s", mod);
-                     m = KMOD_NONE;
+                     m = NMOD_NONE;
                   }
                }
                else
-                  m = KMOD_NONE;
+                  m = NMOD_NONE;
 
                /* set the keybind */
                input_setKeybind( keybindNames[i], type, key, m );
@@ -972,16 +977,12 @@ int conf_saveConfig ( const char* file )
 
       /* Determine the textual name for the modifier */
       switch (mod) {
-         case KMOD_LCTRL:  modname = "lctrl";   break;
-         case KMOD_RCTRL:  modname = "rctrl";   break;
-         case KMOD_LSHIFT: modname = "lshift";  break;
-         case KMOD_RSHIFT: modname = "rshift";  break;
-         case KMOD_LALT:   modname = "lalt";    break;
-         case KMOD_RALT:   modname = "ralt";    break;
-         case KMOD_LMETA:  modname = "lmeta";   break;
-         case KMOD_RMETA:  modname = "rmeta";   break;
-         case KMOD_ALL:    modname = "any";     break;
-         default:          modname = "none";    break;
+         case NMOD_CTRL:  modname = "ctrl";   break;
+         case NMOD_SHIFT: modname = "shift";  break;
+         case NMOD_ALT:   modname = "alt";    break;
+         case NMOD_META:  modname = "meta";   break;
+         case NMOD_ALL:   modname = "any";     break;
+         default:         modname = "none";    break;
       }
 
       /* Determine the textual name for the key, if a keyboard keybind */

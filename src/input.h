@@ -11,7 +11,12 @@
 #include "SDL.h"
 
 
-#define KMOD_ALL  0xffff /**< Comfort thing SDL is lacking. */
+#define NMOD_NONE    0
+#define NMOD_SHIFT   (1<<0)
+#define NMOD_CTRL    (1<<1)
+#define NMOD_ALT     (1<<2)
+#define NMOD_META    (1<<3)
+#define NMOD_ALL     0xFFFF /**< Comfort thing SDL is lacking. */
 
 
 /* input types */
