@@ -285,16 +285,18 @@ static void map_update( unsigned int wid )
    f         = -1;
    multiple_faction = 0;
    for (i=0; i<sys->nplanets; i++) {
-      if ((f==-1) && (sys->planets[i]->faction>0)) {
-         f = sys->planets[i]->faction;
-         standing += faction_getPlayer( f );
-         nstanding++;
-      }
-      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-            (sys->planets[i]->faction>0)) {
-         snprintf( buf, PATH_MAX, "Multiple" );
-         multiple_faction = 1;
-         break;
+      if(sys->planets[i]->real == ASSET_REAL) {
+         if ((f==-1) && (sys->planets[i]->faction>0)) {
+            f = sys->planets[i]->faction;
+            standing += faction_getPlayer( f );
+            nstanding++;
+         }
+         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+                  (sys->planets[i]->faction>0)) {
+            snprintf( buf, PATH_MAX, "Multiple" );
+            multiple_faction = 1;
+            break;
+         }
       }
    }
    if (f == -1) {

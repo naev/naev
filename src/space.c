@@ -1465,7 +1465,7 @@ static void system_setFaction( StarSystem *sys )
    int i;
    sys->faction = -1;
    for (i=0; i<sys->nplanets; i++) /** @todo Handle multiple different factions. */
-      if (sys->planets[i]->faction > 0) {
+      if (sys->planets[i]->real == ASSET_REAL && sys->planets[i]->faction > 0) {
          sys->faction = sys->planets[i]->faction;
          break;
       }
