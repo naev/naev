@@ -69,7 +69,7 @@ void window_addFader( const unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 

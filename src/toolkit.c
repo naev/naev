@@ -1762,7 +1762,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Handle other cases where event might be used by the window. */
    switch (key) {
       case SDLK_TAB:
-         toolkit_nextFocus();
+         toolkit_nextFocus( wdw );
          break;
 
       case SDLK_RETURN:
@@ -1943,16 +1943,10 @@ void toolkit_update (void)
 /**
  * @brief Focus next widget.
  */
-void toolkit_nextFocus (void)
+void toolkit_nextFocus( Window *wdw )
 {
-   Window *wdw;
    Widget *wgt;
    int next;
-
-   /* Get window. */
-   wdw = toolkit_getActiveWindow();
-   if (wdw == NULL)
-      return;
 
    /* See what to focus. */
    next = (wdw->focus == -1);

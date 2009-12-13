@@ -115,14 +115,17 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 static int tab_raw( Widget* tab, SDL_Event *event )
 {
    Window *wdw;
+   int ret;
 
    /* First handle event internally. */
    if (event->type == SDL_MOUSEBUTTONDOWN)
-      tab_mouse( tab, event );
-   if (event->type == SDL_KEYDOWN) {
-      tab_key( tab, event );
-   }
+      ret = tab_mouse( tab, event );
+   else if (event->type == SDL_KEYDOWN)
+      ret = tab_key( tab, event );
 
+   /* Took the event. */
+   if (ret)
+      return 1;
 
    /* Give event to window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
@@ -192,10 +195,9 @@ if ((key == bind_key) && (mod == bind_mod)) \
 static int tab_key( Widget* tab, SDL_Event *event )
 {
    int change;
-   SDLKey key;
-   SDLMod mod;
-   SDLKey bind_key;
-   SDLMod bind_mod;
+   SDLKey key, bind_key;
+   SDLMod mod, bind_mod;
+   Window *wdw;
 
    /* Event info. */
    key = event->key.keysym.sym;
@@ -221,6 +223,19 @@ static int tab_key( Widget* tab, SDL_Event *event )
       if (tab->dat.tab.onChange != NULL)
           tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
       return 1;
+   }
+
+   /* Window. */
+   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+
+   /* Handle keypresses. */
+   switch (key) {
+      case SDLK_TAB:
+         toolkit_nextFocus( wdw );
+         break;
+   
+      default:
+         break;
    }
 
    return 0;
