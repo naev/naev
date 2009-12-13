@@ -635,11 +635,10 @@ static void map_render( double bx, double by, double w, double h, void *data )
       }
 
       /* Draw the system. */
-      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
-      else if (sys->security >= 1.) col = &cGreen;
-      else if (sys->security >= 0.6) col = &cOrange;
-      else if (sys->security >= 0.3) col = &cRed;
-      else col = &cDarkRed;
+      if (!sys_isKnown(sys) || sys->faction == -1)
+         col = &cInert;
+      else
+         col = faction_colour(sys->faction);
 
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
