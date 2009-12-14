@@ -596,7 +596,7 @@ int areAllies( int a, int b )
  *    @param f Faction to check for validity.
  *    @return 1 if faction is valid, 0 otherwise.
  */
-static int faction_isFaction( int f )
+int faction_isFaction( int f )
 {
    if ((f<0) || (f>=faction_nstack))
       return 0;
