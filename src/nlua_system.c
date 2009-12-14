@@ -453,7 +453,7 @@ static int systemL_hasPresence( lua_State *L )
  */
 static int systemL_planets( lua_State *L )
 {
-   int i;
+   int i, key;
    LuaSystem *sys;
    LuaPlanet p;
 
@@ -461,11 +461,15 @@ static int systemL_planets( lua_State *L )
 
    /* Push all planets. */
    lua_newtable(L);
+   key = 0;
    for (i=0; i<sys->s->nplanets; i++) {
       p.p = sys->s->planets[i];
-      lua_pushnumber(L,i+1); /* key */
-      lua_pushplanet(L,p); /* value */
-      lua_rawset(L,-3);
+      if(p.p->real == ASSET_REAL) {
+         key++;
+         lua_pushnumber(L,key); /* key */
+         lua_pushplanet(L,p); /* value */
+         lua_rawset(L,-3);
+      }
    }
 
    return 1;
@@ -518,27 +522,17 @@ static int systemL_presence( lua_State *L )
       cmd = lua_tostring(L, 2);
       nfct = 0;
 
-      switch(cmd[0]) {
-         case 'a': /* 'all' */
-            fct = faction_getGroup(&nfct, 0);
-            break;
-
-         case 'f': /* 'friendly' */
+      /* Check the command string and get the appropriate faction group.*/
+      if(strcmp(cmd, "all") == 0)
+         fct = faction_getGroup(&nfct, 0);
+      else if(strcmp(cmd, "friendly") == 0)
             fct = faction_getGroup(&nfct, 1);
-            break;
-
-         case 'h': /* 'hostile' */
+      else if(strcmp(cmd, "hostile") == 0)
             fct = faction_getGroup(&nfct, 3);
-            break;
-
-         case 'n': /* 'neutral' */
+      else if(strcmp(cmd, "neutral") == 0)
             fct = faction_getGroup(&nfct, 2);
-            break;
-
-         default: /* Bad input. */
+      else /* Invalid command string. */
             NLUA_INVALID_PARAMETER();
-            break;
-      }
    }
    else if(lua_isfaction(L, 2)) {
       /* A faction id was given. */
