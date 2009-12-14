@@ -522,26 +522,17 @@ static int systemL_presence( lua_State *L )
       cmd = lua_tostring(L, 2);
       nfct = 0;
 
-      switch(cmd[0]) {
-         case 'a': /* 'all' */
-            fct = faction_getGroup(&nfct, 0);
-            break;
-
-         case 'f': /* 'friendly' */
+      /* Check the command string and get the appropriate faction group.*/
+      if(strcmp(cmd, "all") == 0)
+         fct = faction_getGroup(&nfct, 0);
+      else if(strcmp(cmd, "friendly") == 0)
             fct = faction_getGroup(&nfct, 1);
-            break;
-
-         case 'h': /* 'hostile' */
+      else if(strcmp(cmd, "hostile") == 0)
             fct = faction_getGroup(&nfct, 3);
-            break;
-
-         case 'n': /* 'neutral' */
+      else if(strcmp(cmd, "neutral") == 0)
             fct = faction_getGroup(&nfct, 2);
-            break;
-
-         default: /* Bad input. */
+      else /* Invalid command string. */
             NLUA_INVALID_PARAMETER();
-            break;
       }
    }
    else if(lua_isfaction(L, 2)) {
