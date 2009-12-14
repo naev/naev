@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Draygar">
   <fleets>
@@ -66,10 +66,10 @@
   </pos>
   <assets>
    <asset>Raelid Outpost</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -369,8 +369,8 @@
   </pos>
   <assets>
    <asset>Doranthex Prime</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -396,8 +396,8 @@
   </pos>
   <assets>
    <asset>Valt</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -717,7 +717,7 @@
   </pos>
   <assets>
    <asset>Praxis</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -803,8 +803,7 @@
    <x>435</x>
   </pos>
   <assets>
-   <asset>Empire Presence -100</asset>
-   <asset>Empire Presence -100</asset>
+   <asset>Empire Unpresence</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1378,11 +1377,11 @@
   </pos>
   <assets>
    <asset>Nor</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1406,10 +1405,10 @@
   </pos>
   <assets>
    <asset>Sinclair</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1481,12 +1480,12 @@
   </pos>
   <assets>
    <asset>Thar</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1551,8 +1550,8 @@
    <x>243</x>
   </pos>
   <assets>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1683,8 +1682,8 @@
   <assets>
    <asset>Dawn</asset>
    <asset>Dusk</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
  </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1710,10 +1709,10 @@
   </pos>
   <assets>
    <asset>Cetrat</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1848,12 +1847,12 @@
    <asset>Haleb IV</asset>
    <asset>Jorlan</asset>
    <asset>Raglan Outpost</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1901,9 +1900,9 @@
   </pos>
   <assets>
    <asset>Vlexair</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1975,8 +1974,8 @@
    <x>239</x>
   </pos>
   <assets>
-   <asset>FLF Presence 100</asset>
-   <asset>FLF Presence 100</asset>
+   <asset>FLF Presence Small</asset>
+   <asset>FLF Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>

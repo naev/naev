@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Caladan">
   <GFX>
@@ -1198,8 +1198,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>1</range>
+   <value>1200</value>
+   <range>6</range>
   </presence>
   <general>
    <prodfactor>0.6</prodfactor>
@@ -2050,7 +2050,7 @@
 
 
 
- <asset name="Empire Presence -100">
+ <asset name="Empire Unpresence">
   <general>
    <faction>Empire</faction>
   </general>
@@ -2059,7 +2059,7 @@
    <range>0</range>
   </presence>
  </asset>
- <asset name="FLF Presence 100">
+ <asset name="FLF Presence Small">
   <general>
    <faction>FLF</faction>
   </general>

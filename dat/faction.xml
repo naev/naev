@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Factions>
  <faction name="Dummy">
   <static />
@@ -14,7 +14,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Civilian">
@@ -23,6 +22,7 @@
   <allies>
   </allies>
   <enemies>
+   <enemy>Pirate</enemy>
   </enemies>
  </faction>
  <faction name="Proteron">
@@ -31,11 +31,9 @@
   <player>3</player>
   <colour>purple</colour>
   <allies>
-   <ally>Empire</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Frontier">
@@ -47,7 +45,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Trader">
@@ -58,8 +55,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>FLF</enemy>
-   <enemy>Collective</enemy>
    <enemy>Raider</enemy>
   </enemies>
  </faction>
@@ -69,6 +64,7 @@
   <player>-20</player>
   <colour>red</colour>
   <enemies>
+   <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Za'lek</enemy>
@@ -87,14 +83,10 @@
   <player>1</player>
   <allies>
    <ally>Dvaered</ally>
-   <ally>Za'lek</ally>
-   <ally>Sirius</ally>
    <ally>Goddard</ally>
-   <ally>Proteron</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>FLF</enemy>
    <enemy>Collective</enemy>
   </enemies>
  </faction>
@@ -105,16 +97,7 @@
   <colour>silver</colour>
   <enemies>
    <enemy>Empire</enemy>
-   <enemy>Dvaered</enemy>
-   <enemy>Za'lek</enemy>
    <enemy>Pirate</enemy>
-   <enemy>FLF</enemy>
-   <enemy>Sirius</enemy>
-   <enemy>Frontier</enemy>
-   <enemy>Trader</enemy>
-   <enemy>Independent</enemy>
-   <enemy>Goddard</enemy>
-   <enemy>Proteron</enemy>
   </enemies>
  </faction>
  <faction name="FLF">
@@ -123,10 +106,7 @@
   <player>-10</player>
   <colour>orange</colour>
   <enemies>
-   <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
-   <enemy>Collective</enemy>
-   <enemy>Trader</enemy>
   </enemies>
  </faction>
  <faction name="Dvaered">
@@ -140,7 +120,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Za'lek">
@@ -148,11 +127,9 @@
   <longname>House Za'lek</longname>
   <player>2</player>
   <allies>
-   <ally>Empire</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Sirius">
@@ -161,11 +138,9 @@
   <longname>House Sirius</longname>
   <player>3</player>
   <allies>
-   <ally>Empire</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Goddard">
@@ -178,7 +153,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
   </enemies>
  </faction>
  <faction name="Mercenary">
