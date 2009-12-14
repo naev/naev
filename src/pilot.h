@@ -255,7 +255,7 @@ typedef struct Pilot_ {
    double jam_chance; /**< Jam chance. */
 
    /* Cargo */
-   unsigned long credits; /**< monies the pilot has */
+   uint64_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
    int ncommodities; /**< number of commodities. */
    int cargo_free; /**< Free commodity space. */
