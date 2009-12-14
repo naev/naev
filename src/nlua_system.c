@@ -453,7 +453,7 @@ static int systemL_hasPresence( lua_State *L )
  */
 static int systemL_planets( lua_State *L )
 {
-   int i;
+   int i, key;
    LuaSystem *sys;
    LuaPlanet p;
 
@@ -461,11 +461,15 @@ static int systemL_planets( lua_State *L )
 
    /* Push all planets. */
    lua_newtable(L);
+   key = 0;
    for (i=0; i<sys->s->nplanets; i++) {
       p.p = sys->s->planets[i];
-      lua_pushnumber(L,i+1); /* key */
-      lua_pushplanet(L,p); /* value */
-      lua_rawset(L,-3);
+      if(p.p->real == ASSET_REAL) {
+         key++;
+         lua_pushnumber(L,key); /* key */
+         lua_pushplanet(L,p); /* value */
+         lua_rawset(L,-3);
+      }
    }
 
    return 1;
