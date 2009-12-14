@@ -596,7 +596,7 @@
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>3000</price>
-   <description>The Caesar line hasn't changed much since its inception, and the Caesar IV holds the line. Known primarily for its immense explosive payload, its electronics are somewhat antiquated, making it</description>
+   <description>The Caesar IV holds true to its predecessors, delivering an immense explosive payload at the expense of manoeuvrability. Its electronics are somewhat antiquated, making it a poor choice for attacking smaller ships. Its mass complicates trajectory calculations, causing the tracking module to take up to 2 seconds to initialize.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
