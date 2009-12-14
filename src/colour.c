@@ -17,15 +17,7 @@
 #include "naev.h"
 #include "log.h"
 #include "ncompat.h"
-
-#if HAS_WIN32
-#include <shlwapi.h>
-#define STRCASECMP      lstrcmpiA
-#else /* HAS_WIN32 */
-#include <strings.h>
-#define STRCASECMP      strcasecmp
-#endif /* HAS_WIN32 */
-
+#include "nstd.h"
 
 
 /*
