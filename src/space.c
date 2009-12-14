@@ -2141,9 +2141,8 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
    q_destroy(qn);
 
    /* Reset the spilled variable. */
-   for(i = 0; i < systems_nstack; i++) {
+   for(i = 0; i < systems_nstack; i++)
       systems_stack[i].spilled = 0;
-   }
 
    return;
 }
