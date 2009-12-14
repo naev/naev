@@ -192,8 +192,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>1</range>
+   <value>200</value>
+   <range>2</range>
   </presence>
   <general>
    <services />
@@ -338,7 +338,7 @@
    <x>394</x>
   </pos>
   <presence>
-   <value>300</value>
+   <value>400</value>
    <range>1</range>
   </presence>
   <general>
@@ -687,7 +687,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
+   <value>400</value>
    <range>1</range>
   </presence>
   <general>
@@ -892,8 +892,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>1</range>
+   <value>200</value>
+   <range>2</range>
   </presence>
   <general>
    <services />
@@ -1112,8 +1112,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>1</range>
+   <value>200</value>
+   <range>2</range>
   </presence>
   <general>
    <services />
@@ -1136,7 +1136,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>1</range>
+   <range>0</range>
   </presence>
   <general>
    <prodfactor>0.7</prodfactor>
@@ -1175,8 +1175,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>1</range>
+   <value>200</value>
+   <range>2</range>
   </presence>
   <general>
    <services />
@@ -1493,7 +1493,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>1</range>
+   <range>0</range>
   </presence>
   <general>
    <prodfactor>0.8</prodfactor>
@@ -1614,8 +1614,8 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
-   <range>1</range>
+   <value>200</value>
+   <range>2</range>
   </presence>
   <general>
    <services />
@@ -1722,7 +1722,7 @@
   </pos>
   <presence>
    <value>300</value>
-   <range>1</range>
+   <range>0</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -2053,6 +2053,15 @@
  <asset name="Empire Unpresence">
   <general>
    <faction>Empire</faction>
+  </general>
+  <presence>
+   <value>-1000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Frontier Unpresence">
+  <general>
+   <faction>Frontier</faction>
   </general>
   <presence>
    <value>-1000</value>
