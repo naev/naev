@@ -53,9 +53,12 @@ The rotating image of your ship in the upper right illustrates how quickly your 
    text[10] = [[The commodity exchange is fairly simple in purpose and execution. Each spaceport buys and sells certain commodities, and a profit can be made in the traditional manner, by buying commodities where they're cheap, and selling where they're in demand at a higher price.
    
 Unfortunately the economy is currently not terribly dynamic, so there's much more profit to be made taking regular trade missions.]]
-   text[11] = [[Well, this was the last stop. When you're done here, take off and the tutorial will continue.]]
-   text[12] = [[Easy there, space cowboy. You're getting a bit ahead, might want to land and finish learning about the landing tabs.]]
+   text[11] = [[Well, this was the last stop.
    
+Note that most of the landing tabs have an equivalent in the info window, accessible at any time with %s. It displays information about you and your ship, as well as missions and cargo. While it can't modify outfits on your ship, it is possible to abandon missions and jettison cargo with it.
+
+When you're done here, take off and the tutorial will continue.]]
+   text[12] = [[Easy there, space cowboy. You're getting a bit ahead, might want to land and finish learning about the landing tabs.]]
    text[13] = [[If I've told you once, I've told you a thousand times! Get back on the planet and learn, learn, learn!]]
    
    -- Mission details
@@ -251,7 +254,7 @@ function tutEarly()
 end
 
 function tutEnd()
-	tk.msg(title[1], text[11])
+	tk.msg(title[1], string.format(text[11], naev.getKey("info")))
    var.push("tutorial_done", 2)
 	misn.finish(true)
 end

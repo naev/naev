@@ -480,14 +480,14 @@ end
 function succeed()
    tk.msg("Tutorial Skipped", "You're a little early, but since you're here, I'll let you proceed with the next stage of the tutorial.")
    misn.finish(true)
-   var.push("version", 040)
+   var.push("version", 041)
 end
 
 function abort()
    tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
-   var.push("version", 040)
+   var.push("version", 041)
 end
 
 function reject()
