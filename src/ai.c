@@ -2385,7 +2385,7 @@ static int aiL_credits( lua_State *L )
       return 0;
    }
 
-   cur_pilot->credits = luaL_checkint(L,1);
+   cur_pilot->credits = luaL_checklong(L,1);
    
    return 0;
 }

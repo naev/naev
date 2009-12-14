@@ -32,7 +32,8 @@
 #define FACTION_LOGO_PATH  "gfx/logo/" /**< Path to logo gfx. */
 
 
-#define PLAYER_ALLY        70. /**< above this player is considered ally */
+#define PLAYER_ALLY        70. /**< Above this player is considered ally. */
+#define PLAYER_ENEMY       0. /**< Below this the player is considered an enemy. */
 
 
 #define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
@@ -449,7 +450,7 @@ char *faction_getStanding( double mod )
 char *faction_getStandingBroad( double mod )
 {
    if (mod > PLAYER_ALLY) return "Friendly";
-   else if (mod > 0.) return "Neutral";
+   else if (mod > PLAYER_ENEMY) return "Neutral";
    return "Hostile";
 
 }
@@ -472,7 +473,7 @@ int areEnemies( int a, int b)
    /* player handled seperately */
    if (a==FACTION_PLAYER) {
       if (faction_isFaction(b)) {
-         if (faction_stack[b].player < 0)
+         if (faction_stack[b].player < PLAYER_ENEMY)
             return 1;
          else return 0;
       }
@@ -483,7 +484,7 @@ int areEnemies( int a, int b)
    }
    if (b==FACTION_PLAYER) {
       if (faction_isFaction(a)) {
-         if (faction_stack[a].player < 0)
+         if (faction_stack[a].player < PLAYER_ENEMY)
             return 1;
          else return 0;
       }
