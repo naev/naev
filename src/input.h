@@ -11,7 +11,12 @@
 #include "SDL.h"
 
 
-#define KMOD_ALL  0xffff /**< Comfort thing SDL is lacking. */
+#define NMOD_NONE    0
+#define NMOD_SHIFT   (1<<0)
+#define NMOD_CTRL    (1<<1)
+#define NMOD_ALT     (1<<2)
+#define NMOD_META    (1<<3)
+#define NMOD_ALL     0xFFFF /**< Comfort thing SDL is lacking. */
 
 
 /* input types */
@@ -34,6 +39,11 @@ const char* input_modToText( SDLMod mod );
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod );
 const char* input_getKeybindDescription( const char *keybind );
 const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod );
+
+/*
+ * Misc.
+ */
+SDLMod input_translateMod( SDLMod mod );
 
 /*
  * handle input

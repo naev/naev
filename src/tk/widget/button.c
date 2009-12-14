@@ -68,7 +68,7 @@ void window_addButton( const unsigned int wid,
    }
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 /**

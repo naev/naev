@@ -103,7 +103,7 @@ static int naev_getKey( lua_State *L )
       case KEYBIND_KEYBOARD:
          p = 0;
          /* Handle mod. */
-         if ((mod != KMOD_NONE) && (mod != KMOD_ALL))
+         if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
             p += snprintf( &buf[p], sizeof(buf)-p, "%s + ", input_modToText(mod) );
          /* Print key. */
          if (nstd_isalpha(key))
