@@ -2091,7 +2091,7 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
    sys->presence[faction] += amount;
 
    /* If there's no range, we're done here. */
-   if(range < 0)
+   if(range < 1)
       return;
 
    /* Add the spill. */
