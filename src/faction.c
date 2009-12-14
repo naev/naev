@@ -144,7 +144,7 @@ int* faction_getAll( int *n )
  */
 char* faction_name( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -163,7 +163,7 @@ char* faction_name( int f )
  */
 char* faction_longname( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -181,7 +181,7 @@ char* faction_longname( int f )
  */
 glTexture* faction_logoSmall( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -197,7 +197,7 @@ glTexture* faction_logoSmall( int f )
  */
 glTexture* faction_logoTiny( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -226,7 +226,7 @@ glColour* faction_colour( int f )
  */
 int* faction_getEnemies( int f, int *n )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -244,7 +244,7 @@ int* faction_getEnemies( int f, int *n )
  */
 int* faction_getAllies( int f, int *n )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
