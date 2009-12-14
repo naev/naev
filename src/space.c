@@ -1109,7 +1109,8 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    economy_refresh();
 
    /* Add the presence. */
-   addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
+   if (!systems_loading)
+      addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
 
    return 0;
 }
@@ -1148,6 +1149,9 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    sys->nplanets--;
    memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
 
+   /* Remove the presence. */
+   addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
+
    /* Remove from the name stack thingy. */
    found = 0;
    for (i=0; i<spacename_nstack; i++)
@@ -1168,9 +1172,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    /* Regenerate the economy stuff. */
    economy_refresh();
-
-   /* Remove the presence. */
-   addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
 
    return 0;
 }
