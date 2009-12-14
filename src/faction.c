@@ -83,7 +83,6 @@ int faction_nstack = 0; /**< Number of factions in the faction stack. */
  * Prototypes
  */
 /* static */
-static int faction_isFaction( int f );
 static void faction_sanitizePlayer( Faction* faction );
 static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
