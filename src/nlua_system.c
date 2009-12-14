@@ -37,6 +37,7 @@ static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_security( lua_State *L );
+static int systemL_presence( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -50,6 +51,7 @@ static const luaL_reg system_methods[] = {
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "security", systemL_security },
+   { "presence", systemL_presence},
    {0,0}
 }; /**< System metatable methods. */
 
@@ -489,3 +491,73 @@ static int systemL_security( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets the presence in the system.
+ *
+ * @usage pres = sys:presence(<faction id>|all|friendly|neutral|hostile)
+ *
+ *    @luaparam s System to get presence level of.
+ *    @luareturn The presence level in sys (in % -> 25 = 25%).
+ * @luafunc security( s )
+ */
+static int systemL_presence( lua_State *L )
+{
+   LuaSystem *sys;
+   LuaFaction *lf;
+   int *fct;
+   int nfct;
+   double presence;
+   int i;
+   char *cmd;
+
+   sys = luaL_checksystem(L, 1);
+
+   /* Get the second parameter. */
+   if(lua_isstring(L, 2)) {
+      /* A string command has been given. */
+      cmd = lua_tostring(L, 2);
+      nfct = 0;
+
+      switch(cmd[0]) {
+         case 'a': /* 'all' */
+            fct = faction_getGroup(&nfct, 0);
+            break;
+
+         case 'f': /* 'friendly' */
+            fct = faction_getGroup(&nfct, 1);
+            break;
+
+         case 'h': /* 'hostile' */
+            fct = faction_getGroup(&nfct, 3);
+            break;
+
+         case 'n': /* 'neutral' */
+            fct = faction_getGroup(&nfct, 2);
+            break;
+
+         default: /* Bad input. */
+            NLUA_INVALID_PARAMETER();
+            break;
+      }
+   }
+   else if(lua_isfaction(L, 2)) {
+      /* A faction id was given. */
+      lf = lua_tofaction(L, 2);
+      nfct = 1;
+      fct = malloc(sizeof(int) * nfct);
+      fct[0] = lf->f;
+   }
+   else NLUA_INVALID_PARAMETER();
+
+   /* Add up the presence values. */
+   presence = 0;
+   for(i = 0; i < nfct; i++)
+      presence += sys->s->presence[fct[i]];
+
+   /* Clean up after ourselves. */
+   free(fct);
+
+   /* Push it back to Lua. */
+   lua_pushnumber(L, presence);
+   return 1;
+}

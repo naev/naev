@@ -66,6 +66,7 @@ extern glColour cHilight;
 /* objects */
 extern glColour cInert;
 extern glColour cNeutral;
+extern glColour cMapNeutral;
 extern glColour cFriend;
 extern glColour cHostile;
 /* radar */

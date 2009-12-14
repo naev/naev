@@ -50,6 +50,7 @@ typedef struct Fleet_ {
    unsigned int flags; /**< Fleet flags. */
    double pilot_avg; /**< Average amount of pilots. */
    double mass_avg; /**< Average mass for security concerns. */
+   double strength; /**< The rated strength of the fleet. */
 } Fleet;
 
 

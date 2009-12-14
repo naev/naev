@@ -151,6 +151,9 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          continue;
       }
 
+	  /* Set strength level */
+      xmlr_float(node,"strength",temp->strength);
+
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
 

@@ -1340,8 +1340,8 @@ void player_targetPlanet (void)
    planet_target++;
    while (planet_target < cur_system->nplanets) {
 
-      /* In range, target planet. */
-      if (pilot_inRangePlanet( player, planet_target )) {
+      /* In range, and real, target planet. */
+      if (cur_system->planets[planet_target]->real == ASSET_REAL && pilot_inRangePlanet( player, planet_target )) {
          player_playSound(snd_nav, 1);
          return;
       }

@@ -66,4 +66,3 @@ char *naev_binary (void);
 
 
 #endif /* NAEV_H */
-

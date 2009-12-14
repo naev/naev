@@ -21,6 +21,9 @@
 
 #define PLANET_TECH_MAX       8 /**< Amount of special techs a planet can have. */
 
+#define ASSET_UNREAL          0 /**< The asset is "unreal". */
+#define ASSET_REAL            1 /**< The asset is "real". */
+
 
 /**
  * @brief Different planet classes.
@@ -88,6 +91,11 @@ typedef struct Planet_ {
    int population; /**< Population of the planet. */
    double prodfactor; /**< Default Production factor of the planet. */
    double cur_prodfactor; /**< Current real production factor of the planet. */
+
+   /* Asset details. */
+   double presenceAmount; /**< The amount of presence this asset exerts. */
+   int presenceRange; /**< The range of presence exertion of this asset. */
+   int real; /**< If the asset is tangible or not. */
   
    /* Landing details. */
    char* description; /**< planet description */
@@ -163,6 +171,8 @@ typedef struct StarSystem_ {
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
    double security; /**< % of security in this system. */
+   double *presence; /**< Pointer to an array of presences in this system. */
+   int spilled; /**< If the system has been spilled to yet. */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
@@ -231,6 +241,9 @@ int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
+void addPresence( StarSystem *sys, int faction, double amount, int range );
+void system_addAllPlanetsPresence( StarSystem *sys );
+int system_hasPlanet( StarSystem *sys );
 extern char* stardate;
 
 

@@ -86,6 +86,7 @@ naev_SOURCES = \
 	pilot.c \
 	plasmaf.c \
 	player.c \
+   queue.c \
 	rng.c \
 	save.c \
 	ship.c \
@@ -182,6 +183,7 @@ naev_SOURCES = \
 	pilot.h \
 	plasmaf.h \
 	player.h \
+   queue.h \
 	rng.h \
 	save.h \
 	ship.h \

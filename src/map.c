@@ -19,6 +19,7 @@
 #include "mission.h"
 #include "colour.h"
 #include "player.h"
+#include "faction.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -50,6 +51,7 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 /* space.c */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
+extern int faction_nstack;
 
 
 /*
@@ -168,7 +170,7 @@ void map_open (void)
          &gl_smallFont, &cBlack, NULL );
    /* Security. */
    window_addText( wid, -20, -140, 90, 20, 0, "txtSSecurity",
-         &gl_smallFont, &cDConsole, "Security:" );
+         &gl_smallFont, &cDConsole, "Presence:" );
    window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtSecurity",
          &gl_smallFont, &cBlack, NULL );
    /* Planets */
@@ -216,6 +218,9 @@ static void map_update( unsigned int wid )
    int f, y, h, multiple_faction;
    double standing, nstanding;
    unsigned int services;
+   int l;
+   int hasPresence, hasPlanets;
+   char t;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
@@ -280,16 +285,18 @@ static void map_update( unsigned int wid )
    f         = -1;
    multiple_faction = 0;
    for (i=0; i<sys->nplanets; i++) {
-      if ((f==-1) && (sys->planets[i]->faction>0)) {
-         f = sys->planets[i]->faction;
-         standing += faction_getPlayer( f );
-         nstanding++;
-      }
-      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-            (sys->planets[i]->faction>0)) {
-         snprintf( buf, PATH_MAX, "Multiple" );
-         multiple_faction = 1;
-         break;
+      if(sys->planets[i]->real == ASSET_REAL) {
+         if ((f==-1) && (sys->planets[i]->faction>0)) {
+            f = sys->planets[i]->faction;
+            standing += faction_getPlayer( f );
+            nstanding++;
+         }
+         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+                  (sys->planets[i]->faction>0)) {
+            snprintf( buf, PATH_MAX, "Multiple" );
+            multiple_faction = 1;
+            break;
+         }
       }
    }
    if (f == -1) {
@@ -334,33 +341,48 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
 
-   /* Get security. */
+   /* Get presence. */
    y -= 40;
-   if (sys->nfleets == 0)
-      snprintf(buf, PATH_MAX, "NA" );
-   else
-      snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
+   hasPresence = 0;
+   buf[0] = '\0';
+   for(i = 0; i < faction_nstack; i++)
+      if(sys->presence[i] > 0) {
+         hasPresence = 1;
+         l = strlen(buf);
+         buf[l++] = '\e';
+         t = faction_getColourChar(i);
+         /* Use map grey instead of default neutral colour */
+         buf[l++] = (t == 'N' ? 'm' : t);
+         snprintf((buf + l), (PATH_MAX - l), "%s: %.0f\n", faction_name(i), sys->presence[i]);
+      }
+   if(hasPresence == 0)
+      snprintf(buf, PATH_MAX, "N/A");
+
    window_moveWidget( wid, "txtSSecurity", -20, y );
    window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtSecurity", buf );
 
    /* Get planets */
-   if (sys->nplanets == 0) {
-      strncpy( buf, "None", PATH_MAX );
-      window_modifyText( wid, "txtPlanets", buf );
-   }
-   else {
-      p = 0;
-      buf[0] = '\0';
-      if (sys->nplanets > 0)
+   hasPlanets = 0;
+   p = 0;
+   buf[0] = '\0';
+   if (sys->nplanets > 0)
+      if(sys->planets[0]->real == ASSET_REAL) {
+         hasPlanets = 1;
          p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
-      for (i=1; i<sys->nplanets; i++) {
-         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
       }
-
-      window_modifyText( wid, "txtPlanets", buf );
+   for (i=1; i<sys->nplanets; i++) {
+      if(sys->planets[i]->real == ASSET_UNREAL)
+         continue;
+      hasPlanets = 1;
+      p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
    }
-   y -= 40;
+   if(hasPlanets == 0)
+      strncpy( buf, "None", PATH_MAX );
+
+   window_modifyText( wid, "txtPlanets", buf );
+
+   y -= 100;
    window_moveWidget( wid, "txtSPlanets", -20, y );
    window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
 
@@ -613,16 +635,15 @@ static void map_render( double bx, double by, double w, double h, void *data )
       }
 
       /* Draw the system. */
-      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
-      else if (sys->security >= 1.) col = &cGreen;
-      else if (sys->security >= 0.6) col = &cOrange;
-      else if (sys->security >= 0.3) col = &cRed;
-      else col = &cDarkRed;
+      if (!sys_isKnown(sys) || sys->faction == -1)
+         col = &cInert;
+      else
+         col = faction_colour(sys->faction);
 
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* If system is known fill it. */
-      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
+      if (sys_isKnown(sys) && (system_hasPlanet(sys))) {
          /* Planet colours */
          if (!sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;
