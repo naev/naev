@@ -850,6 +850,7 @@
    <x>-32</x>
   </pos>
   <assets>
+   <asset>Pirate Presence Medium</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -875,6 +876,7 @@
   </pos>
   <assets>
    <asset>Arrakis</asset>
+   <asset>Pirate Presence Medium</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1000,6 +1002,7 @@
   </pos>
   <assets>
    <asset>Torloth</asset>
+   <asset>Pirate Presence Medium</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1106,6 +1109,7 @@
    <x>0</x>
   </pos>
   <assets>
+   <asset>Pirate Presence Medium</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1976,6 +1980,7 @@
   <assets>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
+   <asset>Pirate Presence Small</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>

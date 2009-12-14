@@ -2068,4 +2068,22 @@
    <range>0</range>
   </presence>
  </asset>
+ <asset name="Pirate Presence Small">
+  <general>
+   <faction>Pirate</faction>
+  </general>
+  <presence>
+   <value>200</value>
+   <range>3</range>
+  </presence>
+ </asset>
+ <asset name="Pirate Presence Medium">
+  <general>
+   <faction>Pirate</faction>
+  </general>
+  <presence>
+   <value>300</value>
+   <range>2</range>
+  </presence>
+ </asset>
 </Assets>
