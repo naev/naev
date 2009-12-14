@@ -1110,7 +1110,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Add the presence. */
    if (!systems_loading)
-      addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
+      system_addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
 
    return 0;
 }
@@ -1150,7 +1150,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
 
    /* Remove the presence. */
-   addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
+   system_addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -2078,7 +2078,7 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param amount The amount of presence to add (negative to subtract).
  *    @param range The range of spill of the presence.
  */
-void addPresence( StarSystem *sys, int faction, double amount, int range ) {
+void system_addPresence( StarSystem *sys, int faction, double amount, int range ) {
    int i, curSpill;
    Queue q, qn;
    StarSystem *cur;
@@ -2154,7 +2154,7 @@ void addPresence( StarSystem *sys, int faction, double amount, int range ) {
 
 
 /**
- * @brief Go through all the assets and call addPresence().
+ * @brief Go through all the assets and call system_addPresence().
  *
  *    @param sys Pointer to the system to process.
  */
@@ -2162,7 +2162,7 @@ void system_addAllPlanetsPresence( StarSystem *sys ) {
    int i;
 
    for(i = 0; i < sys->nplanets; i++)
-      addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+      system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
 
 
    return;

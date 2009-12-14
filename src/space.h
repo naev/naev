@@ -241,7 +241,7 @@ int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
-void addPresence( StarSystem *sys, int faction, double amount, int range );
+void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 void system_addAllPlanetsPresence( StarSystem *sys );
 int system_hasPlanet( StarSystem *sys );
 extern char* stardate;

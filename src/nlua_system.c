@@ -508,7 +508,7 @@ static int systemL_presence( lua_State *L )
    int nfct;
    double presence;
    int i;
-   char *cmd;
+   const char *cmd;
 
    sys = luaL_checksystem(L, 1);
 
