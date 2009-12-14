@@ -1109,7 +1109,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    economy_refresh();
 
    /* Add the presence. */
-   addPresence(sys, planet->faction, planet->presenceAmount, planet->planetRange);
+   addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
 
    return 0;
 }
@@ -1170,7 +1170,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    economy_refresh();
 
    /* Remove the presence. */
-   addPresence(sys, planet->faction, -(planet->presenceAmount), planet->planetRange);
+   addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
 
    return 0;
 }
