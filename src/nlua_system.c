@@ -533,7 +533,6 @@ static int systemL_presence( lua_State *L )
             fct = faction_getGroup(&nfct, 2);
       else /* Invalid command string. */
             NLUA_INVALID_PARAMETER();
-      }
    }
    else if(lua_isfaction(L, 2)) {
       /* A faction id was given. */
