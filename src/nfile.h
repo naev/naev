@@ -8,6 +8,7 @@
 
 
 char* nfile_basePath (void);
+char* nfile_dirname( char *path );
 int nfile_dirMakeExist( const char* path, ... ); /* Creates if doesn't exist, 0 success */
 int nfile_fileExists( const char* path, ... ); /* Returns 1 on exists */
 int nfile_backupIfExists( const char* path, ... );

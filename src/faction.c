@@ -83,7 +83,6 @@ static int faction_nstack = 0; /**< Number of factions in the faction stack. */
  * Prototypes
  */
 /* static */
-static int faction_isFaction( int f );
 static void faction_sanitizePlayer( Faction* faction );
 static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
@@ -144,7 +143,7 @@ int* faction_getAll( int *n )
  */
 char* faction_name( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -163,7 +162,7 @@ char* faction_name( int f )
  */
 char* faction_longname( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -181,7 +180,7 @@ char* faction_longname( int f )
  */
 glTexture* faction_logoSmall( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -197,7 +196,7 @@ glTexture* faction_logoSmall( int f )
  */
 glTexture* faction_logoTiny( int f )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -226,7 +225,7 @@ glColour* faction_colour( int f )
  */
 int* faction_getEnemies( int f, int *n )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -244,7 +243,7 @@ int* faction_getEnemies( int f, int *n )
  */
 int* faction_getAllies( int f, int *n )
 {
-   if ((f < 0) || (f >= faction_nstack)) {
+   if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
@@ -596,7 +595,7 @@ int areAllies( int a, int b )
  *    @param f Faction to check for validity.
  *    @return 1 if faction is valid, 0 otherwise.
  */
-static int faction_isFaction( int f )
+int faction_isFaction( int f )
 {
    if ((f<0) || (f>=faction_nstack))
       return 0;

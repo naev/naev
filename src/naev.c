@@ -144,7 +144,7 @@ int main( int argc, char** argv )
    char buf[PATH_MAX];
 
    /* Save the binary path. */
-   binary_path = argv[0];
+   binary_path = strdup(argv[0]);
    
    /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
@@ -347,6 +347,9 @@ int main( int argc, char** argv )
       free(naev_icon);
 
    SDL_Quit(); /* quits SDL */
+
+   /* Last free. */
+   free(binary_path);
 
    /* all is well */
    exit(EXIT_SUCCESS);
