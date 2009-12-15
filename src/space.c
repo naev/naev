@@ -142,6 +142,7 @@ static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
+static void presenceCleanup( StarSystem *sys );
 /*
  * Externed prototypes.
  */
@@ -2106,6 +2107,33 @@ static int getPresenceIndex( StarSystem *sys, int faction ) {
 
 
 /**
+ * @brief Do some cleanup work after presence values have been adjusted.
+ *
+ *    @param sys Pointer to the system to cleanup.
+ */
+static void presenceCleanup( StarSystem *sys ) {
+   int i;
+
+   /* Reset the spilled variable for the entire universe. */
+   for(i = 0; i < systems_nstack; i++)
+      systems_stack[i].spilled = 0;
+
+   /* Check the system for 0 value presences. */
+   for(i = 0; i < sys->npresence; i++)
+      if(sys->presence[i].value == 0) {
+         /* Remove the element with 0 value. */
+         memmove(&sys->presence[i], &sys->presence[i + 1],
+                 sizeof(SystemPresence) * sys->npresence - (i + 1));
+         sys->npresence--;
+         sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+         i--;  /* We'll want to check the new value we just copied in. */
+      }
+
+   return;
+}
+
+
+/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
@@ -2150,10 +2178,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    /* If it's empty, something's wrong. */
    if(q_isEmpty(q)) {
       WARN("q is empty after getting adjancies of %s.", sys->name);
-
-      /* Reset the spilled variable. */
-      for(i = 0; i < systems_nstack; i++)
-         systems_stack[i].spilled = 0;
+      presenceCleanup(sys);
 
       return;
    }
@@ -2186,9 +2211,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    q_destroy(q);
    q_destroy(qn);
 
-   /* Reset the spilled variable. */
-   for(i = 0; i < systems_nstack; i++)
-      systems_stack[i].spilled = 0;
+   /* Clean up our mess. */
+   presenceCleanup(sys);
 
    return;
 }
