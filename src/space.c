@@ -2081,6 +2081,12 @@ int space_sysLoad( xmlNodePtr parent )
 static int getPresenceIndex( StarSystem *sys, int faction ) {
    int i;
 
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+
    /* If there is no array, create one and return 0. */
    if (sys->presence == NULL) {
       sys->npresence = 1;
@@ -2118,6 +2124,12 @@ static void presenceCleanup( StarSystem *sys ) {
    for(i = 0; i < systems_nstack; i++)
       systems_stack[i].spilled = 0;
 
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return;
+   }
+
    /* Check the system for 0 value presences. */
    for(i = 0; i < sys->npresence; i++)
       if(sys->presence[i].value == 0) {
@@ -2145,6 +2157,12 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    int i, x, curSpill;
    Queue q, qn;
    StarSystem *cur;
+
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return;
+   }
 
    /* Check that we have a sane faction. (-1 == bobbens == insane)*/
    if(faction_isFaction(faction) == 0)
@@ -2228,6 +2246,12 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 double system_getPresence( StarSystem *sys, int faction ) {
    int i;
 
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+
    /* If there is no array, there is no presence. */
    if (sys->presence == NULL)
       return 0;
@@ -2251,6 +2275,12 @@ double system_getPresence( StarSystem *sys, int faction ) {
 void system_addAllPlanetsPresence( StarSystem *sys ) {
    int i;
 
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return;
+   }
+
    for(i = 0; i < sys->nplanets; i++)
       system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
 
@@ -2267,6 +2297,13 @@ void system_addAllPlanetsPresence( StarSystem *sys ) {
 int system_hasPlanet( StarSystem *sys ) {
    int i;
 
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+
+   /* Go through all the assets and look for a real one. */
    for(i = 0; i < sys->nplanets; i++)
       if(sys->planets[i]->real == ASSET_REAL)
          return 1;
