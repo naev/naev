@@ -2121,6 +2121,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    if(faction_isFaction(faction) == 0)
       return;
 
+   /* Check that we're actually adding any. */
+   if(amount == 0)
+      return;
+
    /* Add the presence to the current system. */
    i = getPresenceIndex(sys, faction);
    sys->presence[i].value += amount;
