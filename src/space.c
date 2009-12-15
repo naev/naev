@@ -2104,6 +2104,7 @@ static int getPresenceIndex( StarSystem *sys, int faction ) {
    return i;
 }
 
+
 /**
  * @brief Adds (or removes) some presence to a system.
  *
@@ -2193,6 +2194,13 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 }
 
 
+/**
+ * @brief Get the presence of a faction in a system.
+ *
+ *    @param sys Pointer to the system to process.
+ *    @param faction The faction to get the presence for.
+ *    @return The amount of presence the faction has in the system.
+ */
 double system_getPresence( StarSystem *sys, int faction ) {
    int i;
 
@@ -2221,7 +2229,6 @@ void system_addAllPlanetsPresence( StarSystem *sys ) {
 
    for(i = 0; i < sys->nplanets; i++)
       system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
-
 
    return;
 }
