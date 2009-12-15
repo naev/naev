@@ -139,6 +139,16 @@ typedef struct SystemFleet_ {
 } SystemFleet;
 
 /**
+ * @struct SystemPresence
+ *
+ * @brief Represents presence in a system
+ */
+typedef struct SystemPresence_ {
+   int faction; /**< Faction of this presence. */
+   double value; /**< Amount of presence. */
+} SystemPresence;
+
+/**
  * @struct StarSystem
  *
  * @brief Represents a star system.
@@ -171,7 +181,10 @@ typedef struct StarSystem_ {
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
    double security; /**< % of security in this system. */
-   double *presence; /**< Pointer to an array of presences in this system. */
+
+   /* Presence. */
+   SystemPresence *presence; /**< Pointer to an array of presences in this system. */
+   int npresence; /**< Number of elements in the presence array. */
    int spilled; /**< If the system has been spilled to yet. */
 
    /* Markers. */
@@ -242,6 +255,7 @@ void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
+double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
 int system_hasPlanet( StarSystem *sys );
 extern char* stardate;

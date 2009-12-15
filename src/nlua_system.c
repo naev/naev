@@ -555,7 +555,7 @@ static int systemL_presence( lua_State *L )
    /* Add up the presence values. */
    presence = 0;
    for(i = 0; i < nfct; i++)
-      presence += sys->s->presence[ fct[i] ];
+      presence += system_getPresence(sys->s, fct[i]);
 
    /* Clean up after ourselves. */
    free(fct);

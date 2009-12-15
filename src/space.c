@@ -93,7 +93,6 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
  */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
-extern int faction_nstack;
 
 
 /*
@@ -142,6 +141,7 @@ static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
+static int getPresenceIndex( StarSystem *sys, int faction );
 /*
  * Externed prototypes.
  */
@@ -1322,7 +1322,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    xmlNodePtr cur, node;
    uint32_t flags;
    int size;
-   int i;
 
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
@@ -1330,9 +1329,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->faction   = -1;
    planet         = NULL;
    size           = 0;
-   sys->presence  = malloc(faction_nstack * sizeof(double));
-   for(i = 0; i < faction_nstack; i++)
-      sys->presence[i] = 0;
+   sys->presence  = NULL;
+   sys->npresence = 0;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
@@ -1869,7 +1867,8 @@ void space_exit (void)
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
 
-      free(systems_stack[i].presence);
+      if(systems_stack[i].presence)
+         free(systems_stack[i].presence);
       free(systems_stack[i].planets);
    }
    free(systems_stack);
@@ -2071,6 +2070,41 @@ int space_sysLoad( xmlNodePtr parent )
 
 
 /**
+ * @brief Gets the index of the presence element for a faction.
+ *          Creates one if it doesn't exist.
+ *
+ *    @param sys Pointer to the system to check.
+ *    @param faction The index of the faction to search for.
+ *    @return The index of the presence array for faction.
+ */
+static int getPresenceIndex( StarSystem *sys, int faction ) {
+   int i;
+
+   /* If there is no array, create one and return 0. */
+   if (sys->presence == NULL) {
+      sys->npresence = 1;
+      sys->presence = malloc(sizeof(SystemPresence));
+      sys->presence[0].faction = faction;
+      sys->presence[0].value = 0 ;
+      return 0;
+   }
+
+   /* Go through the array, looking for the faction. */
+   for (i = 0; i < sys->npresence; i++)
+      if (sys->presence[i].faction == faction)
+         return i;
+
+   /* Grow the array. */
+   i = sys->npresence;
+   sys->npresence++;
+   sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+   sys->presence[i].faction = faction;
+   sys->presence[i].value = 0;
+
+   return i;
+}
+
+/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
@@ -2079,16 +2113,17 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param range The range of spill of the presence.
  */
 void system_addPresence( StarSystem *sys, int faction, double amount, int range ) {
-   int i, curSpill;
+   int i, x, curSpill;
    Queue q, qn;
    StarSystem *cur;
 
    /* Check that we have a sane faction. (-1 == bobbens == insane)*/
-   if(faction < 0 || faction >= faction_nstack)
+   if(faction_isFaction(faction) == 0)
       return;
 
    /* Add the presence to the current system. */
-   sys->presence[faction] += amount;
+   i = getPresenceIndex(sys, faction);
+   sys->presence[i].value += amount;
 
    /* If there's no range, we're done here. */
    if(range < 1)
@@ -2130,7 +2165,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
          }
 
       /* Spill some presence. */
-      cur->presence[faction] += amount / (2 + curSpill);
+      x = getPresenceIndex(cur, faction);
+      cur->presence[x].value += amount / (2 + curSpill);
 
       /* Check to see if we've finished this range. */
       if(q_isEmpty(q)) {
@@ -2150,6 +2186,24 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       systems_stack[i].spilled = 0;
 
    return;
+}
+
+
+double system_getPresence( StarSystem *sys, int faction ) {
+   int i;
+
+   /* If there is no array, there is no presence. */
+   if (sys->presence == NULL)
+      return 0;
+
+   /* Go through the array, looking for the faction. */
+   for (i = 0; i < sys->npresence; i++) {
+      if (sys->presence[i].faction == faction)
+         return sys->presence[i].value;
+   }
+
+   /* If it's not in there, it's zero. */
+   return 0;
 }
 
 
