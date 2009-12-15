@@ -2184,10 +2184,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    }
 
    while(curSpill < range) {
-      /* Pull one off the queue. */
+      /* Pull one off the current range queue. */
       cur = q_dequeue(q);
 
-      /* Enqueue all its adjancencies. */
+      /* Enqueue all its adjancencies to the next range queue. */
       for(i = 0; i < cur->njumps; i++)
          if(system_getIndex(cur->jumps[i])->spilled == 0) {
             q_enqueue(qn, system_getIndex(cur->jumps[i]));
@@ -2198,7 +2198,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       x = getPresenceIndex(cur, faction);
       cur->presence[x].value += amount / (2 + curSpill);
 
-      /* Check to see if we've finished this range. */
+      /* Check to see if we've finished this range and grab the next queue. */
       if(q_isEmpty(q)) {
          curSpill++;
          q_destroy(q);
