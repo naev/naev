@@ -304,7 +304,8 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
       for (j=0; j<systems_stack[i].nplanets; j++) {
          planet = systems_stack[i].planets[j];
          for (k=0; k<nfactions; k++)
-            if (planet->faction == factions[k]) {
+            if (planet->real == ASSET_REAL &&
+                planet->faction == factions[k]) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
                   mtmp += CHUNK_SIZE;
@@ -339,12 +340,14 @@ char* space_getRndPlanet (void)
 
    for (i=0; i<systems_nstack; i++)
       for (j=0; j<systems_stack[i].nplanets; j++) {
-         ntmp++;
-         if (ntmp > mtmp) { /* need more space */
-            mtmp += CHUNK_SIZE;
-            tmp = realloc(tmp, sizeof(char*) * mtmp);
+         if(systems_stack[i].planets[j]->real == ASSET_REAL) {
+            ntmp++;
+            if (ntmp > mtmp) { /* need more space */
+               mtmp += CHUNK_SIZE;
+               tmp = realloc(tmp, sizeof(char*) * mtmp);
+            }
+            tmp[ntmp-1] = systems_stack[i].planets[j]->name;
          }
-         tmp[ntmp-1] = systems_stack[i].planets[j]->name;
       }
 
    res = tmp[RNG(0,ntmp-1)];
