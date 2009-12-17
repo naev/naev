@@ -918,8 +918,6 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    /* Redo the outfits thingy. */
    equipment_regenLists( wid, 1, 1 );
 
-   /* Update ships. */
-   equipment_updateShips( wid, NULL );
 
    return 0;
 }
@@ -937,14 +935,14 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Save positions. */
    if (outfits) {
-      nout   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-      offout = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+      nout    = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+      offout  = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
       window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    }
    if (ships) {
-      nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+      nship   = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
-      s      = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+      s       = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
       strncpy( selship, s, sizeof(selship) );
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
    }
@@ -966,6 +964,9 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
          if (ret != 0) /* Failed to maintain. */
             toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+
+         /* Update ships. */
+         equipment_updateShips( wid, NULL );
       }
    }
 }
