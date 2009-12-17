@@ -24,7 +24,7 @@ else -- default english
    title[2] = "Mission Accomplished"
    text = {}
    text[1] = [[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
-"It looks like you got something. It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try to try to get a cleaner signal. It'll be uglier then the last one, you in?"]]
+"It looks like you got something. It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one, you in?"]]
    text[2] = [["Here's the plan: we want to drop a commando team on %s to set up more sophisticated surveillance. We've already got a team assembled. Your job would be to provide a distraction."
 "The idea would be to have you fly deep into Collective territory and start causing disturbances. This is no suicidal mission so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to %s who will start monitoring."]]
    text[3] = [["If all goes well the commandos will stay 10 STU before returning here with the results. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they get chased."

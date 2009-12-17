@@ -84,7 +84,7 @@ char* nfile_dirname( char *path )
 #if HAS_POSIX
    return dirname( path );
 #elif HAS_WIN32
-   int i, l;
+   int i;
    for (i=strlen(path)-1; i>=0; i--)
       if ((path[i]=='\\') || (path[i]=='/'))
          break;
@@ -94,7 +94,7 @@ char* nfile_dirname( char *path )
       return path;
 
    /* New dirname. */
-   snprintf( dirname_buf, MIN(sizeof(dirname_buf), i),  path );
+   snprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
    return dirname_buf;
 #else
 #error "Functionality not implemented for your OS."
