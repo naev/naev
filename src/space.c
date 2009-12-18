@@ -142,7 +142,7 @@ static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
-void scheduler( double dt );
+void scheduler( double dt, int init );
 /*
  * Externed prototypes.
  */
@@ -457,8 +457,11 @@ Planet* planet_get( const char* planetname )
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
+ *    @param init If we're currently initialising.
+ *                   0 for normal.
+ *                   2 for initialising a system.
  */
-void scheduler ( const double dt ) {
+void scheduler ( const double dt, int init ) {
    int i, j;
    double str;
 
@@ -470,7 +473,7 @@ void scheduler ( const double dt ) {
 
          /* If it's time, push the fleet out. */
          if(cur_system->presence[i].schedule.time <= 0) {
-            space_addFleet( cur_system->presence[i].schedule.fleet, 0 );
+            space_addFleet( cur_system->presence[i].schedule.fleet, init );
             cur_system->presence[i].schedule.fleet = NULL;
          }
       } else {
@@ -487,6 +490,14 @@ void scheduler ( const double dt ) {
                 cur_system->presence[i].schedule.penalty) *
                (1 + 0.2 * (RNGF() - 0.5));
 
+            /* If we're initialising, 33% chance of starting in-system. */
+            if(init == 2) {
+               cur_system->presence[i].schedule.time *= RNGF() * 1.5 - 0.5;
+               if(cur_system->presence[i].schedule.time < 0) {
+                  cur_system->presence[i].schedule.time = 0;
+               }
+            }
+
             /* Calculate the penalty for the next fleet. */
             /* Is this really necessary? */
             cur_system->presence[i].schedule.penalty = str / cur_system->presence[i].value - 1;
@@ -494,6 +505,10 @@ void scheduler ( const double dt ) {
                cur_system->presence[i].schedule.penalty = 0;
          }
       }
+
+   /* If we're initialising, call ourselves again, to actually spawn any that need to be. */
+   if(init == 2)
+      scheduler(0, 1);
 }
 
 
@@ -510,7 +525,7 @@ void space_update( const double dt )
 
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
-      scheduler(dt);
+      scheduler(dt, 0);
 
    /*
     * Volatile systems.
@@ -805,6 +820,9 @@ void space_init ( const char* sysname )
       cur_system->presence[i].schedule.time = 0;
       cur_system->presence[i].schedule.penalty = 0;
    }
+
+   /* Call the scheduler. */
+   scheduler(0, 2);
 
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
