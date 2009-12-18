@@ -604,10 +604,10 @@ static void space_addFleet( Fleet* fleet, int init )
    if (init == 1) {
       if (RNGF() < 0.5) /* 50% chance of starting out en route. */
          c = 2;
-      else if (RNGF() < 0.5) /* 25% of starting out landed. */
+      else {/* 50% of starting out landed. */
          c = 1;
-      else /* 25% chance starting out entering hyperspace. */
-         c = 0;
+         WARN("Landed");
+      }
    }
    else c = 0;
 
@@ -2099,7 +2099,7 @@ static int getPresenceIndex( StarSystem *sys, int faction ) {
       return 0;
    }
 
-   /* If there is no array, create one and return 0. */
+   /* If there is no array, create one and return 0 (the index). */
    if (sys->presence == NULL) {
       sys->npresence = 1;
       sys->presence = malloc(sizeof(SystemPresence));
