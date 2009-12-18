@@ -172,7 +172,7 @@ void menu_main (void)
  */
 static void main_menu_promptClose( unsigned int wid, char *unused )
 {
-   if (dialogue_YesNo( "Quit", "Are you sure you want to quit "APPNAME"?" ))
+   if (dialogue_YesNo( "Quit", "Are you sure you want to quit?" ))
       menu_exit( wid, unused );
 }
 

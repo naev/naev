@@ -270,6 +270,8 @@ static char *ndata_findInDir( const char *path )
  */
 static int ndata_openPackfile (void)
 {
+   char path[PATH_MAX], *buf;
+
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
 
@@ -310,11 +312,10 @@ static int ndata_openPackfile (void)
 
          /* Keep looking. */
          if (ndata_filename == NULL) {
-#if HAS_POSIX
-            char path[PATH_MAX];
-            snprintf( path, PATH_MAX, "%s", dirname( naev_binary() ) );
+            buf = strdup( naev_binary() );
+            snprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
             ndata_filename = ndata_findInDir( path );
-#endif /* HAS_POSIX */
+            free(buf);
          }
       }
    }

@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
+#include <libgen.h>
 #endif /* HAS_POSIX */
 #if HAS_WIN32
 #include <windows.h>
@@ -69,6 +70,35 @@ char* nfile_basePath (void)
    }
    
    return naev_base;
+}
+
+
+#if HAS_WIN32
+static char dirname_buf[PATH_MAX];
+#endif /* HAS_WIN32 */
+/**
+ * @brief Portable version of dirname.
+ */
+char* nfile_dirname( char *path )
+{
+#if HAS_POSIX
+   return dirname( path );
+#elif HAS_WIN32
+   int i;
+   for (i=strlen(path)-1; i>=0; i--)
+      if ((path[i]=='\\') || (path[i]=='/'))
+         break;
+
+   /* Nothing found. */
+   if (i<=0)
+      return path;
+
+   /* New dirname. */
+   snprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
+   return dirname_buf;
+#else
+#error "Functionality not implemented for your OS."
+#endif /* HAS_POSIX */
 }
 
 

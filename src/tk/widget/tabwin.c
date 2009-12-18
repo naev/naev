@@ -13,7 +13,7 @@
 
 #include "toolkit.h"
 #include "font.h"
-#include "input.h"
+#include "../../input.h" /* Hack for now. */
 
 
 #define TAB_HEIGHT   30
@@ -225,14 +225,14 @@ static int tab_key( Widget* tab, SDL_Event *event )
    /* Handle keypresses. */
    switch (key) {
       case SDLK_TAB:
-         if (mod & (KMOD_LSHIFT | KMOD_RSHIFT)) {
-            if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+         if (mod & NMOD_SHIFT) {
+            if (mod & NMOD_CTRL)
                change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
             else
                change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
          }
          else {
-            if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+            if (mod & NMOD_CTRL)
                toolkit_prevFocus( wdw );
             else
                toolkit_nextFocus( wdw );
