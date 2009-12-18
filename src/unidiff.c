@@ -89,7 +89,7 @@ typedef struct UniHunk_ {
    UniHunkType_t type; /**< Type of hunk it is. */
    union {
       char *name;
-      SystemFleet fleet;
+      Fleet *fleet;
       FleetGroup *fleetgroup;
       struct {
          int old; /**< Old value. */
@@ -288,11 +288,11 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the fleet properties. */
+         /* TODO Fix this up to new presence system. */
          xmlr_attr(cur,"name",buf);
-         hunk.u.fleet.fleet = fleet_get(buf);
+         hunk.u.fleet = fleet_get(buf);
          free(buf);
          xmlr_attr(cur,"chance",buf);
-         hunk.u.fleet.chance = atoi(buf);
          free(buf);
 
          /* Get the type. */
@@ -565,10 +565,10 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding a fleet. */
       case HUNK_TYPE_FLEET_ADD:
-         return system_addFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
+         return system_addFleet( system_get(hunk->target.u.name), hunk->u.fleet );
       /* Removing a fleet. */
       case HUNK_TYPE_FLEET_REMOVE:
-         return system_rmFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
+         return system_rmFleet( system_get(hunk->target.u.name), hunk->u.fleet );
 
       /* Adding a fleetgroup. */
       case HUNK_TYPE_FLEETGROUP_ADD:

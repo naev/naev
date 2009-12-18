@@ -129,14 +129,15 @@ typedef struct Planet_ {
 
 
 /**
- * @struct SystemFleet
+ * @struct Schedule
  *
- * @brief Represents a fleet that can appear in the system.
+ * @brief Represents the schedule for the arrival of a fleet in a system.
  */
-typedef struct SystemFleet_ {
-   Fleet* fleet; /**< fleet to appear */
-   int chance; /**< chance of fleet appearing in the system */
-} SystemFleet;
+typedef struct Schedule_ {
+   Fleet *fleet; /**< Pointer to the fleet to spawn. */
+   double time; /**< Time for this schedule to finish. */
+   double penalty; /**< The penalty for the arrival of the next fleet. */
+} Schedule;
 
 /**
  * @struct SystemPresence
@@ -146,6 +147,8 @@ typedef struct SystemFleet_ {
 typedef struct SystemPresence_ {
    int faction; /**< Faction of this presence. */
    double value; /**< Amount of presence. */
+   double curUsed; /**< Presence currently used. */
+   Schedule schedule; /**< Schedule for the arrival of fleets. */
 } SystemPresence;
 
 /**
@@ -174,7 +177,7 @@ typedef struct StarSystem_ {
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
 
    /* Fleets. */
-   SystemFleet* fleets; /**< fleets that can appear in the current system */
+   Fleet** fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
@@ -221,8 +224,8 @@ char planet_getClass( Planet *p );
  */
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
-int system_addFleet( StarSystem *sys, SystemFleet *fleet );
-int system_rmFleet( StarSystem *sys, SystemFleet *fleet );
+int system_addFleet( StarSystem *sys, Fleet *fleet );
+int system_rmFleet( StarSystem *sys, Fleet *fleet );
 int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
 int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
 

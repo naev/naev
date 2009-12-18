@@ -430,7 +430,7 @@ static int systemL_hasPresence( lua_State *L )
    /* Try to find a fleet of the faction. */
    found = 0;
    for (i=0; i<sys->s->nfleets; i++) {
-      if (sys->s->fleets[i].fleet->faction == fct) {
+      if (sys->s->fleets[i]->faction == fct) {
          found = 1;
          break;
       }
