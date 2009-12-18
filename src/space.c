@@ -252,9 +252,11 @@ int space_canHyperspace( Pilot* p)
    if (p->fuel < HYPERSPACE_FUEL) return 0;
 
    for (i=0; i < cur_system->nplanets; i++) {
-      d = vect_dist(&p->solid->pos, &cur_system->planets[i]->pos);
-      if (d < HYPERSPACE_EXIT_MIN)
-         return 0;
+      if(cur_system->planets[i]->real == ASSET_REAL) {
+         d = vect_dist(&p->solid->pos, &cur_system->planets[i]->pos);
+         if (d < HYPERSPACE_EXIT_MIN)
+            return 0;
+      }
    }
    return 1;
 }
