@@ -514,12 +514,12 @@ static int diff_patch( xmlNodePtr parent )
                DEBUG("   [%s] planet remove: '%s'", target, fail->u.name);
                break;
             case HUNK_TYPE_FLEET_ADD:
-               DEBUG("   [%s] fleet add: '%s' (%d%% chance)", target, 
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
+               DEBUG("   [%s] fleet add: '%s'", target, 
+                     fail->u.fleet->name );
                break;
             case HUNK_TYPE_FLEET_REMOVE:
-               DEBUG("   [%s] fleet remove: '%s' (%d%% chance)", target,
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
+               DEBUG("   [%s] fleet remove: '%s'", target,
+                     fail->u.fleet->name );
                break;
             case HUNK_TYPE_FLEETGROUP_ADD:
                DEBUG("   [%s] fleetgroup add: '%s'", target, 
