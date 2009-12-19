@@ -146,6 +146,7 @@ end
 
 function board()
     tk.msg(title[5], string.format(text[5], shipname))
+    player.pay( credits )
     player.refuel()
     player.unboard()
     pinnacle:setHealth(100, 100)
