@@ -151,6 +151,7 @@ function board()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
     pinnacle:changeAI("flee")
+    player.pay( credits )
     misn.finish(true)
 end
 
