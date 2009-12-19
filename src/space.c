@@ -480,8 +480,10 @@ void scheduler ( const double dt, int init ) {
          /* Check if schedules can/should be added. */
          if(cur_system->presence[i].curUsed < cur_system->presence[i].value) {
             /* Pick a fleet (randomly for now). */
-            j = RNGF() * (cur_system->nfleets - 0.01);
-            cur_system->presence[i].schedule.fleet = cur_system->fleets[j];
+            do {
+               j = RNGF() * (cur_system->nfleets - 0.01);
+               cur_system->presence[i].schedule.fleet = cur_system->fleets[j];
+            } while(cur_system->presence[i].faction != cur_system->presence[i].schedule.fleet->faction);
 
             /* Get its strength and calculate the time. */
             str = cur_system->presence[i].schedule.fleet->strength;
