@@ -478,6 +478,7 @@ static int systemL_planets( lua_State *L )
 
 /**
  * @brief Gets the security level in a system.
+ * OBSOLETE. Use sys:presence() instead.
  *
  * @usage sec = sys:security()
  *
@@ -488,10 +489,31 @@ static int systemL_planets( lua_State *L )
 static int systemL_security( lua_State *L )
 {
    LuaSystem *sys;
+   double security;
+   int i;
+   int *fct;
+   int nfct;
+   double presenceF, presenceA;
 
-   sys = luaL_checksystem(L,1);
+   /* Get parameters. */
+   sys = luaL_checksystem(L, 1);
 
-   lua_pushnumber(L, sys->s->security * 100. );
+   /* Get the presence of all factions. */
+   fct = faction_getGroup(&nfct, 0);
+   presenceA = 0;
+   for(i = 0; i < nfct; i++)
+      presenceA += system_getPresence(sys->s, fct[i]);
+
+   /* Get the presence of friendly factions. */
+   fct = faction_getGroup(&nfct, 1);
+   presenceF = 0;
+   for(i = 0; i < nfct; i++)
+      presenceF += system_getPresence(sys->s, fct[i]);
+
+   /* Get the "security" percentage. */
+   security = presenceF / presenceA;
+
+   lua_pushnumber(L, security * 100. );
    return 1;
 }
 

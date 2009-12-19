@@ -48,8 +48,6 @@ typedef struct Fleet_ {
    FleetPilot* pilots; /**< The pilots in the fleet. */
    int npilots; /**< Total number of pilots. */
    unsigned int flags; /**< Fleet flags. */
-   double pilot_avg; /**< Average amount of pilots. */
-   double mass_avg; /**< Average mass for security concerns. */
    double strength; /**< The rated strength of the fleet. */
 } Fleet;
 

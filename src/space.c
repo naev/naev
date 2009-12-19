@@ -136,7 +136,6 @@ static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
-static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
@@ -1241,9 +1240,6 @@ int system_addFleet( StarSystem *sys, Fleet *fleet )
       avg += ((double)fleet->pilots[i].chance) / 100.;
    sys->avg_pilot += avg;
 
-   /* Recalculate security. */
-   system_calcSecurity(sys);
-
    return 0;
 }
 
@@ -1279,9 +1275,6 @@ int system_rmFleet( StarSystem *sys, Fleet *fleet )
    for (i=0; i < fleet->npilots; i++)
       avg += ((double)fleet->pilots[i].chance) / 100.;
    sys->avg_pilot -= avg;
-
-   /* Recalculate security. */
-   system_calcSecurity(sys);
 
    return 0;
 }
@@ -1576,32 +1569,9 @@ int space_load (void)
    /* Done loading. */
    systems_loading = 0;
 
-   /* Calculate system properties. */
-   for (i=0; i<systems_nstack; i++)
-      system_calcSecurity(&systems_stack[i]);
-
    /* Apply all the presences. */
    for (i=0; i<systems_nstack; i++)
       system_addAllPlanetsPresence(&systems_stack[i]);
-
-   return 0;
-}
-
-
-/**
- * @brief Calculates the security in a star system.
- *
- *    @param sys System to calculate security in.
- *    @return 0 on success.
- */
-static int system_calcSecurity( StarSystem *sys )
-{
-   /* Do not run while loading to speed up. */
-   if (systems_loading)
-      return 0;
-
-   /* Set security. */
-   sys->security = 0.;
 
    return 0;
 }

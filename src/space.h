@@ -183,7 +183,6 @@ typedef struct StarSystem_ {
 
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
-   double security; /**< % of security in this system. */
 
    /* Presence. */
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */
