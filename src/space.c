@@ -463,6 +463,7 @@ Planet* planet_get( const char* planetname )
  */
 void scheduler ( const double dt, int init ) {
    int i, j;
+   int inf;
    double str;
 
    /* Go through all the factions and reduce the timer. */
@@ -480,10 +481,20 @@ void scheduler ( const double dt, int init ) {
          /* Check if schedules can/should be added. */
          if(cur_system->presence[i].curUsed < cur_system->presence[i].value) {
             /* Pick a fleet (randomly for now). */
+            inf = 0;
             do {
                j = RNGF() * (cur_system->nfleets - 0.01);
                cur_system->presence[i].schedule.fleet = cur_system->fleets[j];
+               inf++;
+               if(inf > cur_system->nfleets * 100) {
+                  WARN("%s has presence but no fleets in %s.", faction_name(cur_system->presence[i].faction), cur_system->name);
+                  inf = -1;
+                  break;
+               }
             } while(cur_system->presence[i].faction != cur_system->presence[i].schedule.fleet->faction);
+
+            if(inf == -1)
+               continue;
 
             /* Get its strength and calculate the time. */
             str = cur_system->presence[i].schedule.fleet->strength;
@@ -511,6 +522,8 @@ void scheduler ( const double dt, int init ) {
    /* If we're initialising, call ourselves again, to actually spawn any that need to be. */
    if(init == 2)
       scheduler(0, 1);
+
+   return;
 }
 
 
