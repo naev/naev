@@ -663,31 +663,29 @@ static void space_addFleet( Fleet* fleet, int init )
 
    for (i=0; i < fleet->npilots; i++) {
       plt = &fleet->pilots[i];
-      if (RNG(0,100) <= plt->chance) {
-         /* other ships in the fleet should start split up */
-         vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-               RNG(75,150) * (RNG(0,1) ? 1 : -1));
-         a = vect_angle(&vp, &vn);
-         if (a < 0.)
-            a += 2.*M_PI;
-         flags = 0;
+      /* other ships in the fleet should start split up */
+      vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+                RNG(75,150) * (RNG(0,1) ? 1 : -1));
+      a = vect_angle(&vp, &vn);
+      if (a < 0.)
+         a += 2.*M_PI;
+      flags = 0;
 
-         /* Entering via hyperspace. */
-         if (c==0) {
-            vect_pset( &vv, HYPERSPACE_VEL, a );
-            flags |= PILOT_HYP_END;
-         }
-         /* Starting out landed. */
-         else if (c==1)
-            vectnull(&vv);
-         /* Starting out almost landed. */
-         else if (c==2)
-            /* Put speed at half in case they start very near. */
-            vect_pset( &vv, plt->ship->speed * 0.5, a );
-
-         /* Create the pilot. */
-         fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
+      /* Entering via hyperspace. */
+      if (c==0) {
+         vect_pset( &vv, HYPERSPACE_VEL, a );
+         flags |= PILOT_HYP_END;
       }
+      /* Starting out landed. */
+      else if (c==1)
+         vectnull(&vv);
+      /* Starting out almost landed. */
+      else if (c==2)
+         /* Put speed at half in case they start very near. */
+         vect_pset( &vv, plt->ship->speed * 0.5, a );
+
+      /* Create the pilot. */
+      fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
    }
 }
 
