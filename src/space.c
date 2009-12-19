@@ -488,7 +488,7 @@ void scheduler ( const double dt, int init ) {
             /* Get its strength and calculate the time. */
             str = cur_system->presence[i].schedule.fleet->strength;
             cur_system->presence[i].schedule.time =
-               (cur_system->presence[i].value / str * 10 +
+               (str / cur_system->presence[i].value * 30 +
                 cur_system->presence[i].schedule.penalty) *
                (1 + 0.2 * (RNGF() - 0.5));
 
