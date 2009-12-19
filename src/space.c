@@ -479,7 +479,7 @@ void scheduler ( const double dt, int init ) {
       } else {
          /* Check if schedules can/should be added. */
          if(cur_system->presence[i].curUsed < cur_system->presence[i].value) {
-            /* Pick a fleeti (randomly for now). */
+            /* Pick a fleet (randomly for now). */
             j = RNGF() * (cur_system->nfleets - 0.01);
             cur_system->presence[i].schedule.fleet = cur_system->fleets[j];
 
@@ -606,7 +606,6 @@ static void space_addFleet( Fleet* fleet, int init )
          c = 2;
       else {/* 50% of starting out landed. */
          c = 1;
-         WARN("Landed");
       }
    }
    else c = 0;
