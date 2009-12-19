@@ -486,8 +486,11 @@ void scheduler ( const double dt, int init ) {
                cur_system->presence[i].schedule.fleet = cur_system->fleets[j];
                inf++;
                if(inf > cur_system->nfleets * 100) {
-                  WARN("%s has presence but no fleets in %s.", faction_name(cur_system->presence[i].faction), cur_system->name);
+                  if(cur_system->presence[i].schedule.time != -1)
+                     WARN("%s has presence but no fleets in %s.", faction_name(cur_system->presence[i].faction), cur_system->name);
                   inf = -1;
+                  cur_system->presence[i].schedule.fleet = NULL;
+                  cur_system->presence[i].schedule.time = -1;
                   break;
                }
             } while(cur_system->presence[i].faction != cur_system->presence[i].schedule.fleet->faction);
