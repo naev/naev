@@ -2,6 +2,8 @@
 
    Simple cargo mission that opens up the Empire cargo missions.
 
+   Author: bobbens
+
 ]]--
 
 lang = naev.lang()

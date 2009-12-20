@@ -4,6 +4,8 @@
 
    Randomly appearing bar mission to kill a unique pirate.
 
+   Author: bobbens
+
 --]]
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.

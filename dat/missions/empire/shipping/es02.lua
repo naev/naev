@@ -2,6 +2,8 @@
 
    Empire VIP Rescue
 
+   Author: bobbens
+
    Rescue a VIP stranded on a disabled ship in a system while FLF and Dvaered
     are fighting.
 

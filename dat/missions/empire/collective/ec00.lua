@@ -2,6 +2,8 @@
 
    Collective Scout
 
+   Author: bobbens
+
    Starts the collective mini campaign.
 
    You must inspect a stray drone.

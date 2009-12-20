@@ -2,6 +2,8 @@
 
    Collective Espionage I
 
+   Author: bobbens
+
    Second mission in the mini collective campaign.
 
    You must inspect a system for wireless communications.

@@ -2,6 +2,8 @@
 
    Collective Espionage III
 
+   Author: bobbens
+
    Fourth mission in the collective mini campaign.
 
    You must distract the collective forces by breaching into their systems

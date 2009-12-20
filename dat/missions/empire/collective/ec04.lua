@@ -2,6 +2,8 @@
 
    Collective Distraction
 
+   Author: bobbens
+
    Fifth mission in the collective mini campaign.
 
    You must go rescue a team of commandos after being attacked by collective

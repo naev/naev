@@ -2,6 +2,8 @@
 
    Empire Shipping Prisoner Exchange
 
+   Author: bobbens
+
 ]]--
 
 lang = naev.lang()

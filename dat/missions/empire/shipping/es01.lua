@@ -2,6 +2,8 @@
 
    Empire Shipping Dangerous Cargo Delivery
 
+   Author: bobbens
+
 ]]--
 
 lang = naev.lang()

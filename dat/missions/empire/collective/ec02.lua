@@ -2,6 +2,8 @@
 
    Collective Espionage II
 
+   Author: bobbens
+
    Third mission in the collective mini campaign.
 
    You must land on an ex-empire planet in collective territory and return.

@@ -2,6 +2,8 @@
 
    Operation Cold Metal
 
+   Author: bobbens
+
    Seventh and final mission in the Collective Campaign
 
    Mission Objectives:

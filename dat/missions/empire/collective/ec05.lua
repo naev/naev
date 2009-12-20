@@ -2,6 +2,8 @@
 
    Operation Black Trinity
 
+   Author: bobbens
+
    Sixth mission in the collective mini campaign.
 
    Notable campaign changes:
