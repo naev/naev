@@ -518,6 +518,9 @@ void scheduler ( const double dt, int init ) {
             cur_system->presence[i].schedule.penalty = str / cur_system->presence[i].value - 1;
             if(cur_system->presence[i].schedule.penalty < 0)
                cur_system->presence[i].schedule.penalty = 0;
+
+            /* We've used up some presence. */
+            cur_system->presence[i].curUsed += str;
          }
       }
 
