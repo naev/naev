@@ -477,8 +477,8 @@ static int systemL_planets( lua_State *L )
 
 
 /**
- * @brief Gets the security level in a system.
- * OBSOLETE. Use sys:presence() instead.
+ * @brief Gets the security level in a system.<br />
+ * DEPRECATED. Use sys:presence() instead.
  *
  * @usage sec = sys:security()
  *
@@ -531,7 +531,7 @@ static int systemL_security( lua_State *L )
  * @usage if sys:presence("friendly") > sys:presence("hostile") then -- Checks to see if the system is dominantly friendly
  *
  *    @luaparam s System to get presence level of.
- *    @luareturn The presence level in sys (in % -> 25 = 25%).
+ *    @luareturn The presence level in sys (absolute value).
  * @luafunc presence( s )
  */
 static int systemL_presence( lua_State *L )
