@@ -5,6 +5,7 @@
    Mission that is basically a one-time pirate bounty mission.
 
    Author: bobbens
+      minor edits by Infiltrator
 
 --]]
 
@@ -24,12 +25,13 @@ else -- Default to English
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[You are greeted by an Empire official while at the bar, "Hello %s, Commander Soldner has spoken well of you. We have an issue with a pirate known as %s near the system %s. The mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]]
+   text[1]  = [[You are greeted by an Empire official while at the bar. "Hello %s, Commander Soldner has spoken well of you. He said you're a problem solver.
+   "Well, we have a problem with a pirate known as %s near the system %s. This mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]]
    text[2]  = [["Good luck!  The pirate has already killed his last contender, although I don't think he'll be a match for you."]]
 
    -- Messages
    msg      = {}
-   msg[1]   = "MISSION SUCCESS!  You are now authorized for the Heavy Combat Vessel License."
+   msg[1]   = "MISSION SUCCESS! You are now authorized for the Heavy Combat Vessel License."
    msg[2]   = "Pursue %s!"
 end
 
