@@ -31,7 +31,7 @@ Will you take up the bounty?]]
 
    -- Messages
    msg      = {}
-   msg[1]   = "MISSION SUCCESS!  Payment received."
+   msg[1]   = "MISSION SUCCESS! Payment received."
    msg[2]   = "Pursue %s!"
 end
 
