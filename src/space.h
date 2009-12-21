@@ -237,6 +237,13 @@ void space_renderOverlay( const double dt );
 void planets_render (void);
 
 /*
+ * Presence stuff
+ */
+void system_addPresence( StarSystem *sys, int faction, double amount, int range );
+double system_getPresence( StarSystem *sys, int faction );
+void system_addAllPlanetsPresence( StarSystem *sys );
+
+/*
  * update
  */
 void space_update( const double dt );
@@ -256,9 +263,6 @@ int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
-void system_addPresence( StarSystem *sys, int faction, double amount, int range );
-double system_getPresence( StarSystem *sys, int faction );
-void system_addAllPlanetsPresence( StarSystem *sys );
 int system_hasPlanet( StarSystem *sys );
 extern char* stardate;
 
