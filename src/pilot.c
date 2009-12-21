@@ -2987,6 +2987,37 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 
 
 /**
+ * @brief Removes a hook from all the pilots.
+ *
+ *    @param hook Hook to remove.
+ */
+void pilots_rmHook( unsigned int hook )
+{
+   int i, j;
+   Pilot *p;
+
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must have hooks. */
+      if (p->nhooks <= 0)
+         continue;
+
+      for (j=0; j<p->nhooks; j++) {
+
+         /* Hook not found. */
+         if (p->hooks[j].id == hook)
+            continue;
+
+         p->nhooks--;
+         memmove( &p->hooks[j], &p->hooks[j+1], sizeof(PilotHook) * (p->nhooks-i) );
+         i--; /* Dun like it but we have to keep iterator sane. */
+      }
+   }
+}
+
+
+/**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
  *    @param p Pilot to check to see if he has enough credits.

@@ -156,7 +156,7 @@ typedef struct PilotCommodity_ {
  */
 typedef struct PilotHook_ {
    int type; /**< Type of hook. */
-   int id; /**< Hook ID associated with pilot hook. */
+   unsigned int id; /**< Hook ID associated with pilot hook. */
 } PilotHook;
 
 
@@ -449,6 +449,7 @@ char pilot_getFactionColourChar( const Pilot *p );
  */
 void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
 int pilot_runHook( Pilot* p, int hook_type );
+void pilots_rmHook( unsigned int hook );
 
 
 #endif /* PILOT_H */
