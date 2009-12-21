@@ -197,7 +197,7 @@ typedef struct Pilot_ {
    Solid* solid; /**< associated solid (physics) */
    double mass_cargo; /**< Amount of cargo mass added. */
    double mass_outfit; /**< Amount of outfit mass added. */
-   int tsx; /**< current sprite x position., calculated on update. */
+   int tsx; /**< current sprite x position, calculated on update. */
    int tsy; /**< current sprite y position, calculated on update. */
 
    /* Properties. */
