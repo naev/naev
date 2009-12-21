@@ -3010,8 +3010,8 @@ void pilots_rmHook( unsigned int hook )
             continue;
 
          p->nhooks--;
-         memmove( &p->hooks[j], &p->hooks[j+1], sizeof(PilotHook) * (p->nhooks-i) );
-         i--; /* Dun like it but we have to keep iterator sane. */
+         memmove( &p->hooks[j], &p->hooks[j+1], sizeof(PilotHook) * (p->nhooks-j) );
+         j--; /* Dun like it but we have to keep iterator sane. */
       }
    }
 }
