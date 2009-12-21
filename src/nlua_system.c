@@ -214,6 +214,12 @@ static int systemL_get( lua_State *L )
    }
    else NLUA_INVALID_PARAMETER();
 
+   /* Error checking. */
+   if(sys.s == NULL) {
+      NLUA_ERROR(L, "No matching systems found.");
+      return 0;
+   }
+
    /* return the system */
    lua_pushsystem(L,sys);
    return 1;
