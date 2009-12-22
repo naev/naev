@@ -149,6 +149,7 @@ typedef struct Schedule_ {
    Fleet *fleet; /**< Pointer to the fleet to spawn. */
    double time; /**< Time for this schedule to finish. */
    double penalty; /**< The penalty for the arrival of the next fleet. */
+   int chain; /**< Whether or not the next fleet will chain. */
 } Schedule;
 
 /**

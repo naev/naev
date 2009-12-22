@@ -479,7 +479,8 @@ void scheduler ( const double dt, int init ) {
          }
       } else {
          /* Check if schedules can/should be added. */
-         if(cur_system->presence[i].curUsed < cur_system->presence[i].value) {
+         if(cur_system->presence[i].schedule.chain ||
+            cur_system->presence[i].curUsed < cur_system->presence[i].value) {
             /* Pick a fleet (randomly for now). */
             inf = 0;
             do {
@@ -505,6 +506,8 @@ void scheduler ( const double dt, int init ) {
                (str / cur_system->presence[i].value * 30 +
                 cur_system->presence[i].schedule.penalty) *
                (1 + 0.2 * (RNGF() - 0.5));
+            cur_system->presence[i].schedule.time +=
+               cur_system->presence[i].schedule.penalty;
 
             /* If we're initialising, 66.67% chance of starting in-system. */
             if(init == 2) {
@@ -515,10 +518,19 @@ void scheduler ( const double dt, int init ) {
             }
 
             /* Calculate the penalty for the next fleet. */
-            /* Is this really necessary? */
             cur_system->presence[i].schedule.penalty = str / cur_system->presence[i].value - 1;
             if(cur_system->presence[i].schedule.penalty < 0)
                cur_system->presence[i].schedule.penalty = 0;
+
+            /* Chaining. */
+            if(RNGF() > (cur_system->presence[i].curUsed / cur_system->presence[i].value)) {
+               cur_system->presence[i].schedule.chain = 1;
+               cur_system->presence[i].schedule.penalty =
+                  cur_system->presence[i].schedule.time;
+               cur_system->presence[i].schedule.time = 0;
+            } else {
+               cur_system->presence[i].schedule.chain = 0;
+            }
 
             /* We've used up some presence. */
             cur_system->presence[i].curUsed += str;
@@ -850,6 +862,7 @@ void space_init ( const char* sysname )
    cur_system->presence[i].curUsed = 0;
    for(i = 0; i < cur_system->npresence; i++) {
       cur_system->presence[i].curUsed = 0;
+      cur_system->presence[i].schedule.chain = 0;
       cur_system->presence[i].schedule.fleet = NULL;
       cur_system->presence[i].schedule.time = 0;
       cur_system->presence[i].schedule.penalty = 0;
