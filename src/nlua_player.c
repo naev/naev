@@ -33,6 +33,7 @@
 #include "land.h"
 #include "nlua_system.h"
 #include "map.h"
+#include "hook.h"
 
 
 /* player */
@@ -528,6 +529,10 @@ static int playerL_teleport( lua_State *L )
 
    /* Go to the new system. */
    space_init( sys->s->name );
+
+   hooks_run( "jumpout" );
+   hooks_run( "jumpin" );
+   hooks_run( "enter" );
 
    /* Map gets deformed when jumping this way. */
    map_clear();
