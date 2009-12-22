@@ -505,16 +505,16 @@ void scheduler ( const double dt, int init ) {
             cur_system->presence[i].schedule.time =
                (str / cur_system->presence[i].value * 30 +
                 cur_system->presence[i].schedule.penalty) *
-               (1 + 0.2 * (RNGF() - 0.5));
+               (1 + 0.4 * (RNGF() - 0.5));
             cur_system->presence[i].schedule.time +=
                cur_system->presence[i].schedule.penalty;
 
             if(cur_system->presence[i].schedule.chain == 2)
                init = 2;
 
-            /* If we're initialising, 66.67% chance of starting in-system. */
+            /* If we're initialising, 50% chance of starting in-system. */
             if(init == 2) {
-               cur_system->presence[i].schedule.time *= RNGF() * 3 - 2;
+               cur_system->presence[i].schedule.time *= RNGF() * 2 - 1;
                if(cur_system->presence[i].schedule.time < 0) {
                   cur_system->presence[i].schedule.time = 0;
                }
