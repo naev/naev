@@ -191,6 +191,7 @@ typedef struct Pilot_ {
    char* title; /**< title - usually indicating special properties - @todo use */
 
    int faction; /**< Pilot's faction. */
+   int systemFleet; /**< The system fleet the pilot belongs to. */
 
    /* Object characteristics */
    Ship* ship; /**< ship pilot is flying */
@@ -377,10 +378,10 @@ double pilot_hyperspaceDelay( Pilot *p );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags );
+      const unsigned int flags, const int systemFleet );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags );
+      const unsigned int flags, const int systemFleet );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, const unsigned int flags );
 Pilot* pilot_copy( Pilot* src );

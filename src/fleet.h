@@ -48,8 +48,6 @@ typedef struct Fleet_ {
    FleetPilot* pilots; /**< The pilots in the fleet. */
    int npilots; /**< Total number of pilots. */
    unsigned int flags; /**< Fleet flags. */
-   double pilot_avg; /**< Average amount of pilots. */
-   double mass_avg; /**< Average mass for security concerns. */
    double strength; /**< The rated strength of the fleet. */
 } Fleet;
 
@@ -88,7 +86,8 @@ void fleet_free (void);
  * creation
  */
 int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags );
+      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags,
+      const int systemFleet );
 
 
 #endif /* FLEET_H */
