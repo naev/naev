@@ -2823,9 +2823,10 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
    for (i=0; i<pilot->ncommodities; i++)
       if (pilot->commodities[i].id > max_id)
          max_id = pilot->commodities[i].id;
-   if (max_id > id)
+   if (max_id >= id) {
       mission_cargo_id = max_id;
-   id = ++mission_cargo_id;
+      id = ++mission_cargo_id;
+   }
 
    /* Add the cargo. */
    pilot_addCargoRaw( pilot, cargo, quantity, id );
