@@ -530,6 +530,7 @@ static int playerL_teleport( lua_State *L )
    /* Go to the new system. */
    space_init( sys->s->name );
 
+   /* Run hooks - order is important. */
    hooks_run( "jumpout" );
    hooks_run( "jumpin" );
    hooks_run( "enter" );
