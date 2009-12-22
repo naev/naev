@@ -2373,7 +2373,7 @@ void removeSystemFleet( const int systemFleetIndex ) {
    memmove(&cur_system->systemFleets[systemFleetIndex],
            &cur_system->systemFleets[systemFleetIndex + 1],
            sizeof(SystemFleet) *
-             (cur_system->nsystemFleets - systemFleetIndex));
+             (cur_system->nsystemFleets - systemFleetIndex - 1));
    cur_system->nsystemFleets--;
    cur_system->systemFleets = realloc(cur_system->systemFleets,
                                       sizeof(SystemFleet) *
