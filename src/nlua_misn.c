@@ -635,6 +635,12 @@ static int misn_addCargo( lua_State *L )
    quantity = luaL_checkint(L,2);
    cargo = commodity_get( cname );
 
+   /* Check if the cargo exists. */
+   if(cargo == NULL) {
+      NLUA_ERROR(L, "Cargo '%s' not found.", cname);
+      return 0;
+   }
+
    /* First try to add the cargo. */
    ret = pilot_addMissionCargo( player, cargo, quantity );
    mission_linkCargo( cur_mission, ret );
