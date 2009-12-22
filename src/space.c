@@ -509,6 +509,9 @@ void scheduler ( const double dt, int init ) {
             cur_system->presence[i].schedule.time +=
                cur_system->presence[i].schedule.penalty;
 
+            if(cur_system->presence[i].schedule.chain == 2)
+               init = 2;
+
             /* If we're initialising, 66.67% chance of starting in-system. */
             if(init == 2) {
                cur_system->presence[i].schedule.time *= RNGF() * 3 - 2;
@@ -524,7 +527,10 @@ void scheduler ( const double dt, int init ) {
 
             /* Chaining. */
             if(RNGF() > (cur_system->presence[i].curUsed / cur_system->presence[i].value)) {
-               cur_system->presence[i].schedule.chain = 1;
+               if(init == 2)
+                  cur_system->presence[i].schedule.chain = 2;
+               else
+                  cur_system->presence[i].schedule.chain = 1;
                cur_system->presence[i].schedule.penalty =
                   cur_system->presence[i].schedule.time;
                cur_system->presence[i].schedule.time = 0;
