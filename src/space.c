@@ -526,7 +526,7 @@ void scheduler ( const double dt, int init ) {
                cur_system->presence[i].schedule.penalty = 0;
 
             /* Chaining. */
-            if(RNGF() > (cur_system->presence[i].curUsed / cur_system->presence[i].value)) {
+            if(RNGF() > ((cur_system->presence[i].curUsed + str) / cur_system->presence[i].value)) {
                if(init == 2)
                   cur_system->presence[i].schedule.chain = 2;
                else
