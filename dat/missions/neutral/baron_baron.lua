@@ -1,4 +1,4 @@
-﻿--[[
+--[[
 -- This is the first mission in the crazy baron string.
 --]]
 
@@ -190,3 +190,4 @@ end
 function abort()
     misn.finish(false)
 end
+
