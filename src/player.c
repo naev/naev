@@ -493,7 +493,7 @@ static void player_newShipMake( char* name )
 
       /* Create the player. */
       pilot_create( player_ship, name, faction_get("Player"), NULL,
-            player_dir, &vp, &vv, flags );
+            player_dir, &vp, &vv, flags, -1 );
    }
    else {
       /* Grow memory. */
@@ -3046,7 +3046,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* player is currently on this ship */
    if (is_player != 0) {
       pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL,
-            PILOT_PLAYER | PILOT_NO_OUTFITS );
+            PILOT_PLAYER | PILOT_NO_OUTFITS, -1 );
       ship = player;
    }
    else

@@ -100,7 +100,8 @@ FleetGroup* fleet_getGroup( const char* name )
  * @sa pilot_create
  */
 int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags )
+      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags,
+      const int systemFleet )
 {
    unsigned int p;
    p = pilot_create( plt->ship,
@@ -112,7 +113,8 @@ int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
          dir,
          pos,
          vel,
-         flags );
+         flags,
+         systemFleet );
    return p;
 }
 

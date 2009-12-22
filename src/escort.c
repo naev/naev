@@ -101,7 +101,7 @@ unsigned int escort_create( Pilot *p, char *ship,
       f |= PILOT_CARRIED;
 
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f );
+   e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f, -1 );
    pe = pilot_get(e);
    pe->parent = parent;
 

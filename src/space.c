@@ -142,6 +142,7 @@ static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 void scheduler( double dt, int init );
+void removeSystemFleet( const int systemFleetIndex );
 /*
  * Externed prototypes.
  */
@@ -664,6 +665,16 @@ static void space_addFleet( Fleet* fleet, int init )
       }
    }
 
+   /* Create the system fleet. */
+   cur_system->systemFleets = realloc(cur_system->systemFleets, sizeof(SystemFleet) * (cur_system->nsystemFleets + 1));
+   cur_system->systemFleets[cur_system->nsystemFleets].npilots =
+      fleet->npilots;
+   cur_system->systemFleets[cur_system->nsystemFleets].faction =
+      fleet->faction;
+   cur_system->systemFleets[cur_system->nsystemFleets].presenceUsed =
+      fleet->strength;
+   cur_system->nsystemFleets++;
+
    for (i=0; i < fleet->npilots; i++) {
       plt = &fleet->pilots[i];
       /* other ships in the fleet should start split up */
@@ -688,8 +699,8 @@ static void space_addFleet( Fleet* fleet, int init )
          vect_pset( &vv, plt->ship->speed * 0.5, a );
 
       /* Create the pilot. */
-      fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
-   }
+      fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags, (cur_system->nsystemFleets - 1) );
+      }
 }
 
 
@@ -832,9 +843,13 @@ void space_init ( const char* sysname )
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
 
-   /* Reset any schedules. */
+   /* Reset any system fleets. */
+   cur_system->nsystemFleets = 0;
+
+   /* Reset any schedules and used presence. */
    cur_system->presence[i].curUsed = 0;
    for(i = 0; i < cur_system->npresence; i++) {
+      cur_system->presence[i].curUsed = 0;
       cur_system->presence[i].schedule.fleet = NULL;
       cur_system->presence[i].schedule.time = 0;
       cur_system->presence[i].schedule.penalty = 0;
@@ -1361,6 +1376,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    size           = 0;
    sys->presence  = NULL;
    sys->npresence = 0;
+   sys->systemFleets  = NULL;
+   sys->nsystemFleets = 0;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
@@ -2317,4 +2334,50 @@ int system_hasPlanet( StarSystem *sys ) {
          return 1;
 
    return 0;
+}
+
+
+/**
+ * @brief Removes a system fleet and frees up presence.
+ *
+ * @param systemFleetIndex The system fleet to remove.
+ */
+void removeSystemFleet( const int systemFleetIndex ) {
+   int presenceIndex;
+
+   presenceIndex =
+      getPresenceIndex(cur_system,
+                       cur_system->systemFleets[systemFleetIndex].faction);
+   cur_system->presence[presenceIndex].curUsed -=
+      cur_system->systemFleets[systemFleetIndex].presenceUsed;
+
+   memmove(&cur_system->systemFleets[systemFleetIndex],
+           &cur_system->systemFleets[systemFleetIndex + 1],
+           sizeof(SystemFleet) *
+             (cur_system->nsystemFleets - systemFleetIndex));
+   cur_system->nsystemFleets--;
+   cur_system->systemFleets = realloc(cur_system->systemFleets,
+                                      sizeof(SystemFleet) *
+                                        cur_system->nsystemFleets);
+
+   return;
+}
+
+
+/**
+ * @brief Removes a pilot from a system fleet and removes it, if need be.
+ *
+ * @param systemFleetIndex The system fleet to remove from.
+ */
+void system_removePilotFromSystemFleet( const int systemFleetIndex ) {
+   /* Check if the pilot belongs to any fleets. */
+   if(systemFleetIndex < 0)
+      return;
+
+   cur_system->systemFleets[systemFleetIndex].npilots--;
+
+   if(cur_system->systemFleets[systemFleetIndex].npilots == 0)
+      removeSystemFleet(systemFleetIndex);
+
+   return;
 }

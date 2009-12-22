@@ -129,6 +129,18 @@ typedef struct Planet_ {
 
 
 /**
+ * @struct SystemFleet
+ *
+ * @brief Used for freeing presence when fleets in the system get destroyed.
+ */
+typedef struct SystemFleet_ {
+   int npilots; /**< The number of pilots. */
+   int faction; /**< The faction of the fleet. */
+   double presenceUsed; /** < The amount of presence used by this fleet. */
+} SystemFleet;
+
+
+/**
  * @struct Schedule
  *
  * @brief Represents the schedule for the arrival of a fleet in a system.
@@ -188,6 +200,8 @@ typedef struct StarSystem_ {
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */
    int npresence; /**< Number of elements in the presence array. */
    int spilled; /**< If the system has been spilled to yet. */
+   int nsystemFleets; /**< The number of fleets in the system. */
+   SystemFleet *systemFleets; /* */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
@@ -242,6 +256,7 @@ void planets_render (void);
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
+void system_removePilotFromSystemFleet( const int systemFleet );
 
 /*
  * update
