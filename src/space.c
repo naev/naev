@@ -2379,6 +2379,8 @@ void removeSystemFleet( const int systemFleetIndex ) {
                                       sizeof(SystemFleet) *
                                         cur_system->nsystemFleets);
 
+   pilots_updateSystemFleet(systemFleetIndex);
+
    return;
 }
 

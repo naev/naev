@@ -413,6 +413,7 @@ void pilots_render( double dt );
 void pilots_renderOverlay( double dt );
 void pilot_render( Pilot* pilot, const double dt );
 void pilot_renderOverlay( Pilot* p, const double dt );
+void pilots_updateSystemFleet( const int deletedIndex );
 
 
 /*
