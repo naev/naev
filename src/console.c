@@ -132,7 +132,7 @@ static int cli_script( lua_State *L )
 
    /* Try to find the file if it exists. */
    if (nfile_fileExists(fname))
-      snprintf( buf, sizeof(buf), fname );
+      snprintf( buf, sizeof(buf), "%s", fname );
    else {
       bbuf = strdup( naev_binary() );
       snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );

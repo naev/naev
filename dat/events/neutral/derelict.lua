@@ -76,6 +76,7 @@ function create ()
 end
 
 function board()
+    player.unboard()
     -- Roll for events
     local prob = rnd.rnd()
     if prob <= 0.50 then
@@ -92,7 +93,6 @@ end
 function neutralevent()
     -- Pick a random message from the list, display it, unboard.
     tk.msg(ntitle, ntext[rnd.rnd(1, #ntext)])
-    player.unboard()
     destroyevent()
 end
 
@@ -120,7 +120,6 @@ function goodevent()
 --        tk.msg(gtitle, gtext[2])
 --        --effects here
     end
-    player.unboard()
     destroyevent()
 end
 
@@ -161,7 +160,6 @@ function badevent()
 --        tk.msg(btitle, btext[2])
 --        --effects here
     end
-    player.unboard()
     destroyevent()
 end
 
@@ -183,7 +181,6 @@ function missionevent()
         local select = rnd.rnd(1, #mymissions)
         evt.misnStart(mymissions[select])
     
-        player.unboard()
         destroyevent()
     end
 end

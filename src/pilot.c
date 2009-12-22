@@ -2834,9 +2834,10 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
    for (i=0; i<pilot->ncommodities; i++)
       if (pilot->commodities[i].id > max_id)
          max_id = pilot->commodities[i].id;
-   if (max_id > id)
+   if (max_id >= id) {
       mission_cargo_id = max_id;
-   id = ++mission_cargo_id;
+      id = ++mission_cargo_id;
+   }
 
    /* Add the cargo. */
    pilot_addCargoRaw( pilot, cargo, quantity, id );
@@ -2994,6 +2995,37 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
    pilot->hooks = realloc( pilot->hooks, sizeof(PilotHook) * pilot->nhooks );
    pilot->hooks[pilot->nhooks-1].type  = type;
    pilot->hooks[pilot->nhooks-1].id    = hook;
+}
+
+
+/**
+ * @brief Removes a hook from all the pilots.
+ *
+ *    @param hook Hook to remove.
+ */
+void pilots_rmHook( unsigned int hook )
+{
+   int i, j;
+   Pilot *p;
+
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must have hooks. */
+      if (p->nhooks <= 0)
+         continue;
+
+      for (j=0; j<p->nhooks; j++) {
+
+         /* Hook not found. */
+         if (p->hooks[j].id == hook)
+            continue;
+
+         p->nhooks--;
+         memmove( &p->hooks[j], &p->hooks[j+1], sizeof(PilotHook) * (p->nhooks-j) );
+         j--; /* Dun like it but we have to keep iterator sane. */
+      }
+   }
 }
 
 

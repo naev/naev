@@ -316,6 +316,9 @@ int hook_rm( unsigned int id )
 {
    int l,m,h,f;
 
+   /* Remove from all the pilots. */
+   pilots_rmHook( id );
+
    /* Binary search. */
    f = 0;
    l = 0;

@@ -4,6 +4,8 @@
 
    Randomly appearing bar mission to kill a unique pirate.
 
+   Author: bobbens
+
 --]]
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
@@ -29,7 +31,7 @@ Will you take up the bounty?]]
 
    -- Messages
    msg      = {}
-   msg[1]   = "MISSION SUCCESS!  Payment received."
+   msg[1]   = "MISSION SUCCESS! Payment received."
    msg[2]   = "Pursue %s!"
 end
 

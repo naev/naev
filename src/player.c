@@ -2486,7 +2486,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player_name);
    xmlw_elem(writer,"rating","%f",player_crating);
-   xmlw_elem(writer,"credits","%lu",player->credits);
+   xmlw_elem(writer,"credits","%"PRIu64,player->credits);
    xmlw_elem(writer,"time","%u",ntime_get());
 
    /* Current ship. */
