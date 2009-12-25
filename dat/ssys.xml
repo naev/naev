@@ -236,7 +236,8 @@
   </general>
  </ssys>
  <ssys name="Sirou">
-  <jump>Gamma Polaris</jump>
+  <jumps>
+   <jump>Gamma Polaris</jump>
   </jumps>
   <pos>
    <y>-267</y>
@@ -253,6 +254,7 @@
   </general>
  </ssys>
  <ssys name="NGC-7690">
+  <jumps>
    <jump>Coriolis</jump>
    <jump>Capricorn</jump>
    <jump>NGC-7414</jump>
