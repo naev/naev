@@ -11,6 +11,14 @@
    <pilot chance="100" ship="Goddard"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Civilian Schroedinger">
+  <ai>trader</ai>
+  <faction>Civilian</faction>
+  <strength>30</strength>
+  <pilots>
+   <pilot chance="100" ship="Schroedinger"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Civilian Hyena">
   <ai>trader</ai>
   <faction>Civilian</faction>
@@ -19,6 +27,21 @@
    <pilot chance="100" ship="Hyena"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Civilian Llama">
+  <ai>trader</ai>
+  <faction>Civilian</faction>
+  <strength>20</strength>
+  <pilots>
+   <pilot chance="100" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Civilian Gawain">
+  <ai>trader</ai>
+  <faction>Civilian</faction>
+  <strength>35</strength>
+  <pilots>
+   <pilot chance="100" ship="Gawain"></pilot>
+  </pilots>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
@@ -59,15 +82,75 @@
    <pilot chance="100" ship="Quicksilver"></pilot>
   </pilots>
  </fleet>
- <fleet name="Sml Trader Convoy">
+ <fleet name="Small Trader Convoy A">
   <ai>trader</ai>
   <faction>Trader</faction>
-  <strength>200</strength>
+  <strength>100</strength>
   <pilots>
    <pilot chance="100" ship="Llama"></pilot>
    <pilot chance="100" ship="Llama"></pilot>
    <pilot chance="100" ship="Koala"></pilot>
    <pilot chance="100" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Small Trader Convoy B">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <strength>60</strength>
+  <pilots>
+   <pilot chance="100" ship="Llama"></pilot>
+   <pilot chance="100" ship="Llama"></pilot>
+   <pilot chance="100" ship="Llama"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Small Trader Convoy C">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <strength>70</strength>
+  <pilots>
+   <pilot chance="100" ship="Mule"></pilot>
+   <pilot chance="100" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Small Trader Convoy D">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <strength>80</strength>
+  <pilots>
+   <pilot chance="100" ship="Llama"></pilot>
+   <pilot chance="100" ship="Llama"></pilot>
+   <pilot chance="100" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Small Trader Convoy E">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <strength>70</strength>
+  <pilots>
+   <pilot chance="100" ship="Koala"></pilot>
+   <pilot chance="100" ship="Koala"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Small Trader Convoy F">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <strength>110</strength>
+  <pilots>
+   <pilot chance="100" ship="Koala"></pilot>
+   <pilot chance="100" ship="Koala"></pilot>
+   <pilot chance="100" ship="Koala"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Escorted Trader Convoy A">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <strength>150</strength>
+  <pilots>
+   <pilot chance="100" ship="Mule"></pilot>
+   <pilot chance="100" ship="Mule"></pilot>
+   <pilot chance="100" ship="Mule"></pilot>
+   <pilot chance="100" ship="Lancelot"></pilot>
+   <pilot chance="100" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Kahan">
