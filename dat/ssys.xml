@@ -143,6 +143,7 @@
    <asset>Dowue</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -162,10 +163,11 @@
    <x>-40</x>
   </pos>
   <assets>
-    <asset>Antica</asset>
-    <asset>Arcturus Gamma</asset>
+   <asset>Antica</asset>
+   <asset>Arcturus Gamma</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -186,6 +188,7 @@
    <asset>Protera Sigma</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -206,6 +209,7 @@
    <asset>Hurada</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -227,6 +231,7 @@
    <asset>Saturn VI</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -327,6 +332,7 @@
    <asset>Doranthex Prime</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
   </assets>
@@ -351,6 +357,7 @@
    <asset>Valt</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
   </assets>
@@ -433,6 +440,7 @@
    <asset>Ullnorn</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -455,6 +463,7 @@
    <asset>Stalwart Station</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -475,6 +484,7 @@
    <asset>Utsuwa</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -639,6 +649,7 @@
    <asset>FLF Presence Small</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -780,6 +791,7 @@
    <asset>Pirate Presence Medium</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -847,6 +859,8 @@
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -869,6 +883,7 @@
    <asset>Paxsor</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -891,6 +906,7 @@
    <asset>Pirate Presence Medium</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -914,6 +930,7 @@
    <asset>Tau Station</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -953,6 +970,7 @@
    <asset>Durea</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1034,6 +1052,7 @@
    <asset>Omega Station</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1052,6 +1071,7 @@
   </pos>
   <assets>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1130,6 +1150,7 @@
    <asset>Zabween</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1170,6 +1191,7 @@
    <asset>Oma</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1228,6 +1250,7 @@
    <asset>Nor</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
@@ -1253,6 +1276,7 @@
    <asset>Sinclair</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
    <asset>FLF Presence Small</asset>
@@ -1281,6 +1305,7 @@
    <asset>Ozogo X</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1329,6 +1354,7 @@
    <asset>Frontier Unpresence</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1407,6 +1433,7 @@
    <asset>Em 5</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1505,6 +1532,7 @@
    <asset>FLF Presence Small</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
  </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1531,6 +1559,7 @@
    <asset>FLF Presence Small</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1608,6 +1637,7 @@
    <asset>Selphod</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1658,6 +1688,8 @@
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1678,6 +1710,7 @@
    <asset>Norpin II</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
@@ -1701,6 +1734,7 @@
    <asset>FLF Presence Small</asset>
    <asset>Trader Presence Standard</asset>
    <asset>Trader Presence Standard</asset>
+   <asset>Civilian Presence Standard</asset>
   </assets>
   <general>
    <asteroids>0</asteroids>
