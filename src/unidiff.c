@@ -90,7 +90,6 @@ typedef struct UniHunk_ {
    union {
       char *name;
       Fleet *fleet;
-      FleetGroup *fleetgroup;
       struct {
          int old; /**< Old value. */
          int new; /**< New value. */
@@ -316,32 +315,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          else
             diff_hunkSuccess( diff, &hunk );
       }
-      else if (xml_isNode(cur, "fleetgroup")) {
-         hunk.target.type = base.target.type;
-         hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Get the fleet properties. */
-         xmlr_attr(cur,"name",buf);
-         hunk.u.fleetgroup = fleet_getGroup(buf);
-         free(buf);
-
-         /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN("Unidiff '%s': Null hunk type.", diff->name);
-            continue;
-         }
-         if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
-         else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-
-         /* Apply diff. */
-         if (diff_patchHunk( &hunk ) < 0)
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-      }
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -521,14 +494,6 @@ static int diff_patch( xmlNodePtr parent )
                DEBUG("   [%s] fleet remove: '%s'", target,
                      fail->u.fleet->name );
                break;
-            case HUNK_TYPE_FLEETGROUP_ADD:
-               DEBUG("   [%s] fleetgroup add: '%s'", target, 
-                     fail->u.fleetgroup->name );
-               break;
-            case HUNK_TYPE_FLEETGROUP_REMOVE:
-               DEBUG("   [%s] fleetgroup remove: '%s'", target,
-                     fail->u.fleetgroup->name );
-               break;
 
             default:
                DEBUG("   unknown hunk '%d'", fail->type);
@@ -569,15 +534,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Removing a fleet. */
       case HUNK_TYPE_FLEET_REMOVE:
          return system_rmFleet( system_get(hunk->target.u.name), hunk->u.fleet );
-
-      /* Adding a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_ADD:
-         return system_addFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
-      /* Removing a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_REMOVE:
-         return system_rmFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
 
       /* Changing a ship's technology. */
       case HUNK_TYPE_SHIP_TECH:
@@ -736,14 +692,6 @@ static int diff_removeDiff( UniDiff_t *diff )
 
          case HUNK_TYPE_FLEET_REMOVE:
             hunk.type = HUNK_TYPE_FLEET_ADD;
-            break;
-
-         case HUNK_TYPE_FLEETGROUP_ADD:
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-            break;
-
-         case HUNK_TYPE_FLEETGROUP_REMOVE:
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
             break;
 
          /* Doesn't need invert. */
