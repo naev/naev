@@ -2,6 +2,9 @@
 
    Empire Shipping Dangerous Cargo Delivery
 
+   Author: bobbens
+      minor edits by Infiltrator
+
 ]]--
 
 lang = naev.lang()
@@ -23,15 +26,15 @@ else -- default english
    title[3] = "Cargo Delivery"
    title[4] = "Mission Success"
    text = {}
-   text[1] = [[You approach Commander Soldner who seems to be waiting for you,
+   text[1] = [[You approach Commander Soldner, who seems to be waiting for you.
 "Hello, ready for your next mission?"]]
    text[2] = [[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces."
-"The plan is to send an advanced convoy with guards to do the route in an attempt to confuse possible enemies. You will then go in and actually do the delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %d credits."]]
-   text[3] = [["If you encounter any confrontation, avoid it at all costs. The package must arrive to it's destination. Since you are undercover Empire ships won't assist you in case you come under fire by ships. Good luck."]]
+"The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %d credits."]]
+   text[3] = [["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]
    text[4] = [[The packages labelled "Food" are loaded discretely onto your ship. Now to deliver them to %s in the %s system.]]
    text[5] = [[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to %s in the %s system to report to Commander Soldner.]]
-   text[6] = [[You arrive to %s and report to Commander Soldner. He greets you and starts talking, "I heard you encountered resistance.  At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License, you'll still have to pay the fee for getting it."
-"If you're still interested in more work meet me up in the bar in a bit, need to finish some paperwork first."]]
+   text[6] = [[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
+"If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]
    -- Errors
    errtitle = {}
    errtitle[1] = "Need More Space"

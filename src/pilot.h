@@ -156,7 +156,7 @@ typedef struct PilotCommodity_ {
  */
 typedef struct PilotHook_ {
    int type; /**< Type of hook. */
-   int id; /**< Hook ID associated with pilot hook. */
+   unsigned int id; /**< Hook ID associated with pilot hook. */
 } PilotHook;
 
 
@@ -198,7 +198,7 @@ typedef struct Pilot_ {
    Solid* solid; /**< associated solid (physics) */
    double mass_cargo; /**< Amount of cargo mass added. */
    double mass_outfit; /**< Amount of outfit mass added. */
-   int tsx; /**< current sprite x position., calculated on update. */
+   int tsx; /**< current sprite x position, calculated on update. */
    int tsy; /**< current sprite y position, calculated on update. */
 
    /* Properties. */
@@ -451,6 +451,7 @@ char pilot_getFactionColourChar( const Pilot *p );
  */
 void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
 int pilot_runHook( Pilot* p, int hook_type );
+void pilots_rmHook( unsigned int hook );
 
 
 #endif /* PILOT_H */

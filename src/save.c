@@ -331,10 +331,10 @@ static int load_game( const char* file )
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
+   pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    player_load(node);
    var_load(node);
    missions_loadActive(node);
-   pfaction_load(node);
    hook_load(node);
    space_sysLoad(node);
 
