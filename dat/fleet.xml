@@ -445,6 +445,7 @@
  <fleet name="Dvaered Small Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
@@ -458,6 +459,7 @@
  <fleet name="Dvaered Big Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
@@ -472,6 +474,7 @@
  <fleet name="Dvaered Strike Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
@@ -601,7 +604,7 @@
  <fleet name="Trinity">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>0</strength>
+  <strength>-1</strength>
   <pilots>
    <pilot name="ESS Trinity" chance="100" ship="Empire Hawking"></pilot>
   </pilots>
@@ -609,7 +612,7 @@
  <fleet name="Starfire">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>0</strength>
+  <strength>-1</strength>
   <pilots>
    <pilot name="Starfire" chance="100" ship="Goddard"></pilot>
   </pilots>
@@ -681,6 +684,7 @@
  <fleet name="FLF Base">
   <ai>base</ai>
   <faction>FLF</faction>
+  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
@@ -691,6 +695,7 @@
  <fleet name="Independent Vendetta Quartet">
   <ai>flf</ai>
   <faction>Independent</faction>
+  <strength>-1</strength>
   <pilots>
    <pilot chance="100" ship="Vendetta"></pilot>
    <pilot chance="100" ship="Vendetta"></pilot>
