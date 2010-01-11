@@ -1272,6 +1272,9 @@ int system_rmFleet( StarSystem *sys, Fleet *fleet )
 {
    int i;
 
+   if (sys == NULL)
+      return -1;
+
    /* Find a matching fleet (will grab first since can be duplicates). */
    for (i=0; i<sys->nfleets; i++)
       if (fleet == sys->fleets[i])
