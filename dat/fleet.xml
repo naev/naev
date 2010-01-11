@@ -42,6 +42,7 @@
   <pilots>
    <pilot chance="100" ship="Gawain"></pilot>
   </pilots>
+ </fleet>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
