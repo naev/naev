@@ -170,8 +170,6 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
       /* Set strength level */
       xmlr_float(node,"strength",temp->strength);
-      if(temp->strength >= 0 && temp->strength < MINIMUM_FLEET_STRENGTH)
-         WARN("Fleet %s has %f strength and will not spawn. Make the strength -1 if this is intentional.", temp->name, temp->strength);
 
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
@@ -238,6 +236,9 @@ if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
    MELEMENT(temp->faction==-1,"faction");
    MELEMENT(temp->pilots==NULL,"pilots");
 #undef MELEMENT
+   /* Check the strength. */
+   if(temp->strength >= 0 && temp->strength < MINIMUM_FLEET_STRENGTH)
+      WARN("Fleet %s has %f strength and will not spawn. Make the strength -1 if this is intentional.", temp->name, temp->strength);
 
    return 0;
 }
