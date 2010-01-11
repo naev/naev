@@ -692,7 +692,7 @@
    <pilot chance="100" ship="Base"></pilot>
   </pilots>
  </fleet>
- <fleet name="Independent Vendetta Quartet">
+ <fleet name="Vendetta Quartet">
   <ai>flf</ai>
   <faction>Independent</faction>
   <strength>-1</strength>
