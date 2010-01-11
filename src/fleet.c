@@ -170,7 +170,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
       /* Set strength level */
       xmlr_float(node,"strength",temp->strength);
-      if(temp->strength < MINIMUM_FLEET_STRENGTH)
+      if(temp->strength >= 0 && temp->strength < MINIMUM_FLEET_STRENGTH)
          WARN("Fleet %s has %f strength and will not spawn.", temp->name, temp->strength);
 
       /* Set AI. */
