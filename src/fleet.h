@@ -52,27 +52,11 @@ typedef struct Fleet_ {
 } Fleet;
 
 
-/**
- * @brief Represents a group of fleets.
- *
- * Used to simplify creation of star systems and easily synchronize all systems
- *  with new ship additions.
- *
- * @sa Fleet
- */
-typedef struct FleetGroup_ {
-   char *name; /**< Name of the fleetgroup, used as the identifier. */
-   Fleet **fleets; /**< List of fleets in the group. */
-   int *chance; /**< Chance of each fleet in the group. */
-   int nfleets; /**< Number of fleets in the group. */
-} FleetGroup;
-
-
 /*
  * getting fleet stuff
  */
 Fleet* fleet_get( const char* name );
-FleetGroup* fleet_getGroup( const char* name );
+Fleet* fleet_grab( const int faction );
 
 
 /*

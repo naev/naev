@@ -462,8 +462,7 @@ Planet* planet_get( const char* planetname )
  *                   2 for initialising a system.
  */
 void scheduler ( const double dt, int init ) {
-   int i, j;
-   int inf;
+   int i;
    double str;
 
    /* Go through all the factions and reduce the timer. */
@@ -482,22 +481,8 @@ void scheduler ( const double dt, int init ) {
          if(cur_system->presence[i].schedule.chain ||
             cur_system->presence[i].curUsed < cur_system->presence[i].value) {
             /* Pick a fleet (randomly for now). */
-            inf = 0;
-            do {
-               j = RNGF() * (cur_system->nfleets - 0.01);
-               cur_system->presence[i].schedule.fleet = cur_system->fleets[j];
-               inf++;
-               if(inf > cur_system->nfleets * 100) {
-                  if(cur_system->presence[i].schedule.time != -1)
-                     WARN("%s has presence but no fleets in %s.", faction_name(cur_system->presence[i].faction), cur_system->name);
-                  inf = -1;
-                  cur_system->presence[i].schedule.fleet = NULL;
-                  cur_system->presence[i].schedule.time = -1;
-                  break;
-               }
-            } while(cur_system->presence[i].faction != cur_system->presence[i].schedule.fleet->faction);
-
-            if(inf == -1)
+            cur_system->presence[i].schedule.fleet = fleet_grab(cur_system->presence[i].faction);
+            if(cur_system->presence[i].schedule.fleet == NULL)
                continue;
 
             /* Get its strength and calculate the time. */
@@ -1319,58 +1304,6 @@ int system_rmFleet( StarSystem *sys, Fleet *fleet )
 
 
 /**
- * @brief Adds a FleetGroup to a star system.
- *
- *    @param sys Star System to add fleet to.
- *    @param fltgrp FleetGroup to add.
- *    @return 0 on success.
- */
-int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
-{
-   int i;
-   Fleet *fleet;
-
-   if (sys == NULL)
-      return -1;
-
-   /* Add all the fleets. */
-   for (i=0; i<fltgrp->nfleets; i++) {
-      fleet = fltgrp->fleets[i];
-      if (system_addFleet( sys, fleet ))
-         return -1;
-   }
-
-   return 0;
-}
-
-
-/**
- * @brief Removes a fleetgroup from a star system.
- *
- *    @param sys Star System to remove fleet from.
- *    @param fltgrp FleetGroup to remove.
- *    @return 0 on success.
- */
-int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
-{
-   int i;
-   Fleet *fleet;
-
-   if (sys == NULL)
-      return -1;
-
-   /* Add all the fleets. */
-   for (i=0; i<fltgrp->nfleets; i++) {
-      fleet = fltgrp->fleets[i];
-      if (system_rmFleet( sys, fleet ))
-         return -1;
-   }
-
-   return 0;
-}
-
-
-/**
  * @brief Creates a system from an XML node.
  *
  *    @param parent XML node to get system from.
@@ -1381,7 +1314,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    Planet* planet;
    Fleet *fleet;
    Fleet *flt;
-   FleetGroup *fltgrp;
    char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
@@ -1459,41 +1391,23 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"fleet")) {
-
-               /* Try to load it as a FleetGroup. */
-               fltgrp = fleet_getGroup(xml_get(cur));
-               if (fltgrp != NULL) {
-                  /* Try to load it as a FleetGroup. */
-                  fltgrp = fleet_getGroup(xml_get(cur));
-                  if (fltgrp == NULL) {
-                     WARN("Fleet '%s' for Star System '%s' not found",
-                           xml_get(cur), sys->name);
-                     continue;
-                  }
-
-                  /* Add the fleetgroup. */
-                  system_addFleetGroup( sys, fltgrp );
+               /* Try to load it as a fleet. */
+               flt = fleet_get(xml_get(cur));
+               if (flt == NULL) {
+                  WARN("Fleet '%s' for Star System '%s' not found",
+                       xml_get(cur), sys->name);
+                  continue;
                }
-               else {
+               /* Get the fleet. */
+               fleet = flt;
 
-                  /* Try to load it as a fleet. */
-                  flt = fleet_get(xml_get(cur));
-                  if (flt == NULL) {
-                     WARN("Fleet '%s' for Star System '%s' not found",
-                           xml_get(cur), sys->name);
-                     continue;
-                  }
-                  /* Get the fleet. */
-                  fleet = flt;
+               /* Get the chance. */
+               xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
+               if (ptrc)
+                  free(ptrc); /* free the ptrc */
 
-                  /* Get the chance. */
-                  xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
-                  if (ptrc)
-                     free(ptrc); /* free the ptrc */
-
-                  /* Add the fleet. */
-                  system_addFleet( sys, fleet );
-               }
+               /* Add the fleet. */
+               system_addFleet( sys, fleet );
             }
          } while (xml_nextNode(cur));
          continue;

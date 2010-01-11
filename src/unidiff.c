@@ -90,7 +90,6 @@ typedef struct UniHunk_ {
    union {
       char *name;
       Fleet *fleet;
-      FleetGroup *fleetgroup;
       struct {
          int old; /**< Old value. */
          int new; /**< New value. */
@@ -319,11 +318,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
       else if (xml_isNode(cur, "fleetgroup")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Get the fleet properties. */
-         xmlr_attr(cur,"name",buf);
-         hunk.u.fleetgroup = fleet_getGroup(buf);
-         free(buf);
 
          /* Get the type. */
          buf = xml_get(cur);
@@ -569,15 +563,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Removing a fleet. */
       case HUNK_TYPE_FLEET_REMOVE:
          return system_rmFleet( system_get(hunk->target.u.name), hunk->u.fleet );
-
-      /* Adding a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_ADD:
-         return system_addFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
-      /* Removing a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_REMOVE:
-         return system_rmFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
 
       /* Changing a ship's technology. */
       case HUNK_TYPE_SHIP_TECH:

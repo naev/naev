@@ -240,8 +240,6 @@ int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
 int system_rmFleet( StarSystem *sys, Fleet *fleet );
-int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
-int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
 
 /*
  * render
