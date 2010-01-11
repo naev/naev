@@ -515,14 +515,6 @@ static int diff_patch( xmlNodePtr parent )
                DEBUG("   [%s] fleet remove: '%s'", target,
                      fail->u.fleet->name );
                break;
-            case HUNK_TYPE_FLEETGROUP_ADD:
-               DEBUG("   [%s] fleetgroup add: '%s'", target, 
-                     fail->u.fleetgroup->name );
-               break;
-            case HUNK_TYPE_FLEETGROUP_REMOVE:
-               DEBUG("   [%s] fleetgroup remove: '%s'", target,
-                     fail->u.fleetgroup->name );
-               break;
 
             default:
                DEBUG("   unknown hunk '%d'", fail->type);
