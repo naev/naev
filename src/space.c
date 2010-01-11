@@ -482,8 +482,11 @@ void scheduler ( const double dt, int init ) {
             cur_system->presence[i].curUsed < cur_system->presence[i].value) {
             /* Pick a fleet (randomly for now). */
             cur_system->presence[i].schedule.fleet = fleet_grab(cur_system->presence[i].faction);
-            if(cur_system->presence[i].schedule.fleet == NULL)
+            if(cur_system->presence[i].schedule.fleet == NULL) {
+               /* Let's not look here again. */
+               cur_system->presence[i].curUsed = cur_system->presence[i].value;
                continue;
+            }
 
             /* Get its strength and calculate the time. */
             str = cur_system->presence[i].schedule.fleet->strength;
