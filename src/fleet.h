@@ -39,7 +39,6 @@ typedef struct FleetPilot_ {
  *  mission triggers.
  *
  * @sa FleetPilot
- * @sa FleetGroup
  */
 typedef struct Fleet_ {
    char* name; /**< Fleet name, used as the identifier. */

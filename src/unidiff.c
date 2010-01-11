@@ -315,27 +315,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          else
             diff_hunkSuccess( diff, &hunk );
       }
-      else if (xml_isNode(cur, "fleetgroup")) {
-         hunk.target.type = base.target.type;
-         hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN("Unidiff '%s': Null hunk type.", diff->name);
-            continue;
-         }
-         if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
-         else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-
-         /* Apply diff. */
-         if (diff_patchHunk( &hunk ) < 0)
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-      }
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -713,14 +692,6 @@ static int diff_removeDiff( UniDiff_t *diff )
 
          case HUNK_TYPE_FLEET_REMOVE:
             hunk.type = HUNK_TYPE_FLEET_ADD;
-            break;
-
-         case HUNK_TYPE_FLEETGROUP_ADD:
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-            break;
-
-         case HUNK_TYPE_FLEETGROUP_REMOVE:
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
             break;
 
          /* Doesn't need invert. */
