@@ -202,7 +202,7 @@ typedef struct StarSystem_ {
    int npresence; /**< Number of elements in the presence array. */
    int spilled; /**< If the system has been spilled to yet. */
    int nsystemFleets; /**< The number of fleets in the system. */
-   SystemFleet *systemFleets; /* */
+   SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
