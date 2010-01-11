@@ -85,7 +85,7 @@ Fleet* fleet_grab( const int faction )
    while(1) {
       /* Check for infinite loop. */
       if(inf > 100 * nfleets) {
-         WARN("Could not find a fleet for faction %i.", faction);
+         WARN("Could not find a fleet for faction %s.", faction_name(faction));
          return NULL;
       }
       inf++;
