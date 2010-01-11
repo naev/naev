@@ -31,6 +31,8 @@
 
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
+#define MINIMUM_FLEET_STRENGTH 10 /**< The minimum strength a fleet can have to spawn. */
+
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL; /**< Fleet stack. */
@@ -92,7 +94,7 @@ Fleet* fleet_grab( const int faction )
       rnd = RNGF() * (nfleets - 0.01);
       fleet = &fleet_stack[rnd];
 
-      if(fleet->faction == faction)
+      if(fleet->strength >= MINIMUM_FLEET_STRENGTH && fleet->faction == faction)
          break;
    }
 
@@ -166,8 +168,10 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          continue;
       }
 
-	  /* Set strength level */
+      /* Set strength level */
       xmlr_float(node,"strength",temp->strength);
+      if(temp->strength < MINIMUM_FLEET_STRENGTH)
+         WARN("Fleet %s has %f strength and will not spawn.", temp->name, temp->strength);
 
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
