@@ -220,15 +220,6 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                   WARN("Pilot %s in Fleet %s has invalid ship", pilot->name, temp->name);
                if (c!=NULL)
                   free(c);
-
-               /* Load chance */
-               xmlr_attr(cur,"chance",c);
-               pilot->chance = atoi(c);
-               if (pilot->chance == 0)
-                  WARN("Pilot %s in Fleet %s has 0%% chance of appearing",
-                     pilot->name, temp->name );
-               if (c!=NULL)
-                  free(c); /* free the external malloc */
             }
          } while (xml_nextNode(cur));
 

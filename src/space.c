@@ -1246,9 +1246,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
  */
 int system_addFleet( StarSystem *sys, Fleet *fleet )
 {
-   int i;
-   double avg;
-
    if (sys == NULL)
       return -1;
 
@@ -1258,10 +1255,7 @@ int system_addFleet( StarSystem *sys, Fleet *fleet )
    sys->fleets[sys->nfleets - 1] = fleet;
 
    /* Adjust the system average. */
-   avg = 0.;
-   for (i=0; i < fleet->npilots; i++)
-      avg += ((double)fleet->pilots[i].chance) / 100.;
-   sys->avg_pilot += avg;
+   sys->avg_pilot += fleet->npilots;
 
    return 0;
 }
@@ -1277,7 +1271,6 @@ int system_addFleet( StarSystem *sys, Fleet *fleet )
 int system_rmFleet( StarSystem *sys, Fleet *fleet )
 {
    int i;
-   double avg;
 
    /* Find a matching fleet (will grab first since can be duplicates). */
    for (i=0; i<sys->nfleets; i++)
@@ -1294,10 +1287,7 @@ int system_rmFleet( StarSystem *sys, Fleet *fleet )
    sys->fleets = realloc(sys->fleets, sizeof(Fleet*) * sys->nfleets);
 
    /* Adjust the system average. */
-   avg = 0.;
-   for (i=0; i < fleet->npilots; i++)
-      avg += ((double)fleet->pilots[i].chance) / 100.;
-   sys->avg_pilot -= avg;
+   sys->avg_pilot -= fleet->npilots;
 
    return 0;
 }
