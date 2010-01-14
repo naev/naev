@@ -1,5 +1,35 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
+ <fleet name="Independent Schroedinger Squad">
+  <ai>trader</ai>
+  <faction>Independent</faction>
+  <strength>70</strength>
+  <pilots>
+   <pilot chance="100" ship="Schroedinger"></pilot>
+   <pilot chance="100" ship="Schroedinger"></pilot>
+   <pilot chance="100" ship="Schroedinger"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Independent Hyena Squad">
+  <ai>trader</ai>
+  <faction>Independent</faction>
+  <strength>50</strength>
+  <pilots>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Independent Gawain Squad">
+  <ai>trader</ai>
+  <faction>Independent</faction>
+  <strength>90</strength>
+  <pilots>
+   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot chance="100" ship="Gawain"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
