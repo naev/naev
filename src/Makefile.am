@@ -99,6 +99,7 @@ naev_SOURCES = \
 	unidiff.c \
 	weapon.c \
 	ai.h \
+   ai_extra.h \
 	array.h \
 	base64.h \
 	board.h \
