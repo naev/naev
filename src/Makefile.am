@@ -4,6 +4,7 @@ bin_PROGRAMS = naev
 
 AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS)
+naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
 naev_SOURCES = \
 	ai.c \
