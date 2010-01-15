@@ -106,9 +106,9 @@ end
 
 function land()
     if planet.cur() == planet.get(planetname) and not talked then
-        thief1 = misn.npcAdd("talkthieves", "Sauterfeldt's agents", "none", npc_desc) -- TODO: portraits
-        thief2 = misn.npcAdd("talkthieves", "Sauterfeldt's agents", "none", npc_desc) -- TODO: portraits
-        thief3 = misn.npcAdd("talkthieves", "Sauterfeldt's agents", "none", npc_desc) -- TODO: portraits
+        thief1 = misn.npcAdd("talkthieves", "Sauterfeldt's agents", "thief1", npc_desc)
+        thief2 = misn.npcAdd("talkthieves", "Sauterfeldt's agents", "thief2", npc_desc)
+        thief3 = misn.npcAdd("talkthieves", "Sauterfeldt's agents", "thief3", npc_desc)
     end
 end
 

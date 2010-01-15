@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.4.0], [bobbens@gmail.com])
+AC_INIT([naev], [0.4.1], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -297,8 +297,16 @@ AC_SUBST([GLOBAL_CFLAGS])
 AC_SUBST([GLOBAL_LIBS])
 
 # naev
+WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
+
+CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
+CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
+
+LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
+LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
+
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
-NAEV_LIBS="$GLOBAL_LIBS \$(top_builddir)/src/tk/widget/libwidget.a"
+NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
 
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
@@ -312,12 +320,6 @@ AS_IF([test "$enable_debug" != "no"], [
 AS_IF([test "$enable_debug" = "paranoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
-
-CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
-CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
-
-LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
-LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
 NAEV_CFLAGS="$NAEV_CFLAGS $XML_CFLAGS $FREETYPE_CFLAGS $LUA_CFLAGS"
@@ -345,8 +347,14 @@ case "$host" in
     ;;
 esac
 
+# This is a list of in-tree static libs that naev depends on.  It is used by
+# automake to detect when the binary needs recompiling after a library has been
+# changed.
+NAEV_DEPENDENCIES="$WIDGET_LIBS $LUA_LIBS $CSPARSE_LIBS"
+
 AC_SUBST([NAEV_CFLAGS])
 AC_SUBST([NAEV_LIBS])
+AC_SUBST([NAEV_DEPENDENCIES])
 
 # liblua
 LIBLUA_CFLAGS="$GLOBAL_CFLAGS"
