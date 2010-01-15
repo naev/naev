@@ -102,7 +102,7 @@ else -- default english
 end
 
 function create()
-    misn.setNPC("FLF petty officer", "none") -- TODO: portrait
+    misn.setNPC("FLF petty officer", "flf_officer1")
     misn.setDesc(npc_desc)
 end
 
