@@ -62,7 +62,6 @@ lua_pop(L,1);
 PlayerConf_t conf = { .ndata = NULL, .sound_backend = NULL, .joystick_nam = NULL };
 
 /* from main.c */
-extern int nosound;
 extern int show_fps;
 extern int max_fps;
 extern int indjoystick;
