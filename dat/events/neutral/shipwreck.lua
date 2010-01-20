@@ -40,13 +40,12 @@ function create ()
         v:rename("Shipwrecked " .. shipname)
     end
 
-    
     evt.timerStart("broadcast", 3000)
    
     -- Set hooks
-    hook.pilot(p[1], "board", "rescue")
+    hook.pilot( p[1], "board", "rescue" )
+    hook.pilot( p[1], "death", "destroyevent" )
     hook.time("endevent")
-    hook.pilot(p[1], "death", "destroyevent")
 end
 
 function broadcast()
@@ -54,8 +53,8 @@ function broadcast()
     if not p[1]:exists() then
        return
     end
-    p[1]:broadcast(string.format(broadcastmsg, shipname), true)
-    bctimer = evt.timerStart("broadcast", 10000)
+    p[1]:broadcast( string.format(broadcastmsg, shipname), true )
+    bctimer = evt.timerStart("broadcast", 15000)
 end
 
 function rescue()
