@@ -1051,6 +1051,9 @@ void map_select( StarSystem *sys, char shifted )
             }
          }
       }
+      else { /* unreachable. */
+         hyperspace_target = -1;
+      }
    }
 
    map_update(wid);
