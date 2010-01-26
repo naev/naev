@@ -268,13 +268,13 @@ static int hook_pilot( lua_State *L )
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
-   if (strcmp(hook_type,"death")==0) type = PILOT_HOOK_DEATH;
-   else if (strcmp(hook_type,"board")==0) type = PILOT_HOOK_BOARD;
-   else if (strcmp(hook_type,"disable")==0) type = PILOT_HOOK_DISABLE;
-   else if (strcmp(hook_type,"jump")==0) type = PILOT_HOOK_JUMP;
-   else if (strcmp(hook_type,"hail")==0) type = PILOT_HOOK_HAIL;
+   if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
+   else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
+   else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
+   else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
+   else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
-   else if (strcmp(hook_type,"idle")==0) type = PILOT_HOOK_IDLE;
+   else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else { /* hook_type not valid */
       NLUA_DEBUG("Invalid pilot hook type: '%s'", hook_type);
       return 0;

@@ -1175,7 +1175,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       }
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
-      /* run hook */
+      /* Run hook */
       pilot_runHook( p, PILOT_HOOK_DISABLE );
    }
 
@@ -1238,6 +1238,9 @@ void pilot_dead( Pilot* p )
    p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
    p->timer[1] = 0.; /* explosion timer */
 
+   /* Pilot must die before setting death flag and probably messing with other flags. */
+   pilot_runHook( p, PILOT_HOOK_DEATH );
+
    /* flag cleanup - fixes some issues */
    if (pilot_isFlag(p,PILOT_HYP_PREP))
       pilot_rmFlag(p,PILOT_HYP_PREP);
@@ -1248,9 +1251,6 @@ void pilot_dead( Pilot* p )
 
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
-
-   /* run hook if pilot has a death hook */
-   pilot_runHook( p, PILOT_HOOK_DEATH );
 }
 
 
@@ -1762,8 +1762,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
             player_brokeHyperspace();
          }
          else {
+            pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
             pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
-            pilot_runHook( p, PILOT_HOOK_JUMP );
          }
          return;
       }
@@ -3007,7 +3007,7 @@ void pilots_rmHook( unsigned int hook )
       for (j=0; j<p->nhooks; j++) {
 
          /* Hook not found. */
-         if (p->hooks[j].id == hook)
+         if (p->hooks[j].id != hook)
             continue;
 
          p->nhooks--;
