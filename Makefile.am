@@ -34,7 +34,7 @@ VERSION:
 if HAVE_UTILS
 $(DATA_ARCHIVE): $(PACK) VERSION
 	@echo " PACK   $(DATA_ARCHIVE)"
-	test -f $(top_srcdir)/VERSION || mv -n VERSION "$(top_srcdir)"; \
+	echo $(VERSION) > "$(top_srcdir)"/VERSION; \
 	cd "$(top_srcdir)" && \
 	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)" \
 	  AUTHORS VERSION \
@@ -43,9 +43,7 @@ $(DATA_ARCHIVE): $(PACK) VERSION
 	     find snd     -type f \
 	          \( -name '*.ogg' -o -name '*.wav' -o -name '*.lua' \); \
 	     find scripts -type f -name '*.lua'; \
-	     find dat     -type f); \
-	test -f $(abs_top_builddir)/VERSION \
-	  || mv -n VERSION "$(abs_top_builddir)"
+	     find dat     -type f);
 else
 $(DATA_ARCHIVE):
 	@echo "***"
