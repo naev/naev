@@ -223,6 +223,7 @@ void conf_setVideoDefaults (void)
    conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
+   conf.npot         = 1;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -291,6 +292,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
       conf_loadBool("interpolate",conf.interpolate);
+      conf_loadBool("npot",conf.npot);
 
       /* Memory. */
       conf_loadBool("engineglow",conf.engineglow);
@@ -818,6 +820,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Texture Interpolation");
    conf_saveBool("interpolate",conf.interpolate);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Non-\"Power of Two\" textures if available");
+   conf_saveComment("Lowers memory usage by a lot, but may cause slow downs on some systems");
+   conf_saveBool("npot",conf.npot);
    conf_saveEmptyLine();
 
    /* Memory. */

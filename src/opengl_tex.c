@@ -22,6 +22,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "gui.h"
+#include "conf.h"
 
 
 /*
@@ -661,7 +662,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  */
 int gl_needPOT (void)
 {
-   return !gl_tex_ext_npot;
+   return !gl_tex_ext_npot * conf.npot;
 }
 
 
