@@ -47,5 +47,11 @@ void gl_vboDeactivate (void);
 void gl_vboDestroy( gl_vbo* vbo );
 
 
+/*
+ * Info.
+ */
+int gl_vboIsHW (void);
+
+
 #endif /* OPENGL_VBO_H */
    
