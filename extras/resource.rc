@@ -1,6 +1,6 @@
 #include <winresrc.h>
 
-101 ICON DISCARDABLE "extras/logos/logo64.ico"
+101 ICON DISCARDABLE "extras/logos/logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
