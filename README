@@ -28,7 +28,7 @@ X.) DEPENDENCIES
             static-linking makefile.)
          * binutils-dev
 
- X.) COMPILING
+X.) COMPILING
 
    Run: 
 
@@ -39,7 +39,7 @@ X.) DEPENDENCIES
    will tell you what it supports.
 
 
- X.) INSTALLATION
+X.) INSTALLATION
 
    NAEV currently supports make install which will install everything that
    is needed.
@@ -47,7 +47,7 @@ X.) DEPENDENCIES
    If you wish to create a .desktop for your desktop environment, logos
    from 16x16 to 128x128 can be found in extras/logos
 
- X.) CRASHES
+X.) CRASHES
 
    If NAEV is crashing during gameplay, please file a bug report after
    reading http://code.google.com/p/naev/wiki/Debugging.
@@ -55,29 +55,29 @@ X.) DEPENDENCIES
    ov_read_filter', your version of libvorbis is outdated, please see
    the appropriate FAQ entry: http://code.google.com/p/naev/wiki/FAQ
 
- X.) KEYBINDINGS
+X.) KEYBINDINGS
 
    You can now changhe keybindings in game which may be more comfortable for
    you then editting the configuration file.
 
-   X.0) Introduction
-      X.0.0) About
-         NAEV uses a dynamic keybinding system that allows you to set 
-         the keybindings to joystick, keyboard or a mixture of both.
+X.0) Introduction
+   X.0.0) About
+      NAEV uses a dynamic keybinding system that allows you to set 
+      the keybindings to joystick, keyboard or a mixture of both.
 
-         This can changed via ~/.naev/conf.lua, or with the in-game editor.
+This can changed via ~/.naev/conf.lua, or with the in-game editor.
 
-      X.0.1) Joystick
-         If you have a joystick you'll have to tell NAEV which joystick
-         to use.  You can either use the -j or -J parameter from the
-         command-line or put it in the conf.lua file.
-         Examples:
-            naev -j 0
-            naev -J "Precision"
-            joystick = "Precision" # in conf.lua
+   X.0.1) Joystick
+      If you have a joystick you'll have to tell NAEV which joystick
+      to use.  You can either use the -j or -J parameter from the
+      command-line or put it in the conf.lua file.
+      Examples:
+         naev -j 0
+         naev -J "Precision"
+         joystick = "Precision" # in conf.lua
       X.0.2) Syntax
          KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
-               [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
+            [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
          KEY_IDENTIFIER is the identifier given below
          KEY_TYPE can be one of keyboard, jaxis or jbutton
          KEY_NUMBER is the number of the key (found with xev usually, just
@@ -91,8 +91,8 @@ X.) DEPENDENCIES
          accel = { type = "jbutton", key = 0 }
          see conf.example for more examples
 
-     X.1) Keys
-         For an exhaustive list of default keybindings, please see
-         http://code.google.com/p/naev/wiki/Keybinds
+   X.1) Keys
+      For an exhaustive list of default keybindings, please see
+      http://code.google.com/p/naev/wiki/Keybinds
 
 
