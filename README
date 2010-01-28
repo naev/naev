@@ -49,17 +49,22 @@ NAEV README
    If you wish to create a .desktop for your desktop environment, logos
    from 16x16 to 256x256 can be found in extras/logos
 
-4) CRASHES
+4) CRASHES & PROBLEMS
+
+   Please take a look at the FAQ (linked below) before submitting a new
+   bug report, as it covers a number of common gameplay questions and
+   common issues.
 
    If NAEV is crashing during gameplay, please file a bug report after
    reading http://code.google.com/p/naev/wiki/Debugging.
+
    If NAEV crashes on launch with an error such as 'undefined symbol:
    ov_read_filter', your version of libvorbis is outdated, please see
    the appropriate FAQ entry: http://code.google.com/p/naev/wiki/FAQ
 
 5) KEYBINDINGS
 
-   You can now changhe keybindings in game which may be more comfortable for
+   You can now change keybindings in game which may be more comfortable for
    you then editting the configuration file.
 
    5A) Introduction
