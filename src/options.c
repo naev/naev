@@ -1003,6 +1003,9 @@ static void opt_video( unsigned int wid )
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkInterpolate", "Interpolation (Disable for compat.)", NULL, conf.interpolate );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkNPOT", "NPOT Textures (Disable for c.)", NULL, conf.npot );
    y -= 50;
 
 
@@ -1125,6 +1128,11 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.interpolate = f;
       opt_needRestart();
    }
+   f = window_checkboxState( wid, "chkNPOT" );
+   if (conf.npot != f) {
+      conf.npot = f;
+      opt_needRestart();
+   }
 
    /* Features. */
    f = window_checkboxState( wid, "chkEngineGlow" );
@@ -1170,6 +1178,7 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkVBO", conf.vbo );
    window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
    window_checkboxSet( wid, "chkInterpolate", conf.interpolate );
+   window_checkboxSet( wid, "chkNPOT", conf.npot );
    window_checkboxSet( wid, "chkFPS", conf.fps_show );
    window_checkboxSet( wid, "chkEngineGlow", conf.engineglow );
 

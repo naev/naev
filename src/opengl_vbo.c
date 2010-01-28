@@ -373,3 +373,14 @@ void gl_vboDestroy( gl_vbo *vbo )
    free(vbo);
 }
 
+
+/**
+ * @brief Checks to see if the VBOs are supported by HW.
+ *
+ *    @return 1 if VBOs are enabled and supported by HW.
+ */
+int gl_vboIsHW (void)
+{
+   return has_vbo;
+}
+

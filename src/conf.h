@@ -25,6 +25,7 @@ typedef struct PlayerConf_s {
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
    int interpolate; /**< Use texture interpolation. */
+   int npot; /**< Use NPOT textures if available. */
 
    /* Memory usage. */
    int engineglow; /**< Sets engine glow. */

@@ -98,6 +98,12 @@ glTexture* gl_dupTexture( glTexture *texture );
 void gl_freeTexture( glTexture* texture );
 
 /*
+ * Info.
+ */
+int gl_texHasMipmaps (void);
+int gl_texHasCompress (void);
+
+/*
  * Misc.
  */
 int gl_isTrans( const glTexture* t, const int x, const int y );
