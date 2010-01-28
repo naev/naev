@@ -96,7 +96,7 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G, --generate         regenerates the nebula (slow)");
+   LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
