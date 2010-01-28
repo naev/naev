@@ -484,7 +484,8 @@ void sound_al_exit (void)
       alcMakeContextCurrent(NULL);
       alcDestroyContext( al_context );
    }
-   if (al_device) alcCloseDevice( al_device );
+   if (al_device)
+      alcCloseDevice( al_device );
 
    soundUnlock();
    SDL_DestroyMutex( sound_lock );
