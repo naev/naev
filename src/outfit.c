@@ -28,6 +28,7 @@
 #include "spfx.h"
 #include "array.h"
 #include "ship.h"
+#include "conf.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -788,7 +789,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          }
          continue;
       }
-      if (xml_isNode(node,"gfx_end")) {
+      if (conf.interpolate && xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx_end = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 

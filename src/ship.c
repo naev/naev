@@ -438,7 +438,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
 
          /* Load the engine sprite .*/
-         if (conf.engineglow) {
+         if (conf.engineglow && conf.interpolate) {
             snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
             temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
             if (temp->gfx_engine == NULL)
