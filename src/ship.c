@@ -694,6 +694,8 @@ void ships_free (void)
          free(s->description);
       if (s->gui != NULL)
          free(s->gui);
+      if (s->base_type != NULL)
+         free(s->base_type);
       if (s->fabricator != NULL)
          free(s->fabricator);
       if (s->license != NULL)

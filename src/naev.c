@@ -344,7 +344,7 @@ int main( int argc, char** argv )
 
    /* Free the icon. */
    if (naev_icon)
-      free(naev_icon);
+      SDL_FreeSurface(naev_icon);
 
    SDL_Quit(); /* quits SDL */
 
