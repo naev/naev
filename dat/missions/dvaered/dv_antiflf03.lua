@@ -160,7 +160,7 @@ function enter()
         idle()
         misn.timerStart("spawnFLFfighters", 10000)
         misn.timerStart("spawnFLFfighters", 15000)
-        tim_sec = misn.timerStart("security_timer", 60000) -- Security timer to make sure mission goes on
+        tim_sec = misn.timerStart("security_timer", 45000) -- Security timer to make sure mission goes on
         controller = misn.timerStart("control", 1000)
         
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
@@ -322,7 +322,6 @@ function spawnFLFbombers()
 end
 
 function security_timer()
-   tim_sec = misn.timerStart("security_timer", 60000)
    -- Go to next stage
    nextStage()
 end
@@ -359,12 +358,12 @@ function nextStage()
     if stage == 1 then
         misn.timerStart("spawnFLFbombers", 9000)
         misn.timerStart("spawnFLFfighters", 13000)
-        tim_sec = misn.timerStart("security_timer", 45000)
+        tim_sec = misn.timerStart("security_timer", 60000)
     elseif stage == 2 then
         misn.timerStart("spawnFLFfighters", 9000)
         misn.timerStart("spawnFLFbombers", 11000)
         misn.timerStart("spawnFLFbombers", 13000)
-        tim_sec = misn.timerStart("security_timer", 45000)
+        tim_sec = misn.timerStart("security_timer", 75000)
     else
         pilot.broadcast(obstinate, phasetwo, true)
         misn.osdActive(3)
