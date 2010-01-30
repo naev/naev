@@ -158,6 +158,7 @@ function enter()
         idle()
         misn.timerStart("spawnFLFfighters", 10000)
         misn.timerStart("spawnFLFfighters", 15000)
+        tim_sec = misn.timerStart("security_timer", 45000) -- Security timer to make sure mission goes on
         controller = misn.timerStart("control", 1000)
         
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
@@ -271,67 +272,88 @@ function spawnDV()
     end
 end
 
+-- Gets an array of possible Dvaered targets for the FLF to attack
+function possibleDVtargets()
+    targets = {}
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            targets[#targets + 1] = j
+        end
+    end
+    targets[#targets + 1] = player.pilot()
+    targets[#targets + 1] = obstinate
+    return targets
+end
+
+-- Spawns FLF fighters
 function spawnFLFfighters()
     wavefirst = true
-    local targets = {}
+    local targets = possibleDVtargets()
     wingFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", base:pos(), false)
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         j:setNodisable(true)
-        j:control()
-        for i, j in ipairs(fleetDV) do
-            if j:exists() then
-                targets[#targets + 1] = j
-            end
-        end
-        targets[#targets + 1] = player.pilot()
-        targets[#targets + 1] = obstinate
 
+        j:control()
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
 
+-- Spawns FLF bombers
 function spawnFLFbombers()
-    local targets = {}
+    local targets = possibleDVtargets()
     wingFLF = pilot.add("FLF Ancestor Trio", "flf_nojump", base:pos(), false)
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         j:setNodisable(true)
-        j:control()
-        for i, j in ipairs(fleetDV) do
-            if j:exists() then
-                targets[#targets + 1] = j
-            end
-        end
-        targets[#targets + 1] = player.pilot()
-        targets[#targets + 1] = obstinate
 
+        j:control()
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
+end
+
+function security_timer()
+   tim_sec = misn.timerStart("security_timer", 45000)
+   -- Clear all pilot hooks
+    for i, j in ipairs(fleetFLF) do
+        if j:exists() and base:exists() then
+            j:hookClear()
+        end
+    end
+   -- Go to next stage
+   nextStage()
 end
 
 function deathFLF()
     deathsFLF = deathsFLF + 1
     if deathsFLF == #fleetFLF then
-        time = 0 -- Immediately recall the Dvaered escorts
-        stage = stage + 1
-        fleetFLF = {}
-        deathsFLF = 0
-        if stage == 1 then
-            misn.timerStart("spawnFLFbombers", 9000)
-            misn.timerStart("spawnFLFfighters", 13000)
-        elseif stage == 2 then
-            misn.timerStart("spawnFLFfighters", 9000)
-            misn.timerStart("spawnFLFbombers", 11000)
-            misn.timerStart("spawnFLFbombers", 13000)
-        else
-            pilot.broadcast(obstinate, phasetwo, true)
-            misn.osdActive(3)
-            spawnDVbomber()
-            misn.timerStart("engageBase", 30000)
-        end
+        nextStage()
+    end
+end
+
+-- Moves on to the next stage
+function nextStage()
+    time = 0 -- Immediately recall the Dvaered escorts
+    stage = stage + 1
+    fleetFLF = {}
+    deathsFLF = 0
+    misn.timerStop( tim_sec ) -- Stop security timer
+    if stage == 1 then
+        misn.timerStart("spawnFLFbombers", 9000)
+        misn.timerStart("spawnFLFfighters", 13000)
+        tim_sec = misn.timerStart("security_timer", 45000)
+    elseif stage == 2 then
+        misn.timerStart("spawnFLFfighters", 9000)
+        misn.timerStart("spawnFLFbombers", 11000)
+        misn.timerStart("spawnFLFbombers", 13000)
+        tim_sec = misn.timerStart("security_timer", 45000)
+    else
+        pilot.broadcast(obstinate, phasetwo, true)
+        misn.osdActive(3)
+        spawnDVbomber()
+        misn.timerStart("engageBase", 30000)
     end
 end
 
@@ -463,14 +485,7 @@ end
 
 -- Re-target the FLF units when a Dvaered ship dies
 function deathDV()
-    local targets = {}
-
-    for k, l in ipairs(fleetDV) do
-        if l:exists() then
-            targets[#targets + 1] = l
-        end
-    end
-    targets[#targets + 1] = player.pilot()
+    local targets = possibleDVtargets()
 
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
