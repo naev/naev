@@ -325,12 +325,6 @@ end
 
 function security_timer()
    tim_sec = misn.timerStart("security_timer", 45000)
-   -- Clear all pilot hooks
-    for i, j in ipairs(fleetFLF) do
-        if j:exists() and base:exists() then
-            j:hookClear()
-        end
-    end
    -- Go to next stage
    nextStage()
 end
@@ -358,7 +352,6 @@ end
 function nextStage()
     time = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
-    fleetFLF = {}
     deathsFLF = 0
     misn.timerStop( tim_sec ) -- Stop security timer
     if stage == 1 then
@@ -404,12 +397,14 @@ function engageBase()
 
     for i, j in ipairs(fleetDV) do
         if j:exists() and base:exists() then
+            j:control()
             j:attack(base)
         end
     end
 
     for i, j in ipairs(fightersDV) do
         if j:exists() and base:exists() then
+            j:control()
             j:attack(base)
         end
     end
