@@ -1238,9 +1238,6 @@ void pilot_dead( Pilot* p )
    p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
    p->timer[1] = 0.; /* explosion timer */
 
-   /* Pilot must die before setting death flag and probably messing with other flags. */
-   pilot_runHook( p, PILOT_HOOK_DEATH );
-
    /* flag cleanup - fixes some issues */
    if (pilot_isFlag(p,PILOT_HYP_PREP))
       pilot_rmFlag(p,PILOT_HYP_PREP);
@@ -1251,6 +1248,9 @@ void pilot_dead( Pilot* p )
 
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
+
+   /* Pilot must die before setting death flag and probably messing with other flags. */
+   pilot_runHook( p, PILOT_HOOK_DEATH );
 }
 
 
@@ -1762,8 +1762,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
             player_brokeHyperspace();
          }
          else {
-            pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
             pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
+            pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
          }
          return;
       }
