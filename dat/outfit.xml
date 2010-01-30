@@ -617,7 +617,7 @@
  <outfit name="Imperator Launcher">
   <general>
    <slot>high</slot>
-   <tech>10</tech>
+   <tech>9999</tech>
    <license>Heavy Weapon License</license>
    <mass>34</mass>
    <price>160000</price>
@@ -633,7 +633,7 @@
  </outfit>
  <outfit name="Imperator Missile">
   <general>
-   <tech>9</tech>
+   <tech>9999</tech>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>9000</price>
@@ -647,7 +647,7 @@
    <spfx_shield>ExpL</spfx_shield>
    <spfx_armour>ExpL</spfx_armour>
    <duration blowup="armour">12</duration>
-   <lockon>2</lockon>
+   <lockon>0.2</lockon>
    <thrust>125</thrust>
    <turn>20</turn>
    <speed>350</speed>
