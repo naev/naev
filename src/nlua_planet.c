@@ -279,6 +279,10 @@ static int planetL_get( lua_State *L )
 
    /* Push the planet */
    planet.p = planet_get(rndplanet); /* The real planet */
+   if (planet.p == NULL) {
+      NLUA_ERROR(L, "Planet '%s' not found in stack");
+      return 0;
+   }
    lua_pushplanet(L,planet);
    sys.s = system_get( planet_getSystem(rndplanet) );
    lua_pushsystem(L,sys);
