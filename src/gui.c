@@ -202,7 +202,7 @@ static double mesg_fade    = 5.; /**< Fade length. */
  */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
-   double t;
+   double t; /**< Time to live for the message. */
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 
