@@ -37,6 +37,7 @@ static Event_t *running_event = NULL; /**< Current running event. */
 
 
 /* hooks */
+static int hookL_rm( lua_State *L );
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_time( lua_State *L );
@@ -45,6 +46,7 @@ static int hook_jumpin( lua_State *L );
 static int hook_enter( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
+   { "rm", hookL_rm },
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "time", hook_time },
@@ -106,6 +108,30 @@ void nlua_hookTarget( Mission *m, Event_t *ev )
  *
  * @luamod hook
  */
+
+
+/**
+ * @brief Removes a hook previously created.
+ *
+ * @usage hook.rm( h ) -- Hook is removed
+ * 
+ *    @luaparam h Identifier of the hook to remove.
+ *    @luareturn true if the hook was removed.
+ * @luafunc rm( h )
+ */
+static int hookL_rm( lua_State *L )
+{
+   unsigned int h;
+   int ret;
+
+   h = luaL_checklong( L, 1 );
+   ret = hook_rm( h );
+
+   lua_pushboolean( L, ret );
+   return 1;
+}
+
+
 /**
  * @brief Creates a mission hook to a certain stack.
  *
@@ -167,15 +193,17 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
 static int hook_land( lua_State *L )
 {
    const char *where;
+   unsigned int h;
 
    if (lua_gettop(L) < 2)
-      hook_generic( L, "land", 1 );
+      h = hook_generic( L, "land", 1 );
    else {
       where = luaL_checkstring(L, 2);
-      hook_generic( L, where, 1 );
+      h = hook_generic( L, where, 1 );
    }
 
-   return 0;
+   lua_pushnumber( L, h );
+   return 1;
 }
 /**
  * @brief Hooks the function to the player taking off.
@@ -186,8 +214,10 @@ static int hook_land( lua_State *L )
  */
 static int hook_takeoff( lua_State *L )
 {
-   hook_generic( L, "takeoff", 1 );
-   return 0;
+   unsigned int h;
+   h = hook_generic( L, "takeoff", 1 );
+   lua_pushnumber( L, h );
+   return 1;
 }
 /**
  * @brief Hooks the function to a time change.
@@ -198,8 +228,10 @@ static int hook_takeoff( lua_State *L )
  */
 static int hook_time( lua_State *L )
 {
-   hook_generic( L, "time", 1 );
-   return 0;
+   unsigned int h;
+   h = hook_generic( L, "time", 1 );
+   lua_pushnumber( L, h );
+   return 1;
 }
 /**
  * @brief Hooks the function to the player jumping (before changing systems).
@@ -210,8 +242,10 @@ static int hook_time( lua_State *L )
  */
 static int hook_jumpout( lua_State *L )
 {
-   hook_generic( L, "jumpout", 1 );
-   return 0;
+   unsigned int h;
+   h = hook_generic( L, "jumpout", 1 );
+   lua_pushnumber( L, h );
+   return 1;
 }
 /**
  * @brief Hooks the function to the player jumping (after changing systems).
@@ -222,8 +256,10 @@ static int hook_jumpout( lua_State *L )
  */
 static int hook_jumpin( lua_State *L )
 {
-   hook_generic( L, "jumpin", 1 );
-   return 0;
+   unsigned int h;
+   h = hook_generic( L, "jumpin", 1 );
+   lua_pushnumber( L, h );
+   return 1;
 }
 /**
  * @brief Hooks the function to the player entering a system (triggers when taking
@@ -235,8 +271,10 @@ static int hook_jumpin( lua_State *L )
  */
 static int hook_enter( lua_State *L )
 {
-   hook_generic( L, "enter", 1 );
-   return 0;
+   unsigned int h;
+   h = hook_generic( L, "enter", 1 );
+   lua_pushnumber( L, h );
+   return 1;
 }
 /**
  * @brief Hooks the function to a specific pilot.
@@ -284,6 +322,7 @@ static int hook_pilot( lua_State *L )
    h = hook_generic( L, hook_type, 3 );
    pilot_addHook( pilot_get(p->pilot), type, h );
 
-   return 0;
+   lua_pushnumber( L, h );
+   return 1;
 }
 
