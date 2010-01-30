@@ -146,7 +146,7 @@ function enter()
         wavestarted = false
         baseattack = false
         
-        DVbombers = 7 -- Amount of initial Dvaered bombers
+        DVbombers = 5 -- Amount of initial Dvaered bombers
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
         time = 0
@@ -160,7 +160,7 @@ function enter()
         idle()
         misn.timerStart("spawnFLFfighters", 10000)
         misn.timerStart("spawnFLFfighters", 15000)
-        tim_sec = misn.timerStart("security_timer", 45000) -- Security timer to make sure mission goes on
+        tim_sec = misn.timerStart("security_timer", 60000) -- Security timer to make sure mission goes on
         controller = misn.timerStart("control", 1000)
         
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
@@ -322,7 +322,7 @@ function spawnFLFbombers()
 end
 
 function security_timer()
-   tim_sec = misn.timerStart("security_timer", 45000)
+   tim_sec = misn.timerStart("security_timer", 60000)
    -- Go to next stage
    nextStage()
 end
@@ -369,7 +369,7 @@ function nextStage()
         pilot.broadcast(obstinate, phasetwo, true)
         misn.osdActive(3)
         spawnDVbomber()
-        misn.timerStart("engageBase", 45000)
+        misn.timerStart("engageBase", 60000)
     end
 end
 
@@ -414,33 +414,33 @@ end
 
 
 -- Controls a fleet
-function controlFleet( f, pos, off )
+function controlFleet( fleetCur, pos, off )
     -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
-    for i, j in ipairs( f ) do
+    for i, j in ipairs( fleetCur ) do
         if j:exists() then
-            local a = false
+            local attacking = false
 
             -- Kill nearby hostiles
             if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
-                local min = 1000
-                local vmin = nil
-                local d
-                for k,v in ipairs(fleetFLF) do
-                    d = vec2.dist(j:pos(), v:pos())
-                    if d < min then
-                        vmin = v
-                        min  = d
+                local distance = 1000
+                local nearest = nil
+                local distanceCur
+                for k, v in ipairs(fleetFLF) do
+                    distanceCur = vec2.dist(j:pos(), v:pos())
+                    if distanceCur < distance then
+                        nearest = v
+                        distance  = distanceCur
                     end
                 end
-                if vmin ~= nil then
+                if nearest ~= nil then
                     j:control()
                     j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
-                    a = true
+                    attacking = true
                 end
             end
 
             -- Fly back to fleet
-            if not a and (((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle()) then
+            if ((not attacking or vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0 or j:idle()) and not baseattack) then
                 j:control()
                 j:goto( pos[i + off] )
             end
