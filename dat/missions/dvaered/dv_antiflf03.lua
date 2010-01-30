@@ -143,6 +143,7 @@ function enter()
         var.pop("flfbase_sysname")
         missionstarted = true
         wavefirst = true
+        wavestarted = false
         baseattack = false
         
         DVbombers = 7 -- Amount of initial Dvaered bombers
@@ -293,6 +294,7 @@ end
 -- Spawns FLF fighters
 function spawnFLFfighters()
     wavefirst = true
+    wavestarted = true
     local targets = possibleDVtargets()
     wingFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", base:pos(), false)
     for i, j in ipairs(wingFLF) do
@@ -346,6 +348,10 @@ end
 
 -- Moves on to the next stage
 function nextStage()
+    if not wavestarted then
+       return
+    end
+    wavestarted = false
     time = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
     deathsFLF = 0
