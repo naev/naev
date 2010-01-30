@@ -267,6 +267,7 @@ function spawnDV()
         vendetta:setDir(90)
         vendetta:setFriendly()
         vendetta:control()
+        hook.pilot(vendetta, "attacked", "attacked")
         hook.pilot(vendetta, "death", "deathDV")
         fightersDV[#fightersDV + 1] = vendetta
         i = i + 1
@@ -276,11 +277,18 @@ end
 -- Gets an array of possible Dvaered targets for the FLF to attack
 function possibleDVtargets()
     targets = {}
+    -- Bias towards escorts, twice as likely as obstinate or player
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             targets[#targets + 1] = j
         end
     end
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            targets[#targets + 1] = j
+        end
+    end
+    -- Player and obstinate get added seperately
     targets[#targets + 1] = player.pilot()
     targets[#targets + 1] = obstinate
     return targets
@@ -327,9 +335,21 @@ function security_timer()
    nextStage()
 end
 
+-- An FLF ship just died
 function deathFLF()
     deathsFLF = deathsFLF + 1
-    if deathsFLF == #fleetFLF then
+
+    -- Remove dead ships from array
+    local t = fleetFLF
+    fleetFLF = {}
+    for i, j in ipairs(t) do
+        if j:exists() then
+            fleetFLF[ #fleetFLF+1 ] = j
+        end
+    end
+
+    -- Keep track of deaths
+    if #fleetFLF <= 0 then
         nextStage()
     end
 end
@@ -404,7 +424,10 @@ function control()
     -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
     for i, j in ipairs(fleetDV) do
         if j:exists() then
-            if ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
+            if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
+                j:control()
+                j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
+            elseif ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
                 j:control()
                 j:goto(fleetpos[i + 1])
             end
@@ -413,7 +436,10 @@ function control()
     
     for i, j in ipairs(fightersDV) do
         if j:exists() then
-            if ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
+            if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
+                j:control()
+                j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
+            elseif ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
                 j:control()
                 j:goto(fighterpos[i])
             end
