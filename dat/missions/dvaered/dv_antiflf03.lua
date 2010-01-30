@@ -199,29 +199,29 @@ function deathBase()
 
     for i, j in ipairs(bombers) do
         if j:exists() then
-            j:control(false)
-            j:changeAI("flee")
+            j:control()
+            j:hyperspace()
         end
     end
 
     for i, j in ipairs(fleetDV) do
         if j:exists() then
-            j:control(false)
-            j:changeAI("flee")
+            j:control()
+            j:hyperspace()
         end
     end
 
     for i, j in ipairs(fightersDV) do
         if j:exists() then
-            j:control(false)
-            j:changeAI("flee")
+            j:control()
+            j:hyperspace()
         end
     end
     
     misn.timerStop(controller)
-    
-    obstinate:control(false)
-    obstinate:changeAI("flee")
+   
+    obstinate:control(true)
+    obstinate:hyperspace()
 
     missionstarted = false
     victorious = true
@@ -241,10 +241,6 @@ function spawnDV()
     obstinate:addOutfit("Engine Reroute")
     obstinate:addOutfit("Shield Booster")
     obstinate:addOutfit("Shield Booster")
-    obstinate:addOutfit("Ion Cannon")
-    obstinate:addOutfit("Ion Cannon")
-    obstinate:addOutfit("Ion Cannon")
-    obstinate:addOutfit("Ion Cannon")
     hook.pilot(obstinate, "attacked", "attackedObstinate")
     hook.pilot(obstinate, "death", "deathObstinate")
     hook.pilot(obstinate, "idle", "idle")
@@ -410,36 +406,52 @@ function engageBase()
     end
 end
 
+
+-- Controls a fleet
+function controlFleet( f, pos, off )
+    -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
+    for i, j in ipairs( f ) do
+        if j:exists() then
+            local a = false
+
+            -- Kill nearby hostiles
+            if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
+                local min = 1000
+                local vmin = nil
+                local d
+                for k,v in ipairs(fleetFLF) do
+                    d = vec2.dist(j:pos(), v:pos())
+                    if d < min then
+                        vmin = v
+                        min  = d
+                    end
+                end
+                if vmin ~= nil then
+                    j:control()
+                    j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
+                    a = true
+                end
+            end
+
+            -- Fly back to fleet
+            if not a and (((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle()) then
+                j:control()
+                j:goto( pos[i + off] )
+            end
+        end
+    end
+end
+
 -- Tries to whip the AI into behaving in a specific way
 function control()
+    -- Timer to have them return
     if time > 0 then
         time = time - 1000
     end
-    
-    -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
-    for i, j in ipairs(fleetDV) do
-        if j:exists() then
-            if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
-                j:control()
-                j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
-            elseif ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
-                j:control()
-                j:goto(fleetpos[i + 1])
-            end
-        end
-    end
-    
-    for i, j in ipairs(fightersDV) do
-        if j:exists() then
-            if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
-                j:control()
-                j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
-            elseif ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
-                j:control()
-                j:goto(fighterpos[i])
-            end
-        end
-    end
+   
+    -- Control the fleets
+    controlFleet( fleetDV, fleetpos, 1 )
+    controlFleet( fightersDV, fighterpos, 0 )
     
     controller = misn.timerStart("control", 1000)
 end
@@ -473,15 +485,15 @@ function deathObstinate()
 
     for i, j in ipairs(fleetDV) do
         if j:exists() then
-            j:control(false)
-            j:changeAI("flee")
+            j:control()
+            j:hyperspace()
         end
     end
 
     for i, j in ipairs(fightersDV) do
         if j:exists() then
-            j:control(false)
-            j:changeAI("flee")
+            j:control()
+            j:hyperspace()
         end
     end
 
