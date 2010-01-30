@@ -288,6 +288,9 @@ static int hook_enter( lua_State *L )
  *    - "attacked" : triggered when the pilot is attacked in manual control <br />
  *    - "idle" : triggered when the pilot becomes idle in manual control <br />
  *
+ * These hooks are run right after the action that triggers them happens, so when the death
+ *  or jump hook is run, the pilot won't be in the system at that time.
+ *
  *    @luaparam pilot Pilot identifier to hook.
  *    @luaparam type One of the supported hook types.
  *    @luaparam funcname Name of function to run when hook is triggered.
