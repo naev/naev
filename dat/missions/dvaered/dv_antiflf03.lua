@@ -379,7 +379,7 @@ end
 
 -- Makes remaining escorts engage the base
 function engageBase()
-    for i, j in ipairs(fleetFLF) do
+    for i, j in ipairs(fleetDV) do
         if j:exists() and base:exists() then
             j:attack(base)
         end
