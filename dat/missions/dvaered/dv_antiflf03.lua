@@ -143,6 +143,7 @@ function enter()
         var.pop("flfbase_sysname")
         missionstarted = true
         wavefirst = true
+        baseattack = false
         
         DVbombers = 7 -- Amount of initial Dvaered bombers
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
@@ -353,7 +354,7 @@ function nextStage()
         pilot.broadcast(obstinate, phasetwo, true)
         misn.osdActive(3)
         spawnDVbomber()
-        misn.timerStart("engageBase", 30000)
+        misn.timerStart("engageBase", 45000)
     end
 end
 
@@ -379,7 +380,15 @@ end
 
 -- Makes remaining escorts engage the base
 function engageBase()
+    baseattack = true
+
     for i, j in ipairs(fleetDV) do
+        if j:exists() and base:exists() then
+            j:attack(base)
+        end
+    end
+
+    for i, j in ipairs(fightersDV) do
         if j:exists() and base:exists() then
             j:attack(base)
         end
@@ -395,7 +404,7 @@ function control()
     -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
     for i, j in ipairs(fleetDV) do
         if j:exists() then
-            if (vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0 or j:idle()) then
+            if ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
                 j:control()
                 j:goto(fleetpos[i + 1])
             end
@@ -404,7 +413,7 @@ function control()
     
     for i, j in ipairs(fightersDV) do
         if j:exists() then
-            if (vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0 or j:idle()) then
+            if ((vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0) and not baseattack) or j:idle() then
                 j:control()
                 j:goto(fighterpos[i])
             end
