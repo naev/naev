@@ -450,6 +450,7 @@ char pilot_getFactionColourChar( const Pilot *p );
 void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
 int pilot_runHook( Pilot* p, int hook_type );
 void pilots_rmHook( unsigned int hook );
+void pilot_clearHooks( Pilot *p );
 
 
 #endif /* PILOT_H */

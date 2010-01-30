@@ -3019,6 +3019,29 @@ void pilots_rmHook( unsigned int hook )
 
 
 /**
+ * @brief Clears the pilots hooks.
+ *
+ *    @param p Pilot to clear his hooks.
+ */
+void pilot_clearHooks( Pilot *p )
+{
+   int i;
+
+   if (p->nhooks <= 0)
+      return;
+
+   /* Remove the hooks. */
+   for (i=0; i<p->nhooks; i++)
+      hook_rm( p->hooks[i].id );
+
+   /* Clear the hooks. */
+   free(p->hooks);
+   p->hooks  = NULL;
+   p->nhooks = 0;
+}
+
+
+/**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
  *    @param p Pilot to check to see if he has enough credits.
@@ -3350,11 +3373,7 @@ void pilot_free( Pilot* p )
    int i;
   
    /* Clear up pilot hooks. */
-   if (p->hooks) {
-      for (i=0; i<p->nhooks; i++)
-         hook_rm( p->hooks[i].id );
-      free(p->hooks);
-   }
+   pilot_clearHooks(p);
 
    /* If hostile, must remove counter. */
    pilot_rmHostile(p);
