@@ -23,7 +23,7 @@
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
-#define BUTTON_WIDTH    60 /**< Map button width. */
+#define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
@@ -148,8 +148,8 @@ void map_open (void)
     *   $Services
     * 
     * ...
-    *
-    * [Close]
+    * [Autonav]
+    * [ Close ]
     */
 
    /* System Name */
@@ -184,6 +184,9 @@ void map_open (void)
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
+   /* Autonav button */
+   window_addButton( wid, -20, 60, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnAutonav", "Autonav", player_startAutonavWindow );
 
    /*
     * Bottom stuff
@@ -203,7 +206,14 @@ void map_open (void)
    map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
+   
+   /*
+    * Disable Autonav button if player lacks fuel. 
+    */
+   if (player->fuel < HYPERSPACE_FUEL)
+   window_disableButton( wid, "btnAutonav" );
 }
+
 /**
  * @brief Updates the map window.
  *
@@ -683,7 +693,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
       
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
-         if (fuel == player->fuel)
+         if (fuel == player->fuel && fuel > 100.)
             col = &cGreen;
          else if (fuel < 100.)
             col = &cRed;

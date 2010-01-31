@@ -922,6 +922,25 @@ void player_startAutonav (void)
    player_setFlag(PLAYER_AUTONAV);
 }
 
+/**
+ * @brief Starts autonav and closes the window.
+ */
+void player_startAutonavWindow( unsigned int wid, char *str)
+{
+   if (hyperspace_target == -1)
+      return;
+
+   if (player->fuel < HYPERSPACE_FUEL) {
+      player_message("\erNot enough fuel to jump for autonav.");
+      return;
+   }
+
+   player_message("\epAutonav initialized.");
+   player_setFlag(PLAYER_AUTONAV);
+   (void) str;
+
+   window_destroy( wid );
+}
 
 /**
  * @brief Aborts autonav.
