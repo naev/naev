@@ -175,20 +175,36 @@ int intro_display( const char *text, const char *mus )
                   break;
                }
 
-               /* Down arrow recovers. */
+               /* Up arrow decreases speed. */
                else if (event.key.keysym.sym == SDLK_UP) {
+                  vel -= 12.;
+                  break;
+               }
+
+               /* Pageup and backspace jump up. */
+               else if (event.key.keysym.sym == SDLK_PAGEUP || event.key.keysym.sym == SDLK_BACKSPACE ) {
                   offset -= 250.;
                   break;
                }
 
-               /* Only Handle space or up arrow from here down. */
-               else if ((event.key.keysym.sym != SDLK_DOWN) &&
-                     !nstd_isspace(event.key.keysym.sym))
+               /* Pagedown and space jump down. */
+               else if (event.key.keysym.sym == SDLK_PAGEDOWN || event.key.keysym.sym == SDLK_SPACE) {
+                  offset += 250.;
                   break;
+               }
+
+               /* User is clearly flailing on keyboard. */
+               else if (event.key.keysym.sym != SDLK_DOWN) {
+                  vel = 30.;
+               }
+
+               else if (event.key.keysym.sym == SDLK_DOWN) {
+                  vel += 12.;
+               }
 
                /* Purpose fallthrough. */
             case SDL_JOYBUTTONDOWN:
-               offset += 250.;
+               vel += 12.;
             default:
                break;
          }
