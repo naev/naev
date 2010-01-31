@@ -754,14 +754,16 @@ int pilot_oquantity( Pilot* p, PilotOutfitSlot* w )
  *           0 = all
  *           1 = turrets
  *           2 = forward
+ *    @return The number of shots fired.
  */
-void pilot_shoot( Pilot* p, int group )
+int pilot_shoot( Pilot* p, int group )
 {
    int i, ret;
    Outfit* o;
 
-   if (!p->outfits) return; /* no outfits */
+   if (!p->outfits) return 0; /* no outfits */
 
+   ret = 0;
    for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
       o = p->outfit_high[i].outfit;
 
@@ -775,12 +777,12 @@ void pilot_shoot( Pilot* p, int group )
          if ((group == 0) ||
                ((group == 1) && outfit_isTurret(o)) ||
                ((group == 2) && !outfit_isTurret(o))) {
-            ret = pilot_shootWeapon( p, &p->outfit_high[i] );
-            if (ret == 1)
-               i--;
+            ret += pilot_shootWeapon( p, &p->outfit_high[i] );
          }
       }
    }
+
+   return ret;
 }
 
 
@@ -788,20 +790,24 @@ void pilot_shoot( Pilot* p, int group )
  * @brief Makes the pilot shoot it's currently selected secondary weapon.
  *
  *    @param p The pilot which is to shoot.
+ *    @return The number of shots fired.
  */
-void pilot_shootSecondary( Pilot* p )
+int pilot_shootSecondary( Pilot* p )
 {
-   int i;
+   int i, ret;
 
    /* No secondary weapon. */
    if (p->secondary == NULL)
-      return;
+      return 0;
 
    /* Fire all secondary weapon of same type. */
+   ret = 0;
    for (i=0; i<p->outfit_nhigh; i++) {
       if (p->outfit_high[i].outfit == p->secondary->outfit)
-         pilot_shootWeapon( p, &p->outfit_high[i] );
+         ret += pilot_shootWeapon( p, &p->outfit_high[i] );
    }
+
+   return ret;
 }
 
 
@@ -905,7 +911,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
- *    @return 0.
+ *    @return 0 if nothing was shot and 1 if something was shot.
  */
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
@@ -1071,7 +1077,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* Reset timer. */
    w->timer += rate_mod * outfit_delay( w->outfit );
 
-   return 0;
+   return 1;
 }
 
 

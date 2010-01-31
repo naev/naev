@@ -736,7 +736,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* shooting primary weapon */
    } else if (KEY("primary") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) { 
-         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_PRIMARY);
       }
       else if (value==KEY_RELEASE) 
@@ -810,7 +809,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* shooting secondary weapon */
    } else if (KEY("secondary") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_SECONDARY);
       }
       else if (value==KEY_RELEASE)
