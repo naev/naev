@@ -181,6 +181,11 @@ int intro_display( const char *text, const char *mus )
                   break;
                }
 
+               /* Down arrow increases speed. */
+               else if (event.key.keysym.sym == SDLK_DOWN) {
+                  vel += 12.;
+               }
+
                /* Pageup and backspace jump up. */
                else if (event.key.keysym.sym == SDLK_PAGEUP || event.key.keysym.sym == SDLK_BACKSPACE ) {
                   offset -= 250.;
@@ -194,12 +199,8 @@ int intro_display( const char *text, const char *mus )
                }
 
                /* User is clearly flailing on keyboard. */
-               else if (event.key.keysym.sym != SDLK_DOWN) {
+               else {
                   vel = 30.;
-               }
-
-               else if (event.key.keysym.sym == SDLK_DOWN) {
-                  vel += 12.;
                }
 
                /* Purpose fallthrough. */
