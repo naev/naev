@@ -1038,14 +1038,17 @@ void map_select( StarSystem *sys, char shifted )
                    cur_system->name, sys->name, 0 , map_path );
          }
 
-         if (map_npath==0)
+         if (map_npath==0) {
             hyperspace_target = -1;
+            player_abortAutonav(NULL);
+         }
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
                if (map_path[0] == system_getIndex(cur_system->jumps[i])) {
                   planet_target     = -1; /* override planet_target */
                   hyperspace_target = i;
+                  player_abortAutonav(NULL);
                   break;
                }
             }
@@ -1053,6 +1056,7 @@ void map_select( StarSystem *sys, char shifted )
       }
       else { /* unreachable. */
          hyperspace_target = -1;
+         player_abortAutonav(NULL);
       }
    }
 
