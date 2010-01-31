@@ -645,12 +645,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* accelerating */
    if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_accel(kabs);
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
-            player_abortAutonav(NULL);
+            if (!paused) player_abortAutonav(NULL);
             player_accel(1.);
          }
             
@@ -683,14 +683,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning left */
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_LEFT); 
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) { 
-            player_abortAutonav(NULL);
+            if (!paused) player_abortAutonav(NULL);
             player_setFlag(PLAYER_TURN_LEFT); 
             player_left = 1.;
          }
@@ -703,14 +703,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning right */
    } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_RIGHT);
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            player_abortAutonav(NULL);
+            if (!paused) player_abortAutonav(NULL);
             player_setFlag(PLAYER_TURN_RIGHT);
             player_right = 1.;
          }
@@ -723,7 +723,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
@@ -736,7 +736,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* shooting primary weapon */
    } else if (KEY("primary") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) { 
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_PRIMARY);
       }
       else if (value==KEY_RELEASE) 
@@ -759,7 +759,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* face the target */
    } else if (KEY("face") && !repeat) {
       if (value==KEY_PRESS) { 
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_FACE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
@@ -768,7 +768,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_board();
       }
    } else if (KEY("safety") && INGAME() && !repeat) {
@@ -810,7 +810,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* shooting secondary weapon */
    } else if (KEY("secondary") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_SECONDARY);
       }
       else if (value==KEY_RELEASE)
@@ -834,7 +834,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_land();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
@@ -846,7 +846,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_jump();
       }
 
