@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "NAEV"
-!define PRODUCT_VERSION "0.4.1"
+!define PRODUCT_VERSION "0.4.2"
 !define PRODUCT_PUBLISHER "NAEV Inc."
 !define PRODUCT_WEB_SITE "http://naev.googlecode.com/"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\naev.exe"
@@ -21,6 +21,8 @@
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
+
+RequestExecutionLevel user
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -57,26 +59,11 @@ FunctionEnd
 Section "Principal" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite try
-  File "bin\freetype6.dll"
-  File "bin\iconv.dll"
-  File "bin\libfreetype-6.dll"
-  File "bin\libogg-0.dll"
-  File "bin\libpng12-0.dll"
-  File "bin\libpng12.dll"
-  File "bin\libvorbis-0.dll"
-  File "bin\libvorbisfile-3.dll"
-  File "bin\libxml2-2.dll"
-  File "bin\libxml2.dll"
+  File "bin\*.dll"
   File "bin\naev.exe"
   CreateDirectory "$SMPROGRAMS\NAEV"
   CreateShortCut "$SMPROGRAMS\NAEV\NAEV.lnk" "$INSTDIR\naev.exe"
   CreateShortCut "$DESKTOP\NAEV.lnk" "$INSTDIR\naev.exe"
-  File "bin\OpenAL32.dll"
-  File "bin\SDL.dll"
-  File "bin\SDL_image.dll"
-  File "bin\SDL_mixer.dll"
-  File "bin\stdout.txt"
-  File "bin\zlib1.dll"
   MessageBox MB_YESNO  "Want to download ndata? if unsure click yes." IDNO install_ok
   NSISdl::download "http://naev.googlecode.com/files/ndata-0.4.1" "ndata"
   Pop $R0
@@ -116,30 +103,11 @@ FunctionEnd
 
 Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
-  Delete "$INSTDIR\uninst.exe"
-  Delete "$INSTDIR\zlib1.dll"
-  Delete "$INSTDIR\stdout.txt"
-  Delete "$INSTDIR\SDL_mixer.dll"
-  Delete "$INSTDIR\SDL_image.dll"
-  Delete "$INSTDIR\SDL.dll"
-  Delete "$INSTDIR\OpenAL32.dll"
   Delete "$INSTDIR\naev.exe"
-  Delete "$INSTDIR\libxml2.dll"
-  Delete "$INSTDIR\libxml2-2.dll"
-  Delete "$INSTDIR\libvorbisfile-3.dll"
-  Delete "$INSTDIR\libvorbis-0.dll"
-  Delete "$INSTDIR\libpng12.dll"
-  Delete "$INSTDIR\libpng12-0.dll"
-  Delete "$INSTDIR\libogg-0.dll"
-  Delete "$INSTDIR\libfreetype-6.dll"
-  Delete "$INSTDIR\iconv.dll"
-  Delete "$INSTDIR\freetype6.dll"
+  Delete "$INSTDIR\*.dll"
   Delete "$INSTDIR\ndata"
 
-  Delete "$SMPROGRAMS\NAEV\Uninstall.lnk"
-  Delete "$SMPROGRAMS\NAEV\Website.lnk"
-  Delete "$DESKTOP\NAEV.lnk"
-  Delete "$SMPROGRAMS\NAEV\NAEV.lnk"
+  Delete "$SMPROGRAMS\NAEV\*.lnk"
 
   RMDir "$SMPROGRAMS\NAEV"
   RMDir "$INSTDIR"
