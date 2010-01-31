@@ -996,19 +996,20 @@ static void opt_video( unsigned int wid )
          "chkVSync", "Vertical Sync", NULL, conf.vsync );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkVBO", "VBOs (Disable for compatibility)", NULL, conf.vbo );
+         "chkVBO", "Vertex Buffer Objects*", NULL, conf.vbo );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
+         "chkMipmaps", "Mipmaps*", NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", "Interpolation (Disable for compat.)", NULL, conf.interpolate );
+         "chkInterpolate", "Interpolation*", NULL, conf.interpolate );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkNPOT", "NPOT Textures (Disable for c.)", NULL, conf.npot );
-   y -= 50;
-
-
+         "chkNPOT", "NPOT Textures*", NULL, conf.npot );
+   y -= 30;
+   window_addText( wid, x, y, cw, 20, 1,
+         "txtSCompat", NULL, &cBlack, "*Disable for compatibility." );
+   y -= 40;
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
          NULL, &cDConsole, "Features" );
