@@ -968,6 +968,7 @@ void player_think( Pilot* pplayer, const double dt )
    double turn;
    int facing;
    Outfit *afb;
+   int ret;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -1074,8 +1075,10 @@ void player_think( Pilot* pplayer, const double dt )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      pilot_shoot( pplayer, player_firemode );
+      ret = pilot_shoot( pplayer, player_firemode );
       player_setFlag(PLAYER_PRIMARY_L);
+      if (ret)
+         player_abortAutonav(NULL);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1089,8 +1092,11 @@ void player_think( Pilot* pplayer, const double dt )
             outfit_isBeam(pplayer->secondary->outfit)) {
          pilot_shootStop( pplayer, 1 );
       }
-      else
-         pilot_shootSecondary( pplayer );
+      else {
+         ret = pilot_shootSecondary( pplayer );
+         if (ret)
+            player_abortAutonav(NULL);
+      }
 
       player_setFlag(PLAYER_SECONDARY_L);
    }

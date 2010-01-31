@@ -312,8 +312,8 @@ int pilot_getJumps( const Pilot* p );
 /*
  * Combat.
  */
-void pilot_shoot( Pilot* p, int type );
-void pilot_shootSecondary( Pilot* p );
+int pilot_shoot( Pilot* p, int type );
+int pilot_shootSecondary( Pilot* p );
 void pilot_shootStop( Pilot* p, const int secondary );
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
