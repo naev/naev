@@ -437,7 +437,7 @@ int player_newShip( Ship* ship, double px, double py,
    player_vy      = vy;
    player_dir     = dir;
    ship_name      = dialogue_input( "Ship Name", 3, 20,
-         "Please name your brand new %s %s:", ship->fabricator, ship->name );
+         "Please name your new ship:" );
 
    /* Dialogue cancelled. */
    if (ship_name == NULL) {
