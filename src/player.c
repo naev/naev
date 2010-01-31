@@ -1464,13 +1464,10 @@ void player_targetHyperspace (void)
       player_playSound(snd_nav,1);
 
    /* Map gets special treatment if open. */
-   if (map_isOpen()) {
-      if (hyperspace_target == -1)
-         map_select( NULL , 0);
-      else
-         map_select( system_getIndex( cur_system->jumps[hyperspace_target]),0);
-   }
-
+   if (hyperspace_target == -1)
+      map_select( NULL , 0);
+   else
+      map_select( system_getIndex( cur_system->jumps[hyperspace_target]),0);
 }
 
 
