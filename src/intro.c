@@ -26,6 +26,7 @@
 #include "music.h"
 #include "nstd.h"
 #include "toolkit.h"
+#include "conf.h"
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
@@ -146,6 +147,9 @@ int intro_display( const char *text, const char *mus )
    /* We need to clear key repeat to avoid infinite loops. */
    toolkit_clearKey();
 
+   /* Enable keyrepeat just for the intro. */
+   SDL_EnableKeyRepeat( conf.repeat_delay, conf.repeat_freq );
+
    /* Prepare for intro loop. */
    x = 100.;
    y = 0.;
@@ -226,6 +230,9 @@ int intro_display( const char *text, const char *mus )
 
       SDL_Delay(10); /* No need to burn CPU. */
    }
+
+   /* Disable intro's key repeat. */
+   SDL_EnableKeyRepeat( 0, 0 );
 
    /* Stop music, normal music will start shortly after. */
    music_stop();
