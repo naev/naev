@@ -122,7 +122,7 @@ static void intro_cleanup (void)
  */
 int intro_display( const char *text, const char *mus )
 {
-   int i, max;
+   int i, max, stop;
    unsigned int tcur, tlast;
    double dt;
    double x, y, vel;
@@ -152,7 +152,8 @@ int intro_display( const char *text, const char *mus )
    tlast = SDL_GetTicks();
    offset = 0.;
    max = intro_nlines + SCREEN_H / ((intro_font.h + 5.));
-   while (1) {
+   stop = 0;
+   while (!stop) {
 
       /* Get delta tick in seconds. */
       tcur = SDL_GetTicks();
@@ -165,8 +166,10 @@ int intro_display( const char *text, const char *mus )
             case SDL_KEYDOWN:
 
                /* Escape skips directly. */
-               if (event.key.keysym.sym == SDLK_ESCAPE)
-                  offset = max * (intro_font.h + 5.);
+               if (event.key.keysym.sym == SDLK_ESCAPE) {
+                  stop = 1;
+                  break;
+               }
 
                /* Down arrow recovers. */
                else if (event.key.keysym.sym == SDLK_UP) {
