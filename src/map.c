@@ -211,7 +211,7 @@ void map_open (void)
     * Disable Autonav button if player lacks fuel. 
     */
    if (player->fuel < HYPERSPACE_FUEL)
-   window_disableButton( wid, "btnAutonav" );
+      window_disableButton( wid, "btnAutonav" );
 }
 
 /**

@@ -927,6 +927,8 @@ void player_startAutonav (void)
  */
 void player_startAutonavWindow( unsigned int wid, char *str)
 {
+   (void) str;
+
    if (hyperspace_target == -1)
       return;
 
@@ -937,7 +939,6 @@ void player_startAutonavWindow( unsigned int wid, char *str)
 
    player_message("\epAutonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
-   (void) str;
 
    window_destroy( wid );
 }
