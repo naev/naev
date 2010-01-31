@@ -3061,7 +3061,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    node = parent->xmlChildrenNode;
 
-   fuel = 0;
+   fuel = -1;
 
    do {
       /* Get location. */
@@ -3184,7 +3184,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    } while (xml_nextNode(node));
 
    /* Test for sanity. */
-   if (fuel != 0)
+   if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
    if ((is_player == 0) && (planet_get(loc)==NULL))
       loc = planet;
