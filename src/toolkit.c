@@ -1944,6 +1944,33 @@ void toolkit_update (void)
 
 
 /**
+ * @brief Sanitizes the focus of a window.
+ *
+ * Makes sure the window has a focusable widget focused.
+ */
+void toolkit_focusSanitize( Window *wdw )
+{
+   Widget *wgt;
+
+   /* No focus is always sane. */
+   if (wdw->focus == -1)
+      return;
+
+   /* Check focused widget. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wdw->focus == wgt->id) {
+         /* Not focusable. */
+         if (!toolkit_isFocusable(wgt)) {
+            wdw->focus = -1;
+            toolkit_nextFocus( wdw ); /* Get first focus. */
+         }
+         return;
+      }
+   }
+}
+
+
+/**
  * @brief Focus next widget.
  */
 void toolkit_nextFocus( Window *wdw )
