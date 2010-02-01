@@ -527,16 +527,25 @@ static int playerL_teleport( lua_State *L )
    /* Get a system. */
    sys = luaL_checksystem(L,1);
 
+   /* Jump out hook is run first. */
+   hooks_run( "jumpout" );
+
+   /* Just in case remove hyperspace flags. */
+   pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+
    /* Go to the new system. */
    space_init( sys->s->name );
 
-   /* Run hooks - order is important. */
-   hooks_run( "jumpout" );
-   hooks_run( "jumpin" );
-   hooks_run( "enter" );
-
    /* Map gets deformed when jumping this way. */
    map_clear();
+
+   /* Add the escorts. */
+   player_addEscorts();
+
+   /* Run hooks - order is important. */
+   hooks_run( "jumpin" );
+   hooks_run( "enter" );
+   events_trigger( EVENT_TRIGGER_ENTER );
 
    return 0;
 }
