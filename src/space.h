@@ -223,6 +223,7 @@ void space_update( const double dt );
 /*
  * misc
  */
+const StarSystem* system_getAll( int *nsys );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int space_canHyperspace( Pilot* p);

@@ -372,6 +372,19 @@ int space_sysReachable( StarSystem *sys )
 
 
 /**
+ * @brief Gets all the star systems.
+ *
+ *    @param[out] Number of star systems gotten.
+ *    @return The star systems gotten.
+ */
+const StarSystem* system_getAll( int *nsys )
+{
+   *nsys = systems_nstack;
+   return systems_stack;
+}
+
+
+/**
  * @brief Get the system from it's name.
  *
  *    @param sysname Name to match.

@@ -8,12 +8,18 @@
  * @brief Handles developement of star system stuff.
  */
 
-#include "dev_space.h"
+#include "dev_system.h"
 
 #include "naev.h"
 
 #include "nxml.h"
 #include "space.h"
+
+
+/*
+ * Prototypes.
+ */
+static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 
 
 /**
@@ -23,7 +29,7 @@
  *    @param sys Star system to save.
  *    @return 0 on success.
  */
-int dsys_saveSystem( xmlTextWriterPtr writer, StarSystem *sys )
+static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 {
    int i;
 
@@ -34,19 +40,19 @@ int dsys_saveSystem( xmlTextWriterPtr writer, StarSystem *sys )
 
    /* General. */
    xmlw_startElem( writer, "general" );
-   xmlw_elem( writer, "stars", sys->stars );
-   xmlw_elem( writer, "asteroids", sys->asteroids );
-   xmlw_elem( writer, "interference", sys->interference );
+   xmlw_elem( writer, "stars", "%d", sys->stars );
+   xmlw_elem( writer, "asteroids", "%d", sys->asteroids );
+   xmlw_elem( writer, "interference", "%f", sys->interference );
    xmlw_startElem( writer, "nebula" );
-   xmlw_attr( writer, "volatility", "%d", sys->nebu_volatility );
-   xmlw_str( writer, "%d", sys->nebu_density );
+   xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
+   xmlw_str( writer, "%f", sys->nebu_density );
    xmlw_endElem( writer ); /* "nebula" */
    xmlw_endElem( writer ); /* "general" */
 
    /* Position. */
    xmlw_startElem( writer, "pos" );
-   xmlw_elem( writer, "x", sys->pos.x );
-   xmlw_elem( writer, "y", sys->pos.y );
+   xmlw_elem( writer, "x", "%f", sys->pos.x );
+   xmlw_elem( writer, "y", "%f", sys->pos.y );
    xmlw_endElem( writer ); /* "pos" */
 
    /* Planets. */
@@ -68,6 +74,8 @@ int dsys_saveSystem( xmlTextWriterPtr writer, StarSystem *sys )
    xmlw_endElem( writer ); /* "jumps" */
 
    xmlw_endElem( writer ); /** "ssys" */
+
+   return 0;
 }
 
 
@@ -78,9 +86,12 @@ int dsys_saveSystem( xmlTextWriterPtr writer, StarSystem *sys )
  */
 int dsys_saveAll (void)
 {
-   char file[PATH_MAX];
+   int i;
+   /*char file[PATH_MAX];*/
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
+   int nsys;
+   const StarSystem *sys;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -94,10 +105,13 @@ int dsys_saveAll (void)
 
    xmlw_startElem( writer, "Systems" );
 
-   for (i=0; i<systems_mstack; i++)
-      dsys_saveSystem( writer, systems_stack[i] );
+   sys = system_getAll( &nsys );
+   for (i=0; i<nsys; i++)
+      dsys_saveSystem( writer, &sys[i] );
 
    xmlw_endElem( writer ); /* "Systems" */
+
+   return 0;
 }
 
 
