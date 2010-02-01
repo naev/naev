@@ -102,6 +102,9 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+  MessageBox MB_YESNO  "Do you also want remove your saved games and configuration files? If you're planning to install another version of ${PRODUCT_NAME} later, click no." IDNO skipconf
+  RMDir /r "$APPDATA\naev"
+  skipconf:
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\naev.exe"
   Delete "$INSTDIR\*.dll"
