@@ -1762,7 +1762,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Handle other cases where event might be used by the window. */
    switch (key) {
       case SDLK_TAB:
-         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+         if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
             toolkit_prevFocus( wdw );
          else
             toolkit_nextFocus( wdw );

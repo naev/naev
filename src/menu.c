@@ -97,6 +97,8 @@ void menu_main (void)
    int offset_logo, offset_wdw, freespace;
    unsigned int bwid, wid;
    glTexture *tex;
+   char **files;
+   int nfiles, i, len;
 
    /* Play load music. */
    music_choose("load");
@@ -144,10 +146,10 @@ void menu_main (void)
    /* Buttons. */
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*4,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load Game", menu_main_load );
+         "btnNew", "New Game", menu_main_new );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Game", menu_main_new );
+         "btnLoad", "Load Game", menu_main_load );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
@@ -156,6 +158,17 @@ void menu_main (void)
          "btnCredits", "Credits", menu_main_credits );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_exit );
+
+   /* Hacked-up, stolen from save.c */
+   files = nfile_readDir( &nfiles, "%ssaves", nfile_basePath() );
+   for (i=0; i<nfiles; i++) {
+      len = strlen(files[i]);
+   }
+
+   /* Disable load button if there are no saves. */
+   if (files == NULL) {
+      window_disableButton( wid, "btnLoad" );
+   }
 
    /* Make the background window a parent of the menu. */
    window_setParent( bwid, wid );
