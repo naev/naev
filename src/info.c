@@ -82,9 +82,11 @@ void menu_info (void)
 {
    int w, h;
 
-   /* Can't open menu twice. */
-   if (menu_isOpen(MENU_INFO) || dialogue_isOpen())
+   /* Open closes when previously opened. */
+   if (menu_isOpen(MENU_INFO) || dialogue_isOpen()) {
+      info_close( 0, NULL );
       return;
+   }
 
    /* Dimensions. */
    w = 600;
