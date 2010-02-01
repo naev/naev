@@ -65,7 +65,7 @@ Section "Principal" SEC01
   CreateShortCut "$SMPROGRAMS\NAEV\NAEV.lnk" "$INSTDIR\naev.exe"
   CreateShortCut "$DESKTOP\NAEV.lnk" "$INSTDIR\naev.exe"
   MessageBox MB_YESNO  "Want to download ndata? if unsure click yes." IDNO install_ok
-  NSISdl::download "http://naev.googlecode.com/files/ndata-$PRODUCT_VERSION" "ndata"
+  NSISdl::download "http://naev.googlecode.com/files/ndata-${PRODUCT_VERSION}" "ndata"
   Pop $R0
   StrCmp $R0 "success" install_ok
   MessageBox MB_OK|MB_ICONSTOP "Error while downloading ndata. Try downloading manually from naev.googlecode.com."
