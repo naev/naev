@@ -2577,8 +2577,7 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
    xmlw_startElem(writer,"outfit");
    xmlw_attr(writer,"slot","%d",i);
    if ((outfit_ammo(o) != NULL) &&
-         (slot->u.ammo.outfit != NULL) &&
-         (slot->u.ammo.quantity > 0)) {
+         (slot->u.ammo.outfit != NULL)) {
       xmlw_attr(writer,"ammo","%s",slot->u.ammo.outfit->name);
       xmlw_attr(writer,"quantity","%d", slot->u.ammo.quantity);
    }
