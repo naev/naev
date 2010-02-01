@@ -120,4 +120,10 @@ glTexture* xml_parseTexture( xmlNodePtr node,
       const unsigned int flags );
 
 
+/*
+ * Functions for generic complex writing.
+ */
+void xmlw_setParams( xmlTextWriterPtr writer );
+
+
 #endif /* XML_H */

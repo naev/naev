@@ -112,8 +112,7 @@ int save_all (void)
    }
 
    /* Set the writer parameters. */
-   xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
-   xmlTextWriterSetIndent(writer, 1);
+   xmlw_setParams( writer );
 
    /* Start element. */
    xmlw_start(writer);

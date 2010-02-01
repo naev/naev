@@ -160,6 +160,10 @@ typedef struct StarSystem_ {
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
+   /* Fleet data - @TODO Remove in favour of more sane fleet spawn system. */
+   char **fltdat;
+   int nfltdat;
+
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
    double security; /**< % of security in this system. */

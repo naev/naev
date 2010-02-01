@@ -1400,6 +1400,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                   /* Add the fleet. */
                   system_addFleet( sys, &fleet );
                }
+
+               /* Add to data. */
+               sys->nfltdat++;
+               sys->fltdat = realloc( sys->fltdat, sizeof(char*) * sys->nfltdat );
+               sys->fltdat[ sys->nfltdat-1 ] = strdup( xml_raw(cur) );
             }
          } while (xml_nextNode(cur));
          continue;
@@ -1813,7 +1818,7 @@ void planets_render (void)
  */
 void space_exit (void)
 {
-   int i;
+   int i, j;
 
    /* Free the names. */
    if (planetname_stack)
@@ -1852,6 +1857,12 @@ void space_exit (void)
          free(systems_stack[i].fleets);
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
+
+      if (systems_stack[i].nfltdat > 0) {
+         for (j=0; j<systems_stack[i].nfltdat; j++)
+            free(systems_stack[i].fltdat[j]);
+         free(systems_stack[i].fltdat);
+      }
 
       free(systems_stack[i].planets);
    }
