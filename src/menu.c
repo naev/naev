@@ -144,10 +144,10 @@ void menu_main (void)
    /* Buttons. */
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*4,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Game", menu_main_new );
+         "btnLoad", "Load Game", menu_main_load );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load Game", menu_main_load );
+         "btnNew", "New Game", menu_main_new );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
