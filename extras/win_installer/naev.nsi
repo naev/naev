@@ -46,7 +46,7 @@ RequestExecutionLevel user
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "setup.exe"
+OutFile "naev-${PRODUCT_VERSION}-win32.exe"
 InstallDir "$PROGRAMFILES\NAEV"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
