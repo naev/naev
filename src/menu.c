@@ -97,8 +97,6 @@ void menu_main (void)
    int offset_logo, offset_wdw, freespace;
    unsigned int bwid, wid;
    glTexture *tex;
-   char **files;
-   int nfiles, i, len;
 
    /* Play load music. */
    music_choose("load");
@@ -159,16 +157,9 @@ void menu_main (void)
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_exit );
 
-   /* Hacked-up, stolen from save.c */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_basePath() );
-   for (i=0; i<nfiles; i++) {
-      len = strlen(files[i]);
-   }
-
    /* Disable load button if there are no saves. */
-   if (files == NULL) {
+   if (!save_hasSave())
       window_disableButton( wid, "btnLoad" );
-   }
 
    /* Make the background window a parent of the menu. */
    window_setParent( bwid, wid );
@@ -229,7 +220,7 @@ static void menu_main_load( unsigned int wid, char* str )
 {
    (void) str;
    (void) wid;
-   load_game_menu();
+   save_loadGameMenu();
 }
 /**
  * @brief Function to active the new game menu.
@@ -398,7 +389,7 @@ static void menu_death_continue( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
-   reload();
+   save_reload();
 }
 
 /**
