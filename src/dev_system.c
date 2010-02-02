@@ -22,8 +22,8 @@
  * Prototypes.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
-static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 static int dsys_compSys( const void *sys1, const void *sys2 );
+static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 
 
 /**
@@ -41,6 +41,20 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
 
 
 /**
+ * @brief Function for qsorting sysetms.
+ */
+static int dsys_compSys( const void *sys1, const void *sys2 )
+{
+   const StarSystem *s1, *s2;
+
+   s1 = * (const StarSystem**) sys1;
+   s2 = * (const StarSystem**) sys2;
+
+   return strcmp( s1->name, s2->name );
+}
+
+
+/**
  * @brief Saves a star system.
  *
  *    @param write Write to use for saving the star system.
@@ -51,6 +65,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 {
    int i;
    const Planet **sorted_planets;
+   const StarSystem **sorted_jumps;
 
    xmlw_startElem( writer, "ssys" );
 
@@ -91,28 +106,19 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    xmlw_endElem( writer );
 
    /* Jumps. */
+   sorted_jumps = malloc( sizeof(StarSystem*) * sys->njumps );
+   for (i=0; i<sys->njumps; i++)
+      sorted_jumps[i] = system_getIndex( sys->jumps[i] );
+   qsort( sorted_jumps, sys->njumps, sizeof(StarSystem*), dsys_compSys );
    xmlw_startElem( writer, "jumps" );
    for (i=0; i<sys->njumps; i++)
-      xmlw_elem( writer, "jump", "%s", system_getIndex( sys->jumps[i] )->name );
+      xmlw_elem( writer, "jump", "%s", sorted_jumps[i]->name );
    xmlw_endElem( writer ); /* "jumps" */
+   free(sorted_jumps);
 
    xmlw_endElem( writer ); /** "ssys" */
 
    return 0;
-}
-
-
-/**
- * @brief Function for qsorting sysetms.
- */
-static int dsys_compSys( const void *sys1, const void *sys2 )
-{
-   const StarSystem *s1, *s2;
-
-   s1 = * (const StarSystem**) sys1;
-   s2 = * (const StarSystem**) sys2;
-
-   return strcmp( s1->name, s2->name );
 }
 
 
