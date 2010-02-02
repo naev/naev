@@ -80,6 +80,20 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 
 
 /**
+ * @brief Function for qsorting sysetms.
+ */
+static int dsys_compSys( const void *sys1, const void *sys2 )
+{
+   const StarSystem *s1, *s2;
+
+   s1 = * (const StarSystem**) sys1;
+   s2 = * (const StarSystem**) sys2;
+
+   return strcmp( s1->name, s2->name );
+}
+
+
+/**
  * @saves All the star systems.
  *
  *    @return 0 on success.
@@ -92,6 +106,7 @@ int dsys_saveAll (void)
    xmlTextWriterPtr writer;
    int nsys;
    const StarSystem *sys;
+   const StarSystem **sorted_sys;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -103,13 +118,36 @@ int dsys_saveAll (void)
    /* Set the writer parameters. */
    xmlw_setParams( writer );
 
+   /* Start writer. */
+   xmlw_start(writer);
    xmlw_startElem( writer, "Systems" );
 
+   /* Sort systems. */
    sys = system_getAll( &nsys );
+   sorted_sys = malloc( sizeof(StarSystem*) * nsys );
    for (i=0; i<nsys; i++)
-      dsys_saveSystem( writer, &sys[i] );
+      sorted_sys[i] = &sys[i];
+   qsort( sorted_sys, nsys, sizeof(StarSystem*), dsys_compSys );
 
+   /* Write systems. */
+   for (i=0; i<nsys; i++)
+      dsys_saveSystem( writer, sorted_sys[i] );
+
+   /* Clean up sorted system.s */
+   free(sorted_sys);
+
+   /* End writer. */
    xmlw_endElem( writer ); /* "Systems" */
+   xmlw_done(writer);
+
+   /* No need for writer anymore. */
+   xmlFreeTextWriter(writer);
+
+   /* Write data. */
+   xmlSaveFileEnc( "ssys.xml", doc, "UTF-8" );
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
 
    return 0;
 }
