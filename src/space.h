@@ -130,6 +130,27 @@ typedef struct SystemFleet_ {
    int chance; /**< chance of fleet appearing in the system */
 } SystemFleet;
 
+
+/*
+ * Jump point flags.
+ */
+#define JP_DISABLED     (1<<0) /**< Jump point is disabled. */
+#define JP_HIDDEN       (1<<1) /**< Jump point is hidden by default. */
+
+
+/**
+ * @struct JumpPoint
+ *
+ * @brief Represents a jump lane.
+ */
+typedef struct JumpPoint_ {
+   Vector2d pos; /**< Position in the system. */
+   double radius; /**< Radius of jump range. */
+   unsigned int flags; /**< Flags related to the jump point's status. */
+   int known; /**< Is the jump point known? */
+} JumpPoint;
+
+
 /**
  * @struct StarSystem
  *
