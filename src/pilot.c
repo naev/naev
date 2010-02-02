@@ -2157,8 +2157,8 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) < 0) &&
                (fabs(o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > p->speed))
             return "Insufficient speed";
-         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) < 0) &&
-               (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) > p->turn))
+         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) < 0) &&
+               (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > p->turn_base))
             return "Insufficient turn";
 
          /*
@@ -2221,8 +2221,8 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > 0) &&
                (o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed > p->speed))
             return "Increase speed first";
-         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) > 0) &&
-               (o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn > p->turn))
+         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > 0) &&
+               (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > p->turn_base))
             return "Increase turn first";
 
          /*
