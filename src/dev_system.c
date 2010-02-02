@@ -12,6 +12,8 @@
 
 #include "naev.h"
 
+#include <stdlib.h> /* qsort */
+
 #include "nxml.h"
 #include "space.h"
 
@@ -19,7 +21,23 @@
 /*
  * Prototypes.
  */
+static int dsys_compPlanet( const void *planet1, const void *planet2 );
 static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
+static int dsys_compSys( const void *sys1, const void *sys2 );
+
+
+/**
+ * @brief Compare function for planet qsort.
+ */
+static int dsys_compPlanet( const void *planet1, const void *planet2 )
+{
+   const Planet *p1, *p2;
+
+   p1 = * (const Planet**) planet1;
+   p2 = * (const Planet**) planet2;
+
+   return strcmp( p1->name, p2->name );
+}
 
 
 /**
@@ -32,6 +50,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 {
    int i;
+   const Planet **sorted_planets;
 
    xmlw_startElem( writer, "ssys" );
 
@@ -56,10 +75,14 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    xmlw_endElem( writer ); /* "pos" */
 
    /* Planets. */
+   sorted_planets = malloc( sizeof(Planet*) * sys->nplanets);
+   memcpy( sorted_planets, sys->planets, sizeof(Planet*) * sys->nplanets );
+   qsort( sorted_planets, sys->nplanets, sizeof(Planet*), dsys_compPlanet );
    xmlw_startElem( writer, "planets" );
    for (i=0; i<sys->nplanets; i++)
-      xmlw_elem( writer, "planet", "%s", sys->planets[i]->name );
+      xmlw_elem( writer, "planet", "%s", sorted_planets[i]->name );
    xmlw_endElem( writer ); /* "planets" */
+   free(sorted_planets);
 
    /* Fleets. */
    xmlw_startElem( writer, "fleets" );
