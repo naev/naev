@@ -126,7 +126,7 @@ function accept()
 end
 
 function enter()
-    if system.cur():name() == destsysname then
+    if system.cur():name() == destsysname and not victorious then
         pilot.clear()
         pilot.toggleSpawn(false)
         fleetFLF = {}
