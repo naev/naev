@@ -1493,7 +1493,7 @@ void player_targetHyperspace (void)
    if (hyperspace_target == -1)
       map_select( NULL , 0);
    else
-      map_select( system_getIndex( cur_system->jumps[hyperspace_target]),0);
+      map_select( cur_system->jumps[hyperspace_target].target, 0 );
 }
 
 
@@ -1559,7 +1559,7 @@ void player_brokeHyperspace (void)
    ntime_inc( (unsigned int)(d*NTIME_UNIT_LENGTH) );
 
    /* enter the new system */
-   space_init( system_getIndex( cur_system->jumps[hyperspace_target] )->name );
+   space_init( cur_system->jumps[hyperspace_target].target->name );
 
    /* set position, the pilot_update will handle lowering vel */
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
@@ -1609,7 +1609,7 @@ double player_faceHyperspace (void)
    double a;
    StarSystem *sys;
 
-   sys = system_getIndex( cur_system->jumps[hyperspace_target] );
+   sys = cur_system->jumps[hyperspace_target].target;
    a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
    return pilot_face( player, a );
 }

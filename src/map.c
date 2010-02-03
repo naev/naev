@@ -651,9 +651,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
       /* first we draw all of the paths. */  
       for (j=0; j<sys->njumps; j++) {
 
-         jsys = system_getIndex( sys->jumps[j] );
+         jsys = sys->jumps[j].target;
          if (hyperspace_target != -1)
-            hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
+            hsys = cur_system->jumps[hyperspace_target].target;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -999,7 +999,7 @@ void map_jump (void)
 
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
-            if (map_path[0]==system_getIndex(cur_system->jumps[j])) {
+            if (map_path[0] == cur_system->jumps[j].target) {
                planet_target = -1; /* override planet_target */
                hyperspace_target = j;
                break;
@@ -1055,7 +1055,7 @@ void map_select( StarSystem *sys, char shifted )
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
-               if (map_path[0] == system_getIndex(cur_system->jumps[i])) {
+               if (map_path[0] == cur_system->jumps[i].target) {
                   planet_target     = -1; /* override planet_target */
                   hyperspace_target = i;
                   player_abortAutonav(NULL);
@@ -1297,7 +1297,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
       cost = A_g(cur) + 1;
 
       for (i=0; i<cur->sys->njumps; i++) {
-         sys = system_getIndex( cur->sys->jumps[i] );
+         sys = cur->sys->jumps[i].target;
 
          /* Make sure it's reachable */
          if (!ignore_known &&
@@ -1386,7 +1386,7 @@ int map_map( const char* targ_sys, int r )
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( cur->sys->jumps[i] );
+         jsys = cur->sys->jumps[i].target;
 
          /* System has already been parsed or is too deep */
          if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
@@ -1448,7 +1448,7 @@ int map_isMapped( const char* targ_sys, int r )
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( sys->jumps[i] );
+         jsys = sys->jumps[i].target;
         
          /* SYstem has already been parsed. */
          if (A_in(closed,jsys) != NULL)

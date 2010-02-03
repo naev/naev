@@ -766,7 +766,7 @@ void gui_render( double dt )
    }
    else if (hyperspace_target >= 0) { /* hyperspace target */
 
-      sys = system_getIndex( cur_system->jumps[hyperspace_target] );
+      sys = cur_system->jumps[hyperspace_target].target;
 
       /* Determine if we have to play the "enter hyperspace range" sound. */
       i = space_canHyperspace(player);

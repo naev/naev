@@ -16,7 +16,7 @@
 
 #include "nxml.h"
 #include "space.h"
-#include "rng.h"
+#include "physics.h"
 
 
 /*
@@ -24,6 +24,7 @@
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
 static int dsys_compSys( const void *sys1, const void *sys2 );
+static int dsys_compJump( const void *jmp1, const void *jmp2 );
 static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 
 
@@ -56,6 +57,21 @@ static int dsys_compSys( const void *sys1, const void *sys2 )
 
 
 /**
+ * @brief Function for qsorting jumppoints.
+ */
+static int dsys_compJump( const void *jmp1, const void *jmp2 )
+{
+   const JumpPoint *jp1, *jp2;
+
+   jp1 = * (const JumpPoint**) jmp1;
+   jp2 = * (const JumpPoint**) jmp2;
+
+   return strcmp( jp1->target->name, jp2->target->name );
+}
+
+
+
+/**
  * @brief Saves a star system.
  *
  *    @param write Write to use for saving the star system.
@@ -66,7 +82,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 {
    int i;
    const Planet **sorted_planets;
-   const StarSystem **sorted_jumps;
+   const JumpPoint **sorted_jumps;
 
    xmlw_startElem( writer, "ssys" );
 
@@ -101,24 +117,19 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    free(sorted_planets);
 
    /* Jumps. */
-   sorted_jumps = malloc( sizeof(StarSystem*) * sys->njumps );
+   sorted_jumps = malloc( sizeof(JumpPoint*) * sys->njumps );
    for (i=0; i<sys->njumps; i++)
-      sorted_jumps[i] = system_getIndex( sys->jumps[i] );
-   qsort( sorted_jumps, sys->njumps, sizeof(StarSystem*), dsys_compSys );
+      sorted_jumps[i] = &sys->jumps[i];
+   qsort( sorted_jumps, sys->njumps, sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
-   double x,y, r, a;
    for (i=0; i<sys->njumps; i++) {
-      r = RNGF()*500. + 1500.;
-      a = RNGF()*2.*M_PI;
-      x = r * cos(a);
-      y = r * sin(a);
       xmlw_startElem( writer, "jump" );
-      xmlw_attr( writer, "target", "%s", sorted_jumps[i]->name );
+      xmlw_attr( writer, "target", "%s", sorted_jumps[i]->target->name );
       xmlw_startElem( writer, "pos" );
-      xmlw_attr( writer, "x", "%f", x );
-      xmlw_attr( writer, "y", "%f", y );
+      xmlw_attr( writer, "x", "%f", sorted_jumps[i]->pos.x );
+      xmlw_attr( writer, "y", "%f", sorted_jumps[i]->pos.y );
       xmlw_endElem( writer ); /* "pos" */
-      xmlw_elem( writer, "radius", "%f", 100. );
+      xmlw_elem( writer, "radius", "%f", sorted_jumps[i]->radius );
       xmlw_startElem( writer, "flags" );
       xmlw_endElem( writer ); /* "flags" */
       xmlw_endElem( writer ); /* "jump" */

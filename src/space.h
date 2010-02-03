@@ -167,22 +167,25 @@ typedef struct JumpPoint_ {
  * The star system is the basic setting in NAEV.
  */
 struct StarSystem_ {
+   int id; /**< Star system index. */
 
    /* General. */
    char* name; /**< star system name */
    Vector2d pos; /**< position */
-   int *jumps; /**< adjacent star system index numbers */
-   int njumps; /**< number of adjacent jumps */
-   Planet **planets; /**< planets */
-   int nplanets; /**< total number of planets */
-   int faction; /**< overall faction */
-
-   /* System details. */
    int stars; /**< Amount of "stars" it has. */
    int asteroids; /**< @todo implement asteroids */
    double interference; /**< in % @todo implement interference. */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
+
+   /* Planets. */
+   Planet **planets; /**< planets */
+   int nplanets; /**< total number of planets */
+   int faction; /**< overall faction */
+
+   /* Jumps. */
+   JumpPoint *jumps; /**< Jump points in the system */
+   int njumps; /**< number of adjacent jumps */
 
    /* Fleets. */
    SystemFleet* fleets; /**< fleets that can appear in the current system */

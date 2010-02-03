@@ -134,6 +134,7 @@ static int planet_parse( Planet* planet, const xmlNodePtr parent );
 /* system load */
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
+static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static int system_calcSecurity( StarSystem *sys );
@@ -364,7 +365,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (sys_isKnown(system_getIndex( sys->jumps[i] )))
+      if (sys_isKnown( sys->jumps[i].target ))
          return 1;
 
    return 0;
@@ -1464,6 +1465,76 @@ static void system_setFaction( StarSystem *sys )
 
 
 /**
+ * @brief Parses a single jump point for a system.
+ *
+ *    @param node Parent node containing jump point information.
+ *    @param sys System to which the jump point belongs.
+ *    @return 0 on success.
+ */
+static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
+{
+   JumpPoint *j;
+   char *buf;
+   xmlNodePtr cur;
+   double x, y;
+
+   /* Allocate more space. */
+   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
+   j = &sys->jumps[ sys->njumps ];
+   memset( j, 0, sizeof(JumpPoint) );
+
+   /* Get target. */
+   xmlr_attr( node, "target", buf );
+   if (buf == NULL) {
+      WARN("JumpPoint node for system '%s' has no target attribute.", sys->name);
+      return -1;
+   }
+   j->target = system_get( buf );
+   if (j->target == NULL) {
+      WARN("JumpPoint node for system '%s' has invalid target '%s'.", sys->name, buf );
+      free(buf);
+      return -1;
+   }
+   free(buf);
+
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xmlr_float( cur, "radius", j->radius );
+
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         xmlr_attr( cur, "x", buf );
+         if (buf==NULL)
+            WARN("JumpPoint for system '%s' has position node missing 'x' position.", sys->name);
+         else
+            x = atof(buf);
+         free(buf);
+         xmlr_attr( cur, "y", buf );
+         if (buf==NULL)
+            WARN("JumpPoint for system '%s' has position node missing 'y' position.", sys->name);
+         else
+            y = atof(buf);
+         free(buf);
+
+         /* Set position. */
+         vect_cset( &j->pos, x, y );
+      }
+
+      /* Handle flags. */
+      if (xml_isNode(cur,"flags")) {
+      }
+   } while (xml_nextNode(cur));
+
+   /* Added jump. */
+   sys->njumps++;
+
+   return 0;
+}
+
+
+/**
  * @brief Loads the jumps into a system.
  *
  *    @param parent System parent node.
@@ -1494,15 +1565,7 @@ static void system_parseJumps( const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"jump")) {
-               for (i=0; i<systems_nstack; i++)
-                  if (strcmp( systems_stack[i].name, xml_raw(cur))==0) {
-                     sys->njumps++;
-                     sys->jumps = realloc(sys->jumps, sys->njumps*sizeof(int));
-                     sys->jumps[sys->njumps-1] = i;
-                     break;
-                  }
-               if (i==systems_nstack)
-                  WARN("System '%s' not found for jump linking",xml_get(cur));
+               system_parseJumpPoint( cur, sys );
             }
          } while (xml_nextNode(cur));
       }
@@ -1645,6 +1708,7 @@ static int systems_load (void)
          }
 
          system_parse(&systems_stack[systems_nstack-1],node);
+         systems_stack[systems_nstack-1].id = systems_nstack-1;
       }
    } while (xml_nextNode(node));
 
