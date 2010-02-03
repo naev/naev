@@ -332,18 +332,7 @@ function hail()
     
                 retreat = false
             else
-                DVwin = true
-                osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
-                osd_desc[2] = nil
-                misn.osdActive(1)
-                misn.osdCreate(misn_title, osd_desc)
-                misn.setMarker(system.get(DVsys), "misc")
-                
-                for i, j in ipairs(fleetDV) do
-                    if j:exists() then
-                        j:changeAI("flee")
-                    end
-                end
+                winDV()
             end
         else
             tk.msg(DVtitle[3], DVtext[3])
@@ -470,18 +459,22 @@ function FLFdeath()
     
     if alldead then
         if not loyalFLF then
-            DVwin = true
-            osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
-            osd_desc[2] = nil
-            misn.osdActive(1)
-            misn.osdCreate(misn_title, osd_desc)
-            misn.setMarker(system.get(DVsys), "misc")
-            
-            for i, j in ipairs(fleetDV) do
-                if j:exists() then
-                    j:changeAI("flee")
-                end
-            end
+            winDV()
+        end
+    end
+end
+
+function winDV()
+    DVwin = true
+    osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
+    osd_desc[2] = nil
+    misn.osdActive(1)
+    misn.osdCreate(misn_title, osd_desc)
+    misn.setMarker(system.get(DVsys), "misc")
+    
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            j:changeAI("flee")
         end
     end
 end
