@@ -289,6 +289,8 @@ end
 
 -- The actual hailing event
 function hail()
+    local winAlive = false
+    
     if not hailed then
         choice = tk.choice(DVtitle[1], DVtext[1], DVchoice1, DVchoice2)
         if choice == 1 then
@@ -314,20 +316,36 @@ function hail()
             end
             for i, j in ipairs(fleetFLF) do
                 if j:exists() then
+                    wingAlive = true
                     j:setHostile()
                     j:control()
                     j:attack(player.pilot())
                 end
             end
             
-            misn.timerStart("commFLF", 3000)
-            
-            osd_desc[1] = DVosd[1]
-            osd_desc[2] = nil
-            misn.osdActive(1)
-            misn.osdCreate(misn_title, osd_desc)
-
-            retreat = false
+            if wingAlive then
+                misn.timerStart("commFLF", 3000)
+                
+                osd_desc[1] = DVosd[1]
+                osd_desc[2] = nil
+                misn.osdActive(1)
+                misn.osdCreate(misn_title, osd_desc)
+    
+                retreat = false
+            else
+                DVwin = true
+                osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
+                osd_desc[2] = nil
+                misn.osdActive(1)
+                misn.osdCreate(misn_title, osd_desc)
+                misn.setMarker(system.get(DVsys), "misc")
+                
+                for i, j in ipairs(fleetDV) do
+                    if j:exists() then
+                        j:changeAI("flee")
+                    end
+                end
+            end
         else
             tk.msg(DVtitle[3], DVtext[3])
         end
