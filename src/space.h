@@ -120,6 +120,13 @@ typedef struct Planet_ {
 #define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED) /**< Checks if system is marked. */
 
 
+/*
+ * Forward declaration.
+ */
+struct StarSystem_;
+typedef struct StarSystem_ StarSystem;
+
+
 /**
  * @struct SystemFleet
  *
@@ -144,6 +151,7 @@ typedef struct SystemFleet_ {
  * @brief Represents a jump lane.
  */
 typedef struct JumpPoint_ {
+   StarSystem *target; /**< Target star system to jump to. */
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
@@ -158,7 +166,7 @@ typedef struct JumpPoint_ {
  *
  * The star system is the basic setting in NAEV.
  */
-typedef struct StarSystem_ {
+struct StarSystem_ {
 
    /* General. */
    char* name; /**< star system name */
@@ -196,7 +204,7 @@ typedef struct StarSystem_ {
 
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
-} StarSystem;
+};
 
 
 extern StarSystem *cur_system; /**< current star system */
