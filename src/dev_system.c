@@ -16,6 +16,7 @@
 
 #include "nxml.h"
 #include "space.h"
+#include "rng.h"
 
 
 /*
@@ -105,8 +106,23 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       sorted_jumps[i] = system_getIndex( sys->jumps[i] );
    qsort( sorted_jumps, sys->njumps, sizeof(StarSystem*), dsys_compSys );
    xmlw_startElem( writer, "jumps" );
-   for (i=0; i<sys->njumps; i++)
-      xmlw_elem( writer, "jump", "%s", sorted_jumps[i]->name );
+   double x,y, r, a;
+   for (i=0; i<sys->njumps; i++) {
+      r = RNGF()*500. + 1500.;
+      a = RNGF()*2.*M_PI;
+      x = r * cos(a);
+      y = r * sin(a);
+      xmlw_startElem( writer, "jump" );
+      xmlw_attr( writer, "target", "%s", sorted_jumps[i]->name );
+      xmlw_startElem( writer, "pos" );
+      xmlw_attr( writer, "x", "%f", x );
+      xmlw_attr( writer, "y", "%f", y );
+      xmlw_endElem( writer ); /* "pos" */
+      xmlw_elem( writer, "radius", "%f", 100. );
+      xmlw_startElem( writer, "flags" );
+      xmlw_endElem( writer ); /* "flags" */
+      xmlw_endElem( writer ); /* "jump" */
+   }
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
 
