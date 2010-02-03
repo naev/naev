@@ -275,14 +275,13 @@ function checkPatrol()
 end
 
 -- Handles the hailing event
--- TODO: Retool this for the new comm system once it's implemented.
 function hailEvent()
-    -- osd_desc[1] = string.format("Take out your FLF wingmen and report to %s (%s system)", DVplanet, DVsys)
-    -- TODO: Hailing event
-    for i, j in ipairs(fleetDV) do
-        if j:ship():class() == "Destroyer" then
-            j:hailPlayer()
-            hook.pilot(j, "hail", "hail")
+    if not hailed then
+        for i, j in ipairs(fleetDV) do
+            if j:ship():class() == "Destroyer" then
+                j:hailPlayer()
+                hook.pilot(j, "hail", "hail")
+            end
         end
     end
 end
