@@ -30,8 +30,8 @@
  <event name="FLF/DV Derelicts">
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
-  <chance>10</chance>
-  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 10 and system.cur() == system.get("Surano")</cond>
+  <chance>40</chance>
+  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano")</cond>
   <flags>
    <unique />
   </flags>

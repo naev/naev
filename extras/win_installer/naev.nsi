@@ -22,8 +22,6 @@
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
 
-RequestExecutionLevel user
-
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
@@ -101,6 +99,8 @@ Function un.onInit
   Abort
 FunctionEnd
 
+RequestExecutionLevel user
+
 Section Uninstall
   MessageBox MB_YESNO  "Do you also want remove your saved games and configuration files? If you're planning to install another version of ${PRODUCT_NAME} later, click no." IDNO skipconf
   RMDir /r "$APPDATA\naev"
@@ -111,6 +111,8 @@ Section Uninstall
   Delete "$INSTDIR\ndata"
 
   Delete "$SMPROGRAMS\NAEV\*.lnk"
+  
+  Delete "$DESKTOP\NAEV.lnk"
 
   RMDir "$SMPROGRAMS\NAEV"
   RMDir "$INSTDIR"
