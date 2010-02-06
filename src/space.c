@@ -92,6 +92,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
  */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
+static glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 
 
 /*
@@ -141,6 +142,9 @@ static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
+/* Render. */
+static void space_renderJumpPoint( JumpPoint *jp );
+static void space_renderPlanet( Planet *p );
 /*
  * Externed prototypes.
  */
@@ -1586,12 +1590,18 @@ int space_load (void)
    /* Loading. */
    systems_loading = 1;
 
+   /* Load planets. */
    ret = planets_load();
    if (ret < 0)
       return ret;
+
+   /* Load systems. */
    ret = systems_load();
    if (ret < 0)
       return ret;
+
+   /* Load jump point graphic. */
+   jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
 
    /* Done loading. */
    systems_loading = 0;
@@ -1880,13 +1890,37 @@ void space_renderStars( const double dt )
  */
 void planets_render (void)
 {
-   if (cur_system==NULL) return;
-
    int i;
+
+   /* Must be a system. */
+   if (cur_system==NULL)
+      return;
+
+   /* Render the jumps. */
+   for (i=0; i < cur_system->njumps; i++)
+      space_renderJumpPoint( &cur_system->jumps[i] );
+
+   /* Render the planets. */
    for (i=0; i < cur_system->nplanets; i++)
-      gl_blitSprite( cur_system->planets[i]->gfx_space,
-            cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
-            0, 0, NULL );
+      space_renderPlanet( cur_system->planets[i] );
+}
+
+
+/**
+ * @brief Renders a jump point.
+ */
+static void space_renderJumpPoint( JumpPoint *jp )
+{
+   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, 0, 0, NULL );
+}
+
+
+/**
+ * @brief Renders a planet.
+ */
+static void space_renderPlanet( Planet *p )
+{
+   gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
 
@@ -1896,6 +1930,11 @@ void planets_render (void)
 void space_exit (void)
 {
    int i, j;
+
+   /* Free jump point graphic. */
+   if (jumppoint_gfx != NULL)
+      gl_freeTexture(jumppoint_gfx);
+   jumppoint_gfx = NULL;
 
    /* Free the names. */
    if (planetname_stack)
