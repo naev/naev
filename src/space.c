@@ -1480,7 +1480,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    JumpPoint *j;
    char *buf;
    xmlNodePtr cur;
-   double x, y;
+   double x, y, a;
 
    /* Allocate more space. */
    sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
@@ -1533,6 +1533,12 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
    /* Added jump. */
    sys->njumps++;
+
+   /* Calculate heading. */
+   a = atan2( j->target->pos.y - sys->pos.y, j->target->pos.x - sys->pos.x );
+   if (a < 0.)
+      a += M_PI;
+   gl_getSpriteFromDir( &j->sx, &j->sy, jumppoint_gfx, a );
 
    return 0;
 }
@@ -1590,6 +1596,9 @@ int space_load (void)
    /* Loading. */
    systems_loading = 1;
 
+   /* Load jump point graphic - must be before systems_load(). */
+   jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
+
    /* Load planets. */
    ret = planets_load();
    if (ret < 0)
@@ -1599,9 +1608,6 @@ int space_load (void)
    ret = systems_load();
    if (ret < 0)
       return ret;
-
-   /* Load jump point graphic. */
-   jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
 
    /* Done loading. */
    systems_loading = 0;
@@ -1911,7 +1917,7 @@ void planets_render (void)
  */
 static void space_renderJumpPoint( JumpPoint *jp )
 {
-   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, 0, 0, NULL );
+   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, NULL );
 }
 
 

@@ -156,6 +156,8 @@ typedef struct JumpPoint_ {
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
    int known; /**< Is the jump point known? */
+   int sx; /**< X sprite to use. */
+   int sy; /**< Y sprite to use. */
 } JumpPoint;
 
 
