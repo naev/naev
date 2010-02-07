@@ -216,7 +216,9 @@ void player_new (void)
    int r;
 
    /* to not segfault due to lack of environment */
-   player.flags = 0;
+   memset( &player, 0, sizeof(Player_t) );
+   player.nav_planet       = -1;
+   player.nav_hyperspace   = -1;
    player_setFlag(PLAYER_CREATING);
    gl_cameraStatic( 0., 0. );
 
@@ -2685,7 +2687,9 @@ int player_load( xmlNodePtr parent )
    xmlNodePtr node;
 
    /* some cleaning up */
-   player.flags = 0;
+   memset( &player, 0, sizeof(Player_t) );
+   player.nav_planet       = -1;
+   player.nav_hyperspace   = -1;
    map_cleanup();
 
    node = parent->xmlChildrenNode;
