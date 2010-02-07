@@ -235,7 +235,10 @@ static void gui_renderBorder( double dt );
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
 static glColour *gui_getPlanetColour( int i );
+static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy );
+static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr );
 static void gui_renderPlanet( int i );
+static void gui_renderJumpPoint( int i );
 static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const HealthBar *bar, const double w );
@@ -1052,6 +1055,15 @@ static void gui_renderRadar( double dt )
       gui_renderPlanet( player.p->nav_planet );
 
    /*
+    * Jump points.
+    */
+   for (i=0; i<cur_system->njumps; i++)
+      if (i != player.p->nav_hyperspace)
+         gui_renderJumpPoint( i );
+   if (player.p->nav_hyperspace > -1)
+      gui_renderJumpPoint( player.p->nav_hyperspace );
+
+   /*
     * weapons
     */
    weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h,
@@ -1278,7 +1290,7 @@ static glColour* gui_getPilotColour( const Pilot* p )
  */
 #define CHECK_PIXEL(x,y)   \
 (gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-   (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc))
+   (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
 static void gui_renderPilot( const Pilot* p )
 {
    int i, curs;
@@ -1452,9 +1464,111 @@ static glColour *gui_getPlanetColour( int i )
 }
 
 
-#define PIXEL(x,y)      \
-   if (CHECK_PIXEL(x,y)) \
-   glVertex2i((x),(y)) /**< Puts a pixel on radar if inbounds. */
+/**
+ * @brief Renders the planet blink around a position on the minimap.
+ */
+static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
+{
+   GLfloat vx, vy;
+   GLfloat vertex[8*2], colours[8*4];
+   int i, curs;
+
+   if (blink_planet < RADAR_BLINK_PLANET/2.) {
+      curs = 0;
+      vx = cx-vr;
+      vy = cy+vr;
+      if (CHECK_PIXEL(vx-3.3, vy+3.3)) {
+         vertex[curs++] = vx-1.5;
+         vertex[curs++] = vy+1.5;
+         vertex[curs++] = vx-3.3;
+         vertex[curs++] = vy+3.3;
+      }
+      vx = cx+vr;
+      if (CHECK_PIXEL(vx+3.3, vy+3.3)) {
+         vertex[curs++] = vx+1.5;
+         vertex[curs++] = vy+1.5;
+         vertex[curs++] = vx+3.3;
+         vertex[curs++] = vy+3.3;
+      }
+      vy = cy-vr;
+      if (CHECK_PIXEL(vx+3.3, vy-3.3)) {
+         vertex[curs++] = vx+1.5;
+         vertex[curs++] = vy-1.5;
+         vertex[curs++] = vx+3.3;
+         vertex[curs++] = vy-3.3;
+      }
+      vx = cx-vr;
+      if (CHECK_PIXEL(vx-3.3, vy-3.3)) {
+         vertex[curs++] = vx-1.5;
+         vertex[curs++] = vy-1.5;
+         vertex[curs++] = vx-3.3;
+         vertex[curs++] = vy-3.3;
+      }
+      gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * (curs/2)*2, vertex );
+      /* Set the colours. */
+      for (i=0; i<curs/2; i++) {
+         colours[4*i + 0] = cRadar_tPlanet.r;
+         colours[4*i + 1] = cRadar_tPlanet.g;
+         colours[4*i + 2] = cRadar_tPlanet.b;
+         colours[4*i + 3] = 1.-interference_alpha;
+      }
+      gl_vboSubData( gui_vbo, gui_vboColourOffset,
+            sizeof(GLfloat) * (curs/2)*4, colours );
+      /* Draw tho VBO. */
+      gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+            gui_vboColourOffset, 4, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINES, 0, curs/2 );
+   }
+
+   if (blink_planet < 0.)
+      blink_planet += RADAR_BLINK_PLANET;
+
+   /* Deactivate the VBO. */
+   gl_vboDeactivate();
+}
+
+
+/**
+ * @brief Renders an out of range marker for the planet.
+ */
+static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy )
+{
+   GLfloat vertex[8*2], colours[8*4];
+   double a, tx, ty;
+   int i;
+
+   /* Draw a line like for pilots. */
+   a = ANGLE(cx,cy);
+   tx = w*cos(a);
+   ty = w*sin(a);
+
+   /* Set the colour. */
+   for (i=0; i<2; i++) {
+      colours[4*i + 0] = cRadar_tPlanet.r;
+      colours[4*i + 1] = cRadar_tPlanet.g;
+      colours[4*i + 2] = cRadar_tPlanet.b;
+      colours[4*i + 3] = 1.-interference_alpha;
+   }
+   gl_vboSubData( gui_vbo, gui_vboColourOffset,
+         sizeof(GLfloat) * 2*4, colours );
+   /* Set the vertex. */
+   vertex[0] = tx;
+   vertex[1] = ty;
+   vertex[2] = 0.85*tx;
+   vertex[3] = 0.85*ty;
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 2*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+         gui_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 2 );
+
+   /* Deactivate the VBO. */
+   gl_vboDeactivate();
+}
+
+
 /**
  * @brief Draws the planets in the minimap.
  *
@@ -1462,29 +1576,28 @@ static glColour *gui_getPlanetColour( int i )
  */
 static void gui_renderPlanet( int ind )
 {
-   int i, curs;
+   int i;
    int cx, cy, x, y, r, rc;
    int w, h;
    double res;
-   double a, tx,ty;
    GLfloat vx, vy, vr;
    glColour *col;
    Planet *planet;
-   GLfloat vertex[8*2], colours[8*4];
+   GLfloat vertex[5*2], colours[8*4];
 
    /* Make sure is in range. */
    if (!pilot_inRangePlanet( player.p, ind ))
       return;
 
    /* Default values. */
-   res = gui.radar.res;
+   res   = gui.radar.res;
    planet = cur_system->planets[ind];
-   w = gui.radar.w;
-   h = gui.radar.h;
-   r = (int)(planet->gfx_space->sw / res);
-   vr = r;
-   cx = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-   cy = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+   w     = gui.radar.w;
+   h     = gui.radar.h;
+   r     = (int)(planet->gfx_space->sw / res);
+   vr    = r;
+   cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
+   cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
       rc = (int)(gui.radar.w*gui.radar.w);
    else
@@ -1502,90 +1615,15 @@ static void gui_renderPlanet( int ind )
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > rc) {
-         if (player.p->nav_planet == ind) {
-            /* Draw a line like for pilots. */
-            a = ANGLE(cx,cy);
-            tx = w*cos(a);
-            ty = w*sin(a);
-
-            /* Set the colour. */
-            for (i=0; i<2; i++) {
-               colours[4*i + 0] = cRadar_tPlanet.r;
-               colours[4*i + 1] = cRadar_tPlanet.g;
-               colours[4*i + 2] = cRadar_tPlanet.b;
-               colours[4*i + 3] = 1.-interference_alpha;
-            }
-            gl_vboSubData( gui_vbo, gui_vboColourOffset,
-                  sizeof(GLfloat) * 2*4, colours );
-            /* Set the vertex. */
-            vertex[0] = tx;
-            vertex[1] = ty;
-            vertex[2] = 0.85*tx;
-            vertex[3] = 0.85*ty;
-            gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 2*2, vertex );
-            /* Draw tho VBO. */
-            gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-            gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-                  gui_vboColourOffset, 4, GL_FLOAT, 0 );
-            glDrawArrays( GL_LINES, 0, 2 );
-         }
+         if (player.p->nav_planet == ind)
+            gui_renderPlanetOutOfRangeCircle( w, cx, cy );
          return;
       }
    }
 
    /* Do the blink. */
-   if (ind == player.p->nav_planet) {
-      if (blink_planet < RADAR_BLINK_PLANET/2.) {
-         curs = 0;
-         vx = cx-vr;
-         vy = cy+vr;
-         if (CHECK_PIXEL(vx-3.3, vy+3.3)) {
-            vertex[curs++] = vx-1.5;
-            vertex[curs++] = vy+1.5;
-            vertex[curs++] = vx-3.3;
-            vertex[curs++] = vy+3.3;
-         }
-         vx = cx+vr;
-         if (CHECK_PIXEL(vx+3.3, vy+3.3)) {
-            vertex[curs++] = vx+1.5;
-            vertex[curs++] = vy+1.5;
-            vertex[curs++] = vx+3.3;
-            vertex[curs++] = vy+3.3;
-         }
-         vy = cy-vr;
-         if (CHECK_PIXEL(vx+3.3, vy-3.3)) {
-            vertex[curs++] = vx+1.5;
-            vertex[curs++] = vy-1.5;
-            vertex[curs++] = vx+3.3;
-            vertex[curs++] = vy-3.3;
-         }
-         vx = cx-vr;
-         if (CHECK_PIXEL(vx-3.3, vy-3.3)) {
-            vertex[curs++] = vx-1.5;
-            vertex[curs++] = vy-1.5;
-            vertex[curs++] = vx-3.3;
-            vertex[curs++] = vy-3.3;
-         }
-         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * (curs/2)*2, vertex );
-         /* Set the colours. */
-         for (i=0; i<curs/2; i++) {
-            colours[4*i + 0] = cRadar_tPlanet.r;
-            colours[4*i + 1] = cRadar_tPlanet.g;
-            colours[4*i + 2] = cRadar_tPlanet.b;
-            colours[4*i + 3] = 1.-interference_alpha;
-         }
-         gl_vboSubData( gui_vbo, gui_vboColourOffset,
-               sizeof(GLfloat) * (curs/2)*4, colours );
-         /* Draw tho VBO. */
-         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-               gui_vboColourOffset, 4, GL_FLOAT, 0 );
-         glDrawArrays( GL_LINES, 0, curs/2 );
-      }
-
-      if (blink_planet < 0.)
-         blink_planet += RADAR_BLINK_PLANET;
-   }
+   if (ind == player.p->nav_planet)
+      gui_planetBlink( w, h, rc, cx, cy, vr );
 
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
@@ -1621,9 +1659,18 @@ static void gui_renderPlanet( int ind )
    /* Deactivate the VBO. */
    gl_vboDeactivate();
 }
-#undef PIXEL
-#undef CHECK_PIXEL
 
+
+/**
+ * @brief Renders a jump point on the minimap.
+ *
+ *    @param i Jump point to render.
+ */
+static void gui_renderJumpPoint( int i )
+{
+   (void) i;
+}
+#undef CHECK_PIXEL
 
 
 /**
