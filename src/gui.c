@@ -1595,7 +1595,7 @@ static void gui_renderPlanet( int ind )
    w     = gui.radar.w;
    h     = gui.radar.h;
    r     = (int)(planet->gfx_space->sw / res);
-   vr    = r;
+   vr    = MAX( r, 3. ); /* Make sure it's visible. */
    cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
    cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
@@ -1614,7 +1614,7 @@ static void gui_renderPlanet( int ind )
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
-      if (x*x + y*y > rc) {
+      if (x*x + y*y > pow2(w-r)) {
          if (player.p->nav_planet == ind)
             gui_renderPlanetOutOfRangeCircle( w, cx, cy );
          return;
@@ -1638,7 +1638,6 @@ static void gui_renderPlanet( int ind )
    /* Now load the data. */
    vx = cx;
    vy = cy;
-   vr = MAX( vr, 3. ); /* Make sure it's visible. */
    vertex[0] = vx;
    vertex[1] = vy + vr;
    vertex[2] = vx + vr;
@@ -1684,7 +1683,7 @@ static void gui_renderJumpPoint( int ind )
    w     = gui.radar.w;
    h     = gui.radar.h;
    r     = (int)(jumppoint_gfx->sw / res);
-   vr    = r;
+   vr    = MAX( r, 3. ); /* Make sure it's visible. */
    cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
    cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
@@ -1703,7 +1702,7 @@ static void gui_renderJumpPoint( int ind )
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
-      if (x*x + y*y > rc) {
+      if (x*x + y*y > pow2(w-r)) {
          if (player.p->nav_hyperspace == ind)
             gui_renderPlanetOutOfRangeCircle( w, cx, cy );
          return;
@@ -1730,7 +1729,6 @@ static void gui_renderJumpPoint( int ind )
    /* Now load the data. */
    vx = cx;
    vy = cy;
-   vr = MAX( vr, 3. ); /* Make sure it's visible. */
    ca = jp->cosa;
    sa = jp->sina;
    /* Must rotate around triangle center which with our calculations is shifted vr/3 to the left. */
