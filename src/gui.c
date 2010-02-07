@@ -386,9 +386,10 @@ void player_message( const char *fmt, ... )
 static void gui_renderPlanetTarget( double dt )
 {
    (void) dt;
-   double x,y;
+   double x,y, w,h;
    glColour *c;
-   Planet* planet;
+   Planet *planet;
+   JumpPoint *jp;
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -396,31 +397,48 @@ static void gui_renderPlanetTarget( double dt )
       return;
 
    /* Make sure target exists. */
-   if (player.nav_planet < 0)
+   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0))
       return;
 
    /* Make sure targets are still in range. */
-   if (!pilot_inRangePlanet( player.p, player.nav_planet )) {
-      player.nav_planet = -1;
+#if 0
+   if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
+      player.p->nav_planet = -1;
       return;
    }
+#endif
 
    /* Draw planet target graphics. */
-   planet = cur_system->planets[player.nav_planet];
+   if (player.p->nav_hyperspace >= 0) {
+      jp = &cur_system->jumps[player.p->nav_hyperspace];
 
-   c = faction_getColour(planet->faction);
+      c = &cGreen;
 
-   x = planet->pos.x - planet->gfx_space->sw/2.;
-   y = planet->pos.y + planet->gfx_space->sh/2.;
+      x = jp->pos.x - jumppoint_gfx->sw/2.;
+      y = jp->pos.y + jumppoint_gfx->sh/2.;
+      w = jumppoint_gfx->sw;
+      h = jumppoint_gfx->sh;
+   }
+   else {
+      planet = cur_system->planets[player.p->nav_planet];
+
+      c = faction_getColour(planet->faction);
+
+      x = planet->pos.x - planet->gfx_space->sw/2.;
+      y = planet->pos.y + planet->gfx_space->sh/2.;
+      w = planet->gfx_space->sw;
+      h = planet->gfx_space->sh;
+   }
+
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
 
-   x += planet->gfx_space->sw;
+   x += w;
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
 
-   y -= planet->gfx_space->sh;
+   y -= h;
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
 
-   x -= planet->gfx_space->sw;
+   x -= w;
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
 }
 
@@ -755,18 +773,18 @@ void gui_render( double dt )
    /*
     * NAV 
     */
-   if (player.nav_planet >= 0) { /* planet landing target */
+   if (player.p->nav_planet >= 0) { /* planet landing target */
       gl_printMid( NULL, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 5,
             &cConsole, "Land" );
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-            NULL, "%s", cur_system->planets[player.nav_planet]->name );
+            NULL, "%s", cur_system->planets[player.p->nav_planet]->name );
    }
-   else if (player.nav_hyperspace >= 0) { /* hyperspace target */
+   else if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
 
-      sys = cur_system->jumps[player.nav_hyperspace].target;
+      sys = cur_system->jumps[player.p->nav_hyperspace].target;
 
       /* Determine if we have to play the "enter hyperspace range" sound. */
       i = space_canHyperspace(player.p);
@@ -1028,10 +1046,10 @@ static void gui_renderRadar( double dt )
     * planets
     */
    for (i=0; i<cur_system->nplanets; i++)
-      if (i != player.nav_planet)
+      if (i != player.p->nav_planet)
          gui_renderPlanet( i );
-   if (player.nav_planet > -1)
-      gui_renderPlanet( player.nav_planet );
+   if (player.p->nav_planet > -1)
+      gui_renderPlanet( player.p->nav_planet );
 
    /*
     * weapons
@@ -1425,7 +1443,7 @@ static glColour *gui_getPlanetColour( int i )
    planet = cur_system->planets[i];
 
    col = faction_getColour(planet->faction);
-   if (i == player.nav_planet)
+   if (i == player.p->nav_planet)
       col = &cRadar_tPlanet;
    else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
       col = &cInert; /* Override non-hostile planets without service. */
@@ -1484,7 +1502,7 @@ static void gui_renderPlanet( int ind )
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > rc) {
-         if (player.nav_planet == ind) {
+         if (player.p->nav_planet == ind) {
             /* Draw a line like for pilots. */
             a = ANGLE(cx,cy);
             tx = w*cos(a);
@@ -1516,7 +1534,7 @@ static void gui_renderPlanet( int ind )
    }
 
    /* Do the blink. */
-   if (ind == player.nav_planet) {
+   if (ind == player.p->nav_planet) {
       if (blink_planet < RADAR_BLINK_PLANET/2.) {
          curs = 0;
          vx = cx-vr;

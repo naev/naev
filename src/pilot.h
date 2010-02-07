@@ -273,8 +273,12 @@ typedef struct Pilot_ {
    Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts; /**< Number of pilot escorts. */
 
+   /* Targetting. */
+   unsigned int target; /**< AI pilot target. */
+   int nav_planet; /**< Planet land target. */
+   int nav_hyperspace; /**< Hyperspace target. */
+
    /* AI */
-   unsigned int target; /**< AI target. */
    AI_Profile* ai; /**< ai personality profile */
    double tcontrol; /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */

@@ -1982,9 +1982,9 @@ void takeoff( int delay )
    free(nt);
 
    /* initialize the new space */
-   h = player.nav_hyperspace;
+   h = player.p->nav_hyperspace;
    space_init(NULL);
-   player.nav_hyperspace = h;
+   player.p->nav_hyperspace = h;
 
    /* cleanup */
    if (save_all() < 0) { /* must be before cleaning up planet */

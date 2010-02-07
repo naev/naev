@@ -652,8 +652,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
-         if (player.nav_hyperspace != -1)
-            hsys = cur_system->jumps[player.nav_hyperspace].target;
+         if (player.p->nav_hyperspace != -1)
+            hsys = cur_system->jumps[player.p->nav_hyperspace].target;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -990,8 +990,8 @@ void map_jump (void)
       if (map_npath == 0) { /* path is empty */
          free (map_path);
          map_path = NULL;
-         player.nav_planet = -1;
-         player.nav_hyperspace = -1;
+         player.p->nav_planet = -1;
+         player.p->nav_hyperspace = -1;
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
@@ -1000,8 +1000,8 @@ void map_jump (void)
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
-               player.nav_planet = -1; /* override planet_target */
-               player.nav_hyperspace = j;
+               player.p->nav_planet = -1; /* override planet_target */
+               player.p->nav_hyperspace = j;
                break;
             }
          }
@@ -1049,15 +1049,15 @@ void map_select( StarSystem *sys, char shifted )
          }
 
          if (map_npath==0) {
-            player.nav_hyperspace = -1;
+            player.p->nav_hyperspace = -1;
             player_abortAutonav(NULL);
          }
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
-                  player.nav_planet     = -1; /* override planet_target */
-                  player.nav_hyperspace = i;
+                  player.p->nav_planet     = -1; /* override planet_target */
+                  player.p->nav_hyperspace = i;
                   player_abortAutonav(NULL);
                   break;
                }
@@ -1065,7 +1065,7 @@ void map_select( StarSystem *sys, char shifted )
          }
       }
       else { /* unreachable. */
-         player.nav_hyperspace = -1;
+         player.p->nav_hyperspace = -1;
          player_abortAutonav(NULL);
       }
    }

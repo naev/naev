@@ -159,7 +159,7 @@ typedef struct JumpPoint_ {
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
 } JumpPoint;
-
+extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 /**
  * @struct StarSystem

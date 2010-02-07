@@ -217,8 +217,6 @@ void player_new (void)
 
    /* to not segfault due to lack of environment */
    memset( &player, 0, sizeof(Player_t) );
-   player.nav_planet       = -1;
-   player.nav_hyperspace   = -1;
    player_setFlag(PLAYER_CREATING);
    gl_cameraStatic( 0., 0. );
 
@@ -794,8 +792,6 @@ void player_clear (void)
 {
    if (player.p != NULL)
       player.p->target = PLAYER_ID;
-   player.nav_planet     = -1;
-   player.nav_hyperspace = -1;
 }
 
 
@@ -905,7 +901,7 @@ void player_render( double dt )
  */
 void player_startAutonav (void)
 {
-   if (player.nav_hyperspace == -1)
+   if (player.p->nav_hyperspace == -1)
       return;
 
    if (player.p->fuel < HYPERSPACE_FUEL) {
@@ -924,7 +920,7 @@ void player_startAutonavWindow( unsigned int wid, char *str)
 {
    (void) str;
 
-   if (player.nav_hyperspace == -1)
+   if (player.p->nav_hyperspace == -1)
       return;
 
    if (player.p->fuel < HYPERSPACE_FUEL) {
@@ -1003,7 +999,7 @@ void player_think( Pilot* pplayer, const double dt )
          player_abortAutonav("Missile Lockon Detected");
 
       /* If we're already at the target. */
-      else if (player.nav_hyperspace == -1)
+      else if (player.p->nav_hyperspace == -1)
          player_abortAutonav("Target changed to current system");
 
       /* Need fuel. */
@@ -1040,10 +1036,10 @@ void player_think( Pilot* pplayer, const double dt )
          }
       }
       /* If not try to face planet target. */
-      else if (player.nav_planet != -1) {
+      else if (player.p->nav_planet != -1) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
-                  &cur_system->planets[ player.nav_planet ]->pos ));
+                  &cur_system->planets[ player.p->nav_planet ]->pos ));
 
          /* Disable turning. */
          facing = 1;
@@ -1358,20 +1354,20 @@ void player_targetPlanet (void)
    player_rmFlag(PLAYER_LANDACK);
 
    /* Find next planet target. */
-   player.nav_planet++;
-   while (player.nav_planet < cur_system->nplanets) {
+   player.p->nav_planet++;
+   while (player.p->nav_planet < cur_system->nplanets) {
 
       /* In range, target planet. */
-      if (pilot_inRangePlanet( player.p, player.nav_planet )) {
+      if (pilot_inRangePlanet( player.p, player.p->nav_planet )) {
          player_playSound(snd_nav, 1);
          return;
       }
 
-      player.nav_planet++;
+      player.p->nav_planet++;
    }
 
    /* Untarget if out of range. */
-   player.nav_planet = -1;
+   player.p->nav_planet = -1;
 }
 
 
@@ -1396,8 +1392,8 @@ void player_land (void)
       return;
    }
 
-   if (player.nav_planet >= 0) { /* attempt to land */
-      planet = cur_system->planets[player.nav_planet];
+   if (player.p->nav_planet >= 0) { /* attempt to land */
+      planet = cur_system->planets[player.p->nav_planet];
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
          player_message( "\erYou can't land here." );
          return;
@@ -1458,11 +1454,11 @@ void player_land (void)
             td = d;
          }
       }
-      player.nav_planet = tp;
+      player.p->nav_planet = tp;
       player_rmFlag(PLAYER_LANDACK);
 
       /* no landable planet */
-      if (player.nav_planet < 0) return;
+      if (player.p->nav_planet < 0) return;
 
       player_land(); /* rerun land protocol */
    }
@@ -1474,21 +1470,21 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
-   player.nav_planet = -1; /* get rid of planet target */
+   player.p->nav_planet = -1; /* get rid of planet target */
    player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
-   player.nav_hyperspace++;
+   player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
 
-   if (player.nav_hyperspace >= cur_system->njumps)
-      player.nav_hyperspace = -1;
+   if (player.p->nav_hyperspace >= cur_system->njumps)
+      player.p->nav_hyperspace = -1;
    else
       player_playSound(snd_nav,1);
 
    /* Map gets special treatment if open. */
-   if (player.nav_hyperspace == -1)
+   if (player.p->nav_hyperspace == -1)
       map_select( NULL , 0);
    else
-      map_select( cur_system->jumps[player.nav_hyperspace].target, 0 );
+      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
 }
 
 
@@ -1509,7 +1505,7 @@ void player_jump (void)
    int i;
 
    /* Must have a jump target and not be already jumping. */
-   if ((player.nav_hyperspace == -1) || pilot_isFlag(player.p, PILOT_HYPERSPACE))
+   if ((player.p->nav_hyperspace == -1) || pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return;
 
    /* Already jumping, so we break jump. */
@@ -1554,7 +1550,7 @@ void player_brokeHyperspace (void)
    ntime_inc( (unsigned int)(d*NTIME_UNIT_LENGTH) );
 
    /* enter the new system */
-   space_init( cur_system->jumps[player.nav_hyperspace].target->name );
+   space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
 
    /* set position, the pilot_update will handle lowering vel */
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
@@ -1574,7 +1570,7 @@ void player_brokeHyperspace (void)
 
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
-      if (player.nav_hyperspace == -1) {
+      if (player.p->nav_hyperspace == -1) {
          player_message( "\epAutonav arrived at destination.");
          player_rmFlag(PLAYER_AUTONAV);
       }
@@ -1604,7 +1600,7 @@ double player_faceHyperspace (void)
    double a;
    StarSystem *sys;
 
-   sys = cur_system->jumps[player.nav_hyperspace].target;
+   sys = cur_system->jumps[player.p->nav_hyperspace].target;
    a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
    return pilot_face( player.p, a );
 }
@@ -1862,8 +1858,8 @@ void player_hail (void)
 {
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
-   else if(player.nav_planet != -1)
-      comm_openPlanet( cur_system->planets[ player.nav_planet ] );
+   else if(player.p->nav_planet != -1)
+      comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
    else
       player_message("\erNo target selected to hail.");
 }
@@ -2688,8 +2684,6 @@ int player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
-   player.nav_planet       = -1;
-   player.nav_hyperspace   = -1;
    map_cleanup();
 
    node = parent->xmlChildrenNode;

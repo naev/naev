@@ -92,7 +92,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
  */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
-static glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
+glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 
 
 /*
@@ -143,7 +143,7 @@ static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
 /* Render. */
-static void space_renderJumpPoint( JumpPoint *jp );
+static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
 /*
  * Externed prototypes.
@@ -247,7 +247,7 @@ char planet_getClass( Planet *p )
  *    @param p Pilot to check if he can hyperspace.
  *    @return 1 if he can hyperspace, 0 else.
  */
-int space_canHyperspace( Pilot* p)
+int space_canHyperspace( Pilot* p )
 {
    int i;
    double d;
@@ -1904,7 +1904,7 @@ void planets_render (void)
 
    /* Render the jumps. */
    for (i=0; i < cur_system->njumps; i++)
-      space_renderJumpPoint( &cur_system->jumps[i] );
+      space_renderJumpPoint( &cur_system->jumps[i], i );
 
    /* Render the planets. */
    for (i=0; i < cur_system->nplanets; i++)
@@ -1915,9 +1915,16 @@ void planets_render (void)
 /**
  * @brief Renders a jump point.
  */
-static void space_renderJumpPoint( JumpPoint *jp )
+static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
-   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, NULL );
+   glColour *c;
+
+   if (i==player.p->nav_hyperspace)
+      c = &cGreen;
+   else
+      c = NULL;
+
+   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
 }
 
 

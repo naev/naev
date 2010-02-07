@@ -42,10 +42,6 @@ typedef struct Player_s {
    unsigned int flags; /**< Player's flags. */
    int enemies; /**< Amount of enemies the player has. */
    double crating; /**< Combat rating. */
-
-   /* Nav computre. */
-   int nav_planet; /**< Targetted planet. -1 is none. */
-   int nav_hyperspace;
 } Player_t;
 
 
