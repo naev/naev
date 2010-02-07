@@ -249,15 +249,24 @@ char planet_getClass( Planet *p )
  */
 int space_canHyperspace( Pilot* p )
 {
-   int i;
    double d;
-   if (p->fuel < HYPERSPACE_FUEL) return 0;
+   JumpPoint *jp;
 
-   for (i=0; i < cur_system->nplanets; i++) {
-      d = vect_dist(&p->solid->pos, &cur_system->planets[i]->pos);
-      if (d < HYPERSPACE_EXIT_MIN)
-         return 0;
-   }
+   /* Must have fuel. */
+   if (p->fuel < HYPERSPACE_FUEL)
+      return 0;
+
+   /* Must have hyperspace target. */
+   if (p->nav_hyperspace < 0)
+      return 0;
+
+   /* Get the jump. */
+   jp = &cur_system->jumps[ p->nav_hyperspace ];
+
+   /* Check distance. */
+   d = vect_dist2( &p->solid->pos, &jp->pos );
+   if (d > jp->radius*jp->radius)
+      return 0;
    return 1;
 }
 
@@ -1919,7 +1928,8 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    glColour *c;
 
-   if (i==player.p->nav_hyperspace)
+   if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
+         (pilot_isFlag(player.p, PILOT_HYPERSPACE) || space_canHyperspace(player.p)))
       c = &cGreen;
    else
       c = NULL;
