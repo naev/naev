@@ -237,8 +237,8 @@ static void gui_renderMessages( double dt );
 static glColour *gui_getPlanetColour( int i );
 static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy );
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr );
-static void gui_renderPlanet( int i );
-static void gui_renderJumpPoint( int i );
+static void gui_renderPlanet( int ind );
+static void gui_renderJumpPoint( int ind );
 static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const HealthBar *bar, const double w );
@@ -1666,9 +1666,89 @@ static void gui_renderPlanet( int ind )
  *
  *    @param i Jump point to render.
  */
-static void gui_renderJumpPoint( int i )
+static void gui_renderJumpPoint( int ind )
 {
-   (void) i;
+   int i;
+   int cx, cy, x, y, r, rc;
+   int w, h;
+   double res;
+   GLfloat vx, vy, vr;
+   glColour *col;
+   GLfloat vertex[5*2], colours[8*4];
+   JumpPoint *jp;
+
+   /* Default values. */
+   res   = gui.radar.res;
+   jp    = &cur_system->jumps[ind];
+   w     = gui.radar.w;
+   h     = gui.radar.h;
+   r     = (int)(jumppoint_gfx->sw / res);
+   vr    = r;
+   cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
+   cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+   if (gui.radar.shape==RADAR_CIRCLE)
+      rc = (int)(gui.radar.w*gui.radar.w);
+   else
+      rc = 0;
+
+   /* Check if in range. */
+   if (gui.radar.shape == RADAR_RECT) {
+      x = y = 0;
+      /* Out of range. */
+      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
+         return;
+   }
+   else if (gui.radar.shape == RADAR_CIRCLE) {
+      x = ABS(cx)-r;
+      y = ABS(cy)-r;
+      /* Out of range. */
+      if (x*x + y*y > rc) {
+         if (player.p->nav_hyperspace == ind)
+            gui_renderPlanetOutOfRangeCircle( w, cx, cy );
+         return;
+      }
+   }
+
+   /* Do the blink. */
+   if (ind == player.p->nav_hyperspace) {
+      gui_planetBlink( w, h, rc, cx, cy, vr );
+      col = &cGreen;
+   }
+   else
+      col = &cWhite;
+
+   /* Get the colour. */
+   for (i=0; i<5; i++) {
+      colours[4*i + 0] = col->r;
+      colours[4*i + 1] = col->g;
+      colours[4*i + 2] = col->b;
+      colours[4*i + 3] = 1.-interference_alpha;
+   }
+   gl_vboSubData( gui_vbo, gui_vboColourOffset,
+      sizeof(GLfloat) * 5*4, colours );
+   /* Now load the data. */
+   vx = cx;
+   vy = cy;
+   vr = MAX( vr, 3. ); /* Make sure it's visible. */
+   vertex[0] = vx;
+   vertex[1] = vy + vr;
+   vertex[2] = vx + vr;
+   vertex[3] = vy;
+   vertex[4] = vx;
+   vertex[5] = vy - vr;
+   vertex[6] = vx - vr;
+   vertex[7] = vy;
+   vertex[8] = vertex[0];
+   vertex[9] = vertex[1];
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 5*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+         gui_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINE_STRIP, 0, 5 );
+
+   /* Deactivate the VBO. */
+   gl_vboDeactivate();
 }
 #undef CHECK_PIXEL
 
