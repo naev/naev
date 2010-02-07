@@ -1360,6 +1360,7 @@ void player_targetPlanet (void)
       /* In range, target planet. */
       if (pilot_inRangePlanet( player.p, player.p->nav_planet )) {
          player_playSound(snd_nav, 1);
+         player.p->nav_hyperspace = -1;
          return;
       }
 
