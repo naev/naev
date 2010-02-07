@@ -210,7 +210,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel. 
     */
-   if (player->fuel < HYPERSPACE_FUEL)
+   if (player.p->fuel < HYPERSPACE_FUEL)
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -652,8 +652,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
-         if (hyperspace_target != -1)
-            hsys = cur_system->jumps[hyperspace_target].target;
+         if (player.nav_hyperspace != -1)
+            hsys = cur_system->jumps[player.nav_hyperspace].target;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -689,11 +689,11 @@ static void map_render( double bx, double by, double w, double h, void *data )
       lsys = cur_system;
       glShadeModel(GL_SMOOTH);
       col = &cGreen;
-      fuel = player->fuel;
+      fuel = player.p->fuel;
       
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
-         if (fuel == player->fuel && fuel > 100.)
+         if (fuel == player.p->fuel && fuel > 100.)
             col = &cGreen;
          else if (fuel < 100.)
             col = &cRed;
@@ -990,8 +990,8 @@ void map_jump (void)
       if (map_npath == 0) { /* path is empty */
          free (map_path);
          map_path = NULL;
-         planet_target = -1;
-         hyperspace_target = -1;
+         player.nav_planet = -1;
+         player.nav_hyperspace = -1;
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
@@ -1000,8 +1000,8 @@ void map_jump (void)
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
-               planet_target = -1; /* override planet_target */
-               hyperspace_target = j;
+               player.nav_planet = -1; /* override planet_target */
+               player.nav_hyperspace = j;
                break;
             }
          }
@@ -1049,15 +1049,15 @@ void map_select( StarSystem *sys, char shifted )
          }
 
          if (map_npath==0) {
-            hyperspace_target = -1;
+            player.nav_hyperspace = -1;
             player_abortAutonav(NULL);
          }
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
-                  planet_target     = -1; /* override planet_target */
-                  hyperspace_target = i;
+                  player.nav_planet     = -1; /* override planet_target */
+                  player.nav_hyperspace = i;
                   player_abortAutonav(NULL);
                   break;
                }
@@ -1065,7 +1065,7 @@ void map_select( StarSystem *sys, char shifted )
          }
       }
       else { /* unreachable. */
-         hyperspace_target = -1;
+         player.nav_hyperspace = -1;
          player_abortAutonav(NULL);
       }
    }

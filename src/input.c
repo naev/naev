@@ -609,10 +609,10 @@ void input_update (void)
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
-(player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
-!pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
-!pilot_isFlag(player,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
-#define NODEAD()  (player && !pilot_isFlag(player,PILOT_DEAD)) /**< Player isn't dead. */
+((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
+!pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
+!pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+#define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  (!landed) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
@@ -794,13 +794,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("e_targetPrev") && !repeat) {
       if (value==KEY_PRESS) player_targetEscort(1);
    } else if (INGAME() && NODEAD() && KEY("e_attack") && !repeat) {
-      if (value==KEY_PRESS) escorts_attack(player);
+      if (value==KEY_PRESS) escorts_attack(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_hold") && !repeat) {
-      if (value==KEY_PRESS) escorts_hold(player);
+      if (value==KEY_PRESS) escorts_hold(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_return") && !repeat) {
-      if (value==KEY_PRESS) escorts_return(player);
+      if (value==KEY_PRESS) escorts_return(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_clear") && !repeat) {
-      if (value==KEY_PRESS) escorts_clear(player);
+      if (value==KEY_PRESS) escorts_clear(player.p);
 
 
    /*

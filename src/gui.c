@@ -392,21 +392,21 @@ static void gui_renderPlanetTarget( double dt )
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-      ((player != NULL) && pilot_isFlag(player,PILOT_DEAD)))
+      ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))
       return;
 
    /* Make sure target exists. */
-   if (planet_target < 0)
+   if (player.nav_planet < 0)
       return;
 
    /* Make sure targets are still in range. */
-   if (!pilot_inRangePlanet( player, planet_target )) {
-      planet_target = -1;
+   if (!pilot_inRangePlanet( player.p, player.nav_planet )) {
+      player.nav_planet = -1;
       return;
    }
 
    /* Draw planet target graphics. */
-   planet = cur_system->planets[planet_target];
+   planet = cur_system->planets[player.nav_planet];
 
    c = faction_getColour(planet->faction);
 
@@ -442,19 +442,19 @@ static void gui_renderPilotTarget( double dt )
       return;
 
    /* Get the target. */
-   if (player->target != PLAYER_ID)
-      p = pilot_get(player->target);
+   if (player.p->target != PLAYER_ID)
+      p = pilot_get(player.p->target);
    else p = NULL;
 
    /* Make sure pilot exists and is still alive. */
    if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD)) {
-      player->target = PLAYER_ID;
+      player.p->target = PLAYER_ID;
       return;
    }
 
    /* Make sure target is still in range. */
-   if (!pilot_inRangePilot( player, p )) {
-      player->target = PLAYER_ID;
+   if (!pilot_inRangePilot( player.p, p )) {
+      player.p->target = PLAYER_ID;
       return;
    }
 
@@ -568,12 +568,12 @@ static void gui_renderBorder( double dt )
       tex = pnt->gfx_space;
 
       /* See if in sensor range. */
-      if (!pilot_inRangePlanet(player, i))
+      if (!pilot_inRangePlanet(player.p, i))
          continue;
 
       /* Get relative positions. */
-      rx = (pnt->pos.x - player->solid->pos.x)*z;
-      ry = (pnt->pos.y - player->solid->pos.y)*z;
+      rx = (pnt->pos.x - player.p->solid->pos.x)*z;
+      ry = (pnt->pos.y - player.p->solid->pos.y)*z;
 
       /* Correct for offset. */
       crx = rx - gui_xoff;
@@ -625,12 +625,12 @@ static void gui_renderBorder( double dt )
       tex = plt->ship->gfx_space;
 
       /* See if in sensor range. */
-      if (!pilot_inRangePilot(player, plt))
+      if (!pilot_inRangePilot(player.p, plt))
          continue;
 
       /* Get relative positions. */
-      rx = (plt->solid->pos.x - player->solid->pos.x)*z;
-      ry = (plt->solid->pos.y - player->solid->pos.y)*z;
+      rx = (plt->solid->pos.x - player.p->solid->pos.x)*z;
+      ry = (plt->solid->pos.y - player.p->solid->pos.y)*z;
 
       /* Correct for offset. */
       rx -= gui_xoff;
@@ -711,14 +711,14 @@ void gui_render( double dt )
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-        ((player != NULL) && pilot_isFlag(player,PILOT_DEAD))) {
+        ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD))) {
 
       spfx_cinematic();
       return;
    }
 
    /* Make sure player is valid. */
-   if (player==NULL)
+   if (player.p == NULL)
       return;
 
    /*
@@ -731,7 +731,7 @@ void gui_render( double dt )
    gui_renderBorder(dt);
 
    /* Lockon warning */
-   if (player->lockons > 0)
+   if (player.p->lockons > 0)
       gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h-25.,
             &cRed, "LOCK-ON DETECTED");
 
@@ -755,30 +755,30 @@ void gui_render( double dt )
    /*
     * NAV 
     */
-   if (planet_target >= 0) { /* planet landing target */
+   if (player.nav_planet >= 0) { /* planet landing target */
       gl_printMid( NULL, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 5,
             &cConsole, "Land" );
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-            NULL, "%s", cur_system->planets[planet_target]->name );
+            NULL, "%s", cur_system->planets[player.nav_planet]->name );
    }
-   else if (hyperspace_target >= 0) { /* hyperspace target */
+   else if (player.nav_hyperspace >= 0) { /* hyperspace target */
 
-      sys = cur_system->jumps[hyperspace_target].target;
+      sys = cur_system->jumps[player.nav_hyperspace].target;
 
       /* Determine if we have to play the "enter hyperspace range" sound. */
-      i = space_canHyperspace(player);
+      i = space_canHyperspace(player.p);
       if ((i != 0) && (i != can_jump))
-         if (!pilot_isFlag(player,PILOT_HYPERSPACE))
+         if (!pilot_isFlag(player.p, PILOT_HYPERSPACE))
             player_playSound(snd_jump, 1);
       can_jump = i;
 
       /* Determine the colour of the NAV text. */
-      if (can_jump || pilot_isFlag(player,PILOT_HYPERSPACE) ||
-             pilot_isFlag(player,PILOT_HYP_PREP) ||
-             pilot_isFlag(player,PILOT_HYP_BEGIN))
+      if (can_jump || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+             pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+             pilot_isFlag(player.p, PILOT_HYP_BEGIN))
          c = &cConsole;
       else c = NULL;
       gl_printMid( NULL, (int)gui.nav.w,
@@ -787,7 +787,7 @@ void gui_render( double dt )
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-            NULL, "%d - %s", pilot_getJumps(player),
+            NULL, "%d - %s", pilot_getJumps(player.p),
             (sys_isKnown(sys)) ? sys->name : "Unknown" );
    }
    else { /* no NAV target */
@@ -804,16 +804,16 @@ void gui_render( double dt )
    /*
     * health
     */
-   gui_renderHealth( &gui.shield, player->shield / player->shield_max );
-   gui_renderHealth( &gui.armour, player->armour / player->armour_max );
-   gui_renderHealth( &gui.energy, player->energy / player->energy_max );
-   gui_renderHealth( &gui.fuel, player->fuel / player->fuel_max );
+   gui_renderHealth( &gui.shield, player.p->shield / player.p->shield_max );
+   gui_renderHealth( &gui.armour, player.p->armour / player.p->armour_max );
+   gui_renderHealth( &gui.energy, player.p->energy / player.p->energy_max );
+   gui_renderHealth( &gui.fuel, player.p->fuel / player.p->fuel_max );
 
 
    /* 
     * weapon
     */ 
-   if ((player->secondary==NULL) || (player->secondary->outfit == NULL)) {
+   if ((player.p->secondary==NULL) || (player.p->secondary->outfit == NULL)) {
       gl_printMid( NULL, (int)gui.weapon.w,
             gui.weapon.x, gui.weapon.y - 5,
             &cConsole, "Secondary" ); 
@@ -826,30 +826,30 @@ void gui_render( double dt )
       f = &gl_defFont;
 
       /* check to see if weapon is ready */
-      if (player->secondary->timer > 0.)
+      if (player.p->secondary->timer > 0.)
          c = &cGrey;
       else
          c = &cConsole;
 
       /* Launcher. */
-      if ((outfit_isLauncher(player->secondary->outfit) ||
-               outfit_isFighterBay(player->secondary->outfit)) &&
-            (player->secondary->u.ammo.outfit != NULL)) {
+      if ((outfit_isLauncher(player.p->secondary->outfit) ||
+               outfit_isFighterBay(player.p->secondary->outfit)) &&
+            (player.p->secondary->u.ammo.outfit != NULL)) {
 
          /* Get quantity. */
          q = 0;
-         for (i=0; i<player->outfit_nhigh; i++) {
-            if (player->outfit_high[i].outfit != player->secondary->outfit)
+         for (i=0; i<player.p->outfit_nhigh; i++) {
+            if (player.p->outfit_high[i].outfit != player.p->secondary->outfit)
                continue;
             
-            if (player->outfit_high[i].u.ammo.outfit == player->secondary->u.ammo.outfit)
-               q += player->outfit_high[i].u.ammo.quantity;
+            if (player.p->outfit_high[i].u.ammo.outfit == player.p->secondary->u.ammo.outfit)
+               q += player.p->outfit_high[i].u.ammo.quantity;
          }
 
          /* Weapon name. */
          gl_printMidRaw( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 5,
-               c, player->secondary->u.ammo.outfit->name );
+               c, player.p->secondary->u.ammo.outfit->name );
 
          /* Print ammo left underneath. */
          gl_printMid( &gl_smallFont, (int)gui.weapon.w,
@@ -859,17 +859,17 @@ void gui_render( double dt )
       /* Other. */
       else { /* just print the item name */
          /* Mark as out of ammo. */
-         if (outfit_isLauncher(player->secondary->outfit) ||
-                  outfit_isFighterBay(player->secondary->outfit))
+         if (outfit_isLauncher(player.p->secondary->outfit) ||
+                  outfit_isFighterBay(player.p->secondary->outfit))
             c = &cGrey;
 
          /* Render normally. */
-         i = gl_printWidthRaw( f, player->secondary->outfit->name);
+         i = gl_printWidthRaw( f, player.p->secondary->outfit->name);
          if (i > (int)gui.weapon.w) /* font is too big */
             f = &gl_smallFont;
          gl_printMidRaw( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
-               c, player->secondary->outfit->name );
+               c, player.p->secondary->outfit->name );
       }
    } 
 
@@ -877,8 +877,8 @@ void gui_render( double dt )
    /*
     * target
     */
-   if (player->target != PLAYER_ID) {
-      p = pilot_get(player->target);
+   if (player.p->target != PLAYER_ID) {
+      p = pilot_get(player.p->target);
 
       /* blit the pilot target */
       gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
@@ -943,30 +943,30 @@ void gui_render( double dt )
    gl_print( &gl_smallFont,
          gui.misc.x + 8, j,
          &cConsole, "Creds:" );
-   credits2str( str, player->credits, 2 );
+   credits2str( str, player.p->credits, 2 );
    i = gl_printWidth( &gl_smallFont, str );
    gl_print( &gl_smallFont,
          gui.misc.x + gui.misc.w - 8 - i, j,
          NULL, str );
    /* cargo and friends */
-   if (player->ncommodities > 0) {
+   if (player.p->ncommodities > 0) {
       j -= gl_smallFont.h + 5;
       gl_print( &gl_smallFont,
             gui.misc.x + 8, j,
             &cConsole, "Cargo:" );
-      for (i=0; i < MIN(player->ncommodities,3); i++) { 
+      for (i=0; i < MIN(player.p->ncommodities,3); i++) { 
          j -= gl_smallFont.h + 3;
-         if (player->commodities[i].quantity > 0.) /* quantity is over */
+         if (player.p->commodities[i].quantity > 0.) /* quantity is over */
             gl_printMax( &gl_smallFont, gui.misc.w - 15,
                   gui.misc.x + 13, j,
-                  NULL, "%d %s%s", player->commodities[i].quantity,
-                  player->commodities[i].commodity->name,
-                  (player->commodities[i].id) ? "*" : "" );
+                  NULL, "%d %s%s", player.p->commodities[i].quantity,
+                  player.p->commodities[i].commodity->name,
+                  (player.p->commodities[i].id) ? "*" : "" );
          else /* basically for weightless mission stuff */ 
             gl_printMax( &gl_smallFont, gui.misc.w - 15,
                   gui.misc.x + 13, j,
-                  NULL, "%s%s",  player->commodities[i].commodity->name,
-                  (player->commodities[i].id) ? "*" : "" );
+                  NULL, "%s%s",  player.p->commodities[i].commodity->name,
+                  (player.p->commodities[i].id) ? "*" : "" );
 
       }
    }
@@ -975,10 +975,10 @@ void gui_render( double dt )
    gl_print( &gl_smallFont,
          gui.misc.x + 8, j,
          &cConsole, "Free:" );
-   i = gl_printWidth( &gl_smallFont, "%d", pilot_cargoFree(player) );
+   i = gl_printWidth( &gl_smallFont, "%d", pilot_cargoFree(player.p) );
    gl_print( &gl_smallFont,
          gui.misc.x + gui.misc.w - 8 - i, j,
-         NULL, "%d", pilot_cargoFree(player) );
+         NULL, "%d", pilot_cargoFree(player.p) );
 
 
    /* Messages. */
@@ -991,10 +991,10 @@ void gui_render( double dt )
    /*
     * hyperspace
     */
-   if (pilot_isFlag(player, PILOT_HYPERSPACE) &&
-         (player->ptimer < HYPERSPACE_FADEOUT)) {
+   if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
+         (player.p->ptimer < HYPERSPACE_FADEOUT)) {
       if (i < j) {
-         x = (HYPERSPACE_FADEOUT-player->ptimer) / HYPERSPACE_FADEOUT;
+         x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
          col.r = 1.;
          col.g = 1.;
          col.b = 1.;
@@ -1028,10 +1028,10 @@ static void gui_renderRadar( double dt )
     * planets
     */
    for (i=0; i<cur_system->nplanets; i++)
-      if (i != planet_target)
+      if (i != player.nav_planet)
          gui_renderPlanet( i );
-   if (planet_target > -1)
-      gui_renderPlanet( planet_target );
+   if (player.nav_planet > -1)
+      gui_renderPlanet( player.nav_planet );
 
    /*
     * weapons
@@ -1043,7 +1043,7 @@ static void gui_renderRadar( double dt )
    /* render the pilot_nstack */
    j = 0;
    for (i=1; i<pilot_nstack; i++) { /* skip the player */
-      if (pilot_stack[i]->id == player->target)
+      if (pilot_stack[i]->id == player.p->target)
          j = i;
       else
          gui_renderPilot(pilot_stack[i]);
@@ -1242,7 +1242,7 @@ static glColour* gui_getPilotColour( const Pilot* p )
 {
    glColour *col;
 
-   if (p->id == player->target) col = &cRadar_tPilot;
+   if (p->id == player.p->target) col = &cRadar_tPilot;
    else if (pilot_isDisabled(p)) col = &cInert;
    else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
    else if (pilot_isHostile(p)) col = &cHostile;
@@ -1274,12 +1274,12 @@ static void gui_renderPilot( const Pilot* p )
    int rc;
 
    /* Make sure is in range. */
-   if (!pilot_inRangePilot( player, p ))
+   if (!pilot_inRangePilot( player.p, p ))
       return;
 
    /* Get position. */
-   x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
-   y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
+   x = (p->solid->pos.x - player.p->solid->pos.x) / gui.radar.res;
+   y = (p->solid->pos.y - player.p->solid->pos.y) / gui.radar.res;
    /* Get size. */
    sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
    sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
@@ -1295,7 +1295,7 @@ static void gui_renderPilot( const Pilot* p )
             ((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) ) {
 
       /* Draw little targetted symbol. */
-      if (p->id == player->target) {
+      if (p->id == player.p->target) {
          /* Circle radars have it easy. */
          if (gui.radar.shape==RADAR_CIRCLE)  {
             /* We'll create a line. */
@@ -1342,7 +1342,7 @@ static void gui_renderPilot( const Pilot* p )
    }
 
    /* Draw selection if targetted. */
-   if (p->id == player->target) {
+   if (p->id == player.p->target) {
       if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
          for (i=0; i<8; i++) {
@@ -1425,7 +1425,7 @@ static glColour *gui_getPlanetColour( int i )
    planet = cur_system->planets[i];
 
    col = faction_getColour(planet->faction);
-   if (i == planet_target)
+   if (i == player.nav_planet)
       col = &cRadar_tPlanet;
    else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
       col = &cInert; /* Override non-hostile planets without service. */
@@ -1455,7 +1455,7 @@ static void gui_renderPlanet( int ind )
    GLfloat vertex[8*2], colours[8*4];
 
    /* Make sure is in range. */
-   if (!pilot_inRangePlanet( player, ind ))
+   if (!pilot_inRangePlanet( player.p, ind ))
       return;
 
    /* Default values. */
@@ -1465,8 +1465,8 @@ static void gui_renderPlanet( int ind )
    h = gui.radar.h;
    r = (int)(planet->gfx_space->sw / res);
    vr = r;
-   cx = (int)((planet->pos.x - player->solid->pos.x) / res);
-   cy = (int)((planet->pos.y - player->solid->pos.y) / res);
+   cx = (int)((planet->pos.x - player.p->solid->pos.x) / res);
+   cy = (int)((planet->pos.y - player.p->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
       rc = (int)(gui.radar.w*gui.radar.w);
    else
@@ -1484,7 +1484,7 @@ static void gui_renderPlanet( int ind )
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > rc) {
-         if (planet_target == ind) {
+         if (player.nav_planet == ind) {
             /* Draw a line like for pilots. */
             a = ANGLE(cx,cy);
             tx = w*cos(a);
@@ -1516,7 +1516,7 @@ static void gui_renderPlanet( int ind )
    }
 
    /* Do the blink. */
-   if (ind == planet_target) {
+   if (ind == player.nav_planet) {
       if (blink_planet < RADAR_BLINK_PLANET/2.) {
          curs = 0;
          vx = cx-vr;

@@ -452,7 +452,7 @@ void missions_update( const double dt )
    int i,j;
 
    /* Don't update if player is dead. */
-   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
+   if ((player.p==NULL) || player_isFlag(PLAYER_DESTROYED))
       return;
 
    for (i=0; i<MISSION_MAX; i++) {
@@ -514,8 +514,8 @@ void mission_cleanup( Mission* misn )
    /* Cargo. */
    if (misn->cargo != NULL) {
       for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
-         if (player != NULL) /* Only remove if player exists. */
-            pilot_rmMissionCargo( player, misn->cargo[i], 0 );
+         if (player.p != NULL) /* Only remove if player exists. */
+            pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
          mission_unlinkCargo( misn, misn->cargo[i] );
       }
       free(misn->cargo);

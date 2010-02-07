@@ -3,7 +3,6 @@
  */
 
 
-
 #ifndef PLAYER_H
 #  define PLAYER_H
 
@@ -26,25 +25,34 @@
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 /* flag functions */
-#define player_isFlag(f)   (player_flags & (f)) /**< Checks for a player flag. */
-#define player_setFlag(f)  (player_flags |= (f)) /**< Sets a player flag. */ 
-#define player_rmFlag(f)   (player_flags &= ~(f)) /**< Removes a player flag. */
+#define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
+#define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */ 
+#define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
+
+
+/**
+ * The player struct.
+ */
+typedef struct Player_s {
+   /* Player intrinsecs. */
+   Pilot *p; /**< Player's pilot. */
+   char *name; /**< Player's name. */
+
+   /* Player data. */
+   unsigned int flags; /**< Player's flags. */
+   int enemies; /**< Amount of enemies the player has. */
+   double crating; /**< Combat rating. */
+
+   /* Nav computre. */
+   int nav_planet; /**< Targetted planet. -1 is none. */
+   int nav_hyperspace;
+} Player_t;
 
 
 /*
- * the player
+ * Local player.
  */
-extern Pilot* player; /**< Player himself. */
-extern char* player_name; /**< Player's name. */
-extern unsigned int player_flags; /**< Player's flags. */
-extern double player_crating; /**< Player's combat rating. */
-extern int player_enemies; /**< Amount of enemies player has. */
-
-/*
- * Targetting.
- */
-extern int planet_target; /**< Targetted planet. -1 is none. */
-extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
+extern Player_t player; /**< Local player. */
 
 
 /*

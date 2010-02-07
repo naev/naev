@@ -984,7 +984,7 @@ void equipment_addAmmo (void)
 
    /* Get player. */
    if (eq_wgt.selected == NULL)
-      p = player;
+      p = player.p;
    else
       p = eq_wgt.selected;
 
@@ -1047,8 +1047,8 @@ static void equipment_genLists( unsigned int wid )
       sships   = malloc(sizeof(char*)*nships);
       tships   = malloc(sizeof(glTexture*)*nships);
       /* Add player's current ship. */
-      sships[0] = strdup(player->name);
-      tships[0] = player->ship->gfx_target;
+      sships[0] = strdup(player.p->name);
+      tships[0] = player.p->ship->gfx_target;
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
          player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
@@ -1176,8 +1176,8 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    /* Get the ship. */
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,player->name)==0) { /* no ships */
-      ship    = player;
+   if (strcmp(shipname,player.p->name)==0) { /* no ships */
+      ship    = player.p;
       loc     = "Onboard";
       price   = 0;
       onboard = 1;
@@ -1331,11 +1331,11 @@ static void equipment_changeShip( unsigned int wid )
             land_planet->name );
       return;
    }
-   else if (pilot_cargoUsed(player) > pilot_cargoFree(newship)) {
+   else if (pilot_cargoUsed(player.p) > pilot_cargoFree(newship)) {
       dialogue_alert( "You won't be able to fit your current cargo in the new ship." );
       return;
    }
-   else if (pilot_hasDeployed(player)) {
+   else if (pilot_hasDeployed(player.p)) {
       dialogue_alert( "You can't leave your fighters stranded. Recall them before changing ships." );
       return;
    }
@@ -1370,7 +1370,7 @@ static void equipment_transportShip( unsigned int wid )
       return;
    }
    else if (!player_hasCredits( price )) { /* not enough money. */
-      credits2str( buf, price-player->credits, 2 );
+      credits2str( buf, price-player.p->credits, 2 );
       dialogue_alert( "You need %d more credits to transport '%s' here.",
             buf, shipname );
       return;

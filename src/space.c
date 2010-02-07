@@ -526,8 +526,8 @@ void space_update( const double dt )
     */
    if (cur_system->nebu_volatility > 0.) {
       /* Player takes damage. */
-      if (player)
-         pilot_hit( player, NULL, 0, DAMAGE_TYPE_RADIATION,
+      if (player.p)
+         pilot_hit( player.p, NULL, 0, DAMAGE_TYPE_RADIATION,
                pow2(cur_system->nebu_volatility) / 500. * dt );
    }
 
@@ -750,7 +750,7 @@ void space_init ( const char* sysname )
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
-   pilot_clearTimers(player); /* Clear timers. */
+   pilot_clearTimers(player.p); /* Clear timers. */
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
@@ -804,7 +804,7 @@ void space_init ( const char* sysname )
    music_choose(NULL);
 
    /* Reset player enemies. */
-   player_enemies = 0;
+   player.enemies = 0;
 
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
@@ -1810,19 +1810,19 @@ void space_renderStars( const double dt )
    gl_matrixPush();
       gl_matrixScale( z, z );
 
-   if ((player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player->ptimer < HYPERSPACE_STARS_BLUR)) {
+         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
 
       glShadeModel(GL_SMOOTH);
 
       /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player->ptimer;
+      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
       m /= HYPERSPACE_STARS_BLUR;
       m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player->solid->vel)+M_PI);
-      y = m*sin(VANGLE(player->solid->vel)+M_PI);
+      x = m*cos(VANGLE(player.p->solid->vel)+M_PI);
+      y = m*sin(VANGLE(player.p->solid->vel)+M_PI);
 
       /* Generate lines. */
       for (i=0; i < nstars; i++) {
@@ -1840,7 +1840,7 @@ void space_renderStars( const double dt )
       glShadeModel(GL_FLAT);
    }
    else { /* normal rendering */
-      if (!paused && (player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+      if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
          /* Calculate some dimensions. */
@@ -1857,9 +1857,9 @@ void space_renderStars( const double dt )
             /* calculate new position */
             b = 9. - 10.*star_colour[8*i+3];
             star_vertex[4*i+0] = star_vertex[4*i+0] -
-               (GLfloat)player->solid->vel.x / b*(GLfloat)dt;
+               (GLfloat)player.p->solid->vel.x / b*(GLfloat)dt;
             star_vertex[4*i+1] = star_vertex[4*i+1] -
-               (GLfloat)player->solid->vel.y / b*(GLfloat)dt;
+               (GLfloat)player.p->solid->vel.y / b*(GLfloat)dt;
 
             /* check boundries */
             if (star_vertex[4*i+0] > hw)

@@ -249,7 +249,7 @@ int escorts_attack( Pilot *parent )
    ret = 1;
    if (parent->target != parent->id)
       ret = escort_command( parent, ESCORT_ATTACK, parent->target );
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Attacking %s.", t->name);
    return ret;
 }
@@ -262,7 +262,7 @@ int escorts_hold( Pilot *parent )
 {
    int ret;
    ret = escort_command( parent, ESCORT_HOLD, -1 );
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
          player_message("\egEscorts: \e0Holding position.");
    return ret;
 }
@@ -275,7 +275,7 @@ int escorts_return( Pilot *parent )
 {
    int ret;
    ret = escort_command( parent, ESCORT_RETURN, -1 );
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Returning to ship.");
    return ret;
 }
@@ -288,7 +288,7 @@ int escorts_clear( Pilot *parent )
 {
    int ret;
    ret = escort_command( parent, ESCORT_CLEAR, -1);
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Clearing orders.");
    return ret;
 }
