@@ -1546,8 +1546,11 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    /* Calculate heading. */
    a = atan2( j->target->pos.y - sys->pos.y, j->target->pos.x - sys->pos.x );
    if (a < 0.)
-      a += M_PI;
+      a += 2.*M_PI;
    gl_getSpriteFromDir( &j->sx, &j->sy, jumppoint_gfx, a );
+   j->angle = 2.*M_PI-a;
+   j->cosa  = cos(j->angle);
+   j->sina  = sin(j->angle);
 
    return 0;
 }

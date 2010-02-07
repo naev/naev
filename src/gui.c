@@ -1534,7 +1534,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
  */
 static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy )
 {
-   GLfloat vertex[8*2], colours[8*4];
+   GLfloat vertex[2*2], colours[8*2];
    double a, tx, ty;
    int i;
 
@@ -1583,7 +1583,7 @@ static void gui_renderPlanet( int ind )
    GLfloat vx, vy, vr;
    glColour *col;
    Planet *planet;
-   GLfloat vertex[5*2], colours[8*4];
+   GLfloat vertex[5*2], colours[5*4];
 
    /* Make sure is in range. */
    if (!pilot_inRangePlanet( player.p, ind ))
@@ -1672,9 +1672,10 @@ static void gui_renderJumpPoint( int ind )
    int cx, cy, x, y, r, rc;
    int w, h;
    double res;
+   GLfloat ca, sa;
    GLfloat vx, vy, vr;
    glColour *col;
-   GLfloat vertex[5*2], colours[8*4];
+   GLfloat vertex[4*2], colours[4*4];
    JumpPoint *jp;
 
    /* Default values. */
@@ -1718,7 +1719,7 @@ static void gui_renderJumpPoint( int ind )
       col = &cWhite;
 
    /* Get the colour. */
-   for (i=0; i<5; i++) {
+   for (i=0; i<4; i++) {
       colours[4*i + 0] = col->r;
       colours[4*i + 1] = col->g;
       colours[4*i + 2] = col->b;
@@ -1730,22 +1731,23 @@ static void gui_renderJumpPoint( int ind )
    vx = cx;
    vy = cy;
    vr = MAX( vr, 3. ); /* Make sure it's visible. */
-   vertex[0] = vx;
-   vertex[1] = vy + vr;
-   vertex[2] = vx + vr;
-   vertex[3] = vy;
-   vertex[4] = vx;
-   vertex[5] = vy - vr;
-   vertex[6] = vx - vr;
-   vertex[7] = vy;
-   vertex[8] = vertex[0];
-   vertex[9] = vertex[1];
-   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 5*2, vertex );
+   ca = jp->cosa;
+   sa = jp->sina;
+   /* Must rotate around triangle center which with our calculations is shifted vr/3 to the left. */
+   vertex[0] = vx + (4./3.*vr)*ca;
+   vertex[1] = vy - (4./3.*vr)*sa;
+   vertex[2] = vx - (2./3.*vr)*ca + vr*sa;
+   vertex[3] = vy + (2./3.*vr)*sa + vr*ca;
+   vertex[4] = vx - (2./3.*vr)*ca - vr*sa;
+   vertex[5] = vy + (2./3.*vr)*sa - vr*ca;
+   vertex[6] = vertex[0];
+   vertex[7] = vertex[1];
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
    /* Draw tho VBO. */
    gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
    gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
          gui_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 5 );
+   glDrawArrays( GL_LINE_STRIP, 0, 4 );
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
