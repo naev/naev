@@ -188,9 +188,12 @@ static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
-static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
+
+/* Hyperspace. */
+static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
+static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
 
 /* escorts */
 static int aiL_e_attack( lua_State *L ); /* bool e_attack() */
@@ -269,8 +272,10 @@ static const luaL_reg aiL_methods[] = {
    { "face", aiL_face },
    { "brake", aiL_brake },
    { "stop", aiL_stop },
-   { "hyperspace", aiL_hyperspace },
    { "relvel", aiL_relvel },
+   /* Hyperspace. */
+   { "rndhyptarget", aiL_rndhyptarget },
+   { "hyperspace", aiL_hyperspace },
    /* escorts */
    { "e_attack", aiL_e_attack },
    { "e_hold", aiL_e_hold },
@@ -1792,6 +1797,44 @@ static int aiL_hyperspace( lua_State *L )
    }
 
    lua_pushnumber(L,dist);
+   return 1;
+}
+
+
+/*
+ * Gets a random hyperspace target and returns it's position.
+ */
+static int aiL_rndhyptarget( lua_State *L )
+{
+   JumpPoint **jumps;
+   int i, j, r;
+   LuaVector lv;
+   int *id;
+
+   /* Find usable jump points. */
+   jumps = malloc( sizeof(JumpPoint*) * cur_system->njumps );
+   id    = malloc( sizeof(int) * cur_system->njumps );
+   j = 0;
+   for (i=0; i < cur_system->njumps; i++) {
+      id[j]      = i;
+      jumps[j++] = &cur_system->jumps[i];
+   }
+
+   /* Choose random jump point. */
+   r = RNG(0, j);
+
+   /* Set up data. */
+   vectcpy( &lv.vec, &jumps[r]->pos );
+
+   /* Set up target. */
+   cur_pilot->nav_hyperspace = id[r];
+
+   /* Clean up. */
+   free(jumps);
+   free(id);
+
+   /* Return vector. */
+   lua_pushvector( L, lv );
    return 1;
 }
 
