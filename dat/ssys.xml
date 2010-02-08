@@ -17,23 +17,23 @@
   </planets>
   <jumps>
    <jump target="Coriolis">
-    <pos x="247.654282" y="1907.568829"/>
-    <radius>100.000000</radius>
+    <pos x="-49.990003" y="2499.500150"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Delta Pavonis">
-    <pos x="-382.188692" y="1592.000018"/>
-    <radius>100.000000</radius>
+    <pos x="-286.560270" y="-2483.522340"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Eridani">
-    <pos x="-1718.099252" y="952.479864"/>
-    <radius>100.000000</radius>
+    <pos x="2450.323328" y="495.898769"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7324">
-    <pos x="683.265392" y="1429.078478"/>
-    <radius>100.000000</radius>
+    <pos x="-2362.465184" y="817.776410"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -59,23 +59,23 @@
   </planets>
   <jumps>
    <jump target="Arcturus">
-    <pos x="-1238.554641" y="1303.898723"/>
-    <radius>100.000000</radius>
+    <pos x="1188.792586" y="2199.266284"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-1608.114343" y="-286.752227"/>
-    <radius>100.000000</radius>
+    <pos x="-2419.043181" y="631.054743"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Hekaras">
-    <pos x="1663.676471" y="-1066.599916"/>
-    <radius>100.000000</radius>
+    <pos x="2236.067977" y="1118.033989"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zied">
-    <pos x="701.262275" y="1384.142763"/>
-    <radius>100.000000</radius>
+    <pos x="2403.809869" y="-686.802820"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -98,23 +98,23 @@
   <planets/>
   <jumps>
    <jump target="Doeston">
-    <pos x="-869.197524" y="1471.425903"/>
-    <radius>100.000000</radius>
+    <pos x="-1311.624057" y="-2128.295640"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Oriantis">
-    <pos x="-1223.283193" y="-1421.246450"/>
-    <radius>100.000000</radius>
+    <pos x="-2427.411529" y="598.057913"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Polaris">
-    <pos x="1137.380702" y="1238.336993"/>
-    <radius>100.000000</radius>
+    <pos x="679.322676" y="2405.934476"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zerantix">
-    <pos x="396.018243" y="1829.539096"/>
-    <radius>100.000000</radius>
+    <pos x="2456.425614" y="464.729170"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -134,13 +134,13 @@
   <planets/>
   <jumps>
    <jump target="Raelid">
-    <pos x="1237.828184" y="-1525.738671"/>
-    <radius>100.000000</radius>
+    <pos x="-1561.737619" y="-1952.172024"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zylex">
-    <pos x="1252.934348" y="1449.614698"/>
-    <radius>100.000000</radius>
+    <pos x="2369.351911" y="-797.603613"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -165,18 +165,18 @@
   </planets>
   <jumps>
    <jump target="Apez">
-    <pos x="603.565566" y="1779.168405"/>
-    <radius>100.000000</radius>
+    <pos x="-1188.792586" y="-2199.266284"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="807.117758" y="-1486.612777"/>
-    <radius>100.000000</radius>
+    <pos x="-2337.898613" y="-885.567657"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Goddard">
-    <pos x="379.897421" y="-1913.242886"/>
-    <radius>100.000000</radius>
+    <pos x="2071.809706" y="1399.144217"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -202,8 +202,8 @@
   </planets>
   <jumps>
    <jump target="Darkstone">
-    <pos x="-121.806408" y="-1628.328701"/>
-    <radius>100.000000</radius>
+    <pos x="-2236.067977" y="1118.033989"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -228,8 +228,8 @@
   </planets>
   <jumps>
    <jump target="Verex">
-    <pos x="1399.223928" y="-546.910348"/>
-    <radius>100.000000</radius>
+    <pos x="2174.591255" y="1233.350264"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -252,8 +252,8 @@
   <planets/>
   <jumps>
    <jump target="Shakar">
-    <pos x="-143.731236" y="1543.320644"/>
-    <radius>100.000000</radius>
+    <pos x="1767.766953" y="-1767.766953"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -277,13 +277,13 @@
   </planets>
   <jumps>
    <jump target="C-14">
-    <pos x="-1673.815287" y="324.058373"/>
-    <radius>100.000000</radius>
+    <pos x="-864.263397" y="-2345.857792"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-28">
-    <pos x="790.490714" y="1617.212610"/>
-    <radius>100.000000</radius>
+    <pos x="1037.027119" y="-2274.769165"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -307,18 +307,18 @@
   </planets>
   <jumps>
    <jump target="C-00">
-    <pos x="1447.217038" y="-419.658170"/>
-    <radius>100.000000</radius>
+    <pos x="864.263397" y="2345.857792"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-28">
-    <pos x="924.860318" y="1362.162123"/>
-    <radius>100.000000</radius>
+    <pos x="2313.867391" y="946.582114"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-43">
-    <pos x="782.514593" y="-1503.144649"/>
-    <radius>100.000000</radius>
+    <pos x="2350.476562" y="-851.621943"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -342,23 +342,23 @@
   </planets>
   <jumps>
    <jump target="C-00">
-    <pos x="739.244857" y="-1626.153211"/>
-    <radius>100.000000</radius>
+    <pos x="-1037.027119" y="2274.769165"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-14">
-    <pos x="1083.518763" y="-1212.543036"/>
-    <radius>100.000000</radius>
+    <pos x="-2313.867391" y="-946.582114"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-43">
-    <pos x="-1396.436523" y="-1140.190648"/>
-    <radius>100.000000</radius>
+    <pos x="143.991338" y="-2495.849854"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-59">
-    <pos x="1212.115025" y="-1358.495618"/>
-    <radius>100.000000</radius>
+    <pos x="2492.345945" y="-195.478113"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -383,23 +383,23 @@
   </planets>
   <jumps>
    <jump target="C-14">
-    <pos x="-696.322956" y="-1680.276648"/>
-    <radius>100.000000</radius>
+    <pos x="-2350.476562" y="851.621943"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-28">
-    <pos x="1525.106816" y="529.175392"/>
-    <radius>100.000000</radius>
+    <pos x="-143.991338" y="2495.849854"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-59">
-    <pos x="485.858525" y="-1735.035581"/>
-    <radius>100.000000</radius>
+    <pos x="1767.766953" y="1767.766953"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7132">
-    <pos x="-1617.873637" y="-206.753714"/>
-    <radius>100.000000</radius>
+    <pos x="2490.801395" y="214.262486"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -423,18 +423,18 @@
   </planets>
   <jumps>
    <jump target="C-28">
-    <pos x="312.912772" y="-1799.049898"/>
-    <radius>100.000000</radius>
+    <pos x="-2492.345945" y="195.478113"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-43">
-    <pos x="-1638.517442" y="514.993832"/>
-    <radius>100.000000</radius>
+    <pos x="-1767.766953" y="-1767.766953"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7132">
-    <pos x="890.913114" y="1376.013984"/>
-    <radius>100.000000</radius>
+    <pos x="1868.523297" y="-1660.909597"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -458,8 +458,8 @@
   </planets>
   <jumps>
    <jump target="NGC-7690">
-    <pos x="-1172.260925" y="-1589.259278"/>
-    <radius>100.000000</radius>
+    <pos x="1975.549503" y="-1532.058798"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -482,23 +482,23 @@
   <planets/>
   <jumps>
    <jump target="Alteris">
-    <pos x="1368.264190" y="1015.675284"/>
-    <radius>100.000000</radius>
+    <pos x="49.990003" y="-2499.500150"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Dune">
-    <pos x="800.701376" y="1423.888283"/>
-    <radius>100.000000</radius>
+    <pos x="2450.323328" y="495.898769"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7690">
-    <pos x="-1021.543261" y="1676.089180"/>
-    <radius>100.000000</radius>
+    <pos x="-2023.554620" y="1468.069038"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7693">
-    <pos x="1569.563349" y="606.624085"/>
-    <radius>100.000000</radius>
+    <pos x="1244.173643" y="2168.416921"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -524,8 +524,8 @@
   </planets>
   <jumps>
    <jump target="Delta Pavonis">
-    <pos x="1708.331605" y="361.917119"/>
-    <radius>100.000000</radius>
+    <pos x="-1614.855604" y="1908.465713"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -551,23 +551,23 @@
   </planets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-436.507267" y="1560.124955"/>
-    <radius>100.000000</radius>
+    <pos x="-2473.123998" y="365.592243"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Klantar">
-    <pos x="-1376.259030" y="-1094.014543"/>
-    <radius>100.000000</radius>
+    <pos x="1633.083141" y="-1892.891823"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tarsus">
-    <pos x="-1582.956995" y="1008.887527"/>
-    <radius>100.000000</radius>
+    <pos x="-2143.732314" y="-1286.239389"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Theras">
-    <pos x="-1731.313192" y="646.315394"/>
-    <radius>100.000000</radius>
+    <pos x="2162.346217" y="1254.694719"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -594,13 +594,13 @@
   </planets>
   <jumps>
    <jump target="Beeklo">
-    <pos x="658.283073" y="1509.184761"/>
-    <radius>100.000000</radius>
+    <pos x="2236.067977" y="-1118.033989"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Verex">
-    <pos x="557.467946" y="1899.925737"/>
-    <radius>100.000000</radius>
+    <pos x="781.876594" y="2374.588173"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -625,18 +625,18 @@
   </planets>
   <jumps>
    <jump target="Alteris">
-    <pos x="1629.382672" y="-1120.185469"/>
-    <radius>100.000000</radius>
+    <pos x="286.560270" y="2483.522340"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Cygnus">
-    <pos x="-1571.355449" y="556.935025"/>
-    <radius>100.000000</radius>
+    <pos x="1614.855604" y="-1908.465713"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Goddard">
-    <pos x="-1619.821249" y="-619.838021"/>
-    <radius>100.000000</radius>
+    <pos x="-17.985146" y="-2499.935306"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -662,28 +662,28 @@
   </planets>
   <jumps>
    <jump target="Arandon">
-    <pos x="-1339.647199" y="1458.468234"/>
-    <radius>100.000000</radius>
+    <pos x="1311.624057" y="2128.295640"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Myad">
-    <pos x="530.640322" y="-1756.423053"/>
-    <radius>100.000000</radius>
+    <pos x="1270.633961" y="-2153.018657"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Sigur">
-    <pos x="-823.654481" y="1656.345701"/>
-    <radius>100.000000</radius>
+    <pos x="-2352.986677" y="844.661884"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Toros">
-    <pos x="-916.852344" y="-1464.690663"/>
-    <radius>100.000000</radius>
+    <pos x="2324.901800" y="919.147223"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zylex">
-    <pos x="-402.978616" y="1463.130003"/>
-    <radius>100.000000</radius>
+    <pos x="-2136.540189" y="-1298.151001"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -707,28 +707,28 @@
   </planets>
   <jumps>
    <jump target="Dakron">
-    <pos x="1667.143487" y="-993.489716"/>
-    <radius>100.000000</radius>
+    <pos x="2473.123998" y="-365.592243"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Ogat">
-    <pos x="-1561.261485" y="-320.998607"/>
-    <radius>100.000000</radius>
+    <pos x="-845.180714" y="2352.800366"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tarsus">
-    <pos x="1071.248446" y="-1543.061780"/>
-    <radius>100.000000</radius>
+    <pos x="1920.553199" y="-1600.460999"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Torg">
-    <pos x="-783.629863" y="-1414.210309"/>
-    <radius>100.000000</radius>
+    <pos x="-2025.561027" y="-1465.299466"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tuoladis">
-    <pos x="1369.470907" y="1155.383896"/>
-    <radius>100.000000</radius>
+    <pos x="1848.355954" y="1683.324172"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -754,8 +754,8 @@
   </planets>
   <jumps>
    <jump target="Tau Prime">
-    <pos x="1579.149628" y="632.933302"/>
-    <radius>100.000000</radius>
+    <pos x="321.385072" y="-2479.256267"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -782,8 +782,8 @@
   </planets>
   <jumps>
    <jump target="Tau Prime">
-    <pos x="40.580777" y="1558.725396"/>
-    <radius>100.000000</radius>
+    <pos x="-184.679214" y="2493.169386"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -809,18 +809,18 @@
   </planets>
   <jumps>
    <jump target="Coriolis">
-    <pos x="1050.373414" y="-1549.011460"/>
-    <radius>100.000000</radius>
+    <pos x="-2450.323328" y="-495.898769"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Eridani">
-    <pos x="-884.293847" y="1408.002130"/>
-    <radius>100.000000</radius>
+    <pos x="49.990003" y="-2499.500150"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7789">
-    <pos x="-821.141324" y="1575.505391"/>
-    <radius>100.000000</radius>
+    <pos x="1429.481654" y="2050.995417"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -846,13 +846,13 @@
   </planets>
   <jumps>
    <jump target="Hakoi">
-    <pos x="894.746924" y="-1244.545339"/>
-    <radius>100.000000</radius>
+    <pos x="-1741.188443" y="-1793.951729"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Qex">
-    <pos x="-1378.914138" y="769.988002"/>
-    <radius>100.000000</radius>
+    <pos x="-2042.419658" y="1441.707994"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -877,18 +877,18 @@
   </planets>
   <jumps>
    <jump target="Alteris">
-    <pos x="-611.619423" y="-1462.443664"/>
-    <radius>100.000000</radius>
+    <pos x="-2450.323328" y="-495.898769"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Dune">
-    <pos x="1444.160290" y="-1050.916410"/>
-    <radius>100.000000</radius>
+    <pos x="-49.990003" y="2499.500150"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Mizar">
-    <pos x="1776.195297" y="-318.175305"/>
-    <radius>100.000000</radius>
+    <pos x="2382.314450" y="-758.009143"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -915,33 +915,33 @@
   </planets>
   <jumps>
    <jump target="Apez">
-    <pos x="1447.858588" y="-485.372273"/>
-    <radius>100.000000</radius>
+    <pos x="2419.043181" y="-631.054743"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Arcturus">
-    <pos x="526.214671" y="-1734.468503"/>
-    <radius>100.000000</radius>
+    <pos x="2337.898613" y="885.567657"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Koralis">
-    <pos x="338.506110" y="1746.491781"/>
-    <radius>100.000000</radius>
+    <pos x="-2067.316255" y="-1405.775054"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Qex">
-    <pos x="697.269308" y="1814.783619"/>
-    <radius>100.000000</radius>
+    <pos x="-369.461338" y="-2472.548952"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Shakar">
-    <pos x="-391.278927" y="1939.965273"/>
-    <radius>100.000000</radius>
+    <pos x="49.495247" y="2499.509996"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Sirou">
-    <pos x="-1676.887826" y="-439.507640"/>
-    <radius>100.000000</radius>
+    <pos x="-2072.680322" y="1397.854171"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -968,8 +968,8 @@
   </planets>
   <jumps>
    <jump target="Theras">
-    <pos x="-318.466542" y="-1585.527771"/>
-    <radius>100.000000</radius>
+    <pos x="-2102.160762" y="-1353.114973"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -995,8 +995,8 @@
   </planets>
   <jumps>
    <jump target="Verex">
-    <pos x="681.623759" y="1794.399271"/>
-    <radius>100.000000</radius>
+    <pos x="-1249.306134" y="2165.463965"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1021,18 +1021,18 @@
   </planets>
   <jumps>
    <jump target="Arcturus">
-    <pos x="-1012.669266" y="1136.745008"/>
-    <radius>100.000000</radius>
+    <pos x="-2071.809706" y="-1399.144217"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Delta Pavonis">
-    <pos x="280.649451" y="-1929.046078"/>
-    <radius>100.000000</radius>
+    <pos x="17.985146" y="2499.935306"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Ogat">
-    <pos x="-1726.921101" y="743.117376"/>
-    <radius>100.000000</radius>
+    <pos x="2240.018553" y="-1110.097690"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1057,8 +1057,8 @@
   <planets/>
   <jumps>
    <jump target="Sol">
-    <pos x="764.325629" y="-1341.213925"/>
-    <radius>100.000000</radius>
+    <pos x="-2479.001028" y="323.347960"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1080,8 +1080,8 @@
   </planets>
   <jumps>
    <jump target="Eneguoz">
-    <pos x="189.028698" y="-1794.526406"/>
-    <radius>100.000000</radius>
+    <pos x="1741.188443" y="1793.951729"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1108,13 +1108,13 @@
   </planets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="-828.809117" y="1395.045053"/>
-    <radius>100.000000</radius>
+    <pos x="1310.243564" y="-2129.145792"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Theras">
-    <pos x="-1771.954461" y="-407.964820"/>
-    <radius>100.000000</radius>
+    <pos x="-2458.632971" y="452.906074"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1138,8 +1138,8 @@
   <planets/>
   <jumps>
    <jump target="NGC-7693">
-    <pos x="1256.924922" y="-1267.141371"/>
-    <radius>100.000000</radius>
+    <pos x="2173.903335" y="-1234.562388"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1163,8 +1163,8 @@
   </planets>
   <jumps>
    <jump target="Apez">
-    <pos x="-1612.490587" y="-547.406336"/>
-    <radius>100.000000</radius>
+    <pos x="-2236.067977" y="-1118.033989"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1187,8 +1187,8 @@
   <planets/>
   <jumps>
    <jump target="Toaxis">
-    <pos x="887.366057" y="-1238.838338"/>
-    <radius>100.000000</radius>
+    <pos x="-1611.493131" y="1911.305807"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1210,13 +1210,13 @@
   </planets>
   <jumps>
    <jump target="Dakron">
-    <pos x="-1616.217844" y="743.939084"/>
-    <radius>100.000000</radius>
+    <pos x="-1633.083141" y="1892.891823"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Massia">
-    <pos x="1664.962496" y="995.700321"/>
-    <radius>100.000000</radius>
+    <pos x="-776.004454" y="-2376.513641"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1242,13 +1242,13 @@
   </planets>
   <jumps>
    <jump target="Gamma Polaris">
-    <pos x="-1404.699701" y="-696.995231"/>
-    <radius>100.000000</radius>
+    <pos x="2067.316255" y="1405.775054"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Qex">
-    <pos x="1450.859525" y="-760.867403"/>
-    <radius>100.000000</radius>
+    <pos x="1431.058920" y="-2049.895209"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1273,8 +1273,8 @@
   </planets>
   <jumps>
    <jump target="Klantar">
-    <pos x="-10.608633" y="-1588.294337"/>
-    <radius>100.000000</radius>
+    <pos x="776.004454" y="2376.513641"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1298,18 +1298,18 @@
   <planets/>
   <jumps>
    <jump target="Eridani">
-    <pos x="73.560880" y="1901.097889"/>
-    <radius>100.000000</radius>
+    <pos x="-2382.314450" y="758.009143"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Surano">
-    <pos x="1019.155304" y="-1531.063932"/>
-    <radius>100.000000</radius>
+    <pos x="1670.669544" y="-1859.801945"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Thorndyke">
-    <pos x="-384.251976" y="-1533.123179"/>
-    <radius>100.000000</radius>
+    <pos x="940.942617" y="2316.166443"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1334,13 +1334,13 @@
   <planets/>
   <jumps>
    <jump target="Doeston">
-    <pos x="673.727201" y="-1361.006400"/>
-    <radius>100.000000</radius>
+    <pos x="-1270.633961" y="2153.018657"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tormulex">
-    <pos x="1349.257299" y="1430.329870"/>
-    <radius>100.000000</radius>
+    <pos x="2395.322154" y="715.843402"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1362,8 +1362,8 @@
   <planets/>
   <jumps>
    <jump target="NGC-7273">
-    <pos x="-1159.211245" y="-1480.907518"/>
-    <radius>100.000000</radius>
+    <pos x="2160.438455" y="1257.976822"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1386,18 +1386,18 @@
   <planets/>
   <jumps>
    <jump target="C-43">
-    <pos x="-1711.911713" y="-861.043166"/>
-    <radius>100.000000</radius>
+    <pos x="-2490.801395" y="-214.262486"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="C-59">
-    <pos x="-1346.373249" y="1299.647126"/>
-    <radius>100.000000</radius>
+    <pos x="-1868.523297" y="1660.909597"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7291">
-    <pos x="1129.898346" y="-1231.077495"/>
-    <radius>100.000000</radius>
+    <pos x="2129.145792" y="-1310.243564"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1419,18 +1419,18 @@
   <planets/>
   <jumps>
    <jump target="NGC-6938">
-    <pos x="1480.400381" y="-1274.439557"/>
-    <radius>100.000000</radius>
+    <pos x="-2160.438455" y="-1257.976822"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7291">
-    <pos x="-1767.576740" y="-296.805836"/>
-    <radius>100.000000</radius>
+    <pos x="-2282.308948" y="1020.326353"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7324">
-    <pos x="-602.450846" y="1877.458401"/>
-    <radius>100.000000</radius>
+    <pos x="38.456988" y="2499.704195"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1456,18 +1456,18 @@
   </planets>
   <jumps>
    <jump target="NGC-7132">
-    <pos x="-1359.255928" y="946.425954"/>
-    <radius>100.000000</radius>
+    <pos x="-2129.145792" y="1310.243564"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7273">
-    <pos x="-872.375433" y="-1771.613077"/>
-    <radius>100.000000</radius>
+    <pos x="2282.308948" y="-1020.326353"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7414">
-    <pos x="-919.148930" y="-1469.996476"/>
-    <radius>100.000000</radius>
+    <pos x="1275.504783" y="2150.136635"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1491,13 +1491,13 @@
   <planets/>
   <jumps>
    <jump target="Alteris">
-    <pos x="1494.843503" y="-917.297318"/>
-    <radius>100.000000</radius>
+    <pos x="2362.465184" y="-817.776410"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7273">
-    <pos x="313.026588" y="-1745.610473"/>
-    <radius>100.000000</radius>
+    <pos x="-38.456988" y="-2499.704195"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1521,13 +1521,13 @@
   <planets/>
   <jumps>
    <jump target="NGC-7291">
-    <pos x="-353.164956" y="-1910.833903"/>
-    <radius>100.000000</radius>
+    <pos x="-1275.504783" y="-2150.136635"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7690">
-    <pos x="-1049.675638" y="1204.755855"/>
-    <radius>100.000000</radius>
+    <pos x="2349.483559" y="854.357658"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1550,18 +1550,18 @@
   <planets/>
   <jumps>
    <jump target="Capricorn">
-    <pos x="-1253.997072" y="-1227.639050"/>
-    <radius>100.000000</radius>
+    <pos x="-1975.549503" y="1532.058798"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Coriolis">
-    <pos x="-642.013835" y="1604.742769"/>
-    <radius>100.000000</radius>
+    <pos x="2023.554620" y="-1468.069038"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7414">
-    <pos x="258.943661" y="1854.171791"/>
-    <radius>100.000000</radius>
+    <pos x="-2349.483559" y="-854.357658"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1584,18 +1584,18 @@
   <planets/>
   <jumps>
    <jump target="Coriolis">
-    <pos x="-262.777791" y="1503.426033"/>
-    <radius>100.000000</radius>
+    <pos x="-1244.173643" y="-2168.416921"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Haven">
-    <pos x="-541.915025" y="1772.650436"/>
-    <radius>100.000000</radius>
+    <pos x="-2173.903335" y="1234.562388"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7723">
-    <pos x="1518.303162" y="-329.589559"/>
-    <radius>100.000000</radius>
+    <pos x="155.945715" y="2495.131446"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1618,18 +1618,18 @@
   <planets/>
   <jumps>
    <jump target="NGC-7693">
-    <pos x="-21.130988" y="1546.571734"/>
-    <radius>100.000000</radius>
+    <pos x="-155.945715" y="-2495.131446"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7783">
-    <pos x="1545.603083" y="1202.858063"/>
-    <radius>100.000000</radius>
+    <pos x="-1118.033989" y="2236.067977"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7843">
-    <pos x="-1392.870548" y="1158.164219"/>
-    <radius>100.000000</radius>
+    <pos x="2210.237351" y="1168.268314"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1652,8 +1652,8 @@
   <planets/>
   <jumps>
    <jump target="NGC-7723">
-    <pos x="73.006411" y="-1599.294825"/>
-    <radius>100.000000</radius>
+    <pos x="1118.033989" y="-2236.067977"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1673,8 +1673,8 @@
   <planets/>
   <jumps>
    <jump target="Dune">
-    <pos x="-1829.411577" y="-53.528541"/>
-    <radius>100.000000</radius>
+    <pos x="-1429.481654" y="-2050.995417"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1697,33 +1697,33 @@
   <planets/>
   <jumps>
    <jump target="NGC-7723">
-    <pos x="794.663900" y="-1747.065258"/>
-    <radius>100.000000</radius>
+    <pos x="-2210.237351" y="-1168.268314"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7723">
-    <pos x="1432.007809" y="764.227509"/>
-    <radius>100.000000</radius>
+    <pos x="-2210.237351" y="-1168.268314"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-7723">
-    <pos x="1755.920428" y="374.972233"/>
-    <radius>100.000000</radius>
+    <pos x="-2210.237351" y="-1168.268314"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="New Haven">
-    <pos x="-1504.706158" y="-493.021079"/>
-    <radius>100.000000</radius>
+    <pos x="34.718874" y="2499.758908"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="New Haven">
-    <pos x="613.668596" y="-1428.306581"/>
-    <radius>100.000000</radius>
+    <pos x="34.718874" y="2499.758908"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="New Haven">
-    <pos x="1508.132784" y="1185.754443"/>
-    <radius>100.000000</radius>
+    <pos x="34.718874" y="2499.758908"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1779,8 +1779,8 @@
   <planets/>
   <jumps>
    <jump target="Sigur">
-    <pos x="-273.523985" y="-1726.819793"/>
-    <radius>100.000000</radius>
+    <pos x="2229.373519" y="-1131.323875"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1802,8 +1802,8 @@
   </planets>
   <jumps>
    <jump target="NGC-7843">
-    <pos x="1477.115653" y="338.691660"/>
-    <radius>100.000000</radius>
+    <pos x="-34.718874" y="-2499.758908"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1827,8 +1827,8 @@
   </planets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="611.396486" y="1688.880590"/>
-    <radius>100.000000</radius>
+    <pos x="1386.750491" y="2080.125736"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1854,23 +1854,23 @@
   </planets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-1175.130494" y="1123.935459"/>
-    <radius>100.000000</radius>
+    <pos x="845.180714" y="-2352.800366"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Goddard">
-    <pos x="-299.696675" y="-1696.768588"/>
-    <radius>100.000000</radius>
+    <pos x="-2240.018553" y="1110.097690"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Vlexon">
-    <pos x="-486.613786" y="1510.944432"/>
-    <radius>100.000000</radius>
+    <pos x="-1275.504783" y="-2150.136635"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zacron">
-    <pos x="-173.739501" y="-1840.544094"/>
-    <radius>100.000000</radius>
+    <pos x="2399.697792" y="701.035310"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1895,8 +1895,8 @@
   <planets/>
   <jumps>
    <jump target="Arandon">
-    <pos x="1108.894388" y="1653.583885"/>
-    <radius>100.000000</radius>
+    <pos x="2427.411529" y="-598.057913"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1916,8 +1916,8 @@
   <planets/>
   <jumps>
    <jump target="Thorndyke">
-    <pos x="1046.317704" y="-1687.330058"/>
-    <radius>100.000000</radius>
+    <pos x="-2026.698071" y="-1463.726385"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1937,13 +1937,13 @@
   <planets/>
   <jumps>
    <jump target="Arandon">
-    <pos x="-1145.262407" y="1099.760558"/>
-    <radius>100.000000</radius>
+    <pos x="-679.322676" y="-2405.934476"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Sol">
-    <pos x="-1488.029009" y="1016.686779"/>
-    <radius>100.000000</radius>
+    <pos x="2458.382025" y="454.266244"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1965,8 +1965,8 @@
   </planets>
   <jumps>
    <jump target="Shakar">
-    <pos x="-1168.316962" y="-1453.768377"/>
-    <radius>100.000000</radius>
+    <pos x="-2469.692814" y="388.094585"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1992,23 +1992,23 @@
   </planets>
   <jumps>
    <jump target="Eneguoz">
-    <pos x="-1807.157252" y="-381.453804"/>
-    <radius>100.000000</radius>
+    <pos x="2042.419658" y="-1441.707994"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-950.287550" y="-1689.431735"/>
-    <radius>100.000000</radius>
+    <pos x="369.461338" y="2472.548952"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Koralis">
-    <pos x="1972.966146" y="-70.662035"/>
-    <radius>100.000000</radius>
+    <pos x="-1431.058920" y="2049.895209"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Uhriabi">
-    <pos x="-1332.160477" y="-776.715958"/>
-    <radius>100.000000</radius>
+    <pos x="2486.858247" y="256.000114"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2034,28 +2034,28 @@
   </planets>
   <jumps>
    <jump target="Arcanis">
-    <pos x="1151.402701" y="-1032.112471"/>
-    <radius>100.000000</radius>
+    <pos x="1561.737619" y="1952.172024"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Surano">
-    <pos x="846.709715" y="1368.798435"/>
-    <radius>100.000000</radius>
+    <pos x="-480.558571" y="2453.377969"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tau Prime">
-    <pos x="1679.499895" y="-439.191270"/>
-    <radius>100.000000</radius>
+    <pos x="-2146.358173" y="1281.852798"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Toaxis">
-    <pos x="-412.862213" y="1735.872946"/>
-    <radius>100.000000</radius>
+    <pos x="2487.172093" y="-252.932755"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zacron">
-    <pos x="695.346690" y="1381.257456"/>
-    <radius>100.000000</radius>
+    <pos x="-814.976708" y="-2363.432454"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2082,18 +2082,18 @@
   </planets>
   <jumps>
    <jump target="Borla">
-    <pos x="1529.067700" y="90.471802"/>
-    <radius>100.000000</radius>
+    <pos x="-1767.766953" y="1767.766953"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-1218.662826" y="-1480.946794"/>
-    <radius>100.000000</radius>
+    <pos x="-49.495247" y="-2499.509996"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Protera">
-    <pos x="1518.963774" y="1029.871899"/>
-    <radius>100.000000</radius>
+    <pos x="2469.692814" y="-388.094585"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2116,18 +2116,18 @@
   <planets/>
   <jumps>
    <jump target="Doeston">
-    <pos x="-972.684408" y="1181.431691"/>
-    <radius>100.000000</radius>
+    <pos x="2352.986677" y="-844.661884"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="NGC-8037">
-    <pos x="1462.485823" y="-893.748502"/>
-    <radius>100.000000</radius>
+    <pos x="-2229.373519" y="1131.323875"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zylex">
-    <pos x="-1795.674074" y="190.275047"/>
-    <radius>100.000000</radius>
+    <pos x="-32.891890" y="-2499.783615"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2147,8 +2147,8 @@
   <planets/>
   <jumps>
    <jump target="Gamma Polaris">
-    <pos x="1538.426660" y="-906.026238"/>
-    <radius>100.000000</radius>
+    <pos x="2072.680322" y="-1397.854171"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2170,13 +2170,13 @@
   <planets/>
   <jumps>
    <jump target="Haleb">
-    <pos x="-552.785824" y="-1771.644797"/>
-    <radius>100.000000</radius>
+    <pos x="-1310.243564" y="2129.145792"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Norpin">
-    <pos x="-1475.048358" y="883.945571"/>
-    <radius>100.000000</radius>
+    <pos x="-1386.750491" y="-2080.125736"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2200,13 +2200,13 @@
   <planets/>
   <jumps>
    <jump target="Haered">
-    <pos x="-1766.051480" y="-760.078221"/>
-    <radius>100.000000</radius>
+    <pos x="2479.001028" y="-323.347960"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Polaris">
-    <pos x="933.933791" y="1645.644431"/>
-    <radius>100.000000</radius>
+    <pos x="-2458.382025" y="-454.266244"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2226,13 +2226,13 @@
   <planets/>
   <jumps>
    <jump target="Mizar">
-    <pos x="-1929.291733" y="-384.371569"/>
-    <radius>100.000000</radius>
+    <pos x="-1670.669544" y="1859.801945"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Raelid">
-    <pos x="614.352697" y="1557.213151"/>
-    <radius>100.000000</radius>
+    <pos x="480.558571" y="-2453.377969"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2258,18 +2258,18 @@
   </planets>
   <jumps>
    <jump target="Dakron">
-    <pos x="1836.601989" y="96.872520"/>
-    <radius>100.000000</radius>
+    <pos x="2143.732314" y="1286.239389"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Doranthex">
-    <pos x="649.374392" y="1647.309675"/>
-    <radius>100.000000</radius>
+    <pos x="-1920.553199" y="1600.460999"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Verex">
-    <pos x="-606.809700" y="1657.524682"/>
-    <radius>100.000000</radius>
+    <pos x="-1561.737619" y="-1952.172024"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2296,18 +2296,18 @@
   </planets>
   <jumps>
    <jump target="Draconis">
-    <pos x="572.608546" y="1452.281832"/>
-    <radius>100.000000</radius>
+    <pos x="-321.385072" y="2479.256267"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Draygar">
-    <pos x="-1281.397583" y="-979.924833"/>
-    <radius>100.000000</radius>
+    <pos x="184.679214" y="-2493.169386"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Raelid">
-    <pos x="397.228359" y="1809.736751"/>
-    <radius>100.000000</radius>
+    <pos x="2146.358173" y="-1281.852798"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2333,18 +2333,18 @@
   </planets>
   <jumps>
    <jump target="Dakron">
-    <pos x="-1180.482349" y="1279.984924"/>
-    <radius>100.000000</radius>
+    <pos x="-2162.346217" y="-1254.694719"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gilligan's Light">
-    <pos x="-1495.532005" y="614.705138"/>
-    <radius>100.000000</radius>
+    <pos x="2102.160762" y="1353.114973"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Haleb">
-    <pos x="-1919.429747" y="455.017941"/>
-    <radius>100.000000</radius>
+    <pos x="2458.632971" y="-452.906074"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2368,13 +2368,13 @@
   <planets/>
   <jumps>
    <jump target="Mizar">
-    <pos x="1600.767848" y="196.449115"/>
-    <radius>100.000000</radius>
+    <pos x="-940.942617" y="-2316.166443"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Pilatis">
-    <pos x="1739.673479" y="-17.433552"/>
-    <radius>100.000000</radius>
+    <pos x="2026.698071" y="1463.726385"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2396,13 +2396,13 @@
   <planets/>
   <jumps>
    <jump target="Ingot">
-    <pos x="405.457652" y="-1534.860983"/>
-    <radius>100.000000</radius>
+    <pos x="1611.493131" y="-1911.305807"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Raelid">
-    <pos x="-398.005085" y="-1673.511209"/>
-    <radius>100.000000</radius>
+    <pos x="-2487.172093" y="252.932755"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2428,8 +2428,8 @@
   </planets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-1681.236922" y="195.558332"/>
-    <radius>100.000000</radius>
+    <pos x="2025.561027" y="1465.299466"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2453,8 +2453,8 @@
   <planets/>
   <jumps>
    <jump target="Myad">
-    <pos x="1285.263826" y="-1183.650593"/>
-    <radius>100.000000</radius>
+    <pos x="-2395.322154" y="-715.843402"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2474,8 +2474,8 @@
   <planets/>
   <jumps>
    <jump target="Doeston">
-    <pos x="1533.369969" y="-1116.103877"/>
-    <radius>100.000000</radius>
+    <pos x="-2324.901800" y="-919.147223"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2495,13 +2495,13 @@
   <planets/>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-1483.671606" y="1001.252692"/>
-    <radius>100.000000</radius>
+    <pos x="-1848.355954" y="-1683.324172"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Zacron">
-    <pos x="1755.211574" y="432.864054"/>
-    <radius>100.000000</radius>
+    <pos x="-128.036880" y="2496.719159"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2527,8 +2527,8 @@
   </planets>
   <jumps>
    <jump target="Qex">
-    <pos x="1147.451366" y="1199.923857"/>
-    <radius>100.000000</radius>
+    <pos x="-2486.858247" y="-256.000114"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2553,23 +2553,23 @@
   </planets>
   <jumps>
    <jump target="Blunderbuss">
-    <pos x="1751.939266" y="95.926872"/>
-    <radius>100.000000</radius>
+    <pos x="-2174.591255" y="-1233.350264"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Darkstone">
-    <pos x="-439.504553" y="-1449.120595"/>
-    <radius>100.000000</radius>
+    <pos x="-781.876594" y="-2374.588173"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Ginger">
-    <pos x="-1000.966091" y="1155.579334"/>
-    <radius>100.000000</radius>
+    <pos x="1249.306134" y="-2165.463965"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tarsus">
-    <pos x="1449.460133" y="-1324.381754"/>
-    <radius>100.000000</radius>
+    <pos x="1561.737619" y="1952.172024"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2594,8 +2594,8 @@
   </planets>
   <jumps>
    <jump target="Ogat">
-    <pos x="151.427628" y="-1960.259276"/>
-    <radius>100.000000</radius>
+    <pos x="1275.504783" y="2150.136635"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2620,18 +2620,18 @@
   <planets/>
   <jumps>
    <jump target="Ogat">
-    <pos x="820.255224" y="-1293.163671"/>
-    <radius>100.000000</radius>
+    <pos x="-2399.697792" y="-701.035310"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Raelid">
-    <pos x="672.453259" y="-1874.276343"/>
-    <radius>100.000000</radius>
+    <pos x="814.976708" y="2363.432454"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tuoladis">
-    <pos x="-1745.189561" y="-286.135636"/>
-    <radius>100.000000</radius>
+    <pos x="128.036880" y="-2496.719159"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2655,8 +2655,8 @@
   <planets/>
   <jumps>
    <jump target="Arandon">
-    <pos x="-1473.517379" y="1159.228663"/>
-    <radius>100.000000</radius>
+    <pos x="-2456.425614" y="-464.729170"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2679,8 +2679,8 @@
   </planets>
   <jumps>
    <jump target="Apez">
-    <pos x="1764.433305" y="-102.868097"/>
-    <radius>100.000000</radius>
+    <pos x="-2403.809869" y="686.802820"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2703,18 +2703,18 @@
   <planets/>
   <jumps>
    <jump target="Arcanis">
-    <pos x="-1061.755204" y="-1107.914067"/>
-    <radius>100.000000</radius>
+    <pos x="-2369.351911" y="797.603613"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Doeston">
-    <pos x="-1799.893334" y="253.977443"/>
-    <radius>100.000000</radius>
+    <pos x="2136.540189" y="1298.151001"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Sigur">
-    <pos x="547.324071" y="-1854.836467"/>
-    <radius>100.000000</radius>
+    <pos x="32.891890" y="2499.783615"/>
+    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
