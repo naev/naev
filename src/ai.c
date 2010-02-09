@@ -30,13 +30,13 @@
  *   -  AI will follow basic tasks defined from Lua AI script.  
  *     - if Task is NULL, AI will run "control" task
  *     - Task is continued every frame
+ *     - Tasks can have subtasks which will be closed when parent task is dead.
  *     -  "control" task is a special task that MUST exist in any given  Pilot AI
  *        (missiles and such will use "seek")
  *     - "control" task is not permanent, but transitory
  *     - "control" task sets another task
  *   - "control" task is also run at a set rate (depending on Lua global "control_rate")
  *     to choose optimal behaviour (task)
- *
  * 
  * Memory
  *
@@ -142,19 +142,26 @@ static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
 static int ai_loadEquip (void);
+/* Task management. */
+static Task* ai_createTask( lua_State *L, int subtask );
+static int ai_tasktarget( lua_State *L, Task *t );
 
 
 /*
  * AI routines for Lua
  */
 /* tasks */
-static int aiL_pushtask( lua_State *L ); /* pushtask( string, number/pointer, number ) */
+static int aiL_pushtask( lua_State *L ); /* pushtask( string, number/pointer ) */
 static int aiL_poptask( lua_State *L ); /* poptask() */
-static int aiL_taskname( lua_State *L ); /* number taskname() */
+static int aiL_taskname( lua_State *L ); /* string taskname() */
+static int aiL_gettarget( lua_State *L ); /* pointer gettarget() */
+static int aiL_pushsubtask( lua_State *L ); /* pushsubtask( string, number/pointer, number ) */
+static int aiL_popsubtask( lua_State *L ); /* popsubtask() */
+static int aiL_subtaskname( lua_State *L ); /* string subtaskname() */
+static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 
 /* consult values */
 static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
-static int aiL_gettarget( lua_State *L ); /* pointer gettarget() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
@@ -238,6 +245,11 @@ static const luaL_reg aiL_methods[] = {
    { "pushtask", aiL_pushtask },
    { "poptask", aiL_poptask },
    { "taskname", aiL_taskname },
+   { "target", aiL_gettarget },
+   { "pushsubtask", aiL_pushsubtask },
+   { "popsubtask", aiL_popsubtask },
+   { "subtaskname", aiL_subtaskname },
+   { "subtarget", aiL_getsubtarget },
    /* is */
    { "exists", aiL_exists },
    { "ismaxvel", aiL_ismaxvel },
@@ -249,7 +261,6 @@ static const luaL_reg aiL_methods[] = {
    { "haslockon", aiL_haslockon },
    /* get */
    { "getPlayer", aiL_getplayer },
-   { "target", aiL_gettarget },
    { "rndpilot", aiL_getrndpilot },
    { "armour", aiL_armour },
    { "shield", aiL_shield },
@@ -906,7 +917,7 @@ static void ai_create( Pilot* pilot, char *param )
 /**
  * @brief Creates a new AI task.
  */
-Task *ai_newtask( Pilot *p, const char *func, int pos )
+Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *pointer;
    
@@ -916,14 +927,31 @@ Task *ai_newtask( Pilot *p, const char *func, int pos )
    t->name  = strdup(func);
    t->dtype = TASKDATA_NULL;
 
-   /* Attach the task. */
-   if ((pos == 1) && (p->task != NULL)) { /* put at the end */
-      for (pointer = p->task; pointer->next != NULL; pointer = pointer->next);
-      pointer->next = t;
+   /* Handle subtask and general task. */
+   if (!subtask) {
+      if ((pos == 1) && (p->task != NULL)) { /* put at the end */
+         for (pointer = p->task; pointer->next != NULL; pointer = pointer->next);
+         pointer->next = t;
+      }
+      else {
+         t->next = p->task;
+         p->task = t;
+      }
    }
-   else { /* default put at the beginning */
-      t->next = p->task;
-      p->task = t;
+   else {
+      /* Must have valid task. */
+      if (p->task == NULL)
+         return NULL;
+
+      /* Add the subtask. */
+      if ((pos == 1) && (p->task != NULL)) { /* put at the end */
+         for (pointer = p->task->subtask; pointer->next != NULL; pointer = pointer->next);
+         pointer->next = t;
+      }
+      else {
+         t->next           = p->task->subtask;
+         p->task->subtask  = t;
+      }
    }
 
    return t;
@@ -937,6 +965,13 @@ Task *ai_newtask( Pilot *p, const char *func, int pos )
  */
 void ai_freetask( Task* t )
 {
+   /* Recursive subtask freeing. */
+   if (t->subtask != NULL) {
+      ai_freetask(t->subtask);
+      t->subtask = NULL;
+   }
+
+   /* Free next task in the chain. */
    if (t->next != NULL) {
       ai_freetask(t->next); /* yay recursive freeing */
       t->next = NULL;
@@ -945,6 +980,63 @@ void ai_freetask( Task* t )
    if (t->name)
       free(t->name);
    free(t);
+}
+
+
+/**
+ * @brief Creates a new task based on stack information.
+ */
+static Task* ai_createTask( lua_State *L, int subtask )
+{
+   const char *func;
+   Task *t;
+   LuaVector *lv;
+
+   /* Parse basic parameters. */
+   func  = luaL_checkstring(L,1);
+
+   /* Creates a new AI task. */
+   t = ai_newtask( cur_pilot, func, subtask, 0 );
+
+   /* Set the data. */
+   if (lua_gettop(L) > 1) {
+      if (lua_isnumber(L,2)) {
+         t->dtype    = TASKDATA_INT;
+         t->dat.num  = (unsigned int)lua_tonumber(L,2);
+      }
+      else if (lua_isvector(L,2)) {
+         t->dtype    = TASKDATA_VEC2;
+         lv          = lua_tovector(L,2);
+         vectcpy( &t->dat.vec, &lv->vec );
+      }
+      else NLUA_INVALID_PARAMETER();
+   }
+
+   return t;
+}
+
+
+/**
+ * @brief Pushes a task target.
+ */
+static int ai_tasktarget( lua_State *L, Task *t )
+{
+   LuaVector lv;
+
+   /* Pask task type. */
+   switch (t->dtype) {
+      case TASKDATA_INT:
+         lua_pushnumber(L, t->dat.num);
+         return 1;
+
+      case TASKDATA_VEC2:
+         lv.vec = t->dat.vec;
+         lua_pushvector(L, lv);
+         return 1;
+
+      default:
+         return 0;
+   }
 }
 
 
@@ -962,7 +1054,6 @@ void ai_freetask( Task* t )
  */
 /**
  * @brief Pushes a task onto the pilot's task list.
- *    @luaparam pos Position to push into stack, 0 is front, 1 is back.
  *    @luaparam func Function to call for task.
  *    @luaparam data Data to pass to the function.  Only lightuserdata or number
  *           is currently supported.
@@ -972,32 +1063,7 @@ void ai_freetask( Task* t )
  */
 static int aiL_pushtask( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
-   int pos;
-   const char *func;
-   Task *t;
-   LuaVector *lv;
-
-   /* Parse basic parameters. */
-   pos   = luaL_checkint(L,1);
-   func  = luaL_checkstring(L,2);
-
-   /* Creates a new AI task. */
-   t = ai_newtask( cur_pilot, func, pos );
-
-   /* Set the data. */
-   if (lua_gettop(L) > 2) {
-      if (lua_isnumber(L,3)) {
-         t->dtype = TASKDATA_INT;
-         t->dat.num = (unsigned int)lua_tonumber(L,3);
-      }
-      else if (lua_isvector(L,3)) {
-         t->dtype = TASKDATA_VEC2;
-         lv       = lua_tovector(L,3);
-         vectcpy( &t->dat.vec, &lv->vec );
-      }
-      else NLUA_INVALID_PARAMETER();
-   }
+   ai_createTask( L, 0 );
 
    return 0;
 }
@@ -1018,8 +1084,8 @@ static int aiL_poptask( lua_State *L )
       return 0;
    }
 
-   cur_pilot->task = t->next;
-   t->next = NULL;
+   cur_pilot->task   = t->next;
+   t->next           = NULL;
    ai_freetask(t);
    return 0;
 }
@@ -1033,9 +1099,102 @@ static int aiL_poptask( lua_State *L )
  */
 static int aiL_taskname( lua_State *L )
 {
-   if (cur_pilot->task) lua_pushstring(L, cur_pilot->task->name);
-   else lua_pushstring(L, "none");
+   if (cur_pilot->task)
+      lua_pushstring(L, cur_pilot->task->name);
+   else
+      lua_pushstring(L, "none");
    return 1;
+}
+
+/**
+ * @brief Gets the pilot's task target.
+ *    @return The pilot's target ship identifier or nil if no target.
+ * @luafunc target()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_gettarget( lua_State *L )
+{
+   /* Must have a task. */
+   if (cur_pilot->task == NULL)
+      return 0;
+
+   return ai_tasktarget( L, cur_pilot->task );
+}
+
+/**
+ * @brief Pushes a subtask onto the pilot's task's subtask list.
+ *    @luaparam func Function to call for task.
+ *    @luaparam data Data to pass to the function.  Only lightuserdata or number
+ *           is currently supported.
+ * @luafunc pushsubtask( pos, func, data )
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_pushsubtask( lua_State *L )
+{
+   if (cur_pilot->task == NULL) {
+      NLUA_ERROR(L, "");
+      return 0;
+   }
+
+   ai_createTask(L, 1);
+   return 0;
+}
+
+/**
+ * @brief Pops the current running task.
+ * @luafunc popsubtask()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_popsubtask( lua_State *L )
+{
+   (void)L; /* hack to avoid -W -Wall warnings */
+   Task* t = cur_pilot->task;
+
+   /* Tasks must exist. */
+   if (t == NULL) {
+      NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
+      return 0;
+   }
+
+   cur_pilot->task   = t->next;
+   t->next           = NULL;
+   ai_freetask(t);
+   return 0;
+}
+
+/**
+ * @brief Gets the current subtask's name.
+ *    @return The current subtask name or "none" if there are no subtasks.
+ * @luafunc subtaskname()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_subtaskname( lua_State *L )
+{
+   if (cur_pilot->task)
+      lua_pushstring(L, cur_pilot->task->name);
+   else
+      lua_pushstring(L, "none");
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's subtask target.
+ *    @return The pilot's target ship identifier or nil if no target.
+ * @luafunc subtarget()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_getsubtarget( lua_State *L )
+{
+   /* Must have a subtask. */
+   if ((cur_pilot->task == NULL) || (cur_pilot->task->subtask == NULL))
+      return 0;
+
+   return ai_tasktarget( L, cur_pilot->task->subtask );
 }
 
 /**
@@ -1049,37 +1208,6 @@ static int aiL_getplayer( lua_State *L )
 {
    lua_pushnumber(L, PLAYER_ID);
    return 1;
-}
-
-/**
- * @brief Gets the pilot's target.
- *    @return The pilot's target ship identifier or nil if no target.
- * @luafunc target()
- *    @param L Lua state.
- *    @return Number of Lua parameters.
- */
-static int aiL_gettarget( lua_State *L )
-{
-   LuaVector lv;
-
-   /* Must have a task. */
-   if (cur_pilot->task == NULL)
-      return 0;
-
-   /* Pask task type. */
-   switch (cur_pilot->task->dtype) {
-      case TASKDATA_INT:
-         lua_pushnumber(L, cur_pilot->task->dat.num);
-         return 1;
-
-      case TASKDATA_VEC2:
-         lv.vec = cur_pilot->task->dat.vec;
-         lua_pushvector(L, lv);
-         return 1;
-
-      default:
-         return 0;
-   }
 }
 
 /**
@@ -1204,8 +1332,6 @@ static int aiL_getdistance( lua_State *L )
    LuaVector *lv;
    Pilot *pilot;
    unsigned int n;
-
-   NLUA_MIN_ARGS(1);
 
    /* vector as a parameter */
    if (lua_isvector(L,1)) {
@@ -1619,7 +1745,6 @@ static int aiL_turn( lua_State *L )
  */
 static int aiL_face( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaVector *lv;
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
@@ -1958,7 +2083,6 @@ static int aiL_aim( lua_State *L )
    double dist, diff;
    double mod;
    double speed;
-   NLUA_MIN_ARGS(1);
 
    /* Only acceptable parameter is pilot id */
    id = luaL_checklong(L,1);
@@ -2402,8 +2526,6 @@ static int aiL_broadcast( lua_State *L )
  */
 static int aiL_distress( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-
    if (lua_isstring(L,1))
       snprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
    else if (lua_isnil(L,1))
@@ -2439,7 +2561,6 @@ static int aiL_credits( lua_State *L )
  */
 static int aiL_cargo( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    int q;
    const char *s;
 

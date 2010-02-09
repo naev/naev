@@ -54,7 +54,7 @@ function goto ()
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
-      ai.pushtask(0, "brake")
+      ai.pushtask("brake")
    end
 end
 
@@ -80,7 +80,7 @@ function follow ()
 
    -- Brake
    elseif dist+100 < bdist then
-      ai.pushtask(0, "brake")
+      ai.pushtask("brake")
 
    -- Must approach
    elseif dir < 10 and dist > 300 then

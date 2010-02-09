@@ -1571,7 +1571,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
    }
 
    /* Creates the new task. */
-   t = ai_newtask( p, task, 1 );
+   t = ai_newtask( p, task, 0, 1 );
 
    return t;
 }

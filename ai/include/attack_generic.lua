@@ -43,7 +43,7 @@ function atk_g_attacked( attacker )
 
    -- If no target automatically choose it
    if not ai.exists(target) then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
       return
    end
 
@@ -53,7 +53,7 @@ function atk_g_attacked( attacker )
 
    if target ~= attacker and dist < tdist and
          dist < range * mem.atk_changetarget then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
    end
 end
 

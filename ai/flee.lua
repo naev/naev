@@ -24,9 +24,9 @@ function control ()
       local enemy = ai.getenemy()
 
       if enemy ~= nil then
-         ai.pushtask(0, "runaway", enemy)
+         ai.pushtask("runaway", enemy)
       else
-         ai.pushtask(0, "hyperspace" )
+         ai.pushtask("hyperspace" )
       end
    
    elseif task == "runaway" then
@@ -49,10 +49,10 @@ function attacked ( attacker )
       local target = ai.target()
       if target == nil or ai.target() ~= attacker then
          ai.poptask()
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
    else
-      ai.pushtask(0, "runaway", attacker)
+      ai.pushtask("runaway", attacker)
    end
 end
 
