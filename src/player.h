@@ -30,6 +30,11 @@
 #define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
 
 
+/* Autonav states. */
+#define AUTONAV_APPROACH   0 /**< Player is approaching a jump. */
+#define AUTONAV_BRAKE      1 /**< Player is braking at a jump. */
+
+
 /**
  * The player struct.
  */
@@ -42,6 +47,7 @@ typedef struct Player_s {
    unsigned int flags; /**< Player's flags. */
    int enemies; /**< Amount of enemies the player has. */
    double crating; /**< Combat rating. */
+   int autonav; /**< Current autonav state. */
 } Player_t;
 
 

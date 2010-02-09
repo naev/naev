@@ -194,6 +194,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
+static void player_autonav (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
 /* 
@@ -911,6 +912,7 @@ void player_startAutonav (void)
 
    player_message("\epAutonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
+   player.autonav = AUTONAV_APPROACH;
 }
 
 /**
@@ -975,7 +977,6 @@ void player_think( Pilot* pplayer, const double dt )
 {
    (void) dt;
    Pilot *target;
-   double d;
    double turn;
    int facing;
    Outfit *afb;
@@ -1006,17 +1007,9 @@ void player_think( Pilot* pplayer, const double dt )
       else if (pplayer->fuel < HYPERSPACE_FUEL)
          player_abortAutonav("Not enough fuel for autonav to continue");
 
-      /* Try to jump. */
-      else if (space_canHyperspace(pplayer))
-         player_jump();
-
-      /* Keey on moving. */
-      else  {
-         /* Only accelerate if facing move dir. */
-         d = pilot_face( pplayer, VANGLE(pplayer->solid->pos) );
-         if ((player_acc < 1.) && (d < MIN_DIR_ERR))
-            player_accel( 1. );
-      }
+      /* Keep on moving. */
+      else 
+         player_autonav();
 
       /* Disable turning. */
       facing = 1;
@@ -1129,6 +1122,59 @@ void player_think( Pilot* pplayer, const double dt )
    }
    else
       pilot_setThrust( pplayer, player_acc );
+}
+
+
+/**
+ * @brief Handles the autonavigation process for the player.
+ */
+static void player_autonav (void)
+{
+   JumpPoint *jp;
+   double d, time, vel, dist;
+
+   /* Target jump. */
+   jp = &cur_system->jumps[ player.p->nav_hyperspace ];
+
+   switch (player.autonav) {
+      case AUTONAV_APPROACH:
+
+         /* Only accelerate if facing move dir. */
+         d = pilot_face( player.p, vect_angle( &player.p->solid->pos, &jp->pos ) );
+         if ((player_acc < 1.) && (d < MIN_DIR_ERR))
+            player_accel( 1. );
+
+         /* Get current time to reach target. */
+         time = VMOD(player.p->solid->vel) /
+            (player.p->thrust / player.p->solid->mass);
+
+         /* Get velocity. */
+         vel = MIN(player.p->speed,VMOD(player.p->solid->vel));
+
+         /* Get distance. */
+         dist = vel*(time+1.1*180./player.p->turn) -
+            0.5*(player.p->thrust/player.p->solid->mass)*time*time;
+
+         /* See if should start braking. */
+         if (dist*dist < vect_dist2( &jp->pos, &player.p->solid->pos ))
+            player.autonav = AUTONAV_BRAKE;
+
+         break;
+
+      case AUTONAV_BRAKE:
+         /* Braking procedure. */
+         d = pilot_face( player.p, VANGLE(player.p->solid->vel) );
+         if ((player_acc < 1.) && (d < MIN_DIR_ERR))
+            player_accel( 1. );
+
+         /* Try to jump or see if braked. */
+         if (space_canHyperspace(player.p))
+            player_jump();
+         else if (VMOD(player.p->solid->vel) < MIN_VEL_ERR)
+            player.autonav = AUTONAV_APPROACH;
+
+         break;
+   }
 }
 
 
@@ -1519,7 +1565,7 @@ void player_jump (void)
    i = space_hyperspace(player.p);
 
    if (i == -1)
-      player_message("\erYou are too close to gravity centers to initiate hyperspace.");
+      player_message("\erYou are too far from a jump point to initiate hyperspace.");
    else if (i == -2)
       player_message("\erYou are moving too fast to enter hyperspace.");
    else if (i == -3)
