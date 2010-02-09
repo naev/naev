@@ -203,20 +203,16 @@ end
 
 --[[
 -- Starts heading away to try to hyperspace.
---
--- Will need teh following in control() to work:
---
--- task = ai.taskname()
--- if task == "hyperspace" then
---    ai.hyperspace() -- Try to hyperspace
--- end
 --]]
 function hyperspace ()
    local dir = ai.face(-1) -- face away from (0,0)
+
    if (dir < 10) then
       ai.accel()
    end
 end
+
+function
 
 
 --[[

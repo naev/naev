@@ -4,7 +4,7 @@ include("ai/include/basic.lua")
 mem.enemy_close = 500 -- Distance enemy is too close for comfort
 
 -- Required control rate
-control_rate = 2
+control_rate    = 2
 
 -- Required "control" function
 function control ()
@@ -18,10 +18,6 @@ function control ()
          ai.poptask()
       end
       ai.pushtask("runaway",enemy)
-
-   -- Enter hyperspace if possible
-   elseif task == "hyperspace" then
-      ai.hyperspace() -- try to hyperspace
 
    -- Try to jump when far enough away
    elseif task == "runaway" then

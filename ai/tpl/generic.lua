@@ -105,10 +105,6 @@ function control ()
       taunt(enemy, true)
       ai.pushtask("attack", enemy)
 
-   -- Enter hyperspace if possible
-   elseif task == "hyperspace" then 
-      ai.hyperspace() -- try to hyperspace 
-
    end
 end
 

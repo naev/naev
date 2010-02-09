@@ -17,10 +17,7 @@ end
 function control ()
    local task  = ai.taskname()
 
-   if task == "hyperspace" then
-      ai.hyperspace() -- try to hyperspace 
-
-   elseif task ~= "runaway" then
+   if task ~= "runaway" then
       local enemy = ai.getenemy()
 
       if enemy ~= nil then
@@ -36,8 +33,6 @@ function control ()
          ai.poptask()
          return
       end
-
-      ai.hyperspace()
    end
 end
 
