@@ -302,6 +302,7 @@ int space_setJumpInPos( Pilot *p, StarSystem *sys )
    int i;
    JumpPoint *jp;
    double a, d, x, y;
+   double ea, ed;
 
    /* Find the entry system. */
    jp = NULL;
@@ -326,6 +327,12 @@ int space_setJumpInPos( Pilot *p, StarSystem *sys )
    /* Calculate new position. */
    x += d*cos(a);
    y += d*sin(a);
+
+   /* Add some error. */
+   ea = 2*M_PI*RNGF();
+   ed = jp->radius/2.;
+   x += ed*cos(ea);
+   y += ed*sin(ea);
 
    /* Set new position. */
    vect_cset( &p->solid->pos, x, y );
