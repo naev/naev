@@ -807,14 +807,15 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    Task *t;
 
    /* Create the task. */
-   t = malloc(sizeof(Task));
+   t           = malloc(sizeof(Task));
    t->next     = NULL;
+   t->subtask  = NULL;
    t->name     = strdup("refuel");
    t->dtype    = TASKDATA_INT;
    t->dat.num  = target;
 
    /* Prepend the task. */
-   t->next = refueler->task;
+   t->next     = refueler->task;
    refueler->task = t;
 
    return;
@@ -928,7 +929,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
    Task *t, *pointer;
    
    /* Create the new task. */
-   t           = malloc(sizeof(Task));
+   t           = malloc( sizeof(Task) );
    t->next     = NULL;
    t->subtask  = NULL;
    t->name     = strdup(func);
@@ -951,7 +952,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
          return NULL;
 
       /* Add the subtask. */
-      if ((pos == 1) && (p->task != NULL)) { /* put at the end */
+      if ((pos == 1) && (p->task->subtask != NULL)) { /* put at the end */
          for (pointer = p->task->subtask; pointer->next != NULL; pointer = pointer->next);
          pointer->next = t;
       }
@@ -1157,18 +1158,21 @@ static int aiL_pushsubtask( lua_State *L )
  */
 static int aiL_popsubtask( lua_State *L )
 {
-   (void)L; /* hack to avoid -W -Wall warnings */
-   Task* t = cur_pilot->task;
+   (void) L;
+   Task *t, *st;
+   t = cur_pilot->task;
 
    /* Tasks must exist. */
-   if (t == NULL) {
+   if ((t == NULL) || (t->subtask == NULL)) {
       NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
       return 0;
    }
 
-   cur_pilot->task   = t->next;
-   t->next           = NULL;
-   ai_freetask(t);
+   /* Exterminate, annihilate destroy. */
+   st          = t->subtask;
+   t->subtask  =  st->next;
+   st->next    = NULL;
+   ai_freetask(st);
    return 0;
 }
 
@@ -1181,8 +1185,8 @@ static int aiL_popsubtask( lua_State *L )
  */
 static int aiL_subtaskname( lua_State *L )
 {
-   if (cur_pilot->task)
-      lua_pushstring(L, cur_pilot->task->name);
+   if ((cur_pilot->task != NULL) && (cur_pilot->task->subtask != NULL))
+      lua_pushstring(L, cur_pilot->task->subtask->name);
    else
       lua_pushstring(L, "none");
    return 1;
@@ -1953,7 +1957,7 @@ static int aiL_rndhyptarget( lua_State *L )
    }
 
    /* Choose random jump point. */
-   r = RNG(0, j);
+   r = RNG(0, j-1);
 
    /* Set up data. */
    vectcpy( &lv.vec, &jumps[r]->pos );
