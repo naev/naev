@@ -199,6 +199,7 @@ static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 
 /* Hyperspace. */
+static int aiL_nearhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_rndhyptarget( lua_State *L ); /* pointer rndhyptarget() */
 static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
 
@@ -285,6 +286,7 @@ static const luaL_reg aiL_methods[] = {
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
    /* Hyperspace. */
+   { "nearhyptarget", aiL_nearhyptarget },
    { "rndhyptarget", aiL_rndhyptarget },
    { "hyperspace", aiL_hyperspace },
    /* escorts */
@@ -1937,7 +1939,46 @@ static int aiL_hyperspace( lua_State *L )
 }
 
 
-/*
+/**
+ * @brief Gets the nearest hyperspace target.
+ */
+static int aiL_nearhyptarget( lua_State *L )
+{
+   JumpPoint *jp;
+   double mindist, dist;
+   int i, j;
+   LuaVector lv;
+   double a, rad;
+
+   /* Find nearest jump .*/
+   mindist = INFINITY;
+   for (i=0; i <cur_system->njumps; i++) {
+      dist  = vect_dist2( &cur_pilot->solid->pos, &cur_system->jumps[i].pos );
+      if (dist < mindist) {
+         jp       = &cur_system->jumps[i];
+         mindist  = dist;
+         j        = i;
+      }
+   }
+
+   /* Copy vector. */
+   vectcpy( &lv.vec, &jp->pos );
+
+   /* Introduce some error. */
+   a     = RNGF() * M_PI * 2.;
+   rad   = RNGF() * 0.5 * jp->radius;
+   vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
+
+   /* Set up target. */
+   cur_pilot->nav_hyperspace = j;;
+
+   /* Return vector. */
+   lua_pushvector( L, lv );
+   return 1;
+}
+
+
+/**
  * Gets a random hyperspace target and returns it's position.
  */
 static int aiL_rndhyptarget( lua_State *L )

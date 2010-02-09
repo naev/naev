@@ -182,7 +182,7 @@ function runaway ()
    end
    ]]--
 
-   ai.pushsubtask( "__run_hyp", ai.rndhyptarget() )
+   ai.pushsubtask( "__run_hyp", ai.nearhyptarget() )
 end
 function __run_turret( dist )
    -- See if we have some turret to use
