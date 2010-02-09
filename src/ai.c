@@ -733,8 +733,14 @@ void ai_think( Pilot* pilot, const double dt )
    }
 
    /* pilot has a currently running task */
-   if (cur_pilot->task) {
-      ai_run(L, cur_pilot->task->name);
+   if (cur_pilot->task != NULL) {
+      /* Run subtask if availible, otherwise run main task. */
+      if (cur_pilot->task->subtask != NULL)
+         ai_run(L, cur_pilot->task->subtask->name);
+      else
+         ai_run(L, cur_pilot->task->name);
+
+      /* If task is over and pilot is in manual control run the idle hook. */
       if ((cur_pilot->task==NULL) && pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
          pilot_runHook( cur_pilot, PILOT_HOOK_IDLE );
    }
