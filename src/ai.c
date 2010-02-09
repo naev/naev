@@ -1946,6 +1946,7 @@ static int aiL_rndhyptarget( lua_State *L )
    int i, j, r;
    LuaVector lv;
    int *id;
+   double a, rad;
 
    /* Find usable jump points. */
    jumps = malloc( sizeof(JumpPoint*) * cur_system->njumps );
@@ -1961,6 +1962,11 @@ static int aiL_rndhyptarget( lua_State *L )
 
    /* Set up data. */
    vectcpy( &lv.vec, &jumps[r]->pos );
+
+   /* Introduce some error. */
+   a     = RNGF() * M_PI * 2.;
+   rad   = RNGF() * 0.5 * jumps[r]->radius;
+   vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
 
    /* Set up target. */
    cur_pilot->nav_hyperspace = id[r];
