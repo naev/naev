@@ -1033,7 +1033,13 @@ void player_think( Pilot* pplayer, const double dt )
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
                   &cur_system->planets[ player.p->nav_planet ]->pos ));
-
+         /* Disable turning. */
+         facing = 1;
+      }
+      else if (player.p->nav_hyperspace != -1) {
+         pilot_face( pplayer,
+               vect_angle( &player.p->solid->pos,
+                  &cur_system->jumps[ player.p->nav_hyperspace ].pos ));
          /* Disable turning. */
          facing = 1;
       }
@@ -1138,40 +1144,54 @@ static void player_autonav (void)
 
    switch (player.autonav) {
       case AUTONAV_APPROACH:
-
          /* Only accelerate if facing move dir. */
          d = pilot_face( player.p, vect_angle( &player.p->solid->pos, &jp->pos ) );
-         if ((player_acc < 1.) && (d < MIN_DIR_ERR))
-            player_accel( 1. );
+         if (FABS(d) < MIN_DIR_ERR) {
+            if (player_acc < 1.)
+               player_accel( 1. );
+         }
+         else if (player_acc > 0.)
+            player_accelOver();
 
          /* Get current time to reach target. */
-         time = VMOD(player.p->solid->vel) /
+         time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
             (player.p->thrust / player.p->solid->mass);
 
          /* Get velocity. */
-         vel = MIN(player.p->speed,VMOD(player.p->solid->vel));
+         vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
 
          /* Get distance. */
-         dist = vel*(time+1.1*180./player.p->turn) -
-            0.5*(player.p->thrust/player.p->solid->mass)*time*time;
+         dist  = vel*(time+1.1*180./player.p->turn) -
+               0.5*(player.p->thrust/player.p->solid->mass)*time*time;
 
          /* See if should start braking. */
-         if (dist*dist < vect_dist2( &jp->pos, &player.p->solid->pos ))
+         if (dist*dist > vect_dist2( &jp->pos, &player.p->solid->pos )) {
+            player_accelOver();
             player.autonav = AUTONAV_BRAKE;
+         }
 
          break;
 
       case AUTONAV_BRAKE:
          /* Braking procedure. */
-         d = pilot_face( player.p, VANGLE(player.p->solid->vel) );
-         if ((player_acc < 1.) && (d < MIN_DIR_ERR))
-            player_accel( 1. );
+         d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
+         if (FABS(d) < MIN_DIR_ERR) {
+            if (player_acc < 1.)
+               player_accel( 1. );
+         }
+         else if (player_acc > 0.)
+            player_accelOver();
 
          /* Try to jump or see if braked. */
-         if (space_canHyperspace(player.p))
-            player_jump();
-         else if (VMOD(player.p->solid->vel) < MIN_VEL_ERR)
+         if (space_canHyperspace(player.p)) {
             player.autonav = AUTONAV_APPROACH;
+            player_accelOver();
+            player_jump();
+         }
+         else if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
+            player.autonav = AUTONAV_APPROACH;
+            player_accelOver();
+         }
 
          break;
    }
