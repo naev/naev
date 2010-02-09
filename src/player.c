@@ -1501,11 +1501,13 @@ void player_land (void)
             td = d;
          }
       }
-      player.p->nav_planet = tp;
+      player.p->nav_planet       = tp;
+      player.p->nav_hyperspace   = -1;
       player_rmFlag(PLAYER_LANDACK);
 
       /* no landable planet */
-      if (player.p->nav_planet < 0) return;
+      if (player.p->nav_planet < 0)
+         return;
 
       player_land(); /* rerun land protocol */
    }
