@@ -172,7 +172,6 @@ function runaway ()
    -- Good to set the target for distress calls
    ai.settarget( target )
 
-   local dist  = ai.dist(target)
    local dir   = ai.face(target, true)
    ai.accel()
 
@@ -183,6 +182,9 @@ function runaway ()
    end
    ]]--
 
+   ai.pushsubtask( "__run_hyp", ai.rndhyptarget() )
+end
+function __run_turret( dist )
    -- See if we have some turret to use
    local secondary, special = ai.secondary("melee")
    if special == "Turret" then
@@ -195,6 +197,39 @@ function runaway ()
       if dist < ai.getweaprange() then
          ai.shoot(false, 1)
       end
+   end
+end
+function __run_hyp ()
+   -- Shoot the target
+   local target   = ai.target()
+   ai.settarget( target )
+   local tdist    = ai.dist(target)
+   __run_turret( tdist )
+
+   -- Go towards jump
+   local jump     = ai.subtarget()
+   local jdir     = ai.face(jump)
+   local bdist    = ai.minbrakedist()
+   local jdist    = ai.dist(jump)
+   if jdir < 10 and jdist > bdist then
+      ai.accel()
+   elseif jdist < bdist then
+      ai.pushsubtask( "__run_hypbrake" )
+   end
+end
+function __run_hypbrake ()
+   -- Shoot the target
+   local target   = ai.target()
+   ai.settarget( target )
+   local tdist    = ai.dist(target)
+   __run_turret( tdist )
+
+   -- The braking
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.popsubtask()
+      ai.pushtask( "__hyp_jump" )
    end
 end
 
@@ -214,12 +249,9 @@ function __hyp_approach ()
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
-
       ai.accel()
-
    -- Need to start braking
    elseif dist < bdist then
-
       ai.pushsubtask("__hyp_brake")
    end
 end
