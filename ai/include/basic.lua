@@ -130,8 +130,7 @@ function land ()
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.poptask()
-      ai.pushtask( 0, "landstop" )
+      ai.pushsubtask( "landstop" )
    end
 
 end
@@ -140,8 +139,8 @@ function landstop ()
    if ai.isstopped() then
       ai.stop() -- Will stop the pilot if below err vel
       ai.settimer(0, rnd.int(8000,15000)) -- We wait during a while
-      ai.poptask()
-      ai.pushtask( 0, "landwait")
+      ai.popsubtask()
+      ai.pushsubtask( "landwait")
    end
 end
 function landwait ()
@@ -150,8 +149,7 @@ function landwait ()
 
    -- In case for some reason landed far away
    if dist > 50 then
-      ai.poptask()
-      ai.pushtask( 0, "land" )
+      ai.popsubtask()
 
    -- Check if time is up
    elseif ai.timeup(0) then
@@ -247,7 +245,7 @@ function board ()
 
    -- See if must brake or approach
    if dist < bdist then
-      ai.pushtask( 0, "boardstop", target )
+      ai.pushsubtask( "boardstop", target )
    elseif dir < 10 then
       ai.accel()
    end
@@ -289,7 +287,7 @@ function boardstop ()
 
    -- If stopped try again
    if ai.isstopped() then
-      ai.poptask()
+      ai.popsubtask()
    end
 end
 
@@ -323,7 +321,7 @@ function refuel ()
 
    -- See if must brake or approach
    if dist < bdist then
-      ai.pushtask( 0, "refuelstop", target )
+      ai.pushtask( "refuelstop", target )
    elseif dir < 10 then
       ai.accel()
    end

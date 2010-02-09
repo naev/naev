@@ -44,7 +44,7 @@ function control ()
       end
 
    -- Don't stop boarding
-   elseif task == "board" or task == "boardstop" then
+   elseif task == "board" then
       -- We want to think in case another attacker gets close
       attack_think()
 
@@ -210,13 +210,13 @@ function distress ( pilot, attacker )
    local task = ai.taskname()
    -- If not attacking nor fleeing, begin attacking
    if task ~= "attack" and task ~= "runaway" then
-      ai.pushtask( 0, "attack", t )
+      ai.pushtask( "attack", t )
    -- We're sort of busy
    elseif task == "attack" then
       local target = ai.target()
 
       if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
-         ai.pushtask( 0, "attack", t )
+         ai.pushtask( "attack", t )
       end
    end
 end

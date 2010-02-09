@@ -112,7 +112,7 @@ function atk_b_ranged( target, dist )
 
    -- Time to break attack and get back to bomb
    else
-      ai.pushtask( 0, "atk_b_backoff" )
+      ai.pushtask( "atk_b_backoff" )
    end
 end
 

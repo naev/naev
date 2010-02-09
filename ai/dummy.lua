@@ -6,8 +6,8 @@
 control_rate = 2
 
 function create ()
-   ai.pushtask( 0, "idle" )
-   ai.pushtask( 0, "brake" )
+   ai.pushtask( "idle" )
+   ai.pushtask( "brake" )
 end
 
 -- No need for control
