@@ -292,12 +292,14 @@ int space_hyperspace( Pilot* p )
 
 
 /**
- * @brief Sets the jump in position of a pilot.
+ * @brief Calculates the jump in pos for a pilot.
  *
- *    @param p Pilot that is jumping in.
- *    @param sys System pilot is coming from.
+ *    @param in Star system entering.
+ *    @param out Star system exitting.
+ *    @param[out] pos Position calculated.
+ *    @param[out] vel Velocity calculated.
  */
-int space_setJumpInPos( Pilot *p, StarSystem *sys )
+int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel )
 {
    int i;
    JumpPoint *jp;
@@ -306,13 +308,13 @@ int space_setJumpInPos( Pilot *p, StarSystem *sys )
 
    /* Find the entry system. */
    jp = NULL;
-   for (i=0; i<cur_system->njumps; i++)
-      if (cur_system->jumps[i].target == sys)
-         jp = &cur_system->jumps[i];
+   for (i=0; i<in->njumps; i++)
+      if (in->jumps[i].target == out)
+         jp = &in->jumps[i];
 
    /* Must have found the jump. */
    if (jp == NULL) {
-      WARN("Unable to set jump-in pos for pilot '%s'", p->name);
+      WARN("Unable to find jump in point for '%s' in '%s': not connected", out->name, in->name);
       return -1;
    }
 
@@ -335,11 +337,11 @@ int space_setJumpInPos( Pilot *p, StarSystem *sys )
    y += ed*sin(ea);
 
    /* Set new position. */
-   vect_cset( &p->solid->pos, x, y );
+   vect_cset( pos, x, y );
 
    /* Set new velocity. */
    a += M_PI;
-   vect_cset( &p->solid->vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
+   vect_cset( vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
 
    return 0;
 }
@@ -652,6 +654,7 @@ static void space_addFleet( Fleet* fleet, int init )
    unsigned int flags;
    double a, d;
    Vector2d vv,vp, vn;
+   JumpPoint *jp;
 
    /* Needed to determine angle. */
    vectnull(&vn);
@@ -669,11 +672,10 @@ static void space_addFleet( Fleet* fleet, int init )
 
    /* simulate they came from hyperspace */
    if (c==0) {
-      d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-      vect_pset( &vp, d, RNGF()*2.*M_PI);
+      jp = &cur_system->jumps[ RNG(0,cur_system->njumps-1) ];
    }
    /* Starting out landed or heading towards landing.. */
-   else if ((c==1) || (c==2)) {
+   else {
       /* Get friendly planet to land on. */
       planet = NULL;
       for (i=0; i<cur_system->nplanets; i++)
@@ -713,10 +715,8 @@ static void space_addFleet( Fleet* fleet, int init )
          flags = 0;
 
          /* Entering via hyperspace. */
-         if (c==0) {
-            vect_pset( &vv, HYPERSPACE_VEL, a );
-            flags |= PILOT_HYP_END;
-         }
+         if (c==0)
+            space_calcJumpInPos( cur_system, jp->target, &vp, &vv );
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);

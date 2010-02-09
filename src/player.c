@@ -1557,7 +1557,7 @@ void player_brokeHyperspace (void)
    space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
 
    /* set position, the pilot_update will handle lowering vel */
-   space_setJumpInPos( player.p, sys );
+   space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel );
 
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;
