@@ -687,9 +687,8 @@ static void space_addFleet( Fleet* fleet, int init )
 
       /* No suitable planet found. */
       if (planet == NULL) {
-         d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-         vect_pset( &vp, d, RNGF()*2.*M_PI);
-         c = 0;
+         jp = &cur_system->jumps[ RNG(0,cur_system->njumps-1) ];
+         c  = 0;
       }
       else {
          /* Start out landed. */
@@ -831,7 +830,7 @@ void space_init ( const char* sysname )
 
       if (i>=systems_nstack)
          ERR("System %s not found in stack", sysname);
-      cur_system = systems_stack+i;
+      cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0);
       player_message("\epEntering System %s on %s.", sysname, nt);
