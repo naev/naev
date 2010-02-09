@@ -922,10 +922,11 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
    Task *t, *pointer;
    
    /* Create the new task. */
-   t        = malloc(sizeof(Task));
-   t->next  = NULL;
-   t->name  = strdup(func);
-   t->dtype = TASKDATA_NULL;
+   t           = malloc(sizeof(Task));
+   t->next     = NULL;
+   t->subtask  = NULL;
+   t->name     = strdup(func);
+   t->dtype    = TASKDATA_NULL;
 
    /* Handle subtask and general task. */
    if (!subtask) {
