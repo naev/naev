@@ -1534,13 +1534,13 @@ void player_jump (void)
    }
 }
 
-
 /**
  * @brief Player actually broke hyperspace (entering new system).
  */
 void player_brokeHyperspace (void)
 {
    double d;
+   StarSystem *sys;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1550,12 +1550,14 @@ void player_brokeHyperspace (void)
    d += RNG_1SIGMA() * 0.2 * d;
    ntime_inc( (unsigned int)(d*NTIME_UNIT_LENGTH) );
 
+   /* Save old system. */
+   sys = cur_system;
+
    /* enter the new system */
    space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
 
    /* set position, the pilot_update will handle lowering vel */
-   d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-   player_warp( -cos( player.p->solid->dir ) * d, -sin( player.p->solid->dir ) * d );
+   space_setJumpInPos( player.p, sys );
 
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;

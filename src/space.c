@@ -292,6 +292,52 @@ int space_hyperspace( Pilot* p )
 
 
 /**
+ * @brief Sets the jump in position of a pilot.
+ *
+ *    @param p Pilot that is jumping in.
+ *    @param sys System pilot is coming from.
+ */
+int space_setJumpInPos( Pilot *p, StarSystem *sys )
+{
+   int i;
+   JumpPoint *jp;
+   double a, d, x, y;
+
+   /* Find the entry system. */
+   jp = NULL;
+   for (i=0; i<cur_system->njumps; i++)
+      if (cur_system->jumps[i].target == sys)
+         jp = &cur_system->jumps[i];
+
+   /* Must have found the jump. */
+   if (jp == NULL) {
+      WARN("Unable to set jump-in pos for pilot '%s'", p->name);
+      return -1;
+   }
+
+   /* Base position target. */
+   x = jp->pos.x;
+   y = jp->pos.y;
+
+   /* Calculate offset from target position. */
+   a = 2*M_PI - jp->angle;
+   d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+  
+   /* Calculate new position. */
+   x += d*cos(a);
+   y += d*sin(a);
+
+   /* Set new position. */
+   vect_cset( &p->solid->pos, x, y );
+
+   /* Set new velocity. */
+   a += M_PI;
+   vect_cset( &p->solid->vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
+
+   return 0;
+}
+
+/**
  * @brief Gets the name of all the planets that belong to factions.
  *
  *    @param[out] nplanets Number of planets found.

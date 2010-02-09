@@ -257,22 +257,36 @@ void planets_render (void);
  */
 void space_update( const double dt );
 
-/*
- * misc
+/* 
+ * Getting stuff.
  */
 const StarSystem* system_getAll( int *nsys );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
-int space_canHyperspace( Pilot* p);
-int space_hyperspace( Pilot* p );
 int space_sysReachable( StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
+
+
+/* 
+ * Markers.
+ */
 int space_addMarker( const char *sys, SysMarker type );
 int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
+
+
+/* 
+ * Hyperspace.
+ */
+int space_canHyperspace( Pilot* p);
+int space_hyperspace( Pilot* p );
+int space_setJumpInPos( Pilot *p, StarSystem *sys );
+
+
+/* Stardate. */
 extern char* stardate;
 
 
