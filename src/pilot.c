@@ -1750,6 +1750,7 @@ void pilot_update( Pilot* pilot, const double dt )
 static void pilot_hyperspace( Pilot* p, double dt )
 {
    double diff;
+   JumpPoint *jp;
 
    /* pilot is actually in hyperspace */
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
@@ -1790,35 +1791,47 @@ static void pilot_hyperspace( Pilot* p, double dt )
    }
    /* pilot is getting ready for hyperspace */
    else {
+      /* Make sure still within range. */
+      jp = &cur_system->jumps[ p->nav_hyperspace ];
+      if (jp->radius*jp->radius < vect_dist2( &p->solid->pos, &jp->pos ) ) {
+         pilot_hyperspaceAbort( p );
 
-      /* brake */
-      if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
-         diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-
-         if (ABS(diff) < MAX_DIR_ERR)
-            pilot_setThrust( p, 1. );
-         else
-            pilot_setThrust( p, 0. );
-
+         if (p == player.p) {
+            if (!player_isFlag(PLAYER_AUTONAV))
+               player_message( "\erStrayed too far from jump point: jump aborted." );
+         }
       }
-      /* face target */
       else {
 
-         pilot_setThrust( p, 0. );
+         /* brake */
+         if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
-         /* player.p should actually face the system he's headed to */
-         if (p==player.p)
-            diff = player_faceHyperspace();
-         else
-            diff = pilot_face( p, VANGLE(p->solid->pos) );
+            if (ABS(diff) < MAX_DIR_ERR)
+               pilot_setThrust( p, 1. );
+            else
+               pilot_setThrust( p, 0. );
 
-         if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
-            pilot_setTurn( p, 0. );
-            p->ptimer = HYPERSPACE_ENGINE_DELAY;
-            pilot_setFlag(p, PILOT_HYP_BEGIN);
-            /* Player plays sound. */
-            if (p->id == PLAYER_ID) {
-               player_playSound( snd_hypPowUp, 1 );
+         }
+         /* face target */
+         else {
+
+            pilot_setThrust( p, 0. );
+
+            /* player.p should actually face the system he's headed to */
+            if (p==player.p)
+               diff = player_faceHyperspace();
+            else
+               diff = pilot_face( p, VANGLE(p->solid->pos) );
+
+            if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
+               pilot_setTurn( p, 0. );
+               p->ptimer = HYPERSPACE_ENGINE_DELAY;
+               pilot_setFlag(p, PILOT_HYP_BEGIN);
+               /* Player plays sound. */
+               if (p->id == PLAYER_ID) {
+                  player_playSound( snd_hypPowUp, 1 );
+               }
             }
          }
       }
