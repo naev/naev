@@ -1005,8 +1005,10 @@ void map_jump (void)
                break;
             }
          }
-
       }
+   }
+   else {
+      player.p->nav_hyperspace = -1;
    }
 }
 
