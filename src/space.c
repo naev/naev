@@ -299,7 +299,7 @@ int space_hyperspace( Pilot* p )
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
  */
-int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel )
+int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
 {
    int i;
    JumpPoint *jp;
@@ -342,6 +342,9 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
    /* Set new velocity. */
    a += M_PI;
    vect_cset( vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
+
+   /* Set direction. */
+   *dir = a;
 
    return 0;
 }
@@ -715,7 +718,7 @@ static void space_addFleet( Fleet* fleet, int init )
 
          /* Entering via hyperspace. */
          if (c==0)
-            space_calcJumpInPos( cur_system, jp->target, &vp, &vv );
+            space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);

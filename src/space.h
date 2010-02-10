@@ -283,7 +283,7 @@ void space_clearComputerMarkers (void);
  */
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
-int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel );
+int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
 
 
 /* Stardate. */
