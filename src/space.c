@@ -106,7 +106,7 @@ extern int pilot_nstack;
 /*
  * star stack and friends
  */
-#define STAR_BUF  100   /**< Area to leave around screen for stars, more = less repitition */
+#define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
 /**
  * @struct Star
  *
@@ -1877,36 +1877,6 @@ void space_renderStars( const double dt )
    gl_matrixPush();
       gl_matrixScale( z, z );
 
-   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
-
-      glShadeModel(GL_SMOOTH);
-
-      /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
-      m /= HYPERSPACE_STARS_BLUR;
-      m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player.p->solid->vel)+M_PI);
-      y = m*sin(VANGLE(player.p->solid->vel)+M_PI);
-
-      /* Generate lines. */
-      for (i=0; i < nstars; i++) {
-         brightness = star_colour[8*i+3];
-         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
-      }
-
-      /* Draw the lines. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, nstars );
-
-      glShadeModel(GL_FLAT);
-   }
-   else { /* normal rendering */
       if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
@@ -1943,6 +1913,36 @@ void space_renderStars( const double dt )
          gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
       }
 
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING) &&
+         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+
+      glShadeModel(GL_SMOOTH);
+
+      /* lines will be based on velocity */
+      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+      m /= HYPERSPACE_STARS_BLUR;
+      m *= HYPERSPACE_STARS_LENGTH;
+      x = m*cos(VANGLE(player.p->solid->vel));
+      y = m*sin(VANGLE(player.p->solid->vel));
+
+      /* Generate lines. */
+      for (i=0; i < nstars; i++) {
+         brightness = star_colour[8*i+3];
+         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
+         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
+      }
+
+      /* Draw the lines. */
+      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
+      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
+      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINES, 0, nstars );
+
+      glShadeModel(GL_FLAT);
+   }
+   else { /* normal rendering */
       /* Render. */
       gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
       gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
