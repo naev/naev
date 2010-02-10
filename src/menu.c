@@ -117,7 +117,8 @@ void menu_main (void)
       if (freespace/3 > 25) {
          freespace -= 25;
          offset_logo = -25;
-         offset_wdw  = -25 - tex->sh - 25;
+         /*offset_wdw  = -25 - tex->sh - 25;*/
+         offset_wdw  = -1;
       }
       /* Otherwise space evenly. */
       else {
