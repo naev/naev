@@ -436,15 +436,15 @@ static int econ_createGMatrix (void)
       for (j=0; j < sys->njumps; j++) {
 
          /* Get the resistances. */
-         R     = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
+         R     = econ_calcJumpR( sys, sys->jumps[j].target );
          R     = 1./R; /* Must be inverted. */
          Rsum += R;
 
          /* Matrix is symetrical and non-diagonal is negative. */
-         ret = cs_entry( M, i, sys->jumps[j], -R );
+         ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
-         ret = cs_entry( M, sys->jumps[j], i, -R );
+         ret = cs_entry( M, sys->jumps[j].target->id, i, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
       }

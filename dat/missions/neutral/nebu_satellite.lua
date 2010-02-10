@@ -61,7 +61,7 @@ function accept ()
    -- Check for cargo space
    if player.freeCargo() <  3 then
       tk.msg( title[1], text[9] )
-      return
+      misn.finish()
    end
 
    -- Add cargo

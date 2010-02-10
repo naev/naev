@@ -4,7 +4,7 @@ include("ai/include/basic.lua")
 mem.enemy_close = 500 -- Distance enemy is too close for comfort
 
 -- Required control rate
-control_rate = 2
+control_rate    = 2
 
 -- Required "control" function
 function control ()
@@ -17,11 +17,7 @@ function control ()
       if task ~= "none" then
          ai.poptask()
       end
-      ai.pushtask(0,"runaway",enemy)
-
-   -- Enter hyperspace if possible
-   elseif task == "hyperspace" then
-      ai.hyperspace() -- try to hyperspace
+      ai.pushtask("runaway",enemy)
 
    -- Try to jump when far enough away
    elseif task == "runaway" then
@@ -53,7 +49,7 @@ function control ()
       -- See if another enemy is closer
       if enemy ~= nil and enemy ~= target then
          ai.poptask()
-         ai.pushtask(0,"runaway",enemy)
+         ai.pushtask("runaway",enemy)
       end
 
       -- Try to jump.
@@ -67,11 +63,11 @@ function control ()
       -- planet must exist
       if planet == nil then
          ai.settimer(0, rnd.int(1000, 3000))
-         ai.pushtask(0, "enterdelay")
+         ai.pushtask("enterdelay")
       else
          mem.land = planet
-         ai.pushtask(0, "hyperspace")
-         ai.pushtask(0, "land")
+         ai.pushtask("hyperspace")
+         ai.pushtask("land")
       end
    end
 end
@@ -79,7 +75,7 @@ end
    -- Delays the ship when entering systems so that it doesn't leave right away
 function enterdelay ()
    if ai.timeup(0) then
-      ai.pushtask(0, "hyperspace")
+      ai.pushtask("hyperspace")
    end
 end
 
@@ -93,10 +89,10 @@ function attacked ( attacker )
 
    if ai.taskname() ~= "runaway" then
       -- Sir Robin bravely ran away
-      ai.pushtask(0, "runaway", attacker)
+      ai.pushtask("runaway", attacker)
    else -- run away from the new baddie
       ai.poptask()
-      ai.pushtask(0, "runaway", attacker)
+      ai.pushtask("runaway", attacker)
    end
 end
 

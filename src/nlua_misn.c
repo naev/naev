@@ -642,7 +642,7 @@ static int misn_addCargo( lua_State *L )
    }
 
    /* First try to add the cargo. */
-   ret = pilot_addMissionCargo( player, cargo, quantity );
+   ret = pilot_addMissionCargo( player.p, cargo, quantity );
    mission_linkCargo( cur_mission, ret );
 
    lua_pushnumber(L, ret);
@@ -663,7 +663,7 @@ static int misn_rmCargo( lua_State *L )
    id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id, 0 ) != 0) {
+   if (pilot_rmMissionCargo( player.p, id, 0 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -689,7 +689,7 @@ static int misn_jetCargo( lua_State *L )
    id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id, 1 ) != 0) {
+   if (pilot_rmMissionCargo( player.p, id, 1 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }

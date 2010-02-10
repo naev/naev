@@ -17,5 +17,5 @@ end
  
 -- By default stay still
 function idle ()
-   ai.pushtask( 0, "stay_still" )
+   ai.pushtask( "stay_still" )
 end

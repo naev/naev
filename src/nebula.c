@@ -602,9 +602,9 @@ void nebu_renderPuffs( const double dt, int below_player )
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
          /* calculate new position */
-         if (!paused && (player!=NULL)) {
-            nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
-            nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
+         if (!paused && (player.p!=NULL)) {
+            nebu_puffs[i].x -= player.p->solid->vel.x * nebu_puffs[i].height * dt;
+            nebu_puffs[i].y -= player.p->solid->vel.y * nebu_puffs[i].height * dt;
          }
 
          /* Check boundries */

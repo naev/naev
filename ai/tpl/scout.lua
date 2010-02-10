@@ -18,7 +18,7 @@ function control ()
       -- There is an enemy
       if enemy ~= nil then
          if ai.dist(enemy) < enemy_dist or ai.haslockon() then
-            ai.pushtask(0, "runaway", enemy)
+            ai.pushtask("runaway", enemy)
             return
          end
       end
@@ -31,14 +31,14 @@ function control ()
 
       if planet ~= nil then
          if ai.dist(planet) > planet_dist then
-            ai.pushtask(0, "approach")
+            ai.pushtask("approach")
             return
          end
       end
 
       -- Go idle if no task
       if task == "none" then
-         ai.pushtask(0, "idle")
+         ai.pushtask("idle")
          return
       end
 
@@ -48,7 +48,7 @@ function control ()
       
       if ai.dist( planet ) < planet_dist + ai.minbrakedist() then
          ai.poptask()
-         ai.pushtask(0, "idle")
+         ai.pushtask("idle")
          return
       end
 
@@ -70,13 +70,13 @@ function attacked ( attacker )
 
    -- Start running away
    if task ~= "runaway" then
-      ai.pushtask(0, "runaway", attacker)
+      ai.pushtask("runaway", attacker)
 
    elseif task == "runaway" then
       if ai.target() ~= attacker then
          -- Runaway from the new guy
          ai.poptask()
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
    end
 end
@@ -106,7 +106,7 @@ function approach ()
       ai.accel()
    else
       ai.poptask()
-      ai.pushtask(0, "idle")
+      ai.pushtask("idle")
    end
 end
 

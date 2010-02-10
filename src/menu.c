@@ -292,8 +292,8 @@ void menu_small (void)
    unsigned int wid;
 
    /* Check if menu should be openable. */
-   if ((player == NULL) || player_isFlag(PLAYER_DESTROYED) ||
-         pilot_isFlag(player,PILOT_DEAD) ||
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
+         pilot_isFlag(player.p,PILOT_DEAD) ||
          comm_isOpen() ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
          (menu_isOpen(MENU_MAIN) ||
@@ -416,7 +416,7 @@ void menu_death (void)
 
    /* Propose the player to continue if the samegame exist, if not, propose to restart */
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    if (nfile_fileExists(path))
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", "Continue", menu_death_continue );

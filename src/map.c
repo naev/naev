@@ -210,7 +210,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel. 
     */
-   if (player->fuel < HYPERSPACE_FUEL)
+   if (player.p->fuel < HYPERSPACE_FUEL)
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -651,9 +651,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
       /* first we draw all of the paths. */  
       for (j=0; j<sys->njumps; j++) {
 
-         jsys = system_getIndex( sys->jumps[j] );
-         if (hyperspace_target != -1)
-            hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
+         jsys = sys->jumps[j].target;
+         if (player.p->nav_hyperspace != -1)
+            hsys = cur_system->jumps[player.p->nav_hyperspace].target;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -689,11 +689,11 @@ static void map_render( double bx, double by, double w, double h, void *data )
       lsys = cur_system;
       glShadeModel(GL_SMOOTH);
       col = &cGreen;
-      fuel = player->fuel;
+      fuel = player.p->fuel;
       
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
-         if (fuel == player->fuel && fuel > 100.)
+         if (fuel == player.p->fuel && fuel > 100.)
             col = &cGreen;
          else if (fuel < 100.)
             col = &cRed;
@@ -990,8 +990,8 @@ void map_jump (void)
       if (map_npath == 0) { /* path is empty */
          free (map_path);
          map_path = NULL;
-         planet_target = -1;
-         hyperspace_target = -1;
+         player.p->nav_planet = -1;
+         player.p->nav_hyperspace = -1;
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
@@ -999,9 +999,9 @@ void map_jump (void)
 
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
-            if (map_path[0]==system_getIndex(cur_system->jumps[j])) {
-               planet_target = -1; /* override planet_target */
-               hyperspace_target = j;
+            if (map_path[0] == cur_system->jumps[j].target) {
+               player.p->nav_planet = -1; /* override planet_target */
+               player.p->nav_hyperspace = j;
                break;
             }
          }
@@ -1049,15 +1049,15 @@ void map_select( StarSystem *sys, char shifted )
          }
 
          if (map_npath==0) {
-            hyperspace_target = -1;
+            player.p->nav_hyperspace = -1;
             player_abortAutonav(NULL);
          }
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
-               if (map_path[0] == system_getIndex(cur_system->jumps[i])) {
-                  planet_target     = -1; /* override planet_target */
-                  hyperspace_target = i;
+               if (map_path[0] == cur_system->jumps[i].target) {
+                  player.p->nav_planet     = -1; /* override planet_target */
+                  player.p->nav_hyperspace = i;
                   player_abortAutonav(NULL);
                   break;
                }
@@ -1065,7 +1065,7 @@ void map_select( StarSystem *sys, char shifted )
          }
       }
       else { /* unreachable. */
-         hyperspace_target = -1;
+         player.p->nav_hyperspace = -1;
          player_abortAutonav(NULL);
       }
    }
@@ -1297,7 +1297,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
       cost = A_g(cur) + 1;
 
       for (i=0; i<cur->sys->njumps; i++) {
-         sys = system_getIndex( cur->sys->jumps[i] );
+         sys = cur->sys->jumps[i].target;
 
          /* Make sure it's reachable */
          if (!ignore_known &&
@@ -1386,7 +1386,7 @@ int map_map( const char* targ_sys, int r )
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( cur->sys->jumps[i] );
+         jsys = cur->sys->jumps[i].target;
 
          /* System has already been parsed or is too deep */
          if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
@@ -1448,7 +1448,7 @@ int map_isMapped( const char* targ_sys, int r )
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( sys->jumps[i] );
+         jsys = sys->jumps[i].target;
         
          /* SYstem has already been parsed. */
          if (A_in(closed,jsys) != NULL)

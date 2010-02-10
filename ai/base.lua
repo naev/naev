@@ -20,9 +20,9 @@ function control ()
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
          taunt(enemy, true)
-         ai.pushtask(0, "attack", enemy)
+         ai.pushtask("attack", enemy)
       else
-         ai.pushtask(0, "idle")
+         ai.pushtask("idle")
       end
    end
 end
@@ -30,7 +30,7 @@ end
 
 function attacked( attacker )
    if ai.taskname() ~= "attack" then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
    end
 end
 

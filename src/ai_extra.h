@@ -21,7 +21,7 @@ void ai_destroy( Pilot* p );
 /*
  * Task related.
  */
-Task *ai_newtask( Pilot *p, const char *func, int pos );
+Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos );
 void ai_freetask( Task* t );
 void ai_cleartasks( Pilot* p );
 

@@ -18,6 +18,7 @@ naev_SOURCES = \
 	conf.c \
 	console.c \
 	debris.c \
+	dev_system.c \
 	dialogue.c \
 	economy.c \
 	equipment.c \
@@ -99,7 +100,7 @@ naev_SOURCES = \
 	unidiff.c \
 	weapon.c \
 	ai.h \
-   ai_extra.h \
+	ai_extra.h \
 	array.h \
 	base64.h \
 	board.h \
@@ -111,6 +112,7 @@ naev_SOURCES = \
 	config.h \
 	console.h \
 	debris.h \
+	dev_system.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \
