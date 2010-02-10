@@ -1571,11 +1571,33 @@ void player_hailStart (void)
  */
 void player_jump (void)
 {
-   int i;
+   int i, j;
+   double dist, mindist;
 
    /* Must have a jump target and not be already jumping. */
-   if ((player.p->nav_hyperspace == -1) || pilot_isFlag(player.p, PILOT_HYPERSPACE))
+   if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return;
+
+   if (player.p->nav_hyperspace == -1) {
+      j        = -1;
+      mindist  = INFINITY;
+      for (i=0; i<cur_system->njumps; i++) {
+         dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
+         if (dist < mindist) {
+            mindist  = dist;
+            j        = i;
+         }
+      }
+      if (j  < 0)
+         return;
+
+      player.p->nav_hyperspace = j;
+      player_playSound(snd_nav,1);
+
+      /* Only follow through if within range. */
+      if (mindist > pow2( cur_system->jumps[j].radius ))
+         return;
+   }
 
    /* Already jumping, so we break jump. */
    if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
