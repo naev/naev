@@ -564,6 +564,7 @@ static void gui_renderBorder( double dt )
    int i, j;
    Pilot *plt;
    Planet *pnt;
+   JumpPoint *jp;
    glTexture *tex;
    int hw, hh;
    int cw, ch;
@@ -622,21 +623,79 @@ static void gui_renderBorder( double dt )
                sizeof(GLfloat) * 5*4, colours );
          /* Set up vertex. */
          vertex[0] = cx-5.;
-         vertex[1] = cy-5;
+         vertex[1] = cy-5.;
          vertex[2] = cx-5.;
-         vertex[3] = cy+5;
+         vertex[3] = cy+5.;
          vertex[4] = cx+5.;
-         vertex[5] = cy+5;
+         vertex[5] = cy+5.;
          vertex[6] = cx+5.;
-         vertex[7] = cy-5;
+         vertex[7] = cy-5.;
          vertex[8] = cx-5.;
-         vertex[9] = cy-5;
+         vertex[9] = cy-5.;
          gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 5*2, vertex );
          /* Draw tho VBO. */
          gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
          gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
                gui_vboColourOffset, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 5 );
+      }
+   }
+
+   /* Draw jump routes. */
+   for (i=0; i<cur_system->njumps; i++) {
+      jp  = &cur_system->jumps[i]; 
+      tex = pnt->gfx_space;
+
+      /* See if in sensor range. */
+      if (!pilot_inRangePlanet(player.p, i))
+         continue;
+
+      /* Get relative positions. */
+      rx = (jp->pos.x - player.p->solid->pos.x)*z;
+      ry = (jp->pos.y - player.p->solid->pos.y)*z;
+
+      /* Correct for offset. */
+      crx = rx - gui_xoff;
+      cry = ry - gui_yoff;
+
+      /* Compare dimensions. */
+      cw = hw + tex->sw/2;
+      ch = hh + tex->sh/2;
+
+      /* Check if out of range. */
+      if ((ABS(crx) > cw) || (ABS(cry) > ch)) {
+
+         /* Get border intersection. */
+         gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
+
+         /* Set up colours. */
+         if (i==player.p->nav_hyperspace)
+            col = &cGreen;
+         else
+            col = &cWhite;
+         for (j=0; j<4; j++) {
+            colours[4*j + 0] = col->r;
+            colours[4*j + 1] = col->g;
+            colours[4*j + 2] = col->b;
+            colours[4*j + 3] = int_a;
+         }
+         gl_vboSubData( gui_vbo, gui_vboColourOffset,
+               sizeof(GLfloat) * 4*4, colours );
+         /* Set up vertex. */
+         vertex[0] = cx-5.;
+         vertex[1] = cy-5.;
+         vertex[2] = cx+5.;
+         vertex[3] = cy-5.;
+         vertex[4] = cx;
+         vertex[5] = cy+5.;
+         vertex[6] = cx-5.;
+         vertex[7] = cy-5.;
+         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
+         /* Draw tho VBO. */
+         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+               gui_vboColourOffset, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINE_STRIP, 0, 4 );
       }
    }
 
@@ -679,13 +738,13 @@ static void gui_renderBorder( double dt )
                sizeof(GLfloat) * 4*4, colours );
          /* Set up vertex. */
          vertex[0] = cx-5.;
-         vertex[1] = cy-5;
+         vertex[1] = cy-5.;
          vertex[2] = cx+5.;
-         vertex[3] = cy+5;
+         vertex[3] = cy+5.;
          vertex[4] = cx+5.;
-         vertex[5] = cy-5;
+         vertex[5] = cy-5.;
          vertex[6] = cx-5.;
-         vertex[7] = cy+5;
+         vertex[7] = cy+5.;
          gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
          /* Draw tho VBO. */
          gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
