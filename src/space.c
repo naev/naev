@@ -1921,8 +1921,8 @@ void space_renderStars( const double dt )
       m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
       m /= HYPERSPACE_STARS_BLUR;
       m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player.p->solid->vel)+M_PI);
-      y = m*sin(VANGLE(player.p->solid->vel)+M_PI);
+      x = m*cos(VANGLE(player.p->solid->vel));
+      y = m*sin(VANGLE(player.p->solid->vel));
 
       /* Generate lines. */
       for (i=0; i < nstars; i++) {
