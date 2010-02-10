@@ -644,7 +644,7 @@ static void gui_renderBorder( double dt )
    /* Draw jump routes. */
    for (i=0; i<cur_system->njumps; i++) {
       jp  = &cur_system->jumps[i]; 
-      tex = pnt->gfx_space;
+      tex = jumppoint_gfx;
 
       /* See if in sensor range. */
       if (!pilot_inRangePlanet(player.p, i))
