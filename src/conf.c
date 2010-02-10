@@ -97,6 +97,7 @@ static void print_usage( char **argv )
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
    LOG("   -G, --generate        regenerates the nebula (slow)");
+   LOG("   -N, --nondata         do not use ndata and try to use laid out files");
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -493,13 +494,14 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
+      { "nondata", no_argument, 0, 'N' },
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:Vd:j:J:W:H:MSm:s:Ghv",
+         "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
@@ -539,6 +541,11 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 'G':
             nebu_forceGenerate();
+            break;
+         case 'N':
+            if (conf.ndata != NULL)
+               free(conf.ndata);
+            conf.ndata = NULL;
             break;
 
          case 'v':
