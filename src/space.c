@@ -299,7 +299,7 @@ int space_hyperspace( Pilot* p )
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
  */
-int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
+int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel )
 {
    int i;
    JumpPoint *jp;
@@ -342,9 +342,6 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
    /* Set new velocity. */
    a += M_PI;
    vect_cset( vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
-
-   /* Set direction. */
-   *dir = a;
 
    return 0;
 }
@@ -718,7 +715,7 @@ static void space_addFleet( Fleet* fleet, int init )
 
          /* Entering via hyperspace. */
          if (c==0)
-            space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
+            space_calcJumpInPos( cur_system, jp->target, &vp, &vv );
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);
@@ -1877,20 +1874,6 @@ void space_renderStars( const double dt )
    gl_matrixPush();
       gl_matrixScale( z, z );
 
-   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
-
-      glShadeModel(GL_SMOOTH);
-
-      /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
-      m /= HYPERSPACE_STARS_BLUR;
-      m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player.p->solid->vel)+M_PI);
-      y = m*sin(VANGLE(player.p->solid->vel)+M_PI);
-
       if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
@@ -1926,6 +1909,20 @@ void space_renderStars( const double dt )
          /* Upload the data. */
          gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
       }
+
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING) &&
+         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+
+      glShadeModel(GL_SMOOTH);
+
+      /* lines will be based on velocity */
+      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+      m /= HYPERSPACE_STARS_BLUR;
+      m *= HYPERSPACE_STARS_LENGTH;
+      x = m*cos(VANGLE(player.p->solid->vel)+M_PI);
+      y = m*sin(VANGLE(player.p->solid->vel)+M_PI);
 
       /* Generate lines. */
       for (i=0; i < nstars; i++) {
@@ -1943,42 +1940,6 @@ void space_renderStars( const double dt )
       glShadeModel(GL_FLAT);
    }
    else { /* normal rendering */
-      if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-            !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-         /* Calculate some dimensions. */
-         w  = (SCREEN_W + 2.*STAR_BUF);
-         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-         h  = (SCREEN_H + 2.*STAR_BUF);
-         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-         hw = w/2.;
-         hh = h/2.;
-
-         /* Calculate new star positions. */
-         for (i=0; i < nstars; i++) {
-
-            /* calculate new position */
-            b = 9. - 10.*star_colour[8*i+3];
-            star_vertex[4*i+0] = star_vertex[4*i+0] -
-               (GLfloat)player.p->solid->vel.x / b*(GLfloat)dt;
-            star_vertex[4*i+1] = star_vertex[4*i+1] -
-               (GLfloat)player.p->solid->vel.y / b*(GLfloat)dt;
-
-            /* check boundries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
-
-         /* Upload the data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      }
-
       /* Render. */
       gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
       gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
