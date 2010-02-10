@@ -106,7 +106,7 @@ extern int pilot_nstack;
 /*
  * star stack and friends
  */
-#define STAR_BUF  100   /**< Area to leave around screen for stars, more = less repitition */
+#define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
 /**
  * @struct Star
  *
