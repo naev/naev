@@ -21,6 +21,7 @@ docs/lua/*.luadoc
 *.deps/
 src/stamp-h1
 src/config.h
+src/config.h.in~
 build/*
 aclocal.m4
 autom4te.cache/*
