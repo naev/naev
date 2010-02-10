@@ -228,9 +228,9 @@ static int planetL_get( lua_State *L )
 
    /* If boolean return random. */
    else if (lua_isboolean(L,1)) {
-      planet.p = planet_get( space_getRndPlanet() );
+      planet.p    = planet_get( space_getRndPlanet() );
       lua_pushplanet(L,planet);
-      sys.s = system_get( planet_getSystem(land_planet->name) );
+      sys.s       = system_get( planet_getSystem(planet.p->name) );
       lua_pushsystem(L,sys);
       return 2;
    }
