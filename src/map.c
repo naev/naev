@@ -55,17 +55,20 @@ extern int systems_nstack;
 /*
  * prototypes
  */
+/* Update. */
 static void map_update( unsigned int wid );
+/* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
-static void map_renderNames( double x, double y );
 static void map_renderMarkers( double x, double y, double r );
+static void map_drawMarker( double x, double y, double r,
+      int num, int cur, int type );
+/* Mouse. */
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
+/* Misc. */
 static void map_setZoom( double zoom );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
-static void map_drawMarker( double x, double y, double r,
-      int num, int cur, int type );
 
 
 /**
@@ -578,20 +581,62 @@ static glTexture *gl_genFactionDisk( int radius )
 static void map_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i,j;
-   double x,y,r, tx,ty, fuel;
-   StarSystem *sys, *jsys, *hsys, *lsys;
-   glColour *col, c;
-   GLfloat vertex[8*(2+4)];
-   int sw, sh;
+   double x,y,r;
+   StarSystem *sys;
 
    /* Parameters. */
-   r = round(CLAMP(5., 15., 6.*map_zoom));
-   x = round((bx - map_xpos + w/2) * 1.);
-   y = round((by - map_ypos + h/2) * 1.);
+   map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 0 );
+  
+   /* Render system names. */
+   map_renderNames( x, y, 0 );
+
+   /* Render system markers. */
+   map_renderMarkers( x, y, r );
+
+   /* Selected system. */
+   if (map_selected != -1) {
+      sys = system_getIndex( map_selected );
+      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            1.5*r, bx, by, w, h, &cRed, 0 );
+   }
+
+   /* Current planet. */
+   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+         y + cur_system->pos.y * map_zoom,
+         1.5*r, bx, by, w, h, &cRadar_tPlanet, 0 );
+}
+
+
+/**
+ * @brief Gets the render parameters.
+ */
+void map_renderParams( double bx, double by, double xpos, double ypos,
+      double w, double h, double zoom, double *x, double *y, double *r )
+{
+   *r = round(CLAMP(5., 15., 6.*zoom));
+   *x = round((bx - xpos + w/2) * 1.);
+   *y = round((by - ypos + h/2) * 1.);
+}
+
+
+/**
+ * @brief Renders the systems.
+ */
+void map_renderSystems( double bx, double by, double x, double y,
+      double w, double h, double r, int all )
+{
+   int i,j;
+   glColour *col, c;
+   GLfloat vertex[8*(2+4)];
+   StarSystem *sys, *jsys, *hsys, *lsys;
+   int sw, sh;
+   double tx,ty, fuel;
 
    /*
     * First pass renders everything almost (except names and markers).
@@ -600,8 +645,8 @@ static void map_render( double bx, double by, double w, double h, void *data )
       sys = system_getIndex( i );
 
       /* check to make sure system is known or adjacent to known (or marked) */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-            && !space_sysReachable(sys))
+      if (!all && (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+            && !space_sysReachable(sys)))
          continue;
 
       tx = x + sys->pos.x*map_zoom;
@@ -644,7 +689,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
       }
 
-      if (!sys_isKnown(sys))
+      if (!all && !sys_isKnown(sys))
          continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
@@ -734,29 +779,13 @@ static void map_render( double bx, double by, double w, double h, void *data )
       
       glShadeModel( GL_FLAT );
    }
-
-   map_renderNames( x, y );
-
-   map_renderMarkers( x, y, r );
-
-   /* Selected planet. */
-   if (map_selected != -1) {
-      sys = system_getIndex( map_selected );
-      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.5*r, bx, by, w, h, &cRed, 0 );
-   }
-
-   /* Current planet. */
-   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
-         y + cur_system->pos.y * map_zoom,
-         1.5*r, bx, by, w, h, &cRadar_tPlanet, 0 );
 }
 
 
 /**
  * @brief Renders the system names on the map.
  */
-static void map_renderNames( double x, double y )
+void map_renderNames( double x, double y, int all )
 {
    double tx, ty;
    StarSystem *sys;
@@ -769,7 +798,7 @@ static void map_renderNames( double x, double y )
       sys = system_getIndex( i );
 
       /* Skip system. */
-      if (!sys_isKnown(sys) || (map_zoom <= 0.5 ))
+      if ((!all && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
       tx = x + (sys->pos.x+11.) * map_zoom;

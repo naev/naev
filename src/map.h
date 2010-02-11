@@ -36,6 +36,12 @@ int map_isMapped( const char* targ_sys, int r );
 void map_show( int wid, int x, int y, int w, int h, double zoom );
 int map_center( const char *sys );
 
+/* Internal rendering sort of stuff. */
+void map_renderParams( double bx, double by, double xpos, double ypos,
+      double w, double h, double zoom, double *x, double *y, double *r );
+void map_renderSystems( double bx, double by, double x, double y, double w, double h, double r, int all );
+void map_renderNames( double x, double y, int all );
+
 
 #endif /* MAP_H */
 
