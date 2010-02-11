@@ -57,6 +57,8 @@ extern int systems_nstack;
  */
 static void map_update( unsigned int wid );
 static void map_render( double bx, double by, double w, double h, void *data );
+static void map_renderNames( double x, double y );
+static void map_renderMarkers( double x, double y, double r );
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 static void map_setZoom( double zoom );
@@ -576,7 +578,7 @@ static glTexture *gl_genFactionDisk( int radius )
 static void map_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i,j, n,m;
+   int i,j;
    double x,y,r, tx,ty, fuel;
    StarSystem *sys, *jsys, *hsys, *lsys;
    glColour *col, c;
@@ -733,6 +735,33 @@ static void map_render( double bx, double by, double w, double h, void *data )
       glShadeModel( GL_FLAT );
    }
 
+   map_renderNames( x, y );
+
+   map_renderMarkers( x, y, r );
+
+   /* Selected planet. */
+   if (map_selected != -1) {
+      sys = system_getIndex( map_selected );
+      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            1.5*r, bx, by, w, h, &cRed, 0 );
+   }
+
+   /* Current planet. */
+   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+         y + cur_system->pos.y * map_zoom,
+         1.5*r, bx, by, w, h, &cRadar_tPlanet, 0 );
+}
+
+
+/**
+ * @brief Renders the system names on the map.
+ */
+static void map_renderNames( double x, double y )
+{
+   double tx, ty;
+   StarSystem *sys;
+   int i;
+
    /*
     * Second pass - System names
     */
@@ -749,7 +778,17 @@ static void map_render( double bx, double by, double w, double h, void *data )
             tx + SCREEN_W/2., ty + SCREEN_H/2.,
             &cWhite, sys->name );
    }
+}
 
+
+/**
+ * @brief Renders the map markers.
+ */
+static void map_renderMarkers( double x, double y, double r )
+{
+   double tx, ty;
+   int i, j, n, m;
+   StarSystem *sys;
 
    /*
     * Third pass - system markers
@@ -790,19 +829,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
          j++;
       }
    }
-
-   /* Selected planet. */
-   if (map_selected != -1) {
-      sys = system_getIndex( map_selected );
-      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.5*r, bx, by, w, h, &cRed, 0 );
-   }
-
-   /* Current planet. */
-   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
-         y + cur_system->pos.y * map_zoom,
-         1.5*r, bx, by, w, h, &cRadar_tPlanet, 0 );
 }
+
+
 /**
  * @brief Map custom widget mouse handling.
  *
