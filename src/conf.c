@@ -98,6 +98,9 @@ static void print_usage( char **argv )
    LOG("   -s f, --svol f        sets the sound volume to f");
    LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+#ifdef DEBUGGING
+   LOG("   --devmode             enables dev mode perks like the editors");
+#endif /* DEBUGGING */
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -139,6 +142,7 @@ void conf_setDefaults (void)
 
    /* Misc. */
    conf.nosave       = 0;
+   conf.devmode      = 0;
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -495,6 +499,9 @@ void conf_parseCLI( int argc, char** argv )
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
       { "nondata", no_argument, 0, 'N' },
+#ifdef DEBUGGING
+      { "devmode", no_argument, 0, 'D' },
+#endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
@@ -547,6 +554,12 @@ void conf_parseCLI( int argc, char** argv )
                free(conf.ndata);
             conf.ndata = NULL;
             break;
+#ifdef DEBUGGING
+         case 'D':
+            conf.devmode = 1;
+            LOG("Enabling developer mode.");
+            break;
+#endif /* DEBUGGING */
 
          case 'v':
             /* by now it has already displayed the version

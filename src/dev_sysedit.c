@@ -17,10 +17,16 @@
 #include "space.h"
 #include "toolkit.h"
 #include "opengl.h"
+#include "map.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
+
+
+static double sysedit_xpos = 0.;
+static double sysedit_ypos = 0.;
+static double sysedit_zoom = 1.;
 
 
 /*
@@ -59,6 +65,20 @@ void sysedit_open( unsigned int wid_unused, char *unused )
  */
 static void sysedit_render( double bx, double by, double w, double h, void *data )
 {
+   (void) data;
+   double x,y,r;
+
+   /* Parameters. */
+   map_renderParams( bx, by, sysedit_xpos, sysedit_ypos, w, h, sysedit_zoom, &x, &y, &r );
+
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 0 );
+
+   /* Render system names. */
+   map_renderNames( x, y, 0 );
 }
 
 /**
