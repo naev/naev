@@ -699,7 +699,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
-         if (player.p->nav_hyperspace != -1)
+         if (!all && (player.p->nav_hyperspace != -1))
             hsys = cur_system->jumps[player.p->nav_hyperspace].target;
 
          /* Draw the lines. */
@@ -732,7 +732,7 @@ void map_renderSystems( double bx, double by, double x, double y,
    }
    
    /* Now we'll draw over the lines with the new pathways. */
-   if (map_path != NULL) {
+   if (!all && (map_path != NULL)) {
       lsys = cur_system;
       glShadeModel(GL_SMOOTH);
       col = &cGreen;

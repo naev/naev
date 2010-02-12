@@ -75,10 +75,10 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 0 );
+   map_renderSystems( bx, by, x, y, w, h, r, 1 );
 
    /* Render system names. */
-   map_renderNames( x, y, 0 );
+   map_renderNames( x, y, 1 );
 }
 
 /**
