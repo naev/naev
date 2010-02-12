@@ -66,7 +66,6 @@ static void map_drawMarker( double x, double y, double r,
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
-static void map_setZoom( double zoom );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -653,7 +652,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       ty = y + sys->pos.y*map_zoom;
 
       /* draws the disk representing the faction */
-      if (sys_isKnown(sys) && (sys->faction != -1)) {
+      if ((all || sys_isKnown(sys)) && (sys->faction != -1)) {
          sw = gl_faction_disk->sw;
          sh = gl_faction_disk->sw;
 
@@ -670,7 +669,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       }
 
       /* Draw the system. */
-      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
+      if ((!all && !sys_isKnown(sys)) || (sys->nfleets==0)) col = &cInert;
       else if (sys->security >= 1.) col = &cGreen;
       else if (sys->security >= 0.6) col = &cOrange;
       else if (sys->security >= 0.3) col = &cRed;
@@ -679,11 +678,12 @@ void map_renderSystems( double bx, double by, double x, double y,
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* If system is known fill it. */
-      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
+      if ((all || sys_isKnown(sys)) && (sys->nplanets > 0)) {
          /* Planet colours */
-         if (!sys_isKnown(sys)) col = &cInert;
+         if (!all && !sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;
-         else col = faction_getColour( sys->faction);
+         else if (all) col = &cNeutral;
+         else col = faction_getColour( sys->faction );
 
          /* Radius slightly shorter. */
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );

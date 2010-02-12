@@ -47,6 +47,9 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    (void) unused;
    unsigned int wid;
 
+   /* Needed to generate faction disk. */
+   map_setZoom( 1. );
+
    /* Create the window. */
    wid = window_create( "System Editor", -1, -1, -1, -1 );
 
