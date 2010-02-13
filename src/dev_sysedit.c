@@ -214,10 +214,12 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             }
 
             /* Start dragging. */
-            sysedit_drag      = 1;
-            sysedit_dragTime  = SDL_GetTicks();
-            sysedit_moved     = 0;
-            sysedit_tsys      = NULL;
+            if (!(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
+               sysedit_drag      = 1;
+               sysedit_dragTime  = SDL_GetTicks();
+               sysedit_moved     = 0;
+               sysedit_tsys      = NULL;
+            }
             return;
          }
          break;
