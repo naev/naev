@@ -366,6 +366,7 @@ static void sysedit_newSys( double x, double y )
    for (i=0; i<systems_nstack; i++) {
       if (strcmp(name, system_getIndex(i)->name)==0) {
          dialogue_alert( "The Star System '%s' already exists!", name );
+         free(name);
          sysedit_newSys( x, y );
          return;
       }
