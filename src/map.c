@@ -632,7 +632,7 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
  * @brief Renders the systems.
  */
 void map_renderSystems( double bx, double by, double x, double y,
-      double w, double h, double r, int all )
+      double w, double h, double r, int editor)
 {
    int i,j;
    glColour *col, c;
@@ -648,7 +648,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       sys = system_getIndex( i );
 
       /* check to make sure system is known or adjacent to known (or marked) */
-      if (!all && (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+      if (!editor && (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
             && !space_sysReachable(sys)))
          continue;
 
@@ -656,7 +656,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       ty = y + sys->pos.y*map_zoom;
 
       /* draws the disk representing the faction */
-      if ((all || sys_isKnown(sys)) && (sys->faction != -1)) {
+      if ((editor || sys_isKnown(sys)) && (sys->faction != -1)) {
          sw = gl_faction_disk->sw;
          sh = gl_faction_disk->sw;
 
@@ -673,7 +673,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       }
 
       /* Draw the system. */
-      if ((!all && !sys_isKnown(sys)) || (sys->nfleets==0)) col = &cInert;
+      if ((!editor && !sys_isKnown(sys)) || (sys->nfleets==0)) col = &cInert;
       else if (sys->security >= 1.) col = &cGreen;
       else if (sys->security >= 0.6) col = &cOrange;
       else if (sys->security >= 0.3) col = &cRed;
@@ -682,18 +682,18 @@ void map_renderSystems( double bx, double by, double x, double y,
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* If system is known fill it. */
-      if ((all || sys_isKnown(sys)) && (sys->nplanets > 0)) {
+      if ((editor || sys_isKnown(sys)) && (sys->nplanets > 0)) {
          /* Planet colours */
-         if (!all && !sys_isKnown(sys)) col = &cInert;
+         if (!editor && !sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;
-         else if (all) col = &cNeutral;
+         else if (editor) col = &cNeutral;
          else col = faction_getColour( sys->faction );
 
          /* Radius slightly shorter. */
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
       }
 
-      if (!all && !sys_isKnown(sys))
+      if (!editor && !sys_isKnown(sys))
          continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
@@ -799,7 +799,7 @@ static void map_renderPath( double x, double y )
 /**
  * @brief Renders the system names on the map.
  */
-void map_renderNames( double x, double y, int all )
+void map_renderNames( double x, double y, int editor )
 {
    double tx, ty;
    StarSystem *sys;
@@ -812,7 +812,7 @@ void map_renderNames( double x, double y, int all )
       sys = system_getIndex( i );
 
       /* Skip system. */
-      if ((!all && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
+      if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
       tx = x + (sys->pos.x+11.) * map_zoom;

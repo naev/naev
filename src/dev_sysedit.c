@@ -129,6 +129,8 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 {
    (void) data;
    double x,y,r;
+   StarSystem *sys;
+   int i;
 
    /* Parameters. */
    map_renderParams( bx, by, sysedit_xpos, sysedit_ypos, w, h, sysedit_zoom, &x, &y, &r );
@@ -141,6 +143,13 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
    /* Render system names. */
    map_renderNames( x, y, 1 );
+
+   /* Render the selected system selections. */
+   for (i=0; i<sysedit_nsys; i++) {
+      sys = sysedit_sys[i];
+      gl_drawCircleInRect( x + sys->pos.x * sysedit_zoom, y + sys->pos.y * sysedit_zoom,
+            1.5*r, bx, by, w, h, &cWhite, 0 );
+   }
 }
 
 /**
@@ -244,7 +253,8 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             sysedit_drag      = 0;
          }
          if (sysedit_dragSys) {
-            if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
+            if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
+                  (sysedit_moved < SYSEDIT_MOVE_THRESHOLD) && (sysedit_tsys != NULL)) {
                if (sysedit_tadd == 0)
                   sysedit_selectRm( sysedit_tsys );
                else {
