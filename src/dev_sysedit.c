@@ -259,7 +259,7 @@ static void sysedit_deselect (void)
    sysedit_sys    = NULL;
    sysedit_nsys   = 0;
    sysedit_msys   = 0;
-   window_modifyText( sysedit_wid, "txtSelected", "\eDSelected: \e0None" );
+   window_modifyText( sysedit_wid, "txtSelected", "No selection" );
 }
 
 
@@ -310,7 +310,7 @@ static void sysedit_selectText (void)
 {
    int i, l;
    char buf[1024];
-   l = snprintf( buf, sizeof(buf), "\eDSelected: \e0" );
+   l = 0;
    for (i=0; i<sysedit_nsys; i++) {
       l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", sysedit_sys[i]->name,
             (i == sysedit_nsys-1) ? "" : ", " );
