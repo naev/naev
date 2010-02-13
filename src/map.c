@@ -637,7 +637,7 @@ void map_renderSystems( double bx, double by, double x, double y,
    int i,j;
    glColour *col, c;
    GLfloat vertex[8*(2+4)];
-   StarSystem *sys, *jsys, *hsys;
+   StarSystem *sys, *jsys;
    int sw, sh;
    double tx,ty;
 
@@ -703,8 +703,6 @@ void map_renderSystems( double bx, double by, double x, double y,
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
-         if (!all && (player.p->nav_hyperspace != -1))
-            hsys = cur_system->jumps[player.p->nav_hyperspace].target;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
