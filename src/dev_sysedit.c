@@ -20,6 +20,7 @@
 #include "map.h"
 #include "dev_system.h"
 #include "unidiff.h"
+#include "dialogue.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -30,9 +31,18 @@
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
 
+/*
+ * The editor modes.
+ */
+#define SYSEDIT_DEFAULT    0  /**< Default editor mode. */
+#define SYSEDIT_JUMP       1  /**< Jump point toggle mode. */
+#define SYSEDIT_NEWSYS     2  /**< New system editor mode. */
+
+
 extern int systems_nstack;
 
 
+static int sysedit_mode       = SYSEDIT_DEFAULT; /**< Editor mode. */
 static unsigned int sysedit_wid = 0; /**< Sysedit wid. */
 static double sysedit_xpos    = 0.; /**< Viewport X position. */
 static double sysedit_ypos    = 0.; /**< Viewport Y position. */
@@ -45,7 +55,7 @@ static StarSystem **sysedit_sys = NULL; /**< Selected systems. */
 static StarSystem *sysedit_tsys = NULL; /**< Temporarily clicked system. */
 static int sysedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
 static int sysedit_nsys       = 0;  /**< Number of selected systems. */
-static int sysedit_msys       = 1;  /**< Memory allocated for selected systems. */
+static int sysedit_msys       = 0;  /**< Memory allocated for selected systems. */
 
 
 /*
@@ -56,6 +66,9 @@ static void sysedit_deselect (void);
 static void sysedit_selectAdd( StarSystem *sys );
 static void sysedit_selectRm( StarSystem *sys );
 static void sysedit_selectText (void);
+/* Misc modes. */
+static void sysedit_newSys( double x, double y );
+static void sysedit_toggleJump( StarSystem *sys );
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
@@ -63,6 +76,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void sysedit_save( unsigned int wid_unused, char *unused );
+static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 
 
 /**
@@ -76,10 +90,19 @@ void sysedit_open( unsigned int wid_unused, char *unused )
 
    /* Needed to generate faction disk. */
    map_setZoom( 1. );
-   sysedit_zoom = 1.;
 
    /* Must have no diffs applied. */
    diff_clear();
+
+   /* Reset some variables. */
+   sysedit_mode   = SYSEDIT_DEFAULT;
+   sysedit_drag   = 0;
+   sysedit_dragSys = 0;
+   sysedit_tsys   = NULL;
+   sysedit_tadd   = 0;
+   sysedit_zoom   = 1.;
+   sysedit_xpos   = 0.;
+   sysedit_ypos   = 0.;
 
    /* Create the window. */
    wid = window_create( "System Editor", -1, -1, -1, -1 );
@@ -90,8 +113,12 @@ void sysedit_open( unsigned int wid_unused, char *unused )
          "btnClose", "Close", window_close );
 
    /*Save button. */
-   window_addButton( wid, -20, 20+(BUTTON_WIDTH+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save", sysedit_save );
+
+   /* New system. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnNew", "New Sys", sysedit_btnNew );
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", sysedit_buttonZoom );
@@ -119,6 +146,18 @@ static void sysedit_save( unsigned int wid_unused, char *unused )
    (void) unused;
 
    dsys_saveAll();
+}
+
+
+/**
+ * @brief Enters the editor in new system mode.
+ */
+static void sysedit_btnNew( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   sysedit_mode = SYSEDIT_NEWSYS;
 }
 
 
@@ -188,6 +227,12 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             mx -= w/2 - sysedit_xpos;
             my -= h/2 - sysedit_ypos;
 
+            if (sysedit_mode == SYSEDIT_NEWSYS) {
+               sysedit_newSys( mx, my );
+               sysedit_mode = SYSEDIT_DEFAULT;
+               return;
+            }
+
             for (i=0; i<systems_nstack; i++) {
                sys = system_getIndex( i );
 
@@ -203,30 +248,38 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                         sysedit_dragSys   = 1;
                         sysedit_tsys      = sys;
 
-                        /* Check modifier. */
-                        if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                           sysedit_tadd      = 0;
-                        else
-                           sysedit_tadd      = -1;
-                        sysedit_dragTime  = SDL_GetTicks();
-                        sysedit_moved     = 0;
+                        if (sysedit_mode == SYSEDIT_DEFAULT) {
+                           /* Check modifier. */
+                           if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                              sysedit_tadd      = 0;
+                           else
+                              sysedit_tadd      = -1;
+                           sysedit_dragTime  = SDL_GetTicks();
+                           sysedit_moved     = 0;
+                        }
                         return;
                      }
                   }
 
-                  /* Add the system if not selected. */
-                  if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                     sysedit_selectAdd( sys );
-                  else {
-                     sysedit_deselect();
-                     sysedit_selectAdd( sys );
-                  }
-                  sysedit_tsys      = NULL;
+                  if (sysedit_mode == SYSEDIT_DEFAULT) {
+                     /* Add the system if not selected. */
+                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                        sysedit_selectAdd( sys );
+                     else {
+                        sysedit_deselect();
+                        sysedit_selectAdd( sys );
+                     }
+                     sysedit_tsys      = NULL;
 
-                  /* Start dragging anyway. */
-                  sysedit_dragSys   = 1;
-                  sysedit_dragTime  = SDL_GetTicks();
-                  sysedit_moved     = 0;
+                     /* Start dragging anyway. */
+                     sysedit_dragSys   = 1;
+                     sysedit_dragTime  = SDL_GetTicks();
+                     sysedit_moved     = 0;
+                  }
+                  else if (sysedit_mode == SYSEDIT_JUMP) {
+                     sysedit_toggleJump( sys );
+                     sysedit_mode = SYSEDIT_DEFAULT;
+                  }
                   return;
                }
             }
@@ -288,6 +341,45 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          }
          break;
    }
+}
+
+
+/**
+ * @brief Creates a new system.
+ */
+static void sysedit_newSys( double x, double y )
+{
+   char *name;
+   StarSystem *sys;
+
+   /* Get name. */
+   name = dialogue_inputRaw( "New Star System Creation", 1, 32, "What do you want to name the new system?" );
+
+   /* Abort. */
+   if (name == NULL) {
+      dialogue_alert( "Star System creation aborted!" );
+      return;
+   }
+
+   /* Create the system. */
+   sys         = system_new();
+   sys->name   = name;
+   sys->pos.x  = x;
+   sys->pos.y  = y;
+}
+
+
+/**
+ * @brief Toggles the jump point for the selected systems.
+ */
+static void sysedit_toggleJump( StarSystem *sys )
+{
+   /*
+   int i, j;
+   for (i=0; i<sysedit_nsys; i++) {
+      for (
+   }
+   */
 }
 
 

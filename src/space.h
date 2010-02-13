@@ -237,6 +237,7 @@ char planet_getClass( Planet *p );
 /*
  * system adding/removing stuff.
  */
+StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addFleet( StarSystem *sys, SystemFleet *fleet );

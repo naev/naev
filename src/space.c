@@ -133,6 +133,7 @@ static double interference_timer = 0.; /**< Interference timer. */
 /* planet load */
 static int planet_parse( Planet* planet, const xmlNodePtr parent );
 /* system load */
+static void system_init( StarSystem *sys );
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
@@ -1359,6 +1360,37 @@ int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
 
 
 /**
+ * @brief Initializes a new star system with null memory.
+ */
+static void system_init( StarSystem *sys )
+{
+   memset( sys, 0, sizeof(StarSystem) );
+   sys->faction   = -1;
+}
+
+
+/**
+ * @brief Creates a new star system.
+ */
+StarSystem *system_new (void)
+{
+   StarSystem *sys;
+
+   /* Check if memory needs to grow. */
+   systems_nstack++;
+   if (systems_nstack > systems_mstack) {
+      systems_mstack += CHUNK_SIZE;
+      systems_stack = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
+   }
+   sys = &systems_stack[ systems_nstack-1 ];
+
+   /* Initialize system and id. */
+   system_init( sys );
+   sys->id = systems_nstack-1;
+}
+
+
+/**
  * @brief Creates a system from an XML node.
  *
  *    @param parent XML node to get system from.
@@ -1376,9 +1408,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    int size;
 
    /* Clear memory for sane defaults. */
-   memset( sys, 0, sizeof(StarSystem) );
+   system_init( sys );
    flags          = 0;
-   sys->faction   = -1;
    planet         = NULL;
    size           = 0;
 
@@ -1746,6 +1777,7 @@ static int systems_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
+   StarSystem *sys;
 
    /* Load the file. */
    buf = ndata_read( SYSTEM_DATA, &bufsize );
@@ -1783,15 +1815,8 @@ static int systems_load (void)
     */
    do {
       if (xml_isNode(node,XML_SYSTEM_TAG)) {
-         /* Check if memory needs to grow. */
-         systems_nstack++;
-         if (systems_nstack > systems_mstack) {
-            systems_mstack += CHUNK_SIZE;
-            systems_stack = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
-         }
-
-         system_parse(&systems_stack[systems_nstack-1],node);
-         systems_stack[systems_nstack-1].id = systems_nstack-1;
+         sys = system_new();
+         system_parse( sys, node );
       }
    } while (xml_nextNode(node));
 
