@@ -19,6 +19,7 @@
 #include "opengl.h"
 #include "map.h"
 #include "dev_system.h"
+#include "unidiff.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -76,6 +77,9 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    /* Needed to generate faction disk. */
    map_setZoom( 1. );
    sysedit_zoom = 1.;
+
+   /* Must have no diffs applied. */
+   diff_clear();
 
    /* Create the window. */
    wid = window_create( "System Editor", -1, -1, -1, -1 );
