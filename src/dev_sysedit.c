@@ -349,6 +349,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
  */
 static void sysedit_newSys( double x, double y )
 {
+   int i;
    char *name;
    StarSystem *sys;
 
@@ -359,6 +360,15 @@ static void sysedit_newSys( double x, double y )
    if (name == NULL) {
       dialogue_alert( "Star System creation aborted!" );
       return;
+   }
+
+   /* Avoid name collisions. */
+   for (i=0; i<systems_nstack; i++) {
+      if (strcmp(name, system_getIndex(i)->name)==0) {
+         dialogue_alert( "The Star System '%s' already exists!", name );
+         sysedit_newSys( x, y );
+         return;
+      }
    }
 
    /* Create the system. */
