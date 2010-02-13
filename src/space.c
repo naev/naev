@@ -1387,6 +1387,8 @@ StarSystem *system_new (void)
    /* Initialize system and id. */
    system_init( sys );
    sys->id = systems_nstack-1;
+
+   return sys;
 }
 
 
