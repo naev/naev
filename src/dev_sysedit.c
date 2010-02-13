@@ -18,6 +18,7 @@
 #include "toolkit.h"
 #include "opengl.h"
 #include "map.h"
+#include "dev_system.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -59,6 +60,8 @@ static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
+/* Button functions. */
+static void sysedit_save( unsigned int wid_unused, char *unused );
 
 
 /**
@@ -82,6 +85,10 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", window_close );
 
+   /*Save button. */
+   window_addButton( wid, -20, 20+(BUTTON_WIDTH+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", "Save", sysedit_save );
+
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", sysedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", sysedit_buttonZoom );
@@ -96,6 +103,18 @@ void sysedit_open( unsigned int wid_unused, char *unused )
 
    /* Deselect everything. */
    sysedit_deselect();
+}
+
+
+/**
+ * @brief Saves the systems.
+ */
+static void sysedit_save( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   dsys_saveAll();
 }
 
 
@@ -317,7 +336,10 @@ static void sysedit_selectText (void)
       l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", sysedit_sys[i]->name,
             (i == sysedit_nsys-1) ? "" : ", " );
    }
-   window_modifyText( sysedit_wid, "txtSelected", buf );
+   if (l == 0)
+      window_modifyText( sysedit_wid, "txtSelected", "No selection" );
+   else
+      window_modifyText( sysedit_wid, "txtSelected", buf );
 }
 
 
