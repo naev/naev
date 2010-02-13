@@ -209,6 +209,11 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                      sysedit_selectAdd( sys );
                   }
                   sysedit_tsys      = NULL;
+
+                  /* Start dragging anyway. */
+                  sysedit_dragSys   = 1;
+                  sysedit_dragTime  = SDL_GetTicks();
+                  sysedit_moved     = 0;
                   return;
                }
             }
