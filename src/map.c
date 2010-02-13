@@ -59,6 +59,7 @@ extern int systems_nstack;
 static void map_update( unsigned int wid );
 /* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
+static void map_renderPath( double x, double y );
 static void map_renderMarkers( double x, double y, double r );
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type );
@@ -591,6 +592,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Render systems. */
    map_renderSystems( bx, by, x, y, w, h, r, 0 );
+
+   /* Render the jump paths. */
+   map_renderPath( x, y );
   
    /* Render system names. */
    map_renderNames( x, y, 0 );
@@ -633,9 +637,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    int i,j;
    glColour *col, c;
    GLfloat vertex[8*(2+4)];
-   StarSystem *sys, *jsys, *hsys, *lsys;
+   StarSystem *sys, *jsys, *hsys;
    int sw, sh;
-   double tx,ty, fuel;
+   double tx,ty;
 
    /*
     * First pass renders everything almost (except names and markers).
@@ -730,9 +734,21 @@ void map_renderSystems( double bx, double by, double x, double y,
       }
       glShadeModel( GL_FLAT );
    }
+}
    
    /* Now we'll draw over the lines with the new pathways. */
-   if (!all && (map_path != NULL)) {
+/**
+ * @brief Render the map path.
+ */
+static void map_renderPath( double x, double y )
+{
+   int j;
+   glColour *col;
+   GLfloat vertex[8*(2+4)];
+   StarSystem *jsys, *lsys;
+   double fuel;
+
+   if (map_path != NULL) {
       lsys = cur_system;
       glShadeModel(GL_SMOOTH);
       col = &cGreen;
