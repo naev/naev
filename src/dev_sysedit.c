@@ -580,6 +580,7 @@ static void sysedit_newSys( double x, double y )
    sys->pos.x  = x;
    sys->pos.y  = y;
    sys->stars  = 400;
+   sys->radius = 2500.;
 
    /* Select new system. */
    sysedit_deselect();
