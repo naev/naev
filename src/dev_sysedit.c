@@ -472,6 +472,7 @@ static void sysedit_newSys( double x, double y )
    sys->name   = name;
    sys->pos.x  = x;
    sys->pos.y  = y;
+   sys->stars  = 400;
 
    /* Select new system. */
    sysedit_deselect();
