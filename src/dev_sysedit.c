@@ -499,6 +499,7 @@ static void sysedit_renameSys (void)
   
       /* Try again. */
       if (sysedit_checkName( name )) {
+         free(name);
          i--;
          continue;
       }
