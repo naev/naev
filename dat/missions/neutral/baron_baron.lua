@@ -189,6 +189,7 @@ function takeoff()
 end
 
 function abort()
+    var.pop("baron_stage")
     misn.finish(false)
 end
 
