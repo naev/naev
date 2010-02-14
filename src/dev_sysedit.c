@@ -28,6 +28,10 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
+#define SYSEDIT_EDIT_WIDTH       400 /**< System editor width. */
+#define SYSEDIT_EDIT_HEIGHT      300 /**< System editor height. */
+
+
 #define SYSEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
@@ -69,10 +73,15 @@ static void sysedit_deselect (void);
 static void sysedit_selectAdd( StarSystem *sys );
 static void sysedit_selectRm( StarSystem *sys );
 static void sysedit_selectText (void);
-/* Misc modes. */
+/* System editing. */
+static void sysedit_editSys (void);
+static void sysedit_editSysClose( unsigned int wid, char *name );
+/* System reanming. */
 static int sysedit_checkName( char *name );
 static void sysedit_renameSys (void);
+/* New system. */
 static void sysedit_newSys( double x, double y );
+/* Jump handling. */
 static void sysedit_toggleJump( StarSystem *sys );
 static void sysedit_jumpAdd( StarSystem *sys, StarSystem *targ );
 static void sysedit_jumpRm( StarSystem *sys, StarSystem *targ );
@@ -88,6 +97,7 @@ static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnJump( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
+static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 
@@ -118,7 +128,7 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    sysedit_ypos   = 0.;
 
    /* Create the window. */
-   wid = window_create( "System Editor", -1, -1, -1, -1 );
+   wid = window_create( "Universe Editor", -1, -1, -1, -1 );
    window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
 
@@ -138,8 +148,12 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnRename", "Rename", sysedit_btnRename );
 
-   /* New system. */
+   /* Edit system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*5, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnEdit", "Edit", sysedit_btnEdit );
+
+   /* New system. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Sys", sysedit_btnNew );
 
    /* Zoom buttons */
@@ -178,6 +192,9 @@ static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
          return 1;
       case SDLK_r:
          sysedit_renameSys();
+         return 1;
+      case SDLK_e:
+         sysedit_editSys();
          return 1;
       case SDLK_ESCAPE:
          sysedit_mode = SYSEDIT_DEFAULT;
@@ -250,6 +267,18 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    (void) unused;
 
    sysedit_mode = SYSEDIT_NEWSYS;
+}
+
+
+/**
+ * @brief Opens the system property editor.
+ */
+static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   sysedit_editSys();
 }
 
 
@@ -733,4 +762,33 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
    sysedit_xpos *= sysedit_zoom;
    sysedit_ypos *= sysedit_zoom;
 }
+
+
+/**
+ * @brief Edits an individual system or group of systems.
+ */
+static void sysedit_editSys (void)
+{
+   unsigned int wid;
+
+   /* Create the window. */
+   wid = window_create( "Star System Property Editor", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", sysedit_editSysClose );
+}
+
+
+/**
+ * @brief Closes the system property editor.
+ */
+static void sysedit_editSysClose( unsigned int wid, char *name )
+{
+   /* Close the window. */
+   window_close( wid, name );
+}
+
+
+
 
