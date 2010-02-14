@@ -408,8 +408,9 @@ static void sysedit_newSys( double x, double y )
    sys->pos.x  = x;
    sys->pos.y  = y;
 
-   /* Deselect systems as pointers might be all invalid. */
+   /* Select new system. */
    sysedit_deselect();
+   sysedit_selectAdd( sys );
 }
 
 
