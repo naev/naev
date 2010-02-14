@@ -1467,9 +1467,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"stars")) /* non-zero */
-               sys->stars = xml_getInt(cur);
-            else if (xml_isNode(cur,"asteroids")) {
+            xmlr_int( cur, "stars", sys->stars );
+            xmlr_float( cur, "radius", sys->radius );
+            if (xml_isNode(cur,"asteroids")) {
                flags |= FLAG_ASTEROIDSSET;
                sys->asteroids = xml_getInt(cur);
             }
@@ -1563,6 +1563,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(sys->stars==0,"stars");
+   MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_ASTEROIDSSET)==0,"asteroids");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
@@ -1602,7 +1603,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 {
    JumpPoint *j;
    char *buf;
-   xmlNodePtr cur;
+   xmlNodePtr cur, cur2;
    double x, y, a;
 
    /* Allocate more space. */
@@ -1650,6 +1651,11 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle flags. */
       if (xml_isNode(cur,"flags")) {
+         cur2 = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur2,"autopos"))
+               j->flags |= JP_AUTOPOS; 
+         } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));
 
