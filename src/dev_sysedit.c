@@ -72,6 +72,8 @@ static void sysedit_selectText (void);
 /* Misc modes. */
 static void sysedit_newSys( double x, double y );
 static void sysedit_toggleJump( StarSystem *sys );
+static void sysedit_jumpAdd( StarSystem *sys, StarSystem *targ );
+static void sysedit_jumpRm( StarSystem *sys, StarSystem *targ );
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
@@ -81,6 +83,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_save( unsigned int wid_unused, char *unused );
+static void sysedit_btnJump( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 
 
@@ -121,8 +124,12 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save", sysedit_save );
 
-   /* New system. */
+   /* Jump toggle. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnJump", "Jump", sysedit_btnJump );
+
+   /* New system. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Sys", sysedit_btnNew );
 
    /* Zoom buttons */
@@ -148,6 +155,9 @@ void sysedit_open( unsigned int wid_unused, char *unused )
  */
 static void sysedit_close( unsigned int wid, char *wgt )
 {
+   /* Frees some memory. */
+   sysedit_deselect();
+
    /* Reconstruct jumps. */
    systems_reconstructJumps();
 
@@ -165,6 +175,18 @@ static void sysedit_save( unsigned int wid_unused, char *unused )
    (void) unused;
 
    dsys_saveAll();
+}
+
+
+/**
+ * @brief Enters the editor in new jump mode.
+ */
+static void sysedit_btnJump( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   sysedit_mode = SYSEDIT_JUMP;
 }
 
 
@@ -284,10 +306,10 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   /* Try to find in selected systems - begin drag move. */
                   for (i=0; i<sysedit_nsys; i++) {
                      if (sysedit_sys[i] == sys) {
-                        sysedit_dragSys   = 1;
-                        sysedit_tsys      = sys;
-
                         if (sysedit_mode == SYSEDIT_DEFAULT) {
+                           sysedit_dragSys   = 1;
+                           sysedit_tsys      = sys;
+
                            /* Check modifier. */
                            if (mod & (KMOD_LCTRL | KMOD_RCTRL))
                               sysedit_tadd      = 0;
@@ -324,7 +346,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             }
 
             /* Start dragging. */
-            if (!(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
+            if ((sysedit_mode == SYSEDIT_DEFAULT) && !(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
                sysedit_drag      = 1;
                sysedit_dragTime  = SDL_GetTicks();
                sysedit_moved     = 0;
@@ -433,12 +455,76 @@ static void sysedit_newSys( double x, double y )
  */
 static void sysedit_toggleJump( StarSystem *sys )
 {
-   /*
-   int i, j;
+   int i, j, rm;
+   StarSystem *isys, *target;
+
    for (i=0; i<sysedit_nsys; i++) {
-      for (
+      isys  = sysedit_sys[i];
+      rm    = 0;
+      for (j=0; j<isys->njumps; j++) {
+         target = isys->jumps[j].target;
+         /* Target already exists, remove. */
+         if (target == sys) {
+            sysedit_jumpRm( isys, sys );
+            sysedit_jumpRm( sys, isys );
+            rm = 1;
+            break;
+         }
+      }
+      /* Target doesn't exist, add. */
+      if (!rm) {
+         sysedit_jumpAdd( isys, sys );
+         sysedit_jumpAdd( sys, isys );
+      }
    }
-   */
+
+   /* Reconstruct jumps just in case. */
+   systems_reconstructJumps();
+}
+
+
+/**
+ * @brief Adds a new Star System jump.
+ */
+static void sysedit_jumpAdd( StarSystem *sys, StarSystem *targ )
+{
+   JumpPoint *jp;
+
+   /* Add the jump. */
+   sys->njumps++;
+   sys->jumps  = realloc( sys->jumps, sizeof(JumpPoint) * sys->njumps );
+   jp          = &sys->jumps[ sys->njumps-1 ];
+
+   /* Fill it out with basics. */
+   jp->target  = targ;
+   jp->targetid = targ->id;
+   jp->radius  = 200.;
+   jp->flags   = JP_AUTOPOS; /* Will automaticalyl create position. */
+
+}
+
+
+/**
+ * @brief Removes a Star System jump.
+ */
+static void sysedit_jumpRm( StarSystem *sys, StarSystem *targ )
+{
+   int i;
+
+   /* Find assosciated jump. */
+   for (i=0; i<sys->njumps; i++)
+      if (sys->jumps[i].target == targ)
+         break;
+
+   /* Not found. */
+   if (i >= sys->njumps) {
+      WARN("Jump for system '%s' not found in system '%s' for removal.", targ->name, sys->name);
+      return;
+   }
+
+   /* Remove the jump. */
+   sys->njumps--;
+   memmove( &sys->jumps[i], &sys->jumps[i+1], sizeof(JumpPoint) * (sys->njumps - i) );
 }
 
 
@@ -509,7 +595,7 @@ static void sysedit_selectText (void)
             (i == sysedit_nsys-1) ? "" : ", " );
    }
    if (l == 0)
-      window_modifyText( sysedit_wid, "txtSelected", "No selection" );
+      sysedit_deselect();
    else
       window_modifyText( sysedit_wid, "txtSelected", buf );
 }
