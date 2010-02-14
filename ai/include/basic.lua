@@ -14,6 +14,7 @@ function brake ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
+      return
    end
 end
 
@@ -34,6 +35,7 @@ function __goto_nobrake ()
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
+      return
    end
 end
 
@@ -55,6 +57,7 @@ function goto ()
    elseif dist < bdist then
       ai.poptask()
       ai.pushtask("brake")
+      return
    end
 end
 
@@ -153,6 +156,7 @@ function __landwait ()
    elseif ai.timeup(0) then
       mem.landed = true -- Mark as landed so they don't spend time forever floating around
       ai.poptask() -- Ready to do whatever we were doing before.
+      return
    end
 end
 

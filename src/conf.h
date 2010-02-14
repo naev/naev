@@ -73,6 +73,7 @@ typedef struct PlayerConf_s {
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int nosave; /**< Disables conf saving. */
+   int devmode; /**< Developer mode. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */

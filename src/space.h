@@ -141,8 +141,10 @@ typedef struct SystemFleet_ {
 /*
  * Jump point flags.
  */
-#define JP_DISABLED     (1<<0) /**< Jump point is disabled. */
-#define JP_HIDDEN       (1<<1) /**< Jump point is hidden by default. */
+#define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
+#define JP_DISABLED     (1<<1) /**< Jump point is disabled. */
+#define JP_HIDDEN       (1<<2) /**< Jump point is hidden by default. */
+
 
 
 /**
@@ -152,6 +154,7 @@ typedef struct SystemFleet_ {
  */
 typedef struct JumpPoint_ {
    StarSystem *target; /**< Target star system to jump to. */
+   int targetid; /**< ID of the target star system. */
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
@@ -182,6 +185,7 @@ struct StarSystem_ {
    double interference; /**< in % @todo implement interference. */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
+   double radius; /**< Default system radius for standard jump points. */
 
    /* Planets. */
    Planet **planets; /**< planets */
@@ -237,6 +241,8 @@ char planet_getClass( Planet *p );
 /*
  * system adding/removing stuff.
  */
+void systems_reconstructJumps (void);
+StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addFleet( StarSystem *sys, SystemFleet *fleet );

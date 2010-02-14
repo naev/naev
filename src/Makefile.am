@@ -19,6 +19,7 @@ naev_SOURCES = \
 	console.c \
 	debris.c \
 	dev_system.c \
+	dev_sysedit.c \
 	dialogue.c \
 	economy.c \
 	equipment.c \
@@ -113,6 +114,7 @@ naev_SOURCES = \
 	console.h \
 	debris.h \
 	dev_system.h \
+	dev_sysedit.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \

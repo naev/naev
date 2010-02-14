@@ -1684,22 +1684,6 @@ void player_brokeHyperspace (void)
 
 
 /**
- * @brief Makes player.p face his hyperspace target.
- *
- *    @return direction to face.
- */
-double player_faceHyperspace (void)
-{
-   double a;
-   StarSystem *sys;
-
-   sys = cur_system->jumps[player.p->nav_hyperspace].target;
-   a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
-   return pilot_face( player.p, a );
-}
-
-
-/**
  * @brief Activate the afterburner.
  */
 void player_afterburn (void)

@@ -82,7 +82,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 {
    int i;
    const Planet **sorted_planets;
-   const JumpPoint **sorted_jumps;
+   const JumpPoint **sorted_jumps, *jp;
 
    xmlw_startElem( writer, "ssys" );
 
@@ -91,6 +91,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 
    /* General. */
    xmlw_startElem( writer, "general" );
+   xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "stars", "%d", sys->stars );
    xmlw_elem( writer, "asteroids", "%d", sys->asteroids );
    xmlw_elem( writer, "interference", "%f", sys->interference );
@@ -123,14 +124,17 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    qsort( sorted_jumps, sys->njumps, sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
    for (i=0; i<sys->njumps; i++) {
+      jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
-      xmlw_attr( writer, "target", "%s", sorted_jumps[i]->target->name );
+      xmlw_attr( writer, "target", "%s", jp->target->name );
       xmlw_startElem( writer, "pos" );
-      xmlw_attr( writer, "x", "%f", sorted_jumps[i]->pos.x );
-      xmlw_attr( writer, "y", "%f", sorted_jumps[i]->pos.y );
+      xmlw_attr( writer, "x", "%f", jp->pos.x );
+      xmlw_attr( writer, "y", "%f", jp->pos.y );
       xmlw_endElem( writer ); /* "pos" */
-      xmlw_elem( writer, "radius", "%f", sorted_jumps[i]->radius );
+      xmlw_elem( writer, "radius", "%f", jp->radius );
       xmlw_startElem( writer, "flags" );
+      if (jp->flags & JP_AUTOPOS)
+         xmlw_elemEmpty( writer, "autopos" );
       xmlw_endElem( writer ); /* "flags" */
       xmlw_endElem( writer ); /* "jump" */
    }
@@ -163,6 +167,9 @@ int dsys_saveAll (void)
    int nsys;
    const StarSystem *sys;
    const StarSystem **sorted_sys;
+
+   /* Reconstruct jumps so jump pos are updated. */
+   systems_reconstructJumps();
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);

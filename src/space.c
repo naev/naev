@@ -133,6 +133,7 @@ static double interference_timer = 0.; /**< Interference timer. */
 /* planet load */
 static int planet_parse( Planet* planet, const xmlNodePtr parent );
 /* system load */
+static void system_init( StarSystem *sys );
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
@@ -1359,6 +1360,83 @@ int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
 
 
 /**
+ * @brief Initializes a new star system with null memory.
+ */
+static void system_init( StarSystem *sys )
+{
+   memset( sys, 0, sizeof(StarSystem) );
+   sys->faction   = -1;
+}
+
+
+/**
+ * @brief Creates a new star system.
+ */
+StarSystem *system_new (void)
+{
+   StarSystem *sys;
+   int realloced;
+
+   /* Check if memory needs to grow. */
+   systems_nstack++;
+   realloced = 0;
+   if (systems_nstack > systems_mstack) {
+      systems_mstack   += CHUNK_SIZE;
+      systems_stack     = realloc( systems_stack, sizeof(StarSystem) * systems_mstack );
+      realloced         = 1;
+   }
+   sys = &systems_stack[ systems_nstack-1 ];
+
+   /* Initialize system and id. */
+   system_init( sys );
+   sys->id = systems_nstack-1;
+
+   /* Reconstruct the jumps. */
+   if (!systems_loading && realloced)
+      systems_reconstructJumps();
+
+   return sys;
+}
+
+
+/**
+ * @brief Reconstructs the jumps.
+ */
+void systems_reconstructJumps (void)
+{
+   StarSystem *sys;
+   JumpPoint *jp;
+   int i, j;
+   double a;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      for (j=0; j<sys->njumps; j++) {
+         jp          = &sys->jumps[j];
+         jp->target  = system_getIndex( jp->targetid );
+
+         /* Get heading. */
+         a = atan2( jp->target->pos.y - sys->pos.y, jp->target->pos.x - sys->pos.x );
+         if (a < 0.)
+            a += 2.*M_PI;
+
+         /* Update position if needed.. */
+         if (jp->flags & JP_AUTOPOS) {
+            jp->pos.x   = sys->radius*cos(a);
+            jp->pos.y   = sys->radius*sin(a);
+         }
+
+         /* Update jump specific data. */
+         gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
+         jp->angle = 2.*M_PI-a;
+         jp->cosa  = cos(jp->angle);
+         jp->sina  = sin(jp->angle);
+      }
+   }
+}
+
+
+/**
  * @brief Creates a system from an XML node.
  *
  *    @param parent XML node to get system from.
@@ -1376,9 +1454,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    int size;
 
    /* Clear memory for sane defaults. */
-   memset( sys, 0, sizeof(StarSystem) );
    flags          = 0;
-   sys->faction   = -1;
    planet         = NULL;
    size           = 0;
 
@@ -1408,9 +1484,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"stars")) /* non-zero */
-               sys->stars = xml_getInt(cur);
-            else if (xml_isNode(cur,"asteroids")) {
+            xmlr_int( cur, "stars", sys->stars );
+            xmlr_float( cur, "radius", sys->radius );
+            if (xml_isNode(cur,"asteroids")) {
                flags |= FLAG_ASTEROIDSSET;
                sys->asteroids = xml_getInt(cur);
             }
@@ -1504,6 +1580,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(sys->stars==0,"stars");
+   MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_ASTEROIDSSET)==0,"asteroids");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
@@ -1543,8 +1620,8 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 {
    JumpPoint *j;
    char *buf;
-   xmlNodePtr cur;
-   double x, y, a;
+   xmlNodePtr cur, cur2;
+   double x, y;
 
    /* Allocate more space. */
    sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
@@ -1564,7 +1641,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       return -1;
    }
    free(buf);
-
+   j->targetid = j->target->id;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
@@ -1592,20 +1669,16 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle flags. */
       if (xml_isNode(cur,"flags")) {
+         cur2 = cur->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur2,"autopos"))
+               j->flags |= JP_AUTOPOS; 
+         } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));
 
    /* Added jump. */
    sys->njumps++;
-
-   /* Calculate heading. */
-   a = atan2( j->target->pos.y - sys->pos.y, j->target->pos.x - sys->pos.x );
-   if (a < 0.)
-      a += 2.*M_PI;
-   gl_getSpriteFromDir( &j->sx, &j->sy, jumppoint_gfx, a );
-   j->angle = 2.*M_PI-a;
-   j->cosa  = cos(j->angle);
-   j->sina  = sin(j->angle);
 
    return 0;
 }
@@ -1647,6 +1720,8 @@ static void system_parseJumps( const xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+
+   systems_reconstructJumps();
 }
 
 
@@ -1657,8 +1732,9 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 int space_load (void)
 {
-   int i;
+   int i, j;
    int ret;
+   StarSystem *sys;
 
    /* Loading. */
    systems_loading = 1;
@@ -1679,9 +1755,17 @@ int space_load (void)
    /* Done loading. */
    systems_loading = 0;
 
-   /* Calculate system properties. */
-   for (i=0; i<systems_nstack; i++)
-      system_calcSecurity(&systems_stack[i]);
+   /* Fine tuning. */
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+
+      /* Calculate system properties. */
+      system_calcSecurity( sys );
+
+      /* Save jump indexes. */
+      for (j=0; j<sys->njumps; j++)
+         sys->jumps[j].targetid = sys->jumps[j].target->id;
+   }
 
    return 0;
 }
@@ -1746,6 +1830,7 @@ static int systems_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
+   StarSystem *sys;
 
    /* Load the file. */
    buf = ndata_read( SYSTEM_DATA, &bufsize );
@@ -1783,15 +1868,8 @@ static int systems_load (void)
     */
    do {
       if (xml_isNode(node,XML_SYSTEM_TAG)) {
-         /* Check if memory needs to grow. */
-         systems_nstack++;
-         if (systems_nstack > systems_mstack) {
-            systems_mstack += CHUNK_SIZE;
-            systems_stack = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
-         }
-
-         system_parse(&systems_stack[systems_nstack-1],node);
-         systems_stack[systems_nstack-1].id = systems_nstack-1;
+         sys = system_new();
+         system_parse( sys, node );
       }
    } while (xml_nextNode(node));
 

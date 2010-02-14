@@ -1165,8 +1165,12 @@ static int aiL_popsubtask( lua_State *L )
    t = cur_pilot->task;
 
    /* Tasks must exist. */
-   if ((t == NULL) || (t->subtask == NULL)) {
+   if (t == NULL) {
       NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
+      return 0;
+   }
+   if (t->subtask == NULL) {
+      NLUA_DEBUG("Trying to pop subtask when there are no subtasks for the task '%s'.", t->name);
       return 0;
    }
 

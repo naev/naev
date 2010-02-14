@@ -1749,7 +1749,8 @@ void pilot_update( Pilot* pilot, const double dt )
  */
 static void pilot_hyperspace( Pilot* p, double dt )
 {
-   double diff;
+   StarSystem *sys;
+   double a, diff;
    JumpPoint *jp;
 
    /* pilot is actually in hyperspace */
@@ -1818,11 +1819,10 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
             pilot_setThrust( p, 0. );
 
-            /* player.p should actually face the system he's headed to */
-            if (p==player.p)
-               diff = player_faceHyperspace();
-            else
-               diff = pilot_face( p, VANGLE(p->solid->pos) );
+            /* Face system headed to. */
+            sys = cur_system->jumps[p->nav_hyperspace].target;
+            a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
+            diff = pilot_face( p, a );
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
                pilot_setTurn( p, 0. );
