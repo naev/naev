@@ -21,6 +21,7 @@
 #include "dev_system.h"
 #include "unidiff.h"
 #include "dialogue.h"
+#include "tk/toolkit_priv.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -56,6 +57,8 @@ static StarSystem *sysedit_tsys = NULL; /**< Temporarily clicked system. */
 static int sysedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
 static int sysedit_nsys       = 0;  /**< Number of selected systems. */
 static int sysedit_msys       = 0;  /**< Memory allocated for selected systems. */
+static double sysedit_mx      = 0.; /**< X mouse position. */
+static double sysedit_my      = 0.; /**< Y mouse position. */
 
 
 /*
@@ -72,6 +75,7 @@ static void sysedit_toggleJump( StarSystem *sys );
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
+static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Button functions. */
@@ -131,6 +135,7 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
          "cstSysEdit", 1, sysedit_render, sysedit_mouse, NULL );
+   window_custSetOverlay( wid, "cstSysEdit", sysedit_renderOverlay );
 
    /* Deselect everything. */
    sysedit_deselect();
@@ -189,6 +194,26 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       gl_drawCircleInRect( x + sys->pos.x * sysedit_zoom, y + sys->pos.y * sysedit_zoom,
             1.5*r, bx, by, w, h, &cWhite, 0 );
    }
+}
+
+
+/**
+ * @brief Renders the overlay.
+ */
+static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
+{
+   double x, y;
+   (void) bw;
+   (void) bh;
+   (void) data;
+
+   x = bx + sysedit_mx;
+   y = by + sysedit_my;
+
+   if (sysedit_mode == SYSEDIT_NEWSYS)
+      toolkit_drawAltText( x, y, "Click to add a new system");
+   else if (sysedit_mode == SYSEDIT_JUMP)
+      toolkit_drawAltText( x, y, "Click to toggle jump route");
 }
 
 /**
@@ -320,6 +345,11 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          break;
 
       case SDL_MOUSEMOTION:
+         /* Update mouse positions. */
+         sysedit_mx  = mx;
+         sysedit_my  = my;
+
+         /* Handle dragging. */
          if (sysedit_drag) {
             /* axis is inverted */
             sysedit_xpos -= event->motion.xrel;
@@ -377,6 +407,9 @@ static void sysedit_newSys( double x, double y )
    sys->name   = name;
    sys->pos.x  = x;
    sys->pos.y  = y;
+
+   /* Deselect systems as pointers might be all invalid. */
+   sysedit_deselect();
 }
 
 
