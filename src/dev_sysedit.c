@@ -188,12 +188,18 @@ static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
          sysedit_mode = SYSEDIT_NEWSYS;
          return 1;
       case SDLK_j:
+         if (sysedit_nsys == 0)
+            return 0;
          sysedit_mode = SYSEDIT_JUMP;
          return 1;
       case SDLK_r:
+         if (sysedit_nsys == 0)
+            return 0;
          sysedit_renameSys();
          return 1;
       case SDLK_e:
+         if (sysedit_nsys == 0)
+            return 0;
          sysedit_editSys();
          return 1;
       case SDLK_ESCAPE:
@@ -668,6 +674,11 @@ static void sysedit_deselect (void)
    sysedit_sys    = NULL;
    sysedit_nsys   = 0;
    sysedit_msys   = 0;
+
+   /* Change window stuff. */
+   window_disableButton( sysedit_wid, "btnJump" );
+   window_disableButton( sysedit_wid, "btnRename" );
+   window_disableButton( sysedit_wid, "btnEdit" );
    window_modifyText( sysedit_wid, "txtSelected", "No selection" );
 }
 
@@ -691,6 +702,11 @@ static void sysedit_selectAdd( StarSystem *sys )
 
    /* Set text again. */
    sysedit_selectText();
+
+   /* Enable buttons again. */
+   window_enableButton( sysedit_wid, "btnJump" );
+   window_enableButton( sysedit_wid, "btnRename" );
+   window_enableButton( sysedit_wid, "btnEdit" );
 }
 
 
