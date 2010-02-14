@@ -70,6 +70,8 @@ static void sysedit_selectAdd( StarSystem *sys );
 static void sysedit_selectRm( StarSystem *sys );
 static void sysedit_selectText (void);
 /* Misc modes. */
+static int sysedit_checkName( char *name );
+static void sysedit_renameSys (void);
 static void sysedit_newSys( double x, double y );
 static void sysedit_toggleJump( StarSystem *sys );
 static void sysedit_jumpAdd( StarSystem *sys, StarSystem *targ );
@@ -84,6 +86,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnJump( unsigned int wid_unused, char *unused );
+static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
@@ -131,8 +134,12 @@ void sysedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnJump", "Jump", sysedit_btnJump );
 
-   /* New system. */
+   /* Rename system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", "Rename", sysedit_btnRename );
+
+   /* New system. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*5, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Sys", sysedit_btnNew );
 
    /* Zoom buttons */
@@ -216,6 +223,18 @@ static void sysedit_btnJump( unsigned int wid_unused, char *unused )
    (void) unused;
 
    sysedit_mode = SYSEDIT_JUMP;
+}
+
+
+/**
+ * @brief Renames selected systems.
+ */
+static void sysedit_btnRename( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   sysedit_renameSys();
 }
 
 
@@ -440,11 +459,62 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
 
 /**
+ * @brief Checks to see if a system name is already in use.
+ *
+ *    @return 1 if system name is already in use.
+ */
+static int sysedit_checkName( char *name )
+{
+   int i;
+
+   /* Avoid name collisions. */
+   for (i=0; i<systems_nstack; i++) {
+      if (strcmp(name, system_getIndex(i)->name)==0) {
+         dialogue_alert( "The Star System '%s' already exists!", name );
+         return 1;
+      }
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Renames all the currently selected systems.
+ */
+static void sysedit_renameSys (void)
+{
+   int i;
+   char *name;
+   StarSystem *sys;
+
+   for (i=0; i<sysedit_nsys; i++) {
+      sys = sysedit_sys[i];
+
+      /* Get name. */
+      name = dialogue_input( "Rename Star System", 1, 32, "What do you want to rename \er%s\e0?", sys->name );
+
+      /* Keep current name. */
+      if (name == NULL)
+         continue;
+  
+      /* Try again. */
+      if (sysedit_checkName( name )) {
+         i--;
+         continue;
+      }
+
+      /* Change the name. */
+      free(sys->name);
+      sys->name = name;
+   }
+}
+
+
+/**
  * @brief Creates a new system.
  */
 static void sysedit_newSys( double x, double y )
 {
-   int i;
    char *name;
    StarSystem *sys;
 
@@ -457,14 +527,11 @@ static void sysedit_newSys( double x, double y )
       return;
    }
 
-   /* Avoid name collisions. */
-   for (i=0; i<systems_nstack; i++) {
-      if (strcmp(name, system_getIndex(i)->name)==0) {
-         dialogue_alert( "The Star System '%s' already exists!", name );
-         free(name);
-         sysedit_newSys( x, y );
-         return;
-      }
+   /* Make sure there is no collision. */
+   if (sysedit_checkName( name )) {
+      free(name);
+      sysedit_newSys( x, y );
+      return;
    }
 
    /* Create the system. */
