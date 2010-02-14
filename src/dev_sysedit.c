@@ -79,6 +79,7 @@ static void sysedit_renderOverlay( double bx, double by, double bw, double bh, v
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Button functions. */
+static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 
@@ -114,7 +115,7 @@ void sysedit_open( unsigned int wid_unused, char *unused )
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", "Close", sysedit_close );
 
    /*Save button. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -139,6 +140,19 @@ void sysedit_open( unsigned int wid_unused, char *unused )
 
    /* Deselect everything. */
    sysedit_deselect();
+}
+
+
+/**
+ * @brief Closes the system editor widget.
+ */
+static void sysedit_close( unsigned int wid, char *wgt )
+{
+   /* Reconstruct jumps. */
+   systems_reconstructJumps();
+
+   /* Close the window. */
+   window_close( wid, wgt );
 }
 
 
