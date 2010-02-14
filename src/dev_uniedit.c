@@ -22,6 +22,7 @@
 #include "unidiff.h"
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
+#include "dev_sysedit.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -97,8 +98,9 @@ static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
-static void uniedit_btnNew( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
+static void uniedit_btnNew( unsigned int wid_unused, char *unused );
+static void uniedit_btnOpen( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int uniedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 
@@ -156,6 +158,10 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* New system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Sys", uniedit_btnNew );
+
+   /* Open a system. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*7, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnOpen", "Open", uniedit_btnOpen );
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", uniedit_buttonZoom );
@@ -274,6 +280,21 @@ static void uniedit_btnNew( unsigned int wid_unused, char *unused )
    (void) unused;
 
    uniedit_mode = UNIEDIT_NEWSYS;
+}
+
+
+/**
+ * @brief Opens up a system.
+ */
+static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   if (uniedit_nsys != 1)
+      return;
+
+   sysedit_open( uniedit_sys[0] );
 }
 
 
@@ -681,6 +702,7 @@ static void uniedit_deselect (void)
    window_disableButton( uniedit_wid, "btnJump" );
    window_disableButton( uniedit_wid, "btnRename" );
    window_disableButton( uniedit_wid, "btnEdit" );
+   window_disableButton( uniedit_wid, "btnOpen" );
    window_modifyText( uniedit_wid, "txtSelected", "No selection" );
 }
 
@@ -709,6 +731,10 @@ static void uniedit_selectAdd( StarSystem *sys )
    window_enableButton( uniedit_wid, "btnJump" );
    window_enableButton( uniedit_wid, "btnRename" );
    window_enableButton( uniedit_wid, "btnEdit" );
+   if (uniedit_nsys == 1)
+      window_enableButton( uniedit_wid, "btnOpen" );
+   else
+      window_disableButton( uniedit_wid, "btnOpen" );
 }
 
 
@@ -723,6 +749,10 @@ static void uniedit_selectRm( StarSystem *sys )
          uniedit_nsys--;
          memmove( &uniedit_sys[i], &uniedit_sys[i+1], sizeof(StarSystem*) * (uniedit_nsys - i) );
          uniedit_selectText();
+         if (uniedit_nsys == 1)
+            window_enableButton( uniedit_wid, "btnOpen" );
+         else
+            window_disableButton( uniedit_wid, "btnOpen" );
          return;
       }
    }
