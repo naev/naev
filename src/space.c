@@ -139,6 +139,7 @@ static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
+static void systems_reconstructJumps (void);
 static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
@@ -1374,16 +1375,15 @@ static void system_init( StarSystem *sys )
  */
 StarSystem *system_new (void)
 {
-   StarSystem *sys, *sysj;
+   StarSystem *sys;
    int realloced;
-   int i, j;
 
    /* Check if memory needs to grow. */
    systems_nstack++;
    realloced = 0;
    if (systems_nstack > systems_mstack) {
       systems_mstack   += CHUNK_SIZE;
-      systems_stack     = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
+      systems_stack     = realloc( systems_stack, sizeof(StarSystem) * systems_mstack );
       realloced         = 1;
    }
    sys = &systems_stack[ systems_nstack-1 ];
@@ -1393,15 +1393,29 @@ StarSystem *system_new (void)
    sys->id = systems_nstack-1;
 
    /* Reconstruct the jumps. */
-   if (!systems_loading && realloced) {
-      for (i=0; i<systems_nstack; i++) {
-         sysj = &systems_stack[i];
-         for (j=0; j<sys->njumps; j++)
-            sysj->jumps[j].target = &systems_stack[ sysj->jumps[j].targetid ];
-      }
-   }
+   if (!systems_loading && realloced)
+      systems_reconstructJumps();
 
    return sys;
+}
+
+
+/**
+ * @brief Reconstructs the jumps.
+ */
+static void systems_reconstructJumps (void)
+{
+   StarSystem *sys;
+   JumpPoint *jp;
+   int i, j;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      for (j=0; j<sys->njumps; j++) {
+         jp          = &sys->jumps[j];
+         jp->target  = system_getIndex( jp->targetid );
+      }
+   }
 }
 
 
