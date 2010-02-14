@@ -1669,7 +1669,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle flags. */
       if (xml_isNode(cur,"flags")) {
-         cur2 = node->xmlChildrenNode;
+         cur2 = cur->xmlChildrenNode;
          do {
             if (xml_isNode(cur2,"autopos"))
                j->flags |= JP_AUTOPOS; 
