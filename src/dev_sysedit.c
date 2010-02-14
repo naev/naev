@@ -176,6 +176,9 @@ static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
       case SDLK_j:
          sysedit_mode = SYSEDIT_JUMP;
          return 1;
+      case SDLK_r:
+         sysedit_renameSys();
+         return 1;
       case SDLK_ESCAPE:
          sysedit_mode = SYSEDIT_DEFAULT;
          return 1;
