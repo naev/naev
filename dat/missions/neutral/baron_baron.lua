@@ -74,6 +74,7 @@ end
 
 function create ()
     if tk.choice(title[1], text[1], choice1, choice2) == 1 then
+        var.push("baron_stage", 1)
         accept()
     else
         tk.msg(refusetitle, refusetext)
