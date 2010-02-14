@@ -85,6 +85,8 @@ static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnJump( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
+/* Keybindings handling. */
+static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 
 
 /**
@@ -114,6 +116,7 @@ void sysedit_open( unsigned int wid_unused, char *unused )
 
    /* Create the window. */
    wid = window_create( "System Editor", -1, -1, -1, -1 );
+   window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
 
    /* Close button. */
@@ -147,6 +150,32 @@ void sysedit_open( unsigned int wid_unused, char *unused )
 
    /* Deselect everything. */
    sysedit_deselect();
+}
+
+
+/**
+ * @brief Handles keybindings.
+ */
+static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
+{
+   (void) wid;
+   (void) mod;
+
+   switch (key) {
+      /* Mode changes. */
+      case SDLK_n:
+         sysedit_mode = SYSEDIT_NEWSYS;
+         return 1;
+      case SDLK_j:
+         sysedit_mode = SYSEDIT_JUMP;
+         return 1;
+      case SDLK_ESCAPE:
+         sysedit_mode = SYSEDIT_DEFAULT;
+         return 1;
+
+      default:
+         return 0;
+   }
 }
 
 
