@@ -91,8 +91,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 
    /* General. */
    xmlw_startElem( writer, "general" );
-   /*xmlw_elem( writer, "radius", "%f", sys->radius );*/
-   xmlw_elem( writer, "radius", "2500" );
+   xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "stars", "%d", sys->stars );
    xmlw_elem( writer, "asteroids", "%d", sys->asteroids );
    xmlw_elem( writer, "interference", "%f", sys->interference );
@@ -134,7 +133,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       xmlw_endElem( writer ); /* "pos" */
       xmlw_elem( writer, "radius", "%f", jp->radius );
       xmlw_startElem( writer, "flags" );
-      /*if (jp->flags & JP_AUTOPOS)*/
+      if (jp->flags & JP_AUTOPOS)
          xmlw_elemEmpty( writer, "autopos" );
       xmlw_endElem( writer ); /* "flags" */
       xmlw_endElem( writer ); /* "jump" */
