@@ -8,7 +8,10 @@
 #  define DEV_SYSEDIT_H
 
 
-void sysedit_open( unsigned int wid_unused, char *unused );
+#include "space.h"
+
+
+void sysedit_open( StarSystem *sys );
 
 
 #endif /* DEV_SYSEDIT_H */

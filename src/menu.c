@@ -38,7 +38,7 @@
 #include "info.h"
 #include "comm.h"
 #include "conf.h"
-#include "dev_sysedit.h"
+#include "dev_uniedit.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -161,7 +161,7 @@ void menu_main (void)
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
       window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnEditor", "Editor", sysedit_open );
+            "btnEditor", "Editor", uniedit_open );
       y -= BUTTON_HEIGHT+20;
    }
    window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
