@@ -1374,19 +1374,32 @@ static void system_init( StarSystem *sys )
  */
 StarSystem *system_new (void)
 {
-   StarSystem *sys;
+   StarSystem *sys, *sysj;
+   int realloced;
+   int i, j;
 
    /* Check if memory needs to grow. */
    systems_nstack++;
+   realloced = 0;
    if (systems_nstack > systems_mstack) {
-      systems_mstack += CHUNK_SIZE;
-      systems_stack = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
+      systems_mstack   += CHUNK_SIZE;
+      systems_stack     = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
+      realloced         = 1;
    }
    sys = &systems_stack[ systems_nstack-1 ];
 
    /* Initialize system and id. */
    system_init( sys );
    sys->id = systems_nstack-1;
+
+   /* Reconstruct the jumps. */
+   if (!systems_loading && realloced) {
+      for (i=0; i<systems_nstack; i++) {
+         sysj = &systems_stack[i];
+         for (j=0; j<sys->njumps; j++)
+            sysj->jumps[j].target = &systems_stack[ sysj->jumps[j].targetid ];
+      }
+   }
 
    return sys;
 }
@@ -1410,7 +1423,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    int size;
 
    /* Clear memory for sane defaults. */
-   system_init( sys );
    flags          = 0;
    planet         = NULL;
    size           = 0;
@@ -1598,7 +1610,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    }
    free(buf);
 
-
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
@@ -1690,8 +1701,9 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 int space_load (void)
 {
-   int i;
+   int i, j;
    int ret;
+   StarSystem *sys;
 
    /* Loading. */
    systems_loading = 1;
@@ -1712,9 +1724,17 @@ int space_load (void)
    /* Done loading. */
    systems_loading = 0;
 
-   /* Calculate system properties. */
-   for (i=0; i<systems_nstack; i++)
-      system_calcSecurity(&systems_stack[i]);
+   /* Fine tuning. */
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+
+      /* Calculate system properties. */
+      system_calcSecurity( sys );
+
+      /* Save jump indexes. */
+      for (j=0; j<sys->njumps; j++)
+         sys->jumps[j].targetid = sys->jumps[j].target->id;
+   }
 
    return 0;
 }

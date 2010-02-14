@@ -152,6 +152,7 @@ typedef struct SystemFleet_ {
  */
 typedef struct JumpPoint_ {
    StarSystem *target; /**< Target star system to jump to. */
+   int targetid; /**< ID of the target star system. */
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
