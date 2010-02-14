@@ -76,6 +76,7 @@ static void sysedit_selectText (void);
 /* System editing. */
 static void sysedit_editSys (void);
 static void sysedit_editSysClose( unsigned int wid, char *name );
+static void sysedit_btnEditRename( unsigned int wid, char *unused );
 /* System reanming. */
 static int sysedit_checkName( char *name );
 static void sysedit_renameSys (void);
@@ -786,6 +787,12 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
 static void sysedit_editSys (void)
 {
    unsigned int wid;
+   int y;
+   char buf[128];
+
+   /* Must have a system. */
+   if (sysedit_nsys == 0)
+      return;
 
    /* Create the window. */
    wid = window_create( "Star System Property Editor", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
@@ -793,6 +800,11 @@ static void sysedit_editSys (void)
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_editSysClose );
+
+   y = -45;
+   snprintf( buf, sizeof(buf), "Name: \en%s", (sysedit_nsys > 1) ? "\ervarious" : sysedit_sys[0]->name );
+   window_addText( wid, 20, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
+   window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", sysedit_btnEditRename );
 }
 
 
@@ -805,6 +817,22 @@ static void sysedit_editSysClose( unsigned int wid, char *name )
    window_close( wid, name );
 }
 
+
+/**
+ * @brief Renames the systems in the system editor.
+ */
+static void sysedit_btnEditRename( unsigned int wid, char *unused )
+{
+   (void) unused;
+   char buf[128];
+
+   /* Rename systems. */
+   sysedit_renameSys();
+
+   /* Update text. */
+   snprintf( buf, sizeof(buf), "Name: %s", (sysedit_nsys > 1) ? "\ervarious" : sysedit_sys[0]->name );
+   window_modifyText( wid, "txtName", buf );
+}
 
 
 
