@@ -168,6 +168,9 @@ int dsys_saveAll (void)
    const StarSystem *sys;
    const StarSystem **sorted_sys;
 
+   /* Reconstruct jumps so jump pos are updated. */
+   systems_reconstructJumps();
+
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {

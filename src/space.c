@@ -139,7 +139,6 @@ static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
-static void systems_reconstructJumps (void);
 static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
@@ -1403,17 +1402,35 @@ StarSystem *system_new (void)
 /**
  * @brief Reconstructs the jumps.
  */
-static void systems_reconstructJumps (void)
+void systems_reconstructJumps (void)
 {
    StarSystem *sys;
    JumpPoint *jp;
    int i, j;
+   double a;
 
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
       for (j=0; j<sys->njumps; j++) {
          jp          = &sys->jumps[j];
          jp->target  = system_getIndex( jp->targetid );
+
+         /* Get heading. */
+         a = atan2( jp->target->pos.y - sys->pos.y, jp->target->pos.x - sys->pos.x );
+         if (a < 0.)
+            a += 2.*M_PI;
+
+         /* Update position if needed.. */
+         if (jp->flags & JP_AUTOPOS) {
+            jp->pos.x   = sys->radius*cos(a);
+            jp->pos.y   = sys->radius*sin(a);
+         }
+
+         /* Update jump specific data. */
+         gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
+         jp->angle = 2.*M_PI-a;
+         jp->cosa  = cos(jp->angle);
+         jp->sina  = sin(jp->angle);
       }
    }
 }
@@ -1604,7 +1621,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    JumpPoint *j;
    char *buf;
    xmlNodePtr cur, cur2;
-   double x, y, a;
+   double x, y;
 
    /* Allocate more space. */
    sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
@@ -1662,15 +1679,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    /* Added jump. */
    sys->njumps++;
 
-   /* Calculate heading. */
-   a = atan2( j->target->pos.y - sys->pos.y, j->target->pos.x - sys->pos.x );
-   if (a < 0.)
-      a += 2.*M_PI;
-   gl_getSpriteFromDir( &j->sx, &j->sy, jumppoint_gfx, a );
-   j->angle = 2.*M_PI-a;
-   j->cosa  = cos(j->angle);
-   j->sina  = sin(j->angle);
-
    return 0;
 }
 
@@ -1711,6 +1719,8 @@ static void system_parseJumps( const xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+
+   systems_reconstructJumps();
 }
 
 
