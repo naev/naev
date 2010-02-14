@@ -10,13 +10,12 @@
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
- <event name="Baroncomm">
+ <event name="Baroncomm_baron">
   <lua>neutral/baroncomm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>system.cur():security() &gt;= 75</cond>
+  <cond>var.peek("baron_stage") == nil and system.cur():security() &gt;= 75</cond>
   <flags>
-   <unique />
   </flags>
  </event>
  <event name="Shipwreck">
