@@ -1641,6 +1641,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       return -1;
    }
    free(buf);
+   j->targetid = j->target->id;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
