@@ -68,6 +68,7 @@ static void sysedit_selectText (void);
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -185,9 +186,52 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 static void sysedit_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
+   int i;
+   StarSystem *sys;
+   Planet *p;
+   JumpPoint *jp;
+   double x,y;
 
-   /* background */
+   /* Comfort++. */
+   sys = sysedit_sys;
+
+   /* Background */
    gl_renderRect( bx, by, w, h, &cBlack );
+
+   /* Coordinate translation. */
+   x = round((bx - sysedit_xpos + w/2) * 1.);
+   y = round((by - sysedit_ypos + h/2) * 1.);
+
+   /* Render planets. */
+   for (i=0; i<sys->nplanets; i++) {
+      p     = sys->planets[i];
+      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0 );
+   }
+
+   /* Render jump points. */
+   for (i=0; i<sys->njumps; i++) {
+      jp    = &sys->jumps[i];
+      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy );
+   }
+}
+
+
+/**
+ * @brief Renders a sprite for the custom widget.
+ */
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy )
+{
+   double tx, ty, z;
+
+   /* Comfort. */
+   z  = sysedit_zoom;
+
+   /* Translate coords. */
+   tx = bx + (x - gfx->sw/2.)*z + SCREEN_W/2.;
+   ty = by + (y - gfx->sh/2.)*z + SCREEN_H/2.;
+
+   /* Blit the planet. */
+   gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, NULL );
 }
 
 
@@ -213,7 +257,6 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
    (void) data;
    int i;
    double x,y, t;
-   StarSystem *sys;
    SDLMod mod;
 
    t = 15.*15.; /* threshold */
@@ -288,30 +331,31 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   return;
                }
             }
+#endif
 
             /* Start dragging. */
-            if ((sysedit_mode == SYSEDIT_DEFAULT) && !(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
+            if (!(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
                sysedit_drag      = 1;
                sysedit_dragTime  = SDL_GetTicks();
                sysedit_moved     = 0;
-               sysedit_tsys      = NULL;
             }
             return;
-#endif
          }
          break;
 
       case SDL_MOUSEBUTTONUP:
-#if 0
          if (sysedit_drag) {
+#if 0
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                if (sysedit_tsys == NULL)
                   sysedit_deselect();
                else
                   sysedit_selectAdd( sysedit_tsys );
             }
+#endif
             sysedit_drag      = 0;
          }
+#if 0
          if (sysedit_dragSys) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
                   (sysedit_moved < SYSEDIT_MOVE_THRESHOLD) && (sysedit_tsys != NULL)) {
@@ -328,11 +372,6 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          break;
 
       case SDL_MOUSEMOTION:
-#if 0
-         /* Update mouse positions. */
-         sysedit_mx  = mx;
-         sysedit_my  = my;
-
          /* Handle dragging. */
          if (sysedit_drag) {
             /* axis is inverted */
@@ -342,6 +381,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Update mousemovement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
+#if 0
          else if (sysedit_dragSys && (sysedit_nsys > 0)) {
             if ((sysedit_moved > SYSEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - sysedit_dragTime > SYSEDIT_DRAG_THRESHOLD)) {
                for (i=0; i<sysedit_nsys; i++) {
@@ -380,7 +420,7 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
    }
    else if (strcmp(str,"btnZoomOut")==0) {
       sysedit_zoom -= (sysedit_zoom > 1.) ? 0.5 : 0.25;
-      sysedit_zoom = MAX(0.5, sysedit_zoom);
+      sysedit_zoom = MAX(0.25, sysedit_zoom);
    }
 
    /* Hack for the circles to work. */
