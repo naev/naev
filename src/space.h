@@ -239,6 +239,7 @@ void space_exit (void);
 Planet *planet_new (void);
 char* planet_getSystem( const char* planetname );
 Planet* planet_get( const char* planetname );
+int planet_exists( const char* planetname );
 char planet_getClass( Planet *p );
 
 /*

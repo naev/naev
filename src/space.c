@@ -532,6 +532,22 @@ Planet* planet_get( const char* planetname )
 
 
 /**
+ * @brief Check to see if a planet exists.
+ *
+ *    @param planetname Name of the planet to see if it exists.
+ *    @return 1 if planet exists.
+ */
+int planet_exists( const char* planetname )
+{
+   int i;
+   for (i=0; i<planet_nstack; i++)
+      if (strcmp(planet_stack[i].name,planetname)==0)
+         return 1;
+   return 0;
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.

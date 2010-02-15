@@ -37,14 +37,6 @@
 
 
 /*
- * The editor modes.
- */
-#define SYSEDIT_DEFAULT    0  /**< Default editor mode. */
-#define SYSEDIT_JUMP       1  /**< Jump point toggle mode. */
-#define SYSEDIT_NEWSYS     2  /**< New system editor mode. */
-
-
-/*
  * Selection types.
  */
 #define SELECT_NONE        0 /**< No selection. */
@@ -135,7 +127,7 @@ void sysedit_open( StarSystem *sys )
 
    /* New system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Sys", sysedit_btnNew );
+         "btnNew", "New Planet", sysedit_btnNew );
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", sysedit_buttonZoom );
@@ -200,6 +192,30 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
+   Planet *p;
+   char *name;
+
+   /* Get new name. */
+   name = dialogue_inputRaw( "New Planet Creation", 1, 32, "What do you want to name the new planet?" );
+   if (name == NULL)
+      return;
+
+   /* Check for collision. */
+   if (planet_exists( name )) {
+      dialogue_alert( "Planet by the name of \er'%s'\e0 already exists in the \er'%s'\e0 system",
+            name, planet_getSystem( name ) );
+      free(name);
+      sysedit_btnNew( 0, NULL );
+      return;
+   }
+
+   /* Create the new planet. */
+   p        = planet_new();
+   p->name  = name;
+   p->gfx_space = gl_dupTexture( planet_get( space_getRndPlanet() )->gfx_space ); /* Use random graphic. */
+
+   /* Add new planet. */
+   system_addPlanet( sysedit_sys, name );
 }
 
 
