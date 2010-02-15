@@ -471,7 +471,7 @@ StarSystem* system_get( const char* sysname )
       if (strcmp(sysname, systems_stack[i].name)==0)
          return &systems_stack[i];
 
-   DEBUG("System '%s' not found in stack", sysname);
+   WARN("System '%s' not found in stack", sysname);
    return NULL;
 }
 
@@ -528,6 +528,22 @@ Planet* planet_get( const char* planetname )
 
    WARN("Planet '%s' not found in the universe", planetname);
    return NULL;
+}
+
+
+/**
+ * @brief Check to see if a planet exists.
+ *
+ *    @param planetname Name of the planet to see if it exists.
+ *    @return 1 if planet exists.
+ */
+int planet_exists( const char* planetname )
+{
+   int i;
+   for (i=0; i<planet_nstack; i++)
+      if (strcmp(planet_stack[i].name,planetname)==0)
+         return 1;
+   return 0;
 }
 
 
@@ -889,6 +905,37 @@ void space_init ( const char* sysname )
 
 
 /**
+ * @brief Creates a new planet.
+ */
+Planet *planet_new (void)
+{
+   Planet *p;
+   int realloced;
+
+   /* See if stack must grow. */
+   planet_nstack++;
+   realloced = 0;
+   if (planet_nstack > planet_mstack) {
+      planet_mstack += CHUNK_SIZE;
+      planet_stack   = realloc( planet_stack, sizeof(Planet) * planet_mstack );
+      realloced      = 1;
+   }
+
+   /* Clean up memory. */
+   p           = &planet_stack[ planet_nstack-1 ];
+   memset( p, 0, sizeof(Planet) );
+   p->id       = planet_nstack-1;
+   p->faction  = -1;
+
+   /* Reconstruct the jumps. */
+   if (!systems_loading && realloced)
+      systems_reconstructPlanets();
+
+   return p;
+}
+
+
+/**
  * @brief Loads all the planets in the game.
  *
  *    @return 0 on success.
@@ -899,6 +946,7 @@ static int planets_load ( void )
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
+   Planet *p;
 
    buf = ndata_read( PLANET_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
@@ -924,15 +972,8 @@ static int planets_load ( void )
 
    do {
       if (xml_isNode(node,XML_PLANET_TAG)) {
-
-         /* See if stack must grow. */
-         planet_nstack++;
-         if (planet_nstack > planet_mstack) {
-            planet_mstack += CHUNK_SIZE;
-            planet_stack = realloc( planet_stack, sizeof(Planet) * planet_mstack );
-         }
-
-         planet_parse( &planet_stack[planet_nstack-1], node );
+         p = planet_new();
+         planet_parse( p, node );
       }
    } while (xml_nextNode(node));
 
@@ -961,8 +1002,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
-   memset( planet, 0, sizeof(Planet) );
-   planet->faction = -1;
    flags = 0;
 
    /* Get the name. */
@@ -1142,14 +1181,21 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Check if need to grow the star system planet stack. */
    sys->nplanets++;
-   if (sys->planets == NULL)
-      sys->planets = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
-   else if (sys->nplanets > CHUNK_SIZE_SMALL)
-      sys->planets = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
+   if (sys->planets == NULL) {
+      sys->planets   = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
+      sys->planetsid = malloc( sizeof(int) * CHUNK_SIZE_SMALL );
+   }
+   else if (sys->nplanets > CHUNK_SIZE_SMALL) {
+      sys->planets   = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
+      sys->planetsid = realloc( sys->planetsid, sizeof(int) * sys->nplanets );
+   }
    planet = planet_get(planetname);
-   if (planet == NULL)
+   if (planet == NULL) {
+      sys->nplanets--; /* Try to keep sanity if possible. */
       return -1;
-   sys->planets[sys->nplanets-1] = planet;
+   }
+   sys->planets[sys->nplanets-1]    = planet;
+   sys->planetsid[sys->nplanets-1]  = planet->id;
 
    /* add planet <-> star system to name stack */
    spacename_nstack++;
@@ -1204,6 +1250,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    /* Remove planet from system. */
    sys->nplanets--;
    memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
+   memmove( &sys->planetsid[i], &sys->planetsid[i+1], sizeof(int) * (sys->nplanets-i) );
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -1431,6 +1478,23 @@ void systems_reconstructJumps (void)
          jp->angle = 2.*M_PI-a;
          jp->cosa  = cos(jp->angle);
          jp->sina  = sin(jp->angle);
+      }
+   }
+}
+
+
+/**
+ * @brief Updates the system planet pointers.
+ */
+void systems_reconstructPlanets (void)
+{
+   StarSystem *sys;
+   int i, j;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      for (j=0; j<sys->nplanets; j++) {
+         sys->planets[j] = &planet_stack[ sys->planetsid[j] ];
       }
    }
 }
@@ -1720,8 +1784,6 @@ static void system_parseJumps( const xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
-
-   systems_reconstructJumps();
 }
 
 
@@ -1754,6 +1816,10 @@ int space_load (void)
 
    /* Done loading. */
    systems_loading = 0;
+
+   /* Reconstruction. */
+   systems_reconstructJumps();
+   systems_reconstructPlanets();
 
    /* Fine tuning. */
    for (i=0; i<systems_nstack; i++) {
