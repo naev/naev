@@ -116,7 +116,7 @@ void sysedit_open( StarSystem *sys )
    /* Reset some variables. */
    sysedit_sys    = sys;
    sysedit_drag   = 0;
-   sysedit_zoom   = 1.;
+   sysedit_zoom   = 0.5;
    sysedit_xpos   = 0.;
    sysedit_ypos   = 0.;
 
@@ -561,12 +561,12 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      sysedit_zoom += (sysedit_zoom >= 1.) ? 0.5 : 0.25;
-      sysedit_zoom = MIN(2.5, sysedit_zoom);
+      sysedit_zoom *= 1.2;
+      sysedit_zoom = MIN(1., sysedit_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      sysedit_zoom -= (sysedit_zoom > 1.) ? 0.5 : 0.25;
-      sysedit_zoom = MAX(0.25, sysedit_zoom);
+      sysedit_zoom *= 0.8;
+      sysedit_zoom = MAX(0.10, sysedit_zoom);
    }
 
    /* Transform coords back. */

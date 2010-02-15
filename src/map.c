@@ -966,11 +966,11 @@ static void map_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      map_zoom += (map_zoom >= 1.) ? 0.5 : 0.25;
+      map_zoom *= 1.2;
       map_zoom = MIN(2.5, map_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
+      map_zoom *= 0.8;
       map_zoom = MAX(0.5, map_zoom);
    }
 

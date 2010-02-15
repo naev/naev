@@ -795,11 +795,11 @@ static void uniedit_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      uniedit_zoom += (uniedit_zoom >= 1.) ? 0.5 : 0.25;
+      uniedit_zoom *= 1.2;
       uniedit_zoom = MIN(2.5, uniedit_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      uniedit_zoom -= (uniedit_zoom > 1.) ? 0.5 : 0.25;
+      uniedit_zoom *= 0.8;
       uniedit_zoom = MAX(0.5, uniedit_zoom);
    }
 
