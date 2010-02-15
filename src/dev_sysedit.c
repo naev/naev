@@ -44,6 +44,21 @@
 #define SYSEDIT_NEWSYS     2  /**< New system editor mode. */
 
 
+/**
+ * @brief Selection generic for stuff in a system.
+ */
+typedef struct Select_s {
+   int type; /**< Type of selection. */
+   union {
+      int planet;
+      int jump;
+   } u; /**< Data itself. */
+} Select_t;
+static Select_t *sysedit_select  = NULL; /**< Current system selection. */
+static int sysedit_nselect       = 0; /**< Number of selections in current system. */
+static int sysedit_mselect       = 0; /**< Memory allocated for selections. */
+
+
 static StarSystem *sysedit_sys = NULL; /**< Currently opened system. */
 static unsigned int sysedit_wid = 0; /**< Sysedit wid. */
 static double sysedit_xpos    = 0.; /**< Viewport X position. */
@@ -78,6 +93,10 @@ static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+/* Selection. */
+static void sysedit_deselect (void);
+static void sysedit_selectAdd( Select_t *sel );
+static void sysedit_selectRm( Select_t *sel );
 
 
 /**
@@ -427,4 +446,58 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
    sysedit_xpos *= sysedit_zoom;
    sysedit_ypos *= sysedit_zoom;
 }
+
+
+/**
+ * @brief Deselects everything.
+ */
+static void sysedit_deselect (void)
+{
+   if (sysedit_nselect > 0)
+      free( sysedit_select );
+   sysedit_select    = NULL;
+   sysedit_nselect   = 0;
+   sysedit_mselect   = 0;
+}
+
+
+/**
+ * @brief Adds a system to the selection.
+ */
+static void sysedit_selectAdd( Select_t *sel )
+{
+   /* Allocate if needed. */
+   if (sysedit_mselect < sysedit_nselect+1) {
+      if (sysedit_mselect == 0)
+         sysedit_mselect = 1;
+      sysedit_mselect  *= 2;
+      sysedit_select    = realloc( sysedit_select,
+            sizeof(Select_t) * sysedit_mselect );
+   }
+
+   /* Add system. */
+   memcpy( &sysedit_select[ sysedit_nselect ], sel, sizeof(Select_t) );
+   sysedit_nselect++;
+
+}
+
+
+/**
+ * @brief Removes a system from the selection.
+ */
+static void sysedit_selectRm( Select_t *sel )
+{
+   int i;
+   for (i=0; i<sysedit_nselect; i++) {
+      if (memcmp(&sysedit_select[i], sel, sizeof(Select_t))==0) {
+         sysedit_nselect--;
+         memmove( &sysedit_select[i], &sysedit_select[i+1],
+               sizeof(Select_t) * (sysedit_nselect - i) );
+         return;
+      }
+   }
+   WARN("Trying to unselect item that is not in selection!");
+}
+
+
 
