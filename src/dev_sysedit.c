@@ -520,23 +520,8 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   }
                   /* Jump point. */
                   else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
-                     jp = &sys->jumps[ sysedit_select[i].u.jump ];
-                     if (jp->flags & JP_AUTOPOS) {
-                        j = dialogue_YesNo( "Move Jump Point",
-                              "Moving the jumppoint from '%s' to '%s' will remove the AUTOPOS flag. Continue?",
-                              sys->name, jp->target->name );
-                        if (j) {
-                           jp->flags      &= ~(JP_AUTOPOS);
-                           sysedit_dragSel = 0; /* Stop dragging, player has to click anyway. */
-                        }
-                        else {
-                           /* Unselect. */
-                           sel.type    = SELECT_JUMPPOINT;
-                           sel.u.jump  = sysedit_select[i].u.jump;
-                           sysedit_selectRm( &sel );
-                        }
-                        continue;
-                     }
+                     jp         = &sys->jumps[ sysedit_select[i].u.jump ];
+                     jp->flags &= ~(JP_AUTOPOS);
                      jp->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
                      jp->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
                   }
