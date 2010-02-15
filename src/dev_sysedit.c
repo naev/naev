@@ -44,6 +44,31 @@
 #define SYSEDIT_NEWSYS     2  /**< New system editor mode. */
 
 
+/*
+ * Selection types.
+ */
+#define SELECT_NONE        0 /**< No selection. */
+#define SELECT_PLANET      1 /**< Selection is a planet. */
+#define SELECT_JUMPPOINT   2 /**< Selection is a jump point. */
+
+
+/**
+ * @brief Selection generic for stuff in a system.
+ */
+typedef struct Select_s {
+   int type; /**< Type of selection. */
+   union {
+      int planet;
+      int jump;
+   } u; /**< Data itself. */
+} Select_t;
+static Select_t *sysedit_select  = NULL; /**< Current system selection. */
+static int sysedit_nselect       = 0; /**< Number of selections in current system. */
+static int sysedit_mselect       = 0; /**< Memory allocated for selections. */
+static Select_t sysedit_tsel;         /**< Temporary selection. */
+static int  sysedit_tadd         = 0; /**< Add to selection. */
+
+
 static StarSystem *sysedit_sys = NULL; /**< Currently opened system. */
 static unsigned int sysedit_wid = 0; /**< Sysedit wid. */
 static double sysedit_xpos    = 0.; /**< Viewport X position. */
@@ -52,23 +77,16 @@ static double sysedit_zoom    = 1.; /**< Viewport zoom level. */
 static int sysedit_moved      = 0;  /**< Space moved since mouse down. */
 static unsigned int sysedit_dragTime = 0; /**< Tick last started to drag. */
 static int sysedit_drag       = 0;  /**< Dragging viewport around. */
-static int sysedit_dragSys    = 0;  /**< Dragging system around. */
+static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 
 
 /*
  * Universe editor Prototypes.
  */
-/* Selection. */
-/*
-static void sysedit_deselect (void);
-static void sysedit_selectAdd( StarSystem *sys );
-static void sysedit_selectRm( StarSystem *sys );
-static void sysedit_selectText (void);
-*/
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy );
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -78,6 +96,11 @@ static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+/* Selection. */
+static int sysedit_selectCmp( Select_t *a, Select_t *b );
+static void sysedit_deselect (void);
+static void sysedit_selectAdd( Select_t *sel );
+static void sysedit_selectRm( Select_t *sel );
 
 
 /**
@@ -93,7 +116,7 @@ void sysedit_open( StarSystem *sys )
    /* Reset some variables. */
    sysedit_sys    = sys;
    sysedit_drag   = 0;
-   sysedit_zoom   = 1.;
+   sysedit_zoom   = 0.5;
    sysedit_xpos   = 0.;
    sysedit_ypos   = 0.;
 
@@ -128,7 +151,7 @@ void sysedit_open( StarSystem *sys )
    window_custSetOverlay( wid, "cstSysEdit", sysedit_renderOverlay );
 
    /* Deselect everything. */
-   /*sysedit_deselect();*/
+   sysedit_deselect();
 }
 
 
@@ -186,11 +209,14 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 static void sysedit_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i;
+   int i, j;
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
    double x,y;
+   glColour *c;
+   int selected;
+   Select_t sel;
 
    /* Comfort++. */
    sys = sysedit_sys;
@@ -204,14 +230,46 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
    /* Render planets. */
    for (i=0; i<sys->nplanets; i++) {
-      p     = sys->planets[i];
-      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0 );
+      p              = sys->planets[i];
+
+      /* Check if selected. */
+      sel.type       = SELECT_PLANET;
+      sel.u.planet   = i;
+      selected       = 0;
+      for (j=0; j<sysedit_nselect; j++) {
+         if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+            selected = 1;
+            break;
+         }
+      }
+
+      /* Render. */
+      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected );
    }
 
    /* Render jump points. */
    for (i=0; i<sys->njumps; i++) {
       jp    = &sys->jumps[i];
-      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy );
+
+      /* Choose colour. */
+      if (jp->flags & JP_AUTOPOS)
+         c = &cGreen;
+      else
+         c = NULL;
+
+      /* Check if selected. */
+      sel.type       = SELECT_JUMPPOINT;
+      sel.u.planet   = i;
+      selected       = 0;
+      for (j=0; j<sysedit_nselect; j++) {
+         if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+            selected = 1;
+            break;
+         }
+      }
+
+      /* Render. */
+      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c, selected );
    }
 }
 
@@ -219,19 +277,23 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 /**
  * @brief Renders a sprite for the custom widget.
  */
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy )
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected )
 {
    double tx, ty, z;
 
    /* Comfort. */
    z  = sysedit_zoom;
 
+   /* Hack. */
+   if (selected) {
+   }
+
    /* Translate coords. */
    tx = bx + (x - gfx->sw/2.)*z + SCREEN_W/2.;
    ty = by + (y - gfx->sh/2.)*z + SCREEN_H/2.;
 
    /* Blit the planet. */
-   gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, NULL );
+   gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
 }
 
 
@@ -255,11 +317,16 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 {
    (void) wid;
    (void) data;
-   int i;
+   int i, j;
    double x,y, t;
    SDLMod mod;
+   StarSystem *sys;
+   Planet *p;
+   JumpPoint *jp;
+   Select_t sel;
 
-   t = 15.*15.; /* threshold */
+   /* Comfort. */
+   sys = sysedit_sys;
 
    /* Handle modifiers. */
    mod = SDL_GetModState();
@@ -282,21 +349,31 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             mx -= w/2 - sysedit_xpos;
             my -= h/2 - sysedit_ypos;
 
-#if 0
-            for (i=0; i<systems_nstack; i++) {
-               sys = system_getIndex( i );
 
-               /* get position */
-               x = sys->pos.x * sysedit_zoom;
-               y = sys->pos.y * sysedit_zoom;
+            /* Check planets. */
+            for (i=0; i<sys->nplanets; i++) {
+               p = sys->planets[i];
 
+               /* Position. */
+               x = p->pos.x * sysedit_zoom;
+               y = p->pos.y * sysedit_zoom;
+
+               /* Set selection. */
+               sel.type       = SELECT_PLANET;
+               sel.u.planet   = i;
+
+               /* Threshold. */
+               t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
+               t *= pow2(sysedit_zoom);
+
+               /* Can select. */
                if ((pow2(mx-x)+pow2(my-y)) < t) {
 
-                  /* Try to find in selected systems - begin drag move. */
-                  for (i=0; i<sysedit_nsys; i++) {
-                     if (sysedit_sys[i] == sys) {
-                        sysedit_dragSys   = 1;
-                        sysedit_tsys      = sys;
+                  /* Check if already selected. */
+                  for (j=0; j<sysedit_nselect; j++) {
+                     if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+                        sysedit_dragSel   = 1;
+                        memcpy( &sysedit_tsel, &sel, sizeof(Select_t) );
 
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
@@ -309,29 +386,76 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                      }
                   }
 
-                  if (sysedit_mode == SYSEDIT_DEFAULT) {
-                     /* Add the system if not selected. */
-                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                        sysedit_selectAdd( sys );
-                     else {
-                        sysedit_deselect();
-                        sysedit_selectAdd( sys );
-                     }
-                     sysedit_tsys      = NULL;
+                  /* Add the system if not selected. */
+                  if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                     sysedit_selectAdd( &sel );
+                  else {
+                     sysedit_deselect();
+                     sysedit_selectAdd( &sel );
+                  }
+                  sysedit_tsel.type = SELECT_NONE;
 
-                     /* Start dragging anyway. */
-                     sysedit_dragSys   = 1;
-                     sysedit_dragTime  = SDL_GetTicks();
-                     sysedit_moved     = 0;
-                  }
-                  else if (sysedit_mode == SYSEDIT_JUMP) {
-                     sysedit_toggleJump( sys );
-                     sysedit_mode = SYSEDIT_DEFAULT;
-                  }
+                  /* Start dragging anyway. */
+                  sysedit_dragSel   = 1;
+                  sysedit_dragTime  = SDL_GetTicks();
+                  sysedit_moved     = 0;
                   return;
                }
             }
-#endif
+
+            /* Check jump points. */
+            for (i=0; i<sys->njumps; i++) {
+               jp = &sys->jumps[i];
+               p = sys->planets[i];
+
+               /* Position. */
+               x = jp->pos.x * sysedit_zoom;
+               y = jp->pos.y * sysedit_zoom;
+
+               /* Set selection. */
+               sel.type       = SELECT_JUMPPOINT;
+               sel.u.planet   = i;
+
+               /* Threshold. */
+               t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
+               t *= pow2(sysedit_zoom);
+
+               /* Can select. */
+               if ((pow2(mx-x)+pow2(my-y)) < t) {
+
+                  /* Check if already selected. */
+                  for (j=0; j<sysedit_nselect; j++) {
+                     if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+                        sysedit_dragSel   = 1;
+                        memcpy( &sysedit_tsel, &sel, sizeof(Select_t) );
+
+                        /* Check modifier. */
+                        if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                           sysedit_tadd      = 0;
+                        else
+                           sysedit_tadd      = -1;
+                        sysedit_dragTime  = SDL_GetTicks();
+                        sysedit_moved     = 0;
+                        return;
+                     }
+                  }
+
+                  /* Add the system if not selected. */
+                  if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                     sysedit_selectAdd( &sel );
+                  else {
+                     sysedit_deselect();
+                     sysedit_selectAdd( &sel );
+                  }
+                  sysedit_tsel.type = SELECT_NONE;
+
+                  /* Start dragging anyway. */
+                  sysedit_dragSel   = 1;
+                  sysedit_dragTime  = SDL_GetTicks();
+                  sysedit_moved     = 0;
+                  return;
+               }
+            }
 
             /* Start dragging. */
             if (!(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
@@ -345,30 +469,26 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
       case SDL_MOUSEBUTTONUP:
          if (sysedit_drag) {
-#if 0
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-               if (sysedit_tsys == NULL)
+               if (sysedit_tsel.type == SELECT_NONE)
                   sysedit_deselect();
                else
-                  sysedit_selectAdd( sysedit_tsys );
+                  sysedit_selectAdd( &sysedit_tsel );
             }
-#endif
             sysedit_drag      = 0;
          }
-#if 0
-         if (sysedit_dragSys) {
+         if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
-                  (sysedit_moved < SYSEDIT_MOVE_THRESHOLD) && (sysedit_tsys != NULL)) {
+                  (sysedit_moved < SYSEDIT_MOVE_THRESHOLD) && (sysedit_tsel.type != SELECT_NONE)) {
                if (sysedit_tadd == 0)
-                  sysedit_selectRm( sysedit_tsys );
+                  sysedit_selectRm( &sysedit_tsel );
                else {
                   sysedit_deselect();
-                  sysedit_selectAdd( sysedit_tsys );
+                  sysedit_selectAdd( &sysedit_tsel );
                }
             }
-            sysedit_dragSys   = 0;
+            sysedit_dragSel   = 0;
          }
-#endif
          break;
 
       case SDL_MOUSEMOTION:
@@ -381,19 +501,45 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Update mousemovement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
-#if 0
-         else if (sysedit_dragSys && (sysedit_nsys > 0)) {
+         /* Dragging selection around. */
+         else if (sysedit_dragSel && (sysedit_nselect > 0)) {
             if ((sysedit_moved > SYSEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - sysedit_dragTime > SYSEDIT_DRAG_THRESHOLD)) {
-               for (i=0; i<sysedit_nsys; i++) {
-                  sysedit_sys[i]->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
-                  sysedit_sys[i]->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+               for (i=0; i<sysedit_nselect; i++) {
+
+                  /* Planets. */
+                  if (sysedit_select[i].type == SELECT_PLANET) {
+                     p = sys->planets[ sysedit_select[i].u.planet ];
+                     p->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
+                     p->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                  }
+                  /* Jump point. */
+                  else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
+                     jp = &sys->jumps[ sysedit_select[i].u.jump ];
+                     if (jp->flags & JP_AUTOPOS) {
+                        j = dialogue_YesNo( "Move Jump Point",
+                              "Moving the jumppoint from '%s' to '%s' will remove the AUTOPOS flag. Continue?",
+                              sys->name, jp->target->name );
+                        if (j) {
+                           jp->flags      &= ~(JP_AUTOPOS);
+                           sysedit_dragSel = 0; /* Stop dragging, player has to click anyway. */
+                        }
+                        else {
+                           /* Unselect. */
+                           sel.type    = SELECT_JUMPPOINT;
+                           sel.u.jump  = sysedit_select[i].u.jump;
+                           sysedit_selectRm( &sel );
+                        }
+                        continue;
+                     }
+                     jp->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
+                     jp->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                  }
                }
             }
 
             /* Update mousemovement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
-#endif
          break;
    }
 }
@@ -415,19 +561,79 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      sysedit_zoom += (sysedit_zoom >= 1.) ? 0.5 : 0.25;
-      sysedit_zoom = MIN(2.5, sysedit_zoom);
+      sysedit_zoom *= 1.2;
+      sysedit_zoom = MIN(1., sysedit_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      sysedit_zoom -= (sysedit_zoom > 1.) ? 0.5 : 0.25;
-      sysedit_zoom = MAX(0.25, sysedit_zoom);
+      sysedit_zoom *= 0.8;
+      sysedit_zoom = MAX(0.10, sysedit_zoom);
    }
-
-   /* Hack for the circles to work. */
-   map_setZoom(sysedit_zoom);
 
    /* Transform coords back. */
    sysedit_xpos *= sysedit_zoom;
    sysedit_ypos *= sysedit_zoom;
+}
+
+
+/**
+ * @brief Deselects everything.
+ */
+static void sysedit_deselect (void)
+{
+   if (sysedit_nselect > 0)
+      free( sysedit_select );
+   sysedit_select    = NULL;
+   sysedit_nselect   = 0;
+   sysedit_mselect   = 0;
+}
+
+
+/**
+ * @brief Adds a system to the selection.
+ */
+static void sysedit_selectAdd( Select_t *sel )
+{
+   /* Allocate if needed. */
+   if (sysedit_mselect < sysedit_nselect+1) {
+      if (sysedit_mselect == 0)
+         sysedit_mselect = 1;
+      sysedit_mselect  *= 2;
+      sysedit_select    = realloc( sysedit_select,
+            sizeof(Select_t) * sysedit_mselect );
+   }
+
+   /* Add system. */
+   memcpy( &sysedit_select[ sysedit_nselect ], sel, sizeof(Select_t) );
+   sysedit_nselect++;
+
+}
+
+
+/**
+ * @brief Removes a system from the selection.
+ */
+static void sysedit_selectRm( Select_t *sel )
+{
+   int i;
+   for (i=0; i<sysedit_nselect; i++) {
+      if (sysedit_selectCmp( &sysedit_select[i], sel )) {
+         sysedit_nselect--;
+         memmove( &sysedit_select[i], &sysedit_select[i+1],
+               sizeof(Select_t) * (sysedit_nselect - i) );
+         return;
+      }
+   }
+   WARN("Trying to unselect item that is not in selection!");
+}
+
+
+/**
+ * @brief Compares two selections to see if they are the same.
+ *
+ *    @return 1 if both selections are the same.
+ */
+static int sysedit_selectCmp( Select_t *a, Select_t *b )
+{
+   return (memcmp(a, b, sizeof(Select_t)) == 0);
 }
 
