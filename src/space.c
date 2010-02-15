@@ -968,6 +968,7 @@ Planet *planet_new (void)
    memset( p, 0, sizeof(Planet) );
    p->id       = planet_nstack-1;
    p->faction  = -1;
+   p->class    = PLANET_CLASS_A;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)

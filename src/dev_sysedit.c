@@ -91,6 +91,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
 static void sysedit_btnReset( unsigned int wid_unused, char *unused );
+static void sysedit_btnGFX( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 /* Selection. */
@@ -133,6 +134,10 @@ void sysedit_open( StarSystem *sys )
    /* Reset. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnReset", "Reset", sysedit_btnReset );
+
+   /* GFX. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*7, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnGFX", "GFX", sysedit_btnGFX );
 
    /* Remove. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -275,6 +280,28 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          /* Rename. */
          free(p->name);
          p->name = name;
+      }
+   }
+}
+
+static void sysedit_btnGFX( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   int i;
+   Select_t *sel;
+   Planet *p, *b;
+   for (i=0; i<sysedit_nselect; i++) {
+      sel = &sysedit_select[i];
+      if (sel->type == SELECT_PLANET) {
+         p = sysedit_sys[i].planets[ sel->u.planet ];
+        
+         free(p->gfx_space);
+
+         /* Base planet data off another. */
+         b                    = planet_get( space_getRndPlanet() );
+         p->gfx_space         = gl_dupTexture( b->gfx_space );
+         p->gfx_spacePath     = strdup( b->gfx_spacePath );
       }
    }
 }
