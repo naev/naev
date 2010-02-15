@@ -88,6 +88,9 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
+static void sysedit_btnRename( unsigned int wid_unused, char *unused );
+static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
+static void sysedit_btnReset( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 /* Selection. */
@@ -126,6 +129,18 @@ void sysedit_open( StarSystem *sys )
    /* Save button. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save", sysedit_save );
+
+   /* Reset. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnReset", "Reset", sysedit_btnReset );
+
+   /* Remove. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRemove", "Remove", sysedit_btnRemove );
+
+   /* Rename. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*5, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", "Rename", sysedit_btnRename );
 
    /* New system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -197,7 +212,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   Planet *p;
+   Planet *p, *b;
    char *name;
 
    /* Get new name. */
@@ -217,10 +232,82 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    /* Create the new planet. */
    p        = planet_new();
    p->name  = name;
-   p->gfx_space = gl_dupTexture( planet_get( space_getRndPlanet() )->gfx_space ); /* Use random graphic. */
+
+   /* Base planet data off another. */
+   b                    = planet_get( space_getRndPlanet() );
+   p->gfx_space         = gl_dupTexture( b->gfx_space );
+   p->gfx_spacePath     = strdup( b->gfx_spacePath );
+   p->gfx_exterior      = strdup( b->gfx_exterior );
+   p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
+}
+
+
+static void sysedit_btnRename( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   int i;
+   char *name;
+   Select_t *sel;
+   Planet *p;
+   for (i=0; i<sysedit_nselect; i++) {
+      sel = &sysedit_select[i];
+      if (sel->type == SELECT_PLANET) {
+         p = sysedit_sys[i].planets[ sel->u.planet ];
+
+         /* Get new name. */
+         name = dialogue_input( "New Planet Creation", 1, 32,
+               "What do you want to rename the planet \er%s\e0?", p->name );
+         if (name == NULL)
+            continue;
+
+         /* Check for collision. */
+         if (planet_exists( name )) {
+            dialogue_alert( "Planet by the name of \er'%s'\e0 already exists in the \er'%s'\e0 system",
+                  name, planet_getSystem( name ) );
+            free(name);
+            continue;
+         }
+
+         /* Rename. */
+         free(p->name);
+         p->name = name;
+      }
+   }
+}
+
+
+static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   Select_t *sel;
+   int i;
+   for (i=0; i<sysedit_nselect; i++) {
+      sel = &sysedit_select[i];
+      if (sel->type == SELECT_PLANET)
+         system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
+   }
+}
+
+
+static void sysedit_btnReset( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   Select_t *sel;
+   int i;
+   for (i=0; i<sysedit_nselect; i++) {
+      sel = &sysedit_select[i];
+      if (sel->type == SELECT_JUMPPOINT)
+         sysedit_sys[i].jumps[ sel->u.jump ].flags |= JP_AUTOPOS;
+   }
+
+   /* Must reconstruct jumps. */
+   systems_reconstructJumps();
 }
 
 
