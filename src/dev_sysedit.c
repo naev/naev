@@ -496,6 +496,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                sysedit_drag      = 1;
                sysedit_dragTime  = SDL_GetTicks();
                sysedit_moved     = 0;
+               sysedit_tsel.type = SELECT_NONE;
             }
             return;
          }
