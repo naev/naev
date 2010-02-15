@@ -85,7 +85,7 @@ function jump()
       hook.land("land")
 
    -- Create some opposition
-   elseif misn_stage == 1 and (sys:name() == "NGC-7132" or factions["Collective"]) then
+   elseif misn_stage == 1 and (sys:name() == "Hades" or factions["Collective"]) then
       pilot.add("Collective Sml Swarm")
    end
 end
