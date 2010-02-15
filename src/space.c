@@ -203,7 +203,7 @@ static PlanetClass planetclass_get( const char a )
  *    @param p Planet to get the class char from.
  *    @return The planet's class char.
  */
-char planet_getClass( Planet *p )
+char planet_getClass( const Planet *p )
 {
    switch (p->class) {
       case PLANET_CLASS_A: return 'A';
@@ -528,6 +528,48 @@ Planet* planet_get( const char* planetname )
 
    WARN("Planet '%s' not found in the universe", planetname);
    return NULL;
+}
+
+
+/**
+ * @brief Gets planet by index.
+ *
+ *    @param ind Index of the planet to get.
+ *    @return The planet gotten.
+ */
+Planet* planet_getIndex( int ind )
+{
+   /* Sanity check. */
+   if ((ind < 0) || (ind >= planet_nstack)) {
+      WARN("Planet index '%d' out of range (max %d)", ind, planet_nstack);
+      return NULL;
+   }
+
+   return &planet_stack[ ind ];
+}
+
+
+/**
+ * @brief Gets the number of planets.
+ *
+ *    @return The number of planets.
+ */
+int planet_getNum (void)
+{
+   return planet_nstack;
+}
+
+
+/**
+ * @brief Gets all the planets.
+ *
+ *    @param n Number of planets gotten.
+ *    @return Array of gotten planets.
+ */
+Planet* planet_getAll( int *n )
+{
+   *n = planet_nstack;
+   return planet_stack;
 }
 
 
