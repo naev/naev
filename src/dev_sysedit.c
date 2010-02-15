@@ -78,7 +78,8 @@ static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected );
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
+      int sx, int sy, glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -260,7 +261,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       }
 
       /* Render. */
-      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected );
+      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected, p->name );
    }
 
    /* Render jump points. */
@@ -285,7 +286,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       }
 
       /* Render. */
-      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c, selected );
+      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c, selected, jp->target->name );
    }
 }
 
@@ -293,10 +294,11 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 /**
  * @brief Renders a sprite for the custom widget.
  */
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected )
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
+      int sx, int sy, glColour *c, int selected, const char *caption )
 {
    double tx, ty, z;
-   glColour cc;
+   glColour cc, *col;
 
    /* Comfort. */
    z  = sysedit_zoom;
@@ -316,6 +318,16 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
 
    /* Blit the planet. */
    gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
+
+   /* Display caption. */
+   if (caption != NULL) {
+      if (selected)
+         col = &cRed;
+      else
+         col = c;
+      gl_printMidRaw( &gl_smallFont, gfx->sw*z+100,
+            tx - 50, ty - gl_smallFont.h - 5, col, caption );
+   }
 }
 
 
