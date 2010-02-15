@@ -423,9 +423,6 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
       sysedit_zoom = MAX(0.25, sysedit_zoom);
    }
 
-   /* Hack for the circles to work. */
-   map_setZoom(sysedit_zoom);
-
    /* Transform coords back. */
    sysedit_xpos *= sysedit_zoom;
    sysedit_ypos *= sysedit_zoom;
