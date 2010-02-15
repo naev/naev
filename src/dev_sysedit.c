@@ -280,17 +280,23 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected )
 {
    double tx, ty, z;
+   glColour cc;
 
    /* Comfort. */
    z  = sysedit_zoom;
 
-   /* Hack. */
-   if (selected) {
-   }
-
    /* Translate coords. */
    tx = bx + (x - gfx->sw/2.)*z + SCREEN_W/2.;
    ty = by + (y - gfx->sh/2.)*z + SCREEN_H/2.;
+
+   /* Selection graphic. */
+   if (selected) {
+      cc.r = cFontBlue.r;
+      cc.g = cFontBlue.g;
+      cc.b = cFontBlue.b;
+      cc.a = 0.5;
+      gl_drawCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &cc, 1 );
+   }
 
    /* Blit the planet. */
    gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
