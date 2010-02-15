@@ -104,7 +104,9 @@ typedef struct Planet_ {
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
+   char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
+   char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 } Planet;
 
 
@@ -238,9 +240,12 @@ void space_exit (void);
  */
 Planet *planet_new (void);
 char* planet_getSystem( const char* planetname );
+Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
+Planet* planet_getIndex( int ind );
+int planet_getNum (void);
 int planet_exists( const char* planetname );
-char planet_getClass( Planet *p );
+char planet_getClass( const Planet *p );
 
 /*
  * system adding/removing stuff.
