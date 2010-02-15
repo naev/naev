@@ -471,7 +471,7 @@ StarSystem* system_get( const char* sysname )
       if (strcmp(sysname, systems_stack[i].name)==0)
          return &systems_stack[i];
 
-   DEBUG("System '%s' not found in stack", sysname);
+   WARN("System '%s' not found in stack", sysname);
    return NULL;
 }
 

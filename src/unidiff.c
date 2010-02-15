@@ -502,36 +502,36 @@ static int diff_patch( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
-      DEBUG("Unidiff '%s' failed to apply %d hunks.", diff->name, diff->nfailed);
+      WARN("Unidiff '%s' failed to apply %d hunks.", diff->name, diff->nfailed);
       for (i=0; i<diff->nfailed; i++) {
          fail = &diff->failed[i];
          target = fail->target.u.name;
          switch (fail->type) {
             case HUNK_TYPE_PLANET_ADD:
-               DEBUG("   [%s] planet add: '%s'", target, fail->u.name);
+               WARN("   [%s] planet add: '%s'", target, fail->u.name);
                break;
             case HUNK_TYPE_PLANET_REMOVE:
-               DEBUG("   [%s] planet remove: '%s'", target, fail->u.name);
+               WARN("   [%s] planet remove: '%s'", target, fail->u.name);
                break;
             case HUNK_TYPE_FLEET_ADD:
-               DEBUG("   [%s] fleet add: '%s' (%d%% chance)", target, 
+               WARN("   [%s] fleet add: '%s' (%d%% chance)", target, 
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
                break;
             case HUNK_TYPE_FLEET_REMOVE:
-               DEBUG("   [%s] fleet remove: '%s' (%d%% chance)", target,
+               WARN("   [%s] fleet remove: '%s' (%d%% chance)", target,
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
                break;
             case HUNK_TYPE_FLEETGROUP_ADD:
-               DEBUG("   [%s] fleetgroup add: '%s'", target, 
+               WARN("   [%s] fleetgroup add: '%s'", target, 
                      fail->u.fleetgroup->name );
                break;
             case HUNK_TYPE_FLEETGROUP_REMOVE:
-               DEBUG("   [%s] fleetgroup remove: '%s'", target,
+               WARN("   [%s] fleetgroup remove: '%s'", target,
                      fail->u.fleetgroup->name );
                break;
 
             default:
-               DEBUG("   unknown hunk '%d'", fail->type);
+               WARN("   unknown hunk '%d'", fail->type);
                break;
          }
       }
@@ -757,7 +757,7 @@ static int diff_removeDiff( UniDiff_t *diff )
       }
 
       if (diff_patchHunk(&hunk))
-         DEBUG("Failed to remove hunk type '%d'.", hunk.type);
+         WARN("Failed to remove hunk type '%d'.", hunk.type);
    }
 
    diff_cleanup(diff);
