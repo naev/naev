@@ -86,7 +86,7 @@ static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c );
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -209,12 +209,14 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 static void sysedit_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i;
+   int i, j;
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
    double x,y;
    glColour *c;
+   int selected;
+   Select_t sel;
 
    /* Comfort++. */
    sys = sysedit_sys;
@@ -228,8 +230,21 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
    /* Render planets. */
    for (i=0; i<sys->nplanets; i++) {
-      p     = sys->planets[i];
-      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL );
+      p              = sys->planets[i];
+
+      /* Check if selected. */
+      sel.type       = SELECT_PLANET;
+      sel.u.planet   = i;
+      selected       = 0;
+      for (j=0; j<sysedit_nselect; j++) {
+         if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+            selected = 1;
+            break;
+         }
+      }
+
+      /* Render. */
+      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL, selected );
    }
 
    /* Render jump points. */
@@ -242,7 +257,19 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       else
          c = NULL;
 
-      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
+      /* Check if selected. */
+      sel.type       = SELECT_JUMPPOINT;
+      sel.u.planet   = i;
+      selected       = 0;
+      for (j=0; j<sysedit_nselect; j++) {
+         if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+            selected = 1;
+            break;
+         }
+      }
+
+      /* Render. */
+      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c, selected );
    }
 }
 
@@ -250,12 +277,16 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 /**
  * @brief Renders a sprite for the custom widget.
  */
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c )
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c, int selected )
 {
    double tx, ty, z;
 
    /* Comfort. */
    z  = sysedit_zoom;
+
+   /* Hack. */
+   if (selected) {
+   }
 
    /* Translate coords. */
    tx = bx + (x - gfx->sw/2.)*z + SCREEN_W/2.;
