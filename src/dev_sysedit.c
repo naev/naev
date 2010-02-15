@@ -19,6 +19,7 @@
 #include "opengl.h"
 #include "map.h"
 #include "dev_planet.h"
+#include "dev_system.h"
 #include "unidiff.h"
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
@@ -185,6 +186,7 @@ static void sysedit_save( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
 
+   dsys_saveAll();
    dpl_saveAll();
 }
 

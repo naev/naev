@@ -1061,10 +1061,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             if (xml_isNode(cur,"space")) { /* load space gfx */
                planet->gfx_space = xml_parseTexture( cur,
                      PLANET_GFX_SPACE"%s", 1, 1, OPENGL_TEX_MIPMAPS );
+               planet->gfx_spacePath = xml_getStrd(cur);
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
+               planet->gfx_exteriorPath = xml_getStrd(cur);
             }
          } while (xml_nextNode(cur));
          continue;
@@ -1190,7 +1192,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->description==NULL,"desription");
+         planet->description==NULL,"description");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
          planet->bar_description==NULL,"bar");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
@@ -2220,10 +2222,14 @@ void space_exit (void)
          free(planet_stack[i].bar_description);
 
       /* graphics */
-      if (planet_stack[i].gfx_space)
+      if (planet_stack[i].gfx_space) {
          gl_freeTexture(planet_stack[i].gfx_space);
-      if (planet_stack[i].gfx_exterior)
+         free(planet_stack[i].gfx_spacePath);
+      }
+      if (planet_stack[i].gfx_exterior) {
          free(planet_stack[i].gfx_exterior);
+         free(planet_stack[i].gfx_exteriorPath);
+      }
 
       /* commodities */
       free(planet_stack[i].commodities);

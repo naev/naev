@@ -90,8 +90,7 @@ if (xmlTextWriterEndElement(w) < 0) { \
    ERR("xmlw: unable to create end element"); return -1; }
 /* other stuff */
 #define xmlw_elemEmpty(w,n)   \
-xmlw_startElem(w,n); \
-xmlw_endElem(w)
+do { xmlw_startElem(w,n); xmlw_endElem(w) } while (0)
 #define xmlw_elem(w,n,str,args...) \
 if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
       str, ## args) < 0) { \
