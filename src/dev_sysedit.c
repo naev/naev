@@ -86,7 +86,7 @@ static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy );
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -214,6 +214,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    Planet *p;
    JumpPoint *jp;
    double x,y;
+   glColour *c;
 
    /* Comfort++. */
    sys = sysedit_sys;
@@ -228,13 +229,20 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render planets. */
    for (i=0; i<sys->nplanets; i++) {
       p     = sys->planets[i];
-      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0 );
+      sysedit_renderSprite( p->gfx_space, x, y, p->pos.x, p->pos.y, 0, 0, NULL );
    }
 
    /* Render jump points. */
    for (i=0; i<sys->njumps; i++) {
       jp    = &sys->jumps[i];
-      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy );
+
+      /* Choose colour. */
+      if (jp->flags & JP_AUTOPOS)
+         c = &cGreen;
+      else
+         c = NULL;
+
+      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
    }
 }
 
@@ -242,7 +250,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 /**
  * @brief Renders a sprite for the custom widget.
  */
-static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy )
+static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y, int sx, int sy, glColour *c )
 {
    double tx, ty, z;
 
@@ -254,7 +262,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
    ty = by + (y - gfx->sh/2.)*z + SCREEN_H/2.;
 
    /* Blit the planet. */
-   gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, NULL );
+   gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
 }
 
 
@@ -476,6 +484,22 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   /* Jump point. */
                   else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
                      jp = &sys->jumps[ sysedit_select[i].u.jump ];
+                     if (jp->flags & JP_AUTOPOS) {
+                        j = dialogue_YesNo( "Move Jump Point",
+                              "Moving the jumppoint from '%s' to '%s' will remove the AUTOPOS flag. Continue?",
+                              sys->name, jp->target->name );
+                        if (j) {
+                           jp->flags      &= ~(JP_AUTOPOS);
+                           sysedit_dragSel = 0; /* Stop dragging, player has to click anyway. */
+                        }
+                        else {
+                           /* Unselect. */
+                           sel.type    = SELECT_JUMPPOINT;
+                           sel.u.jump  = sysedit_select[i].u.jump;
+                           sysedit_selectRm( &sel );
+                        }
+                        continue;
+                     }
                      jp->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
                      jp->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
                   }
