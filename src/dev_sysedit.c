@@ -44,6 +44,14 @@
 #define SYSEDIT_NEWSYS     2  /**< New system editor mode. */
 
 
+/*
+ * Selection types.
+ */
+#define SELECT_NONE        0 /**< No selection. */
+#define SELECT_PLANET      1 /**< Selection is a planet. */
+#define SELECT_JUMPPOINT   2 /**< Selection is a jump point. */
+
+
 /**
  * @brief Selection generic for stuff in a system.
  */
@@ -57,6 +65,8 @@ typedef struct Select_s {
 static Select_t *sysedit_select  = NULL; /**< Current system selection. */
 static int sysedit_nselect       = 0; /**< Number of selections in current system. */
 static int sysedit_mselect       = 0; /**< Memory allocated for selections. */
+static Select_t sysedit_tsel;         /**< Temporary selection. */
+static int  sysedit_tadd         = 0; /**< Add to selection. */
 
 
 static StarSystem *sysedit_sys = NULL; /**< Currently opened system. */
@@ -67,19 +77,12 @@ static double sysedit_zoom    = 1.; /**< Viewport zoom level. */
 static int sysedit_moved      = 0;  /**< Space moved since mouse down. */
 static unsigned int sysedit_dragTime = 0; /**< Tick last started to drag. */
 static int sysedit_drag       = 0;  /**< Dragging viewport around. */
-static int sysedit_dragSys    = 0;  /**< Dragging system around. */
+static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 
 
 /*
  * Universe editor Prototypes.
  */
-/* Selection. */
-/*
-static void sysedit_deselect (void);
-static void sysedit_selectAdd( StarSystem *sys );
-static void sysedit_selectRm( StarSystem *sys );
-static void sysedit_selectText (void);
-*/
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
@@ -94,6 +97,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 /* Selection. */
+static int sysedit_selectCmp( Select_t *a, Select_t *b );
 static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
@@ -147,7 +151,7 @@ void sysedit_open( StarSystem *sys )
    window_custSetOverlay( wid, "cstSysEdit", sysedit_renderOverlay );
 
    /* Deselect everything. */
-   /*sysedit_deselect();*/
+   sysedit_deselect();
 }
 
 
@@ -274,11 +278,16 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 {
    (void) wid;
    (void) data;
-   int i;
+   int i, j;
    double x,y, t;
    SDLMod mod;
+   StarSystem *sys;
+   Planet *p;
+   JumpPoint *jp;
+   Select_t sel;
 
-   t = 15.*15.; /* threshold */
+   /* Comfort. */
+   sys = sysedit_sys;
 
    /* Handle modifiers. */
    mod = SDL_GetModState();
@@ -301,6 +310,57 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             mx -= w/2 - sysedit_xpos;
             my -= h/2 - sysedit_ypos;
 
+
+            for (i=0; i<sys->nplanets; i++) {
+               p = sys->planets[i];
+
+               /* Position. */
+               x = p->pos.x * sysedit_zoom;
+               y = p->pos.y * sysedit_zoom;
+
+               /* Set selection. */
+               sel.type       = SELECT_PLANET;
+               sel.u.planet   = i;
+
+               /* Threshold. */
+               t = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
+
+               /* Can select. */
+               if ((pow2(mx-x)+pow2(my-y)) < t) {
+
+                  /* Check if already selected. */
+                  for (j=0; j<sysedit_nselect; j++) {
+                     if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
+                        sysedit_dragSel   = 1;
+                        memcpy( &sysedit_tsel, &sel, sizeof(Select_t) );
+
+                        /* Check modifier. */
+                        if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                           sysedit_tadd      = 0;
+                        else
+                           sysedit_tadd      = -1;
+                        sysedit_dragTime  = SDL_GetTicks();
+                        sysedit_moved     = 0;
+                        return;
+                     }
+                  }
+
+                  /* Add the system if not selected. */
+                  if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                     sysedit_selectAdd( &sel );
+                  else {
+                     sysedit_deselect();
+                     sysedit_selectAdd( &sel );
+                  }
+                  sysedit_tsel.type = SELECT_NONE;
+
+                  /* Start dragging anyway. */
+                  sysedit_dragSel   = 1;
+                  sysedit_dragTime  = SDL_GetTicks();
+                  sysedit_moved     = 0;
+                  return;
+               }
+            }
 #if 0
             for (i=0; i<systems_nstack; i++) {
                sys = system_getIndex( i );
@@ -364,30 +424,26 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
       case SDL_MOUSEBUTTONUP:
          if (sysedit_drag) {
-#if 0
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-               if (sysedit_tsys == NULL)
+               if (sysedit_tsel.type == SELECT_NONE)
                   sysedit_deselect();
                else
-                  sysedit_selectAdd( sysedit_tsys );
+                  sysedit_selectAdd( &sysedit_tsel );
             }
-#endif
             sysedit_drag      = 0;
          }
-#if 0
-         if (sysedit_dragSys) {
+         if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
-                  (sysedit_moved < SYSEDIT_MOVE_THRESHOLD) && (sysedit_tsys != NULL)) {
+                  (sysedit_moved < SYSEDIT_MOVE_THRESHOLD) && (sysedit_tsel.type != SELECT_NONE)) {
                if (sysedit_tadd == 0)
-                  sysedit_selectRm( sysedit_tsys );
+                  sysedit_selectRm( &sysedit_tsel );
                else {
                   sysedit_deselect();
-                  sysedit_selectAdd( sysedit_tsys );
+                  sysedit_selectAdd( &sysedit_tsel );
                }
             }
-            sysedit_dragSys   = 0;
+            sysedit_dragSel   = 0;
          }
-#endif
          break;
 
       case SDL_MOUSEMOTION:
@@ -400,19 +456,20 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Update mousemovement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
-#if 0
-         else if (sysedit_dragSys && (sysedit_nsys > 0)) {
+         else if (sysedit_dragSel && (sysedit_nselect > 0)) {
             if ((sysedit_moved > SYSEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - sysedit_dragTime > SYSEDIT_DRAG_THRESHOLD)) {
-               for (i=0; i<sysedit_nsys; i++) {
-                  sysedit_sys[i]->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
-                  sysedit_sys[i]->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+               for (i=0; i<sysedit_nselect; i++) {
+                  if (sysedit_select[i].type == SELECT_PLANET) {
+                     p = sys->planets[ sysedit_select[i].u.planet ];
+                     p->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
+                     p->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                  }
                }
             }
 
             /* Update mousemovement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
-#endif
          break;
    }
 }
@@ -489,7 +546,7 @@ static void sysedit_selectRm( Select_t *sel )
 {
    int i;
    for (i=0; i<sysedit_nselect; i++) {
-      if (memcmp(&sysedit_select[i], sel, sizeof(Select_t))==0) {
+      if (sysedit_selectCmp( &sysedit_select[i], sel )) {
          sysedit_nselect--;
          memmove( &sysedit_select[i], &sysedit_select[i+1],
                sizeof(Select_t) * (sysedit_nselect - i) );
@@ -500,4 +557,13 @@ static void sysedit_selectRm( Select_t *sel )
 }
 
 
+/**
+ * @brief Compares two selections to see if they are the same.
+ *
+ *    @return 1 if both selections are the same.
+ */
+static int sysedit_selectCmp( Select_t *a, Select_t *b )
+{
+   return (memcmp(a, b, sizeof(Select_t)) == 0);
+}
 
