@@ -79,6 +79,7 @@ typedef enum PlanetClass_ {
  * @brief Represents a planet.
  */
 typedef struct Planet_ {
+   int id; /**< Planet ID. */
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
 
@@ -189,6 +190,7 @@ struct StarSystem_ {
 
    /* Planets. */
    Planet **planets; /**< planets */
+   int *planetsid; /**< IDs of the planets. */
    int nplanets; /**< total number of planets */
    int faction; /**< overall faction */
 
@@ -234,6 +236,7 @@ void space_exit (void);
 /*
  * planet stuff
  */
+Planet *planet_new (void);
 char* planet_getSystem( const char* planetname );
 Planet* planet_get( const char* planetname );
 char planet_getClass( Planet *p );
@@ -242,6 +245,7 @@ char planet_getClass( Planet *p );
  * system adding/removing stuff.
  */
 void systems_reconstructJumps (void);
+void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
