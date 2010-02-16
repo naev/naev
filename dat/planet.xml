@@ -153,7 +153,7 @@
    <y>-950.000000</y>
   </pos>
   <GFX>
-   <space>Moon-G01.png</space>
+   <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
   <general>
@@ -743,7 +743,7 @@
    <y>-930.000000</y>
   </pos>
   <GFX>
-   <space>Moon-P02.png</space>
+   <space>moon-P02.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
   <general>
@@ -789,7 +789,7 @@
    <y>1739.501953</y>
   </pos>
   <GFX>
-   <space>Moon-I00.png</space>
+   <space>moon-I00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
   <general>
@@ -912,7 +912,7 @@
    <y>-110.000000</y>
   </pos>
   <GFX>
-   <space>Moon-A00.png</space>
+   <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
   <general>
@@ -1215,7 +1215,7 @@
    <y>70.000000</y>
   </pos>
   <GFX>
-   <space>Moon-G01.png</space>
+   <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
   <general>
@@ -1238,7 +1238,7 @@
    <y>-1360.000000</y>
   </pos>
   <GFX>
-   <space>Moon-H00.png</space>
+   <space>moon-H00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
   <general>
