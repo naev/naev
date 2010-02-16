@@ -96,6 +96,7 @@ static void sysedit_btnGFX( unsigned int wid_unused, char *unused );
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 /* Selection. */
 static int sysedit_selectCmp( Select_t *a, Select_t *b );
+static void sysedit_checkButtons (void);
 static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
@@ -190,8 +191,8 @@ static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
  */
 static void sysedit_close( unsigned int wid, char *wgt )
 {
-   /* Reconstruct jumps. */
-   systems_reconstructJumps();
+   /* Remove selection. */
+   sysedit_deselect();
 
    /* Close the window. */
    window_close( wid, wgt );
@@ -284,6 +285,8 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
    }
 }
 
+
+
 static void sysedit_btnGFX( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
@@ -307,6 +310,9 @@ static void sysedit_btnGFX( unsigned int wid_unused, char *unused )
 }
 
 
+/**
+ * @brief Removes planets.
+ */
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
@@ -321,6 +327,9 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
 }
 
 
+/**
+ * @brief Resets jump points.
+ */
 static void sysedit_btnReset( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
@@ -723,6 +732,48 @@ static void sysedit_deselect (void)
    sysedit_select    = NULL;
    sysedit_nselect   = 0;
    sysedit_mselect   = 0;
+
+   /* Button sanity. */
+   sysedit_checkButtons();
+}
+
+
+/**
+ * @brief Checks to see which buttons should be active and the likes.
+ */
+static void sysedit_checkButtons (void)
+{
+   int i, sel_planet, sel_jump;
+   Select_t *sel;
+
+   /* See if a planet or jump is selected. */
+   sel_planet  = 0;
+   sel_jump    = 0;
+   for (i=0; i<sysedit_nselect; i++) {
+      sel = &sysedit_select[i];
+      if (sel->type == SELECT_PLANET)
+         sel_planet  = 1;
+      else if (sel->type == SELECT_JUMPPOINT)
+         sel_jump    = 1;
+   }
+
+   /* Planet dependent. */
+   if (sel_planet) {
+      window_enableButton( sysedit_wid, "btnRemove" );
+      window_enableButton( sysedit_wid, "btnRename" );
+   }
+   else {
+      window_disableButton( sysedit_wid, "btnRemove" );
+      window_disableButton( sysedit_wid, "btnRename" );
+   }
+
+   /* Jump dependent. */
+   if (sel_jump) {
+      window_enableButton( sysedit_wid, "btnReset" );
+   }
+   else {
+      window_disableButton( sysedit_wid, "btnReset" );
+   }
 }
 
 
@@ -744,6 +795,8 @@ static void sysedit_selectAdd( Select_t *sel )
    memcpy( &sysedit_select[ sysedit_nselect ], sel, sizeof(Select_t) );
    sysedit_nselect++;
 
+   /* Button sanity. */
+   sysedit_checkButtons();
 }
 
 
@@ -758,6 +811,8 @@ static void sysedit_selectRm( Select_t *sel )
          sysedit_nselect--;
          memmove( &sysedit_select[i], &sysedit_select[i+1],
                sizeof(Select_t) * (sysedit_nselect - i) );
+         /* Button sanity. */
+         sysedit_checkButtons();
          return;
       }
    }
