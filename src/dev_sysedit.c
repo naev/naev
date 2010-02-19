@@ -23,6 +23,7 @@
 #include "unidiff.h"
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
+#include "ndata.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -35,6 +36,9 @@
 
 #define SYSEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
+
+
+#define PLANET_GFX_PATH    "gfx/planet/space" /**< Path to planet space graphics. */
 
 
 /*
@@ -62,6 +66,9 @@ static Select_t sysedit_tsel;         /**< Temporary selection. */
 static int  sysedit_tadd         = 0; /**< Add to selection. */
 
 
+/*
+ * System editor stuff.
+ */
 static StarSystem *sysedit_sys = NULL; /**< Currently opened system. */
 static unsigned int sysedit_wid = 0; /**< Sysedit wid. */
 static double sysedit_xpos    = 0.; /**< Viewport X position. */
@@ -74,7 +81,14 @@ static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 
 
 /*
- * Universe editor Prototypes.
+ * Property editor stuff.
+ */
+static glTexture **sysedit_tex = NULL; /**< Planet textures. */
+static int sysedit_ntex       = 0; /**< Number of planet textures. */
+
+
+/*
+ * System editor Prototypes.
  */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
@@ -91,7 +105,10 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
 static void sysedit_btnReset( unsigned int wid_unused, char *unused );
+/* Property editor. */
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
+static void sysedit_btnEditClose( unsigned int wid, char *wgt );
+static void sysedit_btnEditApply( unsigned int wid, char *wgt );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 /* Selection. */
@@ -728,9 +745,9 @@ static void sysedit_checkButtons (void)
    for (i=0; i<sysedit_nselect; i++) {
       sel = &sysedit_select[i];
       if (sel->type == SELECT_PLANET)
-         sel_planet  = 1;
+         sel_planet++;
       else if (sel->type == SELECT_JUMPPOINT)
-         sel_jump    = 1;
+         sel_jump++;
    }
 
    /* Planet dependent. */
@@ -750,6 +767,12 @@ static void sysedit_checkButtons (void)
    else {
       window_disableButton( sysedit_wid, "btnReset" );
    }
+
+   /* Editor - just one planet. */
+   if ((sel_planet==1) && (sel_jump==0))
+      window_enableButton( sysedit_wid, "btnEdit" );
+   else
+      window_disableButton( sysedit_wid, "btnEdit" );
 }
 
 
@@ -814,23 +837,84 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   int i;
-   Select_t *sel;
-   Planet *p, *b;
-   for (i=0; i<sysedit_nselect; i++) {
-      sel = &sysedit_select[i];
-      if (sel->type == SELECT_PLANET) {
-         p = sysedit_sys[i].planets[ sel->u.planet ];
+   unsigned int wid;
+   uint32_t nfiles, i;
+   char *path, buf[PATH_MAX];
+   char **files;
+   glTexture **tex;
+   int w, h;
 
-         /* Free memory. */
-         gl_freeTexture(p->gfx_space);
-         free(p->gfx_spacePath);
+   /* Create the window. */
+   snprintf( buf, sizeof(buf), "%s - Planet Properties", sysedit_sys->planets[ sysedit_select[0].u.planet ]->name );
+   wid = window_create( buf, -1, -1, -1, -1 );
+   window_dimWindow( wid, &w, &h );
 
-         /* Base planet data off another. */
-         b                    = planet_get( space_getRndPlanet() );
-         p->gfx_space         = gl_dupTexture( b->gfx_space );
-         p->gfx_spacePath     = strdup( b->gfx_spacePath );
-      }
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", sysedit_btnEditClose );
+
+   /* Apply button. */
+   window_addButton( wid, -20, 20+(20+BUTTON_HEIGHT), BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnApply", "Apply", sysedit_btnEditApply );
+
+   /* Find images first. */
+   path           = PLANET_GFX_PATH;
+   files          = ndata_list( path, &nfiles );
+   tex            = malloc( sizeof(glTexture*) * nfiles );
+   sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );
+   sysedit_ntex   = nfiles;
+   for (i=0; i<nfiles; i++) {
+      snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
+      tex[i]         = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+      sysedit_tex[i] = tex[i];
    }
+
+   /* Add image array. */
+   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, files, nfiles, NULL, NULL );
 }
+
+
+/**
+ * @brief Closes the System Property editor.
+ */
+static void sysedit_btnEditClose( unsigned int wid, char *wgt )
+{
+   int i;
+   for (i=0; i<sysedit_ntex; i++)
+      gl_freeTexture( sysedit_tex[i] );
+   if (sysedit_tex != NULL)
+      free( sysedit_tex );
+   sysedit_tex    = NULL;
+   sysedit_ntex   = 0;
+   window_close( wid, wgt );
+}
+
+
+/**
+ * @brief Apply new graphics.
+ */
+static void sysedit_btnEditApply( unsigned int wid, char *wgt )
+{
+   (void) wgt;
+   Planet *p;
+   char *str, buf[PATH_MAX];
+  
+   /* Comfort. */
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+
+   /* Get output. */
+   str = toolkit_getImageArray( wid, "iarGFX" );
+   if (str == NULL)
+      return;
+
+   /* Free. */
+   gl_freeTexture( p->gfx_space );
+   free( p->gfx_spacePath );
+   /* New. */
+   snprintf( buf, sizeof(buf), "%s/%s", PLANET_GFX_PATH, str );
+   p->gfx_space      = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+   p->gfx_spacePath  = strdup( buf );
+}
+
+
 
