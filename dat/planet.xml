@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Planets>
+ <planet name="Alteris I">
+  <pos>
+   <x>-3620.000000</x>
+   <y>-1290.000000</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Alteris II">
+  <pos>
+   <x>-1240.000000</x>
+   <y>2660.000000</y>
+  </pos>
+  <GFX>
+   <space>M04.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Alteris IV">
+  <pos>
+   <x>3280.000000</x>
+   <y>3960.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A01.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Ammu">
   <pos>
    <x>90.000000</x>
@@ -218,8 +287,8 @@
  </planet>
  <planet name="Arrakis">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2200.000000</x>
+   <y>-360.000000</y>
   </pos>
   <GFX>
    <space>H00.png</space>
@@ -365,6 +434,75 @@
    <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
   </general>
  </planet>
+ <planet name="Capricorn II">
+  <pos>
+   <x>2000.000000</x>
+   <y>330.000000</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Capricorn III">
+  <pos>
+   <x>5250.000000</x>
+   <y>3360.000000</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Capricorn IIIa">
+  <pos>
+   <x>4930.000000</x>
+   <y>3640.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-M00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Cerberus">
   <pos>
    <x>130.000000</x>
@@ -396,8 +534,8 @@
  </planet>
  <planet name="Cetrat">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2580.000000</x>
+   <y>-1520.000000</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -499,8 +637,8 @@
  </planet>
  <planet name="Darkshed">
   <pos>
-   <x>-77.000000</x>
-   <y>-53.000000</y>
+   <x>623.000000</x>
+   <y>-1683.000000</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -891,8 +1029,8 @@
  </planet>
  <planet name="Durea">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2300.000000</x>
+   <y>-430.000000</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -923,8 +1061,8 @@
  </planet>
  <planet name="Dusk">
   <pos>
-   <x>-90.000000</x>
-   <y>-80.000000</y>
+   <x>667.912251</x>
+   <y>-454.277655</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -1105,6 +1243,75 @@
    <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
   </general>
  </planet>
+ <planet name="Eridani II">
+  <pos>
+   <x>-266.666667</x>
+   <y>3483.333333</y>
+  </pos>
+  <GFX>
+   <space>D02.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Eridani III">
+  <pos>
+   <x>300.000000</x>
+   <y>2908.333333</y>
+  </pos>
+  <GFX>
+   <space>D00.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Folevo">
+  <pos>
+   <x>-5480.000000</x>
+   <y>-2520.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A01.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Gamma">
   <pos>
    <x>-330.000000</x>
@@ -1197,10 +1404,33 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Green Eye">
+  <pos>
+   <x>-7230.000000</x>
+   <y>1050.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-J01.png</space>
+   <exterior>mining6.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Haleb IV">
   <pos>
-   <x>-57.000000</x>
-   <y>-17.000000</y>
+   <x>-1467.278204</x>
+   <y>-1310.503576</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -1356,8 +1586,8 @@
  </planet>
  <planet name="Jorlan">
   <pos>
-   <x>-97.000000</x>
-   <y>120.000000</y>
+   <x>370.098514</x>
+   <y>1700.948815</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -1573,13 +1803,36 @@
    <bar>(null)</bar>
   </general>
  </planet>
- <planet name="New Haven">
+ <planet name="New Dortmund">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-5720.000000</x>
+   <y>-2110.000000</y>
   </pos>
   <GFX>
-   <space>D00.png</space>
+   <space>M07.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="New Haven">
+  <pos>
+   <x>-7190.000000</x>
+   <y>550.000000</y>
+  </pos>
+  <GFX>
+   <space>X01.png</space>
    <exterior>gas.png</exterior>
   </GFX>
   <general>
@@ -1692,8 +1945,8 @@
  </planet>
  <planet name="Norpin II">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-1880.000000</x>
+   <y>1400.000000</y>
   </pos>
   <GFX>
    <space>H02.png</space>
@@ -1725,6 +1978,29 @@
    </commodities>
    <description>Norpin II is truly at the edge of the frontier, a barely-habitable world being mined and terraformed, though the latter is being done as cheaply as possible, resulting in very poor conditions. The Dvaered are loathed here, and it's rumored that the local shipyard is a major source of FLF vessels.</description>
    <bar>The Norpin II bar isn't the safest place around. With a deep-seated loathing of the Dvaered, the local citizens have brawled with Dvaered soldiers on numerous occasions.</bar>
+  </general>
+ </planet>
+ <planet name="Norpin IV">
+  <pos>
+   <x>1510.000000</x>
+   <y>-2580.000000</y>
+  </pos>
+  <GFX>
+   <space>L00.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Nova Shakar">
@@ -1761,6 +2037,29 @@
    </commodities>
    <description>Nova Shakar was an utterly unremarkable Empire planet until the Emperor's Fist project began. Increasingly, Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
    <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
+  </general>
+ </planet>
+ <planet name="Old Man Jack">
+  <pos>
+   <x>-790.000000</x>
+   <y>1880.000000</y>
+  </pos>
+  <GFX>
+   <space>G02.png</space>
+   <exterior>mining5.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Oma">
@@ -1924,8 +2223,8 @@
  </planet>
  <planet name="Ozogo X">
   <pos>
-   <x>23.000000</x>
-   <y>17.000000</y>
+   <x>893.000000</x>
+   <y>-2023.000000</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -2197,7 +2496,7 @@
    <y>0.000000</y>
   </pos>
   <GFX>
-   <space>M03.png</space>
+   <space>M05.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
@@ -2306,8 +2605,8 @@
  </planet>
  <planet name="Raglan Outpost">
   <pos>
-   <x>394.000000</x>
-   <y>17.000000</y>
+   <x>295.190699</x>
+   <y>2011.151346</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -2331,6 +2630,29 @@
    <commodities/>
    <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident. To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement. Meanwhile the Dvaereds use this base extensively in their fight against the FLF.</description>
    <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty. Though Dvaereds do like to drink, all outpost personnel are under standing orders to remain on alert, given the threat of FLF attack.</bar>
+  </general>
+ </planet>
+ <planet name="Red Eye">
+  <pos>
+   <x>-6760.000000</x>
+   <y>220.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Ridrack">
@@ -2570,8 +2892,8 @@
  </planet>
  <planet name="Selphod">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>383.333333</x>
+   <y>-1316.666667</y>
   </pos>
   <GFX>
    <space>P00.png</space>
@@ -2855,6 +3177,52 @@
    </commodities>
    <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometres wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
    <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
+  </general>
+ </planet>
+ <planet name="The Crucible">
+  <pos>
+   <x>-533.333333</x>
+   <y>2691.666667</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Theras III">
+  <pos>
+   <x>-360.000000</x>
+   <y>1810.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-P00.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Torloth">
@@ -3208,6 +3576,29 @@
    <class>H</class>
    <population>0</population>
    <prodfactor>0.400000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Vert">
+  <pos>
+   <x>840.000000</x>
+   <y>830.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-M06.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
    <tech>
     <main>0</main>
     <special>0</special>

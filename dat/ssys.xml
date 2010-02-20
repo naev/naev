@@ -99,7 +99,7 @@
  </ssys>
  <ssys name="Alteris">
   <general>
-   <radius>3500.000000</radius>
+   <radius>5000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -110,33 +110,36 @@
    <y>23.000000</y>
   </pos>
   <planets>
+   <planet>Alteris I</planet>
+   <planet>Alteris II</planet>
+   <planet>Alteris IV</planet>
    <planet>Darkshed</planet>
    <planet>Ozogo X</planet>
   </planets>
   <jumps>
    <jump target="Coriolis">
-    <pos x="-69.986004" y="3499.300210"/>
+    <pos x="-99.980006" y="4999.000300"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Delta Pavonis">
-    <pos x="-401.184378" y="-3476.931276"/>
+    <pos x="-573.120540" y="-4967.044679"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eridani">
-    <pos x="3430.452659" y="694.258276"/>
+    <pos x="4900.646656" y="991.797537"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sikh">
-    <pos x="-3307.451257" y="1144.886974"/>
+    <pos x="-4724.930367" y="1635.552819"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -586,15 +589,15 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>140.000000</x>
-   <y>-491.000000</y>
+   <x>138.000000</x>
+   <y>-487.000000</y>
   </pos>
   <planets>
    <planet>Utsuwa</planet>
   </planets>
   <jumps>
    <jump target="Verex">
-    <pos x="3044.427757" y="1726.690370"/>
+    <pos x="3139.542384" y="1547.020885"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -886,6 +889,9 @@
    <y>148.000000</y>
   </pos>
   <planets>
+   <planet>Capricorn II</planet>
+   <planet>Capricorn III</planet>
+   <planet>Capricorn IIIa</planet>
    <planet>Durea</planet>
   </planets>
   <jumps>
@@ -1571,28 +1577,18 @@
   </pos>
   <planets>
    <planet>Arrakis</planet>
+   <planet>Vert</planet>
   </planets>
   <jumps>
    <jump target="Coriolis">
-    <pos x="-3430.452659" y="-694.258276"/>
+    <pos x="749.547341" y="-2454.258276"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Eridani">
-    <pos x="69.986004" y="-3499.300210"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Halo">
-    <pos x="2001.274316" y="2871.393584"/>
+    <pos x="991.274316" y="3821.393584"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets>
@@ -1826,25 +1822,14 @@
    <y>40.000000</y>
   </pos>
   <planets>
+   <planet>Eridani II</planet>
+   <planet>Eridani III</planet>
    <planet>Selphod</planet>
+   <planet>The Crucible</planet>
   </planets>
   <jumps>
    <jump target="Alteris">
     <pos x="-3430.452659" y="-694.258276"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Dune">
-    <pos x="-69.986004" y="3499.300210"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Mizar">
-    <pos x="3452.378733" y="-575.396456"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2620,6 +2605,13 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="Pilatis">
+    <pos x="3351.278662" y="-1009.421284"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
   <fleets>
    <fleet>Pirate Light Presence</fleet>
@@ -2797,7 +2789,7 @@
   <planets/>
   <jumps>
    <jump target="Toaxis">
-    <pos x="-933.566570" y="3373.196327"/>
+    <pos x="-933.566548" y="3373.196333"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3249,13 +3241,6 @@
   </pos>
   <planets/>
   <jumps>
-   <jump target="Eridani">
-    <pos x="-3452.378733" y="575.396456"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
    <jump target="Surano">
     <pos x="1990.032605" y="-2879.196109"/>
     <radius>200.000000</radius>
@@ -3386,15 +3371,16 @@
    <y>307.000000</y>
   </pos>
   <planets>
+   <planet>Green Eye</planet>
    <planet>New Haven</planet>
+   <planet>Old Man Jack</planet>
+   <planet>Red Eye</planet>
   </planets>
   <jumps>
    <jump target="Dendria">
-    <pos x="-1629.496325" y="3097.538011"/>
+    <pos x="-1779.496325" y="5097.538011"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Elixir">
     <pos x="-718.622036" y="-3425.431706"/>
@@ -3445,7 +3431,10 @@
    <y>-498.000000</y>
   </pos>
   <planets>
+   <planet>Folevo</planet>
+   <planet>New Dortmund</planet>
    <planet>Norpin II</planet>
+   <planet>Norpin IV</planet>
   </planets>
   <jumps>
    <jump target="Slaccid">
@@ -3780,6 +3769,13 @@
   <jumps>
    <jump target="Defa">
     <pos x="1238.622341" y="3273.501901"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Halo">
+    <pos x="-3351.278662" y="1009.421284"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4835,6 +4831,7 @@
   </pos>
   <planets>
    <planet>Cetrat</planet>
+   <planet>Theras III</planet>
   </planets>
   <jumps>
    <jump target="Dakron">
@@ -4944,7 +4941,7 @@
   <planets/>
   <jumps>
    <jump target="Ingot">
-    <pos x="933.566570" y="-3373.196327"/>
+    <pos x="933.566548" y="-3373.196333"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5302,7 +5299,7 @@
   </planets>
   <jumps>
    <jump target="Blunderbuss">
-    <pos x="-3044.427757" y="-1726.690370"/>
+    <pos x="-3139.542384" y="-1547.020885"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
