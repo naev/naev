@@ -233,7 +233,7 @@ function __run_hypbrake ()
    if ai.isstopped() then
       ai.stop()
       ai.popsubtask()
-      ai.pushtask( "__hyp_jump" )
+      ai.pushsubtask( "__hyp_jump" )
    end
 end
 
