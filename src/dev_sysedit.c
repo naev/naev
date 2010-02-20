@@ -913,7 +913,7 @@ static void sysedit_btnEditApply( unsigned int wid, char *wgt )
    /* New. */
    snprintf( buf, sizeof(buf), "%s/%s", PLANET_GFX_PATH, str );
    p->gfx_space      = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
-   p->gfx_spacePath  = strdup( buf );
+   p->gfx_spacePath  = strdup( str );
 }
 
 
