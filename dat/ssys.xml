@@ -521,6 +521,8 @@
    <y>-573.000000</y>
   </pos>
   <planets>
+   <planet>Beeklo II</planet>
+   <planet>Beeklo III</planet>
    <planet>Totoran</planet>
   </planets>
   <jumps>
@@ -1042,6 +1044,8 @@
    <y>-81.000000</y>
   </pos>
   <planets>
+   <planet>Inca</planet>
+   <planet>Maya</planet>
    <planet>Torloth</planet>
   </planets>
   <jumps>
@@ -1072,6 +1076,8 @@
    <y>-365.000000</y>
   </pos>
   <planets>
+   <planet>Dakron III</planet>
+   <planet>Dakron V</planet>
    <planet>Thar</planet>
   </planets>
   <jumps>
@@ -1154,6 +1160,8 @@
    <y>-535.000000</y>
   </pos>
   <planets>
+   <planet>Darkstone IV</planet>
+   <planet>Darkstone V</planet>
    <planet>Stalwart Station</planet>
    <planet>Varia</planet>
   </planets>
@@ -1223,6 +1231,8 @@
   </pos>
   <planets>
    <planet>Caladan</planet>
+   <planet>Delta Pavonis I</planet>
+   <planet>Ridrack</planet>
   </planets>
   <jumps>
    <jump target="Alteris">
@@ -1240,11 +1250,9 @@
     </flags>
    </jump>
    <jump target="Goddard">
-    <pos x="27.342916" y="-3499.893193"/>
+    <pos x="-2852.657084" y="-3849.893193"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets>
@@ -1430,6 +1438,9 @@
   </pos>
   <planets>
    <planet>Doranthex Prime</planet>
+   <planet>Doranthex Secundus</planet>
+   <planet>Secundus Alpha</planet>
+   <planet>Secundus Beta</planet>
   </planets>
   <jumps>
    <jump target="Dakron">
@@ -1440,11 +1451,9 @@
     </flags>
    </jump>
    <jump target="Ogat">
-    <pos x="-1920.297545" y="2926.167688"/>
+    <pos x="-3440.297545" y="4056.167688"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Tarsus">
     <pos x="1792.974054" y="-3005.868267"/>
@@ -1461,11 +1470,9 @@
     </flags>
    </jump>
    <jump target="Tuoladis">
-    <pos x="1173.636329" y="3297.359211"/>
+    <pos x="2673.636329" y="6057.359211"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets>
@@ -2332,15 +2339,17 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>237.000000</x>
-   <y>-505.000000</y>
+   <x>241.018776</x>
+   <y>-510.626286</y>
   </pos>
   <planets>
+   <planet>Ginger II</planet>
+   <planet>Ginger III</planet>
    <planet>Ullnorn</planet>
   </planets>
   <jumps>
    <jump target="Verex">
-    <pos x="-1749.028587" y="3031.649551"/>
+    <pos x="-1779.268479" y="3014.001274"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2888,7 +2897,10 @@
    <y>-416.000000</y>
   </pos>
   <planets>
+   <planet>Klantar I</planet>
+   <planet>Klantar III</planet>
    <planet>Nor</planet>
+   <planet>Tuur</planet>
   </planets>
   <jumps>
    <jump target="Dakron">
@@ -3160,6 +3172,10 @@
    <y>-465.000000</y>
   </pos>
   <planets>
+   <planet>Arck</planet>
+   <planet>Massia I</planet>
+   <planet>Massia IV</planet>
+   <planet>Massia IVa</planet>
    <planet>Sinclair</planet>
   </planets>
   <jumps>
@@ -3520,6 +3536,7 @@
    <y>-250.000000</y>
   </pos>
   <planets>
+   <planet>Gamma</planet>
    <planet>Praxis</planet>
   </planets>
   <jumps>
@@ -4075,6 +4092,7 @@
   </pos>
   <planets>
    <planet>Raelid Outpost</planet>
+   <planet>Raelid Prime</planet>
   </planets>
   <jumps>
    <jump target="Arcanis">
@@ -4719,6 +4737,7 @@
    <y>-403.000000</y>
   </pos>
   <planets>
+   <planet>Tarsus II</planet>
    <planet>Valt</planet>
   </planets>
   <jumps>
@@ -5263,6 +5282,8 @@
    <y>-453.000000</y>
   </pos>
   <planets>
+   <planet>Verex I</planet>
+   <planet>Verex II</planet>
    <planet>Verex III</planet>
   </planets>
   <jumps>
@@ -5274,14 +5295,12 @@
     </flags>
    </jump>
    <jump target="Darkstone">
-    <pos x="-1094.627231" y="-3324.423442"/>
+    <pos x="-1584.627231" y="-6294.423442"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Ginger">
-    <pos x="1749.028587" y="-3031.649551"/>
+    <pos x="1779.268479" y="-3014.001274"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5313,7 +5332,10 @@
    <y>-301.000000</y>
   </pos>
   <planets>
+   <planet>Ruid</planet>
    <planet>Vlexair</planet>
+   <planet>Vlexon I</planet>
+   <planet>Vlexon II</planet>
   </planets>
   <jumps>
    <jump target="Ogat">

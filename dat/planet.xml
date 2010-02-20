@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Planets>
  <planet name="Ammu">
   <pos>
@@ -107,6 +107,29 @@
    </commodities>
    <description>Though the orbiting military installation is all business, Antica mixes business and pleasure quite readily. Given its location, a vast number of transports stop at Antica to sell their wares before venturing deeper into Empire space.</description>
    <bar>The Antican bar is a rather lavish affair, quite in contrast to the stark exterior of the orbiting military station. Serving some of the Empire's finest food and drink, this Arcturian bar is often a traveller's introduction to Empire cuisine.</bar>
+  </general>
+ </planet>
+ <planet name="Arck">
+  <pos>
+   <x>1960.000000</x>
+   <y>-5210.000000</y>
+  </pos>
+  <GFX>
+   <space>M01.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Arcturus Gamma">
@@ -226,6 +249,52 @@
    <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
   </general>
  </planet>
+ <planet name="Beeklo II">
+  <pos>
+   <x>-140.000000</x>
+   <y>3270.000000</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Beeklo III">
+  <pos>
+   <x>600.000000</x>
+   <y>560.000000</y>
+  </pos>
+  <GFX>
+   <space>P01.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Bon Sebb">
   <pos>
    <x>149.553594</x>
@@ -261,8 +330,8 @@
  </planet>
  <planet name="Caladan">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2290.000000</x>
+   <y>-480.000000</y>
   </pos>
   <GFX>
    <space>M01.png</space>
@@ -382,6 +451,52 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Dakron III">
+  <pos>
+   <x>-920.000000</x>
+   <y>-1640.000000</y>
+  </pos>
+  <GFX>
+   <space>J01.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Dakron V">
+  <pos>
+   <x>-4670.000000</x>
+   <y>-1530.000000</y>
+  </pos>
+  <GFX>
+   <space>G02.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Darkshed">
   <pos>
    <x>-77.000000</x>
@@ -420,6 +535,52 @@
    <bar>The Darkshed canteen is decorated with all sorts of odd artifacts that chronicle trends in spaceship outfitting in the years since the station was established. Scale models of many popular ships hang from the ceiling.</bar>
   </general>
  </planet>
+ <planet name="Darkstone IV">
+  <pos>
+   <x>2070.000000</x>
+   <y>990.000000</y>
+  </pos>
+  <GFX>
+   <space>P02.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Darkstone V">
+  <pos>
+   <x>5580.000000</x>
+   <y>1030.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-J00.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Dawn">
   <pos>
    <x>400.000000</x>
@@ -453,10 +614,33 @@
    <bar>Dawn's bar has a rustic feel to it, as the locals have made a point of keeping the style close to what was the prevalent design in the early expansion era. Other than that, this bar doesn't have much to set it apart from others. The noise, the smell and the drunks are features that are commonplace throughout the galaxy.</bar>
   </general>
  </planet>
+ <planet name="Delta Pavonis I">
+  <pos>
+   <x>-5421.944444</x>
+   <y>1746.944444</y>
+  </pos>
+  <GFX>
+   <space>J04.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Doranthex Prime">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>1090.000000</x>
+   <y>3610.000000</y>
   </pos>
   <GFX>
    <space>A01.png</space>
@@ -483,6 +667,29 @@
    </commodities>
    <description>Doranthex Prime is a mostly-molten planet. One of the few pieces of solid land, a small island drifts around the around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the planet itself once a ship has landed.</description>
    <bar>The drinks served in the Furnace, as the bar calls itself, are a rather curious sort. They are generally very strong and served at a warm temperature. The house specialties also contain volcanic ash which is harvested on the planet surface. A strange bar indeed.</bar>
+  </general>
+ </planet>
+ <planet name="Doranthex Secundus">
+  <pos>
+   <x>-133.255101</x>
+   <y>-59.953061</y>
+  </pos>
+  <GFX>
+   <space>I01.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Dowue">
@@ -737,6 +944,29 @@
    <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
   </general>
  </planet>
+ <planet name="Gamma">
+  <pos>
+   <x>-330.000000</x>
+   <y>-1680.000000</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>mining4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Gem">
   <pos>
    <x>660.000000</x>
@@ -745,6 +975,52 @@
   <GFX>
    <space>moon-P02.png</space>
    <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Ginger II">
+  <pos>
+   <x>160.000000</x>
+   <y>-1400.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A01.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Ginger III">
+  <pos>
+   <x>3490.000000</x>
+   <y>-710.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-D00.png</space>
+   <exterior>forest2.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -838,6 +1114,29 @@
    <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
   </general>
  </planet>
+ <planet name="Inca">
+  <pos>
+   <x>-1358.836734</x>
+   <y>792.566337</y>
+  </pos>
+  <GFX>
+   <space>moon-I01.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Jorcan">
   <pos>
    <x>0.000000</x>
@@ -906,6 +1205,52 @@
    <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
   </general>
  </planet>
+ <planet name="Klantar I">
+  <pos>
+   <x>-650.000000</x>
+   <y>5660.000000</y>
+  </pos>
+  <GFX>
+   <space>O00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Klantar III">
+  <pos>
+   <x>530.000000</x>
+   <y>-1020.000000</y>
+  </pos>
+  <GFX>
+   <space>J01.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Luxsor">
   <pos>
    <x>720.000000</x>
@@ -914,6 +1259,98 @@
   <GFX>
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Massia I">
+  <pos>
+   <x>1890.000000</x>
+   <y>1410.000000</y>
+  </pos>
+  <GFX>
+   <space>A02.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Massia IV">
+  <pos>
+   <x>-390.000000</x>
+   <y>-1900.000000</y>
+  </pos>
+  <GFX>
+   <space>D02.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Massia IVa">
+  <pos>
+   <x>-160.000000</x>
+   <y>-2220.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-G01.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Maya">
+  <pos>
+   <x>-920.000000</x>
+   <y>1100.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-C00.png</space>
+   <exterior>station03.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -1036,11 +1473,11 @@
  </planet>
  <planet name="Nor">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>990.000000</x>
+   <y>2630.000000</y>
   </pos>
   <GFX>
-   <space>I01.png</space>
+   <space>J03.png</space>
    <exterior>gas.png</exterior>
   </GFX>
   <general>
@@ -1399,7 +1836,7 @@
  <planet name="Praxis">
   <pos>
    <x>0.000000</x>
-   <y>0.000000</y>
+   <y>1630.000000</y>
   </pos>
   <GFX>
    <space>M00.png</space>
@@ -1494,8 +1931,8 @@
  </planet>
  <planet name="Raelid Outpost">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-400.294111</x>
+   <y>-85.168960</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -1520,6 +1957,29 @@
    <commodities/>
    <description>Constructed by many captured and then enslaved FLF armsmen. The station seems sturdy, but you can't help wondering whether there's a bomb hidden somewhere, waiting to kill the Dvaered oppressors.</description>
    <bar>The Raelid bar fits the Dvaered stereotype well. It's one of the more prominent areas as soon as you exit the docking area, and, as many Dvaered bars seem to be, it's much larger than it functionally needs to be. Far from the spotless bars of Polaris Prime, it's encrusted with dirt and you can sense the presence of other patrons by their smell alone. Truly, a Dvaered bar.</bar>
+  </general>
+ </planet>
+ <planet name="Raelid Prime">
+  <pos>
+   <x>162.202752</x>
+   <y>171.057567</y>
+  </pos>
+  <GFX>
+   <space>K00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Raglan Outpost">
@@ -1549,6 +2009,52 @@
    <commodities/>
    <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident. To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement. Meanwhile the Dvaereds use this base extensively in their fight against the FLF.</description>
    <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty. Though Dvaereds do like to drink, all outpost personnel are under standing orders to remain on alert, given the threat of FLF attack.</bar>
+  </general>
+ </planet>
+ <planet name="Ridrack">
+  <pos>
+   <x>-1796.018519</x>
+   <y>-885.231481</y>
+  </pos>
+  <GFX>
+   <space>moon-L00.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Ruid">
+  <pos>
+   <x>-2800.000000</x>
+   <y>0.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-D01.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="S00000">
@@ -1694,6 +2200,52 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Secundus Alpha">
+  <pos>
+   <x>25.571416</x>
+   <y>-329.389789</y>
+  </pos>
+  <GFX>
+   <space>moon-C00.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Secundus Beta">
+  <pos>
+   <x>237.777563</x>
+   <y>-612.863297</y>
+  </pos>
+  <GFX>
+   <space>moon-H01.png</space>
+   <exterior>mining4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Selphod">
   <pos>
    <x>0.000000</x>
@@ -1753,8 +2305,8 @@
  </planet>
  <planet name="Sinclair">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-4470.000000</x>
+   <y>-3380.000000</y>
   </pos>
   <GFX>
    <space>M00.png</space>
@@ -1820,8 +2372,8 @@
  </planet>
  <planet name="Stalwart Station">
   <pos>
-   <x>300.000000</x>
-   <y>-800.000000</y>
+   <x>-720.000000</x>
+   <y>-130.000000</y>
   </pos>
   <GFX>
    <space>003.png</space>
@@ -1846,6 +2398,29 @@
    </commodities>
    <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
    <bar>This bar is the only public facility on the station. It is here that free merchants come to do business as well as relax. The bar also doubles as a modest hotel, so at least you won't have to sleep on your ship. Of course, the only difference is that your ship isn't as noisy...</bar>
+  </general>
+ </planet>
+ <planet name="Tarsus II">
+  <pos>
+   <x>50.000000</x>
+   <y>-1040.000000</y>
+  </pos>
+  <GFX>
+   <space>G01.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Tau Prime">
@@ -1905,8 +2480,8 @@
  </planet>
  <planet name="Thar">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>190.000000</x>
+   <y>1340.000000</y>
   </pos>
   <GFX>
    <space>L00.png</space>
@@ -1939,8 +2514,8 @@
  </planet>
  <planet name="Torloth">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>970.000000</x>
+   <y>-1360.000000</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -1973,11 +2548,11 @@
  </planet>
  <planet name="Totoran">
   <pos>
-   <x>-80.000000</x>
-   <y>80.000000</y>
+   <x>3280.000000</x>
+   <y>5020.000000</y>
   </pos>
   <GFX>
-   <space>P02.png</space>
+   <space>M06.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -1999,6 +2574,29 @@
    <commodities/>
    <description>Welcome to Totoran, home of the galaxy's biggest and best fighting tournament: The Crimson Gauntlet! With 34 major rankings and 17 deadly arenas, there is always a fight to suit your tastes! Feel the adrenaline rush as you watch the head-to-head duels, team melees and blind hunts careen to their violent finales! Sponsor a contestant, invest in his equipment, see him obliterate his opponents and win a fortune! Snacks available at all licensed outlets.</description>
    <bar>This bar is always full of people, some crowding around the many holovid pillars to watch the fights in the tournament, others drinking their sorrows away if their contestant was unlucky. The air is buzzing with excitement, and it's hard to make oneself heard over the din. For this reason, orders are placed through terminals projected onto the table surface, and drinks are served from a small dispenser in the middle of the table. Obviously, this establishment is making a lot of money.</bar>
+  </general>
+ </planet>
+ <planet name="Tuur">
+  <pos>
+   <x>1500.000000</x>
+   <y>2230.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-O00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Uhriabi-17">
@@ -2053,7 +2651,7 @@
    <y>500.000000</y>
   </pos>
   <GFX>
-   <space>D00.png</space>
+   <space>A00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
   <general>
@@ -2116,8 +2714,8 @@
  </planet>
  <planet name="Valt">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-4330.000000</x>
+   <y>1780.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -2150,8 +2748,8 @@
  </planet>
  <planet name="Varia">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2350.000000</x>
+   <y>-730.000000</y>
   </pos>
   <GFX>
    <space>M04.png</space>
@@ -2183,10 +2781,56 @@
    <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
   </general>
  </planet>
+ <planet name="Verex I">
+  <pos>
+   <x>-1760.000000</x>
+   <y>-3430.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Verex II">
+  <pos>
+   <x>3530.000000</x>
+   <y>-370.000000</y>
+  </pos>
+  <GFX>
+   <space>D00.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Verex III">
   <pos>
-   <x>-100.000000</x>
-   <y>-300.000000</y>
+   <x>-280.000000</x>
+   <y>690.000000</y>
   </pos>
   <GFX>
    <space>H01.png</space>
@@ -2208,8 +2852,8 @@
  </planet>
  <planet name="Vlexair">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2990.000000</x>
+   <y>230.000000</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -2239,6 +2883,52 @@
    </commodities>
    <description>Vlexair is a harsh, frozen world. Formerly a lush paradise, an internal cataclysm caused its molten core to solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an extremely dangerous environment, it's proven suitable only to the Dvaered workers.</description>
    <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the standard Dvaered grogs.</bar>
+  </general>
+ </planet>
+ <planet name="Vlexon I">
+  <pos>
+   <x>1610.000000</x>
+   <y>-2210.000000</y>
+  </pos>
+  <GFX>
+   <space>H02.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Vlexon II">
+  <pos>
+   <x>320.000000</x>
+   <y>2420.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Zabween">
