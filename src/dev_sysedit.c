@@ -95,6 +95,7 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
+static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
@@ -364,11 +365,11 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    z     = sysedit_zoom;
 
    /* Coordinate translation. */
-   x = round((bx - sysedit_xpos + w/2) * 1.);
-   y = round((by - sysedit_ypos + h/2) * 1.);
+   x = bx - sysedit_xpos + w/2;
+   y = by - sysedit_ypos + h/2;
 
    /* First render background with lines. */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   sysedit_renderBG( bx, by, w, h, x, y );
 
    /* Render planets. */
    for (i=0; i<sys->nplanets; i++) {
@@ -417,7 +418,39 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
    /* Render cursor position. */
    gl_print( &gl_smallFont, bx + 5. + SCREEN_W/2., by + 5. + SCREEN_H/2.,
-         &cWhite, "%.2f, %.2f", (x + sysedit_mx - w/2.)/z, (y + sysedit_my - h/2.)/z );
+         &cWhite, "%.2f, %.2f",
+         (bx + sysedit_mx - x)/z,
+         (by + sysedit_my - y)/z );
+}
+
+
+/**
+ * @brief Renders the custom widget background.
+ */
+static void sysedit_renderBG( double bx, double by, double w, double h, double x, double y )
+{
+   double z, s;
+   double sx, sy, sz;
+
+   /* Comfort. */
+   z  = sysedit_zoom;
+   s  = (z < 0.5) ? 500. : 250.;
+
+   /* Render blackness. */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   /* Render lines. */
+#if 0
+   sz    = s*z;
+   sx    = bx + (s - fmodf( sysedit_xpos, s )) * z;
+   sy    = by + (s - fmodf( sysedit_ypos, s )) * z;
+   /* Vertical. */
+   for (   ; sx<w; sx += sz)
+      gl_renderRect( sx, by, 2., h, &cLightBlue );
+   /* Horizontal. */
+   for (   ; sy<w; sy += sz)
+      gl_renderRect( bx, sy, w, 2., &cLightBlue );
+#endif
 }
 
 
