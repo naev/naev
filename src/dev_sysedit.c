@@ -570,7 +570,6 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Check jump points. */
             for (i=0; i<sys->njumps; i++) {
                jp = &sys->jumps[i];
-               p = sys->planets[i];
 
                /* Position. */
                x = jp->pos.x * sysedit_zoom;
