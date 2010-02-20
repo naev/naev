@@ -895,7 +895,6 @@ static void sysedit_btnEditClose( unsigned int wid, char *wgt )
  */
 static void sysedit_btnEditApply( unsigned int wid, char *wgt )
 {
-   (void) wgt;
    Planet *p;
    char *str, buf[PATH_MAX];
   
@@ -914,6 +913,9 @@ static void sysedit_btnEditApply( unsigned int wid, char *wgt )
    snprintf( buf, sizeof(buf), "%s/%s", PLANET_GFX_PATH, str );
    p->gfx_space      = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
    p->gfx_spacePath  = strdup( str );
+
+   /* For now we close. */
+   sysedit_btnEditClose( wid, wgt );
 }
 
 
