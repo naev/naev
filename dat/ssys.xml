@@ -690,6 +690,7 @@
    <y>107.000000</y>
   </pos>
   <planets>
+   <planet>P0125</planet>
    <planet>S00000</planet>
   </planets>
   <jumps>
@@ -725,6 +726,7 @@
    <y>72.000000</y>
   </pos>
   <planets>
+   <planet>P9234</planet>
    <planet>S49281</planet>
   </planets>
   <jumps>
@@ -760,6 +762,9 @@
    <y>175.000000</y>
   </pos>
   <planets>
+   <planet>P2020</planet>
+   <planet>P2021</planet>
+   <planet>P2022</planet>
    <planet>S38729</planet>
   </planets>
   <jumps>
@@ -838,6 +843,7 @@
    <y>95.000000</y>
   </pos>
   <planets>
+   <planet>P9122</planet>
    <planet>S72839</planet>
   </planets>
   <jumps>
@@ -1358,6 +1364,7 @@
   </pos>
   <planets>
    <planet>Cerberus</planet>
+   <planet>Doeston Prime</planet>
   </planets>
   <jumps>
    <jump target="Arandon">
@@ -1494,6 +1501,11 @@
    <y>-56.000000</y>
   </pos>
   <planets>
+   <planet>Draconis Alpha</planet>
+   <planet>Draconis Beta</planet>
+   <planet>Draconis Delta</planet>
+   <planet>Draconis Gamma</planet>
+   <planet>Draconis Omega</planet>
    <planet>Zabween</planet>
   </planets>
   <jumps>
@@ -1522,14 +1534,17 @@
   </general>
   <pos>
    <x>201.000000</x>
-   <y>-164.000000</y>
+   <y>-166.000000</y>
   </pos>
   <planets>
    <planet>Anecu</planet>
+   <planet>Draygar III</planet>
+   <planet>Hikatalat</planet>
+   <planet>Varona</planet>
   </planets>
   <jumps>
    <jump target="Tau Prime">
-    <pos x="-258.550899" y="3490.437141"/>
+    <pos x="-249.364675" y="3491.105449"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2776,13 +2791,13 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>350.000000</x>
+   <x>372.605613</x>
    <y>-211.000000</y>
   </pos>
   <planets/>
   <jumps>
    <jump target="Toaxis">
-    <pos x="348.263017" y="3482.630166"/>
+    <pos x="-933.566570" y="3373.196327"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4776,6 +4791,7 @@
   </pos>
   <planets>
    <planet>Tau Prime</planet>
+   <planet>Tau Secundus</planet>
    <planet>Tau Station</planet>
   </planets>
   <jumps>
@@ -4787,11 +4803,9 @@
     </flags>
    </jump>
    <jump target="Draygar">
-    <pos x="258.550899" y="-3490.437141"/>
+    <pos x="-320.635325" y="-5341.105449"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Raelid">
     <pos x="3277.152121" y="-1228.932046"/>
@@ -4930,7 +4944,7 @@
   <planets/>
   <jumps>
    <jump target="Ingot">
-    <pos x="-348.263017" y="-3482.630166"/>
+    <pos x="933.566570" y="-3373.196327"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

@@ -37,8 +37,8 @@
  </planet>
  <planet name="Anecu">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-3750.000000</x>
+   <y>-1350.000000</y>
   </pos>
   <GFX>
    <space>O00.png</space>
@@ -367,8 +367,8 @@
  </planet>
  <planet name="Cerberus">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>130.000000</x>
+   <y>-310.000000</y>
   </pos>
   <GFX>
    <space>003.png</space>
@@ -637,6 +637,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Doeston Prime">
+  <pos>
+   <x>520.000000</x>
+   <y>-690.000000</y>
+  </pos>
+  <GFX>
+   <space>J02.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Doranthex Prime">
   <pos>
    <x>1090.000000</x>
@@ -726,6 +749,144 @@
    </commodities>
    <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths. This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted abnormal wavelengths, whose effects where multiplied by contaminants in Dowue's atmosphere. Shortly thereafter, it became mandatory for all personnel to wear special goggles designed to filter out the harmful light.</description>
    <bar>The Dowue Spaceport Bar is better known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. The dangers, even with protective goggles, of the Dowue Syndrome persuade most people to stay indoors, and the bar lies in the heart of the spaceport.</bar>
+  </general>
+ </planet>
+ <planet name="Draconis Alpha">
+  <pos>
+   <x>-305.175781</x>
+   <y>1077.651978</y>
+  </pos>
+  <GFX>
+   <space>K03.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Draconis Beta">
+  <pos>
+   <x>3030.000000</x>
+   <y>-1730.000000</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Draconis Delta">
+  <pos>
+   <x>-310.000000</x>
+   <y>4780.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-H02.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Draconis Gamma">
+  <pos>
+   <x>-2770.000000</x>
+   <y>-1080.000000</y>
+  </pos>
+  <GFX>
+   <space>D01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Draconis Omega">
+  <pos>
+   <x>2240.000000</x>
+   <y>7400.000000</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Draygar III">
+  <pos>
+   <x>-4830.000000</x>
+   <y>4000.000000</y>
+  </pos>
+  <GFX>
+   <space>L00.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Durea">
@@ -1067,6 +1228,29 @@
   <GFX>
    <space>moon-I00.png</space>
    <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Hikatalat">
+  <pos>
+   <x>2580.000000</x>
+   <y>240.000000</y>
+  </pos>
+  <GFX>
+   <space>S00.png</space>
+   <exterior>oceanic.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -1614,8 +1798,8 @@
  </planet>
  <planet name="Omega Station">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-719.507372</x>
+   <y>515.101868</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -1749,6 +1933,144 @@
   </GFX>
   <general>
    <class>J</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="P0125">
+  <pos>
+   <x>0.000000</x>
+   <y>0.000000</y>
+  </pos>
+  <GFX>
+   <space>D01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="P2020">
+  <pos>
+   <x>-2780.000000</x>
+   <y>4040.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-I01.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="P2021">
+  <pos>
+   <x>1910.000000</x>
+   <y>3520.000000</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="P2022">
+  <pos>
+   <x>-390.000000</x>
+   <y>-40.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-C00.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="P9122">
+  <pos>
+   <x>-629.568950</x>
+   <y>-449.692107</y>
+  </pos>
+  <GFX>
+   <space>P00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="P9234">
+  <pos>
+   <x>-1220.000000</x>
+   <y>130.000000</y>
+  </pos>
+  <GFX>
+   <space>H00.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -1931,8 +2253,8 @@
  </planet>
  <planet name="Raelid Outpost">
   <pos>
-   <x>-400.294111</x>
-   <y>-85.168960</y>
+   <x>405.369951</x>
+   <y>-420.862319</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -1965,7 +2287,7 @@
    <y>171.057567</y>
   </pos>
   <GFX>
-   <space>K00.png</space>
+   <space>X01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
@@ -2059,8 +2381,8 @@
  </planet>
  <planet name="S00000">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>820.000000</x>
+   <y>-800.000000</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -2083,8 +2405,8 @@
  </planet>
  <planet name="S23491">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-306.608255</x>
+   <y>-228.934164</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -2107,8 +2429,8 @@
  </planet>
  <planet name="S38729">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-110.000000</x>
+   <y>2000.000000</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -2131,8 +2453,8 @@
  </planet>
  <planet name="S49281">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-2300.000000</x>
+   <y>-50.000000</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -2155,8 +2477,8 @@
  </planet>
  <planet name="S72839">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>760.388472</x>
+   <y>1267.314121</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -2425,8 +2747,8 @@
  </planet>
  <planet name="Tau Prime">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-1969.861111</x>
+   <y>-2639.097222</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -2446,10 +2768,33 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Tau Secundus">
+  <pos>
+   <x>-30.000000</x>
+   <y>520.000000</y>
+  </pos>
+  <GFX>
+   <space>S00.png</space>
+   <exterior>oceanic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Tau Station">
   <pos>
-   <x>47.000000</x>
-   <y>54.000000</y>
+   <x>-1703.000000</x>
+   <y>-2306.000000</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -2781,6 +3126,29 @@
    <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
   </general>
  </planet>
+ <planet name="Varona">
+  <pos>
+   <x>-3410.000000</x>
+   <y>-1030.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-M00.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Verex I">
   <pos>
    <x>-1760.000000</x>
@@ -2933,8 +3301,8 @@
  </planet>
  <planet name="Zabween">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>31.706055</x>
+   <y>1334.703125</y>
   </pos>
   <GFX>
    <space>000.png</space>
