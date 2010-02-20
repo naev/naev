@@ -125,6 +125,7 @@ static void sysedit_selectRm( Select_t *sel );
 void sysedit_open( StarSystem *sys )
 {
    unsigned int wid;
+   char buf[PATH_MAX];
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -137,7 +138,8 @@ void sysedit_open( StarSystem *sys )
    sysedit_ypos   = 0.;
 
    /* Create the window. */
-   wid = window_create( "Star System Editor", -1, -1, -1, -1 );
+   snprintf( buf, sizeof(buf), "%s - Star System Editor", sys->name );
+   wid = window_create( buf, -1, -1, -1, -1 );
    window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
 
