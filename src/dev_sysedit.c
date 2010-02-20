@@ -78,6 +78,8 @@ static int sysedit_moved      = 0;  /**< Space moved since mouse down. */
 static unsigned int sysedit_dragTime = 0; /**< Tick last started to drag. */
 static int sysedit_drag       = 0;  /**< Dragging viewport around. */
 static int sysedit_dragSel    = 0;  /**< Dragging system around. */
+static double sysedit_mx      = 0.; /**< Cursor X position. */
+static double sysedit_my      = 0.; /**< Cursor Y position. */
 
 
 /*
@@ -352,20 +354,21 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
-   double x,y;
+   double x,y, z;
    glColour *c;
    int selected;
    Select_t sel;
 
    /* Comfort++. */
-   sys = sysedit_sys;
-
-   /* Background */
-   gl_renderRect( bx, by, w, h, &cBlack );
+   sys   = sysedit_sys;
+   z     = sysedit_zoom;
 
    /* Coordinate translation. */
    x = round((bx - sysedit_xpos + w/2) * 1.);
    y = round((by - sysedit_ypos + h/2) * 1.);
+
+   /* First render background with lines. */
+   gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Render planets. */
    for (i=0; i<sys->nplanets; i++) {
@@ -408,8 +411,13 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       }
 
       /* Render. */
-      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c, selected, jp->target->name );
+      sysedit_renderSprite( jumppoint_gfx, x, y, jp->pos.x, jp->pos.y,
+            jp->sx, jp->sy, c, selected, jp->target->name );
    }
+
+   /* Render cursor position. */
+   gl_print( &gl_smallFont, bx + 5. + SCREEN_W/2., by + 5. + SCREEN_H/2.,
+         &cWhite, "%.2f, %.2f", (x + sysedit_mx - w/2.)/z, (y + sysedit_my - h/2.)/z );
 }
 
 
@@ -562,7 +570,6 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Check jump points. */
             for (i=0; i<sys->njumps; i++) {
                jp = &sys->jumps[i];
-               p = sys->planets[i];
 
                /* Position. */
                x = jp->pos.x * sysedit_zoom;
@@ -649,6 +656,10 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          break;
 
       case SDL_MOUSEMOTION:
+         /* Update mouse positions. */
+         sysedit_mx  = mx;
+         sysedit_my  = my;
+
          /* Handle dragging. */
          if (sysedit_drag) {
             /* axis is inverted */
