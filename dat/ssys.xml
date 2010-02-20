@@ -195,7 +195,12 @@
    <x>657.000000</x>
    <y>-791.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>An'ku I</planet>
+   <planet>An'ku II</planet>
+   <planet>An'ku III</planet>
+   <planet>Sroolu</planet>
+  </planets>
   <jumps>
    <jump target="Humdrum">
     <pos x="-1464.438204" y="3178.902444"/>
@@ -226,7 +231,10 @@
    <x>511.000000</x>
    <y>-738.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Racheka</planet>
+   <planet>Racheka Secundus</planet>
+  </planets>
   <jumps>
    <jump target="Humdrum">
     <pos x="3310.810811" y="1135.135135"/>
@@ -1025,13 +1033,6 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="Dune">
-    <pos x="3430.452659" y="694.258276"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
    <jump target="Gamel">
     <pos x="1741.843101" y="3035.783690"/>
     <radius>200.000000</radius>
@@ -1596,10 +1597,19 @@
    <planet>Vert</planet>
   </planets>
   <jumps>
-   <jump target="Coriolis">
-    <pos x="749.547341" y="-2454.258276"/>
+   <jump target="Eridani">
+    <pos x="69.986004" y="-3499.300210"/>
     <radius>200.000000</radius>
-    <flags/>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gamel">
+    <pos x="-2604.170490" y="2338.438808"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
    <jump target="Halo">
     <pos x="991.274316" y="3821.393584"/>
@@ -1854,6 +1864,13 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="Dune">
+    <pos x="-69.986004" y="3499.300210"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
   <fleets>
    <fleet>Pirate Light Presence</fleet>
@@ -1915,7 +1932,12 @@
    <x>335.000000</x>
    <y>-732.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Eye of Night I</planet>
+   <planet>Eye of Night II</planet>
+   <planet>Eye of Night III</planet>
+   <planet>Inios</planet>
+  </planets>
   <jumps>
    <jump target="Fidelis">
     <pos x="-3436.726884" y="-662.501568"/>
@@ -1932,11 +1954,9 @@
     </flags>
    </jump>
    <jump target="Ruttwi">
-    <pos x="2224.975385" y="2701.755825"/>
+    <pos x="3104.975385" y="4841.755825"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -2136,6 +2156,13 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="Dune">
+    <pos x="2604.170490" y="-2338.438808"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="Haven">
     <pos x="-3043.464669" y="1728.387343"/>
     <radius>200.000000</radius>
@@ -2324,7 +2351,7 @@
   </planets>
   <jumps>
    <jump target="Tarmak">
-    <pos x="-2534.388590" y="2413.891976"/>
+    <pos x="-2534.388588" y="2413.891979"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2633,14 +2660,14 @@
   <planets/>
   <jumps>
    <jump target="Dune">
-    <pos x="-2361.852236" y="-2582.954512"/>
+    <pos x="-2361.852246" y="-2582.954504"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pilatis">
-    <pos x="3433.341535" y="-679.827847"/>
+    <pos x="3433.341534" y="-679.827852"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2784,7 +2811,11 @@
    <x>616.000000</x>
    <y>-702.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Humdrum I</planet>
+   <planet>Humdrum II</planet>
+   <planet>Humdrum III</planet>
+  </planets>
   <jumps>
    <jump target="An'ku">
     <pos x="1464.438204" y="-3178.902444"/>
@@ -3842,7 +3873,7 @@
     </flags>
    </jump>
    <jump target="Halo">
-    <pos x="-3433.341535" y="679.827847"/>
+    <pos x="-3433.341534" y="679.827852"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4230,10 +4261,17 @@
    <x>485.797371</x>
    <y>-649.240526</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Daal</planet>
+   <planet>Hankies</planet>
+   <planet>Huan'xi</planet>
+   <planet>Rhu II</planet>
+   <planet>Rhu III</planet>
+   <planet>Rhu IV</planet>
+  </planets>
   <jumps>
    <jump target="Ruttwi">
-    <pos x="-3458.334379" y="-538.445282"/>
+    <pos x="-3458.334380" y="-538.445274"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4295,17 +4333,20 @@
    <x>391.000000</x>
    <y>-664.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Arai</planet>
+   <planet>Arch Arai</planet>
+   <planet>Ruttwi I</planet>
+   <planet>Ruttwi II</planet>
+  </planets>
   <jumps>
    <jump target="Eye of Night">
-    <pos x="-2224.975385" y="-2701.755825"/>
+    <pos x="-5374.975385" y="408.244175"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Rhu">
-    <pos x="3458.334379" y="538.445282"/>
+    <pos x="3458.334380" y="538.445274"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4733,8 +4774,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>847.000000</x>
-   <y>-727.000000</y>
+   <x>857.000000</x>
+   <y>-712.000000</y>
   </pos>
   <planets/>
   <jumps/>
@@ -4794,7 +4835,7 @@
     </flags>
    </jump>
    <jump target="Gilligan's Memory">
-    <pos x="2534.388590" y="-2413.891976"/>
+    <pos x="2534.388588" y="-2413.891979"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
