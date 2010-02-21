@@ -415,21 +415,33 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
                   /* Try to find in selected systems - begin drag move. */
                   for (i=0; i<uniedit_nsys; i++) {
-                     if (uniedit_sys[i] == sys) {
-                        if (uniedit_mode == UNIEDIT_DEFAULT) {
-                           uniedit_dragSys   = 1;
-                           uniedit_tsys      = sys;
+                     /* Must match. */
+                     if (uniedit_sys[i] != sys)
+                        continue;
 
-                           /* Check modifier. */
-                           if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                              uniedit_tadd      = 0;
-                           else
-                              uniedit_tadd      = -1;
-                           uniedit_dragTime  = SDL_GetTicks();
-                           uniedit_moved     = 0;
+                     /* Detect double click to open system. */
+                     if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
+                           && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
+                        if (uniedit_nsys == 1) {
+                           sysedit_open( uniedit_sys[0] );
+                           return;
                         }
-                        return;
                      }
+
+                     /* Handle normal click. */
+                     if (uniedit_mode == UNIEDIT_DEFAULT) {
+                        uniedit_dragSys   = 1;
+                        uniedit_tsys      = sys;
+
+                        /* Check modifier. */
+                        if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                           uniedit_tadd      = 0;
+                        else
+                           uniedit_tadd      = -1;
+                        uniedit_dragTime  = SDL_GetTicks();
+                        uniedit_moved     = 0;
+                     }
+                     return;
                   }
 
                   if (uniedit_mode == UNIEDIT_DEFAULT) {
