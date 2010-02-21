@@ -571,6 +571,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Blunderbuss II">
+  <pos>
+   <x>2260.000000</x>
+   <y>220.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-H00.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Bon Sebb">
   <pos>
    <x>149.553594</x>
@@ -2117,6 +2140,98 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Gammacron IV">
+  <pos>
+   <x>250.000000</x>
+   <y>840.000000</y>
+  </pos>
+  <GFX>
+   <space>K00.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Gammacron V">
+  <pos>
+   <x>3460.000000</x>
+   <y>2110.000000</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Gammacron Va">
+  <pos>
+   <x>3870.000000</x>
+   <y>2130.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-J02.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Gammacron Vb">
+  <pos>
+   <x>4251.634470</x>
+   <y>2174.874556</y>
+  </pos>
+  <GFX>
+   <space>moon-J01.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Gem">
   <pos>
    <x>660.000000</x>
@@ -2631,6 +2746,29 @@
    <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
   </general>
  </planet>
+ <planet name="Jugreny">
+  <pos>
+   <x>-500.000000</x>
+   <y>-2160.000000</y>
+  </pos>
+  <GFX>
+   <space>M02.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Karman I">
   <pos>
    <x>520.000000</x>
@@ -2838,6 +2976,52 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Limbo I">
+  <pos>
+   <x>1560.000000</x>
+   <y>1670.000000</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Limbo II">
+  <pos>
+   <x>-2300.000000</x>
+   <y>1190.000000</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Luxsor">
   <pos>
    <x>720.000000</x>
@@ -2846,6 +3030,29 @@
   <GFX>
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Malebolge">
+  <pos>
+   <x>-792.602095</x>
+   <y>-2485.352045</y>
+  </pos>
+  <GFX>
+   <space>moon-A01.png</space>
+   <exterior>station00.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -4160,6 +4367,190 @@
    <bar>Rather distinct from traditional Empire bars, the Protera Sigma bar is entirely open and without seats, as the Proteron believe one should stand while eating and drinking. Despite this curiosity, their brews don't stray far from typical Empire faire.</bar>
   </general>
  </planet>
+ <planet name="Provectus Nova I">
+  <pos>
+   <x>460.000000</x>
+   <y>-170.000000</y>
+  </pos>
+  <GFX>
+   <space>D01.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Provectus Nova Ia">
+  <pos>
+   <x>0.000000</x>
+   <y>0.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-O01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Pudas I">
+  <pos>
+   <x>-90.000000</x>
+   <y>-1230.000000</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Pudas II">
+  <pos>
+   <x>3450.000000</x>
+   <y>-970.000000</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Pultatis I">
+  <pos>
+   <x>-5910.000000</x>
+   <y>2400.000000</y>
+  </pos>
+  <GFX>
+   <space>A02.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Pultatis II">
+  <pos>
+   <x>-1650.000000</x>
+   <y>1250.000000</y>
+  </pos>
+  <GFX>
+   <space>H01.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Pultatis III">
+  <pos>
+   <x>760.000000</x>
+   <y>-2650.000000</y>
+  </pos>
+  <GFX>
+   <space>I00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Pund">
+  <pos>
+   <x>1110.000000</x>
+   <y>-3690.000000</y>
+  </pos>
+  <GFX>
+   <space>P00.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Qex II">
   <pos>
    <x>-610.000000</x>
@@ -4999,6 +5390,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Sudra">
+  <pos>
+   <x>3810.000000</x>
+   <y>-1170.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-M02.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Suoer">
   <pos>
    <x>3610.000000</x>
@@ -5437,6 +5851,52 @@
    <bar>This is a bar. It has to be, because you usually don't have to pay for muddy rainwater. It doesn't seem this place is frequented by its patrons for the purpose of entertainment, because there are no recreational facilities, not even a jukebox. The few appointments are welded to the floor, and everything else is either made out of steel or has steel bars covering it. Clearly, this is a place where fists meet faces. Maybe you shouldn't stay here too long...</bar>
   </general>
  </planet>
+ <planet name="Unicorn I">
+  <pos>
+   <x>-1765.160309</x>
+   <y>-354.856592</y>
+  </pos>
+  <GFX>
+   <space>J03.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Unicorn II">
+  <pos>
+   <x>1342.186819</x>
+   <y>1596.349353</y>
+  </pos>
+  <GFX>
+   <space>moon-C00.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Urbanus II">
   <pos>
    <x>400.543213</x>
@@ -5485,8 +5945,8 @@
  </planet>
  <planet name="Utsuwa">
   <pos>
-   <x>-80.000000</x>
-   <y>80.000000</y>
+   <x>-1300.000000</x>
+   <y>-470.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>

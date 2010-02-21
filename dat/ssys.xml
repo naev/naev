@@ -22,7 +22,7 @@
     </flags>
    </jump>
    <jump target="Merisi">
-    <pos x="-2229.085064" y="-2698.366131"/>
+    <pos x="-2357.214987" y="-2587.187180"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -607,6 +607,7 @@
    <y>-487.000000</y>
   </pos>
   <planets>
+   <planet>Blunderbuss II</planet>
    <planet>Utsuwa</planet>
   </planets>
   <jumps>
@@ -2250,7 +2251,13 @@
    <x>-166.000000</x>
    <y>-699.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Gammacron IV</planet>
+   <planet>Gammacron V</planet>
+   <planet>Gammacron Va</planet>
+   <planet>Gammacron Vb</planet>
+   <planet>Pund</planet>
+  </planets>
   <jumps>
    <jump target="Limbo">
     <pos x="-3488.156887" y="-287.683042"/>
@@ -2260,11 +2267,9 @@
     </flags>
    </jump>
    <jump target="Volus">
-    <pos x="1095.057512" y="-3324.281734"/>
+    <pos x="6335.057512" y="-3304.281734"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -3180,14 +3185,17 @@
    <x>-263.000000</x>
    <y>-707.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Jugreny</planet>
+   <planet>Limbo I</planet>
+   <planet>Limbo II</planet>
+   <planet>Malebolge</planet>
+  </planets>
   <jumps>
    <jump target="Fried">
-    <pos x="-764.014433" y="-3415.593937"/>
+    <pos x="-1174.014433" y="-5035.593937"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Gammacron">
     <pos x="3488.156887" y="287.683042"/>
@@ -3204,11 +3212,9 @@
     </flags>
    </jump>
    <jump target="Pultatis">
-    <pos x="-3257.630227" y="-1279.783303"/>
+    <pos x="-5137.630227" y="-1619.783303"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -3287,8 +3293,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-70.000000</x>
-   <y>-61.000000</y>
+   <x>-73.000000</x>
+   <y>-60.000000</y>
   </pos>
   <planets>
    <planet>Merisi I</planet>
@@ -3298,7 +3304,7 @@
   </planets>
   <jumps>
    <jump target="Acheron">
-    <pos x="2229.085064" y="2698.366131"/>
+    <pos x="2357.214987" y="2587.187180"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4034,7 +4040,10 @@
    <x>-252.000000</x>
    <y>-622.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Provectus Nova I</planet>
+   <planet>Provectus Nova Ia</planet>
+  </planets>
   <jumps>
    <jump target="Limbo">
     <pos x="-449.195366" y="-3471.055102"/>
@@ -4065,7 +4074,11 @@
    <x>-29.000000</x>
    <y>-767.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Pudas I</planet>
+   <planet>Pudas II</planet>
+   <planet>Sudra</planet>
+  </planets>
   <jumps>
    <jump target="Daravon">
     <pos x="-622.446993" y="3444.206693"/>
@@ -4096,7 +4109,11 @@
    <x>-347.000000</x>
    <y>-740.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Pultatis I</planet>
+   <planet>Pultatis II</planet>
+   <planet>Pultatis III</planet>
+  </planets>
   <jumps>
    <jump target="Limbo">
     <pos x="3257.630227" y="1279.783303"/>
@@ -5280,7 +5297,10 @@
    <x>-66.000000</x>
    <y>-833.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Unicorn I</planet>
+   <planet>Unicorn II</planet>
+  </planets>
   <jumps>
    <jump target="Kretogg">
     <pos x="1270.605535" y="-3261.220872"/>
