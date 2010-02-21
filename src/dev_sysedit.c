@@ -434,7 +434,6 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
 
    /* Comfort. */
    z  = sysedit_zoom;
-   /*s  = (z < 0.5) ? 500. : 250.;*/
    s  = 500.;
 
    /* Render blackness. */
@@ -448,14 +447,12 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    sz    = s*z;
    sx    = w/2. - fmod( sysedit_xpos, sz ) - sz*round( w/2. / sz );
    sy    = h/2. - fmod( sysedit_ypos, sz ) - sz*round( h/2. / sz );
-   /*sx    = bx + ( - fmodf( sysedit_xpos, s )) * z;
-   sy    = by + (s - fmodf( sysedit_ypos, s )) * z;*/
    /* Vertical. */
    for (   ; sx<w; sx += sz)
-      gl_renderRect( bx+sx, by, 1., h, &cLightBlue );
+      gl_renderRect( bx+sx, by, 1., h, &cBlue );
    /* Horizontal. */
    for (   ; sy<w; sy += sz)
-      gl_renderRect( bx, by+sy, w, 1., &cLightBlue );
+      gl_renderRect( bx, by+sy, w, 1., &cBlue );
 }
 
 
