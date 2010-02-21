@@ -434,23 +434,28 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
 
    /* Comfort. */
    z  = sysedit_zoom;
-   s  = (z < 0.5) ? 500. : 250.;
+   /*s  = (z < 0.5) ? 500. : 250.;*/
+   s  = 500.;
 
    /* Render blackness. */
    gl_renderRect( bx, by, w, h, &cBlack );
 
+   /* Draw lines that go through 0,0 */
+   gl_renderRect( x-1., by, 3., h, &cLightBlue );
+   gl_renderRect( bx, y-1., w, 3., &cLightBlue );
+
    /* Render lines. */
-#if 0
    sz    = s*z;
-   sx    = bx + (s - fmodf( sysedit_xpos, s )) * z;
-   sy    = by + (s - fmodf( sysedit_ypos, s )) * z;
+   sx    = w/2. - fmod( sysedit_xpos, sz ) - sz*round( w/2. / sz );
+   sy    = h/2. - fmod( sysedit_ypos, sz ) - sz*round( h/2. / sz );
+   /*sx    = bx + ( - fmodf( sysedit_xpos, s )) * z;
+   sy    = by + (s - fmodf( sysedit_ypos, s )) * z;*/
    /* Vertical. */
    for (   ; sx<w; sx += sz)
-      gl_renderRect( sx, by, 2., h, &cLightBlue );
+      gl_renderRect( bx+sx, by, 1., h, &cLightBlue );
    /* Horizontal. */
    for (   ; sy<w; sy += sz)
-      gl_renderRect( bx, sy, w, 2., &cLightBlue );
-#endif
+      gl_renderRect( bx, by+sy, w, 1., &cLightBlue );
 }
 
 
