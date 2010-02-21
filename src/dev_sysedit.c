@@ -71,6 +71,7 @@ static int  sysedit_tadd         = 0; /**< Add to selection. */
  */
 static StarSystem *sysedit_sys = NULL; /**< Currently opened system. */
 static unsigned int sysedit_wid = 0; /**< Sysedit wid. */
+static int sysedit_grid       = 1;  /**< Grid is visible. */
 static double sysedit_xpos    = 0.; /**< Viewport X position. */
 static double sysedit_ypos    = 0.; /**< Viewport Y position. */
 static double sysedit_zoom    = 1.; /**< Viewport zoom level. */
@@ -108,6 +109,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
 static void sysedit_btnReset( unsigned int wid_unused, char *unused );
+static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
 /* Property editor. */
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 static void sysedit_btnEditClose( unsigned int wid, char *wgt );
@@ -173,6 +175,10 @@ void sysedit_open( StarSystem *sys )
    /* New system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*7, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Planet", sysedit_btnNew );
+
+   /* Toggle Grid. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*9, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnGrid", "Grid", sysedit_btnGrid );
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", sysedit_buttonZoom );
@@ -346,6 +352,18 @@ static void sysedit_btnReset( unsigned int wid_unused, char *unused )
 
 
 /**
+ * @brief Toggles the grid.
+ */
+static void sysedit_btnGrid( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   sysedit_grid = !sysedit_grid;
+}
+
+
+/**
  * @brief System editor custom widget rendering.
  */
 static void sysedit_render( double bx, double by, double w, double h, void *data )
@@ -432,12 +450,16 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    double z, s;
    double sx, sy, sz;
 
+   /* Render blackness. */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   /* Must have grid activated. */
+   if (!sysedit_grid)
+      return;
+
    /* Comfort. */
    z  = sysedit_zoom;
    s  = 500.;
-
-   /* Render blackness. */
-   gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Draw lines that go through 0,0 */
    gl_renderRect( x-1., by, 3., h, &cLightBlue );
