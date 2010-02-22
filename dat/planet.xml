@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Planets>
+ <planet name="Aesir IV">
+  <pos>
+   <x>1500.000000</x>
+   <y>0.000000</y>
+  </pos>
+  <GFX>
+   <space>J04.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Alteris I">
   <pos>
    <x>-3620.000000</x>
@@ -54,6 +77,52 @@
   <GFX>
    <space>moon-A01.png</space>
    <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Amaroq I">
+  <pos>
+   <x>-840.000000</x>
+   <y>-900.000000</y>
+  </pos>
+  <GFX>
+   <space>G01.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Amaroq III">
+  <pos>
+   <x>1900.000000</x>
+   <y>-5060.000000</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -888,6 +957,144 @@
    <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
   </general>
  </planet>
+ <planet name="Charred">
+  <pos>
+   <x>210.000000</x>
+   <y>1880.000000</y>
+  </pos>
+  <GFX>
+   <space>A02.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Chriik">
+  <pos>
+   <x>2550.000000</x>
+   <y>-1940.000000</y>
+  </pos>
+  <GFX>
+   <space>H01.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Chucrchill II">
+  <pos>
+   <x>-3200.000000</x>
+   <y>-1260.000000</y>
+  </pos>
+  <GFX>
+   <space>J02.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Churchill I">
+  <pos>
+   <x>-1980.000000</x>
+   <y>3640.000000</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Churchill IIa">
+  <pos>
+   <x>-3317.901235</x>
+   <y>-723.379630</y>
+  </pos>
+  <GFX>
+   <space>moon-M01.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Claudius Mehan">
+  <pos>
+   <x>-115.000000</x>
+   <y>-3062.000000</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station02.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Crylo">
   <pos>
    <x>-240.000000</x>
@@ -1657,6 +1864,52 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Eiderdown I">
+  <pos>
+   <x>3700.000000</x>
+   <y>-1950.000000</y>
+  </pos>
+  <GFX>
+   <space>A01.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Eiderdown III">
+  <pos>
+   <x>-3110.000000</x>
+   <y>-1310.000000</y>
+  </pos>
+  <GFX>
+   <space>D01.png</space>
+   <exterior>mining3.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Eiroik">
   <pos>
    <x>73.000000</x>
@@ -1789,10 +2042,33 @@
    <bar>The Drunken Lobster has a plaque commemorating the time the Emperor spent on Em 5. It seems unlikely he ever visited this bar, though, given its less than refined patrons and threadbare furniture.</bar>
   </general>
  </planet>
+ <planet name="Ember">
+  <pos>
+   <x>573.000000</x>
+   <y>-4190.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Emperor's Fist">
   <pos>
-   <x>2142.633927</x>
-   <y>436.029254</y>
+   <x>3212.633927</x>
+   <y>766.029254</y>
   </pos>
   <GFX>
    <space>C00.png</space>
@@ -2094,6 +2370,144 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Forge">
+  <pos>
+   <x>220.000000</x>
+   <y>-3790.000000</y>
+  </pos>
+  <GFX>
+   <space>A00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Fried I">
+  <pos>
+   <x>-2500.000000</x>
+   <y>420.000000</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Fried II">
+  <pos>
+   <x>-356.000000</x>
+   <y>-3194.000000</y>
+  </pos>
+  <GFX>
+   <space>S00.png</space>
+   <exterior>oceanic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Fried III">
+  <pos>
+   <x>2090.000000</x>
+   <y>540.000000</y>
+  </pos>
+  <GFX>
+   <space>I01.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Fried IIIa">
+  <pos>
+   <x>2600.000000</x>
+   <y>510.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-H01.png</space>
+   <exterior>mining3.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Fried Ia">
+  <pos>
+   <x>-2090.000000</x>
+   <y>120.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-P01.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Fury I">
   <pos>
    <x>-1270.000000</x>
@@ -2232,6 +2646,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Gayathi">
+  <pos>
+   <x>4050.000000</x>
+   <y>-3820.000000</y>
+  </pos>
+  <GFX>
+   <space>O02.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Gem">
   <pos>
    <x>660.000000</x>
@@ -2263,6 +2700,29 @@
   <GFX>
    <space>M00.png</space>
    <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Gilligan's Retreat">
+  <pos>
+   <x>2240.000000</x>
+   <y>-2300.000000</y>
+  </pos>
+  <GFX>
+   <space>A00.png</space>
+   <exterior>aquatic.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -2976,6 +3436,190 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Ksher I">
+  <pos>
+   <x>1420.000000</x>
+   <y>1750.000000</y>
+  </pos>
+  <GFX>
+   <space>J02.png</space>
+   <exterior>mining5.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Ksher II">
+  <pos>
+   <x>-4530.000000</x>
+   <y>1660.000000</y>
+  </pos>
+  <GFX>
+   <space>D02.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Ksher III">
+  <pos>
+   <x>-830.000000</x>
+   <y>-1710.000000</y>
+  </pos>
+  <GFX>
+   <space>M01.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Lapis I">
+  <pos>
+   <x>660.000000</x>
+   <y>1210.000000</y>
+  </pos>
+  <GFX>
+   <space>D02.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Lapis II">
+  <pos>
+   <x>-840.000000</x>
+   <y>-1540.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-P00.png</space>
+   <exterior>mining3.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Lazuli I">
+  <pos>
+   <x>1250.000000</x>
+   <y>2490.000000</y>
+  </pos>
+  <GFX>
+   <space>H00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Lazuli III">
+  <pos>
+   <x>-2820.000000</x>
+   <y>-760.000000</y>
+  </pos>
+  <GFX>
+   <space>H02.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Lazuli Ia">
+  <pos>
+   <x>1520.000000</x>
+   <y>2170.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-H00.png</space>
+   <exterior>mining3.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Limbo I">
   <pos>
    <x>1560.000000</x>
@@ -3022,6 +3666,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Lorelei">
+  <pos>
+   <x>-6460.000000</x>
+   <y>1750.000000</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Luxsor">
   <pos>
    <x>720.000000</x>
@@ -3030,6 +3697,29 @@
   <GFX>
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="M.K.">
+  <pos>
+   <x>-2710.000000</x>
+   <y>570.000000</y>
+  </pos>
+  <GFX>
+   <space>M01.png</space>
+   <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -3321,6 +4011,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Mutris">
+  <pos>
+   <x>4480.000000</x>
+   <y>4070.000000</y>
+  </pos>
+  <GFX>
+   <space>L00.png</space>
+   <exterior>mining4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Nartur I">
   <pos>
    <x>-2080.000000</x>
@@ -3392,8 +4105,8 @@
  </planet>
  <planet name="New Deimos">
   <pos>
-   <x>-901.378029</x>
-   <y>2510.013489</y>
+   <x>-860.378029</x>
+   <y>2378.013489</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -3497,8 +4210,8 @@
  </planet>
  <planet name="New Phobos">
   <pos>
-   <x>1370.000000</x>
-   <y>-3160.000000</y>
+   <x>2010.000000</x>
+   <y>-3380.000000</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -3526,6 +4239,52 @@
   <GFX>
    <space>002.png</space>
    <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Niger I">
+  <pos>
+   <x>-5070.000000</x>
+   <y>-1940.000000</y>
+  </pos>
+  <GFX>
+   <space>P01.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Niger II">
+  <pos>
+   <x>2320.000000</x>
+   <y>-2580.000000</y>
+  </pos>
+  <GFX>
+   <space>P02.png</space>
+   <exterior>oceanic.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -3739,6 +4498,75 @@
    </commodities>
    <description>Nova Shakar was an utterly unremarkable Empire planet until the Emperor's Fist project began. Increasingly, Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
    <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
+  </general>
+ </planet>
+ <planet name="Oberon I">
+  <pos>
+   <x>4250.000000</x>
+   <y>-840.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Oberon III">
+  <pos>
+   <x>970.000000</x>
+   <y>500.000000</y>
+  </pos>
+  <GFX>
+   <space>G01.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Oberon IV">
+  <pos>
+   <x>-50.000000</x>
+   <y>-3600.000000</y>
+  </pos>
+  <GFX>
+   <space>J01.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Old Man Jack">
@@ -4258,8 +5086,8 @@
  </planet>
  <planet name="Polaris Prime">
   <pos>
-   <x>2462.901161</x>
-   <y>807.613422</y>
+   <x>3532.901161</x>
+   <y>1137.613422</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -4771,6 +5599,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Rhaana">
+  <pos>
+   <x>3280.000000</x>
+   <y>-1830.000000</y>
+  </pos>
+  <GFX>
+   <space>M02.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Rhu II">
   <pos>
    <x>-160.000000</x>
@@ -4848,6 +5699,29 @@
   <GFX>
    <space>moon-L00.png</space>
    <exterior>forest2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Rionna">
+  <pos>
+   <x>-1930.000000</x>
+   <y>1780.000000</y>
+  </pos>
+  <GFX>
+   <space>P00.png</space>
+   <exterior>(null)</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -5232,6 +6106,29 @@
   <GFX>
    <space>P01.png</space>
    <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Sinass">
+  <pos>
+   <x>-4630.000000</x>
+   <y>-2200.000000</y>
+  </pos>
+  <GFX>
+   <space>M01.png</space>
+   <exterior>(null)</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -5897,6 +6794,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Urail">
+  <pos>
+   <x>-1970.000000</x>
+   <y>3270.000000</y>
+  </pos>
+  <GFX>
+   <space>M00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Urbanus II">
   <pos>
    <x>400.543213</x>
@@ -5928,6 +6848,29 @@
   <GFX>
    <space>moon-H00.png</space>
    <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Ururis">
+  <pos>
+   <x>2440.000000</x>
+   <y>-2640.000000</y>
+  </pos>
+  <GFX>
+   <space>M03.png</space>
+   <exterior>desertic4.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -6010,6 +6953,75 @@
    </commodities>
    <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
    <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
+  </general>
+ </planet>
+ <planet name="Vanir I">
+  <pos>
+   <x>-2120.000000</x>
+   <y>790.000000</y>
+  </pos>
+  <GFX>
+   <space>S00.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Vanir II">
+  <pos>
+   <x>3010.000000</x>
+   <y>-1110.000000</y>
+  </pos>
+  <GFX>
+   <space>I00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Vanir Ia">
+  <pos>
+   <x>-1938.451675</x>
+   <y>597.762910</y>
+  </pos>
+  <GFX>
+   <space>moon-K00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </planet>
  <planet name="Varaati">

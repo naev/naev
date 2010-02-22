@@ -85,7 +85,12 @@
    <x>1047.000000</x>
    <y>-342.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Aesir IV</planet>
+   <planet>Gayathi</planet>
+   <planet>Mutris</planet>
+   <planet>Urail</planet>
+  </planets>
   <jumps>
    <jump target="Vanir">
     <pos x="-2314.532963" y="-2625.440375"/>
@@ -164,7 +169,11 @@
    <x>117.000000</x>
    <y>-890.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Amaroq I</planet>
+   <planet>Amaroq III</planet>
+   <planet>Rhaana</planet>
+  </planets>
   <jumps>
    <jump target="Marat">
     <pos x="-3354.349893" y="999.168053"/>
@@ -1001,7 +1010,13 @@
    <x>765.000000</x>
    <y>-664.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Chucrchill II</planet>
+   <planet>Churchill I</planet>
+   <planet>Churchill IIa</planet>
+   <planet>Lorelei</planet>
+   <planet>Ururis</planet>
+  </planets>
   <jumps>
    <jump target="Eiderdown">
     <pos x="2422.420288" y="2526.238300"/>
@@ -1708,14 +1723,17 @@
    <x>835.000000</x>
    <y>-591.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Eiderdown I</planet>
+   <planet>Eiderdown III</planet>
+   <planet>Ember</planet>
+   <planet>Forge</planet>
+  </planets>
   <jumps>
    <jump target="Churchill">
-    <pos x="-2422.420288" y="-2526.238300"/>
+    <pos x="-2542.420288" y="-5886.238300"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Esker">
     <pos x="-3173.921314" y="1475.202864"/>
@@ -1732,11 +1750,9 @@
     </flags>
    </jump>
    <jump target="Herakin">
-    <pos x="2381.578848" y="-2564.777221"/>
+    <pos x="2261.578848" y="-5924.777221"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -2091,7 +2107,14 @@
    <x>-280.000000</x>
    <y>-783.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Claudius Mehan</planet>
+   <planet>Fried I</planet>
+   <planet>Fried II</planet>
+   <planet>Fried III</planet>
+   <planet>Fried IIIa</planet>
+   <planet>Fried Ia</planet>
+  </planets>
   <jumps>
    <jump target="Limbo">
     <pos x="764.014433" y="3415.593937"/>
@@ -2198,11 +2221,9 @@
   </planets>
   <jumps>
    <jump target="Apez">
-    <pos x="4893.953126" y="-1024.315771"/>
+    <pos x="6203.953126" y="-334.315771"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Koralis">
     <pos x="-4134.632510" y="-2811.550107"/>
@@ -2377,7 +2398,9 @@
    <x>918.000000</x>
    <y>-573.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Gilligan's Retreat</planet>
+  </planets>
   <jumps>
    <jump target="Adraia">
     <pos x="2736.416904" y="2182.205886"/>
@@ -3085,7 +3108,11 @@
    <x>148.000000</x>
    <y>-747.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Ksher I</planet>
+   <planet>Ksher II</planet>
+   <planet>Ksher III</planet>
+  </planets>
   <jumps>
    <jump target="Sultan">
     <pos x="-0.000000" y="-3500.000000"/>
@@ -3116,7 +3143,10 @@
    <x>428.000000</x>
    <y>-805.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Lapis I</planet>
+   <planet>Lapis II</planet>
+  </planets>
   <jumps>
    <jump target="Anarbalis">
     <pos x="2723.410904" y="2198.416031"/>
@@ -3161,7 +3191,12 @@
    <x>464.000000</x>
    <y>-871.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Chriik</planet>
+   <planet>Lazuli I</planet>
+   <planet>Lazuli III</planet>
+   <planet>Lazuli Ia</planet>
+  </planets>
   <jumps>
    <jump target="Lapis">
     <pos x="-1675.982457" y="3072.634505"/>
@@ -3503,7 +3538,11 @@
    <x>388.000000</x>
    <y>-868.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Niger I</planet>
+   <planet>Niger II</planet>
+   <planet>Rionna</planet>
+  </planets>
   <jumps>
    <jump target="Lapis">
     <pos x="1876.028478" y="2954.744853"/>
@@ -3599,14 +3638,17 @@
    <x>330.666667</x>
    <y>267.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>M.K.</planet>
+   <planet>Oberon I</planet>
+   <planet>Oberon III</planet>
+   <planet>Oberon IV</planet>
+  </planets>
   <jumps>
    <jump target="Defa">
-    <pos x="-2013.922265" y="-2862.536831"/>
+    <pos x="-4043.922265" y="-4622.536831"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Shikima">
     <pos x="265.059412" y="3489.948926"/>
@@ -3616,11 +3658,9 @@
     </flags>
    </jump>
    <jump target="Thirty Stars">
-    <pos x="3181.726880" y="1458.291487"/>
+    <pos x="5071.726880" y="2108.291487"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -4807,8 +4847,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>65.000000</x>
-   <y>-975.000000</y>
+   <x>135.000000</x>
+   <y>-962.000000</y>
   </pos>
   <planets/>
   <jumps/>
@@ -4823,8 +4863,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-553.000000</x>
-   <y>-862.000000</y>
+   <x>-333.000000</x>
+   <y>-853.000000</y>
   </pos>
   <planets/>
   <jumps/>
@@ -5007,7 +5047,9 @@
    <x>402.666667</x>
    <y>300.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Charred</planet>
+  </planets>
   <jumps>
    <jump target="Oberon">
     <pos x="-3181.726880" y="-1458.291487"/>
@@ -5404,7 +5446,12 @@
    <x>980.000000</x>
    <y>-418.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Sinass</planet>
+   <planet>Vanir I</planet>
+   <planet>Vanir II</planet>
+   <planet>Vanir Ia</planet>
+  </planets>
   <jumps>
    <jump target="Adraia">
     <pos x="635.972741" y="-3441.734835"/>
