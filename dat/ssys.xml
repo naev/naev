@@ -1990,7 +1990,13 @@
    <x>334.666667</x>
    <y>432.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Father's Pride I</planet>
+   <planet>Father's Pride II</planet>
+   <planet>Father's Pride III</planet>
+   <planet>Flach</planet>
+   <planet>Rudderfern</planet>
+  </planets>
   <jumps>
    <jump target="Gewirn">
     <pos x="2941.038269" y="1897.444044"/>
@@ -2007,11 +2013,9 @@
     </flags>
    </jump>
    <jump target="Shikima">
-    <pos x="81.373347" y="-3499.053926"/>
+    <pos x="-4028.626653" y="-4359.053926"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -2719,7 +2723,11 @@
    <x>326.666667</x>
    <y>512.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Gaula</planet>
+   <planet>Hatter I</planet>
+   <planet>Hatter II</planet>
+  </planets>
   <jumps>
    <jump target="Father's Pride">
     <pos x="348.263017" y="-3482.630166"/>
@@ -3947,7 +3955,10 @@
    <x>430.666667</x>
    <y>544.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Point Zero 0</planet>
+   <planet>Point Zero Station</planet>
+  </planets>
   <jumps>
    <jump target="Gewirn">
     <pos x="-1494.522069" y="-3164.870264"/>
@@ -4424,7 +4435,12 @@
    <x>425.666667</x>
    <y>633.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Ebenezer</planet>
+   <planet>Sarcophagus I</planet>
+   <planet>Sarcophagus II</planet>
+   <planet>Sarcophagus IIb</planet>
+  </planets>
   <jumps>
    <jump target="Point Zero">
     <pos x="196.319649" y="-3494.489748"/>
@@ -4546,21 +4562,21 @@
    <x>336.666667</x>
    <y>346.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Beene</planet>
+   <planet>Shikima II</planet>
+   <planet>Shikima III</planet>
+  </planets>
   <jumps>
    <jump target="Father's Pride">
-    <pos x="-81.373347" y="3499.053926"/>
+    <pos x="5028.626653" y="-30.946074"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Oberon">
-    <pos x="-265.059412" y="-3489.948926"/>
+    <pos x="-4955.059412" y="50.051074"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -4865,6 +4881,22 @@
   <pos>
    <x>-333.000000</x>
    <y>-853.000000</y>
+  </pos>
+  <planets/>
+  <jumps/>
+  <fleets/>
+ </ssys>
+ <ssys name="TODO? Soromid here">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>346.000000</x>
+   <y>684.000000</y>
   </pos>
   <planets/>
   <jumps/>

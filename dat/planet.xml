@@ -640,6 +640,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Beene">
+  <pos>
+   <x>2340.000000</x>
+   <y>-1580.000000</y>
+  </pos>
+  <GFX>
+   <space>G01.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Blunderbuss II">
   <pos>
    <x>2260.000000</x>
@@ -1841,6 +1864,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Ebenezer">
+  <pos>
+   <x>-2000.000000</x>
+   <y>1190.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-M00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Eclipse Station">
   <pos>
    <x>-1878.340591</x>
@@ -2301,6 +2347,75 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Father's Pride I">
+  <pos>
+   <x>-1870.000000</x>
+   <y>1380.000000</y>
+  </pos>
+  <GFX>
+   <space>D00.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Father's Pride II">
+  <pos>
+   <x>2150.000000</x>
+   <y>-2200.000000</y>
+  </pos>
+  <GFX>
+   <space>H02.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Father's Pride III">
+  <pos>
+   <x>-4630.000000</x>
+   <y>-1390.000000</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Fidelis III">
   <pos>
    <x>1249.313354</x>
@@ -2332,6 +2447,29 @@
   <GFX>
    <space>moon-D00.png</space>
    <exterior>station02.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Flach">
+  <pos>
+   <x>5660.000000</x>
+   <y>-530.000000</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>mining2.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -2646,6 +2784,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Gaula">
+  <pos>
+   <x>4470.000000</x>
+   <y>-2750.000000</y>
+  </pos>
+  <GFX>
+   <space>O00.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Gayathi">
   <pos>
    <x>4050.000000</x>
@@ -2838,6 +2999,52 @@
   <GFX>
    <space>moon-G00.png</space>
    <exterior>mining4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Hatter I">
+  <pos>
+   <x>2950.000000</x>
+   <y>-110.000000</y>
+  </pos>
+  <GFX>
+   <space>A00.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Hatter II">
+  <pos>
+   <x>-600.000000</x>
+   <y>1230.000000</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>(null)</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -5084,6 +5291,52 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Point Zero 0">
+  <pos>
+   <x>900.000000</x>
+   <y>660.000000</y>
+  </pos>
+  <GFX>
+   <space>D00.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Point Zero Station">
+  <pos>
+   <x>580.000000</x>
+   <y>370.000000</y>
+  </pos>
+  <GFX>
+   <space>002.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Polaris Prime">
   <pos>
    <x>3532.901161</x>
@@ -5737,6 +5990,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Rudderfern">
+  <pos>
+   <x>-4210.000000</x>
+   <y>-1670.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-L00.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Ruid">
   <pos>
    <x>-2800.000000</x>
@@ -5914,6 +6190,75 @@
   <general>
    <class>3</class>
    <faction>Collective</faction>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Sarcophagus I">
+  <pos>
+   <x>4910.000000</x>
+   <y>-1820.000000</y>
+  </pos>
+  <GFX>
+   <space>S01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Sarcophagus II">
+  <pos>
+   <x>-1530.000000</x>
+   <y>950.000000</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Sarcophagus IIb">
+  <pos>
+   <x>-2398.216307</x>
+   <y>1412.056327</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -6106,6 +6451,52 @@
   <GFX>
    <space>P01.png</space>
    <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Shikima II">
+  <pos>
+   <x>1590.000000</x>
+   <y>2420.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-G01.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Shikima III">
+  <pos>
+   <x>-3040.000000</x>
+   <y>1720.000000</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>station01.png</exterior>
   </GFX>
   <general>
    <class>A</class>
