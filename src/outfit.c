@@ -95,6 +95,22 @@ Outfit* outfit_get( const char* name )
 
 
 /**
+ * @brief Gets an outfit by name without warning on no-find.
+ *
+ *    @param name Name to match.
+ *    @return Outfit matching name or NULL if not found.
+ */
+Outfit* outfit_getW( const char* name )
+{
+   int i;
+   for (i=0; i<array_size(outfit_stack); i++)
+      if (strcmp(name,outfit_stack[i].name)==0)
+         return &outfit_stack[i];
+   return NULL;
+}
+
+
+/**
  * @brief Function meant for use with C89, C99 algorithm qsort().
  *
  *    @param outfit1 First argument to compare.

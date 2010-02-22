@@ -126,6 +126,22 @@ Commodity* commodity_get( const char* name )
 
 
 /**
+ * @brief Gets a commoditiy by name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Commodity matching name.
+ */
+Commodity* commodity_getW( const char* name )
+{
+   int i;
+   for (i=0; i<commodity_nstack; i++)
+      if (strcmp(commodity_stack[i].name,name)==0)
+         return &commodity_stack[i];
+   return NULL;
+}
+
+
+/**
  * @brief Frees a commodity.
  *
  *    @param com Commodity to free.

@@ -99,6 +99,7 @@ naev_SOURCES = \
 	sound_sdlmix.c \
 	space.c \
 	spfx.c \
+	tech.c \
 	toolkit.c \
 	unidiff.c \
 	weapon.c \
@@ -201,6 +202,7 @@ naev_SOURCES = \
 	sound_sdlmix.h \
 	space.h \
 	spfx.h \
+	tech.h \
 	toolkit.h \
 	unidiff.h \
 	weapon.h

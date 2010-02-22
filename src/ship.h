@@ -154,6 +154,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
  * get
  */
 Ship* ship_get( const char* name );
+Ship* ship_getW( const char* name );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );

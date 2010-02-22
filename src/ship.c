@@ -64,16 +64,36 @@ static int ship_parse( Ship *temp, xmlNodePtr parent );
  */
 Ship* ship_get( const char* name )
 {
-   Ship* temp = ship_stack;
+   Ship *temp;
    int i;
 
+   temp = ship_stack;
    for (i=0; i < array_size(ship_stack); i++)
-      if (strcmp((temp+i)->name, name)==0) break;
+      if (strcmp(temp[i].name, name)==0)
+         return &temp[i];
 
-   if (i == array_size(ship_stack)) /* ship does not exist, game will probably crash now */
-      WARN("Ship %s does not exist", name);
+   WARN("Ship %s does not exist", name);
+   return NULL;
+}
 
-   return temp+i;
+
+/**
+ * @brief Gets a ship based on its name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Ship matching name or NULL if not found.
+ */
+Ship* ship_getW( const char* name )
+{
+   Ship *temp;
+   int i;
+
+   temp = ship_stack;
+   for (i=0; i < array_size(ship_stack); i++)
+      if (strcmp(temp[i].name, name)==0)
+         return &temp[i];
+
+   return NULL;
 }
 
 
