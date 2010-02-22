@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Planets>
  <planet name="Aesir IV">
   <pos>
@@ -442,6 +442,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -1175,6 +1176,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -1549,8 +1551,8 @@
  </planet>
  <planet name="Dawn">
   <pos>
-   <x>400.000000</x>
-   <y>500.000000</y>
+   <x>160.462301</x>
+   <y>1093.853879</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -2105,6 +2107,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -2127,7 +2130,8 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>0</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -2173,7 +2177,8 @@
    <exterior>station00.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>0</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -2795,6 +2800,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3094,6 +3100,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3140,6 +3147,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3278,6 +3286,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3416,6 +3425,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3540,6 +3550,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3609,6 +3620,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -3769,6 +3781,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4206,6 +4219,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4298,6 +4312,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4321,6 +4336,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4528,6 +4544,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4551,6 +4568,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4689,6 +4707,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4793,7 +4812,8 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>0</class>
+   <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -4863,6 +4883,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -6011,6 +6032,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -6323,6 +6345,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -6960,6 +6983,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7050,6 +7074,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7103,6 +7128,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7149,6 +7175,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7342,6 +7369,29 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="The Frontier Council">
+  <pos>
+   <x>-84.817006</x>
+   <y>1388.081726</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Theras III">
   <pos>
    <x>-360.000000</x>
@@ -7376,6 +7426,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7486,6 +7537,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7656,6 +7708,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7794,6 +7847,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -7955,6 +8009,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -8128,6 +8183,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
@@ -8303,6 +8359,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>

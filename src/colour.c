@@ -67,6 +67,7 @@ glColour cDarkPurple = { .r=0.68, .g=0.18, .b=0.64, .a=1. }; /**< Dark Purple */
 glColour cBrown      = { .r=0.59, .g=0.28, .b=0.00, .a=1. }; /**< Brown */
 /* Misc. */
 glColour cSilver     = { .r=0.75, .g=0.75, .b=0.75, .a=1. }; /**< Silver */
+glColour cAqua       = { .r=0.00, .g=0.75, .b=1.00, .a=1. }; /**< Aqua */
 
 
 /*
@@ -150,6 +151,10 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
 #define CHECK_COLOUR(colour) \
       if (STRCASECMP(name, #colour) == 0) return &c##colour
 glColour* col_fromName(const char* name) {
+   if (name[0] == 'a' || name[0] == 'A') {
+      CHECK_COLOUR(Aqua);
+   }
+
    if (name[0] == 'b' || name[0] == 'B') {
       CHECK_COLOUR(Blue);
       CHECK_COLOUR(Black);
