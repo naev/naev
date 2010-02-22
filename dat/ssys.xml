@@ -481,7 +481,12 @@
    <x>100.666667</x>
    <y>463.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Babylon I</planet>
+   <planet>Babylon II</planet>
+   <planet>Babylon IIa</planet>
+   <planet>Scipio</planet>
+  </planets>
   <jumps>
    <jump target="Dendria">
     <pos x="746.766886" y="-3419.406267"/>
@@ -948,7 +953,14 @@
    <x>302.000000</x>
    <y>642.000000</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Cerberus I</planet>
+   <planet>Cerberus II</planet>
+   <planet>Cerberus IIa</planet>
+   <planet>Cerberus IV</planet>
+   <planet>Culex</planet>
+   <planet>Myonei</planet>
+  </planets>
   <jumps>
    <jump target="Sergio Vix">
     <pos x="1626.978264" y="-3098.861360"/>
@@ -1360,7 +1372,12 @@
    <x>179.666667</x>
    <y>420.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Diadem I</planet>
+   <planet>Diadem II</planet>
+   <planet>Leo</planet>
+   <planet>Riun</planet>
+  </planets>
   <jumps>
    <jump target="Dendria">
     <pos x="-2822.417485" y="-2069.772823"/>
@@ -1651,7 +1668,9 @@
    <x>39.666667</x>
    <y>457.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Dust</planet>
+  </planets>
   <jumps>
    <jump target="Dendria">
     <pos x="2459.454407" y="-2490.197587"/>
@@ -4464,7 +4483,12 @@
    <x>337.666667</x>
    <y>574.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Larling</planet>
+   <planet>Sergio Vix I</planet>
+   <planet>Sergio Vix III</planet>
+   <planet>Zepei</planet>
+  </planets>
   <jumps>
    <jump target="Cerberus">
     <pos x="-1626.978264" y="3098.861360"/>
@@ -4474,11 +4498,9 @@
     </flags>
    </jump>
    <jump target="Hatter">
-    <pos x="-611.419286" y="-3446.181431"/>
+    <pos x="4938.580714" y="-3476.181431"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
   <fleets/>
@@ -5454,7 +5476,13 @@
    <x>496.666667</x>
    <y>503.066667</y>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Cutha</planet>
+   <planet>Terminus</planet>
+   <planet>Uridhrion I</planet>
+   <planet>Uridhrion II</planet>
+   <planet>Uridhrion III</planet>
+  </planets>
   <jumps>
    <jump target="Point Zero">
     <pos x="-2973.044379" y="1846.891205"/>
