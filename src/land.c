@@ -867,7 +867,7 @@ static void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   /*ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );*/
+   ships = tech_getShip( land_planet->tech, &nships );
    if (nships <= 0) {
       sships    = malloc(sizeof(char*));
       sships[0] = strdup("None");

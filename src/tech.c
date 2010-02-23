@@ -80,9 +80,11 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent );
 static int tech_loadItemOutfit( tech_group_t *grp, xmlNodePtr parent );
 static int tech_loadItemShip( tech_group_t *grp, xmlNodePtr parent );
 static int tech_loadItemCommodity( tech_group_t *grp, xmlNodePtr parent );
+static int tech_getID( const char *name );
 static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent );
 /* Getting by tech. */
 static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m );
+static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m );
 
 
 /**
@@ -140,7 +142,6 @@ int tech_load (void)
 
    /* Now we load the data. */
    node  = parent->xmlChildrenNode;
-   i     = 0;
    s     = array_size( tech_groups );
    do {
       /* Must match tag. */
@@ -148,20 +149,23 @@ int tech_load (void)
          continue;
 
       /* Must aviod warning by checking explicit NULL. */
-      buf   = xml_get(node);
+      xmlr_attr( node, "name", buf );
       if (buf == NULL)
          continue;
 
       /* Load next tech. */
-      for (  ; i<s; i++) {
+      for (i=0; i<s; i++) {
          tech  = &tech_groups[i];
          if (strcmp(tech->name, buf)==0)
             tech_parseNodeData( tech, node );
       }
+
+      /* Free memory. */
+      free(buf);
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG("Loaded %d tech group%s", array_size( tech_groups ), (array_size( tech_groups ) == 1) ? "" : "s" );
+   DEBUG("Loaded %d tech group%s", s, (s == 1) ? "" : "s" );
 
    return 0;
 }
@@ -189,6 +193,8 @@ void tech_free (void)
  */
 static void tech_freeGroup( tech_group_t *grp )
 {
+   if (grp->name != NULL)
+      free(grp->name);
    if (grp->items != NULL)
       array_free( grp->items );
 }
@@ -200,15 +206,8 @@ static void tech_freeGroup( tech_group_t *grp )
 tech_group_t *tech_groupCreate( xmlNodePtr node )
 {
    tech_group_t *tech;
-
-   /* Parse basic. */
-   tech  = malloc( sizeof(tech_group_t) );
-   if (tech_parseNode( tech, node )) {
-      free(tech);
-      return NULL;
-   }
-
    /* Load data. */
+   tech  = calloc( sizeof(tech_group_t), 1 );
    tech_parseNodeData( tech, node );
    return tech;
 }
@@ -308,16 +307,16 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
          /* Try to find hardcoded type. */
          buf = xml_nodeProp( node, "type" );
          if (buf == NULL) {
-            ret = 0;
-            if (!ret)
+            ret = 1;
+            if (ret)
                ret = tech_loadItemGroup( tech, node );
-            if (!ret)
+            if (ret)
                ret = tech_loadItemOutfit( tech, node );
-            if (!ret)
+            if (ret)
                ret = tech_loadItemShip( tech, node );
-            if (!ret)
+            if (ret)
                ret = tech_loadItemCommodity( tech, node );
-            if (!ret) {
+            if (ret) {
                WARN("Generic item '%s' not found in tech group '%s'",
                      xml_get(node), tech->name );
                continue;
@@ -353,6 +352,22 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
          }
       }
    } while (xml_nextNode( node ));
+
+   int i;
+   tech_item_t *item;
+   char *name;
+   DEBUG("Group '%s' [%d]", tech->name, array_size(tech->items));
+   if (tech->items != NULL)
+      for(i=0;i<array_size(tech->items);i++) {
+         item = &tech->items[i];
+         switch (item->type) {
+            case TECH_TYPE_OUTFIT: name = "outfit"; break;
+            case TECH_TYPE_SHIP: name = "ship"; break;
+            case TECH_TYPE_COMMODITY: name = "commodity"; break;
+            case TECH_TYPE_GROUP: name = "group"; break;
+         }
+         DEBUG("  %s", name);
+      }
 
    return 0;
 }
@@ -463,6 +478,31 @@ static int tech_loadItemCommodity( tech_group_t *grp, xmlNodePtr parent )
 
 
 /**
+ * @brief Gets the ID of a tech.
+ */
+static int tech_getID( const char *name )
+{
+   int i, s;
+   tech_group_t *tech;
+
+   /* NULL cas. */
+   if (tech_groups == NULL)
+      return -1;
+
+   s  = array_size( tech_groups );
+   for (i=0; i<s; i++) {
+      tech  = &tech_groups[i];
+      if (tech->name == NULL)
+         continue;
+      if (strcmp(tech->name, name)==0)
+         return i;
+   }
+
+   return -1L;
+}
+
+
+/**
  * @brief Loads a group item pertaining to a group.
  *
  *    @return 0 on success.
@@ -471,6 +511,7 @@ static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent )
 {
    char *name;
    tech_item_t *item;
+   int tech;
 
    /* Get the name. */
    name = xml_get( parent );
@@ -479,9 +520,15 @@ static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent )
       return -1;
    }
 
+   /* Try to find the tech. */
+   tech = tech_getID( name );
+   if (tech < 0)
+      return 1;
+
    /* Load the new item. */
    item           = tech_itemGrow( grp );
-   item->type  = TECH_TYPE_GROUP;
+   item->type     = TECH_TYPE_GROUP;
+   item->u.grp    = tech;
    return 0;
 }
 
@@ -493,6 +540,10 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
 {
    int i, j, s;
    tech_item_t *item;
+
+   /* Must have items. */
+   if (tech->items == NULL)
+      return o;
 
    /* Comfort. */
    s     = array_size( tech->items );
@@ -555,6 +606,82 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
    /* Sort. */
    qsort( o, *n, sizeof(Outfit*), outfit_compareTech );
    return o;
+}
+
+
+/**
+ * @brief Recursive function for creating an array of outfits from a tech group.
+ */
+static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
+{
+   int i, j, size;
+   tech_item_t *item;
+
+   /* Must have items. */
+   if (tech->items == NULL)
+      return s;
+
+   /* Comfort. */
+   size  = array_size( tech->items );
+
+   /* Load outfits first, then we handle groups. */
+   for (i=0; i<size; i++) {
+      item = &tech->items[i];
+
+      /* Only handle outfits for now. */
+      if (item->type != TECH_TYPE_SHIP)
+         continue;
+
+      /* Skip if already in list. */
+      for (j=0; j<*n; j++)
+         if (s[j] == item->u.ship)
+            continue;
+   
+      /* Allocate memory if needed. */
+      (*n)++;
+      if ((*n) > (*m)) {
+         if ((*m) == 0)
+            (*m)  = 1;
+         (*m) *= 2;
+         s = realloc( s, sizeof(Ship*) * (*m) );
+      }
+
+      /* Add. */
+      s[ *n ]  = item->u.ship;
+   }
+   
+   /* Now handle other groups. */
+   for (i=0; i<size; i++) {
+      item = &tech->items[i];
+
+      /* Only handle outfits for now. */
+      if (item->type != TECH_TYPE_GROUP)
+         continue;
+
+      /* Recursive */
+      s  = tech_addGroupShip( s, tech, n, m );
+   }
+
+   return s;
+}
+
+
+/**
+ * @brief Gets all of the ships assosciated to a tech group.
+ */
+Ship** tech_getShip( tech_group_t *tech, int *n )
+{
+   int m;
+   Ship **s;
+
+   /* Get the outfits. */
+   *n = 0;
+   m  = 0;
+   s  = tech_addGroupShip( NULL, tech, n, &m );
+
+   /* Sort. */
+   qsort( s, *n, sizeof(Ship*), outfit_compareTech );
+   return s;
 }
 
 

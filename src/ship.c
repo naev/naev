@@ -52,7 +52,6 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_compareTech( const void *arg1, const void *arg2 );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -100,7 +99,7 @@ Ship* ship_getW( const char* name )
 /**
  * @brief Comparison function for qsort().
  */
-static int ship_compareTech( const void *arg1, const void *arg2 )
+int ship_compareTech( const void *arg1, const void *arg2 )
 {
    const Ship *s1, *s2;
 
@@ -122,47 +121,6 @@ static int ship_compareTech( const void *arg1, const void *arg2 )
 
    /* Same. */
    return 0;
-}
-
-
-/**
- * @brief Gets all the ships in text form matching tech.
- *
- * You have to free all the strings created in the string array too.
- *
- *    @param[out] n Number of ships found.
- *    @param tech List of technologies to use.
- *    @param techmax Number of technologies in tech.
- *    @return An array of allocated ship names.
- */
-Ship** ship_getTech( int *n, const int *tech, const int techmax )
-{
-   int i,j, num;
-   Ship **ships;
-  
-   /* get available ships for tech */
-   ships = malloc(sizeof(Ship*) * array_size(ship_stack));
-   num = 0;
-   for (i=0; i < array_size(ship_stack); i++) {
-      if (ship_stack[i].tech <= tech[0]) { /* check vs base tech */
-         ships[num] = &ship_stack[i];
-         num++;
-      }
-      else {
-         for (j=0; j<techmax; j++) {
-            if (tech[j] == ship_stack[i].tech) { /* check vs special tech */
-               ships[num] = &ship_stack[i];
-               num++;
-            }
-         }
-      }
-   }
-
-   /* Sort it. */
-   qsort( ships, num, sizeof(Ship*), ship_compareTech );
-   *n = num;
-
-   return ships;
 }
 
 

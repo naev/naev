@@ -4800,6 +4800,9 @@
    <description>Polaris Prime has recently become home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist. It is an immense station with booming commerce, with a large loading area and frequent freight transfers between the station and Emperor's Fist below.</description>
    <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar. A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, it is nonetheless kept immaculately clean. You can only imagine how luxurious the Emperor's personal bar must be.</bar>
   </general>
+  <tech>
+   <item>Test</item>
+  </tech>
  </planet>
  <planet name="Praxis">
   <pos>

@@ -1127,9 +1127,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
                } while (xml_nextNode(ccur));
             }
-            else if (xml_isNode(cur, "tech")) {
-               planet->tech = tech_groupCreate( cur );
-            }
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
@@ -1152,6 +1149,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->ncommodities * sizeof(Commodity*));
             }
          } while(xml_nextNode(cur));
+         continue;
+      }
+      else if (xml_isNode(node, "tech")) {
+         planet->tech = tech_groupCreate( node );
          continue;
       }
 
