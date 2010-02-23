@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Techs>
+ <tech name="Test">
+  <item>Laser Cannon</item>
+  <item>Llama</item>
+  <item>Food</item>
+  <item>Test2</item>
+ </tech>
+ <tech name="Test2">
+  <item>Laser Cannon</item>
+  <item>Mule</item>
+  <item>Ore</item>
+ </tech>
+</Techs>

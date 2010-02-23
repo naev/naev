@@ -89,12 +89,9 @@ int tech_load (void)
    int i, ret, s;
    uint32_t bufsize;
    char *buf;
-   xmlNodePtr node;
+   xmlNodePtr node, parent;
    xmlDocPtr doc;
    tech_group_t *tech;
-
-   /* Create thea rray. */
-   tech_groups = array_create( tech_group_t );
 
    /* Load the data. */
    buf = ndata_read( TECH_DATA, &bufsize );
@@ -109,33 +106,43 @@ int tech_load (void)
    }
 
    /* Load root element. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_TECH_ID)) {
+   parent = doc->xmlChildrenNode;
+   if (!xml_isNode(parent,XML_TECH_ID)) {
       WARN("Malformed "TECH_DATA" file: missing root element '"XML_TECH_ID"'");
       return -1;
    }
 
    /* Get first node. */
-   node = node->xmlChildrenNode; /* first system node */
+   node = parent->xmlChildrenNode;
    if (node == NULL) {
       WARN("Malformed "TECH_DATA" file: does not contain elements");
       return -1;
    }
 
+   /* Create the array. */
+   tech_groups = array_create( tech_group_t );
+
    /* First pass create the groups - needed to reference them later. */
    ret = 0;
    do {
-      if (ret == 0) /* Write over failures. */
+      /* Must match tag. */
+      if (!xml_isNode(node, XML_TECH_TAG))
+         continue;
+      if ((ret == 0) && xml_isNode(node, XML_TECH_TAG)) /* Write over failures. */
          tech = &array_grow( &tech_groups );
       ret = tech_parseNode( tech, node );
    } while (xml_nextNode(node));
    array_shrink( &tech_groups );
 
    /* Now we load the data. */
-   node  = node->xmlChildrenNode; /* first system node */
+   node  = parent->xmlChildrenNode;
    i     = 0;
-   s     = array_size( &tech_groups );
+   s     = array_size( tech_groups );
    do {
+      /* Must match tag. */
+      if (!xml_isNode(node, XML_TECH_TAG))
+         continue;
+
       /* Must aviod warning by checking explicit NULL. */
       buf   = xml_get(node);
       if (buf == NULL)
@@ -148,6 +155,9 @@ int tech_load (void)
             tech_parseNodeData( tech, node );
       }
    } while (xml_nextNode(node));
+
+   /* Info. */
+   DEBUG("Loaded %d tech group%s", array_size( tech_groups ), (array_size( tech_groups ) == 1) ? "" : "s" );
 
    return 0;
 }
