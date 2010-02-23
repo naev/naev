@@ -18,6 +18,12 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item></item>
+   <item></item>
+   <item></item>
+   <item></item>
+  </tech>
  </planet>
  <planet name="Alteris I">
   <pos>
@@ -144,6 +150,9 @@
    <description>Ammu is a generally calm planet, once one is accustomed to the constant rumbling of the lava flows. Lava eruptions are often felt in the subterranean spaceport, but the way it doesn't seem to phase the locals reassures you.</description>
    <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+  </tech>
  </planet>
  <planet name="An'ku I">
   <pos>
@@ -299,7 +308,6 @@
     <missions/>
     <commodity/>
     <outfits/>
-    <shipyard/>
    </services>
    <commodities>
     <commodity>Food</commodity>
@@ -311,6 +319,9 @@
    <description>Anecu is a completely aquatic planet. Its surface is covered completely by water. In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 kilometres high). The planet boasts extensive ship-designing facilities, using the high-pressure of the water as a benchmark against which ships are measured.</description>
    <bar>The spaceport bar is approximately 3 kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+  </tech>
  </planet>
  <planet name="Antica">
   <pos>
@@ -333,6 +344,7 @@
     <missions/>
     <commodity/>
     <outfits/>
+    <shipyard/>
    </services>
    <commodities>
     <commodity>Food</commodity>
@@ -343,6 +355,10 @@
    <description>Though the orbiting military installation is all business, Antica mixes business and pleasure quite readily. Given its location, a vast number of transports stop at Antica to sell their wares before venturing deeper into Empire space.</description>
    <bar>The Antican bar is a rather lavish affair, quite in contrast to the stark exterior of the orbiting military station. Serving some of the Empire's finest food and drink, this Arcturian bar is often a traveller's introduction to Empire cuisine.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Civilian Ships</item>
+  </tech>
  </planet>
  <planet name="Arai">
   <pos>
@@ -435,6 +451,13 @@
    <description>Arcturus Gamma is the Empire's first line of defense when it comes to their core systems. Piracy is nearly non-existent in the core systems due to the large standing force stationed here, and their routine patrols.</description>
    <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained, and full of off-duty Empire soldiers.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Heavy Weapons 1</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Heavy Civilian Combat Ships</item>
+  </tech>
  </planet>
  <planet name="Arcturus I">
   <pos>
@@ -656,6 +679,8 @@
     <bar/>
     <missions/>
     <commodity/>
+    <outfits/>
+    <shipyard/>
    </services>
    <commodities>
     <commodity>Food</commodity>
@@ -664,6 +689,10 @@
    <description>While Bon Sebb was once a popular tourist destination, the stop in neighbouring Apez, with its well-known Dowue Syndrome, has resulted in the tourism industry waning. It is now primarily known for its all-natural crops and herbal remedies.</description>
    <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past, when it was a frontier world.</bar>
   </general>
+  <tech>
+   <item>All Outfits</item>
+   <item>All Ships</item>
+  </tech>
  </planet>
  <planet name="Brimstone I">
   <pos>
@@ -773,6 +802,11 @@
    <description>The surface of the planet is predominantly covered with water and the planetary climate is characterized by abundant precipitation and strong winds, though sufficiently tolerable to make costly weather modification equipment unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
    <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Basic Trade Ships</item>
+  </tech>
  </planet>
  <planet name="Capricorn II">
   <pos>
@@ -4240,6 +4274,10 @@
    <description>Nova Shakar was an utterly unremarkable Empire planet until the Emperor's Fist project began. Increasingly, Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
    <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
   </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
+  </tech>
  </planet>
  <planet name="Oberon I">
   <pos>
