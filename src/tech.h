@@ -40,7 +40,7 @@ int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp );
  * Get.
  */
 int tech_get( const char *name );
-Outfit** tech_getOutfit( int id, int *n );
+Outfit** tech_getOutfit( tech_group_t *tech, int *n );
 
 
 #endif /* TECH_H */

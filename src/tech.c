@@ -542,14 +542,10 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
 /**
  * @brief Gets all of the outfits assosciated to a tech group.
  */
-Outfit** tech_getOutfit( int id, int *n )
+Outfit** tech_getOutfit( tech_group_t *tech, int *n )
 {
    int m;
-   tech_group_t *tech;
    Outfit **o;
-
-   /* Comfort. */
-   tech  = &tech_groups[id];
 
    /* Get the outfits. */
    *n = 0;
