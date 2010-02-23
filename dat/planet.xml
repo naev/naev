@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Planets>
  <planet name="Aesir IV">
   <pos>
@@ -13,10 +13,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -36,10 +32,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -59,10 +51,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -82,10 +70,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -105,10 +89,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -128,10 +108,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -152,10 +128,6 @@
    <faction>Empire</faction>
    <population>60000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -186,10 +158,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -209,10 +177,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -232,10 +196,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -255,10 +215,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -278,10 +234,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -301,10 +253,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -324,10 +272,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -348,10 +292,6 @@
    <faction>Dvaered</faction>
    <population>70000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -386,10 +326,6 @@
    <faction>Empire</faction>
    <population>450000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>12</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -421,10 +357,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -445,10 +377,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -468,10 +396,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -492,10 +416,6 @@
    <faction>Empire</faction>
    <population>52000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>15</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -529,10 +449,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -552,10 +468,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -576,10 +488,6 @@
    <faction>Empire</faction>
    <population>32000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -608,10 +516,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -631,10 +535,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -654,10 +554,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -677,10 +573,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -700,10 +592,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -723,10 +611,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -746,10 +630,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -770,10 +650,6 @@
    <faction>Empire</faction>
    <population>40000</population>
    <prodfactor>0.200000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -802,10 +678,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -825,10 +697,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -848,10 +716,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -871,10 +735,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -895,10 +755,6 @@
    <faction>Empire</faction>
    <population>17000000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>5</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -931,10 +787,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -954,10 +806,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -977,10 +825,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1001,10 +845,6 @@
    <faction>Empire</faction>
    <population>700</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1029,10 +869,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1052,10 +888,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1075,10 +907,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1098,10 +926,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1122,10 +946,6 @@
    <faction>Frontier</faction>
    <population>930000</population>
    <prodfactor>0.600000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1155,10 +975,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1179,10 +995,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1202,10 +1014,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1225,10 +1033,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1248,10 +1052,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1271,10 +1071,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1294,10 +1090,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1317,10 +1109,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1340,10 +1128,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1363,10 +1147,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1386,10 +1166,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1409,10 +1185,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1432,10 +1204,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1455,10 +1223,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1479,10 +1243,6 @@
    <faction>Independent</faction>
    <population>14000</population>
    <prodfactor>0.800000</prodfactor>
-   <tech>
-    <main>15</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1516,10 +1276,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1539,10 +1295,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1563,10 +1315,6 @@
    <faction>Frontier</faction>
    <population>4000000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>4</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1595,10 +1343,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1618,10 +1362,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1641,10 +1381,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1664,10 +1400,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1687,10 +1419,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1711,10 +1439,6 @@
    <faction>Dvaered</faction>
    <population>40000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1742,10 +1466,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1766,10 +1486,6 @@
    <faction>Empire</faction>
    <population>125000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>7</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1801,10 +1517,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1824,10 +1536,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1847,10 +1555,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1870,10 +1574,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1893,10 +1593,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1916,10 +1612,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1940,10 +1632,6 @@
    <faction>Independent</faction>
    <population>2000000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -1971,10 +1659,6 @@
    <class>P</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1994,10 +1678,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2017,10 +1697,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2040,10 +1716,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2063,10 +1735,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2086,10 +1754,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2110,10 +1774,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2134,10 +1794,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2157,10 +1813,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2181,10 +1833,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2204,10 +1852,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2227,10 +1871,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2250,10 +1890,6 @@
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
    </services>
@@ -2275,10 +1911,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2298,10 +1930,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2321,10 +1949,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2345,10 +1969,6 @@
    <faction>Empire</faction>
    <population>150000</population>
    <prodfactor>0.600000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -2382,10 +2002,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2406,10 +2022,6 @@
    <faction>Empire</faction>
    <population>127000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -2434,10 +2046,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2457,10 +2065,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2480,10 +2084,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2503,10 +2103,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2526,10 +2122,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2549,10 +2141,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2572,10 +2160,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2595,10 +2179,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2618,10 +2198,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2641,10 +2217,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2664,10 +2236,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2687,10 +2255,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2710,10 +2274,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2733,10 +2293,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2756,10 +2312,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2779,10 +2331,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2803,10 +2351,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2826,10 +2370,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2849,10 +2389,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2872,10 +2408,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2895,10 +2427,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2918,10 +2446,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2941,10 +2465,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2964,10 +2484,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2987,10 +2503,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3010,10 +2522,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3033,10 +2541,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3056,10 +2560,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3079,10 +2579,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3103,10 +2599,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3126,10 +2618,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3150,10 +2638,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3173,10 +2657,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3196,10 +2676,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3219,10 +2695,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3242,10 +2714,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3265,10 +2733,6 @@
    <class>I</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3289,10 +2753,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3312,10 +2772,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3335,10 +2791,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3358,10 +2810,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3381,10 +2829,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3404,10 +2848,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3428,10 +2868,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3451,10 +2887,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3474,10 +2906,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3497,10 +2925,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3521,10 +2945,6 @@
    <faction>Empire</faction>
    <population>12000</population>
    <prodfactor>0.200000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -3553,10 +2973,6 @@
    <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3576,10 +2992,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3599,10 +3011,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3623,10 +3031,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3647,10 +3051,6 @@
    <faction>Dvaered</faction>
    <population>170000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -3680,10 +3080,6 @@
    <faction>Frontier</faction>
    <population>5000000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -3714,10 +3110,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3737,10 +3129,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3760,10 +3148,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3784,10 +3168,6 @@
    <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3807,10 +3187,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3830,10 +3206,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3853,10 +3225,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3876,10 +3244,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3899,10 +3263,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3922,10 +3282,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3945,10 +3301,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3968,10 +3320,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3991,10 +3339,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4014,10 +3358,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4037,10 +3377,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4060,10 +3396,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4083,10 +3415,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4106,10 +3434,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4129,10 +3453,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4152,10 +3472,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4175,10 +3491,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4198,10 +3510,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4222,10 +3530,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4245,10 +3549,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4268,10 +3568,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4291,10 +3587,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4315,10 +3607,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4339,10 +3627,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4362,10 +3646,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4385,10 +3665,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4408,10 +3684,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4431,10 +3703,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4454,10 +3722,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4477,10 +3741,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4500,10 +3760,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4523,10 +3779,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4547,10 +3799,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4571,10 +3819,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4594,10 +3838,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4617,10 +3857,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4640,10 +3876,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4663,10 +3895,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4686,10 +3914,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4710,10 +3934,6 @@
    <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4734,10 +3954,6 @@
    <faction>Pirate</faction>
    <population>9000</population>
    <prodfactor>0.600000</prodfactor>
-   <tech>
-    <main>13</main>
-    <special>9009</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -4769,10 +3985,6 @@
    <class>K</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4792,10 +4004,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4816,10 +4024,6 @@
    <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4839,10 +4043,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4862,10 +4062,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4886,10 +4082,6 @@
    <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4910,10 +4102,6 @@
    <faction>Dvaered</faction>
    <population>130000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -4945,10 +4133,6 @@
    <faction>Frontier</faction>
    <population>260000</population>
    <prodfactor>0.600000</prodfactor>
-   <tech>
-    <main>8</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -4981,10 +4165,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5004,10 +4184,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5027,10 +4203,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5051,10 +4223,6 @@
    <faction>Empire</faction>
    <population>812000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5086,10 +4254,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5109,10 +4273,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5132,10 +4292,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5155,10 +4311,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5179,10 +4331,6 @@
    <faction>Empire</faction>
    <population>20000</population>
    <prodfactor>0.200000</prodfactor>
-   <tech>
-    <main>4</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5212,10 +4360,6 @@
    <faction>Empire</faction>
    <population>14000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>9</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5245,10 +4389,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5268,10 +4408,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5291,10 +4427,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5314,10 +4446,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5337,10 +4465,6 @@
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5360,10 +4484,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5383,10 +4503,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5406,10 +4522,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5429,10 +4541,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5452,10 +4560,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5475,10 +4579,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5499,10 +4599,6 @@
    <faction>Empire</faction>
    <population>65000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5532,10 +4628,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5555,10 +4647,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5578,10 +4666,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5601,10 +4685,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5624,10 +4704,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5647,10 +4723,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5670,10 +4742,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5693,10 +4761,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5717,10 +4781,6 @@
    <faction>Empire</faction>
    <population>318000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>15</main>
-    <special>1002</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5755,10 +4815,6 @@
    <faction>Dvaered</faction>
    <population>400000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>8</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5791,10 +4847,6 @@
    <faction>Proteron</faction>
    <population>1200000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>12</main>
-    <special>1002</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -5827,10 +4879,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5850,10 +4898,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5873,10 +4917,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5896,10 +4936,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5919,10 +4955,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5942,10 +4974,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5965,10 +4993,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5988,10 +5012,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6011,10 +5031,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6035,10 +5051,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6058,10 +5070,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6081,10 +5089,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6104,10 +5108,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6128,10 +5128,6 @@
    <faction>Dvaered</faction>
    <population>3000</population>
    <prodfactor>0.200000</prodfactor>
-   <tech>
-    <main>3</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -6157,10 +5153,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6181,10 +5173,6 @@
    <faction>Dvaered</faction>
    <population>7000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>7</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -6209,10 +5197,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6232,10 +5216,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6255,10 +5235,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6278,10 +5254,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6301,10 +5273,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6324,10 +5292,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6348,10 +5312,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6371,10 +5331,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6394,10 +5350,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6417,10 +5369,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6440,10 +5388,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6463,10 +5407,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6487,10 +5427,6 @@
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6511,10 +5447,6 @@
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6535,10 +5467,6 @@
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6559,10 +5487,6 @@
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6583,10 +5507,6 @@
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6606,10 +5526,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6629,10 +5545,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6652,10 +5564,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6675,10 +5583,6 @@
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6698,10 +5602,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6721,10 +5621,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6744,10 +5640,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6768,10 +5660,6 @@
    <faction>Empire</faction>
    <population>27000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>7</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -6801,10 +5689,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6824,10 +5708,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6847,10 +5727,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6870,10 +5746,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6893,10 +5765,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6916,10 +5784,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6939,10 +5803,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6962,10 +5822,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6986,10 +5842,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7010,10 +5862,6 @@
    <faction>Dvaered</faction>
    <population>130000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>8</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7047,10 +5895,6 @@
    <faction>FLF</faction>
    <population>1000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>4</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7077,10 +5921,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7101,10 +5941,6 @@
    <faction>Dvaered</faction>
    <population>12000</population>
    <prodfactor>0.800000</prodfactor>
-   <tech>
-    <main>7</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7131,10 +5967,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7155,10 +5987,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7179,10 +6007,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7202,10 +6026,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7225,10 +6045,6 @@
    <class>M</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7248,10 +6064,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7272,10 +6084,6 @@
    <faction>Empire</faction>
    <population>12000</population>
    <prodfactor>0.800000</prodfactor>
-   <tech>
-    <main>7</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7303,10 +6111,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7327,10 +6131,6 @@
    <faction>Dvaered</faction>
    <population>2000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7360,10 +6160,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7383,10 +6179,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7406,10 +6198,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7430,10 +6218,6 @@
    <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7454,10 +6238,6 @@
    <faction>Empire</faction>
    <population>350000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7488,10 +6268,6 @@
    <faction>Dvaered</faction>
    <population>2000000000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>4</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7517,10 +6293,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7541,10 +6313,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7564,10 +6332,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7587,10 +6351,6 @@
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7610,10 +6370,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7634,10 +6390,6 @@
    <faction>Dvaered</faction>
    <population>10000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>4</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7665,10 +6417,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7688,10 +6436,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7712,10 +6456,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7735,10 +6475,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7758,10 +6494,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7781,10 +6513,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7804,10 +6532,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7827,10 +6551,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7851,10 +6571,6 @@
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7875,10 +6591,6 @@
    <faction>Dvaered</faction>
    <population>400000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>3</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7910,10 +6622,6 @@
    <faction>Dvaered</faction>
    <population>15000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -7943,10 +6651,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7966,10 +6670,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7989,10 +6689,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8013,10 +6709,6 @@
    <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8037,10 +6729,6 @@
    <faction>Dvaered</faction>
    <population>500000000</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>5</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -8071,10 +6759,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8094,10 +6778,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8117,10 +6797,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8140,10 +6816,6 @@
    <class>H</class>
    <population>0</population>
    <prodfactor>0.400000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8163,10 +6835,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8187,10 +6855,6 @@
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8211,10 +6875,6 @@
    <faction>Dvaered</faction>
    <population>4500</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -8245,10 +6905,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8268,10 +6924,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8292,10 +6944,6 @@
    <faction>Pirate</faction>
    <population>15000000</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8316,10 +6964,6 @@
    <faction>Pirate</faction>
    <population>4500</population>
    <prodfactor>0.500000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8339,10 +6983,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8363,10 +7003,6 @@
    <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8387,10 +7023,6 @@
    <faction>Empire</faction>
    <population>4000</population>
    <prodfactor>0.300000</prodfactor>
-   <tech>
-    <main>9</main>
-    <special>0</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
@@ -8423,10 +7055,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8446,10 +7074,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8469,10 +7093,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8492,10 +7112,6 @@
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8516,10 +7132,6 @@
    <faction>Goddard</faction>
    <population>13000000</population>
    <prodfactor>0.700000</prodfactor>
-   <tech>
-    <main>10</main>
-    <special>1001</special>
-   </tech>
    <services>
     <land/>
     <refuel/>
