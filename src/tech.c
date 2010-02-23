@@ -241,7 +241,6 @@ int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
 
    /* Node header. */
    xmlw_startElem( writer, "tech" );
-   xmlw_attr( writer, "name", grp->name );
 
    /* Save items. */
    s  = array_size( grp->items );
