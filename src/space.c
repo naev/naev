@@ -60,8 +60,7 @@
 #define FLAG_ASTEROIDSSET     (1<<2) /**< Set the asteroid value. */
 #define FLAG_INTERFERENCESET  (1<<3) /**< Set the interference value. */
 #define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
-#define FLAG_TECHSET          (1<<5) /**< Set the tech value. */
-#define FLAG_FACTIONSET       (1<<6) /**< Set the faction value. */
+#define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
 
 
 /*
@@ -1039,7 +1038,7 @@ static int planets_load ( void )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent )
 {
-   int i, mem;
+   int mem;
    char str[PATH_MAX];
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
@@ -1129,22 +1128,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                } while (xml_nextNode(ccur));
             }
             else if (xml_isNode(cur, "tech")) {
-               ccur = cur->children;
-               do {
-                  if (xml_isNode(ccur,"main")) {
-                     flags |= FLAG_TECHSET;
-                     planet->tech[0] = xml_getInt(ccur);
-                  }
-                  else if (xml_isNode(ccur,"special")) {
-                     for (i=1; i<PLANET_TECH_MAX; i++)
-                        if (planet->tech[i]==0) {
-                           planet->tech[i] = xml_getInt(ccur);
-                           break;
-                        }
-                     if (i==PLANET_TECH_MAX) WARN("Planet '%s' has too many"
-                           "'special tech' entries", planet->name);
-                  }
-               } while (xml_nextNode(ccur));
+               planet->tech = tech_groupCreate( cur );
             }
 
             else if (xml_isNode(cur, "commodities")) {
@@ -1201,7 +1185,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
    MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
             planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
-         (flags&FLAG_TECHSET)==0, "tech" );
+         (planet->tech==NULL), "tech" );
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
          (planet->ncommodities==0),"commodity" );
 #undef MELEMENT
@@ -2231,6 +2215,10 @@ void space_exit (void)
          free(planet_stack[i].gfx_exterior);
          free(planet_stack[i].gfx_exteriorPath);
       }
+
+      /* tech */
+      if (planet_stack[i].tech != NULL)
+         tech_groupDestroy( planet_stack[i].tech );
 
       /* commodities */
       free(planet_stack[i].commodities);

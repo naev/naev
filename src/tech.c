@@ -35,7 +35,7 @@ typedef enum tech_item_type_e {
    TECH_TYPE_OUTFIT,       /**< Tech contains an outfit. */
    TECH_TYPE_SHIP,         /**< Tech contains a ship. */
    TECH_TYPE_COMMODITY,    /**< Tech contains a commodity. */
-   TECH_TYPE_CONTRABAND,   /**< Tech contains contraband. */
+   /*TECH_TYPE_CONTRABAND,*/   /**< Tech contains contraband. */
    TECH_TYPE_GROUP,        /**< Tech contains another tech group. */
 } tech_item_type_t;
 
@@ -218,8 +218,57 @@ tech_group_t *tech_groupCreate( xmlNodePtr node )
  */
 void tech_groupDestroy( tech_group_t *grp )
 {
+   if (grp == NULL)
+      return;
+
    tech_freeGroup( grp );
    free(grp);
+}
+
+
+/**
+ * @brief Writes a group in an exml node.
+ */
+int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
+{
+   int i, s;
+   char *name;
+   tech_item_t *item;
+
+   /* Handle empty groups. */
+   if (grp == NULL)
+      return 0;
+
+   /* Node header. */
+   xmlw_startElem( writer, "tech" );
+   xmlw_attr( writer, "name", grp->name );
+
+   /* Save items. */
+   s  = array_size( grp->items );
+   for (i=0; i<s; i++) {
+      item = &grp->items[i];
+      /* Handle type. */
+      switch (item->type) {
+         case TECH_TYPE_OUTFIT:
+            name = item->u.outfit->name;
+            break;
+         case TECH_TYPE_SHIP:
+            name = item->u.ship->name;
+            break;
+         case TECH_TYPE_COMMODITY:
+            name = item->u.comm->name;
+            break;
+         case TECH_TYPE_GROUP:
+            name = tech_groups[ item->u.grp ].name;
+            break;
+      }
+      /* Save item. */
+      xmlw_elem( writer, "item", "%s", name );
+   }
+
+   xmlw_endElem( writer ); /* "tech" */
+
+   return 0;
 }
 
 
@@ -228,6 +277,9 @@ void tech_groupDestroy( tech_group_t *grp )
  */
 static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
 {
+   /* Just in case. */
+   memset( tech, 0, sizeof(tech_group_t) );
+
    /* Get name. */
    xmlr_attr( parent, "name", tech->name);
    if (tech->name == NULL) {

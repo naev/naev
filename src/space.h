@@ -14,12 +14,10 @@
 #include "economy.h"
 #include "fleet.h"
 #include "mission.h"
+#include "tech.h"
 
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
-
-
-#define PLANET_TECH_MAX       8 /**< Amount of special techs a planet can have. */
 
 
 /**
@@ -96,11 +94,8 @@ typedef struct Planet_ {
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
-   int tech[PLANET_TECH_MAX]; /**< tech[0] stores global tech level
-                                   (everything that and below) while
-                                   tech[1-PLANET_TECH_MAX] store the
-                                   "unique" tech levels (only matches */
    int bribed; /**< If planet has been bribed. */
+   tech_group_t *tech; /**< Planet tech. */
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */

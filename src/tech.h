@@ -11,6 +11,7 @@
 #include "outfit.h"
 #include "ship.h"
 #include "economy.h"
+#include "nxml.h"
 
 
 /*
@@ -32,6 +33,7 @@ void tech_free (void);
  */
 tech_group_t *tech_groupCreate( xmlNodePtr node );
 void tech_groupDestroy( tech_group_t *grp );
+int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp );
 
 
 /*

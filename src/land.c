@@ -444,7 +444,7 @@ static void outfits_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   /*outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);*/
    if (noutfits <= 0) { /* No outfits */
       soutfits    = malloc(sizeof(char*));
       soutfits[0] = strdup("None");
@@ -484,7 +484,7 @@ static void outfits_updateQuantities( unsigned int wid )
    int i;
 
    /* Get outfits. */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   /*outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);*/
    if (noutfits <= 0)
       return;
 
@@ -867,7 +867,7 @@ static void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
+   /*ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );*/
    if (nships <= 0) {
       sships    = malloc(sizeof(char*));
       sships[0] = strdup("None");
