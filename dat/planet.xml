@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Planets>
  <planet name="Aesir IV">
   <pos>
@@ -4801,7 +4801,8 @@
    <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar. A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, it is nonetheless kept immaculately clean. You can only imagine how luxurious the Emperor's personal bar must be.</bar>
   </general>
   <tech>
-   <item>Test</item>
+   <item>Empire Military Ships</item>
+   <item>High Tech Upgrades 2</item>
   </tech>
  </planet>
  <planet name="Praxis">

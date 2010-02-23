@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
@@ -393,7 +393,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Peacemaker" chance="100" ship="Peacemaker"></pilot>
+   <pilot name="Empire Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Sml Defense">
@@ -408,7 +408,7 @@
    <pilot name="Admonisher" chance="60" ship="Empire Admonisher"></pilot>
    <pilot name="Pacifier" chance="50" ship="Empire Pacifier"></pilot>
    <pilot name="Hawking" chance="20" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" chance="5" ship="Peacemaker"></pilot>
+   <pilot name="Empire Peacemaker" chance="5" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lge Attack">
@@ -427,7 +427,7 @@
    <pilot name="Admonisher" chance="60" ship="Empire Admonisher"></pilot>
    <pilot name="Pacifier" chance="50" ship="Empire Pacifier"></pilot>
    <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" chance="50" ship="Peacemaker"></pilot>
+   <pilot name="Empire Peacemaker" chance="50" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Med Attack">
