@@ -353,22 +353,6 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
       }
    } while (xml_nextNode( node ));
 
-   int i;
-   tech_item_t *item;
-   char *name;
-   DEBUG("Group '%s' [%d]", tech->name, array_size(tech->items));
-   if (tech->items != NULL)
-      for(i=0;i<array_size(tech->items);i++) {
-         item = &tech->items[i];
-         switch (item->type) {
-            case TECH_TYPE_OUTFIT: name = "outfit"; break;
-            case TECH_TYPE_SHIP: name = "ship"; break;
-            case TECH_TYPE_COMMODITY: name = "commodity"; break;
-            case TECH_TYPE_GROUP: name = "group"; break;
-         }
-         DEBUG("  %s", name);
-      }
-
    return 0;
 }
 
@@ -538,7 +522,7 @@ static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent )
  */
 static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m )
 {
-   int i, j, s;
+   int i, j, s, f;
    tech_item_t *item;
 
    /* Must have items. */
@@ -557,9 +541,15 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
          continue;
 
       /* Skip if already in list. */
-      for (j=0; j<*n; j++)
-         if (o[j] == item->u.outfit)
-            continue;
+      f = 0;
+      for (j=0; j<*n; j++) {
+         if (o[j] == item->u.outfit) {
+            f = 1;
+            break;
+         }
+      }
+      if (f == 1)
+         continue;
    
       /* Allocate memory if needed. */
       (*n)++;
@@ -571,7 +561,7 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
       }
 
       /* Add. */
-      o[ *n ]  = item->u.outfit;
+      o[ (*n)-1 ]  = item->u.outfit;
    }
    
    /* Now handle other groups. */
@@ -583,7 +573,7 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
          continue;
 
       /* Recursive */
-      o  = tech_addGroupOutfit( o, tech, n, m );
+      o  = tech_addGroupOutfit( o, &tech_groups[ item->u.grp ], n, m );
    }
 
    return o;
@@ -603,6 +593,12 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
    m  = 0;
    o  = tech_addGroupOutfit( NULL, tech, n, &m );
 
+   /* None found case. */
+   if (o == NULL) {
+      *n = 0;
+      return NULL;
+   }
+
    /* Sort. */
    qsort( o, *n, sizeof(Outfit*), outfit_compareTech );
    return o;
@@ -614,7 +610,7 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
  */
 static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
 {
-   int i, j, size;
+   int i, j, size, f;
    tech_item_t *item;
 
    /* Must have items. */
@@ -633,9 +629,15 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
          continue;
 
       /* Skip if already in list. */
-      for (j=0; j<*n; j++)
-         if (s[j] == item->u.ship)
-            continue;
+      f = 0;
+      for (j=0; j<*n; j++) {
+         if (s[j] == item->u.ship) {
+            f = 1;
+            break;
+         }
+      }
+      if (f == 1)
+         continue;
    
       /* Allocate memory if needed. */
       (*n)++;
@@ -647,7 +649,7 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
       }
 
       /* Add. */
-      s[ *n ]  = item->u.ship;
+      s[ (*n)-1 ]  = item->u.ship;
    }
    
    /* Now handle other groups. */
@@ -659,7 +661,7 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
          continue;
 
       /* Recursive */
-      s  = tech_addGroupShip( s, tech, n, m );
+      s  = tech_addGroupShip( s, &tech_groups[ item->u.grp ], n, m );
    }
 
    return s;
@@ -678,6 +680,12 @@ Ship** tech_getShip( tech_group_t *tech, int *n )
    *n = 0;
    m  = 0;
    s  = tech_addGroupShip( NULL, tech, n, &m );
+
+   /* None found case. */
+   if (s == NULL) {
+      *n = 0;
+      return NULL;
+   }
 
    /* Sort. */
    qsort( s, *n, sizeof(Ship*), outfit_compareTech );
