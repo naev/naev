@@ -275,11 +275,13 @@
  <tech name="Heavy Civilian Combat Ships">
   <item>Admonisher</item>
   <item>Archimedes</item>
-  <item>Goddard</item>
   <item>Hawking</item>
   <item>Lancelot</item>
   <item>Pacifier</item>
   <item>Vigilance</item>
+ </tech>
+ <tech name="Goddard">
+  <item>Goddard</item>
  </tech>
  <tech name="Empire Military Ships">
   <item>Empire Admonisher</item>
