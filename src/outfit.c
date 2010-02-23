@@ -155,50 +155,6 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
 
 
 /**
- * @brief Gets all the outfits matching technology requirements.
- *
- * Function will already sort the outfits by type and then by price making
- *  it much easier to handle later on.
- *
- *    @param[out] n Number of outfits found.
- *    @param[in] tech Technologies to check against. The first one represents
- *                    overall technology, the others are specific technologies.
- *    @param[in] techmax Number of technologies in tech.
- *    @return An allocated array of allocated strings with the names of outfits
- *            matching the tech requirements.
- */
-Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
-{
-   int i,j, num;
-   Outfit **outfits;
-   
-   outfits = malloc(sizeof(Outfit*) * array_size(outfit_stack));
-
-   /* get the available techs */
-   num = 0;
-   for (i=0; i < array_size(outfit_stack); i++) {
-      if (outfit_stack[i].tech <= tech[0]) { /* check vs base tech */
-         outfits[num] = &outfit_stack[i];
-         num++;
-      }
-      else {
-         for(j=0; j<techmax; j++) /* check vs special techs */
-            if (tech[j] == outfit_stack[i].tech) {
-               outfits[num] = &outfit_stack[i];
-               num++;
-            }
-      }
-   }
-
-   /* Sort. */
-   qsort( outfits, num, sizeof(Outfit*), outfit_compareTech );
-   *n = num;
-
-   return outfits;
-}
-
-
-/**
  * @brief Gives the real shield damage, armour damage and knockback modifier.
  *
  *    @param[out] dshield Real shield damage.

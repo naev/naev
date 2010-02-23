@@ -57,10 +57,10 @@ typedef struct tech_item_s {
 /**
  * @brief Group of tech items, basic unit of the tech trees.
  */
-typedef struct tech_group_s {
+struct tech_group_s {
    char *name;          /**< Name of the tech group. */
    tech_item_t *items;  /**< Items in the tech group. */
-} tech_group_t;
+};
 
 
 /*
@@ -72,6 +72,8 @@ static tech_group_t *tech_groups = NULL;
 /*
  * Prototypes.
  */
+static void tech_freeGroup( tech_group_t *grp );
+/* Loading. */
 static tech_item_t *tech_itemGrow( tech_group_t *grp );
 static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent );
 static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent );
@@ -79,6 +81,8 @@ static int tech_loadItemOutfit( tech_group_t *grp, xmlNodePtr parent );
 static int tech_loadItemShip( tech_group_t *grp, xmlNodePtr parent );
 static int tech_loadItemCommodity( tech_group_t *grp, xmlNodePtr parent );
 static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent );
+/* Getting by tech. */
+static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m );
 
 
 /**
@@ -172,11 +176,50 @@ void tech_free (void)
 
    /* Free all individual techs. */
    s = array_size( tech_groups );
-   for (i=0; i<s; i++) {
-   }
+   for (i=0; i<s; i++)
+      tech_freeGroup( &tech_groups[i] );
 
    /* Free the tech array. */
    array_free( tech_groups );
+}
+
+
+/**
+ * @brief Cleans up a tech group.
+ */
+static void tech_freeGroup( tech_group_t *grp )
+{
+   array_free( grp->items );
+}
+
+
+/**
+ * @brief Creates a tech group.
+ */
+tech_group_t *tech_groupCreate( xmlNodePtr node )
+{
+   tech_group_t *tech;
+
+   /* Parse basic. */
+   tech  = malloc( sizeof(tech_group_t) );
+   if (tech_parseNode( tech, node )) {
+      free(tech);
+      return NULL;
+   }
+
+   /* Load data. */
+   tech_parseNodeData( tech, node );
+   return tech;
+}
+
+
+/**
+ * @brief Frees a tech group.
+ */
+void tech_groupDestroy( tech_group_t *grp )
+{
+   tech_freeGroup( grp );
+   free(grp);
 }
 
 
@@ -389,5 +432,80 @@ static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent )
    return 0;
 }
 
+
+/**
+ * @brief Recursive function for creating an array of outfits from a tech group.
+ */
+static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m )
+{
+   int i, j, s;
+   tech_item_t *item;
+
+   /* Comfort. */
+   s     = array_size( tech->items );
+
+   /* Load outfits first, then we handle groups. */
+   for (i=0; i<s; i++) {
+      item = &tech->items[i];
+
+      /* Only handle outfits for now. */
+      if (item->type != TECH_TYPE_OUTFIT)
+         continue;
+
+      /* Skip if already in list. */
+      for (j=0; j<*n; j++)
+         if (o[j] == item->u.outfit)
+            continue;
+   
+      /* Allocate memory if needed. */
+      (*n)++;
+      if ((*n) > (*m)) {
+         if ((*m) == 0)
+            (*m)  = 1;
+         (*m) *= 2;
+         o = realloc( o, sizeof(Outfit*) * (*m) );
+      }
+
+      /* Add. */
+      o[ *n ]  = item->u.outfit;
+   }
+   
+   /* Now handle other groups. */
+   for (i=0; i<s; i++) {
+      item = &tech->items[i];
+
+      /* Only handle outfits for now. */
+      if (item->type != TECH_TYPE_GROUP)
+         continue;
+
+      /* Recursive */
+      o  = tech_addGroupOutfit( o, tech, n, m );
+   }
+
+   return o;
+}
+
+
+/**
+ * @brief Gets all of the outfits assosciated to a tech group.
+ */
+Outfit** tech_getOutfit( int id, int *n )
+{
+   int m;
+   tech_group_t *tech;
+   Outfit **o;
+
+   /* Comfort. */
+   tech  = &tech_groups[id];
+
+   /* Get the outfits. */
+   *n = 0;
+   m  = 0;
+   o  = tech_addGroupOutfit( NULL, tech, n, &m );
+
+   /* Sort. */
+   qsort( o, *n, sizeof(Outfit*), outfit_compareTech );
+   return o;
+}
 
 
