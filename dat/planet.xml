@@ -7152,6 +7152,7 @@
   </GFX>
   <general>
    <class>A</class>
+   <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <tech>
