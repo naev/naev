@@ -1454,7 +1454,6 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            xmlr_int(cur,"tech",temp->tech);
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
@@ -1531,7 +1530,6 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->slot==OUTFIT_SLOT_NULL,"slot");
-   MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");

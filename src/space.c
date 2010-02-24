@@ -1091,7 +1091,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             /* Direct reads. */
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
-            xmlr_long(cur, "population", planet->population );
+            xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "prodfactor", planet->prodfactor );
 
             if (xml_isNode(cur,"class"))

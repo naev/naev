@@ -73,15 +73,16 @@ static tech_group_t *tech_groups = NULL;
  * Prototypes.
  */
 static void tech_freeGroup( tech_group_t *grp );
+static char* tech_getItemName( tech_item_t *item );
 /* Loading. */
 static tech_item_t *tech_itemGrow( tech_group_t *grp );
 static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent );
 static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent );
-static int tech_loadItemOutfit( tech_group_t *grp, xmlNodePtr parent );
-static int tech_loadItemShip( tech_group_t *grp, xmlNodePtr parent );
-static int tech_loadItemCommodity( tech_group_t *grp, xmlNodePtr parent );
+static int tech_addItemOutfit( tech_group_t *grp, const char* name );
+static int tech_addItemShip( tech_group_t *grp, const char* name );
+static int tech_addItemCommodity( tech_group_t *grp, const char* name );
 static int tech_getID( const char *name );
-static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent );
+static int tech_addItemGroup( tech_group_t *grp, const char* name );
 /* Getting by tech. */
 static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m );
 static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m );
@@ -227,13 +228,32 @@ void tech_groupDestroy( tech_group_t *grp )
 
 
 /**
+ * @brief Gets an item's name. 
+ */
+static char* tech_getItemName( tech_item_t *item )
+{
+   /* Handle type. */
+   switch (item->type) {
+      case TECH_TYPE_OUTFIT:
+         return item->u.outfit->name;
+      case TECH_TYPE_SHIP:
+         return item->u.ship->name;
+      case TECH_TYPE_COMMODITY:
+         return item->u.comm->name;
+      case TECH_TYPE_GROUP:
+         return tech_groups[ item->u.grp ].name;
+   }
+
+   return NULL;
+}
+
+
+/**
  * @brief Writes a group in an exml node.
  */
 int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
 {
    int i, s;
-   char *name;
-   tech_item_t *item;
 
    /* Handle empty groups. */
    if (grp == NULL)
@@ -244,26 +264,8 @@ int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
 
    /* Save items. */
    s  = array_size( grp->items );
-   for (i=0; i<s; i++) {
-      item = &grp->items[i];
-      /* Handle type. */
-      switch (item->type) {
-         case TECH_TYPE_OUTFIT:
-            name = item->u.outfit->name;
-            break;
-         case TECH_TYPE_SHIP:
-            name = item->u.ship->name;
-            break;
-         case TECH_TYPE_COMMODITY:
-            name = item->u.comm->name;
-            break;
-         case TECH_TYPE_GROUP:
-            name = tech_groups[ item->u.grp ].name;
-            break;
-      }
-      /* Save item. */
-      xmlw_elem( writer, "item", "%s", name );
-   }
+   for (i=0; i<s; i++)
+      xmlw_elem( writer, "item", "%s", tech_getItemName( &grp->items[i] ) );
 
    xmlw_endElem( writer ); /* "tech" */
 
@@ -296,56 +298,64 @@ static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
 static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
 {
    xmlNodePtr node;
-   char *buf;
+   char *buf, *name;
    int ret;
 
    /* Parse the data. */
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"item")) {
+
+         /* Must have name. */
+         name = xml_get( node );
+         if (name == NULL) {
+            WARN("Tech group '%s' has an item without a value.", tech->name);
+            continue;
+         }
+
          /* Try to find hardcoded type. */
          buf = xml_nodeProp( node, "type" );
          if (buf == NULL) {
             ret = 1;
             if (ret)
-               ret = tech_loadItemGroup( tech, node );
+               ret = tech_addItemGroup( tech, name );
             if (ret)
-               ret = tech_loadItemOutfit( tech, node );
+               ret = tech_addItemOutfit( tech, name );
             if (ret)
-               ret = tech_loadItemShip( tech, node );
+               ret = tech_addItemShip( tech, name );
             if (ret)
-               ret = tech_loadItemCommodity( tech, node );
+               ret = tech_addItemCommodity( tech, name );
             if (ret) {
                WARN("Generic item '%s' not found in tech group '%s'",
-                     xml_get(node), tech->name );
+                     name, tech->name );
                continue;
             }
          }
          else if (strcmp(buf,"group")==0) {
-            if (!tech_loadItemGroup( tech, node )) {
+            if (!tech_addItemGroup( tech, name )) {
                WARN("Group item '%s' not found in tech group '%s'.",
-                     xml_get(node), tech->name );
+                     name, tech->name );
                continue;
             }
          }
          else if (strcmp(buf,"outfit")==0) {
-            if (!tech_loadItemGroup( tech, node )) {
+            if (!tech_addItemGroup( tech, name )) {
                WARN("Outfit item '%s' not found in tech group '%s'.",
-                     xml_get(node), tech->name );
+                     name, tech->name );
                continue;
             }
          }
          else if (strcmp(buf,"ship")==0) {
-            if (!tech_loadItemGroup( tech, node )) {
+            if (!tech_addItemGroup( tech, name )) {
                WARN("Ship item '%s' not found in tech group '%s'.",
-                     xml_get(node), tech->name );
+                     name, tech->name );
                continue;
             }
          }
          else if (strcmp(buf,"commodity")==0) {
-            if (!tech_loadItemGroup( tech, node )) {
+            if (!tech_addItemGroup( tech, name )) {
                WARN("Commodity item '%s' not found in tech group '%s'.",
-                     xml_get(node), tech->name );
+                     name, tech->name );
                continue;
             }
          }
@@ -367,23 +377,10 @@ static tech_item_t *tech_itemGrow( tech_group_t *grp )
 }
 
 
-/**
- * @brief Loads a group item pertaining to a outfit.
- *
- *    @return 0 on success.
- */
-static int tech_loadItemOutfit( tech_group_t *grp, xmlNodePtr parent )
+static int tech_addItemOutfit( tech_group_t *grp, const char *name )
 {
-   char *name;
    tech_item_t *item;
    Outfit *o;
-
-   /* Get the name. */
-   name = xml_get( parent );
-   if (name == NULL) {
-      WARN("Tech group '%s' has an item without a value.", grp->name);
-      return -1;
-   }
 
    /* Get the outfit. */
    o = outfit_getW( name );
@@ -403,18 +400,10 @@ static int tech_loadItemOutfit( tech_group_t *grp, xmlNodePtr parent )
  *
  *    @return 0 on success.
  */
-static int tech_loadItemShip( tech_group_t *grp, xmlNodePtr parent )
+static int tech_addItemShip( tech_group_t *grp, const char* name )
 {
-   char *name;
    tech_item_t *item;
    Ship *s;
-
-   /* Get the name. */
-   name = xml_get( parent );
-   if (name == NULL) {
-      WARN("Tech group '%s' has an item without a value.", grp->name);
-      return -1;
-   }
 
    /* Get the outfit. */
    s = ship_getW( name );
@@ -434,18 +423,10 @@ static int tech_loadItemShip( tech_group_t *grp, xmlNodePtr parent )
  *
  *    @return 0 on success.
  */
-static int tech_loadItemCommodity( tech_group_t *grp, xmlNodePtr parent )
+static int tech_addItemCommodity( tech_group_t *grp, const char* name )
 {
-   char *name;
    tech_item_t *item;
    Commodity *c;
-
-   /* Get the name. */
-   name = xml_get( parent );
-   if (name == NULL) {
-      WARN("Tech group '%s' has an item without a value.", grp->name);
-      return -1;
-   }
 
    /* Get the outfit. */
    c = commodity_getW( name );
@@ -457,6 +438,75 @@ static int tech_loadItemCommodity( tech_group_t *grp, xmlNodePtr parent )
    item->type     = TECH_TYPE_COMMODITY;
    item->u.comm   = c;
    return 0;
+}
+
+
+/**
+ * @brief Adds an item to a tech.
+ */
+int tech_addItem( const char *name, const char *value )
+{
+   int id, ret;
+   tech_group_t *tech;
+
+   /* Get ID. */
+   id = tech_getID( name );
+   if (id < 0) {
+      WARN("Trying to add item '%s' to non-existant tech '%s'.", value, name );
+      return -1;
+   }
+
+   /* Comfort. */
+   tech  = &tech_groups[id];
+
+   /* Try to add the techu. */ 
+   ret = tech_addItemGroup( tech, value );
+   if (ret)
+      ret = tech_addItemOutfit( tech, value );
+   if (ret)
+      ret = tech_addItemShip( tech, value );
+   if (ret)
+      ret = tech_addItemCommodity( tech, value );
+   if (ret) {
+      WARN("Generic item '%s' not found in tech group '%s'", value, name );
+      return -1;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @Brief Removes a tech item.
+ */
+int tech_rmItem( const char *name, const char *value )
+{
+   int id, i, s;
+   tech_group_t *tech;
+   char *buf;
+
+   /* Get ID. */
+   id = tech_getID( name);
+   if (id < 0) {
+      WARN("Trying to remove item '%s' to non-existant tech '%s'.", value, name );
+      return -1;
+   }
+
+   /* Comfort. */
+   tech  = &tech_groups[id];
+
+   /* Iterate over to find it. */
+   s = array_size( tech->items );
+   for (i=0; i<s; i++) {
+      buf = tech_getItemName( &tech->items[i] );
+      if (strcmp(buf, value)==0) {
+         array_erase( &tech->items, &tech->items[i], &tech->items[i+1] );
+         return 0;
+      }
+   }
+
+   WARN("Item '%s' not found in tech group '%s'", value, name );
+   return -1;
 }
 
 
@@ -490,18 +540,10 @@ static int tech_getID( const char *name )
  *
  *    @return 0 on success.
  */
-static int tech_loadItemGroup( tech_group_t *grp, xmlNodePtr parent )
+static int tech_addItemGroup( tech_group_t *grp, const char *name )
 {
-   char *name;
    tech_item_t *item;
    int tech;
-
-   /* Get the name. */
-   name = xml_get( parent );
-   if (name == NULL) {
-      WARN("Tech group '%s' has an item without a value.", grp->name);
-      return -1;
-   }
 
    /* Try to find the tech. */
    tech = tech_getID( name );

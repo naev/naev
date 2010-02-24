@@ -302,4 +302,13 @@
   <item>Pirate Kestrel</item>
   <item>Pirate Vendetta</item>
  </tech>
+
+ <tech name="Collective">
+ </tech>
+ <tech name="__Collective">
+  <item>Neutron Disruptor</item>
+  <item>Drone Fighter Bay</item>
+  <item>Drone Fighter</item>
+  <item>Drone</item>
+ </tech>
 </Techs>

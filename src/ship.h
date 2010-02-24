@@ -84,7 +84,6 @@ typedef struct Ship_ {
 
    /* store stuff */
    unsigned int price; /**< Cost to buy */
-   int tech; /**< Tech needed for it to be available.  See space.h. */
    char* license; /**< License needed to buy it. */
    char* fabricator; /**< company that makes it */
    char* description; /**< selling description */
