@@ -1353,9 +1353,9 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* start the linked lists */
-   open = closed =  NULL;
-   cur = A_newNode( ssys, NULL );
-   open = A_add( open, cur ); /* inital open node is the start system */
+   open  = closed = NULL;
+   cur   = A_newNode( ssys, NULL );
+   open  = A_add( open, cur ); /* inital open node is the start system */
 
    j = 0;
    while ((cur = A_lowest(open))->sys != esys) {
@@ -1398,6 +1398,10 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
             open = A_add( open, neighbour );
          }
       }
+
+      /* Sanity check in case not linked. */
+      if (open == NULL)
+         break;
    }
 
    /* build path backwards if not broken from loop. */
