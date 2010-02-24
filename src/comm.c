@@ -441,7 +441,7 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
          q = 0;
          r = 0;
          for (j=0; j<f->npilots; j++) {
-            q += (double)f->pilots[j].chance / 100.;
+            q++;
             r += f->pilots[j].ship->mass;
          }
          o += q;

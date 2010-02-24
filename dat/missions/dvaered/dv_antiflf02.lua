@@ -78,7 +78,7 @@ else -- default english
 end
 
 function create()
-    misn.setNPC("Dvaered liaison", "none") --TODO: add proper portrait
+    misn.setNPC("Dvaered liaison", "dv_liason")
     misn.setDesc(npc_desc)
 end
 

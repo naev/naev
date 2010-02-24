@@ -3615,3 +3615,19 @@ void pilot_clearTimers( Pilot *pilot )
          o->timer = 0.;
    }
 }
+
+
+/**
+ * @brief Updates the systemFleet of all pilots.
+ *
+ * @param index Index number that was deleted.
+ */
+void pilots_updateSystemFleet( const int deletedIndex ) {
+   int i;
+
+   for(i = 0; i < pilot_nstack; i++)
+      if(pilot_stack[i]->systemFleet >= deletedIndex)
+         pilot_stack[i]->systemFleet--;
+
+   return;
+}

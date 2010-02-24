@@ -428,9 +428,6 @@ static int pilotL_addFleet( lua_State *L )
 
       plt = &flt->pilots[i];
 
-      if (RNG(0,100) > plt->chance)
-         continue;
-
       /* Fleet displacement - first ship is exact. */
       if (!first)
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),

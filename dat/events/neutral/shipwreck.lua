@@ -51,6 +51,9 @@ end
 
 function broadcast()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
+    if not p[1]:exists() then
+       return
+    end
     p[1]:broadcast(string.format(broadcastmsg, shipname), true)
     bctimer = evt.timerStart("broadcast", 10000)
 end

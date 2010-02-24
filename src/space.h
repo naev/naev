@@ -202,7 +202,7 @@ typedef struct StarSystem_ {
    int npresence; /**< Number of elements in the presence array. */
    int spilled; /**< If the system has been spilled to yet. */
    int nsystemFleets; /**< The number of fleets in the system. */
-   SystemFleet *systemFleets; /* */
+   SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
@@ -240,8 +240,6 @@ int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
 int system_rmFleet( StarSystem *sys, Fleet *fleet );
-int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
-int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
 
 /*
  * render

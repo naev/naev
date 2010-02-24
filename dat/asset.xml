@@ -10,7 +10,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>299</value>
+   <value>301</value>
    <range>1</range>
   </presence>
   <general>
@@ -51,7 +51,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>287</value>
+   <value>296</value>
    <range>1</range>
   </presence>
   <general>
@@ -92,8 +92,6 @@
    <x>73</x>
   </pos>
   <presence>
-   <value>294</value>
-   <range>1</range>
   </presence>
   <general>
    <services>
@@ -154,7 +152,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>298</value>
+   <value>314</value>
    <range>1</range>
   </presence>
   <general>
@@ -192,7 +190,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>201</value>
+   <value>200</value>
    <range>2</range>
   </presence>
   <general>
@@ -215,7 +213,7 @@
    <x>-42</x>
   </pos>
   <presence>
-   <value>289</value>
+   <value>314</value>
    <range>1</range>
   </presence>
   <general>
@@ -257,7 +255,7 @@
    <x>80</x>
   </pos>
   <presence>
-   <value>287</value>
+   <value>306</value>
    <range>1</range>
   </presence>
   <general>
@@ -300,7 +298,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>305</value>
+   <value>303</value>
    <range>1</range>
   </presence>
   <general>
@@ -338,7 +336,7 @@
    <x>394</x>
   </pos>
   <presence>
-   <value>386</value>
+   <value>404</value>
    <range>1</range>
   </presence>
   <general>
@@ -370,7 +368,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>299</value>
+   <value>298</value>
    <range>1</range>
   </presence>
   <general>
@@ -401,8 +399,6 @@
    <x>-57</x>
   </pos>
   <presence>
-   <value>304</value>
-   <range>1</range>
   </presence>
   <general>
    <services />
@@ -423,7 +419,7 @@
    <x>47</x>
   </pos>
   <presence>
-   <value>301</value>
+   <value>297</value>
    <range>1</range>
   </presence>
   <general>
@@ -459,7 +455,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
+   <value>307</value>
    <range>1</range>
   </presence>
   <general>
@@ -496,7 +492,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>307</value>
+   <value>301</value>
    <range>1</range>
   </presence>
   <general>
@@ -532,7 +528,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>286</value>
+   <value>295</value>
    <range>1</range>
   </presence>
   <general>
@@ -570,7 +566,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>296</value>
+   <value>285</value>
    <range>1</range>
   </presence>
   <general>
@@ -610,7 +606,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>300</value>
+   <value>286</value>
    <range>1</range>
   </presence>
   <general>
@@ -649,7 +645,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>295</value>
+   <value>312</value>
    <range>1</range>
   </presence>
   <general>
@@ -687,7 +683,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>385</value>
+   <value>387</value>
    <range>1</range>
   </presence>
   <general>
@@ -725,7 +721,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>313</value>
+   <value>302</value>
    <range>1</range>
   </presence>
   <general>
@@ -756,8 +752,6 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>305</value>
-   <range>1</range>
   </presence>
   <general>
    <services />
@@ -778,7 +772,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>286</value>
+   <value>287</value>
    <range>1</range>
   </presence>
   <general>
@@ -815,7 +809,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>298</value>
+   <value>300</value>
    <range>1</range>
   </presence>
   <general>
@@ -892,7 +886,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>194</value>
+   <value>199</value>
    <range>2</range>
   </presence>
   <general>
@@ -915,7 +909,7 @@
    <x>-97</x>
   </pos>
   <presence>
-   <value>99</value>
+   <value>103</value>
    <range>1</range>
   </presence>
   <general>
@@ -954,7 +948,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>298</value>
+   <value>310</value>
    <range>1</range>
   </presence>
   <general>
@@ -991,7 +985,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>289</value>
+   <value>294</value>
    <range>1</range>
   </presence>
   <general>
@@ -1030,7 +1024,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>297</value>
+   <value>303</value>
    <range>1</range>
   </presence>
   <general>
@@ -1070,7 +1064,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>299</value>
+   <value>287</value>
    <range>1</range>
   </presence>
   <general>
@@ -1112,7 +1106,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>205</value>
+   <value>191</value>
    <range>2</range>
   </presence>
   <general>
@@ -1135,7 +1129,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>297</value>
+   <value>302</value>
    <range>0</range>
   </presence>
   <general>
@@ -1175,7 +1169,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>196</value>
+   <value>202</value>
    <range>2</range>
   </presence>
   <general>
@@ -1198,7 +1192,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>1173</value>
+   <value>1195</value>
    <range>6</range>
   </presence>
   <general>
@@ -1238,7 +1232,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>314</value>
+   <value>312</value>
    <range>1</range>
   </presence>
   <general>
@@ -1279,7 +1273,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>98</value>
+   <value>101</value>
    <range>1</range>
   </presence>
   <general>
@@ -1317,7 +1311,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>104</value>
+   <value>101</value>
    <range>1</range>
   </presence>
   <general>
@@ -1358,7 +1352,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>301</value>
+   <value>287</value>
    <range>1</range>
   </presence>
   <general>
@@ -1391,7 +1385,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>311</value>
+   <value>301</value>
    <range>1</range>
   </presence>
   <general>
@@ -1431,7 +1425,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>288</value>
+   <value>297</value>
    <range>1</range>
   </presence>
   <general>
@@ -1490,7 +1484,7 @@
    <x>-77</x>
   </pos>
   <presence>
-   <value>301</value>
+   <value>314</value>
    <range>0</range>
   </presence>
   <general>
@@ -1532,7 +1526,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>310</value>
+   <value>312</value>
    <range>1</range>
   </presence>
   <general>
@@ -1573,7 +1567,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>307</value>
+   <value>313</value>
    <range>1</range>
   </presence>
   <general>
@@ -1612,7 +1606,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>197</value>
+   <value>191</value>
    <range>2</range>
   </presence>
   <general>
@@ -1673,7 +1667,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>296</value>
+   <value>310</value>
    <range>1</range>
   </presence>
   <general>
@@ -1715,7 +1709,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>292</value>
+   <value>298</value>
    <range>0</range>
   </presence>
   <general>
@@ -1751,7 +1745,7 @@
    <x>400</x>
   </pos>
   <presence>
-   <value>103</value>
+   <value>99</value>
    <range>1</range>
   </presence>
   <general>
@@ -1787,8 +1781,6 @@
    <x>-90</x>
   </pos>
   <presence>
-   <value>292</value>
-   <range>1</range>
   </presence>
   <general>
    <tech>
@@ -1809,8 +1801,6 @@
    <x>-100</x>
   </pos>
   <presence>
-   <value>305</value>
-   <range>1</range>
   </presence>
   <general>
    <prodfactor>0.4</prodfactor>
@@ -1834,7 +1824,7 @@
    <x>400</x>
   </pos>
   <presence>
-   <value>297</value>
+   <value>307</value>
    <range>1</range>
   </presence>
   <general>
@@ -1870,7 +1860,7 @@
    <x>0</x>
   </pos>
   <presence>
-   <value>299</value>
+   <value>313</value>
    <range>1</range>
   </presence>
   <general>
@@ -1909,7 +1899,7 @@
    <x>300</x>
   </pos>
   <presence>
-   <value>384</value>
+   <value>390</value>
    <range>1</range>
   </presence>
   <general>
@@ -1943,7 +1933,7 @@
    <x>-80</x>
   </pos>
   <presence>
-   <value>305</value>
+   <value>300</value>
    <range>1</range>
   </presence>
   <general>
@@ -1982,7 +1972,7 @@
    <x>-80</x>
   </pos>
   <presence>
-   <value>310</value>
+   <value>293</value>
    <range>1</range>
   </presence>
   <general>
@@ -2044,6 +2034,24 @@
 
 
 
+ <asset name="Trader Presence Standard">
+  <general>
+   <faction>Trader</faction>
+  </general>
+  <presence>
+   <value>73</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Civilian Presence Standard">
+  <general>
+   <faction>Civilian</faction>
+  </general>
+  <presence>
+   <value>72</value>
+   <range>0</range>
+  </presence>
+ </asset>
  <asset name="Empire Unpresence">
   <general>
    <faction>Empire</faction>
@@ -2067,7 +2075,7 @@
    <faction>FLF</faction>
   </general>
   <presence>
-   <value>96</value>
+   <value>99</value>
    <range>0</range>
   </presence>
  </asset>
@@ -2076,7 +2084,7 @@
    <faction>Pirate</faction>
   </general>
   <presence>
-   <value>196</value>
+   <value>203</value>
    <range>3</range>
   </presence>
  </asset>
@@ -2085,7 +2093,7 @@
    <faction>Pirate</faction>
   </general>
   <presence>
-   <value>291</value>
+   <value>300</value>
    <range>2</range>
   </presence>
  </asset>
