@@ -521,6 +521,68 @@
    <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
   </general>
  </planet>
+ <planet name="Atalanta">
+  <pos>
+   <x>3970.000000</x>
+   <y>-780.000000</y>
+  </pos>
+  <GFX>
+   <space>P01.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>P</class>
+   <faction>Frontier</faction>
+   <population>2000000</population>
+   <prodfactor>0.000000</prodfactor>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Atalanta is named directly after the colony ship that settled it, Atalanta. Though the planet is too cold to be of any real value, the population is making a decent enough living thanks to the caches of heavy elements trapped under the ice.</description>
+   <bar>Like all structures on the planet Atalanta's bar is built under the ice, but it is quite close to the surface. This is because a spectacular lighting effect can be observed overhead when the sun shines directly on the ice. Atalanta's orbit makes this a rare occurrence, but the bar's profits soar during every cycle.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech> </planet>
+ <planet name="Avoss">
+  <pos>
+   <x>-3850.000000</x>
+   <y>3630.000000</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <faction>Frontier</faction>
+   <population>600000</population>
+   <prodfactor>0.000000</prodfactor>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Avoss was originally a mediocre, but habitable world. So, when the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselved fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity becan escalating off the charts everywhere, causing earthquakes and volcanic eruptions all over the world. Now, the world is devastated, a mere shadow of its former self. The colonists have managed to survive however, and remain even today.</description>
+  </general>
+ </planet>
  <planet name="Babylon I">
   <pos>
    <x>2650.000000</x>
@@ -682,7 +744,7 @@
     <commodity>Medicine</commodity>
    </commodities>
    <description>While Bon Sebb was once a popular tourist destination, the stop in neighbouring Apez, with its well-known Dowue Syndrome, has resulted in the tourism industry waning. It is now primarily known for its all-natural crops and herbal remedies.</description>
-   <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past, when it was a frontier world.</bar>
+   <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past.</bar>
   </general>
   <tech>
    <item>All Outfits</item>
@@ -988,7 +1050,7 @@
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Cetrat is a small aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it throughout the planet's massive ocean, there has been little effort in that field.</description>
+   <description>Cetrat is an aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it throughout the planet's massive ocean, there has been little effort in that field. Cetrat was colonized by the eighth colony ship launched during the First Growth, Brooklyn.</description>
    <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
   </general>
   <tech>
@@ -1367,7 +1429,7 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Gilligan's Light was one of the first systems to ever be chosen for a colonization project, and Dawn was the first world on which humans set foot in this sector of space. Dawn served as a staging point for further colonization of the Frontier during the first expansion of mankind, and as such had a lead start in planetary development. With the advent of hyperspace travel, Dawn found itself the local capital of the Frontier worlds. This status is strictly symbolic, but it explains why the FLF have chosen to rally around Gilligan's Light.</description>
+   <description>Gilligan's Light was one of the first systems to ever be chosen for a colonization project, and Dawn was the first world on which humans set foot in this sector of space, despite the fact that the colony ship sent here, Mythril, was only the fifth to be launched. Nevertheless, Dawn proved to be one of the most fertile expeditions in the First Growth, and its development outstripped that of most of the other worlds. With the advent of hyperspace travel, Dawn found itself the local capital of the Frontier worlds, and so is graced by the Frontier Council hanging overhead. This status is strictly symbolic, but it explains why the FLF have chosen to rally around Gilligan's Light.</description>
    <bar>Dawn's bar has a rustic feel to it, as the locals have made a point of keeping the style close to what was the prevalent design in the early expansion era. Other than that, this bar doesn't have much to set it apart from others. The noise, the smell and the drunks are features that are commonplace throughout the galaxy.</bar>
   </general>
  </planet>
@@ -1800,12 +1862,6 @@
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
    <services/>
-    <land/>
-    <refuel/>
-    <bar/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
@@ -1823,7 +1879,7 @@
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
-   <population>20000000000</population>
+   <population>-1474836480</population>
    <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
@@ -2802,6 +2858,63 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Gyrios II">
+  <pos>
+   <x>-730.000000</x>
+   <y>1260.000000</y>
+  </pos>
+  <GFX>
+   <space>K03.png</space>
+   <exterior>oceanic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Gyrios IV">
+  <pos>
+   <x>6840.000000</x>
+   <y>1810.000000</y>
+  </pos>
+  <GFX>
+   <space>A02.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
+ <planet name="Gyrios V">
+  <pos>
+   <x>7380.000000</x>
+   <y>-1750.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-C00.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Haleb IV">
   <pos>
    <x>-1467.278204</x>
@@ -3119,6 +3232,40 @@
    <bar>(null)</bar>
   </general>
  </planet>
+ <planet name="Jaegnhild">
+  <pos>
+   <x>3180.000000</x>
+   <y>-190.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-O00.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>O</class>
+   <faction>Frontier</faction>
+   <population>30000000</population>
+   <prodfactor>0.000000</prodfactor>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>There can almost be no greater contrast than there is between Jaegnhild and its primary, Uuries. One is an ocean world, filled with all kinds of unlikely forms of life, while the other is a lifeless chunk of coalesced dust. Jaegnhild was one of the last colonies established in the First Growth, but among all the chosen worlds it was perhaps the most suitable to life when the colony ship arrived. Though not many call the floating cities their home, the standard of living is unusually high for a Frontier world.</description>
+   <bar>Jaegnhild's bar is built into an ancient compartiment of the colony ship Pristine, which brought the first human settlers to this world so many years ago. Though most of the structure has been rebuilt using newer materials, the original plating can still be seen in places.</bar>
+  </general>
+  <tech>
+   <item>Basic Trade Ships</item>
+  </tech>
+ </planet>
  <planet name="Jorcan">
   <pos>
    <x>0.000000</x>
@@ -3175,8 +3322,9 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Jorlan is a small moon that orbits Haleb IV. It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent down to Haleb IV every dozen STU when the climate conditions are favorable, as outside of that narrow window, intense winds capable of severely damaging most ships persist.</description>
-   <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
+   <description>Jorlan is one of the least successful Frontier worlds. Its colony ship, Santa Maria, arrived to find a barren, desolate rock that had next to no potential for human inhabitants. But with the only other reachable planet being a gas giant, Santa Maria's captain was faced with the choice to settle or perish. Somehow, his expedition has managed to eke out an existence on Jorlan.
+Jorlan's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent to Haleb IV every dozen STU when the climate conditions are favorable.</description>
+   <bar>Rather out of character for a heavy-industry world, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
   </general>
   <tech>
    <item>Basic Outfits 2</item>
@@ -3251,18 +3399,34 @@
   </pos>
   <GFX>
    <space>Y00.png</space>
-   <exterior>mining2.png</exterior>
+   <exterior>methane.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>Y</class>
    <faction>Frontier</faction>
-   <population>0</population>
+   <population>-1294967296</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Khelim was the target world for Majestic, the eleventh colony ship sent from Earth in the First Growth. Majestic was populated chiefly by people from India and the Middle East, and though interstellar traffic has been commonplace for many years now, the characteristic features of that area can still be seen on the faces of the people of Khelim.</description>
+   <bar>The Crescent Blade bar is about as respectable as low-profile bars come. It has all the standard facilities the galactic traveler has come to rely on, and the service leaves nothing to be desired. Other than that, the place is unremarkable.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
  </planet>
  <planet name="Klantar I">
   <pos>
@@ -3472,6 +3636,44 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </planet>
+ <planet name="Lapra">
+  <pos>
+   <x>70.000000</x>
+   <y>4650.000000</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
+   <exterior>mining.png</exterior>
+  </GFX>
+  <general>
+   <class>K</class>
+   <faction>Frontier</faction>
+   <population>350000000</population>
+   <prodfactor>0.000000</prodfactor>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Though Coriolis was the second colony ship, it arrived at Lapra well after New Dortmund had been colonized due to technical difficulties and unforeseen incidents during the journey. When it finally did establish orbit around Lapra, it found a world so low on potential for life that the trip almost seemed like a lost cause. However, upon touchdown the colonists found that there were many useful minerals hidden below the surface of the planet. The colony on Lapra has survived, first out of sheer necessity and later by virtue of its exports.</description>
+   <bar>Lapra's bar looks more like a market than a place for relaxation, and indeed that is exactly what it is. Not only do traders come here to make transactions, the local population also uses the bar as a center for commerce. That said, one can still find a drink and a news terminal, if one looks hard enough.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Light Civilian Combat Ships</item>
+   <item>Bulk Trade Ships</item>
+  </tech>
  </planet>
  <planet name="Larling">
   <pos>
@@ -4022,13 +4224,30 @@
   <general>
    <class>A</class>
    <faction>Frontier</faction>
-   <population>0</population>
+   <population>1000000000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>New Dortmund was founded by the very first colony ship to leave Earth, Genesis. The planet itself was known only by its systematic designation for a long time, New Dortmund being the name of the settlement. However, since the settlement was the only thing the colonists knew for many years, its name became synonymous with the world. The moon Folevo was named after the leader of the Genesis expedition, who sadly perished only a few years after the initial touchdown.
+New Dortmund was never very successful in any sense of the term, but it is still pulling its weight in the overall Frontier economy.</description>
+   <bar>New Dortmund's spaceport bar is mostly deserted, the locals frequenting their own establishments and offworlders preferring to stay with their ships. The only reason the place is still running is because the Frontier Council subsidizes it, on the basis that a spaceport bar will help attract people to New Dortmund. So far, it hasn't.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Bulk Trade Ships</item>
+  </tech>
  </planet>
  <planet name="New Haven">
   <pos>
@@ -4058,7 +4277,7 @@
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>New Haven is a small planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated.The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
+   <description>New Haven is a planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated.The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
    <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
   </general>
   <tech>
@@ -5313,7 +5532,7 @@
     <missions/>
    </services>
    <commodities/>
-   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident. To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement. Meanwhile the Dvaereds use this base extensively in their fight against the FLF.</description>
+   <description>Raglan Outpost is the Dvaereds' single most visible presence in Frontier space. Officially, the station is a mixture of a trade station and an embassy for Dvaered citizens, but it is public knowledge that the Dvaered use the base as a stronghold in their fight against the FLF, and many Frontier inhabitants fear that in time it will also be the staging point for the Devaered invasion of the Frontier.</description>
    <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty. Though Dvaereds do like to drink, all outpost personnel are under standing orders to remain on alert, given the threat of FLF attack.</bar>
   </general>
  </planet>
@@ -6321,15 +6540,19 @@
   </pos>
   <GFX>
    <space>000.png</space>
-   <exterior>oceanic2.png</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
-   <population>0</population>
+   <class>0</class>
+   <faction>Frontier</faction>
+   <population>500</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
    <commodities/>
-   <description>(null)</description>
+   <description>This is the seat of the Frontier Council, the over-arching political body representing the Frontier to the rest of the galaxy. While the Council does not rule the Frontier worlds as such, it does set global policies such as trade taxes and constitutional standards.</description>
    <bar>(null)</bar>
   </general>
  </planet>
@@ -6359,18 +6582,36 @@
   </pos>
   <GFX>
    <space>M05.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>M</class>
    <faction>Frontier</faction>
-   <population>0</population>
+   <population>50000000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>When the thirteenth colony ship, Yamato Nadeshiko, arrived at Tori, it was sterile. though it had both water and carbon in abundant supply, there was no life to be found. With the arrival of the mostly Asian human colonists, this changed. Human flora thrived on the planet, and within a century the planet had acquired a fully functional ecosystem. This marvel has inspired the inhabitants of Tori to leave much of the world's surface to nature. Though this means Tori's economoc potential remains largely untapped, the thriving tourist industry largely compensates.</description>
+   <bar>The spaceport bar is more than just functional. Since most new arrivals on the planet come here first, the authorities have taken pains to make the bar appealing and comfortable. Of course, the fact that Tori is a tourist attraction also means drinks are quite expensive in this bar...</bar>
   </general>
+  <tech>
+   <item>Basic Civilian Ships</item>
+   <item>Basic Outfits 1</item>
+   <item>Low Tech Upgrades</item>
+   <item>Basic Trade Ships</item>
+  </tech>
  </planet>
  <planet name="Torloth">
   <pos>
@@ -6765,6 +7006,25 @@
    <item>Missiles 2</item>
   </tech>
  </planet>
+ <planet name="Uuries">
+  <pos>
+   <x>2880.000000</x>
+   <y>50.000000</y>
+  </pos>
+  <GFX>
+   <space>D00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <prodfactor>0.000000</prodfactor>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </planet>
  <planet name="Valt">
   <pos>
    <x>-4330.000000</x>
@@ -6854,7 +7114,7 @@
  </planet>
  <planet name="Varaati">
   <pos>
-   <x>2370.000000</x>
+   <x>2900.000000</x>
    <y>3050.000000</y>
   </pos>
   <GFX>
@@ -6862,15 +7122,33 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>M</class>
    <faction>Frontier</faction>
-   <population>0</population>
+   <population>500000000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>The sixteenth colony ship to be launched from Earth, Archimedes had many improvements over its predecessors. Though high-yield terraformind was still unknown in those days, the ship did have rather effective atmospheric equalizers and soil enhancers, which allowed it to transform Varaati from a primordeal world into a stable class M. Despite this success, Varaati's economic development started relatively late in the game, placing it a good distance behind Hope and Tori.</description>
+   <bar>Varaati's spaceport bar is one of those places where everything is in a state of disrepair, where none of the safety regulations are met and where the air is thick with odors you don't want to guess the origin of. In short, it's a great place to hang out.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Basic Trade Ships</item>
+   <item>Bulk Trade Ships</item>
+  </tech>
  </planet>
  <planet name="Varia">
   <pos>
@@ -7315,7 +7593,7 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Zhiru was a quiet planet, home of House Goddard, one of the minor Houses. House Goddard began designing a spacecraft, based on their airborne planes. The result was the massive Goddard, named after the house that created it. The ship was a massive success and granted House Goddard fame throughout the galaxy. Now Zhiru has a booming spacecraft industry, specialized in the creation and maintenance of the Goddard ships. This is all possible due to the weak gravity and atmosphere that envelops Zhiru, which allows the massive spacecraft to land and take off with little difficulty.</description>
+   <description>Zhiru was once home to Eduard Manuel Goddard, the man who single-handedly designed the then-revolutionary Goddard battlecruiser, and who would establish the minor House Goddard. Now Zhiru has a booming spacecraft industry, specialized in the creation and maintenance of the Goddard ships. This is all possible due to the weak gravity and atmosphere that envelops Zhiru, which allows the massive spacecraft to land and take off with little difficulty.</description>
    <bar>The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous ship, stripped and refitted in the form of a bar. It's surprisingly comfortable and cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
   </general>
   <tech>

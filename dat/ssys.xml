@@ -2541,6 +2541,37 @@
   </jumps>
   <fleets/>
  </ssys>
+ <ssys name="Gyrios">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>799.000000</x>
+   <y>-417.000000</y>
+  </pos>
+  <planets>
+   <planet>Gyrios II</planet>
+   <planet>Gyrios IV</planet>
+   <planet>Gyrios V</planet>
+   <planet>Jaegnhild</planet>
+   <planet>Lapra</planet>
+   <planet>Uuries</planet>
+  </planets>
+  <jumps>
+   <jump target="Karman">
+    <pos x="-1525.845355" y="-1980.352482"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
  <ssys name="Hades">
   <general>
    <radius>3500.000000</radius>
@@ -2960,6 +2991,7 @@
    <y>-478.000000</y>
   </pos>
   <planets>
+   <planet>Atalanta</planet>
    <planet>Karman I</planet>
    <planet>Karman II</planet>
   </planets>
@@ -2970,6 +3002,11 @@
     <flags>
      <autopos/>
     </flags>
+   </jump>
+   <jump target="Gyrios">
+    <pos x="3146.183497" y="3432.493475"/>
+    <radius>200.000000</radius>
+    <flags/>
    </jump>
    <jump target="Nougat">
     <pos x="-2975.928013" y="-1842.241151"/>
@@ -4549,6 +4586,7 @@
    <y>-312.000000</y>
   </pos>
   <planets>
+   <planet>Avoss</planet>
    <planet>Kotori</planet>
    <planet>Shickhaw I</planet>
    <planet>Shickhaw II</planet>
