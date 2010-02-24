@@ -33,7 +33,7 @@
    <fleetgroup name="Collective Light Presence">remove</fleetgroup>
    <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
-  <tech name="Collective">
+  <tech name="Heavy Civilian Combat Ships">
    <add>__Collective</add>
   </tech>
  </unidiff>

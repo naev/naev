@@ -171,7 +171,6 @@
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
-  <item>Neutron Disruptor</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>150mm Railgun Turret</item>
@@ -303,8 +302,6 @@
   <item>Pirate Vendetta</item>
  </tech>
 
- <tech name="Collective">
- </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
   <item>Drone Fighter Bay</item>
