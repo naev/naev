@@ -66,21 +66,21 @@
   <ai>proteron</ai>
   <faction>Proteron</faction>
   <pilots>
-   <pilot chance="100" ship="Kahan"></pilot>
+   <pilot chance="100" ship="Proteron Kahan"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Archimedes">
   <ai>proteron</ai>
   <faction>Proteron</faction>
   <pilots>
-   <pilot chance="100" ship="Archimedes"></pilot>
+   <pilot chance="100" ship="Proteron Archimedes"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Derivative">
   <ai>proteron</ai>
   <faction>Proteron</faction>
   <pilots>
-   <pilot chance="100" ship="Derivative"></pilot>
+   <pilot chance="100" ship="Proteron Derivative"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Pacifier">
