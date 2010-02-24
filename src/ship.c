@@ -451,7 +451,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       xmlr_int(node,"price",temp->price);
-      xmlr_int(node,"tech",temp->tech);
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
@@ -591,7 +590,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
-   MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->thrust==-1,"thrust");

@@ -329,7 +329,6 @@ typedef struct Outfit_ {
 
    /* general specs */
    OutfitSlotType slot; /**< Type of slot the outfit needs. */
-   int tech; /**< Tech needed to sell it. */
    char *license; /**< Licenses needed to buy it. */
    double mass; /**< How much weapon capacity is needed. */
 

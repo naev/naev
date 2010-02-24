@@ -37,6 +37,13 @@ int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp );
 
 
 /*
+ * Group addition/removal.
+ */
+int tech_addItem( const char *name, const char *value );
+int tech_rmItem( const char *name, const char *value );
+
+
+/*
  * Get.
  */
 Outfit** tech_getOutfit( tech_group_t *tech, int *n );
