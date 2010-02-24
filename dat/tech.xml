@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Techs>
+ <!-- EXAMPLE showing a tech may contain outfits, ships, commodities and other techs. -->
+ <!-- For details, see http://groups.google.com/group/naev/browse_thread/thread/76ece93aa9162ceb -->
  <tech name="Test">
   <item>Laser Cannon</item>
   <item>Llama</item>
@@ -10,5 +12,294 @@
   <item>Laser Cannon</item>
   <item>Mule</item>
   <item>Ore</item>
+ </tech>
+
+ <!-- Templates - add all new outfits, commodities and ships here! -->
+ <tech name="All Outfits">
+  <item>Laser Cannon</item>
+  <item>Laser Cannon MK2</item>
+  <item>Laser Turret</item>
+  <item>Laser Turret MK2</item>
+  <item>Plasma Blaster</item>
+  <item>Plasma Blaster MK2</item>
+  <item>Neutron Disruptor</item>
+  <item>Ion Cannon</item>
+  <item>Heavy Ion Turret</item>
+  <item>40mm Autocannon</item>
+  <item>150mm Railgun</item>
+  <item>150mm Railgun Turret</item>
+  <item>Ripper MK2</item>
+  <item>Base Ripper MK2</item>
+  <item>Orion Beam</item>
+  <item>Ragnarok Beam</item>
+  <item>Seeker Launcher</item>
+  <item>Seeker Missile</item>
+  <item>Headhunter Launcher</item>
+  <item>Headhunter Missile</item>
+  <item>Banshee Launcher</item>
+  <item>Banshee Rocket</item>
+  <item>Mace Launcher</item>
+  <item>Mace Rocket</item>
+  <item>Caesar IV Launcher</item>
+  <item>Caesar IV Missile</item>
+  <item>Imperator Launcher</item>
+  <item>Imperator Missile</item>
+  <item>EMP Grenade Launcher</item>
+  <item>EMP Grenade</item>
+  <item>Battery</item>
+  <item>Battery II</item>
+  <item>Battery III</item>
+  <item>Solar Panel</item>
+  <item>Reactor Class I</item>
+  <item>Reactor Class II</item>
+  <item>Reactor Class III</item>
+  <item>Shield Capacitor</item>
+  <item>Shield Capacitor II</item>
+  <item>Shield Capacitor III</item>
+  <item>Shield Capacitor IV</item>
+  <item>Shield Booster</item>
+  <item>Plasteel Plating</item>
+  <item>Nanobond Plating</item>
+  <item>Biometal Armour</item>
+  <item>Droid Repair Crew</item>
+  <item>Engine Reroute</item>
+  <item>Improved Stabilizer</item>
+  <item>Steering Thrusters</item>
+  <item>Generic Afterburner</item>
+  <item>Hellburner</item>
+  <item>Auxiliary Processing Unit I</item>
+  <item>Auxiliary Processing Unit II</item>
+  <item>Auxiliary Processing Unit III</item>
+  <item>Fuel Pod</item>
+  <item>Cargo Pod</item>
+  <item>Targeting Array</item>
+  <item>Forward Shock Absorbers</item>
+  <item>Power Regulation Override</item>
+  <item>Improved Power Regulator</item>
+  <item>Improved Refrigeration Cycle</item>
+  <item>Star Map</item>
+  <item>Civilian Jammer</item>
+  <item>Milspec Jammer</item>
+  <item>Lancelot Fighter Bay</item>
+  <item>Lancelot Fighter</item>
+  <item>Drone Fighter Bay</item>
+  <item>Drone Fighter</item>
+  <item>Large Civilian Vessel License</item>
+  <item>Medium Weapon License</item>
+  <item>Heavy Weapon License</item>
+  <item>Light Combat Vessel License</item>
+  <item>Medium Combat Vessel License</item>
+  <item>Heavy Combat Vessel License</item>
+ </tech>
+ <tech name="All Ships">
+  <item>Admonisher</item>
+  <item>Ancestor</item>
+  <item>Archimedes</item>
+  <item>Derivative</item>
+  <item>Drone</item>
+  <item>Dvaered Ancestor</item>
+  <item>Dvaered Goddard</item>
+  <item>Dvaered Vendetta</item>
+  <item>Dvaered Vigilance</item>
+  <item>Empire Admonisher</item>
+  <item>Empire Hawking</item>
+  <item>Empire Lancelot</item>
+  <item>Empire Pacifier</item>
+  <item>Empire Peacemaker</item>
+  <item>Gawain</item>
+  <item>Goddard</item>
+  <item>Hawking</item>
+  <item>Hyena</item>
+  <item>Kahan</item>
+  <item>Kestrel</item>
+  <item>Koala</item>
+  <item>Lancelot</item>
+  <item>Llama</item>
+  <item>Mule</item>
+  <item>Pacifier</item>
+  <item>Pirate Admonisher</item>
+  <item>Pirate Ancestor</item>
+  <item>Pirate Kestrel</item>
+  <item>Pirate Vendetta</item>
+  <item>Quicksilver</item>
+  <item>Schroedinger</item>
+  <item>Vendetta</item>
+  <item>Vigilance</item>
+ </tech>
+ <tech name="All Commodities">
+  <item>Food</item>
+  <item>Ore</item>
+  <item>Industrial Goods</item>
+  <item>Medicine</item>
+  <item>Luxury Goods</item>
+ </tech>
+ 
+ <!-- Outfits -->
+ <tech name="Basic Outfits 1">
+  <item>Laser Cannon</item>
+  <item>Plasma Blaster</item>
+  <item>Seeker Launcher</item>
+  <item>Seeker Missile</item>
+  <item>Battery</item>
+  <item>Solar Panel</item>
+  <item>Fuel Pod</item>
+  <item>Star Map</item>
+  </tech>
+ <tech name="Basic Outfits 2">
+  <item>Laser Cannon MK2</item>
+  <item>Plasma Blaster MK2</item>
+  <item>Banshee Launcher</item>
+  <item>Banshee Rocket</item>
+  <item>Reactor Class I</item>
+  <item>Shield Capacitor</item>
+  <item>Plasteel Plating</item>
+  <item>Engine Reroute</item>
+  <item>Generic Afterburner</item>
+  <item>Auxiliary Processing Unit I</item>
+  <item>Cargo Pod</item>
+  <item>Star Map</item>
+  <item>Civilian Jammer</item>
+  </tech>
+ <tech name="Heavy Weapons 1">
+  <item>Laser Turret</item>
+  <item>Ion Cannon</item>
+  <item>40mm Autocannon</item>
+  <item>150mm Railgun</item>
+  <item>Ripper MK2</item>
+  <item>EMP Grenade Launcher</item>
+  <item>EMP Grenade</item>
+  </tech>
+ <tech name="Heavy Weapons 2">
+  <item>Laser Turret MK2</item>
+  <item>Neutron Disruptor</item>
+  <item>Ion Cannon</item>
+  <item>Heavy Ion Turret</item>
+  <item>150mm Railgun Turret</item>
+  <item>Orion Beam</item>
+ </tech>
+ <tech name="Low Tech Upgrades">
+  <item>Battery</item>
+  <item>Solar Panel</item>
+  <item>Reactor Class I</item>
+  <item>Shield Capacitor</item>
+  <item>Shield Booster</item>
+  <item>Plasteel Plating</item>
+  <item>Engine Reroute</item>
+  <item>Auxiliary Processing Unit I</item>
+  <item>Fuel Pod</item>
+  <item>Cargo Pod</item>
+  <item>Star Map</item>
+  <item>Civilian Jammer</item>
+ </tech>
+ <tech name="High Tech Upgrades 1">
+  <item>Battery</item>
+  <item>Battery II</item>
+  <item>Solar Panel</item>
+  <item>Reactor Class I</item>
+  <item>Reactor Class II</item>
+  <item>Shield Capacitor</item>
+  <item>Shield Capacitor II</item>
+  <item>Shield Booster</item>
+  <item>Plasteel Plating</item>
+  <item>Nanobond Plating</item>
+  <item>Engine Reroute</item>
+  <item>Improved Stabilizer</item>
+  <item>Generic Afterburner</item>
+  <item>Auxiliary Processing Unit I</item>
+  <item>Auxiliary Processing Unit II</item>
+  <item>Fuel Pod</item>
+  <item>Cargo Pod</item>
+  <item>Targeting Array</item>
+  <item>Forward Shock Absorbers</item>
+  <item>Power Regulation Override</item>
+  <item>Star Map</item>
+  <item>Civilian Jammer</item>
+  <item>Lancelot Fighter Bay</item>
+  <item>Lancelot Fighter</item>
+ </tech>
+ <tech name="High Tech Upgrades 2">
+  <item>Battery III</item>
+  <item>Reactor Class II</item>
+  <item>Reactor Class III</item>
+  <item>Shield Capacitor III</item>
+  <item>Shield Capacitor IV</item>
+  <item>Biometal Armour</item>
+  <item>Droid Repair Crew</item>
+  <item>Steering Thrusters</item>
+  <item>Hellburner</item>
+  <item>Auxiliary Processing Unit III</item>
+  <item>Improved Power Regulator</item>
+  <item>Improved Refrigeration Cycle</item>
+  <item>Star Map</item>
+  <item>Milspec Jammer</item>
+  <item>Lancelot Fighter Bay</item>
+  <item>Lancelot Fighter</item>
+ </tech>
+ <tech name="Missiles 1">
+  <item>Banshee Launcher</item>
+  <item>Banshee Rocket</item>
+  <item>Seeker Launcher</item>
+  <item>Seeker Missile</item>
+ </tech>
+ <tech name="Missiles 2">
+  <item>Headhunter Launcher</item>
+  <item>Headhunter Missile</item>
+  <item>Mace Launcher</item>
+  <item>Mace Rocket</item>
+  <item>Caesar IV Launcher</item>
+  <item>Caesar IV Missile</item>
+ </tech>
+
+ <!-- Ships -->
+ <tech name="Basic Civilian Ships">
+  <item>Ancestor</item>
+  <item>Gawain</item>
+  <item>Hyena</item>
+  <item>Llama</item>
+  <item>Schroedinger</item>
+ </tech>
+ <tech name="Basic Trade Ships">
+  <item>Koala</item>
+  <item>Lancelot</item>
+ </tech>
+ <tech name="Bulk Trade Ships">
+  <item>Koala</item>
+  <item>Mule</item>
+ </tech>
+ <tech name="Light Civilian Combat Ships">
+  <item>Ancestor</item>
+  <item>Derivative</item>
+  <item>Hyena</item>
+  <item>Vendetta</item>
+ </tech>
+ <tech name="Heavy Civilian Combat Ships">
+  <item>Admonisher</item>
+  <item>Archimedes</item>
+  <item>Hawking</item>
+  <item>Lancelot</item>
+  <item>Pacifier</item>
+  <item>Vigilance</item>
+ </tech>
+ <tech name="Goddard Ship">
+  <item>Goddard</item>
+ </tech>
+ <tech name="Empire Military Ships">
+  <item>Empire Admonisher</item>
+  <item>Empire Hawking</item>
+  <item>Empire Lancelot</item>
+  <item>Empire Pacifier</item>
+  <item>Empire Peacemaker</item>
+ </tech>
+ <tech name="Dvaered Military Ships">
+  <item>Dvaered Ancestor</item>
+  <item>Dvaered Goddard</item>
+  <item>Dvaered Vendetta</item>
+  <item>Dvaered Vigilance</item>
+ </tech>
+ <tech name="Pirate Ships">
+  <item>Pirate Admonisher</item>
+  <item>Pirate Ancestor</item>
+  <item>Pirate Kestrel</item>
+  <item>Pirate Vendetta</item>
  </tech>
 </Techs>

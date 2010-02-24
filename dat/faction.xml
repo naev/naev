@@ -9,7 +9,7 @@
  </faction>
  <faction name="Independent">
   <player>3</player>
-  <colour>cyan</colour>
+  <colour>blue</colour>
   <allies>
    <ally>Trader</ally>
   </allies>
