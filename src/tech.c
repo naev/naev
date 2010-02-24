@@ -450,7 +450,7 @@ int tech_addItem( const char *name, const char *value )
    tech_group_t *tech;
 
    /* Get ID. */
-   id = tech_getID( name);
+   id = tech_getID( name );
    if (id < 0) {
       WARN("Trying to add item '%s' to non-existant tech '%s'.", value, name );
       return -1;
@@ -460,16 +460,15 @@ int tech_addItem( const char *name, const char *value )
    tech  = &tech_groups[id];
 
    /* Try to add the techu. */ 
-   ret = tech_addItemGroup( tech, name );
+   ret = tech_addItemGroup( tech, value );
    if (ret)
-      ret = tech_addItemOutfit( tech, name );
+      ret = tech_addItemOutfit( tech, value );
    if (ret)
-      ret = tech_addItemShip( tech, name );
+      ret = tech_addItemShip( tech, value );
    if (ret)
-      ret = tech_addItemCommodity( tech, name );
+      ret = tech_addItemCommodity( tech, value );
    if (ret) {
-      WARN("Generic item '%s' not found in tech group '%s'",
-            name, tech->name );
+      WARN("Generic item '%s' not found in tech group '%s'", value, name );
       return -1;
    }
 
