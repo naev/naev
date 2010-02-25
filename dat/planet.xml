@@ -1879,7 +1879,7 @@
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
-   <population>1474836480</population>
+   <population>3000000000</population>
    <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
@@ -1890,9 +1890,12 @@
     <outfits/>
     <shipyard/>
    </services>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Dvaer Prime is the capital world in Dvaered space. It was the world on which the Old Empire granted House Dvaered its status as a Great House, and the Dvaered chose to name their people after it. However, iconic though the planet may be, it is of little actual consequence. At best it is fought over jealously by the Dvaered Warlords, who consider ownership of the world a matter of great prestige, but otherwise there is nothing that sets Dvaer Prime apart from other planets. After all, the decisions are all made in Dvaered High Command, which floats in high orbit over Dvaer Prime.</description>
+   <bar>Dvaer Prime sports a well appointed spaceport bar. It is not so much luxurious as it is grimy, but at least all necessary facilities are present and in working order, and the drinks are decent enough by Dvaered standards. A holopainting on the wall commemorates the inauguration ceremony for House Dvaered, but it is faded and warped in places, a testament to the fact that most Dvaered citizens have long ago forgotten that they are technically still part of the Empire.</bar>
   </general>
   <tech>
    <item>Bulk Trade Ships</item>
@@ -1918,18 +1921,17 @@
    <services>
     <land/>
     <refuel/>
-    <bar/>
     <outfits/>
     <shipyard/>
    </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>This is Dvaered High Command, the true seat of power over all Dvaered controlled territories. It is here that the Dvaered Generals come together and decide on a course of action for the Dvaered military forces. Understandably, Dvaered High Command is a military stronghold, one of the most heavily guarded places in the galaxy. One needs a certain amount of Dvaered commendations to even be allowed to set foot on the station.</description>
   </general>
   <tech>
    <item>Dvaered Military Ships</item>
    <item>Low Tech Upgrades</item>
    <item>High Tech Upgrades 1</item>
+   <item>Heavy Weapons 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -1960,18 +1962,30 @@
   </pos>
   <GFX>
    <space>002.png</space>
-   <exterior>station00.png</exterior>
+   <exterior>station03.png</exterior>
   </GFX>
   <general>
    <class>0</class>
    <faction>Dvaered</faction>
-   <population>0</population>
+   <population>4000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <outfits/>
+    <shipyard/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>Eclipse Station is the major military outpost in this area of Dvaered space. It serves as a customs checkpoint for Imperial and Consortium traders looking to travel to Dvaer and beyond. Simultaneously, it is charged with minimizing the Pirate threat in this region of space. It therefore comes as no surprise that Eclipse Station stations a sizeable fleet.</description>
+   <bar>This bar is clearly not a place for relaxation. It is frequented mostly by traders who are waiting for their shipments to clear. The appointments are drab and functional, and the smell of cleaning chemicals is prevalent.</bar>
   </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </planet>
  <planet name="Eiderdown I">
   <pos>
@@ -3912,18 +3926,36 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>M06.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>M</class>
    <faction>Dvaered</faction>
-   <population>0</population>
+   <population>600000000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Mannannan is one of the more frequently visited Dvaered worlds. Uncharacteristically for a Dvaered planet, its political policies and its economy have remained fairly stable, since none of the Warlords controlling the planet have ever bothered to change the local laws in major ways. This has made Mannannan a favorable place to trade for foreigners. Of course, the Dvaered Warlords seem to be oblivious of this, so Mannannan will likely continue to be a unicum.</description>
+   <bar>This bar is one of many. The increase in trade has also brought an increase in tastes, so there are several places that cater to particular tastes, even some very unsavory ones. Fortunately, the most accessible bar seems to be as respectable as bars come.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
  </planet>
  <planet name="Massia I">
   <pos>
@@ -6317,7 +6349,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Missiles 1</item>
    <item>Missiles 2</item>
    <item>Low Tech Upgrades</item>
-   <item>Heavy Civilian Combat Ships</item>
+   <item>Dvaered Military Ships</item>
   </tech>
  </planet>
  <planet name="Stutee">
@@ -6327,18 +6359,33 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-M06.png</space>
-   <exterior>aquatic2.png</exterior>
+   <exterior>forest2.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>M</class>
    <faction>Dvaered</faction>
-   <population>0</population>
+   <population>7000000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Stutee is a former prison world of the Old Empire. Since it had a breathable atmosphere and little else, it was deemed perfect for dropping off criminals and then forgetting about them. However, as the lower class workers rebelled against the Empire, resulting in the inception of House Dvaered, Stutee came to fall under the jurisdiction of the new Great House. House Dvaered decided to settle Stutee more permanently, bringing the former convicts under their rule and setting them to work. Though Stutee is still of little material value, its location one jump off Dvaer makes up for that.</description>
+   <bar>Stutee's bar is located right off the spaceport. Though the planet has been settled and proper infrastructure is now present, the world is not very appealing to any who visit. As such, the spaceport bar is arguably the most important meeting place on the face of the moon.</bar>
   </general>
+  <tech>
+   <item>Low Tech Upgrades</item>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+  </tech>
  </planet>
  <planet name="Sudra">
   <pos>
@@ -7288,18 +7335,34 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>P00.png</space>
-   <exterior>forest2.png</exterior>
+   <exterior>snow.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>P</class>
    <faction>Dvaered</faction>
-   <population>0</population>
+   <population>40000000</population>
    <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Frozen worlds are usually not colonized unless there is very good reason. Vilati Vilata is no exception. The world offers a wealth of valuable natural resources, as well as expansive sibglacial cavern systems that lend themselves quite well to human habitation. The Dvaered have based what would become one of their most successful industrial franchises on this planet, so although nobody likes living here, the place is home to a sizeable amount of workers.</description>
+   <bar>The bar is cold. It must be mentioned. Every effort has been made to minimize loss of heat from the building, but given the bar's close proximity to the spaceport, which is exposed to the elements, and the constant flow of customers, it has proven impossible to keep out the cold. This situation has given rise to a number of unkind jokes about the Vilati bar, which are told throughout the galaxy.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
  </planet>
  <planet name="Vlexair">
   <pos>
