@@ -993,13 +993,12 @@ void space_init ( const char* sysname )
    cur_system->nsystemFleets = 0;
 
    /* Reset any schedules and used presence. */
-   cur_system->presence[i].curUsed = 0;
-   for(i = 0; i < cur_system->npresence; i++) {
-      cur_system->presence[i].curUsed = 0;
-      cur_system->presence[i].schedule.chain = 0;
-      cur_system->presence[i].schedule.fleet = NULL;
-      cur_system->presence[i].schedule.time = 0;
-      cur_system->presence[i].schedule.penalty = 0;
+   for (i=0; i < cur_system->npresence; i++) {
+      cur_system->presence[i].curUsed           = 0;
+      cur_system->presence[i].schedule.chain    = 0;
+      cur_system->presence[i].schedule.fleet    = NULL;
+      cur_system->presence[i].schedule.time     = 0;
+      cur_system->presence[i].schedule.penalty  = 0;
    }
 
    /* Call the scheduler. */
@@ -1562,8 +1561,6 @@ void systems_reconstructPlanets (void)
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
    Planet* planet;
-   Fleet *fleet;
-   Fleet *flt;
    char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
@@ -1581,7 +1578,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
    node  = parent->xmlChildrenNode;
-
    do { /* load all the data */
 
       /* Only handle nodes. */
@@ -1631,32 +1627,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"asset"))
                system_addPlanet( sys, xml_get(cur) );
-         } while (xml_nextNode(cur));
-         continue;
-      }
-      /* loads all the fleets */
-      else if (xml_isNode(node,"fleets")) {
-         cur = node->children;
-         do {
-            if (xml_isNode(cur,"fleet")) {
-               /* Try to load it as a fleet. */
-               flt = fleet_get(xml_get(cur));
-               if (flt == NULL) {
-                  WARN("Fleet '%s' for Star System '%s' not found",
-                       xml_get(cur), sys->name);
-                  continue;
-               }
-               /* Get the fleet. */
-               fleet = flt;
-
-               /* Get the chance. */
-               xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
-               if (ptrc)
-                  free(ptrc); /* free the ptrc */
-
-               /* Add the fleet. */
-               system_addFleet( sys, fleet );
-            }
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2142,7 +2112,7 @@ static void space_renderPlanet( Planet *p )
  */
 void space_exit (void)
 {
-   int i, j;
+   int i;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -2197,12 +2167,6 @@ void space_exit (void)
 
       if(systems_stack[i].presence)
          free(systems_stack[i].presence);
-
-      if (systems_stack[i].nfltdat > 0) {
-         for (j=0; j<systems_stack[i].nfltdat; j++)
-            free(systems_stack[i].fltdat[j]);
-         free(systems_stack[i].fltdat);
-      }
 
       free(systems_stack[i].planets);
    }
