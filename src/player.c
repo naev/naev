@@ -1424,7 +1424,8 @@ void player_targetPlanet (void)
    while (player.p->nav_planet < cur_system->nplanets) {
 
       /* In range, target planet. */
-      if ((cur_system->planets[planet_target]->real == ASSET_REA) && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
+      if ((cur_system->planets[ player.p->nav_planet ]->real == ASSET_REAL)
+            && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
          player_playSound(snd_nav, 1);
          player.p->nav_hyperspace = -1;
          return;

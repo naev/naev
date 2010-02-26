@@ -1112,7 +1112,7 @@ static void gui_renderRadar( double dt )
     * planets
     */
    for (i=0; i<cur_system->nplanets; i++)
-      if ((cur_system->planets[i]->real == ASSET_REAL) && (i != planet_target))
+      if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
          gui_renderPlanet( i );
    if (player.p->nav_planet > -1)
       gui_renderPlanet( player.p->nav_planet );

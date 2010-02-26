@@ -428,6 +428,7 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_PLANET_REMOVE:
                WARN("   [%s] planet remove: '%s'", target, fail->u.name);
                break;
+#if 0
             case HUNK_TYPE_FLEET_ADD:
                WARN("   [%s] fleet add: '%s' (%d%% chance)", target, 
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
@@ -444,6 +445,7 @@ static int diff_patch( xmlNodePtr parent )
                WARN("   [%s] fleetgroup remove: '%s'", target,
                      fail->u.fleetgroup->name );
                break;
+#endif
             case HUNK_TYPE_TECH_ADD:
                WARN("   [%s] tech add: '%s'", target, 
                      fail->u.name );

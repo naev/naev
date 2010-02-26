@@ -833,7 +833,7 @@ static void space_addFleet( Fleet* fleet, int init )
 
       /* Entering via hyperspace. */
       if (c==0) {
-         vect_pset( &vv, HYPERSPACE_VEL, a );
+         space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
          flags |= PILOT_HYP_END;
       }
       /* Starting out landed. */
@@ -845,30 +845,8 @@ static void space_addFleet( Fleet* fleet, int init )
          vect_pset( &vv, plt->ship->speed * 0.5, a );
 
       /* Create the pilot. */
-      if (RNG(0,100) <= plt->chance) {
-         /* other ships in the fleet should start split up */
-         vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-               RNG(75,150) * (RNG(0,1) ? 1 : -1));
-         a = vect_angle(&vp, &vn);
-         if (a < 0.)
-            a += 2.*M_PI;
-         flags = 0;
-
-         /* Entering via hyperspace. */
-         if (c==0)
-            space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
-         /* Starting out landed. */
-         else if (c==1)
-            vectnull(&vv);
-         /* Starting out almost landed. */
-         else if (c==2)
-            /* Put speed at half in case they start very near. */
-            vect_pset( &vv, plt->ship->speed * 0.5, a );
-
-         /* Create the pilot. */
-         fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
-         fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags, (cur_system->nsystemFleets - 1) );
-      }
+      fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags, (cur_system->nsystemFleets - 1) );
+   }
 }
 
 
@@ -1880,9 +1858,6 @@ int space_load (void)
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
 
-      /* Calculate system properties. */
-      system_calcSecurity( sys );
-
       /* Save jump indexes. */
       for (j=0; j<sys->njumps; j++)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
@@ -2159,7 +2134,6 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 static void space_renderPlanet( Planet *p )
 {
    gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
->>>>>>> bigsys
 }
 
 
@@ -2553,29 +2527,29 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    qn = q_create();
 
    /* Create the initial queue consisting of sys adjacencies. */
-   for(i = 0; i < sys->njumps; i++)
-      if(system_getIndex(sys->jumps[i])->spilled == 0) {
-         q_enqueue(q, system_getIndex(sys->jumps[i]));
-         system_getIndex(sys->jumps[i])->spilled = 1;
+   for (i = 0; i < sys->njumps; i++)
+      if (sys->jumps[i].target->spilled == 0) {
+         q_enqueue( q, sys->jumps[i].target );
+         sys->jumps[i].target->spilled = 1;
       }
 
    /* If it's empty, something's wrong. */
-   if(q_isEmpty(q)) {
+   if (q_isEmpty(q)) {
       WARN("q is empty after getting adjancies of %s.", sys->name);
       presenceCleanup(sys);
 
       return;
    }
 
-   while(curSpill < range) {
+   while (curSpill < range) {
       /* Pull one off the current range queue. */
       cur = q_dequeue(q);
 
       /* Enqueue all its adjancencies to the next range queue. */
-      for(i = 0; i < cur->njumps; i++)
-         if(system_getIndex(cur->jumps[i])->spilled == 0) {
-            q_enqueue(qn, system_getIndex(cur->jumps[i]));
-            system_getIndex(cur->jumps[i])->spilled = 1;
+      for (i = 0; i < cur->njumps; i++)
+         if (sys->jumps[i].target->spilled == 0) {
+            q_enqueue( qn, sys->jumps[i].target );
+            sys->jumps[i].target->spilled = 1;
          }
 
       /* Spill some presence. */
