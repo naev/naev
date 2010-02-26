@@ -51,7 +51,7 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
 {
    int i;
 
-   xmlw_startElem( writer, "planet" );
+   xmlw_startElem( writer, "asset" );
 
    /* Attributes. */
    xmlw_attr( writer, "name", "%s", p->name );
@@ -135,7 +135,7 @@ int dpl_saveAll (void)
 
    /* Start writer. */
    xmlw_start(writer);
-   xmlw_startElem( writer, "Planets" );
+   xmlw_startElem( writer, "Assets" );
 
    /* Sort planets. */
    p        = planet_getAll( &np );
@@ -152,14 +152,14 @@ int dpl_saveAll (void)
    free(sorted_p);
 
    /* End writer. */
-   xmlw_endElem( writer ); /* "Systems" */
+   xmlw_endElem( writer ); /* "Assets" */
    xmlw_done( writer );
 
    /* No need for writer anymore. */
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   xmlSaveFileEnc( "planet.xml", doc, "UTF-8" );
+   xmlSaveFileEnc( "asset.xml", doc, "UTF-8" );
 
    /* Clean up. */
    xmlFreeDoc(doc);
