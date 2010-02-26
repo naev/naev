@@ -149,12 +149,13 @@ typedef struct SystemFleet_ {
  *
  * @brief Represents the schedule for the arrival of a fleet in a system.
  */
-typedef struct Schedule_ {
+typedef struct FleetSchedule_ {
    Fleet *fleet; /**< Pointer to the fleet to spawn. */
    double time; /**< Time for this schedule to finish. */
    double penalty; /**< The penalty for the arrival of the next fleet. */
    int chain; /**< Whether or not the next fleet will chain. */
-} Schedule;
+} FleetSchedule;
+
 
 /**
  * @struct SystemPresence
@@ -165,8 +166,9 @@ typedef struct SystemPresence_ {
    int faction; /**< Faction of this presence. */
    double value; /**< Amount of presence. */
    double curUsed; /**< Presence currently used. */
-   Schedule schedule; /**< Schedule for the arrival of fleets. */
+   FleetSchedule schedule; /**< Schedule for the arrival of fleets. */
 } SystemPresence;
+
 
 /*
  * Jump point flags.
@@ -196,6 +198,7 @@ typedef struct JumpPoint_ {
    int sy; /**< Y sprite to use. */
 } JumpPoint;
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
+
 
 /**
  * @struct StarSystem
@@ -231,10 +234,6 @@ struct StarSystem_ {
    Fleet** fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
-
-   /* Fleet data - @TODO Remove in favour of more sane fleet spawn system. */
-   char **fltdat;
-   int nfltdat;
 
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
