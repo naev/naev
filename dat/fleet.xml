@@ -544,7 +544,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Peacemaker" chance="100" ship="Peacemaker"></pilot>
+   <pilot name="Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Sml Defense">
@@ -560,7 +560,7 @@
    <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
    <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
    <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" chance="100" ship="Peacemaker"></pilot>
+   <pilot name="Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lge Attack">
@@ -580,7 +580,7 @@
    <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
    <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
    <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" chance="100" ship="Peacemaker"></pilot>
+   <pilot name="Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Med Attack">
