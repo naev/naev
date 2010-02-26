@@ -143,8 +143,8 @@ static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
-void scheduler( double dt, int init );
-void removeSystemFleet( const int systemFleetIndex );
+static void system_scheduler( double dt, int init );
+static void system_rmSystemFleet( const int systemFleetIndex );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
@@ -602,7 +602,8 @@ int planet_exists( const char* planetname )
  *                   0 for normal.
  *                   2 for initialising a system.
  */
-void scheduler ( const double dt, int init ) {
+static void system_scheduler( double dt, int init )
+{
    int i;
    double str;
 
@@ -674,7 +675,7 @@ void scheduler ( const double dt, int init ) {
 
    /* If we're initialising, call ourselves again, to actually spawn any that need to be. */
    if(init == 2)
-      scheduler(0, 1);
+      system_scheduler(0, 1);
 
    return;
 }
@@ -693,7 +694,7 @@ void space_update( const double dt )
 
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
-      scheduler(dt, 0);
+      system_scheduler(dt, 0);
 
    /*
     * Volatile systems.
@@ -1002,7 +1003,7 @@ void space_init ( const char* sysname )
    }
 
    /* Call the scheduler. */
-   scheduler(0, 2);
+   system_scheduler(0, 2);
 
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
@@ -2621,7 +2622,8 @@ int system_hasPlanet( StarSystem *sys ) {
  *
  * @param systemFleetIndex The system fleet to remove.
  */
-void removeSystemFleet( const int systemFleetIndex ) {
+static void system_rmSystemFleet( const int systemFleetIndex )
+{
    int presenceIndex;
 
    presenceIndex =
@@ -2658,7 +2660,7 @@ void system_removePilotFromSystemFleet( const int systemFleetIndex ) {
    cur_system->systemFleets[systemFleetIndex].npilots--;
 
    if(cur_system->systemFleets[systemFleetIndex].npilots == 0)
-      removeSystemFleet(systemFleetIndex);
+      system_rmSystemFleet(systemFleetIndex);
 
    return;
 }
