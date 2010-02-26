@@ -77,6 +77,7 @@
 #include "event.h"
 #include "cond.h"
 #include "land.h"
+#include "tech.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -344,7 +345,7 @@ int main( int argc, char** argv )
 
    /* Free the icon. */
    if (naev_icon)
-      free(naev_icon);
+      SDL_FreeSurface(naev_icon);
 
    SDL_Quit(); /* quits SDL */
 
@@ -480,7 +481,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     10. /**< Amount of loading stages. */
+#define LOADING_STAGES     12. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* order is very important as they're interdependent */
@@ -488,21 +489,23 @@ void load_all (void)
    commodity_load(); /* dep for space */
    loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
    factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 2./LOADING_STAGES, "Loading AI..." );
+   loadscreen_render( 3./LOADING_STAGES, "Loading AI..." );
    ai_load(); /* dep for fleets */
-   loadscreen_render( 3./LOADING_STAGES, "Loading Missions..." );
+   loadscreen_render( 4./LOADING_STAGES, "Loading Missions..." );
    missions_load(); /* no dep */
-   loadscreen_render( 4./LOADING_STAGES, "Loading Events..." );
+   loadscreen_render( 5./LOADING_STAGES, "Loading Events..." );
    events_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, "Loading Special Effects..." );
+   loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Outfits..." );
+   loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
    outfit_load(); /* dep for ships */
-   loadscreen_render( 7./LOADING_STAGES, "Loading Ships..." );
+   loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 8./LOADING_STAGES, "Loading Fleets..." );
+   loadscreen_render( 9./LOADING_STAGES, "Loading Fleets..." );
    fleet_load(); /* dep for space */
-   loadscreen_render( 9./LOADING_STAGES, "Loading the Universe..." );
+   loadscreen_render( 10./LOADING_STAGES, "Loading Techs..." );
+   tech_load(); /* dep for space */
+   loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
    loadscreen_render( 1., "Loading Completed!" );
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
@@ -515,6 +518,7 @@ void unload_all (void)
    /* data unloading - inverse load_all is a good order */
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
+   tech_free(); /* Frees tech stuff. */
    fleet_free();
    ships_free();
    outfit_free();

@@ -29,7 +29,7 @@ function atk_g_think ()
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy )
+         ai.pushtask( "attack", enemy )
       end
    end
 end
@@ -43,7 +43,7 @@ function atk_g_attacked( attacker )
 
    -- If no target automatically choose it
    if not ai.exists(target) then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
       return
    end
 
@@ -53,7 +53,7 @@ function atk_g_attacked( attacker )
 
    if target ~= attacker and dist < tdist and
          dist < range * mem.atk_changetarget then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
    end
 end
 
@@ -78,7 +78,7 @@ function atk_g ()
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask( 0, "board", target );
+      ai.pushtask( "board", target );
       return
    end
 

@@ -609,10 +609,10 @@ void input_update (void)
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
-(player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
-!pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
-!pilot_isFlag(player,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
-#define NODEAD()  (player && !pilot_isFlag(player,PILOT_DEAD)) /**< Player isn't dead. */
+((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
+!pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
+!pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+#define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  (!landed) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
@@ -645,12 +645,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* accelerating */
    if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_accel(kabs);
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
-            player_abortAutonav(NULL);
+            if (!paused) player_abortAutonav(NULL);
             player_accel(1.);
          }
             
@@ -683,14 +683,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning left */
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_LEFT); 
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) { 
-            player_abortAutonav(NULL);
+            if (!paused) player_abortAutonav(NULL);
             player_setFlag(PLAYER_TURN_LEFT); 
             player_left = 1.;
          }
@@ -703,14 +703,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning right */
    } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_RIGHT);
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            player_abortAutonav(NULL);
+            if (!paused) player_abortAutonav(NULL);
             player_setFlag(PLAYER_TURN_RIGHT);
             player_right = 1.;
          }
@@ -723,7 +723,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
@@ -736,7 +736,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* shooting primary weapon */
    } else if (KEY("primary") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) { 
-         player_abortAutonav(NULL);
          player_setFlag(PLAYER_PRIMARY);
       }
       else if (value==KEY_RELEASE) 
@@ -759,7 +758,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* face the target */
    } else if (KEY("face") && !repeat) {
       if (value==KEY_PRESS) { 
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_FACE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
@@ -768,7 +767,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_board();
       }
    } else if (KEY("safety") && INGAME() && !repeat) {
@@ -795,13 +794,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("e_targetPrev") && !repeat) {
       if (value==KEY_PRESS) player_targetEscort(1);
    } else if (INGAME() && NODEAD() && KEY("e_attack") && !repeat) {
-      if (value==KEY_PRESS) escorts_attack(player);
+      if (value==KEY_PRESS) escorts_attack(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_hold") && !repeat) {
-      if (value==KEY_PRESS) escorts_hold(player);
+      if (value==KEY_PRESS) escorts_hold(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_return") && !repeat) {
-      if (value==KEY_PRESS) escorts_return(player);
+      if (value==KEY_PRESS) escorts_return(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_clear") && !repeat) {
-      if (value==KEY_PRESS) escorts_clear(player);
+      if (value==KEY_PRESS) escorts_clear(player.p);
 
 
    /*
@@ -810,7 +809,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* shooting secondary weapon */
    } else if (KEY("secondary") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
          player_setFlag(PLAYER_SECONDARY);
       }
       else if (value==KEY_RELEASE)
@@ -834,7 +832,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_land();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
@@ -846,7 +844,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         if (!paused) player_abortAutonav(NULL);
          player_jump();
       }
 

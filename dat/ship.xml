@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Ships>
  <!-- Light Craft -->
  <ship name="Llama">
@@ -9,7 +9,6 @@
   <class>Yacht</class>
   <price>120000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>2</tech>
   <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
    <thrust>220</thrust>
@@ -48,7 +47,6 @@
   <class>Fighter</class>
   <price>180000</price>
   <fabricator>Aerosys</fabricator>
-  <tech>2</tech>
   <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
   <movement>
    <thrust>300</thrust>
@@ -86,7 +84,6 @@
   <class>Scout</class>
   <price>180000</price>
   <fabricator>Sirius Systems</fabricator>
-  <tech>5</tech>
   <description>The Schroedinger is primarily used as a reconnaissance vessel. It requires a skeleton crew due to its advanced automation subsystems, and its proprietary fuel tanks allow it to have range much greater than most ships. The downside is that the ship is extremely vulnerable to attack due to its light armour and low amount of weapons space. It is also equipped with a pair of Eraedon engines, making it highly manoeuvrable.</description>
   <movement>
    <thrust>260</thrust>
@@ -125,7 +122,6 @@
   <class>Luxury Yacht</class>
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>11</tech>
   <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
   <movement>
    <thrust>320</thrust>
@@ -165,7 +161,6 @@
   <class>Drone</class>
   <price>300000</price>
   <fabricator>Robosys</fabricator>
-  <tech>9999</tech>
   <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
   <movement>
    <thrust>320</thrust>
@@ -204,7 +199,6 @@
   <class>Courier</class>
   <price>260000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>5</tech>
   <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
   <movement>
    <thrust>200</thrust>
@@ -245,7 +239,6 @@
   <class>Courier</class>
   <price>800000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>8</tech>
   <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
   <movement>
    <thrust>260</thrust>
@@ -289,7 +282,6 @@
   <class>Freighter</class>
   <price>900000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>5</tech>
   <license>Large Civilian Vessel License</license>
   <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
   <movement>
@@ -336,7 +328,6 @@
   <class>Fighter</class>
   <price>290000</price>
   <fabricator>Krain Industries</fabricator>
-  <tech>5</tech>
   <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
   <movement>
    <thrust>280</thrust>
@@ -376,7 +367,6 @@
   <class>Fighter</class>
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>7</tech>
   <license>Light Combat Vessel License</license>
   <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
   <movement>
@@ -419,7 +409,6 @@
   <class>Fighter</class>
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Light Combat Vessel License</license>
   <description>An Empire Lancelot.</description>
   <movement>
@@ -462,7 +451,6 @@
   <class>Fighter</class>
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>8</tech>
   <license>Light Combat Vessel License</license>
   <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
   <movement>
@@ -504,7 +492,6 @@
   <class>Fighter</class>
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
   <description>A Dvaered Vendetta.</description>
   <movement>
    <thrust>200</thrust>
@@ -545,7 +532,6 @@
   <class>Fighter</class>
   <price>450000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
   <movement>
    <thrust>210</thrust>
@@ -586,7 +572,6 @@
   <class>Bomber</class>
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9</tech>
   <license>Light Combat Vessel License</license>
   <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
   <movement>
@@ -627,7 +612,6 @@
   <class>Bomber</class>
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
   <license>Light Combat Vessel License</license>
   <description>A Dvaered Ancestor.</description>
   <movement>
@@ -668,7 +652,6 @@
   <class>Bomber</class>
   <price>550000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targetting systems.</description>
   <movement>
    <thrust>180</thrust>
@@ -709,7 +692,6 @@
   <class>Corvette</class>
   <price>900000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>10</tech>
   <license>Medium Combat Vessel License</license>
   <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <movement>
@@ -754,7 +736,6 @@
   <class>Corvette</class>
   <price>850000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
   <movement>
    <thrust>205</thrust>
@@ -798,7 +779,6 @@
   <class>Corvette</class>
   <price>900000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>An Empire Admonisher.</description>
   <movement>
@@ -843,7 +823,6 @@
   <class>Destroyer</class>
   <price>1200000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>8</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
@@ -890,7 +869,6 @@
   <class>Destroyer</class>
   <price>1200000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
@@ -937,7 +915,6 @@
   <class>Destroyer</class>
   <price>2100000</price>
   <fabricator>House Proteron</fabricator>
-  <tech>1002</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <movement>
@@ -983,7 +960,6 @@
   <class>Destroyer</class>
   <price>1500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>8</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
   <movement>
@@ -1029,7 +1005,6 @@
   <class>Destroyer</class>
   <price>1500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
   <movement>
@@ -1076,7 +1051,6 @@
   <class>Cruiser</class>
   <price>6000000</price>
   <fabricator>Krain Industries</fabricator>
-  <tech>12</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
   <movement>
@@ -1125,7 +1099,6 @@
   <class>Cruiser</class>
   <price>5700000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
   <movement>
    <thrust>110</thrust>
@@ -1173,7 +1146,6 @@
   <class>Cruiser</class>
   <price>6250000</price>
   <fabricator>House Proteron</fabricator>
-  <tech>1002</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The Archimedes is a last-generation heavy cruiser. While many were being retired at the time of the Incident, the remnants of House Proteron have retrofitted them and offered some for sale to the public.</description>
   <movement>
@@ -1225,7 +1197,6 @@
   <class>Cruiser</class>
   <price>7500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
   <movement>
@@ -1276,7 +1247,6 @@
   <class>Cruiser</class>
   <price>7500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Heavy Combat Vessel License</license>
   <description>An Empire Hawking.</description>
   <movement>
@@ -1327,7 +1297,6 @@
   <class>Cruiser</class>
   <price>11500000</price>
   <fabricator>House Goddard</fabricator>
-  <tech>1001</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The archaic design of the Goddard is deceiving. Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
   <movement>
@@ -1379,7 +1348,6 @@
   <class>Cruiser</class>
   <price>11500000</price>
   <fabricator>House Goddard</fabricator>
-  <tech>9999</tech>
   <license>Heavy Combat Vessel License</license>
   <description>A Dvaered Goddard.</description>
   <movement>
@@ -1423,7 +1391,7 @@
    <low />
   </slots>
  </ship>
- <ship name="Peacemaker">
+ <ship name="Empire Peacemaker">
   <base_type>Peacemaker</base_type>
   <GFX sx="12" sy="12">peacemaker</GFX>
   <GUI>minimal</GUI>
@@ -1431,7 +1399,6 @@
   <class>Cruiser</class>
   <price>18000000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Heavy Combat Vessel License</license>
   <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the fiercest vessels in the galaxy, dwarfing even the mighty Goddard. So utterly devestating is this ship, that none are available to civilians.</description>
   <movement>
@@ -1485,7 +1452,6 @@
   <class>Cruiser</class>
   <price>1</price>
   <fabricator>N/A</fabricator>
-  <tech>9999</tech>
   <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
   <movement>
    <thrust>0</thrust>

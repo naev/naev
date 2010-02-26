@@ -129,7 +129,7 @@ int nlua_loadPlayer( lua_State *L, int readonly )
  */
 static int playerL_getname( lua_State *L )
 {
-   lua_pushstring(L,player_name);
+   lua_pushstring(L,player.name);
    return 1;
 }
 /**
@@ -140,7 +140,7 @@ static int playerL_getname( lua_State *L )
  */
 static int playerL_shipname( lua_State *L )
 {
-   lua_pushstring(L,player->name);
+   lua_pushstring(L,player.p->name);
    return 1;
 }
 /**
@@ -151,7 +151,7 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_freeSpace( lua_State *L )
 {
-   lua_pushnumber(L, pilot_cargoFree(player) );
+   lua_pushnumber(L, pilot_cargoFree(player.p) );
    return 1;
 }
 /**
@@ -181,7 +181,7 @@ static int playerL_pay( lua_State *L )
  */
 static int playerL_credits( lua_State *L )
 {
-   lua_pushnumber(L,player->credits);
+   lua_pushnumber(L,player.p->credits);
    return 1;
 }
 /**
@@ -269,7 +269,7 @@ static int playerL_getFaction( lua_State *L )
  */
 static int playerL_getRating( lua_State *L )
 {
-   lua_pushnumber(L, player_crating);
+   lua_pushnumber(L, player.crating);
    lua_pushstring(L, player_rating());
    return 2;
 }
@@ -286,7 +286,7 @@ static int playerL_getPosition( lua_State *L )
 {
    LuaVector v;
 
-   vectcpy( &v.vec, &player->solid->pos );
+   vectcpy( &v.vec, &player.p->solid->pos );
    lua_pushvector(L, v);
    return 1;
 }
@@ -316,7 +316,7 @@ static int playerL_getPilot( lua_State *L )
  */
 static int playerL_fuel( lua_State *L )
 {
-   lua_pushnumber(L,player->fuel);
+   lua_pushnumber(L,player.p->fuel);
    return 1;
 }
 
@@ -336,13 +336,13 @@ static int playerL_refuel( lua_State *L )
 
    if (lua_gettop(L) > 0) {
       f = luaL_checknumber(L,1);
-      player->fuel += f;
+      player.p->fuel += f;
    }
    else
-      player->fuel = player->fuel_max;
+      player.p->fuel = player.p->fuel_max;
 
    /* Make sure value is sane. */
-   player->fuel = CLAMP(0, player->fuel_max, player->fuel);
+   player.p->fuel = CLAMP(0, player.p->fuel_max, player.p->fuel);
 
    return 0;
 }
@@ -513,7 +513,7 @@ static int playerL_evtDone( lua_State *L )
 /**
  * @brief Teleports the player to a new system.
  *
- * Does not change the position nor velocity of the player, which will probably be wrong in the new system.
+ * Does not change the position nor velocity of the player.p, which will probably be wrong in the new system.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to arcanis.
  *
@@ -527,16 +527,25 @@ static int playerL_teleport( lua_State *L )
    /* Get a system. */
    sys = luaL_checksystem(L,1);
 
+   /* Jump out hook is run first. */
+   hooks_run( "jumpout" );
+
+   /* Just in case remove hyperspace flags. */
+   pilot_rmFlag( player.p, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+
    /* Go to the new system. */
    space_init( sys->s->name );
 
-   /* Run hooks - order is important. */
-   hooks_run( "jumpout" );
-   hooks_run( "jumpin" );
-   hooks_run( "enter" );
-
    /* Map gets deformed when jumping this way. */
    map_clear();
+
+   /* Add the escorts. */
+   player_addEscorts();
+
+   /* Run hooks - order is important. */
+   hooks_run( "jumpin" );
+   hooks_run( "enter" );
+   events_trigger( EVENT_TRIGGER_ENTER );
 
    return 0;
 }

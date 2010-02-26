@@ -225,17 +225,18 @@ static int tab_key( Widget* tab, SDL_Event *event )
    /* Handle keypresses. */
    switch (key) {
       case SDLK_TAB:
-         if (mod & NMOD_SHIFT) {
-            if (mod & NMOD_CTRL)
+         if (mod & NMOD_CTRL) {
+            if (mod & NMOD_SHIFT)
                change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
             else
                change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
          }
          else {
-            if (mod & NMOD_CTRL)
-               toolkit_prevFocus( wdw );
-            else
+            /* This is entirely backwards, but it's working around existing widget placement. */
+            if (mod & NMOD_SHIFT)
                toolkit_nextFocus( wdw );
+            else
+               toolkit_prevFocus( wdw );
          }
          ret = 1;
          break;

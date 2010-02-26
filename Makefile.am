@@ -17,7 +17,7 @@ NAEV	     = naev$(EXEEXT)
 EXTRA_DIST = LICENSE conf.example
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
-.PHONY: docs help install-ndata
+.PHONY: docs help install-ndata VERSION
 
 all-local: $(NAEV)
 
@@ -34,7 +34,6 @@ VERSION:
 if HAVE_UTILS
 $(DATA_ARCHIVE): $(PACK) VERSION
 	@echo " PACK   $(DATA_ARCHIVE)"
-	test -f $(top_srcdir)/VERSION || mv -n VERSION "$(top_srcdir)"; \
 	cd "$(top_srcdir)" && \
 	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)" \
 	  AUTHORS VERSION \
@@ -43,9 +42,7 @@ $(DATA_ARCHIVE): $(PACK) VERSION
 	     find snd     -type f \
 	          \( -name '*.ogg' -o -name '*.wav' -o -name '*.lua' \); \
 	     find scripts -type f -name '*.lua'; \
-	     find dat     -type f); \
-	test -f $(abs_top_builddir)/VERSION \
-	  || mv -n VERSION "$(abs_top_builddir)"
+	     find dat     -type f);
 else
 $(DATA_ARCHIVE):
 	@echo "***"

@@ -1,1848 +1,5842 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
- <ssys name="Draygar">
-  <jumps>
-   <jump>Tau Prime</jump>
-  </jumps>
-  <pos>
-   <y>-148</y>
-   <x>201</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-   <asset>Anecu</asset>
-  </assets>
+ <ssys name="Acheron">
   <general>
-   <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7723">
-  <jumps>
-   <jump>NGC-7783</jump>
-   <jump>NGC-7843</jump>
-   <jump>NGC-7693</jump>
-  </jumps>
-  <pos>
-   <y>198</y>
-   <x>85</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>160</stars>
-  </general>
- </ssys>
- <ssys name="Raelid">
-  <jumps>
-   <jump>Tau Prime</jump>
-   <jump>Toaxis</jump>
-   <jump>Zacron</jump>
-   <jump>Surano</jump>
-   <jump>Arcanis</jump>
-  </jumps>
-  <pos>
-   <y>-137</y>
-   <x>269</x>
-  </pos>
-  <assets>
-   <asset>Raelid Outpost</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">100</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Delta Pavonis">
-  <jumps>
-   <jump>Cygnus</jump>
-   <jump>Goddard</jump>
-   <jump>Alteris</jump>
-  </jumps>
-  <pos>
-   <y>-55</y>
-   <x>38</x>
-  </pos>
-  <assets>
-   <asset>Caladan</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Zylex">
-  <jumps>
-   <jump>Sigur</jump>
-   <jump>Doeston</jump>
-   <jump>Arcanis</jump>
-  </jumps>
-  <pos>
-   <y>-91</y>
-   <x>434</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>300</interference>
-   <nebula volatility="0">250</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Arandon">
-  <jumps>
-   <jump>Zerantix</jump>
-   <jump>Polaris</jump>
-   <jump>Doeston</jump>
-   <jump>Oriantis</jump>
-  </jumps>
-  <pos>
-   <y>43</y>
-   <x>566</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>600</interference>
-   <nebula volatility="100">600</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Apez">
-  <jumps>
-   <jump>Arcturus</jump>
-    <jump>Gamma Polaris</jump>
-    <jump>Hekaras</jump>
-    <jump>Zied</jump>
-  </jumps>
-  <pos>
-   <y>-320</y>
-   <x>-80</x>
-  </pos>
-  <assets>
-   <asset>Dowue</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Arcturus">
-  <jumps>
-   <jump>Goddard</jump>
-    <jump>Gamma Polaris</jump>
-    <jump>Apez</jump>
-  </jumps>
-  <pos>
-   <y>-246</y>
-   <x>-40</x>
-  </pos>
-  <assets>
-   <asset>Antica</asset>
-   <asset>Arcturus Gamma</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Protera">
-  <jumps>
-   <jump>Shakar</jump>
-  </jumps>
-  <pos>
-   <y>-206</y>
-   <x>-100</x>
-  </pos>
-  <assets>
-   <asset>Protera Sigma</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Hekaras">
-  <jumps>
-   <jump>Apez</jump>
-  </jumps>
-  <pos>
-   <y>-280</y>
-   <x>0</x>
-  </pos>
-  <assets>
-   <asset>Hurada</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
-  <ssys name="Zied">
-  <jumps>
-   <jump>Apez</jump>
-  </jumps>
-  <pos>
-   <y>-340</y>
-   <x>-10</x>
-  </pos>
-  <assets>
-   <asset>Bon Sebb</asset>
-   <asset>Saturn VI</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Sirou">
-  <jumps>
-   <jump>Gamma Polaris</jump>
-  </jumps>
-  <pos>
-   <y>-267</y>
-   <x>-215</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7690">
-  <jumps>
-   <jump>Coriolis</jump>
-   <jump>Capricorn</jump>
-   <jump>NGC-7414</jump>
-  </jumps>
-  <pos>
-   <y>110</y>
-   <x>-5</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7693">
-  <jumps>
-   <jump>NGC-7723</jump>
-   <jump>Coriolis</jump>
-   <jump>Haven</jump>
-  </jumps>
-  <pos>
-   <y>134</y>
-   <x>81</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="NGC-8037">
-  <jumps>
-   <jump>Sigur</jump>
-  </jumps>
-  <pos>
-   <y>19</y>
-   <x>368</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>300</interference>
-   <nebula volatility="0">250</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Doranthex">
-  <jumps>
-   <jump>Torg</jump>
-   <jump>Dakron</jump>
-   <jump>Tuoladis</jump>
-   <jump>Ogat</jump>
-   <jump>Tarsus</jump>
-  </jumps>
-  <pos>
-   <y>-353</y>
-   <x>187</x>
-  </pos>
-  <assets>
-   <asset>Doranthex Prime</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Tarsus">
-  <jumps>
-   <jump>Dakron</jump>
-   <jump>Doranthex</jump>
-   <jump>Verex</jump>
-  </jumps>
-  <pos>
-   <y>-403</y>
-   <x>247</x>
-  </pos>
-  <assets>
-   <asset>Valt</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7843">
-  <jumps>
-   <jump>NGC-7723</jump>
-   <jump>New Haven</jump>
-  </jumps>
-  <pos>
-   <y>235</y>
-   <x>155</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>120</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7843">
-  <jumps>
-   <jump>NGC-7723</jump>
-   <jump>New Haven</jump>
-  </jumps>
-  <pos>
-   <y>235</y>
-   <x>155</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>120</stars>
-  </general>
- </ssys>
- <ssys name="Verex">
-  <jumps>
-   <jump>Tarsus</jump>
-   <jump>Ginger</jump>
-   <jump>Darkstone</jump>
-   <jump>Blunderbuss</jump>
-  </jumps>
-  <pos>
-   <y>-453</y>
-   <x>207</x>
-  </pos>
-  <assets>
-   <asset>Verex III</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Ginger">
-  <jumps>
-   <jump>Verex</jump>
-  </jumps>
-  <pos>
-   <y>-505</y>
-   <x>237</x>
-  </pos>
-  <assets>
-   <asset>Ullnorn</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Darkstone">
-   <jumps>
-   <jump>Verex</jump>
-   <jump>Beeklo</jump>
-  </jumps>
-  <pos>
-   <y>-535</y>
-   <x>180</x>
-  </pos>
-  <assets>
-   <asset>Varia</asset>
-   <asset>Stalwart Station</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Blunderbuss">
-   <jumps>
-   <jump>Verex</jump>
-  </jumps>
-  <pos>
-   <y>-491</y>
-   <x>140</x>
-  </pos>
-  <assets>
-   <asset>Utsuwa</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Beeklo">
-  <jumps>
-   <jump>Darkstone</jump>
-  </jumps>
-  <pos>
-   <y>-565</y>
-   <x>240</x>
-  </pos>
-  <assets>
-   <asset>Totoran</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7843">
-  <jumps>
-   <jump>NGC-7723</jump>
-   <jump>New Haven</jump>
-  </jumps>
-  <pos>
-   <y>235</y>
-   <x>155</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>120</stars>
-  </general>
- </ssys>
- <ssys name="Arcanis">
-  <jumps>
-   <jump>Zylex</jump>
-    <jump>Raelid</jump>
-  </jumps>
-  <pos>
-   <y>-57</y>
-   <x>333</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>200</interference>
-   <nebula volatility="0">200</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Shakar">
-  <jumps>
-   <jump>Borla</jump>
-   <jump>Gamma Polaris</jump>
-   <jump>Protera</jump>
-  </jumps>
-  <pos>
-   <y>-195</y>
-   <x>-170</x>
-  </pos>
-  <assets>
-   <asset>Nova Shakar</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Thorndyke">
-  <jumps>
-   <jump>Mizar</jump>
-   <jump>Pilatis</jump>
-  </jumps>
-  <pos>
-   <y>83</y>
-   <x>223</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>150</interference>
-   <nebula volatility="0">150</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Doeston">
-  <jumps>
-   <jump>Arandon</jump>
-   <jump>Myad</jump>
-   <jump>Sigur</jump>
-   <jump>Toros</jump>
-   <jump>Zylex</jump>
-  </jumps>
-  <pos>
-   <y>-43</y>
-   <x>513</x>
-  </pos>
-  <assets>
-   <asset>Cerberus</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>400</interference>
-   <nebula volatility="0">400</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Torg">
-  <jumps>
-   <jump>Doranthex</jump>
-  </jumps>
-  <pos>
-   <y>-387</y>
-   <x>140</x>
-  </pos>
-  <assets>
-   <asset>Jorcan</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>100</stars>
-  </general>
- </ssys>
- <ssys name="Ogat">
-  <jumps>
-   <jump>Goddard</jump>
-    <jump>Vlexon</jump>
-    <jump>Zacron</jump>
-    <jump>Doranthex</jump>
-  </jumps>
-  <pos>
-   <y>-250</y>
-   <x>150</x>
-  </pos>
-  <assets>
-   <asset>Praxis</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="C-00">
-  <jumps>
-   <jump>C-28</jump>
-   <jump>C-14</jump>
-  </jumps>
-  <pos>
-   <y>167</y>
-   <x>-296</x>
-  </pos>
-  <assets>
-   <asset>S00000</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>100</stars>
-  </general>
- </ssys>
- <ssys name="Zerantix">
-  <jumps>
-   <jump>Arandon</jump>
-  </jumps>
-  <pos>
-   <y>64</y>
-   <x>677</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>700</interference>
-   <nebula volatility="250">750</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="C-28">
-  <jumps>
-   <jump>C-00</jump>
-   <jump>C-43</jump>
-   <jump>C-59</jump>
-   <jump>C-14</jump>
-  </jumps>
-  <pos>
-   <y>99</y>
-   <x>-265</x>
-  </pos>
-  <assets>
-   <asset>S38729</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="Sigur">
-  <jumps>
-   <jump>NGC-8037</jump>
-   <jump>Zylex</jump>
-   <jump>Doeston</jump>
-  </jumps>
-  <pos>
-   <y>-15</y>
-   <x>435</x>
-  </pos>
-  <assets>
-   <asset>Empire Unpresence</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>350</interference>
-   <nebula volatility="0">300</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7414">
-  <jumps>
-   <jump>NGC-7291</jump>
-    <jump>NGC-7690</jump>
-  </jumps>
-  <pos>
-   <y>82</y>
-   <x>-82</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>150</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7273">
-  <jumps>
-   <jump>NGC-7291</jump>
-   <jump>NGC-6938</jump>
-   <jump>NGC-7324</jump>
-  </jumps>
-  <pos>
-   <y>-15</y>
-   <x>-32</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-   <asset>Pirate Presence Medium</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>300</stars>
-  </general>
- </ssys>
- <ssys name="Dune">
-  <jumps>
-   <jump>Coriolis</jump>
-   <jump>NGC-7789</jump>
-   <jump>Eridani</jump>
-  </jumps>
-  <pos>
-   <y>90</y>
-   <x>130</x>
-  </pos>
-  <assets>
-   <asset>Arrakis</asset>
-   <asset>Pirate Presence Medium</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>300</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
- </ssys>
- <ssys name="Coriolis">
-  <jumps>
-   <jump>Dune</jump>
-   <jump>Alteris</jump>
-   <jump>NGC-7690</jump>
-    <jump>NGC-7693</jump>
-  </jumps>
   <pos>
-   <y>73</y>
-   <x>46</x>
+   <x>-32.000000</x>
+   <y>-15.000000</y>
   </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>300</stars>
-  </general>
- </ssys>
- <ssys name="Slaccid">
+  <planets/>
   <jumps>
-    <jump>Haleb</jump>
-    <jump>Norpin</jump>
+   <jump target="Fortitude">
+    <pos x="-3195.232527" y="1428.456894"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Merisi">
+    <pos x="-2357.214987" y="-2587.187180"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sikh">
+    <pos x="53.839783" y="3499.585872"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
-  <pos>
-   <y>-376</y>
-   <x>483</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
  </ssys>
- <ssys name="Gamma Polaris">
-  <jumps>
-   <jump>Qex</jump>
-   <jump>Sirou</jump>
-   <jump>Shakar</jump>
-    <jump>Arcturus</jump>
-    <jump>Apez</jump>
-    <jump>Koralis</jump>
-  </jumps>
-  <pos>
-   <y>-296</y>
-   <x>-172</x>
-  </pos>
-  <assets>
-   <asset>Emperor's Fist</asset>
-   <asset>Polaris Prime</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
+ <ssys name="Adraia">
   <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- 
-  <ssys name="Koralis">
-  <jumps>
-   <jump>Qex</jump>
-    <jump>Gamma Polaris</jump>
-  </jumps>
-  <pos>
-   <y>-330</y>
-   <x>-222</x>
-  </pos>
-  <assets>
-   <asset>Paxsor</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- 
- <ssys name="Cygnus">
-  <jumps>
-   <jump>Delta Pavonis</jump>
-  </jumps>
-  <pos>
-   <y>-81</y>
-   <x>60</x>
-  </pos>
-  <assets>
-   <asset>Torloth</asset>
-   <asset>Pirate Presence Medium</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Tau Prime">
-  <jumps>
-   <jump>Draconis</jump>
-   <jump>Draygar</jump>
-   <jump>Raelid</jump>
-  </jumps>
-  <pos>
-   <y>-94</y>
-   <x>197</x>
-  </pos>
-  <assets>
-   <asset>Tau Prime</asset>
-   <asset>Tau Station</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">100</nebula>
-   <stars>600</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
- </ssys>
- <ssys name="Polaris">
-  <jumps>
-   <jump>Arandon</jump>
-   <jump>Sol</jump>
-  </jumps>
   <pos>
-   <y>128</y>
-   <x>590</x>
+   <x>997.000000</x>
+   <y>-510.000000</y>
   </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
+  <planets/>
+  <jumps>
+   <jump target="Gilligan's Retreat">
+    <pos x="-2736.416904" y="-2182.205886"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Vanir">
+    <pos x="-635.972741" y="3441.734835"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Aesir">
   <general>
-   <asteroids>0</asteroids>
-   <interference>800</interference>
-   <nebula volatility="300">800</nebula>
+   <radius>3500.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Capricorn">
-  <jumps>
-   <jump>NGC-7690</jump>
-  </jumps>
-  <pos>
-   <y>148</y>
-   <x>-54</x>
-  </pos>
-  <assets>
-   <asset>Durea</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
- </ssys>
- <ssys name="Pilatis">
-  <jumps>
-   <jump>Thorndyke</jump>
-  </jumps>
   <pos>
-   <y>122</y>
-   <x>277</x>
+   <x>1047.000000</x>
+   <y>-342.000000</y>
   </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>300</interference>
-   <nebula volatility="0">200</nebula>
-   <stars>300</stars>
-  </general>
- </ssys>
- <ssys name="Haven">
+  <planets>
+   <planet>Aesir IV</planet>
+   <planet>Gayathi</planet>
+   <planet>Mutris</planet>
+   <planet>Urail</planet>
+  </planets>
   <jumps>
-   <jump>NGC-7693</jump>
+   <jump target="Vanir">
+    <pos x="-2314.532963" y="-2625.440375"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
-  <pos>
-   <y>180</y>
-   <x>0</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-   <asset>Pirate Presence Medium</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>300</interference>
-   <nebula volatility="0">200</nebula>
-   <stars>300</stars>
-  </general>
- </ssys>
- <ssys name="C-43">
-  <jumps>
-   <jump>C-14</jump>
-   <jump>C-59</jump>
-   <jump>NGC-7132</jump>
-   <jump>C-28</jump>
-  </jumps>
-  <pos>
-   <y>47</y>
-   <x>-262</x>
-  </pos>
-  <assets>
-   <asset>S23491</asset>
-   <asset>Eiroik</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7291">
-  <jumps>
-   <jump>NGC-7273</jump>
-   <jump>NGC-7132</jump>
-   <jump>NGC-7414</jump>
-  </jumps>
-  <pos>
-   <y>23</y>
-   <x>-117</x>
-  </pos>
-  <assets>
-   <asset>Omega Station</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>300</stars>
-  </general>
- </ssys>
- <ssys name="Borla">
-  <jumps>
-   <jump>Shakar</jump>
-  </jumps>
-  <pos>
-   <y>-143</y>
-   <x>-222</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Mizar">
-  <jumps>
-   <jump>Surano</jump>
-   <jump>Eridani</jump>
-   <jump>Thorndyke</jump>
-  </jumps>
-  <pos>
-   <y>19</y>
-   <x>197</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">100</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7132">
-  <jumps>
-   <jump>NGC-7291</jump>
-   <jump>C-59</jump>
-   <jump>C-43</jump>
-  </jumps>
-  <pos>
-   <y>55</y>
-   <x>-169</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="Oriantis">
-  <jumps>
-   <jump>Arandon</jump>
-  </jumps>
-  <pos>
-   <y>60</y>
-   <x>497</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>450</interference>
-   <nebula volatility="50">500</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Draconis">
-  <jumps>
-   <jump>Tau Prime</jump>
-  </jumps>
-  <pos>
-   <y>-40</y>
-   <x>190</x>
-  </pos>
-  <assets>
-   <asset>Zabween</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">100</nebula>
-   <stars>600</stars>
-  </general>
- </ssys>
- <ssys name="Surano">
-  <jumps>
-   <jump>Raelid</jump>
-   <jump>Mizar</jump>
-  </jumps>
-  <pos>
-   <y>-40</y>
-   <x>250</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>100</interference>
-   <nebula volatility="0">100</nebula>
-   <stars>600</stars>
-  </general>
- </ssys>
- <ssys name="Eneguoz">
-  <jumps>
-   <jump>Qex</jump>
-   <jump>Hakoi</jump>
-  </jumps>
-  <pos>
-   <y>-431</y>
-   <x>-117</x>
-  </pos>
-  <assets>
-   <asset>Oma</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Myad">
-  <jumps>
-   <jump>Doeston</jump>
-   <jump>Tormulex</jump>
-  </jumps>
-  <pos>
-   <y>-104</y>
-   <x>549</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>350</interference>
-   <nebula volatility="0">300</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="NGC-6938">
-  <jumps>
-   <jump>NGC-7273</jump>
-  </jumps>
-  <pos>
-   <y>-61</y>
-   <x>-111</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="Klantar">
-  <jumps>
-   <jump>Dakron</jump>
-   <jump>Massia</jump>
-  </jumps>
-  <pos>
-   <y>-421</y>
-   <x>346</x>
-  </pos>
-  <assets>
-   <asset>Nor</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Massia">
-  <jumps>
-   <jump>Klantar</jump>
-  </jumps>
-  <pos>
-   <y>-470</y>
-   <x>330</x>
-  </pos>
-  <assets>
-   <asset>Sinclair</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
-  </general>
+  <fleets/>
  </ssys>
  <ssys name="Alteris">
-  <jumps>
-   <jump>Coriolis</jump>
-   <jump>Delta Pavonis</jump>
-   <jump>Eridani</jump>
-   <jump>NGC-7324</jump>
-  </jumps>
-  <pos>
-   <y>23</y>
-   <x>47</x>
-  </pos>
-  <assets>
-   <asset>Darkshed</asset>
-   <asset>Ozogo X</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
   <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>5000.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Tormulex">
-  <jumps>
-   <jump>Myad</jump>
-  </jumps>
-  <pos>
-   <y>-78</y>
-   <x>636</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>500</interference>
-   <nebula volatility="100">500</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>47.000000</x>
+   <y>23.000000</y>
+  </pos>
+  <planets>
+   <planet>Alteris I</planet>
+   <planet>Alteris II</planet>
+   <planet>Alteris IV</planet>
+   <planet>Darkshed</planet>
+   <planet>Ozogo X</planet>
+  </planets>
+  <jumps>
+   <jump target="Coriolis">
+    <pos x="-99.980006" y="4999.000300"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Delta Pavonis">
+    <pos x="-573.120540" y="-4967.044679"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Eridani">
+    <pos x="4900.646656" y="991.797537"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sikh">
+    <pos x="-4724.930367" y="1635.552819"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Amaroq">
+  <general>
+   <radius>3500.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Dakron">
-  <jumps>
-   <jump>Klantar</jump>
-    <jump>Doranthex</jump>
-    <jump>Theras</jump>
-    <jump>Tarsus</jump>
-  </jumps>
-  <pos>
-   <y>-370</y>
-   <x>302</x>
-  </pos>
-  <assets>
-   <asset>Thar</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Frontier Unpresence</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
- </ssys>
- <ssys name="Toros">
-  <jumps>
-   <jump>Doeston</jump>
-  </jumps>
   <pos>
-   <y>8</y>
-   <x>642</x>
+   <x>117.000000</x>
+   <y>-890.000000</y>
   </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
+  <planets>
+   <planet>Amaroq I</planet>
+   <planet>Amaroq III</planet>
+   <planet>Rhaana</planet>
+  </planets>
+  <jumps>
+   <jump target="Marat">
+    <pos x="-3354.349893" y="999.168053"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sultan">
+    <pos x="1278.507205" y="3258.131263"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="An'ku">
   <general>
-   <asteroids>0</asteroids>
-   <interference>650</interference>
-   <nebula volatility="150">700</nebula>
+   <radius>3500.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Toaxis">
-  <jumps>
-   <jump>Raelid</jump>
-   <jump>Ingot</jump>
-  </jumps>
-  <pos>
-   <y>-149</y>
-   <x>387</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>200</interference>
-   <nebula volatility="0">150</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>657.000000</x>
+   <y>-791.000000</y>
+  </pos>
+  <planets>
+   <planet>An'ku I</planet>
+   <planet>An'ku II</planet>
+   <planet>An'ku III</planet>
+   <planet>Sroolu</planet>
+  </planets>
+  <jumps>
+   <jump target="Humdrum">
+    <pos x="-1464.438204" y="3178.902444"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tarmak">
+    <pos x="2111.434283" y="2791.387696"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Anarbalis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>511.000000</x>
+   <y>-738.000000</y>
+  </pos>
+  <planets>
+   <planet>Racheka</planet>
+   <planet>Racheka Secundus</planet>
+  </planets>
+  <jumps>
+   <jump target="Humdrum">
+    <pos x="3310.810811" y="1135.135135"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Lapis">
+    <pos x="-2723.410904" y="-2198.416031"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Andee">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>694.000000</x>
+   <y>-405.000000</y>
+  </pos>
+  <planets>
+   <planet>Andee II</planet>
+   <planet>Andee III</planet>
+   <planet>Andee IIIa</planet>
+   <planet>Andee IIa</planet>
+   <planet>Varaati</planet>
+  </planets>
+  <jumps>
+   <jump target="Brimstone">
+    <pos x="-608.248669" y="3446.742456"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Apez">
+  <general>
+   <radius>3500.000000</radius>
    <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Tuoladis">
-  <jumps>
-   <jump>Doranthex</jump>
-   <jump>Zacron</jump>
-  </jumps>
-  <pos>
-   <y>-302</y>
-   <x>243</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-86.000000</x>
+   <y>-314.000000</y>
+  </pos>
+  <planets>
+   <planet>Crylo</planet>
+   <planet>Dowue</planet>
+   <planet>Gem</planet>
+  </planets>
+  <jumps>
+   <jump target="Arcturus">
+    <pos x="1794.593917" y="3004.901442"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gamma Polaris">
+    <pos x="-3425.767188" y="717.021039"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hekaras">
+    <pos x="2453.631348" y="-2495.935337"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Arandon">
+  <general>
+   <radius>3500.000000</radius>
    <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Hakoi">
-  <jumps>
-   <jump>Eneguoz</jump>
-  </jumps>
-  <pos>
-   <y>-465</y>
-   <x>-150</x>
-  </pos>
-  <assets>
-   <asset>Em 5</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>600.000000</interference>
+   <nebula volatility="100.000000">600.000000</nebula>
+  </general>
+  <pos>
+   <x>570.000000</x>
+   <y>100.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Doeston">
+    <pos x="-1836.273680" y="-2979.613896"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Oriantis">
+    <pos x="-3398.376141" y="837.281078"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Polaris">
+    <pos x="951.051746" y="3368.308266"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Zerantix">
+    <pos x="3390.323531" y="869.313726"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Arcanis">
+  <general>
+   <radius>3500.000000</radius>
    <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="New Haven">
-  <jumps>
-   <jump>NGC-7843</jump>
-  </jumps>
-  <pos>
-   <y>307</y>
-   <x>156</x>
-  </pos>
-  <assets>
-   <asset>New Haven</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>300</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>200.000000</interference>
+   <nebula volatility="0.000000">200.000000</nebula>
+  </general>
+  <pos>
+   <x>333.000000</x>
+   <y>-57.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Raelid">
+    <pos x="-2186.432666" y="-2733.040833"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Zylex">
+    <pos x="3418.937501" y="748.910119"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Arcturus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-43.000000</x>
+   <y>-242.000000</y>
+  </pos>
+  <planets>
+   <planet>Antica</planet>
+   <planet>Arcturus Gamma</planet>
+   <planet>Arcturus I</planet>
+   <planet>Arcturus II</planet>
+  </planets>
+  <jumps>
+   <jump target="Apez">
+    <pos x="-1794.593917" y="-3004.901442"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Borla">
+    <pos x="-2540.834394" y="2407.106268"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Goddard">
+    <pos x="2841.027203" y="2044.153720"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Heavy Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Pirate Token Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Babylon">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>100.666667</x>
+   <y>463.066667</y>
+  </pos>
+  <planets>
+   <planet>Babylon I</planet>
+   <planet>Babylon II</planet>
+   <planet>Babylon IIa</planet>
+   <planet>Scipio</planet>
+  </planets>
+  <jumps>
+   <jump target="Dendria">
+    <pos x="746.766886" y="-3419.406267"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Bastion">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>160</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>90.500000</x>
+   <y>196.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Elixir">
+    <pos x="2756.843394" y="2156.342853"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Fury">
+    <pos x="-1941.450687" y="2912.176030"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gamel">
+    <pos x="-530.103502" y="-3459.622852"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Beeklo">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>240.000000</x>
+   <y>-573.000000</y>
+  </pos>
+  <planets>
+   <planet>Beeklo II</planet>
+   <planet>Beeklo III</planet>
+   <planet>Totoran</planet>
+  </planets>
+  <jumps>
+   <jump target="Darkstone">
+    <pos x="-2956.866764" y="1872.682284"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Dvaer">
+    <pos x="-3098.074927" y="-1628.475282"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Behar">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>300.000000</interference>
+   <nebula volatility="0.000000">250.000000</nebula>
+  </general>
+  <pos>
+   <x>457.000000</x>
+   <y>37.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Doeston">
+    <pos x="3268.111411" y="-1252.776041"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sigur">
+    <pos x="-1033.571948" y="3343.909243"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Blunderbuss">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>138.000000</x>
+   <y>-487.000000</y>
+  </pos>
+  <planets>
+   <planet>Blunderbuss II</planet>
+   <planet>Utsuwa</planet>
+  </planets>
+  <jumps>
+   <jump target="Verex">
+    <pos x="3139.542384" y="1547.020885"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Borla">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-100.000000</x>
+   <y>-188.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Arcturus">
+    <pos x="2540.834394" y="-2407.106268"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Shakar">
+    <pos x="-3482.630166" y="-348.263017"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Brimstone">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>682.000000</x>
+   <y>-337.000000</y>
+  </pos>
+  <planets>
+   <planet>Brimstone I</planet>
+   <planet>Brimstone II</planet>
+   <planet>Brimstone Ia</planet>
+   <planet>Brimstone Ib</planet>
+   <planet>Nonuri</planet>
+  </planets>
+  <jumps>
+   <jump target="Andee">
+    <pos x="1490.397411" y="-4305.049341"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Shickhaw">
+    <pos x="3328.936807" y="1080.823639"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Triap">
+    <pos x="-2699.280588" y="-2227.977628"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="C-00">
+  <general>
+   <radius>3500.000000</radius>
    <stars>100</stars>
-  </general>
- </ssys>
- <ssys name="Haered">
-  <jumps>
-   <jump>Sol</jump>
-  </jumps>
-  <pos>
-   <y>136</y>
-   <x>751</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>800</interference>
-   <nebula volatility="400">800</nebula>
-   <stars>400</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
+  <pos>
+   <x>-274.000000</x>
+   <y>107.000000</y>
+  </pos>
+  <planets>
+   <planet>P0125</planet>
+   <planet>S00000</planet>
+  </planets>
+  <jumps>
+   <jump target="C-14">
+    <pos x="-2982.599290" y="-1831.420617"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="C-28">
+    <pos x="1601.752011" y="3111.975336"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Collective Medium Presence</fleet>
+  </fleets>
  </ssys>
  <ssys name="C-14">
-  <jumps>
-   <jump>C-00</jump>
-   <jump>C-28</jump>
-   <jump>C-43</jump>
-  </jumps>
-  <pos>
-   <y>72</y>
-   <x>-331</x>
-  </pos>
-  <assets>
-   <asset>S49281</asset>
-  </assets>
   <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>100</stars>
-  </general>
- </ssys>
- <ssys name="Uhriabi">
-  <jumps>
-   <jump>Qex</jump>
-  </jumps>
-  <pos>
-   <y>-376</y>
-   <x>-117</x>
-  </pos>
-  <assets>
-   <asset>Uhriabi-17</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
- </ssys>
- <ssys name="Gilligan's Light">
-  <jumps>
-   <jump>Theras</jump>
-  </jumps>
   <pos>
-   <y>-267</y>
-   <x>470</x>
+   <x>-331.000000</x>
+   <y>72.000000</y>
   </pos>
-  <assets>
-   <asset>Dawn</asset>
-   <asset>Dusk</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
- </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Theras">
+  <planets>
+   <planet>P9234</planet>
+   <planet>S49281</planet>
+  </planets>
   <jumps>
-   <jump>Dakron</jump>
-   <jump>Haleb</jump>
-   <jump>Gilligan's Light</jump>
+   <jump target="C-00">
+    <pos x="2982.599290" y="1831.420617"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="C-43">
+    <pos x="3290.667186" y="-1192.270720"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
-  <pos>
-   <y>-323</y>
-   <x>383</x>
-  </pos>
-  <assets>
-   <asset>Cetrat</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>400</stars>
-  </general>
+  <fleets>
+   <fleet>Collective Medium Presence</fleet>
+  </fleets>
  </ssys>
- <ssys name="Sol">
-  <jumps>
-   <jump>Polaris</jump>
-   <jump>Haered</jump>
-  </jumps>
-  <pos>
-   <y>145</y>
-   <x>682</x>
-  </pos>
-  <assets>
-  </assets>
+ <ssys name="C-28">
   <general>
-   <asteroids>0</asteroids>
-   <interference>950</interference>
-   <nebula volatility="500">900</nebula>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7783">
-  <jumps>
-   <jump>NGC-7723</jump>
-  </jumps>
-  <pos>
-   <y>264</y>
-   <x>52</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>140</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7324">
-  <jumps>
-   <jump>Alteris</jump>
-   <jump>NGC-7273</jump>
-  </jumps>
-  <pos>
-   <y>50</y>
-   <x>-31</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="Eridani">
-  <jumps>
-   <jump>Mizar</jump>
-   <jump>Dune</jump>
-   <jump>Alteris</jump>
-  </jumps>
-  <pos>
-   <y>40</y>
-   <x>131</x>
-  </pos>
-  <assets>
-   <asset>Selphod</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>500</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
+  <pos>
+   <x>-239.000000</x>
+   <y>175.000000</y>
+  </pos>
+  <planets>
+   <planet>P2020</planet>
+   <planet>P2021</planet>
+   <planet>P2022</planet>
+   <planet>S38729</planet>
+  </planets>
+  <jumps>
+   <jump target="C-00">
+    <pos x="-1601.752011" y="-3111.975336"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="C-59">
+    <pos x="1043.962476" y="-3340.679923"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Collective Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="C-43">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-262.000000</x>
+   <y>47.000000</y>
+  </pos>
+  <planets>
+   <planet>Eiroik</planet>
+   <planet>S23491</planet>
+  </planets>
+  <jumps>
+   <jump target="C-14">
+    <pos x="-3290.667186" y="1192.270720"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="C-59">
+    <pos x="2474.873734" y="2474.873734"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hades">
+    <pos x="3487.121952" y="299.967480"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Collective Medium Presence</fleet>
+  </fleets>
  </ssys>
  <ssys name="C-59">
-  <jumps>
-   <jump>C-28</jump>
-   <jump>NGC-7132</jump>
-   <jump>C-43</jump>
-  </jumps>
-  <pos>
-   <y>95</y>
-   <x>-214</x>
-  </pos>
-  <assets>
-   <asset>S72839</asset>
-  </assets>
   <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>200</stars>
-  </general>
- </ssys>
- <ssys name="Haleb">
-  <jumps>
-   <jump>Theras</jump>
-   <jump>Slaccid</jump>
-  </jumps>
-  <pos>
-   <y>-337</y>
-   <x>459</x>
-  </pos>
-  <assets>
-   <asset>Haleb IV</asset>
-   <asset>Jorlan</asset>
-   <asset>Raglan Outpost</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-214.000000</x>
+   <y>95.000000</y>
+  </pos>
+  <planets>
+   <planet>P9122</planet>
+   <planet>S72839</planet>
+  </planets>
+  <jumps>
+   <jump target="C-28">
+    <pos x="-1043.962476" y="3340.679923"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="C-43">
+    <pos x="-2474.873734" y="-2474.873734"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hades">
+    <pos x="2615.932615" y="-2325.273436"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Collective Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Capricorn">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-54.000000</x>
+   <y>148.000000</y>
+  </pos>
+  <planets>
+   <planet>Capricorn II</planet>
+   <planet>Capricorn III</planet>
+   <planet>Capricorn IIIa</planet>
+   <planet>Durea</planet>
+  </planets>
+  <jumps>
+   <jump target="Rockbed">
+    <pos x="2765.769304" y="-2144.882318"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Cerberus">
+  <general>
+   <radius>3500.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Norpin">
-  <jumps>
-    <jump>Slaccid</jump>
-  </jumps>
-  <pos>
-   <y>-427</y>
-   <x>449</x>
-  </pos>
-  <assets>
-   <asset>Norpin II</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>302.000000</x>
+   <y>642.000000</y>
+  </pos>
+  <planets>
+   <planet>Cerberus I</planet>
+   <planet>Cerberus II</planet>
+   <planet>Cerberus IIa</planet>
+   <planet>Cerberus IV</planet>
+   <planet>Culex</planet>
+   <planet>Myonei</planet>
+  </planets>
+  <jumps>
+   <jump target="Sergio Vix">
+    <pos x="1626.978264" y="-3098.861360"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Chraan">
+  <general>
+   <radius>3500.000000</radius>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Vlexon">
-  <jumps>
-    <jump>Ogat</jump>
-  </jumps>
-  <pos>
-   <y>-309</y>
-   <x>115</x>
-  </pos>
-  <assets>
-   <asset>Vlexair</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Trader Presence Standard</asset>
-   <asset>Civilian Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>659.000000</x>
+   <y>-451.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Karman">
+    <pos x="3361.211794" y="-975.835682"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Nougat">
+    <pos x="1448.310305" y="-3186.282671"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Triap">
+    <pos x="-1897.444044" y="2941.038269"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Churchill">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>765.000000</x>
+   <y>-664.000000</y>
+  </pos>
+  <planets>
+   <planet>Chucrchill II</planet>
+   <planet>Churchill I</planet>
+   <planet>Churchill IIa</planet>
+   <planet>Lorelei</planet>
+   <planet>Ururis</planet>
+  </planets>
+  <jumps>
+   <jump target="Eiderdown">
+    <pos x="2422.420288" y="2526.238300"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Coriolis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>300</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>46.000000</x>
+   <y>73.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Alteris">
+    <pos x="69.986004" y="-3499.300210"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gamel">
+    <pos x="1741.843101" y="3035.783690"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Rockbed">
+    <pos x="-2832.976468" y="2055.296653"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Cygnus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>60.000000</x>
+   <y>-81.000000</y>
+  </pos>
+  <planets>
+   <planet>Inca</planet>
+   <planet>Maya</planet>
+   <planet>Torloth</planet>
+  </planets>
+  <jumps>
+   <jump target="Delta Pavonis">
+    <pos x="-2260.797845" y="2671.851999"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Dakron">
+  <general>
+   <radius>3500.000000</radius>
    <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Qex">
-  <jumps>
-   <jump>Uhriabi</jump>
-   <jump>Gamma Polaris</jump>
-   <jump>Eneguoz</jump>
-    <jump>Koralis</jump>
-  </jumps>
-  <pos>
-   <y>-383</y>
-   <x>-185</x>
-  </pos>
-  <assets>
-   <asset>Ammu</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>333.000000</x>
+   <y>-365.000000</y>
+  </pos>
+  <planets>
+   <planet>Dakron III</planet>
+   <planet>Dakron V</planet>
+   <planet>Thar</planet>
+  </planets>
+  <jumps>
+   <jump target="Doranthex">
+    <pos x="-3456.936485" y="547.348277"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Klantar">
+    <pos x="2286.316398" y="-2650.048552"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Theras">
+    <pos x="3453.280587" y="-569.958932"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Daravon">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-44.000000</x>
+   <y>-684.000000</y>
+  </pos>
+  <planets>
+   <planet>Daravon I</planet>
+   <planet>Daravon III</planet>
+   <planet>Eclipse Station</planet>
+   <planet>Vilati Vilata</planet>
+  </planets>
+  <jumps>
+   <jump target="Gremlin">
+    <pos x="3271.742532" y="1243.262162"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Perhelion">
+    <pos x="3100.410373" y="-1624.024481"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pudas">
+    <pos x="-1677.553007" y="-4194.206693"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Darkstone">
+  <general>
+   <radius>3500.000000</radius>
    <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="NGC-7789">
-  <jumps>
-   <jump>Dune</jump>
-  </jumps>
-  <pos>
-   <y>156</y>
-   <x>176</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
-  <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
-   <stars>100</stars>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
- </ssys>
- <ssys name="Zacron">
-  <jumps>
-   <jump>Raelid</jump>
-   <jump>Tuoladis</jump>
-   <jump>Ogat</jump>
-  </jumps>
   <pos>
-   <y>-224</y>
-   <x>239</x>
+   <x>180.000000</x>
+   <y>-535.000000</y>
   </pos>
-  <assets>
-   <asset>FLF Presence Small</asset>
-   <asset>FLF Presence Small</asset>
-   <asset>Pirate Presence Small</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
+  <planets>
+   <planet>Darkstone IV</planet>
+   <planet>Darkstone V</planet>
+   <planet>Stalwart Station</planet>
+   <planet>Varia</planet>
+  </planets>
+  <jumps>
+   <jump target="Beeklo">
+    <pos x="2956.866764" y="-1872.682284"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Verex">
+    <pos x="1094.627231" y="3324.423442"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Defa">
   <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
    <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>287.000000</x>
+   <y>205.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Oberon">
+    <pos x="2013.922265" y="2862.536831"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pilatis">
+    <pos x="-1238.622341" y="-3273.501901"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Delta Pavonis">
+  <general>
+   <radius>3500.000000</radius>
    <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
+  <pos>
+   <x>38.000000</x>
+   <y>-55.000000</y>
+  </pos>
+  <planets>
+   <planet>Caladan</planet>
+   <planet>Delta Pavonis I</planet>
+   <planet>Ridrack</planet>
+  </planets>
+  <jumps>
+   <jump target="Alteris">
+    <pos x="401.184378" y="3476.931276"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Cygnus">
+    <pos x="2260.797845" y="-2671.851999"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Goddard">
+    <pos x="-2852.657084" y="-3849.893193"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Dendria">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>119.666667</x>
+   <y>376.066667</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Babylon">
+    <pos x="-746.766886" y="3419.406267"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Diadem">
+    <pos x="2822.417485" y="2069.772823"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Dust">
+    <pos x="-2459.454407" y="2490.197587"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="New Haven">
+    <pos x="1629.496325" y="-3097.538011"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Diadem">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>179.666667</x>
+   <y>420.066667</y>
+  </pos>
+  <planets>
+   <planet>Diadem I</planet>
+   <planet>Diadem II</planet>
+   <planet>Leo</planet>
+   <planet>Riun</planet>
+  </planets>
+  <jumps>
+   <jump target="Dendria">
+    <pos x="-2822.417485" y="-2069.772823"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Khaas">
+    <pos x="3461.568533" y="517.245873"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Solene">
+    <pos x="1710.111791" y="3053.771056"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Doeston">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>400.000000</interference>
+   <nebula volatility="0.000000">400.000000</nebula>
+  </general>
+  <pos>
+   <x>517.000000</x>
+   <y>14.000000</y>
+  </pos>
+  <planets>
+   <planet>Cerberus</planet>
+   <planet>Doeston Prime</planet>
+  </planets>
+  <jumps>
+   <jump target="Arandon">
+    <pos x="1836.273680" y="2979.613896"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Behar">
+    <pos x="-3268.111411" y="1252.776041"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Myad">
+    <pos x="1778.887546" y="-3014.226119"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Toros">
+    <pos x="3343.050642" y="1036.345699"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Zylex">
+    <pos x="-2991.156265" y="-1817.411401"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Dohriabi">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-314.000000</x>
+   <y>-350.000000</y>
+  </pos>
+  <planets>
+   <planet>Dohriabi Prime</planet>
+   <planet>Niflheim</planet>
+  </planets>
+  <jumps>
+   <jump target="Overture">
+    <pos x="686.406473" y="-3432.032365"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Doranthex">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>213.000000</x>
+   <y>-346.000000</y>
+  </pos>
+  <planets>
+   <planet>Doranthex Prime</planet>
+   <planet>Doranthex Secundus</planet>
+   <planet>Secundus Alpha</planet>
+   <planet>Secundus Beta</planet>
+  </planets>
+  <jumps>
+   <jump target="Dakron">
+    <pos x="3456.936485" y="-547.348277"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Ogat">
+    <pos x="-3440.297545" y="4056.167688"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Tarsus">
+    <pos x="1792.974054" y="-3005.868267"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Torg">
+    <pos x="-3051.630139" y="-1713.929256"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tuoladis">
+    <pos x="2673.636329" y="6057.359211"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>FLF Light Guerrilla</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Draconis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>600</stars>
+   <asteroids>0</asteroids>
+   <interference>100.000000</interference>
+   <nebula volatility="0.000000">100.000000</nebula>
+  </general>
+  <pos>
+   <x>190.000000</x>
+   <y>-56.000000</y>
+  </pos>
+  <planets>
+   <planet>Draconis Alpha</planet>
+   <planet>Draconis Beta</planet>
+   <planet>Draconis Delta</planet>
+   <planet>Draconis Gamma</planet>
+   <planet>Draconis Omega</planet>
+   <planet>Zabween</planet>
+  </planets>
+  <jumps>
+   <jump target="Tau Prime">
+    <pos x="449.939100" y="-3470.958773"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Draygar">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>201.000000</x>
+   <y>-166.000000</y>
+  </pos>
+  <planets>
+   <planet>Anecu</planet>
+   <planet>Draygar III</planet>
+   <planet>Hikatalat</planet>
+   <planet>Varona</planet>
+  </planets>
+  <jumps>
+   <jump target="Tau Prime">
+    <pos x="-249.364675" y="3491.105449"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Dune">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>300</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>130.000000</x>
+   <y>90.000000</y>
+  </pos>
+  <planets>
+   <planet>Arrakis</planet>
+   <planet>Vert</planet>
+  </planets>
+  <jumps>
+   <jump target="Eridani">
+    <pos x="69.986004" y="-3499.300210"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gamel">
+    <pos x="-2604.170490" y="2338.438808"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Halo">
+    <pos x="991.274316" y="3821.393584"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Dust">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>39.666667</x>
+   <y>457.066667</y>
+  </pos>
+  <planets>
+   <planet>Dust</planet>
+  </planets>
+  <jumps>
+   <jump target="Dendria">
+    <pos x="2459.454407" y="-2490.197587"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Dvaer">
+  <general>
+   <radius>5000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>162.000000</x>
+   <y>-614.000000</y>
+  </pos>
+  <planets>
+   <planet>Dvaer II</planet>
+   <planet>Dvaer III</planet>
+   <planet>Dvaer IIIa</planet>
+   <planet>Dvaer IV</planet>
+   <planet>Dvaer Prime</planet>
+   <planet>Dvaered High Command</planet>
+  </planets>
+  <jumps>
+   <jump target="Beeklo">
+    <pos x="4425.821325" y="2326.393260"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gremlin">
+    <pos x="-4936.638554" y="1684.977040"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Radix">
+    <pos x="3733.826023" y="-3325.438802"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Urbanus">
+    <pos x="-3243.049588" y="-4633.108060"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Eiderdown">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>835.000000</x>
+   <y>-591.000000</y>
+  </pos>
+  <planets>
+   <planet>Eiderdown I</planet>
+   <planet>Eiderdown III</planet>
+   <planet>Ember</planet>
+   <planet>Forge</planet>
+  </planets>
+  <jumps>
+   <jump target="Churchill">
+    <pos x="-2542.420288" y="-5886.238300"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Esker">
+    <pos x="-3173.921314" y="1475.202864"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gilligan's Retreat">
+    <pos x="3420.488784" y="741.792748"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Herakin">
+    <pos x="2261.578848" y="-5924.777221"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Elixir">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>120</stars>
+   <asteroids>0</asteroids>
+   <interference>100.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>141.000000</x>
+   <y>235.500000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Bastion">
+    <pos x="-2756.843394" y="-2156.342853"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Bastion">
+    <pos x="-2756.843394" y="-2156.342853"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Bastion">
+    <pos x="-2756.843394" y="-2156.342853"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="New Haven">
+    <pos x="718.622036" y="3425.431706"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="New Haven">
+    <pos x="718.622036" y="3425.431706"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="New Haven">
+    <pos x="718.622036" y="3425.431706"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Heavy Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Eneguoz">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-117.000000</x>
+   <y>-431.000000</y>
+  </pos>
+  <planets>
+   <planet>Oma</planet>
+   <planet>Opa</planet>
+  </planets>
+  <jumps>
+   <jump target="Hakoi">
+    <pos x="-2437.663820" y="-2511.532421"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Qex">
+    <pos x="-2859.387521" y="2018.391192"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Eridani">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>131.000000</x>
+   <y>40.000000</y>
+  </pos>
+  <planets>
+   <planet>Eridani II</planet>
+   <planet>Eridani III</planet>
+   <planet>Selphod</planet>
+   <planet>The Crucible</planet>
+  </planets>
+  <jumps>
+   <jump target="Alteris">
+    <pos x="-3430.452659" y="-694.258276"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Dune">
+    <pos x="-69.986004" y="3499.300210"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Esker">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>764.000000</x>
+   <y>-558.000000</y>
+  </pos>
+  <planets>
+   <planet>Esker I</planet>
+   <planet>Esker II</planet>
+   <planet>Esker III</planet>
+   <planet>Esker IV</planet>
+   <planet>Suoer</planet>
+  </planets>
+  <jumps>
+   <jump target="Eiderdown">
+    <pos x="3583.921314" y="-4015.202864"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Modus Manis">
+    <pos x="-2591.593599" y="-2352.369575"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Nougat">
+    <pos x="-3071.068290" y="1678.850665"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Eye of Night">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>335.000000</x>
+   <y>-732.000000</y>
+  </pos>
+  <planets>
+   <planet>Eye of Night I</planet>
+   <planet>Eye of Night II</planet>
+   <planet>Eye of Night III</planet>
+   <planet>Inios</planet>
+  </planets>
+  <jumps>
+   <jump target="Fidelis">
+    <pos x="-3436.726884" y="-662.501568"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Lapis">
+    <pos x="2753.141132" y="-2161.067770"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Ruttwi">
+    <pos x="3104.975385" y="4841.755825"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Father's Pride">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>334.666667</x>
+   <y>432.066667</y>
+  </pos>
+  <planets>
+   <planet>Father's Pride I</planet>
+   <planet>Father's Pride II</planet>
+   <planet>Father's Pride III</planet>
+   <planet>Flach</planet>
+   <planet>Rudderfern</planet>
+  </planets>
+  <jumps>
+   <jump target="Gewirn">
+    <pos x="2941.038269" y="1897.444044"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hatter">
+    <pos x="-348.263017" y="3482.630166"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Shikima">
+    <pos x="-4028.626653" y="-4359.053926"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Fidelis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>252.000000</x>
+   <y>-748.000000</y>
+  </pos>
+  <planets>
+   <planet>Fidelis III</planet>
+   <planet>Fidelis IV</planet>
+   <planet>Mannannan</planet>
+  </planets>
+  <jumps>
+   <jump target="Eye of Night">
+    <pos x="3436.726884" y="662.501568"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Radix">
+    <pos x="-1119.708516" y="3316.059836"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Fortitude">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>300</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-117.000000</x>
+   <y>23.000000</y>
+  </pos>
+  <planets>
+   <planet>Omega Station</planet>
+  </planets>
+  <jumps>
+   <jump target="Acheron">
+    <pos x="3195.232527" y="-1428.456894"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hades">
+    <pos x="-2980.804108" y="1834.340990"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pontus">
+    <pos x="1785.706697" y="3010.191289"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Collective Light Presence</fleet>
+   <fleet>Empire Heavy Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Fried">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-280.000000</x>
+   <y>-783.000000</y>
+  </pos>
+  <planets>
+   <planet>Claudius Mehan</planet>
+   <planet>Fried I</planet>
+   <planet>Fried II</planet>
+   <planet>Fried III</planet>
+   <planet>Fried IIIa</planet>
+   <planet>Fried Ia</planet>
+  </planets>
+  <jumps>
+   <jump target="Limbo">
+    <pos x="764.014433" y="3415.593937"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Fury">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>140</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>55.500000</x>
+   <y>248.500000</y>
+  </pos>
+  <planets>
+   <planet>Fury I</planet>
+  </planets>
+  <jumps>
+   <jump target="Bastion">
+    <pos x="1941.450687" y="-2912.176030"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Gamel">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>81.000000</x>
+   <y>134.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Bastion">
+    <pos x="530.103502" y="3459.622852"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Coriolis">
+    <pos x="-1741.843101" y="-3035.783690"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Dune">
+    <pos x="2604.170490" y="-2338.438808"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Haven">
+    <pos x="-3043.464669" y="1728.387343"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Gamma Polaris">
+  <general>
+   <radius>5000.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-172.000000</x>
+   <y>-296.000000</y>
+  </pos>
+  <planets>
+   <planet>Emperor's Fist</planet>
+   <planet>New Deimos</planet>
+   <planet>New Mars</planet>
+   <planet>New Phobos</planet>
+   <planet>Polaris Prime</planet>
+  </planets>
+  <jumps>
+   <jump target="Apez">
+    <pos x="6203.953126" y="-334.315771"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Koralis">
+    <pos x="-4134.632510" y="-2811.550107"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Qex">
+    <pos x="-738.922675" y="-4945.097904"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Shakar">
+    <pos x="98.990495" y="4999.019992"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sirou">
+    <pos x="-4582.266646" y="2000.707972"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Empire Heavy Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Gammacron">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-166.000000</x>
+   <y>-699.000000</y>
+  </pos>
+  <planets>
+   <planet>Gammacron IV</planet>
+   <planet>Gammacron V</planet>
+   <planet>Gammacron Va</planet>
+   <planet>Gammacron Vb</planet>
+   <planet>Pund</planet>
+  </planets>
+  <jumps>
+   <jump target="Limbo">
+    <pos x="-3488.156887" y="-287.683042"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Volus">
+    <pos x="6335.057512" y="-3304.281734"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Gewirn">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>396.666667</x>
+   <y>472.066667</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Father's Pride">
+    <pos x="-2941.038269" y="-1897.444044"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Point Zero">
+    <pos x="1494.522069" y="3164.870264"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Gilligan's Light">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>523.000000</x>
+   <y>-326.000000</y>
+  </pos>
+  <planets>
+   <planet>Dawn</planet>
+   <planet>Dusk</planet>
+   <planet>The Frontier Council</planet>
+  </planets>
+  <jumps>
+   <jump target="Theras">
+    <pos x="-2943.025067" y="-1894.360963"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Gilligan's Memory">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>788.666667</x>
+   <y>-782.211756</y>
+  </pos>
+  <planets>
+   <planet>Gilligan's Memory</planet>
+   <planet>Zero-Eleven</planet>
+   <planet>Zero-Five</planet>
+   <planet>Zero-One</planet>
+  </planets>
+  <jumps>
+   <jump target="Tarmak">
+    <pos x="-2534.388588" y="2413.891979"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Gilligan's Retreat">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>918.000000</x>
+   <y>-573.000000</y>
+  </pos>
+  <planets>
+   <planet>Gilligan's Retreat</planet>
+  </planets>
+  <jumps>
+   <jump target="Adraia">
+    <pos x="2736.416904" y="2182.205886"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Eiderdown">
+    <pos x="-3420.488784" y="-741.792748"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Ginger">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>241.018776</x>
+   <y>-510.626286</y>
+  </pos>
+  <planets>
+   <planet>Ginger II</planet>
+   <planet>Ginger III</planet>
+   <planet>Ullnorn</planet>
+  </planets>
+  <jumps>
+   <jump target="Verex">
+    <pos x="-1779.268479" y="3014.001274"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
  </ssys>
  <ssys name="Goddard">
-  <jumps>
-   <jump>Delta Pavonis</jump>
-   <jump>Arcturus</jump>
-    <jump>Ogat</jump>
-  </jumps>
-  <pos>
-   <y>-194</y>
-   <x>37</x>
-  </pos>
-  <assets>
-   <asset>Zhiru</asset>
-   <asset>Trader Presence Standard</asset>
-  </assets>
   <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
+  <pos>
+   <x>39.000000</x>
+   <y>-183.000000</y>
+  </pos>
+  <planets>
+   <planet>Zhiru</planet>
+  </planets>
+  <jumps>
+   <jump target="Arcturus">
+    <pos x="-2841.027203" y="-2044.153720"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Delta Pavonis">
+    <pos x="-2867.342916" y="2689.893193"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Ogat">
+    <pos x="2996.450905" y="-1808.668564"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Goddard Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Gremlin">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>56.000000</x>
+   <y>-646.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Daravon">
+    <pos x="-3271.742532" y="-1243.262162"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Dvaer">
+    <pos x="3350.646988" y="1011.516072"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Gyrios">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>799.000000</x>
+   <y>-417.000000</y>
+  </pos>
+  <planets>
+   <planet>Gyrios II</planet>
+   <planet>Gyrios IV</planet>
+   <planet>Gyrios V</planet>
+   <planet>Jaegnhild</planet>
+   <planet>Lapra</planet>
+   <planet>Uuries</planet>
+  </planets>
+  <jumps>
+   <jump target="Karman">
+    <pos x="-1525.845355" y="-1980.352482"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Hades">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-169.000000</x>
+   <y>55.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="C-43">
+    <pos x="-3487.121952" y="-299.967480"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="C-59">
+    <pos x="-2615.932615" y="2325.273436"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Fortitude">
+    <pos x="2980.804108" y="-1834.340990"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Collective Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Haered">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>800.000000</interference>
+   <nebula volatility="400.000000">800.000000</nebula>
+  </general>
+  <pos>
+   <x>683.000000</x>
+   <y>296.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Protera">
+    <pos x="2570.873152" y="2374.997102"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sol">
+    <pos x="-2474.873734" y="-2474.873734"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Hakoi">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-150.000000</x>
+   <y>-465.000000</y>
+  </pos>
+  <planets>
+   <planet>Em 1</planet>
+   <planet>Em 2</planet>
+   <planet>Em 4</planet>
+   <planet>Em 5</planet>
+  </planets>
+  <jumps>
+   <jump target="Eneguoz">
+    <pos x="2437.663820" y="2511.532421"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Haleb">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>512.000000</x>
+   <y>-396.000000</y>
+  </pos>
+  <planets>
+   <planet>Haleb IV</planet>
+   <planet>Jorlan</planet>
+   <planet>Raglan Outpost</planet>
+  </planets>
+  <jumps>
+   <jump target="Slaccid">
+    <pos x="1540.550260" y="-3142.722530"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Theras">
+    <pos x="-3442.086160" y="634.068503"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Triap">
+    <pos x="3492.534219" y="228.483547"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Halo">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>100</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>181.518949</x>
+   <y>146.341840</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Dune">
+    <pos x="-2361.852246" y="-2582.954504"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pilatis">
+    <pos x="3433.341534" y="-679.827852"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Hatter">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>326.666667</x>
+   <y>512.066667</y>
+  </pos>
+  <planets>
+   <planet>Gaula</planet>
+   <planet>Hatter I</planet>
+   <planet>Hatter II</planet>
+  </planets>
+  <jumps>
+   <jump target="Father's Pride">
+    <pos x="348.263017" y="-3482.630166"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Khaas">
+    <pos x="-2116.896763" y="-2787.247405"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sergio Vix">
+    <pos x="611.419286" y="3446.181431"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Haven">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>300</stars>
+   <asteroids>0</asteroids>
+   <interference>300.000000</interference>
+   <nebula volatility="0.000000">200.000000</nebula>
+  </general>
+  <pos>
+   <x>0.000000</x>
+   <y>180.000000</y>
+  </pos>
+  <planets>
+   <planet>Haven</planet>
+  </planets>
+  <jumps>
+   <jump target="Gamel">
+    <pos x="3043.464669" y="-1728.387343"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Hekaras">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-28.000000</x>
+   <y>-373.000000</y>
+  </pos>
+  <planets>
+   <planet>Hekaras III</planet>
+   <planet>Hurada</planet>
+  </planets>
+  <jumps>
+   <jump target="Apez">
+    <pos x="-2453.631348" y="2495.935337"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Herakin">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>900.000000</x>
+   <y>-661.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Eiderdown">
+    <pos x="-2381.578848" y="2564.777221"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Humdrum">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>616.000000</x>
+   <y>-702.000000</y>
+  </pos>
+  <planets>
+   <planet>Humdrum I</planet>
+   <planet>Humdrum II</planet>
+   <planet>Humdrum III</planet>
+  </planets>
+  <jumps>
+   <jump target="An'ku">
+    <pos x="1464.438204" y="-3178.902444"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Anarbalis">
+    <pos x="-3310.810811" y="-1135.135135"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Modus Manis">
+    <pos x="2445.237684" y="2504.159074"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
  </ssys>
  <ssys name="Ingot">
-  <jumps>
-   <jump>Toaxis</jump>
-  </jumps>
-  <pos>
-   <y>-200</y>
-   <x>430</x>
-  </pos>
-  <assets>
-   <asset>Trader Presence Standard</asset>
-  </assets>
   <general>
-   <asteroids>0</asteroids>
-   <interference>50</interference>
-   <nebula volatility="0">0</nebula>
+   <radius>3500.000000</radius>
    <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
+  <pos>
+   <x>372.605613</x>
+   <y>-211.000000</y>
+  </pos>
+  <planets>
+   <planet>Ingot I</planet>
+  </planets>
+  <jumps>
+   <jump target="Toaxis">
+    <pos x="-933.566548" y="3373.196333"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Iris">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>434.333333</x>
+   <y>178.733333</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Oriantis">
+    <pos x="2568.067537" y="-2378.030514"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Percival">
+    <pos x="2142.606175" y="2767.532977"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Karman">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>752.000000</x>
+   <y>-478.000000</y>
+  </pos>
+  <planets>
+   <planet>Atalanta</planet>
+   <planet>Karman I</planet>
+   <planet>Karman II</planet>
+  </planets>
+  <jumps>
+   <jump target="Chraan">
+    <pos x="-3361.211794" y="975.835682"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gyrios">
+    <pos x="3146.183497" y="3432.493475"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Nougat">
+    <pos x="-2975.928013" y="-1842.241151"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Khaas">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>266.666667</x>
+   <y>433.066667</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Diadem">
+    <pos x="-3461.568533" y="-517.245873"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hatter">
+    <pos x="2116.896763" y="2787.247405"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Klantar">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>377.000000</x>
+   <y>-416.000000</y>
+  </pos>
+  <planets>
+   <planet>Klantar I</planet>
+   <planet>Klantar III</planet>
+   <planet>Nor</planet>
+   <planet>Tuur</planet>
+  </planets>
+  <jumps>
+   <jump target="Dakron">
+    <pos x="-2286.316398" y="2650.048552"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Massia">
+    <pos x="-1086.406236" y="-3327.119098"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Koralis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-222.000000</x>
+   <y>-330.000000</y>
+  </pos>
+  <planets>
+   <planet>Luxsor</planet>
+   <planet>Paxsor</planet>
+  </planets>
+  <jumps>
+   <jump target="Gamma Polaris">
+    <pos x="2894.242757" y="1968.085075"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Qex">
+    <pos x="-136.517513" y="-3019.853293"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Kretogg">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-36.000000</x>
+   <y>-910.000000</y>
+  </pos>
+  <planets>
+   <planet>Kretogg I</planet>
+   <planet>Kretogg II</planet>
+   <planet>Kretogg III</planet>
+   <planet>Vorca</planet>
+   <planet>Warden's End</planet>
+  </planets>
+  <jumps>
+   <jump target="Unicorn">
+    <pos x="-1270.605535" y="3261.220872"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Ksher">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>148.000000</x>
+   <y>-747.000000</y>
+  </pos>
+  <planets>
+   <planet>Ksher I</planet>
+   <planet>Ksher II</planet>
+   <planet>Ksher III</planet>
+  </planets>
+  <jumps>
+   <jump target="Sultan">
+    <pos x="-0.000000" y="-3500.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Urbanus">
+    <pos x="-1282.835814" y="3256.429375"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Lapis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>428.000000</x>
+   <y>-805.000000</y>
+  </pos>
+  <planets>
+   <planet>Lapis I</planet>
+   <planet>Lapis II</planet>
+  </planets>
+  <jumps>
+   <jump target="Anarbalis">
+    <pos x="2723.410904" y="2198.416031"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Eye of Night">
+    <pos x="-2753.141132" y="2161.067770"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Lazuli">
+    <pos x="1675.982457" y="-3072.634505"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Niger">
+    <pos x="-1876.028478" y="-2954.744853"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Lazuli">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>464.000000</x>
+   <y>-871.000000</y>
+  </pos>
+  <planets>
+   <planet>Chriik</planet>
+   <planet>Lazuli I</planet>
+   <planet>Lazuli III</planet>
+   <planet>Lazuli Ia</planet>
+  </planets>
+  <jumps>
+   <jump target="Lapis">
+    <pos x="-1675.982457" y="3072.634505"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Limbo">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-263.000000</x>
+   <y>-707.000000</y>
+  </pos>
+  <planets>
+   <planet>Jugreny</planet>
+   <planet>Limbo I</planet>
+   <planet>Limbo II</planet>
+   <planet>Malebolge</planet>
+  </planets>
+  <jumps>
+   <jump target="Fried">
+    <pos x="-1174.014433" y="-5035.593937"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Gammacron">
+    <pos x="3488.156887" y="287.683042"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Provectus Nova">
+    <pos x="449.195366" y="3471.055102"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pultatis">
+    <pos x="-5137.630227" y="-1619.783303"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Marat">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>23.000000</x>
+   <y>-862.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Amaroq">
+    <pos x="3354.349893" y="-999.168053"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Unicorn">
+    <pos x="-3327.793940" y="1084.337351"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Massia">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>361.000000</x>
+   <y>-465.000000</y>
+  </pos>
+  <planets>
+   <planet>Arck</planet>
+   <planet>Massia I</planet>
+   <planet>Massia IV</planet>
+   <planet>Massia IVa</planet>
+   <planet>Sinclair</planet>
+  </planets>
+  <jumps>
+   <jump target="Klantar">
+    <pos x="1086.406236" y="3327.119098"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Merisi">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-73.000000</x>
+   <y>-60.000000</y>
+  </pos>
+  <planets>
+   <planet>Merisi I</planet>
+   <planet>Merisi II</planet>
+   <planet>Merisi III</planet>
+   <planet>Merisi IV</planet>
+  </planets>
+  <jumps>
+   <jump target="Acheron">
+    <pos x="2357.214987" y="2587.187180"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Mizar">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>100.000000</interference>
+   <nebula volatility="0.000000">100.000000</nebula>
+  </general>
+  <pos>
+   <x>203.000000</x>
+   <y>28.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Surano">
+    <pos x="1990.032605" y="-2879.196109"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Thorndyke">
+    <pos x="1196.100721" y="3289.276982"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Modus Manis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>699.000000</x>
+   <y>-617.000000</y>
+  </pos>
+  <planets>
+   <planet>Manis</planet>
+   <planet>Modus</planet>
+  </planets>
+  <jumps>
+   <jump target="Esker">
+    <pos x="2591.593599" y="2352.369575"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Humdrum">
+    <pos x="-2445.237684" y="-2504.159074"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tarmak">
+    <pos x="610.296536" y="-3446.380440"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Myad">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>350.000000</interference>
+   <nebula volatility="0.000000">300.000000</nebula>
+  </general>
+  <pos>
+   <x>553.000000</x>
+   <y>-47.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Doeston">
+    <pos x="-1778.887546" y="3014.226119"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tormulex">
+    <pos x="3275.565726" y="1233.154156"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Nartur">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-372.000000</x>
+   <y>-421.000000</y>
+  </pos>
+  <planets>
+   <planet>Ian</planet>
+   <planet>Nartur I</planet>
+   <planet>Nartur II</planet>
+   <planet>Nartur III</planet>
+  </planets>
+  <jumps>
+   <jump target="Overture">
+    <pos x="2864.104373" y="-2011.692357"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="New Haven">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>100</stars>
+   <asteroids>0</asteroids>
+   <interference>300.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>156.000000</x>
+   <y>307.000000</y>
+  </pos>
+  <planets>
+   <planet>Green Eye</planet>
+   <planet>New Haven</planet>
+   <planet>Old Man Jack</planet>
+   <planet>Red Eye</planet>
+  </planets>
+  <jumps>
+   <jump target="Dendria">
+    <pos x="-1779.496325" y="5097.538011"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Elixir">
+    <pos x="-718.622036" y="-3425.431706"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Heavy Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Niger">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>388.000000</x>
+   <y>-868.000000</y>
+  </pos>
+  <planets>
+   <planet>Niger I</planet>
+   <planet>Niger II</planet>
+   <planet>Rionna</planet>
+  </planets>
+  <jumps>
+   <jump target="Lapis">
+    <pos x="1876.028478" y="2954.744853"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Norpin">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>503.000000</x>
+   <y>-498.000000</y>
+  </pos>
+  <planets>
+   <planet>Folevo</planet>
+   <planet>New Dortmund</planet>
+   <planet>Norpin II</planet>
+   <planet>Norpin IV</planet>
+  </planets>
+  <jumps>
+   <jump target="Slaccid">
+    <pos x="1941.450687" y="2912.176030"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Nougat">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>689.000000</x>
+   <y>-517.000000</y>
+  </pos>
+  <planets>
+   <planet>Nougat I</planet>
+   <planet>Nougat II</planet>
+  </planets>
+  <jumps>
+   <jump target="Chraan">
+    <pos x="-3428.310305" y="966.282671"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Esker">
+    <pos x="3071.068290" y="-1678.850665"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Karman">
+    <pos x="2975.928013" y="1842.241151"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Oberon">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>330.666667</x>
+   <y>267.066667</y>
+  </pos>
+  <planets>
+   <planet>M.K.</planet>
+   <planet>Oberon I</planet>
+   <planet>Oberon III</planet>
+   <planet>Oberon IV</planet>
+  </planets>
+  <jumps>
+   <jump target="Defa">
+    <pos x="-4043.922265" y="-4622.536831"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Shikima">
+    <pos x="265.059412" y="3489.948926"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Thirty Stars">
+    <pos x="5071.726880" y="2108.291487"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Ogat">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>150.000000</x>
+   <y>-250.000000</y>
+  </pos>
+  <planets>
+   <planet>Gamma</planet>
+   <planet>Praxis</planet>
+  </planets>
+  <jumps>
+   <jump target="Doranthex">
+    <pos x="1920.297545" y="-2926.167688"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Goddard">
+    <pos x="-2996.450905" y="1808.668564"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Vlexon">
+    <pos x="-2800.000000" y="-2100.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Zacron">
+    <pos x="3359.576909" y="981.449434"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+   <fleet>Pirate Token Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Oriantis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>450.000000</interference>
+   <nebula volatility="50.000000">500.000000</nebula>
+  </general>
+  <pos>
+   <x>501.000000</x>
+   <y>117.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Arandon">
+    <pos x="3398.376141" y="-837.281078"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Iris">
+    <pos x="-2568.067537" y="2378.030514"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Overture">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-288.000000</x>
+   <y>-480.000000</y>
+  </pos>
+  <planets>
+   <planet>Overture I</planet>
+   <planet>Overture II</planet>
+   <planet>Overture III</planet>
+  </planets>
+  <jumps>
+   <jump target="Dohriabi">
+    <pos x="-686.406473" y="3432.032365"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Nartur">
+    <pos x="-2864.104373" y="2011.692357"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pas">
+    <pos x="-3457.429555" y="-544.225022"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Uhriabi">
+    <pos x="1699.750259" y="3059.550466"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Waterhole">
+    <pos x="45.450713" y="-3499.704878"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Pas">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-396.000000</x>
+   <y>-497.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Overture">
+    <pos x="3457.429555" y="544.225022"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Percival">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>482.333333</x>
+   <y>240.733333</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Iris">
+    <pos x="-2142.606175" y="-2767.532977"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Thirty Stars">
+    <pos x="-2807.031156" y="2090.592282"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Perhelion">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>61.000000</x>
+   <y>-739.000000</y>
+  </pos>
+  <planets>
+   <planet>Perhelion Alpha</planet>
+   <planet>Perhelion Beta</planet>
+   <planet>Perhelion Gamma</planet>
+  </planets>
+  <jumps>
+   <jump target="Daravon">
+    <pos x="-3100.410373" y="1624.024481"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Urbanus">
+    <pos x="4636.459616" y="1051.715700"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Pilatis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>300</stars>
+   <asteroids>0</asteroids>
+   <interference>300.000000</interference>
+   <nebula volatility="0.000000">200.000000</nebula>
+  </general>
+  <pos>
+   <x>259.000000</x>
+   <y>131.000000</y>
+  </pos>
+  <planets>
+   <planet>Pilatis I</planet>
+   <planet>Pilatis II</planet>
+   <planet>Pilatis III</planet>
+  </planets>
+  <jumps>
+   <jump target="Defa">
+    <pos x="1238.622341" y="3273.501901"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Halo">
+    <pos x="-3433.341534" y="679.827852"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Thorndyke">
+    <pos x="-2100.000000" y="-2800.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Point Zero">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>430.666667</x>
+   <y>544.066667</y>
+  </pos>
+  <planets>
+   <planet>Point Zero 0</planet>
+   <planet>Point Zero Station</planet>
+  </planets>
+  <jumps>
+   <jump target="Gewirn">
+    <pos x="-1494.522069" y="-3164.870264"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sarcophagus">
+    <pos x="-196.319649" y="3494.489748"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Uridhrion">
+    <pos x="2973.044379" y="-1846.891205"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Polaris">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>800.000000</interference>
+   <nebula volatility="300.000000">800.000000</nebula>
+  </general>
+  <pos>
+   <x>594.000000</x>
+   <y>185.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Arandon">
+    <pos x="-951.051746" y="-3368.308266"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sol">
+    <pos x="1920.297545" y="2926.167688"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Pontus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>150</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-82.000000</x>
+   <y>82.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Fortitude">
+    <pos x="-1785.706697" y="-3010.191289"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Rockbed">
+    <pos x="3289.276982" y="1196.100721"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Protera">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>1103.000000</x>
+   <y>684.000000</y>
+  </pos>
+  <planets>
+   <planet>Protera Sigma</planet>
+  </planets>
+  <jumps>
+   <jump target="Haered">
+    <pos x="-2570.873152" y="-2374.997102"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Proteron Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Provectus Nova">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-252.000000</x>
+   <y>-622.000000</y>
+  </pos>
+  <planets>
+   <planet>Provectus Nova I</planet>
+   <planet>Provectus Nova Ia</planet>
+  </planets>
+  <jumps>
+   <jump target="Limbo">
+    <pos x="-449.195366" y="-3471.055102"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Waterhole">
+    <pos x="-1659.349381" y="3081.648850"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Pudas">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-29.000000</x>
+   <y>-767.000000</y>
+  </pos>
+  <planets>
+   <planet>Pudas I</planet>
+   <planet>Pudas II</planet>
+   <planet>Sudra</planet>
+  </planets>
+  <jumps>
+   <jump target="Daravon">
+    <pos x="-622.446993" y="3444.206693"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Volus">
+    <pos x="-3458.193205" y="-539.351234"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Pultatis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-347.000000</x>
+   <y>-740.000000</y>
+  </pos>
+  <planets>
+   <planet>Pultatis I</planet>
+   <planet>Pultatis II</planet>
+   <planet>Pultatis III</planet>
+  </planets>
+  <jumps>
+   <jump target="Limbo">
+    <pos x="3257.630227" y="1279.783303"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Qex">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-185.000000</x>
+   <y>-383.000000</y>
+  </pos>
+  <planets>
+   <planet>Ammu</planet>
+   <planet>Qex II</planet>
+  </planets>
+  <jumps>
+   <jump target="Eneguoz">
+    <pos x="1749.387521" y="-2028.391192"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Gamma Polaris">
+    <pos x="-1712.754127" y="3651.568533"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Koralis">
+    <pos x="-2003.482487" y="2869.853293"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Uhriabi">
+    <pos x="-3130.495168" y="-1565.247584"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Radix">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>226.000000</x>
+   <y>-671.000000</y>
+  </pos>
+  <planets>
+   <planet>Radix I</planet>
+   <planet>Radix II</planet>
+   <planet>Stutee</planet>
+  </planets>
+  <jumps>
+   <jump target="Dvaer">
+    <pos x="-2613.678216" y="2327.807161"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Fidelis">
+    <pos x="-1750.291484" y="-4586.059836"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Raelid">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>100.000000</interference>
+   <nebula volatility="0.000000">100.000000</nebula>
+  </general>
+  <pos>
+   <x>269.000000</x>
+   <y>-137.000000</y>
+  </pos>
+  <planets>
+   <planet>Raelid Outpost</planet>
+   <planet>Raelid Prime</planet>
+  </planets>
+  <jumps>
+   <jump target="Arcanis">
+    <pos x="2186.432666" y="2733.040833"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Surano">
+    <pos x="-672.782000" y="3434.729157"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tau Prime">
+    <pos x="-3277.152121" y="1228.932046"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Toaxis">
+    <pos x="3455.545111" y="-556.064731"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Zacron">
+    <pos x="-1140.967392" y="-3308.805436"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Pirate Token Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Rhu">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>485.797371</x>
+   <y>-649.240526</y>
+  </pos>
+  <planets>
+   <planet>Daal</planet>
+   <planet>Hankies</planet>
+   <planet>Huan'xi</planet>
+   <planet>Rhu II</planet>
+   <planet>Rhu III</planet>
+   <planet>Rhu IV</planet>
+  </planets>
+  <jumps>
+   <jump target="Ruttwi">
+    <pos x="-3458.334380" y="-538.445274"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Rockbed">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-5.000000</x>
+   <y>110.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Capricorn">
+    <pos x="-2765.769304" y="2144.882318"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Coriolis">
+    <pos x="2832.976468" y="-2055.296653"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pontus">
+    <pos x="-3289.276982" y="-1196.100721"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Ruttwi">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>391.000000</x>
+   <y>-664.000000</y>
+  </pos>
+  <planets>
+   <planet>Arai</planet>
+   <planet>Arch Arai</planet>
+   <planet>Ruttwi I</planet>
+   <planet>Ruttwi II</planet>
+  </planets>
+  <jumps>
+   <jump target="Eye of Night">
+    <pos x="-5374.975385" y="408.244175"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Rhu">
+    <pos x="3458.334380" y="538.445274"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Sarcophagus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>425.666667</x>
+   <y>633.066667</y>
+  </pos>
+  <planets>
+   <planet>Ebenezer</planet>
+   <planet>Sarcophagus I</planet>
+   <planet>Sarcophagus II</planet>
+   <planet>Sarcophagus IIb</planet>
+  </planets>
+  <jumps>
+   <jump target="Point Zero">
+    <pos x="196.319649" y="-3494.489748"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Sergio Vix">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>337.666667</x>
+   <y>574.066667</y>
+  </pos>
+  <planets>
+   <planet>Larling</planet>
+   <planet>Sergio Vix I</planet>
+   <planet>Sergio Vix III</planet>
+   <planet>Zepei</planet>
+  </planets>
+  <jumps>
+   <jump target="Cerberus">
+    <pos x="-1626.978264" y="3098.861360"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Hatter">
+    <pos x="4938.580714" y="-3476.181431"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Shakar">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-170.000000</x>
+   <y>-195.000000</y>
+  </pos>
+  <planets>
+   <planet>Nova Shakar</planet>
+   <planet>Shakar I</planet>
+  </planets>
+  <jumps>
+   <jump target="Borla">
+    <pos x="3482.630166" y="348.263017"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gamma Polaris">
+    <pos x="-69.293346" y="-3499.313995"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Medium Presence</fleet>
+   <fleet>Trader Heavy Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Shickhaw">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>759.000000</x>
+   <y>-312.000000</y>
+  </pos>
+  <planets>
+   <planet>Avoss</planet>
+   <planet>Kotori</planet>
+   <planet>Shickhaw I</planet>
+   <planet>Shickhaw II</planet>
+   <planet>Shickhaw IV</planet>
+   <planet>Tori</planet>
+  </planets>
+  <jumps>
+   <jump target="Brimstone">
+    <pos x="-3328.936807" y="-1080.823639"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Shikima">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>336.666667</x>
+   <y>346.066667</y>
+  </pos>
+  <planets>
+   <planet>Beene</planet>
+   <planet>Shikima II</planet>
+   <planet>Shikima III</planet>
+  </planets>
+  <jumps>
+   <jump target="Father's Pride">
+    <pos x="5028.626653" y="-30.946074"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Oberon">
+    <pos x="-4955.059412" y="50.051074"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Sigur">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>350.000000</interference>
+   <nebula volatility="0.000000">300.000000</nebula>
+  </general>
+  <pos>
+   <x>440.000000</x>
+   <y>92.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Behar">
+    <pos x="1033.571948" y="-3343.909243"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Sikh">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>200</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-31.000000</x>
+   <y>50.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Acheron">
+    <pos x="-53.839783" y="-3499.585872"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Alteris">
+    <pos x="3307.451257" y="-1144.886974"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Sirou">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-243.000000</x>
+   <y>-265.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Gamma Polaris">
+    <pos x="3207.586652" y="-1400.495580"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Slaccid">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>537.000000</x>
+   <y>-447.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Haleb">
+    <pos x="-1540.550260" y="3142.722530"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Norpin">
+    <pos x="-1941.450687" y="-2912.176030"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Sol">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>950.000000</interference>
+   <nebula volatility="500.000000">900.000000</nebula>
+  </general>
+  <pos>
+   <x>636.000000</x>
+   <y>249.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Haered">
+    <pos x="2474.873734" y="2474.873734"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Polaris">
+    <pos x="-1920.297545" y="-2926.167688"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Solene">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>221.666667</x>
+   <y>495.066667</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Diadem">
+    <pos x="-1710.111791" y="-3053.771056"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Sultan">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>148.000000</x>
+   <y>-811.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Amaroq">
+    <pos x="-1278.507205" y="-3258.131263"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Ksher">
+    <pos x="0.000000" y="3500.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Surano">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>600</stars>
+   <asteroids>0</asteroids>
+   <interference>100.000000</interference>
+   <nebula volatility="0.000000">100.000000</nebula>
+  </general>
+  <pos>
+   <x>250.000000</x>
+   <y>-40.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Mizar">
+    <pos x="-1990.032605" y="2879.196109"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Raelid">
+    <pos x="672.782000" y="-3434.729157"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="TODO: Proteron here">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>1086.000000</x>
+   <y>600.000000</y>
+  </pos>
+  <planets/>
+  <jumps/>
+  <fleets/>
+ </ssys>
+ <ssys name="TODO: Sirius here">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>857.000000</x>
+   <y>-712.000000</y>
+  </pos>
+  <planets/>
+  <jumps/>
+  <fleets/>
+ </ssys>
+ <ssys name="TODO: Traders here">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>135.000000</x>
+   <y>-962.000000</y>
+  </pos>
+  <planets/>
+  <jumps/>
+  <fleets/>
+ </ssys>
+ <ssys name="TODO: Za'lek here">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-333.000000</x>
+   <y>-853.000000</y>
+  </pos>
+  <planets/>
+  <jumps/>
+  <fleets/>
+ </ssys>
+ <ssys name="TODO? Soromid here">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>346.000000</x>
+   <y>684.000000</y>
+  </pos>
+  <planets/>
+  <jumps/>
+  <fleets/>
+ </ssys>
+ <ssys name="Tarmak">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>716.000000</x>
+   <y>-713.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="An'ku">
+    <pos x="-2111.434283" y="-2791.387696"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gilligan's Memory">
+    <pos x="2534.388588" y="-2413.891979"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Modus Manis">
+    <pos x="-610.296536" y="3446.380440"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Tarsus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>247.000000</x>
+   <y>-403.000000</y>
+  </pos>
+  <planets>
+   <planet>Tarsus II</planet>
+   <planet>Valt</planet>
+  </planets>
+  <jumps>
+   <jump target="Doranthex">
+    <pos x="-1792.974054" y="3005.868267"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Verex">
+    <pos x="-2186.432666" y="-2733.040833"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>FLF Light Guerrilla</fleet>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Tau Prime">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>600</stars>
+   <asteroids>0</asteroids>
+   <interference>100.000000</interference>
+   <nebula volatility="0.000000">100.000000</nebula>
+  </general>
+  <pos>
+   <x>197.000000</x>
+   <y>-110.000000</y>
+  </pos>
+  <planets>
+   <planet>Tau Prime</planet>
+   <planet>Tau Secundus</planet>
+   <planet>Tau Station</planet>
+  </planets>
+  <jumps>
+   <jump target="Draconis">
+    <pos x="-449.939100" y="3470.958773"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Draygar">
+    <pos x="-320.635325" y="-5341.105449"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Raelid">
+    <pos x="3277.152121" y="-1228.932046"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>Empire Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Theras">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>436.000000</x>
+   <y>-382.000000</y>
+  </pos>
+  <planets>
+   <planet>Cetrat</planet>
+   <planet>Theras III</planet>
+  </planets>
+  <jumps>
+   <jump target="Dakron">
+    <pos x="-3453.280587" y="569.958932"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Gilligan's Light">
+    <pos x="2943.025067" y="1894.360963"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Haleb">
+    <pos x="3442.086160" y="-634.068503"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Thirty Stars">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>402.666667</x>
+   <y>300.066667</y>
+  </pos>
+  <planets>
+   <planet>Charred</planet>
+  </planets>
+  <jumps>
+   <jump target="Oberon">
+    <pos x="-3181.726880" y="-1458.291487"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Percival">
+    <pos x="2807.031156" y="-2090.592282"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Thorndyke">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>150.000000</interference>
+   <nebula volatility="0.000000">150.000000</nebula>
+  </general>
+  <pos>
+   <x>223.000000</x>
+   <y>83.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Mizar">
+    <pos x="-1196.100721" y="-3289.276982"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pilatis">
+    <pos x="2100.000000" y="2800.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Pirate Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Toaxis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>200.000000</interference>
+   <nebula volatility="0.000000">150.000000</nebula>
+  </general>
+  <pos>
+   <x>356.000000</x>
+   <y>-151.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Ingot">
+    <pos x="933.566548" y="-3373.196333"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Raelid">
+    <pos x="-3455.545111" y="556.064731"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Torg">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>100</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>140.000000</x>
+   <y>-387.000000</y>
+  </pos>
+  <planets>
+   <planet>Jorcan</planet>
+  </planets>
+  <jumps>
+   <jump target="Doranthex">
+    <pos x="3051.630139" y="1713.929256"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Tormulex">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>500.000000</interference>
+   <nebula volatility="100.000000">500.000000</nebula>
+  </general>
+  <pos>
+   <x>638.000000</x>
+   <y>-15.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Myad">
+    <pos x="-3275.565726" y="-1233.154156"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Toros">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>650.000000</interference>
+   <nebula volatility="150.000000">700.000000</nebula>
+  </general>
+  <pos>
+   <x>617.000000</x>
+   <y>45.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Doeston">
+    <pos x="-3343.050642" y="-1036.345699"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Triap">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>619.000000</x>
+   <y>-389.000000</y>
+  </pos>
+  <planets>
+   <planet>Khelim</planet>
+   <planet>Triap I</planet>
+  </planets>
+  <jumps>
+   <jump target="Brimstone">
+    <pos x="2699.280588" y="2227.977628"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Chraan">
+    <pos x="1897.444044" y="-2941.038269"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Haleb">
+    <pos x="-3492.534219" y="-228.483547"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Tuoladis">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>234.000000</x>
+   <y>-287.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Doranthex">
+    <pos x="-1173.636329" y="-3297.359211"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Zacron">
+    <pos x="276.907053" y="3489.028874"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Uhriabi">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-253.000000</x>
+   <y>-417.000000</y>
+  </pos>
+  <planets>
+   <planet>Uhriabi-17</planet>
+   <planet>Uhriabi-9</planet>
+  </planets>
+  <jumps>
+   <jump target="Overture">
+    <pos x="-1699.750259" y="-3059.550466"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Qex">
+    <pos x="3130.495168" y="1565.247584"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Unicorn">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-66.000000</x>
+   <y>-833.000000</y>
+  </pos>
+  <planets>
+   <planet>Unicorn I</planet>
+   <planet>Unicorn II</planet>
+  </planets>
+  <jumps>
+   <jump target="Kretogg">
+    <pos x="1270.605535" y="-3261.220872"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Marat">
+    <pos x="3327.793940" y="-1084.337351"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Volus">
+    <pos x="-2893.495080" y="1969.184152"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Urbanus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>122.000000</x>
+   <y>-681.000000</y>
+  </pos>
+  <planets>
+   <planet>Trincea</planet>
+   <planet>Urbanus II</planet>
+   <planet>Urbanus III</planet>
+  </planets>
+  <jumps>
+   <jump target="Dvaer">
+    <pos x="1794.134711" y="3005.175642"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Ksher">
+    <pos x="1282.835814" y="-3256.429375"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Perhelion">
+    <pos x="-2536.459616" y="-2411.715700"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Uridhrion">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>496.666667</x>
+   <y>503.066667</y>
+  </pos>
+  <planets>
+   <planet>Cutha</planet>
+   <planet>Terminus</planet>
+   <planet>Uridhrion I</planet>
+   <planet>Uridhrion II</planet>
+   <planet>Uridhrion III</planet>
+  </planets>
+  <jumps>
+   <jump target="Point Zero">
+    <pos x="-2973.044379" y="1846.891205"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Vanir">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>980.000000</x>
+   <y>-418.000000</y>
+  </pos>
+  <planets>
+   <planet>Sinass</planet>
+   <planet>Vanir I</planet>
+   <planet>Vanir II</planet>
+   <planet>Vanir Ia</planet>
+  </planets>
+  <jumps>
+   <jump target="Adraia">
+    <pos x="635.972741" y="-3441.734835"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Aesir">
+    <pos x="2314.532963" y="2625.440375"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Verex">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>207.000000</x>
+   <y>-453.000000</y>
+  </pos>
+  <planets>
+   <planet>Verex I</planet>
+   <planet>Verex II</planet>
+   <planet>Verex III</planet>
+  </planets>
+  <jumps>
+   <jump target="Blunderbuss">
+    <pos x="-3139.542384" y="-1547.020885"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Darkstone">
+    <pos x="-1584.627231" y="-6294.423442"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
+   <jump target="Ginger">
+    <pos x="1779.268479" y="-3014.001274"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tarsus">
+    <pos x="2186.432666" y="2733.040833"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Light Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Vlexon">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>82.000000</x>
+   <y>-301.000000</y>
+  </pos>
+  <planets>
+   <planet>Ruid</planet>
+   <planet>Vlexair</planet>
+   <planet>Vlexon I</planet>
+   <planet>Vlexon II</planet>
+  </planets>
+  <jumps>
+   <jump target="Ogat">
+    <pos x="2800.000000" y="2100.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Medium Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Volus">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-138.000000</x>
+   <y>-784.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Gammacron">
+    <pos x="-1095.057512" y="3324.281734"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Pudas">
+    <pos x="3458.193205" y="539.351234"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Unicorn">
+    <pos x="2893.495080" y="-1969.184152"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Waterhole">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-287.000000</x>
+   <y>-557.000000</y>
+  </pos>
+  <planets>
+   <planet>Waterhole</planet>
+   <planet>Waterhole's Moon</planet>
+  </planets>
+  <jumps>
+   <jump target="Overture">
+    <pos x="-45.450713" y="3499.704878"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Provectus Nova">
+    <pos x="1659.349381" y="-3081.648850"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Zacron">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>50.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>239.000000</x>
+   <y>-224.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Ogat">
+    <pos x="-3359.576909" y="-981.449434"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Raelid">
+    <pos x="1140.967392" y="3308.805436"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tuoladis">
+    <pos x="-276.907053" y="-3489.028874"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Dvaered Medium Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Zerantix">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>700.000000</interference>
+   <nebula volatility="250.000000">750.000000</nebula>
+  </general>
+  <pos>
+   <x>648.000000</x>
+   <y>120.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Arandon">
+    <pos x="-3390.323531" y="-869.313726"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets/>
+ </ssys>
+ <ssys name="Zied">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>500</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-5.000000</x>
+   <y>-519.000000</y>
+  </pos>
+  <planets>
+   <planet>Bon Sebb</planet>
+   <planet>Saturn VI</planet>
+  </planets>
+  <jumps/>
+  <fleets>
+   <fleet>Empire Light Presence</fleet>
+   <fleet>Trader Light Presence</fleet>
+  </fleets>
+ </ssys>
+ <ssys name="Zylex">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>300.000000</interference>
+   <nebula volatility="0.000000">250.000000</nebula>
+  </general>
+  <pos>
+   <x>438.000000</x>
+   <y>-34.000000</y>
+  </pos>
+  <planets/>
+  <jumps>
+   <jump target="Arcanis">
+    <pos x="-3418.937501" y="-748.910119"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Doeston">
+    <pos x="2991.156265" y="1817.411401"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+  <fleets>
+   <fleet>Empire Patrol Presence</fleet>
+  </fleets>
  </ssys>
 </Systems>

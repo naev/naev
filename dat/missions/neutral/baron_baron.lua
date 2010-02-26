@@ -74,6 +74,7 @@ end
 
 function create ()
     if tk.choice(title[1], text[1], choice1, choice2) == 1 then
+        var.push("baron_stage", 1)
         accept()
     else
         tk.msg(refusetitle, refusetext)
@@ -183,11 +184,12 @@ function takeoff()
         vendetta2:control()
         vendetta1:attack(player.pilot())
         vendetta2:attack(player.pilot())
-        vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.pilot():ship():name(), planetname), true)
+        vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.ship(), planetname), true)
     end
 end
 
 function abort()
+    var.pop("baron_stage")
     misn.finish(false)
 end
 

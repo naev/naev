@@ -33,7 +33,7 @@ void pause_game (void)
       return; /* already paused */
 
    /* Pause sounds. */
-   if (player != NULL) {
+   if (player.p != NULL) {
       player_soundPause();
       sound_pause();
    }
@@ -51,7 +51,7 @@ void unpause_game (void)
       return; /* already unpaused */
 
    /* Resume sounds. */
-   if (player != NULL) {
+   if (player.p != NULL) {
       player_soundResume();
       sound_resume();
    }

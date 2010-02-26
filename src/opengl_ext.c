@@ -113,9 +113,7 @@ static int gl_extVBO (void)
       nglMapBuffer      = NULL;
       nglUnmapBuffer    = NULL;
       nglDeleteBuffers  = NULL;
-      if (!conf.vbo)
-         DEBUG("VBOs disabled.");
-      else {
+      if (conf.vbo) {
          WARN("GL_ARB_vertex_buffer_object not found!");
          return -1;
       }
@@ -140,7 +138,6 @@ GLAPI void APIENTRY glGenerateMipmapNAEV( GLenum target )
 static int gl_extMipmaps (void)
 {
    if (!conf.mipmaps) {
-      DEBUG("MipMaps disabled.");
       nglGenerateMipmap = NULL;
       return 0;
    }

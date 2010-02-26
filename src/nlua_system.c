@@ -390,7 +390,7 @@ static int systemL_adjacent( lua_State *L )
    /* Push all adjacent systems. */
    lua_newtable(L);
    for (i=0; i<sys->s->njumps; i++) {
-      sysp.s = system_getIndex( sys->s->jumps[i] );
+      sysp.s = sys->s->jumps[i].target;
       lua_pushnumber(L,i+1); /* key */
       lua_pushsystem(L,sysp); /* value */
       lua_rawset(L,-3);

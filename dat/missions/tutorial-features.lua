@@ -18,7 +18,7 @@ else -- default english
    title = {}
    text = {}
    title[1] = "NAEV Tutorial - Landing Tabs"
-   text[1] = [[It appears you've played before. There are many new changes in 0.4.0 and 0.4.1, including a complete revamp of the outfitting system, an on-screen display, map improvements, and many more.
+   text[1] = [[It appears you've played before. There are many new changes in 0.4.0 and subsequent releases, including a complete revamp of the outfitting system, an on-screen display, map improvements, and many more.
    
 Would you like to play a short tutorial familiarizing you with these new features?]]
    text[2] = [[Perhaps most noticeable is the change from buttons to tabs. Functionality has stayed roughly the same, but tabs provide a cleaner, compact interface.
@@ -98,7 +98,7 @@ end
 
 function start()
    misn.accept()
-   var.push("version", 040)
+   var.push("version", 042)
    -- Create OSD
    osdCreation()
    sysname = "Goddard"
@@ -256,13 +256,13 @@ function abort()
    tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
-   var.push("version", 041)
+   var.push("version", 042)
 end
 
 function reject()
    if tk.yesno(msg_rejectTitle, msg_reject) then
       abort()
-      var.push("version", 041)
+      var.push("version", 042)
    else
       start()
    end

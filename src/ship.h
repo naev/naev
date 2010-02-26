@@ -84,7 +84,6 @@ typedef struct Ship_ {
 
    /* store stuff */
    unsigned int price; /**< Cost to buy */
-   int tech; /**< Tech needed for it to be available.  See space.h. */
    char* license; /**< License needed to buy it. */
    char* fabricator; /**< company that makes it */
    char* description; /**< selling description */
@@ -154,6 +153,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
  * get
  */
 Ship* ship_get( const char* name );
+Ship* ship_getW( const char* name );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
@@ -165,6 +165,12 @@ glTexture* ship_loadCommGFX( Ship* s );
  * toolkit
  */
 void ship_view( unsigned int unused, char* shipname );
+
+
+/*
+ * misc.
+ */
+int ship_compareTech( const void *arg1, const void *arg2 );
 
 
 #endif /* SHIP_H */

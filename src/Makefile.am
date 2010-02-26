@@ -18,6 +18,10 @@ naev_SOURCES = \
 	conf.c \
 	console.c \
 	debris.c \
+	dev_planet.c \
+	dev_system.c \
+	dev_sysedit.c \
+	dev_uniedit.c \
 	dialogue.c \
 	economy.c \
 	equipment.c \
@@ -96,11 +100,12 @@ naev_SOURCES = \
 	sound_sdlmix.c \
 	space.c \
 	spfx.c \
+	tech.c \
 	toolkit.c \
 	unidiff.c \
 	weapon.c \
 	ai.h \
-   ai_extra.h \
+	ai_extra.h \
 	array.h \
 	base64.h \
 	board.h \
@@ -112,6 +117,10 @@ naev_SOURCES = \
 	config.h \
 	console.h \
 	debris.h \
+	dev_planet.h \
+	dev_system.h \
+	dev_sysedit.h \
+	dev_uniedit.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \
@@ -195,6 +204,7 @@ naev_SOURCES = \
 	sound_sdlmix.h \
 	space.h \
 	spfx.h \
+	tech.h \
 	toolkit.h \
 	unidiff.h \
 	weapon.h

@@ -1762,7 +1762,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Handle other cases where event might be used by the window. */
    switch (key) {
       case SDLK_TAB:
-         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+         if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
             toolkit_prevFocus( wdw );
          else
             toolkit_nextFocus( wdw );
@@ -1938,6 +1938,33 @@ void toolkit_update (void)
          buf[0] = input_text;
          buf[1] = '\0';
          wgt->textevent( wgt, buf );
+      }
+   }
+}
+
+
+/**
+ * @brief Sanitizes the focus of a window.
+ *
+ * Makes sure the window has a focusable widget focused.
+ */
+void toolkit_focusSanitize( Window *wdw )
+{
+   Widget *wgt;
+
+   /* No focus is always sane. */
+   if (wdw->focus == -1)
+      return;
+
+   /* Check focused widget. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wdw->focus == wgt->id) {
+         /* Not focusable. */
+         if (!toolkit_isFocusable(wgt)) {
+            wdw->focus = -1;
+            toolkit_nextFocus( wdw ); /* Get first focus. */
+         }
+         return;
       }
    }
 }

@@ -172,12 +172,12 @@ void weapon_minimap( const double res, const double w,
       wp = wbackLayer[i];
 
       /* Make sure is in range. */
-      if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
+      if (!pilot_inRange( player.p, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
       /* Get radar position. */
-      x = (wp->solid->pos.x - player->solid->pos.x) / res;
-      y = (wp->solid->pos.y - player->solid->pos.y) / res;
+      x = (wp->solid->pos.x - player.p->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player.p->solid->pos.y) / res;
 
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
@@ -211,12 +211,12 @@ void weapon_minimap( const double res, const double w,
       wp = wfrontLayer[i];
 
       /* Make sure is in range. */
-      if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
+      if (!pilot_inRange( player.p, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
       /* Get radar position. */
-      x = (wp->solid->pos.x - player->solid->pos.x) / res;
-      y = (wp->solid->pos.y - player->solid->pos.y) / res;
+      x = (wp->solid->pos.x - player.p->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player.p->solid->pos.y) / res;
 
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
@@ -1014,7 +1014,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage) );
 
    /* Get the layer. */
-   spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
    /* Choose spfx. */
    if (p->shield > 0.)
       spfx = outfit_spfxShield(w->outfit);
@@ -1062,7 +1062,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->lockon == -1.) {
       /* Get the layer. */
-      spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
 
       /* Choose spfx. */
       if (p->shield > 0.)

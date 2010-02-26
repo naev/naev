@@ -14,16 +14,13 @@
 #include "economy.h"
 #include "fleet.h"
 #include "mission.h"
+#include "tech.h"
 
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
-
-#define PLANET_TECH_MAX       8 /**< Amount of special techs a planet can have. */
-
 #define ASSET_UNREAL          0 /**< The asset is "unreal". */
 #define ASSET_REAL            1 /**< The asset is "real". */
-
 
 /**
  * @brief Different planet classes.
@@ -82,13 +79,14 @@ typedef enum PlanetClass_ {
  * @brief Represents a planet.
  */
 typedef struct Planet_ {
+   int id; /**< Planet ID. */
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
 
    /* Planet details. */
    PlanetClass class; /**< planet type */
    int faction; /**< planet faction */
-   int population; /**< Population of the planet. */
+   uint64_t population; /**< Population of the planet. */
    double prodfactor; /**< Default Production factor of the planet. */
    double cur_prodfactor; /**< Current real production factor of the planet. */
 
@@ -103,15 +101,14 @@ typedef struct Planet_ {
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
-   int tech[PLANET_TECH_MAX]; /**< tech[0] stores global tech level
-                                   (everything that and below) while
-                                   tech[1-PLANET_TECH_MAX] store the
-                                   "unique" tech levels (only matches */
    int bribed; /**< If planet has been bribed. */
+   tech_group_t *tech; /**< Planet tech. */
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
+   char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
+   char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 } Planet;
 
 
@@ -126,6 +123,13 @@ typedef struct Planet_ {
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
 #define sys_isKnown(s)     sys_isFlag(s,SYSTEM_KNOWN) /**< Checks if system is known. */
 #define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED) /**< Checks if system is marked. */
+
+
+/*
+ * Forward declaration.
+ */
+struct StarSystem_;
+typedef struct StarSystem_ StarSystem;
 
 
 /**
@@ -164,6 +168,35 @@ typedef struct SystemPresence_ {
    Schedule schedule; /**< Schedule for the arrival of fleets. */
 } SystemPresence;
 
+/*
+ * Jump point flags.
+ */
+#define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
+#define JP_DISABLED     (1<<1) /**< Jump point is disabled. */
+#define JP_HIDDEN       (1<<2) /**< Jump point is hidden by default. */
+
+
+
+/**
+ * @struct JumpPoint
+ *
+ * @brief Represents a jump lane.
+ */
+typedef struct JumpPoint_ {
+   StarSystem *target; /**< Target star system to jump to. */
+   int targetid; /**< ID of the target star system. */
+   Vector2d pos; /**< Position in the system. */
+   double radius; /**< Radius of jump range. */
+   unsigned int flags; /**< Flags related to the jump point's status. */
+   int known; /**< Is the jump point known? */
+   double angle; /**< Direction the jump is facing. */
+   double cosa; /**< Cosinus of the angle. */
+   double sina; /**< Sinus of the angle. */
+   int sx; /**< X sprite to use. */
+   int sy; /**< Y sprite to use. */
+} JumpPoint;
+extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
+
 /**
  * @struct StarSystem
  *
@@ -171,28 +204,37 @@ typedef struct SystemPresence_ {
  *
  * The star system is the basic setting in NAEV.
  */
-typedef struct StarSystem_ {
+struct StarSystem_ {
+   int id; /**< Star system index. */
 
    /* General. */
    char* name; /**< star system name */
    Vector2d pos; /**< position */
-   int *jumps; /**< adjacent star system index numbers */
-   int njumps; /**< number of adjacent jumps */
-   Planet **planets; /**< planets */
-   int nplanets; /**< total number of planets */
-   int faction; /**< overall faction */
-
-   /* System details. */
    int stars; /**< Amount of "stars" it has. */
    int asteroids; /**< @todo implement asteroids */
    double interference; /**< in % @todo implement interference. */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
+   double radius; /**< Default system radius for standard jump points. */
+
+   /* Planets. */
+   Planet **planets; /**< planets */
+   int *planetsid; /**< IDs of the planets. */
+   int nplanets; /**< total number of planets */
+   int faction; /**< overall faction */
+
+   /* Jumps. */
+   JumpPoint *jumps; /**< Jump points in the system */
+   int njumps; /**< number of adjacent jumps */
 
    /* Fleets. */
    Fleet** fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
+
+   /* Fleet data - @TODO Remove in favour of more sane fleet spawn system. */
+   char **fltdat;
+   int nfltdat;
 
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
@@ -211,7 +253,7 @@ typedef struct StarSystem_ {
 
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
-} StarSystem;
+};
 
 
 extern StarSystem *cur_system; /**< current star system */
@@ -229,13 +271,21 @@ void space_exit (void);
 /*
  * planet stuff
  */
+Planet *planet_new (void);
 char* planet_getSystem( const char* planetname );
+Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
-char planet_getClass( Planet *p );
+Planet* planet_getIndex( int ind );
+int planet_getNum (void);
+int planet_exists( const char* planetname );
+char planet_getClass( const Planet *p );
 
 /*
  * system adding/removing stuff.
  */
+void systems_reconstructJumps (void);
+void systems_reconstructPlanets (void);
+StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
@@ -262,22 +312,37 @@ void system_removePilotFromSystemFleet( const int systemFleet );
  */
 void space_update( const double dt );
 
-/*
- * misc
+/* 
+ * Getting stuff.
  */
+const StarSystem* system_getAll( int *nsys );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
-int space_canHyperspace( Pilot* p);
-int space_hyperspace( Pilot* p );
 int space_sysReachable( StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
+
+
+/* 
+ * Markers.
+ */
 int space_addMarker( const char *sys, SysMarker type );
 int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
 int system_hasPlanet( StarSystem *sys );
+
+
+/* 
+ * Hyperspace.
+ */
+int space_canHyperspace( Pilot* p);
+int space_hyperspace( Pilot* p );
+int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
+
+
+/* Stardate. */
 extern char* stardate;
 
 

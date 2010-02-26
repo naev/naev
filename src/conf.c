@@ -96,7 +96,11 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G, --generate         regenerates the nebula (slow)");
+   LOG("   -G, --generate        regenerates the nebula (slow)");
+   LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+#ifdef DEBUGGING
+   LOG("   --devmode             enables dev mode perks like the editors");
+#endif /* DEBUGGING */
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -138,6 +142,7 @@ void conf_setDefaults (void)
 
    /* Misc. */
    conf.nosave       = 0;
+   conf.devmode      = 0;
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -223,6 +228,7 @@ void conf_setVideoDefaults (void)
    conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
+   conf.npot         = 1;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -291,6 +297,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
       conf_loadBool("interpolate",conf.interpolate);
+      conf_loadBool("npot",conf.npot);
 
       /* Memory. */
       conf_loadBool("engineglow",conf.engineglow);
@@ -491,13 +498,17 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
+      { "nondata", no_argument, 0, 'N' },
+#ifdef DEBUGGING
+      { "devmode", no_argument, 0, 'D' },
+#endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:Vd:j:J:W:H:MSm:s:Ghv",
+         "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
@@ -538,6 +549,17 @@ void conf_parseCLI( int argc, char** argv )
          case 'G':
             nebu_forceGenerate();
             break;
+         case 'N':
+            if (conf.ndata != NULL)
+               free(conf.ndata);
+            conf.ndata = NULL;
+            break;
+#ifdef DEBUGGING
+         case 'D':
+            conf.devmode = 1;
+            LOG("Enabling developer mode.");
+            break;
+#endif /* DEBUGGING */
 
          case 'v':
             /* by now it has already displayed the version
@@ -818,6 +840,11 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Texture Interpolation");
    conf_saveBool("interpolate",conf.interpolate);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Non-\"Power of Two\" textures if available");
+   conf_saveComment("Lowers memory usage by a lot, but may cause slow downs on some systems");
+   conf_saveBool("npot",conf.npot);
    conf_saveEmptyLine();
 
    /* Memory. */

@@ -22,6 +22,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "gui.h"
+#include "conf.h"
 
 
 /*
@@ -263,6 +264,26 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 }
 
 /**
+ * @brief Checks to see if mipmaps are supported and enabled.
+ *
+ *    @return 1 if mipmaps are supported and enabled.
+ */
+int gl_texHasMipmaps (void)
+{
+   return (nglGenerateMipmap != NULL);
+}
+
+/**
+ * @brief Checks to see if texture compression is available and enabled.
+ *
+ *    @return 1 if texture compression is available and enabled.
+ */
+int gl_texHasCompress (void)
+{
+   return (nglCompressedTexImage2D != NULL);
+}
+
+/**
  * @brief Loads a surface into an opengl texture.
  *
  *    @param surface Surface to load into a texture.
@@ -304,7 +325,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
 
    /* now lead the texture data up */
    SDL_LockSurface( surface );
-   if (nglCompressedTexImage2D != NULL) {
+   if (gl_texHasCompress()) {
       glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
             surface->w, surface->h, 0, GL_COMPRESSED_RGBA,
             GL_UNSIGNED_BYTE, surface->pixels );
@@ -316,7 +337,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
-   if ((flags & OPENGL_TEX_MIPMAPS) && (nglGenerateMipmap != NULL)) {
+   if ((flags & OPENGL_TEX_MIPMAPS) && gl_texHasMipmaps()) {
       /* Do fancy stuff. */
       if (gl_hasExt("GL_EXT_texture_filter_anisotropic")) {
          glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &param);
@@ -661,7 +682,12 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  */
 int gl_needPOT (void)
 {
-   return !gl_tex_ext_npot;
+   if (gl_tex_ext_npot == 0)
+      return 1;
+   else if (conf.npot == 1)
+      return 0;
+   else
+      return 1;
 }
 
 

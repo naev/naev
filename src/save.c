@@ -112,8 +112,7 @@ int save_all (void)
    }
 
    /* Set the writer parameters. */
-   xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
-   xmlTextWriterSetIndent(writer, 1);
+   xmlw_setParams( writer );
 
    /* Start element. */
    xmlw_start(writer);
@@ -140,7 +139,7 @@ int save_all (void)
       WARN("Aborting save...");
       goto err_writer;
    }
-   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
 
    /* Back up old savegame. */
    if (nfile_backupIfExists(file) < 0) {
@@ -169,17 +168,50 @@ err:
 /**
  * @brief Reload the current savegame.
  */
-void reload (void)
+void save_reload (void)
 {
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    load_game( path );
+}
+
+
+/**
+ * @brief Checks to see if there's a savegame available.
+ *
+ *    @return 1 if a savegame is available, 0 otherwise.
+ */
+int save_hasSave (void)
+{
+   char **files;
+   int nfiles, i, len;
+   int has_save;
+
+   /* Look for saved games. */
+   files = nfile_readDir( &nfiles, "%ssaves", nfile_basePath() );
+   has_save = 0;
+   for (i=0; i<nfiles; i++) {
+      len = strlen(files[i]);
+
+      /* no save extension */
+      if ((len >= 5) && (strcmp(&files[i][len-3],".ns")==0)) {
+         has_save = 1;
+         break;
+      }
+   }
+
+   /* Clean up. */
+   for (i=0; i<nfiles; i++)
+      free(files[i]);
+   free(files);
+
+   return has_save;
 }
 
 /**
  * @brief Opens the load game menu.
  */
-void load_game_menu (void)
+void save_loadGameMenu (void)
 {
    unsigned int wid;
    char **files;
@@ -260,7 +292,7 @@ static void load_menu_load( unsigned int wdw, char *str )
 
    if (load_game( path )) {
       menu_main();
-      load_game_menu();
+      save_loadGameMenu();
    }
 }
 /**
@@ -289,7 +321,7 @@ static void load_menu_delete( unsigned int wdw, char *str )
 
    /* need to reload the menu */
    load_menu_close(wdw, NULL);
-   load_game_menu();
+   save_loadGameMenu();
 }
 
 

@@ -10,13 +10,12 @@
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
- <event name="Baroncomm">
+ <event name="Baroncomm_baron">
   <lua>neutral/baroncomm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>system.cur():security() &gt;= 75</cond>
+  <cond>var.peek("baron_stage") == nil and system.cur():security() &gt;= 75</cond>
   <flags>
-   <unique />
   </flags>
  </event>
  <event name="Shipwreck">
@@ -30,8 +29,8 @@
  <event name="FLF/DV Derelicts">
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
-  <chance>10</chance>
-  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 10 and system.cur() == system.get("Surano")</cond>
+  <chance>40</chance>
+  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano")</cond>
   <flags>
    <unique />
   </flags>

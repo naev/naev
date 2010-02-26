@@ -92,7 +92,7 @@ function accept ()
    -- Mission data
    misn_stage = 0
    misn_base, misn_base_sys = planet.get("Omega Station")
-   misn_target_sys = system.get("NGC-7690")
+   misn_target_sys = system.get("Rockbed")
    misn.setMarker(misn_target_sys)
 
    -- Mission details

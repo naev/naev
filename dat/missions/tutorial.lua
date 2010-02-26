@@ -41,9 +41,9 @@ else -- default english
    title[2] = "Flight Tutorial"
    text[3] = [[We'll start off by flying around. Use %s and %s to turn, and %s to accelerate. Try flying around the planet.]]
    -- Step 2
-   text[4] = [[Now, we'll try braking. Since you can only accelerate forward, you'll have to turn around and accelerate to brake. To make this easier, you can use %s to turn around, facing the opposite direction that you're moving. The stars in the background are a good indication of your velocity. 
+   text[4] = [[Now, we'll try stopping. Since you can only accelerate forward, you'll have to turn around and accelerate to stop yourself. To make this easier, you can press %s to turn around, facing the opposite direction that you're moving. The stars in the background are good indicators of your velocity. 
 
-Try braking to a stop now.]]
+Try stopping yourself now.]]
    text[5] = [[Now you're getting the hang of it. Moving well is integral to success in NAEV.]]
    -- Step 3
    title[3] = "Targeting Tutorial"
@@ -55,7 +55,9 @@ You have multiple options:
  %s targets the nearest ship.
  %s targets the nearest enemy.
  %s clears the current target.]]
-   text[7] = [[I'll bring in several ships so you can try targeting. You'll notice your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled. The new ships will be yellow.]]
+   text[7] = [[Your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled.
+
+Several ships will be brought in so you can practice targeting. The new ships will be yellow.]]
    -- Step 4
    title[4] = "Combat Tutorial"
    text[8] = [[Now, let's try using the weapon systems.

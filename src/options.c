@@ -996,16 +996,20 @@ static void opt_video( unsigned int wid )
          "chkVSync", "Vertical Sync", NULL, conf.vsync );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkVBO", "VBOs (Disable for compatibility)", NULL, conf.vbo );
+         "chkVBO", "Vertex Buffer Objects*", NULL, conf.vbo );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
+         "chkMipmaps", "Mipmaps*", NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", "Interpolation (Disable for compat.)", NULL, conf.interpolate );
-   y -= 50;
-
-
+         "chkInterpolate", "Interpolation*", NULL, conf.interpolate );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkNPOT", "NPOT Textures*", NULL, conf.npot );
+   y -= 30;
+   window_addText( wid, x, y, cw, 20, 1,
+         "txtSCompat", NULL, &cBlack, "*Disable for compatibility." );
+   y -= 40;
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
          NULL, &cDConsole, "Features" );
@@ -1125,6 +1129,11 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.interpolate = f;
       opt_needRestart();
    }
+   f = window_checkboxState( wid, "chkNPOT" );
+   if (conf.npot != f) {
+      conf.npot = f;
+      opt_needRestart();
+   }
 
    /* Features. */
    f = window_checkboxState( wid, "chkEngineGlow" );
@@ -1170,6 +1179,7 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkVBO", conf.vbo );
    window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
    window_checkboxSet( wid, "chkInterpolate", conf.interpolate );
+   window_checkboxSet( wid, "chkNPOT", conf.npot );
    window_checkboxSet( wid, "chkFPS", conf.fps_show );
    window_checkboxSet( wid, "chkEngineGlow", conf.engineglow );
 

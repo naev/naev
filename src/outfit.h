@@ -329,7 +329,6 @@ typedef struct Outfit_ {
 
    /* general specs */
    OutfitSlotType slot; /**< Type of slot the outfit needs. */
-   int tech; /**< Tech needed to sell it. */
    char *license; /**< Licenses needed to buy it. */
    double mass; /**< How much weapon capacity is needed. */
 
@@ -370,8 +369,8 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  * get
  */
 Outfit* outfit_get( const char* name );
+Outfit* outfit_getW( const char* name );
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
-Outfit** outfit_getTech( int *n, const int *tech, const int techmax );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );
 int outfit_isBolt( const Outfit* o );

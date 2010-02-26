@@ -88,6 +88,7 @@ static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
+static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
@@ -142,6 +143,7 @@ static const luaL_reg pilotL_methods[] = {
    { "hyperspace", pilotL_hyperspace },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
+   { "hookClear", pilotL_hookClear },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -292,12 +294,12 @@ static int pilotL_getPlayer( lua_State *L )
 {
    LuaPilot lp;
 
-   if (player == NULL) {
+   if (player.p == NULL) {
       lua_pushnil(L);
       return 1;
    }
 
-   lp.pilot = player->id;
+   lp.pilot = player.p->id;
    lua_pushpilot(L,lp);
    return 1;
 }
@@ -896,7 +898,7 @@ static int pilotL_comm( lua_State *L )
 
    /* Check to see if pilot is valid. */
    if (target == NULL)
-      t = player;
+      t = player.p;
    else {
       t = pilot_get(target->pilot);
       if (t == NULL) {
@@ -1566,7 +1568,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
    }
 
    /* Creates the new task. */
-   t = ai_newtask( p, task, 1 );
+   t = ai_newtask( p, task, 0, 1 );
 
    return t;
 }
@@ -1790,5 +1792,24 @@ static int pilotL_hailPlayer( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Clears the pilot's hooks.
+ *
+ * Clears all the hooks set on the pilot.
+ *
+ * @usage p:hookClear()
+ *    @luaparam p Pilot to clear hooks.
+ * @luafunc hookClear( p )
+ */
+static int pilotL_hookClear( lua_State *L )
+{
+   Pilot *p;
+
+   p = luaL_validpilot(L,1);
+   pilot_clearHooks( p );
+
+   return 0;
+}
 
 

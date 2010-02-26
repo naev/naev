@@ -488,6 +488,12 @@ static int gl_getGLInfo (void)
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? "yes" : "no",
          gl_screen.fsaa, gl_screen.tex_max);
+   DEBUG("vsync: %s, vbo: %s, mm: %s, compress: %s, npot: %s",
+         gl_has(OPENGL_VSYNC) ? "yes" : "no",
+         gl_vboIsHW() ? "yes" : "no",
+         gl_texHasMipmaps() ? "yes" : "no",
+         gl_texHasCompress() ? "yes" : "no",
+         gl_needPOT() ? "no" : "yes" );
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
    DEBUG("Version: %s", glGetString(GL_VERSION));
 
@@ -630,9 +636,6 @@ int gl_init (void)
    /* Create the window. */
    gl_createWindow( flags );
 
-   /* Get info about the OpenGL window */
-   gl_getGLInfo();
-
    /* Some OpenGL options. */
    glClearColor( 0., 0., 0., 1. );
 
@@ -660,6 +663,9 @@ int gl_init (void)
    gl_initTextures();
    gl_initVBO();
    gl_initRender();
+
+   /* Get info about the OpenGL window */
+   gl_getGLInfo();
 
    /* Cosmetic new line. */
    DEBUG("");

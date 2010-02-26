@@ -82,9 +82,11 @@ void menu_info (void)
 {
    int w, h;
 
-   /* Can't open menu twice. */
-   if (menu_isOpen(MENU_INFO) || dialogue_isOpen())
+   /* Open closes when previously opened. */
+   if (menu_isOpen(MENU_INFO) || dialogue_isOpen()) {
+      info_close( 0, NULL );
       return;
+   }
 
    /* Dimensions. */
    w = 600;
@@ -149,7 +151,7 @@ static void info_openMain( unsigned int wid )
          "Ship:\n"
          "Fuel:"
          );
-   credits2str( creds, player->credits, 2 );
+   credits2str( creds, player.p->credits, 2 );
    snprintf( str, 128, 
          "%s\n"
          "%s\n"
@@ -158,12 +160,12 @@ static void info_openMain( unsigned int wid )
          "%s Credits\n"
          "%s\n"
          "%.0f (%d Jumps)",
-         player_name,
+         player.name,
          nt,
          player_rating(),
          creds,
-         player->name,
-         player->fuel, pilot_getJumps(player) );
+         player.p->name,
+         player.p->fuel, pilot_getJumps(player.p) );
    window_addText( wid, 140, 20,
          200, h-80,
          0, "txtPilot", &gl_smallFont, &cBlack, str );
@@ -229,7 +231,7 @@ static void info_openShip( unsigned int wid )
 
    /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
-   info_eq.selected  = player;
+   info_eq.selected  = player.p;
    info_eq.canmodify = 0;
 
    /* Update ship. */
@@ -245,7 +247,7 @@ static void ship_update( unsigned int wid )
    char buf[1024];
    int cargo;
 
-   cargo = pilot_cargoUsed( player ) + pilot_cargoFree( player);
+   cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    snprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
@@ -265,23 +267,23 @@ static void ship_update( unsigned int wid )
          "%d / %d Tons\n"
          "%.0f / %.0f Units (%d Jumps)",
          /* Generic */
-         player->name,
-         player->ship->name,
-         ship_class(player->ship),
-         player->ship->crew,
-         player->cpu_max,
+         player.p->name,
+         player.p->ship->name,
+         ship_class(player.p->ship),
+         player.p->ship->crew,
+         player.p->cpu_max,
          /* Movement. */
-         player->solid->mass,
-         pilot_hyperspaceDelay( player ),
-         player->thrust / player->solid->mass,
-         player->speed,
-         player->turn,
+         player.p->solid->mass,
+         pilot_hyperspaceDelay( player.p ),
+         player.p->thrust / player.p->solid->mass,
+         player.p->speed,
+         player.p->turn,
          /* Health. */
-         player->shield, player->shield_max, player->shield_regen,
-         player->armour, player->armour_max, player->armour_regen,
-         player->energy, player->energy_max, player->energy_regen,
-         pilot_cargoUsed( player ), cargo,
-         player->fuel, player->fuel_max, pilot_getJumps(player));
+         player.p->shield, player.p->shield_max, player.p->shield_regen,
+         player.p->armour, player.p->armour_max, player.p->armour_regen,
+         player.p->energy, player.p->energy_max, player.p->energy_regen,
+         pilot_cargoUsed( player.p ), cargo,
+         player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
    window_modifyText( wid, "txtDDesc", buf );
 }
 
@@ -327,7 +329,7 @@ static void cargo_genList( unsigned int wid )
       window_destroyWidget( wid, "lstCargo" );
 
    /* List */
-   if (player->ncommodities==0) {
+   if (player.p->ncommodities==0) {
       /* No cargo */
       buf = malloc(sizeof(char*));
       buf[0] = strdup("None");
@@ -335,15 +337,15 @@ static void cargo_genList( unsigned int wid )
    }
    else {
       /* List the player's cargo */
-      buf = malloc(sizeof(char*)*player->ncommodities);
-      for (i=0; i<player->ncommodities; i++) {
+      buf = malloc(sizeof(char*)*player.p->ncommodities);
+      for (i=0; i<player.p->ncommodities; i++) {
          buf[i] = malloc(sizeof(char)*128);
          snprintf(buf[i],128, "%s%s %d",
-               player->commodities[i].commodity->name,
-               (player->commodities[i].id != 0) ? "*" : "",
-               player->commodities[i].quantity);
+               player.p->commodities[i].commodity->name,
+               (player.p->commodities[i].id != 0) ? "*" : "",
+               player.p->commodities[i].quantity);
       }
-      nbuf = player->ncommodities;
+      nbuf = player.p->ncommodities;
    }
    window_addList( wid, 20, -40,
          w - 40, h - BUTTON_HEIGHT - 80,
@@ -360,7 +362,7 @@ static void cargo_update( unsigned int wid, char* str )
    (void)str;
    int pos;
 
-   if (player->ncommodities==0)
+   if (player.p->ncommodities==0)
       return; /* No cargo */
 
    pos = toolkit_getListPos( wid, "lstCargo" );
@@ -381,13 +383,13 @@ static void cargo_jettison( unsigned int wid, char* str )
    int i, j, f, pos, ret;
    Mission *misn;
 
-   if (player->ncommodities==0)
+   if (player.p->ncommodities==0)
       return; /* No cargo, redundant check */
 
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Special case mission cargo. */
-   if (player->commodities[pos].id != 0) {
+   if (player.p->commodities[pos].id != 0) {
       if (!dialogue_YesNo( "Abort Mission", 
                "Are you sure you want to abort this mission?" ))
          return;
@@ -396,7 +398,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       f = 0;
       for (i=0; i<MISSION_MAX; i++) {
          for (j=0; j<player_missions[i].ncargo; j++) {
-            if (player_missions[i].cargo[j] == player->commodities[pos].id) {
+            if (player_missions[i].cargo[j] == player.p->commodities[pos].id) {
                f = 1;
                break;
             }
@@ -406,7 +408,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       }
       if (!f) {
          WARN("Cargo '%d' does not belong to any active mission.",
-               player->commodities[pos].id);
+               player.p->commodities[pos].id);
          return;
       }
       misn = &player_missions[i];
@@ -430,10 +432,10 @@ static void cargo_jettison( unsigned int wid, char* str )
    }
    else {
       /* Remove the cargo */
-      commodity_Jettison( player->id, player->commodities[pos].commodity,
-            player->commodities[pos].quantity );
-      pilot_rmCargo( player, player->commodities[pos].commodity,
-            player->commodities[pos].quantity );
+      commodity_Jettison( player.p->id, player.p->commodities[pos].commodity,
+            player.p->commodities[pos].quantity );
+      pilot_rmCargo( player.p, player.p->commodities[pos].commodity,
+            player.p->commodities[pos].quantity );
    }
 
    /* We reopen the menu to recreate the list now. */

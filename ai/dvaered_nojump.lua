@@ -7,5 +7,5 @@ function donothing ()
 end
 
 function idle () 
-    ai.pushtask(0, "donothing") 
+    ai.pushtask("donothing") 
 end

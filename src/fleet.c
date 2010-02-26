@@ -111,11 +111,12 @@ Fleet* fleet_grab( const int faction )
  *    @param vel Initial velocity.
  *    @param ai AI to use (NULL is default).
  *    @param flags Flags to create with.
+ *    @param systemFLeeet System fleet the pilot belongs to.
  *    @return The ID of the pilot created.
  *
  * @sa pilot_create
  */
-int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
+unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
       Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags,
       const int systemFleet )
 {

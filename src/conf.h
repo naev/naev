@@ -25,6 +25,7 @@ typedef struct PlayerConf_s {
    int mipmaps; /**< Use mipmaps. */
    int compress; /**< Use texture compression. */
    int interpolate; /**< Use texture interpolation. */
+   int npot; /**< Use NPOT textures if available. */
 
    /* Memory usage. */
    int engineglow; /**< Sets engine glow. */
@@ -72,6 +73,7 @@ typedef struct PlayerConf_s {
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int nosave; /**< Disables conf saving. */
+   int devmode; /**< Developer mode. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */

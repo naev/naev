@@ -45,7 +45,7 @@ void window_addInput( const unsigned int wid,
    Widget *wgt = window_newWidget(wdw, name);
    if (wgt == NULL)
       return;
-                                                                    
+
    /* generic */
    wgt->type   = WIDGET_INPUT;
 

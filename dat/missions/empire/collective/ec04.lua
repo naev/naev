@@ -48,7 +48,7 @@ function create ()
       misn.accept()
 
       misn_stage = 0
-      blockade_sys = system.get("NGC-7132")
+      blockade_sys = system.get("Hades")
       misn_base, misn_base_sys = planet.get("Omega Station")
       misn.setMarker(misn_target_sys)
 

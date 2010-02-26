@@ -198,7 +198,7 @@ int comm_openPlanet( Planet *planet )
          comm_planet->faction, 0, 0, comm_planet->name );
 
    /* Add special buttons. */
-   if (areEnemies(player->faction, planet->faction) &&
+   if (areEnemies(player.p->faction, planet->faction) &&
          !planet->bribed)
       window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
@@ -510,7 +510,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* Must need refueling. */
-   if (player->fuel >= player->fuel_max) {
+   if (player.p->fuel >= player.p->fuel_max) {
       dialogue_msg( "Request Fuel", "Your fuel deposits are already full." );
       return;
    }
@@ -551,7 +551,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
       dialogue_msg( "Request Fuel", "You need %u more credits!",
-            price - player->credits);
+            price - player.p->credits);
       return;
    }
 
@@ -560,8 +560,9 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    pilot_modCredits( comm_pilot, price );
 
    /* Start refueling. */
+   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP | PILOT_HYP_BEGIN);
    pilot_setFlag(comm_pilot, PILOT_REFUELING);
-   ai_refuel( comm_pilot, player->id );
+   ai_refuel( comm_pilot, player.p->id );
 
    /* Last message. */
    if (price > 0)
