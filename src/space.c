@@ -1268,6 +1268,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             (planet->tech==NULL), "tech" );
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
             (planet->ncommodities==0),"commodity" );
+      MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
+            "presence" );
    } else { /* The asset is unreal, so set some NULLs. */
       planet->gfx_space    = NULL;
       planet->gfx_exterior = NULL;
