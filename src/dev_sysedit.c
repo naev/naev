@@ -138,7 +138,7 @@ void sysedit_open( StarSystem *sys )
    /* Reset some variables. */
    sysedit_sys    = sys;
    sysedit_drag   = 0;
-   sysedit_zoom   = 0.5;
+   sysedit_zoom   = 0.10;
    sysedit_xpos   = 0.;
    sysedit_ypos   = 0.;
 
