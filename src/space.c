@@ -1327,7 +1327,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Add the presence. */
    if (!systems_loading)
-      system_addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
+      system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
 
    return 0;
 }
@@ -1368,7 +1368,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    memmove( &sys->planetsid[i], &sys->planetsid[i+1], sizeof(int) * (sys->nplanets-i) );
 
    /* Remove the presence. */
-   system_addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
+   system_addPresence( sys, planet->faction, -(planet->presenceAmount), planet->presenceRange );
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -2423,25 +2423,27 @@ static void presenceCleanup( StarSystem *sys )
    int i;
 
    /* Reset the spilled variable for the entire universe. */
-   for(i = 0; i < systems_nstack; i++)
+   for (i=0; i < systems_nstack; i++)
       systems_stack[i].spilled = 0;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return;
    }
 
    /* Check the system for 0 value presences. */
-   for(i = 0; i < sys->npresence; i++)
-      if(sys->presence[i].value == 0) {
-         /* Remove the element with 0 value. */
-         memmove(&sys->presence[i], &sys->presence[i + 1],
-                 sizeof(SystemPresence) * sys->npresence - (i + 1));
-         sys->npresence--;
-         sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
-         i--;  /* We'll want to check the new value we just copied in. */
-      }
+   for (i=0; i < sys->npresence; i++) {
+      if (sys->presence[i].value != 0)
+         continue;
+
+      /* Remove the element with 0 value. */
+      memmove(&sys->presence[i], &sys->presence[i + 1],
+              sizeof(SystemPresence) * sys->npresence - (i + 1));
+      sys->npresence--;
+      sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+      i--;  /* We'll want to check the new value we just copied in. */
+   }
 
    return;
 }
