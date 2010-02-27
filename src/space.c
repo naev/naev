@@ -2469,17 +2469,17 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    StarSystem *cur;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return;
    }
 
    /* Check that we have a sane faction. (-1 == bobbens == insane)*/
-   if(faction_isFaction(faction) == 0)
+   if (faction_isFaction(faction) == 0)
       return;
 
    /* Check that we're actually adding any. */
-   if(amount == 0)
+   if (amount == 0)
       return;
 
    /* Add the presence to the current system. */
@@ -2487,27 +2487,27 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    sys->presence[i].value += amount;
 
    /* If there's no range, we're done here. */
-   if(range < 1)
+   if (range < 1)
       return;
 
    /* Add the spill. */
-   sys->spilled = 1;
-   curSpill = 0;
-   q = q_create();
-   qn = q_create();
+   sys->spilled   = 1;
+   curSpill       = 0;
+   q              = q_create();
+   qn             = q_create();
 
    /* Create the initial queue consisting of sys adjacencies. */
-   for (i = 0; i < sys->njumps; i++)
+   for (i=0; i < sys->njumps; i++) {
       if (sys->jumps[i].target->spilled == 0) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
       }
+   }
 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
       WARN("q is empty after getting adjancies of %s.", sys->name);
       presenceCleanup(sys);
-
       return;
    }
 
@@ -2516,21 +2516,22 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       cur = q_dequeue(q);
 
       /* Enqueue all its adjancencies to the next range queue. */
-      for (i = 0; i < cur->njumps; i++)
-         if (sys->jumps[i].target->spilled == 0) {
-            q_enqueue( qn, sys->jumps[i].target );
-            sys->jumps[i].target->spilled = 1;
+      for (i=0; i < cur->njumps; i++) {
+         if (cur->jumps[i].target->spilled == 0) {
+            q_enqueue( qn, cur->jumps[i].target );
+            cur->jumps[i].target->spilled = 1;
          }
+      }
 
       /* Spill some presence. */
       x = getPresenceIndex(cur, faction);
       cur->presence[x].value += amount / (2 + curSpill);
 
       /* Check to see if we've finished this range and grab the next queue. */
-      if(q_isEmpty(q)) {
+      if (q_isEmpty(q)) {
          curSpill++;
          q_destroy(q);
-         q = qn;
+         q  = qn;
          qn = q_create();
       }
    }
