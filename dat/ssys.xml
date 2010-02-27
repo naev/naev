@@ -1053,13 +1053,6 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="Klantar">
-    <pos x="2286.316398" y="-2650.048552"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
    <jump target="Theras">
     <pos x="3453.280587" y="-569.958932"/>
     <radius>200.000000</radius>
@@ -2508,7 +2501,7 @@
   </assets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="1540.550260" y="-3142.722530"/>
+    <pos x="2051.419253" y="-2835.785438"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2849,8 +2842,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>377.000000</x>
-   <y>-416.000000</y>
+   <x>298.000000</x>
+   <y>-425.000000</y>
   </pos>
   <assets>
    <asset>Klantar I</asset>
@@ -2859,19 +2852,17 @@
    <asset>Tuur</asset>
   </assets>
   <jumps>
-   <jump target="Dakron">
-    <pos x="-2286.316398" y="2650.048552"/>
+   <jump target="Massia">
+    <pos x="1565.247584" y="-3130.495168"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Massia">
-    <pos x="-1086.406236" y="-3327.119098"/>
+   <jump target="Tarsus">
+    <pos x="-3893.739245" y="3716.318890"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
  </ssys>
@@ -3128,8 +3119,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>361.000000</x>
-   <y>-465.000000</y>
+   <x>321.000000</x>
+   <y>-471.000000</y>
   </pos>
   <assets>
    <asset>Arck</asset>
@@ -3140,7 +3131,7 @@
   </assets>
   <jumps>
    <jump target="Klantar">
-    <pos x="1086.406236" y="3327.119098"/>
+    <pos x="-1565.247584" y="3130.495168"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3373,8 +3364,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>503.000000</x>
-   <y>-498.000000</y>
+   <x>508.000000</x>
+   <y>-492.000000</y>
   </pos>
   <assets>
    <asset>Folevo</asset>
@@ -3384,7 +3375,7 @@
   </assets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="1941.450687" y="2912.176030"/>
+    <pos x="2144.882318" y="2765.769304"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4413,20 +4404,20 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>537.000000</x>
-   <y>-447.000000</y>
+   <x>546.000000</x>
+   <y>-443.000000</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Haleb">
-    <pos x="-1540.550260" y="3142.722530"/>
+    <pos x="-2051.419253" y="2835.785438"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Norpin">
-    <pos x="-1941.450687" y="-2912.176030"/>
+    <pos x="-2144.882318" y="-2765.769304"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4678,6 +4669,13 @@
   <jumps>
    <jump target="Doranthex">
     <pos x="-1792.974054" y="3005.868267"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Klantar">
+    <pos x="3213.739245" y="-1386.318890"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
