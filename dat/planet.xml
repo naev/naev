@@ -1038,17 +1038,30 @@
   </pos>
   <GFX>
    <space>H01.png</space>
-   <exterior>(null)</exterior>
+   <exterior>desertic3.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>H</class>
+   <population>20000000</population>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>Chriik is a dead world. Like most desert planets it has no bodies of water and a hot climate, but unlike most desert planets, it doesn't have any indigenous life whatsoever. Indeed, there is no reason why anyone or anything would want to live here in the first place. This pakes it a perfect planet for major industries to set up shop, since they can pollute all they want without repercussions.</description>
+   <bar>The spaceport bar is a popular place on Chriik, because even inside the habitation complexes the air is so dry it will parch you out in record time.</bar>
   </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </planet>
  <planet name="Chucrchill II">
   <pos>
@@ -2874,13 +2887,18 @@
    <exterior>mining4.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>G</class>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
+   <population>35000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>Hankies is something of a holiday resort as well as retreat for the wealthy. It is mainly a consumer world, having neither the land for agriculture nor the resources for industry. It does, however, have a pleasant ecosystem and a wealth of beautiful geography.</description>
+   <bar>Since Hankies doesn't have much to offer, the bar is almost entirely an import product. The architecture, the facilities and the drinks can all be traced offworld. The only thing that is truly authentic to this world is the view from the windows - a mountain range stretching away into the distance.</bar>
   </general>
  </planet>
  <planet name="Hatter I">
@@ -2983,14 +3001,26 @@
    <exterior>station01.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
-   <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
+   <class>M</class>
+   <population>4000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>Huan'xi may be a relatively remote planet, but it has a thriving agriculture. The planet's soil is extremely fertile, allowing for multiple crops per cycle. The planet also exports unique foodstuffs that are difficult to produce elsewhere. Indeed, one can find "genuine Huan'xi products" in food outlets all over the galaxy.</description>
+   <bar>The rustic feel of this bar is the product of a careful choice of appointments, music and holographic illusions. The owner clearly feels that customers will be attracted by the atmosphere of his establishments, rather than by the drinks he serves.</bar>
   </general>
+  <tech>
+   <item>Basic Trade Ships</item>
+   <item>Bulk Trade Ships</item>
+   <item>Basic Outfits 1</item>
+  </tech>
  </planet>
  <planet name="Humdrum I">
   <pos>
@@ -3138,14 +3168,26 @@
    <exterior>mining4.png</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>0</class>
+   <population>5000</population>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>Inios is something like a border guard between Sirius and Dvaered controlled territories. Though officially not a military complex, Inios does garrison far more combat capable ships that one might expect of a commercial station. Whenever the Dvaered send in skirmish fleets to try the Sirius defenses, it is Inios that sends them on their way home.</description>
+   <bar>The bar is built against an outer wall. Several large windows allow patrons to look out on the frozen wastes of Eye of Night III, the planet around which the station orbits. Not coincidentally, the windows also allow people to see the Sirius armed forces docking and taking off, emphasizing the military capacity of the station.</bar>
   </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
+  </tech>
  </planet>
  <planet name="Jaegnhild">
   <pos>
@@ -5498,14 +5540,24 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>(null)</exterior>
   </GFX>
   <general>
-   <class>A</class>
+   <class>H</class>
+   <population>50000000</population>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <description>Rionna is a cold world, but it was not always so. Only a hundred years ago, it was classified as a class M planet, though even then it was on the chilly side. The reason why the face of the planet is covered in ice now is that the local star is going through a dim phase. Astronomers have predicted that in another century and a half, the star will brighten up again, and Rionna will once again be green. The population has dug in, preferring to wait for better years than to move offworld and leave their homes behind.</description>
+   <bar>This spaceport bar is wholly unremarkable. It could be any other bar on any other planet. The only thing that reminds you that you're still on Rionna is that the patrons are all wearing warm clothes.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+  </tech>
  </planet>
  <planet name="Riun">
   <pos>
