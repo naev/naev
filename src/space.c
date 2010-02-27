@@ -2377,7 +2377,8 @@ int space_sysLoad( xmlNodePtr parent )
  *    @param faction The index of the faction to search for.
  *    @return The index of the presence array for faction.
  */
-static int getPresenceIndex( StarSystem *sys, int faction ) {
+static int getPresenceIndex( StarSystem *sys, int faction )
+{
    int i;
 
    /* Check for NULL and display a warning. */
@@ -2422,7 +2423,8 @@ static int getPresenceIndex( StarSystem *sys, int faction ) {
  *
  *    @param sys Pointer to the system to cleanup.
  */
-static void presenceCleanup( StarSystem *sys ) {
+static void presenceCleanup( StarSystem *sys )
+{
    int i;
 
    /* Reset the spilled variable for the entire universe. */
@@ -2458,7 +2460,8 @@ static void presenceCleanup( StarSystem *sys ) {
  *    @param amount The amount of presence to add (negative to subtract).
  *    @param range The range of spill of the presence.
  */
-void system_addPresence( StarSystem *sys, int faction, double amount, int range ) {
+void system_addPresence( StarSystem *sys, int faction, double amount, int range )
+{
    int i, x, curSpill;
    Queue q, qn;
    StarSystem *cur;
@@ -2548,7 +2551,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
  *    @param faction The faction to get the presence for.
  *    @return The amount of presence the faction has in the system.
  */
-double system_getPresence( StarSystem *sys, int faction ) {
+double system_getPresence( StarSystem *sys, int faction )
+{
    int i;
 
    /* Check for NULL and display a warning. */
@@ -2577,7 +2581,8 @@ double system_getPresence( StarSystem *sys, int faction ) {
  *
  *    @param sys Pointer to the system to process.
  */
-void system_addAllPlanetsPresence( StarSystem *sys ) {
+void system_addAllPlanetsPresence( StarSystem *sys )
+{
    int i;
 
    /* Check for NULL and display a warning. */
@@ -2599,7 +2604,8 @@ void system_addAllPlanetsPresence( StarSystem *sys ) {
  *    @param sys Pointer to the system to process.
  *    @return 0 If empty; otherwise 1.
  */
-int system_hasPlanet( StarSystem *sys ) {
+int system_hasPlanet( StarSystem *sys )
+{
    int i;
 
    /* Check for NULL and display a warning. */
@@ -2652,7 +2658,8 @@ static void system_rmSystemFleet( const int systemFleetIndex )
  *
  * @param systemFleetIndex The system fleet to remove from.
  */
-void system_removePilotFromSystemFleet( const int systemFleetIndex ) {
+void system_removePilotFromSystemFleet( const int systemFleetIndex )
+{
    /* Check if the pilot belongs to any fleets. */
    if(systemFleetIndex < 0)
       return;
