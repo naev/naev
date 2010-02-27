@@ -80,7 +80,6 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    if (p->faction >= 0)
       xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
    xmlw_elem( writer, "population", "%"PRIu64, p->population );
-   xmlw_elem( writer, "prodfactor", "%f", p->prodfactor );
    xmlw_startElem( writer, "services" );
    if (planet_hasService( p, PLANET_SERVICE_LAND ))
       xmlw_elemEmpty( writer, "land" );

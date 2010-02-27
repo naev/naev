@@ -1169,7 +1169,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
             xmlr_ulong(cur, "population", planet->population );
-            xmlr_float(cur, "prodfactor", planet->prodfactor );
 
             if (xml_isNode(cur,"class"))
                planet->class =
@@ -1236,10 +1235,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       DEBUG("Unknown node '%s' in planet '%s'",node->name,planet->name);
    } while (xml_nextNode(node));
 
-
-   /* Some postprocessing. */
-   planet->cur_prodfactor = planet->prodfactor;
-
 /*
  * verification
  */
@@ -1251,8 +1246,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             planet->gfx_exterior==NULL,"GFX exterior");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
             (planet->population==0), "population");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-            (planet->prodfactor==0.), "prodfactor");
       MELEMENT((flags&FLAG_XSET)==0,"x");
       MELEMENT((flags&FLAG_YSET)==0,"y");
       MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
