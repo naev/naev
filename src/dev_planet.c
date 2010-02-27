@@ -68,6 +68,12 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    xmlw_elem( writer, "exterior", "%s", p->gfx_exteriorPath );
    xmlw_endElem( writer ); /* "GFX" */
 
+   /* Presence. */
+   xmlw_startElem( writer, "presence" );
+   xmlw_elem( writer, "value", "%f", p->presenceAmount );
+   xmlw_elem( writer, "range", "%d", p->presenceRange );
+   xmlw_endElem( writer );
+
    /* General. */
    xmlw_startElem( writer, "general" );
    xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
@@ -75,10 +81,6 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
       xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
    xmlw_elem( writer, "population", "%"PRIu64, p->population );
    xmlw_elem( writer, "prodfactor", "%f", p->prodfactor );
-   xmlw_startElem( writer, "presence" );
-   xmlw_elem( writer, "value", "%f", p->presenceAmount );
-   xmlw_elem( writer, "range", "%d", p->presenceRange );
-   xmlw_endElem( writer );
    xmlw_startElem( writer, "services" );
    if (planet_hasService( p, PLANET_SERVICE_LAND ))
       xmlw_elemEmpty( writer, "land" );
