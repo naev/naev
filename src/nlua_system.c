@@ -37,6 +37,7 @@ static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_security( lua_State *L );
+static int systemL_presence( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -50,6 +51,7 @@ static const luaL_reg system_methods[] = {
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "security", systemL_security },
+   { "presence", systemL_presence},
    {0,0}
 }; /**< System metatable methods. */
 
@@ -434,7 +436,7 @@ static int systemL_hasPresence( lua_State *L )
    /* Try to find a fleet of the faction. */
    found = 0;
    for (i=0; i<sys->s->nfleets; i++) {
-      if (sys->s->fleets[i].fleet->faction == fct) {
+      if (sys->s->fleets[i]->faction == fct) {
          found = 1;
          break;
       }
@@ -457,7 +459,7 @@ static int systemL_hasPresence( lua_State *L )
  */
 static int systemL_planets( lua_State *L )
 {
-   int i;
+   int i, key;
    LuaSystem *sys;
    LuaPlanet p;
 
@@ -465,11 +467,15 @@ static int systemL_planets( lua_State *L )
 
    /* Push all planets. */
    lua_newtable(L);
+   key = 0;
    for (i=0; i<sys->s->nplanets; i++) {
       p.p = sys->s->planets[i];
-      lua_pushnumber(L,i+1); /* key */
-      lua_pushplanet(L,p); /* value */
-      lua_rawset(L,-3);
+      if(p.p->real == ASSET_REAL) {
+         key++;
+         lua_pushnumber(L,key); /* key */
+         lua_pushplanet(L,p); /* value */
+         lua_rawset(L,-3);
+      }
    }
 
    return 1;
@@ -477,7 +483,8 @@ static int systemL_planets( lua_State *L )
 
 
 /**
- * @brief Gets the security level in a system.
+ * @brief Gets the security level in a system.<br />
+ * DEPRECATED. Use sys:presence() instead.
  *
  * @usage sec = sys:security()
  *
@@ -488,10 +495,102 @@ static int systemL_planets( lua_State *L )
 static int systemL_security( lua_State *L )
 {
    LuaSystem *sys;
+   double security;
+   int i;
+   int *fct;
+   int nfct;
+   double presenceF, presenceA;
 
-   sys = luaL_checksystem(L,1);
+   /* Get parameters. */
+   sys = luaL_checksystem(L, 1);
 
-   lua_pushnumber(L, sys->s->security * 100. );
+   /* Get the presence of all factions. */
+   fct = faction_getGroup(&nfct, 0);
+   presenceA = 0;
+   for(i = 0; i < nfct; i++)
+      presenceA += system_getPresence(sys->s, fct[i]);
+
+   /* Get the presence of friendly factions. */
+   fct = faction_getGroup(&nfct, 1);
+   presenceF = 0;
+   for(i = 0; i < nfct; i++)
+      presenceF += system_getPresence(sys->s, fct[i]);
+
+   /* Get the "security" percentage. */
+   security = presenceF / presenceA;
+
+   lua_pushnumber(L, security * 100. );
    return 1;
 }
+
+/**
+ * @brief Gets the presence in the system.
+ *
+ * Possible parameters are besides a faction:<br/>
+ *  - "all": Gets the sum of all the presences.<br />
+ *  - "friendly": Gets the sum of all the friendly presences.<br />
+ *  - "hostile": Gets the sum of all the hostile presences.<br />
+ *  - "neutral": Gets the sum of all the neutral presences.<br />
+ *
+ * @usage p = sys:presence( f ) -- Gets the presence of a faction f
+ * @usage p = sys:presence( "all" ) -- Gets the sum of all the presences
+ * @usage if sys:presence("friendly") > sys:presence("hostile") then -- Checks to see if the system is dominantly friendly
+ *
+ *    @luaparam s System to get presence level of.
+ *    @luareturn The presence level in sys (absolute value).
+ * @luafunc presence( s )
+ */
+static int systemL_presence( lua_State *L )
+{
+   LuaSystem *sys;
+   LuaFaction *lf;
+   int *fct;
+   int nfct;
+   double presence;
+   int i;
+   const char *cmd;
+
+   /* Get parameters. */
+   sys = luaL_checksystem(L, 1);
+
+   /* Get the second parameter. */
+   if(lua_isstring(L, 2)) {
+      /* A string command has been given. */
+      cmd  = lua_tostring(L, 2);
+      nfct = 0;
+
+      /* Check the command string and get the appropriate faction group.*/
+      if(strcmp(cmd, "all") == 0)
+         fct = faction_getGroup(&nfct, 0);
+      else if(strcmp(cmd, "friendly") == 0)
+         fct = faction_getGroup(&nfct, 1);
+      else if(strcmp(cmd, "hostile") == 0)
+         fct = faction_getGroup(&nfct, 3);
+      else if(strcmp(cmd, "neutral") == 0)
+         fct = faction_getGroup(&nfct, 2);
+      else /* Invalid command string. */
+         NLUA_INVALID_PARAMETER();
+   }
+   else if(lua_isfaction(L, 2)) {
+      /* A faction id was given. */
+      lf     = lua_tofaction(L, 2);
+      nfct   = 1;
+      fct    = malloc(sizeof(int) * nfct);
+      fct[0] = lf->f;
+   }
+   else NLUA_INVALID_PARAMETER();
+
+   /* Add up the presence values. */
+   presence = 0;
+   for(i = 0; i < nfct; i++)
+      presence += system_getPresence(sys->s, fct[i]);
+
+   /* Clean up after ourselves. */
+   free(fct);
+
+   /* Push it back to Lua. */
+   lua_pushnumber(L, presence);
+   return 1;
+}
+
 

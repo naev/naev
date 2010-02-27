@@ -25,6 +25,7 @@ glTexture* faction_logoTiny( int f );
 glColour* faction_colour( int f );
 int* faction_getEnemies( int f, int *n );
 int* faction_getAllies( int f, int *n );
+int* faction_getGroup( int *n, int which );
 
 /* player stuff */
 void faction_modPlayer( int f, double mod );

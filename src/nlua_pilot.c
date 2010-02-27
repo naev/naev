@@ -430,9 +430,6 @@ static int pilotL_addFleet( lua_State *L )
 
       plt = &flt->pilots[i];
 
-      if (RNG(0,100) > plt->chance)
-         continue;
-
       /* Fleet displacement - first ship is exact. */
       if (!first)
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
@@ -440,7 +437,7 @@ static int pilotL_addFleet( lua_State *L )
       first = 0;
 
       /* Create the pilot. */
-      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
+      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags, -1 );
 
       /* we push each pilot created into a table and return it */
       lua_pushnumber(L,++j); /* index, starts with 1 */

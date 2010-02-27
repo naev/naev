@@ -1255,6 +1255,10 @@ void pilot_dead( Pilot* p )
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
 
+   /* Remove him from the system fleet. */
+   system_removePilotFromSystemFleet(p->systemFleet);
+   p->systemFleet = -1;
+
    /* Pilot must die before setting death flag and probably messing with other flags. */
    pilot_runHook( p, PILOT_HOOK_DEATH );
 }
@@ -1621,6 +1625,9 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
+      /* Remove him from the system fleet. */
+      system_removePilotFromSystemFleet(pilot->systemFleet);
+      pilot->systemFleet = -1;
 
       /* Do the slow brake thing */
       vect_pset( &pilot->solid->vel, /* slowly brake */
@@ -1770,6 +1777,10 @@ static void pilot_hyperspace( Pilot* p, double dt )
             player_brokeHyperspace();
          }
          else {
+            /* Remove him from the system fleet. */
+            system_removePilotFromSystemFleet(p->systemFleet);
+            p->systemFleet = -1;
+
             pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
             pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
          }
@@ -3122,7 +3133,7 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags )
+      const unsigned int flags, const int systemFleet )
 {
    int i, p;
 
@@ -3140,6 +3151,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* faction */
    pilot->faction = faction;
+
+   /* System fleet. */
+   pilot->systemFleet = systemFleet;
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
@@ -3255,7 +3269,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags )
+      const unsigned int flags, const int systemFleet )
 {
    Pilot *dyn;
 
@@ -3280,7 +3294,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    pilot_nstack++; /* there's a new pilot */
   
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, systemFleet );
 
    return dyn->id;
 }
@@ -3305,7 +3319,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       WARN("Unable to allocate memory");
       return 0;
    }
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY, -1 );
    return dyn;
 }
 
@@ -3642,4 +3656,20 @@ void pilot_clearTimers( Pilot *pilot )
       if (o->timer > 0.)
          o->timer = 0.;
    }
+}
+
+
+/**
+ * @brief Updates the systemFleet of all pilots.
+ *
+ * @param index Index number that was deleted.
+ */
+void pilots_updateSystemFleet( const int deletedIndex ) {
+   int i;
+
+   for(i = 0; i < pilot_nstack; i++)
+      if(pilot_stack[i]->systemFleet >= deletedIndex)
+         pilot_stack[i]->systemFleet--;
+
+   return;
 }

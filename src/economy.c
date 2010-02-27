@@ -387,7 +387,11 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  */
 static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 {
+   (void) dt;
+   (void) sys;
    (void) price;
+   return 0.;
+#if 0
    int i;
    double I;
    double prodfactor, p;
@@ -422,6 +426,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    I = p / ECON_PROD_MODIFIER;
 
    return I;
+#endif
 }
 
 

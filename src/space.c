@@ -34,15 +34,16 @@
 #include "fleet.h"
 #include "mission.h"
 #include "conf.h"
+#include "queue.h"
 
 
-#define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
-#define XML_PLANET_TAG        "planet" /**< Individual planet xml tag. */
+#define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
+#define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
 
 #define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
-#define PLANET_DATA           "dat/planet.xml" /**< XML file containing planets. */
+#define PLANET_DATA           "dat/asset.xml" /**< XML file containing planets. */
 #define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
 
 #define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
@@ -98,7 +99,6 @@ glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
  * fleet spawn rate
  */
 int space_spawn = 1; /**< Spawn enabled by default. */
-static double spawn_timer = 0; /**< Timer that controls spawn rate. */
 extern int pilot_nstack;
 
 
@@ -138,10 +138,13 @@ static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
-static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
+static int getPresenceIndex( StarSystem *sys, int faction );
+static void presenceCleanup( StarSystem *sys );
+static void system_scheduler( double dt, int init );
+static void system_rmSystemFleet( const int systemFleetIndex );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
@@ -373,7 +376,8 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
       for (j=0; j<systems_stack[i].nplanets; j++) {
          planet = systems_stack[i].planets[j];
          for (k=0; k<nfactions; k++)
-            if (planet->faction == factions[k]) {
+            if (planet->real == ASSET_REAL &&
+                planet->faction == factions[k]) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
                   mtmp += CHUNK_SIZE;
@@ -408,12 +412,14 @@ char* space_getRndPlanet (void)
 
    for (i=0; i<systems_nstack; i++)
       for (j=0; j<systems_stack[i].nplanets; j++) {
-         ntmp++;
-         if (ntmp > mtmp) { /* need more space */
-            mtmp += CHUNK_SIZE;
-            tmp = realloc(tmp, sizeof(char*) * mtmp);
+         if(systems_stack[i].planets[j]->real == ASSET_REAL) {
+            ntmp++;
+            if (ntmp > mtmp) { /* need more space */
+               mtmp += CHUNK_SIZE;
+               tmp = realloc(tmp, sizeof(char*) * mtmp);
+            }
+            tmp[ntmp-1] = systems_stack[i].planets[j]->name;
          }
-         tmp[ntmp-1] = systems_stack[i].planets[j]->name;
       }
 
    res = tmp[RNG(0,ntmp-1)];
@@ -592,59 +598,103 @@ int planet_exists( const char* planetname )
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
+ *    @param init If we're currently initialising.
+ *                   0 for normal.
+ *                   2 for initialising a system.
+ */
+static void system_scheduler( double dt, int init )
+{
+   int i;
+   double str;
+
+   /* Go through all the factions and reduce the timer. */
+   for (i = 0; i < cur_system->npresence; i++)
+      if (cur_system->presence[i].schedule.fleet != NULL) {
+         /* Decrement the timer. */
+         cur_system->presence[i].schedule.time -= dt;
+
+         /* If it's time, push the fleet out. */
+         if(cur_system->presence[i].schedule.time <= 0) {
+            space_addFleet( cur_system->presence[i].schedule.fleet, init );
+            cur_system->presence[i].schedule.fleet = NULL;
+         }
+      } else {
+         /* Check if schedules can/should be added. */
+         if(cur_system->presence[i].schedule.chain ||
+            cur_system->presence[i].curUsed < cur_system->presence[i].value) {
+            /* Pick a fleet (randomly for now). */
+            cur_system->presence[i].schedule.fleet = fleet_grab(cur_system->presence[i].faction);
+            if(cur_system->presence[i].schedule.fleet == NULL) {
+               /* Let's not look here again. */
+               cur_system->presence[i].curUsed = cur_system->presence[i].value;
+               continue;
+            }
+
+            /* Get its strength and calculate the time. */
+            str = cur_system->presence[i].schedule.fleet->strength;
+            cur_system->presence[i].schedule.time =
+               (str / cur_system->presence[i].value * 30 +
+                cur_system->presence[i].schedule.penalty) *
+               (1 + 0.4 * (RNGF() - 0.5));
+            cur_system->presence[i].schedule.time +=
+               cur_system->presence[i].schedule.penalty;
+
+            if(cur_system->presence[i].schedule.chain == 2)
+               init = 2;
+
+            /* If we're initialising, 50% chance of starting in-system. */
+            if(init == 2) {
+               cur_system->presence[i].schedule.time *= RNGF() * 2 - 1;
+               if(cur_system->presence[i].schedule.time < 0) {
+                  cur_system->presence[i].schedule.time = 0;
+               }
+            }
+
+            /* Calculate the penalty for the next fleet. */
+            cur_system->presence[i].schedule.penalty = str / cur_system->presence[i].value - 1;
+            if(cur_system->presence[i].schedule.penalty < 0)
+               cur_system->presence[i].schedule.penalty = 0;
+
+            /* Chaining. */
+            if(RNGF() > ((cur_system->presence[i].curUsed + str) / cur_system->presence[i].value)) {
+               if(init == 2)
+                  cur_system->presence[i].schedule.chain = 2;
+               else
+                  cur_system->presence[i].schedule.chain = 1;
+               cur_system->presence[i].schedule.penalty =
+                  cur_system->presence[i].schedule.time;
+               cur_system->presence[i].schedule.time = 0;
+            } else {
+               cur_system->presence[i].schedule.chain = 0;
+            }
+
+            /* We've used up some presence. */
+            cur_system->presence[i].curUsed += str;
+         }
+      }
+
+   /* If we're initialising, call ourselves again, to actually spawn any that need to be. */
+   if(init == 2)
+      system_scheduler(0, 1);
+
+   return;
+}
+
+
+/**
+ * @brief Controls fleet spawning.
+ *
+ *    @param dt Current delta tick.
  */
 void space_update( const double dt )
 {
-   int i, j, f;
-   double mod;
-   double target;
-
    /* Needs a current system. */
    if (cur_system == NULL)
       return;
 
-
-   /*
-    * Spawning.
-    */
-   if (space_spawn) {
-      spawn_timer -= dt;
-
-      /* Only check if there are fleets and pilots. */
-      if ((cur_system->nfleets == 0) || (cur_system->avg_pilot == 0.))
-         spawn_timer = 300.;
-
-      if (spawn_timer < 0.) { /* time to possibly spawn */
-
-         /* spawn chance is based on overall % */
-         f = RNG(0,100*cur_system->nfleets);
-         j = 0;
-         for (i=0; i < cur_system->nfleets; i++) {
-            j += cur_system->fleets[i].chance;
-            if (f < j) { /* add one fleet */
-               space_addFleet( cur_system->fleets[i].fleet, 0 );
-               break;
-            }
-         }
-
-         /* Target is actually half of average pilots. */
-         target = cur_system->avg_pilot/2.;
-
-         /* Base timer. */
-         spawn_timer = 45./target;
-
-         /* Calculate ship modifier, it tries to stabilize at avg pilots. */
-         /* First get pilot facton ==> [-1., inf ] */
-         mod  = (double)pilot_nstack - target;
-         mod /= target;
-         /* Scale and offset. */
-         /*mod = 2.*mod + 1.5;*/
-         mod  = MIN( mod, -0.5 );
-         /* Modify timer. */
-         spawn_timer *= 1. + mod;
-      }
-   }
-
+   /* If spawning is enabled, call the scheduler. */
+   if (space_spawn)
+      system_scheduler(dt, 0);
 
    /*
     * Volatile systems.
@@ -724,10 +774,9 @@ static void space_addFleet( Fleet* fleet, int init )
    if (init == 1) {
       if (RNGF() < 0.5) /* 50% chance of starting out en route. */
          c = 2;
-      else if (RNGF() < 0.5) /* 25% of starting out landed. */
+      else {/* 50% of starting out landed. */
          c = 1;
-      else /* 25% chance starting out entering hyperspace. */
-         c = 0;
+      }
    }
    else c = 0;
 
@@ -763,31 +812,41 @@ static void space_addFleet( Fleet* fleet, int init )
       }
    }
 
+   /* Create the system fleet. */
+   cur_system->systemFleets = realloc(cur_system->systemFleets, sizeof(SystemFleet) * (cur_system->nsystemFleets + 1));
+   cur_system->systemFleets[cur_system->nsystemFleets].npilots =
+      fleet->npilots;
+   cur_system->systemFleets[cur_system->nsystemFleets].faction =
+      fleet->faction;
+   cur_system->systemFleets[cur_system->nsystemFleets].presenceUsed =
+      fleet->strength;
+   cur_system->nsystemFleets++;
+
    for (i=0; i < fleet->npilots; i++) {
       plt = &fleet->pilots[i];
-      if (RNG(0,100) <= plt->chance) {
-         /* other ships in the fleet should start split up */
-         vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-               RNG(75,150) * (RNG(0,1) ? 1 : -1));
-         a = vect_angle(&vp, &vn);
-         if (a < 0.)
-            a += 2.*M_PI;
-         flags = 0;
+      /* other ships in the fleet should start split up */
+      vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+                RNG(75,150) * (RNG(0,1) ? 1 : -1));
+      a = vect_angle(&vp, &vn);
+      if (a < 0.)
+         a += 2.*M_PI;
+      flags = 0;
 
-         /* Entering via hyperspace. */
-         if (c==0)
-            space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
-         /* Starting out landed. */
-         else if (c==1)
-            vectnull(&vv);
-         /* Starting out almost landed. */
-         else if (c==2)
-            /* Put speed at half in case they start very near. */
-            vect_pset( &vv, plt->ship->speed * 0.5, a );
-
-         /* Create the pilot. */
-         fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
+      /* Entering via hyperspace. */
+      if (c==0) {
+         space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
+         flags |= PILOT_HYP_END;
       }
+      /* Starting out landed. */
+      else if (c==1)
+         vectnull(&vv);
+      /* Starting out almost landed. */
+      else if (c==2)
+         /* Put speed at half in case they start very near. */
+         vect_pset( &vv, plt->ship->speed * 0.5, a );
+
+      /* Create the pilot. */
+      fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags, (cur_system->nsystemFleets - 1) );
    }
 }
 
@@ -931,14 +990,20 @@ void space_init ( const char* sysname )
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
 
-   /* set up fleets -> pilots */
-   for (i=0; i < cur_system->nfleets; i++) {
-      if (RNG(0,100) <= (cur_system->fleets[i].chance/2)) /* fleet check (50% chance) */
-         space_addFleet( cur_system->fleets[i].fleet, 1 );
+   /* Reset any system fleets. */
+   cur_system->nsystemFleets = 0;
+
+   /* Reset any schedules and used presence. */
+   for (i=0; i < cur_system->npresence; i++) {
+      cur_system->presence[i].curUsed           = 0;
+      cur_system->presence[i].schedule.chain    = 0;
+      cur_system->presence[i].schedule.fleet    = NULL;
+      cur_system->presence[i].schedule.time     = 0;
+      cur_system->presence[i].schedule.penalty  = 0;
    }
 
-   /* start the spawn timer */
-   spawn_timer = -1.;
+   /* Call the scheduler. */
+   system_scheduler(0, 2);
 
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
@@ -1045,6 +1110,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
    /* Clear up memory for sane defaults. */
    flags = 0;
+   planet->presenceAmount = 0;
+   planet->presenceRange = 0;
+   planet->real = ASSET_UNREAL;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -1072,6 +1140,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"pos")) {
+         planet->real = ASSET_REAL;
          cur = node->children;
          do {
             if (xml_isNode(cur,"x")) {
@@ -1085,6 +1154,14 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          } while(xml_nextNode(cur));
          continue;
       }
+      else if (xml_isNode(node, "presence")) {
+         cur = node->children;
+         do {
+            xmlr_float(cur, "value", planet->presenceAmount);
+            xmlr_int(cur, "range", planet->presenceRange);
+         } while(xml_nextNode(cur));
+         continue;
+      }
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
@@ -1092,7 +1169,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
             xmlr_ulong(cur, "population", planet->population );
-            xmlr_float(cur, "prodfactor", planet->prodfactor );
 
             if (xml_isNode(cur,"class"))
                planet->class =
@@ -1159,36 +1235,41 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       DEBUG("Unknown node '%s' in planet '%s'",node->name,planet->name);
    } while (xml_nextNode(node));
 
-
-   /* Some postprocessing. */
-   planet->cur_prodfactor = planet->prodfactor;
-
 /*
  * verification
  */
 #define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
-   MELEMENT(planet->gfx_space==NULL,"GFX space");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->gfx_exterior==NULL,"GFX exterior");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (planet->population==0), "population");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (planet->prodfactor==0.), "prodfactor");
-   MELEMENT((flags&FLAG_XSET)==0,"x");
-   MELEMENT((flags&FLAG_YSET)==0,"y");
-   MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->description==NULL,"description");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
-         planet->bar_description==NULL,"bar");
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-         (flags&FLAG_FACTIONSET)==0,"faction");
-   MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-   MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
-            planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
-         (planet->tech==NULL), "tech" );
-   MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-         (planet->ncommodities==0),"commodity" );
+   /* Issue warnings on missing items only it the asset is real. */
+   if (planet->real == ASSET_REAL) {
+      MELEMENT(planet->gfx_space==NULL,"GFX space");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+            planet->gfx_exterior==NULL,"GFX exterior");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+            (planet->population==0), "population");
+      MELEMENT((flags&FLAG_XSET)==0,"x");
+      MELEMENT((flags&FLAG_YSET)==0,"y");
+      MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+            planet->description==NULL,"description");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
+            planet->bar_description==NULL,"bar");
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+            (flags&FLAG_FACTIONSET)==0,"faction");
+      MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
+      MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
+               planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
+            (planet->tech==NULL), "tech" );
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+            (planet->ncommodities==0),"commodity" );
+      MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
+            "presence" );
+   } else { /* The asset is unreal, so set some NULLs. */
+      planet->gfx_space    = NULL;
+      planet->gfx_exterior = NULL;
+      planet->description  = NULL;
+      planet->bar_description = NULL;
+      planet->commodities  = NULL;
+   }
 #undef MELEMENT
 
    return 0;
@@ -1244,6 +1325,10 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    /* Regenerate the economy stuff. */
    economy_refresh();
 
+   /* Add the presence. */
+   if (!systems_loading)
+      system_addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
+
    return 0;
 }
 
@@ -1282,6 +1367,9 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
    memmove( &sys->planetsid[i], &sys->planetsid[i+1], sizeof(int) * (sys->nplanets-i) );
 
+   /* Remove the presence. */
+   system_addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
+
    /* Remove from the name stack thingy. */
    found = 0;
    for (i=0; i<spacename_nstack; i++)
@@ -1314,28 +1402,18 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
  *    @param fleet Fleet to add.
  *    @return 0 on success.
  */
-int system_addFleet( StarSystem *sys, SystemFleet *fleet )
+int system_addFleet( StarSystem *sys, Fleet *fleet )
 {
-   int i;
-   double avg;
-
    if (sys == NULL)
       return -1;
 
    /* Add the fleet. */
    sys->nfleets++;
-   sys->fleets = realloc( sys->fleets, sizeof(SystemFleet)*sys->nfleets );
-   memcpy( &sys->fleets[sys->nfleets-1], fleet, sizeof(SystemFleet) );
+   sys->fleets = realloc( sys->fleets, sizeof(Fleet*) * sys->nfleets );
+   sys->fleets[sys->nfleets - 1] = fleet;
 
    /* Adjust the system average. */
-   avg = 0.;
-   for (i=0; i < fleet->fleet->npilots; i++)
-      avg += ((double)fleet->fleet->pilots[i].chance) / 100.;
-   avg *= ((double)fleet->chance) / 100.;
-   sys->avg_pilot += avg;
-
-   /* Recalculate security. */
-   system_calcSecurity(sys);
+   sys->avg_pilot += fleet->npilots;
 
    return 0;
 }
@@ -1348,15 +1426,16 @@ int system_addFleet( StarSystem *sys, SystemFleet *fleet )
  *    @param fleet Fleet to remove.
  *    @return 0 on success.
  */
-int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
+int system_rmFleet( StarSystem *sys, Fleet *fleet )
 {
    int i;
-   double avg;
+
+   if (sys == NULL)
+      return -1;
 
    /* Find a matching fleet (will grab first since can be duplicates). */
    for (i=0; i<sys->nfleets; i++)
-      if ((fleet->fleet == sys->fleets[i].fleet) &&
-            (fleet->chance == sys->fleets[i].chance))
+      if (fleet == sys->fleets[i])
          break;
 
    /* Not found. */
@@ -1365,72 +1444,11 @@ int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
 
    /* Remove the fleet. */
    sys->nfleets--;
-   memmove(&sys->fleets[i], &sys->fleets[i+1], sizeof(SystemFleet) * (sys->nfleets - i));
-   sys->fleets = realloc(sys->fleets, sizeof(SystemFleet) * sys->nfleets);
+   memmove(&sys->fleets[i], &sys->fleets[i + 1], sizeof(Fleet*) * (sys->nfleets - i));
+   sys->fleets = realloc(sys->fleets, sizeof(Fleet*) * sys->nfleets);
 
    /* Adjust the system average. */
-   avg = 0.;
-   for (i=0; i < fleet->fleet->npilots; i++)
-      avg += ((double)fleet->fleet->pilots[i].chance) / 100.;
-   avg *= ((double)fleet->chance) / 100.;
-   sys->avg_pilot -= avg;
-
-   /* Recalculate security. */
-   system_calcSecurity(sys);
-
-   return 0;
-}
-
-
-/**
- * @brief Adds a FleetGroup to a star system.
- *
- *    @param sys Star System to add fleet to.
- *    @param fltgrp FleetGroup to add.
- *    @return 0 on success.
- */
-int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
-{
-   int i;
-   SystemFleet fleet;
-
-   if (sys == NULL)
-      return -1;
-
-   /* Add all the fleets. */
-   for (i=0; i<fltgrp->nfleets; i++) {
-      fleet.fleet = fltgrp->fleets[i];
-      fleet.chance = fltgrp->chance[i];
-      if (system_addFleet( sys, &fleet ))
-         return -1;
-   }
-
-   return 0;
-}
-
-
-/**
- * @brief Removes a fleetgroup from a star system.
- *
- *    @param sys Star System to remove fleet from.
- *    @param fltgrp FleetGroup to remove.
- *    @return 0 on success.
- */
-int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
-{
-   int i;
-   SystemFleet fleet;
-
-   if (sys == NULL)
-      return -1;
-
-   /* Add all the fleets. */
-   for (i=0; i<fltgrp->nfleets; i++) {
-      fleet.fleet = fltgrp->fleets[i];
-      fleet.chance = fltgrp->chance[i];
-      if (system_rmFleet( sys, &fleet ))
-         return -1;
-   }
+   sys->avg_pilot -= fleet->npilots;
 
    return 0;
 }
@@ -1539,9 +1557,6 @@ void systems_reconstructPlanets (void)
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
    Planet* planet;
-   SystemFleet fleet;
-   Fleet *flt;
-   FleetGroup *fltgrp;
    char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
@@ -1551,11 +1566,14 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    flags          = 0;
    planet         = NULL;
    size           = 0;
+   sys->presence  = NULL;
+   sys->npresence = 0;
+   sys->systemFleets  = NULL;
+   sys->nsystemFleets = 0;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
    node  = parent->xmlChildrenNode;
-
    do { /* load all the data */
 
       /* Only handle nodes. */
@@ -1599,65 +1617,12 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      /* loads all the planets */
-      else if (xml_isNode(node,"planets")) {
+      /* Loads all the assets. */
+      else if (xml_isNode(node,"assets")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"planet"))
+            if (xml_isNode(cur,"asset"))
                system_addPlanet( sys, xml_get(cur) );
-         } while (xml_nextNode(cur));
-         continue;
-      }
-      /* loads all the fleets */
-      else if (xml_isNode(node,"fleets")) {
-         cur = node->children;
-         do {
-            if (xml_isNode(cur,"fleet")) {
-
-               /* Try to load it as a FleetGroup. */
-               fltgrp = fleet_getGroup(xml_get(cur));
-               if (fltgrp != NULL) {
-                  /* Try to load it as a FleetGroup. */
-                  fltgrp = fleet_getGroup(xml_get(cur));
-                  if (fltgrp == NULL) {
-                     WARN("Fleet '%s' for Star System '%s' not found",
-                           xml_get(cur), sys->name);
-                     continue;
-                  }
-
-                  /* Add the fleetgroup. */
-                  system_addFleetGroup( sys, fltgrp );
-               }
-               else {
-
-                  /* Try to load it as a fleet. */
-                  flt = fleet_get(xml_get(cur));
-                  if (flt == NULL) {
-                     WARN("Fleet '%s' for Star System '%s' not found",
-                           xml_get(cur), sys->name);
-                     continue;
-                  }
-                  /* Get the fleet. */
-                  fleet.fleet = flt;
-
-                  /* Get the chance. */
-                  xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
-                  fleet.chance = (ptrc==NULL) ? 0 : atoi(ptrc);
-                  if (fleet.chance == 0)
-                     WARN("Fleet '%s' for Star System '%s' has 0%% chance to appear",
-                           fleet.fleet->name, sys->name);
-                  if (ptrc)
-                     free(ptrc); /* free the ptrc */
-
-                  /* Add the fleet. */
-                  system_addFleet( sys, &fleet );
-               }
-
-               /* Add to data. */
-               sys->nfltdat++;
-               sys->fltdat = realloc( sys->fltdat, sizeof(char*) * sys->nfltdat );
-               sys->fltdat[ sys->nfltdat-1 ] = strdup( xml_raw(cur) );
-            }
          } while (xml_nextNode(cur));
          continue;
       }
@@ -1696,7 +1661,7 @@ static void system_setFaction( StarSystem *sys )
    int i;
    sys->faction = -1;
    for (i=0; i<sys->nplanets; i++) /** @todo Handle multiple different factions. */
-      if (sys->planets[i]->faction > 0) {
+      if (sys->planets[i]->real == ASSET_REAL && sys->planets[i]->faction > 0) {
          sys->faction = sys->planets[i]->faction;
          break;
       }
@@ -1847,6 +1812,10 @@ int space_load (void)
    /* Done loading. */
    systems_loading = 0;
 
+   /* Apply all the presences. */
+   for (i=0; i<systems_nstack; i++)
+      system_addAllPlanetsPresence(&systems_stack[i]);
+
    /* Reconstruction. */
    systems_reconstructJumps();
    systems_reconstructPlanets();
@@ -1855,56 +1824,10 @@ int space_load (void)
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
 
-      /* Calculate system properties. */
-      system_calcSecurity( sys );
-
       /* Save jump indexes. */
       for (j=0; j<sys->njumps; j++)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
    }
-
-   return 0;
-}
-
-
-/**
- * @brief Calculates the security in a star system.
- *
- *    @param sys System to calculate security in.
- *    @return 0 on success.
- */
-static int system_calcSecurity( StarSystem *sys )
-{
-   int i;
-   double guard, hostile, c, mod;
-   Fleet *f;
-
-   /* Do not run while loading to speed up. */
-   if (systems_loading)
-      return 0;
-
-   /* Defaults. */
-   guard    = 0.;
-   hostile  = 0.;
-
-   /* Calculate hostiles/friendlies. */
-   for (i=0; i<sys->nfleets; i++) {
-      f     = sys->fleets[i].fleet;
-      c     = (double)sys->fleets[i].chance / 100.;
-      mod   = c * f->pilot_avg * pow(f->mass_avg, 1./3.);
-      if (fleet_isFlag(f, FLEET_FLAG_GUARD))
-         guard    += mod;
-      else if (faction_getPlayerDef(f->faction) < 0)
-         hostile  += mod;
-   }
-
-   /* Set security. */
-   if (guard == 0.)
-      sys->security = 0.;
-   else if (hostile == 0.)
-      sys->security = 1.;
-   else
-      sys->security = guard / (hostile + guard);
 
    return 0;
 }
@@ -2149,7 +2072,8 @@ void planets_render (void)
 
    /* Render the planets. */
    for (i=0; i < cur_system->nplanets; i++)
-      space_renderPlanet( cur_system->planets[i] );
+      if (cur_system->planets[i]->real == ASSET_REAL)
+         space_renderPlanet( cur_system->planets[i] );
 }
 
 
@@ -2184,7 +2108,7 @@ static void space_renderPlanet( Planet *p )
  */
 void space_exit (void)
 {
-   int i, j;
+   int i;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -2237,11 +2161,8 @@ void space_exit (void)
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
 
-      if (systems_stack[i].nfltdat > 0) {
-         for (j=0; j<systems_stack[i].nfltdat; j++)
-            free(systems_stack[i].fltdat[j]);
-         free(systems_stack[i].fltdat);
-      }
+      if(systems_stack[i].presence)
+         free(systems_stack[i].presence);
 
       free(systems_stack[i].planets);
    }
@@ -2443,3 +2364,306 @@ int space_sysLoad( xmlNodePtr parent )
 }
 
 
+/**
+ * @brief Gets the index of the presence element for a faction.
+ *          Creates one if it doesn't exist.
+ *
+ *    @param sys Pointer to the system to check.
+ *    @param faction The index of the faction to search for.
+ *    @return The index of the presence array for faction.
+ */
+static int getPresenceIndex( StarSystem *sys, int faction )
+{
+   int i;
+
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+
+   /* If there is no array, create one and return 0 (the index). */
+   if (sys->presence == NULL) {
+      sys->npresence = 1;
+      sys->presence = malloc(sizeof(SystemPresence));
+
+      /* Set the defaults. */
+      sys->presence[0].faction = faction;
+      sys->presence[0].value = 0 ;
+      sys->presence[0].curUsed = 0 ;
+      sys->presence[0].schedule.fleet = NULL;
+      sys->presence[0].schedule.time = 0;
+      sys->presence[0].schedule.penalty = 0;
+      return 0;
+   }
+
+   /* Go through the array, looking for the faction. */
+   for (i = 0; i < sys->npresence; i++)
+      if (sys->presence[i].faction == faction)
+         return i;
+
+   /* Grow the array. */
+   i = sys->npresence;
+   sys->npresence++;
+   sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+   sys->presence[i].faction = faction;
+   sys->presence[i].value = 0;
+
+   return i;
+}
+
+
+/**
+ * @brief Do some cleanup work after presence values have been adjusted.
+ *
+ *    @param sys Pointer to the system to cleanup.
+ */
+static void presenceCleanup( StarSystem *sys )
+{
+   int i;
+
+   /* Reset the spilled variable for the entire universe. */
+   for(i = 0; i < systems_nstack; i++)
+      systems_stack[i].spilled = 0;
+
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return;
+   }
+
+   /* Check the system for 0 value presences. */
+   for(i = 0; i < sys->npresence; i++)
+      if(sys->presence[i].value == 0) {
+         /* Remove the element with 0 value. */
+         memmove(&sys->presence[i], &sys->presence[i + 1],
+                 sizeof(SystemPresence) * sys->npresence - (i + 1));
+         sys->npresence--;
+         sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+         i--;  /* We'll want to check the new value we just copied in. */
+      }
+
+   return;
+}
+
+
+/**
+ * @brief Adds (or removes) some presence to a system.
+ *
+ *    @param sys Pointer to the system to add to or remove from.
+ *    @param faction The index of the faction to alter presence for.
+ *    @param amount The amount of presence to add (negative to subtract).
+ *    @param range The range of spill of the presence.
+ */
+void system_addPresence( StarSystem *sys, int faction, double amount, int range )
+{
+   int i, x, curSpill;
+   Queue q, qn;
+   StarSystem *cur;
+
+   /* Check for NULL and display a warning. */
+   if (sys == NULL) {
+      WARN("sys == NULL");
+      return;
+   }
+
+   /* Check that we have a sane faction. (-1 == bobbens == insane)*/
+   if (faction_isFaction(faction) == 0)
+      return;
+
+   /* Check that we're actually adding any. */
+   if (amount == 0)
+      return;
+
+   /* Add the presence to the current system. */
+   i = getPresenceIndex(sys, faction);
+   sys->presence[i].value += amount;
+
+   /* If there's no range, we're done here. */
+   if (range < 1)
+      return;
+
+   /* Add the spill. */
+   sys->spilled   = 1;
+   curSpill       = 0;
+   q              = q_create();
+   qn             = q_create();
+
+   /* Create the initial queue consisting of sys adjacencies. */
+   for (i=0; i < sys->njumps; i++) {
+      if (sys->jumps[i].target->spilled == 0) {
+         q_enqueue( q, sys->jumps[i].target );
+         sys->jumps[i].target->spilled = 1;
+      }
+   }
+
+   /* If it's empty, something's wrong. */
+   if (q_isEmpty(q)) {
+      WARN("q is empty after getting adjancies of %s.", sys->name);
+      presenceCleanup(sys);
+      return;
+   }
+
+   while (curSpill < range) {
+      /* Pull one off the current range queue. */
+      cur = q_dequeue(q);
+
+      /* Enqueue all its adjancencies to the next range queue. */
+      for (i=0; i < cur->njumps; i++) {
+         if (cur->jumps[i].target->spilled == 0) {
+            q_enqueue( qn, cur->jumps[i].target );
+            cur->jumps[i].target->spilled = 1;
+         }
+      }
+
+      /* Spill some presence. */
+      x = getPresenceIndex(cur, faction);
+      cur->presence[x].value += amount / (2 + curSpill);
+
+      /* Check to see if we've finished this range and grab the next queue. */
+      if (q_isEmpty(q)) {
+         curSpill++;
+         q_destroy(q);
+         q  = qn;
+         qn = q_create();
+      }
+   }
+
+   /* Destroy the queues. */
+   q_destroy(q);
+   q_destroy(qn);
+
+   /* Clean up our mess. */
+   presenceCleanup(sys);
+
+   return;
+}
+
+
+/**
+ * @brief Get the presence of a faction in a system.
+ *
+ *    @param sys Pointer to the system to process.
+ *    @param faction The faction to get the presence for.
+ *    @return The amount of presence the faction has in the system.
+ */
+double system_getPresence( StarSystem *sys, int faction )
+{
+   int i;
+
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+
+   /* If there is no array, there is no presence. */
+   if (sys->presence == NULL)
+      return 0;
+
+   /* Go through the array, looking for the faction. */
+   for (i = 0; i < sys->npresence; i++) {
+      if (sys->presence[i].faction == faction)
+         return sys->presence[i].value;
+   }
+
+   /* If it's not in there, it's zero. */
+   return 0;
+}
+
+
+/**
+ * @brief Go through all the assets and call system_addPresence().
+ *
+ *    @param sys Pointer to the system to process.
+ */
+void system_addAllPlanetsPresence( StarSystem *sys )
+{
+   int i;
+
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return;
+   }
+
+   for(i = 0; i < sys->nplanets; i++)
+      system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+
+   return;
+}
+
+
+/**
+ * @brief See if the system has a planet or station.
+ *
+ *    @param sys Pointer to the system to process.
+ *    @return 0 If empty; otherwise 1.
+ */
+int system_hasPlanet( StarSystem *sys )
+{
+   int i;
+
+   /* Check for NULL and display a warning. */
+   if(sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+
+   /* Go through all the assets and look for a real one. */
+   for(i = 0; i < sys->nplanets; i++)
+      if(sys->planets[i]->real == ASSET_REAL)
+         return 1;
+
+   return 0;
+}
+
+
+/**
+ * @brief Removes a system fleet and frees up presence.
+ *
+ * @param systemFleetIndex The system fleet to remove.
+ */
+static void system_rmSystemFleet( const int systemFleetIndex )
+{
+   int presenceIndex;
+
+   presenceIndex =
+      getPresenceIndex(cur_system,
+                       cur_system->systemFleets[systemFleetIndex].faction);
+   cur_system->presence[presenceIndex].curUsed -=
+      cur_system->systemFleets[systemFleetIndex].presenceUsed;
+
+   memmove(&cur_system->systemFleets[systemFleetIndex],
+           &cur_system->systemFleets[systemFleetIndex + 1],
+           sizeof(SystemFleet) *
+             (cur_system->nsystemFleets - systemFleetIndex - 1));
+   cur_system->nsystemFleets--;
+   cur_system->systemFleets = realloc(cur_system->systemFleets,
+                                      sizeof(SystemFleet) *
+                                        cur_system->nsystemFleets);
+
+   pilots_updateSystemFleet(systemFleetIndex);
+
+   return;
+}
+
+
+/**
+ * @brief Removes a pilot from a system fleet and removes it, if need be.
+ *
+ * @param systemFleetIndex The system fleet to remove from.
+ */
+void system_removePilotFromSystemFleet( const int systemFleetIndex )
+{
+   /* Check if the pilot belongs to any fleets. */
+   if(systemFleetIndex < 0)
+      return;
+
+   cur_system->systemFleets[systemFleetIndex].npilots--;
+
+   if(cur_system->systemFleets[systemFleetIndex].npilots == 0)
+      system_rmSystemFleet(systemFleetIndex);
+
+   return;
+}

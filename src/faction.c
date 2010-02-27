@@ -76,7 +76,7 @@ typedef struct Faction_ {
 
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
-static int faction_nstack = 0; /**< Number of factions in the faction stack. */
+int faction_nstack = 0; /**< Number of factions in the faction stack. */
 
 
 /*
@@ -943,3 +943,60 @@ int pfaction_load( xmlNodePtr parent )
 }
 
 
+/**
+ * @brief Returns an array of faction ids.
+ *
+ *    @param *n Writes the number of elements.
+ *    @param which Which factions to get. (0,1,2,3 : all, friendly, neutral, hostile)
+ *    @return A pointer to an array, or NULL.
+ */
+int* faction_getGroup( int *n, int which ) {
+   int *group;
+   int i;
+
+   /* Set defaults. */
+   group = NULL;
+   *n = 0;
+
+   switch(which) {
+      case 0: /* 'all' */
+         *n = faction_nstack;
+         group = malloc(sizeof(int) * *n);
+         for(i = 0; i < faction_nstack; i++)
+            group[i] = i;
+         break;
+
+      case 1: /* 'friendly' */
+         for(i = 0; i < faction_nstack; i++)
+            if(areAllies(FACTION_PLAYER, i)) {
+               (*n)++;
+               group = realloc(group, sizeof(int) * *n);
+               group[*n - 1] = i;
+            }
+         break;
+
+      case 2: /* 'neutral' */
+         for(i = 0; i < faction_nstack; i++)
+            if(!areAllies(FACTION_PLAYER, i) && !areEnemies(FACTION_PLAYER, i)) {
+               (*n)++;
+               group = realloc(group, sizeof(int) * *n);
+               group[*n - 1] = i;
+            }
+         break;
+
+      case 3: /* 'hostile' */
+         for(i = 0; i < faction_nstack; i++)
+            if(areEnemies(FACTION_PLAYER, i)) {
+               (*n)++;
+               group = realloc(group, sizeof(int) * *n);
+               group[*n - 1] = i;
+            }
+         break;
+
+      default:
+         /* Defaults have already been set. */
+         break;
+   }
+
+   return group;
+}

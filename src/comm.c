@@ -432,18 +432,18 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
       }
    }
    /* Get now the presence factor - get mass of possible ships and mass */
+   /* TODO Fix this up to new presence system. */
    o = 0.;
    p = 0.;
    for (i=0; i<cur_system->nfleets; i++) {
-      f = cur_system->fleets[i].fleet;
+      f = cur_system->fleets[i];
       if (areAllies(comm_planet->faction, f->faction)) {
          q = 0;
          r = 0;
          for (j=0; j<f->npilots; j++) {
-            q += (double)f->pilots[j].chance / 100.;
+            q++;
             r += f->pilots[j].ship->mass;
          }
-         q *= (double)cur_system->fleets[i].chance / 100.;
          o += q;
          p += r;
       }

@@ -51,7 +51,7 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
 {
    int i;
 
-   xmlw_startElem( writer, "planet" );
+   xmlw_startElem( writer, "asset" );
 
    /* Attributes. */
    xmlw_attr( writer, "name", "%s", p->name );
@@ -68,13 +68,18 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    xmlw_elem( writer, "exterior", "%s", p->gfx_exteriorPath );
    xmlw_endElem( writer ); /* "GFX" */
 
+   /* Presence. */
+   xmlw_startElem( writer, "presence" );
+   xmlw_elem( writer, "value", "%f", p->presenceAmount );
+   xmlw_elem( writer, "range", "%d", p->presenceRange );
+   xmlw_endElem( writer );
+
    /* General. */
    xmlw_startElem( writer, "general" );
    xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
    if (p->faction >= 0)
       xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
    xmlw_elem( writer, "population", "%"PRIu64, p->population );
-   xmlw_elem( writer, "prodfactor", "%f", p->prodfactor );
    xmlw_startElem( writer, "services" );
    if (planet_hasService( p, PLANET_SERVICE_LAND ))
       xmlw_elemEmpty( writer, "land" );
@@ -135,7 +140,7 @@ int dpl_saveAll (void)
 
    /* Start writer. */
    xmlw_start(writer);
-   xmlw_startElem( writer, "Planets" );
+   xmlw_startElem( writer, "Assets" );
 
    /* Sort planets. */
    p        = planet_getAll( &np );
@@ -152,14 +157,14 @@ int dpl_saveAll (void)
    free(sorted_p);
 
    /* End writer. */
-   xmlw_endElem( writer ); /* "Systems" */
+   xmlw_endElem( writer ); /* "Assets" */
    xmlw_done( writer );
 
    /* No need for writer anymore. */
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   xmlSaveFileEnc( "planet.xml", doc, "UTF-8" );
+   xmlSaveFileEnc( "asset.xml", doc, "UTF-8" );
 
    /* Clean up. */
    xmlFreeDoc(doc);
