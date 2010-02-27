@@ -9,14 +9,14 @@
    <space>J04.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -32,14 +32,14 @@
    <space>K02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -55,14 +55,14 @@
    <space>M04.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -78,14 +78,14 @@
    <space>moon-A01.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -101,14 +101,14 @@
    <space>G01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -124,14 +124,14 @@
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -147,15 +147,15 @@
    <space>A00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Empire</faction>
    <population>60000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -185,14 +185,14 @@
    <space>G02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -208,14 +208,14 @@
    <space>L00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -231,14 +231,14 @@
    <space>C00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -254,14 +254,14 @@
    <space>K00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -277,14 +277,14 @@
    <space>X00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -300,14 +300,14 @@
    <space>moon-P00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -323,14 +323,14 @@
    <space>moon-H02.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -346,15 +346,15 @@
    <space>O00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>O</class>
    <faction>Dvaered</faction>
    <population>70000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -386,15 +386,15 @@
    <space>O01.png</space>
    <exterior>aquatic3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>O</class>
    <faction>Empire</faction>
    <population>450000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -427,14 +427,14 @@
    <space>J01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -450,15 +450,15 @@
    <space>moon-P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -474,14 +474,14 @@
    <space>M01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -497,15 +497,15 @@
    <space>002.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>1</class>
    <faction>Empire</faction>
    <population>52000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -543,14 +543,14 @@
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -566,14 +566,14 @@
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -589,15 +589,15 @@
    <space>H00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>H</class>
    <faction>Empire</faction>
    <population>32000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -622,15 +622,15 @@
    <space>P01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>P</class>
    <faction>Frontier</faction>
    <population>2000000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -662,15 +662,15 @@
    <space>A03.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Frontier</faction>
    <population>600000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -694,14 +694,14 @@
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -717,14 +717,14 @@
    <space>P00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -740,14 +740,14 @@
    <space>moon-J00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -763,14 +763,14 @@
    <space>G00.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -786,14 +786,14 @@
    <space>P01.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -809,14 +809,14 @@
    <space>G01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -832,14 +832,14 @@
    <space>moon-H00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -855,15 +855,15 @@
    <space>M06.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Empire</faction>
    <population>40000</population>
    <prodfactor>0.200000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -894,14 +894,14 @@
    <space>I00.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -917,14 +917,14 @@
    <space>J04.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -940,14 +940,14 @@
    <space>moon-D01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -963,14 +963,14 @@
    <space>moon-J02.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -986,15 +986,15 @@
    <space>M01.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Empire</faction>
    <population>17000000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1029,14 +1029,14 @@
    <space>A03.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1052,14 +1052,14 @@
    <space>O01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1075,14 +1075,14 @@
    <space>moon-M00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1098,15 +1098,15 @@
    <space>003.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Empire</faction>
    <population>700</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1127,14 +1127,14 @@
    <space>A01.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1150,14 +1150,14 @@
    <space>G02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1173,14 +1173,14 @@
    <space>moon-K00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1196,14 +1196,14 @@
    <space>D02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1219,15 +1219,15 @@
    <space>O01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>O</class>
    <faction>Frontier</faction>
    <population>930000</population>
    <prodfactor>0.600000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1257,14 +1257,14 @@
    <space>A02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1280,15 +1280,15 @@
    <space>H01.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1304,14 +1304,14 @@
    <space>J02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1327,14 +1327,14 @@
    <space>G00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1350,14 +1350,14 @@
    <space>moon-M01.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1373,14 +1373,14 @@
    <space>000.png</space>
    <exterior>station02.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1396,14 +1396,14 @@
    <space>J02.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1419,14 +1419,14 @@
    <space>moon-M06.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1442,14 +1442,14 @@
    <space>M04.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1465,14 +1465,14 @@
    <space>moon-M03.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1488,14 +1488,14 @@
    <space>J01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1511,14 +1511,14 @@
    <space>G02.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1534,14 +1534,14 @@
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1557,14 +1557,14 @@
    <space>O01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1580,15 +1580,15 @@
    <space>002.png</space>
    <exterior>station05.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Independent</faction>
    <population>14000</population>
    <prodfactor>0.800000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1625,14 +1625,14 @@
    <space>P02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1648,14 +1648,14 @@
    <space>moon-J00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1671,15 +1671,15 @@
    <space>O01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>O</class>
    <faction>Frontier</faction>
    <population>4000000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1704,14 +1704,14 @@
    <space>J04.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1727,14 +1727,14 @@
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1750,14 +1750,14 @@
    <space>K00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1773,14 +1773,14 @@
    <space>J02.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1796,14 +1796,14 @@
    <space>S01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1819,15 +1819,15 @@
    <space>A01.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>40000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1851,14 +1851,14 @@
    <space>I01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1874,15 +1874,15 @@
    <space>P02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>P</class>
    <faction>Empire</faction>
    <population>125000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -1914,14 +1914,14 @@
    <space>K03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1937,14 +1937,14 @@
    <space>J00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1960,14 +1960,14 @@
    <space>moon-H02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1983,14 +1983,14 @@
    <space>D01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2006,14 +2006,14 @@
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2029,14 +2029,14 @@
    <space>L00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2052,15 +2052,15 @@
    <space>G01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Independent</faction>
    <population>2000000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -2084,14 +2084,14 @@
    <space>P01.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>P</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2107,14 +2107,14 @@
    <space>D01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2130,14 +2130,14 @@
    <space>D00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2153,14 +2153,14 @@
    <space>O02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2176,14 +2176,14 @@
    <space>moon-A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2199,14 +2199,14 @@
    <space>J03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2222,15 +2222,15 @@
    <space>L00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>1474836480</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -2260,15 +2260,15 @@
    <space>000.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Dvaered</faction>
    <population>500</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -2297,14 +2297,14 @@
    <space>moon-M00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2320,15 +2320,15 @@
    <space>002.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2344,14 +2344,14 @@
    <space>A01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2367,14 +2367,14 @@
    <space>D01.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2390,14 +2390,14 @@
    <space>J01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
    </services>
@@ -2415,14 +2415,14 @@
    <space>M01.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2438,14 +2438,14 @@
    <space>H00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2461,14 +2461,14 @@
    <space>moon-H01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2484,15 +2484,15 @@
    <space>M03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Empire</faction>
    <population>150000</population>
    <prodfactor>0.600000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -2526,14 +2526,14 @@
    <space>moon-A01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2549,15 +2549,15 @@
    <space>C00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>C</class>
    <faction>Empire</faction>
    <population>127000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -2578,14 +2578,14 @@
    <space>D02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2601,14 +2601,14 @@
    <space>D00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2624,14 +2624,14 @@
    <space>moon-O00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2647,14 +2647,14 @@
    <space>K04.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2670,14 +2670,14 @@
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2693,14 +2693,14 @@
    <space>P00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2716,14 +2716,14 @@
    <space>K02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2739,14 +2739,14 @@
    <space>A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2762,14 +2762,14 @@
    <space>P02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2785,14 +2785,14 @@
    <space>D00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2808,14 +2808,14 @@
    <space>H02.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2831,14 +2831,14 @@
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2854,14 +2854,14 @@
    <space>A01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2877,14 +2877,14 @@
    <space>moon-D00.png</space>
    <exterior>station02.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2900,14 +2900,14 @@
    <space>Y00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2923,14 +2923,14 @@
    <space>moon-A01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2946,15 +2946,15 @@
    <space>A00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2970,14 +2970,14 @@
    <space>Y00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2993,14 +2993,14 @@
    <space>S00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3016,14 +3016,14 @@
    <space>I01.png</space>
    <exterior>station05.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3039,14 +3039,14 @@
    <space>moon-H01.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3062,14 +3062,14 @@
    <space>moon-P01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3085,14 +3085,14 @@
    <space>G00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3108,14 +3108,14 @@
    <space>A03.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3131,14 +3131,14 @@
    <space>K00.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3154,14 +3154,14 @@
    <space>J00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3177,14 +3177,14 @@
    <space>moon-J02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3200,14 +3200,14 @@
    <space>moon-J01.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3223,14 +3223,14 @@
    <space>O00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3246,15 +3246,15 @@
    <space>O02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3270,14 +3270,14 @@
    <space>moon-P02.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3293,15 +3293,15 @@
    <space>M00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3317,14 +3317,14 @@
    <space>A00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3340,14 +3340,14 @@
    <space>moon-A01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3363,14 +3363,14 @@
    <space>moon-D00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3386,14 +3386,14 @@
    <space>moon-J01.png</space>
    <exterior>mining6.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3409,14 +3409,14 @@
    <space>K03.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3432,14 +3432,14 @@
    <space>A02.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3455,14 +3455,14 @@
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3478,14 +3478,14 @@
    <space>I00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>I</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3501,15 +3501,15 @@
    <space>moon-G00.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3525,14 +3525,14 @@
    <space>A00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3548,14 +3548,14 @@
    <space>J00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3571,14 +3571,14 @@
    <space>A02.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3594,14 +3594,14 @@
    <space>moon-I00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3617,14 +3617,14 @@
    <space>S00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3640,15 +3640,15 @@
    <space>M07.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3664,14 +3664,14 @@
    <space>moon-K00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3687,14 +3687,14 @@
    <space>H02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3710,14 +3710,14 @@
    <space>moon-J02.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3733,15 +3733,15 @@
    <space>H01.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>H</class>
    <faction>Empire</faction>
    <population>12000</population>
    <prodfactor>0.200000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -3765,15 +3765,15 @@
    <space>moon-M02.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3789,14 +3789,14 @@
    <space>moon-I01.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3812,14 +3812,14 @@
    <space>C00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3835,15 +3835,15 @@
    <space>003.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3859,15 +3859,15 @@
    <space>moon-O00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>O</class>
    <faction>Frontier</faction>
    <population>30000000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -3897,15 +3897,15 @@
    <space>G01.png</space>
    <exterior>mining.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>G</class>
    <faction>Dvaered</faction>
    <population>170000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -3930,15 +3930,15 @@
    <space>D01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>D</class>
    <faction>Frontier</faction>
    <population>5000000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -3970,14 +3970,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3997,14 +3997,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K04.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4020,14 +4020,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>O01.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4043,15 +4043,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>Y00.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>Y</class>
    <faction>Frontier</faction>
    <population>18446744072414584320</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -4083,14 +4083,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>O00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4106,14 +4106,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>J01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4129,14 +4129,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-I00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4152,14 +4152,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>J03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4175,14 +4175,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K03.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4198,14 +4198,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>S00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4221,14 +4221,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>J02.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4244,14 +4244,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4267,14 +4267,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4290,14 +4290,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4313,14 +4313,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-P00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4336,15 +4336,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K02.png</space>
    <exterior>mining.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>K</class>
    <faction>Frontier</faction>
    <population>350000000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -4378,14 +4378,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M07.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4401,14 +4401,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>H00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4424,14 +4424,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>H02.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4447,14 +4447,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-H00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4470,14 +4470,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>002.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4493,14 +4493,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4516,14 +4516,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>A03.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4539,15 +4539,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M08.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4563,14 +4563,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4586,14 +4586,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4609,14 +4609,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-A01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4632,15 +4632,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4656,15 +4656,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M06.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4680,14 +4680,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>A02.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4703,14 +4703,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4726,14 +4726,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4749,14 +4749,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4772,14 +4772,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4795,14 +4795,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>O01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4818,14 +4818,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4841,14 +4841,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-P02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4864,15 +4864,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>A00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4888,15 +4888,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>L00.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4912,14 +4912,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K03.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4935,14 +4935,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K02.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4958,14 +4958,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M08.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4981,14 +4981,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>I01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5004,14 +5004,14 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>I00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5027,15 +5027,15 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M07.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Frontier</faction>
    <population>1000000000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5068,15 +5068,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X01.png</space>
    <exterior>gas.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>D</class>
    <faction>Pirate</faction>
    <population>9000</population>
    <prodfactor>0.600000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5112,14 +5112,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>K</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5135,14 +5135,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5158,15 +5158,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>002.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5182,14 +5182,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P01.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5205,14 +5205,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P02.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5228,15 +5228,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M03.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Frontier</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5252,15 +5252,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J03.png</space>
    <exterior>gas.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>I</class>
    <faction>Dvaered</faction>
    <population>130000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5287,15 +5287,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H02.png</space>
    <exterior>desertic3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>H</class>
    <faction>Frontier</faction>
    <population>260000</population>
    <prodfactor>0.600000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5329,14 +5329,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5352,14 +5352,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M08.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5375,14 +5375,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P02.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5398,15 +5398,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M05.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Empire</faction>
    <population>812000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5438,14 +5438,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5461,14 +5461,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5484,14 +5484,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5507,14 +5507,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G02.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5530,15 +5530,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H01.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>H</class>
    <faction>Empire</faction>
    <population>20000</population>
    <prodfactor>0.200000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5563,15 +5563,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Empire</faction>
    <population>14000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5602,14 +5602,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5625,14 +5625,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5648,14 +5648,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5671,14 +5671,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5694,14 +5694,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5717,14 +5717,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5740,14 +5740,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-I01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5763,14 +5763,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5786,14 +5786,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5809,14 +5809,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5832,14 +5832,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5855,15 +5855,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G01.png</space>
    <exterior>mining6.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>G</class>
    <faction>Empire</faction>
    <population>65000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -5889,14 +5889,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5912,14 +5912,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M05.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5935,14 +5935,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-J02.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5958,14 +5958,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5981,14 +5981,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6004,14 +6004,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-O00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6027,14 +6027,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6050,14 +6050,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>002.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6073,15 +6073,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>002.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>1</class>
    <faction>Empire</faction>
    <population>318000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -6116,15 +6116,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Dvaered</faction>
    <population>400000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -6158,15 +6158,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M05.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Proteron</faction>
    <population>1200000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -6202,14 +6202,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6225,14 +6225,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-O01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6248,14 +6248,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6271,14 +6271,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>O01.png</space>
    <exterior>station05.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6294,14 +6294,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6317,14 +6317,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H01.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6340,14 +6340,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>I00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6363,14 +6363,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6386,14 +6386,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M05.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6409,15 +6409,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6433,14 +6433,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-D01.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6456,14 +6456,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6479,14 +6479,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6502,15 +6502,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>002.png</space>
    <exterior>station02.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Dvaered</faction>
    <population>3000</population>
    <prodfactor>0.200000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -6536,14 +6536,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6559,15 +6559,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>1</class>
    <faction>Dvaered</faction>
    <population>7000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -6588,14 +6588,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6611,14 +6611,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6634,14 +6634,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6657,14 +6657,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K04.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6680,14 +6680,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6703,14 +6703,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-L00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6726,15 +6726,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6750,14 +6750,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-J00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6773,14 +6773,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-L00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6796,14 +6796,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-D01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6819,14 +6819,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6842,14 +6842,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6865,15 +6865,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>001.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>3</class>
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6889,15 +6889,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>001.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>3</class>
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6913,15 +6913,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>001.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>3</class>
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6937,15 +6937,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>001.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>3</class>
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6961,15 +6961,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>001.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>3</class>
    <faction>Collective</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6985,14 +6985,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7008,14 +7008,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7031,14 +7031,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7054,14 +7054,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7077,14 +7077,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>C00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7100,14 +7100,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7123,14 +7123,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H01.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7146,15 +7146,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P00.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>P</class>
    <faction>Empire</faction>
    <population>27000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7180,14 +7180,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7203,14 +7203,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7226,14 +7226,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7249,14 +7249,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7272,14 +7272,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7295,14 +7295,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7318,14 +7318,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7341,14 +7341,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>Y00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7364,15 +7364,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M01.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7388,15 +7388,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Dvaered</faction>
    <population>130000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7432,15 +7432,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>FLF</faction>
    <population>1000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7462,15 +7462,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7486,15 +7486,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>003.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>2</class>
    <faction>Dvaered</faction>
    <population>12000</population>
    <prodfactor>0.800000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7524,15 +7524,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M06.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7548,15 +7548,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M02.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7572,15 +7572,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M04.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7596,14 +7596,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7619,14 +7619,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7642,14 +7642,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7665,15 +7665,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Empire</faction>
    <population>12000</population>
    <prodfactor>0.800000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7697,14 +7697,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7720,15 +7720,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>L</class>
    <faction>Dvaered</faction>
    <population>2000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7754,14 +7754,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>003.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7777,15 +7777,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Frontier</faction>
    <population>500</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7804,14 +7804,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P00.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7827,15 +7827,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M05.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Frontier</faction>
    <population>50000000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7869,15 +7869,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>G</class>
    <faction>Empire</faction>
    <population>350000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7903,15 +7903,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M06.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>P</class>
    <faction>Dvaered</faction>
    <population>2000000000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -7938,14 +7938,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>C00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7961,15 +7961,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7985,14 +7985,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-O00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8008,14 +8008,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J02.png</space>
    <exterior>(null)</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>J</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8031,14 +8031,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8054,15 +8054,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>Y</class>
    <faction>Dvaered</faction>
    <population>10000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8086,14 +8086,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8109,14 +8109,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8132,15 +8132,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8156,14 +8156,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K04.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8179,14 +8179,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8202,14 +8202,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8225,14 +8225,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8248,14 +8248,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A03.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8271,15 +8271,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M03.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Sirius</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8295,15 +8295,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>K</class>
    <faction>Dvaered</faction>
    <population>400000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8334,14 +8334,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8357,15 +8357,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>K</class>
    <faction>Dvaered</faction>
    <population>15000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8391,14 +8391,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S00.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8414,14 +8414,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>I00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8437,14 +8437,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-K00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8460,15 +8460,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Frontier</faction>
    <population>500000000</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8502,15 +8502,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M04.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Dvaered</faction>
    <population>500000000</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8542,14 +8542,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M00.png</space>
    <exterior>station04.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8565,14 +8565,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8588,14 +8588,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8611,14 +8611,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H01.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>H</class>
    <population>0</population>
    <prodfactor>0.400000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8634,14 +8634,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M06.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8657,15 +8657,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Dvaered</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8681,15 +8681,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>P</class>
    <faction>Dvaered</faction>
    <population>4500</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8716,14 +8716,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H02.png</space>
    <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8739,14 +8739,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8762,15 +8762,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>Y00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Pirate</faction>
    <population>15000000</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8786,15 +8786,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Pirate</faction>
    <population>4500</population>
    <prodfactor>0.500000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8810,14 +8810,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>O00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8833,15 +8833,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <faction>Empire</faction>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8857,15 +8857,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>000.png</space>
    <exterior>station00.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>0</class>
    <faction>Empire</faction>
    <population>4000</population>
    <prodfactor>0.300000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
@@ -8901,14 +8901,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>gas.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8924,14 +8924,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8947,14 +8947,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8970,14 +8970,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <prodfactor>0.000000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8993,15 +8993,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M04.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>M</class>
    <faction>Goddard</faction>
    <population>13000000</population>
    <prodfactor>0.700000</prodfactor>
-   <presence>
-    <value>0.000000</value>
-    <range>0</range>
-   </presence>
    <services>
     <land/>
     <refuel/>
