@@ -142,12 +142,12 @@
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Empire</faction>
    <population>60000</population>
    <services>
     <land/>
@@ -162,7 +162,7 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Ammu is a generally calm planet, once one is accustomed to the constant rumbling of the lava flows. Lava eruptions are often felt in the subterranean spaceport, but the way it doesn't seem to phase the locals reassures you.</description>
+   <description>Ammu is a generally calm asset, once one is accustomed to the constant rumbling of the lava flows. Lava eruptions are often felt in the subterranean spaceport, but the way it doesn't seem to phase the locals reassures you.</description>
    <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
   </general>
   <tech>
@@ -333,12 +333,12 @@
    <exterior>aquatic.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Dvaered</faction>
    <population>70000</population>
    <services>
     <land/>
@@ -355,8 +355,8 @@
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Anecu is a completely aquatic planet. Its surface is covered completely by water. In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 kilometres high). The planet boasts extensive ship-designing facilities, using the high-pressure of the water as a benchmark against which ships are measured.</description>
-   <bar>The spaceport bar is approximately 3 kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
+   <description>Anecu is a completely aquatic asset. Its surface is covered completely by water. In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 kilometres high). The asset boasts extensive ship-designing facilities, using the high-pressure of the water as a benchmark against which ships are measured.</description>
+   <bar>The spaceport bar is approximately 3 kilometres below the surface of the asset. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
   </general>
   <tech>
    <item>Basic Outfits 1</item>
@@ -372,12 +372,12 @@
    <exterior>aquatic3.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Empire</faction>
    <population>450000</population>
    <services>
     <land/>
@@ -434,35 +434,18 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>P</class>
-   <faction>Sirius</faction>
-   <population>5000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Once an independent world home to pirates and black market traders, Arch Arai has long since fallen under the spell of the Touched. Now it is a fairly law-abiding Sirius world, earning its existence through trade and industry like every other planet.</description>
-   <bar>This bar is a quiet place. Though it is certainly not lacking in patronage, the people who come here don't seem about to make a fuss over anything. The effect is contagious, making newcomers follow the example of those who are already there almost instinctively.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Basic Civilian Ships</item>
-  </tech>
  </asset>
  <asset name="Arck">
   <pos>
@@ -496,12 +479,12 @@
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>1</class>
-   <faction>Empire</faction>
    <population>52000</population>
    <services>
     <land/>
@@ -585,12 +568,12 @@
    <exterior>desertic.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Empire</faction>
    <population>32000</population>
    <services>
     <land/>
@@ -603,7 +586,7 @@
     <commodity>Food</commodity>
     <commodity>Ore</commodity>
    </commodities>
-   <description>Arrakis is a desert planet with no natural precipitation. The locals are continuously discussing sandworms, though you're not sure what to make of it.</description>
+   <description>Arrakis is a desert asset with no natural precipitation. The locals are continuously discussing sandworms, though you're not sure what to make of it.</description>
    <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
   </general>
  </asset>
@@ -617,12 +600,12 @@
    <exterior>aquatic.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Frontier</faction>
    <population>2000000</population>
    <services>
     <land/>
@@ -637,8 +620,8 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Atalanta is named directly after the colony ship that settled it, Atalanta. Though the planet is too cold to be of any real value, the population is making a decent enough living thanks to the caches of heavy elements trapped under the ice.</description>
-   <bar>Like all structures on the planet Atalanta's bar is built under the ice, but it is quite close to the surface. This is because a spectacular lighting effect can be observed overhead when the sun shines directly on the ice. Atalanta's orbit makes this a rare occurrence, but the bar's profits soar during every cycle.</bar>
+   <description>Atalanta is named directly after the colony ship that settled it, Atalanta. Though the asset is too cold to be of any real value, the population is making a decent enough living thanks to the caches of heavy elements trapped under the ice.</description>
+   <bar>Like all structures on the asset Atalanta's bar is built under the ice, but it is quite close to the surface. This is because a spectacular lighting effect can be observed overhead when the sun shines directly on the ice. Atalanta's orbit makes this a rare occurrence, but the bar's profits soar during every cycle.</bar>
   </general>
   <tech>
    <item>Basic Outfits 1</item>
@@ -656,12 +639,12 @@
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Frontier</faction>
    <population>600000</population>
    <services>
     <land/>
@@ -841,12 +824,12 @@
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>40000</population>
    <services>
     <land/>
@@ -967,12 +950,12 @@
    <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>17000000</population>
    <services>
     <land/>
@@ -989,7 +972,7 @@
     <commodity>Industrial Goods</commodity>
     <commodity>Medicine</commodity>
    </commodities>
-   <description>The surface of the planet is predominantly covered with water and the planetary climate is characterized by abundant precipitation and strong winds, though sufficiently tolerable to make costly weather modification equipment unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
+   <description>The surface of the asset is predominantly covered with water and the assetary climate is characterized by abundant precipitation and strong winds, though sufficiently tolerable to make costly weather modification equipment unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
    <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
   </general>
   <tech>
@@ -1075,12 +1058,12 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>700</population>
    <services>
     <land/>
@@ -1191,12 +1174,12 @@
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Frontier</faction>
    <population>930000</population>
    <services>
     <land/>
@@ -1210,7 +1193,7 @@
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Cetrat is an aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it throughout the planet's massive ocean, there has been little effort in that field. Cetrat was colonized by the eighth colony ship launched during the First Growth, Brooklyn.</description>
+   <description>Cetrat is an aquatic asset known for its medical algae. No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it throughout the asset's massive ocean, there has been little effort in that field. Cetrat was colonized by the eighth colony ship launched during the First Growth, Brooklyn.</description>
    <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
   </general>
   <tech>
@@ -1247,34 +1230,21 @@
   </pos>
   <GFX>
    <space>H01.png</space>
-   <exterior>desertic3.png</exterior>
+   <exterior>(null)</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>H</class>
-   <faction>Sirius</faction>
-   <population>20000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
+   <class>A</class>
+   <population>0</population>
+   <services/>
    <commodities/>
-   <description>Chriik is a dead world. Like most desert planets it has no bodies of water and a hot climate, but unlike most desert planets, it doesn't have any indigenous life whatsoever. Indeed, there is no reason why anyone or anything would want to live here in the first place. This pakes it a perfect planet for major industries to set up shop, since they can pollute all they want without repercussions.</description>
-   <bar>The spaceport bar is a popular place on Chriik, because even inside the habitation complexes the air is so dry it will parch you out in record time.</bar>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Heavy Civilian Combat Ships</item>
-   <item>Basic Outfits 2</item>
-   <item>Missiles 1</item>
-   <item>Missiles 2</item>
-  </tech>
  </asset>
  <asset name="Chucrchill II">
   <pos>
@@ -1550,12 +1520,12 @@
    <exterior>station05.png</exterior>
   </GFX>
   <presence>
+   <faction>Independent</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Independent</faction>
    <population>14000</population>
    <services>
     <land/>
@@ -1638,12 +1608,12 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Frontier</faction>
    <population>4000000</population>
    <services>
     <land/>
@@ -1780,12 +1750,12 @@
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>40000</population>
    <services>
     <land/>
@@ -1797,8 +1767,8 @@
    <commodities>
     <commodity>Food</commodity>
    </commodities>
-   <description>Doranthex Prime is a mostly-molten planet. One of the few pieces of solid land, a small island drifts around the around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the planet itself once a ship has landed.</description>
-   <bar>The drinks served in the Furnace, as the bar calls itself, are a rather curious sort. They are generally very strong and served at a warm temperature. The house specialties also contain volcanic ash which is harvested on the planet surface. A strange bar indeed.</bar>
+   <description>Doranthex Prime is a mostly-molten asset. One of the few pieces of solid land, a small island drifts around the around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the asset itself once a ship has landed.</description>
+   <bar>The drinks served in the Furnace, as the bar calls itself, are a rather curious sort. They are generally very strong and served at a warm temperature. The house specialties also contain volcanic ash which is harvested on the asset surface. A strange bar indeed.</bar>
   </general>
  </asset>
  <asset name="Doranthex Secundus">
@@ -1833,12 +1803,12 @@
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Empire</faction>
    <population>125000</population>
    <services>
     <land/>
@@ -1854,7 +1824,7 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths. This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted abnormal wavelengths, whose effects where multiplied by contaminants in Dowue's atmosphere. Shortly thereafter, it became mandatory for all personnel to wear special goggles designed to filter out the harmful light.</description>
+   <description>Dowue is a asset known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths. This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted abnormal wavelengths, whose effects where multiplied by contaminants in Dowue's atmosphere. Shortly thereafter, it became mandatory for all personnel to wear special goggles designed to filter out the harmful light.</description>
    <bar>The Dowue Spaceport Bar is better known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. The dangers, even with protective goggles, of the Dowue Syndrome persuade most people to stay indoors, and the bar lies in the heart of the spaceport.</bar>
   </general>
   <tech>
@@ -2004,12 +1974,12 @@
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Independent</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Independent</faction>
    <population>2000000</population>
    <services>
     <land/>
@@ -2021,8 +1991,8 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Durea is not a terribly pleasant place to live, as it orbits its star a little too distantly for comfort, which leaves most of the planet covered in snow and ice. Only a small portion of the surface thaws far enough in summer for the mining operations, but despite that the riches underneath the crust compel the hardy population to dig. Indeed, if one day resources in the galaxy grow sparse enough, Durea may well find itself in an economically superior position.</description>
-   <bar>This bar is the standard-issue model that can be found on unpopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the amenities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis planets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the planet's harsh environment.</bar>
+   <description>Durea is not a terribly pleasant place to live, as it orbits its star a little too distantly for comfort, which leaves most of the asset covered in snow and ice. Only a small portion of the surface thaws far enough in summer for the mining operations, but despite that the riches underneath the crust compel the hardy population to dig. Indeed, if one day resources in the galaxy grow sparse enough, Durea may well find itself in an economically superior position.</description>
+   <bar>This bar is the standard-issue model that can be found on unpopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the amenities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis assets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the asset's harsh environment.</bar>
   </general>
  </asset>
  <asset name="Dusk">
@@ -2167,13 +2137,13 @@
    <exterior>mining2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
-   <population>3000000000</population>
+   <population>1474836480</population>
    <services>
     <land/>
     <refuel/>
@@ -2183,12 +2153,9 @@
     <outfits/>
     <shipyard/>
    </services>
-   <commodities>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Dvaer Prime is the capital world in Dvaered space. It was the world on which the Old Empire granted House Dvaered its status as a Great House, and the Dvaered chose to name their people after it. However, iconic though the planet may be, it is of little actual consequence. At best it is fought over jealously by the Dvaered Warlords, who consider ownership of the world a matter of great prestige, but otherwise there is nothing that sets Dvaer Prime apart from other planets. After all, the decisions are all made in Dvaered High Command, which floats in high orbit over Dvaer Prime.</description>
-   <bar>Dvaer Prime sports a well appointed spaceport bar. It is not so much luxurious as it is grimy, but at least all necessary facilities are present and in working order, and the drinks are decent enough by Dvaered standards. A holopainting on the wall commemorates the inauguration ceremony for House Dvaered, but it is faded and warped in places, a testament to the fact that most Dvaered citizens have long ago forgotten that they are technically still part of the Empire.</bar>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
   <tech>
    <item>Bulk Trade Ships</item>
@@ -2207,28 +2174,28 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
    <population>500</population>
    <services>
     <land/>
     <refuel/>
+    <bar/>
     <outfits/>
     <shipyard/>
    </services>
    <commodities/>
-   <description>This is Dvaered High Command, the true seat of power over all Dvaered controlled territories. It is here that the Dvaered Generals come together and decide on a course of action for the Dvaered military forces. Understandably, Dvaered High Command is a military stronghold, one of the most heavily guarded places in the galaxy. One needs a certain amount of Dvaered commendations to even be allowed to set foot on the station.</description>
+   <description>(null)</description>
    <bar>(null)</bar>
   </general>
   <tech>
    <item>Dvaered Military Ships</item>
    <item>Low Tech Upgrades</item>
    <item>High Tech Upgrades 1</item>
-   <item>Heavy Weapons 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -2262,33 +2229,21 @@
   </pos>
   <GFX>
    <space>002.png</space>
-   <exterior>station03.png</exterior>
+   <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
-   <population>4000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <outfits/>
-    <shipyard/>
-   </services>
+   <population>0</population>
+   <services/>
    <commodities/>
-   <description>Eclipse Station is the major military outpost in this area of Dvaered space. It serves as a customs checkpoint for Imperial and Consortium traders looking to travel to Dvaer and beyond. Simultaneously, it is charged with minimizing the Pirate threat in this region of space. It therefore comes as no surprise that Eclipse Station stations a sizeable fleet.</description>
-   <bar>This bar is clearly not a place for relaxation. It is frequented mostly by traders who are waiting for their shipments to clear. The appointments are drab and functional, and the smell of cleaning chemicals is prevalent.</bar>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Heavy Civilian Combat Ships</item>
-   <item>High Tech Upgrades 1</item>
-   <item>Missiles 1</item>
-   <item>Missiles 2</item>
-  </tech>
  </asset>
  <asset name="Eiderdown I">
   <pos>
@@ -2354,7 +2309,7 @@
     <land/>
    </services>
    <commodities/>
-   <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
+   <description>Eiroik was a former mining asset under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -2434,12 +2389,12 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>150000</population>
    <services>
     <land/>
@@ -2472,7 +2427,7 @@
   </pos>
   <GFX>
    <space>moon-A01.png</space>
-   <exterior>lava.png</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -2480,29 +2435,12 @@
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
-   <population>2000000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-    <commodity>Medicine</commodity>
-   </commodities>
-   <description>Ember, like its primary Forge, is a hot world. Its surface is molten in places, its atmosphere will burn an unprotected human to a crisp in seconds and seismic activity makes the planet a death trap even in a protected environment. Despite all this, the Sirii have established a sizeable industry on Forge's moon. Located on a relatively stable plate, this complex collects the rare materials produced by Ember's volcanic activity and turns them into raw materials for ship building. The business is quite lucrative, supplying a significant portion of all materials for Sirius' ships.</description>
-   <bar>Ember's spaceport bar is frequented by workers from the industrial complex, most of them from the Shaira echelon. They have many tales to tell of the dangers of their job and the brutal nature of Ember's weather. None of them seem to be discontent with their lives, though.</bar>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Low Tech Upgrades</item>
-  </tech>
  </asset>
  <asset name="Emperor's Fist">
   <pos>
@@ -2514,12 +2452,12 @@
    <exterior>mining5.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>C</class>
-   <faction>Empire</faction>
    <population>127000</population>
    <services>
     <land/>
@@ -2529,7 +2467,7 @@
    </services>
    <commodities/>
    <description>Emperor's Fist is intended to be the new homeworld of the Emperor himself since the last one was destroyed in the Incident. It's a massive project that is attempting to completely transform a C-class world into that which is suitable for the highest ranks of the Empire's aristocracy. Currently it possesses few amenities beyond the Starport.</description>
-   <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
+   <bar>The bar is designed for those working on the terraforming project. Small compared to many assetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
   </general>
  </asset>
  <asset name="Eridani II">
@@ -2894,51 +2832,18 @@
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
    <services/>
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
- </asset>
- <asset name="Fort Sirius">
-  <pos>
-   <x>2341.481481</x>
-   <y>-984.320988</y>
-  </pos>
-  <GFX>
-   <space>000.png</space>
-   <exterior>station00.png</exterior>
-  </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>0</class>
-   <faction>Sirius</faction>
-   <population>10000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities/>
-   <description>Fort Sirius is the primary military hub of the Sirius army. It serves as the gatekeeper for Aesir, making sure no threats will ever reach Mutris. The station has hundreds of hangars in all sizes, allowing a full contigent to be stationed and ready at all times.</description>
-   <bar>(null)</bar>
-  </general>
-  <tech>
-   <item>Sirius Military Ships</item>
-   <item>High Tech Upgrades 2</item>
-   <item>Heavy Weapons 1</item>
-  </tech>
  </asset>
  <asset name="Fried I">
   <pos>
@@ -3211,27 +3116,19 @@
   </pos>
   <GFX>
    <space>O02.png</space>
-   <exterior>aquatic.png</exterior>
+   <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>O</class>
-   <faction>Sirius</faction>
-   <population>1000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <commodity/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>The colony on Gayathi has been around since before Sirichana settled on Mutris. In those days it was an outpost of one of the Factions that were destroyed in the Faction Wars, forgotten and overlooked by all. With its source of funding and supplies gone, Gayathi never had a chance to fully develop its economic infrastructure. Then, when Sirius rose as a galactic power, Gayathi came to fall under its influence. Now it is home to some of the most devout believers found in Sirius space.</description>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -3267,32 +3164,20 @@
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>H</class>
-   <faction>Sirius</faction>
-   <population>3000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Wilibrord Gilligan was a famous explorer of space in the times of the Second Growth. He is responsible for charting many of the currently known jump routes, having a knack for spotting the areas in space that allowed entry into hyperspace for prolonged periods. In those days this was exceptional, since scanning technology was nowhere near as advanced as now. In honor of Gilligan's services to the old Factions, he was granted his own star system and settlement therein. After the Faction Wars, Gilligan's Memory came to fall under Sirian rule, though the Sirii have chosen to uphold Gilligan's memory.</description>
-   <bar>Predictably, the spaceport bar is themed on Wilibrord Gilligan, showing his likeness in several places and displaying a map of his travels through the galaxy on the wall. A popular topic in this bar is the dwarf planets in Gilligan's Memory, particularly speculations on why Gilligan chose to name them the way he did.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Basic Outfits 2</item>
-   <item>Low Tech Upgrades</item>
-  </tech>
  </asset>
- <asset name="Gilligan's Tomb">
+ <asset name="Gilligan's Retreat">
   <pos>
    <x>2240.000000</x>
    <y>-2300.000000</y>
@@ -3478,22 +3363,17 @@
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>G</class>
-   <faction>Sirius</faction>
-   <population>35000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <commodity/>
-   </services>
+   <class>A</class>
+   <population>0</population>
+   <services/>
    <commodities/>
-   <description>Hankies is something of a holiday resort as well as retreat for the wealthy. It is mainly a consumer world, having neither the land for agriculture nor the resources for industry. It does, however, have a pleasant ecosystem and a wealth of beautiful geography.</description>
-   <bar>Since Hankies doesn't have much to offer, the bar is almost entirely an import product. The architecture, the facilities and the drinks can all be traced offworld. The only thing that is truly authentic to this world is the view from the windows - a mountain range stretching away into the distance.</bar>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Hatter I">
@@ -3616,31 +3496,18 @@
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Sirius</faction>
-   <population>4000000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
+   <class>A</class>
+   <population>0</population>
+   <services/>
    <commodities/>
-   <description>Huan'xi may be a relatively remote planet, but it has a thriving agriculture. The planet's soil is extremely fertile, allowing for multiple crops per cycle. The planet also exports unique foodstuffs that are difficult to produce elsewhere. Indeed, one can find "genuine Huan'xi products" in food outlets all over the galaxy.</description>
-   <bar>The rustic feel of this bar is the product of a careful choice of appointments, music and holographic illusions. The owner clearly feels that customers will be attracted by the atmosphere of his establishments, rather than by the drinks he serves.</bar>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Trade Ships</item>
-   <item>Bulk Trade Ships</item>
-   <item>Basic Outfits 1</item>
-  </tech>
  </asset>
  <asset name="Humdrum I">
   <pos>
@@ -3718,12 +3585,12 @@
    <exterior>desertic4.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Empire</faction>
    <population>12000</population>
    <services>
     <land/>
@@ -3749,12 +3616,12 @@
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Empire</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -3816,30 +3683,18 @@
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>0</class>
-   <faction>Sirius</faction>
-   <population>5000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
+   <class>A</class>
+   <population>0</population>
+   <services/>
    <commodities/>
-   <description>Inios is something like a border guard between Sirius and Dvaered controlled territories. Though officially not a military complex, Inios does garrison far more combat capable ships that one might expect of a commercial station. Whenever the Dvaered send in skirmish fleets to try the Sirius defenses, it is Inios that sends them on their way home.</description>
-   <bar>The bar is built against an outer wall. Several large windows allow patrons to look out on the frozen wastes of Eye of Night III, the planet around which the station orbits. Not coincidentally, the windows also allow people to see the Sirius armed forces docking and taking off, emphasizing the military capacity of the station.</bar>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Light Civilian Combat Ships</item>
-   <item>Basic Outfits 2</item>
-  </tech>
  </asset>
  <asset name="Jaegnhild">
   <pos>
@@ -3851,12 +3706,12 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Frontier</faction>
    <population>30000000</population>
    <services>
     <land/>
@@ -3888,12 +3743,12 @@
    <exterior>mining.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>G</class>
-   <faction>Dvaered</faction>
    <population>170000</population>
    <services>
     <land/>
@@ -3906,7 +3761,7 @@
     <commodity>Food</commodity>
     <commodity>Ore</commodity>
    </commodities>
-   <description>Jorcan is a very barren, dull planet, like most mining worlds. Having been mined for decades, its resources have been nearly exhausted. However, mining corporations are known to persist until there's no longer a profit to be made, leaving depleted, dead planets.</description>
+   <description>Jorcan is a very barren, dull asset, like most mining worlds. Having been mined for decades, its resources have been nearly exhausted. However, mining corporations are known to persist until there's no longer a profit to be made, leaving depleted, dead assets.</description>
    <bar>The one word that would describe the Jorcan spaceport bar would be dust. It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces. A coarse soot has coated your palm just holding your drink. You wonder if it will ever wash off.</bar>
   </general>
  </asset>
@@ -3920,12 +3775,12 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>D</class>
-   <faction>Frontier</faction>
    <population>5000000</population>
    <services>
     <land/>
@@ -3940,7 +3795,7 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Jorlan is one of the least successful Frontier worlds. Its colony ship, Santa Maria, arrived to find a barren, desolate rock that had next to no potential for human inhabitants. But with the only other reachable planet being a gas giant, Santa Maria's captain was faced with the choice to settle or perish. Somehow, his expedition has managed to eke out an existence on Jorlan.
+   <description>Jorlan is one of the least successful Frontier worlds. Its colony ship, Santa Maria, arrived to find a barren, desolate rock that had next to no potential for human inhabitants. But with the only other reachable asset being a gas giant, Santa Maria's captain was faced with the choice to settle or perish. Somehow, his expedition has managed to eke out an existence on Jorlan.
 Jorlan's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent to Haleb IV every dozen STU when the climate conditions are favorable.</description>
    <bar>Rather out of character for a heavy-industry world, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
   </general>
@@ -4029,13 +3884,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>methane.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>Y</class>
-   <faction>Frontier</faction>
-   <population>3000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -4310,12 +4165,12 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>mining.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>K</class>
-   <faction>Frontier</faction>
    <population>350000000</population>
    <services>
     <land/>
@@ -4331,7 +4186,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Though Coriolis was the second colony ship, it arrived at Lapra well after New Dortmund had been colonized due to technical difficulties and unforeseen incidents during the journey. When it finally did establish orbit around Lapra, it found a world so low on potential for life that the trip almost seemed like a lost cause. However, upon touchdown the colonists found that there were many useful minerals hidden below the surface of the planet. The colony on Lapra has survived, first out of sheer necessity and later by virtue of its exports.</description>
+   <description>Though Coriolis was the second colony ship, it arrived at Lapra well after New Dortmund had been colonized due to technical difficulties and unforeseen incidents during the journey. When it finally did establish orbit around Lapra, it found a world so low on potential for life that the trip almost seemed like a lost cause. However, upon touchdown the colonists found that there were many useful minerals hidden below the surface of the asset. The colony on Lapra has survived, first out of sheer necessity and later by virtue of its exports.</description>
    <bar>Lapra's bar looks more like a market than a place for relaxation, and indeed that is exactly what it is. Not only do traders come here to make transactions, the local population also uses the bar as a center for commerce. That said, one can still find a drink and a news terminal, if one looks hard enough.</bar>
   </general>
   <tech>
@@ -4505,12 +4360,12 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -4594,12 +4449,12 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -4614,39 +4469,21 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>M06.png</space>
-   <exterior>oceanic2.png</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Dvaered</faction>
-   <population>600000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Mannannan is one of the more frequently visited Dvaered worlds. Uncharacteristically for a Dvaered planet, its political policies and its economy have remained fairly stable, since none of the Warlords controlling the planet have ever bothered to change the local laws in major ways. This has made Mannannan a favorable place to trade for foreigners. Of course, the Dvaered Warlords seem to be oblivious of this, so Mannannan will likely continue to be a unicum.</description>
-   <bar>This bar is one of many. The increase in trade has also brought an increase in tastes, so there are several places that cater to particular tastes, even some very unsavory ones. Fortunately, the most accessible bar seems to be as respectable as bars come.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Basic Outfits 2</item>
-   <item>Missiles 1</item>
-   <item>Missiles 2</item>
-   <item>Light Civilian Combat Ships</item>
-  </tech>
  </asset>
  <asset name="Massia I">
   <pos>
@@ -4834,12 +4671,12 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -4854,38 +4691,21 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>L00.png</space>
-   <exterior>desertic2.png</exterior>
+   <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>L</class>
-   <faction>Sirius</faction>
-   <population>3000000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Mutris. The very heart of Sirius space. This is where Crater City is to be found, home of Sirichana and the many Sirii pilgrims who will one day become the Touched. Crater City being the most holy of places, the airspace in a wide area around it is closed. The spaceport is located thousands of kilometers away. All approaches happen under a tight escort, and non-Sirii are confined to the commercial district of the planet's political capital.</description>
-   <bar>The spaceport bar is the primary meeting place for offworlders on Mutris. Since only Sirii may venture beyond the commercial district, all others are either conducting business or relaxing here. As far as bars go, Mutris' is a fairly accomodating one, though the various religious references make it somewhat uncomfortable to some.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 2</item>
-   <item>High Tech Upgrades 1</item>
-   <item>Basic Civilian Ships</item>
-  </tech>
  </asset>
  <asset name="Myonei">
   <pos>
@@ -5007,12 +4827,12 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Frontier</faction>
    <population>1000000000</population>
    <services>
     <land/>
@@ -5028,7 +4848,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>New Dortmund was founded by the very first colony ship to leave Earth, Genesis. The planet itself was known only by its systematic designation for a long time, New Dortmund being the name of the settlement. However, since the settlement was the only thing the colonists knew for many years, its name became synonymous with the world. The moon Folevo was named after the leader of the Genesis expedition, who sadly perished only a few years after the initial touchdown.
+   <description>New Dortmund was founded by the very first colony ship to leave Earth, Genesis. The asset itself was known only by its systematic designation for a long time, New Dortmund being the name of the settlement. However, since the settlement was the only thing the colonists knew for many years, its name became synonymous with the world. The moon Folevo was named after the leader of the Genesis expedition, who sadly perished only a few years after the initial touchdown.
 New Dortmund was never very successful in any sense of the term, but it is still pulling its weight in the overall Frontier economy.</description>
    <bar>New Dortmund's spaceport bar is mostly deserted, the locals frequenting their own establishments and offworlders preferring to stay with their ships. The only reason the place is still running is because the Frontier Council subsidizes it, on the basis that a spaceport bar will help attract people to New Dortmund. So far, it hasn't.</bar>
   </general>
@@ -5047,12 +4867,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>gas.png</exterior>
   </GFX>
   <presence>
+   <faction>Pirate</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>D</class>
-   <faction>Pirate</faction>
    <population>9000</population>
    <services>
     <land/>
@@ -5068,7 +4888,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>New Haven is a planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated.The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
+   <description>New Haven is a asset located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated.The asset's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
    <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
   </general>
   <tech>
@@ -5134,12 +4954,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -5201,12 +5021,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Frontier</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -5224,12 +5044,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>gas.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>I</class>
-   <faction>Dvaered</faction>
    <population>130000</population>
    <services>
     <land/>
@@ -5258,12 +5078,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic3.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Frontier</faction>
    <population>260000</population>
    <services>
     <land/>
@@ -5365,12 +5185,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>812000</population>
    <services>
     <land/>
@@ -5386,7 +5206,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Nova Shakar was an utterly unremarkable Empire planet until the Emperor's Fist project began. Increasingly, Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
+   <description>Nova Shakar was an utterly unremarkable Empire asset until the Emperor's Fist project began. Increasingly, Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
    <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
   </general>
   <tech>
@@ -5492,12 +5312,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Empire</faction>
    <population>20000</population>
    <services>
     <land/>
@@ -5524,12 +5344,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>14000</population>
    <services>
     <land/>
@@ -5804,12 +5624,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining6.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>G</class>
-   <faction>Empire</faction>
    <population>65000</population>
    <services>
     <land/>
@@ -5824,7 +5644,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Paxsor is the primary Nexus mining asset within Empire space, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
-   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
+   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the asset's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
   </general>
  </asset>
  <asset name="Perhelion Alpha">
@@ -6013,12 +5833,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>3</range>
   </presence>
   <general>
    <class>1</class>
-   <faction>Empire</faction>
    <population>318000</population>
    <services>
     <land/>
@@ -6042,6 +5862,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Empire Military Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 2</item>
+   <item>Collective</item>
   </tech>
  </asset>
  <asset name="Praxis">
@@ -6054,12 +5875,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>400000</population>
    <services>
     <land/>
@@ -6095,12 +5916,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Proteron</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Proteron</faction>
    <population>1200000</population>
    <services>
     <land/>
@@ -6333,36 +6154,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M01.png</space>
-   <exterior>forest.png</exterior>
+   <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>O</class>
-   <faction>Sirius</faction>
-   <population>4294967295</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-   </commodities>
-   <description>Racheka is a relatively young Sirius colony. Where most Sirius planets are converted planets that once belonged to another faction, Racheka was actually established by Sirius colonists a considerable time after Sirichana settled on Mutris. Perhaps for this reason the Sirian religion can be felt very strongly here, as there are no remnants of other cultures mingling in the lives of the population.</description>
-   <bar>The first thing anyone notices when they step into the bar is the ceiling, which is a holographic display of the galaxy, centered around Anarbalis. Though an impressive display as well as a marvel of technology, the bar's proprietor apparently doesn't realize that many of his customers spend all day looking at the stars, and therefore have little desire to look at them when onworld.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 2</item>
-   <item>Bulk Trade Ships</item>
-  </tech>
  </asset>
  <asset name="Racheka Secundus">
   <pos>
@@ -6440,12 +6246,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station02.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
    <population>3000</population>
    <services>
     <land/>
@@ -6495,12 +6301,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>1</class>
-   <faction>Dvaered</faction>
    <population>7000</population>
    <services>
     <land/>
@@ -6655,28 +6461,18 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>(null)</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>H</class>
-   <faction>Sirius</faction>
-   <population>50000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-   </services>
+   <class>A</class>
+   <population>0</population>
+   <services/>
    <commodities/>
-   <description>Rionna is a cold world, but it was not always so. Only a hundred years ago, it was classified as a class M planet, though even then it was on the chilly side. The reason why the face of the planet is covered in ice now is that the local star is going through a dim phase. Astronomers have predicted that in another century and a half, the star will brighten up again, and Rionna will once again be green. The population has dug in, preferring to wait for better years than to move offworld and leave their homes behind.</description>
-   <bar>This spaceport bar is wholly unremarkable. It could be any other bar on any other planet. The only thing that reminds you that you're still on Rionna is that the patrons are all wearing warm clothes.</bar>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-  </tech>
  </asset>
  <asset name="Riun">
   <pos>
@@ -6798,12 +6594,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -6821,12 +6617,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -6844,12 +6640,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -6867,12 +6663,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -6890,12 +6686,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -7067,12 +6863,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Empire</faction>
    <population>27000</population>
    <services>
     <land/>
@@ -7086,7 +6882,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Selphod is a harsh and barren ice planet. Most of the locals have never ventured outside the established bases. Outdoor travels require heavy thermal protection with a personal generator to keep the wearer from succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed thermal suits.</description>
+   <description>Selphod is a harsh and barren ice asset. Most of the locals have never ventured outside the established bases. Outdoor travels require heavy thermal protection with a personal generator to keep the wearer from succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed thermal suits.</description>
    <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices. They are meant to bring warmth and energy in the cold corridors of the base.</bar>
   </general>
  </asset>
@@ -7273,38 +7069,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M01.png</space>
-   <exterior>forest.png</exterior>
+   <exterior>(null)</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Sirius</faction>
-   <population>2000000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-    <commodity>Medicine</commodity>
-   </commodities>
-   <description>Sinass is a fairly typical civilian Sirius world. Sirii of all echelons make their home here. Sinass provides most of the supplies needed by Fort Sirius.</description>
-   <bar>This bar is divided into three sections. One is blue, one is green and the other is purple. It seems to have some significance, but nobody seems to know exactly what it is. The locals get very upset when you're sitting in the wrong section, though.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 2</item>
-   <item>Basic Civilian Ships</item>
-  </tech>
  </asset>
  <asset name="Sinclair">
   <pos>
@@ -7316,12 +7095,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>130000</population>
    <services>
     <land/>
@@ -7338,7 +7117,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The planet that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
+   <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The asset that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
    <bar>Sinclair's spaceport bar is run by entrepreneurs, not warriors. But being entrepreneurs, they recognize the value of catering to the locals and to those that pass through, and so it is that this bar has a large holoportrait of Godfried Sinclair hanging over the bar, and his family's weapon can be seen on various decorative fixtures.</bar>
   </general>
   <tech>
@@ -7359,12 +7138,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
+   <faction>FLF</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>FLF</faction>
    <population>1000</population>
    <services>
     <land/>
@@ -7385,32 +7164,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-H00.png</space>
-   <exterior>desertic3.png</exterior>
+   <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>H</class>
-   <faction>Sirius</faction>
-   <population>1200000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Sroolu is the lone moon oribiting An'ku II. The colony here mostly concerns itself with harvesting the resources that can be found in An'ku, refining them for processing and even producing some low-level end products out of them. The operation seems to be making profit, though it seems it is fated to remain a minor player in the Sirian economy.</description>
-   <bar>Sroolu is only a small colony, but its bar is huge, even by intergalactic standards. It seems whoever built it intended for the entire workforce to fit inside at once. Suffice to say only part of the bar's floor surface is actually in use, the remaining space being screened off by mobile panels.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Missiles 1</item>
-   <item>Missiles 2</item>
-  </tech>
  </asset>
  <asset name="Stalwart Station">
   <pos>
@@ -7422,12 +7190,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>2</class>
-   <faction>Dvaered</faction>
    <population>12000</population>
    <services>
     <land/>
@@ -7446,7 +7214,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Missiles 1</item>
    <item>Missiles 2</item>
    <item>Low Tech Upgrades</item>
-   <item>Dvaered Military Ships</item>
+   <item>Heavy Civilian Combat Ships</item>
   </tech>
  </asset>
  <asset name="Stutee">
@@ -7456,36 +7224,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-M06.png</space>
-   <exterior>forest2.png</exterior>
+   <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Dvaered</faction>
-   <population>7000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Stutee is a former prison world of the Old Empire. Since it had a breathable atmosphere and little else, it was deemed perfect for dropping off criminals and then forgetting about them. However, as the lower class workers rebelled against the Empire, resulting in the inception of House Dvaered, Stutee came to fall under the jurisdiction of the new Great House. House Dvaered decided to settle Stutee more permanently, bringing the former convicts under their rule and setting them to work. Though Stutee is still of little material value, its location one jump off Dvaer makes up for that.</description>
-   <bar>Stutee's bar is located right off the spaceport. Though the planet has been settled and proper infrastructure is now present, the world is not very appealing to any who visit. As such, the spaceport bar is arguably the most important meeting place on the face of the moon.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Low Tech Upgrades</item>
-   <item>Basic Outfits 1</item>
-   <item>Missiles 1</item>
-  </tech>
  </asset>
  <asset name="Sudra">
   <pos>
@@ -7494,37 +7247,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-M02.png</space>
-   <exterior>forest2.png</exterior>
+   <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Dvaered</faction>
-   <population>400000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Luxury Goods</commodity>
-   </commodities>
-   <description>Located on the fringes of Dvaere dcontrolled territory, Sudra has a relatively high amount of illegal activity going on. Though the Dvaered authorities actively try to stamp out criminal elements and make arrests almost every week, they are fighting a futile battle.</description>
-   <bar>This spaceport bar is unsavory. No other word will describe the place with the same accuracy. A good portion of the bar's clientele are wearing hoods, masks, or other garments to hide their personal features. The lighting is set to quite a dim level, allowing customers to find corners as dark as they please. Despite these obvious signs, the Dvaered officials that sometimes frequent the bar don't seem very keen to investigate.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Heavy Weapons 1</item>
-   <item>Missiles 1</item>
-  </tech>
  </asset>
  <asset name="Suoer">
   <pos>
@@ -7536,12 +7273,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -7625,12 +7362,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>12000</population>
    <services>
     <land/>
@@ -7678,12 +7415,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>L</class>
-   <faction>Dvaered</faction>
    <population>2000</population>
    <services>
     <land/>
@@ -7697,7 +7434,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometres wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
+   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometres wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile asset. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
    <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
   </general>
  </asset>
@@ -7733,12 +7470,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Frontier</faction>
    <population>500</population>
    <services>
     <land/>
@@ -7781,12 +7518,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Frontier</faction>
    <population>50000000</population>
    <services>
     <land/>
@@ -7802,8 +7539,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>When the thirteenth colony ship, Yamato Nadeshiko, arrived at Tori, it was sterile. though it had both water and carbon in abundant supply, there was no life to be found. With the arrival of the mostly Asian human colonists, this changed. Human flora thrived on the planet, and within a century the planet had acquired a fully functional ecosystem. This marvel has inspired the inhabitants of Tori to leave much of the world's surface to nature. Though this means Tori's economoc potential remains largely untapped, the thriving tourist industry largely compensates.</description>
-   <bar>The spaceport bar is more than just functional. Since most new arrivals on the planet come here first, the authorities have taken pains to make the bar appealing and comfortable. Of course, the fact that Tori is a tourist attraction also means drinks are quite expensive in this bar...</bar>
+   <description>When the thirteenth colony ship, Yamato Nadeshiko, arrived at Tori, it was sterile. though it had both water and carbon in abundant supply, there was no life to be found. With the arrival of the mostly Asian human colonists, this changed. Human flora thrived on the asset, and within a century the asset had acquired a fully functional ecosystem. This marvel has inspired the inhabitants of Tori to leave much of the world's surface to nature. Though this means Tori's economoc potential remains largely untapped, the thriving tourist industry largely compensates.</description>
+   <bar>The spaceport bar is more than just functional. Since most new arrivals on the asset come here first, the authorities have taken pains to make the bar appealing and comfortable. Of course, the fact that Tori is a tourist attraction also means drinks are quite expensive in this bar...</bar>
   </general>
   <tech>
    <item>Basic Civilian Ships</item>
@@ -7822,12 +7559,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>G</class>
-   <faction>Empire</faction>
    <population>350000</population>
    <services>
     <land/>
@@ -7841,7 +7578,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Torloth is a heavy mining planet. It has rich ores and minerals in abundance with no local fauna to speak of. It's one of the strongholds of the Nexus corporation, housing some of their important ship factories, though the heavy gravity of the planet necessitates constructing larger ships off-world. Torloth produces ships exclusively for delivery to Nexus depots and endorsed shipyards, and does not operate any publicly-accessible shipyards.</description>
+   <description>Torloth is a heavy mining asset. It has rich ores and minerals in abundance with no local fauna to speak of. It's one of the strongholds of the Nexus corporation, housing some of their important ship factories, though the heavy gravity of the asset necessitates constructing larger ships off-world. Torloth produces ships exclusively for delivery to Nexus depots and endorsed shipyards, and does not operate any publicly-accessible shipyards.</description>
    <bar>The spaceport bar is carved from a rich mineral deposit lending the walls a glimmering, reflective quality. The local brews often include minerals in their production process, giving them a rich, somewhat saline taste.</bar>
   </general>
  </asset>
@@ -7855,12 +7592,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Dvaered</faction>
    <population>2000000000</population>
    <services>
     <land/>
@@ -7908,39 +7645,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M02.png</space>
-   <exterior>mining2.png</exterior>
+   <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Dvaered</faction>
-   <population>4294967295</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-    <shipyard/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Luxury Goods</commodity>
-   </commodities>
-   <description>Trincea is one of the most heavily populated worlds in Dvaered space. As such it is a rather attractive planet for Warlords to fight over, so the laws of the planet are prone to frequent change. The citizens have grown used to it, though, adapting to new legislation as a matter of course. By Dvaered standards, they're exceptionally flexible in their thinking.</description>
-   <bar>The spaceport bar is subject to the whims of the Warlords just like anything else on the face of the planet, so it is best to check the local rules every time you set your ship down on Trincea. Fortunately, having drinks and checking the news have never been outlawed so far.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Basic Outfits 2</item>
-   <item>Basic Trade Ships</item>
-   <item>Basic Civilian Ships</item>
-  </tech>
  </asset>
  <asset name="Tuur">
   <pos>
@@ -8018,12 +7737,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>Y</class>
-   <faction>Dvaered</faction>
    <population>10000</population>
    <services>
     <land/>
@@ -8035,7 +7754,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities>
     <commodity>Ore</commodity>
    </commodities>
-   <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
+   <description>Ullnorn isn't actually a habitable asset, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
    <bar>This is a bar. It has to be, because you usually don't have to pay for muddy rainwater. It doesn't seem this place is frequented by its patrons for the purpose of entertainment, because there are no recreational facilities, not even a jukebox. The few appointments are welded to the floor, and everything else is either made out of steel or has steel bars covering it. Clearly, this is a place where fists meet faces. Maybe you shouldn't stay here too long...</bar>
   </general>
  </asset>
@@ -8093,33 +7812,18 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>M</class>
-   <faction>Sirius</faction>
-   <population>1500000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <description>Urail is a halfway decently habitable planet. Its proximity to Mutris makes it a very popular place to live for Sirii, which has driven the price of real estate to almost ridiculous heights. Many Sirii believe that living on Urail gives them a better chance of meeting a Touched, or even being called to Crater City themselves. There is no indication that this is indeed the case, however.</description>
-   <bar>Every spaceport needs a spaceport bar. That is probably the only reason why Urail has one, since the population would much prefer to use the space so build housing for upper echelon Sirii. Nevertheless, the bar is comfortable enough, despite the pricey drinks.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Missiles 1</item>
-  </tech>
  </asset>
  <asset name="Urbanus II">
   <pos>
@@ -8241,12 +7945,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -8264,12 +7968,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining3.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>K</class>
-   <faction>Dvaered</faction>
    <population>400000</population>
    <services>
     <land/>
@@ -8284,7 +7988,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Ore</commodity>
    </commodities>
-   <description>Many people who live in the Empire think of the Dvaered as unsophisticated, brawny louts who spend all day down in the mines and all night picking fights with each other. This is a stereotype, and it's hardly a fair description of Dvaered society as a whole, but it happens to be absolutely accurate when it comes to the Dvaereds on Utsuwa. The colony on this planet is a full-time mining operation, and all who live on Utsuwa work in the mining industry or its peripherals. Needless to say, House Dvaered gets a significant amount of its raw resources from here.</description>
+   <description>Many people who live in the Empire think of the Dvaered as unsophisticated, brawny louts who spend all day down in the mines and all night picking fights with each other. This is a stereotype, and it's hardly a fair description of Dvaered society as a whole, but it happens to be absolutely accurate when it comes to the Dvaereds on Utsuwa. The colony on this asset is a full-time mining operation, and all who live on Utsuwa work in the mining industry or its peripherals. Needless to say, House Dvaered gets a significant amount of its raw resources from here.</description>
    <bar>This bar is a miner's bar, alpha and omega. Virtually all its patrons are miners, and they do what miners do, which is drink, fight, and talk about miner things. Fortunately, the owner of the bar is considerate of outside visitors, so in addition to Miner's Ale, Miner's Vodka, Miner's Whiskey and Bloody Miners you can also order a light beer, which has a little wooden miner's pickaxe in it.</bar>
   </general>
   <tech>
@@ -8324,12 +8028,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>K</class>
-   <faction>Dvaered</faction>
    <population>15000</population>
    <services>
     <land/>
@@ -8343,7 +8047,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
+   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the asset's surface, in an immense, resource-rich cavern.</description>
    <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
   </general>
  </asset>
@@ -8423,12 +8127,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Frontier</faction>
    <population>500000000</population>
    <services>
     <land/>
@@ -8464,12 +8168,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>500000000</population>
    <services>
     <land/>
@@ -8484,7 +8188,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
+   <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the asset is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the asset offers for their crude, destructive forms of entertainment.</description>
    <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
   </general>
   <tech>
@@ -8610,37 +8314,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>P00.png</space>
-   <exterior>snow.png</exterior>
+   <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>P</class>
-   <faction>Dvaered</faction>
-   <population>40000000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-    <missions/>
-    <commodity/>
-    <outfits/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Luxury Goods</commodity>
-   </commodities>
-   <description>Frozen worlds are usually not colonized unless there is very good reason. Vilati Vilata is no exception. The world offers a wealth of valuable natural resources, as well as expansive sibglacial cavern systems that lend themselves quite well to human habitation. The Dvaered have based what would become one of their most successful industrial franchises on this planet, so although nobody likes living here, the place is home to a sizeable amount of workers.</description>
-   <bar>The bar is cold. It must be mentioned. Every effort has been made to minimize loss of heat from the building, but given the bar's close proximity to the spaceport, which is exposed to the elements, and the constant flow of customers, it has proven impossible to keep out the cold. This situation has given rise to a number of unkind jokes about the Vilati bar, which are told throughout the galaxy.</bar>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Basic Outfits 2</item>
-   <item>Missiles 1</item>
-  </tech>
  </asset>
  <asset name="Vlexair">
   <pos>
@@ -8652,12 +8340,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Dvaered</faction>
    <population>4500</population>
    <services>
     <land/>
@@ -8730,12 +8418,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Pirate</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Pirate</faction>
    <population>15000000</population>
    <services/>
    <commodities/>
@@ -8753,12 +8441,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Pirate</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Pirate</faction>
    <population>4500</population>
    <services/>
    <commodities/>
@@ -8798,12 +8486,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining5.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Empire</faction>
    <population>0</population>
    <services/>
    <commodities/>
@@ -8821,12 +8509,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>4000</population>
    <services>
     <land/>
@@ -8952,12 +8640,12 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
+   <faction>Goddard</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Goddard</faction>
    <population>13000000</population>
    <services>
     <land/>
