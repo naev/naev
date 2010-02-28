@@ -189,7 +189,7 @@
   <faction>Proteron</faction>
   <strength>180</strength>
   <pilots>
-   <pilot chance="100" ship="Kahan"></pilot>
+   <pilot chance="100" ship="Proteron Kahan"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Archimedes">
@@ -197,7 +197,7 @@
   <faction>Proteron</faction>
   <strength>220</strength>
   <pilots>
-   <pilot chance="100" ship="Archimedes"></pilot>
+   <pilot chance="100" ship="Proteron Archimedes"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Derivative">
@@ -205,7 +205,7 @@
   <faction>Proteron</faction>
   <strength>25</strength>
   <pilots>
-   <pilot chance="100" ship="Derivative"></pilot>
+   <pilot chance="100" ship="Proteron Derivative"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Pacifier">

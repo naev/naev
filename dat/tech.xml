@@ -94,8 +94,6 @@
  <tech name="All Ships">
   <item>Admonisher</item>
   <item>Ancestor</item>
-  <item>Archimedes</item>
-  <item>Derivative</item>
   <item>Drone</item>
   <item>Dvaered Ancestor</item>
   <item>Dvaered Goddard</item>
@@ -110,7 +108,6 @@
   <item>Goddard</item>
   <item>Hawking</item>
   <item>Hyena</item>
-  <item>Kahan</item>
   <item>Kestrel</item>
   <item>Koala</item>
   <item>Lancelot</item>
@@ -121,6 +118,9 @@
   <item>Pirate Ancestor</item>
   <item>Pirate Kestrel</item>
   <item>Pirate Vendetta</item>
+  <item>Proteron Archimedes</item>
+  <item>Proteron Derivative</item>
+  <item>Proteron Kahan</item>
   <item>Quicksilver</item>
   <item>Schroedinger</item>
   <item>Vendetta</item>
@@ -171,7 +171,6 @@
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
-  <item>Neutron Disruptor</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>150mm Railgun Turret</item>
@@ -260,7 +259,7 @@
  </tech>
  <tech name="Basic Trade Ships">
   <item>Koala</item>
-  <item>Lancelot</item>
+  <item>Llama</item>
  </tech>
  <tech name="Bulk Trade Ships">
   <item>Koala</item>
@@ -268,13 +267,11 @@
  </tech>
  <tech name="Light Civilian Combat Ships">
   <item>Ancestor</item>
-  <item>Derivative</item>
   <item>Hyena</item>
   <item>Vendetta</item>
  </tech>
  <tech name="Heavy Civilian Combat Ships">
   <item>Admonisher</item>
-  <item>Archimedes</item>
   <item>Hawking</item>
   <item>Lancelot</item>
   <item>Pacifier</item>
@@ -302,9 +299,14 @@
   <item>Pirate Kestrel</item>
   <item>Pirate Vendetta</item>
  </tech>
-
- <tech name="Collective">
+ <tech name="Proteron Military Ships">
+  <item>Proteron Archimedes</item>
+  <item>Proteron Derivative</item>
+  <item>Proteron Kahan</item>
  </tech>
+ <tech name="Sirius Military Ships">
+ </tech>
+
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
   <item>Drone Fighter Bay</item>

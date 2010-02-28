@@ -16,7 +16,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -39,7 +38,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -62,7 +60,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -85,7 +82,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -108,7 +104,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -131,7 +126,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -148,14 +142,13 @@
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Empire</faction>
    <population>60000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -192,7 +185,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -215,7 +207,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -238,7 +229,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -261,7 +251,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -284,7 +273,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -307,7 +295,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -330,7 +317,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -347,14 +333,13 @@
    <exterior>aquatic.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Dvaered</faction>
    <population>70000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -387,14 +372,13 @@
    <exterior>aquatic3.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Empire</faction>
    <population>450000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -434,7 +418,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -451,14 +434,13 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -481,7 +463,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -498,14 +479,13 @@
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>1</class>
-   <faction>Empire</faction>
    <population>52000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -550,7 +530,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -573,7 +552,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -590,14 +568,13 @@
    <exterior>desertic.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Empire</faction>
    <population>32000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -623,14 +600,13 @@
    <exterior>aquatic.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Frontier</faction>
    <population>2000000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -663,14 +639,13 @@
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Frontier</faction>
    <population>600000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -701,7 +676,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -724,7 +698,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -747,7 +720,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -770,7 +742,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -793,7 +764,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -816,7 +786,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -839,7 +808,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -856,14 +824,13 @@
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>40000</population>
-   <prodfactor>0.200000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -901,7 +868,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -924,7 +890,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -947,7 +912,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -970,7 +934,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -987,14 +950,13 @@
    <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>17000000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1036,7 +998,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1059,7 +1020,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1082,7 +1042,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1099,14 +1058,13 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>700</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1134,7 +1092,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1157,7 +1114,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1180,7 +1136,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1203,7 +1158,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1220,14 +1174,13 @@
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Frontier</faction>
    <population>930000</population>
-   <prodfactor>0.600000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1264,7 +1217,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1281,14 +1233,13 @@
    <exterior>(null)</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1311,7 +1262,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1334,7 +1284,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1357,7 +1306,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1380,7 +1328,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1403,7 +1350,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1426,7 +1372,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1449,7 +1394,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1472,7 +1416,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1495,7 +1438,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1518,7 +1460,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1541,7 +1482,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1564,7 +1504,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1581,14 +1520,13 @@
    <exterior>station05.png</exterior>
   </GFX>
   <presence>
+   <faction>Independent</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Independent</faction>
    <population>14000</population>
-   <prodfactor>0.800000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1632,7 +1570,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1655,7 +1592,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1672,14 +1608,13 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Frontier</faction>
    <population>4000000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1711,7 +1646,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1734,7 +1668,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1757,7 +1690,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1780,7 +1712,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1803,7 +1734,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1820,14 +1750,13 @@
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>40000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1858,7 +1787,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1875,14 +1803,13 @@
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Empire</faction>
    <population>125000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -1921,7 +1848,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1944,7 +1870,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1967,7 +1892,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -1990,7 +1914,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2013,7 +1936,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2036,7 +1958,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2053,14 +1974,13 @@
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Independent</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Independent</faction>
    <population>2000000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -2091,7 +2011,6 @@
   <general>
    <class>P</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2114,7 +2033,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2137,7 +2055,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2160,7 +2077,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2183,7 +2099,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2206,7 +2121,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2223,14 +2137,13 @@
    <exterior>mining2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>1474836480</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -2261,14 +2174,13 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
    <population>500</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -2304,7 +2216,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2321,14 +2232,13 @@
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2351,7 +2261,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2374,7 +2283,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2397,7 +2305,6 @@
   <general>
    <class>J</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
    </services>
@@ -2422,7 +2329,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2445,7 +2351,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2468,7 +2373,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2485,14 +2389,13 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>150000</population>
-   <prodfactor>0.600000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -2533,7 +2436,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2550,14 +2452,13 @@
    <exterior>mining5.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>C</class>
-   <faction>Empire</faction>
    <population>127000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -2585,7 +2486,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2608,7 +2508,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2631,7 +2530,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2654,7 +2552,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2677,7 +2574,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2700,7 +2596,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2723,7 +2618,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2746,7 +2640,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2769,7 +2662,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2792,7 +2684,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2815,7 +2706,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2838,7 +2728,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2861,7 +2750,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2884,7 +2772,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2907,7 +2794,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2930,7 +2816,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2947,14 +2832,13 @@
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -2977,7 +2861,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3000,7 +2883,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3023,7 +2905,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3046,7 +2927,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3069,7 +2949,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3092,7 +2971,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3115,7 +2993,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3138,7 +3015,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3161,7 +3037,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3184,7 +3059,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3207,7 +3081,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3230,7 +3103,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3247,14 +3119,13 @@
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3277,7 +3148,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3294,21 +3164,20 @@
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Gilligan's Retreat">
+ <asset name="Gilligan's Tomb">
   <pos>
    <x>2240.000000</x>
    <y>-2300.000000</y>
@@ -3324,7 +3193,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3347,7 +3215,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3370,7 +3237,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3393,7 +3259,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3416,7 +3281,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3439,7 +3303,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3462,7 +3325,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3485,7 +3347,6 @@
   <general>
    <class>I</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3502,14 +3363,13 @@
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3532,7 +3392,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3555,7 +3414,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3578,7 +3436,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3601,7 +3458,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3624,7 +3480,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3641,14 +3496,13 @@
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3671,7 +3525,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3694,7 +3547,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3717,7 +3569,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3734,14 +3585,13 @@
    <exterior>desertic4.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Empire</faction>
    <population>12000</population>
-   <prodfactor>0.200000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -3766,14 +3616,13 @@
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Empire</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3796,7 +3645,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3819,7 +3667,6 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3836,14 +3683,13 @@
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -3860,14 +3706,13 @@
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>O</class>
-   <faction>Frontier</faction>
    <population>30000000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -3898,14 +3743,13 @@
    <exterior>mining.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>G</class>
-   <faction>Dvaered</faction>
    <population>170000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -3931,14 +3775,13 @@
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>D</class>
-   <faction>Frontier</faction>
    <population>5000000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -3977,7 +3820,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4004,7 +3846,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4027,7 +3868,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4044,14 +3884,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>methane.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>Y</class>
-   <faction>Frontier</faction>
-   <population>18446744072414584320</population>
-   <prodfactor>0.000000</prodfactor>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -4090,7 +3929,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4113,7 +3951,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4136,7 +3973,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4159,7 +3995,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4182,7 +4017,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4205,7 +4039,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4228,7 +4061,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4251,7 +4083,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4274,7 +4105,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4297,7 +4127,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4320,7 +4149,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4337,14 +4165,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>mining.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>K</class>
-   <faction>Frontier</faction>
    <population>350000000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -4385,7 +4212,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4408,7 +4234,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4431,7 +4256,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4454,7 +4278,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4477,7 +4300,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4500,7 +4322,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4523,7 +4344,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4540,14 +4360,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4570,7 +4389,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4593,7 +4411,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4616,7 +4433,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4633,19 +4449,32 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
-   <faction>Sirius</faction>
-   <population>0</population>
-   <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>4000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Manis is a cool world, though it still counts as earthlike. Unlike many other class M planets in the galaxy, no terraforming was ever performed here, so the world has almost the same ecosystem it did when it was first settled during the Second Growth. Many people are attracted to this "authentic" feel of the planet, which accounts for a significant portion of its popularity.</description>
+   <bar>Perhaps uniquely int the entire galaxy, Manis' spaceport bar doesn't serve alcohol. It has any amount of sodas and herbal teas available, but they don't seem as effective at attracting customers to the bar as would your ordinary spacer's swill.</bar>
   </general>
+  <tech>
+   <item>Low Tech Upgrades</item>
+  </tech>
  </asset>
  <asset name="Mannannan">
   <pos>
@@ -4657,14 +4486,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4687,7 +4515,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4710,7 +4537,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4733,7 +4559,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4756,7 +4581,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4779,7 +4603,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4802,7 +4625,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4825,7 +4647,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4848,7 +4669,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4865,19 +4685,32 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
-   <population>0</population>
-   <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <population>1000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Modus is an unstable world, but it is surprisingly well populated. Something about the planet is greatly beneficial to human fertility, which makes it a popular destination for couples trying to conceive a child the natural way. Of course this is not without risk, as the planet's volatile nature claims a considerable number of lives each cycle.</description>
+   <bar>This bar has chosen to constantly play a heavy beat music track. This is not because people like heavy beat music, but rather to mask the tremors the planet's unstable crust sometimes creates.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+  </tech>
  </asset>
  <asset name="Mutris">
   <pos>
@@ -4889,14 +4722,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4919,7 +4751,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4942,7 +4773,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4965,7 +4795,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -4988,7 +4817,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5011,7 +4839,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5028,14 +4855,13 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Frontier</faction>
    <population>1000000000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5069,14 +4895,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>gas.png</exterior>
   </GFX>
   <presence>
+   <faction>Pirate</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>D</class>
-   <faction>Pirate</faction>
    <population>9000</population>
-   <prodfactor>0.600000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5119,7 +4944,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>K</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5142,7 +4966,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5159,14 +4982,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5189,7 +5011,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5212,7 +5033,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5229,14 +5049,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Frontier</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5253,14 +5072,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>gas.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>I</class>
-   <faction>Dvaered</faction>
    <population>130000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5288,14 +5106,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic3.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Frontier</faction>
    <population>260000</population>
-   <prodfactor>0.600000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5336,7 +5153,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5359,7 +5175,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5382,7 +5197,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5399,14 +5213,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Empire</faction>
    <population>812000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5445,7 +5258,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5468,7 +5280,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5491,7 +5302,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5514,7 +5324,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5531,14 +5340,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>H</class>
-   <faction>Empire</faction>
    <population>20000</population>
-   <prodfactor>0.200000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5564,14 +5372,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>14000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5609,7 +5416,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5632,7 +5438,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5655,7 +5460,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5678,7 +5482,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5701,7 +5504,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>J</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5724,7 +5526,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5747,7 +5548,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5770,7 +5570,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5793,7 +5592,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5816,7 +5614,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5839,7 +5636,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5856,14 +5652,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining6.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>G</class>
-   <faction>Empire</faction>
    <population>65000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -5896,7 +5691,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5919,7 +5713,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5942,7 +5735,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5965,7 +5757,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -5988,7 +5779,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6011,7 +5801,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6034,7 +5823,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6057,7 +5845,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6074,14 +5861,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>100.000000</value>
    <range>3</range>
   </presence>
   <general>
    <class>1</class>
-   <faction>Empire</faction>
    <population>318000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -6104,7 +5890,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Empire Military Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 2</item>
-   <item>Collective</item>
   </tech>
  </asset>
  <asset name="Praxis">
@@ -6117,14 +5902,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>400000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -6159,14 +5943,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Proteron</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Proteron</faction>
    <population>1200000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -6209,7 +5992,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6232,7 +6014,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6255,7 +6036,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6278,7 +6058,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6301,7 +6080,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6324,7 +6102,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6347,7 +6124,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6370,7 +6146,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6393,7 +6168,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6410,14 +6184,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6440,7 +6213,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6463,7 +6235,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6486,7 +6257,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6503,14 +6273,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station02.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
    <population>3000</population>
-   <prodfactor>0.200000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -6543,7 +6312,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6560,14 +6328,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>1</class>
-   <faction>Dvaered</faction>
    <population>7000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -6595,7 +6362,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6618,7 +6384,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6641,7 +6406,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6664,7 +6428,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6687,7 +6450,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6710,7 +6472,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6727,14 +6488,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>(null)</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6757,7 +6517,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6780,7 +6539,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6803,7 +6561,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6826,7 +6583,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6849,7 +6605,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6866,14 +6621,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6890,14 +6644,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6914,14 +6667,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6938,14 +6690,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6962,14 +6713,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Collective</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>3</class>
-   <faction>Collective</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -6992,7 +6742,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7015,7 +6764,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7038,7 +6786,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7061,7 +6808,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>J</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7084,7 +6830,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7107,7 +6852,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7130,7 +6874,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7147,14 +6890,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Empire</faction>
    <population>27000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7187,7 +6929,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7210,7 +6951,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7233,7 +6973,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7256,7 +6995,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7279,7 +7017,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7302,7 +7039,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7325,7 +7061,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7348,7 +7083,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7365,14 +7099,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>(null)</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7389,14 +7122,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>130000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7433,14 +7165,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
+   <faction>FLF</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>FLF</faction>
    <population>1000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7463,14 +7194,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7487,14 +7217,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>2</class>
-   <faction>Dvaered</faction>
    <population>12000</population>
-   <prodfactor>0.800000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7525,14 +7254,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7549,14 +7277,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7573,19 +7300,30 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
-   <faction>Sirius</faction>
-   <population>0</population>
-   <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
+   <bar>This spaceport bar not only provides food, drink and the standard facilities, it also has its own VR lounge. The lounge seems to be used mainly by youngsters who probably have no business being in a spaceport bar, though.</bar>
   </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>Basic Outfits 1</item>
+   <item>Basic Civilian Ships</item>
+  </tech>
  </asset>
  <asset name="Tarsus II">
   <pos>
@@ -7603,7 +7341,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7626,7 +7363,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7649,7 +7385,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7666,14 +7401,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>12000</population>
-   <prodfactor>0.800000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7704,7 +7438,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7721,14 +7454,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>L</class>
-   <faction>Dvaered</faction>
    <population>2000</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7761,7 +7493,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7778,14 +7509,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Frontier</faction>
    <population>500</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7811,7 +7541,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7828,14 +7557,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Frontier</faction>
    <population>50000000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7870,14 +7598,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining2.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>G</class>
-   <faction>Empire</faction>
    <population>350000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7904,14 +7631,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Dvaered</faction>
    <population>2000000000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -7945,7 +7671,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7962,14 +7687,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -7992,7 +7716,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8015,7 +7738,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>J</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8038,7 +7760,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8055,14 +7776,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>Y</class>
-   <faction>Dvaered</faction>
    <population>10000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8093,7 +7813,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8116,7 +7835,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8133,14 +7851,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Sirius</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8163,7 +7880,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8186,7 +7902,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8209,7 +7924,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8232,7 +7946,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8255,7 +7968,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8269,22 +7981,33 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M03.png</space>
-   <exterior>desertic4.png</exterior>
+   <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Sirius</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
-   <faction>Sirius</faction>
-   <population>0</population>
-   <prodfactor>0.000000</prodfactor>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>3100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Ururis is a relatively wealthy Sirian world. It lies on several major trade routes, which brings in quite a bit of revenue. Cashing in on the amount of visitors it gets, the local government often stages entertainment events designed to make the maximum amount of profit possible.</description>
+   <bar>The spaceport bar is a relatively sizeable one. It features a large viewscreen that is constantly updated with trade related information, interlaced with advertisements for upcoming events and festivals.</bar>
   </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
  </asset>
  <asset name="Utsuwa">
   <pos>
@@ -8296,14 +8019,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining3.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>K</class>
-   <faction>Dvaered</faction>
    <population>400000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8341,7 +8063,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8358,14 +8079,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>K</class>
-   <faction>Dvaered</faction>
    <population>15000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8398,7 +8118,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8421,7 +8140,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8444,7 +8162,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8461,14 +8178,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
+   <faction>Frontier</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Frontier</faction>
    <population>500000000</population>
-   <prodfactor>0.000000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8503,14 +8219,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>500000000</population>
-   <prodfactor>0.400000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8549,7 +8264,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8572,7 +8286,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8595,7 +8308,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8618,7 +8330,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>H</class>
    <population>0</population>
-   <prodfactor>0.400000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8641,7 +8352,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8658,14 +8368,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Dvaered</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8682,14 +8391,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
+   <faction>Dvaered</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>P</class>
-   <faction>Dvaered</faction>
    <population>4500</population>
-   <prodfactor>0.500000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8723,7 +8431,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8746,7 +8453,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8763,14 +8469,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station01.png</exterior>
   </GFX>
   <presence>
+   <faction>Pirate</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Pirate</faction>
    <population>15000000</population>
-   <prodfactor>0.500000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8787,14 +8492,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
+   <faction>Pirate</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Pirate</faction>
    <population>4500</population>
-   <prodfactor>0.500000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8817,7 +8521,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8834,14 +8537,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>mining5.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>A</class>
-   <faction>Empire</faction>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8858,14 +8560,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
+   <faction>Empire</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>0</class>
-   <faction>Empire</faction>
    <population>4000</population>
-   <prodfactor>0.300000</prodfactor>
    <services>
     <land/>
     <refuel/>
@@ -8908,7 +8609,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8931,7 +8631,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8954,7 +8653,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8977,7 +8675,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <prodfactor>0.000000</prodfactor>
    <services/>
    <commodities/>
    <description>(null)</description>
@@ -8994,14 +8691,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
+   <faction>Goddard</faction>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
    <class>M</class>
-   <faction>Goddard</faction>
    <population>13000000</population>
-   <prodfactor>0.700000</prodfactor>
    <services>
     <land/>
     <refuel/>
