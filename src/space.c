@@ -1109,10 +1109,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
-   flags = 0;
-   planet->presenceAmount = 0;
-   planet->presenceRange = 0;
-   planet->real = ASSET_UNREAL;
+   flags          = 0;
+   planet->real   = ASSET_REAL;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -1123,7 +1121,11 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"GFX")) {
+      if (xml_isNode(node,"virtual")) {
+         planet->real   = ASSET_VIRTUAL;
+         continue;
+      }
+      else if (xml_isNode(node,"GFX")) {
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
@@ -1140,8 +1142,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"pos")) {
-         planet->real = ASSET_REAL;
-         cur = node->children;
+         cur          = node->children;
          do {
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;
@@ -1159,6 +1160,11 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          do {
             xmlr_float(cur, "value", planet->presenceAmount);
             xmlr_int(cur, "range", planet->presenceRange);
+            if (xml_isNode(cur,"faction")) {
+               flags |= FLAG_FACTIONSET;
+               planet->faction = faction_get( xml_get(cur) );
+               continue;
+            }
          } while(xml_nextNode(cur));
          continue;
       }
@@ -1173,10 +1179,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             if (xml_isNode(cur,"class"))
                planet->class =
                   planetclass_get(cur->children->content[0]);
-            else if (xml_isNode(cur,"faction")) {
-               flags |= FLAG_FACTIONSET;
-               planet->faction = faction_get( xml_get(cur) );
-            }
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
@@ -1327,7 +1329,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Add the presence. */
    if (!systems_loading)
-      system_addPresence(sys, planet->faction, planet->presenceAmount, planet->presenceRange);
+      system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
 
    return 0;
 }
@@ -1368,7 +1370,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    memmove( &sys->planetsid[i], &sys->planetsid[i+1], sizeof(int) * (sys->nplanets-i) );
 
    /* Remove the presence. */
-   system_addPresence(sys, planet->faction, -(planet->presenceAmount), planet->presenceRange);
+   system_addPresence( sys, planet->faction, -(planet->presenceAmount), planet->presenceRange );
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -2423,25 +2425,27 @@ static void presenceCleanup( StarSystem *sys )
    int i;
 
    /* Reset the spilled variable for the entire universe. */
-   for(i = 0; i < systems_nstack; i++)
+   for (i=0; i < systems_nstack; i++)
       systems_stack[i].spilled = 0;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return;
    }
 
    /* Check the system for 0 value presences. */
-   for(i = 0; i < sys->npresence; i++)
-      if(sys->presence[i].value == 0) {
-         /* Remove the element with 0 value. */
-         memmove(&sys->presence[i], &sys->presence[i + 1],
-                 sizeof(SystemPresence) * sys->npresence - (i + 1));
-         sys->npresence--;
-         sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
-         i--;  /* We'll want to check the new value we just copied in. */
-      }
+   for (i=0; i < sys->npresence; i++) {
+      if (sys->presence[i].value != 0)
+         continue;
+
+      /* Remove the element with 0 value. */
+      memmove(&sys->presence[i], &sys->presence[i + 1],
+              sizeof(SystemPresence) * sys->npresence - (i + 1));
+      sys->npresence--;
+      sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
+      i--;  /* We'll want to check the new value we just copied in. */
+   }
 
    return;
 }

@@ -19,8 +19,8 @@
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
-#define ASSET_UNREAL          0 /**< The asset is "unreal". */
-#define ASSET_REAL            1 /**< The asset is "real". */
+#define ASSET_VIRTUAL         0 /**< The asset is virtual. */
+#define ASSET_REAL            1 /**< The asset is real. */
 
 /**
  * @brief Different planet classes.

@@ -168,6 +168,12 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", uniedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
+   /* Presence. */
+   window_addText( wid, -20, -140, 90, 20, 0, "txtSPresence",
+         &gl_smallFont, &cDConsole, "Presence:" );
+   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPresence",
+         &gl_smallFont, &cBlack, "N/A" );
+
    /* Selected text. */
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
          "txtSelected", &gl_smallFont, &cBlack, NULL );
@@ -718,6 +724,7 @@ static void uniedit_deselect (void)
    window_disableButton( uniedit_wid, "btnEdit" );
    window_disableButton( uniedit_wid, "btnOpen" );
    window_modifyText( uniedit_wid, "txtSelected", "No selection" );
+   window_modifyText( uniedit_wid, "txtPresence", "N/A" );
 }
 
 
@@ -781,15 +788,48 @@ static void uniedit_selectText (void)
 {
    int i, l;
    char buf[1024];
+   StarSystem *sys;
+   int hasPresence;
+
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
       l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
-   if (l == 0)
+   if (l == 0) {
       uniedit_deselect();
-   else
+   }
+   else {
       window_modifyText( uniedit_wid, "txtSelected", buf );
+
+      /* Presence text. */
+      if (uniedit_nsys == 1) {
+         sys         = uniedit_sys[0];
+         buf[0]      = '\0';
+         hasPresence = 0;
+         l           = 0;
+
+         for (i=0; i < sys->npresence ; i++) {
+
+            /* Must have presence. */
+            if (sys->presence[i].value <= 0)
+               continue;
+
+            hasPresence = 1;
+            /* Use map grey instead of default neutral colour */
+            l += snprintf( &buf[l], sizeof(buf)-l, "%s\e0%s: %.0f",
+                  (l==0)?"":"\n", faction_name(sys->presence[i].faction),
+                  sys->presence[i].value);
+         }
+         if (hasPresence == 0)
+            snprintf( buf, sizeof(buf), "None" );
+
+         window_modifyText( uniedit_wid, "txtPresence", buf );
+      }
+      else {
+         window_modifyText( uniedit_wid, "txtPresence", "Multiple selected" );
+      }
+   }
 }
 
 

@@ -368,16 +368,17 @@ static void map_update( unsigned int wid )
    hasPresence = 0;
    buf[0]      = '\0';
    l           = 0;
-   for(i = 0; i < sys->npresence ; i++)
-      if(sys->presence[i].value > 0) {
-         hasPresence = 1;
-         t           = faction_getColourChar(sys->presence[i].faction);
-         /* Use map grey instead of default neutral colour */
-         l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                        (l==0)?"":"\n", faction_name(sys->presence[i].faction),
-                        (t=='N')?'M':t, sys->presence[i].value);
-      }
-   if(hasPresence == 0)
+   for (i=0; i < sys->npresence; i++) {
+      if (sys->presence[i].value <= 0)
+         continue;
+      hasPresence = 1;
+      t           = faction_getColourChar(sys->presence[i].faction);
+      /* Use map grey instead of default neutral colour */
+      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", faction_name(sys->presence[i].faction),
+                     (t=='N')?'M':t, sys->presence[i].value);
+   }
+   if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", -20, y );
    window_moveWidget( wid, "txtPresence", -20, y-gl_smallFont.h-5 );
@@ -396,7 +397,7 @@ static void map_update( unsigned int wid )
          p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
       }
    for (i=1; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real == ASSET_UNREAL)
+      if(sys->planets[i]->real != ASSET_REAL)
          continue;
       hasPlanets = 1;
       p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
