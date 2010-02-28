@@ -1109,8 +1109,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
-   flags                   = 0;
-   planet->real            = ASSET_VIRTUAL;
+   flags          = 0;
+   planet->real   = ASSET_REAL;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -1121,7 +1121,11 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"GFX")) {
+      if (xml_isNode(node,"virtual")) {
+         planet->real   = ASSET_VIRTUAL;
+         continue;
+      }
+      else if (xml_isNode(node,"GFX")) {
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
@@ -1138,7 +1142,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"pos")) {
-         planet->real = ASSET_REAL;
          cur          = node->children;
          do {
             if (xml_isNode(cur,"x")) {
@@ -1157,6 +1160,11 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          do {
             xmlr_float(cur, "value", planet->presenceAmount);
             xmlr_int(cur, "range", planet->presenceRange);
+            if (xml_isNode(cur,"faction")) {
+               flags |= FLAG_FACTIONSET;
+               planet->faction = faction_get( xml_get(cur) );
+               continue;
+            }
          } while(xml_nextNode(cur));
          continue;
       }
@@ -1171,10 +1179,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             if (xml_isNode(cur,"class"))
                planet->class =
                   planetclass_get(cur->children->content[0]);
-            else if (xml_isNode(cur,"faction")) {
-               flags |= FLAG_FACTIONSET;
-               planet->faction = faction_get( xml_get(cur) );
-            }
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
