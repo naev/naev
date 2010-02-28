@@ -56,6 +56,10 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    /* Attributes. */
    xmlw_attr( writer, "name", "%s", p->name );
 
+   /* Explicit virtualness. */
+   if (p->real == ASSET_VIRTUAL)
+      xmlw_elemEmpty( writer, "virtual" );
+
    /* Position. */
    if (p->real == ASSET_REAL) {
       xmlw_startElem( writer, "pos" );
