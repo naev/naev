@@ -57,10 +57,12 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    xmlw_attr( writer, "name", "%s", p->name );
 
    /* Position. */
-   xmlw_startElem( writer, "pos" );
-   xmlw_elem( writer, "x", "%f", p->pos.x );
-   xmlw_elem( writer, "y", "%f", p->pos.y );
-   xmlw_endElem( writer ); /* "pos" */
+   if (p->real == ASSET_REAL) {
+      xmlw_startElem( writer, "pos" );
+      xmlw_elem( writer, "x", "%f", p->pos.x );
+      xmlw_elem( writer, "y", "%f", p->pos.y );
+      xmlw_endElem( writer ); /* "pos" */
+   }
 
    /* GFX. */
    if (p->real == ASSET_REAL) {
@@ -72,6 +74,8 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
 
    /* Presence. */
    xmlw_startElem( writer, "presence" );
+   if (p->faction >= 0)
+      xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
    xmlw_elem( writer, "value", "%f", p->presenceAmount );
    xmlw_elem( writer, "range", "%d", p->presenceRange );
    xmlw_endElem( writer );
@@ -80,8 +84,6 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    if (p->real == ASSET_REAL) {
       xmlw_startElem( writer, "general" );
       xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
-      if (p->faction >= 0)
-         xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
       xmlw_elem( writer, "population", "%"PRIu64, p->population );
       xmlw_startElem( writer, "services" );
       if (planet_hasService( p, PLANET_SERVICE_LAND ))
