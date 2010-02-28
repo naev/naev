@@ -1265,12 +1265,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             (planet->ncommodities==0),"commodity" );
       MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
             "presence" );
-   } else { /* The asset is unreal, so set some NULLs. */
-      planet->gfx_space    = NULL;
-      planet->gfx_exterior = NULL;
-      planet->description  = NULL;
-      planet->bar_description = NULL;
-      planet->commodities  = NULL;
    }
 #undef MELEMENT
 
