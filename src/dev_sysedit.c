@@ -393,6 +393,10 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    for (i=0; i<sys->nplanets; i++) {
       p              = sys->planets[i];
 
+      /* Must be real. */
+      if (p->real != ASSET_REAL)
+         continue;
+
       /* Check if selected. */
       sel.type       = SELECT_PLANET;
       sel.u.planet   = i;
@@ -574,6 +578,10 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Check planets. */
             for (i=0; i<sys->nplanets; i++) {
                p = sys->planets[i];
+
+               /* Must be real. */
+               if (p->real != ASSET_REAL)
+                  continue;
 
                /* Position. */
                x = p->pos.x * sysedit_zoom;
