@@ -438,14 +438,31 @@
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
+   <class>P</class>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <population>5000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Once an independent world home to pirates and black market traders, Arch Arai has long since fallen under the spell of the Touched. Now it is a fairly law-abiding Sirius world, earning its existence through trade and industry like every other planet.</description>
+   <bar>This bar is a quiet place. Though it is certainly not lacking in patronage, the people who come here don't seem about to make a fuss over anything. The effect is contagious, making newcomers follow the example of those who are already there almost instinctively.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Civilian Ships</item>
+  </tech>
  </asset>
  <asset name="Arck">
   <pos>
@@ -3254,16 +3271,28 @@
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
+   <class>H</class>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <population>3000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Wilibrord Gilligan was a famous explorer of space in the times of the Second Growth. He is responsible for charting many of the currently known jump routes, having a knack for spotting the areas in space that allowed entry into hyperspace for prolonged periods. In those days this was exceptional, since scanning technology was nowhere near as advanced as now. In honor of Gilligan's services to the old Factions, he was granted his own star system and settlement therein. After the Faction Wars, Gilligan's Memory came to fall under Sirian rule, though the Sirii have chosen to uphold Gilligan's memory.</description>
+   <bar>Predictably, the spaceport bar is themed on Wilibrord Gilligan, showing his likeness in several places and displaying a map of his travels through the galaxy on the wall. A popular topic in this bar is the dwarf planets in Gilligan's Memory, particularly speculations on why Gilligan chose to name them the way he did.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+  </tech>
  </asset>
- <asset name="Gilligan's Retreat">
+ <asset name="Gilligan's Tomb">
   <pos>
    <x>2240.000000</x>
    <y>-2300.000000</y>
@@ -6304,21 +6333,36 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M01.png</space>
-   <exterior>station00.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
+   <class>O</class>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <population>4294967295</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>Racheka is a relatively young Sirius colony. Where most Sirius planets are converted planets that once belonged to another faction, Racheka was actually established by Sirius colonists a considerable time after Sirichana settled on Mutris. Perhaps for this reason the Sirian religion can be felt very strongly here, as there are no remnants of other cultures mingling in the lives of the population.</description>
+   <bar>The first thing anyone notices when they step into the bar is the ceiling, which is a holographic display of the galaxy, centered around Anarbalis. Though an impressive display as well as a marvel of technology, the bar's proprietor apparently doesn't realize that many of his customers spend all day looking at the stars, and therefore have little desire to look at them when onworld.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Bulk Trade Ships</item>
+  </tech>
  </asset>
  <asset name="Racheka Secundus">
   <pos>
@@ -7341,21 +7385,32 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-H00.png</space>
-   <exterior>oceanic.png</exterior>
+   <exterior>desertic3.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
+   <class>H</class>
    <faction>Sirius</faction>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <population>1200000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Sroolu is the lone moon oribiting An'ku II. The colony here mostly concerns itself with harvesting the resources that can be found in An'ku, refining them for processing and even producing some low-level end products out of them. The operation seems to be making profit, though it seems it is fated to remain a minor player in the Sirian economy.</description>
+   <bar>Sroolu is only a small colony, but its bar is huge, even by intergalactic standards. It seems whoever built it intended for the entire workforce to fit inside at once. Suffice to say only part of the bar's floor surface is actually in use, the remaining space being screened off by mobile panels.</bar>
   </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Stalwart Station">
   <pos>

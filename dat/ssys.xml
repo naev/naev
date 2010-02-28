@@ -51,7 +51,7 @@
   </pos>
   <assets/>
   <jumps>
-   <jump target="Gilligan's Retreat">
+   <jump target="Gilligan's Tomb">
     <pos x="-2736.416904" y="-2182.205886"/>
     <radius>200.000000</radius>
     <flags>
@@ -1623,7 +1623,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="Gilligan's Retreat">
+   <jump target="Gilligan's Tomb">
     <pos x="3420.488784" y="741.792748"/>
     <radius>200.000000</radius>
     <flags>
@@ -2231,7 +2231,7 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="Gilligan's Retreat">
+ <ssys name="Gilligan's Tomb">
   <general>
    <radius>3500.000000</radius>
    <stars>400</stars>
@@ -2244,7 +2244,7 @@
    <y>-573.000000</y>
   </pos>
   <assets>
-   <asset>Gilligan's Retreat</asset>
+   <asset>Gilligan's Tomb</asset>
   </assets>
   <jumps>
    <jump target="Adraia">
