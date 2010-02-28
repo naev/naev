@@ -63,10 +63,12 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    xmlw_endElem( writer ); /* "pos" */
 
    /* GFX. */
-   xmlw_startElem( writer, "GFX" );
-   xmlw_elem( writer, "space", "%s", p->gfx_spacePath );
-   xmlw_elem( writer, "exterior", "%s", p->gfx_exteriorPath );
-   xmlw_endElem( writer ); /* "GFX" */
+   if (p->real == ASSET_REAL) {
+      xmlw_startElem( writer, "GFX" );
+      xmlw_elem( writer, "space", "%s", p->gfx_spacePath );
+      xmlw_elem( writer, "exterior", "%s", p->gfx_exteriorPath );
+      xmlw_endElem( writer ); /* "GFX" */
+   }
 
    /* Presence. */
    xmlw_startElem( writer, "presence" );
@@ -75,34 +77,36 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    xmlw_endElem( writer );
 
    /* General. */
-   xmlw_startElem( writer, "general" );
-   xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
-   if (p->faction >= 0)
-      xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
-   xmlw_elem( writer, "population", "%"PRIu64, p->population );
-   xmlw_startElem( writer, "services" );
-   if (planet_hasService( p, PLANET_SERVICE_LAND ))
-      xmlw_elemEmpty( writer, "land" );
-   if (planet_hasService( p, PLANET_SERVICE_REFUEL ))
-      xmlw_elemEmpty( writer, "refuel" );
-   if (planet_hasService( p, PLANET_SERVICE_BAR ))
-      xmlw_elemEmpty( writer, "bar" );
-   if (planet_hasService( p, PLANET_SERVICE_MISSIONS ))
-      xmlw_elemEmpty( writer, "missions" );
-   if (planet_hasService( p, PLANET_SERVICE_COMMODITY ))
-      xmlw_elemEmpty( writer, "commodity" );
-   if (planet_hasService( p, PLANET_SERVICE_OUTFITS ))
-      xmlw_elemEmpty( writer, "outfits" );
-   if (planet_hasService( p, PLANET_SERVICE_SHIPYARD ))
-      xmlw_elemEmpty( writer, "shipyard" );
-   xmlw_endElem( writer ); /* "services" */
-   xmlw_startElem( writer, "commodities" );
-   for (i=0; i<p->ncommodities; i++)
-      xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
-   xmlw_endElem( writer ); /* "commodities" */
-   xmlw_elem( writer, "description", "%s", p->description );
-   xmlw_elem( writer, "bar", "%s", p->bar_description );
-   xmlw_endElem( writer ); /* "general" */
+   if (p->real == ASSET_REAL) {
+      xmlw_startElem( writer, "general" );
+      xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
+      if (p->faction >= 0)
+         xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
+      xmlw_elem( writer, "population", "%"PRIu64, p->population );
+      xmlw_startElem( writer, "services" );
+      if (planet_hasService( p, PLANET_SERVICE_LAND ))
+         xmlw_elemEmpty( writer, "land" );
+      if (planet_hasService( p, PLANET_SERVICE_REFUEL ))
+         xmlw_elemEmpty( writer, "refuel" );
+      if (planet_hasService( p, PLANET_SERVICE_BAR ))
+         xmlw_elemEmpty( writer, "bar" );
+      if (planet_hasService( p, PLANET_SERVICE_MISSIONS ))
+         xmlw_elemEmpty( writer, "missions" );
+      if (planet_hasService( p, PLANET_SERVICE_COMMODITY ))
+         xmlw_elemEmpty( writer, "commodity" );
+      if (planet_hasService( p, PLANET_SERVICE_OUTFITS ))
+         xmlw_elemEmpty( writer, "outfits" );
+      if (planet_hasService( p, PLANET_SERVICE_SHIPYARD ))
+         xmlw_elemEmpty( writer, "shipyard" );
+      xmlw_endElem( writer ); /* "services" */
+      xmlw_startElem( writer, "commodities" );
+      for (i=0; i<p->ncommodities; i++)
+         xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
+      xmlw_endElem( writer ); /* "commodities" */
+      xmlw_elem( writer, "description", "%s", p->description );
+      xmlw_elem( writer, "bar", "%s", p->bar_description );
+      xmlw_endElem( writer ); /* "general" */
+   }
 
    /* Tech. */
    tech_groupWrite( writer, p->tech );

@@ -1109,10 +1109,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
-   flags = 0;
-   planet->presenceAmount = 0;
-   planet->presenceRange = 0;
-   planet->real = ASSET_UNREAL;
+   flags                   = 0;
+   planet->real            = ASSET_VIRTUAL;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -1141,7 +1139,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       }
       else if (xml_isNode(node,"pos")) {
          planet->real = ASSET_REAL;
-         cur = node->children;
+         cur          = node->children;
          do {
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;

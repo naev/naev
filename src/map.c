@@ -397,7 +397,7 @@ static void map_update( unsigned int wid )
          p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
       }
    for (i=1; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real == ASSET_UNREAL)
+      if(sys->planets[i]->real != ASSET_REAL)
          continue;
       hasPlanets = 1;
       p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
