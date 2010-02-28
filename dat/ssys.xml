@@ -51,7 +51,7 @@
   </pos>
   <assets/>
   <jumps>
-   <jump target="Gilligan's Retreat">
+   <jump target="Gilligan's Tomb">
     <pos x="-2736.416904" y="-2182.205886"/>
     <radius>200.000000</radius>
     <flags>
@@ -944,7 +944,7 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>765.000000</x>
+   <x>836.000000</x>
    <y>-664.000000</y>
   </pos>
   <assets>
@@ -956,11 +956,16 @@
   </assets>
   <jumps>
    <jump target="Eiderdown">
-    <pos x="2422.420288" y="2526.238300"/>
+    <pos x="-47.940708" y="3499.671654"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
+   </jump>
+   <jump target="Muirat">
+    <pos x="3785.315956" y="-5328.827521"/>
+    <radius>200.000000</radius>
+    <flags/>
    </jump>
   </jumps>
  </ssys>
@@ -1048,13 +1053,6 @@
   <jumps>
    <jump target="Doranthex">
     <pos x="-3456.936485" y="547.348277"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Klantar">
-    <pos x="2286.316398" y="-2650.048552"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -1630,7 +1628,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="Gilligan's Retreat">
+   <jump target="Gilligan's Tomb">
     <pos x="3420.488784" y="741.792748"/>
     <radius>200.000000</radius>
     <flags>
@@ -2238,7 +2236,7 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="Gilligan's Retreat">
+ <ssys name="Gilligan's Tomb">
   <general>
    <radius>3500.000000</radius>
    <stars>400</stars>
@@ -2251,7 +2249,7 @@
    <y>-573.000000</y>
   </pos>
   <assets>
-   <asset>Gilligan's Retreat</asset>
+   <asset>Gilligan's Tomb</asset>
   </assets>
   <jumps>
    <jump target="Adraia">
@@ -2661,13 +2659,13 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>900.000000</x>
-   <y>-661.000000</y>
+   <x>836.000000</x>
+   <y>-513.000000</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Eiderdown">
-    <pos x="-2381.578848" y="2564.777221"/>
+    <pos x="-44.868108" y="-3499.712396"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2849,8 +2847,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>377.000000</x>
-   <y>-416.000000</y>
+   <x>319.000000</x>
+   <y>-422.000000</y>
   </pos>
   <assets>
    <asset>Klantar I</asset>
@@ -2859,19 +2857,17 @@
    <asset>Tuur</asset>
   </assets>
   <jumps>
-   <jump target="Dakron">
-    <pos x="-2286.316398" y="2650.048552"/>
+   <jump target="Massia">
+    <pos x="961.523948" y="-3365.333817"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Massia">
-    <pos x="-1086.406236" y="-3327.119098"/>
+   <jump target="Tarsus">
+    <pos x="-3184.151254" y="2893.039914"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
  </ssys>
@@ -3128,8 +3124,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>361.000000</x>
-   <y>-465.000000</y>
+   <x>335.000000</x>
+   <y>-478.000000</y>
   </pos>
   <assets>
    <asset>Arck</asset>
@@ -3140,7 +3136,7 @@
   </assets>
   <jumps>
    <jump target="Klantar">
-    <pos x="1086.406236" y="3327.119098"/>
+    <pos x="-961.523948" y="3365.333817"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3239,6 +3235,29 @@
    </jump>
    <jump target="Tarmak">
     <pos x="610.296536" y="-3446.380440"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Muirat">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>875.000000</x>
+   <y>-725.000000</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Churchill">
+    <pos x="-1885.315956" y="2948.827521"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4562,21 +4581,6 @@
   <assets/>
   <jumps/>
  </ssys>
- <ssys name="TODO: Sirius here">
-  <general>
-   <radius>3500.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>857.000000</x>
-   <y>-712.000000</y>
-  </pos>
-  <assets/>
-  <jumps/>
- </ssys>
  <ssys name="TODO: Traders here">
   <general>
    <radius>3500.000000</radius>
@@ -4678,6 +4682,13 @@
   <jumps>
    <jump target="Doranthex">
     <pos x="-1792.974054" y="3005.868267"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Klantar">
+    <pos x="3384.151254" y="-893.039914"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

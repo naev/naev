@@ -3177,7 +3177,7 @@
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Gilligan's Retreat">
+ <asset name="Gilligan's Tomb">
   <pos>
    <x>2240.000000</x>
    <y>-2300.000000</y>
@@ -4454,13 +4454,27 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>4000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Manis is a cool world, though it still counts as earthlike. Unlike many other class M planets in the galaxy, no terraforming was ever performed here, so the world has almost the same ecosystem it did when it was first settled during the Second Growth. Many people are attracted to this "authentic" feel of the planet, which accounts for a significant portion of its popularity.</description>
+   <bar>Perhaps uniquely int the entire galaxy, Manis' spaceport bar doesn't serve alcohol. It has any amount of sodas and herbal teas available, but they don't seem as effective at attracting customers to the bar as would your ordinary spacer's swill.</bar>
   </general>
+  <tech>
+   <item>Low Tech Upgrades</item>
+  </tech>
  </asset>
  <asset name="Mannannan">
   <pos>
@@ -4677,12 +4691,26 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </presence>
   <general>
    <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <population>1000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Modus is an unstable world, but it is surprisingly well populated. Something about the planet is greatly beneficial to human fertility, which makes it a popular destination for couples trying to conceive a child the natural way. Of course this is not without risk, as the planet's volatile nature claims a considerable number of lives each cycle.</description>
+   <bar>This bar has chosen to constantly play a heavy beat music track. This is not because people like heavy beat music, but rather to mask the tremors the planet's unstable crust sometimes creates.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+  </tech>
  </asset>
  <asset name="Mutris">
   <pos>
@@ -5862,7 +5890,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Empire Military Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 2</item>
-   <item>Collective</item>
   </tech>
  </asset>
  <asset name="Praxis">
@@ -7278,13 +7305,25 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
+   <bar>This spaceport bar not only provides food, drink and the standard facilities, it also has its own VR lounge. The lounge seems to be used mainly by youngsters who probably have no business being in a spaceport bar, though.</bar>
   </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>Basic Outfits 1</item>
+   <item>Basic Civilian Ships</item>
+  </tech>
  </asset>
  <asset name="Tarsus II">
   <pos>
@@ -7942,7 +7981,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M03.png</space>
-   <exterior>desertic4.png</exterior>
+   <exterior>forest2.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -7950,13 +7989,25 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <range>0</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>3100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Ururis is a relatively wealthy Sirian world. It lies on several major trade routes, which brings in quite a bit of revenue. Cashing in on the amount of visitors it gets, the local government often stages entertainment events designed to make the maximum amount of profit possible.</description>
+   <bar>The spaceport bar is a relatively sizeable one. It features a large viewscreen that is constantly updated with trade related information, interlaced with advertisements for upcoming events and festivals.</bar>
   </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
  </asset>
  <asset name="Utsuwa">
   <pos>
