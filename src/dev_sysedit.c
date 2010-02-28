@@ -913,9 +913,13 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
    char **files;
    glTexture **tex;
    int w, h;
+   Planet *p;
+
+   /* Comfort. */
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   snprintf( buf, sizeof(buf), "%s - Planet Properties", sysedit_sys->planets[ sysedit_select[0].u.planet ]->name );
+   snprintf( buf, sizeof(buf), "%s - Planet Properties", p->name );
    wid = window_create( buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
@@ -941,6 +945,7 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
 
    /* Add image array. */
    window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, files, nfiles, NULL, NULL );
+   toolkit_setImageArray( wid, "iarGFX", p->gfx_spacePath );
 }
 
 
