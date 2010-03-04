@@ -8,7 +8,7 @@ SUBDIRS += utils
 endif
 
 dist_man6_MANS = naev.6
-dist_doc_DATA = AUTHORS README TODO
+dist_doc_DATA = AUTHORS README TODO extras
 
 DATA_ARCHIVE = ndata
 PACK	     = utils/pack/pack$(EXEEXT)
