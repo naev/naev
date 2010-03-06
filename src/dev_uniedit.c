@@ -78,7 +78,10 @@ static void uniedit_selectText (void);
 /* System editing. */
 static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, char *name );
+static void uniedit_editGenList( unsigned int wid );
 static void uniedit_btnEditRename( unsigned int wid, char *unused );
+static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
+static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
 /* System reanming. */
 static int uniedit_checkName( char *name );
 static void uniedit_renameSys (void);
@@ -886,10 +889,54 @@ static void uniedit_editSys (void)
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_editSysClose );
 
+   /* Rename button. */
    y = -45;
    snprintf( buf, sizeof(buf), "Name: \en%s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
    window_addText( wid, 20, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", uniedit_btnEditRename );
+   y -= 30;
+
+   /* Generate the list. */
+   uniedit_editGenList( wid );
+}
+
+
+/**
+ * @brief Generates the virtual asset list.
+ */
+static void uniedit_editGenList( unsigned int wid )
+{
+   int i, j, n;
+   Planet *p;
+   char **str;
+   int y, h;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstAssets" ))
+      window_destroyWidget( wid, "lstAssets" );
+
+   y = -75;
+
+   /* Virtual asset button. */
+   p     = planet_getAll( &n );
+   str   = malloc( sizeof(char*) * (n+1) );
+   j     = 1;
+   str[0] = strdup("None");
+   for (i=0; i<n; i++)
+      if (p->real == ASSET_VIRTUAL)
+         str[j++] = strdup( p[i].name );
+   h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
+   window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
+         "lstAssets", str, j, 0, NULL );
+   y -= h + 20;
+
+   /* Add buttons if needed. */
+   if (!widget_exists( wid, "btnRmAsset" ))
+      window_addButton( wid, -20, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnRmAsset", "Remove", uniedit_btnEditRmAsset );
+   if (!widget_exists( wid, "btnAddAsset" ))
+      window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnAddAsset", "Add", uniedit_btnEditAddAsset );
 }
 
 
@@ -900,6 +947,41 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
 {
    /* Close the window. */
    window_close( wid, name );
+}
+
+
+/**
+ * @brief Removes a selected asset.
+ */
+static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
+{
+   (void) unused;
+   char *selected;
+   int ret;
+
+   /* Get selection. */
+   selected = toolkit_getList( wid, "lstAssets" );
+
+   /* Make sure it's valid. */
+   if ((selected==NULL) || (strcmp(selected,"None")==0))
+      return;
+
+   /* Remove the asset. */
+   ret = system_rmPlanet( uniedit_sys[0], selected );
+   if (ret != 0) {
+      dialogue_alert( "Failed to remove planet '%s'!", selected );
+      return;
+   }
+
+   uniedit_editGenList( wid );
+}
+
+
+/**
+ * @brief Adds a new asset.
+ */
+static void uniedit_btnEditAddAsset( unsigned int wid, char *unused )
+{
 }
 
 
