@@ -143,8 +143,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -334,8 +334,8 @@
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>O</class>
@@ -373,8 +373,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>O</class>
@@ -435,8 +435,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -480,8 +480,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>1</class>
@@ -569,8 +569,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>H</class>
@@ -601,8 +601,8 @@
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>P</class>
@@ -640,8 +640,8 @@
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -825,8 +825,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -951,8 +951,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -1059,8 +1059,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -1175,8 +1175,8 @@
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>O</class>
@@ -1234,8 +1234,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -1521,7 +1521,7 @@
   </GFX>
   <presence>
    <faction>Independent</faction>
-   <value>0.000000</value>
+   <value>100.000000</value>
    <range>0</range>
   </presence>
   <general>
@@ -1609,8 +1609,8 @@
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>O</class>
@@ -1751,8 +1751,8 @@
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -1804,8 +1804,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>P</class>
@@ -1975,7 +1975,7 @@
   </GFX>
   <presence>
    <faction>Independent</faction>
-   <value>0.000000</value>
+   <value>100.000000</value>
    <range>0</range>
   </presence>
   <general>
@@ -2138,8 +2138,8 @@
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -2175,8 +2175,8 @@
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>300.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -2233,8 +2233,8 @@
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -2390,8 +2390,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -2453,8 +2453,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>C</class>
@@ -2833,8 +2833,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3120,8 +3120,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3165,8 +3165,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3364,8 +3364,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3497,8 +3497,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3586,8 +3586,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>H</class>
@@ -3617,8 +3617,8 @@
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3684,8 +3684,8 @@
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -3707,8 +3707,8 @@
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>O</class>
@@ -3744,8 +3744,8 @@
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>G</class>
@@ -3776,8 +3776,8 @@
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>D</class>
@@ -3885,8 +3885,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>Y</class>
@@ -4166,8 +4166,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>K</class>
@@ -4361,8 +4361,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -4450,8 +4450,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -4487,8 +4487,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -4686,8 +4686,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -4723,8 +4723,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>300.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -4856,8 +4856,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -4896,8 +4896,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Pirate</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>600.000000</value>
+   <range>5</range>
   </presence>
   <general>
    <class>D</class>
@@ -4983,8 +4983,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -5050,8 +5050,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -5073,8 +5073,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>I</class>
@@ -5107,8 +5107,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>H</class>
@@ -5214,8 +5214,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -5341,8 +5341,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>H</class>
@@ -5373,8 +5373,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>200.000000</value>
+   <range>1</range>
   </presence>
   <general>
    <class>0</class>
@@ -5653,8 +5653,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>G</class>
@@ -5862,7 +5862,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>100.000000</value>
+   <value>300.000000</value>
    <range>3</range>
   </presence>
   <general>
@@ -5903,8 +5903,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -5944,7 +5944,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Proteron</faction>
-   <value>0.000000</value>
+   <value>300.000000</value>
    <range>0</range>
   </presence>
   <general>
@@ -6185,8 +6185,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -6274,8 +6274,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -6329,8 +6329,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>1</class>
@@ -6489,8 +6489,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -6622,8 +6622,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Collective</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>3</class>
@@ -6645,8 +6645,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Collective</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>3</class>
@@ -6668,8 +6668,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Collective</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>3</class>
@@ -6691,8 +6691,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Collective</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>3</class>
@@ -6714,8 +6714,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Collective</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>3</class>
@@ -6891,8 +6891,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>P</class>
@@ -7100,8 +7100,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -7123,8 +7123,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -7166,8 +7166,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>FLF</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -7195,8 +7195,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -7218,8 +7218,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>2</class>
@@ -7255,8 +7255,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -7278,8 +7278,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -7301,8 +7301,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -7402,8 +7402,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -7455,8 +7455,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>L</class>
@@ -7510,8 +7510,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -7558,8 +7558,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -7599,8 +7599,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>G</class>
@@ -7632,8 +7632,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>P</class>
@@ -7688,8 +7688,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -7777,8 +7777,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>Y</class>
@@ -7852,8 +7852,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -7985,8 +7985,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Sirius</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -8020,8 +8020,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>K</class>
@@ -8080,8 +8080,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>K</class>
@@ -8179,8 +8179,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Frontier</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>60.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -8220,8 +8220,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>M</class>
@@ -8369,8 +8369,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -8380,6 +8380,142 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Virtual Civilian Standard">
+  <virtual/>
+  <presence>
+   <faction>Civilian</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Dvaered Small">
+  <virtual/>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Dvaered Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Empire Small">
+  <virtual/>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Empire Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Empire</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual FLF Small">
+  <virtual/>
+  <presence>
+   <faction>FLF</faction>
+   <value>80.000000</value>
+   <range>1</range>
+  </presence>
+ </asset>
+ <asset name="Virtual FLF Unpresence">
+  <virtual/>
+  <presence>
+   <faction>FLF</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Frontier Small">
+  <virtual/>
+  <presence>
+   <faction>Frontier</faction>
+   <value>60.000000</value>
+   <range>2</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Frontier Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Frontier</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Pirate Medium">
+  <virtual/>
+  <presence>
+   <faction>Pirate</faction>
+   <value>150.000000</value>
+   <range>2</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Pirate Small">
+  <virtual/>
+  <presence>
+   <faction>Pirate</faction>
+   <value>100.000000</value>
+   <range>3</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Pirate Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Pirate</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Proteron Small">
+  <virtual/>
+  <presence>
+   <faction>Proteron</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Proteron Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Proteron</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Sirius Small">
+  <virtual/>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Sirius Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Sirius</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
+ <asset name="Virtual Trader Standard">
+  <virtual/>
+  <presence>
+   <faction>Trader</faction>
+   <value>70.000000</value>
+   <range>0</range>
+  </presence>
  </asset>
  <asset name="Vlexair">
   <pos>
@@ -8392,8 +8528,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Dvaered</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>P</class>
@@ -8470,8 +8606,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Pirate</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>300.000000</value>
+   <range>5</range>
   </presence>
   <general>
    <class>A</class>
@@ -8493,8 +8629,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Pirate</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>300.000000</value>
+   <range>5</range>
   </presence>
   <general>
    <class>A</class>
@@ -8538,8 +8674,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
@@ -8561,8 +8697,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Empire</faction>
-   <value>0.000000</value>
-   <range>0</range>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -8692,7 +8828,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Goddard</faction>
-   <value>0.000000</value>
+   <value>100.000000</value>
    <range>0</range>
   </presence>
   <general>

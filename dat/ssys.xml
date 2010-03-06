@@ -113,6 +113,7 @@
    <asset>Alteris IV</asset>
    <asset>Darkshed</asset>
    <asset>Ozogo X</asset>
+   <asset>Virtual Empire Small</asset>
   </assets>
   <jumps>
    <jump target="Coriolis">
@@ -229,6 +230,7 @@
   <assets>
    <asset>Racheka</asset>
    <asset>Racheka Secundus</asset>
+   <asset>Virtual Pirate Medium</asset>
   </assets>
   <jumps>
    <jump target="Humdrum">
@@ -408,6 +410,7 @@
    <asset>Arcturus Gamma</asset>
    <asset>Arcturus I</asset>
    <asset>Arcturus II</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Apez">
@@ -483,7 +486,7 @@
     </flags>
    </jump>
    <jump target="Fury">
-    <pos x="-1941.450687" y="2912.176030"/>
+    <pos x="-2154.244298" y="2758.483552"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -554,7 +557,7 @@
     </flags>
    </jump>
    <jump target="Sigur">
-    <pos x="-1033.571948" y="3343.909243"/>
+    <pos x="-994.309154" y="3355.793394"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -580,7 +583,7 @@
   </assets>
   <jumps>
    <jump target="Verex">
-    <pos x="3139.542384" y="1547.020885"/>
+    <pos x="3094.332291" y="1635.575640"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -910,7 +913,10 @@
    <x>659.000000</x>
    <y>-451.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Dvaered Unpresence</asset>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Karman">
     <pos x="3361.211794" y="-975.835682"/>
@@ -1049,6 +1055,8 @@
    <asset>Dakron III</asset>
    <asset>Dakron V</asset>
    <asset>Thar</asset>
+   <asset>Virtual FLF Small</asset>
+   <asset>Virtual Frontier Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Doranthex">
@@ -1134,7 +1142,7 @@
     </flags>
    </jump>
    <jump target="Verex">
-    <pos x="1094.627231" y="3324.423442"/>
+    <pos x="1095.057512" y="3324.281734"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -1188,6 +1196,8 @@
    <asset>Caladan</asset>
    <asset>Delta Pavonis I</asset>
    <asset>Ridrack</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+   <asset>Virtual Pirate Medium</asset>
   </assets>
   <jumps>
    <jump target="Alteris">
@@ -1394,6 +1404,7 @@
    <asset>Doranthex Secundus</asset>
    <asset>Secundus Alpha</asset>
    <asset>Secundus Beta</asset>
+   <asset>Virtual Frontier Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Dakron">
@@ -1416,7 +1427,7 @@
     </flags>
    </jump>
    <jump target="Torg">
-    <pos x="-3051.630139" y="-1713.929256"/>
+    <pos x="-3047.885082" y="-1720.580288"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -1786,6 +1797,7 @@
    <asset>Esker III</asset>
    <asset>Esker IV</asset>
    <asset>Suoer</asset>
+   <asset>Virtual Frontier Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Eiderdown">
@@ -1906,6 +1918,7 @@
    <asset>Fidelis III</asset>
    <asset>Fidelis IV</asset>
    <asset>Mannannan</asset>
+   <asset>Virtual Dvaered Small</asset>
   </assets>
   <jumps>
    <jump target="Eye of Night">
@@ -2002,7 +2015,7 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>55.500000</x>
+   <x>49.500000</x>
    <y>248.500000</y>
   </pos>
   <assets>
@@ -2010,7 +2023,7 @@
   </assets>
   <jumps>
    <jump target="Bastion">
-    <pos x="1941.450687" y="-2912.176030"/>
+    <pos x="2154.244298" y="-2758.483552"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2197,6 +2210,7 @@
    <asset>Dawn</asset>
    <asset>Dusk</asset>
    <asset>The Frontier Council</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Theras">
@@ -2287,7 +2301,7 @@
   </assets>
   <jumps>
    <jump target="Verex">
-    <pos x="-1779.268479" y="3014.001274"/>
+    <pos x="-1674.024232" y="3073.701819"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2503,6 +2517,7 @@
    <asset>Haleb IV</asset>
    <asset>Jorlan</asset>
    <asset>Raglan Outpost</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Slaccid">
@@ -2662,7 +2677,9 @@
    <x>836.000000</x>
    <y>-513.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Eiderdown">
     <pos x="-44.868108" y="-3499.712396"/>
@@ -2728,6 +2745,8 @@
   </pos>
   <assets>
    <asset>Ingot I</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+   <asset>Virtual Pirate Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Toaxis">
@@ -2785,6 +2804,7 @@
    <asset>Atalanta</asset>
    <asset>Karman I</asset>
    <asset>Karman II</asset>
+   <asset>Virtual Sirius Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Chraan">
@@ -2855,6 +2875,7 @@
    <asset>Klantar III</asset>
    <asset>Nor</asset>
    <asset>Tuur</asset>
+   <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Massia">
@@ -2980,6 +3001,7 @@
   <assets>
    <asset>Lapis I</asset>
    <asset>Lapis II</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Anarbalis">
@@ -3057,6 +3079,7 @@
    <asset>Limbo I</asset>
    <asset>Limbo II</asset>
    <asset>Malebolge</asset>
+   <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Fried">
@@ -3184,7 +3207,9 @@
    <x>203.000000</x>
    <y>28.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Surano">
     <pos x="1990.032605" y="-2879.196109"/>
@@ -3254,7 +3279,9 @@
    <x>875.000000</x>
    <y>-725.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Churchill">
     <pos x="-1885.315956" y="2948.827521"/>
@@ -3400,6 +3427,7 @@
    <asset>New Dortmund</asset>
    <asset>Norpin II</asset>
    <asset>Norpin IV</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Slaccid">
@@ -3688,6 +3716,7 @@
    <asset>Perhelion Alpha</asset>
    <asset>Perhelion Beta</asset>
    <asset>Perhelion Gamma</asset>
+   <asset>Virtual Pirate Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Daravon">
@@ -4023,6 +4052,7 @@
    <asset>Radix I</asset>
    <asset>Radix II</asset>
    <asset>Stutee</asset>
+   <asset>Virtual Sirius Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Dvaer">
@@ -4054,6 +4084,7 @@
   <assets>
    <asset>Raelid Outpost</asset>
    <asset>Raelid Prime</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Arcanis">
@@ -4135,7 +4166,9 @@
    <x>-5.000000</x>
    <y>110.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Capricorn">
     <pos x="-2765.769304" y="2144.882318"/>
@@ -4177,6 +4210,7 @@
    <asset>Arch Arai</asset>
    <asset>Ruttwi I</asset>
    <asset>Ruttwi II</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Eye of Night">
@@ -4356,13 +4390,15 @@
    <nebula volatility="0.000000">300.000000</nebula>
   </general>
   <pos>
-   <x>440.000000</x>
-   <y>92.000000</y>
+   <x>441.000000</x>
+   <y>91.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Behar">
-    <pos x="1033.571948" y="-3343.909243"/>
+    <pos x="994.309154" y="-3355.793394"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4382,7 +4418,9 @@
    <x>-31.000000</x>
    <y>50.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Acheron">
     <pos x="-53.839783" y="-3499.585872"/>
@@ -4638,7 +4676,9 @@
    <x>716.000000</x>
    <y>-713.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="An'ku">
     <pos x="-2111.434283" y="-2791.387696"/>
@@ -4678,6 +4718,7 @@
   <assets>
    <asset>Tarsus II</asset>
    <asset>Valt</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Doranthex">
@@ -4695,7 +4736,7 @@
     </flags>
    </jump>
    <jump target="Verex">
-    <pos x="-2186.432666" y="-2733.040833"/>
+    <pos x="-2235.003644" y="-2693.465929"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4719,6 +4760,7 @@
    <asset>Tau Prime</asset>
    <asset>Tau Secundus</asset>
    <asset>Tau Station</asset>
+   <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Draconis">
@@ -4757,6 +4799,8 @@
   <assets>
    <asset>Cetrat</asset>
    <asset>Theras III</asset>
+   <asset>Virtual Dvaered Small</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Dakron">
@@ -4883,15 +4927,16 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>140.000000</x>
-   <y>-387.000000</y>
+   <x>151.000000</x>
+   <y>-381.000000</y>
   </pos>
   <assets>
    <asset>Jorcan</asset>
+   <asset>Virtual FLF Small</asset>
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="3051.630139" y="1713.929256"/>
+    <pos x="3047.885082" y="1720.580288"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4960,6 +5005,7 @@
   <assets>
    <asset>Khelim</asset>
    <asset>Triap I</asset>
+   <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Brimstone">
@@ -4997,7 +5043,9 @@
    <x>234.000000</x>
    <y>-287.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Doranthex">
     <pos x="-1173.636329" y="-3297.359211"/>
@@ -5202,8 +5250,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>207.000000</x>
-   <y>-453.000000</y>
+   <x>208.000000</x>
+   <y>-450.000000</y>
   </pos>
   <assets>
    <asset>Verex I</asset>
@@ -5212,7 +5260,7 @@
   </assets>
   <jumps>
    <jump target="Blunderbuss">
-    <pos x="-3139.542384" y="-1547.020885"/>
+    <pos x="-3094.332291" y="-1635.575640"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5224,14 +5272,14 @@
     <flags/>
    </jump>
    <jump target="Ginger">
-    <pos x="1779.268479" y="-3014.001274"/>
+    <pos x="1674.024232" y="-3073.701819"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tarsus">
-    <pos x="2186.432666" y="2733.040833"/>
+    <pos x="2235.003644" y="2693.465929"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5349,7 +5397,9 @@
    <x>239.000000</x>
    <y>-224.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Ogat">
     <pos x="-3359.576909" y="-981.449434"/>
