@@ -1001,12 +1001,22 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    char **str;
    int h;
 
+   /* Get all assets. */
+   p  = planet_getAll( &n );
+   j  = 0;
+   for (i=0; i<n; i++)
+      if (p[i].real == ASSET_VIRTUAL)
+         j = 1;
+   if (j==0) {
+      dialogue_alert( "No virtual assets to add! Please add virtual assets to dat/asset.xml first." );
+      return;
+   }
+
    /* Create the window. */
    wid = window_create( "Add a Virtual Asset", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
-   p     = planet_getAll( &n );
    str   = malloc( sizeof(char*) * n );
    j     = 0;
    for (i=0; i<n; i++)
