@@ -51,6 +51,7 @@ extern int systems_nstack;
 
 static int uniedit_mode       = UNIEDIT_DEFAULT; /**< Editor mode. */
 static unsigned int uniedit_wid = 0; /**< Sysedit wid. */
+static unsigned int uniedit_widEdit = 0; /**< Sysedit editor wid. */
 static double uniedit_xpos    = 0.; /**< Viewport X position. */
 static double uniedit_ypos    = 0.; /**< Viewport Y position. */
 static double uniedit_zoom    = 1.; /**< Viewport zoom level. */
@@ -82,6 +83,7 @@ static void uniedit_editGenList( unsigned int wid );
 static void uniedit_btnEditRename( unsigned int wid, char *unused );
 static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
+static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused );
 /* System reanming. */
 static int uniedit_checkName( char *name );
 static void uniedit_renameSys (void);
@@ -884,6 +886,7 @@ static void uniedit_editSys (void)
 
    /* Create the window. */
    wid = window_create( "Star System Property Editor", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   uniedit_widEdit = wid;
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -907,6 +910,7 @@ static void uniedit_editSys (void)
 static void uniedit_editGenList( unsigned int wid )
 {
    int i, j, n;
+   StarSystem *sys;
    Planet *p;
    char **str;
    int y, h;
@@ -918,13 +922,17 @@ static void uniedit_editGenList( unsigned int wid )
    y = -75;
 
    /* Virtual asset button. */
-   p     = planet_getAll( &n );
+   sys   = uniedit_sys[0];
+   n     = sys->nplanets;
    str   = malloc( sizeof(char*) * (n+1) );
-   j     = 1;
-   str[0] = strdup("None");
-   for (i=0; i<n; i++)
-      if (p->real == ASSET_VIRTUAL)
-         str[j++] = strdup( p[i].name );
+   j     = 0;
+   str[j++] = strdup("None");
+   for (i=0; i<n; i++) {
+      p     = sys->planets[i];
+      if (p->real == ASSET_VIRTUAL) {
+         str[j++] = strdup( p->name );
+      }
+   }
    h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
    window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
          "lstAssets", str, j, 0, NULL );
@@ -945,6 +953,9 @@ static void uniedit_editGenList( unsigned int wid )
  */
 static void uniedit_editSysClose( unsigned int wid, char *name )
 {
+   /* Text might need changing. */
+   uniedit_selectText();
+
    /* Close the window. */
    window_close( wid, name );
 }
@@ -980,8 +991,66 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
 /**
  * @brief Adds a new asset.
  */
-static void uniedit_btnEditAddAsset( unsigned int wid, char *unused )
+static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
 {
+   (void) parent;
+   (void) unused;
+   unsigned int wid;
+   int i, j, n;
+   Planet *p;
+   char **str;
+   int h;
+
+   /* Create the window. */
+   wid = window_create( "Add a Virtual Asset", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, window_close );
+
+   /* Add virtual asset list. */
+   p     = planet_getAll( &n );
+   str   = malloc( sizeof(char*) * n );
+   j     = 0;
+   for (i=0; i<n; i++)
+      if (p[i].real == ASSET_VIRTUAL)
+         str[j++] = strdup( p[i].name );
+   h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
+   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
+         "lstAssets", str, j, 0, NULL );
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", window_close );
+
+   /* Add button. */
+   window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnAdd", "Add", uniedit_btnEditAddAssetAdd );
+}
+
+
+/**
+ * @brief Actually adds the asset.
+ */
+static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
+{
+   char *selected;
+   int ret;
+
+   /* Get selection. */
+   selected = toolkit_getList( wid, "lstAssets" );
+   if (selected == NULL)
+      return;
+
+   /* Add virtual presence. */
+   ret = system_addPlanet( uniedit_sys[0], selected );
+   if (ret != 0) {
+      dialogue_alert( "Failed to add virtual asset '%s'!", selected );
+      return;
+   }
+
+   /* Regenerate the list. */
+   uniedit_editGenList( uniedit_widEdit );
+
+   /* Close the window. */
+   window_close( wid, unused );
 }
 
 
