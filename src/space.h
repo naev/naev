@@ -126,7 +126,6 @@ typedef struct Planet_ {
 /*
  * Forward declaration.
  */
-struct StarSystem_;
 typedef struct StarSystem_ StarSystem;
 
 
