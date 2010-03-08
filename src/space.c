@@ -598,86 +598,70 @@ int planet_exists( const char* planetname )
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
- *    @param init If we're currently initialising.
- *                   0 for normal.
- *                   2 for initialising a system.
+ *    @param init Should be 1 to initialize the scheduler.
  */
 static void system_scheduler( double dt, int init )
 {
-   int i;
-   double str;
+   int i, n;
+   lua_State *L;
+   SystemPresence *p;
 
    /* Go through all the factions and reduce the timer. */
-   for (i = 0; i < cur_system->npresence; i++)
-      if (cur_system->presence[i].schedule.fleet != NULL) {
-         /* Decrement the timer. */
-         cur_system->presence[i].schedule.time -= dt;
+   for (i=0; i < cur_system->npresence; i++) {
+      p = &cur_system->presence[i];
+      L = faction_getState( p->faction );
 
-         /* If it's time, push the fleet out. */
-         if(cur_system->presence[i].schedule.time <= 0) {
-            space_addFleet( cur_system->presence[i].schedule.fleet, init );
-            cur_system->presence[i].schedule.fleet = NULL;
+      /* Must have a valid scheduler. */
+      if (L==NULL)
+         continue;
+
+      /* Run the appropriate function. */
+      if (init) {
+         lua_getglobal( L, "create" ); /* f */
+         if (lua_isnil(L,-1)) {
+            WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
+                  faction_name( p->faction ) );
+            continue;
          }
-      } else {
-         /* Check if schedules can/should be added. */
-         if(cur_system->presence[i].schedule.chain ||
-            cur_system->presence[i].curUsed < cur_system->presence[i].value) {
-            /* Pick a fleet (randomly for now). */
-            cur_system->presence[i].schedule.fleet = fleet_grab(cur_system->presence[i].faction);
-            if(cur_system->presence[i].schedule.fleet == NULL) {
-               /* Let's not look here again. */
-               cur_system->presence[i].curUsed = cur_system->presence[i].value;
-               continue;
-            }
+         n = 0;
+      }
+      else {
+         /* Decerement dt, only continue  */
+         p->timer -= dt;
+         if (p->timer >= 0.)
+            continue;
 
-            /* Get its strength and calculate the time. */
-            str = cur_system->presence[i].schedule.fleet->strength;
-            cur_system->presence[i].schedule.time =
-               (str / cur_system->presence[i].value * 30 +
-                cur_system->presence[i].schedule.penalty) *
-               (1 + 0.4 * (RNGF() - 0.5));
-            cur_system->presence[i].schedule.time +=
-               cur_system->presence[i].schedule.penalty;
-
-            if(cur_system->presence[i].schedule.chain == 2)
-               init = 2;
-
-            /* If we're initialising, 50% chance of starting in-system. */
-            if(init == 2) {
-               cur_system->presence[i].schedule.time *= RNGF() * 2 - 1;
-               if(cur_system->presence[i].schedule.time < 0) {
-                  cur_system->presence[i].schedule.time = 0;
-               }
-            }
-
-            /* Calculate the penalty for the next fleet. */
-            cur_system->presence[i].schedule.penalty = str / cur_system->presence[i].value - 1;
-            if(cur_system->presence[i].schedule.penalty < 0)
-               cur_system->presence[i].schedule.penalty = 0;
-
-            /* Chaining. */
-            if(RNGF() > ((cur_system->presence[i].curUsed + str) / cur_system->presence[i].value)) {
-               if(init == 2)
-                  cur_system->presence[i].schedule.chain = 2;
-               else
-                  cur_system->presence[i].schedule.chain = 1;
-               cur_system->presence[i].schedule.penalty =
-                  cur_system->presence[i].schedule.time;
-               cur_system->presence[i].schedule.time = 0;
-            } else {
-               cur_system->presence[i].schedule.chain = 0;
-            }
-
-            /* We've used up some presence. */
-            cur_system->presence[i].curUsed += str;
+         lua_getglobal( L, "spawn" ); /* f */
+         if (lua_isnil(L,-1)) {
+            WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
+                  faction_name( p->faction ) );
+            continue;
          }
+         lua_pushnumber( L, p->curUsed ); /* f, presence */
+         n = 1;
+      }
+      lua_pushnumber( L, p->value ); /* f, [arg,], max */
+
+      /* Actually run the function. */
+      if (lua_pcall(L, n+1, 3, 0)) { /* error has occured */
+         WARN("Lua Spawn script for faction '%s' : %s",
+               faction_name( p->faction ), lua_tostring(L,-1));
+         lua_pop(L,n+3);
+         continue;
       }
 
-   /* If we're initialising, call ourselves again, to actually spawn any that need to be. */
-   if(init == 2)
-      system_scheduler(0, 1);
-
-   return;
+      /* Output is handled the same way. */
+      if (!lua_isnumber(L,-3)) {
+         WARN("Lua spawn script for faction '%s' failed to return timer value.",
+               faction_name( p->faction ) );
+         lua_pop(L,3);
+         continue;
+      }
+      p->timer    += lua_tonumber(L,-3);
+      p->curUsed  += lua_tonumber(L,-2);
+      /* Handle table if it exists. */
+      lua_pop(L,3); /* Clear arguments. */
+   }
 }
 
 
@@ -694,7 +678,7 @@ void space_update( const double dt )
 
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
-      system_scheduler(dt, 0);
+      system_scheduler( dt, 0 );
 
    /*
     * Volatile systems.
@@ -995,15 +979,12 @@ void space_init ( const char* sysname )
 
    /* Reset any schedules and used presence. */
    for (i=0; i < cur_system->npresence; i++) {
-      cur_system->presence[i].curUsed           = 0;
-      cur_system->presence[i].schedule.chain    = 0;
-      cur_system->presence[i].schedule.fleet    = NULL;
-      cur_system->presence[i].schedule.time     = 0;
-      cur_system->presence[i].schedule.penalty  = 0;
+      cur_system->presence[i].curUsed  = 0;
+      cur_system->presence[i].timer    = 0.;
    }
 
    /* Call the scheduler. */
-   system_scheduler(0, 2);
+   system_scheduler( 0., 1 );
 
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
@@ -2384,12 +2365,10 @@ static int getPresenceIndex( StarSystem *sys, int faction )
       sys->presence = malloc(sizeof(SystemPresence));
 
       /* Set the defaults. */
-      sys->presence[0].faction = faction;
-      sys->presence[0].value = 0 ;
-      sys->presence[0].curUsed = 0 ;
-      sys->presence[0].schedule.fleet = NULL;
-      sys->presence[0].schedule.time = 0;
-      sys->presence[0].schedule.penalty = 0;
+      sys->presence[0].faction   = faction;
+      sys->presence[0].value     = 0 ;
+      sys->presence[0].curUsed   = 0 ;
+      sys->presence[0].timer     = 0.;
       return 0;
    }
 

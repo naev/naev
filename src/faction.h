@@ -9,6 +9,7 @@
 
 #include "opengl.h"
 #include "colour.h"
+#include "nlua.h"
 
 
 #define FACTION_PLAYER  0  /**< Hardcoded player faction identifier. */
@@ -20,6 +21,7 @@ int faction_get( const char* name );
 int* faction_getAll( int *n );
 char* faction_name( int f );
 char* faction_longname( int f );
+lua_State *faction_getState( int f );
 glTexture* faction_logoSmall( int f );
 glTexture* faction_logoTiny( int f );
 glColour* faction_colour( int f );

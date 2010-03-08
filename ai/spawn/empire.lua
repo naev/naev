@@ -1,8 +1,8 @@
 
 
 -- @brief Calculates when next spawn should occur
-function calcNextSpawn( presence )
-   return 5
+function calcNextSpawn( presence, max )
+   return 5.
 end
 
 
@@ -153,7 +153,7 @@ function create ( max )
    -- Create weights for spawn table
    weights[ spawn_patrol  ] = 100
    weights[ spawn_squad   ] = 0.33*max
-   weights[ spawn_capship ] = 100*math.exp( -presence / 1000 )
+   weights[ spawn_capship ] = 100*math.exp( -max / 1000 )
    
    -- Create spawn table base on weights
    spawn_table = createSpawnTable( weights )
@@ -172,7 +172,7 @@ function spawn ( presence, max )
    -- Actually spawn the pilots
    pilots = spawn_spawn( spawn_data )
 
-   return spawn_presence, calcNextSpawn( spawn_presence, max ), pilots
+   return calcNextSpawn( spawn_presence, max ), spawn_presence, pilots
 end
 
 

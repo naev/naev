@@ -18,6 +18,8 @@
 
 #include "nxml.h"
 
+#include "nlua.h"
+#include "nluadef.h"
 #include "opengl.h"
 #include "log.h"
 #include "ndata.h"
@@ -68,9 +70,14 @@ typedef struct Faction_ {
    int *allies; /**< Allies by ID of the faction. */
    int nallies; /**< Number of allies. */
 
+   /* Player information. */
    double player_def; /**< Default player standing. */
    double player; /**< Standing with player - from -100 to 100 */
 
+   /* Scheduler. */
+   lua_State *state; /**< Lua scheduler script. */
+
+   /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
 } Faction;
 
@@ -249,6 +256,19 @@ int* faction_getAllies( int f, int *n )
    }
    *n = faction_stack[f].nallies;
    return faction_stack[f].allies;
+}
+
+
+/**
+ * @brief Gets the state assosciated to the faction scheduler.
+ */
+lua_State *faction_getState( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   return faction_stack[f].state;
 }
 
 
@@ -614,7 +634,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
    int player;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], *dat;
+   uint32_t ndat;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
@@ -640,6 +661,23 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"longname",temp->longname);
       if (xml_isNode(node, "colour")) {
          temp->colour = col_fromName(xml_raw(node));
+         continue;
+      }
+
+      if (xml_isNode(node, "spawn")) {
+         snprintf( buf, sizeof(buf), "ai/spawn/%s.lua", xml_raw(node) );
+         temp->state = nlua_newState();
+         nlua_loadStandard( temp->state, 0 );
+         dat = ndata_read( buf, &ndat );
+         if (luaL_dobuffer(temp->state, dat, ndat, buf) != 0) {
+            WARN("Failed to run spawn script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check",
+                  buf, lua_tostring(temp->state,-1));
+            lua_close( temp->state );
+            temp->state = NULL;
+         }
+         free(dat);
          continue;
       }
 
@@ -876,6 +914,8 @@ void factions_free (void)
          free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0)
          free(faction_stack[i].enemies);
+      if (faction_stack[i].state != NULL)
+         lua_close( faction_stack[i].state );
    }
    free(faction_stack);
    faction_stack = NULL;
@@ -950,7 +990,8 @@ int pfaction_load( xmlNodePtr parent )
  *    @param which Which factions to get. (0,1,2,3 : all, friendly, neutral, hostile)
  *    @return A pointer to an array, or NULL.
  */
-int* faction_getGroup( int *n, int which ) {
+int *faction_getGroup( int *n, int which )
+{
    int *group;
    int i;
 

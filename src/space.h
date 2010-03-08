@@ -142,28 +142,13 @@ typedef struct SystemFleet_ {
 
 
 /**
- * @struct Schedule
- *
- * @brief Represents the schedule for the arrival of a fleet in a system.
- */
-typedef struct FleetSchedule_ {
-   Fleet *fleet; /**< Pointer to the fleet to spawn. */
-   double time; /**< Time for this schedule to finish. */
-   double penalty; /**< The penalty for the arrival of the next fleet. */
-   int chain; /**< Whether or not the next fleet will chain. */
-} FleetSchedule;
-
-
-/**
- * @struct SystemPresence
- *
  * @brief Represents presence in a system
  */
 typedef struct SystemPresence_ {
    int faction; /**< Faction of this presence. */
    double value; /**< Amount of presence. */
    double curUsed; /**< Presence currently used. */
-   FleetSchedule schedule; /**< Schedule for the arrival of fleets. */
+   double timer; /**< Current faction timer. */
 } SystemPresence;
 
 
