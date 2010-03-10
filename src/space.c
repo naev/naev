@@ -650,7 +650,7 @@ static void system_scheduler( double dt, int init )
       if (lua_pcall(L, n+1, 2, 0)) { /* error has occured */
          WARN("Lua Spawn script for faction '%s' : %s",
                faction_name( p->faction ), lua_tostring(L,-1));
-         lua_pop(L,n+2);
+         lua_pop(L,1);
          continue;
       }
 
