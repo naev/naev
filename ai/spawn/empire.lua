@@ -46,9 +46,10 @@ end
 function spawn_spawn( pilots )
    local spawned = {}
    for k,v in ipairs(pilots) do
-      local p = pilot.add( v )
+      local p = pilot.add( v["pilot"] )
+      local presence = v["presence"] / #p
       for _,vv in ipairs(p) do
-         spawned[ #spawned+1 ] = vv
+         spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
       end
    end
    return spawned
@@ -56,8 +57,23 @@ end
 
 
 -- @brief adds a pilot to the table
-function spawn_addPilot( pilots, name )
-   pilots[ #pilots+1 ] = name
+function spawn_addPilot( pilots, name, presence )
+   pilots[ #pilots+1 ] = { pilot = name, presence = presence }
+   if pilots[ "__presence" ] then
+      pilots[ "__presence" ] = pilots[ "__presence" ] + presence
+   else
+      pilots[ "__presence" ] = presence
+   end
+end
+
+
+-- @brief Gets the presence value of a group of pilots
+function spawn_presence( pilots )
+   if pilots[ "__presence" ] then
+      return pilots[ "__presence" ]
+   else
+      return 0
+   end
 end
 
 
@@ -65,21 +81,17 @@ end
 function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
-   local p = 0
 
    if r < 0.5 then
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      p = 15
+      spawn_addPilot( pilots, "Empire Lancelot", 15 );
    elseif r < 0.8 then
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      p = 30
+      spawn_addPilot( pilots, "Empire Lancelot", 15 );
+      spawn_addPilot( pilots, "Empire Lancelot", 15 );
    else
-      spawn_addPilot( pilots, "Empire Pacifier" );
-      p = 45
+      spawn_addPilot( pilots, "Empire Pacifier", 45 );
    end
 
-   return pilots, p
+   return pilots
 end
 
 
@@ -87,25 +99,21 @@ end
 function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
-   local p = 0
 
    if r < 0.5 then
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Admonisher" );
-      p = 70
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Admonisher", 30 );
    elseif r < 0.8 then
-      spawn_addPilot( pilots, "Empire Admonisher" );
-      spawn_addPilot( pilots, "Empire Admonisher" );
-      p = 80
+      spawn_addPilot( pilots, "Empire Admonisher", 40 );
+      spawn_addPilot( pilots, "Empire Admonisher", 40 );
    else
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Pacifier" );
-      p = 100
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Pacifier", 60 );
    end
 
-   return pilots, p
+   return pilots
 end
 
 
@@ -113,33 +121,27 @@ end
 function spawn_capship ()
    local pilots = {}
    local r = rnd.rnd()
-   local p = 0
    local capship
 
    -- Generate the capship
    if r < 0.7 then
-      spawn_addPilots( pilots, "Empire Hawking" )
-      p = 100
+      spawn_addPilots( pilots, "Empire Hawking", 100 )
    else
-      spawn_addPilots( pilots, "Empire Peacemaker" )
-      p = 150
+      spawn_addPilots( pilots, "Empire Peacemaker", 150 )
    end
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      p = p + 60
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
    elseif r < 0.8 then
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Admonisher" );
-      p = p + 60
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Admonisher", 40 );
    else
-      spawn_addPilot( pilots, "Empire Lancelot" );
-      spawn_addPilot( pilots, "Empire Pacifier" );
-      p = p + 70
+      spawn_addPilot( pilots, "Empire Lancelot", 20 );
+      spawn_addPilot( pilots, "Empire Pacifier", 50 );
    end
 
    return pilots, p
@@ -159,9 +161,9 @@ function create ( max )
    spawn_table = createSpawnTable( weights )
 
    -- Calculate spawn data
-   spawn_data, spawn_presence = spawn_choose( spawn_table )
+   spawn_data = spawn_choose( spawn_table )
 
-   return 0, 0
+   return 0
 end
 
 
@@ -172,7 +174,7 @@ function spawn ( presence, max )
    -- Actually spawn the pilots
    pilots = spawn_spawn( spawn_data )
 
-   return calcNextSpawn( spawn_presence, max ), spawn_presence, pilots
+   return calcNextSpawn( spawn_presence(pilots), max ), pilots
 end
 
 

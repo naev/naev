@@ -190,8 +190,10 @@ typedef struct Pilot_ {
    char* name; /**< pilot's name (if unique) */
    char* title; /**< title - usually indicating special properties - @todo use */
 
+   /* Fleet/faction management. */
    int faction; /**< Pilot's faction. */
    int systemFleet; /**< The system fleet the pilot belongs to. */
+   int presence; /**< Presence being used by the pilot. */
 
    /* Object characteristics */
    Ship* ship; /**< ship pilot is flying */

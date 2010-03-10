@@ -35,6 +35,8 @@
 #include "mission.h"
 #include "conf.h"
 #include "queue.h"
+#include "nlua.h"
+#include "nlua_pilot.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -605,6 +607,8 @@ static void system_scheduler( double dt, int init )
    int i, n;
    lua_State *L;
    SystemPresence *p;
+   LuaPilot *lp;
+   Pilot *pilot;
 
    /* Go through all the factions and reduce the timer. */
    for (i=0; i < cur_system->npresence; i++) {
@@ -643,24 +647,60 @@ static void system_scheduler( double dt, int init )
       lua_pushnumber( L, p->value ); /* f, [arg,], max */
 
       /* Actually run the function. */
-      if (lua_pcall(L, n+1, 3, 0)) { /* error has occured */
+      if (lua_pcall(L, n+1, 2, 0)) { /* error has occured */
          WARN("Lua Spawn script for faction '%s' : %s",
                faction_name( p->faction ), lua_tostring(L,-1));
-         lua_pop(L,n+3);
+         lua_pop(L,n+2);
          continue;
       }
 
       /* Output is handled the same way. */
-      if (!lua_isnumber(L,-3)) {
+      if (!lua_isnumber(L,-2)) {
          WARN("Lua spawn script for faction '%s' failed to return timer value.",
                faction_name( p->faction ) );
-         lua_pop(L,3);
+         lua_pop(L,2);
          continue;
       }
-      p->timer    += lua_tonumber(L,-3);
+      p->timer    += lua_tonumber(L,-2);
       p->curUsed  += lua_tonumber(L,-2);
       /* Handle table if it exists. */
-      lua_pop(L,3); /* Clear arguments. */
+      if (lua_istable(L,-1)) {
+         lua_pushnil(L); /* t, k */
+         while (lua_next(L,-2) != 0) { /* tk, k, v */
+            /* Must be table. */
+            if (!lua_istable(L,-1)) {
+               WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
+                     faction_name( p->faction ) );
+               lua_pop(L,1); /* tk, k */
+               continue;
+            }
+
+            lua_getfield( L, -1, "pilot" ); /* tk, k, v, p */
+            if (!lua_ispilot(L,-1)) {
+               WARN("Lua spawn script for faction '%s' returns invalid data (not a pilot).",
+                     faction_name( p->faction ) );
+               lua_pop(L,2); /* tk, k */
+               continue;
+            }
+            lp    = lua_topilot(L,-1);
+            pilot = pilot_get( lp->pilot );
+            if (pilot == NULL) {
+               lua_pop(L,2); /* tk, k */
+               continue;
+            }
+            lua_pop(L,1); /* tk, k, v */
+            lua_getfield( L, -1, "presence" ); /* tk, k, v, p */
+            if (!lua_isnumber(L,-1)) {
+               WARN("Lua spawn script for faction '%s' returns invalid data (not a number).",
+                     faction_name( p->faction ) );
+               lua_pop(L,2); /* tk, k */
+               continue;
+            }
+            pilot->presence = lua_tonumber(L,-1);
+            lua_pop(L,2); /* tk, k */
+         }          
+      }
+      lua_pop(L,2); /* Clear arguments. */
    }
 }
 

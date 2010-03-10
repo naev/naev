@@ -1235,7 +1235,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  */
 void pilot_dead( Pilot* p )
 {
-   if (pilot_isFlag(p,PILOT_DEAD)) return; /* he's already dead */
+   if (pilot_isFlag(p,PILOT_DEAD))
+      return; /* he's already dead */
 
    /* basically just set timers */
    if (p->id==PLAYER_ID)
