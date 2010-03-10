@@ -662,7 +662,6 @@ static void system_scheduler( double dt, int init )
          continue;
       }
       p->timer    += lua_tonumber(L,-2);
-      p->curUsed  += lua_tonumber(L,-2);
       /* Handle table if it exists. */
       if (lua_istable(L,-1)) {
          lua_pushnil(L); /* t, k */
@@ -697,6 +696,7 @@ static void system_scheduler( double dt, int init )
                continue;
             }
             pilot->presence = lua_tonumber(L,-1);
+            p->curUsed     += pilot->presence;
             lua_pop(L,2); /* tk, k */
          }          
       }

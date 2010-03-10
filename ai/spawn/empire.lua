@@ -1,8 +1,10 @@
 
 
 -- @brief Calculates when next spawn should occur
-function calcNextSpawn( presence, max )
-   return 5.
+function calcNextSpawn( cur, new, max )
+   local mod = max - cur
+
+   return 3000 / mod
 end
 
 
@@ -18,12 +20,12 @@ function createSpawnTable( weights )
    -- Create spawn table
    for k,v in pairs(weights) do
       max = max + v
-      spawn_table[ #spawn_table+1 ] = { max, k }
+      spawn_table[ #spawn_table+1 ] = { chance = max, func = k }
    end
 
    -- Normalize
    for k,v in ipairs(spawn_table) do
-      v[1] = v[1] / max
+      v["chance"] = v["chance"] / max
    end
 
    -- Job done
@@ -35,10 +37,11 @@ end
 function spawn_choose( spawn )
    local r = rnd.rnd()
    for k,v in ipairs(spawn) do
-      if v[1] < r then
-         return v[2]()
+      if r < v["chance"] then
+         return v["func"]()
       end
    end
+   error("No spawn function found")
 end
 
 
@@ -121,13 +124,12 @@ end
 function spawn_capship ()
    local pilots = {}
    local r = rnd.rnd()
-   local capship
 
    -- Generate the capship
    if r < 0.7 then
-      spawn_addPilots( pilots, "Empire Hawking", 100 )
+      spawn_addPilot( pilots, "Empire Hawking", 100 )
    else
-      spawn_addPilots( pilots, "Empire Peacemaker", 150 )
+      spawn_addPilot( pilots, "Empire Peacemaker", 150 )
    end
 
    -- Generate the escorts
@@ -144,7 +146,7 @@ function spawn_capship ()
       spawn_addPilot( pilots, "Empire Pacifier", 50 );
    end
 
-   return pilots, p
+   return pilots
 end
 
 
@@ -163,18 +165,26 @@ function create ( max )
    -- Calculate spawn data
    spawn_data = spawn_choose( spawn_table )
 
-   return 0
+   return calcNextSpawn( 0, spawn_presence(spawn_data), max )
 end
 
 
 -- @brief Spawning hook
 function spawn ( presence, max )
    local pilots
+
+   -- Over limit
+   if presence > max then
+      return 5
+   end
   
    -- Actually spawn the pilots
    pilots = spawn_spawn( spawn_data )
 
-   return calcNextSpawn( spawn_presence(pilots), max ), pilots
+   -- Calculate spawn data
+   spawn_data = spawn_choose( spawn_table )
+
+   return calcNextSpawn( presence, spawn_presence(spawn_data), max ), pilots
 end
 
 
