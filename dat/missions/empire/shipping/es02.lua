@@ -141,7 +141,7 @@ function enter ()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 0, 700 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      p = pilot.add( "FLF Med Force", "def", enter_vect )
+      p = pilot.add( "FLF Med Force", nil, enter_vect )
       for k,v in ipairs(p) do
          v:setHostile()
       end
@@ -149,7 +149,7 @@ function enter ()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 0, 700 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      p = pilot.add( "Dvaered Med Force", "def", enter_vect )
+      p = pilot.add( "Dvaered Med Force", nil, enter_vect )
       for k,v in ipairs(p) do
          v:setFriendly()
       end
@@ -180,7 +180,7 @@ end
 function delay_flf ()
 
    -- More ships to pressue player from behind
-   p = pilot.add( "FLF Sml Force", "def", enter_vect )
+   p = pilot.add( "FLF Sml Force", nil, enter_vect )
    for k,v in ipairs(p) do
       v:setHostile()
    end

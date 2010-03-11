@@ -318,11 +318,11 @@ static int pilotL_getPlayer( lua_State *L )
  *
  * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in).
  * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Sml Trader Convoy", "def", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", "def", system.get("Goddard") ) -- Have the pilot jump in from the system
+ * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system
  *
  *    @luaparam fleetname Name of the fleet to add.
- *    @luaparam ai If set will override the standard fleet AI.  "def" means use default.
+ *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
  *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system.
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add( fleetname, ai, paaram )
@@ -357,13 +357,10 @@ static int pilotL_addFleet( lua_State *L )
    }
 
    /* Parse second argument - Fleet AI Override */
-   if (lua_gettop(L) > 1) {
-      fltai = luaL_checkstring(L,2);
-      if (strcmp(fltai, "def")==0) /* Check if set to default */
-         fltai = NULL;
-   }
-   else
+   if (lua_isnil(L,2))
       fltai = NULL;
+   else
+      fltai = luaL_checkstring(L,2);
 
    /* Handle third argument. */
    if (lua_isvector(L,3))

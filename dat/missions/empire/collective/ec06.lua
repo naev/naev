@@ -122,7 +122,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilots) do
                v:setFriendly()
             end
@@ -139,7 +139,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
                v:setHostile()
@@ -170,7 +170,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilot) do
                v:setFriendly()
             end
@@ -190,7 +190,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
 
             -- Handle special ships
             if v == "Starfire" then

@@ -245,7 +245,7 @@ function enter()
     -- Handle the Kestrel that's the last stop on this mission
     if shadowrun >= 2 and system.get() == sys2 then
         mypos = vec2.new(-1500, 600)
-        targship = pilot.add("Pirate Kestrel", "def", mypos, false)
+        targship = pilot.add( "Pirate Kestrel", nil, mypos )
         targship[1]:rename(shipname)
 
         targship[1]:setFaction(faction.get("Independent")) -- Make sure the ship has no enemies here

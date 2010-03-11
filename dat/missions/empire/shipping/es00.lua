@@ -123,7 +123,7 @@ function enter ()
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
 
       -- Create some pilots to go after the player
-      p = pilot.add( "FLF Sml Force", "def", enter_vect )
+      p = pilot.add( "FLF Sml Force", nil, enter_vect )
       -- Set hostile
       for k,v in ipairs(p) do
          v:setHostile()
@@ -134,12 +134,12 @@ function enter ()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 700, 1000 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      pilot.add( "FLF Med Force", "def", enter_vect )
+      pilot.add( "FLF Med Force", nil, enter_vect )
       -- Now the Dvaered
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 200, 300 )
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
-      pilot.add( "Dvaered Med Force", "def", enter_vect )
+      pilot.add( "Dvaered Med Force", nil, enter_vect )
    end
 end
 
