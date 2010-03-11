@@ -91,8 +91,14 @@ function accept ()
    tk.msg( title[2], string.format( text[2],
          misn_target_sys:name(), misn_final_sys:name() ) )
 
+   hook.jumpout("jumpout")
    hook.enter("jump")
    hook.land("land")
+end
+
+
+function jumpout ()
+   last_sys = system.cur()
 end
 
 
@@ -247,7 +253,7 @@ end
 
 function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Trader Mule", "empire_refuel" )[1]
+   refship = pilot.add( "Trader Mule", "empire_refuel", last_sys )[1]
    refship:rename("Fuel Tanker")
    refship:setFaction("Empire")
    refship:setFriendly()
@@ -260,8 +266,8 @@ function addRefuelShip ()
 
    -- Add some escorts
    refesc = {}
-   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
-   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
+   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
+   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
    for k,v in ipairs(refesc) do
       v:setFriendly()
    end

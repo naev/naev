@@ -112,7 +112,7 @@ function enter()
         player.pilot():setPos(vec2.new(dist * math.cos(angle), dist * math.sin(angle)))
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos(), false)
+        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos())
         player.pilot():setPos(player.pilot():pos() - player.pilot():vel() / 2.2) -- Compensate for hyperjump
 
         faction.get("FLF"):modPlayerRaw(-200)

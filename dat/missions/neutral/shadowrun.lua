@@ -217,14 +217,14 @@ function enter()
     if system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0), false)
+        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
     elseif system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0), false)
-        pirate1 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20), false)
-        pirate2 = pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0), false)
-        pirate3 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20), false)
+        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
+        pirate1 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20))
+        pirate2 = pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0))
+        pirate3 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20))
     end
     
     -- Empire ships around planet
@@ -232,14 +232,14 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
         planetpos = pnt:pos()
-        empire1 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(40,0), false)
-        empire2 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,25), false)
-        empire3 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,40), false)
-        empire4 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,25), false)
-        empire5 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-40,0), false)
-        empire6 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,-25), false)
-        empire7 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,-40), false)
-        empire8 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,-25), false)
+        empire1 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(40,0))
+        empire2 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,25))
+        empire3 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,40))
+        empire4 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,25))
+        empire5 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-40,0))
+        empire6 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,-25))
+        empire7 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,-40))
+        empire8 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,-25))
     end
 
     -- Handle the Kestrel that's the last stop on this mission
