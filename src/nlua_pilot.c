@@ -345,6 +345,7 @@ static int pilotL_addFleet( lua_State *L )
    /* Default values. */
    flags = 0;
    vectnull(&vn); /* Need to determine angle. */
+   jump = -1;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
@@ -363,11 +364,11 @@ static int pilotL_addFleet( lua_State *L )
       fltai = luaL_checkstring(L,2);
 
    /* Handle third argument. */
-   if (lua_isvector(L,3))
+   if (lua_isvector(L,3)) {
       lv = lua_tovector(L,3);
+   }
    else if (lua_issystem(L,3)) {
       ls    = lua_tosystem(L,3);
-      jump  = -1;
       for (i=0; i<cur_system->njumps; i++) {
          if (cur_system->jumps[i].target == ls->s) {
             jump = i;
