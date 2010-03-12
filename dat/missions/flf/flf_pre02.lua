@@ -345,7 +345,7 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", last_sys)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", last_sys))
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])
