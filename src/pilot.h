@@ -390,6 +390,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, const unsigned int flags );
 Pilot* pilot_copy( Pilot* src );
+void pilot_delete( Pilot *p );
 
 
 /*

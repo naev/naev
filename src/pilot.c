@@ -1180,6 +1180,12 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          player.crating += 2*mod;
       }
 
+      /* Remove faction if necessary. */
+      if (p->presence > 0) {
+         system_rmCurrentPresence( cur_system, p->faction, p->presence );
+         p->presence = 0;
+      }
+
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
       pilot_runHook( p, PILOT_HOOK_DISABLE );
@@ -1255,10 +1261,6 @@ void pilot_dead( Pilot* p )
 
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
-
-   /* Remove him from the system fleet. */
-   system_removePilotFromSystemFleet(p->systemFleet);
-   p->systemFleet = -1;
 
    /* Pilot must die before setting death flag and probably messing with other flags. */
    pilot_runHook( p, PILOT_HOOK_DEATH );
@@ -1368,7 +1370,7 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
    }
 
    /* Destroy the pilot. */
-   pilot_setFlag(p,PILOT_DELETE);
+   pilot_delete(p);
 
    return 0;
 }
@@ -1568,7 +1570,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
          if (pilot->id==PLAYER_ID) /* player.p handled differently */
             player_destroyed();
-         pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
+         pilot_delete(pilot);
          return;
       }
 
@@ -1626,10 +1628,6 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
-      /* Remove him from the system fleet. */
-      system_removePilotFromSystemFleet(pilot->systemFleet);
-      pilot->systemFleet = -1;
-
       /* Do the slow brake thing */
       vect_pset( &pilot->solid->vel, /* slowly brake */
          VMOD(pilot->solid->vel) * (1. - dt*0.10),
@@ -1750,6 +1748,24 @@ void pilot_update( Pilot* pilot, const double dt )
 
 
 /**
+ * @brief Deletes a pilot.
+ *
+ *    @param p Pilot to delete3. 
+ */
+void pilot_delete( Pilot* p )
+{
+   /* Remove faction if necessary. */
+   if (p->presence > 0) {
+      system_rmCurrentPresence( cur_system, p->faction, p->presence );
+      p->presence = 0;
+   }
+
+   /* Set flag to mark for deletion. */
+   pilot_setFlag(p, PILOT_DELETE);
+}
+
+
+/**
  * @brief Handles pilot's hyperspace states.
  *
  *    @param p Pilot to handle hyperspace navigation.
@@ -1778,11 +1794,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
             player_brokeHyperspace();
          }
          else {
-            /* Remove him from the system fleet. */
-            system_removePilotFromSystemFleet(p->systemFleet);
-            p->systemFleet = -1;
-
-            pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
+            pilot_delete(p);
             pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
          }
          return;

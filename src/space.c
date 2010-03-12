@@ -141,12 +141,10 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static void system_setFaction( StarSystem *sys );
-static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
-static void system_rmSystemFleet( const int systemFleetIndex );
 /* Render. */
 static void space_renderJumpPoint( JumpPoint *jp, int i );
 static void space_renderPlanet( Planet *p );
@@ -771,106 +769,6 @@ void space_update( const double dt )
                interference_alpha = 0.;
          }
       }
-   }
-}
-
-
-/**
- * @brief Creates a fleet.
- *
- *    @param fleet Fleet to add to the system.
- *    @param init Is being run during the space initialization.
- */
-static void space_addFleet( Fleet* fleet, int init )
-{
-   FleetPilot *plt;
-   Planet *planet;
-   int i, c;
-   unsigned int flags;
-   double a, d;
-   Vector2d vv,vp, vn;
-   JumpPoint *jp;
-
-   /* Needed to determine angle. */
-   vectnull(&vn);
-
-   /* c will determino how to create the fleet, only non-zero if it's run in init. */
-   if (init == 1) {
-      if (RNGF() < 0.5) /* 50% chance of starting out en route. */
-         c = 2;
-      else {/* 50% of starting out landed. */
-         c = 1;
-      }
-   }
-   else c = 0;
-
-   /* simulate they came from hyperspace */
-   if (c==0) {
-      jp = &cur_system->jumps[ RNG(0,cur_system->njumps-1) ];
-   }
-   /* Starting out landed or heading towards landing.. */
-   else {
-      /* Get friendly planet to land on. */
-      planet = NULL;
-      for (i=0; i<cur_system->nplanets; i++)
-         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-               !areEnemies(fleet->faction,cur_system->planets[i]->faction)) {
-            planet = cur_system->planets[i];
-            break;
-         }
-
-      /* No suitable planet found. */
-      if (planet == NULL) {
-         jp = &cur_system->jumps[ RNG(0,cur_system->njumps-1) ];
-         c  = 0;
-      }
-      else {
-         /* Start out landed. */
-         if (c==1)
-            vectcpy( &vp, &planet->pos );
-         /* Start out near landed. */
-         else if (c==2) {
-            d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-            vect_pset( &vp, d, RNGF()*2.*M_PI);
-         }
-      }
-   }
-
-   /* Create the system fleet. */
-   cur_system->systemFleets = realloc(cur_system->systemFleets, sizeof(SystemFleet) * (cur_system->nsystemFleets + 1));
-   cur_system->systemFleets[cur_system->nsystemFleets].npilots =
-      fleet->npilots;
-   cur_system->systemFleets[cur_system->nsystemFleets].faction =
-      fleet->faction;
-   cur_system->systemFleets[cur_system->nsystemFleets].presenceUsed =
-      fleet->strength;
-   cur_system->nsystemFleets++;
-
-   for (i=0; i < fleet->npilots; i++) {
-      plt = &fleet->pilots[i];
-      /* other ships in the fleet should start split up */
-      vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-                RNG(75,150) * (RNG(0,1) ? 1 : -1));
-      a = vect_angle(&vp, &vn);
-      if (a < 0.)
-         a += 2.*M_PI;
-      flags = 0;
-
-      /* Entering via hyperspace. */
-      if (c==0) {
-         space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
-         flags |= PILOT_HYP_END;
-      }
-      /* Starting out landed. */
-      else if (c==1)
-         vectnull(&vv);
-      /* Starting out almost landed. */
-      else if (c==2)
-         /* Put speed at half in case they start very near. */
-         vect_pset( &vv, plt->ship->speed * 0.5, a );
-
-      /* Create the pilot. */
-      fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags, (cur_system->nsystemFleets - 1) );
    }
 }
 
@@ -2637,50 +2535,19 @@ int system_hasPlanet( StarSystem *sys )
 
 
 /**
- * @brief Removes a system fleet and frees up presence.
- *
- * @param systemFleetIndex The system fleet to remove.
+ * @brief Removes active presence.
  */
-static void system_rmSystemFleet( const int systemFleetIndex )
+void system_rmCurrentPresence( StarSystem *sys, int faction, int presence )
 {
-   int presenceIndex;
+   int id;
 
-   presenceIndex =
-      getPresenceIndex(cur_system,
-                       cur_system->systemFleets[systemFleetIndex].faction);
-   cur_system->presence[presenceIndex].curUsed -=
-      cur_system->systemFleets[systemFleetIndex].presenceUsed;
+   /* Remove the presence. */
+   id = getPresenceIndex( cur_system, faction );
+   sys->presence[id].curUsed -= presence;
 
-   memmove(&cur_system->systemFleets[systemFleetIndex],
-           &cur_system->systemFleets[systemFleetIndex + 1],
-           sizeof(SystemFleet) *
-             (cur_system->nsystemFleets - systemFleetIndex - 1));
-   cur_system->nsystemFleets--;
-   cur_system->systemFleets = realloc(cur_system->systemFleets,
-                                      sizeof(SystemFleet) *
-                                        cur_system->nsystemFleets);
-
-   pilots_updateSystemFleet(systemFleetIndex);
-
-   return;
+   /* Sanity. */
+   sys->presence[id].curUsed = MAX( 0, sys->presence[id].curUsed );
 }
 
 
-/**
- * @brief Removes a pilot from a system fleet and removes it, if need be.
- *
- * @param systemFleetIndex The system fleet to remove from.
- */
-void system_removePilotFromSystemFleet( const int systemFleetIndex )
-{
-   /* Check if the pilot belongs to any fleets. */
-   if(systemFleetIndex < 0)
-      return;
 
-   cur_system->systemFleets[systemFleetIndex].npilots--;
-
-   if(cur_system->systemFleets[systemFleetIndex].npilots == 0)
-      system_rmSystemFleet(systemFleetIndex);
-
-   return;
-}
