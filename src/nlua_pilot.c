@@ -357,7 +357,7 @@ static int pilotL_addFleet( lua_State *L )
    }
 
    /* Parse second argument - Fleet AI Override */
-   if (lua_isnil(L,2))
+   if ((lua_gettop(L) < 2) || lua_isnil(L,2))
       fltai = NULL;
    else
       fltai = luaL_checkstring(L,2);
@@ -442,7 +442,8 @@ static int pilotL_remove( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Deletes the pilot. */
-   pilot_setFlag(p,PILOT_DELETE);
+   pilot_delete(p);
+
    return 0;
 }
 /**
