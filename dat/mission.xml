@@ -421,4 +421,14 @@
    <faction>Goddard</faction>
   </avail>
  </mission>
+ <mission name="Chase test">
+  <lua>neutral/chasetest</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
 </Missions>
