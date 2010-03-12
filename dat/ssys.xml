@@ -12,7 +12,7 @@
    <x>-32.000000</x>
    <y>-15.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Fortitude">
     <pos x="-3195.232527" y="1428.456894"/>
@@ -36,11 +36,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Adraia">
   <general>
@@ -54,9 +49,9 @@
    <x>997.000000</x>
    <y>-510.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
-   <jump target="Gilligan's Retreat">
+   <jump target="Gilligan's Tomb">
     <pos x="-2736.416904" y="-2182.205886"/>
     <radius>200.000000</radius>
     <flags>
@@ -71,7 +66,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Aesir">
   <general>
@@ -85,12 +79,12 @@
    <x>1047.000000</x>
    <y>-342.000000</y>
   </pos>
-  <planets>
-   <planet>Aesir IV</planet>
-   <planet>Gayathi</planet>
-   <planet>Mutris</planet>
-   <planet>Urail</planet>
-  </planets>
+  <assets>
+   <asset>Aesir IV</asset>
+   <asset>Gayathi</asset>
+   <asset>Mutris</asset>
+   <asset>Urail</asset>
+  </assets>
   <jumps>
    <jump target="Vanir">
     <pos x="-2314.532963" y="-2625.440375"/>
@@ -100,7 +94,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Alteris">
   <general>
@@ -114,13 +107,14 @@
    <x>47.000000</x>
    <y>23.000000</y>
   </pos>
-  <planets>
-   <planet>Alteris I</planet>
-   <planet>Alteris II</planet>
-   <planet>Alteris IV</planet>
-   <planet>Darkshed</planet>
-   <planet>Ozogo X</planet>
-  </planets>
+  <assets>
+   <asset>Alteris I</asset>
+   <asset>Alteris II</asset>
+   <asset>Alteris IV</asset>
+   <asset>Darkshed</asset>
+   <asset>Ozogo X</asset>
+   <asset>Virtual Empire Small</asset>
+  </assets>
   <jumps>
    <jump target="Coriolis">
     <pos x="-99.980006" y="4999.000300"/>
@@ -151,11 +145,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Amaroq">
   <general>
@@ -169,11 +158,11 @@
    <x>117.000000</x>
    <y>-890.000000</y>
   </pos>
-  <planets>
-   <planet>Amaroq I</planet>
-   <planet>Amaroq III</planet>
-   <planet>Rhaana</planet>
-  </planets>
+  <assets>
+   <asset>Amaroq I</asset>
+   <asset>Amaroq III</asset>
+   <asset>Rhaana</asset>
+  </assets>
   <jumps>
    <jump target="Marat">
     <pos x="-3354.349893" y="999.168053"/>
@@ -190,7 +179,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="An'ku">
   <general>
@@ -204,12 +192,12 @@
    <x>657.000000</x>
    <y>-791.000000</y>
   </pos>
-  <planets>
-   <planet>An'ku I</planet>
-   <planet>An'ku II</planet>
-   <planet>An'ku III</planet>
-   <planet>Sroolu</planet>
-  </planets>
+  <assets>
+   <asset>An'ku I</asset>
+   <asset>An'ku II</asset>
+   <asset>An'ku III</asset>
+   <asset>Sroolu</asset>
+  </assets>
   <jumps>
    <jump target="Humdrum">
     <pos x="-1464.438204" y="3178.902444"/>
@@ -226,7 +214,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Anarbalis">
   <general>
@@ -240,10 +227,11 @@
    <x>511.000000</x>
    <y>-738.000000</y>
   </pos>
-  <planets>
-   <planet>Racheka</planet>
-   <planet>Racheka Secundus</planet>
-  </planets>
+  <assets>
+   <asset>Racheka</asset>
+   <asset>Racheka Secundus</asset>
+   <asset>Virtual Pirate Medium</asset>
+  </assets>
   <jumps>
    <jump target="Humdrum">
     <pos x="3310.810811" y="1135.135135"/>
@@ -260,7 +248,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Andee">
   <general>
@@ -274,13 +261,13 @@
    <x>694.000000</x>
    <y>-405.000000</y>
   </pos>
-  <planets>
-   <planet>Andee II</planet>
-   <planet>Andee III</planet>
-   <planet>Andee IIIa</planet>
-   <planet>Andee IIa</planet>
-   <planet>Varaati</planet>
-  </planets>
+  <assets>
+   <asset>Andee II</asset>
+   <asset>Andee III</asset>
+   <asset>Andee IIIa</asset>
+   <asset>Andee IIa</asset>
+   <asset>Varaati</asset>
+  </assets>
   <jumps>
    <jump target="Brimstone">
     <pos x="-608.248669" y="3446.742456"/>
@@ -290,7 +277,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Apez">
   <general>
@@ -304,11 +290,11 @@
    <x>-86.000000</x>
    <y>-314.000000</y>
   </pos>
-  <planets>
-   <planet>Crylo</planet>
-   <planet>Dowue</planet>
-   <planet>Gem</planet>
-  </planets>
+  <assets>
+   <asset>Crylo</asset>
+   <asset>Dowue</asset>
+   <asset>Gem</asset>
+  </assets>
   <jumps>
    <jump target="Arcturus">
     <pos x="1794.593917" y="3004.901442"/>
@@ -332,10 +318,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Arandon">
   <general>
@@ -349,7 +331,7 @@
    <x>570.000000</x>
    <y>100.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Doeston">
     <pos x="-1836.273680" y="-2979.613896"/>
@@ -380,7 +362,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Arcanis">
   <general>
@@ -394,7 +375,7 @@
    <x>333.000000</x>
    <y>-57.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Raelid">
     <pos x="-2186.432666" y="-2733.040833"/>
@@ -411,9 +392,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Arcturus">
   <general>
@@ -427,12 +405,13 @@
    <x>-43.000000</x>
    <y>-242.000000</y>
   </pos>
-  <planets>
-   <planet>Antica</planet>
-   <planet>Arcturus Gamma</planet>
-   <planet>Arcturus I</planet>
-   <planet>Arcturus II</planet>
-  </planets>
+  <assets>
+   <asset>Antica</asset>
+   <asset>Arcturus Gamma</asset>
+   <asset>Arcturus I</asset>
+   <asset>Arcturus II</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Apez">
     <pos x="-1794.593917" y="-3004.901442"/>
@@ -456,11 +435,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Heavy Presence</fleet>
-   <fleet>Trader Heavy Presence</fleet>
-   <fleet>Pirate Token Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Babylon">
   <general>
@@ -474,12 +448,12 @@
    <x>100.666667</x>
    <y>463.066667</y>
   </pos>
-  <planets>
-   <planet>Babylon I</planet>
-   <planet>Babylon II</planet>
-   <planet>Babylon IIa</planet>
-   <planet>Scipio</planet>
-  </planets>
+  <assets>
+   <asset>Babylon I</asset>
+   <asset>Babylon II</asset>
+   <asset>Babylon IIa</asset>
+   <asset>Scipio</asset>
+  </assets>
   <jumps>
    <jump target="Dendria">
     <pos x="746.766886" y="-3419.406267"/>
@@ -489,7 +463,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Bastion">
   <general>
@@ -503,7 +476,7 @@
    <x>90.500000</x>
    <y>196.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Elixir">
     <pos x="2756.843394" y="2156.342853"/>
@@ -513,7 +486,7 @@
     </flags>
    </jump>
    <jump target="Fury">
-    <pos x="-1941.450687" y="2912.176030"/>
+    <pos x="-2154.244298" y="2758.483552"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -527,10 +500,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Beeklo">
   <general>
@@ -544,11 +513,11 @@
    <x>240.000000</x>
    <y>-573.000000</y>
   </pos>
-  <planets>
-   <planet>Beeklo II</planet>
-   <planet>Beeklo III</planet>
-   <planet>Totoran</planet>
-  </planets>
+  <assets>
+   <asset>Beeklo II</asset>
+   <asset>Beeklo III</asset>
+   <asset>Totoran</asset>
+  </assets>
   <jumps>
    <jump target="Darkstone">
     <pos x="-2956.866764" y="1872.682284"/>
@@ -565,10 +534,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Behar">
   <general>
@@ -582,7 +547,7 @@
    <x>457.000000</x>
    <y>37.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Doeston">
     <pos x="3268.111411" y="-1252.776041"/>
@@ -592,14 +557,13 @@
     </flags>
    </jump>
    <jump target="Sigur">
-    <pos x="-1033.571948" y="3343.909243"/>
+    <pos x="-994.309154" y="3355.793394"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Blunderbuss">
   <general>
@@ -613,23 +577,19 @@
    <x>138.000000</x>
    <y>-487.000000</y>
   </pos>
-  <planets>
-   <planet>Blunderbuss II</planet>
-   <planet>Utsuwa</planet>
-  </planets>
+  <assets>
+   <asset>Blunderbuss II</asset>
+   <asset>Utsuwa</asset>
+  </assets>
   <jumps>
    <jump target="Verex">
-    <pos x="3139.542384" y="1547.020885"/>
+    <pos x="3094.332291" y="1635.575640"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Borla">
   <general>
@@ -643,7 +603,7 @@
    <x>-100.000000</x>
    <y>-188.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Arcturus">
     <pos x="2540.834394" y="-2407.106268"/>
@@ -660,9 +620,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Brimstone">
   <general>
@@ -676,13 +633,13 @@
    <x>682.000000</x>
    <y>-337.000000</y>
   </pos>
-  <planets>
-   <planet>Brimstone I</planet>
-   <planet>Brimstone II</planet>
-   <planet>Brimstone Ia</planet>
-   <planet>Brimstone Ib</planet>
-   <planet>Nonuri</planet>
-  </planets>
+  <assets>
+   <asset>Brimstone I</asset>
+   <asset>Brimstone II</asset>
+   <asset>Brimstone Ia</asset>
+   <asset>Brimstone Ib</asset>
+   <asset>Nonuri</asset>
+  </assets>
   <jumps>
    <jump target="Andee">
     <pos x="1490.397411" y="-4305.049341"/>
@@ -704,7 +661,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="C-00">
   <general>
@@ -718,10 +674,10 @@
    <x>-274.000000</x>
    <y>107.000000</y>
   </pos>
-  <planets>
-   <planet>P0125</planet>
-   <planet>S00000</planet>
-  </planets>
+  <assets>
+   <asset>P0125</asset>
+   <asset>S00000</asset>
+  </assets>
   <jumps>
    <jump target="C-14">
     <pos x="-2982.599290" y="-1831.420617"/>
@@ -738,9 +694,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="C-14">
   <general>
@@ -754,10 +707,10 @@
    <x>-331.000000</x>
    <y>72.000000</y>
   </pos>
-  <planets>
-   <planet>P9234</planet>
-   <planet>S49281</planet>
-  </planets>
+  <assets>
+   <asset>P9234</asset>
+   <asset>S49281</asset>
+  </assets>
   <jumps>
    <jump target="C-00">
     <pos x="2982.599290" y="1831.420617"/>
@@ -774,9 +727,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="C-28">
   <general>
@@ -790,12 +740,12 @@
    <x>-239.000000</x>
    <y>175.000000</y>
   </pos>
-  <planets>
-   <planet>P2020</planet>
-   <planet>P2021</planet>
-   <planet>P2022</planet>
-   <planet>S38729</planet>
-  </planets>
+  <assets>
+   <asset>P2020</asset>
+   <asset>P2021</asset>
+   <asset>P2022</asset>
+   <asset>S38729</asset>
+  </assets>
   <jumps>
    <jump target="C-00">
     <pos x="-1601.752011" y="-3111.975336"/>
@@ -812,9 +762,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="C-43">
   <general>
@@ -828,10 +775,10 @@
    <x>-262.000000</x>
    <y>47.000000</y>
   </pos>
-  <planets>
-   <planet>Eiroik</planet>
-   <planet>S23491</planet>
-  </planets>
+  <assets>
+   <asset>Eiroik</asset>
+   <asset>S23491</asset>
+  </assets>
   <jumps>
    <jump target="C-14">
     <pos x="-3290.667186" y="1192.270720"/>
@@ -855,9 +802,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="C-59">
   <general>
@@ -871,10 +815,10 @@
    <x>-214.000000</x>
    <y>95.000000</y>
   </pos>
-  <planets>
-   <planet>P9122</planet>
-   <planet>S72839</planet>
-  </planets>
+  <assets>
+   <asset>P9122</asset>
+   <asset>S72839</asset>
+  </assets>
   <jumps>
    <jump target="C-28">
     <pos x="-1043.962476" y="3340.679923"/>
@@ -898,9 +842,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Capricorn">
   <general>
@@ -914,12 +855,12 @@
    <x>-54.000000</x>
    <y>148.000000</y>
   </pos>
-  <planets>
-   <planet>Capricorn II</planet>
-   <planet>Capricorn III</planet>
-   <planet>Capricorn IIIa</planet>
-   <planet>Durea</planet>
-  </planets>
+  <assets>
+   <asset>Capricorn II</asset>
+   <asset>Capricorn III</asset>
+   <asset>Capricorn IIIa</asset>
+   <asset>Durea</asset>
+  </assets>
   <jumps>
    <jump target="Rockbed">
     <pos x="2765.769304" y="-2144.882318"/>
@@ -929,10 +870,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Cerberus">
   <general>
@@ -946,14 +883,14 @@
    <x>302.000000</x>
    <y>642.000000</y>
   </pos>
-  <planets>
-   <planet>Cerberus I</planet>
-   <planet>Cerberus II</planet>
-   <planet>Cerberus IIa</planet>
-   <planet>Cerberus IV</planet>
-   <planet>Culex</planet>
-   <planet>Myonei</planet>
-  </planets>
+  <assets>
+   <asset>Cerberus I</asset>
+   <asset>Cerberus II</asset>
+   <asset>Cerberus IIa</asset>
+   <asset>Cerberus IV</asset>
+   <asset>Culex</asset>
+   <asset>Myonei</asset>
+  </assets>
   <jumps>
    <jump target="Sergio Vix">
     <pos x="1626.978264" y="-3098.861360"/>
@@ -963,7 +900,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Chraan">
   <general>
@@ -977,7 +913,10 @@
    <x>659.000000</x>
    <y>-451.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Dvaered Unpresence</asset>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Karman">
     <pos x="3361.211794" y="-975.835682"/>
@@ -1001,7 +940,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Churchill">
   <general>
@@ -1012,26 +950,30 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>765.000000</x>
+   <x>836.000000</x>
    <y>-664.000000</y>
   </pos>
-  <planets>
-   <planet>Chucrchill II</planet>
-   <planet>Churchill I</planet>
-   <planet>Churchill IIa</planet>
-   <planet>Lorelei</planet>
-   <planet>Ururis</planet>
-  </planets>
+  <assets>
+   <asset>Chucrchill II</asset>
+   <asset>Churchill I</asset>
+   <asset>Churchill IIa</asset>
+   <asset>Lorelei</asset>
+   <asset>Ururis</asset>
+  </assets>
   <jumps>
    <jump target="Eiderdown">
-    <pos x="2422.420288" y="2526.238300"/>
+    <pos x="-47.940708" y="3499.671654"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
+   <jump target="Muirat">
+    <pos x="3785.315956" y="-5328.827521"/>
+    <radius>200.000000</radius>
+    <flags/>
+   </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Coriolis">
   <general>
@@ -1045,7 +987,7 @@
    <x>46.000000</x>
    <y>73.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Alteris">
     <pos x="69.986004" y="-3499.300210"/>
@@ -1069,11 +1011,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Cygnus">
   <general>
@@ -1087,11 +1024,11 @@
    <x>60.000000</x>
    <y>-81.000000</y>
   </pos>
-  <planets>
-   <planet>Inca</planet>
-   <planet>Maya</planet>
-   <planet>Torloth</planet>
-  </planets>
+  <assets>
+   <asset>Inca</asset>
+   <asset>Maya</asset>
+   <asset>Torloth</asset>
+  </assets>
   <jumps>
    <jump target="Delta Pavonis">
     <pos x="-2260.797845" y="2671.851999"/>
@@ -1101,11 +1038,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Dakron">
   <general>
@@ -1119,21 +1051,16 @@
    <x>333.000000</x>
    <y>-365.000000</y>
   </pos>
-  <planets>
-   <planet>Dakron III</planet>
-   <planet>Dakron V</planet>
-   <planet>Thar</planet>
-  </planets>
+  <assets>
+   <asset>Dakron III</asset>
+   <asset>Dakron V</asset>
+   <asset>Thar</asset>
+   <asset>Virtual FLF Small</asset>
+   <asset>Virtual Frontier Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Doranthex">
     <pos x="-3456.936485" y="547.348277"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Klantar">
-    <pos x="2286.316398" y="-2650.048552"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -1147,11 +1074,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Daravon">
   <general>
@@ -1165,12 +1087,12 @@
    <x>-44.000000</x>
    <y>-684.000000</y>
   </pos>
-  <planets>
-   <planet>Daravon I</planet>
-   <planet>Daravon III</planet>
-   <planet>Eclipse Station</planet>
-   <planet>Vilati Vilata</planet>
-  </planets>
+  <assets>
+   <asset>Daravon I</asset>
+   <asset>Daravon III</asset>
+   <asset>Eclipse Station</asset>
+   <asset>Vilati Vilata</asset>
+  </assets>
   <jumps>
    <jump target="Gremlin">
     <pos x="3271.742532" y="1243.262162"/>
@@ -1192,7 +1114,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Darkstone">
   <general>
@@ -1206,12 +1127,12 @@
    <x>180.000000</x>
    <y>-535.000000</y>
   </pos>
-  <planets>
-   <planet>Darkstone IV</planet>
-   <planet>Darkstone V</planet>
-   <planet>Stalwart Station</planet>
-   <planet>Varia</planet>
-  </planets>
+  <assets>
+   <asset>Darkstone IV</asset>
+   <asset>Darkstone V</asset>
+   <asset>Stalwart Station</asset>
+   <asset>Varia</asset>
+  </assets>
   <jumps>
    <jump target="Beeklo">
     <pos x="2956.866764" y="-1872.682284"/>
@@ -1221,17 +1142,13 @@
     </flags>
    </jump>
    <jump target="Verex">
-    <pos x="1094.627231" y="3324.423442"/>
+    <pos x="1095.057512" y="3324.281734"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Defa">
   <general>
@@ -1245,7 +1162,7 @@
    <x>287.000000</x>
    <y>205.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Oberon">
     <pos x="2013.922265" y="2862.536831"/>
@@ -1262,7 +1179,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Delta Pavonis">
   <general>
@@ -1276,11 +1192,13 @@
    <x>38.000000</x>
    <y>-55.000000</y>
   </pos>
-  <planets>
-   <planet>Caladan</planet>
-   <planet>Delta Pavonis I</planet>
-   <planet>Ridrack</planet>
-  </planets>
+  <assets>
+   <asset>Caladan</asset>
+   <asset>Delta Pavonis I</asset>
+   <asset>Ridrack</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+   <asset>Virtual Pirate Medium</asset>
+  </assets>
   <jumps>
    <jump target="Alteris">
     <pos x="401.184378" y="3476.931276"/>
@@ -1302,11 +1220,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Dendria">
   <general>
@@ -1320,7 +1233,7 @@
    <x>119.666667</x>
    <y>376.066667</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Babylon">
     <pos x="-746.766886" y="3419.406267"/>
@@ -1351,7 +1264,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Diadem">
   <general>
@@ -1365,12 +1277,12 @@
    <x>179.666667</x>
    <y>420.066667</y>
   </pos>
-  <planets>
-   <planet>Diadem I</planet>
-   <planet>Diadem II</planet>
-   <planet>Leo</planet>
-   <planet>Riun</planet>
-  </planets>
+  <assets>
+   <asset>Diadem I</asset>
+   <asset>Diadem II</asset>
+   <asset>Leo</asset>
+   <asset>Riun</asset>
+  </assets>
   <jumps>
    <jump target="Dendria">
     <pos x="-2822.417485" y="-2069.772823"/>
@@ -1394,7 +1306,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Doeston">
   <general>
@@ -1408,10 +1319,10 @@
    <x>517.000000</x>
    <y>14.000000</y>
   </pos>
-  <planets>
-   <planet>Cerberus</planet>
-   <planet>Doeston Prime</planet>
-  </planets>
+  <assets>
+   <asset>Cerberus</asset>
+   <asset>Doeston Prime</asset>
+  </assets>
   <jumps>
    <jump target="Arandon">
     <pos x="1836.273680" y="2979.613896"/>
@@ -1449,9 +1360,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Dohriabi">
   <general>
@@ -1465,10 +1373,10 @@
    <x>-314.000000</x>
    <y>-350.000000</y>
   </pos>
-  <planets>
-   <planet>Dohriabi Prime</planet>
-   <planet>Niflheim</planet>
-  </planets>
+  <assets>
+   <asset>Dohriabi Prime</asset>
+   <asset>Niflheim</asset>
+  </assets>
   <jumps>
    <jump target="Overture">
     <pos x="686.406473" y="-3432.032365"/>
@@ -1478,7 +1386,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Doranthex">
   <general>
@@ -1492,12 +1399,13 @@
    <x>213.000000</x>
    <y>-346.000000</y>
   </pos>
-  <planets>
-   <planet>Doranthex Prime</planet>
-   <planet>Doranthex Secundus</planet>
-   <planet>Secundus Alpha</planet>
-   <planet>Secundus Beta</planet>
-  </planets>
+  <assets>
+   <asset>Doranthex Prime</asset>
+   <asset>Doranthex Secundus</asset>
+   <asset>Secundus Alpha</asset>
+   <asset>Secundus Beta</asset>
+   <asset>Virtual Frontier Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Dakron">
     <pos x="3456.936485" y="-547.348277"/>
@@ -1519,7 +1427,7 @@
     </flags>
    </jump>
    <jump target="Torg">
-    <pos x="-3051.630139" y="-1713.929256"/>
+    <pos x="-3047.885082" y="-1720.580288"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -1531,11 +1439,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>FLF Light Guerrilla</fleet>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Draconis">
   <general>
@@ -1549,14 +1452,14 @@
    <x>190.000000</x>
    <y>-56.000000</y>
   </pos>
-  <planets>
-   <planet>Draconis Alpha</planet>
-   <planet>Draconis Beta</planet>
-   <planet>Draconis Delta</planet>
-   <planet>Draconis Gamma</planet>
-   <planet>Draconis Omega</planet>
-   <planet>Zabween</planet>
-  </planets>
+  <assets>
+   <asset>Draconis Alpha</asset>
+   <asset>Draconis Beta</asset>
+   <asset>Draconis Delta</asset>
+   <asset>Draconis Gamma</asset>
+   <asset>Draconis Omega</asset>
+   <asset>Zabween</asset>
+  </assets>
   <jumps>
    <jump target="Tau Prime">
     <pos x="449.939100" y="-3470.958773"/>
@@ -1566,12 +1469,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Draygar">
   <general>
@@ -1585,12 +1482,12 @@
    <x>201.000000</x>
    <y>-166.000000</y>
   </pos>
-  <planets>
-   <planet>Anecu</planet>
-   <planet>Draygar III</planet>
-   <planet>Hikatalat</planet>
-   <planet>Varona</planet>
-  </planets>
+  <assets>
+   <asset>Anecu</asset>
+   <asset>Draygar III</asset>
+   <asset>Hikatalat</asset>
+   <asset>Varona</asset>
+  </assets>
   <jumps>
    <jump target="Tau Prime">
     <pos x="-249.364675" y="3491.105449"/>
@@ -1600,11 +1497,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Dune">
   <general>
@@ -1618,10 +1510,10 @@
    <x>130.000000</x>
    <y>90.000000</y>
   </pos>
-  <planets>
-   <planet>Arrakis</planet>
-   <planet>Vert</planet>
-  </planets>
+  <assets>
+   <asset>Arrakis</asset>
+   <asset>Vert</asset>
+  </assets>
   <jumps>
    <jump target="Eridani">
     <pos x="69.986004" y="-3499.300210"/>
@@ -1643,11 +1535,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Dust">
   <general>
@@ -1661,9 +1548,9 @@
    <x>39.666667</x>
    <y>457.066667</y>
   </pos>
-  <planets>
-   <planet>Dust</planet>
-  </planets>
+  <assets>
+   <asset>Dust</asset>
+  </assets>
   <jumps>
    <jump target="Dendria">
     <pos x="2459.454407" y="-2490.197587"/>
@@ -1673,7 +1560,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Dvaer">
   <general>
@@ -1687,14 +1573,14 @@
    <x>162.000000</x>
    <y>-614.000000</y>
   </pos>
-  <planets>
-   <planet>Dvaer II</planet>
-   <planet>Dvaer III</planet>
-   <planet>Dvaer IIIa</planet>
-   <planet>Dvaer IV</planet>
-   <planet>Dvaer Prime</planet>
-   <planet>Dvaered High Command</planet>
-  </planets>
+  <assets>
+   <asset>Dvaer II</asset>
+   <asset>Dvaer III</asset>
+   <asset>Dvaer IIIa</asset>
+   <asset>Dvaer IV</asset>
+   <asset>Dvaer Prime</asset>
+   <asset>Dvaered High Command</asset>
+  </assets>
   <jumps>
    <jump target="Beeklo">
     <pos x="4425.821325" y="2326.393260"/>
@@ -1721,7 +1607,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Eiderdown">
   <general>
@@ -1735,12 +1620,12 @@
    <x>835.000000</x>
    <y>-591.000000</y>
   </pos>
-  <planets>
-   <planet>Eiderdown I</planet>
-   <planet>Eiderdown III</planet>
-   <planet>Ember</planet>
-   <planet>Forge</planet>
-  </planets>
+  <assets>
+   <asset>Eiderdown I</asset>
+   <asset>Eiderdown III</asset>
+   <asset>Ember</asset>
+   <asset>Forge</asset>
+  </assets>
   <jumps>
    <jump target="Churchill">
     <pos x="-2542.420288" y="-5886.238300"/>
@@ -1754,7 +1639,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="Gilligan's Retreat">
+   <jump target="Gilligan's Tomb">
     <pos x="3420.488784" y="741.792748"/>
     <radius>200.000000</radius>
     <flags>
@@ -1767,7 +1652,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Elixir">
   <general>
@@ -1781,7 +1665,7 @@
    <x>141.000000</x>
    <y>235.500000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Bastion">
     <pos x="-2756.843394" y="-2156.342853"/>
@@ -1826,9 +1710,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Heavy Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Eneguoz">
   <general>
@@ -1842,10 +1723,10 @@
    <x>-117.000000</x>
    <y>-431.000000</y>
   </pos>
-  <planets>
-   <planet>Oma</planet>
-   <planet>Opa</planet>
-  </planets>
+  <assets>
+   <asset>Oma</asset>
+   <asset>Opa</asset>
+  </assets>
   <jumps>
    <jump target="Hakoi">
     <pos x="-2437.663820" y="-2511.532421"/>
@@ -1862,10 +1743,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Eridani">
   <general>
@@ -1879,12 +1756,12 @@
    <x>131.000000</x>
    <y>40.000000</y>
   </pos>
-  <planets>
-   <planet>Eridani II</planet>
-   <planet>Eridani III</planet>
-   <planet>Selphod</planet>
-   <planet>The Crucible</planet>
-  </planets>
+  <assets>
+   <asset>Eridani II</asset>
+   <asset>Eridani III</asset>
+   <asset>Selphod</asset>
+   <asset>The Crucible</asset>
+  </assets>
   <jumps>
    <jump target="Alteris">
     <pos x="-3430.452659" y="-694.258276"/>
@@ -1901,11 +1778,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Esker">
   <general>
@@ -1919,13 +1791,14 @@
    <x>764.000000</x>
    <y>-558.000000</y>
   </pos>
-  <planets>
-   <planet>Esker I</planet>
-   <planet>Esker II</planet>
-   <planet>Esker III</planet>
-   <planet>Esker IV</planet>
-   <planet>Suoer</planet>
-  </planets>
+  <assets>
+   <asset>Esker I</asset>
+   <asset>Esker II</asset>
+   <asset>Esker III</asset>
+   <asset>Esker IV</asset>
+   <asset>Suoer</asset>
+   <asset>Virtual Frontier Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Eiderdown">
     <pos x="3583.921314" y="-4015.202864"/>
@@ -1947,7 +1820,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Eye of Night">
   <general>
@@ -1961,12 +1833,12 @@
    <x>335.000000</x>
    <y>-732.000000</y>
   </pos>
-  <planets>
-   <planet>Eye of Night I</planet>
-   <planet>Eye of Night II</planet>
-   <planet>Eye of Night III</planet>
-   <planet>Inios</planet>
-  </planets>
+  <assets>
+   <asset>Eye of Night I</asset>
+   <asset>Eye of Night II</asset>
+   <asset>Eye of Night III</asset>
+   <asset>Inios</asset>
+  </assets>
   <jumps>
    <jump target="Fidelis">
     <pos x="-3436.726884" y="-662.501568"/>
@@ -1988,7 +1860,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Father's Pride">
   <general>
@@ -2002,13 +1873,13 @@
    <x>334.666667</x>
    <y>432.066667</y>
   </pos>
-  <planets>
-   <planet>Father's Pride I</planet>
-   <planet>Father's Pride II</planet>
-   <planet>Father's Pride III</planet>
-   <planet>Flach</planet>
-   <planet>Rudderfern</planet>
-  </planets>
+  <assets>
+   <asset>Father's Pride I</asset>
+   <asset>Father's Pride II</asset>
+   <asset>Father's Pride III</asset>
+   <asset>Flach</asset>
+   <asset>Rudderfern</asset>
+  </assets>
   <jumps>
    <jump target="Gewirn">
     <pos x="2941.038269" y="1897.444044"/>
@@ -2030,7 +1901,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Fidelis">
   <general>
@@ -2044,11 +1914,12 @@
    <x>252.000000</x>
    <y>-748.000000</y>
   </pos>
-  <planets>
-   <planet>Fidelis III</planet>
-   <planet>Fidelis IV</planet>
-   <planet>Mannannan</planet>
-  </planets>
+  <assets>
+   <asset>Fidelis III</asset>
+   <asset>Fidelis IV</asset>
+   <asset>Mannannan</asset>
+   <asset>Virtual Dvaered Small</asset>
+  </assets>
   <jumps>
    <jump target="Eye of Night">
     <pos x="3436.726884" y="662.501568"/>
@@ -2065,7 +1936,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Fortitude">
   <general>
@@ -2079,9 +1949,9 @@
    <x>-117.000000</x>
    <y>23.000000</y>
   </pos>
-  <planets>
-   <planet>Omega Station</planet>
-  </planets>
+  <assets>
+   <asset>Omega Station</asset>
+  </assets>
   <jumps>
    <jump target="Acheron">
     <pos x="3195.232527" y="-1428.456894"/>
@@ -2105,11 +1975,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Light Presence</fleet>
-   <fleet>Empire Heavy Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Fried">
   <general>
@@ -2123,14 +1988,14 @@
    <x>-280.000000</x>
    <y>-783.000000</y>
   </pos>
-  <planets>
-   <planet>Claudius Mehan</planet>
-   <planet>Fried I</planet>
-   <planet>Fried II</planet>
-   <planet>Fried III</planet>
-   <planet>Fried IIIa</planet>
-   <planet>Fried Ia</planet>
-  </planets>
+  <assets>
+   <asset>Claudius Mehan</asset>
+   <asset>Fried I</asset>
+   <asset>Fried II</asset>
+   <asset>Fried III</asset>
+   <asset>Fried IIIa</asset>
+   <asset>Fried Ia</asset>
+  </assets>
   <jumps>
    <jump target="Limbo">
     <pos x="764.014433" y="3415.593937"/>
@@ -2140,7 +2005,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Fury">
   <general>
@@ -2151,22 +2015,21 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>55.500000</x>
+   <x>49.500000</x>
    <y>248.500000</y>
   </pos>
-  <planets>
-   <planet>Fury I</planet>
-  </planets>
+  <assets>
+   <asset>Fury I</asset>
+  </assets>
   <jumps>
    <jump target="Bastion">
-    <pos x="1941.450687" y="-2912.176030"/>
+    <pos x="2154.244298" y="-2758.483552"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Gamel">
   <general>
@@ -2180,7 +2043,7 @@
    <x>81.000000</x>
    <y>134.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Bastion">
     <pos x="530.103502" y="3459.622852"/>
@@ -2211,10 +2074,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Gamma Polaris">
   <general>
@@ -2228,13 +2087,13 @@
    <x>-172.000000</x>
    <y>-296.000000</y>
   </pos>
-  <planets>
-   <planet>Emperor's Fist</planet>
-   <planet>New Deimos</planet>
-   <planet>New Mars</planet>
-   <planet>New Phobos</planet>
-   <planet>Polaris Prime</planet>
-  </planets>
+  <assets>
+   <asset>Emperor's Fist</asset>
+   <asset>New Deimos</asset>
+   <asset>New Mars</asset>
+   <asset>New Phobos</asset>
+   <asset>Polaris Prime</asset>
+  </assets>
   <jumps>
    <jump target="Apez">
     <pos x="6203.953126" y="-334.315771"/>
@@ -2270,11 +2129,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Trader Heavy Presence</fleet>
-   <fleet>Empire Heavy Presence</fleet>
-   <fleet>Dvaered Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Gammacron">
   <general>
@@ -2288,13 +2142,13 @@
    <x>-166.000000</x>
    <y>-699.000000</y>
   </pos>
-  <planets>
-   <planet>Gammacron IV</planet>
-   <planet>Gammacron V</planet>
-   <planet>Gammacron Va</planet>
-   <planet>Gammacron Vb</planet>
-   <planet>Pund</planet>
-  </planets>
+  <assets>
+   <asset>Gammacron IV</asset>
+   <asset>Gammacron V</asset>
+   <asset>Gammacron Va</asset>
+   <asset>Gammacron Vb</asset>
+   <asset>Pund</asset>
+  </assets>
   <jumps>
    <jump target="Limbo">
     <pos x="-3488.156887" y="-287.683042"/>
@@ -2309,7 +2163,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Gewirn">
   <general>
@@ -2323,7 +2176,7 @@
    <x>396.666667</x>
    <y>472.066667</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Father's Pride">
     <pos x="-2941.038269" y="-1897.444044"/>
@@ -2340,7 +2193,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Gilligan's Light">
   <general>
@@ -2354,11 +2206,12 @@
    <x>523.000000</x>
    <y>-326.000000</y>
   </pos>
-  <planets>
-   <planet>Dawn</planet>
-   <planet>Dusk</planet>
-   <planet>The Frontier Council</planet>
-  </planets>
+  <assets>
+   <asset>Dawn</asset>
+   <asset>Dusk</asset>
+   <asset>The Frontier Council</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Theras">
     <pos x="-2943.025067" y="-1894.360963"/>
@@ -2368,11 +2221,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-   <fleet>Dvaered Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Gilligan's Memory">
   <general>
@@ -2386,12 +2234,12 @@
    <x>788.666667</x>
    <y>-782.211756</y>
   </pos>
-  <planets>
-   <planet>Gilligan's Memory</planet>
-   <planet>Zero-Eleven</planet>
-   <planet>Zero-Five</planet>
-   <planet>Zero-One</planet>
-  </planets>
+  <assets>
+   <asset>Gilligan's Memory</asset>
+   <asset>Zero-Eleven</asset>
+   <asset>Zero-Five</asset>
+   <asset>Zero-One</asset>
+  </assets>
   <jumps>
    <jump target="Tarmak">
     <pos x="-2534.388588" y="2413.891979"/>
@@ -2401,9 +2249,8 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
- <ssys name="Gilligan's Retreat">
+ <ssys name="Gilligan's Tomb">
   <general>
    <radius>3500.000000</radius>
    <stars>400</stars>
@@ -2415,9 +2262,9 @@
    <x>918.000000</x>
    <y>-573.000000</y>
   </pos>
-  <planets>
-   <planet>Gilligan's Retreat</planet>
-  </planets>
+  <assets>
+   <asset>Gilligan's Tomb</asset>
+  </assets>
   <jumps>
    <jump target="Adraia">
     <pos x="2736.416904" y="2182.205886"/>
@@ -2434,7 +2281,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Ginger">
   <general>
@@ -2448,24 +2294,20 @@
    <x>241.018776</x>
    <y>-510.626286</y>
   </pos>
-  <planets>
-   <planet>Ginger II</planet>
-   <planet>Ginger III</planet>
-   <planet>Ullnorn</planet>
-  </planets>
+  <assets>
+   <asset>Ginger II</asset>
+   <asset>Ginger III</asset>
+   <asset>Ullnorn</asset>
+  </assets>
   <jumps>
    <jump target="Verex">
-    <pos x="-1779.268479" y="3014.001274"/>
+    <pos x="-1674.024232" y="3073.701819"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Goddard">
   <general>
@@ -2479,9 +2321,9 @@
    <x>39.000000</x>
    <y>-183.000000</y>
   </pos>
-  <planets>
-   <planet>Zhiru</planet>
-  </planets>
+  <assets>
+   <asset>Zhiru</asset>
+  </assets>
   <jumps>
    <jump target="Arcturus">
     <pos x="-2841.027203" y="-2044.153720"/>
@@ -2503,12 +2345,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Heavy Presence</fleet>
-   <fleet>Goddard Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Gremlin">
   <general>
@@ -2522,7 +2358,7 @@
    <x>56.000000</x>
    <y>-646.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Daravon">
     <pos x="-3271.742532" y="-1243.262162"/>
@@ -2539,7 +2375,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Gyrios">
   <general>
@@ -2553,14 +2388,14 @@
    <x>799.000000</x>
    <y>-417.000000</y>
   </pos>
-  <planets>
-   <planet>Gyrios II</planet>
-   <planet>Gyrios IV</planet>
-   <planet>Gyrios V</planet>
-   <planet>Jaegnhild</planet>
-   <planet>Lapra</planet>
-   <planet>Uuries</planet>
-  </planets>
+  <assets>
+   <asset>Gyrios II</asset>
+   <asset>Gyrios IV</asset>
+   <asset>Gyrios V</asset>
+   <asset>Jaegnhild</asset>
+   <asset>Lapra</asset>
+   <asset>Uuries</asset>
+  </assets>
   <jumps>
    <jump target="Karman">
     <pos x="-1525.845355" y="-1980.352482"/>
@@ -2570,7 +2405,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Hades">
   <general>
@@ -2584,7 +2418,7 @@
    <x>-169.000000</x>
    <y>55.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="C-43">
     <pos x="-3487.121952" y="-299.967480"/>
@@ -2608,9 +2442,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Collective Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Haered">
   <general>
@@ -2624,7 +2455,7 @@
    <x>683.000000</x>
    <y>296.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Protera">
     <pos x="2570.873152" y="2374.997102"/>
@@ -2641,7 +2472,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Hakoi">
   <general>
@@ -2655,12 +2485,12 @@
    <x>-150.000000</x>
    <y>-465.000000</y>
   </pos>
-  <planets>
-   <planet>Em 1</planet>
-   <planet>Em 2</planet>
-   <planet>Em 4</planet>
-   <planet>Em 5</planet>
-  </planets>
+  <assets>
+   <asset>Em 1</asset>
+   <asset>Em 2</asset>
+   <asset>Em 4</asset>
+   <asset>Em 5</asset>
+  </assets>
   <jumps>
    <jump target="Eneguoz">
     <pos x="2437.663820" y="2511.532421"/>
@@ -2670,10 +2500,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Haleb">
   <general>
@@ -2687,11 +2513,12 @@
    <x>512.000000</x>
    <y>-396.000000</y>
   </pos>
-  <planets>
-   <planet>Haleb IV</planet>
-   <planet>Jorlan</planet>
-   <planet>Raglan Outpost</planet>
-  </planets>
+  <assets>
+   <asset>Haleb IV</asset>
+   <asset>Jorlan</asset>
+   <asset>Raglan Outpost</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Slaccid">
     <pos x="1540.550260" y="-3142.722530"/>
@@ -2715,11 +2542,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Halo">
   <general>
@@ -2733,7 +2555,7 @@
    <x>181.518949</x>
    <y>146.341840</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Dune">
     <pos x="-2361.852246" y="-2582.954504"/>
@@ -2750,10 +2572,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Hatter">
   <general>
@@ -2767,11 +2585,11 @@
    <x>326.666667</x>
    <y>512.066667</y>
   </pos>
-  <planets>
-   <planet>Gaula</planet>
-   <planet>Hatter I</planet>
-   <planet>Hatter II</planet>
-  </planets>
+  <assets>
+   <asset>Gaula</asset>
+   <asset>Hatter I</asset>
+   <asset>Hatter II</asset>
+  </assets>
   <jumps>
    <jump target="Father's Pride">
     <pos x="348.263017" y="-3482.630166"/>
@@ -2795,7 +2613,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Haven">
   <general>
@@ -2809,9 +2626,9 @@
    <x>0.000000</x>
    <y>180.000000</y>
   </pos>
-  <planets>
-   <planet>Haven</planet>
-  </planets>
+  <assets>
+   <asset>Haven</asset>
+  </assets>
   <jumps>
    <jump target="Gamel">
     <pos x="3043.464669" y="-1728.387343"/>
@@ -2821,9 +2638,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Hekaras">
   <general>
@@ -2837,10 +2651,10 @@
    <x>-28.000000</x>
    <y>-373.000000</y>
   </pos>
-  <planets>
-   <planet>Hekaras III</planet>
-   <planet>Hurada</planet>
-  </planets>
+  <assets>
+   <asset>Hekaras III</asset>
+   <asset>Hurada</asset>
+  </assets>
   <jumps>
    <jump target="Apez">
     <pos x="-2453.631348" y="2495.935337"/>
@@ -2850,10 +2664,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Herakin">
   <general>
@@ -2864,20 +2674,21 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>900.000000</x>
-   <y>-661.000000</y>
+   <x>836.000000</x>
+   <y>-513.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Eiderdown">
-    <pos x="-2381.578848" y="2564.777221"/>
+    <pos x="-44.868108" y="-3499.712396"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Humdrum">
   <general>
@@ -2891,11 +2702,11 @@
    <x>616.000000</x>
    <y>-702.000000</y>
   </pos>
-  <planets>
-   <planet>Humdrum I</planet>
-   <planet>Humdrum II</planet>
-   <planet>Humdrum III</planet>
-  </planets>
+  <assets>
+   <asset>Humdrum I</asset>
+   <asset>Humdrum II</asset>
+   <asset>Humdrum III</asset>
+  </assets>
   <jumps>
    <jump target="An'ku">
     <pos x="1464.438204" y="-3178.902444"/>
@@ -2919,7 +2730,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Ingot">
   <general>
@@ -2933,9 +2743,11 @@
    <x>372.605613</x>
    <y>-211.000000</y>
   </pos>
-  <planets>
-   <planet>Ingot I</planet>
-  </planets>
+  <assets>
+   <asset>Ingot I</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+   <asset>Virtual Pirate Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Toaxis">
     <pos x="-933.566548" y="3373.196333"/>
@@ -2945,7 +2757,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Iris">
   <general>
@@ -2959,7 +2770,7 @@
    <x>434.333333</x>
    <y>178.733333</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Oriantis">
     <pos x="2568.067537" y="-2378.030514"/>
@@ -2976,7 +2787,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Karman">
   <general>
@@ -2990,11 +2800,12 @@
    <x>752.000000</x>
    <y>-478.000000</y>
   </pos>
-  <planets>
-   <planet>Atalanta</planet>
-   <planet>Karman I</planet>
-   <planet>Karman II</planet>
-  </planets>
+  <assets>
+   <asset>Atalanta</asset>
+   <asset>Karman I</asset>
+   <asset>Karman II</asset>
+   <asset>Virtual Sirius Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Chraan">
     <pos x="-3361.211794" y="975.835682"/>
@@ -3016,7 +2827,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Khaas">
   <general>
@@ -3030,7 +2840,7 @@
    <x>266.666667</x>
    <y>433.066667</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Diadem">
     <pos x="-3461.568533" y="-517.245873"/>
@@ -3047,7 +2857,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Klantar">
   <general>
@@ -3058,36 +2867,30 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>377.000000</x>
-   <y>-416.000000</y>
+   <x>319.000000</x>
+   <y>-422.000000</y>
   </pos>
-  <planets>
-   <planet>Klantar I</planet>
-   <planet>Klantar III</planet>
-   <planet>Nor</planet>
-   <planet>Tuur</planet>
-  </planets>
+  <assets>
+   <asset>Klantar I</asset>
+   <asset>Klantar III</asset>
+   <asset>Nor</asset>
+   <asset>Tuur</asset>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
-   <jump target="Dakron">
-    <pos x="-2286.316398" y="2650.048552"/>
+   <jump target="Massia">
+    <pos x="961.523948" y="-3365.333817"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Massia">
-    <pos x="-1086.406236" y="-3327.119098"/>
+   <jump target="Tarsus">
+    <pos x="-3184.151254" y="2893.039914"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Koralis">
   <general>
@@ -3101,10 +2904,10 @@
    <x>-222.000000</x>
    <y>-330.000000</y>
   </pos>
-  <planets>
-   <planet>Luxsor</planet>
-   <planet>Paxsor</planet>
-  </planets>
+  <assets>
+   <asset>Luxsor</asset>
+   <asset>Paxsor</asset>
+  </assets>
   <jumps>
    <jump target="Gamma Polaris">
     <pos x="2894.242757" y="1968.085075"/>
@@ -3119,10 +2922,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Kretogg">
   <general>
@@ -3136,13 +2935,13 @@
    <x>-36.000000</x>
    <y>-910.000000</y>
   </pos>
-  <planets>
-   <planet>Kretogg I</planet>
-   <planet>Kretogg II</planet>
-   <planet>Kretogg III</planet>
-   <planet>Vorca</planet>
-   <planet>Warden's End</planet>
-  </planets>
+  <assets>
+   <asset>Kretogg I</asset>
+   <asset>Kretogg II</asset>
+   <asset>Kretogg III</asset>
+   <asset>Vorca</asset>
+   <asset>Warden's End</asset>
+  </assets>
   <jumps>
    <jump target="Unicorn">
     <pos x="-1270.605535" y="3261.220872"/>
@@ -3152,7 +2951,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Ksher">
   <general>
@@ -3166,11 +2964,11 @@
    <x>148.000000</x>
    <y>-747.000000</y>
   </pos>
-  <planets>
-   <planet>Ksher I</planet>
-   <planet>Ksher II</planet>
-   <planet>Ksher III</planet>
-  </planets>
+  <assets>
+   <asset>Ksher I</asset>
+   <asset>Ksher II</asset>
+   <asset>Ksher III</asset>
+  </assets>
   <jumps>
    <jump target="Sultan">
     <pos x="-0.000000" y="-3500.000000"/>
@@ -3187,7 +2985,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Lapis">
   <general>
@@ -3201,10 +2998,11 @@
    <x>428.000000</x>
    <y>-805.000000</y>
   </pos>
-  <planets>
-   <planet>Lapis I</planet>
-   <planet>Lapis II</planet>
-  </planets>
+  <assets>
+   <asset>Lapis I</asset>
+   <asset>Lapis II</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Anarbalis">
     <pos x="2723.410904" y="2198.416031"/>
@@ -3235,7 +3033,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Lazuli">
   <general>
@@ -3249,12 +3046,12 @@
    <x>464.000000</x>
    <y>-871.000000</y>
   </pos>
-  <planets>
-   <planet>Chriik</planet>
-   <planet>Lazuli I</planet>
-   <planet>Lazuli III</planet>
-   <planet>Lazuli Ia</planet>
-  </planets>
+  <assets>
+   <asset>Chriik</asset>
+   <asset>Lazuli I</asset>
+   <asset>Lazuli III</asset>
+   <asset>Lazuli Ia</asset>
+  </assets>
   <jumps>
    <jump target="Lapis">
     <pos x="-1675.982457" y="3072.634505"/>
@@ -3264,7 +3061,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Limbo">
   <general>
@@ -3278,12 +3074,13 @@
    <x>-263.000000</x>
    <y>-707.000000</y>
   </pos>
-  <planets>
-   <planet>Jugreny</planet>
-   <planet>Limbo I</planet>
-   <planet>Limbo II</planet>
-   <planet>Malebolge</planet>
-  </planets>
+  <assets>
+   <asset>Jugreny</asset>
+   <asset>Limbo I</asset>
+   <asset>Limbo II</asset>
+   <asset>Malebolge</asset>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Fried">
     <pos x="-1174.014433" y="-5035.593937"/>
@@ -3310,7 +3107,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Marat">
   <general>
@@ -3324,7 +3120,7 @@
    <x>23.000000</x>
    <y>-862.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Amaroq">
     <pos x="3354.349893" y="-999.168053"/>
@@ -3341,7 +3137,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Massia">
   <general>
@@ -3352,30 +3147,25 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>361.000000</x>
-   <y>-465.000000</y>
+   <x>335.000000</x>
+   <y>-478.000000</y>
   </pos>
-  <planets>
-   <planet>Arck</planet>
-   <planet>Massia I</planet>
-   <planet>Massia IV</planet>
-   <planet>Massia IVa</planet>
-   <planet>Sinclair</planet>
-  </planets>
+  <assets>
+   <asset>Arck</asset>
+   <asset>Massia I</asset>
+   <asset>Massia IV</asset>
+   <asset>Massia IVa</asset>
+   <asset>Sinclair</asset>
+  </assets>
   <jumps>
    <jump target="Klantar">
-    <pos x="1086.406236" y="3327.119098"/>
+    <pos x="-961.523948" y="3365.333817"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Merisi">
   <general>
@@ -3389,12 +3179,12 @@
    <x>-73.000000</x>
    <y>-60.000000</y>
   </pos>
-  <planets>
-   <planet>Merisi I</planet>
-   <planet>Merisi II</planet>
-   <planet>Merisi III</planet>
-   <planet>Merisi IV</planet>
-  </planets>
+  <assets>
+   <asset>Merisi I</asset>
+   <asset>Merisi II</asset>
+   <asset>Merisi III</asset>
+   <asset>Merisi IV</asset>
+  </assets>
   <jumps>
    <jump target="Acheron">
     <pos x="2357.214987" y="2587.187180"/>
@@ -3404,10 +3194,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Mizar">
   <general>
@@ -3421,7 +3207,9 @@
    <x>203.000000</x>
    <y>28.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Surano">
     <pos x="1990.032605" y="-2879.196109"/>
@@ -3438,12 +3226,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Modus Manis">
   <general>
@@ -3457,10 +3239,10 @@
    <x>699.000000</x>
    <y>-617.000000</y>
   </pos>
-  <planets>
-   <planet>Manis</planet>
-   <planet>Modus</planet>
-  </planets>
+  <assets>
+   <asset>Manis</asset>
+   <asset>Modus</asset>
+  </assets>
   <jumps>
    <jump target="Esker">
     <pos x="2591.593599" y="2352.369575"/>
@@ -3484,7 +3266,31 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
+ </ssys>
+ <ssys name="Muirat">
+  <general>
+   <radius>3500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>875.000000</x>
+   <y>-725.000000</y>
+  </pos>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
+  <jumps>
+   <jump target="Churchill">
+    <pos x="-1885.315956" y="2948.827521"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
  </ssys>
  <ssys name="Myad">
   <general>
@@ -3498,7 +3304,7 @@
    <x>553.000000</x>
    <y>-47.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Doeston">
     <pos x="-1778.887546" y="3014.226119"/>
@@ -3515,9 +3321,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Nartur">
   <general>
@@ -3531,12 +3334,12 @@
    <x>-372.000000</x>
    <y>-421.000000</y>
   </pos>
-  <planets>
-   <planet>Ian</planet>
-   <planet>Nartur I</planet>
-   <planet>Nartur II</planet>
-   <planet>Nartur III</planet>
-  </planets>
+  <assets>
+   <asset>Ian</asset>
+   <asset>Nartur I</asset>
+   <asset>Nartur II</asset>
+   <asset>Nartur III</asset>
+  </assets>
   <jumps>
    <jump target="Overture">
     <pos x="2864.104373" y="-2011.692357"/>
@@ -3546,7 +3349,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="New Haven">
   <general>
@@ -3560,12 +3362,12 @@
    <x>156.000000</x>
    <y>307.000000</y>
   </pos>
-  <planets>
-   <planet>Green Eye</planet>
-   <planet>New Haven</planet>
-   <planet>Old Man Jack</planet>
-   <planet>Red Eye</planet>
-  </planets>
+  <assets>
+   <asset>Green Eye</asset>
+   <asset>New Haven</asset>
+   <asset>Old Man Jack</asset>
+   <asset>Red Eye</asset>
+  </assets>
   <jumps>
    <jump target="Dendria">
     <pos x="-1779.496325" y="5097.538011"/>
@@ -3580,9 +3382,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Heavy Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Niger">
   <general>
@@ -3596,11 +3395,11 @@
    <x>388.000000</x>
    <y>-868.000000</y>
   </pos>
-  <planets>
-   <planet>Niger I</planet>
-   <planet>Niger II</planet>
-   <planet>Rionna</planet>
-  </planets>
+  <assets>
+   <asset>Niger I</asset>
+   <asset>Niger II</asset>
+   <asset>Rionna</asset>
+  </assets>
   <jumps>
    <jump target="Lapis">
     <pos x="1876.028478" y="2954.744853"/>
@@ -3610,7 +3409,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Norpin">
   <general>
@@ -3624,12 +3422,13 @@
    <x>503.000000</x>
    <y>-498.000000</y>
   </pos>
-  <planets>
-   <planet>Folevo</planet>
-   <planet>New Dortmund</planet>
-   <planet>Norpin II</planet>
-   <planet>Norpin IV</planet>
-  </planets>
+  <assets>
+   <asset>Folevo</asset>
+   <asset>New Dortmund</asset>
+   <asset>Norpin II</asset>
+   <asset>Norpin IV</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Slaccid">
     <pos x="1941.450687" y="2912.176030"/>
@@ -3639,11 +3438,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Nougat">
   <general>
@@ -3657,10 +3451,10 @@
    <x>689.000000</x>
    <y>-517.000000</y>
   </pos>
-  <planets>
-   <planet>Nougat I</planet>
-   <planet>Nougat II</planet>
-  </planets>
+  <assets>
+   <asset>Nougat I</asset>
+   <asset>Nougat II</asset>
+  </assets>
   <jumps>
    <jump target="Chraan">
     <pos x="-3428.310305" y="966.282671"/>
@@ -3682,7 +3476,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Oberon">
   <general>
@@ -3696,12 +3489,12 @@
    <x>330.666667</x>
    <y>267.066667</y>
   </pos>
-  <planets>
-   <planet>M.K.</planet>
-   <planet>Oberon I</planet>
-   <planet>Oberon III</planet>
-   <planet>Oberon IV</planet>
-  </planets>
+  <assets>
+   <asset>M.K.</asset>
+   <asset>Oberon I</asset>
+   <asset>Oberon III</asset>
+   <asset>Oberon IV</asset>
+  </assets>
   <jumps>
    <jump target="Defa">
     <pos x="-4043.922265" y="-4622.536831"/>
@@ -3721,7 +3514,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Ogat">
   <general>
@@ -3735,10 +3527,10 @@
    <x>150.000000</x>
    <y>-250.000000</y>
   </pos>
-  <planets>
-   <planet>Gamma</planet>
-   <planet>Praxis</planet>
-  </planets>
+  <assets>
+   <asset>Gamma</asset>
+   <asset>Praxis</asset>
+  </assets>
   <jumps>
    <jump target="Doranthex">
     <pos x="1920.297545" y="-2926.167688"/>
@@ -3769,12 +3561,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Trader Heavy Presence</fleet>
-   <fleet>Pirate Token Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Oriantis">
   <general>
@@ -3788,7 +3574,7 @@
    <x>501.000000</x>
    <y>117.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Arandon">
     <pos x="3398.376141" y="-837.281078"/>
@@ -3805,7 +3591,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Overture">
   <general>
@@ -3819,11 +3604,11 @@
    <x>-288.000000</x>
    <y>-480.000000</y>
   </pos>
-  <planets>
-   <planet>Overture I</planet>
-   <planet>Overture II</planet>
-   <planet>Overture III</planet>
-  </planets>
+  <assets>
+   <asset>Overture I</asset>
+   <asset>Overture II</asset>
+   <asset>Overture III</asset>
+  </assets>
   <jumps>
    <jump target="Dohriabi">
     <pos x="-686.406473" y="3432.032365"/>
@@ -3861,7 +3646,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Pas">
   <general>
@@ -3875,7 +3659,7 @@
    <x>-396.000000</x>
    <y>-497.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Overture">
     <pos x="3457.429555" y="544.225022"/>
@@ -3885,7 +3669,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Percival">
   <general>
@@ -3899,7 +3682,7 @@
    <x>482.333333</x>
    <y>240.733333</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Iris">
     <pos x="-2142.606175" y="-2767.532977"/>
@@ -3916,7 +3699,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Perhelion">
   <general>
@@ -3930,11 +3712,12 @@
    <x>61.000000</x>
    <y>-739.000000</y>
   </pos>
-  <planets>
-   <planet>Perhelion Alpha</planet>
-   <planet>Perhelion Beta</planet>
-   <planet>Perhelion Gamma</planet>
-  </planets>
+  <assets>
+   <asset>Perhelion Alpha</asset>
+   <asset>Perhelion Beta</asset>
+   <asset>Perhelion Gamma</asset>
+   <asset>Virtual Pirate Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Daravon">
     <pos x="-3100.410373" y="1624.024481"/>
@@ -3949,7 +3732,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Pilatis">
   <general>
@@ -3963,11 +3745,11 @@
    <x>259.000000</x>
    <y>131.000000</y>
   </pos>
-  <planets>
-   <planet>Pilatis I</planet>
-   <planet>Pilatis II</planet>
-   <planet>Pilatis III</planet>
-  </planets>
+  <assets>
+   <asset>Pilatis I</asset>
+   <asset>Pilatis II</asset>
+   <asset>Pilatis III</asset>
+  </assets>
   <jumps>
    <jump target="Defa">
     <pos x="1238.622341" y="3273.501901"/>
@@ -3991,7 +3773,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Point Zero">
   <general>
@@ -4005,10 +3786,10 @@
    <x>430.666667</x>
    <y>544.066667</y>
   </pos>
-  <planets>
-   <planet>Point Zero 0</planet>
-   <planet>Point Zero Station</planet>
-  </planets>
+  <assets>
+   <asset>Point Zero 0</asset>
+   <asset>Point Zero Station</asset>
+  </assets>
   <jumps>
    <jump target="Gewirn">
     <pos x="-1494.522069" y="-3164.870264"/>
@@ -4032,7 +3813,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Polaris">
   <general>
@@ -4046,7 +3826,7 @@
    <x>594.000000</x>
    <y>185.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Arandon">
     <pos x="-951.051746" y="-3368.308266"/>
@@ -4063,7 +3843,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Pontus">
   <general>
@@ -4077,7 +3856,7 @@
    <x>-82.000000</x>
    <y>82.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Fortitude">
     <pos x="-1785.706697" y="-3010.191289"/>
@@ -4094,10 +3873,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Protera">
   <general>
@@ -4111,9 +3886,9 @@
    <x>1103.000000</x>
    <y>684.000000</y>
   </pos>
-  <planets>
-   <planet>Protera Sigma</planet>
-  </planets>
+  <assets>
+   <asset>Protera Sigma</asset>
+  </assets>
   <jumps>
    <jump target="Haered">
     <pos x="-2570.873152" y="-2374.997102"/>
@@ -4123,11 +3898,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Proteron Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Provectus Nova">
   <general>
@@ -4141,10 +3911,10 @@
    <x>-252.000000</x>
    <y>-622.000000</y>
   </pos>
-  <planets>
-   <planet>Provectus Nova I</planet>
-   <planet>Provectus Nova Ia</planet>
-  </planets>
+  <assets>
+   <asset>Provectus Nova I</asset>
+   <asset>Provectus Nova Ia</asset>
+  </assets>
   <jumps>
    <jump target="Limbo">
     <pos x="-449.195366" y="-3471.055102"/>
@@ -4161,7 +3931,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Pudas">
   <general>
@@ -4175,11 +3944,11 @@
    <x>-29.000000</x>
    <y>-767.000000</y>
   </pos>
-  <planets>
-   <planet>Pudas I</planet>
-   <planet>Pudas II</planet>
-   <planet>Sudra</planet>
-  </planets>
+  <assets>
+   <asset>Pudas I</asset>
+   <asset>Pudas II</asset>
+   <asset>Sudra</asset>
+  </assets>
   <jumps>
    <jump target="Daravon">
     <pos x="-622.446993" y="3444.206693"/>
@@ -4196,7 +3965,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Pultatis">
   <general>
@@ -4210,11 +3978,11 @@
    <x>-347.000000</x>
    <y>-740.000000</y>
   </pos>
-  <planets>
-   <planet>Pultatis I</planet>
-   <planet>Pultatis II</planet>
-   <planet>Pultatis III</planet>
-  </planets>
+  <assets>
+   <asset>Pultatis I</asset>
+   <asset>Pultatis II</asset>
+   <asset>Pultatis III</asset>
+  </assets>
   <jumps>
    <jump target="Limbo">
     <pos x="3257.630227" y="1279.783303"/>
@@ -4224,7 +3992,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Qex">
   <general>
@@ -4238,10 +4005,10 @@
    <x>-185.000000</x>
    <y>-383.000000</y>
   </pos>
-  <planets>
-   <planet>Ammu</planet>
-   <planet>Qex II</planet>
-  </planets>
+  <assets>
+   <asset>Ammu</asset>
+   <asset>Qex II</asset>
+  </assets>
   <jumps>
    <jump target="Eneguoz">
     <pos x="1749.387521" y="-2028.391192"/>
@@ -4268,11 +4035,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Dvaered Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Radix">
   <general>
@@ -4286,11 +4048,12 @@
    <x>226.000000</x>
    <y>-671.000000</y>
   </pos>
-  <planets>
-   <planet>Radix I</planet>
-   <planet>Radix II</planet>
-   <planet>Stutee</planet>
-  </planets>
+  <assets>
+   <asset>Radix I</asset>
+   <asset>Radix II</asset>
+   <asset>Stutee</asset>
+   <asset>Virtual Sirius Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Dvaer">
     <pos x="-2613.678216" y="2327.807161"/>
@@ -4305,7 +4068,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Raelid">
   <general>
@@ -4319,10 +4081,11 @@
    <x>269.000000</x>
    <y>-137.000000</y>
   </pos>
-  <planets>
-   <planet>Raelid Outpost</planet>
-   <planet>Raelid Prime</planet>
-  </planets>
+  <assets>
+   <asset>Raelid Outpost</asset>
+   <asset>Raelid Prime</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Arcanis">
     <pos x="2186.432666" y="2733.040833"/>
@@ -4360,12 +4123,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Pirate Token Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Rhu">
   <general>
@@ -4379,14 +4136,14 @@
    <x>485.797371</x>
    <y>-649.240526</y>
   </pos>
-  <planets>
-   <planet>Daal</planet>
-   <planet>Hankies</planet>
-   <planet>Huan'xi</planet>
-   <planet>Rhu II</planet>
-   <planet>Rhu III</planet>
-   <planet>Rhu IV</planet>
-  </planets>
+  <assets>
+   <asset>Daal</asset>
+   <asset>Hankies</asset>
+   <asset>Huan'xi</asset>
+   <asset>Rhu II</asset>
+   <asset>Rhu III</asset>
+   <asset>Rhu IV</asset>
+  </assets>
   <jumps>
    <jump target="Ruttwi">
     <pos x="-3458.334380" y="-538.445274"/>
@@ -4396,7 +4153,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Rockbed">
   <general>
@@ -4410,7 +4166,9 @@
    <x>-5.000000</x>
    <y>110.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Capricorn">
     <pos x="-2765.769304" y="2144.882318"/>
@@ -4434,10 +4192,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Ruttwi">
   <general>
@@ -4451,12 +4205,13 @@
    <x>391.000000</x>
    <y>-664.000000</y>
   </pos>
-  <planets>
-   <planet>Arai</planet>
-   <planet>Arch Arai</planet>
-   <planet>Ruttwi I</planet>
-   <planet>Ruttwi II</planet>
-  </planets>
+  <assets>
+   <asset>Arai</asset>
+   <asset>Arch Arai</asset>
+   <asset>Ruttwi I</asset>
+   <asset>Ruttwi II</asset>
+   <asset>Virtual Dvaered Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Eye of Night">
     <pos x="-5374.975385" y="408.244175"/>
@@ -4471,7 +4226,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Sarcophagus">
   <general>
@@ -4485,12 +4239,12 @@
    <x>425.666667</x>
    <y>633.066667</y>
   </pos>
-  <planets>
-   <planet>Ebenezer</planet>
-   <planet>Sarcophagus I</planet>
-   <planet>Sarcophagus II</planet>
-   <planet>Sarcophagus IIb</planet>
-  </planets>
+  <assets>
+   <asset>Ebenezer</asset>
+   <asset>Sarcophagus I</asset>
+   <asset>Sarcophagus II</asset>
+   <asset>Sarcophagus IIb</asset>
+  </assets>
   <jumps>
    <jump target="Point Zero">
     <pos x="196.319649" y="-3494.489748"/>
@@ -4500,7 +4254,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Sergio Vix">
   <general>
@@ -4514,12 +4267,12 @@
    <x>337.666667</x>
    <y>574.066667</y>
   </pos>
-  <planets>
-   <planet>Larling</planet>
-   <planet>Sergio Vix I</planet>
-   <planet>Sergio Vix III</planet>
-   <planet>Zepei</planet>
-  </planets>
+  <assets>
+   <asset>Larling</asset>
+   <asset>Sergio Vix I</asset>
+   <asset>Sergio Vix III</asset>
+   <asset>Zepei</asset>
+  </assets>
   <jumps>
    <jump target="Cerberus">
     <pos x="-1626.978264" y="3098.861360"/>
@@ -4534,7 +4287,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Shakar">
   <general>
@@ -4548,10 +4300,10 @@
    <x>-170.000000</x>
    <y>-195.000000</y>
   </pos>
-  <planets>
-   <planet>Nova Shakar</planet>
-   <planet>Shakar I</planet>
-  </planets>
+  <assets>
+   <asset>Nova Shakar</asset>
+   <asset>Shakar I</asset>
+  </assets>
   <jumps>
    <jump target="Borla">
     <pos x="3482.630166" y="348.263017"/>
@@ -4568,10 +4320,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Medium Presence</fleet>
-   <fleet>Trader Heavy Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Shickhaw">
   <general>
@@ -4585,14 +4333,14 @@
    <x>759.000000</x>
    <y>-312.000000</y>
   </pos>
-  <planets>
-   <planet>Avoss</planet>
-   <planet>Kotori</planet>
-   <planet>Shickhaw I</planet>
-   <planet>Shickhaw II</planet>
-   <planet>Shickhaw IV</planet>
-   <planet>Tori</planet>
-  </planets>
+  <assets>
+   <asset>Avoss</asset>
+   <asset>Kotori</asset>
+   <asset>Shickhaw I</asset>
+   <asset>Shickhaw II</asset>
+   <asset>Shickhaw IV</asset>
+   <asset>Tori</asset>
+  </assets>
   <jumps>
    <jump target="Brimstone">
     <pos x="-3328.936807" y="-1080.823639"/>
@@ -4602,7 +4350,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Shikima">
   <general>
@@ -4616,11 +4363,11 @@
    <x>336.666667</x>
    <y>346.066667</y>
   </pos>
-  <planets>
-   <planet>Beene</planet>
-   <planet>Shikima II</planet>
-   <planet>Shikima III</planet>
-  </planets>
+  <assets>
+   <asset>Beene</asset>
+   <asset>Shikima II</asset>
+   <asset>Shikima III</asset>
+  </assets>
   <jumps>
    <jump target="Father's Pride">
     <pos x="5028.626653" y="-30.946074"/>
@@ -4633,7 +4380,6 @@
     <flags/>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Sigur">
   <general>
@@ -4644,20 +4390,21 @@
    <nebula volatility="0.000000">300.000000</nebula>
   </general>
   <pos>
-   <x>440.000000</x>
-   <y>92.000000</y>
+   <x>441.000000</x>
+   <y>91.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Behar">
-    <pos x="1033.571948" y="-3343.909243"/>
+    <pos x="994.309154" y="-3355.793394"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Sikh">
   <general>
@@ -4671,7 +4418,9 @@
    <x>-31.000000</x>
    <y>50.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Acheron">
     <pos x="-53.839783" y="-3499.585872"/>
@@ -4688,11 +4437,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Sirou">
   <general>
@@ -4706,7 +4450,7 @@
    <x>-243.000000</x>
    <y>-265.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Gamma Polaris">
     <pos x="3207.586652" y="-1400.495580"/>
@@ -4716,9 +4460,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Slaccid">
   <general>
@@ -4732,7 +4473,7 @@
    <x>537.000000</x>
    <y>-447.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Haleb">
     <pos x="-1540.550260" y="3142.722530"/>
@@ -4749,11 +4490,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>FLF Medium Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Sol">
   <general>
@@ -4767,7 +4503,7 @@
    <x>636.000000</x>
    <y>249.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Haered">
     <pos x="2474.873734" y="2474.873734"/>
@@ -4784,7 +4520,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Solene">
   <general>
@@ -4798,7 +4533,7 @@
    <x>221.666667</x>
    <y>495.066667</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Diadem">
     <pos x="-1710.111791" y="-3053.771056"/>
@@ -4808,7 +4543,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Sultan">
   <general>
@@ -4822,7 +4556,7 @@
    <x>148.000000</x>
    <y>-811.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Amaroq">
     <pos x="-1278.507205" y="-3258.131263"/>
@@ -4839,7 +4573,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Surano">
   <general>
@@ -4853,7 +4586,7 @@
    <x>250.000000</x>
    <y>-40.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Mizar">
     <pos x="-1990.032605" y="2879.196109"/>
@@ -4870,11 +4603,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="TODO: Proteron here">
   <general>
@@ -4888,25 +4616,8 @@
    <x>1086.000000</x>
    <y>600.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps/>
-  <fleets/>
- </ssys>
- <ssys name="TODO: Sirius here">
-  <general>
-   <radius>3500.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>857.000000</x>
-   <y>-712.000000</y>
-  </pos>
-  <planets/>
-  <jumps/>
-  <fleets/>
  </ssys>
  <ssys name="TODO: Traders here">
   <general>
@@ -4920,9 +4631,8 @@
    <x>135.000000</x>
    <y>-962.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps/>
-  <fleets/>
  </ssys>
  <ssys name="TODO: Za'lek here">
   <general>
@@ -4936,9 +4646,8 @@
    <x>-333.000000</x>
    <y>-853.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps/>
-  <fleets/>
  </ssys>
  <ssys name="TODO? Soromid here">
   <general>
@@ -4952,9 +4661,8 @@
    <x>346.000000</x>
    <y>684.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps/>
-  <fleets/>
  </ssys>
  <ssys name="Tarmak">
   <general>
@@ -4968,7 +4676,9 @@
    <x>716.000000</x>
    <y>-713.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="An'ku">
     <pos x="-2111.434283" y="-2791.387696"/>
@@ -4992,7 +4702,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Tarsus">
   <general>
@@ -5006,10 +4715,11 @@
    <x>247.000000</x>
    <y>-403.000000</y>
   </pos>
-  <planets>
-   <planet>Tarsus II</planet>
-   <planet>Valt</planet>
-  </planets>
+  <assets>
+   <asset>Tarsus II</asset>
+   <asset>Valt</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Doranthex">
     <pos x="-1792.974054" y="3005.868267"/>
@@ -5018,19 +4728,21 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="Klantar">
+    <pos x="3384.151254" y="-893.039914"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="Verex">
-    <pos x="-2186.432666" y="-2733.040833"/>
+    <pos x="-2235.003644" y="-2693.465929"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>FLF Light Guerrilla</fleet>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Tau Prime">
   <general>
@@ -5044,11 +4756,12 @@
    <x>197.000000</x>
    <y>-110.000000</y>
   </pos>
-  <planets>
-   <planet>Tau Prime</planet>
-   <planet>Tau Secundus</planet>
-   <planet>Tau Station</planet>
-  </planets>
+  <assets>
+   <asset>Tau Prime</asset>
+   <asset>Tau Secundus</asset>
+   <asset>Tau Station</asset>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Draconis">
     <pos x="-449.939100" y="3470.958773"/>
@@ -5070,11 +4783,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>Empire Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Theras">
   <general>
@@ -5088,10 +4796,12 @@
    <x>436.000000</x>
    <y>-382.000000</y>
   </pos>
-  <planets>
-   <planet>Cetrat</planet>
-   <planet>Theras III</planet>
-  </planets>
+  <assets>
+   <asset>Cetrat</asset>
+   <asset>Theras III</asset>
+   <asset>Virtual Dvaered Small</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Dakron">
     <pos x="-3453.280587" y="569.958932"/>
@@ -5115,11 +4825,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Thirty Stars">
   <general>
@@ -5133,9 +4838,9 @@
    <x>402.666667</x>
    <y>300.066667</y>
   </pos>
-  <planets>
-   <planet>Charred</planet>
-  </planets>
+  <assets>
+   <asset>Charred</asset>
+  </assets>
   <jumps>
    <jump target="Oberon">
     <pos x="-3181.726880" y="-1458.291487"/>
@@ -5152,7 +4857,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Thorndyke">
   <general>
@@ -5166,7 +4870,7 @@
    <x>223.000000</x>
    <y>83.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Mizar">
     <pos x="-1196.100721" y="-3289.276982"/>
@@ -5183,9 +4887,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Pirate Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Toaxis">
   <general>
@@ -5199,7 +4900,7 @@
    <x>356.000000</x>
    <y>-151.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Ingot">
     <pos x="933.566548" y="-3373.196333"/>
@@ -5216,11 +4917,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Torg">
   <general>
@@ -5231,26 +4927,22 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>140.000000</x>
-   <y>-387.000000</y>
+   <x>151.000000</x>
+   <y>-381.000000</y>
   </pos>
-  <planets>
-   <planet>Jorcan</planet>
-  </planets>
+  <assets>
+   <asset>Jorcan</asset>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="3051.630139" y="1713.929256"/>
+    <pos x="3047.885082" y="1720.580288"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Tormulex">
   <general>
@@ -5264,7 +4956,7 @@
    <x>638.000000</x>
    <y>-15.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Myad">
     <pos x="-3275.565726" y="-1233.154156"/>
@@ -5274,7 +4966,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Toros">
   <general>
@@ -5288,7 +4979,7 @@
    <x>617.000000</x>
    <y>45.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Doeston">
     <pos x="-3343.050642" y="-1036.345699"/>
@@ -5298,7 +4989,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Triap">
   <general>
@@ -5312,10 +5002,11 @@
    <x>619.000000</x>
    <y>-389.000000</y>
   </pos>
-  <planets>
-   <planet>Khelim</planet>
-   <planet>Triap I</planet>
-  </planets>
+  <assets>
+   <asset>Khelim</asset>
+   <asset>Triap I</asset>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Brimstone">
     <pos x="2699.280588" y="2227.977628"/>
@@ -5339,7 +5030,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Tuoladis">
   <general>
@@ -5353,7 +5043,9 @@
    <x>234.000000</x>
    <y>-287.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual FLF Small</asset>
+  </assets>
   <jumps>
    <jump target="Doranthex">
     <pos x="-1173.636329" y="-3297.359211"/>
@@ -5370,11 +5062,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Medium Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Uhriabi">
   <general>
@@ -5388,10 +5075,10 @@
    <x>-253.000000</x>
    <y>-417.000000</y>
   </pos>
-  <planets>
-   <planet>Uhriabi-17</planet>
-   <planet>Uhriabi-9</planet>
-  </planets>
+  <assets>
+   <asset>Uhriabi-17</asset>
+   <asset>Uhriabi-9</asset>
+  </assets>
   <jumps>
    <jump target="Overture">
     <pos x="-1699.750259" y="-3059.550466"/>
@@ -5408,10 +5095,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Unicorn">
   <general>
@@ -5425,10 +5108,10 @@
    <x>-66.000000</x>
    <y>-833.000000</y>
   </pos>
-  <planets>
-   <planet>Unicorn I</planet>
-   <planet>Unicorn II</planet>
-  </planets>
+  <assets>
+   <asset>Unicorn I</asset>
+   <asset>Unicorn II</asset>
+  </assets>
   <jumps>
    <jump target="Kretogg">
     <pos x="1270.605535" y="-3261.220872"/>
@@ -5452,7 +5135,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Urbanus">
   <general>
@@ -5466,11 +5148,11 @@
    <x>122.000000</x>
    <y>-681.000000</y>
   </pos>
-  <planets>
-   <planet>Trincea</planet>
-   <planet>Urbanus II</planet>
-   <planet>Urbanus III</planet>
-  </planets>
+  <assets>
+   <asset>Trincea</asset>
+   <asset>Urbanus II</asset>
+   <asset>Urbanus III</asset>
+  </assets>
   <jumps>
    <jump target="Dvaer">
     <pos x="1794.134711" y="3005.175642"/>
@@ -5494,7 +5176,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Uridhrion">
   <general>
@@ -5508,13 +5189,13 @@
    <x>496.666667</x>
    <y>503.066667</y>
   </pos>
-  <planets>
-   <planet>Cutha</planet>
-   <planet>Terminus</planet>
-   <planet>Uridhrion I</planet>
-   <planet>Uridhrion II</planet>
-   <planet>Uridhrion III</planet>
-  </planets>
+  <assets>
+   <asset>Cutha</asset>
+   <asset>Terminus</asset>
+   <asset>Uridhrion I</asset>
+   <asset>Uridhrion II</asset>
+   <asset>Uridhrion III</asset>
+  </assets>
   <jumps>
    <jump target="Point Zero">
     <pos x="-2973.044379" y="1846.891205"/>
@@ -5524,7 +5205,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Vanir">
   <general>
@@ -5538,12 +5218,12 @@
    <x>980.000000</x>
    <y>-418.000000</y>
   </pos>
-  <planets>
-   <planet>Sinass</planet>
-   <planet>Vanir I</planet>
-   <planet>Vanir II</planet>
-   <planet>Vanir Ia</planet>
-  </planets>
+  <assets>
+   <asset>Sinass</asset>
+   <asset>Vanir I</asset>
+   <asset>Vanir II</asset>
+   <asset>Vanir Ia</asset>
+  </assets>
   <jumps>
    <jump target="Adraia">
     <pos x="635.972741" y="-3441.734835"/>
@@ -5560,7 +5240,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Verex">
   <general>
@@ -5571,17 +5250,17 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>207.000000</x>
-   <y>-453.000000</y>
+   <x>208.000000</x>
+   <y>-450.000000</y>
   </pos>
-  <planets>
-   <planet>Verex I</planet>
-   <planet>Verex II</planet>
-   <planet>Verex III</planet>
-  </planets>
+  <assets>
+   <asset>Verex I</asset>
+   <asset>Verex II</asset>
+   <asset>Verex III</asset>
+  </assets>
   <jumps>
    <jump target="Blunderbuss">
-    <pos x="-3139.542384" y="-1547.020885"/>
+    <pos x="-3094.332291" y="-1635.575640"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5593,24 +5272,20 @@
     <flags/>
    </jump>
    <jump target="Ginger">
-    <pos x="1779.268479" y="-3014.001274"/>
+    <pos x="1674.024232" y="-3073.701819"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tarsus">
-    <pos x="2186.432666" y="2733.040833"/>
+    <pos x="2235.003644" y="2693.465929"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Light Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Vlexon">
   <general>
@@ -5624,12 +5299,12 @@
    <x>82.000000</x>
    <y>-301.000000</y>
   </pos>
-  <planets>
-   <planet>Ruid</planet>
-   <planet>Vlexair</planet>
-   <planet>Vlexon I</planet>
-   <planet>Vlexon II</planet>
-  </planets>
+  <assets>
+   <asset>Ruid</asset>
+   <asset>Vlexair</asset>
+   <asset>Vlexon I</asset>
+   <asset>Vlexon II</asset>
+  </assets>
   <jumps>
    <jump target="Ogat">
     <pos x="2800.000000" y="2100.000000"/>
@@ -5639,12 +5314,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Medium Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Volus">
   <general>
@@ -5658,7 +5327,7 @@
    <x>-138.000000</x>
    <y>-784.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Gammacron">
     <pos x="-1095.057512" y="3324.281734"/>
@@ -5682,7 +5351,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Waterhole">
   <general>
@@ -5696,10 +5364,10 @@
    <x>-287.000000</x>
    <y>-557.000000</y>
   </pos>
-  <planets>
-   <planet>Waterhole</planet>
-   <planet>Waterhole's Moon</planet>
-  </planets>
+  <assets>
+   <asset>Waterhole</asset>
+   <asset>Waterhole's Moon</asset>
+  </assets>
   <jumps>
    <jump target="Overture">
     <pos x="-45.450713" y="3499.704878"/>
@@ -5716,7 +5384,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Zacron">
   <general>
@@ -5730,7 +5397,9 @@
    <x>239.000000</x>
    <y>-224.000000</y>
   </pos>
-  <planets/>
+  <assets>
+   <asset>Virtual Pirate Small</asset>
+  </assets>
   <jumps>
    <jump target="Ogat">
     <pos x="-3359.576909" y="-981.449434"/>
@@ -5754,11 +5423,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Dvaered Medium Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-   <fleet>FLF Light Guerrilla</fleet>
-  </fleets>
  </ssys>
  <ssys name="Zerantix">
   <general>
@@ -5772,7 +5436,7 @@
    <x>648.000000</x>
    <y>120.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Arandon">
     <pos x="-3390.323531" y="-869.313726"/>
@@ -5782,7 +5446,6 @@
     </flags>
    </jump>
   </jumps>
-  <fleets/>
  </ssys>
  <ssys name="Zied">
   <general>
@@ -5796,15 +5459,11 @@
    <x>-5.000000</x>
    <y>-519.000000</y>
   </pos>
-  <planets>
-   <planet>Bon Sebb</planet>
-   <planet>Saturn VI</planet>
-  </planets>
+  <assets>
+   <asset>Bon Sebb</asset>
+   <asset>Saturn VI</asset>
+  </assets>
   <jumps/>
-  <fleets>
-   <fleet>Empire Light Presence</fleet>
-   <fleet>Trader Light Presence</fleet>
-  </fleets>
  </ssys>
  <ssys name="Zylex">
   <general>
@@ -5818,7 +5477,7 @@
    <x>438.000000</x>
    <y>-34.000000</y>
   </pos>
-  <planets/>
+  <assets/>
   <jumps>
    <jump target="Arcanis">
     <pos x="-3418.937501" y="-748.910119"/>
@@ -5835,8 +5494,5 @@
     </flags>
    </jump>
   </jumps>
-  <fleets>
-   <fleet>Empire Patrol Presence</fleet>
-  </fleets>
  </ssys>
 </Systems>

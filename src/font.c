@@ -843,6 +843,13 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
    if (state == 1) {
       a = (c==NULL) ? 1. : c->a;
       switch (ch) {
+         /* TOP SECRET COLOUR CONVENTION
+          * FOR YOUR EYES ONLY
+          *
+          * Lowercase characters represent base colours.
+          * Uppercase characters reperesent fancy game related colours.
+          * Digits represent states.
+          */
          /* Colours. */
          case 'r': ACOLOUR(cFontRed,a); break;
          case 'g': ACOLOUR(cFontGreen,a); break;
@@ -856,6 +863,7 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
          case 'H': ACOLOUR(cHostile,a); break;
          case 'N': ACOLOUR(cNeutral,a); break;
          case 'I': ACOLOUR(cInert,a); break;
+         case 'M': ACOLOUR(cMapNeutral,a); break;
          case 'C': ACOLOUR(cConsole,a); break;
          case 'D': ACOLOUR(cDConsole,a); break;
          /* Reset state. */

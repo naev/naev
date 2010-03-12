@@ -91,8 +91,14 @@ function accept ()
    tk.msg( title[2], string.format( text[2],
          misn_target_sys:name(), misn_final_sys:name() ) )
 
+   hook.jumpout("jumpout")
    hook.enter("jump")
    hook.land("land")
+end
+
+
+function jumpout ()
+   last_sys = system.cur()
 end
 
 
@@ -122,7 +128,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilots) do
                v:setFriendly()
             end
@@ -139,7 +145,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
                v:setHostile()
@@ -170,7 +176,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilot) do
                v:setFriendly()
             end
@@ -190,7 +196,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
 
             -- Handle special ships
             if v == "Starfire" then
@@ -247,7 +253,7 @@ end
 
 function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Trader Mule", "empire_refuel" )[1]
+   refship = pilot.add( "Trader Mule", "empire_refuel", last_sys )[1]
    refship:rename("Fuel Tanker")
    refship:setFaction("Empire")
    refship:setFriendly()
@@ -260,8 +266,8 @@ function addRefuelShip ()
 
    -- Add some escorts
    refesc = {}
-   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
-   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
+   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
+   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
    for k,v in ipairs(refesc) do
       v:setFriendly()
    end

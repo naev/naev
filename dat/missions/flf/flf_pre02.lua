@@ -205,7 +205,7 @@ function takeoff()
     end
 
     -- Add the FLF wing, no need to keep track of health since it's a takeoff situation (other than death, obviously)
-    fleetFLF = pilot.add("Independent Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos(), false)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos())
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:rename("FLF Wingman")
@@ -239,6 +239,7 @@ function jumpin()
 end
 
 function jumpout()
+    last_sys = system.cur()
     if spawnie ~= nil then
         misn.timerStop(spawnie)
     end
@@ -344,7 +345,7 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = pilot.add("Independent Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos(), true)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", last_sys))
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])
@@ -375,7 +376,7 @@ end
 
 -- Spawns a small Dvaered patrol
 function spawnSmallDV()
-    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", player.pos(), true)
+    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", last_sys)
     for i, j in ipairs(fleetDV) do
         j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         hook.pilot(j, "death", "DVdeath")
@@ -391,7 +392,7 @@ end
 
 -- Spawns a big Dvaered patrol
 function spawnBigDV()
-    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", player.pos(), true)
+    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", last_sys)
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then -- It's a mini-boss of sorts, but it should still be dumbed down.
             j:rmOutfit("all")

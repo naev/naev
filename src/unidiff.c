@@ -88,8 +88,7 @@ typedef struct UniHunk_ {
    UniHunkType_t type; /**< Type of hunk it is. */
    union {
       char *name;
-      SystemFleet fleet;
-      FleetGroup *fleetgroup;
+      Fleet *fleet;
       struct {
          int old; /**< Old value. */
          int new; /**< New value. */
@@ -286,11 +285,11 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          hunk.target.u.name = strdup(base.target.u.name);
 
          /* Get the fleet properties. */
+         /* TODO Fix this up to new presence system. */
          xmlr_attr(cur,"name",buf);
-         hunk.u.fleet.fleet = fleet_get(buf);
+         hunk.u.fleet = fleet_get(buf);
          free(buf);
          xmlr_attr(cur,"chance",buf);
-         hunk.u.fleet.chance = atoi(buf);
          free(buf);
 
          /* Get the type. */
@@ -307,32 +306,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             WARN("Unknown hunk type.");
             hunk.type = HUNK_TYPE_NONE;
          }
-
-         /* Apply diff. */
-         if (diff_patchHunk( &hunk ) < 0)
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-      }
-      else if (xml_isNode(cur, "fleetgroup")) {
-         hunk.target.type = base.target.type;
-         hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Get the fleet properties. */
-         xmlr_attr(cur,"name",buf);
-         hunk.u.fleetgroup = fleet_getGroup(buf);
-         free(buf);
-
-         /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN("Unidiff '%s': Null hunk type.", diff->name);
-            continue;
-         }
-         if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
-         else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -455,6 +428,7 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_PLANET_REMOVE:
                WARN("   [%s] planet remove: '%s'", target, fail->u.name);
                break;
+#if 0
             case HUNK_TYPE_FLEET_ADD:
                WARN("   [%s] fleet add: '%s' (%d%% chance)", target, 
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
@@ -471,6 +445,7 @@ static int diff_patch( xmlNodePtr parent )
                WARN("   [%s] fleetgroup remove: '%s'", target,
                      fail->u.fleetgroup->name );
                break;
+#endif
             case HUNK_TYPE_TECH_ADD:
                WARN("   [%s] tech add: '%s'", target, 
                      fail->u.name );
@@ -509,19 +484,10 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding a fleet. */
       case HUNK_TYPE_FLEET_ADD:
-         return system_addFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
+         return system_addFleet( system_get(hunk->target.u.name), hunk->u.fleet );
       /* Removing a fleet. */
       case HUNK_TYPE_FLEET_REMOVE:
-         return system_rmFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
-
-      /* Adding a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_ADD:
-         return system_addFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
-      /* Removing a fleetgroup. */
-      case HUNK_TYPE_FLEETGROUP_REMOVE:
-         return system_rmFleetGroup( system_get(hunk->target.u.name),
-               hunk->u.fleetgroup );
+         return system_rmFleet( system_get(hunk->target.u.name), hunk->u.fleet );
 
       /* Adding a tech. */
       case HUNK_TYPE_TECH_ADD:
@@ -661,13 +627,6 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
          case HUNK_TYPE_FLEET_REMOVE:
             hunk.type = HUNK_TYPE_FLEET_ADD;
-            break;
-
-         case HUNK_TYPE_FLEETGROUP_ADD:
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
-            break;
-         case HUNK_TYPE_FLEETGROUP_REMOVE:
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
             break;
 
          case HUNK_TYPE_TECH_ADD:

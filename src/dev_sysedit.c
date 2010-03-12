@@ -138,7 +138,7 @@ void sysedit_open( StarSystem *sys )
    /* Reset some variables. */
    sysedit_sys    = sys;
    sysedit_drag   = 0;
-   sysedit_zoom   = 0.5;
+   sysedit_zoom   = 0.10;
    sysedit_xpos   = 0.;
    sysedit_ypos   = 0.;
 
@@ -393,6 +393,10 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    for (i=0; i<sys->nplanets; i++) {
       p              = sys->planets[i];
 
+      /* Must be real. */
+      if (p->real != ASSET_REAL)
+         continue;
+
       /* Check if selected. */
       sel.type       = SELECT_PLANET;
       sel.u.planet   = i;
@@ -574,6 +578,10 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             /* Check planets. */
             for (i=0; i<sys->nplanets; i++) {
                p = sys->planets[i];
+
+               /* Must be real. */
+               if (p->real != ASSET_REAL)
+                  continue;
 
                /* Position. */
                x = p->pos.x * sysedit_zoom;
@@ -913,9 +921,13 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
    char **files;
    glTexture **tex;
    int w, h;
+   Planet *p;
+
+   /* Comfort. */
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   snprintf( buf, sizeof(buf), "%s - Planet Properties", sysedit_sys->planets[ sysedit_select[0].u.planet ]->name );
+   snprintf( buf, sizeof(buf), "%s - Planet Properties", p->name );
    wid = window_create( buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
@@ -941,6 +953,7 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
 
    /* Add image array. */
    window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, files, nfiles, NULL, NULL );
+   toolkit_setImageArray( wid, "iarGFX", p->gfx_spacePath );
 }
 
 

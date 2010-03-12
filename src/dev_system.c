@@ -111,10 +111,10 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    sorted_planets = malloc( sizeof(Planet*) * sys->nplanets);
    memcpy( sorted_planets, sys->planets, sizeof(Planet*) * sys->nplanets );
    qsort( sorted_planets, sys->nplanets, sizeof(Planet*), dsys_compPlanet );
-   xmlw_startElem( writer, "planets" );
+   xmlw_startElem( writer, "assets" );
    for (i=0; i<sys->nplanets; i++)
-      xmlw_elem( writer, "planet", "%s", sorted_planets[i]->name );
-   xmlw_endElem( writer ); /* "planets" */
+      xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
+   xmlw_endElem( writer ); /* "assets" */
    free(sorted_planets);
 
    /* Jumps. */
@@ -140,12 +140,6 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    }
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
-
-   /* Fleets - not sorted, due for removal with faction presence. */
-   xmlw_startElem( writer, "fleets" );
-   for (i=0; i<sys->nfltdat; i++)
-      xmlw_elem( writer, "fleet", "%s", sys->fltdat[i] );
-   xmlw_endElem( writer );
 
    xmlw_endElem( writer ); /** "ssys" */
 

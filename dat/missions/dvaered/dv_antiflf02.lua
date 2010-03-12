@@ -102,13 +102,18 @@ function accept()
         flfdead = 0
         
         misn.addCargo("FLF IFF Transponder", 0)
-        
+       
+        hook.jumpout("jumpout")
         hook.enter("enter")
         hook.land("land")
     else
         tk.msg(refusetitle, refusetext)
         misn.finish()
     end
+end
+
+function jumpout()
+    last_sys = system.cur()
 end
 
 function enter()
@@ -137,7 +142,7 @@ end
 function spawnDV()
     misn.osdActive(3)
     missionstarted = true
-    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_nojump", player:pilot():pos(), true)
+    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_nojump", last_sys)
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
@@ -179,7 +184,7 @@ function spawnFLF()
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
-    fleetFLF = pilot.add("FLF Vendetta Sextet", "flf_nojump", player:pilot():pos() + vecFLF, false)
+    fleetFLF = pilot.add("FLF Vendetta Sextet", "flf_nojump", player:pilot():pos() + vecFLF )
     fleetDV[1]:comm(comm_msg)
     
     for i, j in ipairs(fleetFLF) do

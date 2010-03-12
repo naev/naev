@@ -51,6 +51,7 @@ extern int systems_nstack;
 
 static int uniedit_mode       = UNIEDIT_DEFAULT; /**< Editor mode. */
 static unsigned int uniedit_wid = 0; /**< Sysedit wid. */
+static unsigned int uniedit_widEdit = 0; /**< Sysedit editor wid. */
 static double uniedit_xpos    = 0.; /**< Viewport X position. */
 static double uniedit_ypos    = 0.; /**< Viewport Y position. */
 static double uniedit_zoom    = 1.; /**< Viewport zoom level. */
@@ -78,7 +79,11 @@ static void uniedit_selectText (void);
 /* System editing. */
 static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, char *name );
+static void uniedit_editGenList( unsigned int wid );
 static void uniedit_btnEditRename( unsigned int wid, char *unused );
+static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
+static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
+static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused );
 /* System reanming. */
 static int uniedit_checkName( char *name );
 static void uniedit_renameSys (void);
@@ -167,6 +172,12 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", uniedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
+
+   /* Presence. */
+   window_addText( wid, -20, -140, 90, 20, 0, "txtSPresence",
+         &gl_smallFont, &cDConsole, "Presence:" );
+   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPresence",
+         &gl_smallFont, &cBlack, "N/A" );
 
    /* Selected text. */
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
@@ -718,6 +729,7 @@ static void uniedit_deselect (void)
    window_disableButton( uniedit_wid, "btnEdit" );
    window_disableButton( uniedit_wid, "btnOpen" );
    window_modifyText( uniedit_wid, "txtSelected", "No selection" );
+   window_modifyText( uniedit_wid, "txtPresence", "N/A" );
 }
 
 
@@ -781,15 +793,48 @@ static void uniedit_selectText (void)
 {
    int i, l;
    char buf[1024];
+   StarSystem *sys;
+   int hasPresence;
+
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
       l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
-   if (l == 0)
+   if (l == 0) {
       uniedit_deselect();
-   else
+   }
+   else {
       window_modifyText( uniedit_wid, "txtSelected", buf );
+
+      /* Presence text. */
+      if (uniedit_nsys == 1) {
+         sys         = uniedit_sys[0];
+         buf[0]      = '\0';
+         hasPresence = 0;
+         l           = 0;
+
+         for (i=0; i < sys->npresence ; i++) {
+
+            /* Must have presence. */
+            if (sys->presence[i].value <= 0)
+               continue;
+
+            hasPresence = 1;
+            /* Use map grey instead of default neutral colour */
+            l += snprintf( &buf[l], sizeof(buf)-l, "%s\e0%s: %.0f",
+                  (l==0)?"":"\n", faction_name(sys->presence[i].faction),
+                  sys->presence[i].value);
+         }
+         if (hasPresence == 0)
+            snprintf( buf, sizeof(buf), "None" );
+
+         window_modifyText( uniedit_wid, "txtPresence", buf );
+      }
+      else {
+         window_modifyText( uniedit_wid, "txtPresence", "Multiple selected" );
+      }
+   }
 }
 
 
@@ -841,15 +886,65 @@ static void uniedit_editSys (void)
 
    /* Create the window. */
    wid = window_create( "Star System Property Editor", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   uniedit_widEdit = wid;
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_editSysClose );
 
+   /* Rename button. */
    y = -45;
    snprintf( buf, sizeof(buf), "Name: \en%s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
    window_addText( wid, 20, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", uniedit_btnEditRename );
+   y -= 30;
+
+   /* Generate the list. */
+   uniedit_editGenList( wid );
+}
+
+
+/**
+ * @brief Generates the virtual asset list.
+ */
+static void uniedit_editGenList( unsigned int wid )
+{
+   int i, j, n;
+   StarSystem *sys;
+   Planet *p;
+   char **str;
+   int y, h;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstAssets" ))
+      window_destroyWidget( wid, "lstAssets" );
+
+   y = -75;
+
+   /* Virtual asset button. */
+   sys   = uniedit_sys[0];
+   n     = sys->nplanets;
+   str   = malloc( sizeof(char*) * (n+1) );
+   j     = 0;
+   str[j++] = strdup("None");
+   for (i=0; i<n; i++) {
+      p     = sys->planets[i];
+      if (p->real == ASSET_VIRTUAL) {
+         str[j++] = strdup( p->name );
+      }
+   }
+   h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
+   window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
+         "lstAssets", str, j, 0, NULL );
+   y -= h + 20;
+
+   /* Add buttons if needed. */
+   if (!widget_exists( wid, "btnRmAsset" ))
+      window_addButton( wid, -20, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnRmAsset", "Remove", uniedit_btnEditRmAsset );
+   if (!widget_exists( wid, "btnAddAsset" ))
+      window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnAddAsset", "Add", uniedit_btnEditAddAsset );
 }
 
 
@@ -858,8 +953,114 @@ static void uniedit_editSys (void)
  */
 static void uniedit_editSysClose( unsigned int wid, char *name )
 {
+   /* Text might need changing. */
+   uniedit_selectText();
+
    /* Close the window. */
    window_close( wid, name );
+}
+
+
+/**
+ * @brief Removes a selected asset.
+ */
+static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
+{
+   (void) unused;
+   char *selected;
+   int ret;
+
+   /* Get selection. */
+   selected = toolkit_getList( wid, "lstAssets" );
+
+   /* Make sure it's valid. */
+   if ((selected==NULL) || (strcmp(selected,"None")==0))
+      return;
+
+   /* Remove the asset. */
+   ret = system_rmPlanet( uniedit_sys[0], selected );
+   if (ret != 0) {
+      dialogue_alert( "Failed to remove planet '%s'!", selected );
+      return;
+   }
+
+   uniedit_editGenList( wid );
+}
+
+
+/**
+ * @brief Adds a new asset.
+ */
+static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
+{
+   (void) parent;
+   (void) unused;
+   unsigned int wid;
+   int i, j, n;
+   Planet *p;
+   char **str;
+   int h;
+
+   /* Get all assets. */
+   p  = planet_getAll( &n );
+   j  = 0;
+   for (i=0; i<n; i++)
+      if (p[i].real == ASSET_VIRTUAL)
+         j = 1;
+   if (j==0) {
+      dialogue_alert( "No virtual assets to add! Please add virtual assets to dat/asset.xml first." );
+      return;
+   }
+
+   /* Create the window. */
+   wid = window_create( "Add a Virtual Asset", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, window_close );
+
+   /* Add virtual asset list. */
+   str   = malloc( sizeof(char*) * n );
+   j     = 0;
+   for (i=0; i<n; i++)
+      if (p[i].real == ASSET_VIRTUAL)
+         str[j++] = strdup( p[i].name );
+   h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
+   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
+         "lstAssets", str, j, 0, NULL );
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", window_close );
+
+   /* Add button. */
+   window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnAdd", "Add", uniedit_btnEditAddAssetAdd );
+}
+
+
+/**
+ * @brief Actually adds the asset.
+ */
+static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
+{
+   char *selected;
+   int ret;
+
+   /* Get selection. */
+   selected = toolkit_getList( wid, "lstAssets" );
+   if (selected == NULL)
+      return;
+
+   /* Add virtual presence. */
+   ret = system_addPlanet( uniedit_sys[0], selected );
+   if (ret != 0) {
+      dialogue_alert( "Failed to add virtual asset '%s'!", selected );
+      return;
+   }
+
+   /* Regenerate the list. */
+   uniedit_editGenList( uniedit_widEdit );
+
+   /* Close the window. */
+   window_close( wid, unused );
 }
 
 

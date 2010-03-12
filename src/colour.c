@@ -17,15 +17,7 @@
 #include "naev.h"
 #include "log.h"
 #include "ncompat.h"
-
-#if HAS_WIN32
-#include <shlwapi.h>
-#define STRCASECMP      lstrcmpiA
-#else /* HAS_WIN32 */
-#include <strings.h>
-#define STRCASECMP      strcasecmp
-#endif /* HAS_WIN32 */
-
+#include "nstd.h"
 
 
 /*
@@ -80,6 +72,7 @@ glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.3 }; /**< Hili
 /* objects */
 glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1.  }; /**< Inert object colour */
 glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  }; /**< Neutral object colour */
+glColour cMapNeutral    =  { .r = 0.3, .g = 0.3, .b = 0.3, .a = 1.  }; /**< Neutral object map screen text colour */
 glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
 glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
 /* radar */

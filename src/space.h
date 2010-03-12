@@ -19,6 +19,8 @@
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
+#define ASSET_VIRTUAL         0 /**< The asset is virtual. */
+#define ASSET_REAL            1 /**< The asset is real. */
 
 /**
  * @brief Different planet classes.
@@ -85,8 +87,11 @@ typedef struct Planet_ {
    PlanetClass class; /**< planet type */
    int faction; /**< planet faction */
    uint64_t population; /**< Population of the planet. */
-   double prodfactor; /**< Default Production factor of the planet. */
-   double cur_prodfactor; /**< Current real production factor of the planet. */
+
+   /* Asset details. */
+   double presenceAmount; /**< The amount of presence this asset exerts. */
+   int presenceRange; /**< The range of presence exertion of this asset. */
+   int real; /**< If the asset is tangible or not. */
   
    /* Landing details. */
    char* description; /**< planet description */
@@ -121,19 +126,30 @@ typedef struct Planet_ {
 /*
  * Forward declaration.
  */
-struct StarSystem_;
 typedef struct StarSystem_ StarSystem;
 
 
 /**
  * @struct SystemFleet
  *
- * @brief Represents a fleet that can appear in the system.
+ * @brief Used for freeing presence when fleets in the system get destroyed.
  */
 typedef struct SystemFleet_ {
-   Fleet* fleet; /**< fleet to appear */
-   int chance; /**< chance of fleet appearing in the system */
+   int npilots; /**< The number of pilots. */
+   int faction; /**< The faction of the fleet. */
+   double presenceUsed; /** < The amount of presence used by this fleet. */
 } SystemFleet;
+
+
+/**
+ * @brief Represents presence in a system
+ */
+typedef struct SystemPresence_ {
+   int faction; /**< Faction of this presence. */
+   double value; /**< Amount of presence. */
+   double curUsed; /**< Presence currently used. */
+   double timer; /**< Current faction timer. */
+} SystemPresence;
 
 
 /*
@@ -164,6 +180,7 @@ typedef struct JumpPoint_ {
    int sy; /**< Y sprite to use. */
 } JumpPoint;
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
+
 
 /**
  * @struct StarSystem
@@ -196,17 +213,19 @@ struct StarSystem_ {
    int njumps; /**< number of adjacent jumps */
 
    /* Fleets. */
-   SystemFleet* fleets; /**< fleets that can appear in the current system */
+   Fleet** fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
-   /* Fleet data - @TODO Remove in favour of more sane fleet spawn system. */
-   char **fltdat;
-   int nfltdat;
-
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
-   double security; /**< % of security in this system. */
+
+   /* Presence. */
+   SystemPresence *presence; /**< Pointer to an array of presences in this system. */
+   int npresence; /**< Number of elements in the presence array. */
+   int spilled; /**< If the system has been spilled to yet. */
+   int nsystemFleets; /**< The number of fleets in the system. */
+   SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
 
    /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
@@ -250,10 +269,8 @@ void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
-int system_addFleet( StarSystem *sys, SystemFleet *fleet );
-int system_rmFleet( StarSystem *sys, SystemFleet *fleet );
-int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
-int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
+int system_addFleet( StarSystem *sys, Fleet *fleet );
+int system_rmFleet( StarSystem *sys, Fleet *fleet );
 
 /*
  * render
@@ -262,6 +279,14 @@ void space_renderStars( const double dt );
 void space_render( const double dt );
 void space_renderOverlay( const double dt );
 void planets_render (void);
+
+/*
+ * Presence stuff
+ */
+void system_addPresence( StarSystem *sys, int faction, double amount, int range );
+double system_getPresence( StarSystem *sys, int faction );
+void system_addAllPlanetsPresence( StarSystem *sys );
+void system_rmCurrentPresence( StarSystem *sys, int faction, int presence );
 
 /*
  * update
@@ -287,6 +312,7 @@ int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
+int system_hasPlanet( StarSystem *sys );
 
 
 /* 

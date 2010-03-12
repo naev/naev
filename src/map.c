@@ -19,6 +19,7 @@
 #include "mission.h"
 #include "colour.h"
 #include "player.h"
+#include "faction.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -50,6 +51,7 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 /* space.c */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
+extern int faction_nstack;
 
 
 /*
@@ -171,10 +173,10 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Standing:" );
    window_addText( wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
-   /* Security. */
-   window_addText( wid, -20, -140, 90, 20, 0, "txtSSecurity",
-         &gl_smallFont, &cDConsole, "Security:" );
-   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtSecurity",
+   /* Presence. */
+   window_addText( wid, -20, -140, 90, 20, 0, "txtSPresence",
+         &gl_smallFont, &cDConsole, "Presence:" );
+   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, NULL );
    /* Planets */
    window_addText( wid, -20, -180, 90, 20, 0, "txtSPlanets",
@@ -231,15 +233,21 @@ static void map_update( unsigned int wid )
    int f, y, h, multiple_faction;
    double standing, nstanding;
    unsigned int services;
+   int l;
+   int hasPresence, hasPlanets;
+   char t;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
+   double w;
 
    /* Needs map to update. */
    if (!map_isOpen())
       return;
 
+   /* Get selected system. */
    sys = system_getIndex( map_selected );
+   w   = 80.; /* Width of the side bar. */
 
    /* Not known and no markers. */
    if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
@@ -267,10 +275,10 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSStanding", -20, -100 );
       window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
       window_modifyText( wid, "txtStanding", "Unknown" );
-      /* Security. */
-      window_moveWidget( wid, "txtSSecurity", -20, -140 );
-      window_moveWidget( wid, "txtSecurity",  -20, -140-gl_smallFont.h-5 );
-      window_modifyText( wid, "txtSecurity", "Unknown" );
+      /* Presence. */
+      window_moveWidget( wid, "txtSPresence", -20, -140 );
+      window_moveWidget( wid, "txtPresence",  -20, -140-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtPresence", "Unknown" );
       /* Planets */
       window_moveWidget( wid, "txtSPlanets", -20, -180 );
       window_moveWidget( wid, "txtPlanets", -20, -180-gl_smallFont.h-5 );
@@ -295,16 +303,18 @@ static void map_update( unsigned int wid )
    f         = -1;
    multiple_faction = 0;
    for (i=0; i<sys->nplanets; i++) {
-      if ((f==-1) && (sys->planets[i]->faction>0)) {
-         f = sys->planets[i]->faction;
-         standing += faction_getPlayer( f );
-         nstanding++;
-      }
-      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-            (sys->planets[i]->faction>0)) {
-         snprintf( buf, PATH_MAX, "Multiple" );
-         multiple_faction = 1;
-         break;
+      if(sys->planets[i]->real == ASSET_REAL) {
+         if ((f==-1) && (sys->planets[i]->faction>0)) {
+            f = sys->planets[i]->faction;
+            standing += faction_getPlayer( f );
+            nstanding++;
+         }
+         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+                  (sys->planets[i]->faction>0)) {
+            snprintf( buf, PATH_MAX, "Multiple" );
+            multiple_faction = 1;
+            break;
+         }
       }
    }
    if (f == -1) {
@@ -322,6 +332,7 @@ static void map_update( unsigned int wid )
       if (i==sys->nplanets) /* saw them all and all the same */
          snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
+      /* Scroll down. */
       y = -60;
 
       /* Modify the image. */
@@ -330,6 +341,7 @@ static void map_update( unsigned int wid )
       if (logo != NULL) {
          window_moveWidget( wid, "imgFaction",
                -(90-logo->w)/2-20-logo->w, y-(64-logo->h)/2-logo->h );
+      /* Scroll down. */
          y -= 64 + 10;
       }
 
@@ -341,47 +353,66 @@ static void map_update( unsigned int wid )
       /* Lower text if needed */
       window_moveWidget( wid, "txtSFaction", -20, y );
       window_moveWidget( wid, "txtFaction", -20, y-gl_smallFont.h-5 );
-      h = gl_printHeightRaw( &gl_smallFont, 80, buf );
+      h = gl_printHeightRaw( &gl_smallFont, w, buf );
       window_moveWidget( wid, "txtSStanding", -20, y );
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
+      /* Scroll down. */
       y -= 40 + (h - gl_smallFont.h);
       window_moveWidget( wid, "txtSStanding", -20, y );
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
 
-   /* Get security. */
+   /* Scroll down. */
    y -= 40;
-   if (sys->nfleets == 0)
-      snprintf(buf, PATH_MAX, "NA" );
-   else
-      snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
-   window_moveWidget( wid, "txtSSecurity", -20, y );
-   window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
-   window_modifyText( wid, "txtSecurity", buf );
+   /* Get presence. */
+   hasPresence = 0;
+   buf[0]      = '\0';
+   l           = 0;
+   for (i=0; i < sys->npresence; i++) {
+      if (sys->presence[i].value <= 0)
+         continue;
+      hasPresence = 1;
+      t           = faction_getColourChar(sys->presence[i].faction);
+      /* Use map grey instead of default neutral colour */
+      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", faction_name(sys->presence[i].faction),
+                     (t=='N')?'M':t, sys->presence[i].value);
+   }
+   if (hasPresence == 0)
+      snprintf(buf, PATH_MAX, "N/A");
+   window_moveWidget( wid, "txtSPresence", -20, y );
+   window_moveWidget( wid, "txtPresence", -20, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtPresence", buf );
+   /* Scroll down. */
+   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   y -= 40 + (h - gl_smallFont.h);
 
    /* Get planets */
-   if (sys->nplanets == 0) {
-      strncpy( buf, "None", PATH_MAX );
-      window_modifyText( wid, "txtPlanets", buf );
-   }
-   else {
-      p = 0;
-      buf[0] = '\0';
-      if (sys->nplanets > 0)
+   hasPlanets = 0;
+   p = 0;
+   buf[0] = '\0';
+   if (sys->nplanets > 0)
+      if(sys->planets[0]->real == ASSET_REAL) {
+         hasPlanets = 1;
          p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
-      for (i=1; i<sys->nplanets; i++) {
-         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
       }
-
-      window_modifyText( wid, "txtPlanets", buf );
+   for (i=1; i<sys->nplanets; i++) {
+      if(sys->planets[i]->real != ASSET_REAL)
+         continue;
+      hasPlanets = 1;
+      p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
    }
-   y -= 40;
+   if(hasPlanets == 0)
+      strncpy( buf, "None", PATH_MAX );
+   /* Update text. */
+   window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", -20, y );
    window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
+   /* Scroll down. */
+   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   y -= 40 + (h - gl_smallFont.h);
 
    /* Get the services */
-   h = gl_printHeightRaw( &gl_smallFont, 80, buf );
-   y -= 40 + (h - gl_smallFont.h);
    window_moveWidget( wid, "txtSServices", -20, y );
    window_moveWidget( wid, "txtServices", -20, y-gl_smallFont.h-5 );
    services = 0;
@@ -673,16 +704,15 @@ void map_renderSystems( double bx, double by, double x, double y,
       }
 
       /* Draw the system. */
-      if ((!editor && !sys_isKnown(sys)) || (sys->nfleets==0)) col = &cInert;
-      else if (sys->security >= 1.) col = &cGreen;
-      else if (sys->security >= 0.6) col = &cOrange;
-      else if (sys->security >= 0.3) col = &cRed;
-      else col = &cDarkRed;
+      if ((!editor && !sys_isKnown(sys)) || (sys->nfleets==0))
+         col = &cInert;
+      else
+         col = faction_colour(sys->faction);
 
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* If system is known fill it. */
-      if ((editor || sys_isKnown(sys)) && (sys->nplanets > 0)) {
+      if ((editor || sys_isKnown(sys)) && (system_hasPlanet(sys))) {
          /* Planet colours */
          if (!editor && !sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;

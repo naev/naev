@@ -73,7 +73,7 @@ function jump ()
       d = rnd.rnd( 900, 1200 )
       a = rnd.rnd() * 2 * math.pi
       swarm_position = vec2.new( d*math.cos(a), d*math.sin(a) )
-      pilot.add("Collective Sml Swarm", "def", swarm_position)
+      pilot.add("Collective Sml Swarm", nil, swarm_position)
       misn.timerStart( "reinforcements", 3000 )
       misn.timerStart( "drone_incoming", 9000 )
    elseif factions["Collective"] then

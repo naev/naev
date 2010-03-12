@@ -487,7 +487,7 @@ static void player_newShipMake( char* name )
 
       /* Create the player. */
       pilot_create( player_ship, name, faction_get("Player"), NULL,
-            player_dir, &vp, &vv, flags );
+            player_dir, &vp, &vv, flags, -1 );
    }
    else {
       /* Grow memory. */
@@ -1424,7 +1424,8 @@ void player_targetPlanet (void)
    while (player.p->nav_planet < cur_system->nplanets) {
 
       /* In range, target planet. */
-      if (pilot_inRangePlanet( player.p, player.p->nav_planet )) {
+      if ((cur_system->planets[ player.p->nav_planet ]->real == ASSET_REAL)
+            && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
          player_playSound(snd_nav, 1);
          player.p->nav_hyperspace = -1;
          return;
@@ -3136,7 +3137,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* player.p is currently on this ship */
    if (is_player != 0) {
       pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL,
-            PILOT_PLAYER | PILOT_NO_OUTFITS );
+            PILOT_PLAYER | PILOT_NO_OUTFITS, -1 );
       ship = player.p;
    }
    else

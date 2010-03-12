@@ -320,7 +320,7 @@
   </slots>
  </ship>
  <!-- Fighters -->
- <ship name="Derivative">
+ <ship name="Proteron Derivative">
   <base_type>Derivative</base_type>
   <GFX>derivative</GFX>
   <GUI>minimal</GUI>
@@ -907,7 +907,7 @@
    <low />
   </slots>
  </ship>
- <ship name="Kahan">
+ <ship name="Proteron Kahan">
   <base_type>Kahan</base_type>
   <GFX sx="10" sy="10">kahan</GFX>
   <GUI>minimal</GUI>
@@ -1138,7 +1138,7 @@
    <low />
   </slots>
  </ship>
- <ship name="Archimedes">
+ <ship name="Proteron Archimedes">
   <base_type>Archimedes</base_type>
   <GFX sx="12" sy="12">archimedes</GFX>
   <GUI>minimal</GUI>
@@ -1444,6 +1444,7 @@
    <low />
   </slots>
  </ship>
+ <!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->
  <ship name="Base">
   <base_type>Base</base_type>
   <GFX sx="1" sy="1">base</GFX>
