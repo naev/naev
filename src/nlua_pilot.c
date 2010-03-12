@@ -294,12 +294,12 @@ static int pilotL_getPlayer( lua_State *L )
 {
    LuaPilot lp;
 
-   if (player == NULL) {
+   if (player.p == NULL) {
       lua_pushnil(L);
       return 1;
    }
 
-   lp.pilot = player->id;
+   lp.pilot = player.p->id;
    lua_pushpilot(L,lp);
    return 1;
 }
@@ -901,7 +901,7 @@ static int pilotL_comm( lua_State *L )
 
    /* Check to see if pilot is valid. */
    if (target == NULL)
-      t = player;
+      t = player.p;
    else {
       t = pilot_get(target->pilot);
       if (t == NULL) {
@@ -1571,7 +1571,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
    }
 
    /* Creates the new task. */
-   t = ai_newtask( p, task, 1 );
+   t = ai_newtask( p, task, 0, 1 );
 
    return t;
 }

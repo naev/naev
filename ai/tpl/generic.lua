@@ -38,13 +38,13 @@ function control ()
       if enemy ~= nil and mem.aggressive then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
-         ai.pushtask(0, "attack", enemy)
+         ai.pushtask("attack", enemy)
       else
          idle()
       end
 
    -- Don't stop boarding
-   elseif task == "board" or task == "boardstop" then
+   elseif task == "board" then
       -- We want to think in case another attacker gets close
       attack_think()
 
@@ -63,7 +63,7 @@ function control ()
                and ai.pshield() < ai.pshield(target) ) or
             (mem.armour_run > 0 and ai.parmour() < mem.armour_run
                and ai.parmour() < ai.parmour(target) ) then
-         ai.pushtask(0, "runaway", target)
+         ai.pushtask("runaway", target)
 
       -- Think like normal
       else
@@ -103,11 +103,7 @@ function control ()
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
       taunt(enemy, true)
-      ai.pushtask(0, "attack", enemy)
-
-   -- Enter hyperspace if possible
-   elseif task == "hyperspace" then 
-      ai.hyperspace() -- try to hyperspace 
+      ai.pushtask("attack", enemy)
 
    end
 end
@@ -128,11 +124,11 @@ function attacked ( attacker )
          taunt( attacker, false )
 
          -- Now pilot fights back
-         ai.pushtask(0, "attack", attacker)
+         ai.pushtask("attack", attacker)
       else
 
          -- Runaway
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
 
    -- Let attacker profile handle it.
@@ -142,7 +138,7 @@ function attacked ( attacker )
    elseif task == "runaway" then
       if ai.target() ~= attacker then
          ai.poptask()
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
    end
 end
@@ -153,18 +149,18 @@ function idle ()
    -- planet must exist
    if planet == nil or mem.land_planet == false then
       ai.settimer(0, rnd.int(1000, 3000))
-      ai.pushtask(0, "enterdelay")
+      ai.pushtask("enterdelay")
    else
       mem.land = planet
-      ai.pushtask(0, "hyperspace")
-      ai.pushtask(0, "land")
+      ai.pushtask("hyperspace")
+      ai.pushtask("land")
    end
 end
 
 -- Delays the ship when entering systems so that it doesn't leave right away
 function enterdelay ()
    if ai.timeup(0) then
-      ai.pushtask(0, "hyperspace")
+      ai.pushtask("hyperspace")
    end
 end
 
@@ -210,13 +206,13 @@ function distress ( pilot, attacker )
    local task = ai.taskname()
    -- If not attacking nor fleeing, begin attacking
    if task ~= "attack" and task ~= "runaway" then
-      ai.pushtask( 0, "attack", t )
+      ai.pushtask( "attack", t )
    -- We're sort of busy
    elseif task == "attack" then
       local target = ai.target()
 
       if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
-         ai.pushtask( 0, "attack", t )
+         ai.pushtask( "attack", t )
       end
    end
 end

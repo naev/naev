@@ -112,8 +112,7 @@ int save_all (void)
    }
 
    /* Set the writer parameters. */
-   xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
-   xmlTextWriterSetIndent(writer, 1);
+   xmlw_setParams( writer );
 
    /* Start element. */
    xmlw_start(writer);
@@ -140,7 +139,7 @@ int save_all (void)
       WARN("Aborting save...");
       goto err_writer;
    }
-   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
 
    /* Back up old savegame. */
    if (nfile_backupIfExists(file) < 0) {
@@ -172,7 +171,7 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    load_game( path );
 }
 

@@ -60,8 +60,7 @@
 #define FLAG_ASTEROIDSSET     (1<<2) /**< Set the asteroid value. */
 #define FLAG_INTERFERENCESET  (1<<3) /**< Set the interference value. */
 #define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
-#define FLAG_TECHSET          (1<<5) /**< Set the tech value. */
-#define FLAG_FACTIONSET       (1<<6) /**< Set the faction value. */
+#define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
 
 
 /*
@@ -92,6 +91,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
  */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
+glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 
 
 /*
@@ -105,7 +105,7 @@ extern int pilot_nstack;
 /*
  * star stack and friends
  */
-#define STAR_BUF  100   /**< Area to leave around screen for stars, more = less repitition */
+#define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
 /**
  * @struct Star
  *
@@ -132,14 +132,19 @@ static double interference_timer = 0.; /**< Interference timer. */
 /* planet load */
 static int planet_parse( Planet* planet, const xmlNodePtr parent );
 /* system load */
+static void system_init( StarSystem *sys );
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
+static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
+/* Render. */
+static void space_renderJumpPoint( JumpPoint *jp, int i );
+static void space_renderPlanet( Planet *p );
 /*
  * Externed prototypes.
  */
@@ -197,7 +202,7 @@ static PlanetClass planetclass_get( const char a )
  *    @param p Planet to get the class char from.
  *    @return The planet's class char.
  */
-char planet_getClass( Planet *p )
+char planet_getClass( const Planet *p )
 {
    switch (p->class) {
       case PLANET_CLASS_A: return 'A';
@@ -242,17 +247,26 @@ char planet_getClass( Planet *p )
  *    @param p Pilot to check if he can hyperspace.
  *    @return 1 if he can hyperspace, 0 else.
  */
-int space_canHyperspace( Pilot* p)
+int space_canHyperspace( Pilot* p )
 {
-   int i;
    double d;
-   if (p->fuel < HYPERSPACE_FUEL) return 0;
+   JumpPoint *jp;
 
-   for (i=0; i < cur_system->nplanets; i++) {
-      d = vect_dist(&p->solid->pos, &cur_system->planets[i]->pos);
-      if (d < HYPERSPACE_EXIT_MIN)
-         return 0;
-   }
+   /* Must have fuel. */
+   if (p->fuel < HYPERSPACE_FUEL)
+      return 0;
+
+   /* Must have hyperspace target. */
+   if (p->nav_hyperspace < 0)
+      return 0;
+
+   /* Get the jump. */
+   jp = &cur_system->jumps[ p->nav_hyperspace ];
+
+   /* Check distance. */
+   d = vect_dist2( &p->solid->pos, &jp->pos );
+   if (d > jp->radius*jp->radius)
+      return 0;
    return 1;
 }
 
@@ -276,6 +290,64 @@ int space_hyperspace( Pilot* p )
    return 0;
 }
 
+
+/**
+ * @brief Calculates the jump in pos for a pilot.
+ *
+ *    @param in Star system entering.
+ *    @param out Star system exitting.
+ *    @param[out] pos Position calculated.
+ *    @param[out] vel Velocity calculated.
+ */
+int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
+{
+   int i;
+   JumpPoint *jp;
+   double a, d, x, y;
+   double ea, ed;
+
+   /* Find the entry system. */
+   jp = NULL;
+   for (i=0; i<in->njumps; i++)
+      if (in->jumps[i].target == out)
+         jp = &in->jumps[i];
+
+   /* Must have found the jump. */
+   if (jp == NULL) {
+      WARN("Unable to find jump in point for '%s' in '%s': not connected", out->name, in->name);
+      return -1;
+   }
+
+   /* Base position target. */
+   x = jp->pos.x;
+   y = jp->pos.y;
+
+   /* Calculate offset from target position. */
+   a = 2*M_PI - jp->angle;
+   d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+  
+   /* Calculate new position. */
+   x += d*cos(a);
+   y += d*sin(a);
+
+   /* Add some error. */
+   ea = 2*M_PI*RNGF();
+   ed = jp->radius/2.;
+   x += ed*cos(ea);
+   y += ed*sin(ea);
+
+   /* Set new position. */
+   vect_cset( pos, x, y );
+
+   /* Set new velocity. */
+   a += M_PI;
+   vect_cset( vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
+
+   /* Set direction. */
+   *dir = a;
+
+   return 0;
+}
 
 /**
  * @brief Gets the name of all the planets that belong to factions.
@@ -364,10 +436,23 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (sys_isKnown(system_getIndex( sys->jumps[i] )))
+      if (sys_isKnown( sys->jumps[i].target ))
          return 1;
 
    return 0;
+}
+
+
+/**
+ * @brief Gets all the star systems.
+ *
+ *    @param[out] Number of star systems gotten.
+ *    @return The star systems gotten.
+ */
+const StarSystem* system_getAll( int *nsys )
+{
+   *nsys = systems_nstack;
+   return systems_stack;
 }
 
 
@@ -385,7 +470,7 @@ StarSystem* system_get( const char* sysname )
       if (strcmp(sysname, systems_stack[i].name)==0)
          return &systems_stack[i];
 
-   DEBUG("System '%s' not found in stack", sysname);
+   WARN("System '%s' not found in stack", sysname);
    return NULL;
 }
 
@@ -442,6 +527,64 @@ Planet* planet_get( const char* planetname )
 
    WARN("Planet '%s' not found in the universe", planetname);
    return NULL;
+}
+
+
+/**
+ * @brief Gets planet by index.
+ *
+ *    @param ind Index of the planet to get.
+ *    @return The planet gotten.
+ */
+Planet* planet_getIndex( int ind )
+{
+   /* Sanity check. */
+   if ((ind < 0) || (ind >= planet_nstack)) {
+      WARN("Planet index '%d' out of range (max %d)", ind, planet_nstack);
+      return NULL;
+   }
+
+   return &planet_stack[ ind ];
+}
+
+
+/**
+ * @brief Gets the number of planets.
+ *
+ *    @return The number of planets.
+ */
+int planet_getNum (void)
+{
+   return planet_nstack;
+}
+
+
+/**
+ * @brief Gets all the planets.
+ *
+ *    @param n Number of planets gotten.
+ *    @return Array of gotten planets.
+ */
+Planet* planet_getAll( int *n )
+{
+   *n = planet_nstack;
+   return planet_stack;
+}
+
+
+/**
+ * @brief Check to see if a planet exists.
+ *
+ *    @param planetname Name of the planet to see if it exists.
+ *    @return 1 if planet exists.
+ */
+int planet_exists( const char* planetname )
+{
+   int i;
+   for (i=0; i<planet_nstack; i++)
+      if (strcmp(planet_stack[i].name,planetname)==0)
+         return 1;
+   return 0;
 }
 
 
@@ -508,8 +651,8 @@ void space_update( const double dt )
     */
    if (cur_system->nebu_volatility > 0.) {
       /* Player takes damage. */
-      if (player)
-         pilot_hit( player, NULL, 0, DAMAGE_TYPE_RADIATION,
+      if (player.p)
+         pilot_hit( player.p, NULL, 0, DAMAGE_TYPE_RADIATION,
                pow2(cur_system->nebu_volatility) / 500. * dt );
    }
 
@@ -572,6 +715,7 @@ static void space_addFleet( Fleet* fleet, int init )
    unsigned int flags;
    double a, d;
    Vector2d vv,vp, vn;
+   JumpPoint *jp;
 
    /* Needed to determine angle. */
    vectnull(&vn);
@@ -589,11 +733,10 @@ static void space_addFleet( Fleet* fleet, int init )
 
    /* simulate they came from hyperspace */
    if (c==0) {
-      d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-      vect_pset( &vp, d, RNGF()*2.*M_PI);
+      jp = &cur_system->jumps[ RNG(0,cur_system->njumps-1) ];
    }
    /* Starting out landed or heading towards landing.. */
-   else if ((c==1) || (c==2)) {
+   else {
       /* Get friendly planet to land on. */
       planet = NULL;
       for (i=0; i<cur_system->nplanets; i++)
@@ -605,9 +748,8 @@ static void space_addFleet( Fleet* fleet, int init )
 
       /* No suitable planet found. */
       if (planet == NULL) {
-         d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-         vect_pset( &vp, d, RNGF()*2.*M_PI);
-         c = 0;
+         jp = &cur_system->jumps[ RNG(0,cur_system->njumps-1) ];
+         c  = 0;
       }
       else {
          /* Start out landed. */
@@ -633,10 +775,8 @@ static void space_addFleet( Fleet* fleet, int init )
          flags = 0;
 
          /* Entering via hyperspace. */
-         if (c==0) {
-            vect_pset( &vv, HYPERSPACE_VEL, a );
-            flags |= PILOT_HYP_END;
-         }
+         if (c==0)
+            space_calcJumpInPos( cur_system, jp->target, &vp, &vv, &a );
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);
@@ -732,7 +872,7 @@ void space_init ( const char* sysname )
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
-   pilot_clearTimers(player); /* Clear timers. */
+   pilot_clearTimers(player.p); /* Clear timers. */
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
@@ -751,7 +891,7 @@ void space_init ( const char* sysname )
 
       if (i>=systems_nstack)
          ERR("System %s not found in stack", sysname);
-      cur_system = systems_stack+i;
+      cur_system = &systems_stack[i];
 
       nt = ntime_pretty(0);
       player_message("\epEntering System %s on %s.", sysname, nt);
@@ -786,7 +926,7 @@ void space_init ( const char* sysname )
    music_choose(NULL);
 
    /* Reset player enemies. */
-   player_enemies = 0;
+   player.enemies = 0;
 
    /* Update the pilot sensor range. */
    pilot_updateSensorRange();
@@ -806,6 +946,38 @@ void space_init ( const char* sysname )
 
 
 /**
+ * @brief Creates a new planet.
+ */
+Planet *planet_new (void)
+{
+   Planet *p;
+   int realloced;
+
+   /* See if stack must grow. */
+   planet_nstack++;
+   realloced = 0;
+   if (planet_nstack > planet_mstack) {
+      planet_mstack += CHUNK_SIZE;
+      planet_stack   = realloc( planet_stack, sizeof(Planet) * planet_mstack );
+      realloced      = 1;
+   }
+
+   /* Clean up memory. */
+   p           = &planet_stack[ planet_nstack-1 ];
+   memset( p, 0, sizeof(Planet) );
+   p->id       = planet_nstack-1;
+   p->faction  = -1;
+   p->class    = PLANET_CLASS_A;
+
+   /* Reconstruct the jumps. */
+   if (!systems_loading && realloced)
+      systems_reconstructPlanets();
+
+   return p;
+}
+
+
+/**
  * @brief Loads all the planets in the game.
  *
  *    @return 0 on success.
@@ -816,6 +988,7 @@ static int planets_load ( void )
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
+   Planet *p;
 
    buf = ndata_read( PLANET_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
@@ -841,15 +1014,8 @@ static int planets_load ( void )
 
    do {
       if (xml_isNode(node,XML_PLANET_TAG)) {
-
-         /* See if stack must grow. */
-         planet_nstack++;
-         if (planet_nstack > planet_mstack) {
-            planet_mstack += CHUNK_SIZE;
-            planet_stack = realloc( planet_stack, sizeof(Planet) * planet_mstack );
-         }
-
-         planet_parse( &planet_stack[planet_nstack-1], node );
+         p = planet_new();
+         planet_parse( p, node );
       }
    } while (xml_nextNode(node));
 
@@ -872,14 +1038,12 @@ static int planets_load ( void )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent )
 {
-   int i, mem;
+   int mem;
    char str[PATH_MAX];
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
-   memset( planet, 0, sizeof(Planet) );
-   planet->faction = -1;
    flags = 0;
 
    /* Get the name. */
@@ -897,10 +1061,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             if (xml_isNode(cur,"space")) { /* load space gfx */
                planet->gfx_space = xml_parseTexture( cur,
                      PLANET_GFX_SPACE"%s", 1, 1, OPENGL_TEX_MIPMAPS );
+               planet->gfx_spacePath = xml_getStrd(cur);
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
+               planet->gfx_exteriorPath = xml_getStrd(cur);
             }
          } while (xml_nextNode(cur));
          continue;
@@ -925,7 +1091,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             /* Direct reads. */
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
-            xmlr_long(cur, "population", planet->population );
+            xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "prodfactor", planet->prodfactor );
 
             if (xml_isNode(cur,"class"))
@@ -961,24 +1127,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
                } while (xml_nextNode(ccur));
             }
-            else if (xml_isNode(cur, "tech")) {
-               ccur = cur->children;
-               do {
-                  if (xml_isNode(ccur,"main")) {
-                     flags |= FLAG_TECHSET;
-                     planet->tech[0] = xml_getInt(ccur);
-                  }
-                  else if (xml_isNode(ccur,"special")) {
-                     for (i=1; i<PLANET_TECH_MAX; i++)
-                        if (planet->tech[i]==0) {
-                           planet->tech[i] = xml_getInt(ccur);
-                           break;
-                        }
-                     if (i==PLANET_TECH_MAX) WARN("Planet '%s' has too many"
-                           "'special tech' entries", planet->name);
-                  }
-               } while (xml_nextNode(ccur));
-            }
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
@@ -1001,6 +1149,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->ncommodities * sizeof(Commodity*));
             }
          } while(xml_nextNode(cur));
+         continue;
+      }
+      else if (xml_isNode(node, "tech")) {
+         planet->tech = tech_groupCreate( node );
          continue;
       }
 
@@ -1026,7 +1178,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-         planet->description==NULL,"desription");
+         planet->description==NULL,"description");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
          planet->bar_description==NULL,"bar");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
@@ -1034,7 +1186,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
    MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
             planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
-         (flags&FLAG_TECHSET)==0, "tech" );
+         (planet->tech==NULL), "tech" );
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
          (planet->ncommodities==0),"commodity" );
 #undef MELEMENT
@@ -1059,14 +1211,21 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Check if need to grow the star system planet stack. */
    sys->nplanets++;
-   if (sys->planets == NULL)
-      sys->planets = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
-   else if (sys->nplanets > CHUNK_SIZE_SMALL)
-      sys->planets = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
+   if (sys->planets == NULL) {
+      sys->planets   = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
+      sys->planetsid = malloc( sizeof(int) * CHUNK_SIZE_SMALL );
+   }
+   else if (sys->nplanets > CHUNK_SIZE_SMALL) {
+      sys->planets   = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
+      sys->planetsid = realloc( sys->planetsid, sizeof(int) * sys->nplanets );
+   }
    planet = planet_get(planetname);
-   if (planet == NULL)
+   if (planet == NULL) {
+      sys->nplanets--; /* Try to keep sanity if possible. */
       return -1;
-   sys->planets[sys->nplanets-1] = planet;
+   }
+   sys->planets[sys->nplanets-1]    = planet;
+   sys->planetsid[sys->nplanets-1]  = planet->id;
 
    /* add planet <-> star system to name stack */
    spacename_nstack++;
@@ -1121,6 +1280,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    /* Remove planet from system. */
    sys->nplanets--;
    memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
+   memmove( &sys->planetsid[i], &sys->planetsid[i+1], sizeof(int) * (sys->nplanets-i) );
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -1277,6 +1437,100 @@ int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp )
 
 
 /**
+ * @brief Initializes a new star system with null memory.
+ */
+static void system_init( StarSystem *sys )
+{
+   memset( sys, 0, sizeof(StarSystem) );
+   sys->faction   = -1;
+}
+
+
+/**
+ * @brief Creates a new star system.
+ */
+StarSystem *system_new (void)
+{
+   StarSystem *sys;
+   int realloced;
+
+   /* Check if memory needs to grow. */
+   systems_nstack++;
+   realloced = 0;
+   if (systems_nstack > systems_mstack) {
+      systems_mstack   += CHUNK_SIZE;
+      systems_stack     = realloc( systems_stack, sizeof(StarSystem) * systems_mstack );
+      realloced         = 1;
+   }
+   sys = &systems_stack[ systems_nstack-1 ];
+
+   /* Initialize system and id. */
+   system_init( sys );
+   sys->id = systems_nstack-1;
+
+   /* Reconstruct the jumps. */
+   if (!systems_loading && realloced)
+      systems_reconstructJumps();
+
+   return sys;
+}
+
+
+/**
+ * @brief Reconstructs the jumps.
+ */
+void systems_reconstructJumps (void)
+{
+   StarSystem *sys;
+   JumpPoint *jp;
+   int i, j;
+   double a;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      for (j=0; j<sys->njumps; j++) {
+         jp          = &sys->jumps[j];
+         jp->target  = system_getIndex( jp->targetid );
+
+         /* Get heading. */
+         a = atan2( jp->target->pos.y - sys->pos.y, jp->target->pos.x - sys->pos.x );
+         if (a < 0.)
+            a += 2.*M_PI;
+
+         /* Update position if needed.. */
+         if (jp->flags & JP_AUTOPOS) {
+            jp->pos.x   = sys->radius*cos(a);
+            jp->pos.y   = sys->radius*sin(a);
+         }
+
+         /* Update jump specific data. */
+         gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
+         jp->angle = 2.*M_PI-a;
+         jp->cosa  = cos(jp->angle);
+         jp->sina  = sin(jp->angle);
+      }
+   }
+}
+
+
+/**
+ * @brief Updates the system planet pointers.
+ */
+void systems_reconstructPlanets (void)
+{
+   StarSystem *sys;
+   int i, j;
+
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      for (j=0; j<sys->nplanets; j++) {
+         sys->planets[j] = &planet_stack[ sys->planetsid[j] ];
+      }
+   }
+}
+
+
+/**
  * @brief Creates a system from an XML node.
  *
  *    @param parent XML node to get system from.
@@ -1294,9 +1548,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    int size;
 
    /* Clear memory for sane defaults. */
-   memset( sys, 0, sizeof(StarSystem) );
    flags          = 0;
-   sys->faction   = -1;
    planet         = NULL;
    size           = 0;
 
@@ -1326,9 +1578,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"stars")) /* non-zero */
-               sys->stars = xml_getInt(cur);
-            else if (xml_isNode(cur,"asteroids")) {
+            xmlr_int( cur, "stars", sys->stars );
+            xmlr_float( cur, "radius", sys->radius );
+            if (xml_isNode(cur,"asteroids")) {
                flags |= FLAG_ASTEROIDSSET;
                sys->asteroids = xml_getInt(cur);
             }
@@ -1400,6 +1652,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                   /* Add the fleet. */
                   system_addFleet( sys, &fleet );
                }
+
+               /* Add to data. */
+               sys->nfltdat++;
+               sys->fltdat = realloc( sys->fltdat, sizeof(char*) * sys->nfltdat );
+               sys->fltdat[ sys->nfltdat-1 ] = strdup( xml_raw(cur) );
             }
          } while (xml_nextNode(cur));
          continue;
@@ -1417,6 +1674,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(sys->stars==0,"stars");
+   MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_ASTEROIDSSET)==0,"asteroids");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
@@ -1442,6 +1700,81 @@ static void system_setFaction( StarSystem *sys )
          sys->faction = sys->planets[i]->faction;
          break;
       }
+}
+
+
+/**
+ * @brief Parses a single jump point for a system.
+ *
+ *    @param node Parent node containing jump point information.
+ *    @param sys System to which the jump point belongs.
+ *    @return 0 on success.
+ */
+static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
+{
+   JumpPoint *j;
+   char *buf;
+   xmlNodePtr cur, cur2;
+   double x, y;
+
+   /* Allocate more space. */
+   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
+   j = &sys->jumps[ sys->njumps ];
+   memset( j, 0, sizeof(JumpPoint) );
+
+   /* Get target. */
+   xmlr_attr( node, "target", buf );
+   if (buf == NULL) {
+      WARN("JumpPoint node for system '%s' has no target attribute.", sys->name);
+      return -1;
+   }
+   j->target = system_get( buf );
+   if (j->target == NULL) {
+      WARN("JumpPoint node for system '%s' has invalid target '%s'.", sys->name, buf );
+      free(buf);
+      return -1;
+   }
+   free(buf);
+   j->targetid = j->target->id;
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xmlr_float( cur, "radius", j->radius );
+
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         xmlr_attr( cur, "x", buf );
+         if (buf==NULL)
+            WARN("JumpPoint for system '%s' has position node missing 'x' position.", sys->name);
+         else
+            x = atof(buf);
+         free(buf);
+         xmlr_attr( cur, "y", buf );
+         if (buf==NULL)
+            WARN("JumpPoint for system '%s' has position node missing 'y' position.", sys->name);
+         else
+            y = atof(buf);
+         free(buf);
+
+         /* Set position. */
+         vect_cset( &j->pos, x, y );
+      }
+
+      /* Handle flags. */
+      if (xml_isNode(cur,"flags")) {
+         cur2 = cur->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur2,"autopos"))
+               j->flags |= JP_AUTOPOS; 
+         } while (xml_nextNode(cur2));
+      }
+   } while (xml_nextNode(cur));
+
+   /* Added jump. */
+   sys->njumps++;
+
+   return 0;
 }
 
 
@@ -1476,15 +1809,7 @@ static void system_parseJumps( const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"jump")) {
-               for (i=0; i<systems_nstack; i++)
-                  if (strcmp( systems_stack[i].name, xml_raw(cur))==0) {
-                     sys->njumps++;
-                     sys->jumps = realloc(sys->jumps, sys->njumps*sizeof(int));
-                     sys->jumps[sys->njumps-1] = i;
-                     break;
-                  }
-               if (i==systems_nstack)
-                  WARN("System '%s' not found for jump linking",xml_get(cur));
+               system_parseJumpPoint( cur, sys );
             }
          } while (xml_nextNode(cur));
       }
@@ -1499,15 +1824,22 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 int space_load (void)
 {
-   int i;
+   int i, j;
    int ret;
+   StarSystem *sys;
 
    /* Loading. */
    systems_loading = 1;
 
+   /* Load jump point graphic - must be before systems_load(). */
+   jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
+
+   /* Load planets. */
    ret = planets_load();
    if (ret < 0)
       return ret;
+
+   /* Load systems. */
    ret = systems_load();
    if (ret < 0)
       return ret;
@@ -1515,9 +1847,21 @@ int space_load (void)
    /* Done loading. */
    systems_loading = 0;
 
-   /* Calculate system properties. */
-   for (i=0; i<systems_nstack; i++)
-      system_calcSecurity(&systems_stack[i]);
+   /* Reconstruction. */
+   systems_reconstructJumps();
+   systems_reconstructPlanets();
+
+   /* Fine tuning. */
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+
+      /* Calculate system properties. */
+      system_calcSecurity( sys );
+
+      /* Save jump indexes. */
+      for (j=0; j<sys->njumps; j++)
+         sys->jumps[j].targetid = sys->jumps[j].target->id;
+   }
 
    return 0;
 }
@@ -1582,6 +1926,7 @@ static int systems_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
+   StarSystem *sys;
 
    /* Load the file. */
    buf = ndata_read( SYSTEM_DATA, &bufsize );
@@ -1619,14 +1964,8 @@ static int systems_load (void)
     */
    do {
       if (xml_isNode(node,XML_SYSTEM_TAG)) {
-         /* Check if memory needs to grow. */
-         systems_nstack++;
-         if (systems_nstack > systems_mstack) {
-            systems_mstack += CHUNK_SIZE;
-            systems_stack = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
-         }
-
-         system_parse(&systems_stack[systems_nstack-1],node);
+         sys = system_new();
+         system_parse( sys, node );
       }
    } while (xml_nextNode(node));
 
@@ -1712,19 +2051,55 @@ void space_renderStars( const double dt )
    gl_matrixPush();
       gl_matrixScale( z, z );
 
-   if ((player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+      if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+            !player_isFlag(PLAYER_CREATING)) { /* update position */
+
+         /* Calculate some dimensions. */
+         w  = (SCREEN_W + 2.*STAR_BUF);
+         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+         h  = (SCREEN_H + 2.*STAR_BUF);
+         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+         hw = w/2.;
+         hh = h/2.;
+
+         /* Calculate new star positions. */
+         for (i=0; i < nstars; i++) {
+
+            /* calculate new position */
+            b = 9. - 10.*star_colour[8*i+3];
+            star_vertex[4*i+0] = star_vertex[4*i+0] -
+               (GLfloat)player.p->solid->vel.x / b*(GLfloat)dt;
+            star_vertex[4*i+1] = star_vertex[4*i+1] -
+               (GLfloat)player.p->solid->vel.y / b*(GLfloat)dt;
+
+            /* check boundries */
+            if (star_vertex[4*i+0] > hw)
+               star_vertex[4*i+0] -= w;
+            else if (star_vertex[4*i+0] < -hw)
+               star_vertex[4*i+0] += w;
+            if (star_vertex[4*i+1] > hh)
+               star_vertex[4*i+1] -= h;
+            else if (star_vertex[4*i+1] < -hh)
+               star_vertex[4*i+1] += h;
+         }
+
+         /* Upload the data. */
+         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
+      }
+
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player->ptimer < HYPERSPACE_STARS_BLUR)) {
+         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
 
       glShadeModel(GL_SMOOTH);
 
       /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player->ptimer;
+      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
       m /= HYPERSPACE_STARS_BLUR;
       m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player->solid->vel)+M_PI);
-      y = m*sin(VANGLE(player->solid->vel)+M_PI);
+      x = m*cos(VANGLE(player.p->solid->vel));
+      y = m*sin(VANGLE(player.p->solid->vel));
 
       /* Generate lines. */
       for (i=0; i < nstars; i++) {
@@ -1742,42 +2117,6 @@ void space_renderStars( const double dt )
       glShadeModel(GL_FLAT);
    }
    else { /* normal rendering */
-      if (!paused && (player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-            !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-         /* Calculate some dimensions. */
-         w  = (SCREEN_W + 2.*STAR_BUF);
-         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-         h  = (SCREEN_H + 2.*STAR_BUF);
-         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-         hw = w/2.;
-         hh = h/2.;
-
-         /* Calculate new star positions. */
-         for (i=0; i < nstars; i++) {
-
-            /* calculate new position */
-            b = 9. - 10.*star_colour[8*i+3];
-            star_vertex[4*i+0] = star_vertex[4*i+0] -
-               (GLfloat)player->solid->vel.x / b*(GLfloat)dt;
-            star_vertex[4*i+1] = star_vertex[4*i+1] -
-               (GLfloat)player->solid->vel.y / b*(GLfloat)dt;
-
-            /* check boundries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
-
-         /* Upload the data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      }
-
       /* Render. */
       gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
       gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
@@ -1798,13 +2137,45 @@ void space_renderStars( const double dt )
  */
 void planets_render (void)
 {
-   if (cur_system==NULL) return;
-
    int i;
+
+   /* Must be a system. */
+   if (cur_system==NULL)
+      return;
+
+   /* Render the jumps. */
+   for (i=0; i < cur_system->njumps; i++)
+      space_renderJumpPoint( &cur_system->jumps[i], i );
+
+   /* Render the planets. */
    for (i=0; i < cur_system->nplanets; i++)
-      gl_blitSprite( cur_system->planets[i]->gfx_space,
-            cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
-            0, 0, NULL );
+      space_renderPlanet( cur_system->planets[i] );
+}
+
+
+/**
+ * @brief Renders a jump point.
+ */
+static void space_renderJumpPoint( JumpPoint *jp, int i )
+{
+   glColour *c;
+
+   if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
+         (pilot_isFlag(player.p, PILOT_HYPERSPACE) || space_canHyperspace(player.p)))
+      c = &cGreen;
+   else
+      c = NULL;
+
+   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
+}
+
+
+/**
+ * @brief Renders a planet.
+ */
+static void space_renderPlanet( Planet *p )
+{
+   gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
 
@@ -1813,7 +2184,12 @@ void planets_render (void)
  */
 void space_exit (void)
 {
-   int i;
+   int i, j;
+
+   /* Free jump point graphic. */
+   if (jumppoint_gfx != NULL)
+      gl_freeTexture(jumppoint_gfx);
+   jumppoint_gfx = NULL;
 
    /* Free the names. */
    if (planetname_stack)
@@ -1832,10 +2208,18 @@ void space_exit (void)
          free(planet_stack[i].bar_description);
 
       /* graphics */
-      if (planet_stack[i].gfx_space)
+      if (planet_stack[i].gfx_space) {
          gl_freeTexture(planet_stack[i].gfx_space);
-      if (planet_stack[i].gfx_exterior)
+         free(planet_stack[i].gfx_spacePath);
+      }
+      if (planet_stack[i].gfx_exterior) {
          free(planet_stack[i].gfx_exterior);
+         free(planet_stack[i].gfx_exteriorPath);
+      }
+
+      /* tech */
+      if (planet_stack[i].tech != NULL)
+         tech_groupDestroy( planet_stack[i].tech );
 
       /* commodities */
       free(planet_stack[i].commodities);
@@ -1852,6 +2236,12 @@ void space_exit (void)
          free(systems_stack[i].fleets);
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
+
+      if (systems_stack[i].nfltdat > 0) {
+         for (j=0; j<systems_stack[i].nfltdat; j++)
+            free(systems_stack[i].fltdat[j]);
+         free(systems_stack[i].fltdat);
+      }
 
       free(systems_stack[i].planets);
    }

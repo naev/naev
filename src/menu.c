@@ -37,6 +37,8 @@
 #include "nfile.h"
 #include "info.h"
 #include "comm.h"
+#include "conf.h"
+#include "dev_uniedit.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -97,6 +99,7 @@ void menu_main (void)
    int offset_logo, offset_wdw, freespace;
    unsigned int bwid, wid;
    glTexture *tex;
+   int h, y;
 
    /* Play load music. */
    music_choose("load");
@@ -117,7 +120,8 @@ void menu_main (void)
       if (freespace/3 > 25) {
          freespace -= 25;
          offset_logo = -25;
-         offset_wdw  = -25 - tex->sh - 25;
+         /*offset_wdw  = -25 - tex->sh - 25;*/
+         offset_wdw  = -1;
       }
       /* Otherwise space evenly. */
       else {
@@ -136,25 +140,37 @@ void menu_main (void)
    window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version(1) );
 
+   /* Set dimensions */
+   h  = MAIN_HEIGHT;
+   y  = 20 + (BUTTON_HEIGHT+20)*4;
+   if (conf.devmode) {
+      h += BUTTON_HEIGHT + 20;
+      y += BUTTON_HEIGHT+20;
+   }
+
    /* create menu window */
-   wid = window_create( "Main Menu", -1, offset_wdw,
-         MAIN_WIDTH, MAIN_HEIGHT );
+   wid = window_create( "Main Menu", -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
 
    /* Buttons. */
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*4,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load Game", menu_main_load );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Game", menu_main_new );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   if (conf.devmode) {
+      window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnEditor", "Editor", uniedit_open );
+      y -= BUTTON_HEIGHT+20;
+   }
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCredits", "Credits", menu_main_credits );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_exit );
 
    /* Disable load button if there are no saves. */
@@ -292,8 +308,8 @@ void menu_small (void)
    unsigned int wid;
 
    /* Check if menu should be openable. */
-   if ((player == NULL) || player_isFlag(PLAYER_DESTROYED) ||
-         pilot_isFlag(player,PILOT_DEAD) ||
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
+         pilot_isFlag(player.p,PILOT_DEAD) ||
          comm_isOpen() ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
          (menu_isOpen(MENU_MAIN) ||
@@ -416,7 +432,7 @@ void menu_death (void)
 
    /* Propose the player to continue if the samegame exist, if not, propose to restart */
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    if (nfile_fileExists(path))
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", "Continue", menu_death_continue );

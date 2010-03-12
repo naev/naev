@@ -89,6 +89,8 @@ if (xmlTextWriterStartElement(w,(xmlChar*)str) < 0) { \
 if (xmlTextWriterEndElement(w) < 0) { \
    ERR("xmlw: unable to create end element"); return -1; }
 /* other stuff */
+#define xmlw_elemEmpty(w,n)   \
+do { xmlw_startElem(w,n); xmlw_endElem(w) } while (0)
 #define xmlw_elem(w,n,str,args...) \
 if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
       str, ## args) < 0) { \
@@ -118,6 +120,12 @@ if (xmlTextWriterEndDocument(w) < 0) { \
 glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );
+
+
+/*
+ * Functions for generic complex writing.
+ */
+void xmlw_setParams( xmlTextWriterPtr writer );
 
 
 #endif /* XML_H */

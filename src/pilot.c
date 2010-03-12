@@ -123,7 +123,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    int m, p;
 
    /* Player must exist. */
-   if (player == NULL)
+   if (player.p == NULL)
       return PLAYER_ID;
 
    /* Get the pilot. */
@@ -139,7 +139,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
       while (p < pilot_nstack) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
-               pilot_inRangePilot( player, pilot_stack[p] ))
+               pilot_inRangePilot( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -148,7 +148,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    if (mode == 1) {
       while (p < pilot_nstack) {
          if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
-               pilot_inRangePilot( player, pilot_stack[p] ) &&
+               pilot_inRangePilot( player.p, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
             return pilot_stack[p]->id;
@@ -172,7 +172,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    int m, p;
 
    /* Player must exist. */
-   if (player == NULL)
+   if (player.p == NULL)
       return PLAYER_ID;
 
    /* Get the pilot. */
@@ -191,7 +191,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
-               pilot_inRangePilot( player, pilot_stack[p] ))
+               pilot_inRangePilot( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -200,7 +200,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    else if (mode == 1) {
       while (p >= 0) {
          if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
-               pilot_inRangePilot( player, pilot_stack[p] ) &&
+               pilot_inRangePilot( player.p, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
             return pilot_stack[p]->id;
@@ -287,7 +287,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
       if (!pilot_inRangePilot( p, pilot_stack[i] ))
          continue;
 
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &player->solid->pos);       
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);       
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
          tp = pilot_stack[i]->id;
@@ -312,7 +312,7 @@ Pilot* pilot_get( const unsigned int id )
    int m;
 
    if (id==PLAYER_ID)
-      return player; /* special case player */
+      return player.p; /* special case player.p */
   
    m = pilot_getStackPos(id);
 
@@ -420,10 +420,10 @@ void pilot_setHostile( Pilot* p )
 {
    if (!pilot_isFlag(p, PILOT_HOSTILE)) {
       /* Time to play combat music. */
-      if (player_enemies == 0)
+      if (player.enemies == 0)
          music_choose("combat");
 
-      player_enemies++;
+      player.enemies++;
       pilot_setFlag(p, PILOT_HOSTILE);
    }
 }
@@ -560,8 +560,8 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    Pilot *t;
    char c;
 
-   /* Makes no sense with no player atm. */
-   if (player==NULL)
+   /* Makes no sense with no player.p atm. */
+   if (player.p==NULL)
       return;
 
    /* Get the target. */
@@ -570,10 +570,10 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
       return;
 
    /* Must be in range. */
-   if (!ignore_int && !pilot_inRangePilot( player, p ))
+   if (!ignore_int && !pilot_inRangePilot( player.p, p ))
       return;
 
-   /* Only really affects player atm. */
+   /* Only really affects player.p atm. */
    if (target == PLAYER_ID) {
       c = pilot_getFactionColourChar( p );
       player_message( "\e%cComm %s>\e0 \"%s\"", c, p->name, msg );
@@ -595,12 +595,12 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 {
    char c;
 
-   /* Only display if player exists and is in range. */
-   if (player==NULL)
+   /* Only display if player.p exists and is in range. */
+   if (player.p==NULL)
       return;
 
    /* Check if should ignore interference. */
-   if (!ignore_int && !pilot_inRangePilot( player, p ))
+   if (!ignore_int && !pilot_inRangePilot( player.p, p ))
       return;
 
    c = pilot_getFactionColourChar( p );
@@ -632,7 +632,7 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    /* Get the target to see if it's the player. */
    t = pilot_get(p->target);
 
-   /* Now proceed to see if player should incur faction loss because
+   /* Now proceed to see if player.p should incur faction loss because
     * of the broadcast signal. */
 
    /* Consider not in range at first. */
@@ -685,13 +685,13 @@ void pilot_rmHostile( Pilot* p )
 {
    if (pilot_isFlag(p, PILOT_HOSTILE)) {
       if (!pilot_isDisabled(p))
-         player_enemies--;
+         player.enemies--;
       pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
-      if (player_enemies <= 0) {
+      if (player.enemies <= 0) {
          music_choose("ambient");
-         player_enemies = 0;
+         player.enemies = 0;
       }
    }
 }
@@ -899,7 +899,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
    /* Don't forget to add height. */
    y += m->h;
 
-   /* Get the mount and add the player offset. */
+   /* Get the mount and add the player.p offset. */
    vect_cset( v, x, y );
 
    return 0;
@@ -907,7 +907,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 
 
 /**
- * @brief Actually handles the shooting, how often the player can shoot and such.
+ * @brief Actually handles the shooting, how often the player.p can shoot and such.
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
@@ -1030,7 +1030,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
     */
    else if (outfit_isLauncher(w->outfit)) {
 
-      /* Shooter can't be the target - sanity check for the player */
+      /* Shooter can't be the target - sanity check for the player.p */
       if ((w->outfit->u.lau.ammo->u.amm.ai > 0) && (p->id==p->target))
          return 0;
 
@@ -1091,7 +1091,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 void pilot_switchSecondary( Pilot* p, PilotOutfitSlot* w )
 {
    pilot_shootStop( p, 1 );
-   player->secondary = w;
+   player.p->secondary = w;
 }
 
 
@@ -1122,8 +1122,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
    /* Player breaks autonav. */
    if ((w != NULL) && (p->id == PLAYER_ID) &&
-         !pilot_isFlag(player, PILOT_HYP_BEGIN) &&
-         !pilot_isFlag(player, PILOT_HYPERSPACE))
+         !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
+         !pilot_isFlag(player.p, PILOT_HYPERSPACE))
       player_abortAutonav("Sustaining Damage");
 
    /*
@@ -1161,13 +1161,13 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    }
 
    /* Disabled always run before dead to ensure crating boost. */
-   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
+   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
          (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour)) { /* disabled */
 
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
-      if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
+      if (h == 1) /* Horrible hack to make sure player.p can hit it if it was hostile. */
          /* Do not use pilot_setHostile here or music will change again. */
          pilot_setFlag(p,PILOT_HOSTILE);
 
@@ -1177,7 +1177,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          mod = pow(p->ship->mass,0.4) - 1.;
 
          /* Modify combat rating. */
-         player_crating += 2*mod;
+         player.crating += 2*mod;
       }
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
@@ -1561,7 +1561,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* he's dead jim */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
       if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
-         if (pilot->id==PLAYER_ID) /* player handled differently */
+         if (pilot->id==PLAYER_ID) /* player.p handled differently */
             player_destroyed();
          pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
          return;
@@ -1749,7 +1749,9 @@ void pilot_update( Pilot* pilot, const double dt )
  */
 static void pilot_hyperspace( Pilot* p, double dt )
 {
-   double diff;
+   StarSystem *sys;
+   double a, diff;
+   JumpPoint *jp;
 
    /* pilot is actually in hyperspace */
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
@@ -1764,7 +1766,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
       /* has jump happened? */
       if (p->ptimer < 0.) {
-         if (p->id == PLAYER_ID) { /* player just broke hyperspace */
+         if (p->id == PLAYER_ID) { /* player.p just broke hyperspace */
             player_brokeHyperspace();
          }
          else {
@@ -1790,41 +1792,52 @@ static void pilot_hyperspace( Pilot* p, double dt )
    }
    /* pilot is getting ready for hyperspace */
    else {
+      /* Make sure still within range. */
+      jp = &cur_system->jumps[ p->nav_hyperspace ];
+      if (jp->radius*jp->radius < vect_dist2( &p->solid->pos, &jp->pos ) ) {
+         pilot_hyperspaceAbort( p );
 
-      /* brake */
-      if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
-         diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-
-         if (ABS(diff) < MAX_DIR_ERR)
-            pilot_setThrust( p, 1. );
-         else
-            pilot_setThrust( p, 0. );
-
+         if (p == player.p) {
+            if (!player_isFlag(PLAYER_AUTONAV))
+               player_message( "\erStrayed too far from jump point: jump aborted." );
+         }
       }
-      /* face target */
       else {
 
-         pilot_setThrust( p, 0. );
+         /* brake */
+         if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
-         /* player should actually face the system he's headed to */
-         if (p==player)
-            diff = player_faceHyperspace();
-         else
-            diff = pilot_face( p, VANGLE(p->solid->pos) );
+            if (ABS(diff) < MAX_DIR_ERR)
+               pilot_setThrust( p, 1. );
+            else
+               pilot_setThrust( p, 0. );
 
-         if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
-            pilot_setTurn( p, 0. );
-            p->ptimer = HYPERSPACE_ENGINE_DELAY;
-            pilot_setFlag(p, PILOT_HYP_BEGIN);
-            /* Player plays sound. */
-            if (p->id == PLAYER_ID) {
-               player_playSound( snd_hypPowUp, 1 );
+         }
+         /* face target */
+         else {
+
+            pilot_setThrust( p, 0. );
+
+            /* Face system headed to. */
+            sys = cur_system->jumps[p->nav_hyperspace].target;
+            a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
+            diff = pilot_face( p, a );
+
+            if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
+               pilot_setTurn( p, 0. );
+               p->ptimer = HYPERSPACE_ENGINE_DELAY;
+               pilot_setFlag(p, PILOT_HYP_BEGIN);
+               /* Player plays sound. */
+               if (p->id == PLAYER_ID) {
+                  player_playSound( snd_hypPowUp, 1 );
+               }
             }
          }
       }
    }
 
-   if (p == player)
+   if (p == player.p)
       player_updateSpecific( p, dt );
 }
 
@@ -3116,7 +3129,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
 
-   if (flags & PILOT_PLAYER) /* player is ID 0 */
+   if (flags & PILOT_PLAYER) /* player.p is ID 0 */
       pilot->id = PLAYER_ID;
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
@@ -3191,7 +3204,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->render_overlay   = NULL;
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
       if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
-         player = pilot;
+         player.p = pilot;
          gui_load( pilot->ship->gui ); /* load the gui */
       }
    }
@@ -3220,8 +3233,12 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 
+   /* Targets. */
+   pilot->target           = pilot->id; /* Self = no target. */
+   pilot->nav_planet       = -1;
+   pilot->nav_hyperspace   = -1;
+
    /* AI */
-   pilot->target = pilot->id; /* Self = no target. */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
 }
@@ -3409,8 +3426,8 @@ void pilot_free( Pilot* p )
    if (p->ai != NULL)
       ai_destroy(p); /* Must be destroyed first if applicable. */
    /* Case if pilot is the player. */
-   if (player==p)
-      player = NULL;
+   if (player.p==p)
+      player.p = NULL;
    solid_free(p->solid);
    if (p->mounted != NULL)
       free(p->mounted);
@@ -3466,7 +3483,7 @@ void pilots_free (void)
       pilot_free(pilot_stack[i]);
    free(pilot_stack);
    pilot_stack = NULL;
-   player = NULL;
+   player.p = NULL;
    pilot_nstack = 0;
 }
 
@@ -3478,17 +3495,17 @@ void pilots_clean (void)
 {
    int i;
    for (i=0; i < pilot_nstack; i++)
-      /* we'll set player at privileged position */
-      if ((player != NULL) && (pilot_stack[i] == player)) {
-         pilot_stack[0] = player;
+      /* we'll set player.p at privileged position */
+      if ((player.p != NULL) && (pilot_stack[i] == player.p)) {
+         pilot_stack[0] = player.p;
          pilot_stack[0]->lockons = 0; /* Clear lockons. */
       }
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
 
-   if (player != NULL) { /* set stack to 1 if pilot exists */
+   if (player.p != NULL) { /* set stack to 1 if pilot exists */
       pilot_nstack = 1;
-      pilot_clearTimers( player ); /* Reset the player's timers. */
+      pilot_clearTimers( player.p ); /* Reset the player's timers. */
    }
 }
 
@@ -3499,9 +3516,9 @@ void pilots_clean (void)
 void pilots_cleanAll (void)
 {
    pilots_clean();
-   if (player != NULL) {
-      pilot_free(player);
-      player = NULL;
+   if (player.p != NULL) {
+      pilot_free(player.p);
+      player.p = NULL;
    }
    pilot_nstack = 0;
 }

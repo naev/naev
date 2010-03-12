@@ -30,6 +30,7 @@ typedef struct Commodity_ {
  * Commodity stuff.
  */
 Commodity* commodity_get( const char* name );
+Commodity* commodity_getW( const char* name );
 int commodity_load (void);
 void commodity_free (void);
 

@@ -582,6 +582,8 @@ static char** filterList( const char** list, int nlist,
 /**
  * @brief Gets the list of files in the ndata.
  *
+ * @note Strips the path.
+ *
  *    @param path List files in path.
  *    @param nfiles Number of files found.
  *    @return List of files found.

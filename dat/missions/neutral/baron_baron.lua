@@ -184,7 +184,7 @@ function takeoff()
         vendetta2:control()
         vendetta1:attack(player.pilot())
         vendetta2:attack(player.pilot())
-        vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.pilot():ship():name(), planetname), true)
+        vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.ship(), planetname), true)
     end
 end
 

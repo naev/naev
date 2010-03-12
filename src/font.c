@@ -856,6 +856,8 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
          case 'H': ACOLOUR(cHostile,a); break;
          case 'N': ACOLOUR(cNeutral,a); break;
          case 'I': ACOLOUR(cInert,a); break;
+         case 'C': ACOLOUR(cConsole,a); break;
+         case 'D': ACOLOUR(cDConsole,a); break;
          /* Reset state. */
          case '0':
              if (c==NULL)

@@ -52,7 +52,6 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_compareTech( const void *arg1, const void *arg2 );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -64,23 +63,43 @@ static int ship_parse( Ship *temp, xmlNodePtr parent );
  */
 Ship* ship_get( const char* name )
 {
-   Ship* temp = ship_stack;
+   Ship *temp;
    int i;
 
+   temp = ship_stack;
    for (i=0; i < array_size(ship_stack); i++)
-      if (strcmp((temp+i)->name, name)==0) break;
+      if (strcmp(temp[i].name, name)==0)
+         return &temp[i];
 
-   if (i == array_size(ship_stack)) /* ship does not exist, game will probably crash now */
-      WARN("Ship %s does not exist", name);
+   WARN("Ship %s does not exist", name);
+   return NULL;
+}
 
-   return temp+i;
+
+/**
+ * @brief Gets a ship based on its name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Ship matching name or NULL if not found.
+ */
+Ship* ship_getW( const char* name )
+{
+   Ship *temp;
+   int i;
+
+   temp = ship_stack;
+   for (i=0; i < array_size(ship_stack); i++)
+      if (strcmp(temp[i].name, name)==0)
+         return &temp[i];
+
+   return NULL;
 }
 
 
 /**
  * @brief Comparison function for qsort().
  */
-static int ship_compareTech( const void *arg1, const void *arg2 )
+int ship_compareTech( const void *arg1, const void *arg2 )
 {
    const Ship *s1, *s2;
 
@@ -102,47 +121,6 @@ static int ship_compareTech( const void *arg1, const void *arg2 )
 
    /* Same. */
    return 0;
-}
-
-
-/**
- * @brief Gets all the ships in text form matching tech.
- *
- * You have to free all the strings created in the string array too.
- *
- *    @param[out] n Number of ships found.
- *    @param tech List of technologies to use.
- *    @param techmax Number of technologies in tech.
- *    @return An array of allocated ship names.
- */
-Ship** ship_getTech( int *n, const int *tech, const int techmax )
-{
-   int i,j, num;
-   Ship **ships;
-  
-   /* get available ships for tech */
-   ships = malloc(sizeof(Ship*) * array_size(ship_stack));
-   num = 0;
-   for (i=0; i < array_size(ship_stack); i++) {
-      if (ship_stack[i].tech <= tech[0]) { /* check vs base tech */
-         ships[num] = &ship_stack[i];
-         num++;
-      }
-      else {
-         for (j=0; j<techmax; j++) {
-            if (tech[j] == ship_stack[i].tech) { /* check vs special tech */
-               ships[num] = &ship_stack[i];
-               num++;
-            }
-         }
-      }
-   }
-
-   /* Sort it. */
-   qsort( ships, num, sizeof(Ship*), ship_compareTech );
-   *n = num;
-
-   return ships;
 }
 
 
@@ -473,7 +451,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       xmlr_int(node,"price",temp->price);
-      xmlr_int(node,"tech",temp->tech);
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
@@ -613,7 +590,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
-   MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->thrust==-1,"thrust");

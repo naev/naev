@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Factions>
  <faction name="Dummy">
   <static />
@@ -9,7 +9,7 @@
  </faction>
  <faction name="Independent">
   <player>3</player>
-  <colour>cyan</colour>
+  <colour>blue</colour>
   <allies>
    <ally>Trader</ally>
   </allies>
@@ -163,7 +163,7 @@
  </faction>
  <faction name="Sirius">
   <logo>sirius</logo>
-  <colour>gold</colour>
+  <colour>aqua</colour>
   <longname>House Sirius</longname>
   <player>3</player>
   <allies>

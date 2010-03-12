@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <unidiffs>
  <unidiff name="collective_dead">
   <system name="C-00">
@@ -26,25 +26,16 @@
    <fleetgroup name="Collective Medium Presence">remove</fleetgroup>
    <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
-  <system name="NGC-7291">
+  <system name="Fortitude">
    <fleetgroup name="Collective Light Presence">remove</fleetgroup>
   </system>
-  <system name="NGC-7132">
+  <system name="Hades">
    <fleetgroup name="Collective Light Presence">remove</fleetgroup>
    <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
-  <outfit name="Neutron Disruptor">
-   <tech>1002</tech>
-  </outfit>
-  <outfit name="Drone Fighter Bay">
-   <tech>1002</tech>
-  </outfit>
-  <outfit name="Drone Fighter">
-   <tech>1002</tech>
-  </outfit>
-  <ship name="Drone">
-   <tech>1002</tech>
-  </ship>
+  <tech name="Collective">
+   <add>__Collective</add>
+  </tech>
  </unidiff>
  <unidiff name="heavy_weapons_license">
   <outfit name="Heavy Weapon License">

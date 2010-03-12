@@ -111,7 +111,6 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
 /*
  * player stuff
  */
-extern int hyperspace_target; /**< from player.c */
 static int last_window = 0; /**< Default window. */
 
 
@@ -127,6 +126,8 @@ static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
+static int commodity_getMod (void);
+static void commodity_renderMod( double bx, double by, double w, double h, void *data );
 /* outfits */
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh );
@@ -191,6 +192,10 @@ static void commodity_exchange_open( unsigned int wid )
    window_addButton( wid, -20, 20*2 + BUTTON_HEIGHT,
          (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
          "Sell", commodity_sell );
+         
+      /* cust draws the modifier */
+   window_addCust( wid, -40-((BUTTON_WIDTH-20)/2), 60+ 2*BUTTON_HEIGHT,
+         (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
    window_addText( wid, -20, -40, BUTTON_WIDTH, 60, 0,
@@ -256,7 +261,7 @@ static void commodity_update( unsigned int wid, char* str )
          "%d Tons\n",
          player_cargoOwned( comname ),
          economy_getPrice(com, cur_system, land_planet),
-         pilot_cargoFree(player));
+         pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
 }
@@ -272,7 +277,7 @@ static void commodity_buy( unsigned int wid, char* str )
    Commodity *com;
    unsigned int q, price;
 
-   q = 10;
+   q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
@@ -281,12 +286,12 @@ static void commodity_buy( unsigned int wid, char* str )
       dialogue_alert( "Insufficient credits!" );
       return;
    }
-   else if (pilot_cargoFree(player) <= 0) {
+   else if (pilot_cargoFree(player.p) <= 0) {
       dialogue_alert( "Insufficient free space!" );
       return;
    }
 
-   q = pilot_addCargo( player, com, q );
+   q = pilot_addCargo( player.p, com, q );
    player_modCredits( -q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
@@ -303,15 +308,55 @@ static void commodity_sell( unsigned int wid, char* str )
    Commodity *com;
    unsigned int q, price;
 
-   q = 10;
+   q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
-   q = pilot_rmCargo( player, com, q );
+   q = pilot_rmCargo( player.p, com, q );
    player_modCredits( q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
+}
+
+/**
+ * @brief Gets the current modifier status.
+ *    @return The amount modifier when buying or selling commodities.
+ */
+static int commodity_getMod (void)
+{
+   SDLMod mods;
+   int q;
+
+   mods = SDL_GetModState();
+   q = 10;
+   if (mods & (KMOD_LCTRL | KMOD_RCTRL))
+      q *= 5;
+   if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
+      q *= 10;
+
+   return q;
+}
+/**
+ * @brief Renders the commodity buying modifier.
+ *    @param bx Base X position to render at.
+ *    @param by Base Y position to render at.
+ *    @param w Width to render at.
+ *    @param h Height to render at.
+ */
+static void commodity_renderMod( double bx, double by, double w, double h, void *data )
+{
+   (void) data;
+   (void) h;
+   int q;
+   char buf[8];
+
+   q = commodity_getMod();
+   snprintf( buf, 8, "%dx", q );
+   gl_printMid( &gl_smallFont, w,
+         bx + (double)SCREEN_W/2.,
+         by + (double)SCREEN_H/2.,
+         &cBlack, buf );
 }
 
 
@@ -399,7 +444,7 @@ static void outfits_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   outfits = tech_getOutfit( land_planet->tech, &noutfits );
    if (noutfits <= 0) { /* No outfits */
       soutfits    = malloc(sizeof(char*));
       soutfits[0] = strdup("None");
@@ -439,7 +484,7 @@ static void outfits_updateQuantities( unsigned int wid )
    int i;
 
    /* Get outfits. */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   outfits = tech_getOutfit( land_planet->tech, &noutfits );
    if (noutfits <= 0)
       return;
 
@@ -520,7 +565,7 @@ static void outfits_update( unsigned int wid, char* str )
    /* new text */
    window_modifyText( wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
-   credits2str( buf3, player->credits, 2 );
+   credits2str( buf3, player.p->credits, 2 );
    snprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
@@ -557,7 +602,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
-         && (pilot_cargoFree(player) < -outfit->u.mod.cargo)) {
+         && (pilot_cargoFree(player.p) < -outfit->u.mod.cargo)) {
       if (errmsg != 0)
          dialogue_alert( "You need to empty your cargo first." );
       return 0;
@@ -565,7 +610,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
    /* not enough $$ */
    else if (!player_hasCredits( q*outfit->price )) {
       if (errmsg != 0) {
-         credits2str( buf, q*outfit->price - player->credits, 2 );
+         credits2str( buf, q*outfit->price - player.p->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
       }
       return 0;
@@ -822,7 +867,7 @@ static void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
+   ships = tech_getShip( land_planet->tech, &nships );
    if (nships <= 0) {
       sships    = malloc(sizeof(char*));
       sships[0] = strdup("None");
@@ -899,7 +944,7 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
    credits2str( buf2, ship->price, 2 );
-   credits2str( buf3, player->credits, 2 );
+   credits2str( buf3, player.p->credits, 2 );
    snprintf( buf, PATH_MAX,
          "%s\n"
          "%s\n"
@@ -997,8 +1042,8 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
 
    /* player just gots a new ship */
-   if (player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
-         0., 0., player->solid->dir, NULL ) != 0) {
+   if (player_newShip( ship, player.p->solid->pos.x, player.p->solid->pos.y,
+         0., 0., player.p->solid->dir, NULL ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -1413,7 +1458,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty(0);
-   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player->cargo_free );
+   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
@@ -1442,7 +1487,7 @@ static void misn_update( unsigned int wid, char* str )
  */
 static unsigned int refuel_price (void)
 {
-   return (unsigned int)((player->fuel_max - player->fuel)*3);
+   return (unsigned int)((player.p->fuel_max - player.p->fuel)*3);
 }
 
 
@@ -1464,7 +1509,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
    }
 
    player_modCredits( -price );
-   player->fuel      = player->fuel_max;
+   player.p->fuel      = player.p->fuel_max;
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_destroyWidget( wid, "btnRefuel" );
       window_destroyWidget( wid, "txtRefuel" );
@@ -1490,7 +1535,7 @@ void land_checkAddRefuel (void)
    }
 
    /* Full fuel. */
-   if (player->fuel >= player->fuel_max) {
+   if (player.p->fuel >= player.p->fuel_max) {
       if (widget_exists( land_windows[0], "btnRefuel" ))
          window_destroyWidget( land_windows[0], "btnRefuel" );
       if (widget_exists( land_windows[0], "txtRefuel" ))
@@ -1504,14 +1549,14 @@ void land_checkAddRefuel (void)
       w = land_getWid( LAND_WINDOW_EQUIPMENT );
       if (w > 0)
          equipment_updateShips( w, NULL ); /* Must update counter. */
-      if (player->fuel >= player->fuel_max)
+      if (player.p->fuel >= player.p->fuel_max)
          return;
    }
 
    /* Just enable button if it exists. */
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_enableButton( land_windows[0], "btnRefuel");
-      credits2str( cred, player->credits, 2 );
+      credits2str( cred, player.p->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
       window_modifyText( land_windows[0], "txtRefuel", buf );
    }
@@ -1524,7 +1569,7 @@ void land_checkAddRefuel (void)
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
-      credits2str( cred, player->credits, 2 );
+      credits2str( cred, player.p->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
       window_addText( land_windows[0], -20, 20 + 2*(BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
@@ -1921,13 +1966,13 @@ void takeoff( int delay )
    /* set player to another position with random facing direction and no vel */
    player_warp( land_planet->pos.x + RNG(-sw/2,sw/2),
          land_planet->pos.y + RNG(-sh/2,sh/2) );
-   vect_pset( &player->solid->vel, 0., 0. );
-   player->solid->dir = RNG(0,359) * M_PI/180.;
+   vect_pset( &player.p->solid->vel, 0., 0. );
+   player.p->solid->dir = RNG(0,359) * M_PI/180.;
 
    /* heal the player */
-   player->armour = player->armour_max;
-   player->shield = player->shield_max;
-   player->energy = player->energy_max;
+   player.p->armour = player.p->armour_max;
+   player.p->shield = player.p->shield_max;
+   player.p->energy = player.p->energy_max;
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
@@ -1937,9 +1982,9 @@ void takeoff( int delay )
    free(nt);
 
    /* initialize the new space */
-   h = hyperspace_target;
+   h = player.p->nav_hyperspace;
    space_init(NULL);
-   hyperspace_target = h;
+   player.p->nav_hyperspace = h;
 
    /* cleanup */
    if (save_all() < 0) { /* must be before cleaning up planet */

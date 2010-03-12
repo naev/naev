@@ -95,6 +95,22 @@ Outfit* outfit_get( const char* name )
 
 
 /**
+ * @brief Gets an outfit by name without warning on no-find.
+ *
+ *    @param name Name to match.
+ *    @return Outfit matching name or NULL if not found.
+ */
+Outfit* outfit_getW( const char* name )
+{
+   int i;
+   for (i=0; i<array_size(outfit_stack); i++)
+      if (strcmp(name,outfit_stack[i].name)==0)
+         return &outfit_stack[i];
+   return NULL;
+}
+
+
+/**
  * @brief Function meant for use with C89, C99 algorithm qsort().
  *
  *    @param outfit1 First argument to compare.
@@ -135,50 +151,6 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
 
    /* It turns out they're the same. */
    return 0;
-}
-
-
-/**
- * @brief Gets all the outfits matching technology requirements.
- *
- * Function will already sort the outfits by type and then by price making
- *  it much easier to handle later on.
- *
- *    @param[out] n Number of outfits found.
- *    @param[in] tech Technologies to check against. The first one represents
- *                    overall technology, the others are specific technologies.
- *    @param[in] techmax Number of technologies in tech.
- *    @return An allocated array of allocated strings with the names of outfits
- *            matching the tech requirements.
- */
-Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
-{
-   int i,j, num;
-   Outfit **outfits;
-   
-   outfits = malloc(sizeof(Outfit*) * array_size(outfit_stack));
-
-   /* get the available techs */
-   num = 0;
-   for (i=0; i < array_size(outfit_stack); i++) {
-      if (outfit_stack[i].tech <= tech[0]) { /* check vs base tech */
-         outfits[num] = &outfit_stack[i];
-         num++;
-      }
-      else {
-         for(j=0; j<techmax; j++) /* check vs special techs */
-            if (tech[j] == outfit_stack[i].tech) {
-               outfits[num] = &outfit_stack[i];
-               num++;
-            }
-      }
-   }
-
-   /* Sort. */
-   qsort( outfits, num, sizeof(Outfit*), outfit_compareTech );
-   *n = num;
-
-   return outfits;
 }
 
 
@@ -1482,7 +1454,6 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            xmlr_int(cur,"tech",temp->tech);
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
@@ -1559,7 +1530,6 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->slot==OUTFIT_SLOT_NULL,"slot");
-   MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");

@@ -408,7 +408,7 @@ int hooks_run( const char* stack )
    int i;
 
    /* Don't update if player is dead. */
-   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
    hook_runningstack = 1; /* running hooks */
@@ -440,7 +440,7 @@ int hook_runID( unsigned int id )
    int i, ret;
 
    /* Don't update if player is dead. */
-   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
    /* Try to find the hook and run it. */
