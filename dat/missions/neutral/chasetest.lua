@@ -49,10 +49,12 @@ function accept ()
     misn.setMarker( targetsystem )
     
     hook.jumpin("jumpin") --trigger when entering a system
+    hook.jumpout("jumpout") --trigger when leaving a system
+    last_system = system.cur()
 end
 
 function jumpin () --aforementioned triggered function
-    misn.timerStart("spawnBaddies",5000) --baddies spawn delayed
+    misn.timerStart("spawnBaddies",4000) --baddies spawn delayed
     if system.cur() == targetsystem then --when in Gamma Polaris
         defenders = pilot.add("Empire Sml Defense") --add a defending force to help you
         for pilot_number, pilot_object in pairs(defenders) do
@@ -61,11 +63,15 @@ function jumpin () --aforementioned triggered function
     end
 end
 
+function jumpout ()
+    last_system = system.cur()
+end
+
 function spawnBaddies () 
     pirates = {}
-    pirates[0] = pilot.add("Pirate Admonisher")
-    pirates[1] = pilot.add("Pirate Admonisher")
-    pirates[2] = pilot.add("Pirate Admonisher")
+    pirates[0] = pilot.add("Pirate Admonisher", "pirate", last_system)
+    pirates[1] = pilot.add("Pirate Admonisher", "pirate", last_system)
+    pirates[2] = pilot.add("Pirate Admonisher", "pirate", last_system)
     pirates_alive = 0
     for pirate_number, pirate_object in pairs(pirates) do
         for pilot_number, pilot_object in pairs(pirate_object) do
