@@ -85,8 +85,10 @@ static const luaL_reg playerL_methods[] = {
 static const luaL_reg playerL_cond_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
+   { "credits", playerL_credits },
    { "getFaction", playerL_getFaction },
    { "getRating", playerL_getRating },
+   { "fuel", playerL_fuel },
    { "misnDone", playerL_misnDone },
    { "evtDone", playerL_evtDone },
    {0,0}
