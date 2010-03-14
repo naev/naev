@@ -19,6 +19,7 @@
  <faction name="Civilian">
   <player>1</player>
   <colour>black</colour>
+  <spawn>civilian</spawn>
   <allies>
   </allies>
   <enemies>
@@ -30,6 +31,7 @@
   <longname>House Proteron</longname>
   <player>3</player>
   <colour>purple</colour>
+  <spawn>proteron</spawn>
   <allies>
   </allies>
   <enemies>
@@ -41,6 +43,7 @@
   <longname>Frontier Alliance</longname>
   <player>3</player>
   <colour>yellow</colour>
+  <spawn>frontier</spawn>
   <allies>
   </allies>
   <enemies>
@@ -51,6 +54,7 @@
   <logo>trader</logo>
   <longname>Space Traders Guild</longname>
   <player>3</player>
+  <spawn>trader</spawn>
   <allies>
   </allies>
   <enemies>
@@ -63,6 +67,7 @@
   <longname>Galactic Pirates</longname>
   <player>-20</player>
   <colour>red</colour>
+  <spawn>pirate</spawn>
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
@@ -96,6 +101,7 @@
   <logo>collective</logo>
   <player>-100</player>
   <colour>silver</colour>
+  <spawn>collective</spawn>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
@@ -106,6 +112,7 @@
   <longname>Frontier Liberation Front</longname>
   <player>-10</player>
   <colour>orange</colour>
+  <spawn>flf</spawn>
   <enemies>
    <enemy>Dvaered</enemy>
   </enemies>
@@ -115,6 +122,7 @@
   <colour>brown</colour>
   <longname>House Dvaered</longname>
   <player>1</player>
+  <spawn>dvaered</spawn>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -127,6 +135,7 @@
   <logo>zalek</logo>
   <longname>House Za'lek</longname>
   <player>2</player>
+  <spawn>zalek</spawn>
   <allies>
   </allies>
   <enemies>
@@ -138,6 +147,7 @@
   <colour>aqua</colour>
   <longname>House Sirius</longname>
   <player>3</player>
+  <spawn>sirius</spawn>
   <allies>
   </allies>
   <enemies>
@@ -149,6 +159,7 @@
   <colour>blue</colour>
   <longname>House Goddard</longname>
   <player>2</player>
+  <spawn>goddard</spawn>
   <allies>
    <ally>Empire</ally>
   </allies>
