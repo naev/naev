@@ -1,736 +1,578 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
- <fleet name="Independent Schroedinger Squad">
+ <fleet name="Independent Schroedinger">
   <ai>trader</ai>
   <faction>Independent</faction>
-  <strength>70</strength>
   <pilots>
-   <pilot chance="100" ship="Schroedinger"></pilot>
-   <pilot chance="100" ship="Schroedinger"></pilot>
-   <pilot chance="100" ship="Schroedinger"></pilot>
+   <pilot ship="Schroedinger"></pilot>
   </pilots>
  </fleet>
- <fleet name="Independent Hyena Squad">
+ <fleet name="Independent Hyena">
   <ai>trader</ai>
   <faction>Independent</faction>
-  <strength>50</strength>
   <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
- <fleet name="Independent Gawain Squad">
+ <fleet name="Independent Gawain">
   <ai>trader</ai>
   <faction>Independent</faction>
-  <strength>90</strength>
   <pilots>
-   <pilot chance="100" ship="Gawain"></pilot>
-   <pilot chance="100" ship="Gawain"></pilot>
-   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
-  <strength>300</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot chance="100" ship="Goddard"></pilot>
+   <pilot ship="Goddard"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Goddard Lancelot">
+  <ai>goddard</ai>
+  <faction>Goddard</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Schroedinger">
   <ai>trader</ai>
   <faction>Civilian</faction>
-  <strength>30</strength>
   <pilots>
-   <pilot chance="100" ship="Schroedinger"></pilot>
+   <pilot ship="Schroedinger"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Hyena">
   <ai>trader</ai>
   <faction>Civilian</faction>
-  <strength>25</strength>
   <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Llama">
   <ai>trader</ai>
   <faction>Civilian</faction>
-  <strength>20</strength>
   <pilots>
-   <pilot chance="100" ship="Llama"></pilot>
+   <pilot ship="Llama"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Gawain">
   <ai>trader</ai>
   <faction>Civilian</faction>
-  <strength>35</strength>
   <pilots>
-   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
-  <strength>50</strength>
   <pilots>
-   <pilot chance="100" ship="Llama"></pilot>
+   <pilot ship="Llama"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Koala">
   <ai>trader</ai>
   <faction>Trader</faction>
-  <strength>60</strength>
   <pilots>
-   <pilot chance="100" ship="Koala"></pilot>
+   <pilot ship="Koala"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Mule">
   <ai>trader</ai>
   <faction>Trader</faction>
-  <strength>70</strength>
   <pilots>
-   <pilot chance="100" ship="Mule"></pilot>
+   <pilot ship="Mule"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Gawain">
   <ai>trader</ai>
   <faction>Trader</faction>
-  <strength>20</strength>
   <pilots>
-   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Quicksilver">
   <ai>trader</ai>
   <faction>Trader</faction>
-  <strength>40</strength>
   <pilots>
-   <pilot chance="100" ship="Quicksilver"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Small Trader Convoy A">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>100</strength>
-  <pilots>
-   <pilot chance="100" ship="Llama"></pilot>
-   <pilot chance="100" ship="Llama"></pilot>
-   <pilot chance="100" ship="Koala"></pilot>
-   <pilot chance="100" ship="Mule"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Small Trader Convoy B">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>60</strength>
-  <pilots>
-   <pilot chance="100" ship="Llama"></pilot>
-   <pilot chance="100" ship="Llama"></pilot>
-   <pilot chance="100" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Small Trader Convoy C">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>70</strength>
-  <pilots>
-   <pilot chance="100" ship="Mule"></pilot>
-   <pilot chance="100" ship="Mule"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Small Trader Convoy D">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>80</strength>
-  <pilots>
-   <pilot chance="100" ship="Llama"></pilot>
-   <pilot chance="100" ship="Llama"></pilot>
-   <pilot chance="100" ship="Mule"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Small Trader Convoy E">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>70</strength>
-  <pilots>
-   <pilot chance="100" ship="Koala"></pilot>
-   <pilot chance="100" ship="Koala"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Small Trader Convoy F">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>110</strength>
-  <pilots>
-   <pilot chance="100" ship="Koala"></pilot>
-   <pilot chance="100" ship="Koala"></pilot>
-   <pilot chance="100" ship="Koala"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Escorted Trader Convoy A">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <strength>150</strength>
-  <pilots>
-   <pilot chance="100" ship="Mule"></pilot>
-   <pilot chance="100" ship="Mule"></pilot>
-   <pilot chance="100" ship="Mule"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
+   <pilot ship="Quicksilver"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Kahan">
   <ai>proteron</ai>
   <faction>Proteron</faction>
-  <strength>180</strength>
   <pilots>
-   <pilot chance="100" ship="Proteron Kahan"></pilot>
+   <pilot ship="Proteron Kahan"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Archimedes">
   <ai>proteron</ai>
   <faction>Proteron</faction>
-  <strength>220</strength>
   <pilots>
-   <pilot chance="100" ship="Proteron Archimedes"></pilot>
+   <pilot ship="Proteron Archimedes"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Derivative">
   <ai>proteron</ai>
   <faction>Proteron</faction>
-  <strength>25</strength>
   <pilots>
-   <pilot chance="100" ship="Proteron Derivative"></pilot>
+   <pilot ship="Proteron Derivative"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Frontier Lancelot">
+  <ai>trader</ai>
+  <faction>Frontier</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Pacifier">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>170</strength>
   <pilots>
-   <pilot chance="100" ship="Pacifier"></pilot>
+   <pilot ship="Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Vendetta">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>70</strength>
   <pilots>
-   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="FLF Lancelot">
+  <ai>flf</ai>
+  <faction>FLF</faction>
+  <pilots>
+   <pilot ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Vendetta Trio">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>150</strength>
   <pilots>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Vendetta Sextet">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>200</strength>
   <pilots>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Ancestor Trio">
   <ai>flf</ai>
   <faction>FLF</faction>
-  <strength>150</strength>
   <pilots>
-   <pilot chance="100" ship="Ancestor"></pilot>
-   <pilot chance="100" ship="Ancestor"></pilot>
-   <pilot chance="100" ship="Ancestor"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Sml Force">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <strength>150</strength>
-  <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Med Force">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <strength>200</strength>
-  <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Lge Force">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <strength>300</strength>
-  <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Pacifier"></pilot>
+   <pilot ship="Ancestor"></pilot>
+   <pilot ship="Ancestor"></pilot>
+   <pilot ship="Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Hyena">
   <ai>pirate</ai>
   <faction>Pirate</faction>
-  <strength>25</strength>
   <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Pirate Hyena Pack">
-  <ai>pirate</ai>
-  <faction>Pirate</faction>
-  <strength>90</strength>
-  <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Admonisher">
   <ai>pirate</ai>
   <faction>Pirate</faction>
-  <strength>150</strength>
   <pilots>
-   <pilot name="Admonisher" chance="100" ship="Pirate Admonisher"></pilot>
+   <pilot name="Admonisher" ship="Pirate Admonisher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Vendetta">
   <ai>pirate</ai>
   <faction>Pirate</faction>
-  <strength>70</strength>
   <pilots>
-   <pilot name="Vendetta" chance="100" ship="Pirate Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Pirate Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Ancestor">
   <ai>pirate</ai>
   <faction>Pirate</faction>
-  <strength>40</strength>
   <pilots>
-   <pilot name="Ancestor" chance="100" ship="Pirate Ancestor"></pilot>
+   <pilot name="Ancestor" ship="Pirate Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Kestrel">
   <ai>pirate</ai>
   <faction>Pirate</faction>
-  <strength>200</strength>
   <pilots>
-   <pilot name="Kestrel" chance="100" ship="Pirate Kestrel"></pilot>
+   <pilot name="Kestrel" ship="Pirate Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Drone">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>40</strength>
   <pilots>
-   <pilot chance="100" ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Lge Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>500</strength>
   <pilots>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Sml Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>200</strength>
   <pilots>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
-   <pilot chance="100" ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
+   <pilot ship="Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Vendetta">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>70</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Ancestor">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>30</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
   </pilots>
  </fleet>
   <fleet name="Dvaered Vigilance">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>170</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
   </fleet>
  <fleet name="Dvaered Goddard">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>240</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Goddard" chance="100" ship="Dvaered Goddard"></pilot>
+   <pilot name="Goddard" ship="Dvaered Goddard"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Sml Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>200</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Med Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>300</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Goddard" chance="100" ship="Dvaered Goddard"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Goddard" ship="Dvaered Goddard"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Small Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Big Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Strike Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Vigilance" chance="100" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lancelot">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>60</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Hawking">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>270</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
+   <pilot name="Hawking" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Peacemaker">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>340</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
+   <pilot name="Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>260</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Hawking" ship="Empire Hawking"></pilot>
+   <pilot name="Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lge Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>600</strength>
   <pilots>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" chance="100" ship="Empire Peacemaker"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Hawking" ship="Empire Hawking"></pilot>
+   <pilot name="Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Med Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>400</strength>
   <pilots>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Hawking" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Sml Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>100</strength>
   <pilots>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Pacifier">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>170</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
+   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Admonisher">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <strength>150</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
+   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trinity">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>-1</strength>
   <pilots>
-   <pilot name="ESS Trinity" chance="100" ship="Empire Hawking"></pilot>
+   <pilot name="ESS Trinity" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
  <fleet name="Starfire">
   <ai>collective</ai>
   <faction>Collective</faction>
-  <strength>-1</strength>
   <pilots>
-   <pilot name="Starfire" chance="100" ship="Goddard"></pilot>
+   <pilot name="Starfire" ship="Goddard"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Pacifier">
   <ai>generic</ai>
   <faction>Mercenary</faction>
-  <strength>150</strength>
   <pilots>
-   <pilot chance="100" ship="Pacifier"></pilot>
+   <pilot ship="Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Ancestor">
   <ai>generic</ai>
   <faction>Mercenary</faction>
-  <strength>30</strength>
   <pilots>
-   <pilot chance="100" ship="Ancestor"></pilot>
+   <pilot ship="Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Vendetta">
   <ai>generic</ai>
   <faction>Mercenary</faction>
-  <strength>70</strength>
   <pilots>
-   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="DTS Raiders">
   <ai>pirate</ai>
   <faction>Raider</faction>
-  <strength>170</strength>
   <pilots>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
-   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="DTS Defense Fleet">
   <ai>empire</ai>
   <faction>Trader</faction>
-  <strength>140</strength>
   <pilots>
-   <pilot chance="100" ship="Mule"></pilot>
-   <pilot chance="100" ship="Mule"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Ancestor"></pilot>
-   <pilot chance="100" ship="Gawain"></pilot>
-   <pilot chance="100" ship="Gawain"></pilot>
-   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot ship="Mule"></pilot>
+   <pilot ship="Mule"></pilot>
+   <pilot ship="Lancelot"></pilot>
+   <pilot ship="Lancelot"></pilot>
+   <pilot ship="Ancestor"></pilot>
+   <pilot ship="Gawain"></pilot>
+   <pilot ship="Gawain"></pilot>
+   <pilot ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Base">
   <ai>base</ai>
   <faction>FLF</faction>
-  <strength>-1</strength>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot chance="100" ship="Base"></pilot>
+   <pilot ship="Base"></pilot>
   </pilots>
  </fleet>
  <fleet name="Vendetta Quartet">
   <ai>flf</ai>
   <faction>Independent</faction>
-  <strength>-1</strength>
   <pilots>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
-   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
 </Fleets>
