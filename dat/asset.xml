@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -2153,7 +2153,10 @@
     <outfits/>
     <shipyard/>
    </services>
-   <commodities/>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
