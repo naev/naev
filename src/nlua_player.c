@@ -438,6 +438,13 @@ static int playerL_addShip( lua_State *L )
 {
    const char *str, *name;
    Ship *s;
+   int ret;
+
+   /* Must be landed. */
+   if (land_planet==NULL) {
+      NLUA_ERROR(L, "Player must be landed to add a ship.");
+      return 0;
+   }
 
    /* Handle parameters. */
    str  = luaL_checkstring(L, 1);
@@ -451,7 +458,10 @@ static int playerL_addShip( lua_State *L )
    }
 
    /* Add the ship. */
-   player_newShip( s, 0., 0, 0., 0., 0., name );
+   do {
+      ret = player_newShip( s, 0., 0, 0., 0., 0., name );
+   } while (ret != 0);
+
    return 0;
 }
 
