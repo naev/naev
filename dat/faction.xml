@@ -179,4 +179,20 @@
   <allies />
   <enemies />
  </faction>
+ <faction name="Associates">
+  <invisible />
+  <static />
+  <allies />
+  <enemies>
+   <enemy>Thugs</enemy>
+  </enemies>
+ </faction>
+ <faction name="Thugs">
+  <invisible />
+  <static />
+  <allies />
+  <enemies>
+   <enemy>Associates</enemy>
+  </enemies>
+ </faction>
 </Factions>
