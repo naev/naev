@@ -306,35 +306,6 @@
    <pilot name="Goddard" ship="Dvaered Goddard"></pilot>
   </pilots>
  </fleet>
- <fleet name="Dvaered Sml Force">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
-  <pilots>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Dvaered Med Force">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
-  <pilots>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Goddard" ship="Dvaered Goddard"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Dvaered Small Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
