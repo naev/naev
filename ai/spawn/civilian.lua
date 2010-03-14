@@ -7,7 +7,7 @@ function spawn_patrol ()
     local civships = {{"Civilian Schroedinger", 5},
                       {"Civilian Llama", 5},
                       {"Civilian Gawain", 5},
-                      {"Civilian Hyena", 10},
+                      {"Civilian Hyena", 10}
                      }
     
     local select = rnd.rnd(1, #civships)
