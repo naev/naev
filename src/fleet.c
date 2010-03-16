@@ -31,8 +31,6 @@
 
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
-#define MINIMUM_FLEET_STRENGTH 10 /**< The minimum strength a fleet can have to spawn. */
-
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL; /**< Fleet stack. */
@@ -93,9 +91,6 @@ Fleet* fleet_grab( const int faction )
       /* Get a fleet and check its faction. */
       rnd = RNGF() * (nfleets - 0.01);
       fleet = &fleet_stack[rnd];
-
-      if(fleet->strength >= MINIMUM_FLEET_STRENGTH && fleet->faction == faction)
-         break;
    }
 
    return fleet;
@@ -169,9 +164,6 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          continue;
       }
 
-      /* Set strength level */
-      xmlr_float(node,"strength",temp->strength);
-
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
 
@@ -237,9 +229,6 @@ if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
    MELEMENT(temp->faction==-1,"faction");
    MELEMENT(temp->pilots==NULL,"pilots");
 #undef MELEMENT
-   /* Check the strength. */
-   if(temp->strength >= 0 && temp->strength < MINIMUM_FLEET_STRENGTH)
-      WARN("Fleet %s has %f strength and will not spawn. Make the strength -1 if this is intentional.", temp->name, temp->strength);
 
    return 0;
 }
