@@ -36,7 +36,6 @@ static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
-static int systemL_security( lua_State *L );
 static int systemL_presence( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
@@ -50,7 +49,6 @@ static const luaL_reg system_methods[] = {
    { "adjacentSystems", systemL_adjacent },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
-   { "security", systemL_security },
    { "presence", systemL_presence},
    {0,0}
 }; /**< System metatable methods. */
@@ -272,11 +270,12 @@ static int systemL_name( lua_State *L )
  * @brief Gets system factions.
  *
  * @code
- * sys = system.get() -- Get current system
+ * sys   = system.get() -- Get current system
  * facts = sys:faction() -- Get factions
- * if facts["Empire"] then
+ * if facts[ faction.get("Empire") ] then
  *    -- Do something since there is at least one Empire planet in the system
  * end
+ * value = facts[ faction.get("Pirate") ] or 0 -- Get value of pirates in the system
  * @endcode
  *
  *    @luaparam s System to get the factions of.
@@ -287,16 +286,17 @@ static int systemL_faction( lua_State *L )
 {
    int i;
    LuaSystem *sys;
+   LuaFaction lf;
    sys = luaL_checksystem(L,1);
 
    /* Return result in table */
    lua_newtable(L);
-   for (i=0; i<sys->s->nplanets; i++) {
-      if (sys->s->planets[i]->faction > 0) { /* Faction must be valid */
-         lua_pushboolean(L,1); /* value */
-         lua_setfield(L,-2,faction_name(sys->s->planets[i]->faction)); /* key */
-         /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
-      }
+   for (i=0; i<sys->s->npresence; i++) {
+      lf.f = sys->s->presence[i].faction;
+      lua_pushfaction(L, lf); /* t, k */ 
+      lua_pushnumber(L,sys->s->presence[i].value); /* t, k, v */
+      lua_settable(L,-3);  /* t */
+      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
    }
    return 1;
 
@@ -483,47 +483,6 @@ static int systemL_planets( lua_State *L )
 
 
 /**
- * @brief Gets the security level in a system.<br />
- * DEPRECATED. Use sys:presence() instead.
- *
- * @usage sec = sys:security()
- *
- *    @luaparam s System to get security level of.
- *    @luareturn The security level in sys (in % -> 25 = 25%).
- * @luafunc security( s )
- */
-static int systemL_security( lua_State *L )
-{
-   LuaSystem *sys;
-   double security;
-   int i;
-   int *fct;
-   int nfct;
-   double presenceF, presenceA;
-
-   /* Get parameters. */
-   sys = luaL_checksystem(L, 1);
-
-   /* Get the presence of all factions. */
-   fct = faction_getGroup(&nfct, 0);
-   presenceA = 0;
-   for(i = 0; i < nfct; i++)
-      presenceA += system_getPresence(sys->s, fct[i]);
-
-   /* Get the presence of friendly factions. */
-   fct = faction_getGroup(&nfct, 1);
-   presenceF = 0;
-   for(i = 0; i < nfct; i++)
-      presenceF += system_getPresence(sys->s, fct[i]);
-
-   /* Get the "security" percentage. */
-   security = presenceF / presenceA;
-
-   lua_pushnumber(L, security * 100. );
-   return 1;
-}
-
-/**
  * @brief Gets the presence in the system.
  *
  * Possible parameters are besides a faction:<br/>
@@ -554,7 +513,7 @@ static int systemL_presence( lua_State *L )
    sys = luaL_checksystem(L, 1);
 
    /* Get the second parameter. */
-   if(lua_isstring(L, 2)) {
+   if (lua_isstring(L, 2)) {
       /* A string command has been given. */
       cmd  = lua_tostring(L, 2);
       nfct = 0;
@@ -571,7 +530,7 @@ static int systemL_presence( lua_State *L )
       else /* Invalid command string. */
          NLUA_INVALID_PARAMETER();
    }
-   else if(lua_isfaction(L, 2)) {
+   else if (lua_isfaction(L, 2)) {
       /* A faction id was given. */
       lf     = lua_tofaction(L, 2);
       nfct   = 1;
@@ -582,7 +541,7 @@ static int systemL_presence( lua_State *L )
 
    /* Add up the presence values. */
    presence = 0;
-   for(i = 0; i < nfct; i++)
+   for(i=0; i<nfct; i++)
       presence += system_getPresence(sys->s, fct[i]);
 
    /* Clean up after ourselves. */
