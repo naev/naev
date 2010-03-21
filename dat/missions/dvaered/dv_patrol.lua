@@ -47,7 +47,7 @@ function patrol_systems_filter( s, data )
    end
 
    -- Must not be safe
-   if s:security() > 95 then
+   if sys:presence("friendly") > 3.*sys:presence("hostile") then
       return false
    end
 

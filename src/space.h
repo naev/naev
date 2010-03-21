@@ -137,7 +137,7 @@ typedef struct StarSystem_ StarSystem;
 typedef struct SystemFleet_ {
    int npilots; /**< The number of pilots. */
    int faction; /**< The faction of the fleet. */
-   double presenceUsed; /** < The amount of presence used by this fleet. */
+	double presenceUsed; /**< The amount of presence used by this fleet. */
 } SystemFleet;
 
 
