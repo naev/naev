@@ -14,7 +14,7 @@
   <lua>neutral/baroncomm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>var.peek("baron_stage") == nil and system.cur():security() &gt;= 75</cond>
+  <cond>var.peek("baron_stage") == nil and system.cur():presence("friendly") &gt; 3.*system.cur():presence("hostile")</cond>
   <flags>
   </flags>
  </event>
