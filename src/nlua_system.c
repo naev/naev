@@ -372,11 +372,12 @@ static int systemL_jumpdistance( lua_State *L )
 
 
 /**
- * @brief Gets all the ajacent systems to a system.
+ * @brief Gets all the adjacent systems to a system and the jump point positions.
  *
- * @usage for k,v in pairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ * @usage for k,v in pairs( sys:edjacentSystems() ) do -- Iterate over adjacent systems.
+ * @usage v = sys:adjacentSystems()[ system.get("Gamma Polaris") ] -- Get the position of the jump to Gamma Polaris.
  *
- *    @luaparam s System to get adjacent systems of.
+ *    @luaparam s System to get adjacent systems of, keys are systems, values are jump position.
  *    @luareturn A table with all the adjacent systems.
  * @luafunc adjacentSystems( s )
  */
@@ -384,6 +385,7 @@ static int systemL_adjacent( lua_State *L )
 {
    int i;
    LuaSystem *sys, sysp;
+   LuaVector lv;
 
    sys = luaL_checksystem(L,1);
 
@@ -391,8 +393,9 @@ static int systemL_adjacent( lua_State *L )
    lua_newtable(L);
    for (i=0; i<sys->s->njumps; i++) {
       sysp.s = sys->s->jumps[i].target;
-      lua_pushnumber(L,i+1); /* key */
-      lua_pushsystem(L,sysp); /* value */
+      lua_pushsystem(L,sysp); /* key. */
+      vectcpy( &lv.vec, &sys->s->jumps[i].pos );
+      lua_pushvector(L,lv); /* value. */
       lua_rawset(L,-3);
    }
 
@@ -435,8 +438,8 @@ static int systemL_hasPresence( lua_State *L )
 
    /* Try to find a fleet of the faction. */
    found = 0;
-   for (i=0; i<sys->s->nfleets; i++) {
-      if (sys->s->fleets[i]->faction == fct) {
+   for (i=0; i<sys->s->npresence; i++) {
+      if (sys->s->presence[i].faction == fct) {
          found = 1;
          break;
       }
