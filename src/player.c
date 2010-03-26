@@ -3271,6 +3271,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       }
    } while (xml_nextNode(node));
 
+   /* Update stats. */
+   pilot_calcStats( ship );
+
    /* Test for sanity. */
    if (fuel >= 0)
       ship->fuel = MIN(ship->fuel_max, fuel);

@@ -71,7 +71,7 @@ static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
-static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
+static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
@@ -94,6 +94,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    int i;
    int outfit_n;
    PilotOutfitSlot* slots;
+   Pilot *p;
    const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background? */
@@ -123,12 +124,12 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
-   for (i = 0; i < outfit_n; i++) {
-      if (slots[i].outfit == NULL)
-      {
+   for (i=0; i < outfit_n; i++) {
+      if (slots[i].outfit == NULL) {
          /* Bingo! */
-         eq_wgt.outfit = o;
-         equipment_swapSlot( wid, &slots[i] );
+         eq_wgt.outfit  = o;
+         p              = eq_wgt.selected;
+         equipment_swapSlot( wid, p, &slots[i] );
          return;
       }
    }
@@ -791,7 +792,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, &p->outfit_high[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_high[ret] );
          }
          else {
             wgt->mouseover  = selected + ret;
@@ -811,7 +812,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, &p->outfit_medium[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_medium[ret] );
          }
          else {
             wgt->mouseover = selected + ret;
@@ -831,7 +832,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, &p->outfit_low[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_low[ret] );
          }
          else {
             wgt->mouseover = selected + ret;
@@ -850,7 +851,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 /**
  * @brief Swaps an equipment slot.
  */
-static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
+static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
    int ret;
    Outfit *o, *ammo;
@@ -915,9 +916,11 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       equipment_addAmmo();
    }
 
+   /* Recalculate stats. */
+   pilot_calcStats( p );
+
    /* Redo the outfits thingy. */
    equipment_regenLists( wid, 1, 1 );
-
 
    return 0;
 }
