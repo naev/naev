@@ -1655,7 +1655,9 @@ void player_brokeHyperspace (void)
    player.p->fuel -= HYPERSPACE_FUEL;
 
    /* stop hyperspace */
-   pilot_rmFlag( player.p, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+   pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+   pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* update the map */
    map_jump();
