@@ -470,11 +470,12 @@ int player_newShip( Ship* ship, double px, double py,
 static void player_newShipMake( char* name )
 {
    Vector2d vp, vv;
-   unsigned int flags;
+   PilotFlags flags;
    PlayerShip_t *ship;
 
    /* store the current ship if it exists */
-   flags = PILOT_PLAYER;
+   pilot_clearFlagsRaw( flags );
+   pilot_setFlagRaw( flags, PILOT_PLAYER );
 
    /* in case we're respawning */
    player_rmFlag(PLAYER_CREATING);
@@ -1416,6 +1417,10 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
+   /* Can't be landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
@@ -1453,6 +1458,11 @@ void player_land (void)
       takeoff(1);
       return;
    }
+
+   /* Already landing. */
+   if ((pilot_isFlag( player.p, PILOT_LANDING) ||
+         pilot_isFlag( player.p, PILOT_TAKEOFF)))
+      return;
 
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
@@ -1500,8 +1510,8 @@ void player_land (void)
 
       /* Open land menu. */
       player_soundPause();
-      land(planet);
-      player_soundResume();
+      player.p->ptimer = PILOT_LANDING_DELAY;
+      pilot_setFlag( player.p, PILOT_LANDING );
    }
    else { /* get nearest planet target */
 
@@ -1540,6 +1550,10 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
+   /* Can't be landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    player.p->nav_planet = -1; /* get rid of planet target */
    player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
    player.p->nav_hyperspace++;
@@ -1654,7 +1668,9 @@ void player_brokeHyperspace (void)
    player.p->fuel -= HYPERSPACE_FUEL;
 
    /* stop hyperspace */
-   pilot_rmFlag( player.p, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+   pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+   pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* update the map */
    map_jump();
@@ -3120,12 +3136,16 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    int ret;
    const char *str;
    Commodity *com;
+   PilotFlags flags;
    
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 
    /* Sane defaults. */
    loc = NULL;
+   pilot_clearFlagsRaw( flags );
+   pilot_setFlagRaw( flags, PILOT_PLAYER );
+   pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
 
    /* Get the ship. */
    ship_parsed = ship_get(model);
@@ -3136,13 +3156,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* player.p is currently on this ship */
    if (is_player != 0) {
-      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL,
-            PILOT_PLAYER | PILOT_NO_OUTFITS, -1 );
+      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
       ship = player.p;
    }
    else
-      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL,
-            PILOT_PLAYER | PILOT_NO_OUTFITS );
+      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );
 
    free(name);
    free(model);

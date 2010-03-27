@@ -336,7 +336,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat mcol[4] = { 0., 0., 0. };
 
    /* No interpolation. */
-   if (!conf.interpolate) {
+   if (!conf.interpolate || (tb == NULL)) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
@@ -565,14 +565,40 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       const int sx, const int sy, const glColour *c )
 {
+   gl_blitSpriteInterpolateScale( sa, sb, inter, bx, by, 1., 1., sx, sy, c );
+}
+
+
+/**
+ * @brief Blits a sprite interpolating, position is relative to the player.
+ *
+ * Since position is in "game coordinates" it is subject to all
+ * sorts of position transformations.
+ *
+ * Interpolation is:  sa*inter + sb*1.-inter)
+ *
+ *    @param sa Sprite A to blit.
+ *    @param sb Sprite B to blit.
+ *    @param inter Amount to interpolate.
+ *    @param bx X position of the texture relative to the player.
+ *    @param by Y position of the texture relative to the player.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
+      double inter, const double bx, const double by,
+      double scalew, double scaleh,
+      const int sx, const int sy, const glColour *c )
+{
    double x,y, w,h, tx,ty;
 
    /* Translate coords. */
-   gl_gameToScreenCoords( &x, &y, bx - sa->sw/2., by - sa->sh/2. );
+   gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw/2., by - scaleh * sa->sh/2. );
 
    /* Scaled sprite dimensions. */
-   w = sa->sw*gl_cameraZ;
-   h = sa->sh*gl_cameraZ;
+   w = sa->sw*gl_cameraZ*scalew;
+   h = sa->sh*gl_cameraZ*scaleh;
 
    /* check if inbounds */
    if ((fabs(x) > SCREEN_W/2 + w) ||

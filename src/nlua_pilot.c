@@ -340,10 +340,10 @@ static int pilotL_addFleet( lua_State *L )
    LuaVector *lv;
    LuaSystem *ls;
    int jump;
-   unsigned int flags = 0;
+   PilotFlags flags;
 
    /* Default values. */
-   flags = 0;
+   pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
    jump = -1;
 
@@ -393,7 +393,7 @@ static int pilotL_addFleet( lua_State *L )
    }
    else {
       space_calcJumpInPos( cur_system, cur_system->jumps[jump].target, &vp, &vv, &a );
-      flags |= PILOT_HYP_END;
+      pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 
    /* Make sure angle is sane. */
