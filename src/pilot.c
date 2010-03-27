@@ -1459,16 +1459,27 @@ void pilot_explode( double x, double y, double radius,
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
+   double scalew, scaleh;
+
+   /* Check if needs scaling. */
+   if (pilot_isFlag( p, PILOT_LANDING )) {
+      scalew = p->ptimer / PILOT_LANDING_DELAY;
+      scaleh = scalew;
+   }
+   else if (pilot_isFlag( p, PILOT_TAKEOFF )) {
+      scalew = 1. - p->ptimer / PILOT_TAKEOFF_DELAY;
+      scaleh = scalew;
+   }
+   else {
+      scalew = 1.;
+      scaleh = 1.;
+   }
 
    /* Base ship. */
-   if (p->ship->gfx_engine != NULL)
-      gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
-            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            p->tsx, p->tsy, NULL );
-   else
-      gl_blitSprite( p->ship->gfx_space,
-            p->solid->pos.x, p->solid->pos.y,
-            p->tsx, p->tsy, NULL );
+   gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
+         1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+         scalew, scaleh,
+         p->tsx, p->tsy, NULL );
 }
 
 
