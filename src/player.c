@@ -1455,6 +1455,10 @@ void player_land (void)
       return;
    }
 
+   /* Already landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
       player_message( "\erThere are no planets to land on." );
