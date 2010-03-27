@@ -39,6 +39,7 @@
 #include "ai_extra.h"
 #include "faction.h"
 #include "font.h"
+#include "land.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -1458,16 +1459,27 @@ void pilot_explode( double x, double y, double radius,
 void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
+   double scalew, scaleh;
+
+   /* Check if needs scaling. */
+   if (pilot_isFlag( p, PILOT_LANDING )) {
+      scalew = p->ptimer / PILOT_LANDING_DELAY;
+      scaleh = scalew;
+   }
+   else if (pilot_isFlag( p, PILOT_TAKEOFF )) {
+      scalew = 1. - p->ptimer / PILOT_TAKEOFF_DELAY;
+      scaleh = scalew;
+   }
+   else {
+      scalew = 1.;
+      scaleh = 1.;
+   }
 
    /* Base ship. */
-   if (p->ship->gfx_engine != NULL)
-      gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
-            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
-            p->tsx, p->tsy, NULL );
-   else
-      gl_blitSprite( p->ship->gfx_space,
-            p->solid->pos.x, p->solid->pos.y,
-            p->tsx, p->tsy, NULL );
+   gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
+         1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+         scalew, scaleh,
+         p->tsx, p->tsy, NULL );
 }
 
 
@@ -1565,8 +1577,25 @@ void pilot_update( Pilot* pilot, const double dt )
          o->timer -= dt;
    }
 
+   /* Handle takeoff/landing. */
+   if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
+      if (pilot->ptimer < 0.) {
+         pilot_rmFlag(pilot,PILOT_TAKEOFF);
+         return;
+      }
+   }
+   else if (pilot_isFlag(pilot,PILOT_LANDING)) {
+      if (pilot->ptimer < 0.) {
+         pilot_rmFlag(pilot,PILOT_LANDING);
+         if (pilot_isPlayer(pilot))
+            land( cur_system->planets[ pilot->nav_planet ] );
+         else
+            pilot_setFlag(pilot,PILOT_DELETE);
+         return;
+      }
+   }
    /* he's dead jim */
-   if (pilot_isFlag(pilot,PILOT_DEAD)) {
+   else if (pilot_isFlag(pilot,PILOT_DEAD)) {
       if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
          if (pilot->id==PLAYER_ID) /* player.p handled differently */
             player_destroyed();
@@ -3146,14 +3175,14 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags, const int systemFleet )
+      const PilotFlags flags, const int systemFleet )
 {
    int i, p;
 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
 
-   if (flags & PILOT_PLAYER) /* player.p is ID 0 */
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID, should probably be fixed to something sane someday. */
       pilot->id = PLAYER_ID;
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
@@ -3224,13 +3253,13 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 #endif /* DEBUGGING */
 
    /* set flags and functions */
-   if (flags & PILOT_PLAYER) {
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) {
       pilot->think            = player_think; /* players don't need to think! :P */
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
-      if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
+      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
          player.p = pilot;
          gui_load( pilot->ship->gui ); /* load the gui */
       }
@@ -3243,13 +3272,13 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    }
 
    /* Set enter hyperspace flag if needed. */
-   if (flags & PILOT_HYP_END)
+   if (pilot_isFlagRaw( flags, PILOT_HYP_END ))
       pilot_setFlag(pilot, PILOT_HYP_END);
 
    /* Escort stuff. */
-   if (flags & PILOT_ESCORT) {
+   if (pilot_isFlagRaw( flags, PILOT_ESCORT )) {
       pilot_setFlag(pilot,PILOT_ESCORT);
-      if (flags & PILOT_CARRIED)
+      if (pilot_isFlagRaw( flags, PILOT_CARRIED ))
          pilot_setFlag(pilot,PILOT_CARRIED);
    }
 
@@ -3282,7 +3311,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags, const int systemFleet )
+      const PilotFlags flags, const int systemFleet )
 {
    Pilot *dyn;
 
@@ -3324,7 +3353,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
-      int faction, const char *ai, const unsigned int flags )
+      int faction, const char *ai, PilotFlags flags )
 {
    Pilot* dyn;
    dyn = malloc(sizeof(Pilot));
@@ -3332,7 +3361,8 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       WARN("Unable to allocate memory");
       return 0;
    }
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY, -1 );
+   pilot_setFlagRaw( flags, PILOT_EMPTY );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, -1 );
    return dyn;
 }
 
@@ -3609,7 +3639,10 @@ void pilots_update( double dt )
          }
          /* Must not be boarding to think. */
          else if (!pilot_isFlag(p, PILOT_BOARDING) &&
-               !pilot_isFlag(p, PILOT_REFUELBOARDING))
+               !pilot_isFlag(p, PILOT_REFUELBOARDING) &&
+               /* Must not be landing nor taking off. */
+               !pilot_isFlag(p, PILOT_LANDING) &&
+               !pilot_isFlag(p, PILOT_TAKEOFF))
             p->think(p, dt);
       }
 

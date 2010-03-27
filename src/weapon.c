@@ -807,6 +807,11 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (p->faction == w->faction)
       return 0;
 
+   /* Must not be landing nor taking off. */
+   if (pilot_isFlag(p, PILOT_LANDING) ||
+         pilot_isFlag(p, PILOT_TAKEOFF))
+      return 0;
+
    /* Go "through" dead pilots. */
    if (pilot_isFlag(p, PILOT_DEAD))
       return 0;
