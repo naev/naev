@@ -1417,6 +1417,10 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
+   /* Can't be landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
@@ -1546,6 +1550,10 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
+   /* Can't be landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    player.p->nav_planet = -1; /* get rid of planet target */
    player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
    player.p->nav_hyperspace++;
