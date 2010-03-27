@@ -112,7 +112,7 @@ Fleet* fleet_grab( const int faction )
  * @sa pilot_create
  */
 unsigned int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags,
+      Vector2d *pos, Vector2d *vel, const char* ai, PilotFlags flags,
       const int systemFleet )
 {
    unsigned int p;

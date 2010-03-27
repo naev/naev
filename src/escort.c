@@ -86,7 +86,8 @@ unsigned int escort_create( Pilot *p, char *ship,
    Ship *s;
    Pilot *pe;
    char buf[16];
-   unsigned int e, f;
+   unsigned int e;
+   PilotFlags f;
    unsigned int hook;
    unsigned int parent;
 
@@ -96,9 +97,10 @@ unsigned int escort_create( Pilot *p, char *ship,
    snprintf(buf, 16, "escort*%u", parent);
 
    /* Set flags. */
-   f = PILOT_ESCORT;
+   pilot_clearFlagsRaw( f );
+   pilot_setFlagRaw( f, PILOT_ESCORT );
    if (type == ESCORT_TYPE_BAY)
-      f |= PILOT_CARRIED;
+      pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
    e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f, -1 );

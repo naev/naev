@@ -470,11 +470,12 @@ int player_newShip( Ship* ship, double px, double py,
 static void player_newShipMake( char* name )
 {
    Vector2d vp, vv;
-   unsigned int flags;
+   PilotFlags flags;
    PlayerShip_t *ship;
 
    /* store the current ship if it exists */
-   flags = PILOT_PLAYER;
+   pilot_clearFlagsRaw( flags );
+   pilot_setFlagRaw( flags, PILOT_PLAYER );
 
    /* in case we're respawning */
    player_rmFlag(PLAYER_CREATING);
@@ -3120,12 +3121,16 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    int ret;
    const char *str;
    Commodity *com;
+   PilotFlags flags;
    
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 
    /* Sane defaults. */
    loc = NULL;
+   pilot_clearFlagsRaw( flags );
+   pilot_setFlagRaw( flags, PILOT_PLAYER );
+   pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
 
    /* Get the ship. */
    ship_parsed = ship_get(model);
@@ -3136,13 +3141,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* player.p is currently on this ship */
    if (is_player != 0) {
-      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL,
-            PILOT_PLAYER | PILOT_NO_OUTFITS, -1 );
+      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
       ship = player.p;
    }
    else
-      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL,
-            PILOT_PLAYER | PILOT_NO_OUTFITS );
+      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );
 
    free(name);
    free(model);

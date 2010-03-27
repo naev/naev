@@ -3146,14 +3146,14 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
  */
 void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags, const int systemFleet )
+      const PilotFlags flags, const int systemFleet )
 {
    int i, p;
 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
 
-   if (flags & PILOT_PLAYER) /* player.p is ID 0 */
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID, should probably be fixed to something sane someday. */
       pilot->id = PLAYER_ID;
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
@@ -3224,13 +3224,13 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 #endif /* DEBUGGING */
 
    /* set flags and functions */
-   if (flags & PILOT_PLAYER) {
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) {
       pilot->think            = player_think; /* players don't need to think! :P */
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
-      if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
+      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
          player.p = pilot;
          gui_load( pilot->ship->gui ); /* load the gui */
       }
@@ -3243,13 +3243,13 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    }
 
    /* Set enter hyperspace flag if needed. */
-   if (flags & PILOT_HYP_END)
+   if (pilot_isFlagRaw( flags, PILOT_HYP_END ))
       pilot_setFlag(pilot, PILOT_HYP_END);
 
    /* Escort stuff. */
-   if (flags & PILOT_ESCORT) {
+   if (pilot_isFlagRaw( flags, PILOT_ESCORT )) {
       pilot_setFlag(pilot,PILOT_ESCORT);
-      if (flags & PILOT_CARRIED)
+      if (pilot_isFlagRaw( flags, PILOT_CARRIED ))
          pilot_setFlag(pilot,PILOT_CARRIED);
    }
 
@@ -3282,7 +3282,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
  */
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags, const int systemFleet )
+      const PilotFlags flags, const int systemFleet )
 {
    Pilot *dyn;
 
@@ -3324,7 +3324,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
-      int faction, const char *ai, const unsigned int flags )
+      int faction, const char *ai, PilotFlags flags )
 {
    Pilot* dyn;
    dyn = malloc(sizeof(Pilot));
@@ -3332,7 +3332,8 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
       WARN("Unable to allocate memory");
       return 0;
    }
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY, -1 );
+   pilot_setFlagRaw( flags, PILOT_EMPTY );
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, -1 );
    return dyn;
 }
 

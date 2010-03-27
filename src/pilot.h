@@ -54,43 +54,50 @@
 
 
 /* flags */
-#define pilot_isFlag(p,f)  ((p)->flags & (f)) /**< Checks if flag f is set on pilot p. */
-#define pilot_setFlag(p,f) ((p)->flags |= (f)) /**< Sets flag f on pilot p. */
-#define pilot_rmFlag(p,f)  ((p)->flags &= ~(f)) /**< Removes flag f on pilot p. */
+#define pilot_clearFlagsRaw(a) memset((a), 0, PILOT_FLAGS_MAX) /**< Clears the pilot flags. */
+#define pilot_isFlagRaw(a,f)  ((a)[f]) /**< Checks to see if a pilot flag is set. */
+#define pilot_setFlagRaw(a,f) ((a)[f] = 1) /**< Sets flags rawly. */
+#define pilot_isFlag(p,f)     ((p)->flags[f]) /**< Checks if flag f is set on pilot p. */
+#define pilot_setFlag(p,f)    ((p)->flags[f] = 1) /**< Sets flag f on pilot p. */
+#define pilot_rmFlag(p,f)     ((p)->flags[f] = 0) /**< Removes flag f on pilot p. */
 /* creation */
-#define PILOT_PLAYER       (1<<0) /**< Pilot is a player. */
-#define PILOT_ESCORT       (1<<1) /**< Pilot is an escort. */
-#define PILOT_CARRIED      (1<<2) /**< Pilot usually resides in a fighter bay. */
-#define PILOT_CREATED_AI   (1<<3) /** Pilot has already created AI. */
-#define PILOT_EMPTY        (1<<4) /**< Do not add pilot to stack. */
-#define PILOT_NO_OUTFITS   (1<<5) /**< Do not create the pilot with outfits. */
-#define PILOT_HASTURRET    (1<<6) /**< Pilot has turrets. */
-#define PILOT_HASBEAMS     (1<<7) /**< Pilot has beam weapons. */
+#define PILOT_PLAYER       0 /**< Pilot is a player. */
+#define PILOT_ESCORT       1 /**< Pilot is an escort. */
+#define PILOT_CARRIED      2 /**< Pilot usually resides in a fighter bay. */
+#define PILOT_CREATED_AI   3 /** Pilot has already created AI. */
+#define PILOT_EMPTY        4 /**< Do not add pilot to stack. */
+#define PILOT_NO_OUTFITS   5 /**< Do not create the pilot with outfits. */
+#define PILOT_HASTURRET    6 /**< Pilot has turrets. */
+#define PILOT_HASBEAMS     7 /**< Pilot has beam weapons. */
 /* dynamic */
-#define PILOT_HAILING      (1<<8) /***< Pilot is hailing the player. */
-#define PILOT_NODISABLE    (1<<9) /**< Pilot can't be disabled. */
-#define PILOT_INVINCIBLE   (1<<10) /**< Pilot can't be hit ever. */
-#define PILOT_HOSTILE      (1<<11) /**< Pilot is hostile to the player. */
-#define PILOT_FRIENDLY     (1<<12) /**< Pilot is friendly to the player. */
-#define PILOT_COMBAT       (1<<13) /**< Pilot is engaged in combat. */
-#define PILOT_AFTERBURNER  (1<<14) /**< Pilot has his afterburner activated. */
-#define PILOT_HYP_PREP     (1<<15) /**< Pilot is getting ready for hyperspace. */
-#define PILOT_HYP_BEGIN    (1<<16) /**< Pilot is starting engines. */
-#define PILOT_HYPERSPACE   (1<<17) /**< Pilot is in hyperspace. */
-#define PILOT_HYP_END      (1<<18) /**< Pilot is exiting hyperspace. */
-#define PILOT_BOARDED      (1<<19) /**< Pilot has been boarded already. */
-#define PILOT_NOBOARD      (1<<20) /**< Pilot can't be boarded. */
-#define PILOT_BOARDING     (1<<21) /**< Pilot is currently boarding it's target. */
-#define PILOT_BRIBED       (1<<22) /**< Pilot has been bribed already. */
-#define PILOT_DISTRESSED   (1<<23) /**< Pilot has distressed once already. */
-#define PILOT_REFUELING    (1<<24) /**< Pilot is trying to refueling. */
-#define PILOT_REFUELBOARDING (1<<25) /**< Pilot is actively refueling. */
-#define PILOT_MANUAL_CONTROL (1<<26) /**< Pilot is under manual control of a mission or event. */
-#define PILOT_DISABLED     (1<<27) /**< Pilot is disabled. */
-#define PILOT_DEAD         (1<<28) /**< Pilot is in it's dying throes */
-#define PILOT_DEATH_SOUND  (1<<29) /**< Pilot just did death explosion. */
-#define PILOT_EXPLODED     (1<<30) /**< Pilot did final death explosion. */
-#define PILOT_DELETE       (1<<31) /**< Pilot will get deleted asap. */
+#define PILOT_HAILING      8 /***< Pilot is hailing the player. */
+#define PILOT_NODISABLE    9 /**< Pilot can't be disabled. */
+#define PILOT_INVINCIBLE   10 /**< Pilot can't be hit ever. */
+#define PILOT_HOSTILE      11 /**< Pilot is hostile to the player. */
+#define PILOT_FRIENDLY     12 /**< Pilot is friendly to the player. */
+#define PILOT_COMBAT       13 /**< Pilot is engaged in combat. */
+#define PILOT_AFTERBURNER  14 /**< Pilot has his afterburner activated. */
+#define PILOT_HYP_PREP     15 /**< Pilot is getting ready for hyperspace. */
+#define PILOT_HYP_BEGIN    16 /**< Pilot is starting engines. */
+#define PILOT_HYPERSPACE   17 /**< Pilot is in hyperspace. */
+#define PILOT_HYP_END      18 /**< Pilot is exiting hyperspace. */
+#define PILOT_BOARDED      19 /**< Pilot has been boarded already. */
+#define PILOT_NOBOARD      20 /**< Pilot can't be boarded. */
+#define PILOT_BOARDING     21 /**< Pilot is currently boarding it's target. */
+#define PILOT_BRIBED       22 /**< Pilot has been bribed already. */
+#define PILOT_DISTRESSED   23 /**< Pilot has distressed once already. */
+#define PILOT_REFUELING    24 /**< Pilot is trying to refueling. */
+#define PILOT_REFUELBOARDING 25 /**< Pilot is actively refueling. */
+#define PILOT_MANUAL_CONTROL 26 /**< Pilot is under manual control of a mission or event. */
+#define PILOT_LANDING      27 /**< Pilot is landing. */
+#define PILOT_TAKEOFF      28 /**< Pilot is taking off. */
+#define PILOT_DISABLED     29 /**< Pilot is disabled. */
+#define PILOT_DEAD         30 /**< Pilot is in it's dying throes */
+#define PILOT_DEATH_SOUND  31 /**< Pilot just did death explosion. */
+#define PILOT_EXPLODED     32 /**< Pilot did final death explosion. */
+#define PILOT_DELETE       33 /**< Pilot will get deleted asap. */
+#define PILOT_FLAGS_MAX    PILOT_DELETE /* Maximum number of flags. */
+typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
@@ -291,7 +298,7 @@ typedef struct Pilot_ {
    double comm_msgTimer; /**< Message timer for the comm. */
    double comm_msgWidth; /**< Width of the message. */
    char *comm_msg; /**< Comm message to display overhead. */
-   uint32_t flags; /**< used for AI and others */
+   PilotFlags flags; /**< used for AI and others */
    double ptimer; /**< generic timer for internal pilot use */
    double htimer; /**< Hail animation timer. */
    int hail_pos; /**< Hail animation position. */
@@ -383,12 +390,12 @@ double pilot_hyperspaceDelay( Pilot *p );
  */
 void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags, const int systemFleet );
+      const PilotFlags flags, const int systemFleet );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int flags, const int systemFleet );
+      const PilotFlags flags, const int systemFleet );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
-      int faction, const char *ai, const unsigned int flags );
+      int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_copy( Pilot* src );
 void pilot_delete( Pilot *p );
 
