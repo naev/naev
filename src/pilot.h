@@ -31,11 +31,15 @@
 #define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.3 /**< Minimum entering distance. */
 #define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.4 /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
-
-#define PILOT_SIZE_APROX      0.8   /**< approximation for pilot size */
-#define PILOT_DISABLED_ARMOR  0.3   /**< armour % that gets it disabled */
-#define PILOT_REFUEL_TIME     3. /**< Time to complete refueling. */
-#define PILOT_REFUEL_RATE     HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
+/* Land/takeoff. */
+#define PILOT_LANDING_DELAY      2. /**< Delay for land animation. */
+#define PILOT_TAKEOFF_DELAY      2. /**< Delay for takeoff animation. */
+/* Refueling. */
+#define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
+#define PILOT_REFUEL_RATE        HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
+/* Misc. */
+#define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
+#define PILOT_DISABLED_ARMOR     0.3   /**< armour % that gets it disabled */
 
 /* hooks */
 #define PILOT_HOOK_NONE    0 /**< No hook. */

@@ -1996,7 +1996,7 @@ void takeoff( int delay )
    player_addEscorts();
    hooks_run("enter");
    events_trigger( EVENT_TRIGGER_ENTER );
-   player.p->ptimer = 3.;
+   player.p->ptimer = PILOT_TAKEOFF_DELAY;
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
