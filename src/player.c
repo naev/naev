@@ -1501,8 +1501,8 @@ void player_land (void)
 
       /* Open land menu. */
       player_soundPause();
-      land(planet);
-      player_soundResume();
+      player.p->ptimer = 3.;
+      pilot_setFlag( player.p, PILOT_LANDING );
    }
    else { /* get nearest planet target */
 

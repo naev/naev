@@ -39,6 +39,7 @@
 #include "ai_extra.h"
 #include "faction.h"
 #include "font.h"
+#include "land.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -1565,8 +1566,25 @@ void pilot_update( Pilot* pilot, const double dt )
          o->timer -= dt;
    }
 
+   /* Handle takeoff/landing. */
+   if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
+      if (pilot->ptimer < 0.) {
+         pilot_rmFlag(pilot,PILOT_TAKEOFF);
+         return;
+      }
+   }
+   else if (pilot_isFlag(pilot,PILOT_LANDING)) {
+      if (pilot->ptimer < 0.) {
+         pilot_rmFlag(pilot,PILOT_LANDING);
+         if (pilot_isPlayer(pilot))
+            land( cur_system->planets[ pilot->nav_planet ] );
+         else
+            pilot_setFlag(pilot,PILOT_DELETE);
+         return;
+      }
+   }
    /* he's dead jim */
-   if (pilot_isFlag(pilot,PILOT_DEAD)) {
+   else if (pilot_isFlag(pilot,PILOT_DEAD)) {
       if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
          if (pilot->id==PLAYER_ID) /* player.p handled differently */
             player_destroyed();
@@ -3610,7 +3628,10 @@ void pilots_update( double dt )
          }
          /* Must not be boarding to think. */
          else if (!pilot_isFlag(p, PILOT_BOARDING) &&
-               !pilot_isFlag(p, PILOT_REFUELBOARDING))
+               !pilot_isFlag(p, PILOT_REFUELBOARDING) &&
+               /* Must not be landing nor taking off. */
+               !pilot_isFlag(p, PILOT_LANDING) &&
+               !pilot_isFlag(p, PILOT_TAKEOFF))
             p->think(p, dt);
       }
 
