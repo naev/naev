@@ -1417,6 +1417,10 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
+   /* Can't be landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
@@ -1454,6 +1458,11 @@ void player_land (void)
       takeoff(1);
       return;
    }
+
+   /* Already landing. */
+   if ((pilot_isFlag( player.p, PILOT_LANDING) ||
+         pilot_isFlag( player.p, PILOT_TAKEOFF)))
+      return;
 
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
@@ -1541,6 +1550,10 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
+   /* Can't be landing. */
+   if (pilot_isFlag( player.p, PILOT_LANDING))
+      return;
+
    player.p->nav_planet = -1; /* get rid of planet target */
    player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
    player.p->nav_hyperspace++;
@@ -1655,7 +1668,9 @@ void player_brokeHyperspace (void)
    player.p->fuel -= HYPERSPACE_FUEL;
 
    /* stop hyperspace */
-   pilot_rmFlag( player.p, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+   pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+   pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* update the map */
    map_jump();

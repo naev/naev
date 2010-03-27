@@ -543,7 +543,9 @@ static int playerL_teleport( lua_State *L )
    hooks_run( "jumpout" );
 
    /* Just in case remove hyperspace flags. */
-   pilot_rmFlag( player.p, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+   pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+   pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* Go to the new system. */
    space_init( sys->s->name );

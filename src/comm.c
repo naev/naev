@@ -560,7 +560,8 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    pilot_modCredits( comm_pilot, price );
 
    /* Start refueling. */
-   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP | PILOT_HYP_BEGIN);
+   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP);
+   pilot_rmFlag(comm_pilot, PILOT_HYP_BEGIN);
    pilot_setFlag(comm_pilot, PILOT_REFUELING);
    ai_refuel( comm_pilot, player.p->id );
 
