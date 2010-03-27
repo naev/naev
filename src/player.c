@@ -1456,7 +1456,8 @@ void player_land (void)
    }
 
    /* Already landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING))
+   if ((pilot_isFlag( player.p, PILOT_LANDING) ||
+         pilot_isFlag( player.p, PILOT_TAKEOFF)))
       return;
 
    /* Check if there are planets to land on. */
