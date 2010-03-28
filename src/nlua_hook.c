@@ -285,6 +285,7 @@ static int hook_enter( lua_State *L )
  *    - "disable" : triggered when pilot is disabled.<br />
  *    - "jump" : triggered when pilot jumps to hyperspace.<br />
  *    - "hail" : triggered when pilot is hailed.<br />
+ *    - "land" : triggered when pilot is landing.<br />
  *    - "attacked" : triggered when the pilot is attacked in manual control <br />
  *    - "idle" : triggered when the pilot becomes idle in manual control <br />
  *
@@ -314,6 +315,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
+   else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else { /* hook_type not valid */

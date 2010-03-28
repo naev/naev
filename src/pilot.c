@@ -1463,11 +1463,11 @@ void pilot_render( Pilot* p, const double dt )
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
-      scalew = p->ptimer / PILOT_LANDING_DELAY;
+      scalew = CLAMP( 0., 1., p->ptimer / PILOT_LANDING_DELAY );
       scaleh = scalew;
    }
    else if (pilot_isFlag( p, PILOT_TAKEOFF )) {
-      scalew = 1. - p->ptimer / PILOT_TAKEOFF_DELAY;
+      scalew = CLAMP( 0., 1., 1. - p->ptimer / PILOT_TAKEOFF_DELAY );
       scaleh = scalew;
    }
    else {
@@ -1586,9 +1586,10 @@ void pilot_update( Pilot* pilot, const double dt )
    }
    else if (pilot_isFlag(pilot,PILOT_LANDING)) {
       if (pilot->ptimer < 0.) {
-         pilot_rmFlag(pilot,PILOT_LANDING);
-         if (pilot_isPlayer(pilot))
+         if (pilot_isPlayer(pilot)) {
+            pilot_rmFlag(pilot,PILOT_LANDING);
             land( cur_system->planets[ pilot->nav_planet ] );
+         }
          else
             pilot_setFlag(pilot,PILOT_DELETE);
          return;

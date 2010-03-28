@@ -195,6 +195,7 @@ static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
+static int aiL_land( lua_State *L ); /* bool land() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 
@@ -279,6 +280,7 @@ static const luaL_reg aiL_methods[] = {
    { "nearestplanet", aiL_getnearestplanet },
    { "rndplanet", aiL_getrndplanet },
    { "landplanet", aiL_getlandplanet },
+   { "land", aiL_land },
    { "accel", aiL_accel },
    { "turn", aiL_turn },
    { "face", aiL_face },
@@ -1893,36 +1895,81 @@ static int aiL_getrndplanet( lua_State *L )
  */
 static int aiL_getlandplanet( lua_State *L )
 {
-   Planet** planets;
+   int *ind;
    int nplanets, i;
    LuaVector lv;
+   Planet *p;
 
-   if (cur_system->nplanets == 0) return 0; /* no planets */
+   if (cur_system->nplanets == 0)
+      return 0; /* no planets */
 
    /* Allocate memory. */
-   planets = malloc( sizeof(Planet*) * cur_system->nplanets );
+   ind = malloc( sizeof(int) * cur_system->nplanets );
 
    /* Copy friendly planet.s */
    for (nplanets=0, i=0; i<cur_system->nplanets; i++)
       if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
             !areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
-         planets[nplanets++] = cur_system->planets[i];
+         ind[ nplanets++ ] = i;
 
    /* no planet to land on found */
    if (nplanets==0) {
-      free(planets);
+      free(ind);
       return 0;
    }
 
    /* we can actually get a random planet now */
    i = RNG(0,nplanets-1);
-   vectcpy( &lv.vec, &planets[i]->pos );
-   vect_cadd( &lv.vec, RNG(0, planets[i]->gfx_space->sw)-planets[i]->gfx_space->sw/2.,
-         RNG(0, planets[i]->gfx_space->sh)-planets[i]->gfx_space->sh/2. );
+   p = cur_system->planets[ ind[i] ];
+   vectcpy( &lv.vec, &p->pos );
+   vect_cadd( &lv.vec, RNG(0, p->gfx_space->sw) - p->gfx_space->sw/2.,
+         RNG(0, p->gfx_space->sh) - p->gfx_space->sh/2. );
    lua_pushvector( L, lv );
-   free(planets);
+   cur_pilot->nav_planet   = ind[ i ];
+   free(ind);
+
    return 1;
 }
+
+
+/**
+ * @brief Lands on a planet.
+ *
+ * @luafunc land()
+ */
+static int aiL_land( lua_State *L )
+{
+   int ret;
+   Planet *planet;
+   
+   ret = 0;
+
+   /* Get planet. */
+   planet = cur_system->planets[ cur_pilot->nav_planet ];
+
+   /* Check landability. */
+   if (!planet_hasService(planet,PLANET_SERVICE_INHABITED))
+      ret++;
+
+   /* Check distance. */
+   if (vect_dist(&cur_pilot->solid->pos,&planet->pos) > planet->gfx_space->sw)
+      ret++;
+
+   /* Check velocity. */
+   if ((pow2(VX(cur_pilot->solid->vel)) + pow2(VY(cur_pilot->solid->vel))) >
+         (double)pow2(MAX_HYPERSPACE_VEL))
+      ret++;
+
+   if (!ret) {
+      cur_pilot->ptimer = PILOT_LANDING_DELAY;
+      pilot_setFlag( cur_pilot, PILOT_LANDING );
+      pilot_runHook( cur_pilot, PILOT_HOOK_LAND );
+   }
+
+   lua_pushboolean(L,!ret);
+   return 1;
+}
+
 
 /*
  * tries to enter the pilot in hyperspace, returns the distance if too far away
