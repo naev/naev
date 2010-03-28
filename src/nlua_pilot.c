@@ -417,7 +417,7 @@ static int pilotL_addFleet( lua_State *L )
          chance = chance / (chance + nind);
 
          /* Random jump in. */
-         if (RNGF() > chance) {
+         if ((nind == 0) || (RNGF() <= chance)) {
             jump = RNG_SANE(0,cur_system->njumps-1);
          }
          /* Random take off. */
