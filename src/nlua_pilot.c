@@ -317,7 +317,7 @@ static int pilotL_getPlayer( lua_State *L )
  * end
  * @endcode
  *
- * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in).
+ * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
  * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
  * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
@@ -343,8 +343,11 @@ static int pilotL_addFleet( lua_State *L )
    LuaVector *lv;
    LuaSystem *ls;
    LuaPlanet *lplanet;
+   Planet *planet;
    int jump;
    PilotFlags flags;
+   int *ind, nind;
+   double chance;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -390,16 +393,51 @@ static int pilotL_addFleet( lua_State *L )
    }
    else if (lua_isplanet(L,3)) {
       lplanet = lua_toplanet(L,3);
+      planet  = lplanet->p;
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       vect_cset( &vp,
-            lplanet->p->pos.x + RNG(0,lplanet->p->gfx_space->sw) - lplanet->p->gfx_space->sw / 2.,
-            lplanet->p->pos.y + RNG(0,lplanet->p->gfx_space->sh) - lplanet->p->gfx_space->sh / 2. );
+            planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+            planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
    /* Random. */
-   else
-      jump = RNG_SANE(0,cur_system->njumps-1);
+   else {
+      if (cur_system->nplanets > 0) {
+         /* Build landable planet table. */
+         ind = malloc( sizeof(int) * cur_system->nplanets );
+         nind = 0;
+         for (i=0; i<cur_system->nplanets; i++)
+            if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
+                  !areEnemies(flt->faction,cur_system->planets[i]->faction))
+               ind[ nind++ ] = i;
+
+         /* Calculate jump chance. */
+         chance = cur_system->njumps;
+         chance = chance / (chance + nind);
+
+         /* Random jump in. */
+         if (RNGF() > chance) {
+            jump = RNG_SANE(0,cur_system->njumps-1);
+         }
+         /* Random take off. */
+         else {
+            planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
+            pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+            vect_cset( &vp,
+                  planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+                  planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+            a = RNGF() * 2.*M_PI;
+            vectnull( &vv );
+         }
+
+         /* Free memory allocated. */
+         free( ind );
+      }
+      /* Can only jump in. */
+      else
+         jump = RNG_SANE(0,cur_system->njumps-1);
+   }
 
    /* Set up velocities and such. */
    if (jump >= 0) {
