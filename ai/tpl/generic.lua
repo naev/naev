@@ -6,6 +6,7 @@ include("ai/include/attack.lua")
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
+mem.enemyclose     = nil -- Distance at which an enemy is considered close
 mem.armour_run     = 0 -- At which damage to run at
 mem.armour_return  = 0 -- At which armour to return to combat
 mem.shield_run     = 0 -- At which shield to run
@@ -17,6 +18,7 @@ mem.land_planet    = true -- Should land on planets?
 mem.distress       = true -- AI distresses
 mem.distressrate   = 3 -- Number of ticks before calling for help
 mem.distressmsg    = nil -- Message when calling for help
+mem.distressmsgfunc = nil -- Function to call when distressing
 
 
 -- Required control rate
@@ -34,8 +36,23 @@ function control ()
 
    -- Get new task
    if task == "none" then
+      local attack = false
+
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
+         -- Check if we have minimum range to engage
+         if mem.enemyclose then
+            local dist = ai.dist( enemy )
+            if mem.enemyclose > dist then
+               attack = true
+            end
+         else
+            attack = true
+         end
+      end
+
+      -- See what decision to take
+      if attack then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
@@ -102,9 +119,23 @@ function control ()
 
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
-      taunt(enemy, true)
-      ai.pushtask("attack", enemy)
+      local attack = false
 
+      -- See if enemy is close enough to attack
+      if mem.enemyclose then
+         local dist = ai.dist( enemy )
+         if mem.enemyclose > dist then
+            attack = true
+         end
+      else
+         attack = true
+      end
+
+      -- See if really want to attack
+      if attack then
+         taunt(enemy, true)
+         ai.pushtask("attack", enemy)
+      end
    end
 end
 
@@ -153,7 +184,9 @@ function idle ()
    else
       mem.land = planet
       ai.pushtask("hyperspace")
-      ai.pushtask("land")
+      if not mem.tookoff then
+         ai.pushtask("land")
+      end
    end
 end
 
@@ -165,6 +198,12 @@ function enterdelay ()
 end
 
 function create ()
+   create_post()
+end
+
+-- Finishes create stuff like choose attack and prepare plans
+function create_post ()
+   mem.tookoff    = ai.takingoff()
    attack_choose()
 end
 
@@ -240,7 +279,11 @@ function gen_distress ( target )
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
-      ai.distress( mem.distressmsg )
+      if mem.distressmsgfunc ~= nil then
+         mem.distressmsgfunc()
+      else
+         ai.distress( mem.distressmsg )
+      end
       mem.distressed = 1
    end
 

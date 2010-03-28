@@ -22,6 +22,7 @@
 #include "nlua_vec2.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
+#include "nlua_planet.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -316,14 +317,16 @@ static int pilotL_getPlayer( lua_State *L )
  * end
  * @endcode
  *
- * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in).
+ * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
  * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system
+ * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
  *
  *    @luaparam fleetname Name of the fleet to add.
  *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
- *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system.
+ *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add( fleetname, ai, paaram )
  */
@@ -339,8 +342,12 @@ static int pilotL_addFleet( lua_State *L )
    LuaPilot lp;
    LuaVector *lv;
    LuaSystem *ls;
+   LuaPlanet *lplanet;
+   Planet *planet;
    int jump;
    PilotFlags flags;
+   int *ind, nind;
+   double chance;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -366,6 +373,9 @@ static int pilotL_addFleet( lua_State *L )
    /* Handle third argument. */
    if (lua_isvector(L,3)) {
       lv = lua_tovector(L,3);
+      vectcpy( &vp, &lv->vec );
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
    }
    else if (lua_issystem(L,3)) {
       ls    = lua_tosystem(L,3);
@@ -381,17 +391,56 @@ static int pilotL_addFleet( lua_State *L )
          jump = RNG_SANE(0,cur_system->njumps-1);
       }
    }
-   /* Random. */
-   else
-      jump = RNG_SANE(0,cur_system->njumps-1);
-
-   /* Set up velocities and such. */
-   if (jump < 0) {
-      vectcpy( &vp, &lv->vec );
+   else if (lua_isplanet(L,3)) {
+      lplanet = lua_toplanet(L,3);
+      planet  = lplanet->p;
+      pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+      vect_cset( &vp,
+            planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+            planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
+   /* Random. */
    else {
+      if (cur_system->nplanets > 0) {
+         /* Build landable planet table. */
+         ind = malloc( sizeof(int) * cur_system->nplanets );
+         nind = 0;
+         for (i=0; i<cur_system->nplanets; i++)
+            if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
+                  !areEnemies(flt->faction,cur_system->planets[i]->faction))
+               ind[ nind++ ] = i;
+
+         /* Calculate jump chance. */
+         chance = cur_system->njumps;
+         chance = chance / (chance + nind);
+
+         /* Random jump in. */
+         if (RNGF() > chance) {
+            jump = RNG_SANE(0,cur_system->njumps-1);
+         }
+         /* Random take off. */
+         else {
+            planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
+            pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+            vect_cset( &vp,
+                  planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+                  planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+            a = RNGF() * 2.*M_PI;
+            vectnull( &vv );
+         }
+
+         /* Free memory allocated. */
+         free( ind );
+      }
+      /* Can only jump in. */
+      else
+         jump = RNG_SANE(0,cur_system->njumps-1);
+   }
+
+   /* Set up velocities and such. */
+   if (jump >= 0) {
       space_calcJumpInPos( cur_system, cur_system->jumps[jump].target, &vp, &vv, &a );
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }

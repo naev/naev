@@ -36,8 +36,8 @@ function create ()
       end
    end
 
-   -- Get attack function.
-   attack_choose()
+   -- Handle misc stuff
+   create_post()
 end
 
 -- taunts
