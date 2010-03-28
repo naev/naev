@@ -196,6 +196,7 @@ static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int aiL_land( lua_State *L ); /* bool land() */
+static int aiL_takingoff( lua_State *L ); /* bool takingoff() */
 static int aiL_stop( lua_State *L ); /* stop() */
 static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 
@@ -281,6 +282,7 @@ static const luaL_reg aiL_methods[] = {
    { "rndplanet", aiL_getrndplanet },
    { "landplanet", aiL_getlandplanet },
    { "land", aiL_land },
+   { "takingoff", aiL_takingoff },
    { "accel", aiL_accel },
    { "turn", aiL_turn },
    { "face", aiL_face },
@@ -1967,6 +1969,20 @@ static int aiL_land( lua_State *L )
    }
 
    lua_pushboolean(L,!ret);
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if the pilot is currently taking off.
+ *
+ * @usage if ai.takingoff() then -- Pilot is taking off
+ *    @luareturn true if pilot is taking off, false if he isn't.
+ * @luafunc takingoff()
+ */
+static int aiL_takingoff( lua_State *L )
+{
+   lua_pushboolean( L, pilot_isFlag( cur_pilot, PILOT_TAKEOFF ) );
    return 1;
 }
 

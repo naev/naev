@@ -3295,6 +3295,12 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->nav_planet       = -1;
    pilot->nav_hyperspace   = -1;
 
+   /* Check takeoff. */
+   if (pilot_isFlagRaw( flags, PILOT_TAKEOFF )) {
+      pilot_setFlag( pilot, PILOT_TAKEOFF );
+      pilot->ptimer = PILOT_TAKEOFF_DELAY;
+   }
+
    /* AI */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */

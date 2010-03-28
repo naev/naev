@@ -30,8 +30,8 @@ function create ()
             mem.refuel )
    end
 
-   -- Get attack
-   attack_choose()
+   -- Finish up creation
+   create_post()
 end
 
 -- taunts

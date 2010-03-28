@@ -22,7 +22,8 @@ function create ()
       end
    end
 
-   attack_choose()
+   -- Finish up creation
+   create_post()
 end
 
 -- taunts

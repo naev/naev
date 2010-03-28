@@ -38,8 +38,8 @@ function create ()
       mem.refuel_no = "\"I can't spare fuel for you.\""
    end
 
-   -- Choose attack.
-   attack_choose()
+   -- Finish up creation
+   create_post()
 end
 
 

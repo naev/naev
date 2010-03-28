@@ -22,6 +22,7 @@
 #include "nlua_vec2.h"
 #include "nlua_ship.h"
 #include "nlua_system.h"
+#include "nlua_planet.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -319,11 +320,13 @@ static int pilotL_getPlayer( lua_State *L )
  * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in).
  * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system
+ * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
  *
  *    @luaparam fleetname Name of the fleet to add.
  *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
- *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system.
+ *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add( fleetname, ai, paaram )
  */
@@ -339,6 +342,7 @@ static int pilotL_addFleet( lua_State *L )
    LuaPilot lp;
    LuaVector *lv;
    LuaSystem *ls;
+   LuaPlanet *lplanet;
    int jump;
    PilotFlags flags;
 
@@ -366,6 +370,9 @@ static int pilotL_addFleet( lua_State *L )
    /* Handle third argument. */
    if (lua_isvector(L,3)) {
       lv = lua_tovector(L,3);
+      vectcpy( &vp, &lv->vec );
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
    }
    else if (lua_issystem(L,3)) {
       ls    = lua_tosystem(L,3);
@@ -381,17 +388,21 @@ static int pilotL_addFleet( lua_State *L )
          jump = RNG_SANE(0,cur_system->njumps-1);
       }
    }
+   else if (lua_isplanet(L,3)) {
+      lplanet = lua_toplanet(L,3);
+      pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+      vect_cset( &vp,
+            lplanet->p->pos.x + RNG(0,lplanet->p->gfx_space->sw) - lplanet->p->gfx_space->sw / 2.,
+            lplanet->p->pos.y + RNG(0,lplanet->p->gfx_space->sh) - lplanet->p->gfx_space->sh / 2. );
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
+   }
    /* Random. */
    else
       jump = RNG_SANE(0,cur_system->njumps-1);
 
    /* Set up velocities and such. */
-   if (jump < 0) {
-      vectcpy( &vp, &lv->vec );
-      a = RNGF() * 2.*M_PI;
-      vectnull( &vv );
-   }
-   else {
+   if (jump >= 0) {
       space_calcJumpInPos( cur_system, cur_system->jumps[jump].target, &vp, &vv, &a );
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
