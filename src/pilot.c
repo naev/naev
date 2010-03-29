@@ -139,7 +139,8 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    if (mode == 0) {
       while (p < pilot_nstack) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
-                  (pilot_isDisabled(pilot_stack[p]))) &&
+                  pilot_isDisabled(pilot_stack[p])) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
@@ -149,6 +150,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    if (mode == 1) {
       while (p < pilot_nstack) {
          if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
@@ -192,6 +194,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
@@ -201,6 +204,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    else if (mode == 1) {
       while (p >= 0) {
          if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
@@ -233,9 +237,10 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
       if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
          continue;
 
-      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-            ((pilot_stack[i]->id == PLAYER_ID) && 
-               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+      if (!pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ) &&
+            (areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
+               ((pilot_stack[i]->id == PLAYER_ID) && 
+                  pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
 
          /* Shouldn't be disabled. */
          if (pilot_isDisabled(pilot_stack[i]))
@@ -282,6 +287,10 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
 
       /* Shouldn't be disabled. */
       if (pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Shouldn't be invisible. */
+      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
          continue;
 
       /* Must be in range. */
@@ -1784,12 +1793,6 @@ void pilot_update( Pilot* pilot, const double dt )
  */
 void pilot_delete( Pilot* p )
 {
-   /* Remove faction if necessary. */
-   if (p->presence > 0) {
-      system_rmCurrentPresence( cur_system, p->faction, p->presence );
-      p->presence = 0;
-   }
-
    /* Set flag to mark for deletion. */
    pilot_setFlag(p, PILOT_DELETE);
 }
@@ -3527,6 +3530,12 @@ void pilot_destroy(Pilot* p)
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
+   
+   /* Remove faction if necessary. */
+   if (p->presence > 0) {
+      system_rmCurrentPresence( cur_system, p->faction, p->presence );
+      p->presence = 0;
+   }
 
    /* pilot is eliminated */
    pilot_free(p);
@@ -3633,6 +3642,10 @@ void pilots_update( double dt )
          continue;
       }
 
+      /* Invisible, not doing anything. */
+      if (pilot_isFlag(p, PILOT_INVISIBLE))
+         continue;
+
       /* See if should think. */
       if (p->think && !pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_DEAD)) {
 
@@ -3669,6 +3682,11 @@ void pilots_render( double dt )
 {
    int i;
    for (i=0; i<pilot_nstack; i++) {
+
+      /* Invisible, not doing anything. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
+         continue;
+      
       if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i], dt);
    }
@@ -3684,6 +3702,11 @@ void pilots_renderOverlay( double dt )
 {
    int i;
    for (i=0; i<pilot_nstack; i++) {
+
+      /* Invisible, not doing anything. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
+         continue;
+
       if (pilot_stack[i]->render_overlay != NULL) /* render */
          pilot_stack[i]->render_overlay(pilot_stack[i], dt);
    }

@@ -803,6 +803,10 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (pilot_isFlag(p, PILOT_INVINCIBLE))
       return 0;
 
+   /* Can't hit invisible stuff. */
+   if (pilot_isFlag(p, PILOT_INVISIBLE))
+      return 0;
+
    /* Can never hit same faction. */
    if (p->faction == w->faction)
       return 0;

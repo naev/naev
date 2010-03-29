@@ -101,7 +101,8 @@
 #define PILOT_DEATH_SOUND  31 /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     32 /**< Pilot did final death explosion. */
 #define PILOT_DELETE       33 /**< Pilot will get deleted asap. */
-#define PILOT_FLAGS_MAX    PILOT_DELETE /* Maximum number of flags. */
+#define PILOT_INVISIBLE    34 /**< Pilot is invisible to other pilots. */
+#define PILOT_FLAGS_MAX    PILOT_INVISIBLE /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */

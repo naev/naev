@@ -61,6 +61,11 @@
 #endif
 
 
+/*
+ * Misc stuff.
+ */
+extern const double fps_min;
+void update_routine( double dt );
 char *naev_version( int long_version );
 char *naev_binary (void);
 

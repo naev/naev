@@ -104,6 +104,7 @@ static int fps_skipped = 0; /**< Skipped last frame? */
 static double fps_dt  = 1.; /**< Display fps accumulator. */
 static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
+const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
 #if HAS_LINUX && defined(DEBUGGING)
 static bfd *abfd      = NULL;
@@ -125,7 +126,6 @@ static void debug_sigInit (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
-static void update_routine( double dt );
 static void render_all (void);
 /* Misc. */
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
@@ -599,7 +599,6 @@ static void fps_control (void)
 static void update_all (void)
 {
    double tempdt;
-   static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)game_dt*1000);
@@ -635,7 +634,7 @@ static void update_all (void)
  *
  *    @param[in] dt Current delta tick.
  */
-static void update_routine( double dt )
+void update_routine( double dt )
 {
    space_update(dt);
    weapons_update(dt);
