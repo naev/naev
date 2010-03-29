@@ -38,6 +38,7 @@ void gui_render( double dt );
 /*
  * Messages.
  */
+void player_messageToggle( int enable );
 void player_message( const char *fmt, ... );
 void gui_clearMessages (void);
 void gui_messageScrollUp( int lines );

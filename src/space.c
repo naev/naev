@@ -929,9 +929,11 @@ void space_init ( const char* sysname )
 
    /* Simulate system. */
    pilot_setFlag( player.p, PILOT_INVISIBLE );
+   player_messageToggle( 0 );
    n = SYSTEM_SIMULATE_TIME / fps_min;
    for (i=0; i<n; i++)
       update_routine( fps_min );
+   player_messageToggle( 1 );
    pilot_rmFlag( player.p, PILOT_INVISIBLE );
 }
 
