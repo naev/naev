@@ -58,9 +58,8 @@ function create ()
             mem.refuel);
    end
 
-
-   -- Choose attack format
-   attack_choose()
+   -- Finish up creation
+   create_post()
 end
 
 

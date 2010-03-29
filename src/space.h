@@ -17,6 +17,8 @@
 #include "tech.h"
 
 
+#define SYSTEM_SIMULATE_TIME  15. /**< Time to simulate system before player is added. */
+
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
 #define ASSET_VIRTUAL         0 /**< The asset is virtual. */

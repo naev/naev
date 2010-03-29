@@ -48,8 +48,9 @@
 #define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
 #define PILOT_HOOK_JUMP    4 /**< Pilot jumped. */
 #define PILOT_HOOK_HAIL    5 /**< Pilot is hailed. */
-#define PILOT_HOOK_ATTACKED 6 /**< Pilot is in manual override and is being attacked. */
-#define PILOT_HOOK_IDLE    7 /**< Pilot is in manual override and has just become idle. */
+#define PILOT_HOOK_LAND    6 /**< Pilot is landing. */
+#define PILOT_HOOK_ATTACKED 7 /**< Pilot is in manual override and is being attacked. */
+#define PILOT_HOOK_IDLE    8 /**< Pilot is in manual override and has just become idle. */
 
 
 /* damage */
@@ -100,7 +101,8 @@
 #define PILOT_DEATH_SOUND  31 /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     32 /**< Pilot did final death explosion. */
 #define PILOT_DELETE       33 /**< Pilot will get deleted asap. */
-#define PILOT_FLAGS_MAX    PILOT_DELETE /* Maximum number of flags. */
+#define PILOT_INVISIBLE    34 /**< Pilot is invisible to other pilots. */
+#define PILOT_FLAGS_MAX    PILOT_INVISIBLE /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */

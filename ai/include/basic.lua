@@ -139,24 +139,9 @@ function __landstop ()
    ai.brake()
    if ai.isstopped() then
       ai.stop() -- Will stop the pilot if below err vel
-      ai.settimer(0, rnd.int(8000,15000)) -- We wait during a while
-      ai.popsubtask()
-      ai.pushsubtask( "__landwait")
-   end
-end
-function __landwait ()
-   local target = mem.land
-   local dist   = ai.dist( target )
-
-   -- In case for some reason landed far away
-   if dist > 50 then
-      ai.popsubtask()
-
-   -- Check if time is up
-   elseif ai.timeup(0) then
-      mem.landed = true -- Mark as landed so they don't spend time forever floating around
-      ai.poptask() -- Ready to do whatever we were doing before.
-      return
+      if not ai.land() then
+         ai.popsubtask()
+      end
    end
 end
 

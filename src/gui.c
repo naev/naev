@@ -79,6 +79,9 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static gl_vbo *gui_vbo = NULL; /**< GUI VBO. */
 static GLsizei gui_vboColourOffset = 0; /**< Offset of colour pixels. */
 
+/* Whether or not should recieve messages. */
+static int gui_getMessage     = 1;
+
 /*
  * pilot stuff for GUI
  */
@@ -318,6 +321,17 @@ void gui_messageScrollDown( int lines )
 
 
 /**
+ * @brief Toggles if player should recieve messages.
+ *
+ *    @param enable Whether or not to enable player recieving messages.
+ */
+void player_messageToggle( int enable )
+{
+   gui_getMessage = enable;
+}
+
+
+/**
  * @brief Adds a mesg to the queue to be displayed on screen.
  *
  *    @param str Message to add.
@@ -325,6 +339,10 @@ void gui_messageScrollDown( int lines )
 void player_messageRaw( const char *str )
 {
    int i, p, l;
+
+   /* Must be recieving messages. */
+   if (!gui_getMessage)
+      return;
 
    /* Get length. */
    l = strlen(str);
@@ -366,6 +384,10 @@ void player_message( const char *fmt, ... )
 {
    va_list ap;
    char buf[1024];
+
+   /* Must be recieving messages. */
+   if (!gui_getMessage)
+      return;
 
    /* Must be non-null. */
    if (fmt == NULL)
