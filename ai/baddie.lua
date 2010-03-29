@@ -4,7 +4,7 @@ include("ai/tpl/generic.lua")
 
    Generic Mission baddie AI
 
---]]
+]]--
 
 -- Settings
 mem.aggressive     = true

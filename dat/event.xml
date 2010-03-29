@@ -60,4 +60,13 @@
    <unique />
   </flags>
  </event>
+ <event name="Cinematic Doranthex battle">
+  <lua>cinematic/DvdFLFbattle</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():name() == "Doranthex"</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
 </Events>
