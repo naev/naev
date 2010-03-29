@@ -1793,12 +1793,6 @@ void pilot_update( Pilot* pilot, const double dt )
  */
 void pilot_delete( Pilot* p )
 {
-   /* Remove faction if necessary. */
-   if (p->presence > 0) {
-      system_rmCurrentPresence( cur_system, p->faction, p->presence );
-      p->presence = 0;
-   }
-
    /* Set flag to mark for deletion. */
    pilot_setFlag(p, PILOT_DELETE);
 }
@@ -3536,6 +3530,12 @@ void pilot_destroy(Pilot* p)
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
+   
+   /* Remove faction if necessary. */
+   if (p->presence > 0) {
+      system_rmCurrentPresence( cur_system, p->faction, p->presence );
+      p->presence = 0;
+   }
 
    /* pilot is eliminated */
    pilot_free(p);
