@@ -1507,11 +1507,13 @@ void player_land (void)
       player_afterburnOver();
       /* Stop accelerating. */
       player_accelOver();
-
-      /* Open land menu. */
+   
+      /* Start landing. */
       player_soundPause();
       player.p->ptimer = PILOT_LANDING_DELAY;
       pilot_setFlag( player.p, PILOT_LANDING );
+      pilot_setThrust( player.p, 0. );
+      pilot_setTurn( player.p, 0. );
    }
    else { /* get nearest planet target */
 
