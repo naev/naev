@@ -290,7 +290,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
          continue;
 
       /* Shouldn't be invisible. */
-      if (!pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
+      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
          continue;
 
       /* Must be in range. */
