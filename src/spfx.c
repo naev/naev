@@ -695,7 +695,7 @@ void spfx_render( const int layer )
       sy = (int)effect->gfx->sy;
 
       if (!paused) { /* don't calculate frame if paused */
-         time = fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+         time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
          spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
       }
       
