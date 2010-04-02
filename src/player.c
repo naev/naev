@@ -1707,7 +1707,8 @@ void player_brokeHyperspace (void)
  */
 void player_afterburn (void)
 {
-   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE))
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+         pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
    /** @todo fancy effect? */

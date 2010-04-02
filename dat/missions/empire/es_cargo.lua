@@ -44,7 +44,7 @@ function create()
    repeat
       pnt,sys = planet.get( misn.factions() )
       i = i + 1
-   until sys ~= landed_sys or i > 10
+   until landed_sys:jumpDist(sys) > 0 or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
