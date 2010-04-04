@@ -38,14 +38,20 @@
   </tech>
  </unidiff>
  <unidiff name="heavy_weapons_license">
-  <outfit name="Heavy Weapon License">
-   <tech>1002</tech>
-  </outfit>
+  <tech name="Basic Outfits 1">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
+  <tech name="Basic Outfits 2">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
  </unidiff>
  <unidiff name="heavy_combat_vessel_license">
-  <outfit name="Heavy Combat Vessel License">
-   <tech>1002</tech>
-  </outfit>
+  <tech name="Basic Outfits 1">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
+  <tech name="Basic Outfits 2">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
  </unidiff>
  <unidiff name="FLF_base">
   <system name="Sigur">

@@ -308,6 +308,12 @@
  <tech name="Sirius Military Ships">
  </tech>
 
+ <tech name="__Heavy Weapon License">
+  <item>Heavy Weapon License</item>
+ </tech>
+ <tech name="__Heavy Combat Vessel License">
+  <item>Heavy Combat Vessel License</item>
+ </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
   <item>Drone Fighter Bay</item>
