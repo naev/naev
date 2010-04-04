@@ -265,6 +265,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Create the new planet. */
    p        = planet_new();
+   p->real  = ASSET_REAL;
    p->name  = name;
 
    /* Base planet data off another. */
