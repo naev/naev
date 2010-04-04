@@ -194,6 +194,7 @@
   <invisible />
   <static />
   <allies />
+  <player>0</player>
   <enemies>
    <enemy>Thugs</enemy>
   </enemies>
@@ -202,6 +203,7 @@
   <invisible />
   <static />
   <allies />
+  <player>0</player>
   <enemies>
    <enemy>Associates</enemy>
   </enemies>
