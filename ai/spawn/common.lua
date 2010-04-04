@@ -6,8 +6,18 @@ scom = {}
 -- @brief Calculates when next spawn should occur
 scom.calcNextSpawn = function( cur, new, max )
    local mod = max - cur
+   local val
 
-   return 3000 / mod
+   if mod < 1 then
+      mod = 1
+   end
+
+   val =  3000 / mod
+   if val > 100 then
+      val = 100
+   end
+
+   return val
 end
 
 
@@ -24,6 +34,11 @@ scom.createSpawnTable = function( weights )
    for k,v in pairs(weights) do
       max = max + v
       spawn_table[ #spawn_table+1 ] = { chance = max, func = k }
+   end
+
+   -- Sanity check
+   if max == 0 then
+      error("No weight specified")
    end
 
    -- Normalize
@@ -53,6 +68,9 @@ scom.spawn = function( pilots )
    local spawned = {}
    for k,v in ipairs(pilots) do
       local p = pilot.add( v["pilot"] )
+      if #p == 0 then
+         error("No pilots added")
+      end
       local presence = v["presence"] / #p
       for _,vv in ipairs(p) do
          spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
