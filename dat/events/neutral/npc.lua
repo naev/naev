@@ -166,7 +166,7 @@ function neutral_genMerchant () --Merchants are faction neutral, they always say
    npcdata[1] = merch_name
    npcdata[2] = merch_portraits[ rnd.rnd( 1, #merch_portraits ) ]
    npcdata[3] = merch_desc[ rnd.rnd( 1, #merch_desc ) ]
-   if rnd.rnd( 0, 100 ) < 11 then --they also have the same chance of revealing a hint about a mission.
+   if rnd.rnd( 0, 100 ) < 11 and #merch_misn_msg >= 1 then --they also have the same chance of revealing a hint about a mission.
        npcdata[4] = merch_misn_msg[ rnd.rnd( 1, #merch_misn_msg ) ]
    else
        npcdata[4] = merch_msg[ rnd.rnd( 1, #merch_msg ) ]
@@ -180,7 +180,7 @@ function neutral_genCivilian () --Civilians always belong to the faction the pla
    npcdata[1] = civ_name
    npcdata[2] = civ_portraits[ rnd.rnd( 1, #civ_portraits ) ]
    npcdata[3] = civ_desc[ rnd.rnd( 1, #civ_desc ) ]
-   if rnd.rnd( 0, 100 ) < reputation then --the chance for them to give hints depends on the players affiliation with that faction
+   if rnd.rnd( 0, 100 ) < reputation and #civ_misn_msg >= 1 then --the chance for them to give hints depends on the players affiliation with that faction
        npcdata[4] = civ_misn_msg[ rnd.rnd( 1, #civ_misn_msg ) ]
    else
        npcdata[4] = civ_msg_fac[ rnd.rnd( 1, #civ_msg_fac ) ]
