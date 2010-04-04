@@ -38,6 +38,15 @@ function create ()
     --evt.timerStart("DvaeredSpawn", 16000 + rnd.rnd(100,900))
     --evt.timerStart("DvaeredSpawn", 17000 + rnd.rnd(100,900))
     --evt.timerStart("DvaeredSpawn", 18000 + rnd.rnd(100,900))
+
+    -- Clean up when done
+    hook.jumpout( "event_finish" )
+    hook.land( "event_finish"  )
+end
+
+
+function event_finish()
+   evt.finish(true)
 end
 
 function FLFSpawn ()
