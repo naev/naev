@@ -85,10 +85,11 @@ end
 
 function create ()
     global_npc = {}
-    faction = planet.cur():faction()
-    reputation = player.getFaction(faction:name())
-    civ_msg_fac = civ_msg["Independent"]
-    if faction ~= "Independent" then
+    
+    faction = planet.cur():faction() --get current planets faction
+    reputation = player.getFaction(faction:name()) --get players affiliation with said faction
+    civ_msg_fac = civ_msg["Independent"] --the independent stuff can always be said
+    if faction ~= "Independent" then --add the phrases belonging to the faction of the planet
         for key, value in pairs(civ_msg[faction:name()]) do
             table.insert(civ_msg_fac, value)
         end
@@ -96,13 +97,12 @@ function create ()
     civ_misn_msg = {}
     merch_misn_msg = {}
     for key, value in pairs(misn_msg) do
-        if player.misnDone(key) ~= true then
+        if player.misnDone(key) ~= true then --test if the player has done the mission, if not, add it to the list of possible phrases
             table.insert(civ_misn_msg, value)
             table.insert(merch_misn_msg, value)
         end
     end 
     
-
     local n = rnd.rnd(1,5)
    
     local i = 0
@@ -161,12 +161,12 @@ function npc_talk( id )
 end
 
 
-function neutral_genMerchant ()
+function neutral_genMerchant () --Merchants are faction neutral, they always say the same things, regardless of position.
    local npcdata = {}
    npcdata[1] = merch_name
    npcdata[2] = merch_portraits[ rnd.rnd( 1, #merch_portraits ) ]
    npcdata[3] = merch_desc[ rnd.rnd( 1, #merch_desc ) ]
-   if rnd.rnd( 0, 100 ) < 11 then
+   if rnd.rnd( 0, 100 ) < 11 then --they also have the same chance of revealing a hint about a mission.
        npcdata[4] = merch_misn_msg[ rnd.rnd( 1, #merch_misn_msg ) ]
    else
        npcdata[4] = merch_msg[ rnd.rnd( 1, #merch_msg ) ]
@@ -175,12 +175,12 @@ function neutral_genMerchant ()
 end
 
 
-function neutral_genCivilian ()
+function neutral_genCivilian () --Civilians always belong to the faction the planet belongs to.
    local npcdata = {}
    npcdata[1] = civ_name
    npcdata[2] = civ_portraits[ rnd.rnd( 1, #civ_portraits ) ]
    npcdata[3] = civ_desc[ rnd.rnd( 1, #civ_desc ) ]
-   if rnd.rnd( 0, 100 ) < reputation then
+   if rnd.rnd( 0, 100 ) < reputation then --the chance for them to give hints depends on the players affiliation with that faction
        npcdata[4] = civ_misn_msg[ rnd.rnd( 1, #civ_misn_msg ) ]
    else
        npcdata[4] = civ_msg_fac[ rnd.rnd( 1, #civ_msg_fac ) ]
