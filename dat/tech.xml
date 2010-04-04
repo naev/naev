@@ -144,6 +144,7 @@
   <item>Solar Panel</item>
   <item>Fuel Pod</item>
   <item>Star Map</item>
+  <item>Large Civilian Vessel License</item>
   </tech>
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
@@ -159,6 +160,7 @@
   <item>Cargo Pod</item>
   <item>Star Map</item>
   <item>Civilian Jammer</item>
+  <item>Large Civilian Vessel License</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret</item>
@@ -168,6 +170,8 @@
   <item>Ripper MK2</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
+  <item>Medium Weapon License</item>
+  <item>Medium Combat Vessel License</item>
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
@@ -175,6 +179,8 @@
   <item>Heavy Ion Turret</item>
   <item>150mm Railgun Turret</item>
   <item>Orion Beam</item>
+  <item>Medium Weapon License</item>
+  <item>Medium Combat Vessel License</item>
  </tech>
  <tech name="Low Tech Upgrades">
   <item>Battery</item>
@@ -189,6 +195,7 @@
   <item>Cargo Pod</item>
   <item>Star Map</item>
   <item>Civilian Jammer</item>
+  <item>Light Combat Vessel License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
   <item>Battery</item>
@@ -215,6 +222,7 @@
   <item>Civilian Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
+  <item>Medium Weapon License</item>
  </tech>
  <tech name="High Tech Upgrades 2">
   <item>Battery III</item>
@@ -233,6 +241,7 @@
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
+  <item>Medium Weapon License</item>
  </tech>
  <tech name="Missiles 1">
   <item>Banshee Launcher</item>
