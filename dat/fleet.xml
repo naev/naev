@@ -546,4 +546,35 @@
    <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Mission Thugs">
+  <ai>baddie</ai>
+  <faction>Thugs</faction>
+  <strength>-1</strength>
+  <pilots>
+   <pilot chance="100" ship="Admonisher"></pilot>
+   <pilot chance="100" ship="Admonisher"></pilot>
+   <pilot chance="100" ship="Admonisher"></pilot>
+   <pilot chance="100" ship="Admonisher"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Mission Associate">
+  <ai>dvaered</ai>
+  <faction>Associates</faction>
+  <strength>-1</strength>
+  <pilots>
+   <pilot chance="100" ship="Pacifier"></pilot>
+   <pilot chance="100" ship="Lancelot"></pilot>
+   <pilot chance="100" ship="Lancelot"></pilot>
+   <pilot chance="100" ship="Admonisher"></pilot>
+   <pilot chance="100" ship="Hawking"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Mission Kestrel">
+  <ai>dvaered</ai>
+  <faction>Associates</faction>
+  <strength>-1</strength>
+  <pilots>
+   <pilot chance="100" ship="Kestrel"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>
