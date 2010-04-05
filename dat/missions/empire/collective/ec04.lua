@@ -76,7 +76,7 @@ function jump ()
       pilot.add("Collective Sml Swarm", nil, swarm_position)
       misn.timerStart( "reinforcements", 3000 )
       misn.timerStart( "drone_incoming", 9000 )
-   elseif factions["Collective"] then
+   elseif factions[ faction.get("Collective") ] then
       pilot.add("Collective Sml Swarm")
       pilot.add("Collective Sml Swarm")
    elseif sys == blockade_sys then

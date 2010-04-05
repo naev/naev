@@ -66,11 +66,11 @@ end
 
 
 function enter()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- Increment System visited count
-   if misn_stage == 0 and factions["Collective"] then
+   if misn_stage == 0 and factions[ faction.get("Collective") ] then
       systems_visited = systems_visited + 1
 
       -- Visited enough systems
