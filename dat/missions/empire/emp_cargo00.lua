@@ -38,7 +38,7 @@ function create ()
    local s
    repeat
       dest,sys = planet.get( misn.factions() )
-      s = pnt:services()
+      s = dest:services()
       i = i + 1
    until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
    -- infinite loop protection
