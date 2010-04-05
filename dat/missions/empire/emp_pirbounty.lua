@@ -90,9 +90,9 @@ function get_pir_system( sys )
 
    -- Only take into account system with pirates.
    local pir_sys = {}
-   for k,v in ipairs(adj_sys) do
+   for k,v in pairs(adj_sys) do
       if k:hasPresence( "Pirate" ) then
-         table.insert( pir_sys, k )
+         pir_sys[ #pir_sys+1 ] = k
       end
    end
 
