@@ -40,7 +40,7 @@ end
 function news_genTable ()
 
    -- Get current planet.
-   local curp, curs = planet.get()
+   local curp, curs = planet.cur()
    f = curp:faction()
 
    -- Planets with no faction have no news.
