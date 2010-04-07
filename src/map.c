@@ -1096,7 +1096,6 @@ void map_jump (void)
       if (map_npath == 0) { /* path is empty */
          free (map_path);
          map_path = NULL;
-         player.p->nav_planet = -1;
          player.p->nav_hyperspace = -1;
       }
       else { /* get rid of bottom of the path */
@@ -1106,7 +1105,6 @@ void map_jump (void)
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
-               player.p->nav_planet = -1; /* override planet_target */
                player.p->nav_hyperspace = j;
                break;
             }
@@ -1164,7 +1162,6 @@ void map_select( StarSystem *sys, char shifted )
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
-                  player.p->nav_planet     = -1; /* override planet_target */
                   player.p->nav_hyperspace = i;
                   player_abortAutonav(NULL);
                   break;

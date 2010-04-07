@@ -10,13 +10,13 @@
    <fuel   alpha="0.80" w="0"   h="0" x="95" y="78"   >minimal_fuel</fuel>
   </health>
   <nav    w="135" h="40" x="35" y="220" />
-  <weapon w="135" h="32" x="35" y="274" />
+  <weapon w="135" h="32" x="35" y="294" />
   <target>
-   <gfx     x="40" y="343" /> 
-   <name    x="40" y="330" w="128" />
-   <faction x="40" y="343" w="128" />
-   <health  x="40" y="430" w="128" />
+   <gfx     x="40" y="358" /> 
+   <name    x="40" y="345" w="128" />
+   <faction x="40" y="358" w="128" />
+   <health  x="40" y="445" w="128" />
   </target>
-  <misc w="135" h="104" x="35" y="460" />
+  <misc w="135" h="104" x="35" y="475" />
  </gui>
 </GUIs>
