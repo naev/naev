@@ -83,21 +83,21 @@ const char *keybindDescription[] = {
    "Makes your ship accelerate forward.",
    "Makes your ship turn left.",
    "Makes your ship turn right.",
-   "Makes your ship turn around and face the direction you're moving from. Good for braking.",
+   "Makes your ship turn around and face the direction you're moving from. Useful for braking.",
    "Makes your ship afterburn if you have an afterburner installed.",
-   /* Targetting. */
+   /* Targeting. */
    "Cycles through ship targets.",
    "Cycles backwards through ship targets.",
    "Targets the nearest non-disabled ship.",
    "Cycles through hostile ship targets.",
    "Cycles backwards through hostile ship targets.",
    "Targets the nearest hostile ship.",
-   "Clears current target.",
+   "Clears the currently-targeted ship, planet or jump point.",
    /* Fighting. */
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
-   "Toggles weapon safety (hitting of friendly ships).",
+   "Toggles weapon safety (weapons hitting friendly ships).",
    /* Weapon selection. */
    "Sets fire mode to use all weapons available (both turret and forward mounts).",
    "Sets fire mode to only use turret-class primary weapons.",

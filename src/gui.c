@@ -863,14 +863,14 @@ void gui_render( double dt )
     */
    if (player.p->nav_planet >= 0) { /* planet landing target */
       gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 5,
-            &cConsole, "Land" );
+            gui.nav.x, gui.nav.y,
+            &cConsole, "Landing" );
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+            gui.nav.x, gui.nav.y - 5 - gl_smallFont.h,
             NULL, "%s", cur_system->planets[player.p->nav_planet]->name );
    }
-   else if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
+   if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
 
       sys = cur_system->jumps[player.p->nav_hyperspace].target;
 
@@ -888,21 +888,39 @@ void gui_render( double dt )
          c = &cConsole;
       else c = NULL;
       gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 5,
+            gui.nav.x, gui.nav.y - 33,
             c, "Hyperspace" );
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+            gui.nav.x, gui.nav.y - 38 - gl_smallFont.h,
             NULL, "%d - %s", pilot_getJumps(player.p),
             (sys_isKnown(sys)) ? sys->name : "Unknown" );
    }
-   else { /* no NAV target */
+   if (player.p->nav_hyperspace == -1 && player.p->nav_planet == -1) { /* no hyperspace or planet targets */
       gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 5,
+            gui.nav.x, gui.nav.y - 15,
             &cConsole, "Navigation" );
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+            gui.nav.x, gui.nav.y - 20 - gl_smallFont.h,
+            &cGrey, "Off" );
+   }
+   else if (player.p->nav_hyperspace == -1) { /* no hyperspace target */
+      gl_printMid( NULL, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 33,
+            &cConsole, "Hyperspace" );
+
+      gl_printMid( &gl_smallFont, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 38 - gl_smallFont.h,
+            &cGrey, "Off" );
+   }
+   else if (player.p->nav_planet == -1) { /* no planet target */
+      gl_printMid( NULL, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 0,
+            &cConsole, "Landing" );
+
+      gl_printMid( &gl_smallFont, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 5 - gl_smallFont.h,
             &cGrey, "Off" );
    }
 
@@ -1045,7 +1063,7 @@ void gui_render( double dt )
     * misc
     */
    /* monies */
-   j = gui.misc.y - 8 - gl_smallFont.h;
+   j = gui.misc.y - gl_smallFont.h;
    gl_print( &gl_smallFont,
          gui.misc.x + 8, j,
          &cConsole, "Creds:" );

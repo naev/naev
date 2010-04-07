@@ -1432,7 +1432,6 @@ void player_targetPlanet (void)
       if ((cur_system->planets[ player.p->nav_planet ]->real == ASSET_REAL)
             && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
          player_playSound(snd_nav, 1);
-         player.p->nav_hyperspace = -1;
          return;
       }
 
@@ -1535,7 +1534,6 @@ void player_land (void)
          }
       }
       player.p->nav_planet       = tp;
-      player.p->nav_hyperspace   = -1;
       player_rmFlag(PLAYER_LANDACK);
 
       /* no landable planet */
@@ -1556,8 +1554,6 @@ void player_targetHyperspace (void)
    if (pilot_isFlag( player.p, PILOT_LANDING))
       return;
 
-   player.p->nav_planet = -1; /* get rid of planet target */
-   player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
 
@@ -1651,6 +1647,9 @@ void player_brokeHyperspace (void)
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
+
+   /* Prevent targeted planet # from carrying over. */
+   player.p->nav_planet = -1;
 
    /* calculates the time it takes, call before space_init */
    d  = pilot_hyperspaceDelay( player.p );
@@ -1845,11 +1844,16 @@ void player_targetPrev( int mode )
 
 
 /**
- * @brief Clearcs the player's ship target.
+ * @brief Clears the player's ship, planet or hyperspace target, in that order.
  */
 void player_targetClear (void)
 {
-   player.p->target = PLAYER_ID;
+   if (player.p->nav_planet == -1 && player.p->target == PLAYER_ID)
+      player.p->nav_hyperspace = -1;
+   else if (player.p->target == PLAYER_ID)
+      player.p->nav_planet = -1;
+   else
+      player.p->target = PLAYER_ID;
 }
 
 
