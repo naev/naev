@@ -1863,6 +1863,7 @@ void player_targetClear (void)
    if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
+      map_clear();
    }
    else if (player.p->target == PLAYER_ID)
       player.p->nav_planet = -1;
