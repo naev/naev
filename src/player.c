@@ -1536,6 +1536,7 @@ void player_land (void)
       }
       player.p->nav_planet       = tp;
       player_rmFlag(PLAYER_LANDACK);
+      player_hyperspacePreempt(0);
 
       /* no landable planet */
       if (player.p->nav_planet < 0)
