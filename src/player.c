@@ -69,7 +69,6 @@ static double player_dir      = 0.; /**< Temporary direction. */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_mission   = NULL; /**< More hack. */
 
-
 /*
  * Licenses.
  */
@@ -197,6 +196,7 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
 static void player_autonav (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
+static int preemption = 0; /* Hyperspace target/untarget preemption. */
 /* 
  * externed
  */
@@ -1030,7 +1030,7 @@ void player_think( Pilot* pplayer, const double dt )
          }
       }
       /* If not try to face planet target. */
-      else if (player.p->nav_planet != -1) {
+      else if (player.p->nav_planet != -1 && preemption == 0) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
                   &cur_system->planets[ player.p->nav_planet ]->pos ));
@@ -1426,6 +1426,7 @@ void player_targetPlanet (void)
 
    /* Find next planet target. */
    player.p->nav_planet++;
+   player_hyperspacePreempt(0);
    while (player.p->nav_planet < cur_system->nplanets) {
 
       /* In range, target planet. */
@@ -1556,6 +1557,7 @@ void player_targetHyperspace (void)
 
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
+   player_hyperspacePreempt(1);
 
    if (player.p->nav_hyperspace >= cur_system->njumps)
       player.p->nav_hyperspace = -1;
@@ -1569,6 +1571,15 @@ void player_targetHyperspace (void)
       map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
 }
 
+/**
+ * @brief Enables or disables jump points preempting planets in autoface and target clearing.
+ * 
+ *    @param preempt Boolean; 1 preempts planet target.
+ */
+void player_hyperspacePreempt( int preempt )
+{
+   preemption = preempt;
+}
 
 /**
  * @brief Starts the hail sounds.
@@ -1848,8 +1859,10 @@ void player_targetPrev( int mode )
  */
 void player_targetClear (void)
 {
-   if (player.p->nav_planet == -1 && player.p->target == PLAYER_ID)
+   if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
       player.p->nav_hyperspace = -1;
+      player_hyperspacePreempt(0);
+   }
    else if (player.p->target == PLAYER_ID)
       player.p->nav_planet = -1;
    else
