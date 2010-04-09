@@ -21,6 +21,7 @@
 #include "log.h"
 #include "rng.h"
 #include "ndata.h"
+#include "pilot.h"
 #include "player.h"
 #include "pause.h"
 #include "weapon.h"
@@ -102,6 +103,7 @@ glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
  */
 int space_spawn = 1; /**< Spawn enabled by default. */
 extern int pilot_nstack;
+extern Pilot** pilot_stack;
 
 
 /*
@@ -710,6 +712,8 @@ static void system_scheduler( double dt, int init )
  */
 void space_update( const double dt )
 {
+   int i;
+
    /* Needs a current system. */
    if (cur_system == NULL)
       return;
@@ -722,10 +726,14 @@ void space_update( const double dt )
     * Volatile systems.
     */
    if (cur_system->nebu_volatility > 0.) {
-      /* Player takes damage. */
-      if (player.p)
-         pilot_hit( player.p, NULL, 0, DAMAGE_TYPE_RADIATION,
-               pow2(cur_system->nebu_volatility) / 500. * dt );
+      /* Damage pilots in volatile systems. */
+      for (i=0; i<pilot_nstack; i++) {
+         if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
+            return; /* Invisible pilots (player, during simulation) take no damage. */
+         else
+            pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
+                     pow2(cur_system->nebu_volatility) / 500. * dt );
+      }
    }
 
 

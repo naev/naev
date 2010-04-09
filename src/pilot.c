@@ -55,7 +55,7 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
 
 
 /* stack of pilot_nstack */
-Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c and ai.c */
+Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
 int pilot_nstack = 0; /**< same */
 static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
