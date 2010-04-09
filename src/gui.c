@@ -404,7 +404,7 @@ void player_message( const char *fmt, ... )
 
 
 /**
- * @brief Renders planet targetting reticle.
+ * @brief Sets up rendering of planet and jump point targeting reticles.
  *
  *    @param dt Current delta tick.
  */
@@ -433,7 +433,7 @@ static void gui_renderPlanetTarget( double dt )
    }
 #endif
 
-   /* Draw planet target graphics. */
+   /* Draw planet and jump point target graphics. */
    if (player.p->nav_hyperspace >= 0) {
       jp = &cur_system->jumps[player.p->nav_hyperspace];
 
@@ -443,18 +443,32 @@ static void gui_renderPlanetTarget( double dt )
       y = jp->pos.y + jumppoint_gfx->sh/2.;
       w = jumppoint_gfx->sw;
       h = jumppoint_gfx->sh;
+      gui_renderTargetReticles( x, y, w, h, c );
    }
-   else {
+   if (player.p->nav_planet >= 0) {
       planet = cur_system->planets[player.p->nav_planet];
-
       c = faction_getColour(planet->faction);
 
       x = planet->pos.x - planet->gfx_space->sw/2.;
       y = planet->pos.y + planet->gfx_space->sh/2.;
       w = planet->gfx_space->sw;
       h = planet->gfx_space->sh;
+      gui_renderTargetReticles( x, y, w, h, c );
    }
+}
 
+
+/**
+ * @brief Renders planet and jump point targeting reticles.
+ *
+ *    @param x X position of reticle segment.
+ *    @param y Y position of reticle segment.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param c Colour.
+ */
+void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c )
+{
    gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
 
    x += w;
@@ -1004,6 +1018,18 @@ void gui_render( double dt )
    if (player.p->target != PLAYER_ID) {
       p = pilot_get(player.p->target);
 
+      /* Colourize ship name */
+      if (pilot_isDisabled(p)) 
+         c = &cInert;
+      else if (pilot_isFlag(p,PILOT_BRIBED))
+         c = &cNeutral;
+      else if (pilot_isHostile(p))
+         c = &cHostile;
+      else if (pilot_isFriendly(p))
+         c = &cConsole;
+      else
+         c = faction_getColour(p->faction);
+
       /* blit the pilot target */
       gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
       /* blit the pilot space image */
@@ -1019,7 +1045,7 @@ void gui_render( double dt )
             gui.target_name.w,
             gui.target_name.x,
             gui.target_name.y,
-            NULL, p->name );
+            c, p->name );
       gl_printMaxRaw( &gl_smallFont, gui.target_faction.w,
             gui.target_faction.x,
             gui.target_faction.y,

@@ -69,7 +69,6 @@ static double player_dir      = 0.; /**< Temporary direction. */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_mission   = NULL; /**< More hack. */
 
-
 /*
  * Licenses.
  */
@@ -197,11 +196,13 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
 static void player_autonav (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
+static int preemption = 0; /* Hyperspace target/untarget preemption. */
 /* 
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 int player_load( xmlNodePtr parent ); /* save.c */
+int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
@@ -1030,7 +1031,7 @@ void player_think( Pilot* pplayer, const double dt )
          }
       }
       /* If not try to face planet target. */
-      else if (player.p->nav_planet != -1) {
+      else if (player.p->nav_planet != -1 && preemption == 0) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
                   &cur_system->planets[ player.p->nav_planet ]->pos ));
@@ -1417,15 +1418,12 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
-   /* Can't be landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING))
-      return;
-
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
    /* Find next planet target. */
    player.p->nav_planet++;
+   player_hyperspacePreempt(0);
    while (player.p->nav_planet < cur_system->nplanets) {
 
       /* In range, target planet. */
@@ -1452,6 +1450,7 @@ void player_land (void)
    int tp;
    double td, d;
    Planet *planet;
+   int runcount = 0;
 
    if (landed) { /* player.p is already landed */
       takeoff(1);
@@ -1508,11 +1507,14 @@ void player_land (void)
       player_accelOver();
    
       /* Start landing. */
+      if (runcount == 0)
+         landtarget = player.p->nav_planet;
       player_soundPause();
       player.p->ptimer = PILOT_LANDING_DELAY;
       pilot_setFlag( player.p, PILOT_LANDING );
       pilot_setThrust( player.p, 0. );
       pilot_setTurn( player.p, 0. );
+      runcount++;
    }
    else { /* get nearest planet target */
 
@@ -1535,6 +1537,7 @@ void player_land (void)
       }
       player.p->nav_planet       = tp;
       player_rmFlag(PLAYER_LANDACK);
+      player_hyperspacePreempt(0);
 
       /* no landable planet */
       if (player.p->nav_planet < 0)
@@ -1550,12 +1553,9 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
-   /* Can't be landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING))
-      return;
-
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
+   player_hyperspacePreempt(1);
 
    if (player.p->nav_hyperspace >= cur_system->njumps)
       player.p->nav_hyperspace = -1;
@@ -1569,6 +1569,15 @@ void player_targetHyperspace (void)
       map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
 }
 
+/**
+ * @brief Enables or disables jump points preempting planets in autoface and target clearing.
+ * 
+ *    @param preempt Boolean; 1 preempts planet target.
+ */
+void player_hyperspacePreempt( int preempt )
+{
+   preemption = preempt;
+}
 
 /**
  * @brief Starts the hail sounds.
@@ -1848,8 +1857,11 @@ void player_targetPrev( int mode )
  */
 void player_targetClear (void)
 {
-   if (player.p->nav_planet == -1 && player.p->target == PLAYER_ID)
+   if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
       player.p->nav_hyperspace = -1;
+      player_hyperspacePreempt(0);
+      map_clear();
+   }
    else if (player.p->target == PLAYER_ID)
       player.p->nav_planet = -1;
    else

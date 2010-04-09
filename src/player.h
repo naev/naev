@@ -168,7 +168,7 @@ void player_think( Pilot* pplayer, const double dt );
 void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
-
+void player_hyperspacePreempt( int );
 
 /* 
  * keybind actions

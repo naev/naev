@@ -108,10 +108,6 @@ void map_open (void)
    StarSystem *cur;
    int w,h;
 
-   /* Must not be landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING ))
-      return;
-
    /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
    if (wid > 0) {
@@ -1162,6 +1158,7 @@ void map_select( StarSystem *sys, char shifted )
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
+                  player_hyperspacePreempt(1);
                   player.p->nav_hyperspace = i;
                   player_abortAutonav(NULL);
                   break;

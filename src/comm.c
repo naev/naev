@@ -25,6 +25,7 @@
 #include "ai.h"
 #include "ai_extra.h"
 
+#define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
 
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -66,7 +67,7 @@ static const char* comm_getString( char *str );
  */
 int comm_isOpen (void)
 {
-   return window_exists( "Communication Channel" );
+   return window_exists( COMM_WDWNAME );
 }
 
 
@@ -91,6 +92,13 @@ int comm_openPilot( unsigned int pilot )
 
    if (comm_pilot == NULL)
       return -1;
+
+   /* Destroy the window if it's already present. */
+   wid = window_get(COMM_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
+      return 0;
+   }
 
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
@@ -185,6 +193,13 @@ int comm_openPlanet( Planet *planet )
 {
    unsigned int wid;
 
+   /* Destroy the window if it's already present. */
+   wid = window_get(COMM_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
+      return 0;
+   }
+
    /* Must not be disabled. */
    if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
       player_message("%s does not respond.", planet->name);
@@ -262,7 +277,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    x = (GRAPHIC_WIDTH - w) / 2;
 
    /* Create the window. */
-   wid = window_create( "Communication Channel", -1, -1,
+   wid = window_create( COMM_WDWNAME, -1, -1,
          20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
 
