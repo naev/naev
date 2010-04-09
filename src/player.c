@@ -202,6 +202,7 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 int player_load( xmlNodePtr parent ); /* save.c */
+int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
@@ -1417,10 +1418,6 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
-   /* Can't be landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING))
-      return;
-
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
@@ -1453,6 +1450,7 @@ void player_land (void)
    int tp;
    double td, d;
    Planet *planet;
+   int runcount = 0;
 
    if (landed) { /* player.p is already landed */
       takeoff(1);
@@ -1509,11 +1507,14 @@ void player_land (void)
       player_accelOver();
    
       /* Start landing. */
+      if (runcount == 0)
+         landtarget = player.p->nav_planet;
       player_soundPause();
       player.p->ptimer = PILOT_LANDING_DELAY;
       pilot_setFlag( player.p, PILOT_LANDING );
       pilot_setThrust( player.p, 0. );
       pilot_setTurn( player.p, 0. );
+      runcount++;
    }
    else { /* get nearest planet target */
 
@@ -1552,10 +1553,6 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
-   /* Can't be landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING))
-      return;
-
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
    player_hyperspacePreempt(1);

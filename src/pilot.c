@@ -86,6 +86,7 @@ static void pilot_dead( Pilot* p );
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_updateMass( Pilot *pilot );
+extern int landtarget; /* From player.c  */
 
 
 /**
@@ -1597,7 +1598,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
             pilot_rmFlag(pilot,PILOT_LANDING);
-            land( cur_system->planets[ pilot->nav_planet ] );
+            land( cur_system->planets[ landtarget ] );
          }
          else
             pilot_setFlag(pilot,PILOT_DELETE);

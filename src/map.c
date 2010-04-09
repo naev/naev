@@ -108,10 +108,6 @@ void map_open (void)
    StarSystem *cur;
    int w,h;
 
-   /* Must not be landing. */
-   if (pilot_isFlag( player.p, PILOT_LANDING ))
-      return;
-
    /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
    if (wid > 0) {
