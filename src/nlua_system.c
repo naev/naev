@@ -272,10 +272,10 @@ static int systemL_name( lua_State *L )
  * @code
  * sys   = system.get() -- Get current system
  * facts = sys:faction() -- Get factions
- * if facts[ faction.get("Empire") ] then
+ * if facts[ "Empire" ] then
  *    -- Do something since there is at least one Empire planet in the system
  * end
- * value = facts[ faction.get("Pirate") ] or 0 -- Get value of pirates in the system
+ * value = facts[ "Pirate" ] or 0 -- Get value of pirates in the system
  * @endcode
  *
  *    @luaparam s System to get the factions of.
@@ -286,14 +286,12 @@ static int systemL_faction( lua_State *L )
 {
    int i;
    LuaSystem *sys;
-   LuaFaction lf;
    sys = luaL_checksystem(L,1);
 
    /* Return result in table */
    lua_newtable(L);
    for (i=0; i<sys->s->npresence; i++) {
-      lf.f = sys->s->presence[i].faction;
-      lua_pushfaction(L, lf); /* t, k */ 
+      lua_pushstring( L, faction_name(sys->s->presence[i].faction) ); /* t, k */
       lua_pushnumber(L,sys->s->presence[i].value); /* t, k, v */
       lua_settable(L,-3);  /* t */
       /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
