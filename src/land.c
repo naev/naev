@@ -1102,12 +1102,14 @@ static void shipyard_trade( unsigned int wid, char* str )
             ship->license);
       return;
    }
+
+   /* New ship must have equal or greater cargo space. */
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) {
       dialogue_alert( "You have %d tons of cargo, but the %s can only hold %g tons. Sell or jettison some cargo first.",
             pilot_cargoUsed(player.p), ship->name, ship->cap_cargo );
       return;
    }
-   else if (pilot_hasDeployed(player.p)) {
+   else if (pilot_hasDeployed(player.p)) { /* Escorts must not be in space. */
       dialogue_alert( "You can't leave your fighters stranded. Recall them before trading in your ship." );
       return;
    }
@@ -1117,6 +1119,7 @@ static void shipyard_trade( unsigned int wid, char* str )
    credits2str( buf3, ship->price - player_shipPrice(player.p->name), 2 );
    credits2str( buf4, playerprice - targetprice, 2 );
 
+   /* Display the correct dialogue depending on the new ship's price versus the player's. */
    if ( targetprice == playerprice ) {
       if (dialogue_YesNo("Are you sure?", /* confirm */
          "Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?",
@@ -1148,15 +1151,15 @@ static void shipyard_trade( unsigned int wid, char* str )
       /* Player actually aborted naming process. */
       return;
    }
-   
+
+   /* Only modify credits if necessary. */
    if (trade == 1) {
       player_modCredits( +player_shipPrice(player.p->name) ); /* Refund the player for their own ship. */
       player_modCredits( -ship->price ); /* ouch, paying is hard */
    }
 
-   /* Store the old ship's name prior to switching to the new one. */
-   oldship=strdup( player.p->name );
-   player_swapShip( createdname );
+   oldship=strdup( player.p->name ); /* Store the old ship's name prior to switching to the new one. */
+   player_swapShip( createdname ); /* Move to the new ship. */
    player_rmShip( oldship );
    land_checkAddRefuel();
 
