@@ -514,7 +514,7 @@ static void outfits_update( unsigned int wid, char* str )
    (void)str;
    char *outfitname;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[16], buf3[16];
+   char buf[PATH_MAX], buf2[32], buf3[32];
    double th;
    int iw, ih;
    int w, h;
@@ -599,7 +599,7 @@ static void outfits_update( unsigned int wid, char* str )
  */
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 {
-   char buf[16];
+   char buf[32];
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
@@ -905,7 +905,7 @@ static void shipyard_update( unsigned int wid, char* str )
    (void)str;
    char *shipname;
    Ship* ship;
-   char buf[PATH_MAX], buf2[16], buf3[16];
+   char buf[PATH_MAX], buf2[32], buf3[32];
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
@@ -1028,7 +1028,7 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
 static void shipyard_buy( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16];
+   char *shipname, buf[32];
    Ship* ship;
    unsigned int w;
 
@@ -1077,7 +1077,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 static void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16], buf2[16], buf3[16], buf4[16];
+   char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
    Ship* ship;
    unsigned int w;
    int trade;
@@ -1628,7 +1628,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
  */
 void land_checkAddRefuel (void)
 {
-   char buf[32], cred[16];
+   char buf[32], cred[32];
    unsigned int w;
 
    /* Check to see if fuel conditions are met. */

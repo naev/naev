@@ -821,7 +821,7 @@ void gui_render( double dt )
 {
    int i, j;
    double x;
-   char str[10];
+   char str[32];
    Pilot* p;
    glColour* c, col;
    glFont* f;

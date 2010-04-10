@@ -1164,7 +1164,7 @@ static void equipment_genLists( unsigned int wid )
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[512], sysname[128], buf2[16], buf3[16];
+   char buf[512], sysname[128], buf2[32], buf3[32];
    char *shipname;
    Pilot *ship;
    char* loc;
@@ -1359,7 +1359,7 @@ static void equipment_changeShip( unsigned int wid )
 static void equipment_transportShip( unsigned int wid )
 {
    unsigned int price;
-   char *shipname, buf[16];
+   char *shipname, buf[32];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,"None")==0) { /* no ships */
@@ -1446,7 +1446,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 static void equipment_sellShip( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16], *name;
+   char *shipname, buf[32], *name;
    int price;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
