@@ -1059,7 +1059,6 @@ void shipyard_trade( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
    Ship* ship;
-   int trade;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
@@ -1067,16 +1066,16 @@ void shipyard_trade( unsigned int wid, char* str )
    int targetprice = ship->price;
    int playerprice = player_shipPrice(player.p->name);
 
-   /* Must have enough money. */
-   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
-      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
-      return;
-   }
-
    /* Must have license. */
    if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
       dialogue_alert( "You do not have the '%s' license required to buy this ship.",
             ship->license);
+      return;
+   }
+
+   /* Must have enough money. */
+   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
+      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
       return;
    }
 
@@ -1102,37 +1101,25 @@ void shipyard_trade( unsigned int wid, char* str )
          "Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?",
                player.p->ship->name, buf2)==0)
          return;
-      else
-         trade = 0;
    }
    else if ( targetprice < playerprice ) {
       if (dialogue_YesNo("Are you sure?", /* confirm */
          "Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?",
                player.p->ship->name, buf2, ship->name, buf4)==0)
          return;
-      else
-         trade = 1;
    }
    else if ( targetprice > playerprice ) {
       if (dialogue_YesNo("Are you sure?", /* confirm */
          "Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?",
                player.p->ship->name, buf2, buf3)==0)
          return;
-      else
-         trade = 1;
    }
 
    /* player just gots a new ship */
-   if (player_newShip( ship, NULL, 1 ) != 0) {
-      /* Player actually aborted naming process. */
-      return;
-   }
+   if (player_newShip( ship, NULL, 1 ) != 0)
+      return; /* Player aborted the naming process. */
 
-   /* Only modify credits if necessary. */
-   if (trade == 1) {
-      player_modCredits( +player_shipPrice(player.p->name) ); /* Refund the player for their own ship. */
-      player_modCredits( -ship->price ); /* ouch, paying is hard */
-   }
+   player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
 
    land_checkAddRefuel();
 
