@@ -2469,14 +2469,18 @@ int player_eventAlreadyDone( int id )
  * @brief Checks to see if player.p has license.
  *
  *    @param license License to check to see if the player.p has.
- *    @return 1 if has license,  0 if doesn't.
+ *    @return 1 if has license (or none needed), 0 if doesn't.
  */
 int player_hasLicense( char *license )
 {
    int i;
+   if (!license) /* Null input. */
+      return 1;
+
    for (i=0; i<player_nlicenses; i++)
       if (strcmp(license, player_licenses[i])==0)
          return 1;
+
    return 0;
 }
 
