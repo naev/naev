@@ -203,6 +203,7 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 int player_load( xmlNodePtr parent ); /* save.c */
 int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
+char* createdname; /* Used in land.c */
 
 
 /**
@@ -460,6 +461,7 @@ int player_newShip( Ship* ship, double px, double py,
 
    player_newShipMake(ship_name);
 
+   createdname=strdup(ship_name);
    free(ship_name);
 
    return 0;

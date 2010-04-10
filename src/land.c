@@ -145,6 +145,7 @@ static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
+static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 /* spaceport bar */
 static void bar_getDim( int wid,
@@ -168,6 +169,7 @@ static void land_toggleRefuel( unsigned int wid, char *name );
 /* external */
 extern unsigned int economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
+extern char* createdname; /**< From player.c */
 
 
 /**
@@ -812,15 +814,18 @@ static void shipyard_open( unsigned int wid )
    ih = h - 60;
 
    /* Calculate button dimensions. */
-   bw = (w - iw - 80) / 2;
+   bw = (w - iw - 200) / 2;
    bh = BUTTON_HEIGHT;
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         bw, bh, "btnCloseShipyard",
+         bw-20, bh, "btnCloseShipyard",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-bw, 20,
-         bw, bh, "btnBuyShip",
+   window_addButton( wid, -20 - bw, 20,
+         bw-20, bh, "btnTradeShip",
+         "Trade-In", shipyard_trade );
+   window_addButton( wid, -20 - bw*2, 20,
+         bw-20, bh, "btnBuyShip",
          "Buy", shipyard_buy );
 
    /* target gfx */
@@ -909,6 +914,7 @@ static void shipyard_update( unsigned int wid, char* str )
    if (strcmp(shipname,"None")==0) {
       window_modifyImage( wid, "imgTarget", NULL );
       window_disableButton( wid, "btnBuyShip");
+      window_disableButton( wid, "btnTradeShip");
       window_disableButton( wid, "btnInfoShip");
       snprintf( buf, PATH_MAX,
             "None\n"
@@ -991,10 +997,17 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!player_hasCredits( ship->price ) ||
-         ((ship->license != NULL) && !player_hasLicense(ship->license)))
+         ((ship->license != NULL) && !player_hasLicense(ship->license))) {
       window_disableButton( wid, "btnBuyShip");
-   else
+      if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)))
+         window_disableButton( wid, "btnTradeShip");
+      else
+         window_enableButton( wid, "btnTradeShip");
+   }
+   else {
       window_enableButton( wid, "btnBuyShip");
+      window_enableButton( wid, "btnTradeShip");
+   }
 }
 
 /**
@@ -1058,6 +1071,102 @@ static void shipyard_buy( unsigned int wid, char* str )
    equipment_regenLists( w, 0, 1 );
 }
 
+/**
+ * @brief Player attempts to buy a ship, trading the current ship in.
+ *    @param wid Window player is buying ship from.
+ *    @param str Unused.
+ */
+static void shipyard_trade( unsigned int wid, char* str )
+{
+   (void)str;
+   char *shipname, buf[16], buf2[16], buf3[16], buf4[16], *oldship;
+   Ship* ship;
+   unsigned int w;
+   int trade;
+
+   shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   ship = ship_get( shipname );
+
+   int targetprice = ship->price;
+   int playerprice = player_shipPrice(player.p->name);
+
+   /* Must have enough money. */
+   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
+      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
+      return;
+   }
+
+   /* Must have license. */
+   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
+      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
+            ship->license);
+      return;
+   }
+   if (pilot_cargoUsed(player.p) > ship->cap_cargo) {
+      dialogue_alert( "You have %d tons of cargo, but the %s can only hold %g tons. Sell or jettison some cargo first.",
+            pilot_cargoUsed(player.p), ship->name, ship->cap_cargo );
+      return;
+   }
+   else if (pilot_hasDeployed(player.p)) {
+      dialogue_alert( "You can't leave your fighters stranded. Recall them before trading in your ship." );
+      return;
+   }
+
+   credits2str( buf, ship->price, 2 );
+   credits2str( buf2, player_shipPrice(player.p->name), 2 );
+   credits2str( buf3, ship->price - player_shipPrice(player.p->name), 2 );
+   credits2str( buf4, playerprice - targetprice, 2 );
+
+   if ( targetprice == playerprice ) {
+      if (dialogue_YesNo("Are you sure?", /* confirm */
+         "Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?",
+               player.p->ship->name, buf2)==0)
+         return;
+      else
+         trade = 0;
+   }
+   else if ( targetprice < playerprice ) {
+      if (dialogue_YesNo("Are you sure?", /* confirm */
+         "Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?",
+               player.p->ship->name, buf2, ship->name, buf4)==0)
+         return;
+      else
+         trade = 1;
+   }
+   else if ( targetprice > playerprice ) {
+      if (dialogue_YesNo("Are you sure?", /* confirm */
+         "Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?",
+               player.p->ship->name, buf2, buf3)==0)
+         return;
+      else
+         trade = 1;
+   }
+
+   /* player just gots a new ship */
+   if (player_newShip( ship, player.p->solid->pos.x, player.p->solid->pos.y,
+         0., 0., player.p->solid->dir, NULL ) != 0) {
+      /* Player actually aborted naming process. */
+      return;
+   }
+   
+   if (trade == 1) {
+      player_modCredits( +player_shipPrice(player.p->name) ); /* Refund the player for their own ship. */
+      player_modCredits( -ship->price ); /* ouch, paying is hard */
+   }
+
+   /* Store the old ship's name prior to switching to the new one. */
+   oldship=strdup( player.p->name );
+   player_swapShip( createdname );
+   player_rmShip( oldship );
+   land_checkAddRefuel();
+
+   /* Update shipyard. */
+   shipyard_update(wid, NULL);
+
+   /* Update equipment. */
+   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   equipment_regenLists( w, 0, 1 );
+}
 
 /**
  * @brief Gets the dimensions of the spaceport bar window.
