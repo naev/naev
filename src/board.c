@@ -340,7 +340,7 @@ static void board_update( unsigned int wdw )
 {
    int i, j;
    char str[PATH_MAX];
-   char cred[10];
+   char cred[32];
    Pilot* p;
 
    p = pilot_get(player.p->target);

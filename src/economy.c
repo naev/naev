@@ -83,7 +83,7 @@ unsigned int economy_getPrice( const Commodity *com,
 /**
  * @brief Converts credits to a usable string for displaying.
  *
- *    @param[out] str Output is stored here, must have at least a length of 10
+ *    @param[out] str Output is stored here, must have at least a length of 32
  *                     char.
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
@@ -93,17 +93,17 @@ void credits2str( char *str, uint64_t credits, int decimals )
    if (decimals < 0)
       snprintf( str, 32, "%"PRIu64, credits );
    else if (credits >= 1000000000000000LLU)
-      snprintf( str, 16, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+      snprintf( str, 32, "%.*fQ", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LLU)
-      snprintf( str, 16, "%.*fT", decimals, (double)credits / 1000000000000. );
+      snprintf( str, 32, "%.*fT", decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000LU)
-      snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
+      snprintf( str, 32, "%.*fB", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000U)
-      snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
+      snprintf( str, 32, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000U)
-      snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
+      snprintf( str, 32, "%.*fK", decimals, (double)credits / 1000. );
    else 
-      snprintf (str, 16, "%"PRIu64, credits );
+      snprintf (str, 32, "%"PRIu64, credits );
 }
 
 

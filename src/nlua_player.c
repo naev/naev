@@ -459,7 +459,7 @@ static int playerL_addShip( lua_State *L )
 
    /* Add the ship. */
    do {
-      ret = player_newShip( s, 0., 0, 0., 0., 0., name );
+      ret = player_newShip( s, name, 0 );
    } while (ret != 0);
 
    return 0;

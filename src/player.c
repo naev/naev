@@ -61,11 +61,6 @@
  */
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
-static double player_px       = 0.; /**< Temporary X position. */
-static double player_py       = 0.; /**< Temporary Y position. */
-static double player_vx       = 0.; /**< Temporory X velocity. */
-static double player_vy       = 0.; /**< Temporary Y velocity. */
-static double player_dir      = 0.; /**< Temporary direction. */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_mission   = NULL; /**< More hack. */
 
@@ -385,10 +380,13 @@ static int player_newMake (void)
       WARN("Ship not set by module.");
       return -1;
    }
-   if (player_newShip( ship, x, y, 0., 0., RNGF() * 2.*M_PI, NULL ) != 0) {
+   if (player_newShip( ship, NULL, 0 ) != 0) {
       player_new();
       return -1;
    }
+   vect_cset( &player.p->solid->pos, x, y );
+   vectnull( &player.p->solid->vel );
+   player.p->solid->dir = RNGF() * 2.*M_PI;
    space_init(sysname);
    free(sysname);
 
@@ -413,24 +411,21 @@ static int player_newMake (void)
 /**
  * @brief Creates a new ship for player.
  *
+ *    @param ship New ship to get.
+ *    @param def_name Default name to give it if canceled.
+ *    @param trade Whether or not to trade player's current ship with the new ship.
  *    @return 0 indicates success, -1 means dialogue was cancelled.
  *
  * @sa player_newShipMake
  */
-int player_newShip( Ship* ship, double px, double py,
-      double vx, double vy, double dir, const char *def_name )
+int player_newShip( Ship* ship, const char *def_name, int trade )
 {
-   char* ship_name;
+   char *ship_name, *old_name;
    int i, len;
 
    /* temporary values while player.p doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
    player_ship    = ship;
-   player_px      = px;
-   player_py      = py;
-   player_vx      = vx;
-   player_vy      = vy;
-   player_dir     = dir;
    ship_name      = dialogue_input( "Ship Name", 3, 20,
          "Please name your new ship:" );
 
@@ -460,6 +455,13 @@ int player_newShip( Ship* ship, double px, double py,
 
    player_newShipMake(ship_name);
 
+   /* Player is trading ship in. */
+   if (trade) {
+      old_name = player.p->name;
+      player_swapShip( ship_name ); /* Move to the new ship. */
+      player_rmShip( old_name );
+   }
+
    free(ship_name);
 
    return 0;
@@ -473,6 +475,7 @@ static void player_newShipMake( char* name )
    Vector2d vp, vv;
    PilotFlags flags;
    PlayerShip_t *ship;
+   double px, py, dir;
 
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
@@ -483,13 +486,18 @@ static void player_newShipMake( char* name )
 
    /* create the player.p */
    if (player.p == NULL) {
-      /* Hackish position setting */
-      vect_cset( &vp, player_px, player_py );
-      vect_cset( &vv, player_vx, player_vy );
+      /* Set position to defaults. */
+      if (player.p != NULL) {
+         px    = player.p->solid->pos.x;
+         py    = player.p->solid->pos.y;
+         dir   = player.p->solid->dir;
+      }
+      vect_cset( &vp, px, py );
+      vect_cset( &vv, 0., 0. );
 
       /* Create the player. */
       pilot_create( player_ship, name, faction_get("Player"), NULL,
-            player_dir, &vp, &vv, flags, -1 );
+            dir, &vp, &vv, flags, -1 );
    }
    else {
       /* Grow memory. */
