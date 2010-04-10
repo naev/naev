@@ -169,7 +169,6 @@ static void land_toggleRefuel( unsigned int wid, char *name );
 /* external */
 extern unsigned int economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
-extern char* createdname; /**< From player.c */
 
 
 /**
@@ -1055,8 +1054,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
 
    /* player just gots a new ship */
-   if (player_newShip( ship, player.p->solid->pos.x, player.p->solid->pos.y,
-         0., 0., player.p->solid->dir, NULL ) != 0) {
+   if (player_newShip( ship, NULL, 0 ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -1079,7 +1077,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 static void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16], buf2[16], buf3[16], buf4[16], *oldship;
+   char *shipname, buf[16], buf2[16], buf3[16], buf4[16];
    Ship* ship;
    unsigned int w;
    int trade;
@@ -1146,8 +1144,7 @@ static void shipyard_trade( unsigned int wid, char* str )
    }
 
    /* player just gots a new ship */
-   if (player_newShip( ship, player.p->solid->pos.x, player.p->solid->pos.y,
-         0., 0., player.p->solid->dir, NULL ) != 0) {
+   if (player_newShip( ship, NULL, 1 ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -1158,9 +1155,6 @@ static void shipyard_trade( unsigned int wid, char* str )
       player_modCredits( -ship->price ); /* ouch, paying is hard */
    }
 
-   oldship=strdup( player.p->name ); /* Store the old ship's name prior to switching to the new one. */
-   player_swapShip( createdname ); /* Move to the new ship. */
-   player_rmShip( oldship );
    land_checkAddRefuel();
 
    /* Update shipyard. */
