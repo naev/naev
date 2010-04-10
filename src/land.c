@@ -1019,8 +1019,10 @@ static void shipyard_buy( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
+   int targetprice = ship->price;
+
    /* Must have enough money. */
-   if (!player_hasCredits( ship->price )) {
+   if (!player_hasCredits( targetprice )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
@@ -1032,7 +1034,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
 
-   credits2str( buf, ship->price, 2 );
+   credits2str( buf, targetprice, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
          "Do you really want to spend %s on a new ship?", buf )==0)
       return;
@@ -1042,7 +1044,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       /* Player actually aborted naming process. */
       return;
    }
-   player_modCredits( -ship->price ); /* ouch, paying is hard */
+   player_modCredits( -targetprice ); /* ouch, paying is hard */
    land_checkAddRefuel();
 
    /* Update shipyard. */
@@ -1074,7 +1076,7 @@ void shipyard_trade( unsigned int wid, char* str )
    }
 
    /* Must have enough money. */
-   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
+   if (!player_hasCredits( targetprice - playerprice)) {
       dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
       return;
    }
@@ -1090,9 +1092,9 @@ void shipyard_trade( unsigned int wid, char* str )
       return;
    }
 
-   credits2str( buf, ship->price, 2 );
-   credits2str( buf2, player_shipPrice(player.p->name), 2 );
-   credits2str( buf3, ship->price - player_shipPrice(player.p->name), 2 );
+   credits2str( buf, targetprice, 2 );
+   credits2str( buf2, playerprice, 2 );
+   credits2str( buf3, targetprice - playerprice, 2 );
    credits2str( buf4, playerprice - targetprice, 2 );
 
    /* Display the correct dialogue depending on the new ship's price versus the player's. */
