@@ -614,7 +614,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* Needs license. */
-   else if ((outfit->license != NULL) && !player_hasLicense(outfit->license)) {
+   else if (!player_hasLicense(outfit->license)) {
       if (errmsg != 0)
          dialogue_alert( "You need the '%s' license to buy this outfit.",
                outfit->license );
@@ -981,7 +981,7 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!player_hasCredits( ship->price ) ||
-         ((ship->license != NULL) && !player_hasLicense(ship->license))) {
+         (!player_hasLicense(ship->license))) {
       window_disableButton( wid, "btnBuyShip");
       if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)))
          window_disableButton( wid, "btnTradeShip");
@@ -1028,7 +1028,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    }
 
    /* Must have license. */
-   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
+   if (!player_hasLicense(ship->license)) {
       dialogue_alert( "You do not have the '%s' license required to buy this ship.",
             ship->license);
       return;
@@ -1069,7 +1069,7 @@ void shipyard_trade( unsigned int wid, char* str )
    int playerprice = player_shipPrice(player.p->name);
 
    /* Must have license. */
-   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
+   if (!player_hasLicense(ship->license)) {
       dialogue_alert( "You do not have the '%s' license required to buy this ship.",
             ship->license);
       return;
