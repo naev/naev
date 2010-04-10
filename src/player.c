@@ -49,6 +49,7 @@
 #include "event.h"
 #include "conf.h"
 #include "nebula.h"
+#include "equipment.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -421,7 +422,7 @@ static int player_newMake (void)
 int player_newShip( Ship* ship, const char *def_name, int trade )
 {
    char *ship_name, *old_name;
-   int i, len;
+   int i, len, w;
 
    /* temporary values while player.p doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
@@ -463,6 +464,12 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
    }
 
    free(ship_name);
+
+   /* Update ship list if landed. */
+   if (landed) {   
+      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      equipment_regenLists( w, 0, 1 );
+   }
 
    return 0;
 }

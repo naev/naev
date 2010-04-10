@@ -65,20 +65,6 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 
 
 /*
- * The window interfaces.
- */
-#define LAND_NUMWINDOWS          7 /**< Number of land windows. */
-#define LAND_WINDOW_MAIN         0 /**< Main window. */
-#define LAND_WINDOW_BAR          1 /**< Bar window. */
-#define LAND_WINDOW_MISSION      2 /**< Mission computer window. */
-#define LAND_WINDOW_OUTFITS      3 /**< Outfits window. */
-#define LAND_WINDOW_SHIPYARD     4 /**< Shipyard window. */
-#define LAND_WINDOW_EQUIPMENT    5 /**< Equipment window. */
-#define LAND_WINDOW_COMMODITY    6 /**< Commodity window. */
-
-
-
-/*
  * land variables
  */
 int landed = 0; /**< Is player landed. */
@@ -117,7 +103,6 @@ static int last_window = 0; /**< Default window. */
 /*
  * prototypes
  */
-static unsigned int land_getWid( int window );
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_changeTab( unsigned int wid, char *wgt, int tab );
@@ -1030,7 +1015,6 @@ static void shipyard_buy( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[32];
    Ship* ship;
-   unsigned int w;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
@@ -1063,10 +1047,6 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
-
-   /* Update equipment. */
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 0, 1 );
 }
 
 /**
@@ -1074,12 +1054,11 @@ static void shipyard_buy( unsigned int wid, char* str )
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
  */
-static void shipyard_trade( unsigned int wid, char* str )
+void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
    char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
    Ship* ship;
-   unsigned int w;
    int trade;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
@@ -1159,10 +1138,6 @@ static void shipyard_trade( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
-
-   /* Update equipment. */
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 0, 1 );
 }
 
 /**
@@ -1728,7 +1703,7 @@ static void land_cleanupWindow( unsigned int wid, char *name )
  *    @param window Type of window to get wid (LAND_WINDOW_MAIN, ...).
  *    @return 0 on error, otherwise the wid of the window.
  */
-static unsigned int land_getWid( int window )
+unsigned int land_getWid( int window )
 {
    if (land_windowsMap[window] == -1)
       return 0;

@@ -12,6 +12,19 @@
 
 
 /*
+ * The window interfaces.
+ */
+#define LAND_NUMWINDOWS          7 /**< Number of land windows. */
+#define LAND_WINDOW_MAIN         0 /**< Main window. */
+#define LAND_WINDOW_BAR          1 /**< Bar window. */
+#define LAND_WINDOW_MISSION      2 /**< Mission computer window. */
+#define LAND_WINDOW_OUTFITS      3 /**< Outfits window. */
+#define LAND_WINDOW_SHIPYARD     4 /**< Shipyard window. */
+#define LAND_WINDOW_EQUIPMENT    5 /**< Equipment window. */
+#define LAND_WINDOW_COMMODITY    6 /**< Commodity window. */
+
+
+/*
  * Landed at.
  */
 extern int landed;
@@ -32,6 +45,7 @@ void land_exit (void);
  */
 void land_checkAddRefuel (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
+unsigned int land_getWid( int window );
 
 
 #endif /* LAND_H */
