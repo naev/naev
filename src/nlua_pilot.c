@@ -346,6 +346,7 @@ static int pilotL_addFleet( lua_State *L )
    Planet *planet;
    int jump;
    PilotFlags flags;
+   int *jumpind, njumpind;
    int *ind, nind;
    double chance;
 
@@ -403,40 +404,51 @@ static int pilotL_addFleet( lua_State *L )
    }
    /* Random. */
    else {
+      /* Build landable planet table. */
+      ind   = NULL;
+      nind  = 0;
       if (cur_system->nplanets > 0) {
-         /* Build landable planet table. */
          ind = malloc( sizeof(int) * cur_system->nplanets );
-         nind = 0;
          for (i=0; i<cur_system->nplanets; i++)
             if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
                   !areEnemies(flt->faction,cur_system->planets[i]->faction))
                ind[ nind++ ] = i;
-
-         /* Calculate jump chance. */
-         chance = cur_system->njumps;
-         chance = chance / (chance + nind);
-
-         /* Random jump in. */
-         if ((nind == 0) || (RNGF() <= chance)) {
-            jump = RNG_SANE(0,cur_system->njumps-1);
-         }
-         /* Random take off. */
-         else {
-            planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
-            pilot_setFlagRaw( flags, PILOT_TAKEOFF );
-            vect_cset( &vp,
-                  planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
-                  planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
-            a = RNGF() * 2.*M_PI;
-            vectnull( &vv );
-         }
-
-         /* Free memory allocated. */
-         free( ind );
       }
-      /* Can only jump in. */
-      else
-         jump = RNG_SANE(0,cur_system->njumps-1);
+
+      /* Build jumpable jump table. */
+      jumpind  = NULL;
+      njumpind = 0;
+      if (cur_system->njumps > 0) {
+         jumpind = malloc( sizeof(int) * cur_system->njumps );
+         for (i=0; i<cur_system->njumps; i++)
+            if (system_getPresence( cur_system->jumps[i].target, flt->faction ) > 0)
+               jumpind[ njumpind++ ] = i;
+      }
+
+      /* Calculate jump chance. */
+      chance = njumpind;
+      chance = chance / (chance + nind);
+
+      /* Random jump in. */
+      if ((nind == 0) || (RNGF() <= chance)) {
+         jump = jumpind[ RNG_SANE(0,njumpind-1) ];
+      }
+      /* Random take off. */
+      else {
+         planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
+         pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+         vect_cset( &vp,
+               planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+               planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+         a = RNGF() * 2.*M_PI;
+         vectnull( &vv );
+      }
+
+      /* Free memory allocated. */
+      if (ind != NULL )
+         free( ind );
+      if (jumpind != NULL)
+         free( jumpind );
    }
 
    /* Set up velocities and such. */
