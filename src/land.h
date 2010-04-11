@@ -47,5 +47,9 @@ void land_checkAddRefuel (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
 unsigned int land_getWid( int window );
 
+int can_trade( char* shipname );
+int can_buy(char* shipname );
+int can_swap( char* shipname );
+int can_sell( char* shipname );
 
 #endif /* LAND_H */

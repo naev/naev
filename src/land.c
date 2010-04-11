@@ -980,18 +980,15 @@ static void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (!player_hasCredits( ship->price ) ||
-         (!player_hasLicense(ship->license))) {
+   if (!can_buy( shipname ))
       window_disableButton( wid, "btnBuyShip");
-      if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)))
-         window_disableButton( wid, "btnTradeShip");
-      else
-         window_enableButton( wid, "btnTradeShip");
-   }
-   else {
+   else
       window_enableButton( wid, "btnBuyShip");
+
+   if (!can_trade( shipname ))
+      window_disableButton( wid, "btnTradeShip");
+   else
       window_enableButton( wid, "btnTradeShip");
-   }
 }
 
 /**
@@ -1049,6 +1046,69 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
+}
+
+/**
+ * @brief Makes sure it's sane to buy a ship.
+ *    @param shipname Ship being bought.
+ */
+int can_buy ( char *shipname )
+{
+   Ship* ship;
+   ship = ship_get( shipname );
+   
+   /* Must have enough credits. */
+   if (!player_hasCredits( ship->price || !player_hasLicense(ship->license)))
+      return 0;
+   return 1;
+}
+
+/**
+ * @brief Makes sure it's sane to sell a ship.
+ *    @param shipname Ship being sold.
+ */
+int can_sell( char* shipname )
+{
+   if (strcmp(shipname,player.p->name)==0) { /* no ships */
+      return 0;
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Makes sure it's sane to change ships.
+ *    @param shipname Ship being changed to.
+ */
+int can_swap( char* shipname )
+{
+   Ship* ship;
+   ship = ship_get( shipname );
+
+   if (strcmp(shipname,"None")==0) /* No ships. */
+      return 0;
+   else if (pilot_cargoUsed(player.p) > ship->cap_cargo) /* Current ship has too much cargo. */
+      return 0;
+   else if (pilot_hasDeployed(player.p)) /* Escorts are in space. */
+      return 0;
+   else if (!player_hasLicense(ship->license)) /* Lacks the necessary license. */
+      return 0;
+   return 1;
+}
+
+/**
+ * @brief Makes sure it's sane to buy a ship, trading the old one in simultaneously.
+ *    @param shipname Ship being bought.
+ */
+int can_trade( char* shipname )
+{
+   Ship* ship;
+   ship = ship_get( shipname );
+
+   /* Must have enough credits and be able to swap ships. */
+   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)) || !can_swap( shipname ))
+      return 0;
+   return  1;
 }
 
 /**

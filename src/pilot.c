@@ -3128,9 +3128,9 @@ void pilot_clearHooks( Pilot *p )
 int pilot_hasCredits( Pilot *p, int amount )
 {
    unsigned long ul;
-
-   ul = (unsigned long) ABS(amount);
-
+   if (amount < 0)
+      return 1;
+   ul = amount;
    return (ul <= p->credits);
 }
 
