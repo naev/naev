@@ -65,20 +65,6 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 
 
 /*
- * The window interfaces.
- */
-#define LAND_NUMWINDOWS          7 /**< Number of land windows. */
-#define LAND_WINDOW_MAIN         0 /**< Main window. */
-#define LAND_WINDOW_BAR          1 /**< Bar window. */
-#define LAND_WINDOW_MISSION      2 /**< Mission computer window. */
-#define LAND_WINDOW_OUTFITS      3 /**< Outfits window. */
-#define LAND_WINDOW_SHIPYARD     4 /**< Shipyard window. */
-#define LAND_WINDOW_EQUIPMENT    5 /**< Equipment window. */
-#define LAND_WINDOW_COMMODITY    6 /**< Commodity window. */
-
-
-
-/*
  * land variables
  */
 int landed = 0; /**< Is player landed. */
@@ -117,7 +103,6 @@ static int last_window = 0; /**< Default window. */
 /*
  * prototypes
  */
-static unsigned int land_getWid( int window );
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_changeTab( unsigned int wid, char *wgt, int tab );
@@ -629,7 +614,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* Needs license. */
-   else if ((outfit->license != NULL) && !player_hasLicense(outfit->license)) {
+   else if (!player_hasLicense(outfit->license)) {
       if (errmsg != 0)
          dialogue_alert( "You need the '%s' license to buy this outfit.",
                outfit->license );
@@ -996,7 +981,7 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!player_hasCredits( ship->price ) ||
-         ((ship->license != NULL) && !player_hasLicense(ship->license))) {
+         (!player_hasLicense(ship->license))) {
       window_disableButton( wid, "btnBuyShip");
       if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)))
          window_disableButton( wid, "btnTradeShip");
@@ -1030,25 +1015,26 @@ static void shipyard_buy( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[32];
    Ship* ship;
-   unsigned int w;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
+   int targetprice = ship->price;
+
    /* Must have enough money. */
-   if (!player_hasCredits( ship->price )) {
+   if (!player_hasCredits( targetprice )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
 
    /* Must have license. */
-   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
+   if (!player_hasLicense(ship->license)) {
       dialogue_alert( "You do not have the '%s' license required to buy this ship.",
             ship->license);
       return;
    }
 
-   credits2str( buf, ship->price, 2 );
+   credits2str( buf, targetprice, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
          "Do you really want to spend %s on a new ship?", buf )==0)
       return;
@@ -1058,15 +1044,11 @@ static void shipyard_buy( unsigned int wid, char* str )
       /* Player actually aborted naming process. */
       return;
    }
-   player_modCredits( -ship->price ); /* ouch, paying is hard */
+   player_modCredits( -targetprice ); /* ouch, paying is hard */
    land_checkAddRefuel();
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
-
-   /* Update equipment. */
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 0, 1 );
 }
 
 /**
@@ -1074,13 +1056,11 @@ static void shipyard_buy( unsigned int wid, char* str )
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
  */
-static void shipyard_trade( unsigned int wid, char* str )
+void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
    char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
    Ship* ship;
-   unsigned int w;
-   int trade;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
@@ -1088,16 +1068,16 @@ static void shipyard_trade( unsigned int wid, char* str )
    int targetprice = ship->price;
    int playerprice = player_shipPrice(player.p->name);
 
-   /* Must have enough money. */
-   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
-      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
+   /* Must have license. */
+   if (!player_hasLicense(ship->license)) {
+      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
+            ship->license);
       return;
    }
 
-   /* Must have license. */
-   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
-      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
-            ship->license);
+   /* Must have enough money. */
+   if (!player_hasCredits( targetprice - playerprice)) {
+      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
       return;
    }
 
@@ -1112,9 +1092,9 @@ static void shipyard_trade( unsigned int wid, char* str )
       return;
    }
 
-   credits2str( buf, ship->price, 2 );
-   credits2str( buf2, player_shipPrice(player.p->name), 2 );
-   credits2str( buf3, ship->price - player_shipPrice(player.p->name), 2 );
+   credits2str( buf, targetprice, 2 );
+   credits2str( buf2, playerprice, 2 );
+   credits2str( buf3, targetprice - playerprice, 2 );
    credits2str( buf4, playerprice - targetprice, 2 );
 
    /* Display the correct dialogue depending on the new ship's price versus the player's. */
@@ -1123,46 +1103,30 @@ static void shipyard_trade( unsigned int wid, char* str )
          "Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?",
                player.p->ship->name, buf2)==0)
          return;
-      else
-         trade = 0;
    }
    else if ( targetprice < playerprice ) {
       if (dialogue_YesNo("Are you sure?", /* confirm */
          "Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?",
                player.p->ship->name, buf2, ship->name, buf4)==0)
          return;
-      else
-         trade = 1;
    }
    else if ( targetprice > playerprice ) {
       if (dialogue_YesNo("Are you sure?", /* confirm */
          "Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?",
                player.p->ship->name, buf2, buf3)==0)
          return;
-      else
-         trade = 1;
    }
 
    /* player just gots a new ship */
-   if (player_newShip( ship, NULL, 1 ) != 0) {
-      /* Player actually aborted naming process. */
-      return;
-   }
+   if (player_newShip( ship, NULL, 1 ) != 0)
+      return; /* Player aborted the naming process. */
 
-   /* Only modify credits if necessary. */
-   if (trade == 1) {
-      player_modCredits( +player_shipPrice(player.p->name) ); /* Refund the player for their own ship. */
-      player_modCredits( -ship->price ); /* ouch, paying is hard */
-   }
+   player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
 
    land_checkAddRefuel();
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
-
-   /* Update equipment. */
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 0, 1 );
 }
 
 /**
@@ -1728,7 +1692,7 @@ static void land_cleanupWindow( unsigned int wid, char *name )
  *    @param window Type of window to get wid (LAND_WINDOW_MAIN, ...).
  *    @return 0 on error, otherwise the wid of the window.
  */
-static unsigned int land_getWid( int window )
+unsigned int land_getWid( int window )
 {
    if (land_windowsMap[window] == -1)
       return 0;
