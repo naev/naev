@@ -1057,8 +1057,8 @@ int can_buy ( char *shipname )
    Ship* ship;
    ship = ship_get( shipname );
    
-   /* Must have enough credits. */
-   if (!player_hasCredits( ship->price || !player_hasLicense(ship->license)))
+   /* Must have enough credits and the necessary license. */
+   if (!player_hasCredits( ship->price ) || !player_hasLicense(ship->license))
       return 0;
    return 1;
 }
@@ -1091,8 +1091,6 @@ int can_swap( char* shipname )
       return 0;
    else if (pilot_hasDeployed(player.p)) /* Escorts are in space. */
       return 0;
-   else if (!player_hasLicense(ship->license)) /* Lacks the necessary license. */
-      return 0;
    return 1;
 }
 
@@ -1105,8 +1103,9 @@ int can_trade( char* shipname )
    Ship* ship;
    ship = ship_get( shipname );
 
-   /* Must have enough credits and be able to swap ships. */
-   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)) || !can_swap( shipname ))
+   /* Must have enough credits, the necessary license, and be able to swap ships. */
+   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)) || !can_swap( shipname ) ||
+         !player_hasLicense(ship->license))
       return 0;
    return  1;
 }
