@@ -25,6 +25,7 @@
 #include "nlua_tk.h"
 #include "font.h"
 #include "toolkit.h"
+#include "nfile.h"
 
 
 #define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
@@ -121,9 +122,28 @@ static int cli_print( lua_State *L ) {
  */
 static int cli_script( lua_State *L )
 {
-   const char *fname = luaL_optstring(L, 1, NULL);
-   int n = lua_gettop(L);
-   if (luaL_loadfile(L, fname) != 0) lua_error(L);
+   const char *fname;
+   char buf[PATH_MAX], *bbuf;
+   int n;
+
+   /* Handle parameters. */
+   fname = luaL_optstring(L, 1, NULL);
+   n     = lua_gettop(L);
+
+   /* Try to find the file if it exists. */
+   if (nfile_fileExists(fname))
+      snprintf( buf, sizeof(buf), "%s", fname );
+   else {
+      bbuf = strdup( naev_binary() );
+      snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
+      free(bbuf);
+   }
+
+   /* Do the file. */
+   if (luaL_loadfile(L, buf) != 0)
+      lua_error(L);
+
+   /* Return the stuff. */
    lua_call(L, 0, LUA_MULTRET);
    return lua_gettop(L) - n;
 }

@@ -71,7 +71,7 @@ static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
-static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
+static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
@@ -94,6 +94,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    int i;
    int outfit_n;
    PilotOutfitSlot* slots;
+   Pilot *p;
    const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background? */
@@ -123,12 +124,12 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
-   for (i = 0; i < outfit_n; i++) {
-      if (slots[i].outfit == NULL)
-      {
+   for (i=0; i < outfit_n; i++) {
+      if (slots[i].outfit == NULL) {
          /* Bingo! */
-         eq_wgt.outfit = o;
-         equipment_swapSlot( wid, &slots[i] );
+         eq_wgt.outfit  = o;
+         p              = eq_wgt.selected;
+         equipment_swapSlot( wid, p, &slots[i] );
          return;
       }
    }
@@ -791,7 +792,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, &p->outfit_high[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_high[ret] );
          }
          else {
             wgt->mouseover  = selected + ret;
@@ -811,7 +812,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, &p->outfit_medium[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_medium[ret] );
          }
          else {
             wgt->mouseover = selected + ret;
@@ -831,7 +832,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, &p->outfit_low[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_low[ret] );
          }
          else {
             wgt->mouseover = selected + ret;
@@ -850,7 +851,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 /**
  * @brief Swaps an equipment slot.
  */
-static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
+static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
    int ret;
    Outfit *o, *ammo;
@@ -873,10 +874,16 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
             player_addOutfit( ammo, q );
       }
 
+      /* Handle possible fuel changes. */
+      f = eq_wgt.selected->fuel;
+
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
+
+      /* Don't "gain" fuel. */
+      eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
    }
    /* Add outfit. */
    else {
@@ -903,18 +910,17 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          pilot_addOutfit( eq_wgt.selected, o, slot );
 
          /* Don't "gain" fuel. */
-         if (eq_wgt.selected->fuel > f)
-            eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
+         eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
       }
 
       equipment_addAmmo();
    }
 
+   /* Recalculate stats. */
+   pilot_calcStats( p );
+
    /* Redo the outfits thingy. */
    equipment_regenLists( wid, 1, 1 );
-
-   /* Update ships. */
-   equipment_updateShips( wid, NULL );
 
    return 0;
 }
@@ -932,14 +938,14 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Save positions. */
    if (outfits) {
-      nout   = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-      offout = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
+      nout    = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+      offout  = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
       window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    }
    if (ships) {
-      nship  = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+      nship   = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
-      s      = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+      s       = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
       strncpy( selship, s, sizeof(selship) );
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
    }
@@ -961,6 +967,9 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
          if (ret != 0) /* Failed to maintain. */
             toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+
+         /* Update ships. */
+         equipment_updateShips( wid, NULL );
       }
    }
 }
@@ -978,7 +987,7 @@ void equipment_addAmmo (void)
 
    /* Get player. */
    if (eq_wgt.selected == NULL)
-      p = player;
+      p = player.p;
    else
       p = eq_wgt.selected;
 
@@ -1041,8 +1050,8 @@ static void equipment_genLists( unsigned int wid )
       sships   = malloc(sizeof(char*)*nships);
       tships   = malloc(sizeof(glTexture*)*nships);
       /* Add player's current ship. */
-      sships[0] = strdup(player->name);
-      tships[0] = player->ship->gfx_target;
+      sships[0] = strdup(player.p->name);
+      tships[0] = player.p->ship->gfx_target;
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
          player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
@@ -1155,7 +1164,7 @@ static void equipment_genLists( unsigned int wid )
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[512], sysname[128], buf2[16], buf3[16];
+   char buf[512], sysname[128], buf2[32], buf3[32];
    char *shipname;
    Pilot *ship;
    char* loc;
@@ -1170,8 +1179,8 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    /* Get the ship. */
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,player->name)==0) { /* no ships */
-      ship    = player;
+   if (strcmp(shipname,player.p->name)==0) { /* no ships */
+      ship    = player.p;
       loc     = "Onboard";
       price   = 0;
       onboard = 1;
@@ -1242,7 +1251,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    else {
       if (strcmp(land_planet->name,loc)) { /* ship not here */
          window_buttonCaption( wid, "btnChangeShip", "Transport" );
-         if (price > player->credits)
+         if (!player_hasCredits( price ))
             window_disableButton( wid, "btnChangeShip" );
          else
             window_enableButton( wid, "btnChangeShip" );
@@ -1325,11 +1334,11 @@ static void equipment_changeShip( unsigned int wid )
             land_planet->name );
       return;
    }
-   else if (pilot_cargoUsed(player) > pilot_cargoFree(newship)) {
+   else if (pilot_cargoUsed(player.p) > pilot_cargoFree(newship)) {
       dialogue_alert( "You won't be able to fit your current cargo in the new ship." );
       return;
    }
-   else if (pilot_hasDeployed(player)) {
+   else if (pilot_hasDeployed(player.p)) {
       dialogue_alert( "You can't leave your fighters stranded. Recall them before changing ships." );
       return;
    }
@@ -1350,7 +1359,7 @@ static void equipment_changeShip( unsigned int wid )
 static void equipment_transportShip( unsigned int wid )
 {
    unsigned int price;
-   char *shipname, buf[16];
+   char *shipname, buf[32];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,"None")==0) { /* no ships */
@@ -1363,8 +1372,8 @@ static void equipment_transportShip( unsigned int wid )
       dialogue_alert( "Your ship '%s' is already here.", shipname );
       return;
    }
-   else if (player->credits < price) { /* not enough money */
-      credits2str( buf, price-player->credits, 2 );
+   else if (!player_hasCredits( price )) { /* not enough money. */
+      credits2str( buf, price-player.p->credits, 2 );
       dialogue_alert( "You need %d more credits to transport '%s' here.",
             buf, shipname );
       return;
@@ -1378,7 +1387,7 @@ static void equipment_transportShip( unsigned int wid )
       return;
 
    /* success */
-   player->credits -= price;
+   player_modCredits( -price );
    land_checkAddRefuel();
    player_setLoc( shipname, land_planet->name );
 }
@@ -1392,8 +1401,12 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int i;
    Pilot *ship;
    Outfit *o, *ammo;
+   double f;
 
    ship = eq_wgt.selected;
+
+   /* Handle possible fuel changes. */
+   f = eq_wgt.selected->fuel;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
@@ -1416,7 +1429,11 @@ static void equipment_unequipShip( unsigned int wid, char* str )
          player_addOutfit( o, 1 );
    }
 
+   /* Recalculate stats. */
    pilot_calcStats( ship );
+
+   /* Don't "gain" fuel. */
+   eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
 
    /* Regenerate list. */
    equipment_regenLists( wid, 1, 1 );
@@ -1429,7 +1446,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 static void equipment_sellShip( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16], *name;
+   char *shipname, buf[32], *name;
    int price;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
@@ -1450,7 +1467,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Sold. */
    name = strdup(shipname);
-   player->credits += price;
+   player_modCredits( price );
    land_checkAddRefuel();
    player_rmShip( shipname );
 

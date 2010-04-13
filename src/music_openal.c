@@ -247,6 +247,10 @@ static int music_thread( void* unused )
           * We died.
           */
          case MUSIC_STATE_DEAD:
+            musicLock();
+            music_state = MUSIC_STATE_DEAD;
+            SDL_CondBroadcast( music_state_cond );
+            musicUnlock();
             return 0;
             break;
 
@@ -681,7 +685,6 @@ void music_al_exit (void)
 {
    /* Kill the thread. */
    music_kill();
-   SDL_WaitThread( music_player, NULL );
 
    soundLock();
 
@@ -950,10 +953,25 @@ int music_al_isPlaying (void)
  */
 static void music_kill (void)
 {
+   int ret;
    musicLock();
 
    music_command = MUSIC_CMD_KILL;
    music_forced  = 1;
+   while (1) {
+      ret = SDL_CondWaitTimeout( music_state_cond, music_state_lock, 3000 );
+
+      /* Timed out, just slaughter the thread. */
+      if (ret == SDL_MUTEX_TIMEDOUT) {
+         WARN("Music thread did not exit when asked, slaughtering...");
+         SDL_KillThread( music_player );
+         break;
+      }
+
+      /* Ended properly, breaking. */
+      if (music_state == MUSIC_STATE_DEAD)
+         break;
+   }
 
    musicUnlock();
 }

@@ -86,6 +86,7 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
       int *lw, int *lh, int *bw, int *bh );
 static void menuKeybinds_genList( unsigned int wid );
 static void menuKeybinds_update( unsigned int wid, char *name );
+static void opt_keyDefaults( unsigned int wid, char *str );
 /* Setting keybindings. */
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
 static void opt_setKey( unsigned int wid, char *str );
@@ -105,6 +106,9 @@ void opt_menu (void)
 
    /* Create window and tabs. */
    opt_wid = window_create( "Options", -1, -1, w, h );
+   window_setCancel( opt_wid, opt_close );
+
+   /* Create tabbed window. */
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, opt_names );
 
@@ -272,8 +276,16 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Ask user. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default gameplay settings?" ))
+      return;
+
+   /* Restore. */
    conf_setGameplayDefaults();
    opt_gameplayUpdate( wid, NULL );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Gameplay settings restored to defaults.");
 }
 
 /**
@@ -333,6 +345,9 @@ static void opt_keybinds( unsigned int wid )
    /* Set button. */
    window_addButton( wid, -20 - bw - 20, 20, bw, bh,
          "btnSet", "Set Key", opt_setKey );
+   /* Restore deafaults button. */
+   window_addButton( wid, -20, 20+bh+20, bw, bh,
+         "btnDefaults", "Defaults", opt_keyDefaults );
 
    /* Text stuff. */
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
@@ -344,10 +359,14 @@ static void opt_keybinds( unsigned int wid )
    menuKeybinds_genList( wid );
 }
 
+
+/**
+ * @brief Generates the keybindings list.
+ */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int i, j, l;
-   char **str;
+   int i, j, l, p;
+   char **str, mod_text[64];
    SDLKey key;
    KeybindType type;
    SDLMod mod;
@@ -366,11 +385,27 @@ static void menuKeybinds_genList( unsigned int wid )
       key = input_getKeybind( keybindNames[j], &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
+            /* Generate mod text. */
+            if (mod == NMOD_ALL)
+               snprintf( mod_text, sizeof(mod_text), "any+" );
+            else {
+               p = 0;
+               mod_text[0] = '\0';
+               if (mod & NMOD_SHIFT)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+               if (mod & NMOD_CTRL)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+               if (mod & NMOD_ALT)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+               if (mod & NMOD_META)
+                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+            }
+
             /* SDL_GetKeyName returns lowercase which is ugly. */
             if (nstd_isalpha(key))
-               snprintf(str[j], l, "%s <%c>", keybindNames[j], nstd_toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", keybindNames[j], mod_text, nstd_toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s>", keybindNames[j], SDL_GetKeyName(key) );
+               snprintf(str[j], l, "%s <%s%s>", keybindNames[j], mod_text, SDL_GetKeyName(key) );
             break;
          case KEYBIND_JAXISPOS:
             snprintf(str[j], l, "%s <ja+%d>", keybindNames[j], key);
@@ -458,6 +493,29 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    /* Update text. */
    snprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
    window_modifyText( wid, "txtDesc", buf );
+}
+
+
+/**
+ * @brief Restores the key defaults.
+ */
+static void opt_keyDefaults( unsigned int wid, char *str )
+{
+   (void) str;
+
+   /* Ask user if he wants to. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default keybindings?" ))
+      return;
+
+   /* Restore defaults. */
+   input_setDefault();
+
+   /* Regenerate list widget. */
+   window_destroyWidget( wid, "lstKeybinds" );
+   menuKeybinds_genList( wid );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Keybindings restored to defaults.");
 }
 
 
@@ -647,6 +705,10 @@ static void opt_audioDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Ask user. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default audio settings?" ))
+      return;
+
    /* Set defaults. */
    conf_setAudioDefaults();
 
@@ -656,6 +718,9 @@ static void opt_audioDefaults( unsigned int wid, char *str )
 
    /* Update widgets. */
    opt_audioUpdate( wid, NULL );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Audio settings restored to defaults.");
 }
 
 /**
@@ -687,7 +752,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    unsigned int parent;
    KeybindType type;
    int key;
-   SDLMod mod;
+   SDLMod mod, ev_mod;
    const char *str;
 
    /* See how to handle it. */
@@ -714,9 +779,19 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          }
          type = KEYBIND_KEYBOARD;
          if (window_checkboxState( wid, "chkAny" ))
-            mod = KMOD_ALL;
-         else
-            mod  = event->key.keysym.mod & ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE);
+            mod = NMOD_ALL;
+         else {
+            ev_mod = event->key.keysym.mod;
+            mod    = 0;
+            if (ev_mod & (KMOD_LSHIFT | KMOD_RSHIFT))
+               mod |= NMOD_SHIFT;
+            if (ev_mod & (KMOD_LCTRL | KMOD_RCTRL))
+               mod |= NMOD_CTRL;
+            if (ev_mod & (KMOD_LALT | KMOD_RALT))
+               mod |= NMOD_ALT;
+            if (ev_mod & (KMOD_LMETA | KMOD_RMETA))
+               mod |= NMOD_META;
+         }
          /* Set key. */
          opt_lastKeyPress = key;
          break;
@@ -729,13 +804,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          else
             return 0; /* Not handled. */
          key  = event->jaxis.axis;
-         mod  = KMOD_ALL;
+         mod  = NMOD_ALL;
          break;
 
       case SDL_JOYBUTTONDOWN:
          type = KEYBIND_JBUTTON;
          key  = event->jbutton.button;
-         mod  = KMOD_ALL;
+         mod  = NMOD_ALL;
          break;
 
       /* Not handled. */
@@ -921,16 +996,20 @@ static void opt_video( unsigned int wid )
          "chkVSync", "Vertical Sync", NULL, conf.vsync );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkVBO", "VBOs (Disable for compatibility)", NULL, conf.vbo );
+         "chkVBO", "Vertex Buffer Objects*", NULL, conf.vbo );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkMipmaps", "Mipmaps (Disable for compatibility)", NULL, conf.mipmaps );
+         "chkMipmaps", "Mipmaps*", NULL, conf.mipmaps );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkInterpolate", "Interpolation (Disable for compat.)", NULL, conf.interpolate );
-   y -= 50;
-
-
+         "chkInterpolate", "Interpolation*", NULL, conf.interpolate );
+   y -= 20;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkNPOT", "NPOT Textures*", NULL, conf.npot );
+   y -= 30;
+   window_addText( wid, x, y, cw, 20, 1,
+         "txtSCompat", NULL, &cBlack, "*Disable for compatibility." );
+   y -= 40;
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
          NULL, &cDConsole, "Features" );
@@ -1050,6 +1129,11 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.interpolate = f;
       opt_needRestart();
    }
+   f = window_checkboxState( wid, "chkNPOT" );
+   if (conf.npot != f) {
+      conf.npot = f;
+      opt_needRestart();
+   }
 
    /* Features. */
    f = window_checkboxState( wid, "chkEngineGlow" );
@@ -1066,8 +1150,16 @@ static void opt_videoDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
+   /* Ask user. */
+   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default video settings?" ))
+      return;
+
+   /* Restore settings. */
    conf_setVideoDefaults();
    opt_videoUpdate( wid, NULL );
+
+   /* Alert user it worked. */
+   dialogue_msgRaw( "Defaults Restored", "Video settings restored to defaults.");
 }
 
 static void opt_videoUpdate( unsigned int wid, char *str )
@@ -1087,6 +1179,7 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkVBO", conf.vbo );
    window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
    window_checkboxSet( wid, "chkInterpolate", conf.interpolate );
+   window_checkboxSet( wid, "chkNPOT", conf.npot );
    window_checkboxSet( wid, "chkFPS", conf.fps_show );
    window_checkboxSet( wid, "chkEngineGlow", conf.engineglow );
 

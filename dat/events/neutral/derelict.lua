@@ -67,7 +67,7 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(400, 1000)
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add(ship, "dummy", pos, false)[1]
+    p     = pilot.add(ship, "dummy", pos)[1]
     p:setFaction("Derelict")
     p:disable()
     hook.pilot(p, "board", "board")
@@ -76,6 +76,7 @@ function create ()
 end
 
 function board()
+    player.unboard()
     -- Roll for events
     local prob = rnd.rnd()
     if prob <= 0.50 then
@@ -92,7 +93,6 @@ end
 function neutralevent()
     -- Pick a random message from the list, display it, unboard.
     tk.msg(ntitle, ntext[rnd.rnd(1, #ntext)])
-    player.unboard()
     destroyevent()
 end
 
@@ -120,7 +120,6 @@ function goodevent()
 --        tk.msg(gtitle, gtext[2])
 --        --effects here
     end
-    player.unboard()
     destroyevent()
 end
 
@@ -136,10 +135,10 @@ function badevent()
         player.pilot():setFuel(false)
     elseif event == 3 then
         tk.msg(btitle, btext[3])
-        v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300), false)[1]
-        v2 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new(-300, 300), false)[1]
-        a1 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new(-300,-300), false)[1]
-        a2 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new( 300,-300), false)[1]
+        v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300))[1]
+        v2 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new(-300, 300))[1]
+        a1 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new(-300,-300))[1]
+        a2 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new( 300,-300))[1]
         v1:control()
         v1:attack(player.pilot())
         v2:control()
@@ -161,7 +160,6 @@ function badevent()
 --        tk.msg(btitle, btext[2])
 --        --effects here
     end
-    player.unboard()
     destroyevent()
 end
 
@@ -183,7 +181,6 @@ function missionevent()
         local select = rnd.rnd(1, #mymissions)
         evt.misnStart(mymissions[select])
     
-        player.unboard()
         destroyevent()
     end
 end

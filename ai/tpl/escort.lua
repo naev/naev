@@ -16,7 +16,7 @@ end
 
 -- Just tries to guard mem.escort
 function idle ()
-   ai.pushtask(0, "follow", mem.escort)
+   ai.pushtask("follow", mem.escort)
 end
 
 
@@ -37,7 +37,7 @@ function flyback ()
 
    -- Try to brake
    if not ai.isstopped() and dist < bdist then
-      ai.pushtask(0, "brake")
+      ai.pushtask("brake")
 
    -- Try to dock
    elseif ai.isstopped() and dist < 30 then
@@ -57,20 +57,20 @@ end
 function e_attack( target )
    if mem.command then
       if target ~= nil then
-         ai.pushtask(0, "attack", target)
+         ai.pushtask("attack", target)
       end
    end
 end
 -- Hold position
 function e_hold ()
    if mem.command then
-      ai.pushtask(0, "hold" )
+      ai.pushtask("hold" )
    end
 end
 -- Return to carrier
 function e_return ()
    if mem.command and mem.carrier then
-      ai.pushtask(0, "flyback" )
+      ai.pushtask("flyback" )
    end
 end
 -- Clear orders

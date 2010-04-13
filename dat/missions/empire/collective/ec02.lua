@@ -2,6 +2,9 @@
 
    Collective Espionage II
 
+   Author: bobbens
+      minor edits by Infiltrator
+
    Third mission in the collective mini campaign.
 
    You must land on an ex-empire planet in collective territory and return.
@@ -22,15 +25,15 @@ else -- default english
    title[1] = "Collective Espionage"
    title[2] = "Mission Accomplished"
    text = {}
-   text[1] = [[You head over to Lt. Commander Dimitri see what the results are.
-"Hello again there %s. Bad news on your latest run, you got nothing other then the usual robotic chatter. We'll have to send you out again, this time we'll follow a different approach. Interested in giving it another shot?]]
-   text[2] = [["On your last run you were monitoring while out in the open, while you do get better signals, upon noticing your presence. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."
-"When the Collective struck, they quickly took many systems, one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans, there was nothing we could do. The turbulence and dense atmosphere should be able to hide your ship."]]
-   text[3] = [["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the 4 jumps of fuel to be able to get there and back in one piece."
+   text[1] = [[You head over to Lt. Commander Dimitri to see what the results are.
+"Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]
+   text[2] = [["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmittions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."
+"When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]
+   text[3] = [["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece."
 "Good luck, I'll be waiting for you on your return."]]
-   text[4] = [[You quickly land on %s and hide in the deep dense methane atmosphere it has. Your monitoring gear flickers into action, hopefully catching something of use. With some luck there won't be too many Collective ships when you take off.]]
-   text[5] = [[As your ship touches ground you see Lt. Commander Dimitri come out to greet you.
-"How was the weather?", he mentions jokingly. "Glad to see you're in one piece. We'll get right on analyzing the data acquired. These robots have to be up to something. Meet me in the bar later, meanwhile give yourself a treat, you've earned it. We've made a 100k credit deposit in your bank account, enjoy it."]]
+   text[4] = [[You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]
+   text[5] = [[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
+"How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analysing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 100k credit deposit in your bank account. Enjoy it."]]
 end
 
 

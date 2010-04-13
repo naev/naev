@@ -2,6 +2,9 @@
 
    Operation Cold Metal
 
+   Author: bobbens
+      minor edits by Infiltrator
+
    Seventh and final mission in the Collective Campaign
 
    Mission Objectives:
@@ -24,7 +27,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   bar_desc = "You see Comodore Keer at a table with a couple other pilots. She motions you to sit down with them."
+   bar_desc = "You see Comodore Keer at a table with a couple of other pilots. She motions you to sit down with them."
    misn_title = "Operation Cold Metal"
    misn_reward = "Fame and Glory"
    misn_desc = {}
@@ -39,10 +42,10 @@ else -- default english
    text = {}
    text[1] = [[You join Commodore Keer's table.
 She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]]
-   text[2] = [["The Operation has been dubbed 'Cold Metal'. Our goal is to head to C-00, we'll take the route of %s, %s then C-00. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. We'll also clear each system completely of Collective presence before continuing to the next system. See you in combat pilots."]]
+   text[2] = [["The Operation has been dubbed 'Cold Metal'. Our goal is to head to C-00, we'll take the route of %s, %s then C-00. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. We'll also clear each system completely of Collective presence before continuing to the next system. See you in combat, pilots."]]
    text[3] = [[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
-You notice Commodore Keer. Upon greeting her she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective, shouldn't take too long to be back to normal."]]
-   text[4] = [[She continues, "As a symbol of appreciation you should find a deposit of 500 thousand credits has been made to your account. There will be a celebration later today in the officer's room if you want to join in."
+You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]
+   text[4] = [[She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
 
 And such ends the Collective threat...]]
    text[5] = [[You recieve a message signed by Commodore Keeras soon as you enter Empire space:
@@ -88,8 +91,14 @@ function accept ()
    tk.msg( title[2], string.format( text[2],
          misn_target_sys:name(), misn_final_sys:name() ) )
 
+   hook.jumpout("jumpout")
    hook.enter("jump")
    hook.land("land")
+end
+
+
+function jumpout ()
+   last_sys = system.cur()
 end
 
 
@@ -119,7 +128,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilots) do
                v:setFriendly()
             end
@@ -136,7 +145,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
                v:setHostile()
@@ -167,7 +176,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilot) do
                v:setFriendly()
             end
@@ -187,7 +196,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
 
             -- Handle special ships
             if v == "Starfire" then
@@ -244,7 +253,7 @@ end
 
 function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Trader Mule", "empire_refuel" )[1]
+   refship = pilot.add( "Trader Mule", "empire_refuel", last_sys )[1]
    refship:rename("Fuel Tanker")
    refship:setFaction("Empire")
    refship:setFriendly()
@@ -257,8 +266,8 @@ function addRefuelShip ()
 
    -- Add some escorts
    refesc = {}
-   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
-   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
+   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
+   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
    for k,v in ipairs(refesc) do
       v:setFriendly()
    end

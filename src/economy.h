@@ -8,6 +8,9 @@
 #  define ECONOMY_H
 
 
+#include <stdint.h>
+
+
 /**
  * @struct Commodity
  *
@@ -27,6 +30,7 @@ typedef struct Commodity_ {
  * Commodity stuff.
  */
 Commodity* commodity_get( const char* name );
+Commodity* commodity_getW( const char* name );
 int commodity_load (void);
 void commodity_free (void);
 
@@ -43,7 +47,7 @@ void economy_destroy (void);
 /* 
  * Misc stuff.
  */
-void credits2str( char *str, unsigned int credits, int decimals );
+void credits2str( char *str, uint64_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 
 

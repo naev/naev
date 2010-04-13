@@ -1,98 +1,105 @@
 
-   NAEV README
+NAEV README
 
-   X.) DEPENDENCIES
+   For an overview of the game, please visit http://code.google.com/p/naev/
+   or view the man page (If you're on a Unix-like system).
+   
+   An exhaustive list of command line arguments is detailed in the man page.
+   
+   Hardware requirements can also be found on the website.
 
-      X.1) Debian
-         X.1.1) Binary
-            * libsdl1.2debian
-            * libsdl-image1.2
-            * libsdl-mixer1.2
-            * libgl1-mesa-dri
-            * libxml2
-            * libfreetype6
-            * libpng12-0
-            * libopenal1
-            * libvorbis0a >=1.2.1 (Moot if binary is statically-linked.)
+1) DEPENDENCIES
 
-         X.1.2) Source
-            * libsdl1.2-dev
-            * libsdl-image1.2-dev
-            * libsdl-mixer1.2-dev
-            * libgl1-mesa-dev
-            * libxml2-dev
-            * libfreetype6-dev
-            * libpng12-dev
-            * libopenal-dev
-            * libvorbis-dev >=1.2.1 (Older versions will work if using
-               static-linking makefile.)
-            * binutils-dev
+   NAEV's dependencies are intended to be relatively common. In addition to
+   an OpenGL-capable graphics card and driver, NAEV requires the following:
+      * SDL
+      * SDL_image
+      * SDL_mixer
+      * libxml2
+      * freetype2
+      * libpng
+      * openal
+      * libvorbis (>= 1.2.1 necessary for Replaygain)
+      * binutils
+      
+   Note that several distributions ship outdated versions of libvorbis, and
+   thus libvorbisfile is statically linked into the release binary.
+   
+   Compiling your own binary on many distributions will result in Replaygain
+   being disabled.
 
-    X.) COMPILING
+   See http://code.google.com/p/naev/ for package lists for several distributions.
+      
+2) COMPILING
 
-      Run: 
+   Run: 
 
-      ./autogen.sh && ./configure
-      make
+   ./autogen.sh && ./configure
+   make
 
-      If you need special settings you should pass flags to configure, using -h
-      will tell you what it supports.
+   If you need special settings you should pass flags to configure, using -h
+   will tell you what it supports.
 
 
-    X.) INSTALLATION
+3) INSTALLATION
 
-      NAEV currently supports make install which will install everything that
-      is needed.
+   NAEV currently supports make install which will install everything that
+   is needed.
 
-      If you wish to create a .desktop for your desktop environment, logos
-      from 16x16 to 128x128 can be found in extras/logos
+   If you wish to create a .desktop for your desktop environment, logos
+   from 16x16 to 256x256 can be found in extras/logos
 
-    X.) CRASHES
+4) CRASHES & PROBLEMS
 
-      If NAEV is crashing during gameplay, please file a bug report after
-      reading http://code.google.com/p/naev/wiki/Debugging.
-      If NAEV crashes on launch with an error such as 'undefined symbol:
-      ov_read_filter', your version of libvorbis is outdated, please see
-      the appropriate FAQ entry: http://code.google.com/p/naev/wiki/FAQ
+   Please take a look at the FAQ (linked below) before submitting a new
+   bug report, as it covers a number of common gameplay questions and
+   common issues.
 
-    X.) KEYBINDINGS
+   If NAEV is crashing during gameplay, please file a bug report after
+   reading http://code.google.com/p/naev/wiki/Debugging.
 
-      You can now changhe keybindings in game which may be more comfortable for
-      you then editting the configuration file.
+   If NAEV crashes on launch with an error such as 'undefined symbol:
+   ov_read_filter', your version of libvorbis is outdated, please see
+   the appropriate FAQ entry: http://code.google.com/p/naev/wiki/FAQ
 
-      X.0) Introduction
-         X.0.0) About
-            NAEV uses a dynamic keybinding system that allows you to set 
-            the keybindings to joystick, keyboard or a mixture of both.
+5) KEYBINDINGS
 
-            This can changed via ~/.naev/conf.lua, or with the in-game editor.
+   You can now change keybindings in game which may be more comfortable for
+   you then editting the configuration file.
 
-         X.0.1) Joystick
-            If you have a joystick you'll have to tell NAEV which joystick
-            to use.  You can either use the -j or -J parameter from the
-            command-line or put it in the conf.lua file.
-            Examples:
-               naev -j 0
-               naev -J "Precision"
-               joystick = "Precision" # in conf.lua
-         X.0.2) Syntax
-            KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
-                  [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
-            KEY_IDENTIFIER is the identifier given below
-            KEY_TYPE can be one of keyboard, jaxis or jbutton
-            KEY_NUMBER is the number of the key (found with xev usually, just
-               convert the keysym from hex to base 10)
-            KEY_REVERSE is whether it is reversed or not, which is only useful
-               in the case of jaxis
-            MOD_IDENTIFIER is the modifier to take into account, can be one of:
-               lctrl, rctrl, lshift, rshift, lmeta, rmeta, ralt, lalt
-               It isn't used with joystick bindings.
-         X.0.3) Example
-            accel = { type = "jbutton", key = 0 }
-            see conf.example for more examples
+   5A) Introduction
+      5A1) About
+         NAEV uses a dynamic keybinding system that allows you to set 
+         the keybindings to joystick, keyboard or a mixture of both.
 
-        X.1) Keys
-            For an exhaustive list of default keybindings, please see
-            http://code.google.com/p/naev/wiki/Keybinds
+         This can changed via ~/.naev/conf.lua, or with the in-game editor.
+
+   5B) Joystick
+      If you have a joystick you'll have to tell NAEV which joystick
+      to use.  You can either use the -j or -J parameter from the
+      command-line or put it in the conf.lua file.
+      Examples:
+         naev -j 0
+         naev -J "Precision"
+         joystick = "Precision" # in conf.lua
+      5B1) Syntax
+         KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
+            [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
+         KEY_IDENTIFIER is the identifier given below
+         KEY_TYPE can be one of keyboard, jaxis or jbutton
+         KEY_NUMBER is the number of the key (found with xev usually, just
+            convert the keysym from hex to base 10)
+         KEY_REVERSE is whether it is reversed or not, which is only useful
+            in the case of jaxis
+         MOD_IDENTIFIER is the modifier to take into account, can be one of:
+            lctrl, rctrl, lshift, rshift, lmeta, rmeta, ralt, lalt
+            It isn't used with joystick bindings.
+      5B2) Example
+         accel = { type = "jbutton", key = 0 }
+         see conf.example for more examples
+
+   5C) Keys
+      For an exhaustive list of default keybindings, please see
+      http://code.google.com/p/naev/wiki/Keybinds
 
 

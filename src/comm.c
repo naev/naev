@@ -25,6 +25,7 @@
 #include "ai.h"
 #include "ai_extra.h"
 
+#define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
 
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -66,7 +67,7 @@ static const char* comm_getString( char *str );
  */
 int comm_isOpen (void)
 {
-   return window_exists( "Communication Channel" );
+   return window_exists( COMM_WDWNAME );
 }
 
 
@@ -91,6 +92,13 @@ int comm_openPilot( unsigned int pilot )
 
    if (comm_pilot == NULL)
       return -1;
+
+   /* Destroy the window if it's already present. */
+   wid = window_get(COMM_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
+      return 0;
+   }
 
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
@@ -185,6 +193,13 @@ int comm_openPlanet( Planet *planet )
 {
    unsigned int wid;
 
+   /* Destroy the window if it's already present. */
+   wid = window_get(COMM_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
+      return 0;
+   }
+
    /* Must not be disabled. */
    if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
       player_message("%s does not respond.", planet->name);
@@ -198,7 +213,7 @@ int comm_openPlanet( Planet *planet )
          comm_planet->faction, 0, 0, comm_planet->name );
 
    /* Add special buttons. */
-   if (areEnemies(player->faction, planet->faction) &&
+   if (areEnemies(player.p->faction, planet->faction) &&
          !planet->bribed)
       window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
@@ -262,7 +277,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    x = (GRAPHIC_WIDTH - w) / 2;
 
    /* Create the window. */
-   wid = window_create( "Communication Channel", -1, -1,
+   wid = window_create( COMM_WDWNAME, -1, -1,
          20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
 
@@ -368,12 +383,12 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    }
 
    /* Check if has the money. */
-   if (player->credits < price) {
+   if (!player_hasCredits( price )) {
       dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
       return;
    }
 
-   player->credits -= price;
+   player_modCredits( -price );
    str = comm_getString( "bribe_paid" );
    if (str == NULL)
       dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
@@ -432,18 +447,18 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
       }
    }
    /* Get now the presence factor - get mass of possible ships and mass */
+   /* TODO Fix this up to new presence system. */
    o = 0.;
    p = 0.;
    for (i=0; i<cur_system->nfleets; i++) {
-      f = cur_system->fleets[i].fleet;
+      f = cur_system->fleets[i];
       if (areAllies(comm_planet->faction, f->faction)) {
          q = 0;
          r = 0;
          for (j=0; j<f->npilots; j++) {
-            q += (double)f->pilots[j].chance / 100.;
+            q++;
             r += f->pilots[j].ship->mass;
          }
-         q *= (double)cur_system->fleets[i].chance / 100.;
          o += q;
          p += r;
       }
@@ -469,13 +484,13 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
    }
 
    /* Check if has the money. */
-   if (player->credits < price) {
+   if (!player_hasCredits( price )) {
       dialogue_msg("Bribe Starport", "You don't have enough credits for the bribery.");
       return;
    }
 
    /* Pay the money. */
-   player->credits -= price;
+   player_modCredits( -price );
    dialogue_msg("Bribe Starport", "You have permission to dock.");
 
    /* Mark as bribed and don't allow bribing again. */
@@ -510,7 +525,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* Must need refueling. */
-   if (player->fuel >= player->fuel_max) {
+   if (player.p->fuel >= player.p->fuel_max) {
       dialogue_msg( "Request Fuel", "Your fuel deposits are already full." );
       return;
    }
@@ -549,19 +564,21 @@ static void comm_requestFuel( unsigned int wid, char *unused )
       dialogue_msg( "Request Fuel", "%s", msg );
 
    /* Check if he has the money. */
-   if (player->credits < price) {
+   if (!player_hasCredits( price )) {
       dialogue_msg( "Request Fuel", "You need %u more credits!",
-            price - player->credits);
+            price - player.p->credits);
       return;
    }
 
    /* Take money. */
-   player->credits      -= price;
-   comm_pilot->credits  += price;
+   player_modCredits( -price );
+   pilot_modCredits( comm_pilot, price );
 
    /* Start refueling. */
+   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP);
+   pilot_rmFlag(comm_pilot, PILOT_HYP_BEGIN);
    pilot_setFlag(comm_pilot, PILOT_REFUELING);
-   ai_refuel( comm_pilot, player->id );
+   ai_refuel( comm_pilot, player.p->id );
 
    /* Last message. */
    if (price > 0)

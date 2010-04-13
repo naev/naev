@@ -60,6 +60,8 @@ static void cs_unmatched (int m, const int *wi, int *p, int *rr, int set)
 /* return 1 if row i is in R2 */
 static int cs_rprune (int i, int j, double aij, void *other)
 {
+    (void) j;
+    (void) aij;
     int *rr = (int *) other ;
     return (i >= rr [1] && i < rr [2]) ;
 }

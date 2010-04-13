@@ -83,22 +83,27 @@ unsigned int economy_getPrice( const Commodity *com,
 /**
  * @brief Converts credits to a usable string for displaying.
  *
- *    @param[out] str Output is stored here, must have at least a length of 10
+ *    @param[out] str Output is stored here, must have at least a length of 32
  *                     char.
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
  */
-void credits2str( char *str, unsigned int credits, int decimals )
+void credits2str( char *str, uint64_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, 32, "%d", credits );
-   else if (credits >= 1000000000)
-      snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
-   else if (credits >= 1000000)                
-      snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
-   else if (credits >= 1000)              
-      snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
-   else snprintf (str, 16, "%d", credits );
+      snprintf( str, 32, "%"PRIu64, credits );
+   else if (credits >= 1000000000000000LLU)
+      snprintf( str, 32, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+   else if (credits >= 1000000000000LLU)
+      snprintf( str, 32, "%.*fT", decimals, (double)credits / 1000000000000. );
+   else if (credits >= 1000000000LU)
+      snprintf( str, 32, "%.*fB", decimals, (double)credits / 1000000000. );
+   else if (credits >= 1000000U)
+      snprintf( str, 32, "%.*fM", decimals, (double)credits / 1000000. );
+   else if (credits >= 1000U)
+      snprintf( str, 32, "%.*fK", decimals, (double)credits / 1000. );
+   else 
+      snprintf (str, 32, "%"PRIu64, credits );
 }
 
 
@@ -114,8 +119,24 @@ Commodity* commodity_get( const char* name )
    for (i=0; i<commodity_nstack; i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
-   
+
    WARN("Commodity '%s' not found in stack", name);
+   return NULL;
+}
+
+
+/**
+ * @brief Gets a commoditiy by name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Commodity matching name.
+ */
+Commodity* commodity_getW( const char* name )
+{
+   int i;
+   for (i=0; i<commodity_nstack; i++)
+      if (strcmp(commodity_stack[i].name,name)==0)
+         return &commodity_stack[i];
    return NULL;
 }
 
@@ -177,7 +198,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 /**
  * @brief Throws cargo out in space graphically.
  *
- *    @param pilot ID of the pilot throwing the stuff out 
+ *    @param pilot ID of the pilot throwing the stuff out
  *    @param com Commodity to throw out.
  *    @param quantity Quantity thrown out.
  */
@@ -204,7 +225,7 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
       a  = 2. * M_PI * RNGF();
       vx = bvx + r*cos(a);
       vy = bvy + r*sin(a);
-      
+
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
    }
@@ -222,7 +243,7 @@ int commodity_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
-  
+
    /* Load the file. */
    buf = ndata_read( COMMODITY_DATA, &bufsize);
    if (buf == NULL)
@@ -308,7 +329,7 @@ unsigned int economy_getPrice( const Commodity *com,
 
    /* Get position in stack. */
    k = com - commodity_stack;
-  
+
    /* Find what commodity that is. */
    for (i=0; i<econ_nprices; i++)
       if (econ_comm[i] == k)
@@ -366,7 +387,11 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  */
 static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 {
+   (void) dt;
+   (void) sys;
    (void) price;
+   return 0.;
+#if 0
    int i;
    double I;
    double prodfactor, p;
@@ -401,6 +426,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    I = p / ECON_PROD_MODIFIER;
 
    return I;
+#endif
 }
 
 
@@ -431,15 +457,15 @@ static int econ_createGMatrix (void)
       for (j=0; j < sys->njumps; j++) {
 
          /* Get the resistances. */
-         R     = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
+         R     = econ_calcJumpR( sys, sys->jumps[j].target );
          R     = 1./R; /* Must be inverted. */
          Rsum += R;
-         
+
          /* Matrix is symetrical and non-diagonal is negative. */
-         ret = cs_entry( M, i, sys->jumps[j], -R );
+         ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
-         ret = cs_entry( M, sys->jumps[j], i, -R );
+         ret = cs_entry( M, sys->jumps[j].target->id, i, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
       }
@@ -566,7 +592,7 @@ int economy_update( unsigned int dt )
       offset = 0.5 - min * scale;
       */
 
-      /* 
+      /*
        * I'm not sure I like the filtering of the results, but it would take
        * much more work to get a sane system working without the need of post
        * filtering.

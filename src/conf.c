@@ -62,7 +62,6 @@ lua_pop(L,1);
 PlayerConf_t conf = { .ndata = NULL, .sound_backend = NULL, .joystick_nam = NULL };
 
 /* from main.c */
-extern int nosound;
 extern int show_fps;
 extern int max_fps;
 extern int indjoystick;
@@ -97,7 +96,11 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G, --generate         regenerates the nebula (slow)");
+   LOG("   -G, --generate        regenerates the nebula (slow)");
+   LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+#ifdef DEBUGGING
+   LOG("   --devmode             enables dev mode perks like the editors");
+#endif /* DEBUGGING */
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -139,6 +142,7 @@ void conf_setDefaults (void)
 
    /* Misc. */
    conf.nosave       = 0;
+   conf.devmode      = 0;
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -224,6 +228,7 @@ void conf_setVideoDefaults (void)
    conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
+   conf.npot         = 1;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -292,6 +297,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("mipmaps",conf.mipmaps);
       conf_loadBool("compress",conf.compress);
       conf_loadBool("interpolate",conf.interpolate);
+      conf_loadBool("npot",conf.npot);
 
       /* Memory. */
       conf_loadBool("engineglow",conf.engineglow);
@@ -368,7 +374,7 @@ int conf_loadConfig ( const char* file )
             str = lua_tostring(L,-1);
             if (strcmp(str,"none")==0) {
                input_setKeybind( keybindNames[i],
-                     KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
+                     KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
          }
          else if (lua_istable(L, -1)) { /* it's a table */
@@ -428,23 +434,28 @@ int conf_loadConfig ( const char* file )
 
                /* Set modifier, probably should be able to handle two at a time. */
                if (mod != NULL) {
-                  if (strcmp(mod,"lctrl")==0)         m = KMOD_LCTRL;
-                  else if (strcmp(mod,"rctrl")==0)    m = KMOD_RCTRL;
-                  else if (strcmp(mod,"lshift")==0)   m = KMOD_LSHIFT;
-                  else if (strcmp(mod,"rshift")==0)   m = KMOD_RSHIFT;
-                  else if (strcmp(mod,"lalt")==0)     m = KMOD_LALT;
-                  else if (strcmp(mod,"ralt")==0)     m = KMOD_RALT;
-                  else if (strcmp(mod,"lmeta")==0)    m = KMOD_LMETA;
-                  else if (strcmp(mod,"rmeta")==0)    m = KMOD_RMETA;
-                  else if (strcmp(mod,"any")==0)      m = KMOD_ALL;
-                  else if (strcmp(mod,"none")==0)     m = 0;
+                  /* The "rctrl/lctrl" friends are for compat with 0.4.0 and older, remove around 0.5.0 or so. */
+                  if      (strcmp(mod,"ctrl")==0)    m = NMOD_CTRL;
+                  else if (strcmp(mod,"lctrl")==0)   m = NMOD_CTRL; /* compat. */
+                  else if (strcmp(mod,"rctrl")==0)   m = NMOD_CTRL; /* compat. */
+                  else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
+                  else if (strcmp(mod,"lshift")==0)  m = NMOD_SHIFT; /* compat. */
+                  else if (strcmp(mod,"rshift")==0)  m = NMOD_SHIFT; /* compat. */
+                  else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
+                  else if (strcmp(mod,"lalt")==0)    m = NMOD_ALT; /* compat. */
+                  else if (strcmp(mod,"ralt")==0)    m = NMOD_ALT; /* compat. */
+                  else if (strcmp(mod,"meta")==0)    m = NMOD_META;
+                  else if (strcmp(mod,"lmeta")==0)   m = NMOD_META; /* compat. */
+                  else if (strcmp(mod,"rmeta")==0)   m = NMOD_META; /* compat. */
+                  else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
+                  else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
                      WARN("Unknown keybinding mod of type %s", mod);
-                     m = KMOD_NONE;
+                     m = NMOD_NONE;
                   }
                }
                else
-                  m = KMOD_NONE;
+                  m = NMOD_NONE;
 
                /* set the keybind */
                input_setKeybind( keybindNames[i], type, key, m );
@@ -487,13 +498,17 @@ void conf_parseCLI( int argc, char** argv )
       { "mvol", required_argument, 0, 'm' },
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
+      { "nondata", no_argument, 0, 'N' },
+#ifdef DEBUGGING
+      { "devmode", no_argument, 0, 'D' },
+#endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:Vd:j:J:W:H:MSm:s:Ghv",
+         "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
@@ -534,6 +549,17 @@ void conf_parseCLI( int argc, char** argv )
          case 'G':
             nebu_forceGenerate();
             break;
+         case 'N':
+            if (conf.ndata != NULL)
+               free(conf.ndata);
+            conf.ndata = NULL;
+            break;
+#ifdef DEBUGGING
+         case 'D':
+            conf.devmode = 1;
+            LOG("Enabling developer mode.");
+            break;
+#endif /* DEBUGGING */
 
          case 'v':
             /* by now it has already displayed the version
@@ -816,6 +842,11 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("interpolate",conf.interpolate);
    conf_saveEmptyLine();
 
+   conf_saveComment("Use OpenGL Non-\"Power of Two\" textures if available");
+   conf_saveComment("Lowers memory usage by a lot, but may cause slow downs on some systems");
+   conf_saveBool("npot",conf.npot);
+   conf_saveEmptyLine();
+
    /* Memory. */
    conf_saveComment("If true enables engine glow");
    conf_saveBool("engineglow",conf.engineglow);
@@ -972,16 +1003,12 @@ int conf_saveConfig ( const char* file )
 
       /* Determine the textual name for the modifier */
       switch (mod) {
-         case KMOD_LCTRL:  modname = "lctrl";   break;
-         case KMOD_RCTRL:  modname = "rctrl";   break;
-         case KMOD_LSHIFT: modname = "lshift";  break;
-         case KMOD_RSHIFT: modname = "rshift";  break;
-         case KMOD_LALT:   modname = "lalt";    break;
-         case KMOD_RALT:   modname = "ralt";    break;
-         case KMOD_LMETA:  modname = "lmeta";   break;
-         case KMOD_RMETA:  modname = "rmeta";   break;
-         case KMOD_ALL:    modname = "any";     break;
-         default:          modname = "none";    break;
+         case NMOD_CTRL:  modname = "ctrl";   break;
+         case NMOD_SHIFT: modname = "shift";  break;
+         case NMOD_ALT:   modname = "alt";    break;
+         case NMOD_META:  modname = "meta";   break;
+         case NMOD_ALL:   modname = "any";     break;
+         default:         modname = "none";    break;
       }
 
       /* Determine the textual name for the key, if a keyboard keybind */

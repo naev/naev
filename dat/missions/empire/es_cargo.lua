@@ -41,10 +41,12 @@ function create()
    -- target destination
    local i = 0
    local landed, landed_sys = planet.get()
+   local s
    repeat
       pnt,sys = planet.get( misn.factions() )
+      s = pnt:services()
       i = i + 1
-   until sys ~= landed_sys or i > 10
+   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)

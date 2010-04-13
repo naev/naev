@@ -77,6 +77,7 @@
 #include "event.h"
 #include "cond.h"
 #include "land.h"
+#include "tech.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -103,6 +104,7 @@ static int fps_skipped = 0; /**< Skipped last frame? */
 static double fps_dt  = 1.; /**< Display fps accumulator. */
 static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
+const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
 #if HAS_LINUX && defined(DEBUGGING)
 static bfd *abfd      = NULL;
@@ -124,7 +126,6 @@ static void debug_sigInit (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
-static void update_routine( double dt );
 static void render_all (void);
 /* Misc. */
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
@@ -144,7 +145,7 @@ int main( int argc, char** argv )
    char buf[PATH_MAX];
 
    /* Save the binary path. */
-   binary_path = argv[0];
+   binary_path = strdup(argv[0]);
    
    /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
@@ -344,9 +345,12 @@ int main( int argc, char** argv )
 
    /* Free the icon. */
    if (naev_icon)
-      free(naev_icon);
+      SDL_FreeSurface(naev_icon);
 
    SDL_Quit(); /* quits SDL */
+
+   /* Last free. */
+   free(binary_path);
 
    /* all is well */
    exit(EXIT_SUCCESS);
@@ -477,7 +481,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     10. /**< Amount of loading stages. */
+#define LOADING_STAGES     12. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* order is very important as they're interdependent */
@@ -485,21 +489,23 @@ void load_all (void)
    commodity_load(); /* dep for space */
    loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
    factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 2./LOADING_STAGES, "Loading AI..." );
+   loadscreen_render( 3./LOADING_STAGES, "Loading AI..." );
    ai_load(); /* dep for fleets */
-   loadscreen_render( 3./LOADING_STAGES, "Loading Missions..." );
+   loadscreen_render( 4./LOADING_STAGES, "Loading Missions..." );
    missions_load(); /* no dep */
-   loadscreen_render( 4./LOADING_STAGES, "Loading Events..." );
+   loadscreen_render( 5./LOADING_STAGES, "Loading Events..." );
    events_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, "Loading Special Effects..." );
+   loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Outfits..." );
+   loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
    outfit_load(); /* dep for ships */
-   loadscreen_render( 7./LOADING_STAGES, "Loading Ships..." );
+   loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 8./LOADING_STAGES, "Loading Fleets..." );
+   loadscreen_render( 9./LOADING_STAGES, "Loading Fleets..." );
    fleet_load(); /* dep for space */
-   loadscreen_render( 9./LOADING_STAGES, "Loading the Universe..." );
+   loadscreen_render( 10./LOADING_STAGES, "Loading Techs..." );
+   tech_load(); /* dep for space */
+   loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
    loadscreen_render( 1., "Loading Completed!" );
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
@@ -512,6 +518,7 @@ void unload_all (void)
    /* data unloading - inverse load_all is a good order */
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
+   tech_free(); /* Frees tech stuff. */
    fleet_free();
    ships_free();
    outfit_free();
@@ -592,7 +599,6 @@ static void fps_control (void)
 static void update_all (void)
 {
    double tempdt;
-   static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)game_dt*1000);
@@ -628,7 +634,7 @@ static void update_all (void)
  *
  *    @param[in] dt Current delta tick.
  */
-static void update_routine( double dt )
+void update_routine( double dt )
 {
    space_update(dt);
    weapons_update(dt);
@@ -677,8 +683,9 @@ static void render_all (void)
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
-   spfx_end();
+   gui_renderReticles(dt);
    pilots_renderOverlay(dt);
+   spfx_end();
    gui_render(dt);
    display_fps( real_dt ); /* Exception. */
 }

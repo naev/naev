@@ -102,7 +102,7 @@ else -- default english
 end
 
 function create()
-    misn.setNPC("FLF petty officer", "none") -- TODO: portrait
+    misn.setNPC("FLF petty officer", "flf_officer1")
     misn.setDesc(npc_desc)
 end
 
@@ -205,7 +205,7 @@ function takeoff()
     end
 
     -- Add the FLF wing, no need to keep track of health since it's a takeoff situation (other than death, obviously)
-    fleetFLF = pilot.add("Independent Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos(), false)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos())
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:rename("FLF Wingman")
@@ -239,6 +239,7 @@ function jumpin()
 end
 
 function jumpout()
+    last_sys = system.cur()
     if spawnie ~= nil then
         misn.timerStop(spawnie)
     end
@@ -275,20 +276,21 @@ function checkPatrol()
 end
 
 -- Handles the hailing event
--- TODO: Retool this for the new comm system once it's implemented.
 function hailEvent()
-    -- osd_desc[1] = string.format("Take out your FLF wingmen and report to %s (%s system)", DVplanet, DVsys)
-    -- TODO: Hailing event
-    for i, j in ipairs(fleetDV) do
-        if j:ship():class() == "Destroyer" then
-            j:hailPlayer()
-            hook.pilot(j, "hail", "hail")
+    if not hailed then
+        for i, j in ipairs(fleetDV) do
+            if j:ship():class() == "Destroyer" then
+                j:hailPlayer()
+                hook.pilot(j, "hail", "hail")
+            end
         end
     end
 end
 
 -- The actual hailing event
 function hail()
+    local winAlive = false
+    
     if not hailed then
         choice = tk.choice(DVtitle[1], DVtext[1], DVchoice1, DVchoice2)
         if choice == 1 then
@@ -314,20 +316,25 @@ function hail()
             end
             for i, j in ipairs(fleetFLF) do
                 if j:exists() then
+                    wingAlive = true
                     j:setHostile()
                     j:control()
                     j:attack(player.pilot())
                 end
             end
             
-            misn.timerStart("commFLF", 3000)
-            
-            osd_desc[1] = DVosd[1]
-            osd_desc[2] = nil
-            misn.osdActive(1)
-            misn.osdCreate(misn_title, osd_desc)
-
-            retreat = false
+            if wingAlive then
+                misn.timerStart("commFLF", 3000)
+                
+                osd_desc[1] = DVosd[1]
+                osd_desc[2] = nil
+                misn.osdActive(1)
+                misn.osdCreate(misn_title, osd_desc)
+    
+                retreat = false
+            else
+                winDV()
+            end
         else
             tk.msg(DVtitle[3], DVtext[3])
         end
@@ -338,7 +345,7 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = pilot.add("Independent Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos(), true)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", last_sys))
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])
@@ -369,7 +376,7 @@ end
 
 -- Spawns a small Dvaered patrol
 function spawnSmallDV()
-    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", player.pos(), true)
+    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", last_sys)
     for i, j in ipairs(fleetDV) do
         j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         hook.pilot(j, "death", "DVdeath")
@@ -385,7 +392,7 @@ end
 
 -- Spawns a big Dvaered patrol
 function spawnBigDV()
-    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", player.pos(), true)
+    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", last_sys)
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then -- It's a mini-boss of sorts, but it should still be dumbed down.
             j:rmOutfit("all")
@@ -453,18 +460,22 @@ function FLFdeath()
     
     if alldead then
         if not loyalFLF then
-            DVwin = true
-            osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
-            osd_desc[2] = nil
-            misn.osdActive(1)
-            misn.osdCreate(misn_title, osd_desc)
-            misn.setMarker(system.get(DVsys), "misc")
-            
-            for i, j in ipairs(fleetDV) do
-                if j:exists() then
-                    j:changeAI("flee")
-                end
-            end
+            winDV()
+        end
+    end
+end
+
+function winDV()
+    DVwin = true
+    osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
+    osd_desc[2] = nil
+    misn.osdActive(1)
+    misn.osdCreate(misn_title, osd_desc)
+    misn.setMarker(system.get(DVsys), "misc")
+    
+    for i, j in ipairs(fleetDV) do
+        if j:exists() then
+            j:changeAI("flee")
         end
     end
 end

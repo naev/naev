@@ -127,7 +127,7 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>var.peek("es_cargo") == true and system.get("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>var.peek("es_cargo") == true and system.get("Fortitude"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <chance>80</chance>
    <location>Bar</location>
    <done>Empire Shipping 3</done>
@@ -429,6 +429,17 @@
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>
+  </avail>
+ </mission>
+ <mission name="Crimelord">
+  <lua>neutral/crimelord</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>20</chance>
+   <location>Bar</location>
+   <cond>system.get("Ogat"):jumpDist() == 4 and player.fuel() &gt;= 400</cond>
   </avail>
  </mission>
 </Missions>

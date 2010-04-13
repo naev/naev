@@ -3,7 +3,6 @@
  */
 
 
-
 #ifndef PLAYER_H
 #  define PLAYER_H
 
@@ -26,25 +25,36 @@
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 /* flag functions */
-#define player_isFlag(f)   (player_flags & (f)) /**< Checks for a player flag. */
-#define player_setFlag(f)  (player_flags |= (f)) /**< Sets a player flag. */ 
-#define player_rmFlag(f)   (player_flags &= ~(f)) /**< Removes a player flag. */
+#define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
+#define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */ 
+#define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
+
+
+/* Autonav states. */
+#define AUTONAV_APPROACH   0 /**< Player is approaching a jump. */
+#define AUTONAV_BRAKE      1 /**< Player is braking at a jump. */
+
+
+/**
+ * The player struct.
+ */
+typedef struct Player_s {
+   /* Player intrinsecs. */
+   Pilot *p; /**< Player's pilot. */
+   char *name; /**< Player's name. */
+
+   /* Player data. */
+   unsigned int flags; /**< Player's flags. */
+   int enemies; /**< Amount of enemies the player has. */
+   double crating; /**< Combat rating. */
+   int autonav; /**< Current autonav state. */
+} Player_t;
 
 
 /*
- * the player
+ * Local player.
  */
-extern Pilot* player; /**< Player himself. */
-extern char* player_name; /**< Player's name. */
-extern unsigned int player_flags; /**< Player's flags. */
-extern double player_crating; /**< Player's combat rating. */
-extern int player_enemies; /**< Amount of enemies player has. */
-
-/*
- * Targetting.
- */
-extern int planet_target; /**< Targetted planet. -1 is none. */
-extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
+extern Player_t player; /**< Local player. */
 
 
 /*
@@ -53,6 +63,7 @@ extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
 extern int snd_target; /**< Sound when targetting. */
 extern int snd_jump; /**< Sound when can jump. */
 extern int snd_nav; /**< Sound when changing nav computer. */
+extern int snd_hail; /**< Hail sound. */
 extern int snd_hypPowUp; /**< Hyperspace power up sound. */
 extern int snd_hypEng; /**< Hyperspace engine sound. */
 extern int snd_hypPowDown; /**< Hyperspace power down sound. */
@@ -64,8 +75,7 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
  * creation/cleanup
  */
 void player_new (void);
-int player_newShip( Ship* ship, double px, double py,
-      double vx, double vy, double dir, const char *def_name );
+int player_newShip( Ship* ship, const char *def_name, int trade );
 void player_cleanup (void);
 int gui_load (const char* name);
 
@@ -84,6 +94,9 @@ void player_message ( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
+int player_hasCredits( int amount );
+unsigned long player_modCredits( int amount );
+void player_hailStart (void);
 /* Sounds. */
 void player_playSound( int sound, int once );
 void player_stopSound (void);
@@ -91,7 +104,6 @@ void player_soundPause (void);
 void player_soundResume (void);
 /* cargo */
 int player_cargoOwned( const char* commodityname );
-
 
 /*
  * player ships
@@ -155,8 +167,7 @@ void player_think( Pilot* pplayer, const double dt );
 void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
-double player_faceHyperspace (void);
-
+void player_hyperspacePreempt( int );
 
 /* 
  * keybind actions
@@ -180,6 +191,7 @@ void player_accel( double acc );
 void player_accelOver (void);
 void player_startAutonav (void);
 void player_abortAutonav( char *reason );
+void player_startAutonavWindow( unsigned int wid, char *str);
 void player_hail (void);
 void player_autohail (void);
 void player_setFireMode( int mode );

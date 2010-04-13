@@ -15,6 +15,7 @@
 static void fad_render( Widget* fad, double bx, double by );
 static int fad_mclick( Widget* fad, int button, int x, int y );
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
+static int fad_key( Widget* fad, SDLKey key, SDLMod mod );
 static void fad_setValue( Widget *fad, double value );
 
 
@@ -57,6 +58,8 @@ void window_addFader( const unsigned int wid,
    /*wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);*/ /**< @todo Let faders focus. */
    wgt->mclickevent     = fad_mclick;
    wgt->mmoveevent      = fad_mmove;
+   wgt->keyevent        = fad_key;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.fad.value   = min;
    wgt->dat.fad.min     = min;
    wgt->dat.fad.max     = max;
@@ -69,7 +72,7 @@ void window_addFader( const unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 
@@ -175,6 +178,44 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Handles input for a fader widget.
+ *
+ *    @param fad Fader widget to handle event.
+ *    @param key Key being handled.
+ *    @param mod Mods when key is being pressed.
+ *    @return 1 if the event was used, 0 if it wasn't.
+ */
+static int fad_key( Widget* fad, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+   int ret;
+   double cur;
+
+   /* Current value. */
+   cur = (fad->dat.fad.value - fad->dat.fad.min) / (fad->dat.fad.max - fad->dat.fad.min);
+
+   /* Handle keypresses. */
+   ret = 0;
+   switch (key) {
+      case SDLK_RIGHT:
+      case SDLK_UP:
+         fad_setValue( fad, cur+0.05 );
+         break;
+
+      case SDLK_LEFT:
+      case SDLK_DOWN:
+         fad_setValue( fad, cur-0.05 );
+         break;
+
+      default:
+         break;
+   }
+
+   return ret;
 }
 
 
@@ -285,3 +326,5 @@ void window_faderBounds( const unsigned int wid,
    /* Set the value. */
    fad_setValue(wgt, wgt->dat.fad.value );
 }
+
+

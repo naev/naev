@@ -8,7 +8,7 @@ mem.aggressive = true
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
+   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/100) )
 
    -- Handle bribing
    if rnd.int() > 0.4 then
@@ -36,17 +36,23 @@ function create ()
       end
    end
 
-   -- Get attack function.
-   attack_choose()
+   -- Handle misc stuff
+   create_post()
 end
 
 -- taunts
 function taunt ( target, offense )
+
+   -- Only 50% of actually taunting.
+   if rnd.rnd(0,1) == 0 then
+      return
+   end
+
    -- Offense is not actually used
    taunts = {
-         "Prepare to face annihilation!",
-         "I shall wash my hull in your blood!",
-         "Your head will make a great trophy!",
+       "Prepare to face annihilation!",
+       "I shall wash my hull in your blood!",
+       "Your head will make a great trophy!",
        "You're no match for the Dvaered!",
        "Death awaits you!"
    }

@@ -228,9 +228,9 @@ static int planetL_get( lua_State *L )
 
    /* If boolean return random. */
    else if (lua_isboolean(L,1)) {
-      planet.p = planet_get( space_getRndPlanet() );
+      planet.p    = planet_get( space_getRndPlanet() );
       lua_pushplanet(L,planet);
-      sys.s = system_get( planet_getSystem(land_planet->name) );
+      sys.s       = system_get( planet_getSystem(planet.p->name) );
       lua_pushsystem(L,sys);
       return 2;
    }
@@ -279,6 +279,10 @@ static int planetL_get( lua_State *L )
 
    /* Push the planet */
    planet.p = planet_get(rndplanet); /* The real planet */
+   if (planet.p == NULL) {
+      NLUA_ERROR(L, "Planet '%s' not found in stack");
+      return 0;
+   }
    lua_pushplanet(L,planet);
    sys.s = system_get( planet_getSystem(rndplanet) );
    lua_pushsystem(L,sys);
@@ -376,7 +380,6 @@ static int planetL_class(lua_State *L )
  *  - "outfits"<br />
  *  - "shipyard"<br />
  *
- * @usage if #p:services() > 0 then -- Planet has services
  * @usage if p:serivces()["refuel"] then -- PLanet has refuel service.
  * #usage if p:services()["shipyard"] then -- Planet has shipyard service.
  *    @luaparam p Planet to get the services of.

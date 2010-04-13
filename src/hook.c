@@ -124,9 +124,11 @@ static int hook_runMisn( Hook *hook )
    misn = &player_missions[i];
 
    /* Run mission code. */
-   if (misn_run( misn, hook->u.misn.func ) < 0) /* error has occured */
+   if (misn_run( misn, hook->u.misn.func ) < 0) { /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
             hook->id, hook->u.misn.func);
+      return -1;
+   }
 
    return 0;
 }
@@ -143,8 +145,12 @@ static int hook_runEvent( Hook *hook )
    int ret, id;
    id = hook->id;
    ret = event_run( hook->u.event.parent, hook->u.event.func );
-   if (ret != 0)
+   if (ret < 0) {
       hook_rm( id );
+      WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
+            hook->id, hook->u.event.func);
+      return -1;
+   }
    return 0;
 }
 
@@ -160,8 +166,10 @@ static int hook_runFunc( Hook *hook )
    int ret, id;
    id = hook->id;
    ret = hook->u.func.func( hook->u.func.data );
-   if (ret != 0)
+   if (ret != 0) {
       hook_rm( id );
+      return -1;
+   }
    return 0;
 }
 
@@ -308,6 +316,9 @@ int hook_rm( unsigned int id )
 {
    int l,m,h,f;
 
+   /* Remove from all the pilots. */
+   pilots_rmHook( id );
+
    /* Binary search. */
    f = 0;
    l = 0;
@@ -397,7 +408,7 @@ int hooks_run( const char* stack )
    int i;
 
    /* Don't update if player is dead. */
-   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
    hook_runningstack = 1; /* running hooks */
@@ -423,14 +434,14 @@ int hooks_run( const char* stack )
  *    @param id Identifier of the hook to run.
  *    @return The ID of the hook or 0 if it got deleted.
  */
-void hook_runID( unsigned int id )
+int hook_runID( unsigned int id )
 {
    Hook *h;
    int i, ret;
 
    /* Don't update if player is dead. */
-   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
-      return;
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
+      return 0;
 
    /* Try to find the hook and run it. */
    ret = 0;
@@ -443,8 +454,12 @@ void hook_runID( unsigned int id )
       }
 
    /* Hook not found. */
-   if (ret == 0)
-      DEBUG("Attempting to run hook of id '%d' which is not in the stack", id);
+   if (ret == 0) {
+      WARN("Attempting to run hook of id '%d' which is not in the stack", id);
+      return -1;
+   }
+
+   return 0;
 }
 
 
@@ -647,7 +662,7 @@ static int hook_parse( xmlNodePtr base )
 
             /* Type specific. */
             if (type == HOOK_TYPE_MISN) {
-               xmlr_long(cur,"parent",parent);
+               xmlr_uint(cur,"parent",parent);
                xmlr_str(cur,"func",func);
             }
          } while (xml_nextNode(cur));

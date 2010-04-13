@@ -2,6 +2,9 @@
 
    Collective Scout
 
+   Author: bobbens
+      minor edits by Infiltrator
+
    Starts the collective mini campaign.
 
    You must inspect a stray drone.
@@ -24,13 +27,13 @@ else -- default english
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[You approach the Lt. Commander.
-"Hello %s, we have a reconnaissance you might be interested. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]
+"Hello %s, we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]
    text[2] = [["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments."
-"You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace, had the timing to arrive more or less when the Incident happened, otherwise they would have been wiped out by the Emperor's Armada without sweating. They completely wiped out all human life in the first worlds they hit like Eiroik. We managed to stop them here, in %s and afterwards constructed this base. Since then it's been more or less a stalemate."]]
-   text[3] = [["This week Collective activity has increased heavily around NGC-7291. We've been trying to contain them, but reports indicate that a scout broke through. It was last detected near %s, heading east. We expect it to not have gone far. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a bit more"
-"It is of vital important that you do not engage the drone. Report back as soon as you locate it."]]
-   text[4] = [[After landing you head to the Empire military headquarters and find Sgt. Dimitri there.
-"Well it seems like the drone has some strange fixation with %s. We aren't quite sure what to make of it, but intelligence is on it. Report back at the bar in bit and we'll see what we can do about the Collective"]]
+"You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occured, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik, and the other worlds they hit. We managed to stop them here, in %s, and constructed this base. Since then it's been more or less a stalemate."]]
+   text[3] = [["This week Collective activity has increased heavily around Rockbed. We've been trying to contain them, but reports indicate that a scout broke through. It was last detected near %s, heading east. We expect it to not have gone far. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a little closer."
+"It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]]
+   text[4] = [[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
+"Well it seems like the drone has some strange fixation on %s. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]
    msg_killdrone = "Mission Failed: You weren't supposed to kill the drone!"
 end
 
@@ -75,7 +78,7 @@ function enter()
    sys = system.get()
 
    -- additional fleets
-   if sys:name() == "NGC-7291" then -- increase action for realism
+   if sys:name() == "Rockbed" then -- increase action for realism
       pilot.add("Empire Sml Defense")
       pilot.add("Collective Sml Swarm")
    elseif sys == misn_target then

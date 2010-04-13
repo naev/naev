@@ -2,6 +2,9 @@
 
    Collective Espionage I
 
+   Author: bobbens
+      minor edits by Infiltrator
+
    Second mission in the mini collective campaign.
 
    You must inspect a system for wireless communications.
@@ -12,7 +15,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   bar_desc = "You notice Lt. Commander Dimitri who seems to be motioning for you to come over."
+   bar_desc = "You notice Lt. Commander Dimitri motioning for you to come over to him."
    misn_title = "Collective Espionage"
    misn_reward = "None"
    misn_desc = {}
@@ -24,9 +27,9 @@ else -- default english
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[You meet up with Lt. Commander Dimitri.
-"We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to go run through the Collective systems to see if you can pick up any strange wireless communications. Just do a quick run through, be careful of the Collective though. You interested in doing the run? It'll be dangerous."]]
-   text[2] = [["Just run through some systems while keeping your communications system on logging. We'll parse the results when you get back. With just visiting 2 or 3 Collective systems it should be more then enough. Don't forget to carry enough fuel, 5 or 6 jumps should be enough. Good luck."]]
-   text[3] = [[After landing Lt. Commander Dimitri greets you on the land pad.
+"We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to go run through the Collective systems to see if you can pick up any strange wireless communications. Just do a quick run through. Be careful of the Collective, though. You interested in doing the run? It'll be dangerous."]]
+   text[2] = [["Just run through some systems while keeping your communications system on logging. We'll analyse the results when you get back. Just visiting two or three Collective systems it should be more then enough. Don't forget to carry enough fuel. Five or six jumps should be enough. Good luck."]]
+   text[3] = [[After landing, Lt. Commander Dimitri greets you on the land pad.
 "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]
 end
 
@@ -63,11 +66,11 @@ end
 
 
 function enter()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- Increment System visited count
-   if misn_stage == 0 and factions["Collective"] then
+   if misn_stage == 0 and factions[ "Collective" ] and factions[ "Collective" ] > 200 then
       systems_visited = systems_visited + 1
 
       -- Visited enough systems

@@ -21,6 +21,8 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "nlua_ship.h"
+#include "nlua_system.h"
+#include "nlua_planet.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -88,6 +90,7 @@ static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
+static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
@@ -142,6 +145,7 @@ static const luaL_reg pilotL_methods[] = {
    { "hyperspace", pilotL_hyperspace },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
+   { "hookClear", pilotL_hookClear },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -292,12 +296,12 @@ static int pilotL_getPlayer( lua_State *L )
 {
    LuaPilot lp;
 
-   if (player == NULL) {
+   if (player.p == NULL) {
       lua_pushnil(L);
       return 1;
    }
 
-   lp.pilot = player->id;
+   lp.pilot = player.p->id;
    lua_pushpilot(L,lp);
    return 1;
 }
@@ -313,67 +317,46 @@ static int pilotL_getPlayer( lua_State *L )
  * end
  * @endcode
  *
- * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in).
+ * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
  * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Sml Trader Convoy", "def", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", "def", vec2.new( 1000, 1000 ), true ) -- Have the pilot jump in.
+ * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
  *
  *    @luaparam fleetname Name of the fleet to add.
- *    @luaparam ai If set will override the standard fleet AI.  "def" means use default.
- *    @luaparam pos Position to create pilots around instead of choosing randomly.
- *    @luaparam jump true if pilots should jump in, false by default if pos is defined.
+ *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
+ *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
- * @luafunc add( fleetname, ai, pos, jump )
+ * @luafunc add( fleetname, ai, paaram )
  */
 static int pilotL_addFleet( lua_State *L )
 {
    Fleet *flt;
    const char *fltname, *fltai;
-   int i, j, first;
+   int i, first;
    unsigned int p;
    double a;
-   double d;
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaPilot lp;
    LuaVector *lv;
+   LuaSystem *ls;
+   LuaPlanet *lplanet;
+   Planet *planet;
    int jump;
-   unsigned int flags = 0;
+   PilotFlags flags;
+   int *jumpind, njumpind;
+   int *ind, nind;
+   double chance;
 
    /* Default values. */
-   flags = 0;
+   pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
+   jump = -1;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
-
-   /* Parse second argument - Fleet AI Override */
-   if (lua_gettop(L) > 1) {
-      fltai = luaL_checkstring(L,2);
-      if (strcmp(fltai, "def")==0) /* Check if set to default */
-         fltai = NULL;
-   }
-   else
-      fltai = NULL;
-
-   /* Parse third argument - Position */
-   if (lua_gettop(L) > 2) {
-      lv = luaL_checkvector(L,3);
-   }
-   else
-      lv = NULL;
-
-   /* Parse Jump. */
-   if (lua_gettop(L) > 3) {
-      jump = lua_toboolean(L,4);
-   }
-   else {
-      /* Only jump by default if not position was passed. */
-      if (lv==NULL)
-         jump = 1;
-      else
-         jump = 0;
-   }
 
    /* pull the fleet */
    flt = fleet_get( fltname );
@@ -382,37 +365,96 @@ static int pilotL_addFleet( lua_State *L )
       return 0;
    }
 
-   /* Use position passed if possible. */
-   if (lv != NULL) {
-      if (!jump)
-         vectcpy( &vp, &lv->vec );
-      else {
-         /* Pilot is jumping in, we'll only use the vector angle. */
-         d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-         vect_pset( &vp, d, VANGLE(lv->vec) );
-      }
-   }
-   else {
-      d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-      vect_pset( &vp, d, RNGF() * 2.*M_PI);
-   }
+   /* Parse second argument - Fleet AI Override */
+   if ((lua_gettop(L) < 2) || lua_isnil(L,2))
+      fltai = NULL;
+   else
+      fltai = luaL_checkstring(L,2);
 
-   /* Set velocity only if no position is set.. */
-   if (lv != NULL) {
-      if (jump) {
-         a = vect_angle(&vp,&vn);
-         vect_pset( &vv, HYPERSPACE_VEL, a );
-         flags |= PILOT_HYP_END;
+   /* Handle third argument. */
+   if (lua_isvector(L,3)) {
+      lv = lua_tovector(L,3);
+      vectcpy( &vp, &lv->vec );
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
+   }
+   else if (lua_issystem(L,3)) {
+      ls    = lua_tosystem(L,3);
+      for (i=0; i<cur_system->njumps; i++) {
+         if (cur_system->jumps[i].target == ls->s) {
+            jump = i;
+            break;
+         }
       }
+      if (jump < 0) {
+         WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
+               fltname, ls->s->name, cur_system->name );
+         jump = RNG_SANE(0,cur_system->njumps-1);
+      }
+   }
+   else if (lua_isplanet(L,3)) {
+      lplanet = lua_toplanet(L,3);
+      planet  = lplanet->p;
+      pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+      vect_cset( &vp,
+            planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+            planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
+   }
+   /* Random. */
+   else {
+      /* Build landable planet table. */
+      ind   = NULL;
+      nind  = 0;
+      if (cur_system->nplanets > 0) {
+         ind = malloc( sizeof(int) * cur_system->nplanets );
+         for (i=0; i<cur_system->nplanets; i++)
+            if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
+                  !areEnemies(flt->faction,cur_system->planets[i]->faction))
+               ind[ nind++ ] = i;
+      }
+
+      /* Build jumpable jump table. */
+      jumpind  = NULL;
+      njumpind = 0;
+      if (cur_system->njumps > 0) {
+         jumpind = malloc( sizeof(int) * cur_system->njumps );
+         for (i=0; i<cur_system->njumps; i++)
+            if (system_getPresence( cur_system->jumps[i].target, flt->faction ) > 0)
+               jumpind[ njumpind++ ] = i;
+      }
+
+      /* Calculate jump chance. */
+      chance = njumpind;
+      chance = chance / (chance + nind);
+
+      /* Random jump in. */
+      if ((nind == 0) || (RNGF() <= chance)) {
+         jump = jumpind[ RNG_SANE(0,njumpind-1) ];
+      }
+      /* Random take off. */
       else {
+         planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
+         pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+         vect_cset( &vp,
+               planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+               planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
          a = RNGF() * 2.*M_PI;
          vectnull( &vv );
       }
+
+      /* Free memory allocated. */
+      if (ind != NULL )
+         free( ind );
+      if (jumpind != NULL)
+         free( jumpind );
    }
-   else { /* Entering via hyperspace. */
-      a = vect_angle(&vp,&vn);
-      vect_pset( &vv, HYPERSPACE_VEL, a );
-      flags |= PILOT_HYP_END;
+
+   /* Set up velocities and such. */
+   if (jump >= 0) {
+      space_calcJumpInPos( cur_system, cur_system->jumps[jump].target, &vp, &vv, &a );
+      pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 
    /* Make sure angle is sane. */
@@ -422,14 +464,10 @@ static int pilotL_addFleet( lua_State *L )
 
    /* now we start adding pilots and toss ids into the table we return */
    first = 1;
-   j     = 0;
    lua_newtable(L);
    for (i=0; i<flt->npilots; i++) {
 
       plt = &flt->pilots[i];
-
-      if (RNG(0,100) > plt->chance)
-         continue;
 
       /* Fleet displacement - first ship is exact. */
       if (!first)
@@ -438,16 +476,18 @@ static int pilotL_addFleet( lua_State *L )
       first = 0;
 
       /* Create the pilot. */
-      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
+      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags, -1 );
 
       /* we push each pilot created into a table and return it */
-      lua_pushnumber(L,++j); /* index, starts with 1 */
+      lua_pushnumber(L,i+1); /* index, starts with 1 */
       lp.pilot = p;
       lua_pushpilot(L,lp); /* value = LuaPilot */
       lua_rawset(L,-3); /* store the value in the table */
    }
    return 1;
 }
+
+
 /**
  * @brief Removes a pilot without explosions or anything.
  *
@@ -464,7 +504,8 @@ static int pilotL_remove( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Deletes the pilot. */
-   pilot_setFlag(p,PILOT_DELETE);
+   pilot_delete(p);
+
    return 0;
 }
 /**
@@ -899,7 +940,7 @@ static int pilotL_comm( lua_State *L )
 
    /* Check to see if pilot is valid. */
    if (target == NULL)
-      t = player;
+      t = player.p;
    else {
       t = pilot_get(target->pilot);
       if (t == NULL) {
@@ -1569,7 +1610,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
    }
 
    /* Creates the new task. */
-   t = ai_newtask( p, task, 1 );
+   t = ai_newtask( p, task, 0, 1 );
 
    return t;
 }
@@ -1785,6 +1826,7 @@ static int pilotL_hailPlayer( lua_State *L )
 
       /* Set flag. */
       pilot_setFlag( p, PILOT_HAILING );
+      player_hailStart();
    }
    else
       pilot_rmFlag( p, PILOT_HAILING );
@@ -1792,5 +1834,24 @@ static int pilotL_hailPlayer( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Clears the pilot's hooks.
+ *
+ * Clears all the hooks set on the pilot.
+ *
+ * @usage p:hookClear()
+ *    @luaparam p Pilot to clear hooks.
+ * @luafunc hookClear( p )
+ */
+static int pilotL_hookClear( lua_State *L )
+{
+   Pilot *p;
+
+   p = luaL_validpilot(L,1);
+   pilot_clearHooks( p );
+
+   return 0;
+}
 
 

@@ -1,60 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <unidiffs>
  <unidiff name="collective_dead">
   <system name="C-00">
    <planet name="S00000">remove</planet>
-   <fleetgroup name="Collective Medium Presence">remove</fleetgroup>
-   <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
   <system name="C-14">
    <planet name="S49281">remove</planet>
-   <fleetgroup name="Collective Medium Presence">remove</fleetgroup>
-   <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
   <system name="C-28">
    <planet name="S38729">remove</planet>
-   <fleetgroup name="Collective Medium Presence">remove</fleetgroup>
-   <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
   <system name="C-59">
    <planet name="S72839">remove</planet>
-   <fleetgroup name="Collective Medium Presence">remove</fleetgroup>
-   <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
   <system name="C-43">
    <planet name="S23491">remove</planet>
-   <fleetgroup name="Collective Medium Presence">remove</fleetgroup>
-   <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
   </system>
-  <system name="NGC-7291">
-   <fleetgroup name="Collective Light Presence">remove</fleetgroup>
+  <system name="Fortitude">
   </system>
-  <system name="NGC-7132">
-   <fleetgroup name="Collective Light Presence">remove</fleetgroup>
-   <fleetgroup name="Empire Patrol Presence">add</fleetgroup>
+  <system name="Hades">
   </system>
-  <outfit name="Neutron Disruptor">
-   <tech>1002</tech>
-  </outfit>
-  <outfit name="Drone Fighter Bay">
-   <tech>1002</tech>
-  </outfit>
-  <outfit name="Drone Fighter">
-   <tech>1002</tech>
-  </outfit>
-  <ship name="Drone">
-   <tech>1002</tech>
-  </ship>
+  <tech name="Heavy Civilian Combat Ships">
+   <add>__Collective</add>
+  </tech>
  </unidiff>
  <unidiff name="heavy_weapons_license">
-  <outfit name="Heavy Weapon License">
-   <tech>1002</tech>
-  </outfit>
+  <tech name="Basic Outfits 1">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
+  <tech name="Basic Outfits 2">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
  </unidiff>
  <unidiff name="heavy_combat_vessel_license">
-  <outfit name="Heavy Combat Vessel License">
-   <tech>1002</tech>
-  </outfit>
+  <tech name="Basic Outfits 1">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
+  <tech name="Basic Outfits 2">
+   <add>__Heavy Combat Vessel License</add>
+  </tech>
  </unidiff>
  <unidiff name="FLF_base">
   <system name="Sigur">

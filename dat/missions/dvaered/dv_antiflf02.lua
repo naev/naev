@@ -78,7 +78,7 @@ else -- default english
 end
 
 function create()
-    misn.setNPC("Dvaered liaison", "none") --TODO: add proper portrait
+    misn.setNPC("Dvaered liaison", "dv_liason")
     misn.setDesc(npc_desc)
 end
 
@@ -102,13 +102,18 @@ function accept()
         flfdead = 0
         
         misn.addCargo("FLF IFF Transponder", 0)
-        
+       
+        hook.jumpout("jumpout")
         hook.enter("enter")
         hook.land("land")
     else
         tk.msg(refusetitle, refusetext)
         misn.finish()
     end
+end
+
+function jumpout()
+    last_sys = system.cur()
 end
 
 function enter()
@@ -137,7 +142,7 @@ end
 function spawnDV()
     misn.osdActive(3)
     missionstarted = true
-    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_nojump", player:pilot():pos(), true)
+    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_nojump", last_sys)
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
@@ -153,7 +158,7 @@ function spawnDV()
     misn.timerStart("pollHealth", 500)
 end
 
--- Polls the player's armor and the Dvaereds' shields, and spawns the FLF fleet if shields armor are below a certain value.
+-- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armor are below a certain value.
 function pollHealth()
     shieldDV = 0
     parmor, pshield = player.pilot():getHealth()
@@ -161,7 +166,7 @@ function pollHealth()
         armor, shield = j:getHealth()
         shieldDV = shieldDV + shield
     end
-    if parmor <= 70 and shieldDV <= 250 then
+    if parmor <= 70 and pshield <= 10 and shieldDV <= 250 then
         spawnFLF()
     else
         misn.timerStart("pollHealth", 500)
@@ -179,7 +184,7 @@ function spawnFLF()
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
-    fleetFLF = pilot.add("FLF Vendetta Sextet", "flf_nojump", player:pilot():pos() + vecFLF, false)
+    fleetFLF = pilot.add("FLF Vendetta Sextet", "flf_nojump", player:pilot():pos() + vecFLF )
     fleetDV[1]:comm(comm_msg)
     
     for i, j in ipairs(fleetFLF) do

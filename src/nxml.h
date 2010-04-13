@@ -41,7 +41,9 @@
 #define xml_raw(n)            ((char*)(n)->children->content)
 #define xml_get(n)            (((n)->children == NULL) ? NULL : (char*)(n)->children->content)
 #define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  : atoi(xml_raw(n)))
+#define xml_getUInt(n)        ((xml_get(n) == NULL) ? 0  : strtoul(xml_raw(n), (char**)NULL, 10))
 #define xml_getLong(n)        ((xml_get(n) == NULL) ? 0  : atol(xml_raw(n)))
+#define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoul(xml_raw(n), (char**)NULL, 10))
 #define xml_getFloat(n)       ((xml_get(n) == NULL) ? 0. : atof(xml_raw(n)))
 #define xml_getStrd(n)        ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n)))
 
@@ -52,9 +54,15 @@
 #define xmlr_int(n,s,i) \
    if (xml_isNode(n,s)) { \
       i = xml_getInt(n); continue; }
+#define xmlr_uint(n,s,i) \
+   if (xml_isNode(n,s)) { \
+      i = xml_getUInt(n); continue; }
 #define xmlr_long(n,s,l) \
    if (xml_isNode(n,s)) { \
       l = xml_getLong(n); continue; }
+#define xmlr_ulong(n,s,l) \
+   if (xml_isNode(n,s)) { \
+      l = xml_getULong(n); continue; }
 #define xmlr_float(n,s,f) \
    if (xml_isNode(n,s)) { \
       f = xml_getFloat(n); continue; }
@@ -81,6 +89,8 @@ if (xmlTextWriterStartElement(w,(xmlChar*)str) < 0) { \
 if (xmlTextWriterEndElement(w) < 0) { \
    ERR("xmlw: unable to create end element"); return -1; }
 /* other stuff */
+#define xmlw_elemEmpty(w,n)   \
+do { xmlw_startElem(w,n); xmlw_endElem(w) } while (0)
 #define xmlw_elem(w,n,str,args...) \
 if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
       str, ## args) < 0) { \
@@ -110,6 +120,12 @@ if (xmlTextWriterEndDocument(w) < 0) { \
 glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );
+
+
+/*
+ * Functions for generic complex writing.
+ */
+void xmlw_setParams( xmlTextWriterPtr writer );
 
 
 #endif /* XML_H */

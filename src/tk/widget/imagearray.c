@@ -96,7 +96,7 @@ void window_addImageArray( const unsigned int wid,
          (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 

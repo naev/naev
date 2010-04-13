@@ -40,7 +40,8 @@
 
 #define CHUNK_SIZE      128 /**< Chunk size to allocate spfx bases. */
 
-#define SPFX_CHUNK      1024 /**< chunk to alloc when needed */
+#define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
+#define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
 #define SHAKE_VEL_MOD   0.0008 /**< Shake modifier. */
 
@@ -319,7 +320,10 @@ void spfx_add( int effect,
     */
    if (layer == SPFX_LAYER_FRONT) { /* front layer */
       if (spfx_mstack_front < spfx_nstack_front+1) { /* need more memory */
-         spfx_mstack_front += SPFX_CHUNK;
+         if (spfx_mstack_front == 0)
+            spfx_mstack_front = SPFX_CHUNK_MIN;
+         else
+            spfx_mstack_front += MIN( spfx_mstack_front, SPFX_CHUNK_MAX );
          spfx_stack_front = realloc( spfx_stack_front, spfx_mstack_front*sizeof(SPFX) );
       }
       cur_spfx = &spfx_stack_front[spfx_nstack_front];
@@ -327,7 +331,10 @@ void spfx_add( int effect,
    }
    else if (layer == SPFX_LAYER_BACK) { /* back layer */
       if (spfx_mstack_back < spfx_nstack_back+1) { /* need more memory */
-         spfx_mstack_back += SPFX_CHUNK;
+         if (spfx_mstack_back == 0)
+            spfx_mstack_back = SPFX_CHUNK_MIN;
+         else
+            spfx_mstack_back += MIN( spfx_mstack_back, SPFX_CHUNK_MAX );
          spfx_stack_back = realloc( spfx_stack_back, spfx_mstack_back*sizeof(SPFX) );
       }
       cur_spfx = &spfx_stack_back[spfx_nstack_back];
@@ -688,7 +695,7 @@ void spfx_render( const int layer )
       sy = (int)effect->gfx->sy;
 
       if (!paused) { /* don't calculate frame if paused */
-         time = fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+         time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
          spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
       }
       

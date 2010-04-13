@@ -233,9 +233,11 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    ret = lua_pcall(L, nargs, 0, 0);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if ((err==NULL) || (strcmp(err,"Mission Done")!=0))
+      if ((err==NULL) || (strcmp(err,"Mission Done")!=0)) {
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
+         ret = -1;
+      }
       else
          ret = 1;
       lua_pop(L,1);
@@ -633,8 +635,14 @@ static int misn_addCargo( lua_State *L )
    quantity = luaL_checkint(L,2);
    cargo = commodity_get( cname );
 
+   /* Check if the cargo exists. */
+   if(cargo == NULL) {
+      NLUA_ERROR(L, "Cargo '%s' not found.", cname);
+      return 0;
+   }
+
    /* First try to add the cargo. */
-   ret = pilot_addMissionCargo( player, cargo, quantity );
+   ret = pilot_addMissionCargo( player.p, cargo, quantity );
    mission_linkCargo( cur_mission, ret );
 
    lua_pushnumber(L, ret);
@@ -655,7 +663,7 @@ static int misn_rmCargo( lua_State *L )
    id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id, 0 ) != 0) {
+   if (pilot_rmMissionCargo( player.p, id, 0 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -681,7 +689,7 @@ static int misn_jetCargo( lua_State *L )
    id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id, 1 ) != 0) {
+   if (pilot_rmMissionCargo( player.p, id, 1 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }

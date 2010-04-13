@@ -64,6 +64,7 @@ static char* ndata_filename         = NULL; /**< Packfile name. */
 static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
 static char* ndata_packName         = NULL; /**< Name of the ndata module. */
 static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
+static int ndata_loadedfile         = 0; /**< Already loaded a file? */
 
 /*
  * File list.
@@ -270,6 +271,8 @@ static char *ndata_findInDir( const char *path )
  */
 static int ndata_openPackfile (void)
 {
+   char path[PATH_MAX], *buf;
+
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
 
@@ -310,25 +313,28 @@ static int ndata_openPackfile (void)
 
          /* Keep looking. */
          if (ndata_filename == NULL) {
-#if HAS_POSIX
-            char path[PATH_MAX];
-            snprintf( path, PATH_MAX, "%s", dirname( naev_binary() ) );
+            buf = strdup( naev_binary() );
+            snprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
             ndata_filename = ndata_findInDir( path );
-#endif /* HAS_POSIX */
+            free(buf);
          }
       }
    }
 
    /* Open the cache. */
    if (ndata_isndata( ndata_filename ) != 1) {
-      WARN("Cannot find ndata file!");
-      WARN("Please run with ndata path suffix or specify in conf.lua.");
-      WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
+      if (!ndata_loadedfile) {
+         WARN("Cannot find ndata file!");
+         WARN("Please run with ndata path suffix or specify in conf.lua.");
+         WARN("E.g. naev ~/ndata or data = \"~/ndata\"");
 
-      /* Display the not found message. */
-      ndata_notfound();
+         /* Display the not found message. */
+         ndata_notfound();
 
-      exit(1);
+         exit(1);
+      }
+      else
+         return -1;
    }
    ndata_cache = pack_openCache( ndata_filename );
    if (ndata_cache == NULL)
@@ -469,6 +475,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       if (nfile_fileExists( filename )) {
          buf = nfile_readFile( &nbuf, filename );
          if (buf != NULL) {
+            ndata_loadedfile = 1;
             *filesize = nbuf;
             return buf;
          }
@@ -480,9 +487,13 @@ void* ndata_read( const char* filename, uint32_t *filesize )
 
    /* Wasn't able to open the file. */
    if (ndata_cache == NULL) {
+      WARN("Unable to open file '%s': not found.", filename);
       *filesize = 0;
       return NULL;
    }
+
+   /* Mark that we loaded a file. */
+   ndata_loadedfile = 1;
 
    /* Get data from packfile. */
    return pack_readfileCached( ndata_cache, filename, filesize );
@@ -503,8 +514,10 @@ SDL_RWops *ndata_rwops( const char* filename )
 
       /* Try to open from file. */
       rw = SDL_RWFromFile( filename, "rb" );
-      if (rw != NULL)
+      if (rw != NULL) {
+         ndata_loadedfile = 1;
          return rw;
+      }
 
       /* Load the packfile. */
       ndata_openPackfile();
@@ -512,8 +525,12 @@ SDL_RWops *ndata_rwops( const char* filename )
 
    /* Wasn't able to open the file. */
    if (ndata_cache == NULL) {
+      WARN("Unable to open file '%s': not found.", filename);
       return NULL;
    }
+
+   /* Mark that we loaded a file. */
+   ndata_loadedfile = 1;
 
    return pack_rwopsCached( ndata_cache, filename );
 }
@@ -564,6 +581,8 @@ static char** filterList( const char** list, int nlist,
 
 /**
  * @brief Gets the list of files in the ndata.
+ *
+ * @note Strips the path.
  *
  *    @param path List files in path.
  *    @param nfiles Number of files found.

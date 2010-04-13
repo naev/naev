@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <spfxs>
  <spfx name="ExpS">
   <gfx sx="6" sy="5">exps</gfx>
@@ -11,6 +11,14 @@
  <spfx name="ExpL">
   <gfx sx="6" sy="5">expl</gfx>
   <anim>500</anim>
+ </spfx>
+ <spfx name="ExpM2">
+  <gfx sx="5" sy="5">expm2</gfx>
+  <anim>450</anim>
+ </spfx>
+ <spfx name="ExpL2">
+  <gfx sx="6" sy="5">expl2</gfx>
+  <anim>1300</anim>
  </spfx>
  <spfx name="cargo">
   <gfx sx="6" sy="6">cargo</gfx>

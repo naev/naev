@@ -80,7 +80,7 @@ void window_addList( const unsigned int wid,
       wgt->dat.lst.height = 0;
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 

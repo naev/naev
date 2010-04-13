@@ -55,8 +55,8 @@ function create ()
      
    end
 
-   -- Choose how to attack
-   attack_choose()
+   -- Finish up creation
+   create_post()
 end
 
 -- taunts

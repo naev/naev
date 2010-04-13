@@ -65,20 +65,6 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 
 
 /*
- * The window interfaces.
- */
-#define LAND_NUMWINDOWS          7 /**< Number of land windows. */
-#define LAND_WINDOW_MAIN         0 /**< Main window. */
-#define LAND_WINDOW_BAR          1 /**< Bar window. */
-#define LAND_WINDOW_MISSION      2 /**< Mission computer window. */
-#define LAND_WINDOW_OUTFITS      3 /**< Outfits window. */
-#define LAND_WINDOW_SHIPYARD     4 /**< Shipyard window. */
-#define LAND_WINDOW_EQUIPMENT    5 /**< Equipment window. */
-#define LAND_WINDOW_COMMODITY    6 /**< Commodity window. */
-
-
-
-/*
  * land variables
  */
 int landed = 0; /**< Is player landed. */
@@ -96,7 +82,7 @@ static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
- 
+
 /*
  * mission computer stack
  */
@@ -111,14 +97,12 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
 /*
  * player stuff
  */
-extern int hyperspace_target; /**< from player.c */
 static int last_window = 0; /**< Default window. */
 
 
 /*
  * prototypes
  */
-static unsigned int land_getWid( int window );
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_changeTab( unsigned int wid, char *wgt, int tab );
@@ -127,6 +111,8 @@ static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
+static int commodity_getMod (void);
+static void commodity_renderMod( double bx, double by, double w, double h, void *data );
 /* outfits */
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh );
@@ -144,6 +130,7 @@ static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
+static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 /* spaceport bar */
 static void bar_getDim( int wid,
@@ -191,10 +178,14 @@ static void commodity_exchange_open( unsigned int wid )
    window_addButton( wid, -20, 20*2 + BUTTON_HEIGHT,
          (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
          "Sell", commodity_sell );
+         
+      /* cust draws the modifier */
+   window_addCust( wid, -40-((BUTTON_WIDTH-20)/2), 60+ 2*BUTTON_HEIGHT,
+         (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
    window_addText( wid, -20, -40, BUTTON_WIDTH, 60, 0,
-         "txtSInfo", &gl_smallFont, &cDConsole, 
+         "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market price:\n"
          "\n"
@@ -256,7 +247,7 @@ static void commodity_update( unsigned int wid, char* str )
          "%d Tons\n",
          player_cargoOwned( comname ),
          economy_getPrice(com, cur_system, land_planet),
-         pilot_cargoFree(player));
+         pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
 }
@@ -272,22 +263,22 @@ static void commodity_buy( unsigned int wid, char* str )
    Commodity *com;
    unsigned int q, price;
 
-   q = 10;
+   q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
-   if (player->credits < q * price) {
+   if (!player_hasCredits( q * price )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
-   else if (pilot_cargoFree(player) <= 0) {
+   else if (pilot_cargoFree(player.p) <= 0) {
       dialogue_alert( "Insufficient free space!" );
       return;
    }
 
-   q = pilot_addCargo( player, com, q );
-   player->credits -= q * price;
+   q = pilot_addCargo( player.p, com, q );
+   player_modCredits( -q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
@@ -303,15 +294,55 @@ static void commodity_sell( unsigned int wid, char* str )
    Commodity *com;
    unsigned int q, price;
 
-   q = 10;
+   q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
-   q = pilot_rmCargo( player, com, q );
-   player->credits += q * price;
+   q = pilot_rmCargo( player.p, com, q );
+   player_modCredits( q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
+}
+
+/**
+ * @brief Gets the current modifier status.
+ *    @return The amount modifier when buying or selling commodities.
+ */
+static int commodity_getMod (void)
+{
+   SDLMod mods;
+   int q;
+
+   mods = SDL_GetModState();
+   q = 10;
+   if (mods & (KMOD_LCTRL | KMOD_RCTRL))
+      q *= 5;
+   if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
+      q *= 10;
+
+   return q;
+}
+/**
+ * @brief Renders the commodity buying modifier.
+ *    @param bx Base X position to render at.
+ *    @param by Base Y position to render at.
+ *    @param w Width to render at.
+ *    @param h Height to render at.
+ */
+static void commodity_renderMod( double bx, double by, double w, double h, void *data )
+{
+   (void) data;
+   (void) h;
+   int q;
+   char buf[8];
+
+   q = commodity_getMod();
+   snprintf( buf, 8, "%dx", q );
+   gl_printMid( &gl_smallFont, w,
+         bx + (double)SCREEN_W/2.,
+         by + (double)SCREEN_H/2.,
+         &cBlack, buf );
 }
 
 
@@ -399,7 +430,7 @@ static void outfits_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   outfits = tech_getOutfit( land_planet->tech, &noutfits );
    if (noutfits <= 0) { /* No outfits */
       soutfits    = malloc(sizeof(char*));
       soutfits[0] = strdup("None");
@@ -439,7 +470,7 @@ static void outfits_updateQuantities( unsigned int wid )
    int i;
 
    /* Get outfits. */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   outfits = tech_getOutfit( land_planet->tech, &noutfits );
    if (noutfits <= 0)
       return;
 
@@ -468,7 +499,7 @@ static void outfits_update( unsigned int wid, char* str )
    (void)str;
    char *outfitname;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[16], buf3[16];
+   char buf[PATH_MAX], buf2[32], buf3[32];
    double th;
    int iw, ih;
    int w, h;
@@ -520,7 +551,7 @@ static void outfits_update( unsigned int wid, char* str )
    /* new text */
    window_modifyText( wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
-   credits2str( buf3, player->credits, 2 );
+   credits2str( buf3, player.p->credits, 2 );
    snprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
@@ -553,19 +584,19 @@ static void outfits_update( unsigned int wid, char* str )
  */
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 {
-   char buf[16];
+   char buf[32];
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
-         && (pilot_cargoFree(player) < -outfit->u.mod.cargo)) {
+         && (pilot_cargoFree(player.p) < -outfit->u.mod.cargo)) {
       if (errmsg != 0)
          dialogue_alert( "You need to empty your cargo first." );
       return 0;
    }
    /* not enough $$ */
-   else if (q*outfit->price > player->credits) {
+   else if (!player_hasCredits( q*outfit->price )) {
       if (errmsg != 0) {
-         credits2str( buf, q*outfit->price - player->credits, 2 );
+         credits2str( buf, q*outfit->price - player.p->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
       }
       return 0;
@@ -583,7 +614,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* Needs license. */
-   else if ((outfit->license != NULL) && !player_hasLicense(outfit->license)) {
+   else if (!player_hasLicense(outfit->license)) {
       if (errmsg != 0)
          dialogue_alert( "You need the '%s' license to buy this outfit.",
                outfit->license );
@@ -628,7 +659,7 @@ static void outfits_buy( unsigned int wid, char* str )
       return;
 
    /* Actually buy the outfit. */
-   player->credits -= outfit->price * player_addOutfit( outfit, q );
+   player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
    outfits_updateQuantities(wid);
@@ -651,6 +682,10 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
    /* Map check. */
    if ((outfit_isMap(outfit)) &&
          map_isMapped( NULL, outfit->u.map.radius ))
+      return 0;
+
+   /* License check. */
+   if (outfit_isLicense(outfit))
       return 0;
 
    /* has no outfits to sell */
@@ -684,7 +719,7 @@ static void outfits_sell( unsigned int wid, char* str )
    if (outfit_canSell( outfit, q, 1 ) == 0)
       return;
 
-   player->credits += outfit->price * player_rmOutfit( outfit, q );
+   player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
    outfits_updateQuantities(wid);
@@ -763,15 +798,18 @@ static void shipyard_open( unsigned int wid )
    ih = h - 60;
 
    /* Calculate button dimensions. */
-   bw = (w - iw - 80) / 2;
+   bw = (w - iw - 200) / 2;
    bh = BUTTON_HEIGHT;
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         bw, bh, "btnCloseShipyard",
+         bw-20, bh, "btnCloseShipyard",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-bw, 20,
-         bw, bh, "btnBuyShip",
+   window_addButton( wid, -20 - bw, 20,
+         bw-20, bh, "btnTradeShip",
+         "Trade-In", shipyard_trade );
+   window_addButton( wid, -20 - bw*2, 20,
+         bw-20, bh, "btnBuyShip",
          "Buy", shipyard_buy );
 
    /* target gfx */
@@ -818,7 +856,7 @@ static void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
+   ships = tech_getShip( land_planet->tech, &nships );
    if (nships <= 0) {
       sships    = malloc(sizeof(char*));
       sships[0] = strdup("None");
@@ -852,14 +890,15 @@ static void shipyard_update( unsigned int wid, char* str )
    (void)str;
    char *shipname;
    Ship* ship;
-   char buf[PATH_MAX], buf2[16], buf3[16];
-   
+   char buf[PATH_MAX], buf2[32], buf3[32];
+
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
    /* No ships */
    if (strcmp(shipname,"None")==0) {
       window_modifyImage( wid, "imgTarget", NULL );
       window_disableButton( wid, "btnBuyShip");
+      window_disableButton( wid, "btnTradeShip");
       window_disableButton( wid, "btnInfoShip");
       snprintf( buf, PATH_MAX,
             "None\n"
@@ -895,7 +934,7 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
    credits2str( buf2, ship->price, 2 );
-   credits2str( buf3, player->credits, 2 );
+   credits2str( buf3, player.p->credits, 2 );
    snprintf( buf, PATH_MAX,
          "%s\n"
          "%s\n"
@@ -941,10 +980,18 @@ static void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (ship->price > player->credits)
+   if (!player_hasCredits( ship->price ) ||
+         (!player_hasLicense(ship->license))) {
       window_disableButton( wid, "btnBuyShip");
-   else
+      if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)))
+         window_disableButton( wid, "btnTradeShip");
+      else
+         window_enableButton( wid, "btnTradeShip");
+   }
+   else {
       window_enableButton( wid, "btnBuyShip");
+      window_enableButton( wid, "btnTradeShip");
+   }
 }
 
 /**
@@ -966,48 +1013,121 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
 static void shipyard_buy( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16];
+   char *shipname, buf[32];
    Ship* ship;
-   unsigned int w;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
+   int targetprice = ship->price;
+
    /* Must have enough money. */
-   if (ship->price > player->credits) {
+   if (!player_hasCredits( targetprice )) {
       dialogue_alert( "Insufficient credits!" );
       return;
    }
 
    /* Must have license. */
-   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
+   if (!player_hasLicense(ship->license)) {
       dialogue_alert( "You do not have the '%s' license required to buy this ship.",
             ship->license);
       return;
    }
 
-   credits2str( buf, ship->price, 2 );
+   credits2str( buf, targetprice, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
          "Do you really want to spend %s on a new ship?", buf )==0)
       return;
 
    /* player just gots a new ship */
-   if (player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
-         0., 0., player->solid->dir, NULL ) != 0) {
+   if (player_newShip( ship, NULL, 0 ) != 0) {
       /* Player actually aborted naming process. */
       return;
    }
-   player->credits -= ship->price; /* ouch, paying is hard */
+   player_modCredits( -targetprice ); /* ouch, paying is hard */
    land_checkAddRefuel();
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
-
-   /* Update equipment. */
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 0, 1 );
 }
 
+/**
+ * @brief Player attempts to buy a ship, trading the current ship in.
+ *    @param wid Window player is buying ship from.
+ *    @param str Unused.
+ */
+void shipyard_trade( unsigned int wid, char* str )
+{
+   (void)str;
+   char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
+   Ship* ship;
+
+   shipname = toolkit_getImageArray( wid, "iarShipyard" );
+   ship = ship_get( shipname );
+
+   int targetprice = ship->price;
+   int playerprice = player_shipPrice(player.p->name);
+
+   /* Must have license. */
+   if (!player_hasLicense(ship->license)) {
+      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
+            ship->license);
+      return;
+   }
+
+   /* Must have enough money. */
+   if (!player_hasCredits( targetprice - playerprice)) {
+      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
+      return;
+   }
+
+   /* New ship must have equal or greater cargo space. */
+   if (pilot_cargoUsed(player.p) > ship->cap_cargo) {
+      dialogue_alert( "You have %d tons of cargo, but the %s can only hold %g tons. Sell or jettison some cargo first.",
+            pilot_cargoUsed(player.p), ship->name, ship->cap_cargo );
+      return;
+   }
+   else if (pilot_hasDeployed(player.p)) { /* Escorts must not be in space. */
+      dialogue_alert( "You can't leave your fighters stranded. Recall them before trading in your ship." );
+      return;
+   }
+
+   credits2str( buf, targetprice, 2 );
+   credits2str( buf2, playerprice, 2 );
+   credits2str( buf3, targetprice - playerprice, 2 );
+   credits2str( buf4, playerprice - targetprice, 2 );
+
+   /* Display the correct dialogue depending on the new ship's price versus the player's. */
+   if ( targetprice == playerprice ) {
+      if (dialogue_YesNo("Are you sure?", /* confirm */
+         "Your %s is worth %s, exactly as much as the new ship, so no credits need be exchanged. Are you sure you want to trade your ship in?",
+               player.p->ship->name, buf2)==0)
+         return;
+   }
+   else if ( targetprice < playerprice ) {
+      if (dialogue_YesNo("Are you sure?", /* confirm */
+         "Your %s is worth %s credits, more than the new ship. For your ship, you will get the new %s and %s credits. Are you sure you want to trade your ship in?",
+               player.p->ship->name, buf2, ship->name, buf4)==0)
+         return;
+   }
+   else if ( targetprice > playerprice ) {
+      if (dialogue_YesNo("Are you sure?", /* confirm */
+         "Your %s is worth %s, so the new ship will cost %s credits. Are you sure you want to trade your ship in?",
+               player.p->ship->name, buf2, buf3)==0)
+         return;
+   }
+
+   /* player just gots a new ship */
+   if (player_newShip( ship, NULL, 1 ) != 0)
+      return; /* Player aborted the naming process. */
+
+   player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
+
+   land_checkAddRefuel();
+
+   /* Update shipyard. */
+   shipyard_update(wid, NULL);
+}
 
 /**
  * @brief Gets the dimensions of the spaceport bar window.
@@ -1408,7 +1528,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty(0);
-   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player->cargo_free );
+   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
@@ -1437,7 +1557,7 @@ static void misn_update( unsigned int wid, char* str )
  */
 static unsigned int refuel_price (void)
 {
-   return (unsigned int)((player->fuel_max - player->fuel)*3);
+   return (unsigned int)((player.p->fuel_max - player.p->fuel)*3);
 }
 
 
@@ -1453,13 +1573,13 @@ static void spaceport_refuel( unsigned int wid, char *str )
 
    price = refuel_price();
 
-   if (player->credits < price) { /* player is out of money after landing */
+   if (!player_hasCredits( price )) { /* player is out of money after landing */
       dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }
 
-   player->credits  -= price;
-   player->fuel      = player->fuel_max;
+   player_modCredits( -price );
+   player.p->fuel      = player.p->fuel_max;
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_destroyWidget( wid, "btnRefuel" );
       window_destroyWidget( wid, "txtRefuel" );
@@ -1472,7 +1592,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
  */
 void land_checkAddRefuel (void)
 {
-   char buf[32], cred[16];
+   char buf[32], cred[32];
    unsigned int w;
 
    /* Check to see if fuel conditions are met. */
@@ -1485,8 +1605,13 @@ void land_checkAddRefuel (void)
    }
 
    /* Full fuel. */
-   if (player->fuel >= player->fuel_max)
+   if (player.p->fuel >= player.p->fuel_max) {
+      if (widget_exists( land_windows[0], "btnRefuel" ))
+         window_destroyWidget( land_windows[0], "btnRefuel" );
+      if (widget_exists( land_windows[0], "txtRefuel" ))
+         window_destroyWidget( land_windows[0], "txtRefuel" );
       return;
+   }
 
    /* Autorefuel. */
    if (conf.autorefuel) {
@@ -1494,14 +1619,14 @@ void land_checkAddRefuel (void)
       w = land_getWid( LAND_WINDOW_EQUIPMENT );
       if (w > 0)
          equipment_updateShips( w, NULL ); /* Must update counter. */
-      if (player->fuel >= player->fuel_max)
+      if (player.p->fuel >= player.p->fuel_max)
          return;
    }
 
    /* Just enable button if it exists. */
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_enableButton( land_windows[0], "btnRefuel");
-      credits2str( cred, player->credits, 2 );
+      credits2str( cred, player.p->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
       window_modifyText( land_windows[0], "txtRefuel", buf );
    }
@@ -1514,15 +1639,15 @@ void land_checkAddRefuel (void)
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
-      credits2str( cred, player->credits, 2 );
+      credits2str( cred, player.p->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
       window_addText( land_windows[0], -20, 20 + 2*(BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
    }
-   
+
    /* Make sure player can click it. */
-   if (player->credits < refuel_price())
+   if (!player_hasCredits( refuel_price() ))
       window_disableButton( land_windows[0], "btnRefuel" );
 }
 
@@ -1567,7 +1692,7 @@ static void land_cleanupWindow( unsigned int wid, char *name )
  *    @param window Type of window to get wid (LAND_WINDOW_MAIN, ...).
  *    @return 0 on error, otherwise the wid of the window.
  */
-static unsigned int land_getWid( int window )
+unsigned int land_getWid( int window )
 {
    if (land_windowsMap[window] == -1)
       return 0;
@@ -1667,7 +1792,7 @@ void land( Planet* p )
     *  3) Generate missions - so that campaigns are fluid.
     *  4) Create other tabs - lists depend on NPC and missions.
     */
-   
+
    /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
@@ -1678,10 +1803,12 @@ void land( Planet* p )
    hooks_run("land");
 
    /* 3) Generate computer and bar missions. */
-   mission_computer = missions_genList( &mission_ncomputer,
-         land_planet->faction, land_planet->name, cur_system->name,
-         MIS_AVAIL_COMPUTER );
-   npc_generate(); /**< Generate bar npc. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
+      mission_computer = missions_genList( &mission_ncomputer,
+            land_planet->faction, land_planet->name, cur_system->name,
+            MIS_AVAIL_COMPUTER );
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+      npc_generate(); /* Generate bar npc. */
 
    /* 4) Create other tabs. */
    /* Basic - bar + missions */
@@ -1761,7 +1888,7 @@ static void land_createMainTab( unsigned int wid )
     */
    window_addImage( wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
-         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0, 
+         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
 
    /*
@@ -1819,6 +1946,9 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
 
          /* Must regenerate outfits. */
          switch (i) {
+            case LAND_WINDOW_MAIN:
+               land_checkAddRefuel();
+               break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
                outfits_updateQuantities( w );
@@ -1908,13 +2038,13 @@ void takeoff( int delay )
    /* set player to another position with random facing direction and no vel */
    player_warp( land_planet->pos.x + RNG(-sw/2,sw/2),
          land_planet->pos.y + RNG(-sh/2,sh/2) );
-   vect_pset( &player->solid->vel, 0., 0. );
-   player->solid->dir = RNG(0,359) * M_PI/180.;
+   vect_pset( &player.p->solid->vel, 0., 0. );
+   player.p->solid->dir = RNG(0,359) * M_PI/180.;
 
    /* heal the player */
-   player->armour = player->armour_max;
-   player->shield = player->shield_max;
-   player->energy = player->energy_max;
+   player.p->armour = player.p->armour_max;
+   player.p->shield = player.p->shield_max;
+   player.p->energy = player.p->energy_max;
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
@@ -1924,9 +2054,9 @@ void takeoff( int delay )
    free(nt);
 
    /* initialize the new space */
-   h = hyperspace_target;
+   h = player.p->nav_hyperspace;
    space_init(NULL);
-   hyperspace_target = h;
+   player.p->nav_hyperspace = h;
 
    /* cleanup */
    if (save_all() < 0) { /* must be before cleaning up planet */
@@ -1938,6 +2068,10 @@ void takeoff( int delay )
    player_addEscorts();
    hooks_run("enter");
    events_trigger( EVENT_TRIGGER_ENTER );
+   player.p->ptimer = PILOT_TAKEOFF_DELAY;
+   pilot_setFlag( player.p, PILOT_TAKEOFF );
+   pilot_setThrust( player.p, 0. );
+   pilot_setTurn( player.p, 0. );
 }
 
 
@@ -1952,7 +2086,7 @@ void land_cleanup (void)
    land_planet    = NULL;
    landed         = 0;
    land_visited   = 0;
-  
+
    /* Destroy window. */
    if (land_wid > 0)
       window_destroy(land_wid);

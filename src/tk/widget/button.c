@@ -68,7 +68,7 @@ void window_addButton( const unsigned int wid,
    }
 
    if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
+      toolkit_nextFocus( wdw );
 }
 
 /**
@@ -102,6 +102,7 @@ static Widget* btn_get( const unsigned int wid, const char* name )
 void window_disableButton( const unsigned int wid, char* name )
 {
    Widget *wgt;
+   Window *wdw;
 
    /* Get the widget. */
    wgt = btn_get( wid, name );
@@ -111,6 +112,10 @@ void window_disableButton( const unsigned int wid, char* name )
    /* Disable button. */
    wgt->dat.btn.disabled = 1;
    wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
+
+   /* Sanitize focus. */
+   wdw = window_wget(wid);
+   toolkit_focusSanitize(wdw);
 }
 
 

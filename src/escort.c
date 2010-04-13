@@ -86,7 +86,8 @@ unsigned int escort_create( Pilot *p, char *ship,
    Ship *s;
    Pilot *pe;
    char buf[16];
-   unsigned int e, f;
+   unsigned int e;
+   PilotFlags f;
    unsigned int hook;
    unsigned int parent;
 
@@ -96,12 +97,13 @@ unsigned int escort_create( Pilot *p, char *ship,
    snprintf(buf, 16, "escort*%u", parent);
 
    /* Set flags. */
-   f = PILOT_ESCORT;
+   pilot_clearFlagsRaw( f );
+   pilot_setFlagRaw( f, PILOT_ESCORT );
    if (type == ESCORT_TYPE_BAY)
-      f |= PILOT_CARRIED;
+      pilot_setFlagRaw( f, PILOT_CARRIED );
 
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f );
+   e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f, -1 );
    pe = pilot_get(e);
    pe->parent = parent;
 
@@ -249,7 +251,7 @@ int escorts_attack( Pilot *parent )
    ret = 1;
    if (parent->target != parent->id)
       ret = escort_command( parent, ESCORT_ATTACK, parent->target );
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Attacking %s.", t->name);
    return ret;
 }
@@ -262,7 +264,7 @@ int escorts_hold( Pilot *parent )
 {
    int ret;
    ret = escort_command( parent, ESCORT_HOLD, -1 );
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
          player_message("\egEscorts: \e0Holding position.");
    return ret;
 }
@@ -275,7 +277,7 @@ int escorts_return( Pilot *parent )
 {
    int ret;
    ret = escort_command( parent, ESCORT_RETURN, -1 );
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Returning to ship.");
    return ret;
 }
@@ -288,7 +290,7 @@ int escorts_clear( Pilot *parent )
 {
    int ret;
    ret = escort_command( parent, ESCORT_CLEAR, -1);
-   if ((ret == 0) && (parent == player))
+   if ((ret == 0) && (parent == player.p))
       player_message("\egEscorts: \e0Clearing orders.");
    return ret;
 }

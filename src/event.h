@@ -10,7 +10,7 @@
 #include "nlua.h"
 
 
-#define EVENT_TIMER_MAX       3 /**< Maximum amount of event timers. */
+#define EVENT_TIMER_MAX       10 /**< Maximum amount of event timers. */
 
 
 /**

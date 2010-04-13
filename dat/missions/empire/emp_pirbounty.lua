@@ -4,6 +4,8 @@
 
    Randomly appearing bar mission to kill a unique pirate.
 
+   Author: bobbens
+
 --]]
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
@@ -29,7 +31,7 @@ Will you take up the bounty?]]
 
    -- Messages
    msg      = {}
-   msg[1]   = "MISSION SUCCESS!  Payment received."
+   msg[1]   = "MISSION SUCCESS! Payment received."
    msg[2]   = "Pursue %s!"
 end
 
@@ -88,9 +90,9 @@ function get_pir_system( sys )
 
    -- Only take into account system with pirates.
    local pir_sys = {}
-   for k,v in ipairs(adj_sys) do
-      if v:hasPresence( "Pirate" ) then
-         table.insert( pir_sys, v )
+   for k,v in pairs(adj_sys) do
+      if k:hasPresence( "Pirate" ) then
+         pir_sys[ #pir_sys+1 ] = k
       end
    end
 

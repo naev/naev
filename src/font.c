@@ -183,6 +183,7 @@ void gl_printRaw( const glFont *ft_font,
       ft_font = &gl_defFont;
 
    /* Render it. */
+   s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; text[i] != '\0'; i++)
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
@@ -246,6 +247,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    ret = font_limitSize( ft_font, NULL, text, max );
 
    /* Render it. */
+   s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
@@ -316,6 +318,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    x += (double)(width - n)/2.;
 
    /* Render it. */
+   s = 0;
    gl_fontRenderStart(ft_font, x, y, c);
    for (i=0; i < ret; i++)
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
@@ -384,6 +387,7 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
+   s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       ret = gl_printWidthForText( ft_font, &text[p], width );
@@ -839,18 +843,29 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
    if (state == 1) {
       a = (c==NULL) ? 1. : c->a;
       switch (ch) {
+         /* TOP SECRET COLOUR CONVENTION
+          * FOR YOUR EYES ONLY
+          *
+          * Lowercase characters represent base colours.
+          * Uppercase characters reperesent fancy game related colours.
+          * Digits represent states.
+          */
          /* Colours. */
-         case 'r': ACOLOUR(cRed,a); break;
-         case 'g': ACOLOUR(cGreen,a); break;
-         case 'b': ACOLOUR(cLightBlue,a); break;
-         case 'y': ACOLOUR(cYellow,a); break;
-         case 'w': ACOLOUR(cWhite,a); break;
-         case 'p': ACOLOUR(cDarkPurple,a); break;
+         case 'r': ACOLOUR(cFontRed,a); break;
+         case 'g': ACOLOUR(cFontGreen,a); break;
+         case 'b': ACOLOUR(cFontBlue,a); break;
+         case 'y': ACOLOUR(cFontYellow,a); break;
+         case 'w': ACOLOUR(cFontWhite,a); break;
+         case 'p': ACOLOUR(cFontPurple,a); break;
+         case 'n': ACOLOUR(cBlack,a); break;
          /* Fancy states. */
          case 'F': ACOLOUR(cFriend,a); break;
          case 'H': ACOLOUR(cHostile,a); break;
          case 'N': ACOLOUR(cNeutral,a); break;
          case 'I': ACOLOUR(cInert,a); break;
+         case 'M': ACOLOUR(cMapNeutral,a); break;
+         case 'C': ACOLOUR(cConsole,a); break;
+         case 'D': ACOLOUR(cDConsole,a); break;
          /* Reset state. */
          case '0':
              if (c==NULL)

@@ -134,7 +134,7 @@ function equip_genericMilitary( p, shipsize )
       -- Scout
       if class == "Scout" then
          primary        = equip_forwardLow ()
-         use_primary    = rnd.rnd(1,#nhigh)
+         use_primary    = rnd.rnd(1,nhigh)
          medium         = { "Generic Afterburner", "Milspec Jammer" }
          use_medium     = 2
          low            = { "Solar Panel" }

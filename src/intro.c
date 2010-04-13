@@ -26,6 +26,7 @@
 #include "music.h"
 #include "nstd.h"
 #include "toolkit.h"
+#include "conf.h"
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
@@ -122,7 +123,7 @@ static void intro_cleanup (void)
  */
 int intro_display( const char *text, const char *mus )
 {
-   int i, max;
+   int i, max, stop;
    unsigned int tcur, tlast;
    double dt;
    double x, y, vel;
@@ -146,13 +147,17 @@ int intro_display( const char *text, const char *mus )
    /* We need to clear key repeat to avoid infinite loops. */
    toolkit_clearKey();
 
+   /* Enable keyrepeat just for the intro. */
+   SDL_EnableKeyRepeat( conf.repeat_delay, conf.repeat_freq );
+
    /* Prepare for intro loop. */
    x = 100.;
    y = 0.;
    tlast = SDL_GetTicks();
    offset = 0.;
    max = intro_nlines + SCREEN_H / ((intro_font.h + 5.));
-   while (1) {
+   stop = 0;
+   while (!stop) {
 
       /* Get delta tick in seconds. */
       tcur = SDL_GetTicks();
@@ -165,23 +170,42 @@ int intro_display( const char *text, const char *mus )
             case SDL_KEYDOWN:
 
                /* Escape skips directly. */
-               if (event.key.keysym.sym == SDLK_ESCAPE)
-                  offset = max * (intro_font.h + 5.);
+               if (event.key.keysym.sym == SDLK_ESCAPE) {
+                  stop = 1;
+                  break;
+               }
 
-               /* Down arrow recovers. */
+               /* Up arrow decreases speed. */
                else if (event.key.keysym.sym == SDLK_UP) {
+                  vel -= 12.;
+                  break;
+               }
+
+               /* Down arrow increases speed. */
+               else if (event.key.keysym.sym == SDLK_DOWN) {
+                  vel += 12.;
+               }
+
+               /* Pageup and backspace jump up. */
+               else if (event.key.keysym.sym == SDLK_PAGEUP || event.key.keysym.sym == SDLK_BACKSPACE ) {
                   offset -= 250.;
                   break;
                }
 
-               /* Only Handle space or up arrow from here down. */
-               else if ((event.key.keysym.sym != SDLK_DOWN) &&
-                     !nstd_isspace(event.key.keysym.sym))
+               /* Pagedown and space jump down. */
+               else if (event.key.keysym.sym == SDLK_PAGEDOWN || event.key.keysym.sym == SDLK_SPACE) {
+                  offset += 250.;
                   break;
+               }
+
+               /* User is clearly flailing on keyboard. */
+               else {
+                  vel = 30.;
+               }
 
                /* Purpose fallthrough. */
             case SDL_JOYBUTTONDOWN:
-               offset += 250.;
+               vel += 12.;
             default:
                break;
          }
@@ -223,6 +247,9 @@ int intro_display( const char *text, const char *mus )
 
       SDL_Delay(10); /* No need to burn CPU. */
    }
+
+   /* Disable intro's key repeat. */
+   SDL_EnableKeyRepeat( 0, 0 );
 
    /* Stop music, normal music will start shortly after. */
    music_stop();

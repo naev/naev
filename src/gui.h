@@ -32,11 +32,14 @@ void gui_cleanup (void);
 /*
  * render
  */
+void gui_renderReticles( double dt );
 void gui_render( double dt );
+void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c );
 
 /*
  * Messages.
  */
+void player_messageToggle( int enable );
 void player_message( const char *fmt, ... );
 void gui_clearMessages (void);
 void gui_messageScrollUp( int lines );

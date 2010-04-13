@@ -17,15 +17,7 @@
 #include "naev.h"
 #include "log.h"
 #include "ncompat.h"
-
-#if HAS_WIN32
-#include <shlwapi.h>
-#define STRCASECMP      lstrcmpiA
-#else /* HAS_WIN32 */
-#include <strings.h>
-#define STRCASECMP      strcasecmp
-#endif /* HAS_WIN32 */
-
+#include "nstd.h"
 
 
 /*
@@ -67,6 +59,7 @@ glColour cDarkPurple = { .r=0.68, .g=0.18, .b=0.64, .a=1. }; /**< Dark Purple */
 glColour cBrown      = { .r=0.59, .g=0.28, .b=0.00, .a=1. }; /**< Brown */
 /* Misc. */
 glColour cSilver     = { .r=0.75, .g=0.75, .b=0.75, .a=1. }; /**< Silver */
+glColour cAqua       = { .r=0.00, .g=0.75, .b=1.00, .a=1. }; /**< Aqua */
 
 
 /*
@@ -79,6 +72,7 @@ glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.3 }; /**< Hili
 /* objects */
 glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1.  }; /**< Inert object colour */
 glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  }; /**< Neutral object colour */
+glColour cMapNeutral    =  { .r = 0.3, .g = 0.3, .b = 0.3, .a = 1.  }; /**< Neutral object map screen text colour */
 glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
 glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
 /* radar */
@@ -92,6 +86,17 @@ glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armo
 glColour cEnergy        =  { .r = 0.2, .g = 0.8, .b = 0.2, .a = 1.  }; /**< Energy bar colour. */
 glColour cFuel          =  { .r = 0.9, .g = 0.1, .b = 0.4, .a = 1.  }; /**< Fuel bar colour. */
 
+/* Deiz's Super Font Palette */
+
+glColour cFontRed       =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cFontGreen     =  { .r = 0.4, .g = 0.8, .b = 0.2, .a = 1. };
+glColour cFontBlue      =  { .r = 0.2, .g = 0.4, .b = 0.8, .a = 1. };
+glColour cFontYellow    =  { .r = 0.9, .g = 0.8, .b = 0.0, .a = 1. };
+glColour cFontWhite     =  { .r = 0.8, .g = 0.8, .b = 0.8, .a = 1.  };
+glColour cFontPurple    =  { .r = 0.7, .g = 0.3, .b = 0.7, .a = 1.  };
+glColour cFontFriendly  =  { .r = 0.3, .g = 0.9, .b = 0.3, .a = 1. };
+glColour cFontHostile   =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cFontNeutral   =  { .r = 1.0, .g = 0.9, .b = 0.0, .a = 1.  };
 
 /**
  * @brief Changes colourspace from HSV to RGB.
@@ -139,6 +144,10 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
 #define CHECK_COLOUR(colour) \
       if (STRCASECMP(name, #colour) == 0) return &c##colour
 glColour* col_fromName(const char* name) {
+   if (name[0] == 'a' || name[0] == 'A') {
+      CHECK_COLOUR(Aqua);
+   }
+
    if (name[0] == 'b' || name[0] == 'B') {
       CHECK_COLOUR(Blue);
       CHECK_COLOUR(Black);

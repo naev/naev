@@ -2,6 +2,9 @@
 
    Simple cargo mission that opens up the Empire cargo missions.
 
+   Author: bobbens
+      minor edits by Infiltrator
+
 ]]--
 
 lang = naev.lang()
@@ -19,11 +22,11 @@ else -- default english
    text = {}
    text[1] = [[You approach the Empire Lieutenant.
 "Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would be interesting in working for the Empire?"]]
-   text[2] = [["Welcome aboard.", says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we get data on your flying skills. Later you could get called for more important mission. Who knows?  You could be the next Yao Pternov, greatest pilot we ever had on the armada."
-He hits a couple buttons on his wrist computer that springs into action.
+   text[2] = [["Welcome aboard," says Czesc before giving you a firm handshake. "At first you'll just be tested with cargo missions while we gather data on your flying skills. Later on, you could get called upon for more important missions. Who knows? You could be the next Yao Pternov, greatest pilot we ever had in the armada."
+He hits a couple buttons on his wrist computer, which springs into action.
 "It looks like we already have a simple task for you. Deliver these parcels to %s. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]]
-   text[3] = [[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards they make you do some paperwork to formalize your participation with the Empire. They tell you to keep an eye out for missions labeled ES in the mission computer which stand for Empire Shipping which you now have access to.
-You aren't too sure of what to make of your encounter with the Empire, only time will tell...]]
+   text[3] = [[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
+You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]]
 end
 
 
@@ -32,10 +35,12 @@ function create ()
 
    -- target destination
    local i = 0
+   local s
    repeat
       dest,sys = planet.get( misn.factions() )
+      s = dest:services()
       i = i + 1
-   until sys ~= landed_sys or i > 10
+   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
