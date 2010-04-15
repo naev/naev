@@ -49,7 +49,7 @@ end
 
 function jumpin()
     if system.cur() == destsys then
-        seiryuu = pilot.add("Seiryuu", "trader", vec2.new(0, 0), false)[1] -- TODO: Big system position.
+        seiryuu = pilot.add("Seiryuu", "trader", vec2.new(0, -2000), false)[1] -- TODO: Big system position.
         seiryuu:disable()
         seiryuu:setInvincible(true)
         hook.pilot(seiryuu, "board", "board")
@@ -57,6 +57,7 @@ function jumpin()
 end
 
 function board()
+    player.unboard()
     seiryuu:setHealth(100,100)
     evt.misnStart("Shadow Vigil")
     hailed = false
