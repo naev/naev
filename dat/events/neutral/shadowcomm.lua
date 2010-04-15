@@ -25,8 +25,6 @@ function create ()
     
     vendetta = pilot.add("Four Winds Vendetta")[1]
     
-    first = var.peek("shadowvigil_first") == true -- Make sure it's true or false, but not nil.
-
     hailie = evt.timerStart("hailme", 3000)
 
     hook.pilot(vendetta, "jump", "finish")
@@ -51,7 +49,6 @@ end
 
 function jumpin()
     if system.cur() == destsys then
-        var.push("shadowvigil_first", first)
         seiryuu = pilot.add("Seiryuu", "trader", vec2.new(0, 0), false)[1] -- TODO: Big system position.
         seiryuu:disable()
         seiryuu:setInvincible(true)

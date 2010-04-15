@@ -50,10 +50,10 @@ end
 function create()
     sysname = "Tuoladis"
     destsys = system.get(sysname)
-    misssys = {system.get("Apez"), system.get("Apez"), system.get("Apez")} -- Escort meeting point, protegee meeting point, final destination.
+    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
     seirsys = system.cur()
     
-    first = var.peek("shadowvigil_first")
+    first = var.peek("shadowvigil_first") == true -- Make sure it's not nil
     accepted = false
     missend = false
 
