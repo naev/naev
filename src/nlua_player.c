@@ -490,7 +490,8 @@ static int playerL_misnDone( lua_State *L )
       return 0;
    }
 
-   return player_missionAlreadyDone( id );
+   lua_pushboolean( L, player_missionAlreadyDone( id ) );
+   return 1;
 }
 
 
@@ -518,7 +519,8 @@ static int playerL_evtDone( lua_State *L )
       return 0;
    }
 
-   return player_eventAlreadyDone( id );
+   lua_pushboolean( L, player_eventAlreadyDone( id ) );
+   return 1;
 }
 
 

@@ -18,8 +18,8 @@ else -- default english
     FLFosd = {}
     DVosd = {}
     
-    introfirst = [[    The FLF officer doesn't seem at all surprised that you approached him. On the contrary, he looks like he expected you to do so all along.
-    "Greetings," he says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exhange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
+    introfirst = [[    The FLF officer doesn't seem at all surprised that you approached him. On the contrary, she looks like he expected you to do so all along.
+    "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exhange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
     ]]
     
     introrepeat = [[    "Hello again, %s" Corporal Benito says to you. "I see you've come back, though I can't imagine you're here to meet up with any friends."
@@ -27,7 +27,7 @@ else -- default english
     
     title[1] = "A chance to prove yourself"
     text[1] = [[Indeed, you are constantly aware of the furtive glances the other people in this bar are giving you. They don't seem outright hostile, but you can tell that if you don't watch your step and choose your words carefully, things might quickly take a turn for the worse.
-    Benito waves his hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]
+    Benito waves her hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]
     
     title[2] = "Patrol-B-gone"
     text[2] = [[    "I'm happy to hear that. It's good to know we still have the support from the common man. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will have to go out there and make it so the Dvaered don't patrol anymore."
@@ -43,7 +43,7 @@ else -- default english
     
     title[5] = "Breaking the ice"
     text[5] = [[    When you left Sindbad station, it was a cold, lonely place for you. The FLF soldiers on the station avoided you whenever they could, and basic services were harder to get than they should have been. 
-    But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. He walks up to you and offers you his hand.
+    But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.
     "Welcome back, %s, and congratulations. We already know all about your success in battle against the Dvaered patrols. And before you ask, no, I didn't know they were going to field a Vigilance. I might not have sent you out there if I did. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"
     Benito takes you to the station's bar, and buys you what for lack of a better word must be called a drink.
     "We will of course reward you for your service," he says once you are seated. "Though you must understand the FLF don't have that big a budget. Financial support is tricky, and the Frontier don't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass is among those you've impressed, you from today on, you can call yourself one of us! How about that, huh?"]]

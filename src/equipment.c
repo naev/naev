@@ -1294,15 +1294,12 @@ void equipment_updateOutfits( unsigned int wid, char* str )
 static void equipment_transChangeShip( unsigned int wid, char* str )
 {
    (void) str;
-   char *shipname;
+   char *shipname, *loc;
    Pilot *ship;
-   char* loc;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,"None")==0) /* no ships */
-      return;
    ship  = player_getShip( shipname );
-   loc   = player_getLoc( ship->name );
+   loc   = player_getLoc( shipname );
 
    if (strcmp(land_planet->name,loc)) /* ship not here */
       equipment_transportShip( wid );
@@ -1318,30 +1315,14 @@ static void equipment_transChangeShip( unsigned int wid, char* str )
  */
 static void equipment_changeShip( unsigned int wid )
 {
-   char *shipname, *loc;
+   char *shipname;
    Pilot *newship;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    newship = player_getShip(shipname);
-   if (strcmp(shipname,"None")==0) { /* no ships */
-      dialogue_alert( "You need another ship to change ships!" );
-      return;
-   }
-   loc = player_getLoc(shipname);
 
-   if (strcmp(loc,land_planet->name)) {
-      dialogue_alert( "You must transport the ship to %s to be able to get in.",
-            land_planet->name );
+   if (error_dialogue( shipname, "swapEquipment" ))
       return;
-   }
-   else if (pilot_cargoUsed(player.p) > pilot_cargoFree(newship)) {
-      dialogue_alert( "You won't be able to fit your current cargo in the new ship." );
-      return;
-   }
-   else if (pilot_hasDeployed(player.p)) {
-      dialogue_alert( "You can't leave your fighters stranded. Recall them before changing ships." );
-      return;
-   }
 
    /* Swap ship. */
    player_swapShip(shipname);
@@ -1374,7 +1355,7 @@ static void equipment_transportShip( unsigned int wid )
    }
    else if (!player_hasCredits( price )) { /* not enough money. */
       credits2str( buf, price-player.p->credits, 2 );
-      dialogue_alert( "You need %d more credits to transport '%s' here.",
+      dialogue_alert( "You need %s more credits to transport '%s' here.",
             buf, shipname );
       return;
    }
@@ -1450,10 +1431,9 @@ static void equipment_sellShip( unsigned int wid, char* str )
    int price;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,"None")==0) { /* no ships */
-      dialogue_alert( "You can't sell nothing!" );
+
+   if (error_dialogue( shipname, "sell" ))
       return;
-   }
 
    /* Calculate price. */
    price = player_shipPrice(shipname);
