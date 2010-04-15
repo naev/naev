@@ -18,7 +18,7 @@ else -- default english
     FLFosd = {}
     DVosd = {}
     
-    introfirst = [[    The FLF officer doesn't seem at all surprised that you approached him. On the contrary, she looks like he expected you to do so all along.
+    introfirst = [[    The FLF officer doesn't seem at all surprised that you approached her. On the contrary, she looks like she expected you to do so all along.
     "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exhange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
     ]]
     
@@ -46,7 +46,7 @@ else -- default english
     But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.
     "Welcome back, %s, and congratulations. We already know all about your success in battle against the Dvaered patrols. And before you ask, no, I didn't know they were going to field a Vigilance. I might not have sent you out there if I did. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"
     Benito takes you to the station's bar, and buys you what for lack of a better word must be called a drink.
-    "We will of course reward you for your service," he says once you are seated. "Though you must understand the FLF don't have that big a budget. Financial support is tricky, and the Frontier don't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass is among those you've impressed, you from today on, you can call yourself one of us! How about that, huh?"]]
+    "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF don't have that big a budget. Financial support is tricky, and the Frontier don't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, you from today on, you can call yourself one of us! How about that, huh?"]]
     
     text[6] = [[    "Of course, our work is only just beginning. You got those patrols off our backs, but they'll eventually return. No rest for the weary, we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. I'm sure you'll play an imporant role in our eventual victory over the Dvaered!"
     That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]]
@@ -97,7 +97,7 @@ else -- default english
     DVosd[1] = "Destroy your wingmen!"
     DVosd[2] = "Fly to the %s system and land on %s"
         
-    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. He seems somewhat more receptive than most people in the bar."
+    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. She seems somewhat more receptive than most people in the bar."
     
 end
 
