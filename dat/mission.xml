@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial">
   <lua>tutorial</lua>
@@ -353,8 +353,8 @@
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
   </avail>
  </mission>
- <mission name="Shadow Strike">
-  <lua>neutral/shadowstrike</lua>
+ <mission name="Shadow Vigil">
+  <lua>neutral/shadowvigil</lua>
   <flags>
    <unique />
   </flags>

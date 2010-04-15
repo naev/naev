@@ -196,6 +196,7 @@
   <player>0</player>
   <allies />
   <enemies />
+ </faction>
  <faction name="Associates">
   <invisible />
   <static />

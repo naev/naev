@@ -21,10 +21,9 @@
  <event name="Shadowcomm">
   <lua>neutral/shadowcomm</lua>
   <trigger>enter</trigger>
-  <chance>3</chance>
-  <cond>player.misnDone("Shadowrun") and not var.peek("shadowrun_failed")</cond>
+  <chance>100</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or var.peek("shadowvigil_active") == true)</cond>
   <flags>
-   <unique />
   </flags>
  </event>
  <event name="Shipwreck">

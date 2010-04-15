@@ -10,7 +10,7 @@ else -- default english
     text = {}
 
     title[1] = "An open invitation"
-    text[1] = [[    "Greetings, %s," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you aren't afraid of being a target."
+    text[1] = [[    "Greetings, %s," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
     You frown at that, but you ask the pilot where this acquaintance wishes you to go anyway.
     "Fly to the %s system," he replies. "She will meet you there. There's no rush - but I suggest you go see her at the earliest opportunity."
     The screen blinks out, and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about.]]
@@ -18,10 +18,14 @@ else -- default english
 end
 
 function create ()
+    sysname = "Pas"
+    destsys = system.get(sysname)
+    
+    hailed = false
+    
     vendetta = pilot.add("Four Winds Vendetta")[1]
     
-    first = true
-    hailed = false
+    first = var.peek("shadowvigil_first") == true -- Make sure it's true or false, but not nil.
 
     hailie = evt.timerStart("hailme", 3000)
 
@@ -40,13 +44,14 @@ end
 -- Triggered when the player hails the ship
 function hail()
     tk.msg(title[1], string.format(text[1], player.name(), sysname))
+    var.push("shadowvigil_active", true)
     hailed = true
     hook.jumpin("jumpin")
 end
 
 function jumpin()
     if system.cur() == destsys then
-        var.push("shadowstrike_first", first)
+        var.push("shadowvigil_first", first)
         seiryuu = pilot.add("Seiryuu", "trader", vec2.new(0, 0), false)[1] -- TODO: Big system position.
         seiryuu:disable()
         seiryuu:setInvincible(true)
@@ -55,8 +60,10 @@ function jumpin()
 end
 
 function board()
-    evt.misnStart("Shadow Strike")
-    first = false()
+    seiryuu:setHealth(100,100)
+    evt.misnStart("Shadow Vigil")
+    hailed = false
+    finish()
 end
 
 function finish()
