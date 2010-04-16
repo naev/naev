@@ -2190,6 +2190,9 @@ char* player_getLoc( char* shipname )
 {
    int i;
 
+   if (strcmp(player.p->name,shipname)==0)
+      return land_planet->name;
+
    for (i=0; i < player_nstack; i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return player_stack[i].loc;

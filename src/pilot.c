@@ -1597,8 +1597,8 @@ void pilot_update( Pilot* pilot, const double dt )
    else if (pilot_isFlag(pilot,PILOT_LANDING)) {
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
-            pilot_rmFlag(pilot,PILOT_LANDING);
             land( cur_system->planets[ landtarget ] );
+            pilot_rmFlag(pilot,PILOT_LANDING);
          }
          else
             pilot_setFlag(pilot,PILOT_DELETE);
@@ -3128,9 +3128,9 @@ void pilot_clearHooks( Pilot *p )
 int pilot_hasCredits( Pilot *p, int amount )
 {
    unsigned long ul;
-
-   ul = (unsigned long) ABS(amount);
-
+   if (amount < 0)
+      return 1;
+   ul = amount;
    return (ul <= p->credits);
 }
 

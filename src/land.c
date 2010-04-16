@@ -106,6 +106,13 @@ static int last_window = 0; /**< Default window. */
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_changeTab( unsigned int wid, char *wgt, int tab );
+/* error handling */
+char errorlist[512];
+int error_dialogue( char* shipname, char* type );
+void error_dialogue_build( const char *fmt, ... );
+char errorreason[512];
+int append;
+char *errorlist_ptr;
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
@@ -980,18 +987,15 @@ static void shipyard_update( unsigned int wid, char* str )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
-   if (!player_hasCredits( ship->price ) ||
-         (!player_hasLicense(ship->license))) {
+   if (!can_buy( shipname ))
       window_disableButton( wid, "btnBuyShip");
-      if (!player_hasCredits( ship->price - player_shipPrice(player.p->name)))
-         window_disableButton( wid, "btnTradeShip");
-      else
-         window_enableButton( wid, "btnTradeShip");
-   }
-   else {
+   else
       window_enableButton( wid, "btnBuyShip");
+
+   if (!can_trade( shipname ))
+      window_disableButton( wid, "btnTradeShip");
+   else
       window_enableButton( wid, "btnTradeShip");
-   }
 }
 
 /**
@@ -1021,18 +1025,8 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    int targetprice = ship->price;
 
-   /* Must have enough money. */
-   if (!player_hasCredits( targetprice )) {
-      dialogue_alert( "Insufficient credits!" );
+   if (error_dialogue( shipname, "buy" ))
       return;
-   }
-
-   /* Must have license. */
-   if (!player_hasLicense(ship->license)) {
-      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
-            ship->license);
-      return;
-   }
 
    credits2str( buf, targetprice, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
@@ -1052,6 +1046,179 @@ static void shipyard_buy( unsigned int wid, char* str )
 }
 
 /**
+ * @brief Makes sure it's sane to buy a ship.
+ *    @param shipname Ship being bought.
+ */
+int can_buy ( char *shipname )
+{
+   Ship* ship;
+   ship = ship_get( shipname );
+   int failure = 0;
+
+   /* Must have enough credits and the necessary license. */
+   if (!player_hasLicense(ship->license)) {
+      error_dialogue_build( "You lack the %s.", ship->license );
+      failure = 1;
+   }
+   if (!player_hasCredits( ship->price )) {
+      char buf[32];
+      credits2str( buf, ship->price - player.p->credits, 2 );
+      error_dialogue_build( "You need %s more credits.", buf);
+      failure = 1;
+   }
+   return !failure;
+}
+
+/**
+ * @brief Makes sure it's sane to sell a ship.
+ *    @param shipname Ship being sold.
+ */
+int can_sell( char* shipname )
+{
+   int failure = 0;
+   Pilot* ship;
+   ship = player_getShip( shipname );
+   if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
+      error_dialogue_build( "You can't sell the ship you're piloting.", shipname );
+      failure = 1;
+   }
+
+   return !failure;
+}
+
+/**
+ * @brief Makes sure it's sane to change ships.
+ *    @param shipname Ship being changed to.
+ */
+int can_swap( char* shipname )
+{
+   int failure = 0;
+   Ship* ship;
+   ship = ship_get( shipname );
+
+   if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
+      error_dialogue_build( "You have %g tons more cargo than the new ship can hold.",
+            pilot_cargoUsed(player.p) - ship->cap_cargo, ship->name );
+      failure = 1;
+   }
+   if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
+      error_dialogue_build( "You can't strand your fighters in space.");
+      failure = 1;
+   }
+   return !failure;
+}
+
+/**
+ * @brief Makes sure it's sane to change ships in the equipment view.
+ *    @param shipname Ship being changed to.
+ */
+int can_swapEquipment( char* shipname )
+{
+   int failure = 0;
+   char *loc = player_getLoc(shipname);
+   Pilot *newship;
+   newship = player_getShip(shipname);
+
+   if (strcmp(shipname,player.p->name)==0) /* Already onboard. */
+      error_dialogue_build( "You're already onboard the %s.", shipname );
+      failure = 1;
+   if (strcmp(loc,land_planet->name)) { /* Ship isn't here. */
+      dialogue_alert( "You must transport the ship to %s to be able to get in.",
+            land_planet->name );
+      failure = 1;
+   }
+   if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
+      error_dialogue_build( "You have %d tons more cargo than the new ship can hold.",
+            pilot_cargoUsed(player.p) - pilot_cargoFree(newship), shipname );
+      failure = 1;
+   }
+   if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
+      error_dialogue_build( "You can't strand your fighters in space.");
+      failure = 1;
+   }
+   return !failure;
+}
+
+/**
+ * @brief Makes sure it's sane to buy a ship, trading the old one in simultaneously.
+ *    @param shipname Ship being bought.
+ */
+int can_trade( char* shipname )
+{
+   int failure = 0;
+   Ship* ship;
+   ship = ship_get( shipname );
+
+   /* Must have the necessary license, enough credits, and be able to swap ships. */
+   if (!player_hasLicense(ship->license)) {
+      error_dialogue_build( "You lack the %s.", ship->license );
+      failure = 1;
+   }
+   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
+      int creditdifference = ship->price - (player_shipPrice(player.p->name) + player.p->credits);
+      char buf[32];
+      credits2str( buf, creditdifference, 2 );
+      error_dialogue_build( "You need %s more credits.", buf);
+      failure = 1;
+   }
+   if (!can_swap( shipname ))
+      failure = 1;
+   return !failure;
+}
+
+/**
+ * @brief Generates error dialogues used by several landing tabs.
+ *    @param shipname Ship being acted upon.
+ *    @param type Type of action.
+ */
+int error_dialogue( char* shipname, char* type )
+{
+   errorlist_ptr = NULL;
+   if (strcmp(type,"trade")==0)
+      can_trade( shipname );
+   else if (strcmp(type,"buy")==0)
+      can_buy( shipname );
+   else if (strcmp(type,"swapEquipment")==0)
+      can_swapEquipment( shipname );
+   else if (strcmp(type,"swap")==0)
+      can_swap( shipname );
+   else if (strcmp(type,"sell")==0)
+      can_sell( shipname );
+   if (errorlist_ptr != NULL) {
+      dialogue_alert( "%s", errorlist );
+      return 1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Generates error dialogues used by several landing tabs.
+ *    @param fmt String with printf-like formatting
+ */
+void error_dialogue_build( const char *fmt, ... )
+{
+   va_list ap;
+
+   if (fmt == NULL)
+      return;
+   else { /* get the message */
+      va_start(ap, fmt);
+      vsnprintf(errorreason, 512, fmt, ap);
+      va_end(ap);
+   }
+
+   if (errorlist_ptr == NULL) { /* Initialize on first run. */
+      append = snprintf( errorlist, sizeof(errorlist), errorreason);
+      errorlist_ptr = errorlist;
+   }
+   else { /* Append newest error to the existing list. */
+      snprintf( &errorlist[append],  sizeof(errorlist)-append, "\n%s", errorreason );
+      errorlist_ptr = errorlist;
+   }
+}
+
+
+/**
  * @brief Player attempts to buy a ship, trading the current ship in.
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
@@ -1068,29 +1235,8 @@ void shipyard_trade( unsigned int wid, char* str )
    int targetprice = ship->price;
    int playerprice = player_shipPrice(player.p->name);
 
-   /* Must have license. */
-   if (!player_hasLicense(ship->license)) {
-      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
-            ship->license);
+   if (error_dialogue( shipname, "trade" ))
       return;
-   }
-
-   /* Must have enough money. */
-   if (!player_hasCredits( targetprice - playerprice)) {
-      dialogue_alert( "Despite the current ship's value, you have insufficient credits." );
-      return;
-   }
-
-   /* New ship must have equal or greater cargo space. */
-   if (pilot_cargoUsed(player.p) > ship->cap_cargo) {
-      dialogue_alert( "You have %d tons of cargo, but the %s can only hold %g tons. Sell or jettison some cargo first.",
-            pilot_cargoUsed(player.p), ship->name, ship->cap_cargo );
-      return;
-   }
-   else if (pilot_hasDeployed(player.p)) { /* Escorts must not be in space. */
-      dialogue_alert( "You can't leave your fighters stranded. Recall them before trading in your ship." );
-      return;
-   }
 
    credits2str( buf, targetprice, 2 );
    credits2str( buf2, playerprice, 2 );
