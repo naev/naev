@@ -242,6 +242,14 @@ typedef struct Pilot_ {
    double energy_regen; /**< Energy regeneration rate (per second). */
    double energy_tau; /**< Tau regeneration rate for energy. */
 
+   /* Electronic warfare. */
+   double ew_base_hide; /**< Base static hide factor. */
+   double ew_mass; /**< Mass factor. */
+   double ew_hide; /**< Static hide factor. */
+   double ew_movement; /**< Movement factor. */
+   double ew_evasion; /**< Dynamic evasion factor. */
+   double ew_detect; /**< Static detection factor. */
+
    /* Ship statistics. */
    ShipStats stats; /**< Pilot's copy of ship statistics. */
 

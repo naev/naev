@@ -452,9 +452,6 @@ int pilot_inRange( const Pilot *p, double x, double y )
 {
    double d;
 
-   if (cur_system->interference == 0.)
-      return 1;
-
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
@@ -470,20 +467,20 @@ int pilot_inRange( const Pilot *p, double x, double y )
  *
  *    @param p Pilot who is trying to check to see if other is in sensor range.
  *    @param target Target of p to check to see if is in sensor range.
- *    @return 1 if they are in range, 0 if they aren't.
+ *    @return 1 if they are in range, 0 if they aren't and -1 if they are detected fuzzily.
  */
 int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
-   double d;
-
-   if (cur_system->interference == 0.)
-      return 1;
+   double d, sense;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   if (d < sensor_curRange)
+   sense = sensor_curRange * p->ew_detect;
+   if (d * target->ew_evasion < sense)
       return 1;
+   else if  (d * target->ew_hide < sense)
+      return -1;
 
    return 0;
 }
@@ -1587,6 +1584,10 @@ void pilot_update( Pilot* pilot, const double dt )
          o->timer -= dt;
    }
 
+   /* Update electronic warfare. */
+   pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) );
+   pilot->ew_evasion = pilot->ew_hide * pilot->ew_movement;
+
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
       if (pilot->ptimer < 0.) {
@@ -2524,6 +2525,9 @@ void pilot_calcStats( Pilot* pilot )
    /* Jamming */
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
+   /* Electronic warfare - we only handle the non-changing ones here. */
+   pilot->ew_base_hide  = 1.;
+   pilot->ew_detect     = 1.;
    /* Stats. */
    memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
 
@@ -2710,6 +2714,10 @@ void pilot_calcStats( Pilot* pilot )
 static void pilot_updateMass( Pilot *pilot )
 {
    pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
+
+   /* Need to recalculate electronic warfare mass change. */
+   pilot->ew_mass = 1. / (1. + pow( pilot->solid->mass, 1./3. ) / 10.);
+   pilot->ew_hide = pilot->ew_mass * pilot->ew_base_hide;
 }
 
 
@@ -3604,19 +3612,13 @@ void pilots_cleanAll (void)
 void pilot_updateSensorRange (void)
 {
    /* Calculate the sensor sensor_curRange. */
-   if (cur_system->interference == 0.)
-      sensor_curRange = INFINITY;
-   else if (cur_system->interference >= 999.)
-      sensor_curRange = 0.; /* No range. */
-   else {
-      /* 0    ->    inf
-       * 250  ->   1500.
-       * 500  ->    750.
-       * 750  ->    500.
-       * 1000 ->    300. */
-      sensor_curRange  = 375.;
-      sensor_curRange /= (cur_system->interference / 1000.);
-   }
+   /* 0    ->   5000.0
+    * 250  ->   2222.22222222
+    * 500  ->   1428.57142857
+    * 750  ->   1052.63157895
+    * 1000 ->    833.333333333 */
+   sensor_curRange  = 10000;
+   sensor_curRange /= ((cur_system->interference + 200) / 100.);
 
    /* Speeds up calculations. */
    sensor_curRange = pow2(sensor_curRange);
