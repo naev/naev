@@ -1585,8 +1585,8 @@ void pilot_update( Pilot* pilot, const double dt )
    }
 
    /* Update electronic warfare. */
-   pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) );
-   pilot->ew_evasion = pilot->ew_hide * pilot->ew_movement;
+   pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) ) / 10.;
+   pilot->ew_evasion  = pilot->ew_hide * pilot->ew_movement;
 
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
@@ -2716,7 +2716,7 @@ static void pilot_updateMass( Pilot *pilot )
    pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
 
    /* Need to recalculate electronic warfare mass change. */
-   pilot->ew_mass = 1. / (1. + pow( pilot->solid->mass, 1./3. ) / 10.);
+   pilot->ew_mass = 1. / (1. + sqrt( pilot->solid->mass ) / 20.);
    pilot->ew_hide = pilot->ew_mass * pilot->ew_base_hide;
 }
 
