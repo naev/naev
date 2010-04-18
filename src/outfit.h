@@ -42,8 +42,6 @@
 typedef struct ShipStats_ {
 #if 0
    /* Scout type. */
-   double sensor_range; /**< Sensor detection range. */
-   double sensor_jam; /**< Sensor detection countermeasures. */
    double jam_range; /**< Range of jammer effect. */
    double jam_chance; /**< Possibility of jamming missile. */
 
@@ -63,6 +61,10 @@ typedef struct ShipStats_ {
    /* Freighter-type. */
    double cargo_inertia; /**< Lowers the effect of cargo mass. */
 #endif
+
+   /* Scout type. */
+   double ew_hide; /**< Electronic warfare hide modifier. */
+   double ew_detect; /**< Electronic warfare detection modifier. */
 
    /* Fighter type. */
    double accuracy_forward; /**< Accuracy of forward mounts. */

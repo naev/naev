@@ -2493,6 +2493,7 @@ void pilot_calcStats( Pilot* pilot )
    ShipStats *s;
    int nfirerate_turret, nfirerate_forward;
    int njammers;
+   int ew_ndetect, ew_nhide;
 
    /* Comfortability. */
    s = &pilot->stats;
@@ -2525,9 +2526,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Jamming */
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
-   /* Electronic warfare - we only handle the non-changing ones here. */
-   pilot->ew_base_hide  = 1.;
-   pilot->ew_detect     = 1.;
    /* Stats. */
    memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
 
@@ -2542,6 +2540,8 @@ void pilot_calcStats( Pilot* pilot )
    wrange = wspeed      = 0.;
    pilot->mass_outfit   = 0.;
    njammers             = 0;
+   ew_ndetect           = 0;
+   ew_nhide             = 0;
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
    arel                 = 0.;
@@ -2590,6 +2590,15 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
+         /* Scout. */
+         if (o->u.mod.stats.ew_hide != 0.) {
+            s->ew_hide           += o->u.mod.stats.ew_hide * q;
+            ew_nhide++;
+         }
+         if (o->u.mod.stats.ew_detect != 0.) {
+            s->ew_detect         += o->u.mod.stats.ew_detect * q;
+            ew_ndetect++;
+         }
          /* Fighter. */
          s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
          s->damage_forward    += o->u.mod.stats.damage_forward * q;
@@ -2659,6 +2668,12 @@ void pilot_calcStats( Pilot* pilot )
       pilot->jam_range  /= (double)njammers;
       pilot->jam_chance *= exp( -0.2 * (double)(njammers-1) );
    }
+
+   /*
+    * Electronic warfare setting base parameters.
+    */
+   pilot->ew_base_hide  = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
+   pilot->ew_detect     = 1. + s->ew_detect/100. * exp( -0.2 * (double)(ew_ndetect-1) );;
 
    /* 
     * Normalize stats.
