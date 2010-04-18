@@ -828,6 +828,7 @@ void gui_render( double dt )
    StarSystem *sys;
    int q;
    glTexture *logo;
+   int r;
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -1018,65 +1019,96 @@ void gui_render( double dt )
    if (player.p->target != PLAYER_ID) {
       p = pilot_get(player.p->target);
 
-      /* Colourize ship name */
-      if (pilot_isDisabled(p)) 
-         c = &cInert;
-      else if (pilot_isFlag(p,PILOT_BRIBED))
-         c = &cNeutral;
-      else if (pilot_isHostile(p))
-         c = &cHostile;
-      else if (pilot_isFriendly(p))
-         c = &cConsole;
-      else
-         c = faction_getColour(p->faction);
-
-      /* blit the pilot target */
-      gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
-      /* blit the pilot space image */
-      /*x = gui.target.x + (TARGET_WIDTH - p->ship->gfx_space->sw)/2.;
-      y = gui.target.y + (TARGET_HEIGHT - p->ship->gfx_space->sh)/2.;
-      gl_blitStaticSprite( p->ship->gfx_space,
-            x, y, p->tsx, p->tsy, NULL );*/
+      /* Check range.  */
+      r = pilot_inRangePilot( player.p, p );
 
 
       /* target name */
-      i = gl_printWidth( NULL, p->name );
-      gl_printMaxRaw( (i>gui.target_name.w) ? &gl_smallFont : NULL,
-            gui.target_name.w,
-            gui.target_name.x,
-            gui.target_name.y,
-            c, p->name );
-      gl_printMaxRaw( &gl_smallFont, gui.target_faction.w,
-            gui.target_faction.x,
-            gui.target_faction.y,
-            NULL, faction_name(p->faction) );
+      if (r > 0) {
 
-      /* Faction logo. */
-      logo = faction_logoTiny( p->faction );
-      if (logo != NULL) {
-         gl_blitStatic( logo,
-               gui.target_name.x + gui.target_name.w - logo->w - 2.,
-               gui.target_name.y + gl_defFont.h - logo->h - 2., NULL );
+         /* Colourize ship name */
+         if (pilot_isDisabled(p)) 
+            c = &cInert;
+         else if (pilot_isFlag(p,PILOT_BRIBED))
+            c = &cNeutral;
+         else if (pilot_isHostile(p))
+            c = &cHostile;
+         else if (pilot_isFriendly(p))
+            c = &cConsole;
+         else
+            c = faction_getColour(p->faction);
+
+         /* blit the pilot target */
+         gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
+         /* blit the pilot space image */
+         /*x = gui.target.x + (TARGET_WIDTH - p->ship->gfx_space->sw)/2.;
+           y = gui.target.y + (TARGET_HEIGHT - p->ship->gfx_space->sh)/2.;
+           gl_blitStaticSprite( p->ship->gfx_space,
+           x, y, p->tsx, p->tsy, NULL );*/
+
+         i = gl_printWidth( NULL, p->name );
+         gl_printMaxRaw( (i>gui.target_name.w) ? &gl_smallFont : NULL,
+               gui.target_name.w,
+               gui.target_name.x,
+               gui.target_name.y,
+               c, p->name );
+         gl_printMaxRaw( &gl_smallFont, gui.target_faction.w,
+               gui.target_faction.x,
+               gui.target_faction.y,
+               NULL, faction_name(p->faction) );
+
+         /* Faction logo. */
+         logo = faction_logoTiny( p->faction );
+         if (logo != NULL) {
+            gl_blitStatic( logo,
+                  gui.target_name.x + gui.target_name.w - logo->w - 2.,
+                  gui.target_name.y + gl_defFont.h - logo->h - 2., NULL );
+         }
+
+         /* target status */
+         if (pilot_isDisabled(p)) { /* pilot is disabled */
+            gl_printMaxRaw( &gl_smallFont, gui.target_health.w,
+                  gui.target_health.x,
+                  gui.target_health.y,
+                  NULL, "Disabled" );
+         }
+
+         else if (p->shield > p->shield_max * 5./100.) { /* > 5% on shields */
+            gl_printMax( &gl_smallFont, gui.target_health.w,
+                  gui.target_health.x,
+                  gui.target_health.y, NULL,
+                  "%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
+         }
+
+         else { /* on armour */
+            gl_printMax( &gl_smallFont, gui.target_health.w,
+                  gui.target_health.x,
+                  gui.target_health.y, NULL, 
+                  "%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
+         }
       }
+      else {
 
-      /* target status */
-      if (pilot_isDisabled(p)) /* pilot is disabled */
+         /* blit the pilot target */
+         gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
+
+         i = gl_printWidth( NULL, "Unknown" );
+         gl_printMaxRaw( (i>gui.target_name.w) ? &gl_smallFont : NULL,
+               gui.target_name.w,
+               gui.target_name.x,
+               gui.target_name.y,
+               &cInert, "Unknown" );
+         gl_printMaxRaw( &gl_smallFont, gui.target_faction.w,
+               gui.target_faction.x,
+               gui.target_faction.y,
+               NULL, "Unknown" );
+
+         /* target status */
          gl_printMaxRaw( &gl_smallFont, gui.target_health.w,
                gui.target_health.x,
                gui.target_health.y,
-               NULL, "Disabled" );
-
-      else if (p->shield > p->shield_max * 5./100.) /* > 5% on shields */
-         gl_printMax( &gl_smallFont, gui.target_health.w,
-            gui.target_health.x,
-               gui.target_health.y, NULL,
-               "%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
-
-      else /* on armour */
-         gl_printMax( &gl_smallFont, gui.target_health.w,
-               gui.target_health.x,
-               gui.target_health.y, NULL, 
-               "%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
+               NULL, "Unknown" );
+      }
    }
    else { /* no target */
       gl_printMidRaw( NULL, SHIP_TARGET_W,
