@@ -582,19 +582,19 @@ const char* outfit_getType( const Outfit* o )
  */
 const char* outfit_getTypeBroad( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return "Bolt Weapon";
-   else if (outfit_isBeam(o)) return "Beam Weapon";
-   else if (outfit_isLauncher(o)) return "Launcher";
-   else if (outfit_isAmmo(o)) return "Ammo";
-   else if (outfit_isTurret(o)) return "Turret";
-   else if (outfit_isMod(o)) return "Modification";
+   if (outfit_isBolt(o))            return "Bolt Weapon";
+   else if (outfit_isBeam(o))       return "Beam Weapon";
+   else if (outfit_isLauncher(o))   return "Launcher";
+   else if (outfit_isAmmo(o))       return "Ammo";
+   else if (outfit_isTurret(o))     return "Turret";
+   else if (outfit_isMod(o))        return "Modification";
    else if (outfit_isAfterburner(o)) return "Afterburner";
-   else if (outfit_isJammer(o)) return "Jammer";
+   else if (outfit_isJammer(o))     return "Jammer";
    else if (outfit_isFighterBay(o)) return "Fighter Bay";
-   else if (outfit_isFighter(o)) return "Fighter";
-   else if (outfit_isMap(o)) return "Map";
-   else if (outfit_isLicense(o)) return "License";
-   else return "Unknown";
+   else if (outfit_isFighter(o))    return "Fighter";
+   else if (outfit_isMap(o))        return "Map";
+   else if (outfit_isLicense(o))    return "License";
+   else                             return "Unknown";
 }
 
 
@@ -606,11 +606,11 @@ const char* outfit_getTypeBroad( const Outfit* o )
  */
 static DamageType outfit_strToDamageType( char *buf )
 {
-   if (strcmp(buf,"energy")==0) return DAMAGE_TYPE_ENERGY;
-   else if (strcmp(buf,"kinetic")==0) return DAMAGE_TYPE_KINETIC;
-   else if (strcmp(buf,"ion")==0) return DAMAGE_TYPE_ION;
+   if (strcmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
+   else if (strcmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
+   else if (strcmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
    else if (strcmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
-   else if (strcmp(buf,"emp")==0) return DAMAGE_TYPE_EMP;
+   else if (strcmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
 
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;
@@ -649,21 +649,21 @@ if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType
  */
 static OutfitType outfit_strToOutfitType( char *buf )
 {
-   O_CMP("bolt",OUTFIT_TYPE_BOLT);
-   O_CMP("beam",OUTFIT_TYPE_BEAM);
-   O_CMP("turret bolt",OUTFIT_TYPE_TURRET_BOLT);
-   O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
-   O_CMP("launcher",OUTFIT_TYPE_LAUNCHER);
-   O_CMP("ammo",OUTFIT_TYPE_AMMO);
+   O_CMP("bolt",           OUTFIT_TYPE_BOLT);
+   O_CMP("beam",           OUTFIT_TYPE_BEAM);
+   O_CMP("turret bolt",    OUTFIT_TYPE_TURRET_BOLT);
+   O_CMP("turret beam",    OUTFIT_TYPE_TURRET_BEAM);
+   O_CMP("launcher",       OUTFIT_TYPE_LAUNCHER);
+   O_CMP("ammo",           OUTFIT_TYPE_AMMO);
    O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
-   O_CMP("turret ammo",OUTFIT_TYPE_TURRET_AMMO);
-   O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
-   O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
-   O_CMP("fighter bay",OUTFIT_TYPE_FIGHTER_BAY);
-   O_CMP("fighter",OUTFIT_TYPE_FIGHTER);
-   O_CMP("jammer",OUTFIT_TYPE_JAMMER);
-   O_CMP("map",OUTFIT_TYPE_MAP);
-   O_CMP("license",OUTFIT_TYPE_LICENSE);
+   O_CMP("turret ammo",    OUTFIT_TYPE_TURRET_AMMO);
+   O_CMP("modification",   OUTFIT_TYPE_MODIFCATION);
+   O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
+   O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
+   O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
+   O_CMP("jammer",         OUTFIT_TYPE_JAMMER);
+   O_CMP("map",            OUTFIT_TYPE_MAP);
+   O_CMP("license",        OUTFIT_TYPE_LICENSE);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;

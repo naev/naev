@@ -156,6 +156,7 @@ typedef struct OutfitBoltData_ {
    double range; /**< how far it goes */
    double falloff; /**< Point at which damage falls off. */
    double accuracy; /**< desviation accuracy */
+   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy; /**< energy usage */
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< damage type */
@@ -216,6 +217,7 @@ typedef struct OutfitLauncherData_ {
 typedef struct OutfitAmmoData_ {
    double duration; /**< How long the ammo lives. */
    double lockon; /**< time it takes to lock on the target */
+   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double resist; /**< lowers chance of jamming by this amount */
    int ai; /**< Smartness of ammo. */
 
