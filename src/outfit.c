@@ -723,12 +723,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.sound          = -1;
    temp->u.blt.sound_hit      = -1;
    temp->u.blt.falloff        = -1.;
+   temp->u.blt.ew_lockon      = 1.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
       xmlr_float(node,"accuracy",temp->u.blt.accuracy);
+      xmlr_float(node,"ew_lockon",temp->u.blt.ew_lockon);
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"cpu",temp->u.blt.cpu);
       if (xml_isNode(node,"range")) {
@@ -998,6 +1000,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
    temp->u.amm.ai          = -1;
+   temp->u.amm.ew_lockon   = 1.;
 
    do { /* load all the data */
       /* Basic */
@@ -1017,6 +1020,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       xmlr_float(node,"lockon",temp->u.amm.lockon);
+      xmlr_float(node,"ew_lockon",temp->u.amm.ew_lockon);
       xmlr_float(node,"resist",temp->u.amm.resist);
       /* Movement */
       xmlr_float(node,"thrust",temp->u.amm.thrust);

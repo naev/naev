@@ -1112,6 +1112,8 @@ static Weapon* weapon_create( const Outfit* outfit,
    Pilot *pilot_target;
    double x,y, acc, t, dist;
    Weapon* w;
+   double ew_evasion;
+   double acc_max;
 
    /* Create basic features */
    w = malloc(sizeof(Weapon));
@@ -1135,9 +1137,10 @@ static Weapon* weapon_create( const Outfit* outfit,
                (w->target != 0)) { /* Must have valid target */
 
             pilot_target = pilot_get(w->target);
-            if (pilot_target == NULL)
-               rdir = dir;
-
+            if (pilot_target == NULL) {
+               rdir        = dir;
+               ew_evasion  = 1.;
+            }
             else {
                /* Get the distance */
                dist = vect_dist( pos, &pilot_target->solid->pos );
@@ -1161,10 +1164,15 @@ static Weapon* weapon_create( const Outfit* outfit,
 
                /* Set angle to face. */
                rdir = ANGLE(x, y);
+
+               /* Evasion. */
+               ew_evasion  = pilot_target->ew_evasion;
             }
          }
-         else /* fire straight */
-            rdir = dir;
+         else { /* fire straight */
+            rdir        = dir;
+            ew_evasion  = 1.;
+         }
 
          /* Calculate accuarcy. */
          acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
@@ -1178,7 +1186,10 @@ static Weapon* weapon_create( const Outfit* outfit,
             acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
             w->dam_mod  *= parent->stats.damage_forward;
          }
-         acc = MAX( 0., acc ); /* Make sure it doesn't become negative. */
+         acc_max = acc;
+         acc  *= ew_evasion / outfit->u.blt.ew_lockon;
+         acc   = MAX( acc_max, acc ); /* Shouldn't go below maximum accuracy, it can only get worse. */
+         acc   = MAX( 0., acc ); /* Make sure it doesn't become negative. */
 
          /* Calculate direction. */
          rdir += RNG_2SIGMA() * acc;
@@ -1230,9 +1241,10 @@ static Weapon* weapon_create( const Outfit* outfit,
       case OUTFIT_TYPE_TURRET_AMMO:
          if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
             pilot_target = pilot_get(w->target);
-            if (pilot_target == NULL)
-               rdir = dir;
-
+            if (pilot_target == NULL) {
+               rdir        = dir;
+               ew_evasion  = 1.;
+            }
             else {
                /* Get the distance */
                dist = vect_dist( pos, &pilot_target->solid->pos );
@@ -1253,10 +1265,14 @@ static Weapon* weapon_create( const Outfit* outfit,
 
                /* Set angle to face. */
                rdir = ANGLE(x, y);
+
+               /* Evasion. */
+               ew_evasion    = pilot_target->ew_evasion;
             }
          }
          else {
-            rdir = dir;
+            rdir        = dir;
+            ew_evasion  = 1.;
          }
          if (outfit->u.amm.accuracy != 0.) {
             rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
@@ -1276,7 +1292,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 
          /* Set up ammo details. */
          mass        = w->outfit->mass;
-         w->lockon   = outfit->u.amm.lockon;
+         w->lockon   = MAX( outfit->u.amm.lockon, outfit->u.amm.lockon * ew_evasion / outfit->u.amm.ew_lockon );
          w->timer    = outfit->u.amm.duration;
          w->solid    = solid_create( mass, rdir, pos, &v );
          if (w->outfit->u.amm.thrust != 0.)
