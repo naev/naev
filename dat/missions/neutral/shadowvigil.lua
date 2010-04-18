@@ -58,6 +58,7 @@ function create()
     missend = false
 
     if first then
+        var.push("shadowvigil_first", false)
         tk.msg(title[1], string.format(text[1], player.name()))
         tk.msg(title[1], text[2])
         if tk.yesno(title[1], text[3]) then
@@ -66,7 +67,6 @@ function create()
             tk.msg(refusetitle, refusetext)
             abort()
         end
-        var.push("shadowvigil_first", false)
     else
         tk.msg(title[1], string.format(textrepeat, player.name()))
         if tk.yesno(title[1], text[3]) then
