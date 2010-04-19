@@ -546,7 +546,7 @@
    <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mission Thugs">
+ <fleet name="crimelord Thugs">
   <ai>baddie</ai>
   <faction>Thugs</faction>
   <pilots>
@@ -556,7 +556,7 @@
    <pilot ship="Admonisher"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mission Associate">
+ <fleet name="crimelord Associate">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
@@ -567,7 +567,7 @@
    <pilot ship="Hawking"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mission Kestrel">
+ <fleet name="crimelord Kestrel">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>

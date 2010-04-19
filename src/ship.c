@@ -278,6 +278,9 @@ int ship_statsParse( ShipStats *s, xmlNodePtr parent )
    /* Parse information. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      /* Scout. */
+      xmlr_float(node,"ew_hide",s->ew_hide);
+      xmlr_float(node,"ew_detect",s->ew_detect);
       /* Fighter. */
       xmlr_float(node,"accuracy_forward",s->accuracy_forward);
       xmlr_float(node,"damage_forward",s->damage_forward);
@@ -318,6 +321,9 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
+   /* Scout stuff. */
+   DESC_ADD(s->ew_detect,"Detection");
+   DESC_ADD(s->ew_hide,"Cloaking");
    /* Fighter Stuff. */
    DESC_ADD(s->accuracy_forward,"Accuracy (Cannon)");
    DESC_ADD(s->damage_forward,"Damage (Cannon)");

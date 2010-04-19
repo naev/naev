@@ -65,12 +65,12 @@ function jumpin () --aforementioned triggered function
     
     if system.cur() == targetsystem then --when in target system
     
-        defenders = pilot.add("Mission Associate") --add a defending force to help you
+        defenders = pilot.add("crimelord Associate") --add a defending force to help you
         for pilot_number, pilot_object in pairs(defenders) do
             pilot_object:setFriendly() --I think they like you
         end
         
-        capship = pilot.add("Mission Kestrel") --add the capship - needed for the mission
+        capship = pilot.add("crimelord Kestrel") --add the capship - needed for the mission
         for cap_num, cap_obj in pairs(capship) do
             cap_obj:setInvincible(true) --since it's needed it may not be destroyed
             cap_obj:setFriendly()
@@ -84,9 +84,9 @@ end
 
 function spawnBaddies ()
     if last_system == startsystem then
-        thugs = pilot.add( "Mission Thugs")
+        thugs = pilot.add( "crimelord Thugs")
     else
-        thugs = pilot.add( "Mission Thugs", nil, last_system)
+        thugs = pilot.add( "crimelord Thugs", nil, last_system)
     end
     thugs_alive = 0
     for pilot_number, pilot_object in pairs(thugs) do
