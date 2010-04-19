@@ -27,10 +27,12 @@ function create ()
     
     hailie = evt.timerStart("hailme", 3000)
 
-    hook.pilot(vendetta, "jump", "finish")
-    hook.pilot(vendetta, "death", "finish")
-    hook.land("finish")
-    hook.jumpout("finish")
+    var.push("shadowvigil_active", true) -- Make sure the event can't reappear while it's active
+
+    hook1 = hook.pilot(vendetta, "jump", "finish")
+    hook2 = hook.pilot(vendetta, "death", "finish")
+    hook3 = hook.land("finish")
+    hook4 = hook.jumpout("finish")
 end
 
 -- Make the ship hail the player
@@ -41,15 +43,19 @@ end
 
 -- Triggered when the player hails the ship
 function hail()
+    hailed = true
     tk.msg(title[1], string.format(text[1], player.name(), sysname))
     var.push("shadowvigil_active", true)
-    hailed = true
+    hook.rm(hook1)
+    hook.rm(hook2)
+    hook.rm(hook3)
+    hook.rm(hook4)
     hook.jumpin("jumpin")
 end
 
 function jumpin()
     if system.cur() == destsys then
-        seiryuu = pilot.add("Seiryuu", "trader", vec2.new(0, -2000), false)[1] -- TODO: Big system position.
+        seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
         seiryuu:disable()
         seiryuu:setInvincible(true)
         hook.pilot(seiryuu, "board", "board")
@@ -60,13 +66,13 @@ function board()
     player.unboard()
     seiryuu:setHealth(100,100)
     evt.misnStart("Shadow Vigil")
-    hailed = false
     finish()
 end
 
 function finish()
-    evt.timerStop(hailie)
     if not hailed then
-        evt.finish()
+        var.pop("shadowvigil_active")
     end
+    evt.timerStop(hailie)
+    evt.finish()
 end

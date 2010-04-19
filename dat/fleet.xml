@@ -550,42 +550,51 @@
   <ai>baddie</ai>
   <faction>Thugs</faction>
   <pilots>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mission Associate">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
-   <pilot chance="100" ship="Pacifier"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Hawking"></pilot>
+   <pilot ship="Pacifier"></pilot>
+   <pilot ship="Lancelot"></pilot>
+   <pilot ship="Lancelot"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Hawking"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mission Kestrel">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
-   <pilot chance="100" ship="Kestrel"></pilot>
+   <pilot ship="Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Four Winds Vendetta">
   <ai>trader</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot chance="100" ship="Vendetta"></pilot>
+   <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Seiryuu">
   <ai>trader</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot name="Seiryuu" chance="100" ship="Pirate Kestrel"></pilot>
+   <pilot name="Seiryuu" ship="Pirate Kestrel"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Escort Lancelot Triplet">
+  <ai>trader</ai>
+  <faction>Independent</faction>
+  <pilots>
+   <pilot name="Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
 </Fleets>

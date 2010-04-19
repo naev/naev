@@ -9,6 +9,7 @@ else -- default english
 
     title = {}
     text = {}
+    commmsg = {}
     
     title[1] = "Reunion with Rebina"
     text[1] = [[    You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in grey uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartiments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
@@ -24,21 +25,25 @@ else -- default english
     text[3] = [[    "You may not know this, but there are tensions between the Imperial and Dvaered militaries. For some time now there have been incidents on the border, conflicts about customs, pilots disrespecting each other's flight trajectories, that sort of thing. It hasn't become a public affair yet, and the respective authorities don't want it to come to that. This is why they've arranged a secret diplomatic meeting to smooth things over and make arrangements to de-escalate the situation.
     "This is where we come in. Without going into the details, suffice to say we have an interest in making sure that this meeting does not meet with any unfortunate accidents. However, for reasons I can't explain to you now, we can't become involved directly. That's why I want you to go on our behalf.
     "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your protegee, the Imperial representative. Once there, you will protect him from any threats you might encounter, and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
-    "That will be all. Can I count on you to undertake this task?"]]
+    "That will be all. I offer you a suitable monetary reward should you choose to accept. Can I count on you to undertake this task?"]]
     
     refusetitle = "Let sleeping shadows lie"
     refusetext = [[    Captain Rebina sighs. "I see. I don't mind admitting that I hoped you would accept, but it's your decision. I won't force you to do anything you feel uncomfortable with. However, I still hold out the hope that you will change your mind. If you do, come back to see me. You know where to find the Seiryuu."
     
     Mere minutes later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]]
     
-    accepttitle = ""
-    accepttext = [[]]
+    accepttitle = "Shadow Vigil"
+    accepttext = [[    "Excellent, %s," Rebina smiles at you. "I've told my crew to provide your ship's computer with the necessary navigation data. Also, note that I've taken the liberty to install a specialized IFF transponder in your ship. Don't pay it any heed, it will only serve to identify you as one of the escorts. For various reasons, it is best you refrained from communication with the other escorts as much as possible. I think you might have an inkling as to why."
+    Rebina straightens up. "That will be all for now, %s," she says in a more formal, captain-like manner. "You have your assignment I suggest you go about it."
+    You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]]
     
-    -- OSD stuff
+    commmsg[1] = "There you are at last. Fancy boat you've got there. Okay, you know the drill. Let's go."
+    
+    -- Mission info stuff
     osd_title = {}
     osd_msg   = {}
     osd_title = "Shadow Vigil"
-    osd_msg[1] = "Fly to the %s system and wait for the others to arrive"
+    osd_msg[1] = "Fly to the %s system and join the other escorts"
     osd_msg[2] = "Follow the flight leader to the rendezvous location"
     osd_msg[3] = "Escort the Imperial diplomat"
     osd_msg[4] = "Report back to Rebina"
@@ -51,7 +56,9 @@ function create()
     sysname = "Tuoladis"
     destsys = system.get(sysname)
     misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
+    nextsys = misssys[1]
     seirsys = system.cur()
+    escorting = false
     
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     accepted = false
@@ -80,36 +87,70 @@ function create()
 end
 
 function accept()
-    tk.msg(accepttitle, accepttext)
+    var.push("shadowvigil_active", true)
+    tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
 
     misn.accept()
-    accepted = true
     
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
+    misn.setMarker(misssys[1], "misc")
     
     osd_msg[1] = string.format(osd_msg[1], misssys[1]:name())
     misn.osdCreate(osd_title, osd_msg)
     
-    hook.jumpin("jumpin")
+    jumphook = hook.jumpin("jumpin")
     -- TODO
 end
 
+-- Function hooked to jumpin. Handles the events in the various systems.
 function jumpin()
-    if accepted then
-        if system.cur() == misssys[1] then
-            -- Handle actual mission here
-        elseif system.cur() == misssys[2] then
-            -- Handle actual mission here
+    if escorting then
+        if system.cur() == misssys[2] then
+            -- case join up with diplomat
         elseif system.cur() == misssys[3] then
-            -- Handle actual mission here
-        elseif system.cur() == seirsys then
-            seiryuu = pilot.add("Seiryuu", "trader", vec2.new(0, -2000), false)[1]
-            seiryuu:setInvincible(true)
-            if missend then
-                seiryuu:disable()
-                hook.pilot(seiryuu, "board", "board")
+            -- case rendezvous with dvaered diplomat
+        elseif not system.cur() == nextsys then
+            -- Case player is escorting AND jumped to somewhere other than the next escort destination
+        end
+    elseif system.cur() == misssys[1] then
+        escorts = pilot.add("Escort Lancelot Triplet", nil, vec2.new(0, 0))
+        for i, j in pairs(escorts) do
+            if j:exists() then
+                j:control()
             end
+        end
+        proxy1 = misn.timerStart("proximity", 1000)
+    elseif system.cur() == seirsys then
+        seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
+        seiryuu:setInvincible(true)
+        if missend then
+            seiryuu:disable()
+            hook.pilot(seiryuu, "board", "board")
+        end
+    else
+        if proxy1 then
+            misn.timerStop(proxy1)
+        end
+    end
+end
+
+-- Poll for player proximity to the origin
+function proximity()
+    if vec2.dist(player.pos(), vec2.new(0, 0)) < 500 then
+        escortStart()
+    else
+        proxy1 = misn.timerStart("proximity", 1000)
+    end
+end
+
+-- The player has successfully joined up with the escort fleet. Cutscene -> departure.
+function escortStart()
+    escorting = true
+    escorts[1]:comm(commmsg[1])
+    for i, j in pairs(escorts) do
+        if j:exists() then
+            j:hyperspace() -- TODO: specific target!
         end
     end
 end
