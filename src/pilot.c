@@ -452,9 +452,6 @@ int pilot_inRange( const Pilot *p, double x, double y )
 {
    double d;
 
-   if (cur_system->interference == 0.)
-      return 1;
-
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
@@ -470,20 +467,20 @@ int pilot_inRange( const Pilot *p, double x, double y )
  *
  *    @param p Pilot who is trying to check to see if other is in sensor range.
  *    @param target Target of p to check to see if is in sensor range.
- *    @return 1 if they are in range, 0 if they aren't.
+ *    @return 1 if they are in range, 0 if they aren't and -1 if they are detected fuzzily.
  */
 int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
-   double d;
-
-   if (cur_system->interference == 0.)
-      return 1;
+   double d, sense;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   if (d < sensor_curRange)
+   sense = sensor_curRange * p->ew_detect;
+   if (d * target->ew_evasion < sense)
       return 1;
+   else if  (d * target->ew_hide < sense)
+      return -1;
 
    return 0;
 }
@@ -1587,6 +1584,10 @@ void pilot_update( Pilot* pilot, const double dt )
          o->timer -= dt;
    }
 
+   /* Update electronic warfare. */
+   pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) ) / 10.;
+   pilot->ew_evasion  = pilot->ew_hide * pilot->ew_movement;
+
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
       if (pilot->ptimer < 0.) {
@@ -2492,6 +2493,7 @@ void pilot_calcStats( Pilot* pilot )
    ShipStats *s;
    int nfirerate_turret, nfirerate_forward;
    int njammers;
+   int ew_ndetect, ew_nhide;
 
    /* Comfortability. */
    s = &pilot->stats;
@@ -2538,6 +2540,8 @@ void pilot_calcStats( Pilot* pilot )
    wrange = wspeed      = 0.;
    pilot->mass_outfit   = 0.;
    njammers             = 0;
+   ew_ndetect           = 0;
+   ew_nhide             = 0;
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
    arel                 = 0.;
@@ -2586,6 +2590,15 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
+         /* Scout. */
+         if (o->u.mod.stats.ew_hide != 0.) {
+            s->ew_hide           += o->u.mod.stats.ew_hide * q;
+            ew_nhide++;
+         }
+         if (o->u.mod.stats.ew_detect != 0.) {
+            s->ew_detect         += o->u.mod.stats.ew_detect * q;
+            ew_ndetect++;
+         }
          /* Fighter. */
          s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
          s->damage_forward    += o->u.mod.stats.damage_forward * q;
@@ -2656,6 +2669,12 @@ void pilot_calcStats( Pilot* pilot )
       pilot->jam_chance *= exp( -0.2 * (double)(njammers-1) );
    }
 
+   /*
+    * Electronic warfare setting base parameters.
+    */
+   pilot->ew_base_hide  = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
+   pilot->ew_detect     = 1. + s->ew_detect/100. * exp( -0.2 * (double)(ew_ndetect-1) );;
+
    /* 
     * Normalize stats.
     */
@@ -2710,6 +2729,10 @@ void pilot_calcStats( Pilot* pilot )
 static void pilot_updateMass( Pilot *pilot )
 {
    pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
+
+   /* Need to recalculate electronic warfare mass change. */
+   pilot->ew_mass = 1. / (1. + sqrt( pilot->solid->mass ) / 20.); /* Smaller the more mass you have. */
+   pilot->ew_hide = pilot->ew_mass * pilot->ew_base_hide;
 }
 
 
@@ -3604,19 +3627,13 @@ void pilots_cleanAll (void)
 void pilot_updateSensorRange (void)
 {
    /* Calculate the sensor sensor_curRange. */
-   if (cur_system->interference == 0.)
-      sensor_curRange = INFINITY;
-   else if (cur_system->interference >= 999.)
-      sensor_curRange = 0.; /* No range. */
-   else {
-      /* 0    ->    inf
-       * 250  ->   1500.
-       * 500  ->    750.
-       * 750  ->    500.
-       * 1000 ->    300. */
-      sensor_curRange  = 375.;
-      sensor_curRange /= (cur_system->interference / 1000.);
-   }
+   /* 0    ->   5000.0
+    * 250  ->   2222.22222222
+    * 500  ->   1428.57142857
+    * 750  ->   1052.63157895
+    * 1000 ->    833.333333333 */
+   sensor_curRange  = 10000;
+   sensor_curRange /= ((cur_system->interference + 200) / 100.);
 
    /* Speeds up calculations. */
    sensor_curRange = pow2(sensor_curRange);

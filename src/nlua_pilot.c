@@ -425,30 +425,47 @@ static int pilotL_addFleet( lua_State *L )
                jumpind[ njumpind++ ] = i;
       }
 
+      /* Crazy case no landable nor presence, we'll just jump in randomly. */
+      if ((nind == 0) && (njumpind==0)) {
+         if (cur_system->njumps > 0) {
+            jumpind = malloc( sizeof(int) * cur_system->njumps );
+            for (i=0; i<cur_system->njumps; i++)
+               jumpind[ njumpind++ ] = i;
+         }
+         else {
+            WARN("Creating pilot in system with no jumps nor planets to take off from!");
+            vectnull( &vp );
+            a = RNGF() * 2.*M_PI;
+            vectnull( &vv );
+         }
+      }
+
       /* Calculate jump chance. */
-      chance = njumpind;
-      chance = chance / (chance + nind);
+      if ((nind > 0) || (njumpind > 0)) {
+         chance = njumpind;
+         chance = chance / (chance + nind);
 
-      /* Random jump in. */
-      if ((nind == 0) || (RNGF() <= chance)) {
-         jump = jumpind[ RNG_SANE(0,njumpind-1) ];
-      }
-      /* Random take off. */
-      else {
-         planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
-         pilot_setFlagRaw( flags, PILOT_TAKEOFF );
-         vect_cset( &vp,
-               planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
-               planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
-         a = RNGF() * 2.*M_PI;
-         vectnull( &vv );
-      }
+         /* Random jump in. */
+         if ((nind == 0) || (RNGF() <= chance)) {
+            jump = jumpind[ RNG_SANE(0,njumpind-1) ];
+         }
+         /* Random take off. */
+         else {
+            planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
+            pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+            vect_cset( &vp,
+                  planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
+                  planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+            a = RNGF() * 2.*M_PI;
+            vectnull( &vv );
+         }
 
-      /* Free memory allocated. */
-      if (ind != NULL )
-         free( ind );
-      if (jumpind != NULL)
-         free( jumpind );
+         /* Free memory allocated. */
+         if (ind != NULL )
+            free( ind );
+         if (jumpind != NULL)
+            free( jumpind );
+      }
    }
 
    /* Set up velocities and such. */
