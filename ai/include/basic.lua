@@ -109,6 +109,11 @@ function __hyperspace ()
 end
 
 
+function __land ()
+   land()
+end
+
+
 --[[
 -- Attempts to land on a planet.
 --]]
@@ -120,6 +125,20 @@ function land ()
       return
    end
 
+   -- Set target if necessary
+   local target = ai.target()
+   if target ~= nil then
+      mem.land = target
+   end
+
+   -- Make sure mem.land is valid target
+   if mem.land == nil then
+      mem.land = ai.landplanet()
+   end
+
+   ai.pushsubtask( "__landgo" )
+end
+function __landgo ()
    local target   = mem.land
    local dir      = ai.face( target )
    local dist     = ai.dist( target )

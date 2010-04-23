@@ -89,6 +89,7 @@ static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
+static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
@@ -143,6 +144,7 @@ static const luaL_reg pilotL_methods[] = {
    { "attack", pilotL_attack },
    { "runaway", pilotL_runaway },
    { "hyperspace", pilotL_hyperspace },
+   { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
    { "hookClear", pilotL_hookClear },
@@ -1491,9 +1493,10 @@ static int pilotL_idle( lua_State *L )
  * @luasee goto
  * @luasee brake
  * @luasee follow
- * @luasee hyperspace
  * @luasee attack
  * @luasee runaway
+ * @luasee hyperspace
+ * @luasee land
  * @luafunc control( p, enable )
  */
 static int pilotL_control( lua_State *L )
@@ -1837,6 +1840,58 @@ static int pilotL_hyperspace( lua_State *L )
       a     = RNGF() * M_PI * 2.;
       rad   = RNGF() * 0.5 * jp->radius;
       vect_cadd( &t->dat.vec, rad*cos(a), rad*sin(a) );
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Tells the pilot to land
+ *
+ * Pilot must be under manual control for this to work.
+ *
+ *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam planet Optional planet to land on, uses random if nil.
+ * @luasee control
+ * @luafunc land( p, planet )
+ */
+static int pilotL_land( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+   LuaPlanet *lp;
+   int i;
+
+   /* Get parameters. */
+   p = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 0)
+      lp = luaL_checkplanet( L, 2 );
+   else
+      lp = NULL;
+
+   /* Set the task. */
+   t = pilotL_newtask( L, p, "__land" );
+   if (lp != NULL) {
+      /* Find the jump. */
+      for (i=0; i < cur_system->nplanets; i++) {
+         if (cur_system->planets[i] == lp->p) {
+            break;
+         }
+      }
+      if (i >= cur_system->nplanets) {
+         NLUA_ERROR( L, "Planet '%s' not found in system '%s'", lp->p->name, cur_system->name );
+         return 0;
+      }
+
+      /* Copy vector. */
+      p->nav_planet = i;
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &lp->p->pos );
+      
+      /* Introduce some error. */
+      vect_cadd( &t->dat.vec, RNG(0, lp->p->gfx_space->sw) - lp->p->gfx_space->sw/2.,
+            RNG(0, lp->p->gfx_space->sh) - lp->p->gfx_space->sh/2. );
    }
 
    return 0;
