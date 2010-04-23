@@ -1793,19 +1793,51 @@ static int pilotL_runaway( lua_State *L )
  * Pilot must be under manual control for this to work.
  *
  *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam sys Optional system argument to jump to, uses random if nil.
  * @luasee control
- * @luafunc hyperspace( p )
+ * @luafunc hyperspace( p, sys )
  */
 static int pilotL_hyperspace( lua_State *L )
 {
    Pilot *p;
    Task *t;
+   LuaSystem *sys;
+   int i;
+   JumpPoint *jp;
+   double a, rad;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 0)
+      sys = luaL_checksystem( L, 2 );
+   else
+      sys = NULL;
+
 
    /* Set the task. */
    t = pilotL_newtask( L, p, "__hyperspace" );
+   if (sys != NULL) {
+      /* Find the jump. */
+      for (i=0; i < cur_system->njumps; i++) {
+         jp = &cur_system->jumps[i];
+         if (jp->target == sys->s) {
+            break;
+         }
+      }
+      if (i >= cur_system->njumps) {
+         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", sys->s->name, cur_system->name );
+         return 0;
+      }
+
+      /* Copy vector. */
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &jp->pos );
+      
+      /* Introduce some error. */
+      a     = RNGF() * M_PI * 2.;
+      rad   = RNGF() * 0.5 * jp->radius;
+      vect_cadd( &t->dat.vec, rad*cos(a), rad*sin(a) );
+   }
 
    return 0;
 }

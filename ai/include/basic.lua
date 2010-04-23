@@ -227,8 +227,11 @@ end
 -- Starts heading away to try to hyperspace.
 --]]
 function hyperspace ()
-   local v = ai.rndhyptarget()
-   ai.pushsubtask( "__hyp_approach", v )
+   local target = ai.target()
+   if target == nil then
+      target = ai.rndhyptarget()
+   end
+   ai.pushsubtask( "__hyp_approach", target )
 end
 function __hyp_approach ()
    local target   = ai.subtarget()
