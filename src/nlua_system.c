@@ -37,6 +37,7 @@ static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
+static int systemL_radius( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -49,7 +50,8 @@ static const luaL_reg system_methods[] = {
    { "adjacentSystems", systemL_adjacent },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
-   { "presence", systemL_presence},
+   { "presence", systemL_presence },
+   { "radius", systemL_radius },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -553,4 +555,26 @@ static int systemL_presence( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Gets the radius of the system.
+ *
+ * This is the radius of the circle which all the default jumps will be on.
+ *
+ * @usage r = s:radius()
+ *
+ *    @luaparam s System to get the radius of.
+ *    @luareturn The radius of the system.
+ * @luafunc radius( s )
+ */
+static int systemL_radius( lua_State *L )
+{
+   LuaSystem *sys;
+
+   /* Get parameters. */
+   sys = luaL_checksystem(L, 1);
+
+   lua_pushnumber( L, sys->s->radius );
+   return 1;
+}
 
