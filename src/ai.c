@@ -1946,6 +1946,11 @@ static int aiL_land( lua_State *L )
    
    ret = 0;
 
+   if (cur_pilot->nav_planet < 0) {
+      NLUA_ERROR( L, "Pilot '%s' has no land target", cur_pilot->name );
+      return 0;
+   }
+
    /* Get planet. */
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 

@@ -115,12 +115,12 @@ end
 
 function jumpin()
     if talked and system.cur() == system.get(sysname2) then
-        pinnacle = pilot.add("Proteron Kahan", "trader", vec2.new(-400,-400))[1]
+        pinnacle = pilot.add("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400))[1]
         pinnacle:setFaction("Civilian")
         pinnacle:rename(shipname)
         pinnacle:setInvincible(true)
         pinnacle:control()
-        pinnacle:goto(vec2.new( 400, -400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
     end
@@ -130,10 +130,10 @@ function idle()
     if stopping then
         pinnacle:disable()
     else
-        pinnacle:goto(vec2.new( 400,  400), false)
-        pinnacle:goto(vec2.new(-400,  400), false)
-        pinnacle:goto(vec2.new(-400, -400), false)
-        pinnacle:goto(vec2.new( 400, -400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
     end
 end
 
