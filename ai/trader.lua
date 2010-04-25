@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/trader.lua")
 
 
 mem.shield_run = 100

@@ -42,28 +42,28 @@
   </pilots>
  </fleet>
  <fleet name="Civilian Schroedinger">
-  <ai>trader</ai>
+  <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
    <pilot ship="Schroedinger"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Hyena">
-  <ai>trader</ai>
+  <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
    <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Llama">
-  <ai>trader</ai>
+  <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
    <pilot ship="Llama"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Gawain">
-  <ai>trader</ai>
+  <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
    <pilot ship="Gawain"></pilot>

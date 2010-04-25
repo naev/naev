@@ -1,5 +1,5 @@
 include("ai/empire_idle.lua")
-
+include("ai/personality/patrol.lua")
 
 -- Settings
 mem.aggressive = false
