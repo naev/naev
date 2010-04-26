@@ -16,7 +16,7 @@ function idle ()
        end
    else -- Stay. Have a beer.
       -- sysrad = rnd.rnd() * system.cur():radius() -- TODO: Make this work somehow
-      sysrad = 3500 -- This is the radius of most systems anyway.
+      sysrad = ai.sysradius() -- This is the radius of most systems anyway.
       angle = rnd.rnd() * 2 * math.pi
       ai.pushtask("__goto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
    end
