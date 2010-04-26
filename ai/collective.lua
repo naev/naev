@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 -- Settings
 mem.control_rate = 0.5 -- Lower control rate
