@@ -176,7 +176,7 @@ function escortStart()
     escorts[1]:comm(commmsg[1])
     for i, j in pairs(escorts) do
         if j:exists() then
-            j:hyperspace(getNextSystem(misssys[2])) -- TODO: specific target!
+            j:hyperspace(getNextSystem(misssys[stage])) -- This is broken somehow.
         end
     end
 end
@@ -191,8 +191,8 @@ function getNextSystem(finalsys)
         local nearest = 0
         local nextsys = nil
         for j, _ in pairs(neighs) do
-            if nearest == 0 or j:jumpDist(mysys) < nearest then
-                nearest = j:jumpDist(mysys)
+            if nearest == 0 or j:jumpDist(finalsys) < nearest then
+                nearest = j:jumpDist(finalsys)
                 nextsys = j
             end
         end
