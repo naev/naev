@@ -640,6 +640,7 @@ static void system_scheduler( double dt, int init )
          if (lua_isnil(L,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
                   faction_name( p->faction ) );
+            lua_pop(L,1);
             continue;
          }
          lua_pushnumber( L, p->curUsed ); /* f, presence */
@@ -671,7 +672,7 @@ static void system_scheduler( double dt, int init )
             if (!lua_istable(L,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
                      faction_name( p->faction ) );
-               lua_pop(L,1); /* tk, k */
+               lua_pop(L,2); /* tk, k */
                continue;
             }
 
@@ -2636,6 +2637,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    /* Run decrease function if applicable. */
    lua_getglobal( L, "decrease" ); /* f */
    if (lua_isnil(L,-1)) {
+      lua_pop(L,1);
       return;
    }
    lua_pushnumber( L, presence->curUsed ); /* f, cur */

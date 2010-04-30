@@ -2177,7 +2177,7 @@ void takeoff( int delay )
 
    /* to randomize the takeoff a bit */
    a = RNGF() * 2. * M_PI;
-   r = land_planet->radius;
+   r = RNGF() * land_planet->radius;
 
    /* no longer authorized to land */
    player_rmFlag(PLAYER_LANDACK);

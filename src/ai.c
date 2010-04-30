@@ -1928,7 +1928,7 @@ static int aiL_getlandplanet( lua_State *L )
    p = cur_system->planets[ ind[i] ];
    vectcpy( &lv.vec, &p->pos );
    a = RNGF() * 2. * M_PI;
-   r = p->radius * 0.8;
+   r = RNGF() * p->radius * 0.8;
    vect_cadd( &lv.vec, r * cos(a), r * sin(a) );
    lua_pushvector( L, lv );
    cur_pilot->nav_planet   = ind[ i ];
@@ -1963,7 +1963,7 @@ static int aiL_land( lua_State *L )
       ret++;
 
    /* Check distance. */
-   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > (planet->radius))
+   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > pow2(planet->radius))
       ret++;
 
    /* Check velocity. */
