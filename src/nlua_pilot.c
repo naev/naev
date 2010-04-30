@@ -399,7 +399,7 @@ static int pilotL_addFleet( lua_State *L )
       planet  = lplanet->p;
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       a = RNGF() * 2. * M_PI;
-      r = planet->radius;
+      r = RNGF() * planet->radius;
       vect_cset( &vp,
             planet->pos.x + r * cos(a),
             planet->pos.y + r * sin(a) );
@@ -458,7 +458,7 @@ static int pilotL_addFleet( lua_State *L )
             planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
             pilot_setFlagRaw( flags, PILOT_TAKEOFF );
             a = RNGF() * 2. * M_PI;
-            r = planet->radius;
+            r = RNGF() * planet->radius;
             vect_cset( &vp,
                   planet->pos.x + r * cos(a),
                   planet->pos.y + r * sin(a) );
@@ -1899,7 +1899,7 @@ static int pilotL_land( lua_State *L )
       
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;
-      r = lp->p->radius;
+      r = RNGF() * lp->p->radius;
       vect_cadd( &t->dat.vec, r*cos(a), r*sin(a) );
    }
 

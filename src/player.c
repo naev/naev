@@ -2999,7 +2999,7 @@ static int player_parse( xmlNodePtr parent )
    sys = system_get( planet_getSystem( planet ) );
    space_gfxLoad( sys );
    a = RNGF() * 2.*M_PI;
-   r = pnt->radius * 0.8;
+   r = RNGF() * pnt->radius * 0.8;
    player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
    gl_cameraBind(&player.p->solid->pos);
