@@ -19,6 +19,8 @@ function create ()
       mem.refuel_msg = "\"Sure thing.\""
    end
 
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
    bribe_no = "I'm out of here."
 end
 
