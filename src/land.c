@@ -2159,8 +2159,9 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
  */
 void takeoff( int delay )
 {
-   int sw,sh, h;
+   int h;
    char *nt;
+   double a, r;
 
    if (!landed)
       return;
@@ -2175,15 +2176,14 @@ void takeoff( int delay )
    music_choose("takeoff");
 
    /* to randomize the takeoff a bit */
-   sw = land_planet->gfx_space->w;
-   sh = land_planet->gfx_space->h;
+   a = RNGF() * 2. * M_PI;
+   r = RNGF() * land_planet->radius;
 
    /* no longer authorized to land */
    player_rmFlag(PLAYER_LANDACK);
 
    /* set player to another position with random facing direction and no vel */
-   player_warp( land_planet->pos.x + RNG(-sw/2,sw/2),
-         land_planet->pos.y + RNG(-sh/2,sh/2) );
+   player_warp( land_planet->pos.x + r * cos(a), land_planet->pos.y + r * sin(a) );
    vect_pset( &player.p->solid->vel, 0., 0. );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
 

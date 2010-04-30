@@ -169,6 +169,7 @@ extern int map_npath;
 /* 
  * internal
  */
+static void player_checkHail (void);
 static void player_updateZoom( double dt );
 /* creation */
 static int player_newMake (void);
@@ -414,7 +415,7 @@ static int player_newMake (void)
  *
  *    @param ship New ship to get.
  *    @param def_name Default name to give it if canceled.
- *    @param trade Whether or not to trade player's current ship with the new ship.
+ *    @param trade Whether or not to t/ade player's current ship with the new ship.
  *    @return 0 indicates success, -1 means dialogue was cancelled.
  *
  * @sa player_newShipMake
@@ -1507,7 +1508,7 @@ void player_land (void)
          }
          return;
       }
-      else if (vect_dist(&player.p->solid->pos,&planet->pos) > planet->gfx_space->sw) {
+      else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
          player_message("\erYou are too far away to land on %s.", planet->name);
          return;
       } else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
@@ -1683,14 +1684,14 @@ void player_brokeHyperspace (void)
    /* Save old system. */
    sys = cur_system;
 
+   /* Free old graphics. */
+   space_gfxUnload( sys );
+
    /* enter the new system */
    space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
 
    /* set position, the pilot_update will handle lowering vel */
    space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
-
-   /* Free old graphics. */
-   space_gfxUnload( sys );
 
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;
@@ -1983,6 +1984,30 @@ void player_screenshot (void)
 
 
 /**
+ * @brief Checks to see if player is still being hailed and clears hail counters
+ *        if he isn't.
+ */
+static void player_checkHail (void)
+{
+   int i;
+   Pilot *p;
+
+   /* See if a pilot is hailing. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be hailing. */
+      if (pilot_isFlag(p, PILOT_HAILING))
+         return;
+   }
+
+   /* Clear hail timer. */
+   player_hailCounter   = 0;
+   player_hailTimer     = 0.;
+}
+
+
+/**
  * @brief Opens communication with the player's target.
  */
 void player_hail (void)
@@ -1993,6 +2018,9 @@ void player_hail (void)
       comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
    else
       player_message("\erNo target selected to hail.");
+
+   /* Clear hails if none found. */
+   player_checkHail();
 }
 
 
@@ -2022,6 +2050,9 @@ void player_autohail (void)
    /* Try o hail. */
    player.p->target = p->id;
    player_hail();
+
+   /* Clear hails if none found. */
+   player_checkHail();
 }
 
 
@@ -2852,12 +2883,12 @@ static int player_parse( xmlNodePtr parent )
    unsigned int player_time;
    char* planet, *str;
    Planet* pnt;
-   int sw,sh;
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
    int i, hunting;
    StarSystem *sys;
+   double a, r;
 
    xmlr_attr(parent,"name",player.name);
 
@@ -2967,10 +2998,9 @@ static int player_parse( xmlNodePtr parent )
    }
    sys = system_get( planet_getSystem( planet ) );
    space_gfxLoad( sys );
-   sw = pnt->gfx_space->sw;
-   sh = pnt->gfx_space->sh;
-   player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
-         pnt->pos.y + RNG(-sh/2,sh/2) );
+   a = RNGF() * 2.*M_PI;
+   r = RNGF() * pnt->radius * 0.8;
+   player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
    gl_cameraBind(&player.p->solid->pos);
 

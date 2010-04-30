@@ -1,7 +1,7 @@
 -- Default task to run when idle
 function idle ()
-   r = rnd.rnd()
-   if r < 0.34 then -- Try to leave.
+   if mem.loiter == nil then mem.loiter = 3 end
+   if mem.loiter == 0 then -- Try to leave.
        local planet = ai.landplanet()
        -- planet must exist
        if planet == nil or mem.land_planet == false then
@@ -19,4 +19,5 @@ function idle ()
       angle = rnd.rnd() * 2 * math.pi
       ai.pushtask("__goto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
    end
+   mem.loiter = mem.loiter - 1
 end

@@ -449,10 +449,10 @@ static void gui_renderPlanetTarget( double dt )
       planet = cur_system->planets[player.p->nav_planet];
       c = faction_getColour(planet->faction);
 
-      x = planet->pos.x - planet->gfx_space->sw/2.;
-      y = planet->pos.y + planet->gfx_space->sh/2.;
-      w = planet->gfx_space->sw;
-      h = planet->gfx_space->sh;
+      x = planet->pos.x - planet->radius;
+      y = planet->pos.y + planet->radius;
+      w = planet->radius * 2.;
+      h = planet->radius * 2.;
       gui_renderTargetReticles( x, y, w, h, c );
    }
 }
@@ -1755,7 +1755,7 @@ static void gui_renderPlanet( int ind )
    planet = cur_system->planets[ind];
    w     = gui.radar.w;
    h     = gui.radar.h;
-   r     = (int)(planet->gfx_space->sw / res);
+   r     = (int)(planet->radius*2. / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
    cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
    cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
