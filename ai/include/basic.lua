@@ -210,7 +210,7 @@ end
 function __run_hyp ()
    -- Shoot the target
    local target   = ai.target()
-   if not ai.exists(target) then
+   if ai.exists(target) then
       ai.settarget( target )
       local tdist    = ai.dist(target)
       __run_turret( tdist )
@@ -230,7 +230,7 @@ end
 function __run_hypbrake ()
    -- Shoot the target
    local target   = ai.target()
-   if not ai.exists(target) then
+   if ai.exists(target) then
       ai.settarget( target )
       local tdist    = ai.dist(target)
       __run_turret( tdist )
