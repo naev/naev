@@ -1832,6 +1832,9 @@ static int pilotL_hyperspace( lua_State *L )
          return 0;
       }
 
+      /* Set nav target. */
+      p->nav_hyperspace = i;
+
       /* Copy vector. */
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &jp->pos );
