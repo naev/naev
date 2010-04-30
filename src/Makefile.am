@@ -73,6 +73,7 @@ naev_SOURCES = \
 	nlua_vec2.c \
 	nmath.c \
 	nondata.c \
+	npng.c \
 	npc.c \
 	ntime.c \
 	nxml.c \
@@ -91,7 +92,7 @@ naev_SOURCES = \
 	pilot.c \
 	plasmaf.c \
 	player.c \
-   queue.c \
+	queue.c \
 	rng.c \
 	save.c \
 	ship.c \
@@ -175,6 +176,7 @@ naev_SOURCES = \
 	nluadef.h \
 	nmath.h \
 	nopenal.h \
+	npng.h \
 	npc.h \
 	nstd.h \
 	ntime.h \
@@ -194,7 +196,7 @@ naev_SOURCES = \
 	pilot.h \
 	plasmaf.h \
 	player.h \
-   queue.h \
+	queue.h \
 	rng.h \
 	save.h \
 	ship.h \
