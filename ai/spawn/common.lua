@@ -19,9 +19,6 @@ scom.calcNextSpawn = function( cur, new, max )
         
     local fleetratio = (new/max)/stdfleetsize -- This turns into the base delay multiplier for the next fleet.
     
-    print("calcNextSpawn: cur=".. cur .. ", new=".. new .. ", max=" .. max)
-    print("calcNextSpawn: Next fleet will enter after " .. min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay) .. " seconds.")
-    
     return min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
 end
 
