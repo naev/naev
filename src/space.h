@@ -84,6 +84,7 @@ typedef struct Planet_ {
    int id; /**< Planet ID. */
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
+   double radius; /**< Radius of the planet. */
 
    /* Planet details. */
    PlanetClass class; /**< planet type */

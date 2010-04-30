@@ -38,6 +38,7 @@
 #include "queue.h"
 #include "nlua.h"
 #include "nlua_pilot.h"
+#include "npng.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -1086,6 +1087,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    char str[PATH_MAX];
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
+   SDL_RWops *rw;
+   npng_t *npng;
+   int w, h;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1111,6 +1115,19 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
+               rw = ndata_rwops( planet->gfx_spaceName );
+               if (rw == NULL) {
+                  WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spaceName );
+               }
+               else {
+                  npng = npng_open( rw );
+                  if (npng != NULL) {
+                     npng_dim( npng, &w, &h );
+                     planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     npng_close( npng );
+                  }
+                  SDL_RWclose( rw );
+               }
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));

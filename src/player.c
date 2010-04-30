@@ -415,7 +415,7 @@ static int player_newMake (void)
  *
  *    @param ship New ship to get.
  *    @param def_name Default name to give it if canceled.
- *    @param trade Whether or not to trade player's current ship with the new ship.
+ *    @param trade Whether or not to t/ade player's current ship with the new ship.
  *    @return 0 indicates success, -1 means dialogue was cancelled.
  *
  * @sa player_newShipMake
@@ -1508,7 +1508,7 @@ void player_land (void)
          }
          return;
       }
-      else if (vect_dist(&player.p->solid->pos,&planet->pos) > planet->gfx_space->sw) {
+      else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
          player_message("\erYou are too far away to land on %s.", planet->name);
          return;
       } else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
@@ -2883,12 +2883,12 @@ static int player_parse( xmlNodePtr parent )
    unsigned int player_time;
    char* planet, *str;
    Planet* pnt;
-   int sw,sh;
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
    int i, hunting;
    StarSystem *sys;
+   double a, r;
 
    xmlr_attr(parent,"name",player.name);
 
@@ -2998,10 +2998,9 @@ static int player_parse( xmlNodePtr parent )
    }
    sys = system_get( planet_getSystem( planet ) );
    space_gfxLoad( sys );
-   sw = pnt->gfx_space->sw;
-   sh = pnt->gfx_space->sh;
-   player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
-         pnt->pos.y + RNG(-sh/2,sh/2) );
+   a = RNGF() * 2.*M_PI;
+   r = pnt->radius * 0.8;
+   player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
    gl_cameraBind(&player.p->solid->pos);
 

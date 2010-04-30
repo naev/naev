@@ -338,7 +338,7 @@ static int pilotL_addFleet( lua_State *L )
    const char *fltname, *fltai;
    int i, first;
    unsigned int p;
-   double a;
+   double a, r;
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaPilot lp;
@@ -398,9 +398,11 @@ static int pilotL_addFleet( lua_State *L )
       lplanet = lua_toplanet(L,3);
       planet  = lplanet->p;
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+      a = RNGF() * 2. * M_PI;
+      r = planet->radius;
       vect_cset( &vp,
-            planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
-            planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+            planet->pos.x + r * cos(a),
+            planet->pos.y + r * sin(a) );
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
@@ -455,9 +457,11 @@ static int pilotL_addFleet( lua_State *L )
          else {
             planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
             pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+            a = RNGF() * 2. * M_PI;
+            r = planet->radius;
             vect_cset( &vp,
-                  planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
-                  planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+                  planet->pos.x + r * cos(a),
+                  planet->pos.y + r * sin(a) );
             a = RNGF() * 2.*M_PI;
             vectnull( &vv );
          }
@@ -1865,6 +1869,7 @@ static int pilotL_land( lua_State *L )
    Task *t;
    LuaPlanet *lp;
    int i;
+   double a, r;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
@@ -1893,8 +1898,9 @@ static int pilotL_land( lua_State *L )
       vectcpy( &t->dat.vec, &lp->p->pos );
       
       /* Introduce some error. */
-      vect_cadd( &t->dat.vec, RNG(0, lp->p->gfx_space->sw) - lp->p->gfx_space->sw/2.,
-            RNG(0, lp->p->gfx_space->sh) - lp->p->gfx_space->sh/2. );
+      a = RNGF() * 2. * M_PI;
+      r = lp->p->radius;
+      vect_cadd( &t->dat.vec, r*cos(a), r*sin(a) );
    }
 
    return 0;
