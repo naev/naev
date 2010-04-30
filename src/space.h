@@ -290,7 +290,7 @@ void planets_render (void);
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
-void system_rmCurrentPresence( StarSystem *sys, int faction, int presence );
+void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
 
 /*
  * update.
