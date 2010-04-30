@@ -106,3 +106,9 @@ scom.presence = function( pilots )
 end
 
 
+-- @brief Default decrease function
+scom.decrease = function( cur, max, timer )
+   return timer
+end
+
+

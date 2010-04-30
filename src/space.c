@@ -38,6 +38,7 @@
 #include "queue.h"
 #include "nlua.h"
 #include "nlua_pilot.h"
+#include "npng.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -1086,6 +1087,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    char str[PATH_MAX];
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
+   SDL_RWops *rw;
+   npng_t *npng;
+   int w, h;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1111,6 +1115,19 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
+               rw = ndata_rwops( planet->gfx_spaceName );
+               if (rw == NULL) {
+                  WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spaceName );
+               }
+               else {
+                  npng = npng_open( rw );
+                  if (npng != NULL) {
+                     npng_dim( npng, &w, &h );
+                     planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     npng_close( npng );
+                  }
+                  SDL_RWclose( rw );
+               }
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
@@ -2599,16 +2616,49 @@ int system_hasPlanet( StarSystem *sys )
 /**
  * @brief Removes active presence.
  */
-void system_rmCurrentPresence( StarSystem *sys, int faction, int presence )
+void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
    int id;
+   lua_State *L;
+   SystemPresence *presence;
 
    /* Remove the presence. */
    id = getPresenceIndex( cur_system, faction );
-   sys->presence[id].curUsed -= presence;
+   sys->presence[id].curUsed -= amount;
 
    /* Sanity. */
-   sys->presence[id].curUsed = MAX( 0, sys->presence[id].curUsed );
+   presence = &sys->presence[id];
+   presence->curUsed = MAX( 0, sys->presence[id].curUsed );
+
+   /* Run lower hook. */
+   L = faction_getState( faction );
+
+   /* Run decrease function if applicable. */
+   lua_getglobal( L, "decrease" ); /* f */
+   if (lua_isnil(L,-1)) {
+      return;
+   }
+   lua_pushnumber( L, presence->curUsed ); /* f, cur */
+   lua_pushnumber( L, presence->value ); /* f, cur, max */
+   lua_pushnumber( L, presence->timer ); /* f, cur, max, timer */
+
+   /* Actually run the function. */
+   if (lua_pcall(L, 3, 1, 0)) { /* error has occured */
+      WARN("Lua decrease script for faction '%s' : %s",
+            faction_name( faction ), lua_tostring(L,-1));
+      lua_pop(L,1);
+      return;
+   }
+
+   /* Output is handled the same way. */
+   if (!lua_isnumber(L,-1)) {
+      WARN("Lua spawn script for faction '%s' failed to return timer value.",
+            faction_name( presence->faction ) );
+      lua_pop(L,1);
+      return;
+   }
+   presence->timer = lua_tonumber(L,-1);
+   lua_pop(L,1);
 }
 
 
