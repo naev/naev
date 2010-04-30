@@ -537,6 +537,7 @@ static int playerL_evtDone( lua_State *L )
 static int playerL_teleport( lua_State *L )
 {
    LuaSystem *sys;
+   StarSystem *old;
 
    /* Get a system. */
    sys = luaL_checksystem(L,1);
@@ -550,7 +551,11 @@ static int playerL_teleport( lua_State *L )
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* Go to the new system. */
+   old = cur_system;
    space_init( sys->s->name );
+
+   /* Free graphics. */
+   space_gfxUnload( old );
 
    /* Map gets deformed when jumping this way. */
    map_clear();

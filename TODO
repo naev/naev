@@ -2,7 +2,6 @@
 
    VITAL
 
-   *) Integrate the resource editor possibly.
    *) Asteroids
    *) More missions
        *) FLF Nebula Campaign
@@ -36,7 +35,6 @@
       *) very rare
       *) random mutation for cloaking/displacement abilities
    *) Optimize texture usage
-      *) all land graphics should be on land only (optionally)
       *) planet space graphics should be ondemand
    *) Graphic improvements
       *) have ships flying in nebula leave traces
@@ -62,7 +60,6 @@
    *) Testing improvements
       *) Allow console to reload data (to avoid restarts)
    *) ^F for maps.
-   *) Tech packages.
 
 
    MAYBE... SOMEDAY...

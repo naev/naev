@@ -1689,6 +1689,9 @@ void player_brokeHyperspace (void)
    /* set position, the pilot_update will handle lowering vel */
    space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
 
+   /* Free old graphics. */
+   space_gfxUnload( sys );
+
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;
 
@@ -2854,6 +2857,7 @@ static int player_parse( xmlNodePtr parent )
    int q;
    Outfit *o;
    int i, hunting;
+   StarSystem *sys;
 
    xmlr_attr(parent,"name",player.name);
 
@@ -2961,6 +2965,8 @@ static int player_parse( xmlNodePtr parent )
       }
       i++;
    }
+   sys = system_get( planet_getSystem( planet ) );
+   space_gfxLoad( sys );
    sw = pnt->gfx_space->sw;
    sh = pnt->gfx_space->sh;
    player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
@@ -2971,7 +2977,7 @@ static int player_parse( xmlNodePtr parent )
    /* initialize the system */
    music_choose("takeoff");
    planet = pnt->name;
-   space_init( planet_getSystem(planet) );
+   space_init( sys->name );
    map_clear(); /* sets the map up */
 
    /* initialize the sound */

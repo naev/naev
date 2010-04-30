@@ -929,6 +929,9 @@ void space_init ( const char* sysname )
       cur_system->presence[i].timer    = 0.;
    }
 
+   /* Load graphics. */
+   space_gfxLoad( cur_system );
+
    /* Call the scheduler. */
    system_scheduler( 0., 1 );
 
@@ -1031,6 +1034,46 @@ static int planets_load ( void )
 
 
 /**
+ * @brief Loads all the graphics for a star system.
+ *
+ *    @param sys System to load graphics for.
+ */
+void space_gfxLoad( StarSystem *sys )
+{
+   int i;
+   Planet *planet;
+   for (i=0; i<sys->nplanets; i++) {
+      planet = sys->planets[i];
+      
+      if (planet->real != ASSET_REAL)
+         continue;
+
+      if (planet->gfx_space == NULL)
+         planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+   }
+}
+
+
+/**
+ * @brief Unloads all the graphics for a star system.
+ *
+ *    @param sys System to unload graphics for.
+ */
+void space_gfxUnload( StarSystem *sys )
+{
+   int i;
+   Planet *planet;
+   for (i=0; i<sys->nplanets; i++) {
+      planet = sys->planets[i];
+      if (planet->gfx_space != NULL) {
+         gl_freeTexture( planet->gfx_space );
+         planet->gfx_space = NULL;
+      }
+   }
+}
+
+
+/**
  * @brief Parses a planet from an xml node.
  *
  *    @param planet Planet to fill up.
@@ -1065,8 +1108,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               planet->gfx_space = xml_parseTexture( cur,
-                     PLANET_GFX_SPACE"%s", 1, 1, OPENGL_TEX_MIPMAPS );
+               snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
+               planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
@@ -1179,7 +1222,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 #define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
    /* Issue warnings on missing items only it the asset is real. */
    if (planet->real == ASSET_REAL) {
-      MELEMENT(planet->gfx_space==NULL,"GFX space");
+      MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->gfx_exterior==NULL,"GFX exterior");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
@@ -2065,7 +2108,9 @@ void space_exit (void)
 
       /* graphics */
       if (planet_stack[i].gfx_space) {
-         gl_freeTexture(planet_stack[i].gfx_space);
+         if (planet_stack[i].gfx_space != NULL)
+            gl_freeTexture( planet_stack[i].gfx_space );
+         free(planet_stack[i].gfx_spaceName);
          free(planet_stack[i].gfx_spacePath);
       }
       if (planet_stack[i].gfx_exterior) {
