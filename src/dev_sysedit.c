@@ -142,6 +142,9 @@ void sysedit_open( StarSystem *sys )
    sysedit_xpos   = 0.;
    sysedit_ypos   = 0.;
 
+   /* Load graphics. */
+   space_gfxLoad( sysedit_sys );
+
    /* Create the window. */
    snprintf( buf, sizeof(buf), "%s - Star System Editor", sys->name );
    wid = window_create( buf, -1, -1, -1, -1 );
@@ -219,6 +222,9 @@ static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
  */
 static void sysedit_close( unsigned int wid, char *wgt )
 {
+   /* Unload graphics. */
+   space_gfxLoad( sysedit_sys );
+
    /* Remove selection. */
    sysedit_deselect();
 
