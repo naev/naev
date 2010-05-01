@@ -112,7 +112,7 @@ typedef struct Radar_ {
 #define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
 #define RADAR_RES_MIN      10. /**< Minimum radar resolution. */
 #define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
-#define RADAR_RES_DEFAULT  40. /**< Default resolution. */
+#define RADAR_RES_DEFAULT  50. /**< Default resolution. */
 
 /**
  * @struct Rect
