@@ -373,6 +373,9 @@ static int load_game( const char* file )
    /* Initialize the economy. */
    economy_init();
 
+   /* Run the load event trigger. */
+   events_trigger( EVENT_TRIGGER_LOAD );
+
    /* Need to run takeoff hooks since player just "took off" */
    hooks_run("takeoff");
    player_addEscorts();

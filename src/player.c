@@ -270,6 +270,9 @@ void player_new (void)
       free(player_mission);
       player_mission = NULL;
    }
+
+   /* Run the load event trigger. */
+   events_trigger( EVENT_TRIGGER_LOAD );
 }
 
 
