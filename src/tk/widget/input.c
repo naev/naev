@@ -35,11 +35,13 @@ static void inp_cleanup( Widget* inp );
  *    @param name Name of the widget to use internally.
  *    @param max Max amount of characters that can be written.
  *    @param oneline Whether widget should only be one line long.
+ *    @param font Font to use.
  */
 void window_addInput( const unsigned int wid,
                       const int x, const int y, /* position */
                       const int w, const int h, /* size */
-                      char* name, const int max, const int oneline )
+                      char* name, const int max, const int oneline,
+                      glFont *font )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -56,6 +58,7 @@ void window_addInput( const unsigned int wid,
    wgt->keyevent        = inp_key;
    wgt->textevent       = inp_text;
    /*wgt->keyevent        = inp_key;*/
+   wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
    wgt->dat.inp.max     = max+1;
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos     = 0;
@@ -91,7 +94,7 @@ static void inp_render( Widget* inp, double bx, double by )
    if (inp->dat.inp.oneline) ty = y - (inp->h - gl_smallFont.h)/2.;
 
    /* Draw text. */
-   gl_printTextRaw( &gl_smallFont, inp->w-10., inp->h,
+   gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
          x+5. + SCREEN_W/2., ty  + SCREEN_H/2.,
          &cBlack, inp->dat.inp.input + inp->dat.inp.view );
 
