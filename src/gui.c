@@ -449,10 +449,10 @@ static void gui_renderPlanetTarget( double dt )
       planet = cur_system->planets[player.p->nav_planet];
       c = faction_getColour(planet->faction);
 
-      x = planet->pos.x - planet->radius;
-      y = planet->pos.y + planet->radius;
-      w = planet->radius * 2.;
-      h = planet->radius * 2.;
+      x = planet->pos.x - planet->radius * 1.2;
+      y = planet->pos.y + planet->radius * 1.2;
+      w = planet->radius * 2. * 1.2;
+      h = planet->radius * 2. * 1.2;
       gui_renderTargetReticles( x, y, w, h, c );
    }
 }

@@ -1124,7 +1124,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                   npng = npng_open( rw );
                   if (npng != NULL) {
                      npng_dim( npng, &w, &h );
-                     planet->radius = (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
                      npng_close( npng );
                   }
                   SDL_RWclose( rw );
