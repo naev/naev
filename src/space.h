@@ -84,6 +84,7 @@ typedef struct Planet_ {
    int id; /**< Planet ID. */
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
+   double radius; /**< Radius of the planet. */
 
    /* Planet details. */
    PlanetClass class; /**< planet type */
@@ -106,6 +107,7 @@ typedef struct Planet_ {
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
+   char *gfx_spaceName; /**< Name to load texture quicly with. */
    char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
@@ -283,17 +285,24 @@ void space_renderOverlay( const double dt );
 void planets_render (void);
 
 /*
- * Presence stuff
+ * Presence stuff.
  */
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
-void system_rmCurrentPresence( StarSystem *sys, int faction, int presence );
+void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
 
 /*
- * update
+ * update.
  */
 void space_update( const double dt );
+
+/*
+ * Graphics.
+ */
+void space_gfxLoad( StarSystem *sys );
+void space_gfxUnload( StarSystem *sys );
+
 
 /* 
  * Getting stuff.

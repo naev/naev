@@ -109,6 +109,11 @@ function __hyperspace ()
 end
 
 
+function __land ()
+   land()
+end
+
+
 --[[
 -- Attempts to land on a planet.
 --]]
@@ -120,6 +125,20 @@ function land ()
       return
    end
 
+   -- Set target if necessary
+   local target = ai.target()
+   if target ~= nil then
+      mem.land = target
+   end
+
+   -- Make sure mem.land is valid target
+   if mem.land == nil then
+      mem.land = ai.landplanet()
+   end
+
+   ai.pushsubtask( "__landgo" )
+end
+function __landgo ()
    local target   = mem.land
    local dir      = ai.face( target )
    local dist     = ai.dist( target )
@@ -191,9 +210,11 @@ end
 function __run_hyp ()
    -- Shoot the target
    local target   = ai.target()
-   ai.settarget( target )
-   local tdist    = ai.dist(target)
-   __run_turret( tdist )
+   if ai.exists(target) then
+      ai.settarget( target )
+      local tdist    = ai.dist(target)
+      __run_turret( tdist )
+   end
 
    -- Go towards jump
    local jump     = ai.subtarget()
@@ -209,9 +230,11 @@ end
 function __run_hypbrake ()
    -- Shoot the target
    local target   = ai.target()
-   ai.settarget( target )
-   local tdist    = ai.dist(target)
-   __run_turret( tdist )
+   if ai.exists(target) then
+      ai.settarget( target )
+      local tdist    = ai.dist(target)
+      __run_turret( tdist )
+   end
 
    -- The braking
    ai.brake()
@@ -227,8 +250,11 @@ end
 -- Starts heading away to try to hyperspace.
 --]]
 function hyperspace ()
-   local v = ai.rndhyptarget()
-   ai.pushsubtask( "__hyp_approach", v )
+   local target = ai.target()
+   if target == nil then
+      target = ai.rndhyptarget()
+   end
+   ai.pushsubtask( "__hyp_approach", target )
 end
 function __hyp_approach ()
    local target   = ai.subtarget()

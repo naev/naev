@@ -169,6 +169,7 @@ extern int map_npath;
 /* 
  * internal
  */
+static void player_checkHail (void);
 static void player_updateZoom( double dt );
 /* creation */
 static int player_newMake (void);
@@ -180,7 +181,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
-static int player_parse( xmlNodePtr parent );
+static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
@@ -197,7 +198,7 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
-int player_load( xmlNodePtr parent ); /* save.c */
+Planet* player_load( xmlNodePtr parent ); /* save.c */
 int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
@@ -269,6 +270,9 @@ void player_new (void)
       free(player_mission);
       player_mission = NULL;
    }
+
+   /* Run the load event trigger. */
+   events_trigger( EVENT_TRIGGER_LOAD );
 }
 
 
@@ -414,7 +418,7 @@ static int player_newMake (void)
  *
  *    @param ship New ship to get.
  *    @param def_name Default name to give it if canceled.
- *    @param trade Whether or not to trade player's current ship with the new ship.
+ *    @param trade Whether or not to t/ade player's current ship with the new ship.
  *    @return 0 indicates success, -1 means dialogue was cancelled.
  *
  * @sa player_newShipMake
@@ -1436,6 +1440,8 @@ void player_targetPlanet (void)
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
+   gui_forceBlink();
+
    /* Find next planet target. */
    player.p->nav_planet++;
    player_hyperspacePreempt(0);
@@ -1507,7 +1513,7 @@ void player_land (void)
          }
          return;
       }
-      else if (vect_dist(&player.p->solid->pos,&planet->pos) > planet->gfx_space->sw) {
+      else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
          player_message("\erYou are too far away to land on %s.", planet->name);
          return;
       } else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
@@ -1550,6 +1556,7 @@ void player_land (void)
             td = d;
          }
       }
+      gui_forceBlink();
       player.p->nav_planet       = tp;
       player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
@@ -1682,6 +1689,9 @@ void player_brokeHyperspace (void)
 
    /* Save old system. */
    sys = cur_system;
+
+   /* Free old graphics. */
+   space_gfxUnload( sys );
 
    /* enter the new system */
    space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
@@ -1832,8 +1842,10 @@ void player_targetHostile (void)
       }
    }
 
-   if ((tp != PLAYER_ID) && (tp != player.p->target))
+   if ((tp != PLAYER_ID) && (tp != player.p->target)) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 
    player.p->target = tp;
 }
@@ -1848,8 +1860,10 @@ void player_targetNext( int mode )
 {
    player.p->target = pilot_getNextID(player.p->target, mode);
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1862,8 +1876,10 @@ void player_targetPrev( int mode )
 {
    player.p->target = pilot_getPrevID(player.p->target, mode);
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   };
 }
 
 
@@ -1872,6 +1888,7 @@ void player_targetPrev( int mode )
  */
 void player_targetClear (void)
 {
+   gui_forceBlink();
    if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
@@ -1926,8 +1943,10 @@ void player_targetEscort( int prev )
    }
 
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1942,8 +1961,10 @@ void player_targetNearest (void)
    t = player.p->target;
    player.p->target = pilot_getNearestPilot(player.p);
 
-   if ((player.p->target != PLAYER_ID) && (t != player.p->target))
+   if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1980,6 +2001,30 @@ void player_screenshot (void)
 
 
 /**
+ * @brief Checks to see if player is still being hailed and clears hail counters
+ *        if he isn't.
+ */
+static void player_checkHail (void)
+{
+   int i;
+   Pilot *p;
+
+   /* See if a pilot is hailing. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be hailing. */
+      if (pilot_isFlag(p, PILOT_HAILING))
+         return;
+   }
+
+   /* Clear hail timer. */
+   player_hailCounter   = 0;
+   player_hailTimer     = 0.;
+}
+
+
+/**
  * @brief Opens communication with the player's target.
  */
 void player_hail (void)
@@ -1990,6 +2035,9 @@ void player_hail (void)
       comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
    else
       player_message("\erNo target selected to hail.");
+
+   /* Clear hails if none found. */
+   player_checkHail();
 }
 
 
@@ -2019,6 +2067,9 @@ void player_autohail (void)
    /* Try o hail. */
    player.p->target = p->id;
    player_hail();
+
+   /* Clear hails if none found. */
+   player_checkHail();
 }
 
 
@@ -2813,19 +2864,20 @@ static int player_saveShip( xmlTextWriterPtr writer,
  *    @param parent Node where the player.p stuff is to be found.
  *    @return 0 on success.
  */
-int player_load( xmlNodePtr parent )
+Planet* player_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   Planet *pnt;
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
+   pnt = NULL;
    map_cleanup();
 
    node = parent->xmlChildrenNode;
-
    do {
       if (xml_isNode(node,"player"))
-         player_parse( node );
+         pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
          player_parseDoneMissions( node );
       else if (xml_isNode(node,"events_done"))
@@ -2834,7 +2886,7 @@ int player_load( xmlNodePtr parent )
          player_parseEscorts(node);
    } while (xml_nextNode(node));
 
-   return 0;
+   return pnt;
 }
 
 
@@ -2842,23 +2894,25 @@ int player_load( xmlNodePtr parent )
  * @brief Parses the player.p node.
  *
  *    @param parent The player.p node.
- *    @return 0 on success.
+ *    @return Planet to start on on success.
  */
-static int player_parse( xmlNodePtr parent )
+static Planet* player_parse( xmlNodePtr parent )
 {
    unsigned int player_time;
    char* planet, *str;
    Planet* pnt;
-   int sw,sh;
    xmlNodePtr node, cur;
    int q;
    Outfit *o;
    int i, hunting;
+   StarSystem *sys;
+   double a, r;
 
    xmlr_attr(parent,"name",player.name);
 
    /* Make sure player.p is NULL. */
    player.p = NULL;
+   pnt = NULL;
 
    /* Sane defaults. */
    planet = NULL;
@@ -2927,7 +2981,7 @@ static int player_parse( xmlNodePtr parent )
    if (player.p == NULL) {
       if (player_nstack == 0) {
          WARN("Player has no ships!");
-         return -1;
+         return NULL;
       }
 
       /* Just give player.p a random ship in the stack. */
@@ -2961,23 +3015,22 @@ static int player_parse( xmlNodePtr parent )
       }
       i++;
    }
-   sw = pnt->gfx_space->sw;
-   sh = pnt->gfx_space->sh;
-   player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
-         pnt->pos.y + RNG(-sh/2,sh/2) );
+   sys = system_get( planet_getSystem( planet ) );
+   space_gfxLoad( sys );
+   a = RNGF() * 2.*M_PI;
+   r = RNGF() * pnt->radius * 0.8;
+   player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
    gl_cameraBind(&player.p->solid->pos);
 
    /* initialize the system */
-   music_choose("takeoff");
-   planet = pnt->name;
-   space_init( planet_getSystem(planet) );
+   space_init( sys->name );
    map_clear(); /* sets the map up */
 
    /* initialize the sound */
    player_initSound();
 
-   return 0;
+   return pnt;
 }
 
 

@@ -38,6 +38,7 @@
 #include "queue.h"
 #include "nlua.h"
 #include "nlua_pilot.h"
+#include "npng.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -639,6 +640,7 @@ static void system_scheduler( double dt, int init )
          if (lua_isnil(L,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
                   faction_name( p->faction ) );
+            lua_pop(L,1);
             continue;
          }
          lua_pushnumber( L, p->curUsed ); /* f, presence */
@@ -670,7 +672,7 @@ static void system_scheduler( double dt, int init )
             if (!lua_istable(L,-1)) {
                WARN("Lua spawn script for faction '%s' returns invalid data (not a table).",
                      faction_name( p->faction ) );
-               lua_pop(L,1); /* tk, k */
+               lua_pop(L,2); /* tk, k */
                continue;
             }
 
@@ -929,6 +931,9 @@ void space_init ( const char* sysname )
       cur_system->presence[i].timer    = 0.;
    }
 
+   /* Load graphics. */
+   space_gfxLoad( cur_system );
+
    /* Call the scheduler. */
    system_scheduler( 0., 1 );
 
@@ -1031,6 +1036,46 @@ static int planets_load ( void )
 
 
 /**
+ * @brief Loads all the graphics for a star system.
+ *
+ *    @param sys System to load graphics for.
+ */
+void space_gfxLoad( StarSystem *sys )
+{
+   int i;
+   Planet *planet;
+   for (i=0; i<sys->nplanets; i++) {
+      planet = sys->planets[i];
+      
+      if (planet->real != ASSET_REAL)
+         continue;
+
+      if (planet->gfx_space == NULL)
+         planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+   }
+}
+
+
+/**
+ * @brief Unloads all the graphics for a star system.
+ *
+ *    @param sys System to unload graphics for.
+ */
+void space_gfxUnload( StarSystem *sys )
+{
+   int i;
+   Planet *planet;
+   for (i=0; i<sys->nplanets; i++) {
+      planet = sys->planets[i];
+      if (planet->gfx_space != NULL) {
+         gl_freeTexture( planet->gfx_space );
+         planet->gfx_space = NULL;
+      }
+   }
+}
+
+
+/**
  * @brief Parses a planet from an xml node.
  *
  *    @param planet Planet to fill up.
@@ -1043,6 +1088,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    char str[PATH_MAX];
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
+   SDL_RWops *rw;
+   npng_t *npng;
+   int w, h;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1065,9 +1113,22 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               planet->gfx_space = xml_parseTexture( cur,
-                     PLANET_GFX_SPACE"%s", 1, 1, OPENGL_TEX_MIPMAPS );
+               snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
+               planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
+               rw = ndata_rwops( planet->gfx_spaceName );
+               if (rw == NULL) {
+                  WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spaceName );
+               }
+               else {
+                  npng = npng_open( rw );
+                  if (npng != NULL) {
+                     npng_dim( npng, &w, &h );
+                     planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     npng_close( npng );
+                  }
+                  SDL_RWclose( rw );
+               }
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
@@ -1179,7 +1240,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 #define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
    /* Issue warnings on missing items only it the asset is real. */
    if (planet->real == ASSET_REAL) {
-      MELEMENT(planet->gfx_space==NULL,"GFX space");
+      MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->gfx_exterior==NULL,"GFX exterior");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
@@ -2065,7 +2126,9 @@ void space_exit (void)
 
       /* graphics */
       if (planet_stack[i].gfx_space) {
-         gl_freeTexture(planet_stack[i].gfx_space);
+         if (planet_stack[i].gfx_space != NULL)
+            gl_freeTexture( planet_stack[i].gfx_space );
+         free(planet_stack[i].gfx_spaceName);
          free(planet_stack[i].gfx_spacePath);
       }
       if (planet_stack[i].gfx_exterior) {
@@ -2554,16 +2617,50 @@ int system_hasPlanet( StarSystem *sys )
 /**
  * @brief Removes active presence.
  */
-void system_rmCurrentPresence( StarSystem *sys, int faction, int presence )
+void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
    int id;
+   lua_State *L;
+   SystemPresence *presence;
 
    /* Remove the presence. */
    id = getPresenceIndex( cur_system, faction );
-   sys->presence[id].curUsed -= presence;
+   sys->presence[id].curUsed -= amount;
 
    /* Sanity. */
-   sys->presence[id].curUsed = MAX( 0, sys->presence[id].curUsed );
+   presence = &sys->presence[id];
+   presence->curUsed = MAX( 0, sys->presence[id].curUsed );
+
+   /* Run lower hook. */
+   L = faction_getState( faction );
+
+   /* Run decrease function if applicable. */
+   lua_getglobal( L, "decrease" ); /* f */
+   if (lua_isnil(L,-1)) {
+      lua_pop(L,1);
+      return;
+   }
+   lua_pushnumber( L, presence->curUsed ); /* f, cur */
+   lua_pushnumber( L, presence->value ); /* f, cur, max */
+   lua_pushnumber( L, presence->timer ); /* f, cur, max, timer */
+
+   /* Actually run the function. */
+   if (lua_pcall(L, 3, 1, 0)) { /* error has occured */
+      WARN("Lua decrease script for faction '%s' : %s",
+            faction_name( faction ), lua_tostring(L,-1));
+      lua_pop(L,1);
+      return;
+   }
+
+   /* Output is handled the same way. */
+   if (!lua_isnumber(L,-1)) {
+      WARN("Lua spawn script for faction '%s' failed to return timer value.",
+            faction_name( presence->faction ) );
+      lua_pop(L,1);
+      return;
+   }
+   presence->timer = lua_tonumber(L,-1);
+   lua_pop(L,1);
 }
 
 

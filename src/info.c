@@ -489,7 +489,7 @@ static void info_openStandings( unsigned int wid )
          "closeMissions", "Close", info_close );
 
    /* Graphics. */
-   window_addImage( wid, 0, 0, "imgLogo", NULL, 0 );
+   window_addImage( wid, 0, 0, 0, 0, "imgLogo", NULL, 0 );
 
    /* Text. */
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",

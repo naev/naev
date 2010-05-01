@@ -28,6 +28,7 @@
 #include "nlua_var.h"
 #include "event.h"
 #include "conf.h"
+#include "land.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -43,7 +44,7 @@
 /* externs */
 /* player.c */
 extern int player_save( xmlTextWriterPtr writer ); /**< Saves player related stuff. */
-extern int player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
+extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
 /* mission.c */
 extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
 extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
@@ -335,6 +336,7 @@ static int load_game( const char* file )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
+   Planet *pnt;
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
@@ -364,7 +366,7 @@ static int load_game( const char* file )
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
-   player_load(node);
+   pnt = player_load(node);
    var_load(node);
    missions_loadActive(node);
    hook_load(node);
@@ -373,11 +375,11 @@ static int load_game( const char* file )
    /* Initialize the economy. */
    economy_init();
 
-   /* Need to run takeoff hooks since player just "took off" */
-   hooks_run("takeoff");
-   player_addEscorts();
-   hooks_run("enter");
-   events_trigger( EVENT_TRIGGER_ENTER );
+   /* Run the load event trigger. */
+   events_trigger( EVENT_TRIGGER_LOAD );
+
+   /* Land the player. */
+   land( pnt );
 
    xmlFreeDoc(doc);
    xmlCleanupParser();

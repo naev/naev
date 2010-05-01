@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 -- Settings
 mem.armour_run = 40
@@ -21,6 +22,8 @@ function create ()
          mem.bribe_no = "\"I'm afraid you can't make it worth my while.\""
       end
    end
+
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Finish up creation
    create_post()

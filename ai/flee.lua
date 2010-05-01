@@ -1,4 +1,6 @@
 include("ai/include/basic.lua")
+include("ai/personality/trader.lua")
+
 --[[
  ===FLEE AI===
 Mission specific AI to make pilots leave the system immediately.

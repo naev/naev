@@ -530,16 +530,25 @@ static int playerL_evtDone( lua_State *L )
  * Does not change the position nor velocity of the player.p, which will probably be wrong in the new system.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to arcanis.
+ * @usage player.teleport( "Arcanis" ) -- Teleports the player to arcanis.
  *
- *    @luaparam sys System to teleport the player to.
+ *    @luaparam sys System or name of a system to teleport the player to.
  * @luafunc teleport( sys )
  */
 static int playerL_teleport( lua_State *L )
 {
    LuaSystem *sys;
+   const char *name;
 
    /* Get a system. */
-   sys = luaL_checksystem(L,1);
+   if (lua_issystem(L,1)) {
+      sys   = lua_tosystem(L,1);
+      name  = sys->s->name;
+   }
+   else if (lua_isstring(L,1))
+      name = lua_tostring(L,1);
+   else
+      NLUA_INVALID_PARAMETER();
 
    /* Jump out hook is run first. */
    hooks_run( "jumpout" );
@@ -549,8 +558,11 @@ static int playerL_teleport( lua_State *L )
    pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
+   /* Free graphics. */
+   space_gfxUnload( cur_system );
+
    /* Go to the new system. */
-   space_init( sys->s->name );
+   space_init( name );
 
    /* Map gets deformed when jumping this way. */
    map_clear();

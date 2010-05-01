@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 --[[
 
@@ -57,6 +58,8 @@ function create ()
       mem.refuel_msg = string.format("\"For you, only %d credits for a jump's worth of fuel.\"",
             mem.refuel);
    end
+
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Finish up creation
    create_post()

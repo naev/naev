@@ -30,6 +30,7 @@ static void img_render( Widget* img, double bx, double by );
  */
 void window_addImage( const unsigned int wid,
                       const int x, const int y,
+                      const int w, const int h,
                       char* name, glTexture* image, int border )
 {
    Window *wdw = window_wget(wid);
@@ -47,8 +48,8 @@ void window_addImage( const unsigned int wid,
    wgt->dat.img.colour  = NULL; /* normal colour */
 
    /* position/size */
-   wgt->w = (image==NULL) ? 0 : wgt->dat.img.image->sw;
-   wgt->h = (image==NULL) ? 0 : wgt->dat.img.image->sh;
+   wgt->w = (w > 0) ? w : ((image==NULL) ? 0 : wgt->dat.img.image->sw);
+   wgt->h = (h > 0) ? h : ((image==NULL) ? 0 : wgt->dat.img.image->sh);
    toolkit_setPos( wdw, wgt, x, y );
 }
 
@@ -63,18 +64,25 @@ void window_addImage( const unsigned int wid,
 static void img_render( Widget* img, double bx, double by )
 {
    double x,y;
+   double w,h;
 
-   if (img->dat.img.image == NULL) return;
+   /* Fanciness. */
+   if (img->dat.img.image == NULL)
+      return;
 
+   /* Values. */
    x = bx + img->x;
    y = by + img->y;
+   w = img->w;
+   h = img->h;
 
    /*
     * image
     */
-   gl_blitStatic( img->dat.img.image,
+   gl_blitScale( img->dat.img.image,
          x + (double)SCREEN_W/2.,
          y + (double)SCREEN_H/2.,
+         w, h,
          img->dat.img.colour );
 
    if (img->dat.img.border) {

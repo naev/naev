@@ -241,6 +241,7 @@ static int aiL_shipprice( lua_State *L ); /* shipprice() */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_donerefuel( lua_State *L ); /* boolean donerefuel() */
+static int aiL_sysradius( lua_State *L ); /* number sysradius() */
 
 
 static const luaL_reg aiL_methods[] = {
@@ -325,6 +326,7 @@ static const luaL_reg aiL_methods[] = {
    { "board", aiL_board },
    { "refuel", aiL_refuel },
    { "donerefuel", aiL_donerefuel },
+   { "sysradius", aiL_sysradius },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -1901,6 +1903,7 @@ static int aiL_getlandplanet( lua_State *L )
    int nplanets, i;
    LuaVector lv;
    Planet *p;
+   double a, r;
 
    if (cur_system->nplanets == 0)
       return 0; /* no planets */
@@ -1924,8 +1927,9 @@ static int aiL_getlandplanet( lua_State *L )
    i = RNG(0,nplanets-1);
    p = cur_system->planets[ ind[i] ];
    vectcpy( &lv.vec, &p->pos );
-   vect_cadd( &lv.vec, RNG(0, p->gfx_space->sw) - p->gfx_space->sw/2.,
-         RNG(0, p->gfx_space->sh) - p->gfx_space->sh/2. );
+   a = RNGF() * 2. * M_PI;
+   r = RNGF() * p->radius * 0.8;
+   vect_cadd( &lv.vec, r * cos(a), r * sin(a) );
    lua_pushvector( L, lv );
    cur_pilot->nav_planet   = ind[ i ];
    free(ind);
@@ -1946,6 +1950,11 @@ static int aiL_land( lua_State *L )
    
    ret = 0;
 
+   if (cur_pilot->nav_planet < 0) {
+      NLUA_ERROR( L, "Pilot '%s' has no land target", cur_pilot->name );
+      return 0;
+   }
+
    /* Get planet. */
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 
@@ -1954,7 +1963,7 @@ static int aiL_land( lua_State *L )
       ret++;
 
    /* Check distance. */
-   if (vect_dist(&cur_pilot->solid->pos,&planet->pos) > planet->gfx_space->sw)
+   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > pow2(planet->radius))
       ret++;
 
    /* Check velocity. */
@@ -2716,6 +2725,20 @@ static int aiL_shipprice( lua_State *L )
    lua_pushnumber(L, cur_pilot->ship->price);
    return 1;
 }
+
+
+/**
+ * @brief Gets the radius of the current system the pilot is in.
+ *
+ *    @luareturn The radius of the current system the pilot is in.
+ * @luafunc sysradius()
+ */
+static int aiL_sysradius( lua_State *L )
+{
+   lua_pushnumber( L, cur_system->radius );
+   return 1;
+}
+
 
 /**
  * @}

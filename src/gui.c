@@ -112,7 +112,7 @@ typedef struct Radar_ {
 #define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
 #define RADAR_RES_MIN      10. /**< Minimum radar resolution. */
 #define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
-#define RADAR_RES_DEFAULT  40. /**< Default resolution. */
+#define RADAR_RES_DEFAULT  50. /**< Default resolution. */
 
 /**
  * @struct Rect
@@ -449,10 +449,10 @@ static void gui_renderPlanetTarget( double dt )
       planet = cur_system->planets[player.p->nav_planet];
       c = faction_getColour(planet->faction);
 
-      x = planet->pos.x - planet->gfx_space->sw/2.;
-      y = planet->pos.y + planet->gfx_space->sh/2.;
-      w = planet->gfx_space->sw;
-      h = planet->gfx_space->sh;
+      x = planet->pos.x - planet->radius * 1.2;
+      y = planet->pos.y + planet->radius * 1.2;
+      w = planet->radius * 2. * 1.2;
+      h = planet->radius * 2. * 1.2;
       gui_renderTargetReticles( x, y, w, h, c );
    }
 }
@@ -845,8 +845,8 @@ void gui_render( double dt )
    /*
     * Countdown timers.
     */
-   blink_pilot -= dt;
-   blink_planet -= dt;
+   blink_pilot    -= dt;
+   blink_planet   -= dt;
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
@@ -1534,7 +1534,7 @@ static void gui_renderPilot( const Pilot* p )
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
-      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
+      if (blink_pilot > RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
          for (i=0; i<8; i++) {
             colours[4*i + 0] = cRadar_tPilot.r;
@@ -1626,6 +1626,16 @@ static glColour *gui_getPlanetColour( int i )
 
 
 /**
+ * @brief Force sets the planet and pilot radar blink.
+ */
+void gui_forceBlink (void)
+{
+   blink_pilot  = 0.;
+   blink_planet = 0.;
+}
+
+
+/**
  * @brief Renders the planet blink around a position on the minimap.
  */
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
@@ -1634,7 +1644,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
    GLfloat vertex[8*2], colours[8*4];
    int i, curs;
 
-   if (blink_planet < RADAR_BLINK_PLANET/2.) {
+   if (blink_planet > RADAR_BLINK_PLANET/2.) {
       curs = 0;
       vx = cx-vr;
       vy = cy+vr;
@@ -1755,7 +1765,7 @@ static void gui_renderPlanet( int ind )
    planet = cur_system->planets[ind];
    w     = gui.radar.w;
    h     = gui.radar.h;
-   r     = (int)(planet->gfx_space->sw / res);
+   r     = (int)(planet->radius*2. / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
    cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
    cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);

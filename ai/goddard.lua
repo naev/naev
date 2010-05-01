@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 -- Settings
 mem.aggressive = true
@@ -29,6 +30,8 @@ function create ()
       mem.refuel_msg = string.format( "\"I could do you the favour of refueling for the price of %d credits.\"",
             mem.refuel )
    end
+
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Finish up creation
    create_post()

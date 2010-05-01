@@ -78,6 +78,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint8 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
+static void toolkit_focusClear( Window *wdw );
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 /* render */
@@ -743,6 +744,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 
    /* There's dead stuff now. */
    window_dead = 1;
+   wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    wgt_setFlag( wgt, WGT_FLAG_KILL );
 }
 
@@ -1638,8 +1640,11 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
          if (button == SDL_BUTTON_LEFT)
             wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
-         if (toolkit_isFocusable(wgt))
+         if (toolkit_isFocusable(wgt)) {
+            toolkit_focusClear( w );
             w->focus = wgt->id;
+            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+         }
 
          /* Try to give the event to the widget. */
          if (wgt->mclickevent != NULL)
@@ -1944,6 +1949,17 @@ void toolkit_update (void)
 
 
 /**
+ * @brief Clears the window focus.
+ */
+static void toolkit_focusClear( Window *wdw )
+{
+   Widget *wgt;
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
+}
+
+
+/**
  * @brief Sanitizes the focus of a window.
  *
  * Makes sure the window has a focusable widget focused.
@@ -1951,6 +1967,9 @@ void toolkit_update (void)
 void toolkit_focusSanitize( Window *wdw )
 {
    Widget *wgt;
+
+   /* Clear focus. */
+   toolkit_focusClear( wdw );
 
    /* No focus is always sane. */
    if (wdw->focus == -1)
@@ -1963,6 +1982,9 @@ void toolkit_focusSanitize( Window *wdw )
          if (!toolkit_isFocusable(wgt)) {
             wdw->focus = -1;
             toolkit_nextFocus( wdw ); /* Get first focus. */
+         }
+         else {
+            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
          }
          return;
       }
@@ -1978,6 +2000,9 @@ void toolkit_nextFocus( Window *wdw )
    Widget *wgt;
    int next;
 
+   /* Clear focus. */
+   toolkit_focusClear( wdw );
+
    /* See what to focus. */
    next = (wdw->focus == -1);
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -1986,6 +2011,7 @@ void toolkit_nextFocus( Window *wdw )
 
       if (next) {
          wdw->focus = wgt->id;
+         wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
          return;
       }
       else if (wdw->focus == wgt->id)
@@ -2005,6 +2031,9 @@ void toolkit_prevFocus( Window *wdw )
 {
    Widget *wgt, *prev;
 
+   /* Clear focus. */
+   toolkit_focusClear( wdw );
+
    /* See what to focus. */
    prev = NULL;
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -2015,8 +2044,10 @@ void toolkit_prevFocus( Window *wdw )
       if (wdw->focus == wgt->id) {
          if (prev == NULL)
             wdw->focus = -1;
-         else
+         else {
             wdw->focus = prev->id;
+            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+         }
          return;
       }
 
@@ -2027,8 +2058,10 @@ void toolkit_prevFocus( Window *wdw )
    /* Focus nothing. */
    if (prev == NULL)
       wdw->focus = -1;
-   else
+   else {
       wdw->focus = prev->id;
+      wgt_setFlag( prev, WGT_FLAG_FOCUSED );
+   }
    return;
 }
 
@@ -2087,6 +2120,7 @@ static Widget* toolkit_getFocus( Window *wdw )
          return wgt;
 
    /* Not found. */
+   toolkit_focusClear( wdw );
    wdw->focus = -1;
    return NULL;
 }

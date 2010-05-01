@@ -174,22 +174,6 @@ function attacked ( attacker )
    end
 end
 
--- Default task to run when idle
-function idle ()
-   local planet = ai.landplanet()
-   -- planet must exist
-   if planet == nil or mem.land_planet == false then
-      ai.settimer(0, rnd.int(1000, 3000))
-      ai.pushtask("enterdelay")
-   else
-      mem.land = planet
-      ai.pushtask("hyperspace")
-      if not mem.tookoff then
-         ai.pushtask("land")
-      end
-   end
-end
-
 -- Delays the ship when entering systems so that it doesn't leave right away
 function enterdelay ()
    if ai.timeup(0) then

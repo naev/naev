@@ -1,7 +1,7 @@
 include("ai/spawn/common.lua")
 
 
--- @brief Spawns a small patrol fleet.
+-- @brief Spawns a small trade fleet.
 function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
@@ -20,7 +20,7 @@ function spawn_patrol ()
 end
 
 
--- @brief Spawns a medium sized squadron.
+-- @brief Spawns a larger trade fleet.
 function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
@@ -52,7 +52,7 @@ function create ( max )
 
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = 0.33*max
+    weights[ spawn_squad   ] = 0.5*max
    
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )

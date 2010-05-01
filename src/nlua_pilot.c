@@ -89,6 +89,7 @@ static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
+static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
@@ -143,6 +144,7 @@ static const luaL_reg pilotL_methods[] = {
    { "attack", pilotL_attack },
    { "runaway", pilotL_runaway },
    { "hyperspace", pilotL_hyperspace },
+   { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
    { "hookClear", pilotL_hookClear },
@@ -336,7 +338,7 @@ static int pilotL_addFleet( lua_State *L )
    const char *fltname, *fltai;
    int i, first;
    unsigned int p;
-   double a;
+   double a, r;
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaPilot lp;
@@ -396,9 +398,11 @@ static int pilotL_addFleet( lua_State *L )
       lplanet = lua_toplanet(L,3);
       planet  = lplanet->p;
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+      a = RNGF() * 2. * M_PI;
+      r = RNGF() * planet->radius;
       vect_cset( &vp,
-            planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
-            planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+            planet->pos.x + r * cos(a),
+            planet->pos.y + r * sin(a) );
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
@@ -453,9 +457,11 @@ static int pilotL_addFleet( lua_State *L )
          else {
             planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
             pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+            a = RNGF() * 2. * M_PI;
+            r = RNGF() * planet->radius;
             vect_cset( &vp,
-                  planet->pos.x + RNG(0,planet->gfx_space->sw) - planet->gfx_space->sw / 2.,
-                  planet->pos.y + RNG(0,planet->gfx_space->sh) - planet->gfx_space->sh / 2. );
+                  planet->pos.x + r * cos(a),
+                  planet->pos.y + r * sin(a) );
             a = RNGF() * 2.*M_PI;
             vectnull( &vv );
          }
@@ -1491,9 +1497,10 @@ static int pilotL_idle( lua_State *L )
  * @luasee goto
  * @luasee brake
  * @luasee follow
- * @luasee hyperspace
  * @luasee attack
  * @luasee runaway
+ * @luasee hyperspace
+ * @luasee land
  * @luafunc control( p, enable )
  */
 static int pilotL_control( lua_State *L )
@@ -1793,19 +1800,108 @@ static int pilotL_runaway( lua_State *L )
  * Pilot must be under manual control for this to work.
  *
  *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam sys Optional system argument to jump to, uses random if nil.
  * @luasee control
- * @luafunc hyperspace( p )
+ * @luafunc hyperspace( p, sys )
  */
 static int pilotL_hyperspace( lua_State *L )
 {
    Pilot *p;
    Task *t;
+   LuaSystem *sys;
+   int i;
+   JumpPoint *jp;
+   double a, rad;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 0)
+      sys = luaL_checksystem( L, 2 );
+   else
+      sys = NULL;
+
 
    /* Set the task. */
    t = pilotL_newtask( L, p, "__hyperspace" );
+   if (sys != NULL) {
+      /* Find the jump. */
+      for (i=0; i < cur_system->njumps; i++) {
+         jp = &cur_system->jumps[i];
+         if (jp->target == sys->s) {
+            break;
+         }
+      }
+      if (i >= cur_system->njumps) {
+         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", sys->s->name, cur_system->name );
+         return 0;
+      }
+
+      /* Set nav target. */
+      p->nav_hyperspace = i;
+
+      /* Copy vector. */
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &jp->pos );
+      
+      /* Introduce some error. */
+      a     = RNGF() * M_PI * 2.;
+      rad   = RNGF() * 0.5 * jp->radius;
+      vect_cadd( &t->dat.vec, rad*cos(a), rad*sin(a) );
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Tells the pilot to land
+ *
+ * Pilot must be under manual control for this to work.
+ *
+ *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam planet Optional planet to land on, uses random if nil.
+ * @luasee control
+ * @luafunc land( p, planet )
+ */
+static int pilotL_land( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+   LuaPlanet *lp;
+   int i;
+   double a, r;
+
+   /* Get parameters. */
+   p = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 0)
+      lp = luaL_checkplanet( L, 2 );
+   else
+      lp = NULL;
+
+   /* Set the task. */
+   t = pilotL_newtask( L, p, "__land" );
+   if (lp != NULL) {
+      /* Find the jump. */
+      for (i=0; i < cur_system->nplanets; i++) {
+         if (cur_system->planets[i] == lp->p) {
+            break;
+         }
+      }
+      if (i >= cur_system->nplanets) {
+         NLUA_ERROR( L, "Planet '%s' not found in system '%s'", lp->p->name, cur_system->name );
+         return 0;
+      }
+
+      /* Copy vector. */
+      p->nav_planet = i;
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &lp->p->pos );
+      
+      /* Introduce some error. */
+      a = RNGF() * 2. * M_PI;
+      r = RNGF() * lp->p->radius;
+      vect_cadd( &t->dat.vec, r*cos(a), r*sin(a) );
+   }
 
    return 0;
 }
