@@ -1440,6 +1440,8 @@ void player_targetPlanet (void)
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
+   gui_forceBlink();
+
    /* Find next planet target. */
    player.p->nav_planet++;
    player_hyperspacePreempt(0);
@@ -1554,6 +1556,7 @@ void player_land (void)
             td = d;
          }
       }
+      gui_forceBlink();
       player.p->nav_planet       = tp;
       player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
@@ -1839,8 +1842,10 @@ void player_targetHostile (void)
       }
    }
 
-   if ((tp != PLAYER_ID) && (tp != player.p->target))
+   if ((tp != PLAYER_ID) && (tp != player.p->target)) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 
    player.p->target = tp;
 }
@@ -1855,8 +1860,10 @@ void player_targetNext( int mode )
 {
    player.p->target = pilot_getNextID(player.p->target, mode);
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1869,8 +1876,10 @@ void player_targetPrev( int mode )
 {
    player.p->target = pilot_getPrevID(player.p->target, mode);
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   };
 }
 
 
@@ -1879,6 +1888,7 @@ void player_targetPrev( int mode )
  */
 void player_targetClear (void)
 {
+   gui_forceBlink();
    if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
@@ -1933,8 +1943,10 @@ void player_targetEscort( int prev )
    }
 
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1949,8 +1961,10 @@ void player_targetNearest (void)
    t = player.p->target;
    player.p->target = pilot_getNearestPilot(player.p);
 
-   if ((player.p->target != PLAYER_ID) && (t != player.p->target))
+   if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 

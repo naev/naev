@@ -845,8 +845,8 @@ void gui_render( double dt )
    /*
     * Countdown timers.
     */
-   blink_pilot -= dt;
-   blink_planet -= dt;
+   blink_pilot    -= dt;
+   blink_planet   -= dt;
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
@@ -1534,7 +1534,7 @@ static void gui_renderPilot( const Pilot* p )
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
-      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
+      if (blink_pilot > RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
          for (i=0; i<8; i++) {
             colours[4*i + 0] = cRadar_tPilot.r;
@@ -1626,6 +1626,16 @@ static glColour *gui_getPlanetColour( int i )
 
 
 /**
+ * @brief Force sets the planet and pilot radar blink.
+ */
+void gui_forceBlink (void)
+{
+   blink_pilot  = 0.;
+   blink_planet = 0.;
+}
+
+
+/**
  * @brief Renders the planet blink around a position on the minimap.
  */
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
@@ -1634,7 +1644,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
    GLfloat vertex[8*2], colours[8*4];
    int i, curs;
 
-   if (blink_planet < RADAR_BLINK_PLANET/2.) {
+   if (blink_planet > RADAR_BLINK_PLANET/2.) {
       curs = 0;
       vx = cx-vr;
       vy = cy+vr;
