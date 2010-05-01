@@ -416,7 +416,7 @@ void cli_open (void)
    /* Input box. */
    window_addInput( wid, 20, 20,
          cli_width-60-BUTTON_WIDTH, BUTTON_HEIGHT,
-         "inpInput", LINE_LENGTH, 1 );
+         "inpInput", LINE_LENGTH, 1, cli_font );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

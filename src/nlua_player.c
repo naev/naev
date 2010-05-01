@@ -530,8 +530,9 @@ static int playerL_evtDone( lua_State *L )
  * Does not change the position nor velocity of the player.p, which will probably be wrong in the new system.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to arcanis.
+ * @usage player.teleport( "Arcanis" ) -- Teleports the player to arcanis.
  *
- *    @luaparam sys System to teleport the player to.
+ *    @luaparam sys System or name of a system to teleport the player to.
  * @luafunc teleport( sys )
  */
 static int playerL_teleport( lua_State *L )

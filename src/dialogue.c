@@ -358,7 +358,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    window_addText( input_wid, 30, -30, 200, h,  0, "txtInput",
          &gl_smallFont, &cDConsole, msg );
    /* input */
-   window_addInput( input_wid, 20, -50-h, 200, 20, "inpInput", max, 1 );
+   window_addInput( input_wid, 20, -50-h, 200, 20, "inpInput", max, 1, NULL );
    window_setInputFilter( input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
    /* button */
    window_addButton( input_wid, -20, 20, 80, 30,
