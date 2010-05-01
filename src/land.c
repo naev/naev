@@ -409,7 +409,7 @@ static void outfits_open( unsigned int wid )
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
-   window_addImage( wid, 20 + iw + 20, -50-128, "imgOutfit", NULL, 1 );
+   window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
@@ -823,7 +823,7 @@ static void shipyard_open( unsigned int wid )
    window_addRect( wid, -41, -50,
          129, 96, "rctTarget", &cBlack, 0 );
    window_addImage( wid, -40-128, -50-96,
-         "imgTarget", NULL, 1 );
+         0, 0, "imgTarget", NULL, 1 );
 
    /* stat text */
    window_addText( wid, -40, -170, 128, 200, 0, "txtStats",
@@ -1436,7 +1436,7 @@ static void bar_update( unsigned int wid, char* str )
    if (!widget_exists(wid, "imgPortrait")) {
       window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
             -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
-            "imgPortrait", NULL, 1 );
+            PORTRAIT_WIDTH, PORTRAIT_HEIGHT, "imgPortrait", NULL, 1 );
    }
 
    /* Enable button. */
@@ -2024,7 +2024,7 @@ static void land_createMainTab( unsigned int wid )
       logo = faction_logoSmall(land_planet->faction);
       if (logo != NULL) {
          window_addImage( wid, 440 + (w-460-logo->w)/2, -20,
-               "imgFaction", logo, 0 );
+               0, 0, "imgFaction", logo, 0 );
          offset = 84;
       }
    }
@@ -2032,7 +2032,7 @@ static void land_createMainTab( unsigned int wid )
    /*
     * Pretty display.
     */
-   window_addImage( wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
+   window_addImage( wid, 20, -40, 0, 0, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
