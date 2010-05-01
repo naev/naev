@@ -136,7 +136,7 @@ void menu_main (void)
    window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
          menu_main_nebu, NULL, &menu_main_lasttick );
-   window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, "imgLogo", tex, 0 );
+   window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
    window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version(1) );
 

@@ -537,9 +537,17 @@ static int playerL_evtDone( lua_State *L )
 static int playerL_teleport( lua_State *L )
 {
    LuaSystem *sys;
+   const char *name;
 
    /* Get a system. */
-   sys = luaL_checksystem(L,1);
+   if (lua_issystem(L,1)) {
+      sys   = lua_tosystem(L,1);
+      name  = sys->s->name;
+   }
+   else if (lua_isstring(L,1))
+      name = lua_tostring(L,1);
+   else
+      NLUA_INVALID_PARAMETER();
 
    /* Jump out hook is run first. */
    hooks_run( "jumpout" );
@@ -553,7 +561,7 @@ static int playerL_teleport( lua_State *L )
    space_gfxUnload( cur_system );
 
    /* Go to the new system. */
-   space_init( sys->s->name );
+   space_init( name );
 
    /* Map gets deformed when jumping this way. */
    map_clear();

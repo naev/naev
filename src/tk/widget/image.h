@@ -25,6 +25,7 @@ typedef struct WidgetImageData_{
 /* Required functions. */
 void window_addImage( const unsigned int wid,
       const int x, const int y, /* position */
+      const int w, const int h, /* dimensions */
       char* name, glTexture* image, int border ); /* label and image itself */
 
 /* Misc functions. */

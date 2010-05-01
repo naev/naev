@@ -163,7 +163,7 @@ void map_open (void)
    window_addText( wid, -20, -20, 100, 20, 1, "txtSysname",
          &gl_defFont, &cDConsole, cur->name );
    /* Faction */
-   window_addImage( wid, -20-64, -60-64, "imgFaction", NULL, 0 );
+   window_addImage( wid, -20-64, -60-64, 0, 0, "imgFaction", NULL, 0 );
    window_addText( wid, -20, -60, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
    window_addText( wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",

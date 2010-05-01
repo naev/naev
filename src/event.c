@@ -472,6 +472,8 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
             temp->trigger = EVENT_TRIGGER_ENTER;
          else if (strcmp(buf,"land")==0)
             temp->trigger = EVENT_TRIGGER_LAND;
+         else if (strcmp(buf,"load")==0)
+            temp->trigger = EVENT_TRIGGER_LOAD;
          else
             WARN("Event '%s' has invalid 'trigger' parameter: %s", temp->name, buf);
 
