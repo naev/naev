@@ -2192,13 +2192,6 @@ void takeoff( int delay )
    player.p->shield = player.p->shield_max;
    player.p->energy = player.p->energy_max;
 
-   /* time goes by, triggers hook before takeoff */
-   if (delay)
-      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
-   nt = ntime_pretty(0);
-   player_message("\epTaking off from %s on %s.", land_planet->name, nt);
-   free(nt);
-
    /* initialize the new space */
    h = player.p->nav_hyperspace;
    space_init(NULL);
@@ -2208,6 +2201,15 @@ void takeoff( int delay )
    if (save_all() < 0) { /* must be before cleaning up planet */
       dialogue_alert( "Failed to save game!  You should exit and check the log to see what happened and then file a bug report!" );
    }
+
+   /* time goes by, triggers hook before takeoff */
+   if (delay)
+      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
+   nt = ntime_pretty(0);
+   player_message("\epTaking off from %s on %s.", land_planet->name, nt);
+   free(nt);
+
+   /* Hooks and stuff. */
    land_cleanup(); /* Cleanup stuff */
    hooks_run("takeoff"); /* Must be run after cleanup since we don't want the
                             missions to think we are landed. */

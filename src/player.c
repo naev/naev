@@ -181,7 +181,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
-static int player_parse( xmlNodePtr parent );
+static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
@@ -198,7 +198,7 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
-int player_load( xmlNodePtr parent ); /* save.c */
+Planet* player_load( xmlNodePtr parent ); /* save.c */
 int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
@@ -1440,6 +1440,8 @@ void player_targetPlanet (void)
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
+   gui_forceBlink();
+
    /* Find next planet target. */
    player.p->nav_planet++;
    player_hyperspacePreempt(0);
@@ -1554,6 +1556,7 @@ void player_land (void)
             td = d;
          }
       }
+      gui_forceBlink();
       player.p->nav_planet       = tp;
       player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
@@ -1839,8 +1842,10 @@ void player_targetHostile (void)
       }
    }
 
-   if ((tp != PLAYER_ID) && (tp != player.p->target))
+   if ((tp != PLAYER_ID) && (tp != player.p->target)) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 
    player.p->target = tp;
 }
@@ -1855,8 +1860,10 @@ void player_targetNext( int mode )
 {
    player.p->target = pilot_getNextID(player.p->target, mode);
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1869,8 +1876,10 @@ void player_targetPrev( int mode )
 {
    player.p->target = pilot_getPrevID(player.p->target, mode);
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   };
 }
 
 
@@ -1879,6 +1888,7 @@ void player_targetPrev( int mode )
  */
 void player_targetClear (void)
 {
+   gui_forceBlink();
    if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
@@ -1933,8 +1943,10 @@ void player_targetEscort( int prev )
    }
 
 
-   if (player.p->target != PLAYER_ID)
+   if (player.p->target != PLAYER_ID) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -1949,8 +1961,10 @@ void player_targetNearest (void)
    t = player.p->target;
    player.p->target = pilot_getNearestPilot(player.p);
 
-   if ((player.p->target != PLAYER_ID) && (t != player.p->target))
+   if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
+      gui_forceBlink();
       player_playSound( snd_target, 1 );
+   }
 }
 
 
@@ -2850,19 +2864,20 @@ static int player_saveShip( xmlTextWriterPtr writer,
  *    @param parent Node where the player.p stuff is to be found.
  *    @return 0 on success.
  */
-int player_load( xmlNodePtr parent )
+Planet* player_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   Planet *pnt;
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
+   pnt = NULL;
    map_cleanup();
 
    node = parent->xmlChildrenNode;
-
    do {
       if (xml_isNode(node,"player"))
-         player_parse( node );
+         pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
          player_parseDoneMissions( node );
       else if (xml_isNode(node,"events_done"))
@@ -2871,7 +2886,7 @@ int player_load( xmlNodePtr parent )
          player_parseEscorts(node);
    } while (xml_nextNode(node));
 
-   return 0;
+   return pnt;
 }
 
 
@@ -2879,9 +2894,9 @@ int player_load( xmlNodePtr parent )
  * @brief Parses the player.p node.
  *
  *    @param parent The player.p node.
- *    @return 0 on success.
+ *    @return Planet to start on on success.
  */
-static int player_parse( xmlNodePtr parent )
+static Planet* player_parse( xmlNodePtr parent )
 {
    unsigned int player_time;
    char* planet, *str;
@@ -2897,6 +2912,7 @@ static int player_parse( xmlNodePtr parent )
 
    /* Make sure player.p is NULL. */
    player.p = NULL;
+   pnt = NULL;
 
    /* Sane defaults. */
    planet = NULL;
@@ -2965,7 +2981,7 @@ static int player_parse( xmlNodePtr parent )
    if (player.p == NULL) {
       if (player_nstack == 0) {
          WARN("Player has no ships!");
-         return -1;
+         return NULL;
       }
 
       /* Just give player.p a random ship in the stack. */
@@ -3008,15 +3024,13 @@ static int player_parse( xmlNodePtr parent )
    gl_cameraBind(&player.p->solid->pos);
 
    /* initialize the system */
-   music_choose("takeoff");
-   planet = pnt->name;
    space_init( sys->name );
    map_clear(); /* sets the map up */
 
    /* initialize the sound */
    player_initSound();
 
-   return 0;
+   return pnt;
 }
 
 

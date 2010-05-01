@@ -103,12 +103,14 @@ static void inp_render( Widget* inp, double bx, double by )
          &cBlack, &inp->dat.inp.input[ inp->dat.inp.view ] );
 
    /* Draw cursor. */
-   m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX );
-   strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
-   buf[ m ] = '\0';
-   w = gl_printWidthRaw( inp->dat.inp.font, buf );
-   toolkit_drawRect( x+5.+w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
-         1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+   if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
+      m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX );
+      strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
+      buf[ m ] = '\0';
+      w = gl_printWidthRaw( inp->dat.inp.font, buf );
+      toolkit_drawRect( x+5.+w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
+            1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+   }
 
    /* inner outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 0.,

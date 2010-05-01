@@ -353,8 +353,6 @@ static void menu_small_exit( unsigned int wid, char* str )
    
    /* if landed we must save anyways */
    if (landed) {
-      /* increment time to match takeoff */
-      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
       save_all();
       land_cleanup();
    }
@@ -384,8 +382,6 @@ static void exit_game (void)
 {
    /* if landed we must save anyways */
    if (landed) {
-      /* increment time to match takeoff */
-      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
       save_all();
       land_cleanup();
    }
