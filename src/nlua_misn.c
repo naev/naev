@@ -526,7 +526,8 @@ static int misn_accept( lua_State *L )
  *    @luaparam properly If true and the mission is unique it marks the mission
  *                     as completed.  If false it deletes the mission but
  *                     doesn't mark it as completed.  If the parameter isn't
- *                     passed it just ends the mission.
+ *                     passed it just ends the mission (without removing it
+ *                     from the player's list of active missions).
  * @luafunc finish( properly )
  */
 static int misn_finish( lua_State *L )
