@@ -358,7 +358,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else { /* hook_type not valid */
-      NLUA_DEBUG("Invalid pilot hook type: '%s'", hook_type);
+      NLUA_ERROR(L, "Invalid pilot hook type: '%s'", hook_type);
       return 0;
    }
 
