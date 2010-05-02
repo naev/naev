@@ -316,17 +316,19 @@ static int hook_board( lua_State *L )
  * @brief Hooks the function to a specific pilot.
  *
  * You can hook to different actions.  Curently hook system only supports:<br />
- *    - "death" : triggered when pilot dies.<br />
+ *    - "death" : triggered when pilot dies (before marked as dead). <br />
  *    - "board" : triggered when pilot is boarded.<br />
- *    - "disable" : triggered when pilot is disabled.<br />
- *    - "jump" : triggered when pilot jumps to hyperspace.<br />
+ *    - "disable" : triggered when pilot is disabled (with disable set).<br />
+ *    - "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
  *    - "hail" : triggered when pilot is hailed.<br />
- *    - "land" : triggered when pilot is landing.<br />
+ *    - "land" : triggered when pilot is landing (right when starting land descent).<br />
  *    - "attacked" : triggered when the pilot is attacked in manual control <br />
  *    - "idle" : triggered when the pilot becomes idle in manual control <br />
  *
- * These hooks are run right after the action that triggers them happens, so when the death
- *  or jump hook is run, the pilot won't be in the system at that time.
+ * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
+ *
+ * function my_hook( pilot )
+ * end
  *
  *    @luaparam pilot Pilot identifier to hook.
  *    @luaparam type One of the supported hook types.
