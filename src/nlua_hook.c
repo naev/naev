@@ -44,6 +44,8 @@ static int hook_time( lua_State *L );
 static int hook_jumpout( lua_State *L );
 static int hook_jumpin( lua_State *L );
 static int hook_enter( lua_State *L );
+static int hook_hail( lua_State *L );
+static int hook_board( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -53,6 +55,8 @@ static const luaL_reg hook_methods[] = {
    { "jumpout", hook_jumpout },
    { "jumpin", hook_jumpin },
    { "enter", hook_enter },
+   { "hail", hook_hail },
+   { "board", hook_board },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -277,6 +281,38 @@ static int hook_enter( lua_State *L )
    return 1;
 }
 /**
+ * @brief Hooks the function to the player hailing any ship (not a planet).
+ *
+ * The hook recieves a single parameter which is the ship being hailed.
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc hail( funcname )
+ */
+static int hook_hail( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "hail", 1 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player boarding any ship.
+ *
+ * The hook recieves a single parameter which is the ship being boarded.
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc board( funcname )
+ */
+static int hook_board( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "board", 1 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
  * @brief Hooks the function to a specific pilot.
  *
  * You can hook to different actions.  Curently hook system only supports:<br />
@@ -304,6 +340,7 @@ static int hook_pilot( lua_State *L )
    LuaPilot *p;
    int type;
    const char *hook_type;
+   char buf[ PATH_MAX ];
 
    /* Parameters. */
    p           = luaL_checkpilot(L,1);
@@ -324,7 +361,8 @@ static int hook_pilot( lua_State *L )
    }
 
    /* actually add the hook */
-   h = hook_generic( L, hook_type, 3 );
+   snprintf( buf, sizeof(buf), "p_%s", hook_type );
+   h = hook_generic( L, buf, 3 );
    pilot_addHook( pilot_get(p->pilot), type, h );
 
    lua_pushnumber( L, h );

@@ -82,7 +82,7 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
-static int pilotL_cleartask( lua_State *L );
+static int pilotL_taskclear( lua_State *L );
 static int pilotL_goto( lua_State *L );
 static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
@@ -137,7 +137,7 @@ static const luaL_reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
-   { "cleartask", pilotL_cleartask },
+   { "taskClear", pilotL_taskclear },
    { "goto", pilotL_goto },
    { "brake", pilotL_brake },
    { "follow", pilotL_follow },
@@ -1522,7 +1522,7 @@ static int pilotL_control( lua_State *L )
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
 
    /* Clear task. */
-   pilotL_cleartask( L );
+   pilotL_taskclear( L );
 
    return 0;
 }
@@ -1601,12 +1601,12 @@ static int pilotL_memory( lua_State *L )
 /**
  * @brief Clears all the tasks of the pilot.
  *
- * @usage p:cleartask()
+ * @usage p:taskClear()
  *
  *    @luaparam p Pilot to clear tasks of.
- * @luafunc cleartask( p )
+ * @luafunc taskClear( p )
  */
-static int pilotL_cleartask( lua_State *L )
+static int pilotL_taskclear( lua_State *L )
 {
    Pilot *p;
 
