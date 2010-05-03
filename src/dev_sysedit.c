@@ -276,13 +276,16 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Base planet data off another. */
    b                    = planet_get( space_getRndPlanet() );
-   p->gfx_space         = gl_dupTexture( b->gfx_space );
    p->gfx_spacePath     = strdup( b->gfx_spacePath );
+   p->gfx_spaceName     = strdup( b->gfx_spaceName );
    p->gfx_exterior      = strdup( b->gfx_exterior );
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
+
+   /* Reload graphics. */
+   space_gfxLoad( sysedit_sys );
 }
 
 
