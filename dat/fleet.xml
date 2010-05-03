@@ -574,4 +574,11 @@
    <pilot chance="100" ship="Kestrel"></pilot>
   </pilots>
  </fleet>
+ <fleet name="racing Beacon">
+  <ai>baddie</ai>
+  <faction>Independent</faction>
+  <pilots>
+   <pilot chance="100" ship="Beacon"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>

@@ -1497,4 +1497,36 @@
    <low />
   </slots>
  </ship>
+ <!-- The beacon is also not a normal ship -->
+ <ship name="Beacon">
+  <base_type>Beacon</base_type>
+  <GFX>beacon</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Yacht</class>
+  <price>1</price>
+  <fabricator>Arledas Racing</fabricator>
+  <description>This beacon is one of the checkpoints you have to reach in order to win the race</description>
+  <movement>
+   <thrust>0</thrust>
+   <turn>100</turn>
+   <speed>0</speed>
+  </movement>
+  <health>
+   <shield>100000</shield>
+   <armour>100000</armour>
+   <energy>1</energy>
+   <shield_regen>1000</shield_regen>
+   <armour_regen>1000</armour_regen>
+   <energy_regen>1</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>1</cpu>
+   <crew>1</crew>
+   <mass>1000000</mass>
+   <fuel>1</fuel>
+   <cap_cargo>100</cap_cargo>
+  </characteristics>
+  <slots />
+ </ship>
 </Ships>
