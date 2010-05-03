@@ -267,7 +267,7 @@ static void map_update( unsigned int wid )
          window_modifyText( wid, "txtSysname", sys->name );
       else
          window_modifyText( wid, "txtSysname", "Unknown" );
-      window_modifyImage( wid, "imgFaction", NULL );
+      window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", -20, -60 );
       window_moveWidget( wid, "txtFaction", -20, -60-gl_smallFont.h-5 );
       window_modifyText( wid, "txtFaction", "Unknown" );
@@ -318,7 +318,7 @@ static void map_update( unsigned int wid )
       }
    }
    if (f == -1) {
-      window_modifyImage( wid, "imgFaction", NULL );
+      window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", -20, -60 );
       window_moveWidget( wid, "txtFaction", -20, -60-gl_smallFont.h-5 );
       window_modifyText( wid, "txtFaction", "NA" );
@@ -337,7 +337,7 @@ static void map_update( unsigned int wid )
 
       /* Modify the image. */
       logo = faction_logoSmall(f);
-      window_modifyImage( wid, "imgFaction", logo );
+      window_modifyImage( wid, "imgFaction", logo, 0, 0 );
       if (logo != NULL) {
          window_moveWidget( wid, "imgFaction",
                -(90-logo->w)/2-20-logo->w, y-(64-logo->h)/2-logo->h );

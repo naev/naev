@@ -30,7 +30,7 @@ void window_addImage( const unsigned int wid,
 
 /* Misc functions. */
 void window_modifyImage( const unsigned int wid,
-      char* name, glTexture* image );
+      char* name, glTexture* image, int w, int h );
 void window_imgColour( const unsigned int wid,
       char* name, glColour* colour );
 glTexture* window_getImage( const unsigned int wid, char* name );

@@ -24,6 +24,7 @@
 #include "opengl.h"
 #include "ai.h"
 #include "ai_extra.h"
+#include "hook.h"
 
 #define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
 
@@ -128,10 +129,12 @@ int comm_openPilot( unsigned int pilot )
    /* Create the pilot window. */
    wid = comm_openPilotWindow();
 
-   /* Run hooks if needed. */
-   run = pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+   /* Run generic hail hooks. */
+   run = 0;
+   run += hooks_runParam( "hail", comm_pilot->id );
+   run += pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+   /* Reopen window in case something changed. */
    if (run > 0) {
-      /* Reopen window in case something changed. */
       comm_close( wid, NULL );
       comm_pilot = p;
       comm_openPilotWindow();

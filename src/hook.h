@@ -23,19 +23,24 @@ void hook_rmEventParent( unsigned int parent );
  *
  * Currently used:
  *  - General
- *    - "takeoff" - when taking off
- *    - "jump" - when changing system
- *    - "time" - when time is increment drastically (hyperspace and taking off)
+ *    - "takeoff" - When taking off
+ *    - "jumpin" - When player jumps (after changing system)
+ *    - "jumpout" - When player jumps (before changing system)
+ *    - "time" - When time is increment drastically (hyperspace and taking off)
+ *    - "hail" - When any pilot is hailed
+ *    - "board" - WHen any pilot is boarded
  *  - Landing
- *    - "land" - when landed
- *    - "outfits" - when visited outfitter
- *    - "shipyard" - when visited shipyard
- *    - "bar" - when visited bar
- *    - "mission" - when visited mission computer
- *    - "commodity" - when visited commodity exchange
- *    - "equipment" - when visiting equipment place
+ *    - "land" - When landed
+ *    - "outfits" - When visited outfitter
+ *    - "shipyard" - When visited shipyard
+ *    - "bar" - When visited bar
+ *    - "mission" - When visited mission computer
+ *    - "commodity" - When visited commodity exchange
+ *    - "equipment" - When visiting equipment place < br/>
  */
+int hooks_runParam( const char* stack, unsigned int pilot );
 int hooks_run( const char* stack );
+int hook_runIDparam( unsigned int id, unsigned int pilot );
 int hook_runID( unsigned int id ); /* runs hook of specific id */
 
 /* destroys hooks */

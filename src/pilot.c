@@ -1196,7 +1196,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
-      pilot_runHook( p, PILOT_HOOK_DISABLE );
+      pilot_runHook( p, PILOT_HOOK_DISABLE ); /* Already disabled. */
    }
 
    /* Officially dead. */
@@ -1267,11 +1267,11 @@ void pilot_dead( Pilot* p )
    if (pilot_isFlag(p,PILOT_HYPERSPACE))
       pilot_rmFlag(p,PILOT_HYPERSPACE);
 
-   /* PILOT R OFFICIALLY DEADZ0R */
-   pilot_setFlag(p,PILOT_DEAD);
-
    /* Pilot must die before setting death flag and probably messing with other flags. */
    pilot_runHook( p, PILOT_HOOK_DEATH );
+
+   /* PILOT R OFFICIALLY DEADZ0R */
+   pilot_setFlag(p,PILOT_DEAD);
 }
 
 
@@ -1288,7 +1288,7 @@ int pilot_runHook( Pilot* p, int hook_type )
    run = 0;
    for (i=0; i<p->nhooks; i++) {
       if (p->hooks[i].type == hook_type) {
-         ret = hook_runID( p->hooks[i].id );
+         ret = hook_runIDparam( p->hooks[i].id, p->id );
          if (ret)
             WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
          run++;
@@ -1829,8 +1829,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
             player_brokeHyperspace();
          }
          else {
-            pilot_delete(p);
             pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
+            pilot_delete(p);
          }
          return;
       }

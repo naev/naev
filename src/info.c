@@ -539,17 +539,18 @@ static void standings_update( unsigned int wid, char* str )
    /* Render logo. */
    t = faction_logoSmall( info_factions[p] );
    if (t != NULL) {
-      window_modifyImage( wid, "imgLogo", t );
-      y = -40 - t->h;
+      window_modifyImage( wid, "imgLogo", t, 0, 0 );
+      y  = -40;
       window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-t->w)/2, y );
+      y -= t->h;
    }
    else {
-      window_modifyImage( wid, "imgLogo", NULL );
+      window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
       y = -20;
    }
 
    /* Modify text. */
-   y -= 30;
+   y -= 20;
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;

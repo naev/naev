@@ -127,10 +127,12 @@ glTexture* window_getImage( const unsigned int wid, char* name )
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget to modify image of.
+ *    @param w New width to set, 0 uses image, -1 doesn't change and >0 sets directly.
+ *    @param w New height to set, 0 uses image, -1 doesn't change and >0 sets directly.
  *    @param image New image to set.
  */
 void window_modifyImage( const unsigned int wid,
-      char* name, glTexture* image )
+      char* name, glTexture* image, int w, int h )
 {  
    Widget *wgt;
    
@@ -147,6 +149,12 @@ void window_modifyImage( const unsigned int wid,
    
    /* Set the image. */
    wgt->dat.img.image = image;
+
+   /* Adjust size. */
+   if (w >= 0)
+      wgt->w = (w > 0) ? w : ((image==NULL) ? 0 : wgt->dat.img.image->sw);
+   if (h >= 0)
+      wgt->h = (h > 0) ? h : ((image==NULL) ? 0 : wgt->dat.img.image->sh);
 }
 
 

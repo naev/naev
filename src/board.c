@@ -138,6 +138,7 @@ void player_board (void)
    /*
     * run hook if needed
     */
+   hooks_runParam( "board", p->id );
    pilot_runHook(p, PILOT_HOOK_BOARD);
 
    if (board_stopboard) {
