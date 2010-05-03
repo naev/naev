@@ -517,7 +517,7 @@ static void outfits_update( unsigned int wid, char* str )
    /* Get and set parameters. */
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
-      window_modifyImage( wid, "imgOutfit", NULL );
+      window_modifyImage( wid, "imgOutfit", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
       snprintf( buf, PATH_MAX,
@@ -542,7 +542,7 @@ static void outfits_update( unsigned int wid, char* str )
    outfit = outfit_get( outfitname );
 
    /* new image */
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
    if (outfit_canBuy(outfit,1,0) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
@@ -903,7 +903,7 @@ static void shipyard_update( unsigned int wid, char* str )
 
    /* No ships */
    if (strcmp(shipname,"None")==0) {
-      window_modifyImage( wid, "imgTarget", NULL );
+      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
       window_disableButton( wid, "btnInfoShip");
@@ -928,14 +928,14 @@ static void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n" );
       window_modifyText( wid, "txtDDesc", buf );
-      window_modifyImage( wid, "txtStats", NULL );
+      window_modifyImage( wid, "txtStats", NULL, 0, 0 );
       return;
    }
 
    ship = ship_get( shipname );
 
    /* update image */
-   window_modifyImage( wid, "imgTarget", ship->gfx_target );
+   window_modifyImage( wid, "imgTarget", ship->gfx_target, 0, 0 );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
@@ -1436,7 +1436,7 @@ static void bar_update( unsigned int wid, char* str )
    if (!widget_exists(wid, "imgPortrait")) {
       window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
             -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
-            PORTRAIT_WIDTH, PORTRAIT_HEIGHT, "imgPortrait", NULL, 1 );
+            0, 0, "imgPortrait", NULL, 1 );
    }
 
    /* Enable button. */
@@ -1444,7 +1444,7 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
-   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ) );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ), 0, 0 );
 
    /* Set mission description. */
    window_modifyText(  wid, "txtMission", npc_getDesc( pos ));

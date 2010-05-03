@@ -140,7 +140,7 @@ end
 function hail()
     if talked then
         tk.msg(title[4], string.format(text[4], shipname, shipname))
-        pinnacle:cleartask()
+        pinnacle:taskClear()
         pinnacle:brake()
         stopping = true
         hook.pilot(pinnacle, "board", "board")

@@ -291,7 +291,7 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
    if (main_naevLogo != NULL)
       gl_freeTexture(main_naevLogo);
    main_naevLogo = NULL;
-   window_modifyImage( wid, "imgLogo", NULL );
+   window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
 }
 
 
