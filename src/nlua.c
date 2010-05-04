@@ -92,7 +92,7 @@ int nlua_loadBasic( lua_State* L )
          "rawget",
          "rawset",
          "setfenv",
-         "setmetatable",
+         /*"setmetatable",*/
          "END"
    };
 

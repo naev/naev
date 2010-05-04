@@ -1,3 +1,4 @@
+include("ai/include/basic.lua")
 --[[
 -- Dummy AI - does nothing except brake and then float around.
 --]]
