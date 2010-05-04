@@ -432,4 +432,13 @@
    <cond>system.get("Ogat"):jumpDist() == 4 and player.fuel() &gt;= 400</cond>
   </avail>
  </mission>
+ <mission name="Neuling Circuit">
+  <lua>neutral/neuling_circuit</lua>
+  <flags />
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>system.cur() == system.get("Therdin") and var.peek("race_active") ~= 1</cond>
+  </avail>
+ </mission>
 </Missions>

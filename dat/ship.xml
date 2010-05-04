@@ -1500,7 +1500,7 @@
  <!-- The beacon is also not a normal ship -->
  <ship name="Beacon">
   <base_type>Beacon</base_type>
-  <GFX>beacon</GFX>
+  <GFX sx="1" sy="1">beacon</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Yacht</class>
