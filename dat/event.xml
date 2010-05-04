@@ -3,7 +3,7 @@
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>next(system.get():faction()) ~= nil</cond>
+  <cond>next(system.cur():faction()) ~= nil</cond>
  </event>
  <event name="Unique">
   <lua>neutral/unique</lua>
