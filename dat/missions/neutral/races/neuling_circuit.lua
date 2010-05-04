@@ -115,13 +115,13 @@ function raceStart ()
 end
 
 function checkProximity ()
-   if vec2.dist( racers[1].pilot:pos(), beaconSanity( beacon_pos[racers[1].beacons_done +1], beacons ) ) <= 100 then
+   if vec2.dist( racers[1].pilot:pos(), beacon_pos[ beaconSanity( racers[1].beacons_done +1, beacons ) ] ) <= 100 then
       racers[1].beacons_done = racers[1].beacons_done + 1
+      racers[1]:nextBeacon( beacons ) --ai function
       
-      if racers[1].beacons_done % #beacons == 0 then --when round is completed
-         player.msg( string.format( text[8], rounds - rounds * #beacons / racers[1].beacons_done ) )
+      if racers[1].beacons_done % #beacons == 1 then --when round is completed
          
-         if racers[1].rounds_completed == rounds * #beacons then --when race is completed
+         if racers[1].beacons_done - 1 == rounds * #beacons then --when race is completed
             tk.msg( title[2], text[5] )
             var.push( "race_active", 0)
             
@@ -134,7 +134,7 @@ function checkProximity ()
             misn.finish( true )
             
          else
-            player.msg( string.format( text[8], rounds - rounds_completed ) )
+         player.msg( string.format( text[8], (rounds * #beacons - ( racers[1].beacons_done - 1 ) ) / #beacons ) )
          end
          
       end
