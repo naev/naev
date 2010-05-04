@@ -6216,6 +6216,33 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Racing Station">
+  <pos>
+   <x>-300.000000</x>
+   <y>-1000.000000</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Independent</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>10000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
+   <commodities/>
+   <description>This space station was built solely for the purpose of hosting the violent races that Therdin is known for throughout the Galaxy. Newcomers and seasoned participants come together here to engage in this controversial sport.</description>
+   <bar>The Bar of the Racing Station is the place where one can write oneself in for all the races, it is a place full of racers from all around the Galaxy and gives host to a large variety of shady characters.</bar>
+  </general>
+ </asset>
  <asset name="Racheka">
   <pos>
    <x>-534.057617</x>

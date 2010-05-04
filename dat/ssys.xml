@@ -4457,6 +4457,13 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="Therdin">
+    <pos x="575.396456" y="3452.378733"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
  </ssys>
  <ssys name="Shickhaw">
@@ -4970,6 +4977,38 @@
    </jump>
    <jump target="Haleb">
     <pos x="3442.086160" y="-634.068503"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Therdin">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-157.000000</x>
+   <y>-117.000000</y>
+  </pos>
+  <assets>
+   <asset>Racing Station</asset>
+   <asset>Virtual Empire Small</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Dvaered Small</asset>
+   <asset>Virtual Frontier Small</asset>
+   <asset>Virtual Pirate Unpresence</asset>
+   <asset>Virtual Sirius Small</asset>
+   <asset>Virtual Trader Local</asset>
+  </assets>
+  <jumps>
+   <jump target="Shakar">
+    <pos x="-410.997468" y="-2465.984810"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
