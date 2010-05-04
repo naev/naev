@@ -65,6 +65,18 @@
 #endif /* HAS_BIGENDIAN */
 
 
+/* Compatibility with older SDL and the likes. */
+#ifndef RW_SEEK_SET
+#define RW_SEEK_SET  SEEK_SET
+#endif /* RW_SEEK_SET */
+#ifndef RW_SEEK_CUR
+#define RW_SEEK_CUR  SEEK_CUR
+#endif /* RW_SEEK_CUR */
+#ifndef RW_SEEK_END
+#define RW_SEEK_END  SEEK_END
+#endif /* RW_SEEK_END */
+
+
 /**
  * @brief Abstracts around packfiles.
  */
