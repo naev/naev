@@ -433,7 +433,7 @@
   </avail>
  </mission>
  <mission name="Neuling Circuit">
-  <lua>neutral/neuling_circuit</lua>
+  <lua>neutral/races/neuling_circuit</lua>
   <flags />
   <avail>
    <chance>100</chance>
