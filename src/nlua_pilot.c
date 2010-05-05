@@ -894,6 +894,9 @@ static int pilotL_setDir( lua_State *L )
 
    /* Set direction. */
    p->solid->dir = fmodf( d*M_PI/180., 2*M_PI );
+   if (p->solid->dir < 0.)
+      p->solid->dir += 2*M_PI;
+
    return 0;
 }
 

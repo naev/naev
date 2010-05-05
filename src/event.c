@@ -330,9 +330,9 @@ void events_update( double dt )
             if (ev->timer[j] < 0.) {
 
                /* Destroy timer. */
-               ev->timer[j] = 0.;
-               tfunc = ev->tfunc[j];
-               ev->tfunc[j] = NULL;
+               ev->timer[j]   = 0.;
+               tfunc          = ev->tfunc[j];
+               ev->tfunc[j]   = NULL;
 
                /* Run function. */
                event_runLua( ev, tfunc );

@@ -450,6 +450,7 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 void missions_update( const double dt )
 {
    int i,j;
+   char *func;
 
    /* Don't update if player is dead. */
    if ((player.p==NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -468,10 +469,14 @@ void missions_update( const double dt )
 
                /* Timer is up - trigger function. */
                if (player_missions[i].timer[j] < 0.) {
-                  misn_run( &player_missions[i], player_missions[i].tfunc[j] );
+                  func = player_missions[i].tfunc[j];
+                  /* Remove timer. */
                   player_missions[i].timer[j] = 0.;
-                  free(player_missions[i].tfunc[j]);
                   player_missions[i].tfunc[j] = NULL;
+                  /* Run function. */
+                  misn_run( &player_missions[i], func );
+                  /* Clean up. */
+                  free(func);
                }
             }
          }

@@ -169,6 +169,7 @@ extern int map_npath;
 /* 
  * internal
  */
+static void player_checkHail (void);
 static void player_updateZoom( double dt );
 /* creation */
 static int player_newMake (void);
@@ -1980,6 +1981,30 @@ void player_screenshot (void)
 
 
 /**
+ * @brief Checks to see if player is still being hailed and clears hail counters
+ *        if he isn't.
+ */
+static void player_checkHail (void)
+{
+   int i;
+   Pilot *p;
+
+   /* See if a pilot is hailing. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be hailing. */
+      if (pilot_isFlag(p, PILOT_HAILING))
+         return;
+   }
+
+   /* Clear hail timer. */
+   player_hailCounter   = 0;
+   player_hailTimer     = 0.;
+}
+
+
+/**
  * @brief Opens communication with the player's target.
  */
 void player_hail (void)
@@ -1990,6 +2015,9 @@ void player_hail (void)
       comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
    else
       player_message("\erNo target selected to hail.");
+
+   /* Clear hails if none found. */
+   player_checkHail();
 }
 
 
@@ -2019,6 +2047,9 @@ void player_autohail (void)
    /* Try o hail. */
    player.p->target = p->id;
    player_hail();
+
+   /* Clear hails if none found. */
+   player_checkHail();
 }
 
 
