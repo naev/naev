@@ -68,7 +68,7 @@ function raceInit ()
    
    for k, v in pairs(beacon_pos) do
       beacons[k] = pilot.add( "racing Beacon", nil, v )[1]
-      beacons[k]:control()
+      beacons[k]:control( true )
       beacons[k]:setHostile() --hostile/friendly to indicate next beacon
       beacons[k]:setInvincible()
    end
@@ -76,16 +76,14 @@ function raceInit ()
    
    -- spawn participants here
    racers = {}
-   racers[1] = racer:new( pilot.player(), "player", 1, beacons)
-   --racer[s2] = racer.new( pilot.add("Goddard Goddard"), "player", 2, beacons)
+   racers[1] = racer:new( pilot.player(), "player", 1, beacons )
+   racers[2] = racer:new( pilot.add("Independent Schroedinger")[1], "basic", 2, beacons )
+   racers[3] = racer:new( pilot.add("Independent Hyena")[1], "basic", 3, beacons )
+   racers[4] = racer:new( pilot.add("Independent Gawain")[1], "basic", 4, beacons )
+   racers[5] = racer:new( pilot.add("Goddard Goddard")[1], "basic", 5, beacons )
+   racers[6] = racer:new( pilot.add("Empire Peacemaker")[1], "basic", 6, beacons )
    
-   --pilot.player():setPos( beacon_pos[beacons_done] ) put player to start beacon
-   --x, y = beacon_pos[beacons_done + 1, beacons]:get() direct player towards next beacon. beaconSanity makes sure that only existing beacons can be referenced
-   --pilot.player():setDir( math.deg( math.atan( y/x ) ) )
-   --pilot.player():disable()
-   
-
-   beacons[ beaconSanity( racers[1].beacons_done + 1, beacons ) ]:setFriendly() --this indicates the next beacon, only for player use   
+ 
    player.msg( text[3] )
    
    countdown_timer = misn.timerStart( "countdownThree", 3000 ) --start countdown
@@ -109,40 +107,31 @@ end
 function raceStart ()
    player.msg( text[4] )
    
-   racers[1].pilot:setHealth( 100, 100 ) --enable the player
-   
-   check_timer = misn.timerStart( "checkProximity", 250 ) --start checking if the player has reached beacons
-end
-
-function checkProximity ()
-   if vec2.dist( racers[1].pilot:pos(), beacon_pos[ beaconSanity( racers[1].beacons_done +1, beacons ) ] ) <= 100 then
-      racers[1].beacons_done = racers[1].beacons_done + 1
-      racers[1]:nextBeacon( beacons ) --ai function
-      
-      if racers[1].beacons_done % #beacons == 1 then --when round is completed
-         
-         if racers[1].beacons_done - 1 == rounds * #beacons then --when race is completed
-            tk.msg( title[2], text[5] )
-            var.push( "race_active", 0)
-            
-            for k, v in pairs(beacons) do --remove the beacons
-               v:rm()
-            end
-            
-            pilot.toggleSpawn( true )
-            
-            misn.finish( true )
-            
-         else
-         player.msg( string.format( text[8], (rounds * #beacons - ( racers[1].beacons_done - 1 ) ) / #beacons ) )
-         end
-         
-      end
-      
-      player.msg( text[2] )
+   for k,v in pairs(racers) do
+      v:startRace( beacons )
    end
    
-   check_timer = misn.timerStart( "checkProximity", 250 ) --no conditional necessary, since mission is deleted upon race completion
+   check_timer = misn.timerStart( "controlLoop", 250 ) --start checking if the player has reached beacons
+end
+
+function controlLoop ()
+   racers_done = 0
+   for k,v in pairs(racers) do
+      v:checkProx( beacons, rounds )
+      racers_done = racers_done + v.done
+   end
+   if racers_done == #racers then
+      tk.msg( title[2], text[5] )
+      for k, v in pairs(beacons) do
+         v:rm()
+      end
+      var.push("race_active", 0)
+      for k, v in pairs(racers) do
+         v:rm()
+      end
+      misn.finish(true)
+   end
+   check_timer = misn.timerStart( "controlLoop", 250 )
 end
 
 function abort ()
@@ -150,5 +139,8 @@ function abort ()
       v:rm()
    end
    var.push("race_active", 0)
+   for k, v in pairs(racers) do
+      v:rm()
+   end
    misn.finish(false)
 end
