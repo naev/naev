@@ -75,7 +75,7 @@
 #define PILOT_HASTURRET    6 /**< Pilot has turrets. */
 #define PILOT_HASBEAMS     7 /**< Pilot has beam weapons. */
 /* dynamic */
-#define PILOT_HAILING      8 /***< Pilot is hailing the player. */
+#define PILOT_HAILING      8 /**< Pilot is hailing the player. */
 #define PILOT_NODISABLE    9 /**< Pilot can't be disabled. */
 #define PILOT_INVINCIBLE   10 /**< Pilot can't be hit ever. */
 #define PILOT_HOSTILE      11 /**< Pilot is hostile to the player. */
