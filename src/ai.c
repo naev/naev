@@ -189,7 +189,7 @@ static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
 /* movement */
 static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
-static int aiL_face( lua_State *L ); /* face(number/pointer) */
+static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
@@ -1763,25 +1763,26 @@ static int aiL_turn( lua_State *L )
 }
 
 
-/*
- * faces the target
+/**
+ * @brief Faces the target.
+ *
+ * @luafunc face
  */
 static int aiL_face( lua_State *L )
 {
    LuaVector *lv;
-   Vector2d sv, tv; /* get the position to face */
+   Vector2d *tv; /* get the position to face */
    Pilot* p;
-   double d, mod, diff;
+   double k_diff, k_vel, d, diff, vx, vy, dx, dy;
    unsigned int id;
-   int n;
+   int vel;
 
    /* Get first parameter, aka what to face. */
-   n  = -2;
-   lv = NULL;
    if (lua_isnumber(L,1)) {
       d = (double)lua_tonumber(L,1);
-      if (d < 0.)
-         n = -1;
+      if (d < 0.) {
+         tv = &cur_pilot->solid->pos;
+      }
       else {
          id = (unsigned int)d;
          p = pilot_get(id);
@@ -1789,34 +1790,59 @@ static int aiL_face( lua_State *L )
             NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
             return 0;
          }
-         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
+         /* Target vector. */
+         tv = &p->solid->pos;
       }
    }
-   else if (lua_isvector(L,1))
+   else if (lua_isvector(L,1)) {
       lv = lua_tovector(L,1);
+      tv = &lv->vec;
+   }
    else NLUA_INVALID_PARAMETER();
 
-   mod = 10;
+   /* Default gain. */
+   k_diff = 10.;
+   k_vel  = 1.;
 
    /* Check if must invert. */
-   if (lua_gettop(L) > 1) {
-      if (lua_isboolean(L,2) && lua_toboolean(L,2))
-         mod *= -1;
+   if (lua_toboolean(L,2))
+      k_diff *= -1;
+
+   /* Third parameter. */
+   vel = lua_toboolean(L, 3);
+
+   /* Tangencial component of velocity vector
+    *
+    * v: velocity vector
+    * d: direction vector
+    *
+    *                  d       d                d
+    * v_t = v - ( v . --- ) * --- = v - ( v . ----- ) * d
+    *                 |d|     |d|             |d|^2
+    */
+   /* Velocity vector. */
+   vx = cur_pilot->solid->vel.x;
+   vy = cur_pilot->solid->vel.y;
+   /* Direction vector. */
+   dx = tv->x - cur_pilot->solid->pos.x;
+   dy = tv->y - cur_pilot->solid->pos.y;
+   if (vel) {
+      /* Calculate dot product. */
+      d = (vx * dx + vy * dy) / (dx*dx + dy*dy);
+      /* Calculate tangencial velocity. */
+      vx = vx - d * dx;
+      vy = vy - d * dy;
+
+      /* Add velocity compensation. */
+      dx += -k_vel * vx;
+      dy += -k_vel * vy;
    }
-
-   vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
-
-   if (lv==NULL) /* target is dynamic */
-      diff = angle_diff(cur_pilot->solid->dir,
-            (n==-1) ? VANGLE(sv) :
-            vect_angle(&sv, &tv));
-   else /* target is static */
-      diff = angle_diff( cur_pilot->solid->dir,   
-            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
-            vect_angle(&cur_pilot->solid->pos, &lv->vec));
+   
+   /* Compensate error and rotate. */
+   diff = angle_diff( cur_pilot->solid->dir, atan2( dy, dx ) );
 
    /* Make pilot turn. */
-   pilot_turn = mod*diff;
+   pilot_turn = k_diff * diff;
 
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, ABS(diff*180./M_PI));
