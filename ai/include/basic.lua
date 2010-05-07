@@ -24,7 +24,7 @@ end
 --]]
 function __goto_nobrake ()
    local target   = ai.target()
-   local dir      = ai.face( target )
+   local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
 
