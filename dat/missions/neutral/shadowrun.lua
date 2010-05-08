@@ -221,10 +221,10 @@ function enter()
     elseif system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
-        pirate1 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20))
-        pirate2 = pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0))
-        pirate3 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20))
+        pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
+        pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20))
+        pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0))
+        pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20))
     end
     
     -- Empire ships around planet
@@ -232,29 +232,26 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
         planetpos = pnt:pos()
-        empire1 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(40,0))
-        empire2 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,25))
-        empire3 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,40))
-        empire4 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,25))
-        empire5 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-40,0))
-        empire6 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,-25))
-        empire7 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,-40))
-        empire8 = pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,-25))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(40,0))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,25))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,40))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,25))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-40,0))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(-25,-25))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(0,-40))
+        pilot.add("Empire Pacifier", "empire_idle", planetpos + vec2.new(25,-25))
     end
 
-    -- Handle the Kestrel that's the last stop on this mission
+    -- Handle the Seiryuu, the last stop on this mission
     if shadowrun >= 2 and system.get() == sys2 then
         mypos = vec2.new(-1500, 600)
-        targship = pilot.add( "Pirate Kestrel", nil, mypos )
-        targship[1]:rename(shipname)
+        seiryuu = pilot.add( "Seiryuu", nil, mypos )[1]
 
-        targship[1]:setFaction(faction.get("Independent")) -- Make sure the ship has no enemies here
-
-        targship[1]:disable()
-        targship[1]:setInvincible(true)
+        seiryuu:disable()
+        seiryuu:setInvincible(true)
         
-        hook.pilot(targship[1], "board", "board")
-        hook.pilot(targship[1], "death", "abort")
+        hook.pilot(seiryuu, "board", "board")
+        hook.pilot(seiryuu, "death", "abort")
     end
 end
 
@@ -271,8 +268,8 @@ function board()
     end
 
     player.unboard()
-    targship[1]:setHealth(100, 100)
-    targship[1]:changeAI("flee")
+    seiryuu:setHealth(100, 100)
+    seiryuu:changeAI("flee")
 
     if var.peek("shadowrun") then
        var.pop("shadowrun") -- in case it was used
@@ -281,6 +278,5 @@ function board()
 end
 
 function abort()
-    var.push("shadowrun_failed", true)
-    misn.finish(true)
+    misn.finish(false)
 end
