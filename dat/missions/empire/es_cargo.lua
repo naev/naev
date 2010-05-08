@@ -94,7 +94,7 @@ function accept()
       carg_id = misn.addCargo( carg_type, carg_mass )
       tk.msg( msg_title[1], string.format( msg_msg[1], carg_mass, carg_type ))
       hook.land( "land" ) -- only hook after accepting
-      hook.time( "timeup" )
+      hook.enter( "timeup" )
    else
       tk.msg( msg_title[2], msg_msg [2] )
       misn.finish()
