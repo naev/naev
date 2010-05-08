@@ -79,6 +79,7 @@
 #include "land.h"
 #include "tech.h"
 #include "hook.h"
+#include "npc.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -319,6 +320,7 @@ int main( int argc, char** argv )
    pilots_free(); /* frees the pilots, they were locked up :( */
    cond_exit(); /* destroy conditional subsystem. */
    land_exit(); /* Destroys landing vbo and friends. */
+   npc_clear(); /* In case exitting while landed. */
 
    /* data unloading */
    unload_all();
