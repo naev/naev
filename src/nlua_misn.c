@@ -381,6 +381,7 @@ static int misn_setMarker( lua_State *L )
       if (cur_mission->sys_marker != NULL)
          free(cur_mission->sys_marker);
       mission_sysMark(); /* Clear the marker */
+      return 0; /* Our job is done here. */
    }
 
    /* Passing in a Star System */
