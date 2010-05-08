@@ -142,6 +142,7 @@ void* q_dequeue( Queue q )
    q->first = q->first->next;
    if (q->first == NULL)
       q->last = NULL;
+   free(temp);
 
    return d;
 }
