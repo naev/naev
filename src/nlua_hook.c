@@ -250,7 +250,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
    if (!lua_isnil(L,pos+1))
       hookL_setarg( L, h, pos+1 );
 
-   return 0;
+   return h;
 }
 /**
  * @brief Hooks the function to the player landing.
