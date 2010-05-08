@@ -133,7 +133,7 @@ end
 -- Time hook
 function timeup()
    if time.get() > misn_time then
-      misn.timerStart("failed", 2000)
+      hook.timer(2000, "failed")
    else
       misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
             pnt:name(), sys:name(),

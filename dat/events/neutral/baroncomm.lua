@@ -27,6 +27,6 @@ function hail()
 end
 
 function finish()
-    evt.timerStop(hailie)
+    hook.rm(hailie)
     evt.finish()
 end

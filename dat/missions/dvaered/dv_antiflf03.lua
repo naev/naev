@@ -158,10 +158,10 @@ function enter()
         spawnDV()
 
         idle()
-        misn.timerStart("spawnFLFfighters", 10000)
-        misn.timerStart("spawnFLFfighters", 15000)
-        tim_sec = misn.timerStart("security_timer", 45000) -- Security timer to make sure mission goes on
-        controller = misn.timerStart("control", 1000)
+        hook.timer(10000, "spawnFLFfighters")
+        hook.timer(15000, "spawnFLFfighters")
+        tim_sec = hook.timer(45000, "security_timer")
+        controller = hook.timer(1000, "control")
         
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
@@ -219,7 +219,7 @@ function deathBase()
         end
     end
     
-    misn.timerStop(controller)
+    hook.rm(controller)
    
     obstinate:control(true)
     obstinate:hyperspace()
@@ -356,19 +356,19 @@ function nextStage()
     deathsFLF = 0
     misn.timerStop( tim_sec ) -- Stop security timer
     if stage == 1 then
-        misn.timerStart("spawnFLFbombers", 9000)
-        misn.timerStart("spawnFLFfighters", 13000)
-        tim_sec = misn.timerStart("security_timer", 60000)
+        hook.timer(9000, "spawnFLFbombers")
+        hook.timer(13000, "spawnFLFfighters")
+        tim_sec = hook.timer(60000, "security_timer")
     elseif stage == 2 then
-        misn.timerStart("spawnFLFfighters", 9000)
-        misn.timerStart("spawnFLFbombers", 11000)
-        misn.timerStart("spawnFLFbombers", 13000)
-        tim_sec = misn.timerStart("security_timer", 75000)
+        hook.timer(9000, "spawnFLFfighters")
+        hook.timer(11000, "spawnFLFbombers")
+        hook.timer(13000, "spawnFLFbombers")
+        tim_sec = hook.timer(75000, "security_timer")
     else
         pilot.broadcast(obstinate, phasetwo, true)
         misn.osdActive(3)
         spawnDVbomber()
-        misn.timerStart("engageBase", 60000)
+        hook.timer(60000, "engageBase")
     end
 end
 
@@ -388,7 +388,7 @@ function spawnDVbomber()
     hook.pilot(bomber, "death", "deathDVbomber")
     DVbombers = DVbombers - 1
     if DVbombers > 0 then
-        spawner = misn.timerStart("spawnDVbomber", 3000)
+        spawner = hook.timer(3000, "spawnDVbomber")
     end
 end 
 
@@ -458,7 +458,7 @@ function control()
     controlFleet( fleetDV, fleetpos, 1 )
     controlFleet( fightersDV, fighterpos, 0 )
     
-    controller = misn.timerStart("control", 1000)
+    controller = hook.timer(1000, "control")
 end
 
 -- Replaces lost bombers. The supply is limited, though.

@@ -40,7 +40,7 @@ function create ()
         v:rename("Shipwrecked " .. shipname)
     end
 
-    evt.timerStart("broadcast", 3000)
+    hook.timer(3000, "broadcast")
    
     -- Set hooks
     hook.pilot( p[1], "board", "rescue" )
@@ -55,12 +55,12 @@ function broadcast()
        return
     end
     p[1]:broadcast( string.format(broadcastmsg, shipname), true )
-    bctimer = evt.timerStart("broadcast", 15000)
+    bctimer = hook.timer(15000, "broadcast")
 end
 
 function rescue()
     -- Player boards the shipwreck and rescues the crew, this spawns a new mission.
-    evt.timerStop(bctimer)
+    hook.rm(bctimer)
     evt.misnStart("The Space Family")
     evt.finish(true)
 end

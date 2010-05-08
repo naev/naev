@@ -117,8 +117,8 @@ function enter()
 
         faction.get("FLF"):modPlayerRaw(-200)
         
-        misn.timerStart("commFLF", 2000)
-        misn.timerStart("wakeUpGregarYouLazyBugger", 20000) -- 20s before Gregar wakes up
+        hook.timer(2000, "commFLF")
+        hook.timer(20000, "wakeUpGregarYouLazyBugger")
     end
 end
 
@@ -166,8 +166,8 @@ function wakeUpGregarYouLazyBugger()
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
         faction.get("FLF"):modPlayerRaw(100)
-        misn.timerStart("annai", 2000)
-        OORT = misn.timerStart("outOfRange", 4000)
+        hook.timer(2000, "annai")
+        OORT = hook.timer(4000, "outOfRange")
     end
 end
 
@@ -185,7 +185,7 @@ function annai()
             j:goto(poss[i])
         end
     end
-    spawner = misn.timerStart("spawnbase", 1000)
+    spawner = hook.timer(1000, "spawnbase")
 end
 
 -- Part of the escort script
@@ -199,9 +199,9 @@ function spawnbase()
     if mindist < 1000 then
         diff.apply("FLF_base")
         basefound = true
-        misn.timerStop(OORT)
+        hook.rm(OORT)
     else
-        spawner = misn.timerStart("spawnbase", 1000)
+        spawner = hook.timer(1000, "spawnbase")
     end
 end
 
@@ -214,7 +214,7 @@ function outOfRange()
         end
     end
     if mindist < 1000 then
-        OORT = misn.timerStart("outOfRange", 2000)
+        OORT = hook.timer(2000, "outOfRange")
     else
         -- TODO: handle mission failure due to distance to escorts
         tk.msg(contacttitle, contacttext)
@@ -223,7 +223,7 @@ function outOfRange()
                 j:rm()
             end
         end
-        misn.timerStop(spawner)
+        hook.rm(spawner)
     end
 end
 

@@ -164,7 +164,7 @@ end
 
 function enter()
    if harrassmsg then
-      misn.timerStart("harrassme", 3000) -- Harrass the player in 3s
+      hook.timer(3000, "harrassme")
       harrassmsg = false
    else
    end
