@@ -29,8 +29,6 @@
 /* actual flags */
 #define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
 
-#define MISSION_TIMER_MAX     10 /**< Maximum amount of timers in a mission. */
-
 
 /**
  * @brief Different type of system markers.
@@ -102,10 +100,6 @@ typedef struct Mission_ {
    char *sys_marker; /**< System to mark. */
    SysMarker sys_markerType; /**< Type of the marker. */
 
-   /* Timers. */
-   double timer[MISSION_TIMER_MAX]; /**< Mission timers. */
-   char *tfunc[MISSION_TIMER_MAX]; /**< Functions assosciated to the timers. */
-
    /* OSD. */
    unsigned int osd; /**< On-Screen Display ID. */
    int osd_set; /**< OSD was set explicitly. */
@@ -133,7 +127,6 @@ int mission_start( const char *name );
 /*
  * misc
  */
-void missions_update( const double dt );
 int mission_getID( const char* name );
 MissionData* mission_get( int id );
 void mission_sysMark (void);
