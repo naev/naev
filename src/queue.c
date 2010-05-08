@@ -46,10 +46,12 @@ Queue q_create (void)
    Queue q = malloc(sizeof(Queue_));
 
    /* Check that we didn't get a NULL. */
+#ifdef DEBUGGING
    if (q == NULL) {
       WARN("q == NULL");
       return NULL;
    }
+#endif /* DEBUGGING */
 
    /* Assign nothing into it. */
    q->first = NULL;
