@@ -322,24 +322,25 @@ void events_update( double dt )
       /* Decrement timers see if must run. */
       for (j=0; j<EVENT_TIMER_MAX; j++) {
 
-         if (ev->timer[j] > 0.) {
+         /* Must be active. */
+         if (ev->timer[j] <= 0.)
+            continue;
 
-            ev->timer[j] -= dt;
+         ev->timer[j] -= dt;
 
-            /* Timer is up - trigger function. */
-            if (ev->timer[j] < 0.) {
+         /* Timer is up - trigger function. */
+         if (ev->timer[j] < 0.) {
 
-               /* Destroy timer. */
-               ev->timer[j]   = 0.;
-               tfunc          = ev->tfunc[j];
-               ev->tfunc[j]   = NULL;
+            /* Destroy timer. */
+            ev->timer[j]   = 0.;
+            tfunc          = ev->tfunc[j];
+            ev->tfunc[j]   = NULL;
 
-               /* Run function. */
-               event_runLua( ev, tfunc );
+            /* Run function. */
+            event_runLua( ev, tfunc );
 
-               /* Free remainder stuff. */
-               free(tfunc);
-            }
+            /* Free remainder stuff. */
+            free(tfunc);
          }
       }
    }
