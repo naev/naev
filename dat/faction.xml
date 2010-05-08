@@ -59,7 +59,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Raider</enemy>
   </enemies>
  </faction>
  <faction name="Pirate">
@@ -177,10 +176,11 @@
  <faction name="Raider">
   <invisible />
   <longname>Galactic Pirates</longname>
-  <player>-20</player>
+  <player>-100</player>
   <colour>red</colour>
   <enemies>
-   <enemy>Trader</enemy>
+   <enemy>Four Winds</enemy>
+   <enemy>Diplomatic</enemy>
   </enemies>
  </faction>
  <faction name="Derelict">
@@ -195,7 +195,20 @@
   <static />
   <player>0</player>
   <allies />
-  <enemies />
+  <enemies>
+   <enemy>Raider</enemy>
+  </enemies>
+ </faction>
+ <faction name="Diplomatic">
+  <invisible />
+  <static />
+  <player>0</player>
+  <colour>blue</colour>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Raider</enemy>
+  </enemies>
  </faction>
  <faction name="Associates">
   <invisible />

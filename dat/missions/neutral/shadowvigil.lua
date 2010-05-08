@@ -2,6 +2,9 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
+include ("scripts/proximity.lua")
+include ("scripts/chatter.lua")
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -104,10 +107,11 @@ function accept()
     destsys = system.get(sysname)
     misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
     misssys["__save"] = true
+    alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
+    alive["__save"] = true
     nextsys = misssys[1]
     seirsys = system.cur()
     oldsys = system.cur()
-    escorting = false
     chattered = false
     stage = 1
     
@@ -140,7 +144,7 @@ end
 
 -- Function hooked to landing. Only used to prevent a fringe case.
 function land()
-    if escorting and system.cur() == misssys[3] and stage == 3 then
+    if system.cur() == misssys[3] and stage == 3 then
         tk.msg("You landed in the final system!", "Fag.")
         abort()
     end
@@ -150,8 +154,7 @@ end
 function enter()
     if system.cur() == misssys[1] and stage == 1 then
         -- case enter system where escorts wait
-        escorts = pilot.add("Escort Lancelot Triplet", nil, vec2.new(0, 0))
-        alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
+        escorts = pilot.add("Shadowvigil Escorts", nil, vec2.new(0, 0))
         for i, j in ipairs(escorts) do
             if j:exists() then
                 j:rename(string.format("Four Winds Escort %d", i)) -- Note: not translate-friendly.
@@ -159,37 +162,63 @@ function enter()
                 hook.pilot(j, "death", "escortDeath")
             end
         end
-        proxy1 = hook.timer(1000, "proximityOrigin")
+        proxy = hook.timer(1000, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortStart"})
     end
 end
 
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
-    if escorting then
-        if system.cur() == misssys[2] then
-            -- case join up with diplomat
+    if stage == 3 then
+        -- Spawn the diplomat.
+        diplomat = pilot.add("Shadowvigil Diplomat", nil, oldsys)[1]
+        hook.pilot(diplomat, "death", "diplomatDeath")
+        hook.pilot(diplomat, "jump", "diplomatJump")
+        diplomat:control()
+    end
+    if stage >= 2 then
+
+        -- Spawn the escorts.
+        escorts = pilot.add("Shadowvigil Escorts", nil, oldsys)
+        for i, j in ipairs(escorts) do
+            if not alive[i] then j:rm() end -- Dead escorts stay dead.
+            if j:exists() then
+                j:rename(string.format("Four Winds Escort %d", i)) -- Note: not translate-friendly.
+                j:control()
+                hook.pilot(j, "death", "escortDeath")
+            end
+        end
+
+        -- Ships spawned, now decide what to do with them.
+        if system.cur() == misssys[2] then -- case join up with diplomat
+            diplomat = pilot.add("Shadowvigil Diplomat", nil, vec2.new(0, 0))[1]
+            hook.pilot(diplomat, "death", "diplomatDeath")
+            hook.pilot(diplomat, "jump", "diplomatJump")
+            diplomat:control()
+            proxy = hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
+            for i, j in ipairs(escorts) do
+                if j:exists() then
+                    j:follow(diplomat) -- Follow the diplomat.
+                end
+            end
+            hook.timer(4000, "chatter", {pilot = escorts[1], text = commmsg[6]})
+            hook.timer(7000, "chatter", {pilot = escorts[2], text = commmsg[7]})
+            hook.timer(7000, "chatter", {pilot = escorts[3], text = commmsg[8]})
+        elseif system.cur() == misssys[3] then -- case rendezvous with dvaered diplomat
             tk.msg("Implement me!", "Fag.")
-            stage = 3 -- The actual escort begins here.
-        elseif system.cur() == misssys[3] then
-            -- case rendezvous with dvaered diplomat
-        elseif not system.cur() == nextsys then
-            -- case player is escorting AND jumped to somewhere other than the next escort destination
+        elseif not system.cur() == nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
             tk.msg(wrongsystitle, wrongsystext)
             abort()
-        else
-            -- case enroute, handle escorts flying to the next system
-            escorts = pilot.add("Escort Lancelot Triplet", nil, oldsys)
+        else -- case enroute, handle escorts flying to the next system
             for i, j in ipairs(escorts) do
-                if not alive[i] then j:rm() end -- Dead escorts stay dead.
                 if j:exists() then
-                    j:rename(string.format("Four Winds Escort %d", i)) -- Note: not translate-friendly.
-                    j:control()
-                    hook.pilot(j, "death", "escortDeath")
+                    if stage == 2 then
+                        j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+                    else
+                        j:follow(diplomat) -- Follow the diplomat.
+                    end
                 end
-                j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
             end
             if not chattered then
-                -- This is the radio chatter conversation.
                 hook.timer(10000, "chatter", {pilot = escorts[2], text = commmsg[2]})
                 hook.timer(15000, "chatter", {pilot = escorts[3], text = commmsg[3]})
                 hook.timer(20000, "chatter", {pilot = escorts[2], text = commmsg[4]})
@@ -197,7 +226,8 @@ function jumpin()
                 chattered = true
             end
         end
-    elseif system.cur() == seirsys then
+
+    elseif system.cur() == seirsys then -- not escorting.
         -- case enter system where Seiryuu is
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
         seiryuu:setInvincible(true)
@@ -206,27 +236,17 @@ function jumpin()
             hook.pilot(seiryuu, "board", "board")
         end
     else
-        if proxy1 then
-            misn.timerStop(proxy1)
+        if proxy then
+            misn.timerStop(proxy)
         end
-    end
-end
-
--- Poll for player proximity to the origin
-function proximityOrigin()
-    if vec2.dist(player.pos(), vec2.new(0, 0)) < 500 then
-        escortStart()
-    else
-        proxy1 = hook.timer(1000, "proximityOrigin")
     end
 end
 
 -- The player has successfully joined up with the escort fleet. Cutscene -> departure.
 function escortStart()
-    escorting = true
     stage = 2 -- Fly to the diplomat rendezvous point
     misn.osdActive(2)
-    -- misn.setMarker() -- No marker. Player has to follow the NPCs.
+    misn.setMarker() -- No marker. Player has to follow the NPCs.
     escorts[1]:comm(commmsg[1])
     for i, j in pairs(escorts) do
         if j:exists() then
@@ -235,12 +255,9 @@ function escortStart()
     end
 end
 
--- Make a pilot say a line.
--- argument chat: A table containing a pilot and a string. The pilot will say the string (if he is alive).
-function chatter(chat)
-    if chat.pilot:exists() then
-        chat.pilot:comm(chat.text)
-    end
+function escortNext()
+    stage = 3 -- The actual escort begins here.
+    diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
 end
 
 -- Choose the next system to jump to on the route from the current system to the argument system.
@@ -273,9 +290,31 @@ function escortDeath()
     end
 end
 
+-- Handle the death of the diplomat. Abort the mission if the diplomat dies.
+function diplomatDeath()
+    -- TODO: abort message
+    tk.msg("The duplomat am death!", "Fag.")
+    for i, j in ipairs(escorts) do
+        if j:exists() then
+            j:control(false)
+        end
+    end
+    abort()
+end
+
+-- Handle the departure of the diplomat. Escorts will follow.
+function diplomatJump()
+    for i, j in ipairs(escorts) do
+        if j:exists() then
+            j:taskClear()
+            j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+        end
+    end
+end
+
 function board()
     player.unboard()
-    seiryuu:setHealth(100,100)
+    seiryuu:setHealth(100, 100)
     -- TODO: end mission text, reward
 end
 

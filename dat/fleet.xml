@@ -585,16 +585,23 @@
   <ai>trader</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot name="Seiryuu" ship="Pirate Kestrel"></pilot>
+   <pilot name="Seiryuu" ship="Seiryuu"></pilot>
   </pilots>
  </fleet>
- <fleet name="Escort Lancelot Triplet">
+ <fleet name="Shadowvigil Diplomat">
+  <ai>trader</ai>
+  <faction>Diplomatic</faction>
+  <pilots>
+   <pilot name="Imperial Diplomat" ship="Diplomatic Vessel"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Shadowvigil Escorts">
   <ai>trader</ai>
   <faction>Independent</faction>
   <pilots>
-   <pilot name="Lancelot" ship="Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
 </Fleets>
