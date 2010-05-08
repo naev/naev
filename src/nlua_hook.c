@@ -177,8 +177,6 @@ static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
       lua_newtable( L );      /* v, t */
       lua_pushvalue( L, -1 ); /* v, t, t */
       lua_setglobal( L, "__hook_arg" ); /* v, t */
-      lua_pushboolean( L, 1 );/* v, t, b */
-      lua_setfield( L, -2, "__save" ); /* v, t */
    }
    lua_pushnumber( L, hook ); /* v, t, k */
    lua_pushvalue( L, -3 );    /* v, t, k, v */
