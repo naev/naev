@@ -65,6 +65,7 @@ static const luaL_reg hook_methods[] = {
 /*
  * Prototypes.
  */
+static int hookL_setarg( lua_State *L, unsigned int hook, int ind );
 static unsigned int hook_generic( lua_State *L, const char* stack, int pos );
 
 
@@ -99,15 +100,18 @@ void nlua_hookTarget( Mission *m, Event_t *ev )
  * @brief Lua bindings to manipulate hooks.
  *
  * Hooks allow you to trigger functions to certain actions like when the player
- * jumps or a pilot dies.
+ *  jumps or a pilot dies.
+ *
+ * They can have arguments passed to them which will then get passed to the
+ *  called hook function.
  *
  * Example usage would be:
  * @code
- * function penter ()
+ * function penter( arg )
  *    -- Function to run when player enters a system
  * end
  *
- * hookid = hook.enter( "penter" )
+ * hookid = hook.enter( "penter", 5 )
  * @endcode
  *
  * @luamod hook
@@ -128,11 +132,76 @@ static int hookL_rm( lua_State *L )
    unsigned int h;
    int ret;
 
+   /* Remove the hook. */
    h = luaL_checklong( L, 1 );
    ret = hook_rm( h );
 
+   /* Clean up hook data. */
+   if (ret) {
+      lua_getglobal( L, "__hook_arg" );
+      if (!lua_isnil(L,-1)) {
+         lua_pushnumber( L, h ); /* t, n */
+         lua_pushnil( L );       /* t, n, nil */
+         lua_settable( L, -3 );  /* t */
+      }
+      lua_pop( L, 1 );        /* */
+   }
+
    lua_pushboolean( L, ret );
    return 1;
+}
+
+
+/**
+ * @brief Sets a Lua argument for a hook.
+ *
+ *    @param L State to set hook argument for.
+ *    @param hook Hook to set argument for.
+ *    @param ind Index of argument to set.
+ *    @return 0 on success.
+ */
+static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
+{
+   lua_pushvalue( L, ind );   /* v */
+   /* If a table set __save, this won't work for tables of tables however. */
+   if (lua_istable(L, -1)) {
+      lua_pushboolean( L, 1 );/* v, b */
+      lua_setfield( L, -2, "__save" ); /* v */
+   }
+   /* Create if necessary the actual hook argument table. */
+   lua_getglobal( L, "__hook_arg" ); /* v, t */
+   if (lua_isnil(L,-1)) {     /* v, nil */
+      lua_pop( L, 1 );        /* v */
+      lua_newtable( L );      /* v, t */
+      lua_pushvalue( L, -1 ); /* v, t, t */
+      lua_setglobal( L, "__hook_arg" ); /* v, t */
+      lua_pushboolean( L, 1 );/* v, t, b */
+      lua_setfield( L, -2, "__save" ); /* v, t */
+   }
+   lua_pushnumber( L, hook ); /* v, t, k */
+   lua_pushvalue( L, -3 );    /* v, t, k, v */
+   lua_settable( L, -3 );     /* v, t */
+   lua_pop( L, 2 );           /* */
+   return 0;
+}
+
+
+/**
+ * @brief Gets a Lua argument for a hook.
+ *
+ *    @param L Lua state to put argument in.
+ *    @param hook Hook te get argument of.
+ *    @return 0 on success.
+ */
+int hookL_getarg( lua_State *L, unsigned int hook )
+{
+   lua_getglobal( L, "__hook_arg" ); /* t */
+   if (!lua_isnil(L,-1)) {    /* t */
+      lua_pushnumber( L, hook ); /* t, k */
+      lua_gettable( L, -2 );  /* t, v */ 
+      lua_remove( L, -2 );    /* v */
+   }
+   return 0;
 }
 
 
@@ -150,10 +219,12 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
 {
    int i;
    const char *func;
+   unsigned int h;
 
    /* Last parameter must be function to hook */
    func = luaL_checkstring(L,pos);
 
+   h = 0;
    if (running_mission != NULL) {
       /* make sure mission is a player mission */
       for (i=0; i<MISSION_MAX; i++)
@@ -164,13 +235,21 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
          return 0;
       }
 
-      return hook_addMisn( running_mission->id, func, stack );
+      h = hook_addMisn( running_mission->id, func, stack );
    }
    else if (running_event != NULL) {
-      return hook_addEvent( running_event->id, func, stack );
+      h = hook_addEvent( running_event->id, func, stack );
    }
 
-   NLUA_ERROR(L,"No hook target was set.");
+   if (h == 0) {
+      NLUA_ERROR(L,"No hook target was set.");
+      return 0;
+   }
+
+   /* Check parameter. */
+   if (!lua_isnil(L,pos+1))
+      hookL_setarg( L, h, pos+1 );
+
    return 0;
 }
 /**
@@ -191,8 +270,9 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam where Optional argument to specify where to hook the function.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc land( funcname, where )
+ * @luafunc land( funcname, where, arg )
  */
 static int hook_land( lua_State *L )
 {
@@ -213,8 +293,9 @@ static int hook_land( lua_State *L )
  * @brief Hooks the function to the player taking off.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc takeoff( funcname )
+ * @luafunc takeoff( funcname, arg )
  */
 static int hook_takeoff( lua_State *L )
 {
@@ -227,8 +308,9 @@ static int hook_takeoff( lua_State *L )
  * @brief Hooks the function to a time change.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc time( funcname )
+ * @luafunc time( funcname, arg )
  */
 static int hook_time( lua_State *L )
 {
@@ -241,8 +323,9 @@ static int hook_time( lua_State *L )
  * @brief Hooks the function to the player jumping (before changing systems).
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc jumpout( funcname )
+ * @luafunc jumpout( funcname, arg )
  */
 static int hook_jumpout( lua_State *L )
 {
@@ -255,8 +338,9 @@ static int hook_jumpout( lua_State *L )
  * @brief Hooks the function to the player jumping (after changing systems).
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc jumpin( funcname )
+ * @luafunc jumpin( funcname, arg )
  */
 static int hook_jumpin( lua_State *L )
 {
@@ -270,8 +354,9 @@ static int hook_jumpin( lua_State *L )
  *  off too).
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc enter( funcname )
+ * @luafunc enter( funcname, arg )
  */
 static int hook_enter( lua_State *L )
 {
@@ -286,8 +371,9 @@ static int hook_enter( lua_State *L )
  * The hook recieves a single parameter which is the ship being hailed.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc hail( funcname )
+ * @luafunc hail( funcname, arg )
  */
 static int hook_hail( lua_State *L )
 {
@@ -302,8 +388,9 @@ static int hook_hail( lua_State *L )
  * The hook recieves a single parameter which is the ship being boarded.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc board( funcname )
+ * @luafunc board( funcname, arg )
  */
 static int hook_board( lua_State *L )
 {
@@ -327,14 +414,15 @@ static int hook_board( lua_State *L )
  *
  * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
  *
- * function my_hook( pilot )
+ * function my_hook( pilot, arg )
  * end
  *
  *    @luaparam pilot Pilot identifier to hook.
  *    @luaparam type One of the supported hook types.
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc pilot( pilot, type, funcname )
+ * @luafunc pilot( pilot, type, funcname, arg )
  */
 static int hook_pilot( lua_State *L )
 {

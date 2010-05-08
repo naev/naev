@@ -82,6 +82,8 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
 static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent );
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent );
+/* Misc. */
+static void mission_updateTimer( Mission *misn, double dt );
 /* externed */
 int missions_saveActive( xmlTextWriterPtr writer );
 int missions_loadActive( xmlNodePtr parent );
@@ -441,6 +443,40 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 }
 
 
+/**
+ * @brief Updates a mission's timers.
+ *
+ *    @param misn Mission to update timers.
+ *    @param dt Current deltatick.
+ */
+static void mission_updateTimer( Mission *misn, double dt )
+{
+   int i;
+   char *func;
+
+   for (i=0; i<MISSION_TIMER_MAX; i++) {
+
+      /* Timer must be active. */
+      if (misn->timer[i] > 0.) {
+
+         /* Decrement time. */
+         misn->timer[i] -= dt;
+
+         /* Timer is up - trigger function. */
+         if (misn->timer[i] < 0.) {
+            func = misn->tfunc[i];
+            /* Remove timer. */
+            misn->timer[i] = 0.;
+            misn->tfunc[i] = NULL;
+            /* Run function. */
+            misn_run( &player_missions[i], func );
+            /* Clean up. */
+            free(func);
+         }
+      }
+   }
+}
+
 
 /**
  * @brief Updates the missions triggering timers if needed.
@@ -449,8 +485,7 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
  */
 void missions_update( const double dt )
 {
-   int i,j;
-   char *func;
+   int i;
 
    /* Don't update if player is dead. */
    if ((player.p==NULL) || player_isFlag(PLAYER_DESTROYED))
@@ -459,28 +494,11 @@ void missions_update( const double dt )
    for (i=0; i<MISSION_MAX; i++) {
 
       /* Mission must be active. */
-      if (player_missions[i].id != 0) {
-         for (j=0; j<MISSION_TIMER_MAX; j++) {
+      if (player_missions[i].id == 0)
+         continue;
 
-            /* Timer must be active. */
-            if (player_missions[i].timer[j] > 0.) {
-
-               player_missions[i].timer[j] -= dt;
-
-               /* Timer is up - trigger function. */
-               if (player_missions[i].timer[j] < 0.) {
-                  func = player_missions[i].tfunc[j];
-                  /* Remove timer. */
-                  player_missions[i].timer[j] = 0.;
-                  player_missions[i].tfunc[j] = NULL;
-                  /* Run function. */
-                  misn_run( &player_missions[i], func );
-                  /* Clean up. */
-                  free(func);
-               }
-            }
-         }
-      }
+      /* Update timers. */
+      mission_updateTimer( &player_missions[i], dt );
    }
 }
 

@@ -23,6 +23,7 @@
 #include "player.h"
 #include "event.h"
 #include "nlua_pilot.h"
+#include "nlua_hook.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */
@@ -74,6 +75,7 @@ static Hook* hook_stack       = NULL; /**< Stack of hooks. */
 static int hook_mstack        = 0; /**< Size of hook memory. */
 static int hook_nstack        = 0; /**< Number of hooks currently used. */
 static int hook_runningstack  = 0; /**< Check if stack is running. */
+static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
 
 
 /*
@@ -82,6 +84,8 @@ static int hook_runningstack  = 0; /**< Check if stack is running. */
 /* extern */
 extern int misn_run( Mission *misn, const char *func );
 /* intern */
+static Hook* hook_get( unsigned int id );
+static unsigned int hook_genID (void);
 static Hook* hook_new( HookType_t type, const char *stack );
 static int hook_runMisn( Hook *hook, unsigned int pilot );
 static int hook_runEvent( Hook *hook, unsigned int pilot );
@@ -104,10 +108,14 @@ int hook_load( xmlNodePtr parent );
 static int hook_runMisn( Hook *hook, unsigned int pilot )
 {
    int i;
+   unsigned int id;
    Mission* misn;
    lua_State *L;
    LuaPilot lp;
    int n;
+
+   /* Simplicity. */
+   id = hook->id;
 
    /* Make sure it's valid. */
    if (hook->u.misn.parent == 0) {
@@ -137,6 +145,10 @@ static int hook_runMisn( Hook *hook, unsigned int pilot )
    else
       n = 0;
 
+   /* Add hook parameters. */
+   hookL_getarg( L, id );
+   n++;
+
    /* Run mission code. */
    if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
@@ -156,7 +168,8 @@ static int hook_runMisn( Hook *hook, unsigned int pilot )
  */
 static int hook_runEvent( Hook *hook, unsigned int pilot )
 {
-   int ret, id;
+   int ret;
+   unsigned int id;
    lua_State *L;
    LuaPilot lp;
    int n;
@@ -173,6 +186,10 @@ static int hook_runEvent( Hook *hook, unsigned int pilot )
    }
    else
       n = 0;
+
+   /* Add hook parameters. */
+   hookL_getarg( L, id );
+   n++;
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
@@ -235,6 +252,30 @@ static int hook_run( Hook *hook, unsigned int pilot )
 
 
 /**
+ * @brief Generates a new hook id.
+ *
+ *    @return New hook id.
+ */
+static unsigned int hook_genID (void)
+{
+   unsigned int id;
+   int i;
+   id = ++hook_id; /* default id, not safe if loading */
+
+   /* If not loading we can just return. */
+   if (!hook_loadingstack)
+      return id;
+
+   /* Must check ids for collisions. */
+   for (i=0; i<hook_nstack; i++)
+      if (id == hook_stack[i].id) /* Check for collision. */
+         return hook_genID(); /* recursively try again */
+
+   return id;
+}
+
+
+/**
  * @brief Generates and allocates a new hook.
  *
  *    @param stack Stack to which the new hook belongs.
@@ -256,7 +297,7 @@ static Hook* hook_new( HookType_t type, const char *stack )
 
    /* Fill out generic details. */
    new_hook->type    = type;
-   new_hook->id      = ++hook_id;
+   new_hook->id      = hook_genID();
    new_hook->stack   = strdup(stack);
 
    /* Increment stack size. */
@@ -472,6 +513,19 @@ int hooks_run( const char* stack )
 
 
 /**
+ * @brief Gets a hook by ID.
+ */
+static Hook* hook_get( unsigned int id )
+{
+   int i;
+   for (i=0; i<hook_nstack; i++)
+      if (hook_stack[i].id == id)
+         return &hook_stack[i];
+   return NULL;
+}
+
+
+/**
  * @brief Runs a single hook by id.
  *
  *    @param id Identifier of the hook to run.
@@ -480,27 +534,18 @@ int hooks_run( const char* stack )
 int hook_runIDparam( unsigned int id, unsigned int pilot )
 {
    Hook *h;
-   int i, ret;
 
    /* Don't update if player is dead. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
    /* Try to find the hook and run it. */
-   ret = 0;
-   for (i=0; i<hook_nstack; i++)
-      if (hook_stack[i].id == id) {
-         h     = &hook_stack[i];
-         hook_run( h, pilot );
-         ret   = 1;
-         break;
-      }
-
-   /* Hook not found. */
-   if (ret == 0) {
+   h = hook_get( id );
+   if (h == NULL) {
       WARN("Attempting to run hook of id '%d' which is not in the stack", id);
       return -1;
    }
+   hook_run( h, pilot );
 
    return 0;
 }
@@ -614,6 +659,7 @@ int hook_save( xmlTextWriterPtr writer )
       switch (h->type) {
          case HOOK_TYPE_MISN:
             xmlw_attr(writer,"type","misn"); /* Save attribute. */
+            xmlw_elem(writer,"id","%u",h->id);
             xmlw_elem(writer,"parent","%u",h->u.misn.parent);
             xmlw_elem(writer,"func","%s",h->u.misn.func);
             break;
@@ -653,14 +699,25 @@ int hook_save( xmlTextWriterPtr writer )
 int hook_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   int i;
 
    hook_cleanup();
+
+   /* We're loading. */
+   hook_loadingstack = 1;
 
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"hooks"))
          hook_parse(node);
    } while (xml_nextNode(node));
+
+   /* Done loading. */
+   hook_loadingstack = 0;
+
+   /* Set ID gen to highest hook. */
+   for (i=0; i<hook_nstack; i++)
+      hook_id = MAX( hook_stack[i].id, hook_id );
 
    return 0;
 }
@@ -676,12 +733,14 @@ static int hook_parse( xmlNodePtr base )
 {
    xmlNodePtr node, cur;
    char *func, *stack, *stype;
-   unsigned int parent;
+   unsigned int parent, id, new_id;
    HookType_t type;
+   Hook *h;
 
    node = base->xmlChildrenNode;
    do {
       if (xml_isNode(node,"hook")) {
+         id       = 0;
          parent   = 0;
          func     = NULL;
          stack    = NULL;
@@ -708,10 +767,14 @@ static int hook_parse( xmlNodePtr base )
             WARN("Hook of unknown type '%s' found, skipping.", stype);
             type = HOOK_TYPE_NULL;
             free(stype);
+            continue;
          }
 
          /* Handle the data. */
          do {
+            /* ID. */
+            xmlr_long(cur,"id",id);
+
             /* Generic. */
             xmlr_str(cur,"stack",stack);
 
@@ -722,20 +785,24 @@ static int hook_parse( xmlNodePtr base )
             }
          } while (xml_nextNode(cur));
 
+         /* Check for validity. */
+         if ((parent == 0) || (func == NULL) || (stack == NULL)) {
+            WARN("Invalid hook.");
+            continue;
+         }
+
          /* Create the hook. */
          if (type == HOOK_TYPE_MISN) {
-            if ((parent == 0) || (func == NULL) || (stack == NULL)) {
-               WARN("Invalid hook.");
-               return -1;
-            }
-            hook_addMisn( parent, func, stack );
+            new_id = hook_addMisn( parent, func, stack );
          }
          if (type == HOOK_TYPE_EVENT) {
-            if ((parent == 0) || (func == NULL) || (stack == NULL)) {
-               WARN("Invalid hook.");
-               return -1;
-            }
-            hook_addEvent( parent, func, stack );
+            new_id = hook_addEvent( parent, func, stack );
+         }
+
+         /* Set the id. */
+         if (id != 0) {
+            h = hook_get( new_id );
+            h->id = id;
          }
       }
    } while (xml_nextNode(node));
