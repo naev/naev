@@ -125,6 +125,7 @@ static void unload_all (void);
 static void display_fps( const double dt );
 static void window_caption (void);
 static void debug_sigInit (void);
+static void debug_sigClose (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
@@ -351,6 +352,9 @@ int main( int argc, char** argv )
       SDL_FreeSurface(naev_icon);
 
    SDL_Quit(); /* quits SDL */
+
+   /* Clean up signal handler. */
+   debug_sigClose();
 
    /* Last free. */
    free(binary_path);
@@ -936,6 +940,8 @@ static void debug_sigInit (void)
 #if HAS_LINUX && defined(DEBUGGING)
    char **matching;
    struct sigaction sa, so;
+   long symcount;
+   unsigned int size;
 
    bfd_init();
 
@@ -946,8 +952,6 @@ static void debug_sigInit (void)
 
       /* Read symbols */
       if (bfd_get_file_flags(abfd) & HAS_SYMS) {
-         long symcount;
-         unsigned int size;
 
          /* static */
          symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
@@ -973,5 +977,16 @@ static void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
+#endif /* HAS_LINUX && defined(DEBUGGING) */
+}
+
+
+/**
+ * @brief Closes the SignalHandler for linux.
+ */
+static void debug_sigClose (void)
+{
+#if HAS_LINUX && defined(DEBUGGING)
+   bfd_close( abfd );
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 }
