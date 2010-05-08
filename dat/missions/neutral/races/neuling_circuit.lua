@@ -76,13 +76,12 @@ function raceInit ()
    
    -- spawn participants here
    racers = {}
-   racers[1] = racer:new( pilot.player(), "player", 1, beacons )
-   racers[2] = racer:new( pilot.add("Independent Schroedinger")[1], "fighter", 2, beacons )
-   racers[3] = racer:new( pilot.add("Independent Hyena")[1], "fighter", 3, beacons )
-   racers[4] = racer:new( pilot.add("Independent Gawain")[1], "fighter", 4, beacons )
-   racers[5] = racer:new( pilot.add("Goddard Goddard")[1], "basic", 5, beacons )
-   racers[6] = racer:new( pilot.add("Civilian Llama")[1], "figher", 6, beacons )
-   
+   racers[1] = racer:new( nil, "player", 1, beacons )
+   racers[2] = racer:new( "Independent Schroedinger", "fighter", 2, beacons )
+   racers[3] = racer:new( "Independent Hyena", "fighter", 3, beacons )
+   racers[4] = racer:new( "Independent Gawain", "fighter", 4, beacons )
+   racers[5] = racer:new( "Goddard Goddard", "basic", 5, beacons )
+   racers[6] = racer:new( "Civilian Llama", "fighter", 6, beacons )
  
    player.msg( text[3] )
    

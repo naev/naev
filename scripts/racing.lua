@@ -33,27 +33,62 @@ end
 racer = {}
 racer_mt = { __index = racer }
 
-function racer:new ( pilot, aitype, number, beacon_list )
-   local pilot = pilot
-   local ai = aitype
+
+--[[
+   @brief Creates a racer.
+
+      @param pilotname Name of the pilot fleet to use (should only have one pilot).
+      @param aitype AI to use for the racer.
+      @param number Number of the racer in the race.
+      @param beacon_list List of beacons to visit.
+      @return The newly created racer.
+--]]
+function racer:new ( pilotname, aitype, number, beacon_list )
+   local ai    = aitype
    local beacons_done = 1
+
+   -- Chose ai
+   local name
    if ai == "player" then
-      local name = player.name()
+      name = player.name()
       beacon_list[ beaconSanity( beacons_done +1, beacon_list ) ]:setFriendly()
    elseif ai == "perfect" then
-      local name = "Pete Perfect"
+      name = "Pete Perfect"
    elseif ai == "basic" then
-      local name = "Basic Butcher Ben"
+      name = "Basic Butcher Ben"
    elseif ai == "fighter" then
-      local name = "Fighting Forklift"
+      name = "Fighting Forklift"
+   else
+      error( string.format( "Invalid ai '%s' for racer", aitype ) )
    end
-   local x, y = beacon_list[ beaconSanity( beacons_done +1, beacon_list ) ]:pos():sub( beacon_list[ beaconSanity( beacons_done, beacon_list ) ]:pos() ):get()
-   local angle = math.atan( y/x )
+
+   -- Calculate direction to face
+   local bnext = beacon_list[ beaconSanity( beacons_done + 1, beacon_list ) ]
+   local bcur = beacon_list[ beaconSanity( beacons_done, beacon_list ) ]
+   local v = bnext:pos() - bcur:pos()
+   local x, y = v:get()
+   local angle = math.atan2( y, x )
+
+   -- Calculate vector
    local sinevalue = 50 * math.sin( 0.5 * math.pi * ( number * 2 - 1 ) )
-   pilot:setPos( beacon_list[ beacons_done ]:pos():add( vec2.new( math.cos( angle ) * ( -50 ) * number + math.sin( angle ) * sinevalue, math.sin( angle ) * ( -50 ) * number + math.cos( angle ) * sinevalue ) ) )
-   pilot:setDir( math.deg( angle ) )
-   pilot:disable()
-   return setmetatable( { pilot=pilot, ai=ai, beacons_done=beacons_done, name=name, done=0 }, racer_mt )
+   local c = math.cos( angle )
+   local s = math.sin( angle )
+   v = beacon_list[ beacons_done ]:pos()
+   v = v:add( -50*c*number + s*sinevalue, -50*s*number + c*sinevalue ) 
+
+   -- Create/get pilot
+   local p
+   if pilotname == nil then
+      p = player.pilot()
+      p:setPos( v )
+   else
+      p = pilot.add( pilotname, "dummy", v )[1]
+   end
+   p:setDir( math.deg( angle ) )
+   p:disable()
+
+   -- Set metatable
+   return setmetatable( { pilot=p, ai=ai, beacons_done=beacons_done, name=name, done=0 }, racer_mt )
 end
 
 function racer:beaconDone( beacon_list, rounds )
@@ -64,6 +99,7 @@ function racer:beaconDone( beacon_list, rounds )
       beacon_list[ beaconSanity( self.beacons_done, beacon_list ) ]:setHostile()
       beacon_list[ beaconSanity( self.beacons_done +1, beacon_list ) ]:setFriendly()
    elseif self.ai == "basic" then
+      self.pilot:taskClear()
       self.pilot:goto( beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos(), false )
    elseif self.ai == "fighter" then
       self.pilot:broadcast( "Checkpoint!", true )
@@ -84,6 +120,7 @@ function racer:checkProx ( beacon_list, rounds )
    if self.ai == "fighter" and vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() ) <= 200 then
       local this_beacon = beacon_list[beaconSanity(self.beacons_done+1, beacon_list)]:pos()
       local next_beacon = beacon_list[beaconSanity(self.beacons_done+2, beacon_list)]:pos()
+      self.pilot:taskClear()
       self.pilot:goto( this_beacon + (next_beacon - this_beacon)*200/vec2.mod(next_beacon - this_beacon), false) --goes to a point 200 units from the next beacon (in the direction of the last one
       self.pilot:goto( beacon_list[ beaconSanity( self.beacons_done + 2, beacon_list ) ]:pos(), false )
    end
