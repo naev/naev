@@ -66,11 +66,13 @@ Queue q_create (void)
  */
 void q_destroy( Queue q )
 {
+#ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
    if (q == NULL) {
       WARN("q == NULL");
       return;
    }
+#endif /* DEBUGGING */
 
    /* Free all the data. */
    while(q->first != NULL) {
@@ -91,11 +93,13 @@ void q_enqueue( Queue q, void *data )
 {
    Node n;
 
+#ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
    if (q == NULL) {
       WARN("q == NULL");
       return;
    }
+#endif /* DEBUGGING */
 
    /* Create a new node. */
    n = malloc(sizeof(Node_));
@@ -121,11 +125,13 @@ void* q_dequeue( Queue q )
    void *d;
    Node temp;
 
+#ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
    if (q == NULL) {
       WARN("q == NULL");
       return NULL;
    }
+#endif /* DEBUGGING */
 
    /* Check that it's not empty. */
    if (q->first == NULL)
@@ -136,7 +142,6 @@ void* q_dequeue( Queue q )
    q->first = q->first->next;
    if (q->first == NULL)
       q->last = NULL;
-   //free(temp);
 
    return d;
 }
@@ -149,11 +154,13 @@ void* q_dequeue( Queue q )
  */
 int q_isEmpty( Queue q )
 {
+#ifdef DEBUGGING
    /* Check that we didn't get a NULL. */
    if (q == NULL) {
       WARN("q == NULL");
       return -1;
    }
+#endif /* DEBUGGING */
 
    if (q->first == NULL)
       return 1;
