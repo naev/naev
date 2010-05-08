@@ -2432,7 +2432,7 @@ static void presenceCleanup( StarSystem *sys )
 
       /* Remove the element with 0 value. */
       memmove(&sys->presence[i], &sys->presence[i + 1],
-              sizeof(SystemPresence) * sys->npresence - (i + 1));
+              sizeof(SystemPresence) * (sys->npresence - (i + 1)));
       sys->npresence--;
       sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
       i--;  /* We'll want to check the new value we just copied in. */
