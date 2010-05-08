@@ -20,20 +20,19 @@ end
 
 
 --[[
--- Goes to a target position
+-- Goes to a target position without braking
 --]]
 function __goto_nobrake ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
-   local bdist    = ai.minbrakedist()
 
    -- Need to get closer
-   if dir < 10 and dist > bdist then
+   if dir < 10 then
       ai.accel()
 
    -- Need to start braking
-   elseif dist < bdist then
+   elseif dist < 50 then
       ai.poptask()
       return
    end
@@ -41,11 +40,11 @@ end
 
 
 --[[
--- Goes to a target position
+-- Goes to a target position roughly
 --]]
 function goto ()
    local target   = ai.target()
-   local dir      = ai.face( target )
+   local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
 

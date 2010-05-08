@@ -1802,7 +1802,7 @@ static int aiL_face( lua_State *L )
 
    /* Default gain. */
    k_diff = 10.;
-   k_vel  = 1.;
+   k_vel  = 100.; /* overkill gain! */
 
    /* Check if must invert. */
    if (lua_toboolean(L,2))
