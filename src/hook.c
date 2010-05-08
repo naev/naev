@@ -104,10 +104,14 @@ int hook_load( xmlNodePtr parent );
 static int hook_runMisn( Hook *hook, unsigned int pilot )
 {
    int i;
+   unsigned int id;
    Mission* misn;
    lua_State *L;
    LuaPilot lp;
    int n;
+
+   /* Simplicity. */
+   id = hook->id;
 
    /* Make sure it's valid. */
    if (hook->u.misn.parent == 0) {
@@ -137,6 +141,10 @@ static int hook_runMisn( Hook *hook, unsigned int pilot )
    else
       n = 0;
 
+   /* Add hook parameters. */
+   hookL_getarg( L, id );
+   n++;
+
    /* Run mission code. */
    if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
@@ -156,7 +164,8 @@ static int hook_runMisn( Hook *hook, unsigned int pilot )
  */
 static int hook_runEvent( Hook *hook, unsigned int pilot )
 {
-   int ret, id;
+   int ret;
+   unsigned int id;
    lua_State *L;
    LuaPilot lp;
    int n;
@@ -173,6 +182,10 @@ static int hook_runEvent( Hook *hook, unsigned int pilot )
    }
    else
       n = 0;
+
+   /* Add hook parameters. */
+   hookL_getarg( L, id );
+   n++;
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
