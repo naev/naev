@@ -353,6 +353,9 @@ int main( int argc, char** argv )
 
    SDL_Quit(); /* quits SDL */
 
+   /* Clean up parser. */
+   xmlCleanupParser();
+
    /* Clean up signal handler. */
    debug_sigClose();
 
