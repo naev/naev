@@ -45,7 +45,8 @@ function create ()
     -- Set hooks
     hook.pilot( p[1], "board", "rescue" )
     hook.pilot( p[1], "death", "destroyevent" )
-    hook.time("endevent")
+    hook.enter("endevent")
+    hook.land("endevent")
 end
 
 function broadcast()
