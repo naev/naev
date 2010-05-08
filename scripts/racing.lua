@@ -44,6 +44,8 @@ function racer:new ( pilot, aitype, number, beacon_list )
       local name = "Pete Perfect"
    elseif ai == "basic" then
       local name = "Basic Butcher Ben"
+   elseif ai == "fighter" then
+      local name = "Fighting Forklift"
    end
    local x, y = beacon_list[ beaconSanity( beacons_done +1, beacon_list ) ]:pos():sub( beacon_list[ beaconSanity( beacons_done, beacon_list ) ]:pos() ):get()
    local angle = math.atan( y/x )
@@ -63,6 +65,8 @@ function racer:beaconDone( beacon_list, rounds )
       beacon_list[ beaconSanity( self.beacons_done +1, beacon_list ) ]:setFriendly()
    elseif self.ai == "basic" then
       self.pilot:goto( beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos(), false )
+   elseif self.ai == "fighter" then
+      self.pilot:broadcast( "Checkpoint!", true )
    end
    
    if self.beacons_done % #beacon_list == 1 then --when round is completed
@@ -77,9 +81,16 @@ function racer:beaconDone( beacon_list, rounds )
 end
 
 function racer:checkProx ( beacon_list, rounds )
+   if self.ai == "fighter" and vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() ) <= 200 then
+      local this_beacon = beacon_list[beaconSanity(self.beacons_done+1, beacon_list)]:pos()
+      local next_beacon = beacon_list[beaconSanity(self.beacons_done+2, beacon_list)]:pos()
+      self.pilot:goto( this_beacon + (next_beacon - this_beacon)*200/vec2.mod(next_beacon - this_beacon), false) --goes to a point 200 units from the next beacon (in the direction of the last one
+      self.pilot:goto( beacon_list[ beaconSanity( self.beacons_done + 2, beacon_list ) ]:pos(), false )
+   end
    if vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() ) <= 100 then
       self:beaconDone( beacon_list, rounds )
    end
+   
 end
 
 function racer:roundDone ( beacon_list )
@@ -90,7 +101,7 @@ end
 
 function racer:raceDone ()
    self.done = 1
-   if self.ai == "basic" then
+   if self.ai == "basic" or self.ai == "fighter" then
       self.pilot:brake()
    end
 end
@@ -100,9 +111,17 @@ function racer:startRace ( beacon_list )
    if self.ai == "basic" then
       self.pilot:control(true)
       self.pilot:goto( beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos(), false )
+   elseif self.ai == "fighter" then
+      self.pilot:control(true)
+      local this_beacon = beacon_list[self.beacons_done]:pos()
+      local next_beacon = beacon_list[beaconSanity(self.beacons_done+1, beacon_list)]:pos()
+      self.pilot:goto( this_beacon + (next_beacon - this_beacon)*200/vec2.mod(next_beacon - this_beacon), false) --goes to a point 200 units from the next beacon (in the direction of the last one
    end
 end
 
 function racer:rm()
-   self.pilot:rm()
+   if self.pilot ~= pilot.player() then
+      self.pilot:rm()
+   end
+   return nil
 end

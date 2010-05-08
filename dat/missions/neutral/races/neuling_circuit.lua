@@ -77,11 +77,11 @@ function raceInit ()
    -- spawn participants here
    racers = {}
    racers[1] = racer:new( pilot.player(), "player", 1, beacons )
-   racers[2] = racer:new( pilot.add("Independent Schroedinger")[1], "basic", 2, beacons )
-   racers[3] = racer:new( pilot.add("Independent Hyena")[1], "basic", 3, beacons )
-   racers[4] = racer:new( pilot.add("Independent Gawain")[1], "basic", 4, beacons )
+   racers[2] = racer:new( pilot.add("Independent Schroedinger")[1], "fighter", 2, beacons )
+   racers[3] = racer:new( pilot.add("Independent Hyena")[1], "fighter", 3, beacons )
+   racers[4] = racer:new( pilot.add("Independent Gawain")[1], "fighter", 4, beacons )
    racers[5] = racer:new( pilot.add("Goddard Goddard")[1], "basic", 5, beacons )
-   racers[6] = racer:new( pilot.add("Empire Peacemaker")[1], "basic", 6, beacons )
+   racers[6] = racer:new( pilot.add("Civilian Llama")[1], "figher", 6, beacons )
    
  
    player.msg( text[3] )
@@ -127,7 +127,7 @@ function controlLoop ()
       end
       var.push("race_active", 0)
       for k, v in pairs(racers) do
-         v:rm()
+         racers[k] = v:rm()
       end
       misn.finish(true)
    end
@@ -135,12 +135,16 @@ function controlLoop ()
 end
 
 function abort ()
-   for k, v in pairs(beacons) do
-      v:rm()
+   if beacons ~= nil then
+      for k, v in pairs(beacons) do
+         v:rm()
+      end
    end
    var.push("race_active", 0)
-   for k, v in pairs(racers) do
-      v:rm()
+   if racers ~= nil then
+      for k, v in pairs(racers) do
+         racers[k] = v:rm()
+      end
    end
    misn.finish(false)
 end

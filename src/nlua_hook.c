@@ -163,12 +163,20 @@ static int hookL_rm( lua_State *L )
 static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
 {
    lua_pushvalue( L, ind );   /* v */
+   /* If a table set __save, this won't work for tables of tables however. */
+   if (lua_istable(L, -1)) {
+      lua_pushboolean( L, 1 );/* v, b */
+      lua_setfield( L, -2, "__save" ); /* v */
+   }
+   /* Create if necessary the actual hook argument table. */
    lua_getglobal( L, "__hook_arg" ); /* v, t */
    if (lua_isnil(L,-1)) {     /* v, nil */
       lua_pop( L, 1 );        /* v */
       lua_newtable( L );      /* v, t */
       lua_pushvalue( L, -1 ); /* v, t, t */
       lua_setglobal( L, "__hook_arg" ); /* v, t */
+      lua_pushboolean( L, 1 );/* v, t, b */
+      lua_setfield( L, -2, "__save" ); /* v, t */
    }
    lua_pushnumber( L, hook ); /* v, t, k */
    lua_pushvalue( L, -3 );    /* v, t, k, v */
