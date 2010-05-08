@@ -192,7 +192,11 @@ function create ()
     global_npc = {}
     
     faction = planet.cur():faction() --get current planets faction
-    reputation = player.getFaction(faction:name()) --get players affiliation with said faction
+    if faction == nil then
+       return
+    end
+
+    reputation = player.getFaction( faction:name() ) --get players affiliation with said faction
     civ_msg_fac = civ_msg["general"] --the stuff that's always said
     for key, value in pairs(civ_msg[faction:name()]) do --add faction-specific stuff
         table.insert(civ_msg_fac, value)

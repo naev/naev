@@ -72,7 +72,8 @@ function create ()
     p:disable()
     hook.pilot(p, "board", "board")
     hook.pilot(p, "death", "destroyevent")
-    hook.time("destroyevent")
+    hook.enter("destroyevent")
+    hook.land("endevent")
 end
 
 function board()
