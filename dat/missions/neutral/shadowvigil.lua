@@ -37,7 +37,31 @@ else -- default english
     Rebina straightens up. "That will be all for now, %s," she says in a more formal, captain-like manner. "You have your assignment I suggest you go about it."
     You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]]
     
+    wrongsystitle = "You diverged!"
+    wrongsystext = [[You have jumped to the wrong system! You are no longer part of the mission to escort the diplomat.]]
+    
+    -- First meeting.
     commmsg[1] = "There you are at last. Fancy boat you've got there. Okay, you know the drill. Let's go."
+    
+    -- Enroute chatter.
+    commmsg[2] = "So do you guys think we'll run into any trouble?"
+    commmsg[3] = "Not if we all follow the plan. I didn't hear of any trouble coming our way from any of the others."
+    commmsg[4] = "I just hope Z. knows what he's doing."
+    commmsg[5] = "Cut the chatter, two, three. This is a low-profile operation. Act the part, please."
+    
+    -- Diplomat jumpin.
+    commmsg[6] = "Alright boys, there he is. You know your orders. Stick to him, don't let anyone touch him on the way to the rendezvous."
+    commmsg[7] = "Two, copy."
+    commmsg[8] = "Three, copy."
+    
+    -- Enroute pirates.
+    commmsg[9] = "Those rats are eyeballing us - take them out!"
+    commmsg[10] = "All hostiles eliminated, resume standing orders."
+    
+    -- Endgame
+    commmsg[11] = "This is Empire zero-zero-four. Transmitting clearance code now."
+    commmsg[12] = "Empire zero-zero-four, your code checks out. Commende boarding maneuvers."
+    commmsg[13] = "This is leader, you're all clear. Execute, execute, execute!"
     
     -- Mission info stuff
     osd_title = {}
@@ -53,19 +77,6 @@ else -- default english
 end
 
 function create()
-    sysname = "Tuoladis"
-    destsys = system.get(sysname)
-    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
-    nextsys = misssys[1]
-    seirsys = system.cur()
-    oldsys = system.cur()
-    escorting = false
-    stage = 1
-    
-    first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
-    accepted = false
-    missend = false
-
     if first then
         var.push("shadowvigil_first", false)
         tk.msg(title[1], string.format(text[1], player.name()))
@@ -89,6 +100,21 @@ function create()
 end
 
 function accept()
+    sysname = "Tuoladis"
+    destsys = system.get(sysname)
+    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
+    misssys["__save"] = true
+    nextsys = misssys[1]
+    seirsys = system.cur()
+    oldsys = system.cur()
+    escorting = false
+    chatter = false
+    stage = 1
+    
+    first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
+    accepted = false
+    missend = false
+
     var.push("shadowvigil_active", true)
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
 
@@ -101,9 +127,10 @@ function accept()
     osd_msg[1] = string.format(osd_msg[1], misssys[1]:name())
     misn.osdCreate(osd_title, osd_msg)
     
-    jumphook = hook.jumpin("jumpin")
-    jumphook = hook.jumpin("jumpout")
-    -- TODO
+    enterhook = hook.enter("enter")
+    jumpinhook = hook.jumpin("jumpin")
+    jumpouthook = hook.jumpin("jumpout")
+    landhook = hook.land("land")
 end
 
 -- Function hooked to jumpout. Used to retain information about the previously visited system.
@@ -111,40 +138,64 @@ function jumpout()
     oldsys = system.cur()
 end
 
--- Function hooked to jumpin. Handles the events in the various systems.
+-- Function hooked to landing. Only used to prevent a fringe case.
+function land()
+    if escorting and system.cur() == misssys[3] and stage == 3 then
+        tk.msg("You landed in the final system!", "Fag.")
+        abort()
+    end
+end
+
+-- Function hooked to jumpin AND takeoff. Handles events that should occur in either case.
+function enter()
+    if system.cur() == misssys[1] and stage == 1 then
+        -- case enter system where escorts wait
+        escorts = pilot.add("Escort Lancelot Triplet", nil, vec2.new(0, 0))
+        alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
+        for i, j in ipairs(escorts) do
+            if j:exists() then
+                j:rename(string.format("Four Winds Escort %d", i)) -- Note: not translate-friendly.
+                j:control()
+                hook.pilot(j, "death", "escortDeath")
+            end
+        end
+        proxy1 = hook.timer(1000, "proximityOrigin")
+    end
+end
+
+-- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
     if escorting then
         if system.cur() == misssys[2] then
             -- case join up with diplomat
+            tk.msg("Implement me!", "Fag.")
+            stage = 3 -- The actual escort begins here.
         elseif system.cur() == misssys[3] then
             -- case rendezvous with dvaered diplomat
         elseif not system.cur() == nextsys then
             -- case player is escorting AND jumped to somewhere other than the next escort destination
-            tk.msg("fail!", "faul!")
+            tk.msg(wrongsystitle, wrongsystext)
             abort()
         else
             -- case enroute, handle escorts flying to the next system
             escorts = pilot.add("Escort Lancelot Triplet", nil, oldsys)
-            for i, j in pairs(escorts) do
+            for i, j in ipairs(escorts) do
                 if not alive[i] then j:rm() end -- Dead escorts stay dead.
                 if j:exists() then
+                    j:rename(string.format("Four Winds Escort %d", i)) -- Note: not translate-friendly.
                     j:control()
                     hook.pilot(j, "death", "escortDeath")
                 end
                 j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
             end
-        end
-    elseif system.cur() == misssys[1] then
-        -- case enter system where escorts wait
-        escorts = pilot.add("Escort Lancelot Triplet", nil, vec2.new(0, 0))
-        alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
-        for i, j in pairs(escorts) do
-            if j:exists() then
-                j:control()
-                hook.pilot(j, "death", "escortDeath")
+            if not chatter then
+                hook.timer(10000, "chatter")
+                hook.timer(15000, "chatter")
+                hook.timer(20000, "chatter")
+                hook.timer(25000, "chatter")
+                chatter = true
             end
         end
-        proxy1 = misn.timerStart("proximity", 1000)
     elseif system.cur() == seirsys then
         -- case enter system where Seiryuu is
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
@@ -161,11 +212,11 @@ function jumpin()
 end
 
 -- Poll for player proximity to the origin
-function proximity()
+function proximityOrigin()
     if vec2.dist(player.pos(), vec2.new(0, 0)) < 500 then
         escortStart()
     else
-        proxy1 = misn.timerStart("proximity", 1000)
+        proxy1 = hook.timer(1000, "proximityOrigin")
     end
 end
 
@@ -181,6 +232,14 @@ function escortStart()
     end
 end
 
+-- State machine that handles the pilot conversation.
+function chatter()
+    if not (alive[1] and alive[2] and alive[3]) then
+        return
+    end
+    -- TODO: state machine here.
+end
+
 -- Choose the next system to jump to on the route from the current system to the argument system.
 function getNextSystem(finalsys)
     local mysys = system.cur()
@@ -188,10 +247,10 @@ function getNextSystem(finalsys)
         return mysys
     else
         neighs = mysys:adjacentSystems()
-        local nearest = 0
-        local nextsys = nil
+        local nearest = -1
+        local nextsys = finalsys
         for j, _ in pairs(neighs) do
-            if nearest == 0 or j:jumpDist(finalsys) < nearest then
+            if nearest == -1 or j:jumpDist(finalsys) < nearest then
                 nearest = j:jumpDist(finalsys)
                 nextsys = j
             end
@@ -206,6 +265,7 @@ function escortDeath()
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
         -- TODO: abort message
+        tk.msg("All the escorts am death!", "Fag.")
         abort()
     end
 end
@@ -216,6 +276,7 @@ function board()
     -- TODO: end mission text, reward
 end
 
+-- Handle the unsuccessful end of the mission.
 function abort()
     var.pop("shadowvigil_active")
     misn.finish(false)

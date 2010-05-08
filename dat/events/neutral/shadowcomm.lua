@@ -25,7 +25,7 @@ function create ()
     
     vendetta = pilot.add("Four Winds Vendetta")[1]
     
-    hailie = evt.timerStart("hailme", 3000)
+    hailie = hook.timer(3000, "hailme")
 
     var.push("shadowvigil_active", true) -- Make sure the event can't reappear while it's active
 
@@ -42,7 +42,7 @@ function hailme()
 end
 
 -- Triggered when the player hails the ship
-function hail()
+function hail(p)
     hailed = true
     tk.msg(title[1], string.format(text[1], player.name(), sysname))
     var.push("shadowvigil_active", true)
