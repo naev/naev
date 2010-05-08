@@ -95,18 +95,18 @@ int tech_load (void)
 {
    int i, ret, s;
    uint32_t bufsize;
-   char *buf;
+   char *buf, *data;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
    tech_group_t *tech;
 
    /* Load the data. */
-   buf = ndata_read( TECH_DATA, &bufsize );
-   if (buf == NULL)
+   data = ndata_read( TECH_DATA, &bufsize );
+   if (data == NULL)
       return -1;
 
    /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
+   doc = xmlParseMemory( data, bufsize );
    if (doc == NULL) {
       WARN("'%s' is not a valid XML file.", TECH_DATA);
       return -1;
@@ -167,6 +167,9 @@ int tech_load (void)
 
    /* Info. */
    DEBUG("Loaded %d tech group%s", s, (s == 1) ? "" : "s" );
+
+   /* Free memory. */
+   free(data);
 
    return 0;
 }
