@@ -78,6 +78,7 @@
 #include "cond.h"
 #include "land.h"
 #include "tech.h"
+#include "hook.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -642,6 +643,7 @@ void update_routine( double dt )
    pilots_update(dt);
    missions_update(dt);
    events_update(dt);
+   hooks_update(dt);
 }
 
 

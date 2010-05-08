@@ -48,8 +48,13 @@ typedef enum HookType_e {
 typedef struct Hook_ {
    unsigned int id; /**< unique id */
    char *stack; /**< stack it's a part of */
-   HookType_t type; /**< Type of hook. */
    int delete; /**< indicates it should be deleted when possible */
+
+   /* Timer information. */
+   int is_timer; /**< Whether or not is actually a timer. */
+   double ms; /**< Miliseconds left. */
+
+   HookType_t type; /**< Type of hook. */
    union {
       struct {
          unsigned int parent; /**< mission it's connected to */
@@ -354,6 +359,101 @@ unsigned int hook_addEvent( unsigned int parent, const char *func, const char *s
 
 
 /**
+ * @brief Adds a new mission type hook timer hook.
+ *
+ *    @param parent Hook mission parent.
+ *    @param func Function to run when hook is triggered.
+ *    @param ms Milliseconds to wait
+ *    @return The new hook identifier.
+ */
+unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_MISN, "timer" );
+
+   /* Put mission specific details. */
+   new_hook->u.misn.parent = parent;
+   new_hook->u.misn.func   = strdup(func);
+
+   /* Timer information. */
+   new_hook->is_timer      = 1;
+   new_hook->ms            = ms;
+
+   return new_hook->id;
+}
+
+
+/**
+ * @brief Adds a new event type hook timer.
+ *
+ *    @param parent Hook event parent.
+ *    @param func Function to run when hook is triggered.
+ *    @param ms Miliseconds to wait.
+ *    @return The new hook identifier.
+ */
+unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_EVENT, "timer" );
+
+   /* Put event specific details. */
+   new_hook->u.event.parent = parent;
+   new_hook->u.event.func   = strdup(func);
+
+   /* Timer information. */
+   new_hook->is_timer      = 1;
+   new_hook->ms            = ms;
+
+   return new_hook->id;
+}
+
+
+/**
+ * @brief Updates all the hook timer related stuff.
+ */
+void hooks_update( double dt )
+{
+   int i;
+   Hook *h;
+   hook_runningstack = 1; /* running hooks */
+   for (i=0; i<hook_nstack; i++) {
+      /* Find valid timer hooks. */
+      h = &hook_stack[i];
+      if (h->is_timer == 0)
+         continue;
+
+      /* Decrement timer and check to see if should run. */
+      h->ms -= dt;
+      if (h->ms > 0.)
+         continue;
+
+      /* Run the timer hook. */
+      hook_run( h, 0 );
+   }
+   hook_runningstack = 0; /* not running hooks anymore */
+
+   /* Second pass to delete. */
+   for (i=0; i<hook_nstack; i++) {
+      /* Find valid timer hooks. */
+      h = &hook_stack[i];
+      if (h->is_timer == 0)
+         continue;
+
+      /* See if hook should be deleted. */
+      if (h->ms > 0.)
+         continue;
+
+      /* Remove the hook (timers get run once). */
+      hook_rm( h->id );
+   }
+}
+
+
+/**
  * @brief Adds a new C function type hook.
  *
  *    @param func Function to hook.  Parameter is the data passed.  Function
@@ -619,6 +719,7 @@ static int hook_needSave( Hook *h )
    int i;
    char *nosave[] = {
          "p_death", "p_board", "p_disable", "p_jump", "p_attacked", "p_idle", /* pilot hooks */
+         "timer", /* timers */
          "end" };
  
    /* Impossible to save functions. */

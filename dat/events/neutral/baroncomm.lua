@@ -11,7 +11,7 @@ function create ()
     hook.land("finish")
     hook.jumpout("finish")
     
-    hailie = evt.timerStart("hailme", 3000)
+    hailie = hook.timer( 3000., "hailme" );
 end
 
 -- Make the ship hail the player
