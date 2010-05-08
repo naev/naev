@@ -526,6 +526,12 @@ static int pilotL_remove( lua_State *L )
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
+   /* Make sure it's not the player. */
+   if (player.p == p) {
+      NLUA_ERROR( L, "Trying to remove the bloody player!" );
+      return 0;
+   }
+
    /* Deletes the pilot. */
    pilot_delete(p);
 
@@ -1661,6 +1667,7 @@ static int pilotL_goto( lua_State *L )
    Task *t;
    LuaVector *lv;
    int brake;
+   const char *tsk;
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
@@ -1671,7 +1678,13 @@ static int pilotL_goto( lua_State *L )
       brake = 1;
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, (brake) ? "goto" : "__goto_nobrake" );
+   if (brake) {
+      tsk = "goto";
+   }
+   else {
+      tsk = "__goto_nobrake";
+   }
+   t        = pilotL_newtask( L, p, tsk );
    t->dtype = TASKDATA_VEC2;
    vectcpy( &t->dat.vec, &lv->vec );
 
