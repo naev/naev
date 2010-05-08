@@ -40,9 +40,9 @@ end
 include("scripts/jumpdist.lua")
 
 
-function patrol_systems_filter( s, data )
+function patrol_systems_filter( sys, data )
    -- Must have Dvaered
-   if not s:hasPresence( "Dvaered" ) then
+   if not sys:hasPresence( "Dvaered" ) then
       return false
    end
 
@@ -54,7 +54,7 @@ function patrol_systems_filter( s, data )
    -- Must not already be in list
    local found = false
    for k,v in ipairs(data) do
-      if s == v then
+      if sys == v then
          return false
       end
    end
