@@ -10,9 +10,6 @@
 #include "nlua.h"
 
 
-#define EVENT_TIMER_MAX       10 /**< Maximum amount of event timers. */
-
-
 /**
  * @brief Activated event structure.
  */
@@ -20,10 +17,6 @@ typedef struct Event_s {
    unsigned int id; /**< Event ID. */
    int data; /**< EventData parent. */
    lua_State *L; /**< Event Lua State. */
-
-   /* Timers. */
-   double timer[EVENT_TIMER_MAX]; /**< Event timers. */
-   char *tfunc[EVENT_TIMER_MAX]; /**< Functions assosciated to the timers. */
 } Event_t;
 
 
@@ -44,12 +37,6 @@ typedef enum EventTrigger_s {
 int events_load (void);
 void events_exit (void);
 void events_cleanup (void);
-
-
-/*
- * Updating.
- */
-void events_update( double dt );
 
 
 /*

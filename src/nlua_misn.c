@@ -83,8 +83,6 @@ static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
-static int misn_timerStart( lua_State *L );
-static int misn_timerStop( lua_State *L );
 static int misn_addCargo( lua_State *L );
 static int misn_rmCargo( lua_State *L );
 static int misn_jetCargo( lua_State *L );
@@ -102,8 +100,6 @@ static const luaL_reg misn_methods[] = {
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
-   { "timerStart", misn_timerStart },
-   { "timerStop", misn_timerStop },
    { "addCargo", misn_addCargo },
    { "rmCargo", misn_rmCargo },
    { "jetCargo", misn_jetCargo },
@@ -549,68 +545,6 @@ static int misn_finish( lua_State *L )
 
    lua_pushstring(L, "Mission Done");
    lua_error(L); /* shouldn't return */
-
-   return 0;
-}
-
-/**
- * @brief Starts a timer.
- *
- *    @luaparam funcname Name of the function to run when timer is up.
- *    @luaparam delay Milliseconds to wait for timer.
- *    @luareturn The timer being used.
- * @luafunc timerStart( funcname, delay )
- */
-static int misn_timerStart( lua_State *L )
-{
-   int i;
-   const char *func;
-   double delay;
-
-   /* Parse arguments. */
-   func  = luaL_checkstring(L,1);
-   delay = luaL_checknumber(L,2);
-
-   /* Add timer */
-   for (i=0; i<MISSION_TIMER_MAX; i++) {
-      if (cur_mission->timer[i] == 0.) {
-         cur_mission->timer[i] = delay / 1000.;
-         cur_mission->tfunc[i] = strdup(func);
-         break;
-      }
-   }
-
-   /* No timer found. */
-   if (i >= MISSION_TIMER_MAX) {
-      return 0;
-   }
-
-   /* Returns the timer id. */
-   lua_pushnumber(L,i);
-   return 1;
-}
-
-/**
- * @brief Stops a timer previously started with timerStart().
- *
- *    @luaparam t Timer to stop.
- * @luafunc timerStop( t )
- */
-static int misn_timerStop( lua_State *L )
-{
-   int t;
-
-   /* Parse parameters. */
-   t = luaL_checkint(L,1);
-
-   /* Stop the timer. */
-   if (cur_mission->timer[t] != 0.) {
-      cur_mission->timer[t] = 0.;
-      if (cur_mission->tfunc[t] != NULL) {
-         free(cur_mission->tfunc[t]);
-         cur_mission->tfunc[t] = NULL;
-      }
-   }
 
    return 0;
 }

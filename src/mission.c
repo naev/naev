@@ -82,8 +82,6 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
 static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent );
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent );
-/* Misc. */
-static void mission_updateTimer( Mission *misn, double dt );
 /* externed */
 int missions_saveActive( xmlTextWriterPtr writer );
 int missions_loadActive( xmlNodePtr parent );
@@ -150,7 +148,6 @@ MissionData* mission_get( int id )
  */
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create )
 {
-   int i;
    char *buf;
    uint32_t bufsize;
 
@@ -163,12 +160,6 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    if (create) {
       mission->title = strdup(misn->name);
       mission->desc  = strdup("No description.");
-   }
-
-   /* Init the timers. */
-   for (i=0; i<MISSION_TIMER_MAX; i++) {
-      mission->timer[i] = 0.;
-      mission->tfunc[i] = NULL;
    }
 
    /* init lua */
@@ -444,66 +435,6 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 
 
 /**
- * @brief Updates a mission's timers.
- *
- *    @param misn Mission to update timers.
- *    @param dt Current deltatick.
- */
-static void mission_updateTimer( Mission *misn, double dt )
-{
-   int i;
-   char *func;
-
-   for (i=0; i<MISSION_TIMER_MAX; i++) {
-
-      /* Timer must be active. */
-      if (misn->timer[i] > 0.) {
-
-         /* Decrement time. */
-         misn->timer[i] -= dt;
-
-         /* Timer is up - trigger function. */
-         if (misn->timer[i] < 0.) {
-            func = misn->tfunc[i];
-            /* Remove timer. */
-            misn->timer[i] = 0.;
-            misn->tfunc[i] = NULL;
-            /* Run function. */
-            misn_run( &player_missions[i], func );
-            /* Clean up. */
-            free(func);
-         }
-      }
-   }
-}
-
-
-/**
- * @brief Updates the missions triggering timers if needed.
- *
- *    @param dt Current deltatick.
- */
-void missions_update( const double dt )
-{
-   int i;
-
-   /* Don't update if player is dead. */
-   if ((player.p==NULL) || player_isFlag(PLAYER_DESTROYED))
-      return;
-
-   for (i=0; i<MISSION_MAX; i++) {
-
-      /* Mission must be active. */
-      if (player_missions[i].id == 0)
-         continue;
-
-      /* Update timers. */
-      mission_updateTimer( &player_missions[i], dt );
-   }
-}
-
-
-/**
  * @brief Cleans up a mission.
  *
  *    @param misn Mission to clean up.
@@ -542,10 +473,6 @@ void mission_cleanup( Mission* misn )
          mission_unlinkCargo( misn, misn->cargo[i] );
       }
       free(misn->cargo);
-   }
-   for (i=0; i<MISSION_TIMER_MAX; i++) {
-      if (misn->tfunc[i] != NULL)
-         free(misn->tfunc[i]);
    }
    if (misn->osd > 0)
       osd_destroy(misn->osd);
@@ -1264,21 +1191,6 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_elem(writer,"cargo","%u", player_missions[i].cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
 
-         /* Timers. */
-         xmlw_startElem(writer,"timers");
-         for (j=0; j<MISSION_TIMER_MAX; j++) {
-            if (player_missions[i].timer[j] > 0.) {
-               xmlw_startElem(writer,"timer");
-              
-               xmlw_attr(writer,"id","%d",j);
-               xmlw_attr(writer,"func","%s",player_missions[i].tfunc[j]);
-               xmlw_str(writer,"%f",player_missions[i].timer[j]);
-
-               xmlw_endElem(writer); /* "timer" */
-            }
-         }
-         xmlw_endElem(writer); /* "timers" */
-
          /* OSD. */
          if (player_missions[i].osd > 0) {
             xmlw_startElem(writer,"osd");
@@ -1401,22 +1313,6 @@ static int missions_parseActive( xmlNodePtr parent )
                do {
                   if (xml_isNode(nest,"cargo"))
                      mission_linkCargo( misn, xml_getLong(nest) );
-               } while (xml_nextNode(nest));
-            }
-
-            /* Timers. */
-            if (xml_isNode(cur,"timers")) {
-               nest = cur->xmlChildrenNode;
-               do {
-                  if (xml_isNode(nest,"timer")) {
-                     xmlr_attr(nest,"id",buf);
-                     i = atoi(buf);
-                     free(buf);
-                     xmlr_attr(nest,"func",buf);
-                     /* Set the timer. */
-                     misn->timer[i] = xml_getFloat(nest);
-                     misn->tfunc[i] = buf;
-                  }
                } while (xml_nextNode(nest));
             }
 
