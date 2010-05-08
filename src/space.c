@@ -2159,7 +2159,10 @@ void space_exit (void)
       if(systems_stack[i].presence)
          free(systems_stack[i].presence);
 
-      free(systems_stack[i].planets);
+      if (systems_stack[i].planets != NULL)
+         free(systems_stack[i].planets);
+      if (systems_stack[i].planetsid != NULL)
+         free(systems_stack[i].planetsid);
    }
    free(systems_stack);
    systems_stack = NULL;
