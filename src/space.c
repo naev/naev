@@ -2109,9 +2109,9 @@ void space_exit (void)
    jumppoint_gfx = NULL;
 
    /* Free the names. */
-   if (planetname_stack)
+   if (planetname_stack != NULL)
       free(planetname_stack);
-   if (systemname_stack)
+   if (systemname_stack != NULL)
       free(systemname_stack);
    spacename_nstack = 0;
 
@@ -2119,19 +2119,19 @@ void space_exit (void)
    for (i=0; i < planet_nstack; i++) {
       free(planet_stack[i].name);
 
-      if (planet_stack[i].description)
+      if (planet_stack[i].description != NULL)
          free(planet_stack[i].description);
-      if (planet_stack[i].bar_description)
+      if (planet_stack[i].bar_description != NULL)
          free(planet_stack[i].bar_description);
 
       /* graphics */
-      if (planet_stack[i].gfx_space) {
+      if (planet_stack[i].gfx_spaceName != NULL) {
          if (planet_stack[i].gfx_space != NULL)
             gl_freeTexture( planet_stack[i].gfx_space );
          free(planet_stack[i].gfx_spaceName);
          free(planet_stack[i].gfx_spacePath);
       }
-      if (planet_stack[i].gfx_exterior) {
+      if (planet_stack[i].gfx_exterior != NULL) {
          free(planet_stack[i].gfx_exterior);
          free(planet_stack[i].gfx_exteriorPath);
       }
