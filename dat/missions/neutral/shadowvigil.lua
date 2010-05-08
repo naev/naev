@@ -108,7 +108,7 @@ function accept()
     seirsys = system.cur()
     oldsys = system.cur()
     escorting = false
-    chatter = false
+    chattered = false
     stage = 1
     
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
@@ -188,12 +188,13 @@ function jumpin()
                 end
                 j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
             end
-            if not chatter then
-                hook.timer(10000, "chatter")
-                hook.timer(15000, "chatter")
-                hook.timer(20000, "chatter")
-                hook.timer(25000, "chatter")
-                chatter = true
+            if not chattered then
+                -- This is the radio chatter conversation.
+                hook.timer(10000, "chatter", {pilot = escorts[2], text = commmsg[2]})
+                hook.timer(15000, "chatter", {pilot = escorts[3], text = commmsg[3]})
+                hook.timer(20000, "chatter", {pilot = escorts[2], text = commmsg[4]})
+                hook.timer(25000, "chatter", {pilot = escorts[1], text = commmsg[5]})
+                chattered = true
             end
         end
     elseif system.cur() == seirsys then
@@ -224,6 +225,8 @@ end
 function escortStart()
     escorting = true
     stage = 2 -- Fly to the diplomat rendezvous point
+    misn.osdActive(2)
+    -- misn.setMarker() -- No marker. Player has to follow the NPCs.
     escorts[1]:comm(commmsg[1])
     for i, j in pairs(escorts) do
         if j:exists() then
@@ -232,12 +235,12 @@ function escortStart()
     end
 end
 
--- State machine that handles the pilot conversation.
-function chatter()
-    if not (alive[1] and alive[2] and alive[3]) then
-        return
+-- Make a pilot say a line.
+-- argument chat: A table containing a pilot and a string. The pilot will say the string (if he is alive).
+function chatter(chat)
+    if chat.pilot:exists() then
+        chat.pilot:comm(chat.text)
     end
-    -- TODO: state machine here.
 end
 
 -- Choose the next system to jump to on the route from the current system to the argument system.
