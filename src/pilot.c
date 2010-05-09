@@ -2674,6 +2674,8 @@ void pilot_calcStats( Pilot* pilot )
     */
    pilot->ew_base_hide  = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
    pilot->ew_detect     = 1. + s->ew_detect/100. * exp( -0.2 * (double)(ew_ndetect-1) );;
+   s->ew_hide           = s->ew_hide/100. + 1.;
+   s->ew_detect         = s->ew_detect/100. + 1.;
 
    /* 
     * Normalize stats.
