@@ -14,6 +14,7 @@
 unsigned int osd_create( const char *title, int nitems, const char **items );
 int osd_destroy( unsigned int osd );
 int osd_active( unsigned int osd, int msg );
+int osd_getActive( unsigned int osd );
 char *osd_getTitle( unsigned int osd );
 char **osd_getItems( unsigned int osd, int *nitems );
 

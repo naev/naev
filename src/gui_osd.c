@@ -249,6 +249,7 @@ int osd_destroy( unsigned int osd )
  *
  *    @param osd OSD to change active message.
  *    @param msg Message to make active in OSD.
+ *    @return 0 on succcess.
  */
 int osd_active( unsigned int osd, int msg )
 {
@@ -265,6 +266,24 @@ int osd_active( unsigned int osd, int msg )
 
    o->active = msg;
    return 0;
+}
+
+
+/**
+ * @brief Gets the active OSD MESSAGE>
+ *
+ *    @param osd OSD to get active message.
+ *    @return The active OSD message or -1 on error.
+ */
+int osd_getActive( unsigned int osd )
+{
+   OSD_t *o;
+
+   o = osd_get(osd);
+   if (o == NULL)
+      return -1;
+
+   return o->active;
 }
 
 

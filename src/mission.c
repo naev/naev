@@ -1199,6 +1199,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
             items = osd_getItems(player_missions[i].osd, &nitems);
             xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i].osd));
             xmlw_attr(writer,"nitems","%d",nitems);
+            xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i].osd));
 
             /* Save messages. */
             for (j=0; j<nitems; j++) {
@@ -1344,6 +1345,13 @@ static int missions_parseActive( xmlNodePtr parent )
                misn->osd = osd_create( title, nitems, items );
                free(items);
                free(title);
+
+               /* Set active. */
+               xmlr_attr(cur,"active",buf);
+               if (buf != NULL) {
+                  osd_active( misn->osd, atoi(buf) );
+                  free(buf);
+               }
             }
 
             if (xml_isNode(cur,"lua"))
