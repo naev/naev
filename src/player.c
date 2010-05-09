@@ -679,6 +679,10 @@ void player_cleanup (void)
    /* Clear player. */
    player_clear();
 
+   /* Clear hail timer. */
+   player_hailCounter   = 0;
+   player_hailTimer     = 0.;
+
    /* Clear messages. */
    gui_clearMessages();
 
