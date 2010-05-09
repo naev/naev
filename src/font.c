@@ -89,6 +89,16 @@ static int font_limitSize( const glFont *ft_font, int *width,
    /* limit size */
    n = 0;
    for (i=0; text[i] != '\0'; i++) {
+      /* Ignore escape sequence. */
+      if (text[i] == '\e') {
+         if (text[i+1] != '\0')
+            i += 2;
+         else
+            i += 1;
+         continue;
+      }
+
+      /* Count length. */
       n += ft_font->chars[ (int)text[i] ].adv_x;
       if (n > max) {
          n -= ft_font->chars[ (int)text[i] ].adv_x; /* actual size */
