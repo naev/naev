@@ -208,7 +208,7 @@ function jumpin()
         elseif not system.cur() == nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
             tk.msg(wrongsystitle, wrongsystext)
             abort()
-        else -- case enroute, handle escorts flying to the next system
+        else -- case enroute, handle escorts flying to the next system, possibly combat
             for i, j in ipairs(escorts) do
                 if j:exists() then
                     if stage == 2 then
@@ -224,6 +224,8 @@ function jumpin()
                 hook.timer(20000, "chatter", {pilot = escorts[2], text = commmsg[4]})
                 hook.timer(25000, "chatter", {pilot = escorts[1], text = commmsg[5]})
                 chattered = true
+            end
+            if misssys[3]:jumpDist() == 2 then -- Encounter
             end
         end
 

@@ -28,7 +28,7 @@
  </faction>
  <faction name="Proteron">
   <logo>proteron</logo>
-  <longname>House Proteron</longname>
+  <longname>Proteron</longname>
   <player>3</player>
   <colour>purple</colour>
   <spawn>proteron</spawn>
@@ -59,6 +59,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Raider</enemy>
   </enemies>
  </faction>
  <faction name="Pirate">
@@ -179,8 +180,7 @@
   <player>-100</player>
   <colour>red</colour>
   <enemies>
-   <enemy>Four Winds</enemy>
-   <enemy>Diplomatic</enemy>
+   <enemy>Trader</enemy>
   </enemies>
  </faction>
  <faction name="Derelict">
@@ -196,7 +196,7 @@
   <player>0</player>
   <allies />
   <enemies>
-   <enemy>Raider</enemy>
+   <enemy>Thugs</enemy>
   </enemies>
  </faction>
  <faction name="Diplomatic">
@@ -207,7 +207,7 @@
   <allies>
   </allies>
   <enemies>
-   <enemy>Raider</enemy>
+   <enemy>Thugs</enemy>
   </enemies>
  </faction>
  <faction name="Associates">
@@ -226,6 +226,8 @@
   <player>0</player>
   <enemies>
    <enemy>Associates</enemy>
+   <enemy>Four Winds</enemy>
+   <enemy>Diplomatic</enemy>
   </enemies>
  </faction>
 </Factions>
