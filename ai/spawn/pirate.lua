@@ -7,17 +7,14 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
     else
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
     end
 
     return pilots
@@ -30,22 +27,17 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Ancestor", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Ancestor", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Ancestor", 15 );
-       scom.addPilot( pilots, "Pirate Ancestor", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Ancestor", 20 );
     else
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Hyena", 10 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
+       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     end
 
@@ -63,18 +55,18 @@ function spawn_capship ()
 
     -- Generate the escorts
     if r < 0.5 then
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Ancestor", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Ancestor", 20 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     else
-       scom.addPilot( pilots, "Pirate Vendetta", 15 );
-       scom.addPilot( pilots, "Pirate Ancestor", 15 );
-       scom.addPilot( pilots, "Pirate Ancestor", 15 );
+       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Ancestor", 20 );
+       scom.addPilot( pilots, "Pirate Ancestor", 20 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     end
@@ -89,8 +81,8 @@ function create ( max )
 
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = 0.33*max
-    weights[ spawn_capship ] = 100*math.exp( -max / 1000 )
+    weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
+    weights[ spawn_capship ] = math.max(1, -100 + 0.50 * max)
    
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )
