@@ -250,7 +250,7 @@ function escortStart()
     escorts[1]:comm(commmsg[1])
     for i, j in pairs(escorts) do
         if j:exists() then
-            j:hyperspace(getNextSystem(misssys[stage])) -- This is broken somehow.
+            j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
 end

@@ -80,10 +80,6 @@ function follow ()
    if ai.isstopped() and dist < 300 then
       return
 
-   -- Brake
-   elseif dist+100 < bdist then
-      ai.pushtask("brake")
-
    -- Must approach
    elseif dir < 10 and dist > 300 then
       ai.accel()
