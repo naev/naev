@@ -1055,7 +1055,7 @@ void gui_render( double dt )
          gl_printMaxRaw( &gl_smallFont, gui.target_faction.w,
                gui.target_faction.x,
                gui.target_faction.y,
-               NULL, faction_name(p->faction) );
+               NULL, faction_shortname(p->faction) );
 
          /* Faction logo. */
          logo = faction_logoTiny( p->faction );

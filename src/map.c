@@ -375,7 +375,7 @@ static void map_update( unsigned int wid )
       t           = faction_getColourChar(sys->presence[i].faction);
       /* Use map grey instead of default neutral colour */
       l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                     (l==0)?"":"\n", faction_name(sys->presence[i].faction),
+                     (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                      (t=='N')?'M':t, sys->presence[i].value);
    }
    if (hasPresence == 0)
