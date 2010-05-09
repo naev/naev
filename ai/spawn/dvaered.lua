@@ -7,14 +7,14 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
     end
 
     return pilots
@@ -27,19 +27,19 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 30 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vigilance",530 );
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 30 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 50 );
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 30 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 30 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 50 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 50 );
     end
 
     return pilots
@@ -51,23 +51,21 @@ function spawn_capship ()
     local pilots = {}
 
     -- Generate the capship
-    scom.addPilot( pilots, "Dvaered Goddard", 100 )
+    scom.addPilot( pilots, "Dvaered Goddard", 150 )
 
     -- Generate the escorts
     r = rnd.rnd()
     if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 50 );
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 15 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 30 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 50 );
     end
 
     return pilots
@@ -80,8 +78,8 @@ function create ( max )
 
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = 0.33*max
-    weights[ spawn_capship ] = 100*math.exp( -max / 1000 )
+    weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
+    weights[ spawn_capship ] = math.max(1, -100 + 0.50 * max)
    
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )

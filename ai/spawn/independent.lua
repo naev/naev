@@ -54,7 +54,7 @@ function create ( max )
 
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = 0.33*max
+    weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
    
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )
