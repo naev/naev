@@ -609,7 +609,6 @@
   <faction>Shadow_pirates</faction>
   <pilots>
    <pilot ship="Pirate Ancestor"></pilot>
-   <pilot ship="Pirate Ancestor"></pilot>
    <pilot ship="Hyena"></pilot>
    <pilot ship="Hyena"></pilot>
   </pilots>
@@ -618,7 +617,6 @@
   <ai>baddie</ai>
   <faction>Shadow_pirates</faction>
   <pilots>
-   <pilot ship="Pirate Ancestor"></pilot>
    <pilot ship="Pirate Ancestor"></pilot>
    <pilot ship="Pirate Ancestor"></pilot>
    <pilot ship="Hyena"></pilot>

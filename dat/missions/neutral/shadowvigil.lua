@@ -197,8 +197,10 @@ function jumpin()
         diplomat = pilot.add("Shadowvigil Diplomat", nil, oldsys)[1]
         hook.pilot(diplomat, "death", "diplomatDeath")
         hook.pilot(diplomat, "jump", "diplomatJump")
+        hook.pilot(diplomat, "attacked", "diplomatAttacked")
         diplomat:control()
         dpjump = false
+        misn.setMarker() -- No marker. Player has to follow the NPCs.
     end
     if stage >= 2 then
 
@@ -323,7 +325,7 @@ function attackerDeath()
         end
     end
 
-    if survivors then return end
+    if survivors == true then return end
     
     for i, j in ipairs(escorts) do
         if j:exists() then
@@ -372,6 +374,7 @@ end
 -- Handle the departure of the diplomat. Escorts will follow.
 function diplomatJump()
     dpjump = true
+    misn.setMarker(getNextSystem(misssys[stage]), "misc")
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:control(true)
@@ -379,6 +382,20 @@ function diplomatJump()
             j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
+end
+
+-- Handle the diplomat getting attacked.
+function diplomatAttacked()
+    if shuttingup == true then return
+    else
+        shuttingup = true
+        diplomat:comm(diplomatdistress)
+        hook.timer(10000, "diplomatShutup") -- Shuts him up for at least 10s.
+    end
+end
+
+function diplomatShutup
+    shuttingup = false
 end
 
 -- Function hooked to boarding. Only used on the Seiryuu.

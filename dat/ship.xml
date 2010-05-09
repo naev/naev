@@ -1557,7 +1557,7 @@
   <movement>
    <thrust>100</thrust>
    <turn>135</turn>
-   <speed>120</speed>
+   <speed>100</speed>
   </movement>
   <health>
    <shield>400</shield>
