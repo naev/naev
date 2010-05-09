@@ -344,9 +344,13 @@ void player_messageRaw( const char *str )
    if (!gui_getMessage)
       return;
 
+   /* Must be non-null. */
+   if (str == NULL)
+      return;
+
    /* Get length. */
    l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui.mesg.w - 15. );
+   i = gl_printWidthForText( NULL, str, gui.mesg.w - ((str[0] == '\t') ? 45. : 15.) );
    p = 0;
    while (p < l) {
       /* Move pointer. */
@@ -368,10 +372,10 @@ void player_messageRaw( const char *str )
       mesg_stack[mesg_pointer].t = mesg_timeout;
 
       /* Get length. */
-      i  = gl_printWidthForText( NULL, &str[p], gui.mesg.w - 15. );
       p += i;
       if ((str[p] == '\n') || (str[p] == ' '))
          p++; /* Skip "empty char". */
+      i  = gl_printWidthForText( NULL, &str[p], gui.mesg.w - 45. ); /* Theyr'e tabbed so it's shorter. */
    }
 }
 
