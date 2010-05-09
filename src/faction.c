@@ -962,6 +962,10 @@ int pfaction_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"factions");
 
    for (i=1; i<faction_nstack; i++) { /* player is faction 0 */
+      /* Must not be static. */
+      if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
+         continue;
+
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
@@ -997,8 +1001,13 @@ int pfaction_load( xmlNodePtr parent )
             if (xml_isNode(cur,"faction")) {
                xmlr_attr(cur,"name",str); 
                faction = faction_get(str);
-               if (faction != -1) /* Faction is valid. */
-                  faction_stack[faction].player = xml_getFloat(cur);
+
+               if (faction != -1) { /* Faction is valid. */
+
+                  /* Must not be static. */
+                  if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
+                     faction_stack[faction].player = xml_getFloat(cur);
+               }
                free(str);
             }
          } while (xml_nextNode(cur));

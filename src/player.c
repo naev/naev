@@ -233,7 +233,6 @@ void player_new (void)
    events_cleanup();
    space_clearKnown();
    land_cleanup();
-   factions_reset();
    map_cleanup();
 
    player.name = dialogue_input( "Player Name", 2, 20,
@@ -685,6 +684,9 @@ void player_cleanup (void)
 
    /* Clear messages. */
    gui_clearMessages();
+
+   /* Reset factions. */
+   factions_reset();
 
    /* clean up name */
    if (player.name != NULL) {
