@@ -144,12 +144,31 @@ int* faction_getAll( int *n )
 
 
 /**
- * @brief Get's a factions short name.
+ * @brief Get's a factions "real" name.
  *
  *    @param f Faction to get the name of.
  *    @return Name of the faction.
  */
 char* faction_name( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   /* Don't want player to see his escorts as "Player" faction. */
+   if (f == FACTION_PLAYER)
+      return "Escort";
+   return faction_stack[f].name;
+}
+
+
+/**
+ * @brief Get's a factions short name.
+ *
+ *    @param f Faction to get the name of.
+ *    @return Name of the faction.
+ */
+char* faction_shortname( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
