@@ -290,6 +290,7 @@ end
 -- The player has successfully rendezvoused with the diplomat. Now the real work begins.
 function escortNext()
     stage = 3 -- The actual escort begins here.
+    misn.osdActive(3)
     diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
     dpjump = false
 end
