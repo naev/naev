@@ -17,7 +17,9 @@
   </enemies>
  </faction>
  <faction name="Civilian">
-  <player>1</player>
+  <invisible />
+  <static />
+  <player>0</player>
   <colour>black</colour>
   <spawn>civilian</spawn>
   <allies>
@@ -204,7 +206,7 @@
   <invisible />
   <static />
   <allies />
-  <player>0</player>
+  <player>-100</player>
   <enemies>
    <enemy>Four Winds</enemy>
    <enemy>Diplomatic</enemy>

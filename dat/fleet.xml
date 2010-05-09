@@ -597,14 +597,14 @@
  </fleet>
  <fleet name="Shadowvigil Escorts">
   <ai>trader</ai>
-  <faction>Independent</faction>
+  <faction>Four Winds</faction>
   <pilots>
    <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
    <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
    <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
- <fleet name="Shadowvigil Thugs 1">
+ <fleet name="Shadowvigil Ambush 1">
   <ai>baddie</ai>
   <faction>Shadow_pirates</faction>
   <pilots>
@@ -614,7 +614,7 @@
    <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
- <fleet name="Shadowvigil Thugs 2">
+ <fleet name="Shadowvigil Ambush 2">
   <ai>baddie</ai>
   <faction>Shadow_pirates</faction>
   <pilots>

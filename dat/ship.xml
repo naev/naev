@@ -1560,8 +1560,8 @@
    <speed>120</speed>
   </movement>
   <health>
-   <shield>500</shield>
-   <armour>500</armour>
+   <shield>400</shield>
+   <armour>400</armour>
    <energy>730</energy>
    <shield_regen>150</shield_regen>
    <armour_regen>0</armour_regen>
