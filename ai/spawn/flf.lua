@@ -7,17 +7,15 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
     else
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
     end
 
     return pilots
@@ -30,20 +28,18 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
     else
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Lancelot", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
-       scom.addPilot( pilots, "FLF Vendetta", 15 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Lancelot", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
+       scom.addPilot( pilots, "FLF Vendetta", 25 );
     end
 
     return pilots
@@ -56,7 +52,7 @@ function create ( max )
 
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = 0.33*max
+    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )
