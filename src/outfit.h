@@ -63,7 +63,7 @@ typedef struct ShipStats_ {
 #endif
 
    /* Scout type. */
-   double ew_hide; /**< Electronic warfare hide modifier. */
+   double ew_hide;   /**< Electronic warfare hide modifier. */
    double ew_detect; /**< Electronic warfare detection modifier. */
 
    /* Fighter type. */
