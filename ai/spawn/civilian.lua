@@ -4,10 +4,10 @@ include("ai/spawn/common.lua")
 -- @brief Spawns a single small ship.
 function spawn_patrol ()
     local pilots = {}
-    local civships = {{"Civilian Schroedinger", 5},
-                      {"Civilian Llama", 5},
-                      {"Civilian Gawain", 5},
-                      {"Civilian Hyena", 10}
+    local civships = {{"Civilian Schroedinger", 8},
+                      {"Civilian Llama", 8},
+                      {"Civilian Gawain", 8},
+                      {"Civilian Hyena", 13}
                      }
     
     local select = rnd.rnd(1, #civships)
