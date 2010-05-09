@@ -604,4 +604,26 @@
    <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Shadowvigil Thugs 1">
+  <ai>baddie</ai>
+  <faction>Shadow_pirates</faction>
+  <pilots>
+   <pilot ship="Pirate Ancestor"></pilot>
+   <pilot ship="Pirate Ancestor"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Shadowvigil Thugs 2">
+  <ai>baddie</ai>
+  <faction>Shadow_pirates</faction>
+  <pilots>
+   <pilot ship="Pirate Ancestor"></pilot>
+   <pilot ship="Pirate Ancestor"></pilot>
+   <pilot ship="Pirate Ancestor"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>

@@ -196,7 +196,18 @@
   <player>0</player>
   <allies />
   <enemies>
-   <enemy>Thugs</enemy>
+   <enemy>Shadow_pirates</enemy>
+  </enemies>
+ </faction>
+ <faction name="Shadow_pirates">
+  <display>Pirate</display>
+  <invisible />
+  <static />
+  <allies />
+  <player>0</player>
+  <enemies>
+   <enemy>Four Winds</enemy>
+   <enemy>Diplomatic</enemy>
   </enemies>
  </faction>
  <faction name="Diplomatic">
@@ -207,7 +218,7 @@
   <allies>
   </allies>
   <enemies>
-   <enemy>Thugs</enemy>
+   <enemy>Shadow_pirates</enemy>
   </enemies>
  </faction>
  <faction name="Associates">
@@ -226,8 +237,6 @@
   <player>0</player>
   <enemies>
    <enemy>Associates</enemy>
-   <enemy>Four Winds</enemy>
-   <enemy>Diplomatic</enemy>
   </enemies>
  </faction>
 </Factions>
