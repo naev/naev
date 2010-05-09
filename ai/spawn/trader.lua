@@ -7,13 +7,13 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Trader Llama", 15 );
+       scom.addPilot( pilots, "Trader Llama", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Trader Llama", 15 );
-       scom.addPilot( pilots, "Trader Llama", 15 );
+       scom.addPilot( pilots, "Trader Llama", 20 );
+       scom.addPilot( pilots, "Trader Llama", 20 );
     else
-       scom.addPilot( pilots, "Trader Llama", 15 );
-       scom.addPilot( pilots, "Trader Koala", 30 );
+       scom.addPilot( pilots, "Trader Llama", 20 );
+       scom.addPilot( pilots, "Trader Koala", 40 );
     end
 
     return pilots
@@ -26,20 +26,20 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Trader Koala", 30 );
-       scom.addPilot( pilots, "Trader Gawain", 10 );
-       scom.addPilot( pilots, "Trader Gawain", 10 );
+       scom.addPilot( pilots, "Trader Koala", 40 );
+       scom.addPilot( pilots, "Trader Gawain", 20 );
+       scom.addPilot( pilots, "Trader Gawain", 20 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Trader Mule", 45 );
-       scom.addPilot( pilots, "Trader Gawain", 10 );
-       scom.addPilot( pilots, "Trader Quicksilver", 10 );
-       scom.addPilot( pilots, "Trader Quicksilver", 10 );
+       scom.addPilot( pilots, "Trader Gawain", 20 );
+       scom.addPilot( pilots, "Trader Quicksilver", 20 );
+       scom.addPilot( pilots, "Trader Quicksilver", 20 );
     else
-       scom.addPilot( pilots, "Trader Llama", 15 );
+       scom.addPilot( pilots, "Trader Llama", 20 );
        scom.addPilot( pilots, "Trader Mule", 45 );
-       scom.addPilot( pilots, "Trader Gawain", 10 );
-       scom.addPilot( pilots, "Trader Quicksilver", 10 );
-       scom.addPilot( pilots, "Trader Quicksilver", 10 );
+       scom.addPilot( pilots, "Trader Gawain", 20 );
+       scom.addPilot( pilots, "Trader Quicksilver", 20 );
+       scom.addPilot( pilots, "Trader Quicksilver", 20 );
     end
 
     return pilots
@@ -52,7 +52,7 @@ function create ( max )
 
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
+    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max) 
    
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )
