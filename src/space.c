@@ -2498,6 +2498,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
       WARN("q is empty after getting adjancies of %s.", sys->name);
+      q_destroy(q);
+      q_destroy(qn);
       presenceCleanup(sys);
       return;
    }
