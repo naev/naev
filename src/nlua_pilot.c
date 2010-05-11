@@ -547,7 +547,7 @@ static int pilotL_remove( lua_State *L )
 static int pilotL_clear( lua_State *L )
 {
    (void) L;
-   pilots_clean();
+   pilots_clear();
    return 0;
 }
 /**
@@ -1835,7 +1835,6 @@ static int pilotL_hyperspace( lua_State *L )
       sys = luaL_checksystem( L, 2 );
    else
       sys = NULL;
-
 
    /* Set the task. */
    t = pilotL_newtask( L, p, "__hyperspace" );

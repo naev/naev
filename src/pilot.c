@@ -3610,6 +3610,18 @@ void pilots_clean (void)
 
 
 /**
+ * @brief Clears all the pilots except the player.
+ */
+void pilots_clear (void)
+{
+   int i;
+   for (i=0; i < pilot_nstack; i++)
+      if (!pilot_isPlayer( pilot_stack[i] ))
+         pilot_delete( pilot_stack[i] );
+}
+
+
+/**
  * @brief Even cleans up the player.
  */
 void pilots_cleanAll (void)
