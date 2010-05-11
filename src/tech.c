@@ -170,6 +170,7 @@ int tech_load (void)
 
    /* Free memory. */
    free(data);
+   xmlFreeDoc(doc);
 
    return 0;
 }
