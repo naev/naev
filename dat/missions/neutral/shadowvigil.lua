@@ -461,19 +461,14 @@ function diplomatCutscene()
     
     hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
     hook.timer(6000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
-    hook.timer(9000, "scheduler", {funcname = "diplomatGo"})
+    hook.timer(9000, "diplomatGo")
     hook.timer(15000, "chatter", {pilot = escorts[1], text = commmsg[13]})
-    hook.timer(15500, "scheduler", {funcname = "killDiplomats"})
+    hook.timer(15500, "killDiplomats")
     
 end
 
 function diplomatShutup()
     shuttingup = false
-end
-
--- This function executes whatever function is passed to it.
-function scheduler(schedule)
-    _G[schedule.funcname]()
 end
 
 function diplomatGo()
@@ -491,8 +486,8 @@ function killDiplomats()
         end
     end
     diplomat:hookClear()
-    hook.timer(500, "scheduler", {funcname = "diplomatKilled"})
-    hook.timer(5000, "scheduler", {funcname = "escortFlee"})
+    hook.timer(500, "diplomatKilled")
+    hook.timer(5000, "escortFlee")
 end
 
 function diplomatKilled()
