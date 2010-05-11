@@ -40,6 +40,12 @@ else -- default english
     Rebina straightens up. "That will be all for now, %s," she says in a more formal, captain-like manner. "You have your assignment I suggest you go about it."
     You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]]
     
+    title[4] = "An unfortunate outcome"
+    text[4] = [[    Captain Rebina angrily drums her fingers on her captain's chair as she watches the reconstruction made from your sensor logs. Her eyes narrow when both diplomatic ships explode under the onslaught of weapons the escorts should not have had onboard.
+    "This is bad, %s," she says when the replay shuts down. "Worse than I had even thought possible. The death of the Imperial and Dvaered diplomats is going to spark a political incident, with each faction accusing the other of treachery." She stands up and begins pacing up and down the Seiryuu's bridge. "But that's not the worst of it. You saw what happened. The diplomats were killed by their own escorts - by Four Winds operatives! This is an outrage!"
+    Captain Rebina brings herself back under control through an effort of will. "%s, this doesn not bode well. We have a problem, and I fear I'm going to need your help again before the end. But not yet. I have a lot to do. I have to get to the bottom of this, and I have to try to keep this situation from escalating into a disaster. I will contact you again when I know more. In the mean time, you will have the time to spend your reward - it's already in your account."
+    Following this, you are swiftly escorted off the Seiryuu. Back in your cockpit, you can't help feeling a little anxious about these Four Winds. Who are they, what do they want, and what is your role in all of it? Time will have to tell.]]
+    
     wrongsystitle = "You diverged!"
     wrongsystext = [[You have jumped to the wrong system! You are no longer part of the mission to escort the diplomat.]]
     
@@ -513,7 +519,8 @@ end
 function board()
     player.unboard()
     seiryuu:setHealth(100, 100)
-    -- TODO: end mission text, reward
+    tk.msg(title[4], string.format(text[4], player.name(), player.name()))
+    player.pay(25000)
     var.pop("shadowvigil_active")
     misn.finish(true)
 end
