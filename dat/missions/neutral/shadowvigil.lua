@@ -52,6 +52,8 @@ else -- default english
     diplomatnojumptitle = "You have left your protegee behind!"
     diplomatnojumptext = [[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]
     
+    diplomatdistress = "Diplomatic vessel under fire!"
+    
     -- First meeting.
     commmsg[1] = "There you are at last. Fancy boat you've got there. Okay, you know the drill. Let's go."
     
@@ -72,7 +74,7 @@ else -- default english
     
     -- Endgame
     commmsg[11] = "This is Empire zero-zero-four. Transmitting clearance code now."
-    commmsg[12] = "Empire zero-zero-four, your code checks out. Commende boarding maneuvers."
+    commmsg[12] = "Empire zero-zero-four, your code checks out. Commence boarding maneuvers."
     commmsg[13] = "This is leader, you're all clear. Execute, execute, execute!"
     
     -- Mission info stuff
@@ -121,6 +123,8 @@ function accept()
     seirsys = system.cur() -- Remember where the Seiryuu is.
     oldsys = system.cur() -- This is the LAST system we were in. Needed to choose the correct jump point.
     chattered = false
+    kills = 0 -- Counter to keep track of enemy kills.
+    maxkills = 0 -- The amount of enemies in this ambush.
     
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     accepted = false
@@ -157,6 +161,9 @@ end
 
 -- Function hooked to landing. Only used to prevent a fringe case.
 function land()
+    if kills < maxkills then
+        tk.msg("You abandoned your protegee!", "Fag.")
+    end
     if system.cur() == misssys[3] and stage == 3 then
         tk.msg("You landed in the final system!", "Fag.")
         abort()
@@ -167,12 +174,14 @@ end
 function takeoff()
     if stage == 3 then
         dpjump = true -- We're going to assume that if the player takes off AND the stage is 3, the diplomat will have gotten away and the mission can continue. Mainly a leniency toward refueling.
+        player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(misssys[stage]):name()))
+        misn.setMarker(getNextSystem(misssys[stage]), "misc")
     end
 end
 
 -- Function hooked to jumpin AND takeoff. Handles events that should occur in either case.
 function enter()
-    if system.cur() == misssys[1] and stage == 1 then
+    if system.cur() == misssys[1] and stage == 1 and missend == false then
         -- case enter system where escorts wait
         escorts = pilot.add("Shadowvigil Escorts", nil, vec2.new(0, 0))
         for i, j in ipairs(escorts) do
@@ -211,6 +220,7 @@ function jumpin()
             if j:exists() then
                 j:control()
                 hook.pilot(j, "death", "escortDeath")
+                controlled = true
             end
         end
 
@@ -230,7 +240,19 @@ function jumpin()
             hook.timer(7000, "chatter", {pilot = escorts[2], text = commmsg[7]})
             hook.timer(7000, "chatter", {pilot = escorts[3], text = commmsg[8]})
         elseif system.cur() == misssys[3] then -- case rendezvous with dvaered diplomat
-            tk.msg("Implement me!", "Fag.")
+            for i, j in ipairs(escorts) do
+                if j:exists() then
+                    j:follow(diplomat) -- Follow the diplomat.
+                end
+            end
+            dvaerplomat = pilot.add("Dvaered Vigilance", nil, vec2.new(2000, 4000))[1]
+            dvaerplomat:control()
+            dvaerplomat:disable()
+            dvaerplomat:setDir(180)
+            dvaerplomat:setFaction("Diplomatic")
+            diplomat:setInvincible(true)
+            diplomat:goto(vec2.new(1850, 4000), true)
+            diplomatidle = hook.pilot(diplomat, "idle", "diplomatIdle")
         else -- case enroute, handle escorts flying to the next system, possibly combat
             for i, j in ipairs(escorts) do
                 if j:exists() then
@@ -251,13 +273,18 @@ function jumpin()
             end
             if misssys[3]:jumpDist() <= 2 and misssys[3]:jumpDist() > 0 then -- Encounter
                 ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - misssys[3]:jumpDist()), nil, vec2.new(0, 0))
+                kills = 0
+                maxkills = #ambush
                 for i, j in ipairs(ambush) do
                     if j:exists() then
                         hook.pilot(j, "death", "attackerDeath")
                     end
                 end
-                hook.timer(5000, "chatter", {pilot = escorts[1], text = commmsg[9]})
-                hook.timer(6000, "escortFree")
+                for i, j in ipairs(escorts) do
+                    if j:exists() then
+                        hook.pilot(j, "attacked", "diplomatAttacked")
+                    end
+                end
             end
         end
 
@@ -318,24 +345,23 @@ end
 
 -- Handle the death of the scripted attackers. Once they're dead, recall the escorts.
 function attackerDeath()
-    local survivors = false
-    for i, j in ipairs(ambush) do
-        if j:exists() then
-            survivors = true
-        end
-    end
+    kills = kills + 1
 
-    if survivors == true then return end
-    
+    if kills < maxkills then return end
+
+    local myj
     for i, j in ipairs(escorts) do
         if j:exists() then
+            myj = j
             j:control()
             j:changeAI("trader")
             j:follow(diplomat)
+            diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+            controlled = true
         end
     end
     
-    j:comm(commmsg[10])
+    myj:comm(commmsg[10])
 end
 
 -- Puts the escorts under AI control again, and makes them fight.
@@ -343,7 +369,7 @@ function escortFree()
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:control(false)
-            j:changeAI("empire")
+            j:changeAI("baddie_norun")
         end
     end
 end
@@ -382,10 +408,18 @@ function diplomatJump()
             j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
+    player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(misssys[stage]):name()))
 end
 
 -- Handle the diplomat getting attacked.
 function diplomatAttacked()
+    if controlled == true then
+        chatter({pilot = escorts[1], text = commmsg[9]})
+        escortFree()
+        diplomat:taskClear()
+        diplomat:brake()
+        controlled = false
+    end
     if shuttingup == true then return
     else
         shuttingup = true
@@ -394,8 +428,85 @@ function diplomatAttacked()
     end
 end
 
-function diplomatShutup
+-- As soon as the diplomat is at its destination, set up final cutscene.
+function diplomatIdle()
+    local mypos = {} -- Relative positions to the Dvaered diplomat.
+    mypos[1] = vec2.new(0, 100)
+    mypos[2] = vec2.new(-60, -60)
+    mypos[3] = vec2.new(60, -60)
+    
+    for i, j in ipairs(escorts) do
+        if j:exists() then
+            j:setInvincible(true)
+            j:taskClear()
+            j:goto(dvaerplomat:pos() + mypos[i], true)
+        end
+    end
+    
+    proxy = hook.timer(100, "proximity", {location = diplomat:pos(), radius = 200, funcname = "diplomatCutscene"})
+end
+
+-- This is the final cutscene.
+function diplomatCutscene()
+    playerh1, playerh2 = player:pilot():getHealth()
+    player:pilot():disable()
+    player:pilot():setVel(vec2.new(0, 0))
+    player:pilot():setInvincible(true)
+    
+    hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
+    hook.timer(6000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
+    hook.timer(9000, "scheduler", {funcname = "diplomatGo"})
+    hook.timer(15000, "chatter", {pilot = escorts[1], text = commmsg[13]})
+    hook.timer(15500, "scheduler", {funcname = "killDiplomats"})
+    
+end
+
+function diplomatShutup()
     shuttingup = false
+end
+
+-- This function executes whatever function is passed to it.
+function scheduler(schedule)
+    _G[schedule.funcname]()
+end
+
+function diplomatGo()
+    diplomat:goto(dvaerplomat:pos(), true)
+    hook.rm(diplomatidle)
+end
+
+function killDiplomats()
+    for i, j in ipairs(escorts) do
+        if j:exists() then
+            j:taskClear()
+            j:rmOutfit("all")
+            j:addOutfit("Cheater's Ragnarok Beam", 1)
+            j:attack(dvaerplomat)
+        end
+    end
+    diplomat:hookClear()
+    hook.timer(500, "scheduler", {funcname = "diplomatKilled"})
+    hook.timer(5000, "scheduler", {funcname = "escortFlee"})
+end
+
+function diplomatKilled()
+    diplomat:setHealth(0, 0)
+    dvaerplomat:setHealth(0, 0)
+end
+
+function escortFlee()
+    player:pilot():setInvincible(false)
+    player:pilot():setHealth(playerh1, playerh2)
+    for i, j in ipairs(escorts) do
+        if j:exists() then
+            j:taskClear()
+            j:rmOutfit("all")
+            j:hyperspace()
+        end
+    end
+    misn.osdActive(4)
+    stage = 1 -- no longer spawn things
+    missend = true
 end
 
 -- Function hooked to boarding. Only used on the Seiryuu.

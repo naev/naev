@@ -605,23 +605,22 @@
   </pilots>
  </fleet>
  <fleet name="Shadowvigil Ambush 1">
-  <ai>baddie</ai>
+  <ai>baddie_norun</ai>
   <faction>Shadow_pirates</faction>
   <pilots>
-   <pilot ship="Pirate Ancestor"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Pirate Attacker" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Shadowvigil Ambush 2">
-  <ai>baddie</ai>
+  <ai>baddie_norun</ai>
   <faction>Shadow_pirates</faction>
   <pilots>
-   <pilot ship="Pirate Ancestor"></pilot>
-   <pilot ship="Pirate Ancestor"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Pirate Attacker" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Attacker" ship="Pirate Vendetta"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
   </pilots>
  </fleet>
 </Fleets>

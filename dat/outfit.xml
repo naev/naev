@@ -1277,4 +1277,28 @@
   </general>
   <specific type="license" />
  </outfit>
+ <!-- Cheats. For missions, honest! -->
+ <outfit name="Cheater's Ragnarok Beam">
+  <general>
+   <slot>high</slot>
+   <mass>1</mass>
+   <price>745000</price>
+   <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
+   <gfx_store>ragnarok</gfx_store>
+  </general>
+  <specific type="turret beam">
+   <cpu>1</cpu>
+   <delay>10000</delay>
+   <duration>5</duration>
+   <range>400</range>
+   <turn>35</turn>
+   <energy>20</energy>
+   <damage type="energy">150</damage>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <gfx>beam_ragnarok</gfx>
+   <sound>beam0</sound>
+   <sound_off>beam_off0</sound_off>
+  </specific>
+ </outfit>
 </Outfits>
