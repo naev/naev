@@ -80,6 +80,7 @@
 #include "tech.h"
 #include "hook.h"
 #include "npc.h"
+#include "console.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -346,6 +347,7 @@ int main( int argc, char** argv )
    gl_exit(); /* kills video output */
    sound_exit(); /* kills the sound */
    news_exit(); /* destroys the news. */
+   cli_exit(); /* CLean up the console. */
 
    /* Free the icon. */
    if (naev_icon)
