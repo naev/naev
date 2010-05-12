@@ -417,6 +417,7 @@ static void ai_run( lua_State *L, const char *funcname )
  *
  *    @param p Pilot to initialize in AI.
  *    @param ai AI to initialize pilot.
+ *    @return 0 on success.
  */
 int ai_pinit( Pilot *p, const char *ai )
 {
@@ -449,8 +450,10 @@ int ai_pinit( Pilot *p, const char *ai )
 
    /* Set up the profile. */
    prof = ai_getProfile(buf);
-   if (prof == NULL)
+   if (prof == NULL) {
       WARN("AI Profile '%s' not found.", buf);
+      return -1;
+   }
    p->ai = prof;
    L = p->ai->L;
 
