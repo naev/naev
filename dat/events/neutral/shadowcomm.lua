@@ -38,7 +38,7 @@ end
 -- Make the ship hail the player
 function hailme()
     vendetta:hailPlayer()
-    hook.pilot(vendetta, "hail", "hail")
+    hailhook = hook.pilot(vendetta, "hail", "hail")
 end
 
 -- Triggered when the player hails the ship
@@ -50,6 +50,7 @@ function hail(p)
     hook.rm(hook2)
     hook.rm(hook3)
     hook.rm(hook4)
+    hook.rm(hailhook)
     hook.jumpin("jumpin")
 end
 
