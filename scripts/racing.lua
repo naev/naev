@@ -83,6 +83,7 @@ function racer:new ( pilotname, aitype, number, beacon_list )
       p:setPos( v )
    else
       p = pilot.add( pilotname, "dummy", v )[1]
+      p:rename( name )
    end
    p:setDir( math.deg( angle ) )
    p:disable()
@@ -92,11 +93,13 @@ function racer:new ( pilotname, aitype, number, beacon_list )
 end
 
 function racer:beaconDone( beacon_list, rounds )
+   --assign the next beacon
    self.beacons_done = self.beacons_done + 1
    
+   --reaction to the fact that the beacon is done
    if self.ai == "player" then
       player.msg( message[1] )
-      beacon_list[ beaconSanity( self.beacons_done, beacon_list ) ]:setHostile()
+      beacon_list[ beaconSanity( self.beacons_done, beacon_list ) ]:setHostile() --the friendly/hostile thing makes the next beacon visible for the player
       beacon_list[ beaconSanity( self.beacons_done +1, beacon_list ) ]:setFriendly()
    elseif self.ai == "basic" then
       self.pilot:taskClear()
@@ -117,6 +120,7 @@ function racer:beaconDone( beacon_list, rounds )
 end
 
 function racer:checkProx ( beacon_list, rounds )
+   -- fighter ai starts moving to the next beacon before actually reaching the the current one
    if self.ai == "fighter" and vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() ) <= 200 then
       local this_beacon = beacon_list[beaconSanity(self.beacons_done+1, beacon_list)]:pos()
       local next_beacon = beacon_list[beaconSanity(self.beacons_done+2, beacon_list)]:pos()
@@ -132,7 +136,7 @@ end
 
 function racer:roundDone ( beacon_list )
    if self.ai == "player" then
-      player.msg( string.format( message[2], (rounds * #beacon_list - ( self.beacons_done - 1 ) ) / #beacon_list ) )
+      player.msg( string.format( message[2], (rounds * #beacon_list - ( self.beacons_done - 1 ) ) / #beacon_list ) ) -- "x rounds left"
    end
 end
 
