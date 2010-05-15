@@ -2672,8 +2672,10 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Electronic warfare setting base parameters.
     */
-   pilot->ew_base_hide  = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
-   pilot->ew_detect     = 1. + s->ew_detect/100. * exp( -0.2 * (double)(ew_ndetect-1) );;
+   s->ew_hide           = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
+   s->ew_detect         = 1. + s->ew_detect/100. * exp( -0.2 * (double)(ew_ndetect-1) );
+   pilot->ew_base_hide  = s->ew_hide;
+   pilot->ew_detect     = s->ew_detect;
 
    /* 
     * Normalize stats.
@@ -3604,6 +3606,18 @@ void pilots_clean (void)
       pilot_nstack = 1;
       pilot_clearTimers( player.p ); /* Reset the player's timers. */
    }
+}
+
+
+/**
+ * @brief Clears all the pilots except the player.
+ */
+void pilots_clear (void)
+{
+   int i;
+   for (i=0; i < pilot_nstack; i++)
+      if (!pilot_isPlayer( pilot_stack[i] ))
+         pilot_delete( pilot_stack[i] );
 }
 
 

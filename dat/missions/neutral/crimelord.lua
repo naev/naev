@@ -61,7 +61,7 @@ function accept ()
 end
 
 function jumpin () --aforementioned triggered function
-    misn.timerStart("spawnBaddies",4000) --baddies spawn delayed
+    hook.timer(4000, "spawnBaddies")
     
     if system.cur() == targetsystem then --when in target system
     

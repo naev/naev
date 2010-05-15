@@ -57,15 +57,11 @@ static int evt_delete = 0; /**< if 1 delete current event */
  */
 /* evt */
 static int evt_misnStart( lua_State *L );
-static int evt_timerStart( lua_State *L );
-static int evt_timerStop( lua_State *L );
 static int evt_npcAdd( lua_State *L );
 static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
 static const luaL_reg evt_methods[] = {
    { "misnStart", evt_misnStart },
-   { "timerStart", evt_timerStart },
-   { "timerStop", evt_timerStop },
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
    { "finish", evt_finish },
@@ -180,69 +176,6 @@ static int evt_misnStart( lua_State *L )
 
    /* Has to reset the hook target since mission overrides. */
    nlua_hookTarget( NULL, cur_event );
-
-   return 0;
-}
-
-
-/**
- * @brief Starts a timer.
- *
- *    @luaparam funcname Name of the function to run when timer is up.
- *    @luaparam delay Milliseconds to wait for timer.
- *    @luareturn The timer being used.
- * @luafunc timerStart( funcname, delay )
- */
-static int evt_timerStart( lua_State *L )
-{
-   int i;
-   const char *func;
-   double delay;
-
-   /* Parse arguments. */
-   func  = luaL_checkstring(L,1);
-   delay = luaL_checknumber(L,2);
-
-   /* Add timer */
-   for (i=0; i<EVENT_TIMER_MAX; i++) {
-      if (cur_event->timer[i] == 0.) {
-         cur_event->timer[i] = delay / 1000.;
-         cur_event->tfunc[i] = strdup(func);
-         break;
-      }
-   }
-
-   /* No timer found. */
-   if (i >= EVENT_TIMER_MAX) {
-      return 0;
-   }
-
-   /* Returns the timer id. */
-   lua_pushnumber(L,i);
-   return 1;
-}
-
-/**
- * @brief Stops a timer previously started with timerStart().
- *
- *    @luaparam t Timer to stop.
- * @luafunc timerStop( t )
- */
-static int evt_timerStop( lua_State *L )
-{
-   int t;
-
-   /* Parse parameters. */
-   t = luaL_checkint(L,1);
-
-   /* Stop the timer. */
-   if (cur_event->timer[t] != 0.) {
-      cur_event->timer[t] = 0.;
-      if (cur_event->tfunc[t] != NULL) {
-         free(cur_event->tfunc[t]);
-         cur_event->tfunc[t] = NULL;
-      }
-   }
 
    return 0;
 }

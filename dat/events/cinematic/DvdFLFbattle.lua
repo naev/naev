@@ -20,9 +20,9 @@ function create ()
     flfwave = 1
     dvaeredwave = 1    
     
-    evt.timerStart("FLFSpawn", 3000)
+    hook.timer(3000, "FLFSpawn")
     
-    evt.timerStart("DvaeredSpawn", 12000)
+    hook.timer(12000, "DvaeredSpawn")
     
     hook.jumpout("leave")
     hook.land("leave")
@@ -52,7 +52,7 @@ function FLFSpawn ()
     
     flfwave = flfwave + 1
     if flfwave <=5 then
-        evt.timerStart("FLFSpawn", 1000 + rnd.rnd(100,900) )
+        hook.timer(1000, "FLFSpawn")
     end
 end
 
@@ -80,7 +80,7 @@ function DvaeredSpawn ()
     
     dvaeredwave = dvaeredwave + 1
     if dvaeredwave <=5 then
-        evt.timerStart("DvaeredSpawn", 3000 + rnd.rnd(100,900) )
+        hook.timer(3000, "DvaeredSpawn")
     end
 end
 

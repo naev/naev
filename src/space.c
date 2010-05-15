@@ -2109,9 +2109,9 @@ void space_exit (void)
    jumppoint_gfx = NULL;
 
    /* Free the names. */
-   if (planetname_stack)
+   if (planetname_stack != NULL)
       free(planetname_stack);
-   if (systemname_stack)
+   if (systemname_stack != NULL)
       free(systemname_stack);
    spacename_nstack = 0;
 
@@ -2119,19 +2119,19 @@ void space_exit (void)
    for (i=0; i < planet_nstack; i++) {
       free(planet_stack[i].name);
 
-      if (planet_stack[i].description)
+      if (planet_stack[i].description != NULL)
          free(planet_stack[i].description);
-      if (planet_stack[i].bar_description)
+      if (planet_stack[i].bar_description != NULL)
          free(planet_stack[i].bar_description);
 
       /* graphics */
-      if (planet_stack[i].gfx_space) {
+      if (planet_stack[i].gfx_spaceName != NULL) {
          if (planet_stack[i].gfx_space != NULL)
             gl_freeTexture( planet_stack[i].gfx_space );
          free(planet_stack[i].gfx_spaceName);
          free(planet_stack[i].gfx_spacePath);
       }
-      if (planet_stack[i].gfx_exterior) {
+      if (planet_stack[i].gfx_exterior != NULL) {
          free(planet_stack[i].gfx_exterior);
          free(planet_stack[i].gfx_exteriorPath);
       }
@@ -2159,7 +2159,10 @@ void space_exit (void)
       if(systems_stack[i].presence)
          free(systems_stack[i].presence);
 
-      free(systems_stack[i].planets);
+      if (systems_stack[i].planets != NULL)
+         free(systems_stack[i].planets);
+      if (systems_stack[i].planetsid != NULL)
+         free(systems_stack[i].planetsid);
    }
    free(systems_stack);
    systems_stack = NULL;
@@ -2432,7 +2435,7 @@ static void presenceCleanup( StarSystem *sys )
 
       /* Remove the element with 0 value. */
       memmove(&sys->presence[i], &sys->presence[i + 1],
-              sizeof(SystemPresence) * sys->npresence - (i + 1));
+              sizeof(SystemPresence) * (sys->npresence - (i + 1)));
       sys->npresence--;
       sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
       i--;  /* We'll want to check the new value we just copied in. */
@@ -2495,6 +2498,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
       WARN("q is empty after getting adjancies of %s.", sys->name);
+      q_destroy(q);
+      q_destroy(qn);
       presenceCleanup(sys);
       return;
    }

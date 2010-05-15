@@ -20,6 +20,7 @@ int faction_isFaction( int f );
 int faction_get( const char* name );
 int* faction_getAll( int *n );
 char* faction_name( int f );
+char* faction_shortname( int f );
 char* faction_longname( int f );
 lua_State *faction_getState( int f );
 glTexture* faction_logoSmall( int f );

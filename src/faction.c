@@ -56,6 +56,7 @@
 typedef struct Faction_ {
    char *name; /**< Normal Name. */
    char *longname; /**< Long Name. */
+   char *displayname; /**< Display name. */
 
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
@@ -143,7 +144,7 @@ int* faction_getAll( int *n )
 
 
 /**
- * @brief Get's a factions short name.
+ * @brief Get's a factions "real" name.
  *
  *    @param f Faction to get the name of.
  *    @return Name of the faction.
@@ -157,6 +158,28 @@ char* faction_name( int f )
    /* Don't want player to see his escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
       return "Escort";
+   return faction_stack[f].name;
+}
+
+
+/**
+ * @brief Get's a factions short name.
+ *
+ *    @param f Faction to get the name of.
+ *    @return Name of the faction.
+ */
+char* faction_shortname( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   /* Don't want player to see his escorts as "Player" faction. */
+   if (f == FACTION_PLAYER)
+      return "Escort";
+   /* Possibly get display name. */
+   if (faction_stack[f].displayname != NULL)
+      return faction_stack[f].displayname;
    return faction_stack[f].name;
 }
 
@@ -659,6 +682,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       xmlr_strd(node,"longname",temp->longname);
+      xmlr_strd(node,"display",temp->displayname);
       if (xml_isNode(node, "colour")) {
          temp->colour = col_fromName(xml_raw(node));
          continue;
@@ -906,6 +930,8 @@ void factions_free (void)
       free(faction_stack[i].name);
       if (faction_stack[i].longname != NULL)
          free(faction_stack[i].longname);
+      if (faction_stack[i].displayname != NULL)
+         free(faction_stack[i].displayname);
       if (faction_stack[i].logo_small != NULL)
          gl_freeTexture(faction_stack[i].logo_small);
       if (faction_stack[i].logo_tiny != NULL)
@@ -936,6 +962,10 @@ int pfaction_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"factions");
 
    for (i=1; i<faction_nstack; i++) { /* player is faction 0 */
+      /* Must not be static. */
+      if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
+         continue;
+
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
@@ -971,8 +1001,13 @@ int pfaction_load( xmlNodePtr parent )
             if (xml_isNode(cur,"faction")) {
                xmlr_attr(cur,"name",str); 
                faction = faction_get(str);
-               if (faction != -1) /* Faction is valid. */
-                  faction_stack[faction].player = xml_getFloat(cur);
+
+               if (faction != -1) { /* Faction is valid. */
+
+                  /* Must not be static. */
+                  if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
+                     faction_stack[faction].player = xml_getFloat(cur);
+               }
                free(str);
             }
          } while (xml_nextNode(cur));

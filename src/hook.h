@@ -46,6 +46,11 @@ int hook_runID( unsigned int id ); /* runs hook of specific id */
 /* destroys hooks */
 void hook_cleanup (void);
 
+/* Timer hooks. */
+void hooks_update( double dt );
+unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms );
+unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms );
+
 
 #endif /* HOOK_H */
 

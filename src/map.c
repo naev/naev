@@ -340,7 +340,7 @@ static void map_update( unsigned int wid )
       window_modifyImage( wid, "imgFaction", logo, 0, 0 );
       if (logo != NULL) {
          window_moveWidget( wid, "imgFaction",
-               -(90-logo->w)/2-20-logo->w, y-(64-logo->h)/2-logo->h );
+               -(90-logo->w)/2-20, y-(64-logo->h)/2 );
       /* Scroll down. */
          y -= 64 + 10;
       }
@@ -375,7 +375,7 @@ static void map_update( unsigned int wid )
       t           = faction_getColourChar(sys->presence[i].faction);
       /* Use map grey instead of default neutral colour */
       l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                     (l==0)?"":"\n", faction_name(sys->presence[i].faction),
+                     (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                      (t=='N')?'M':t, sys->presence[i].value);
    }
    if (hasPresence == 0)

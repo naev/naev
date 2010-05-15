@@ -169,10 +169,10 @@ end
 
 function land()
     if spawnie ~= nil then
-        misn.timerStop(spawnie)
+        hook.rm(spawnie)
     end
     if hailie ~= nil then
-        misn.timerStop(hailie)
+        hook.rm(hailie)
     end
     
     if planet.cur():name() == "Sindbad" and encounters == 4 then
@@ -232,7 +232,7 @@ function jumpin()
         tk.msg(failtitle, failtext)
         misn.finish(false) -- The player can accept the mission again, so don't abort().
     else
-        misn.timerStart("spawnFLF", 2000)
+        hook.timer(2000, "spawnFLF")
     end
 
     checkPatrol()
@@ -241,10 +241,10 @@ end
 function jumpout()
     last_sys = system.cur()
     if spawnie ~= nil then
-        misn.timerStop(spawnie)
+        hook.rm(spawnie)
     end
     if hailie ~= nil then
-        misn.timerStop(hailie)
+        hook.rm(hailie)
     end
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
@@ -262,13 +262,13 @@ function checkPatrol()
         pilot.toggleSpawn(false)
         
         if encounters < 3 then
-            spawnie = misn.timerStart("spawnSmallDV", 12000)
+            spawnie = hook.timer(12000, "spawnSmallDV")
         else
-            spawnie = misn.timerStart("spawnBigDV", 12000)
+            spawnie = hook.timer(12000, "spawnBigDV")
             dv_patrol = var.peek("dv_patrol")
             if dv_patrol ~= nil then
                 if var.peek("dv_patrol") >= 3 then
-                    hailie = misn.timerStart("hailEvent", 20000)
+                    hailie = hook.timer(20000, "hailEvent")
                 end
             end
         end
@@ -324,7 +324,7 @@ function hail()
             end
             
             if wingAlive then
-                misn.timerStart("commFLF", 3000)
+                hook.timer(3000, "commFLF")
                 
                 osd_desc[1] = DVosd[1]
                 osd_desc[2] = nil

@@ -257,8 +257,6 @@ static int event_create( int dataid )
  */
 static void event_cleanup( Event_t *ev )
 {
-   int i;
-
    /* Destroy Lua. */
    lua_close(ev->L);
 
@@ -267,14 +265,6 @@ static void event_cleanup( Event_t *ev )
 
    /* Free NPC. */
    npc_rm_parentEvent(ev->id);
-
-   /* Free timers. */
-   for (i=0; i<EVENT_TIMER_MAX; i++) {
-      if (ev->tfunc[i] != NULL) {
-         free(ev->tfunc[i]);
-         ev->tfunc[i] = NULL;
-      }
-   }
 }
 
 
@@ -304,45 +294,6 @@ void event_remove( unsigned int eventid )
    }
 
    WARN("Event ID '%u' not valid.", eventid);
-}
-
-
-/**
- * @brief Runs event timer stuff.
- */
-void events_update( double dt )
-{
-   int i, j;
-   Event_t *ev;
-   char *tfunc;
-
-   for (i=0; i<event_nactive; i++) {
-      ev = &event_active[i];
-     
-      /* Decrement timers see if must run. */
-      for (j=0; j<EVENT_TIMER_MAX; j++) {
-
-         if (ev->timer[j] > 0.) {
-
-            ev->timer[j] -= dt;
-
-            /* Timer is up - trigger function. */
-            if (ev->timer[j] < 0.) {
-
-               /* Destroy timer. */
-               ev->timer[j]   = 0.;
-               tfunc          = ev->tfunc[j];
-               ev->tfunc[j]   = NULL;
-
-               /* Run function. */
-               event_runLua( ev, tfunc );
-
-               /* Free remainder stuff. */
-               free(tfunc);
-            }
-         }
-      }
-   }
 }
 
 

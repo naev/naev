@@ -233,7 +233,6 @@ void player_new (void)
    events_cleanup();
    space_clearKnown();
    land_cleanup();
-   factions_reset();
    map_cleanup();
 
    player.name = dialogue_input( "Player Name", 2, 20,
@@ -679,8 +678,15 @@ void player_cleanup (void)
    /* Clear player. */
    player_clear();
 
+   /* Clear hail timer. */
+   player_hailCounter   = 0;
+   player_hailTimer     = 0.;
+
    /* Clear messages. */
    gui_clearMessages();
+
+   /* Reset factions. */
+   factions_reset();
 
    /* clean up name */
    if (player.name != NULL) {
@@ -1829,7 +1835,7 @@ void player_targetHostile (void)
          continue;
  
       /* Must be in range. */
-      if (!pilot_inRangePilot( player.p, pilot_stack[i] ))
+      if (pilot_inRangePilot( player.p, pilot_stack[i] ) <= 0)
          continue;
 
       /* Normal unbribed check. */

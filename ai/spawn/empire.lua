@@ -7,12 +7,12 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Lancelot", 15 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 15 );
-      scom.addPilot( pilots, "Empire Lancelot", 15 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
    else
-      scom.addPilot( pilots, "Empire Pacifier", 45 );
+      scom.addPilot( pilots, "Empire Pacifier", 90 );
    end
 
    return pilots
@@ -25,16 +25,16 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Admonisher", 30 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Admonisher", 50 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Admonisher", 40 );
-      scom.addPilot( pilots, "Empire Admonisher", 40 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Admonisher", 50 );
    else
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Pacifier", 60 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Pacifier", 90 );
    end
 
    return pilots
@@ -48,23 +48,23 @@ function spawn_capship ()
 
    -- Generate the capship
    if r < 0.7 then
-      scom.addPilot( pilots, "Empire Hawking", 100 )
+      scom.addPilot( pilots, "Empire Hawking", 120 )
    else
-      scom.addPilot( pilots, "Empire Peacemaker", 150 )
+      scom.addPilot( pilots, "Empire Peacemaker", 200 )
    end
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Admonisher", 40 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Admonisher", 50 );
    else
-      scom.addPilot( pilots, "Empire Lancelot", 20 );
-      scom.addPilot( pilots, "Empire Pacifier", 50 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Pacifier", 90 );
    end
 
    return pilots
@@ -76,9 +76,9 @@ function create ( max )
    local weights = {}
 
    -- Create weights for spawn table
-   weights[ spawn_patrol  ] = 100
-   weights[ spawn_squad   ] = 0.33*max
-   weights[ spawn_capship ] = 100*math.exp( -max / 1000 )
+    weights[ spawn_patrol  ] = 100
+    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
+    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
    
    -- Create spawn table base on weights
    spawn_table = scom.createSpawnTable( weights )

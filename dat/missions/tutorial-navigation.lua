@@ -104,7 +104,7 @@ end
 function tutEnter()
    enter_sys = system.get()
    if enter_sys ~= misn_sys then
-      misn.timerStart("tutEnd", 5000)
+      hook.timer(5000, "tutEnd")
    end
 end
    
