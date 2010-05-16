@@ -43,7 +43,7 @@ racer_mt = { __index = racer }
       @param beacon_list List of beacons to visit.
       @return The newly created racer.
 --]]
-function racer:new ( pilotname, aitype, number, beacon_list )
+function racer:new ( pilotname, aitype, number, beacon_list, racer_name )
    local ai    = aitype
    local beacons_done = 1
 
@@ -60,6 +60,9 @@ function racer:new ( pilotname, aitype, number, beacon_list )
       name = "Fighting Forklift"
    else
       error( string.format( "Invalid ai '%s' for racer", aitype ) )
+   end
+   if racer_name ~= nil then
+      name = racer_name
    end
 
    -- Calculate direction to face
@@ -126,15 +129,17 @@ function racer:beaconDone( beacon_list, rounds )
 end
 
 function racer:checkProx ( beacon_list, rounds )
+   self.distance = vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() )
+   
    -- fighter ai starts moving to the next beacon before actually reaching the the current one
-   if self.ai == "fighter" and vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() ) <= 200 then
+   if self.ai == "fighter" and self.distance <= 200 then
       local this_beacon = beacon_list[beaconSanity(self.beacons_done+1, beacon_list)]:pos()
       local next_beacon = beacon_list[beaconSanity(self.beacons_done+2, beacon_list)]:pos()
       self.pilot:taskClear()
       self.pilot:goto( this_beacon + (next_beacon - this_beacon)*200/vec2.mod(next_beacon - this_beacon), false) --goes to a point 200 units from the next beacon (in the direction of the last one
       self.pilot:goto( beacon_list[ beaconSanity( self.beacons_done + 2, beacon_list ) ]:pos(), false )
    end
-   if vec2.dist( self.pilot:pos(), beacon_list[ beaconSanity( self.beacons_done + 1, beacon_list ) ]:pos() ) <= 100 then
+   if self.distance <= 100 then
       self:beaconDone( beacon_list, rounds )
    end
    

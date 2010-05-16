@@ -77,11 +77,11 @@ function raceInit ()
    -- spawn participants here
    racers = {}
    racers[1] = racer:new( nil, "player", 1, beacons )
-   racers[2] = racer:new( "Independent Schroedinger", "basic", 2, beacons )
-   racers[3] = racer:new( "Independent Hyena", "fighter", 3, beacons )
-   racers[4] = racer:new( "Independent Gawain", "fighter", 4, beacons )
-   racers[5] = racer:new( "Goddard Goddard", "basic", 5, beacons )
-   racers[6] = racer:new( "Civilian Llama", "fighter", 6, beacons )
+   racers[2] = racer:new( "Independent Schroedinger", "basic", 2, beacons, "Schroedinger" )
+   racers[3] = racer:new( "Independent Hyena", "basic", 3, beacons, "Hyena" )
+   racers[4] = racer:new( "Independent Gawain", "basic", 4, beacons, "Gawain" )
+   racers[5] = racer:new( "Goddard Goddard", "basic", 5, beacons, "Goddard" )
+   racers[6] = racer:new( "Civilian Llama", "basic", 6, beacons, "Llama" )
  
    player.msg( text[3] )
    
@@ -115,15 +115,43 @@ end
 
 function controlLoop ()
    racers_done = 0
-   for k,v in pairs(racers) do
-      v:checkProx( beacons, rounds )
-      racers_done = racers_done + v.done
+   
+   positions = {}
+   
+   for k,v in pairs(racers) do --check for completed beacons / races
+      v:checkProx( beacons, rounds ) --does the checking and updates racer.position
+      racers_done = racers_done + v.done --amount of racers that are done
+      
+      local i = 1
+      
+      while true do
+         if positions[ i ] == nil then
+            table.insert( positions, i, v )
+            break
+         elseif v.beacons_done > positions[ i ].beacons_done then
+            table.insert( positions, i, v )
+            break
+         elseif v.beacons_done == positions[ i ].beacons_done and v.distance < positions[ i ].distance then
+            table.insert( positions, i, v )
+            break
+         else
+            i = i + 1
+         end
+      end
    end
-   if racers_done == #racers then
+   
+   placing = "" --convert the order into human readable format...
+   for k, v in pairs( positions ) do
+      placing = placing .. k .. " - " .. v.name .. "\n"
+   end
+   misn.setDesc( placing ) --...and display it
+   
+   if racers_done == #racers then --if everybody is done
       tk.msg( title[2], text[5] )
       for k, v in pairs(beacons) do
          v:rm()
       end
+      
       var.push("race_active", 0)
       for k, v in pairs(racers) do
          racers[k] = v:rm()
@@ -145,5 +173,6 @@ function abort ()
          racers[k] = v:rm()
       end
    end
+   pilot.player():setHealth( 100, 100 )
    misn.finish(false)
 end
