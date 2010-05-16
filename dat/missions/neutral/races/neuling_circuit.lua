@@ -77,7 +77,7 @@ function raceInit ()
    -- spawn participants here
    racers = {}
    racers[1] = racer:new( nil, "player", 1, beacons )
-   racers[2] = racer:new( "Independent Schroedinger", "fighter", 2, beacons )
+   racers[2] = racer:new( "Independent Schroedinger", "basic", 2, beacons )
    racers[3] = racer:new( "Independent Hyena", "fighter", 3, beacons )
    racers[4] = racer:new( "Independent Gawain", "fighter", 4, beacons )
    racers[5] = racer:new( "Goddard Goddard", "basic", 5, beacons )
@@ -85,22 +85,22 @@ function raceInit ()
  
    player.msg( text[3] )
    
-   countdown_timer = misn.timerStart( "countdownThree", 3000 ) --start countdown
+   countdown_timer = hook.timer( 3000, "countdownThree"  ) --start countdown
 end
 
 function countdownThree ()
    player.msg( "3" )
-   countdown_timer = misn.timerStart( "countdownTwo", 1000 )
+   countdown_timer = hook.timer( 1000, "countdownTwo"  )
 end
 
 function countdownTwo ()
    player.msg( "2" )
-   countdown_timer = misn.timerStart( "countdownOne", 1000 )
+   countdown_timer = hook.timer( 1000, "countdownOne" )
 end
 
 function countdownOne ()
    player.msg( "1" )
-   countdown_timer = misn.timerStart( "raceStart", 1000 )
+   countdown_timer = hook.timer( 1000, "raceStart" )
 end
 
 function raceStart ()
@@ -110,7 +110,7 @@ function raceStart ()
       v:startRace( beacons )
    end
    
-   check_timer = misn.timerStart( "controlLoop", 250 ) --start checking if the player has reached beacons
+   check_timer = hook.timer( 250, "controlLoop" ) --start checking if the player has reached beacons
 end
 
 function controlLoop ()
@@ -130,7 +130,7 @@ function controlLoop ()
       end
       misn.finish(true)
    end
-   check_timer = misn.timerStart( "controlLoop", 250 )
+   check_timer = hook.timer( 250, "controlLoop" )
 end
 
 function abort ()

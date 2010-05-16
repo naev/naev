@@ -97,13 +97,13 @@ end
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
 
-      this_planet, this_system = planet.get()
-      if ( this_system:hasPresence( "Pirate") or 
-           this_system:hasPresence( "Collective") or 
-           this_system:hasPresence( "FLF") ) 
+      this_planet, this_system = planet.cur()
+      if ( this_system:hasPresence( "Pirate" ) or 
+           this_system:hasPresence( "Collective" ) or 
+           this_system:hasPresence( "FLF" ) ) 
          then misn.finish(false) 
       end
-      planet_name = planet.name( this_planet)
+      planet_name = this_planet:name()
       system_name = this_system:name()
       if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
          misn.accept()

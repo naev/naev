@@ -63,29 +63,35 @@ function racer:new ( pilotname, aitype, number, beacon_list )
    end
 
    -- Calculate direction to face
-   local bnext = beacon_list[ beaconSanity( beacons_done + 1, beacon_list ) ]
-   local bcur = beacon_list[ beaconSanity( beacons_done, beacon_list ) ]
-   local v = bnext:pos() - bcur:pos()
-   local x, y = v:get()
-   local angle = math.atan2( y, x )
-
+   local bnext = beacon_list[ beaconSanity( beacons_done + 1, beacon_list ) ]:pos()
+   local bcur = beacon_list[ beacons_done ]:pos()
+   local x1, y1 = bcur:get()
+   local x2, y2 = bnext:get()
+   local a = x2 - x1
+   local b = y2 - y1
+   local alpha = math.atan2( b, a )
+   local sp_num = number * 2 - 1
+   local c = 50 * math.sin( 0.5 * math.pi * sp_num )
+   local d = 50 * number
+   local e = math.sqrt( c^2 + d^2 )
+   local beta = math.atan2( c, d )
+   local gamma = math.pi + alpha - beta
+   local f = math.sin( gamma ) * e
+   local g = math.cos( gamma ) * e
+   
    -- Calculate vector
-   local sinevalue = 50 * math.sin( 0.5 * math.pi * ( number * 2 - 1 ) )
-   local c = math.cos( angle )
-   local s = math.sin( angle )
-   v = beacon_list[ beacons_done ]:pos()
-   v = v:add( -50*c*number + s*sinevalue, -50*s*number + c*sinevalue ) 
+   local position = vec2.add( bcur, g, f ) 
 
    -- Create/get pilot
    local p
    if pilotname == nil then
       p = player.pilot()
-      p:setPos( v )
    else
       p = pilot.add( pilotname, "dummy", v )[1]
       p:rename( name )
    end
-   p:setDir( math.deg( angle ) )
+   p:setPos( position )
+   p:setDir( math.deg( alpha ) )
    p:disable()
 
    -- Set metatable
