@@ -596,7 +596,7 @@
    <y>-780.000000</y>
   </pos>
   <GFX>
-   <space>P01.png</space>
+   <space>P03.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
   <presence>
@@ -688,7 +688,7 @@
    <y>-520.000000</y>
   </pos>
   <GFX>
-   <space>P00.png</space>
+   <space>P03.png</space>
    <exterior>(null)</exterior>
   </GFX>
   <presence>
@@ -754,7 +754,7 @@
    <y>560.000000</y>
   </pos>
   <GFX>
-   <space>P01.png</space>
+   <space>P03.png</space>
    <exterior>(null)</exterior>
   </GFX>
   <presence>
@@ -1560,7 +1560,7 @@
    <y>990.000000</y>
   </pos>
   <GFX>
-   <space>P02.png</space>
+   <space>P03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
@@ -2589,7 +2589,7 @@
    <y>310.000000</y>
   </pos>
   <GFX>
-   <space>P00.png</space>
+   <space>P03.png</space>
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
@@ -5646,7 +5646,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>-449.692107</y>
   </pos>
   <GFX>
-   <space>P00.png</space>
+   <space>P03.png</space>
    <exterior>forest.png</exterior>
   </GFX>
   <presence>

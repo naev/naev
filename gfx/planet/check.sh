@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATA="../../dat/planet.xml"
+DATA="../../dat/asset.xml"
 
 echo "Checking for unused graphics..."
 echo
