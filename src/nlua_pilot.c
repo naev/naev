@@ -75,9 +75,11 @@ static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
+static int pilotL_setEnergy( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNodisable( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
+static int pilotL_getEnergy( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
@@ -113,9 +115,11 @@ static const luaL_reg pilotL_methods[] = {
    /* Modify. */
    { "changeAI", pilotL_changeAI },
    { "setHealth", pilotL_setHealth },
+   { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
    { "setNodisable", pilotL_setNodisable },
    { "getHealth", pilotL_getHealth },
+   { "getEnergy", pilotL_getEnergy },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
    { "setDir", pilotL_setDir },
@@ -1358,6 +1362,34 @@ static int pilotL_setHealth( lua_State *L )
 
 
 /**
+ * @brief Sets the energy of a pilot.
+ *
+ * @usage p:setEnergy( 100 ) -- Sets pilot to full energy.
+ * @usage p:setEnergy(  70 ) -- Sets pilot to 70% energy.
+ *
+ *    @luaparam p Pilot to set energy of.
+ *    @luaparam energy Value to set energy to, should be double from 0-100 (in percent).
+ *
+ * @luafunc setEnergy( p, energy )
+ */
+static int pilotL_setEnergy( lua_State *L )
+{
+   Pilot *p;
+   double e;
+
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   e  = luaL_checknumber(L, 2);
+   e /= 100.;
+
+   /* Set energy. */
+   p->energy = e * p->energy_max;
+
+   return 0;
+}
+
+
+/**
  * @brief Sets the ability to board the pilot.
  *
  * No parameter is equivalent to true.
@@ -1444,6 +1476,29 @@ static int pilotL_getHealth( lua_State *L )
    /* Return parameters. */
    lua_pushnumber(L, p->armour / p->armour_max * 100. );
    lua_pushnumber(L, p->shield / p->shield_max * 100. );
+
+   return 2;
+}
+
+
+/**
+ * @brief Gets the pilot's energy.
+ *
+ * @usage energy = p:getEnergy()
+ *
+ *    @luaparam p Pilot to get energy of.
+ *    @luareturn The energy of the pilot in % [0:100].
+ * @luafunc getEnergy( p )
+ */
+static int pilotL_getEnergy( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Return parameter. */
+   lua_pushnumber(L, p->energy / p->energy_max * 100. );
 
    return 2;
 }
