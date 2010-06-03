@@ -1500,7 +1500,7 @@ static int pilotL_getEnergy( lua_State *L )
    /* Return parameter. */
    lua_pushnumber(L, p->energy / p->energy_max * 100. );
 
-   return 2;
+   return 1;
 }
 
 
