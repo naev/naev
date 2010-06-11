@@ -403,8 +403,11 @@ static int playerL_takeoff( lua_State *L )
 static int playerL_cargoHas( lua_State *L )
 {
    const char *str;
+   int quantity;
    str = luaL_checkstring( L, 1 );
-   return player_cargoOwned( str );
+   quantity = player_cargoOwned( str );
+   lua_pushnumber( L, quantity );
+   return 1;
 }
 
 
