@@ -340,7 +340,7 @@ static void map_update( unsigned int wid )
       window_modifyImage( wid, "imgFaction", logo, 0, 0 );
       if (logo != NULL) {
          window_moveWidget( wid, "imgFaction",
-               -(90-logo->w)/2-20-logo->w, y-(64-logo->h)/2-logo->h );
+               -(90-logo->w)/2-20, y-(64-logo->h)/2 );
       /* Scroll down. */
          y -= 64 + 10;
       }

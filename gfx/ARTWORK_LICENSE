@@ -8,21 +8,21 @@
      * exterior
        * methane.png
      * space
-       * A00.png
-       * C00.png
-       * D00.png
-       * D01.png
-       * G00.png
-       * H00.png
-       * H01.png
-       * I00.png
-       * J01.png
-       * M01.png
-       * M02.png
-       * M04.png
-       * O00.png
-       * P00.png
-       * P01.png
+       * moon-A00.png
+       * moon-C00.png
+       * moon-D00.png
+       * moon-D01.png
+       * moon-G00.png
+       * moon-H00.png
+       * moon-H01.png
+       * moon-I00.png
+       * moon-J01.png
+       * moon-M01.png
+       * moon-M02.png
+       * moon-M04.png
+       * moon-O00.png
+       * moon-P00.png
+       * moon-P01.png
  
  * Author: Vega Strike, License: GPLv2
    * outfit
@@ -166,8 +166,8 @@
  * Author: Joel Hans, License: PD
    * planet
      * space
-       * J00.png
-       * M00.png
+       * moon-J00.png
+       * moon-M00.png
  
  * Author: Jordi Pegueroles, License: PD
    * outfit
@@ -205,18 +205,18 @@
  * Author: Justin Nichol <http://justinnichol.wordpress.com/>, License: CC-By v3.0
    * planet
      * space
-       * A01.png
-       * G01.png
-       * H02.png
-       * I01.png
-       * J02.png
-       * K00.png
-       * L00.png
-       * M03.png
-       * M05.png
-       * M06.png
-       * O01.png
-       * P02.png
+       * moon-A01.png
+       * moon-G01.png
+       * moon-H02.png
+       * moon-I01.png
+       * moon-J02.png
+       * moon-K00.png
+       * moon-L00.png
+       * moon-M03.png
+       * moon-M05.png
+       * moon-M06.png
+       * moon-O01.png
+       * moon-P02.png
 
  * Author: Camilo Polymeris <cpolymeris@gmx.net>, License: GPLv3
    * gui
@@ -385,4 +385,10 @@
 
   * Author: Scaatis, CC-by v3.0
     * NAEV.png
+
+ * Author: Nikola Whallon <6.saturn.6@gmail.com>, License: GPLv3 / CC-by 3
+   * gfx
+     * planet
+       * space
+         * P03.png
 
