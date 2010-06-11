@@ -39,20 +39,25 @@
 /* player */
 static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
-static int playerL_freeSpace( lua_State *L );
 static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
 static int playerL_msg( lua_State *L );
+/* Faction stuff. */
 static int playerL_modFaction( lua_State *L );
 static int playerL_modFactionRaw( lua_State *L );
 static int playerL_getFaction( lua_State *L );
 static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
 static int playerL_getPilot( lua_State *L );
+/* Fuel stuff. */
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
+/* Board stuff. */
 static int playerL_unboard( lua_State *L );
+/* Land stuff. */
 static int playerL_takeoff( lua_State *L );
+/* Cargo stuff. */
+static int playerL_cargoFree( lua_State *L );
 static int playerL_cargoHas( lua_State *L );
 static int playerL_cargoAdd( lua_State *L );
 static int playerL_cargoRm( lua_State *L );
@@ -64,7 +69,6 @@ static int playerL_teleport( lua_State *L );
 static const luaL_reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
-   { "freeCargo", playerL_freeSpace },
    { "pay", playerL_pay },
    { "credits", playerL_credits },
    { "msg", playerL_msg },
@@ -78,6 +82,7 @@ static const luaL_reg playerL_methods[] = {
    { "refuel", playerL_refuel },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
+   { "cargoFree", playerL_cargoFree },
    { "cargoHas", playerL_cargoHas },
    { "cargoAdd", playerL_cargoAdd },
    { "cargoRm", playerL_cargoRm },
@@ -95,6 +100,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "getFaction", playerL_getFaction },
    { "getRating", playerL_getRating },
    { "fuel", playerL_fuel },
+   { "cargoFree", playerL_cargoFree },
    { "cargoHas", playerL_cargoHas },
    { "misnDone", playerL_misnDone },
    { "evtDone", playerL_evtDone },
@@ -150,17 +156,6 @@ static int playerL_getname( lua_State *L )
 static int playerL_shipname( lua_State *L )
 {
    lua_pushstring(L,player.p->name);
-   return 1;
-}
-/**
- * @brief Gets the free cargo space the player has.
- *
- *    @luareturn The free cargo space in tons of the player.
- * @brief freeCargo()
- */
-static int playerL_freeSpace( lua_State *L )
-{
-   lua_pushnumber(L, pilot_cargoFree(player.p) );
    return 1;
 }
 /**
@@ -390,6 +385,19 @@ static int playerL_takeoff( lua_State *L )
       landed = 0;
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the free cargo space the player has.
+ *
+ *    @luareturn The free cargo space in tons of the player.
+ * @brief cargoFree()
+ */
+static int playerL_cargoFree( lua_State *L )
+{
+   lua_pushnumber(L, pilot_cargoFree(player.p) );
+   return 1;
 }
 
 
