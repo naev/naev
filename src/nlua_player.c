@@ -39,20 +39,28 @@
 /* player */
 static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
-static int playerL_freeSpace( lua_State *L );
 static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
 static int playerL_msg( lua_State *L );
+/* Faction stuff. */
 static int playerL_modFaction( lua_State *L );
 static int playerL_modFactionRaw( lua_State *L );
 static int playerL_getFaction( lua_State *L );
 static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
 static int playerL_getPilot( lua_State *L );
+/* Fuel stuff. */
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
+/* Board stuff. */
 static int playerL_unboard( lua_State *L );
+/* Land stuff. */
 static int playerL_takeoff( lua_State *L );
+/* Cargo stuff. */
+static int playerL_cargoFree( lua_State *L );
+static int playerL_cargoHas( lua_State *L );
+static int playerL_cargoAdd( lua_State *L );
+static int playerL_cargoRm( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_misnDone( lua_State *L );
@@ -61,7 +69,6 @@ static int playerL_teleport( lua_State *L );
 static const luaL_reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
-   { "freeCargo", playerL_freeSpace },
    { "pay", playerL_pay },
    { "credits", playerL_credits },
    { "msg", playerL_msg },
@@ -75,6 +82,10 @@ static const luaL_reg playerL_methods[] = {
    { "refuel", playerL_refuel },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
+   { "cargoFree", playerL_cargoFree },
+   { "cargoHas", playerL_cargoHas },
+   { "cargoAdd", playerL_cargoAdd },
+   { "cargoRm", playerL_cargoRm },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
    { "misnDone", playerL_misnDone },
@@ -89,6 +100,8 @@ static const luaL_reg playerL_cond_methods[] = {
    { "getFaction", playerL_getFaction },
    { "getRating", playerL_getRating },
    { "fuel", playerL_fuel },
+   { "cargoFree", playerL_cargoFree },
+   { "cargoHas", playerL_cargoHas },
    { "misnDone", playerL_misnDone },
    { "evtDone", playerL_evtDone },
    {0,0}
@@ -143,17 +156,6 @@ static int playerL_getname( lua_State *L )
 static int playerL_shipname( lua_State *L )
 {
    lua_pushstring(L,player.p->name);
-   return 1;
-}
-/**
- * @brief Gets the free cargo space the player has.
- *
- *    @luareturn The free cargo space in tons of the player.
- * @brief freeCargo()
- */
-static int playerL_freeSpace( lua_State *L )
-{
-   lua_pushnumber(L, pilot_cargoFree(player.p) );
    return 1;
 }
 /**
@@ -383,6 +385,105 @@ static int playerL_takeoff( lua_State *L )
       landed = 0;
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the free cargo space the player has.
+ *
+ *    @luareturn The free cargo space in tons of the player.
+ * @brief cargoFree()
+ */
+static int playerL_cargoFree( lua_State *L )
+{
+   lua_pushnumber(L, pilot_cargoFree(player.p) );
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see how much cargo the player has of a type.
+ *
+ *    @luaparam type Type of cargo to see how much the player has.
+ *    @luareturn The amount of cargo the player has.
+ * @luafunc cargoHas( type )
+ */
+static int playerL_cargoHas( lua_State *L )
+{
+   const char *str;
+   int quantity;
+   str = luaL_checkstring( L, 1 );
+   quantity = player_cargoOwned( str );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Tries to add cargo to the player's ship.
+ *
+ * @usage n = player.cargoAdd( "Food", 20 )
+ *
+ *    @luaparam type Name of the cargo to add.
+ *    @luaparam quantity Quantity of the cargo to add.
+ *    @luareturn The number of cargo added.
+ * @luafunc cargoAdd( type, quantity )
+ */
+static int playerL_cargoAdd( lua_State *L )
+{
+   const char *str;
+   int quantity;
+   Commodity *cargo;
+
+   /* Parse parameters. */
+   str      = luaL_checkstring( L, 1 );
+   quantity = luaL_checknumber( L, 2 );
+
+   /* Get cargo. */
+   cargo    = commodity_get( str );
+   if (cargo == NULL) {
+      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   /* Try to add the cargo. */
+   quantity = pilot_addCargo( player.p, cargo, quantity );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Tries to remove cargo from the player's ship.
+ *
+ * @usage n = player.cargoRm( "Food", 20 )
+ *
+ *    @luaparam type Name of the cargo to remove.
+ *    @luaparam quantity Quantity of the cargo to remove.
+ *    @luareturn The number of cargo removed.
+ * @luafunc cargoRm( type, quantity )
+ */
+static int playerL_cargoRm( lua_State *L )
+{
+   const char *str;
+   int quantity;
+   Commodity *cargo;
+
+   /* Parse parameters. */
+   str      = luaL_checkstring( L, 1 );
+   quantity = luaL_checknumber( L, 2 );
+
+   /* Get cargo. */
+   cargo    = commodity_get( str );
+   if (cargo == NULL) {
+      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   /* Try to add the cargo. */
+   quantity = pilot_rmCargo( player.p, cargo, quantity );
+   lua_pushnumber( L, quantity );
+   return 1;
 }
 
 

@@ -1,4 +1,4 @@
- * Author: Bobbens, License: PD
+﻿ * Author: Bobbens, License: PD
    * outfit
      * space
        * lasergreen.png
@@ -382,6 +382,37 @@
     * gfx
       * gui
         * hail.png
+      * planet
+        * space
+          * A00.png
+          * A01.png
+          * A02.png
+          * A03.png
+          * C00.png
+          * D00.png
+          * D01.png
+          * D02.png
+          * G00.png
+          * G01.png
+          * H00.png
+          * H01.png
+          * H02.png
+          * I00.png
+          * I01.png
+          * J00.png
+          * J01.png
+          * J02.png
+          * J03.png
+          * J04.png
+          * K00.png
+          * L00.png
+          * M00.png
+          * M01.png
+          * M02.png
+          * O00.png
+          * P00.png
+          * P01.png
+          * P02.png
 
   * Author: Scaatis, CC-by v3.0
     * NAEV.png
@@ -391,4 +422,12 @@
      * planet
        * space
          * P03.png
+
+ * Author: Vicki Li <LacrymosAmaya@gmail.com>, License: GPLv3 / CC-by 3
+   * gfx
+     * planet
+       * space
+         * P04.png
+
+
 
