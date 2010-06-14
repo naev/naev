@@ -342,6 +342,23 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="Prince">
+  <lua>neutral/baron_prince</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 15</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+   <faction>Independent</faction>
+  </avail>
+ </mission>
  <mission name="Shadowrun">
   <lua>neutral/shadowrun</lua>
   <flags>
