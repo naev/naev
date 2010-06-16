@@ -323,6 +323,12 @@ static int pilotL_getPlayer( lua_State *L )
  * end
  * @endcode
  *
+ * How param works (by type of value passed): <br/>
+ *  - nil: spawns pilot randomly <br/>
+ *  - planet: pilot takes off from the planet <br/>
+ *  - system: jumps pilot in from the system <br/>
+ *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
+ *
  * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
  * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
@@ -334,7 +340,7 @@ static int pilotL_getPlayer( lua_State *L )
  *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
  *              a planet it'll try to take off from it.
  *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
- * @luafunc add( fleetname, ai, paaram )
+ * @luafunc add( fleetname, ai, param )
  */
 static int pilotL_addFleet( lua_State *L )
 {
