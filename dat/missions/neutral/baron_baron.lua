@@ -73,7 +73,6 @@ end
 
 function create ()
     if tk.choice(title[1], text[1], choice1, choice2) == 1 then
-        var.push("baron_stage", 1)
         accept()
     else
         tk.msg(refusetitle, refusetext)
@@ -155,7 +154,6 @@ function board()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
     pinnacle:changeAI("flee")
-    var.pop("baron_stage")
     var.pop("baron_active")
     misn.finish(true)
 end
@@ -191,7 +189,6 @@ function takeoff()
 end
 
 function abort()
-    var.pop("baron_stage")
     var.pop("baron_active")
     misn.finish(false)
 end

@@ -78,7 +78,7 @@ else -- default english
     text[16] = [[    Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.
     "Oh, this is marvelous, marvelous indeed, %s! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centerpiece in my collection of relics and artefacts. Yes indeed!
     "I was right to send you, %s, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, %s, I will call on you when I have need of you again."
-    You are ushered through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]]
+    You are seen out of the Baron's quarters, so you head back through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]]
 
     -- Mission details
     misn_title = "Prince"
@@ -125,6 +125,7 @@ function accept()
     dest[3] = planet.get("Hurada")
     dest["__save"] = true
     flintloc = planet.get("Tau Prime")
+    flintloc["__save"] = true
 
     stage = 1
     
@@ -140,12 +141,12 @@ function accept()
         misn.setReward(misn_reward)
         misn.setDesc(misn_desc[1]:format(baronsys:name()))
         misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
-                                      })
+                                   })
         misn.setMarker(baronsys, "misc")
         misn.accept()
         var.push("baron_active", true)
         
-        jumpinhook = hook.jumpin("jumpin")
+        enterhook = hook.enter("enter")
     else
         tk.msg(refusetitle, refusetext)
         abort()
@@ -156,10 +157,10 @@ function board()
     if stage == 1 then
         misn.setMarker()
         tk.msg(title[4], text[4]:format(mangle(player.name()), mangle(player.name())))
-        tk.msg(title[4], text[5]:format(mangle(player.name()), flintloc[1], flintloc[2], mangle(player.name())))
+        tk.msg(title[4], text[5]:format(mangle(player.name()), flintloc[1]:name(), flintloc[2]:name(), mangle(player.name())))
         misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
-                                        osd_msg[2]
-                                      })
+                                     osd_msg[2]
+                                   })
         misn.setDesc(misn_desc[2])
         misn.osdActive(2)
         
@@ -238,9 +239,9 @@ function land()
         if bingo then
             tk.msg(title[10], text[15])
             misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
-                                            osd_msg[2],
-                                            osd_msg[3]
-                                          })
+                                         osd_msg[2],
+                                         osd_msg[3]
+                                       })
             misn.osdActive(3)
             stage = 3
             -- TODO: clear mission markers
@@ -283,7 +284,7 @@ function seller()
     end
 end
 
-function jumpin()
+function enter()
     if system.cur() == baronsys then
         pinnacle = pilot.add("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400))[1]
         pinnacle:setFaction("Civilian")

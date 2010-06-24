@@ -8,7 +8,7 @@ if lang == "es" then
 else -- default english
 end
 
-function create ()
+function create()
     -- TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
     shipname = "pinnacle"
     baronship = pilot.add("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400))[1]
