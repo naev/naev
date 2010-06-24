@@ -284,6 +284,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    wid = window_create( COMM_WDWNAME, -1, -1,
          20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
+   window_setCancel( wid, comm_close );
 
    /* Create the image. */
    window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
