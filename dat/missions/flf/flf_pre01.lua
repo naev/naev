@@ -82,7 +82,7 @@ function create()
     misn.setTitle(misn_title)
     misn.setMarker(system.get(destsysname), "misc")
     
-    gregar = misn.addCargo("Gregar", 0)
+    gregar = misn.cargoAdd("Gregar", 0)
     
     hook.enter("enter")
     hook.land("land")
@@ -130,7 +130,7 @@ function land()
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
-        misn.jetCargo(gregar)
+        misn.cargoJet(gregar)
         misn.finish(true)
     -- Case Dvaered planet
     elseif planet.cur():faction():name() == "Dvaered" and not basefound then
@@ -139,7 +139,7 @@ function land()
             faction.get("Dvaered"):modPlayerRaw(5)
             var.push("flfbase_intro", 1)
             var.pop("flfbase_flfshipkilled")
-            misn.jetCargo(gregar)
+            misn.cargoJet(gregar)
             misn.finish(true)
         end
     end

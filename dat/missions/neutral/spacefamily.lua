@@ -79,7 +79,7 @@ function create ()
    tk.msg(title[1], text[1])
    tk.msg(title[1], string.format(text[2], shipname))
 
-   carg_id = misn.addCargo( carg_type, 0 )
+   carg_id = misn.cargoAdd( carg_type, 0 )
 
    -- First stop; subsequent stops will be handled in the land function
    nextstop = 1
@@ -125,7 +125,7 @@ function land()
       if nextstop == 3 then -- This is the last stop
          tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
          player.pay(20000)
-         misn.jetCargo(carg_id)
+         misn.cargoJet(carg_id)
          misn.finish(true)
       else
          nextstop = nextstop + 1
@@ -180,6 +180,6 @@ function abort ()
    else
       tk.msg(msg_abortTitle, msg_abort_landed)
    end
-   misn.jetCargo(carg_id)
+   misn.cargoJet(carg_id)
    misn.finish(true)
 end

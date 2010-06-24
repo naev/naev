@@ -143,7 +143,7 @@ function accept()
       misn.finish()
 
    elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-      carg_id = misn.addCargo( carg_type, carg_mass )
+      carg_id = misn.cargoAdd( carg_type, carg_mass )
 
       if misn_type == "People" then
          tk.msg( accept_title, string.format( accept_msg[2], carg_type ))
@@ -166,7 +166,7 @@ end
 function land()
    landed = planet.get()
    if landed == pnt then
-      if misn.rmCargo( carg_id ) then
+      if misn.cargoRm( carg_id ) then
          player.pay( reward )
          if misn_type == "People" then
             tk.msg( msg_title[2], string.format( msg_msg[5], carg_type ))
@@ -207,14 +207,14 @@ end
 function failed ()
    player.msg( msg_msg[4] )
    if misn_type ~= "People" then
-      misn.jetCargo( carg_id )
+      misn.cargoJet( carg_id )
    end
    misn.finish(false)
 end
 
 function abort ()
    if misn_type ~= "People" then
-      misn.jetCargo( carg_id )
+      misn.cargoJet( carg_id )
    end
 end
 

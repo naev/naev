@@ -101,7 +101,7 @@ function accept()
         logsfound = false
         flfdead = 0
         
-        misn.addCargo("FLF IFF Transponder", 0)
+        misn.cargoAdd("FLF IFF Transponder", 0)
        
         hook.jumpout("jumpout")
         hook.enter("enter")
