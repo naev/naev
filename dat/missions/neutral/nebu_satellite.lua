@@ -65,7 +65,7 @@ function accept ()
    end
 
    -- Add cargo
-   cargo = misn.addCargo( "Satellite", 3 )
+   cargo = misn.cargoAdd( "Satellite", 3 )
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
@@ -131,7 +131,7 @@ end
 function launchSatellite ()
    misn_stage = 1
    player.msg( launch[3] )
-   misn.jetCargo( cargo )
+   misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
    misn.setMarker( homeworld_sys )
 end

@@ -168,7 +168,7 @@ function talkthieves()
     misn.npcRm(thief3)
 
     talked = true
-    carg_id = misn.addCargo("The Baron's holopainting", 0)
+    carg_id = misn.cargoAdd("The Baron's holopainting", 0)
 
     misn.osdActive(2)
     misn.setMarker(system.get(sysname2), "misc")

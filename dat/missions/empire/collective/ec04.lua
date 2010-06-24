@@ -131,12 +131,12 @@ function land ()
       misn.setMarker(misn_base_sys)
 
       -- Add goods
-      misn_cargo = misn.addCargo( "Datapad", 0 )
+      misn_cargo = misn.cargoAdd( "Datapad", 0 )
 
    elseif misn_stage == 1 and pnt == misn_base then
 
       tk.msg( title[3], text[6] )
-      misn.rmCargo( misn_cargo )
+      misn.cargoRm( misn_cargo )
 
       -- Rewards
       player.modFaction("Empire",5)

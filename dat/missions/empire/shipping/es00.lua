@@ -73,7 +73,7 @@ function accept ()
          dest:name(), ret:name(), retsys:name() ))
 
    -- Set up the goal
-   prisoners = misn.addCargo("Prisoners", 0)
+   prisoners = misn.cargoAdd("Prisoners", 0)
    tk.msg( title[2], text[3] )
 
    -- Set hooks
@@ -85,7 +85,7 @@ end
 function land ()
    landed = planet.get()
    if landed == dest and misn_stage == 0 then
-      if misn.rmCargo(prisoners) then
+      if misn.cargoRm(prisoners) then
          -- Go on to next stage
          misn_stage = 1
 

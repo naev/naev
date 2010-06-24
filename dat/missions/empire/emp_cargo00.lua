@@ -72,7 +72,7 @@ function accept ()
    tk.msg( title[2], string.format( text[2], dest:name() ))
 
    -- Set up the goal
-   parcels = misn.addCargo("Parcels", 0)
+   parcels = misn.cargoAdd("Parcels", 0)
    hook.land("land")
 end
 
@@ -81,7 +81,7 @@ function land()
 
    local landed = planet.get()
    if landed == dest then
-      if misn.rmCargo(parcels) then
+      if misn.cargoRm(parcels) then
          player.pay(reward)
          -- More flavour text
          tk.msg(title[3], string.format( text[3], dest:name() ))

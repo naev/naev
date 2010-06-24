@@ -83,9 +83,9 @@ static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
-static int misn_addCargo( lua_State *L );
-static int misn_rmCargo( lua_State *L );
-static int misn_jetCargo( lua_State *L );
+static int misn_cargoAdd( lua_State *L );
+static int misn_cargoRm( lua_State *L );
+static int misn_cargoJet( lua_State *L );
 static int misn_osdCreate( lua_State *L );
 static int misn_osdDestroy( lua_State *L );
 static int misn_osdActive( lua_State *L );
@@ -100,9 +100,9 @@ static const luaL_reg misn_methods[] = {
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
-   { "addCargo", misn_addCargo },
-   { "rmCargo", misn_rmCargo },
-   { "jetCargo", misn_jetCargo },
+   { "cargoAdd", misn_cargoAdd },
+   { "cargoRm", misn_cargoRm },
+   { "cargoJet", misn_cargoJet },
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
@@ -558,10 +558,10 @@ static int misn_finish( lua_State *L )
  *
  *    @luaparam cargo Name of the cargo to add.
  *    @luaparam quantity Quantity of cargo to add.
- *    @luareturn The id of the cargo which can be used in rmCargo.
- * @luafunc addCargo( cargo, quantity )
+ *    @luareturn The id of the cargo which can be used in cargoRm.
+ * @luafunc cargoAdd( cargo, quantity )
  */
-static int misn_addCargo( lua_State *L )
+static int misn_cargoAdd( lua_State *L )
 {
    const char *cname;
    Commodity *cargo;
@@ -590,9 +590,9 @@ static int misn_addCargo( lua_State *L )
  *
  *    @luaparam cargoid Identifier of the mission cargo.
  *    @luareturn true on success.
- * @luafunc rmCargo( cargoid )
+ * @luafunc cargoRm( cargoid )
  */
-static int misn_rmCargo( lua_State *L )
+static int misn_cargoRm( lua_State *L )
 {
    int ret;
    unsigned int id;
@@ -616,9 +616,9 @@ static int misn_rmCargo( lua_State *L )
  *
  *    @luaparam cargoid ID of the cargo to jettison.
  *    @luareturn true on success.
- * @luafunc jetCargo( cargoid )
+ * @luafunc cargoJet( cargoid )
  */
-static int misn_jetCargo( lua_State *L )
+static int misn_cargoJet( lua_State *L )
 {
    int ret;
    unsigned int id;
