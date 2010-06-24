@@ -34,9 +34,10 @@
  * @brief Different type of system markers.
  */
 typedef enum SysMarker_ {
-   SYSMARKER_MISC, /**< Miscellaneous marker. */
-   SYSMARKER_RUSH, /**< Rush mission marker. */
-   SYSMARKER_CARGO /**< Cargo mission marker. */
+   SYSMARKER_COMPUTER,
+   SYSMARKER_LOW,
+   SYSMARKER_HIGH,
+   SYSMARKER_PLOT
 } SysMarker;
 
 
@@ -78,6 +79,16 @@ typedef struct MissionData_ {
 
 
 /**
+ * @brief Mission system marker.
+ */
+typedef struct MissionMarker_ {
+   int id;
+   int sys; /**< ID of marked system. */
+   SysMarker type; /**< Marker type. */
+} MissionMarker;
+
+
+/**
  * @struct Mission
  *
  * @brief Represents an active mission.
@@ -97,8 +108,8 @@ typedef struct Mission_ {
    unsigned int *cargo; /**< Cargos given to player. */
    int ncargo; /**< Number of cargos given to player. */
 
-   char *sys_marker; /**< System to mark. */
-   SysMarker sys_markerType; /**< Type of the marker. */
+   /* Markers. */
+   MissionMarker *markers; /**< Markers array. */
 
    /* OSD. */
    unsigned int osd; /**< On-Screen Display ID. */
@@ -129,6 +140,7 @@ int mission_start( const char *name );
  */
 int mission_getID( const char* name );
 MissionData* mission_get( int id );
+int mission_addMarker( Mission *misn, int id, int sys, SysMarker type );
 void mission_sysMark (void);
 void mission_sysComputerMark( Mission* misn );
 

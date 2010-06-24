@@ -499,7 +499,7 @@ static void map_drawMarker( double x, double y, double r,
 {
    const double beta = M_PI / 9;
    static const glColour* colours[] = {
-      &cGreen, &cBlue, &cRed, &cOrange
+      &cGreen, &cBlue, &cRed, &cOrange, &cYellow
    };
 
    int i;
@@ -879,9 +879,10 @@ static void map_renderMarkers( double x, double y, double r )
 
       /* Count markers. */
       n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
-      n += sys->markers_misc;
-      n += sys->markers_cargo;
-      n += sys->markers_rush;
+      n += sys->markers_plot;
+      n += sys->markers_high;
+      n += sys->markers_low;
+      n += sys->markers_computer;
 
       /* Draw the markers. */
       j = 0;
@@ -889,16 +890,20 @@ static void map_renderMarkers( double x, double y, double r )
          map_drawMarker( tx, ty, r, n, j, 0 );
          j++;
       }
-      for (m=0; m<sys->markers_misc; m++) {
+      for (m=0; m<sys->markers_plot; m++) {
          map_drawMarker( tx, ty, r, n, j, 1 );
          j++;
       }
-      for (m=0; m<sys->markers_rush; m++) {
+      for (m=0; m<sys->markers_high; m++) {
          map_drawMarker( tx, ty, r, n, j, 2 );
          j++;
       }
-      for (m=0; m<sys->markers_cargo; m++) {
+      for (m=0; m<sys->markers_low; m++) {
          map_drawMarker( tx, ty, r, n, j, 3 );
+         j++;
+      }
+      for (m=0; m<sys->markers_computer; m++) {
+         map_drawMarker( tx, ty, r, n, j, 4 );
          j++;
       }
    }

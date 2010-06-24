@@ -232,9 +232,10 @@ struct StarSystem_ {
    SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
 
    /* Markers. */
-   int markers_misc; /**< Number of misc mission markers on system. */
-   int markers_rush; /**< Number of rush mission markers on system. */
-   int markers_cargo; /**< Number of cargo mission markers on system. */
+   int markers_computer;
+   int markers_low;
+   int markers_high;
+   int markers_plot;
 
    /* Misc. */
    unsigned int flags; /**< flags for system properties */
@@ -310,6 +311,7 @@ void space_gfxUnload( StarSystem *sys );
 const StarSystem* system_getAll( int *nsys );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
+int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
@@ -318,8 +320,8 @@ char* space_getRndPlanet (void);
 /* 
  * Markers.
  */
-int space_addMarker( const char *sys, SysMarker type );
-int space_rmMarker( const char *sys, SysMarker type );
+int space_addMarker( int sys, SysMarker type );
+int space_rmMarker( int sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
