@@ -57,19 +57,28 @@ else -- default english
 
     title[9] = "This is not the artefact you're looking for"
 
-    text[12] = [[    Miss!]]
+    text[12] = [[    "Let's see what we have here," Flintly says as you hand him the artefact you bought on %s. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
+    You feel disappointed and frustrated, but you have no choice but to deposit the "artefact" into the nearest disintegrator inlet.]]
 
-    text[13] = [[    Miss!]]
+    text[13] = [[    You hand Flintley the artefact you procured on %s. He examines it for a few moment, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, %s. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
+    You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]]
 
-    text[14] = [[    Miss!]]
+    text[14] = [[    Flintly studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That guy on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital charactersitics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
+    You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for...]]
     
-    title[10] = "Time capsule"
+    title[10] = "From days long gone"
     
-    text[15] = [[    You am found it(s).]]
+    text[15] = [[    Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several minutes he leans back and whistles. "Well I never. This has to be it, %s. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"
+    You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artefact's purpose.
+    "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
+    Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artefact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]]
     
     title[11] = "The Baron has his prize"
     
-    text[16] = [[    Jeee]]
+    text[16] = [[    Baron Dovai Sauterfeldt turns the skate-board over in his hands, inspecting every nick, every scratch on the surface. His eyes are gleaming with delight.
+    "Oh, this is marvelous, marvelous indeed, %s! A piece of pre-Growth history, right here in my hands! I can almost hear the echoes of that ancient civilization when I put my ear close to it! This is going to be the centerpiece in my collection of relics and artefacts. Yes indeed!
+    "I was right to send you, %s, you've beautifully lived up to my expectations. And I'm a man of my word, I will reward you as promised. What was it we agreed on again? What, I never promised you anything? Well, that won't do. I'll have my assistant place a suitable amount of money in your account. You will not find me ungrateful! Ah, but you must excuse me. I need time to revel in this fantastic piece of art! Goodbye, %s, I will call on you when I have need of you again."
+    You are ushered through the airlock and back into your own ship. The first thing you do is check your balance, and to your relief, it has indeed been upgraded by a substantial amount. As you undock, you wonder what kind of wild goose chase the man will send you on next time.]]
 
     -- Mission details
     misn_title = "Prince"
@@ -77,8 +86,6 @@ else -- default english
     misn_desc[1] = "Baron Sauterfeldt has summoned you to his ship, which is in the %s system."
     misn_desc[2] = "Baron Sauterfeldt has tasked you with finding an ancient artefact, but he doesn't know exactly where to get it."
     
-    credits = 100000 -- 100K
-
     -- NPC stuff
     npc_desc = "An unfamiliar man"
     bar_desc = "A man you've never seen before makes eye contact with you. It seems he knows who you are."
@@ -92,11 +99,11 @@ else -- default english
     sellerdesc = "You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artefact sellers."
 
     buy = "Buy the artefact\
-(15,000 credits)"
+(%d credits)"
     nobuy = "Don't buy the artefact"
 
     nomoneytitle = "Not enough money!"
-    nomoneytext = "You can't currently afford to buy this artefact. You need 15,000 credits."
+    nomoneytext = "You can't currently afford to buy this artefact. You need %d credits."
     
     -- OSD stuff
     osd_msg[1] = "Fly to the %s system and dock with (board) Kahan Pinnacle"
@@ -123,6 +130,8 @@ function accept()
     
     flintleyfirst = true
     artefactsfound = 0
+    
+    reward = 100000 -- The price of each artefact will always be 15% of this
     
     if tk.yesno(title[1], text[1]:format(baronsys:name())) then
         tk.msg(title[2], text[2]:format(baronsys:name()))
@@ -173,27 +182,23 @@ function board()
         stopping = false
         idle()
     elseif stage == 3 then
-        tk.msg(title[11], text[16])
+        tk.msg(title[11], text[16]:format(mangle(player.name()), mangle(player.name()), mangle(player.name()))
         player.unboard()
         pinnacle:setHealth(100,100)
         pinnacle:control(false)
         var.pop("baron_active")
+        player.pay(reward)
         mission.finish(true)
-    else -- Should never happen!
-        player.unboard()
-        print(STDERR, "baron_prince: reached invalid else clause! stage = " .. stage)
-        abort()
-    end
 end
 
 function land()
-    if system.cur() == dest[1][1]then
+    if planet.cur() == dest[1][1]then
         sellnpc = misn.npcAdd("seller", "Artefact seller", thief1, sellerdesc, 4)
-    elseif system.cur() == dest[2][1] then
+    elseif planet.cur() == dest[2][1] then
         sellnpc = misn.npcAdd("seller", "Artefact seller", thief2, sellerdesc, 4)
-    elseif system.cur() == dest[3][1] then
+    elseif planet.cur() == dest[3][1] then
         sellnpc = misn.npcAdd("seller", "Artefact seller", thief3, sellerdesc, 4)
-    elseif system.cur() == flintloc[1] then
+    elseif planet.cur() == flintloc[1] then
         local bingo = false
         
         if flintleyfirst then
@@ -201,32 +206,32 @@ function land()
             tk.msg(title[7], text[8]:format(player.name()))
         end
         
-        if player.cargoHas("Artefact? A") == 0 then
-            artefact1 = false
+        if artefactA ~= nil then
             if rnd.rnd(1, 3 - artefactsfound) == 1 then
                 bingo = true
             else
-                tk.msg(title[9], text[12])
+                tk.msg(title[9], text[12]:format(dest[1][1]:name()))
                 artefactsfound = artefactsfound + 1
             end
+            misn.cargoRm(artefactA)
         end
-        if player.cargoHas("Artefact? B") == 0 then
-            artefact2 = false
+        if artefactB ~= nil then
             if rnd.rnd(1, 3 - artefactsfound) == 1 then
                 bingo = true
             else
-                tk.msg(title[9], text[13])
+                tk.msg(title[9], text[13]:format(dest[2][1]:name(), player.name()))
                 artefactsfound = artefactsfound + 1
             end
+            misn.cargoRm(artefactB)
         end
-        if player.cargoHas("Artefact? C") == 0 then
-            artefact3 = false
+        if artefactC ~= nil then
             if rnd.rnd(1, 3 - artefactsfound) == 1 then
                 bingo = true
             else
-                tk.msg(title[9], text[14])
+                tk.msg(title[9], text[14]:format(dest[3][1]:name()))
                 artefactsfound = artefactsfound + 1
             end
+            misn.cargoRm(artefactC)
         end
 
         if bingo then
@@ -244,34 +249,34 @@ function land()
 end
 
 function seller()
-    if system.cur() == dest[1][1]then
-        if tk.choice(title[8], text[9], buy, nobuy) == 1 then
+    if planet.cur() == dest[1][1]then
+        if tk.choice(title[8], text[9], buy:format(reward * 0.15), nobuy) == 1 then
             if player.credits() >= 15000 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
-                player.cargoAdd("Artefact A", 0)
+                artefactA = misn.cargoAdd("Artefact A", 0)
             else
-                tk.msg(nomoneytitle, nomoneytext)
+                tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
             end
         end
-    elseif system.cur() == dest[2][1] then
-        if tk.choice(title[8], text[10], buy, nobuy) == 1 then
+    elseif planet.cur() == dest[2][1] then
+        if tk.choice(title[8], text[10], buy:format(reward * 0.15), nobuy) == 1 then
             if player.credits() >= 15000 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
-                player.cargoAdd("Artefact B", 0)
+                artefactB = misn.cargoAdd("Artefact B", 0)
             else
-                tk.msg(nomoneytitle, nomoneytext)
+                tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
             end
         end
-    elseif system.cur() == dest[2][1] then
-        if tk.choice(title[8], text[11], buy, nobuy) == 1 then
+    elseif planet.cur() == dest[2][1] then
+        if tk.choice(title[8], text[11], buy:format(reward * 0.15), nobuy) == 1 then
             if player.credits() >= 15000 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
-                player.cargoAdd("Artefact C", 0)
+                artefactC = misn.cargoAdd("Artefact C", 0)
             else
-                tk.msg(nomoneytitle, nomoneytext)
+                tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
             end
         end
     end
@@ -292,11 +297,11 @@ function jumpin()
         local choice = rnd.rnd(1, 5)
         local fleep
         if choice == 1 then
-            fleep = pilot.add2("Mercenary Wing 1", "baddie")
+            fleep = pilot.add("Mercenary Wing 1", "baddie", true)
         elseif choice == 2 then
-            fleep = pilot.add2("Mercenary Wing 2", "baddie")
+            fleep = pilot.add("Mercenary Wing 2", "baddie", true)
         elseif choice == 3 then
-            fleep = pilot.add2("Mercenary Wing 3", "baddie")
+            fleep = pilot.add("Mercenary Wing 3", "baddie", true)
         end
         for i, j in ipairs(fleep) do
             if j:exists() then
@@ -362,21 +367,6 @@ function isIn(char, table)
         if j == char then return true end
     end
     return false
-end
-
--- Function to handle jumping in for NPC ships better
-pilot{"add2"} = function (fleetname, ai)
-    local adjs = system.cur():adjacentSystems()
-    local planets = system.cur():planets()
-    
-    local choice = rnd.rnd(1, #adjs + #planets)
-    
-    local flit
-    
-    if choice <= #adjs then flit = pilot.add(fleetname, ai, adjs[choice]) end
-    else flit = pilot.add(fleetname, ai, planets[choice - #adjs]) end
-
-    return flit
 end
 
 function abort()

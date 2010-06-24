@@ -23,7 +23,7 @@ function create ()
     
     hailed = false
     
-    vendetta = pilot.add("Four Winds Vendetta")[1]
+    vendetta = pilot.add("Four Winds Vendetta", nil, true)[1]
     
     hailie = hook.timer(3000, "hailme")
 
