@@ -360,7 +360,7 @@ static int misn_setReward( lua_State *L )
 /**
  * @brief Adds a new marker.
  *
- * @usage my_marker = misn.markerAdd( "Gamma Polaris", "cargo" )
+ * @usage my_marker = misn.markerAdd( "Gamma Polaris", "low" )
  *
  * Valid marker types are:<br/>
  *  - "plot": Important plot marker.<br/>
