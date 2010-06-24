@@ -360,7 +360,7 @@ static int misn_setReward( lua_State *L )
 /**
  * @brief Adds a new marker.
  *
- * @usage my_marker = misn.markerAdd( "Gamma Polaris", "low" )
+ * @usage my_marker = misn.markerAdd( system.get("Gamma Polaris"), "low" )
  *
  * Valid marker types are:<br/>
  *  - "plot": Important plot marker.<br/>
@@ -410,7 +410,7 @@ static int misn_markerAdd( lua_State *L )
 /**
  * @brief Moves a marker to a new system.
  *
- * @usage misn.markerMove( my_marker, "Delta Pavonis" )
+ * @usage misn.markerMove( my_marker, system.get("Delta Pavonis") )
  *
  *    @luaparam id ID of the mission marker to move.
  *    @luaparam sys System to move the marker to.
