@@ -1364,12 +1364,13 @@ static int missions_parseActive( xmlNodePtr parent )
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"marker")) {
-                     xmlr_attr(nest,"type",buf);
                      /* Get ID. */
+                     xmlr_attr(nest,"id",buf);
                      id = (buf != NULL) ? atoi(buf) : -1;
                      if (buf != NULL)
                         free(buf);
                      /* Get type. */
+                     xmlr_attr(nest,"type",buf);
                      type = (buf != NULL) ? atoi(buf) : -1;
                      if (buf != NULL)
                         free(buf);
