@@ -15,6 +15,7 @@ mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
+mem.land_friendly  = false -- Only land on friendly planets?
 mem.distress       = true -- AI distresses
 mem.distressrate   = 3 -- Number of ticks before calling for help
 mem.distressmsg    = nil -- Message when calling for help
