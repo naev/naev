@@ -50,7 +50,7 @@ function create ()
       misn_stage = 0
       blockade_sys = system.get("Hades")
       misn_base, misn_base_sys = planet.get("Omega Station")
-      misn.setMarker(misn_target_sys)
+      misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -128,7 +128,7 @@ function land ()
       tk.msg( title[2], text[5] )
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
 
       -- Add goods
       misn_cargo = misn.cargoAdd( "Datapad", 0 )

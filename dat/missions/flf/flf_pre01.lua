@@ -80,7 +80,7 @@ function create()
     misn.osdCreate(misn_title, {string.format(osd_desc[1], destsysname), osd_desc[2]})
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
-    misn.setMarker(system.get(destsysname), "misc")
+    misn.markerAdd( syste.get(destsysname), "low" )
     
     gregar = misn.cargoAdd("Gregar", 0)
     

@@ -61,7 +61,7 @@ function accept ()
    pickup,pickupsys = planet.get( "Selphod" )
    dest,destsys = planet.get( "Cerberus" )
    ret,retsys = planet.get( "Polaris Prime" )
-   misn.setMarker(pickupsys)
+   misn_marker = misn.markerAdd( pickupsys, "low" )
 
    -- Mission details
    misn_stage = 0
@@ -99,7 +99,7 @@ function land ()
       misn_stage = 1
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
-      misn.setMarker(destsys)
+      misn.markerMove( misn_marker, destsys )
 
       -- Load message
       tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
@@ -110,7 +110,7 @@ function land ()
          -- Update mission
          misn_stage = 2
          misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
-         misn.setMarker(retsys)
+         misn.markerMove( misn_marker, retsys )
 
          -- Some text
          tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )

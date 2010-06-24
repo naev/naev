@@ -132,7 +132,7 @@ function accept()
             misn.osdCreate(misn_title, osd_desc)
             misn.setDesc(misn_desc)
             misn.setTitle(misn_title)
-            misn.setMarker(system.get(sysname[encounters]), "misc")
+            misn_marker = misn.markerAdd( system.get( sysname[encounters] ), "low" )
             misn.setReward(misn_rwrd)
             
             escarmor = {100, 100, 100, 100}
@@ -433,13 +433,13 @@ function DVdeath()
             osd_desc[2] = nil
             misn.osdActive(1)
             misn.osdCreate(misn_title, osd_desc)
-            misn.setMarker(system.get(var.peek("flfbase_sysname")), "misc")
+            misn.markerMove( misn_marker, system.get(var.peek("flfbase_sysname")) )
             retreat = false
         else
             osd_desc[1] = string.format(FLFosd[1], sysname[encounters])
             misn.osdCreate(misn_title, osd_desc)
             misn.osdActive(1)
-            misn.setMarker(system.get(sysname[encounters]), "misc")
+            misn.markerMove( misn_marker, system.get(sysname[encounters]) )
             retreat = true
         end
         -- Patrol clear.
@@ -471,7 +471,7 @@ function winDV()
     osd_desc[2] = nil
     misn.osdActive(1)
     misn.osdCreate(misn_title, osd_desc)
-    misn.setMarker(system.get(DVsys), "misc")
+    misn.markerMove( misn_marker, system.get(DVsys) )
     
     for i, j in ipairs(fleetDV) do
         if j:exists() then

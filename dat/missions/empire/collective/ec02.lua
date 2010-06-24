@@ -56,7 +56,7 @@ function accept ()
    systems_visited = 0 -- Number of Collective systems visited
    misn_base, misn_base_sys = planet.get("Omega Station")
    misn_target, misn_target_sys = planet.get("Eiroik")
-   misn.setMarker(misn_target_sys)
+   misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
    -- Mission details
    misn.setTitle(misn_title)
@@ -82,7 +82,7 @@ function land()
       tk.msg( title[1], string.format(text[4], misn_target:name()) )
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
 
    -- Return bit
    elseif misn_stage == 1 and pnt == misn_base then
