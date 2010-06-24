@@ -139,7 +139,7 @@ function accept()
         misn.setTitle(misn_title)
         misn.setReward(misn_reward)
         misn.setDesc(misn_desc[1]:format(baronsys:name()))
-        misn.osdCreate(misn_title[1], { osd_msg[1]:format(baronsys:name()),
+        misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
                                       })
         misn.setMarker(baronsys, "misc")
         misn.accept()
@@ -157,7 +157,7 @@ function board()
         misn.setMarker()
         tk.msg(title[4], text[4]:format(mangle(player.name()), mangle(player.name())))
         tk.msg(title[4], text[5]:format(mangle(player.name()), flintloc[1], flintloc[2], mangle(player.name())))
-        misn.osdCreate(misn_title[1], { osd_msg[1]:format(baronsys:name()),
+        misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
                                         osd_msg[2]
                                       })
         misn.setDesc(misn_desc[2])
@@ -182,13 +182,14 @@ function board()
         stopping = false
         idle()
     elseif stage == 3 then
-        tk.msg(title[11], text[16]:format(mangle(player.name()), mangle(player.name()), mangle(player.name()))
+        tk.msg(title[11], text[16]:format(mangle(player.name()), mangle(player.name()), mangle(player.name())))
         player.unboard()
         pinnacle:setHealth(100,100)
         pinnacle:control(false)
         var.pop("baron_active")
         player.pay(reward)
         mission.finish(true)
+    end
 end
 
 function land()
@@ -236,7 +237,7 @@ function land()
 
         if bingo then
             tk.msg(title[10], text[15])
-            misn.osdCreate(misn_title[1], { osd_msg[1]:format(baronsys:name()),
+            misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
                                             osd_msg[2],
                                             osd_msg[3]
                                           })
@@ -283,7 +284,7 @@ function seller()
 end
 
 function jumpin()
-    if sys.cur() == baronsys then
+    if system.cur() == baronsys then
         pinnacle = pilot.add("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400))[1]
         pinnacle:setFaction("Civilian")
         pinnacle:rename("Pinnacle")
@@ -292,7 +293,7 @@ function jumpin()
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
-    elseif artefactsfound > 0 then
+    elseif artefactA ~= nil or artefactB ~= nil or artefactC ~= nil then
         -- Spawn artefact hunters, maybe.
         local choice = rnd.rnd(1, 5)
         local fleep
@@ -307,6 +308,7 @@ function jumpin()
             if j:exists() then
                 j:control()
                 j:setHostile(true)
+                j:rename("Artefact hunter")
                 j:attack(player.pilot())
             end
         end

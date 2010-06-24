@@ -35,7 +35,7 @@
  <event name="Shadowcomm">
   <lua>neutral/shadow_comm</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>3</chance>
   <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or var.peek("shadowvigil_active") == true)</cond>
   <flags>
   </flags>
