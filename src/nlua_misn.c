@@ -474,7 +474,7 @@ static int misn_markerRm( lua_State *L )
 
    /* Mission must have markers. */
    if (cur_mission->markers == NULL) {
-      NLUA_ERROR( L, "Mission has no markers set!" );
+      /* Already removed. */
       return 0;
    }
 
@@ -488,7 +488,7 @@ static int misn_markerRm( lua_State *L )
       }
    }
    if (marker == NULL) {
-      NLUA_ERROR( L, "Mission does not have a marker with id '%d'", id );
+      /* Already removed. */
       return 0;
    }
 
