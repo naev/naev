@@ -13,7 +13,7 @@ else -- default english
 end
 
 function create ()
-    evt.npcAdd("flintley", "Flintley", none, desc, 5) -- TODO: portrait for Flintley
+    evt.npcAdd("flintley", "Flintley", "none", desc, 5) -- TODO: portrait for Flintley
 end
 
 function flintley()
