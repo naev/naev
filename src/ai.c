@@ -1924,7 +1924,10 @@ static int aiL_getrndplanet( lua_State *L )
 }
 
 /*
- * returns a random friendly planet's position to the pilot
+ * @brief Returns a random friendly planet's position to the pilot
+ *
+ *    @luaparam only_friend Only check for ally planets.
+ * @luafunc landplanet( only_friend )
  */
 static int aiL_getlandplanet( lua_State *L )
 {
@@ -1933,18 +1936,32 @@ static int aiL_getlandplanet( lua_State *L )
    LuaVector lv;
    Planet *p;
    double a, r;
+   int only_friend;
 
+   /* Must have planets. */
    if (cur_system->nplanets == 0)
       return 0; /* no planets */
+
+   /* Check if we should get only friendlies. */
+   only_friend = lua_toboolean(L, 1);
 
    /* Allocate memory. */
    ind = malloc( sizeof(int) * cur_system->nplanets );
 
    /* Copy friendly planet.s */
-   for (nplanets=0, i=0; i<cur_system->nplanets; i++)
-      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-            !areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
-         ind[ nplanets++ ] = i;
+   for (nplanets=0, i=0; i<cur_system->nplanets; i++) {
+      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+         continue;
+
+      /* Check conditions. */
+      if (only_friend && !areAllies( cur_pilot->faction, cur_system->planets[i]->faction ))
+         continue;
+      else if (!only_friend && areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
+         continue;
+      
+      /* Add it. */
+      ind[ nplanets++ ] = i;
+   }
 
    /* no planet to land on found */
    if (nplanets==0) {
