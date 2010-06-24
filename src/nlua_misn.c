@@ -362,6 +362,12 @@ static int misn_setReward( lua_State *L )
  *
  * @usage my_marker = misn.markerAdd( "Gamma Polaris", "cargo" )
  *
+ * Valid marker types are:<br/>
+ *  - "plot": Important plot marker.<br/>
+ *  - "high": High importance mission marker (lower than plot).<br/>
+ *  - "low": Low importance mission marker (lower than high).<br/>
+ *  - "computer": Mission computer marker.<br/>
+ *
  *    @luaparam sys System to mark.
  *    @luaparam type Colouring scheme to use.
  *    @luareturn A marker ID to be used with markerMove and markerRm.

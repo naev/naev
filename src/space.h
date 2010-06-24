@@ -232,10 +232,10 @@ struct StarSystem_ {
    SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
 
    /* Markers. */
-   int markers_computer;
-   int markers_low;
-   int markers_high;
-   int markers_plot;
+   int markers_computer; /**< Number of mission computer markers. */
+   int markers_low; /**< Number of low mission markers. */
+   int markers_high; /**< Number of high mission markers. */
+   int markers_plot; /**< Number of plot level mission markers. */
 
    /* Misc. */
    unsigned int flags; /**< flags for system properties */

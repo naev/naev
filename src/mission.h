@@ -34,10 +34,10 @@
  * @brief Different type of system markers.
  */
 typedef enum SysMarker_ {
-   SYSMARKER_COMPUTER,
-   SYSMARKER_LOW,
-   SYSMARKER_HIGH,
-   SYSMARKER_PLOT
+   SYSMARKER_COMPUTER,  /**< Marker is for mission computer missions. */
+   SYSMARKER_LOW,       /**< Marker is for low priority mission targets. */
+   SYSMARKER_HIGH,      /**< Marker is for high priority mission targets. */
+   SYSMARKER_PLOT       /**< Marker is for plot priority (ultra high) mission targets. */
 } SysMarker;
 
 
