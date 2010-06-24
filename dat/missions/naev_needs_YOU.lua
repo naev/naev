@@ -83,7 +83,7 @@ function create()
          misn.setReward( misn_reward )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
-         misn.setMarker( system.get(), "misc" )
+         misn.markerAdd( system.cur(), "low" )
 
      -- Mission ends with a little comment after blasting off.
          hook.enter( "enter_system")
@@ -94,7 +94,7 @@ function create()
          misn.setReward( misn_reward )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
-         misn.setMarker( system.get(), "misc" )
+         misn.markerAdd( system.cur(), "low" )
          
      -- Mission ends with a little comment after blasting off.
          hook.enter( "enter_system")

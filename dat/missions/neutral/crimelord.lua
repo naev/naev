@@ -49,7 +49,7 @@ function accept ()
     misn.setTitle( title[0] ) --OSD stuff
     misn.setReward( reward_desc )
     misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
-    misn.setMarker( targetsystem )
+    misn.markerAdd( targetsystem, "low" )
     
     startsystem = system.cur() --needed to make thugs appear random in the first system
     last_system = system.cur() --ignore this one, it's just the intitiation of the variable

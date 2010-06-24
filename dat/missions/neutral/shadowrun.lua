@@ -149,7 +149,7 @@ function accept()
                                        string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
-        misn.setMarker(sys, "misc")
+        misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
     else
         tk.msg(title[1], refusal)
@@ -208,8 +208,7 @@ function enter()
         misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
-        misn.setMarker(sys2, "misc")
-    else
+        misn.markerMove( misn_marker, sys2 )
         abort()
     end
 

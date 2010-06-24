@@ -81,7 +81,7 @@ function accept ()
    misn_base, misn_base_sys = planet.get("Omega Station")
    misn_target_sys = system.get("C-43")
    misn_final_sys = system.get("C-28")
-   misn.setMarker(misn_target_sys)
+   misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
    misn.setTitle(misn_title)
@@ -286,12 +286,12 @@ function col_dead ()
       if misn_stage == 1 then
          misn.setDesc( string.format(misn_desc[2], misn_final_sys:name() ))
          player.msg( string.format( talk[1], misn_final_sys:name() ))
-         misn.setMarker(misn_final_sys)
+         misn.markerMove( misn_marker, misn_final_sys )
          misn_stage = 2
       elseif misn_stage == 3 then
          misn.setDesc( string.format(misn_desc[3], misn_base:name(), misn_base_sys:name() ))
          player.msg( string.format( talk[2], misn_base_sys:name() ))
-         misn.setMarker(misn_base_sys)
+         misn.markerMove( misn_marker, misn_base_sys )
          misn_stage = 4
       end
 

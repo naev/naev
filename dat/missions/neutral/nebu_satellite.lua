@@ -71,7 +71,7 @@ function accept ()
    misn.setTitle( mtitle[1] )
    misn.setReward( string.format( mreward[1], credits ) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
-   misn.setMarker( satellite_sys )
+   misn_marker = misn.markerAdd( satellite_sys, "low" )
 
    -- Add mission
    misn.accept()
@@ -133,5 +133,5 @@ function launchSatellite ()
    player.msg( launch[3] )
    misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
-   misn.setMarker( homeworld_sys )
+   misn.markerMove( misn_marker, homeworld_sys )
 end

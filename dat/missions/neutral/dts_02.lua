@@ -122,7 +122,7 @@ function create()
          misn.setReward( string.format( misn_reward, reward) )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
-         misn.setMarker( this_system, "misc" )
+         misn.markerAdd( this_system, "low" )
          defender = true
 
      -- hook an abstract deciding function to player entering a system

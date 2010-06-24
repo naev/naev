@@ -112,7 +112,7 @@ function accept()
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setTitle(misn_title)
-        misn.setMarker(system.get(destsysname), "misc")
+        mission_marker = misn.markerAdd( system.get(destsysname), "high" )
         
         missionstarted = false
         victorious = false
@@ -196,7 +196,7 @@ end
 
 function deathBase()
     misn.osdActive(4)
-    misn.setMarker(system.get(DVsys), "misc")
+    misn.markerMove( mission_marker, system.get(DVsys) )
 
     for i, j in ipairs(bombers) do
         if j:exists() then

@@ -59,7 +59,7 @@ function accept ()
    misn.accept()
 
    -- target destination
-   misn.setMarker(destsys)
+   misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
    misn_stage = 0
@@ -92,7 +92,7 @@ function land ()
          -- Some text
          tk.msg(title[2], text[4] )
          tk.msg(title[2], text[5] )
-         misn.setMarker(retsys)
+         misn.markerMove( misn_marker, retsys )
          misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
 
          -- We'll take off right away again

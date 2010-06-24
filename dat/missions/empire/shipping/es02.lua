@@ -66,7 +66,7 @@ function accept ()
    -- target destination
    destsys = system.get( "Slaccid" )
    ret,retsys = planet.get( "Polaris Prime" )
-   misn.setMarker(destsys)
+   misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
    misn_stage = 0
@@ -166,11 +166,6 @@ function enter ()
 
       -- Notify of mission failure
       player.msg( msg[2] )
-      --[[
-      misn_stage = 3
-      misn.setMarker(retsys)
-      misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-      ]]--
       misn.finish(false)
 
    end
@@ -194,7 +189,7 @@ function board ()
 
    -- Update mission details
    misn_stage = 2
-   misn.setMarker(retsys)
+   misn.markerMove( misn_marker, retsys )
    misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
 
    -- Force unboard
@@ -209,10 +204,6 @@ function death ()
 
       -- Update mission details
       misn_stage = 3
-      --[[
-      misn.setMarker(retsys)
-      misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-      ]]--
       misn.finish(false)
    end
 end

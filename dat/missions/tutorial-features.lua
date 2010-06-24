@@ -103,7 +103,7 @@ function start()
    osdCreation()
    sysname = "Goddard"
    sys = system.get(sysname)
-   misn.setMarker(sys, "misc")
+   misn.markerAdd( sys, "low" )
    
    tk.msg(title[1], text[13])
    
