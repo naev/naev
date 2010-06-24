@@ -143,7 +143,7 @@ function accept()
     
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
-    misn.setMarker(misssys[1], "misc")
+    marker = misn.markerAdd(misssys[1], "low")
     
     osd_msg[1] = string.format(osd_msg[1], misssys[1]:name())
     misn.osdCreate(osd_title, osd_msg)
@@ -181,7 +181,8 @@ function takeoff()
     if stage == 3 then
         dpjump = true -- We're going to assume that if the player takes off AND the stage is 3, the diplomat will have gotten away and the mission can continue. Mainly a leniency toward refueling.
         player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(misssys[stage]):name()))
-        misn.setMarker(getNextSystem(misssys[stage]), "misc")
+        misn.markerRm(marker)
+        marker = misn.markerAdd(getNextSystem(misssys[stage]), "low")
     end
 end
 
@@ -215,7 +216,7 @@ function jumpin()
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
         diplomat:control()
         dpjump = false
-        misn.setMarker() -- No marker. Player has to follow the NPCs.
+        misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     end
     if stage >= 2 then
 
@@ -313,7 +314,7 @@ end
 function escortStart()
     stage = 2 -- Fly to the diplomat rendezvous point
     misn.osdActive(2)
-    misn.setMarker() -- No marker. Player has to follow the NPCs.
+    misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     escorts[1]:comm(commmsg[1])
     for i, j in pairs(escorts) do
         if j:exists() then
@@ -406,7 +407,8 @@ end
 -- Handle the departure of the diplomat. Escorts will follow.
 function diplomatJump()
     dpjump = true
-    misn.setMarker(getNextSystem(misssys[stage]), "misc")
+    misn.markerRm(marker)
+    marker = misn.markerAdd(getNextSystem(misssys[stage]), "low")
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:control(true)

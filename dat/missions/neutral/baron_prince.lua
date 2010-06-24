@@ -129,7 +129,7 @@ function accept()
     flintleyfirst = true
     artefactsfound = 0
     
-    reward = 100000 -- The price of each artefact will always be 15% of this
+    reward = 100000 -- The price of each artefact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
     
     if tk.yesno(title[1], text[1]:format(baronsys:name())) then
         tk.msg(title[2], text[2]:format(baronsys:name()))
@@ -139,7 +139,7 @@ function accept()
         misn.setDesc(misn_desc[1]:format(baronsys:name()))
         misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
                                    })
-        misn.setMarker(baronsys, "misc")
+        marker = misn.markerAdd(baronsys, "low")
         misn.accept()
         var.push("baron_active", true)
         
@@ -152,7 +152,6 @@ end
 
 function board()
     if stage == 1 then
-        misn.setMarker()
         tk.msg(title[4], text[4]:format(mangle(player.name()), mangle(player.name())))
         tk.msg(title[4], text[5]:format(mangle(player.name()), flintplanet:name(), flintsys:name(), mangle(player.name())))
         tk.msg(title[5], text[6])
@@ -164,10 +163,11 @@ function board()
         
         stage = 2
         
-        -- TODO: needs better mission marker system! All three markers should be displayed at the same time.
-        misn.setMarker(artefactsysA, "misc")
-        misn.setMarker(artefactsysB, "misc")
-        misn.setMarker(artefactsysC, "misc")
+        misn.markerRm(marker)
+        markerA = misn.markerAdd(artefactsysA, "low")
+        markerB = misn.markerAdd(artefactsysB, "low")
+        markerC = misn.markerAdd(artefactsysC, "low")
+        flintmarker = misn.markerAdd(flintsys, "high")
         
         hook.land("land")
         player.unboard()
@@ -199,82 +199,96 @@ function land()
     elseif planet.cur() == artefactplanetC then
         sellnpc = misn.npcAdd("seller", "Artefact seller", thief3, sellerdesc, 4)
     elseif planet.cur() == flintplanet then
-        local bingo = false
-        
         if flintleyfirst then
-            flintleyfirst = false
-            tk.msg(title[7], text[8]:format(player.name()))
+            flintnpc = misn.npcAdd("flintley", flint_npc1, none, flint_bar1, 4) -- TODO: portrait for Flintley
+        else
+            flintnpc = misn.npcAdd("flintley", flint_npc2, none, flint_bar2, 4) -- TODO: portrait for Flintley
         end
-        
-        if artefactA ~= nil then
-            if rnd.rnd(1, 3 - artefactsfound) == 1 then
-                bingo = true
-            else
-                tk.msg(title[9], text[12]:format(artefactplanetA:name()))
-                artefactsfound = artefactsfound + 1
-            end
-            misn.cargoRm(artefactA)
-        end
-        if artefactB ~= nil then
-            if rnd.rnd(1, 3 - artefactsfound) == 1 then
-                bingo = true
-            else
-                tk.msg(title[9], text[13]:format(artefactplanetB:name(), player.name()))
-                artefactsfound = artefactsfound + 1
-            end
-            misn.cargoRm(artefactB)
-        end
-        if artefactC ~= nil then
-            if rnd.rnd(1, 3 - artefactsfound) == 1 then
-                bingo = true
-            else
-                tk.msg(title[9], text[14]:format(artefactplanetC:name()))
-                artefactsfound = artefactsfound + 1
-            end
-            misn.cargoRm(artefactC)
-        end
+    end
+end
 
-        if bingo then
-            tk.msg(title[10], text[15])
-            misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
-                                         osd_msg[2],
-                                         osd_msg[3]
-                                       })
-            misn.osdActive(3)
-            stage = 3
-            -- TODO: clear mission markers
-            misn.setMarker(baronsys, "misc")
+function flintley()
+    local bingo = false
+
+    if flintleyfirst then
+        flintleyfirst = false
+        tk.msg(title[7], text[8]:format(player.name()))
+    end
+    
+    if artefactA ~= nil then
+        if rnd.rnd(1, 3 - artefactsfound) == 1 then
+            bingo = true
+        else
+            tk.msg(title[9], text[12]:format(artefactplanetA:name()))
+            artefactsfound = artefactsfound + 1
         end
+        misn.cargoRm(artefactA)
+    end
+    if artefactB ~= nil then
+        if rnd.rnd(1, 3 - artefactsfound) == 1 then
+            bingo = true
+        else
+            tk.msg(title[9], text[13]:format(artefactplanetB:name(), player.name()))
+            artefactsfound = artefactsfound + 1
+        end
+        misn.cargoRm(artefactB)
+    end
+    if artefactC ~= nil then
+        if rnd.rnd(1, 3 - artefactsfound) == 1 then
+            bingo = true
+        else
+            tk.msg(title[9], text[14]:format(artefactplanetC:name()))
+            artefactsfound = artefactsfound + 1
+        end
+        misn.cargoRm(artefactC)
+    end
+
+    if bingo then
+        tk.msg(title[10], text[15])
+        misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
+                                     osd_msg[2],
+                                     osd_msg[3]
+                                   })
+        misn.osdActive(3)
+        stage = 3
+        misn.markerRm(markerA)
+        misn.markerRm(markerB)
+        misn.markerRm(markerC)
+        marker = misn.markerAdd(baronsys, "low")
+        misn.markerRm(flintmarker)
     end
 end
 
 function seller()
     if planet.cur() == artefactplanetA then
         if tk.choice(title[8], text[9], buy:format(reward * 0.15), nobuy) == 1 then
-            if player.credits() >= 15000 then
+            if player.credits() >= reward * 0.15 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
-                artefactA = misn.cargoAdd("Artefact A", 0)
+                artefactA = misn.cargoAdd("Artefact? A", 0)
+                misn.markerRm(markerA)
             else
                 tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
             end
         end
     elseif planet.cur() == artefactplanetB then
         if tk.choice(title[8], text[10], buy:format(reward * 0.15), nobuy) == 1 then
-            if player.credits() >= 15000 then
+            if player.credits() >= reward * 0.15 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
-                artefactB = misn.cargoAdd("Artefact B", 0)
+                artefactB = misn.cargoAdd("Artefact? B", 0)
+                misn.markerRm(markerB)
             else
                 tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
             end
         end
     elseif planet.cur() == artefactplanetB then
         if tk.choice(title[8], text[11], buy:format(reward * 0.15), nobuy) == 1 then
-            if player.credits() >= 15000 then
+            if player.credits() >= reward * 0.15 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
-                artefactC = misn.cargoAdd("Artefact C", 0)
+                artefactC = misn.cargoAdd("Artefact? C", 0)
+                misn.markerRm(markerC)
             else
                 tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
             end
@@ -288,6 +302,7 @@ function enter()
         pinnacle:setFaction("Civilian")
         pinnacle:rename("Pinnacle")
         pinnacle:setInvincible(true)
+        pinnacle:setFriendly()
         pinnacle:control()
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
         hook.pilot(pinnacle, "idle", "idle")
