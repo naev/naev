@@ -6,7 +6,6 @@
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    shipname = "Pinnacle"
     sysname1 = "Darkstone"
     sysname2 = "Ingot"
     planetname = "Varia"
@@ -27,7 +26,7 @@ else -- default english
     You raise an eyebrow, but the pilot on the other end seems to be oblivious to the gesture.
     "So, right, you're going to %s to meet with our agents. You should find them in the spaceport bar. They'll get the item onto your ship, and you'll transport it out of Dvaered space. All quiet-like of course. No need for the authorities to know until you're long gone. Don't worry, our people are pros. It'll go off without a hitch, trust me."
     You smirk at that. You know from experience that things seldom 'go off without a hitch', and this particular plan doesn't seem to be all that well thought out. Still, it doesn't seem like you'll be in a lot of danger. If things go south, they'll go south well before you are even in the picture. And even if the authorities somehow get on your case, you'll only have to deal with the planetary police, not the entirety of House Dvaered.
-    You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the %s," he replies. "Once you arrive with the holopainting onboard your ship, hail the %s and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?"
+    You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?"
     You indicate that you know what to do, then cut the connection. Next stop: planet %s.]]
     
     title[3] = "Cloak and dagger"
@@ -38,10 +37,10 @@ else -- default english
     The second agent is caught by a Dvaered bullet, and topples off the docking bridge and into the abyss below. The third manages to get the cart with the chest into your airlock before catching a round with his chest as well. As the Dvaered near your ship, you seal the airlock, fire up your engines and punch it out of the docking hangar.]]
         
     title[4] = "Green light for docking"
-    text[4] = [[Your comm is answered by a communications officer on the bridge of the %s. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the %s will be brought to a halt.]]
+    text[4] = [[Your comm is answered by a communications officer on the bridge of the Pinnacle. You tell her you've got a delivery for the baron. She runs a few checks on a console off the screen, then tells you you've been cleared for docking and that the Pinnacle will be brought to a halt.]]
 
     title[5] = "No bad deed goes unrewarded"
-    text[5] = [[    When you arrive at your ship's airlock, the chest containing the Dvaered holopainting is already being carted onto the %s by a pair of crewmen. "You'll be wanting your reward, eh? Come along", one of them yells at you. They both chuckle and head off down the corridor..
+    text[5] = [[    When you arrive at your ship's airlock, the chest containing the Dvaered holopainting is already being carted onto the Pinnacle by a pair of crewmen. "You'll be wanting your reward, eh? Come along", one of them yells at you. They both chuckle and head off down the corridor..
     You follow the crewmen as they push the cart through the main corridor of the ship. Soon you arrive at a door leading to a large, luxurious compartment. You can tell at a glance that these are Baron Sauterfeldt's personal quarters. The Baron himself is present. He is a fat man, wearing a tailored suit that manages to make him look stately rather than pompous, a monocle and several rings on each finger. In a word, the Baron has a taste for the extravagant.
     "Ah, my holopainting," he coos as the chest is being carried into his quarters. "At last, I've been waiting forever." The Baron does not seem to be aware of your presence at all. He continues to fuss over the holopainting even as his crewman strip away the chest and lift the frame up to the wall.
     You look around his quarters. All sorts of exotic blades and other "art" works adorn his room, along with tapestries and various other holopaintings. You notice a bowl atop a velvet rug with "Fluffles" on it. Hanging above it seems to be a precariously balanced ancient blade.
@@ -69,12 +68,11 @@ else -- default english
     -- OSD stuff
     osd_title = "Baron"
     osd_msg[1] = "Fly to the %s system and land on planet %s"
-    osd_msg[2] = "Fly to the %s system and dock with (board) Kahan %s"
+    osd_msg[2] = "Fly to the %s system and dock with (board) Kahan Pinnacle"
 end
 
 function create ()
     if tk.choice(title[1], text[1], choice1, choice2) == 1 then
-        var.push("baron_stage", 1)
         accept()
     else
         tk.msg(refusetitle, refusetext)
@@ -83,16 +81,17 @@ function create ()
 end
 
 function accept()
-    tk.msg(title[2], string.format(text[2], planetname, planetname, sysname2, shipname, shipname, planetname))
+    tk.msg(title[2], text[2]:format(planetname, planetname, sysname2, planetname))
     
     misn.accept()
+    var.push("baron_active", true)
     
     misn.setTitle(misn_title)
     misn.setReward(misn_reward)
     misn.setDesc(misn_desc)
     
-    osd_msg[1] = string.format(osd_msg[1], sysname1, planetname)
-    osd_msg[2] = string.format(osd_msg[2], sysname2, shipname)
+    osd_msg[1] = osd_msg[1]:format(sysname1, planetname)
+    osd_msg[2] = osd_msg[2]:format(sysname2)
     misn.osdCreate(osd_title, osd_msg)
    
     misn_marker = misn.markerAdd( system.get(sysname1), "low" )
@@ -117,7 +116,7 @@ function jumpin()
     if talked and system.cur() == system.get(sysname2) then
         pinnacle = pilot.add("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400))[1]
         pinnacle:setFaction("Civilian")
-        pinnacle:rename(shipname)
+        pinnacle:rename("Pinnacle")
         pinnacle:setInvincible(true)
         pinnacle:control()
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
@@ -139,7 +138,7 @@ end
 
 function hail()
     if talked then
-        tk.msg(title[4], string.format(text[4], shipname, shipname))
+        tk.msg(title[4], text[4])
         pinnacle:taskClear()
         pinnacle:brake()
         stopping = true
@@ -148,13 +147,14 @@ function hail()
 end
 
 function board()
-    tk.msg(title[5], string.format(text[5], shipname))
+    tk.msg(title[5], text[5])
     player.pay( credits )
     player.refuel()
     player.unboard()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
     pinnacle:changeAI("flee")
+    var.pop("baron_active")
     misn.finish(true)
 end
 
@@ -184,12 +184,12 @@ function takeoff()
         vendetta2:control()
         vendetta1:attack(player.pilot())
         vendetta2:attack(player.pilot())
-        vendetta1:broadcast(string.format(comm1, player.pilot():ship():baseType(), player.ship(), planetname), true)
+        vendetta1:broadcast(comm1:format(player.pilot():ship():baseType(), player.ship(), planetname), true)
     end
 end
 
 function abort()
-    var.pop("baron_stage")
+    var.pop("baron_active")
     misn.finish(false)
 end
 

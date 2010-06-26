@@ -17,7 +17,9 @@
   </enemies>
  </faction>
  <faction name="Civilian">
-  <player>1</player>
+  <invisible />
+  <static />
+  <player>0</player>
   <colour>black</colour>
   <spawn>civilian</spawn>
   <allies>
@@ -28,7 +30,7 @@
  </faction>
  <faction name="Proteron">
   <logo>proteron</logo>
-  <longname>House Proteron</longname>
+  <longname>Proteron</longname>
   <player>3</player>
   <colour>purple</colour>
   <spawn>proteron</spawn>
@@ -177,7 +179,7 @@
  <faction name="Raider">
   <invisible />
   <longname>Galactic Pirates</longname>
-  <player>-20</player>
+  <player>-100</player>
   <colour>red</colour>
   <enemies>
    <enemy>Trader</enemy>
@@ -189,6 +191,37 @@
   <player>0</player>
   <allies />
   <enemies />
+ </faction>
+ <faction name="Four Winds">
+  <invisible />
+  <static />
+  <player>0</player>
+  <allies />
+  <enemies>
+   <enemy>Shadow_pirates</enemy>
+  </enemies>
+ </faction>
+ <faction name="Shadow_pirates">
+  <display>Pirate</display>
+  <invisible />
+  <static />
+  <allies />
+  <player>-100</player>
+  <enemies>
+   <enemy>Four Winds</enemy>
+   <enemy>Diplomatic</enemy>
+  </enemies>
+ </faction>
+ <faction name="Diplomatic">
+  <invisible />
+  <static />
+  <player>0</player>
+  <colour>blue</colour>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Shadow_pirates</enemy>
+  </enemies>
  </faction>
  <faction name="Associates">
   <invisible />
