@@ -1782,6 +1782,10 @@ static int pilotL_goto( lua_State *L )
  *
  * @usage p:face( enemy_pilot ) -- Face enemy pilot
  * @usage p:face( vec2.new( 0, 0 ) ) -- Face origin
+ *
+ *    @luaparam p Pilot to add task to.
+ *    @luaparam target Target to face (can be vec2 or pilot).
+ * @luafunc face( p, target )
  */
 static int pilotL_face( lua_State *L )
 {
