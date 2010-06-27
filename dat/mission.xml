@@ -350,7 +350,7 @@
   <avail>
    <priority>4</priority>
    <cond>player.getRating() &gt; 15</cond>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
