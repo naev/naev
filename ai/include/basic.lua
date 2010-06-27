@@ -25,17 +25,17 @@ end
 function __goto_nobrake ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
-   local dist     = ai.dist( target )
+   __goto_generic( target, dir, false )
+end
 
-   -- Need to get closer
-   if dir < 10 then
-      ai.accel()
 
-   -- Need to start braking
-   elseif dist < 50 then
-      ai.poptask()
-      return
-   end
+--[[
+-- Goes to a target position without braking
+--]]
+function __goto_nobrake_raw ()
+   local target   = ai.target()
+   local dir      = ai.face( target )
+   __goto_generic( target, dir, false )
 end
 
 
@@ -45,8 +45,31 @@ end
 function goto ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
+   __goto_generic( target, dir, true )
+end
+
+
+--[[
+-- Goto without velocity compensation.
+--]]
+function goto_raw ()
+   local target   = ai.target()
+   local dir      = ai.face( target )
+   __goto_generic( target, dir, true )
+end
+
+
+--[[
+-- Generic GOTO function.
+--]]
+function __goto_generic( target, dir, brake )
    local dist     = ai.dist( target )
-   local bdist    = ai.minbrakedist()
+   local bdist
+   if brake then
+      bdist    = ai.minbrakedist()
+   else
+      bdist    = 50
+   end
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -55,7 +78,9 @@ function goto ()
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
-      ai.pushtask("brake")
+      if brake then
+         ai.pushtask("brake")
+      end
       return
    end
 end

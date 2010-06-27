@@ -1726,15 +1726,17 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
  *    @luaparam v Vector target for the pilot.
  *    @luaparam brake If true (or nil) brakes the pilot near target position,
  *              otherwise pops the task when it is about to brake.
+ *    @luaparam compensate If true (or nil) compensates for velocity, otherwise it
+ *              doesn't.
  * @luasee control
- * @luafunc goto( p, v, brake )
+ * @luafunc goto( p, v, brake, compensate )
  */
 static int pilotL_goto( lua_State *L )
 {
    Pilot *p;
    Task *t;
    LuaVector *lv;
-   int brake;
+   int brake, compensate;
    const char *tsk;
 
    /* Get parameters. */
@@ -1744,13 +1746,24 @@ static int pilotL_goto( lua_State *L )
       brake = lua_toboolean(L,3);
    else
       brake = 1;
+   if (lua_gettop(L) > 3)
+      compensate = lua_toboolean(L,4);
+   else
+      compensate = 1;
+
 
    /* Set the task. */
    if (brake) {
-      tsk = "goto";
+      if (compensate)
+         tsk = "goto";
+      else
+         tsk = "goto_raw";
    }
    else {
-      tsk = "__goto_nobrake";
+      if (compensate)
+         tsk = "__goto_nobrake";
+      else
+         tsk = "__goto_nobrake_raw";
    }
    t        = pilotL_newtask( L, p, tsk );
    t->dtype = TASKDATA_VEC2;
