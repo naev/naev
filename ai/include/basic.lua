@@ -40,6 +40,35 @@ end
 
 
 --[[
+-- Goes to a precise position.
+--]]
+function __goto_precise ()
+   local target   = ai.target()
+   local dir      = ai.face( target, nil, true )
+   local dist     = ai.dist( target )
+
+   -- Handle finished
+   if ai.isstopped() and dist < 10 then
+      ai.stop() -- Will stop the pilot if below err vel
+      ai.poptask()
+   end
+
+   local bdist    = ai.minbrakedist()
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
+      ai.accel()
+
+   -- Need to start braking
+   elseif dist < bdist then
+      ai.pushsubtask("brake")
+   end
+end
+
+
+
+
+--[[
 -- Goes to a target position roughly
 --]]
 function goto ()
@@ -62,7 +91,7 @@ end
 --[[
 -- Generic GOTO function.
 --]]
-function __goto_generic( target, dir, brake )
+function __goto_generic( target, dir, brake, subtask )
    local dist     = ai.dist( target )
    local bdist
    if brake then
