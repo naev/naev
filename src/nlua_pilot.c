@@ -86,6 +86,7 @@ static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_goto( lua_State *L );
+static int pilotL_face( lua_State *L );
 static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
@@ -143,6 +144,7 @@ static const luaL_reg pilotL_methods[] = {
    { "memory", pilotL_memory },
    { "taskClear", pilotL_taskclear },
    { "goto", pilotL_goto },
+   { "face", pilotL_face },
    { "brake", pilotL_brake },
    { "follow", pilotL_follow },
    { "attack", pilotL_attack },
@@ -1770,6 +1772,42 @@ static int pilotL_goto( lua_State *L )
    t        = pilotL_newtask( L, p, tsk );
    t->dtype = TASKDATA_VEC2;
    vectcpy( &t->dat.vec, &lv->vec );
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot face a target.
+ *
+ * @usage p:face( enemy_pilot ) -- Face enemy pilot
+ * @usage p:face( vec2.new( 0, 0 ) ) -- Face origin
+ */
+static int pilotL_face( lua_State *L )
+{
+   Pilot *p, *pt;
+   LuaVector *vt;
+   Task *t;
+
+   /* Get parameters. */
+   pt = NULL;
+   vt = NULL;
+   p  = luaL_validpilot(L,1);
+   if (lua_ispilot(L,2))
+      pt = luaL_validpilot(L,2);
+   else
+      vt = luaL_checkvector(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "__face" );
+   if (pt != NULL) {
+      t->dtype = TASKDATA_INT;
+      t->dat.num = pt->id;
+   }
+   else {
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &vt->vec );
+   }
 
    return 0;
 }

@@ -7,6 +7,15 @@
 
 
 --[[
+-- Faces the target.
+--]]
+function __face ()
+   local target = ai.target()
+   ai.face( target )
+end
+
+
+--[[
 -- Brakes the ship
 --]]
 function brake ()
