@@ -80,11 +80,11 @@
    <unique />
   </flags>
  </event>
- <event name="Cinematic Doranthex battle">
+ <event name="Cinematic Dvaered/FLF battle">
   <lua>cinematic/DvdFLFbattle</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>system.cur():name() == "Doranthex"</cond>
+  <cond>system.cur():name() == "Tuoladis"</cond>
   <flags>
    <unique />
   </flags>
