@@ -1722,12 +1722,17 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
  *
  * Pilot must be under manual control for this to work.
  *
+ * @usage p:goto( v ) -- Goes to v precisely and braking
+ * @usage p:goto( v, true, true ) -- Same as p:goto( v )
+ * @usage p:goto( v, false ) -- Goes to v without braking compensating velocity
+ * @usage p:goto( v, false, false ) -- Really rough aproximation of going to v without braking
+ *
  *    @luaparam p Pilot to tell to go to a position.
  *    @luaparam v Vector target for the pilot.
  *    @luaparam brake If true (or nil) brakes the pilot near target position,
  *              otherwise pops the task when it is about to brake.
  *    @luaparam compensate If true (or nil) compensates for velocity, otherwise it
- *              doesn't.
+ *              doesn't. It only affects if brake is not set.
  * @luasee control
  * @luafunc goto( p, v, brake, compensate )
  */
@@ -1754,10 +1759,7 @@ static int pilotL_goto( lua_State *L )
 
    /* Set the task. */
    if (brake) {
-      if (compensate)
-         tsk = "goto";
-      else
-         tsk = "goto_raw";
+      tsk = "__goto_precise";
    }
    else {
       if (compensate)
