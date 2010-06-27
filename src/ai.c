@@ -1769,7 +1769,14 @@ static int aiL_turn( lua_State *L )
 /**
  * @brief Faces the target.
  *
- * @luafunc face
+ * @usage ai.face( a_pilot ) -- Face a pilot
+ * @usage ai.face( a_pilot, true ) -- Face away from a pilot
+ * @usage ai.face( a_pilot, nil, true ) -- Compensate velocity facing a pilot
+ * 
+ *    @param target Target to face.
+ *    @param invert Invert away from target.
+ *    @param compensate Compensate for velocity?
+ * @luafunc face( target, invert, compensate )
  */
 static int aiL_face( lua_State *L )
 {
