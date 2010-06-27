@@ -2099,7 +2099,7 @@ static int aiL_nearhyptarget( lua_State *L )
    vect_cadd( &lv.vec, rad*cos(a), rad*sin(a) );
 
    /* Set up target. */
-   cur_pilot->nav_hyperspace = j;;
+   cur_pilot->nav_hyperspace = j;
 
    /* Return vector. */
    lua_pushvector( L, lv );
