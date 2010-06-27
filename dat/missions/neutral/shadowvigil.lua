@@ -448,6 +448,7 @@ function diplomatIdle()
             j:setInvincible(true)
             j:taskClear()
             j:goto(dvaerplomat:pos() + mypos[i], true)
+            j:face(dvaerplomat:pos())
         end
     end
     
