@@ -871,7 +871,7 @@ void space_initStars( int n )
 void space_init ( const char* sysname )
 {
    char* nt;
-   int i, n;
+   int i, n, s;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -955,9 +955,12 @@ void space_init ( const char* sysname )
    /* Simulate system. */
    pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
+   s = sound_disabled;
+   sound_disabled = 1;
    n = SYSTEM_SIMULATE_TIME / fps_min;
    for (i=0; i<n; i++)
       update_routine( fps_min );
+   sound_disabled = s;
    player_messageToggle( 1 );
    pilot_rmFlag( player.p, PILOT_INVISIBLE );
 }
