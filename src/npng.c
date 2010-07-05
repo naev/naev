@@ -24,7 +24,6 @@
 struct npng_s {
    SDL_RWops*  rw; /**< SDL_RWops to read data from. */
    int start; /** Start position to read from. */
-   int info; /**< Loaded info already? */
    png_structp png_ptr; /**< PNG struct pointer. */
    png_infop   info_ptr; /**< PNG info struct pointer. */
 
@@ -38,6 +37,7 @@ struct npng_s {
  * Prototypes.
  */
 static void npng_read( png_structp png_ptr, png_bytep data, png_size_t len );
+static int npng_info( npng_t *npng );
 
 
 /**
@@ -76,7 +76,7 @@ npng_t *npng_open( SDL_RWops *rw )
 
    /* Set up struct. */
    npng->rw       = rw;
-   npng->png_ptr  = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+   npng->png_ptr  = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
    if (npng->png_ptr == NULL) {
       WARN("png_create_read_struct failed");
       return NULL;
@@ -98,7 +98,7 @@ npng_t *npng_open( SDL_RWops *rw )
    png_set_read_fn( npng->png_ptr, (voidp) rw, npng_read );
 
    /* Set up long jump for IO. */
-   if (setjmp(png_jmpbuf( npng->png_ptr ))) {
+   if (setjmp( png_jmpbuf( npng->png_ptr )) ) {
       WARN("Error during setjmp");
       return NULL;
    }
@@ -106,14 +106,14 @@ npng_t *npng_open( SDL_RWops *rw )
    /* We've already checked sig. */
    png_set_sig_bytes( npng->png_ptr, 8 );
 
-   /* Read information. */
-   png_read_info( npng->png_ptr, npng->info_ptr );
-
    /* Get start. */
    npng->start = SDL_RWtell( npng->rw );
 
+   /* Get info. */
+   npng_info( npng );
+
    /* Load text. */
-   png_get_text( npng->png_ptr, npng->info_ptr, &npng->text_ptr, &npng->num_text);
+   png_get_text( npng->png_ptr, npng->info_ptr, &npng->text_ptr, &npng->num_text );
 
    return npng;
 }
@@ -134,26 +134,21 @@ void npng_close( npng_t *npng )
 /**
  * @brief Initializes the npng.
  */
-int npng_info( npng_t *npng )
+static int npng_info( npng_t *npng )
 {
    png_uint_32 width, height;
    int bit_depth, color_type, interface_type;
    /*double display_exponent, gamma;*/
 
-   /* Already loaded. */
-   if (npng->info)
-      return 0;
-
-   /* Go back to position. */
-   SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );
+   /* Read information. */
+   png_read_info( npng->png_ptr, npng->info_ptr );
 
    /* Read header stuff. */
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
          &bit_depth, &color_type, &interface_type, NULL, NULL );
 
    /* Strip down from 16 bit to 8 bit. */
-   if (bit_depth == 16)
-      png_set_strip_16( npng->png_ptr );
+   png_set_strip_16( npng->png_ptr );
 
    /* Extract small bits into separate bytes. */
    png_set_packing( npng->png_ptr );
@@ -177,11 +172,13 @@ int npng_info( npng_t *npng )
    /*if (png_get_gAMA( npng->png_ptr, info_ptr, &gamma) )
       png_set_gamma( npng->png_ptr, display_exponent, gamma );*/
 
+   /* Fill alpha. */
+   png_set_filler( npng->png_ptr, 0xff, PNG_FILLER_AFTER );
+
    /* Update information. */
    png_read_update_info( npng->png_ptr, npng->info_ptr );
 
    /* Success. */
-   npng->info = 1;
    return 0;
 }
 
@@ -209,8 +206,6 @@ int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h )
 int npng_pitch( npng_t *npng )
 {
    /* Make sure loaded info. */
-   if (!npng->info)
-      npng_info( npng );
    return png_get_rowbytes( npng->png_ptr, npng->info_ptr );
 }
 
@@ -224,10 +219,6 @@ int npng_readInto( npng_t *npng, png_bytep *row_pointers )
    int bit_depth, color_type, interface_type;
    int rowbytes;
 
-   /* Make sure loaded info. */
-   if (!npng->info)
-      npng_info( npng );
-
    /* Read information. */
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
          &bit_depth, &color_type, &interface_type, NULL, NULL );
@@ -236,7 +227,7 @@ int npng_readInto( npng_t *npng, png_bytep *row_pointers )
    rowbytes = png_get_rowbytes( npng->png_ptr, npng->info_ptr );
 
    /* Go back to position. */
-   SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );
+   /*SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );*/
 
    /* Read the entire image in one go */
    png_read_image( npng->png_ptr, row_pointers );
@@ -301,10 +292,6 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    Uint32 Rmask, Gmask, Bmask, Amask;
    int bit_depth, color_type, interface_type;
 
-   /* Make sure loaded info. */
-   if (!npng->info)
-      npng_info( npng );
-
    /* Read information. */
    channels = png_get_channels( npng->png_ptr, npng->info_ptr );
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
@@ -333,21 +320,22 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
       Amask = 0x000000FF >> s;
    }
    surface = SDL_AllocSurface( SDL_SWSURFACE, width, height,
-         bit_depth*channels, Rmask, Gmask, Bmask, Amask);
+         bit_depth*channels, Rmask, Gmask, Bmask, Amask );
    if (surface == NULL) {
       ERR( "Out of Memory" );
       return NULL;
    }
+   /*if (bit_depth*channels < npng_pitch( npng )) DEBUG(" %d / %d ", bit_depth*channels, npng_pitch( npng ) );*/
 
    /* Create the array of pointers to image data */
-   row_pointers = malloc( sizeof(png_bytep)*height );
+   row_pointers = malloc( sizeof(png_bytep) * rheight );
    if (row_pointers == NULL) {
       ERR( "Out of Memory" );
       return NULL;
    }
    for (row=0; row<rheight; row++) { /* We only need to go to real height, not full height. */
       row_pointers[ vflip ? rheight-row-1 : row ] = (png_bytep)
-         (Uint8 *) surface->pixels + row*surface->pitch;
+         (Uint8 *) surface->pixels + row * surface->pitch;
    }
 
    /* Load the data. */

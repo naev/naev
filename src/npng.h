@@ -24,7 +24,6 @@ void npng_close( npng_t *npng );
 /*
  * Info.
  */
-int npng_info( npng_t *npng );
 int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h );
 int npng_pitch( npng_t *npng );
 
