@@ -353,6 +353,10 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    int potw, poth;
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   Uint32 saved_flags;
+   Uint8 saved_alpha;
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get sprite size. */
    sw = temp->gfx_space->w / sx;
@@ -369,20 +373,47 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    }
 
    /* Create the surface. */
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+
+   /* create the temp POT surface */
    gfx = SDL_CreateRGBSurface( 0, potw, poth,
          surface->format->BytesPerPixel*8, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
+   saved_alpha = surface->format->alpha;
+   if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
+      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+      SDL_SetColorKey( surface, 0, surface->format->colorkey );
+   }
+
+   /* create the temp POT surface */
+   gfx = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+         potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   if (gfx == NULL) {
+      WARN( "Unable to create ship '%s' targetting surface.", temp->name );
+      return -1;
+   }
 
    /* Copy over. */
-   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
+   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 3./4. );
    rtemp.x = sw * x;
-   rtemp.y = sh * y;;
+   rtemp.y = sh * (y-1);
    rtemp.w = sw;
    rtemp.h = sh;
    dstrect.x = 0;
    dstrect.y = 0;
    dstrect.w = rtemp.w;
    dstrect.h = rtemp.h;
-   SDL_BlitSurface( surface, &rtemp, gfx, &rtemp );
+   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
+
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   /* set saved alpha */
+   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+      SDL_SetAlpha( surface, 0, 0 );
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
   
    /* Load the surface. */
    temp->gfx_target = gl_loadImagePad( NULL, gfx, 0, potw, poth, 1, 1, 1 );
