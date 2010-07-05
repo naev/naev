@@ -337,6 +337,9 @@ SDL_Surface *npng_readSurface( npng_t *npng )
 
    /* Load the data. */
    npng_readInto( npng, row_pointers );
+
+   /* Free rows. */
+   free( row_pointers );
    return surface;
 }
 
