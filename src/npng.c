@@ -27,6 +27,10 @@ struct npng_s {
    int info; /**< Loaded info already? */
    png_structp png_ptr; /**< PNG struct pointer. */
    png_infop   info_ptr; /**< PNG info struct pointer. */
+
+   /* Text information */
+   png_textp text_ptr; /**< Pointer to texts. */
+   int num_text; /**< Number of texts. */
 };
 
 
@@ -107,6 +111,9 @@ npng_t *npng_open( SDL_RWops *rw )
 
    /* Get start. */
    npng->start = SDL_RWtell( npng->rw );
+
+   /* Load text. */
+   png_get_text( npng->png_ptr, npng->info_ptr, &npng->text_ptr, &npng->num_text);
 
    return npng;
 }
@@ -350,4 +357,24 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    free( row_pointers );
    return surface;
 }
+
+
+/**
+ * @brief Gets metadat by name.
+ */
+int npng_metadata( npng_t *npng, char *txt, char **data )
+{
+   int i;
+
+   for (i=0; i<npng->num_text; i++) {
+      if (strcmp( txt, npng->text_ptr[i].key )==0) {
+         *data = npng->text_ptr[i].text;
+         return npng->text_ptr[i].text_length;
+      }
+   }
+
+   return -1;
+}
+
+
 
