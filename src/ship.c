@@ -364,12 +364,12 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* POT size. */
    if (gl_needPOT()) {
-      potw = gl_pot( sw );
-      poth = gl_pot( sh );
+      potw = gl_pot( SHIP_TARGET_W );
+      poth = gl_pot( SHIP_TARGET_H );
    }
    else {
-      potw = sw;
-      poth = sh;
+      potw = SHIP_TARGET_W;
+      poth = SHIP_TARGET_H;
    }
 
    /* Create the surface. */
@@ -398,13 +398,13 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    }
 
    /* Copy over. */
-   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 3./4. );
+   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
    rtemp.x = sw * x;
-   rtemp.y = sh * (y-1);
+   rtemp.y = sh * (temp->gfx_space->sy-y-1);
    rtemp.w = sw;
    rtemp.h = sh;
-   dstrect.x = 0;
-   dstrect.y = 0;
+   dstrect.x = (SHIP_TARGET_W - sw) / 2;
+   dstrect.y = (SHIP_TARGET_H - sh) / 2;
    dstrect.w = rtemp.w;
    dstrect.h = rtemp.h;
    SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
