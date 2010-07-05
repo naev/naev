@@ -434,8 +434,9 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
          /* Convert to HSV. */
          col_rgb2hsv( &h, &s, &v, r, g, b );
 
-         h = 0.0;
-         s = 0.9;
+         h  = 0.0;
+         s  = 1.0;
+         v *= 1.5;
 
          /* Convert back to RGB. */
          col_hsv2rgb( &r, &g, &b, h, s, v );
