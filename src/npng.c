@@ -312,7 +312,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
 
    /* Pad POT if needed. */
    rheight = height;
-   if (pad_pot && gl_needPOT()) {
+   if (pad_pot) {
       width    = gl_pot( width );
       height   = gl_pot( height );
    }

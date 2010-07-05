@@ -485,7 +485,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
    npng     = npng_open( rw );
    npng_dim( npng, &w, &h );
-   surface  = npng_readSurface( npng, 1, 1 );
+   surface  = npng_readSurface( npng, gl_needPOT(), 1 );
    npng_close( npng );
    SDL_RWclose( rw );
    if (surface == NULL) {
