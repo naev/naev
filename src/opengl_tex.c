@@ -216,60 +216,56 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Make size power of two. */
-   if (!gl_needPOT()) { /* No real need, but there's some issue with bypassing this function. */
-      potw = surface->w;
-      poth = surface->h;
-   }
-   else {
-      potw = gl_pot(surface->w);
-      poth = gl_pot(surface->h);
-   }
+   potw = gl_pot(surface->w);
+   poth = gl_pot(surface->h);
+   if (gl_needPOT() && ((potw != surface->w) || (poth != surface->h))) {
 
-   /* we must blit with an SDL_Rect */
-   rtemp.x = rtemp.y = 0;
-   rtemp.w = surface->w;
-   rtemp.h = surface->h;
+      /* we must blit with an SDL_Rect */
+      rtemp.x = rtemp.y = 0;
+      rtemp.w = surface->w;
+      rtemp.h = surface->h;
 
-   /* saves alpha */
+      /* saves alpha */
 #if SDL_VERSION_ATLEAST(1,3,0)
-   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
 
-   /* create the temp POT surface */
-   temp = SDL_CreateRGBSurface( 0, potw, poth,
-         surface->format->BytesPerPixel*8, RGBAMASK );
+      /* create the temp POT surface */
+      temp = SDL_CreateRGBSurface( 0, potw, poth,
+            surface->format->BytesPerPixel*8, RGBAMASK );
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
-   saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
-   saved_alpha = surface->format->alpha;
-   if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
-      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
-      SDL_SetColorKey( surface, 0, surface->format->colorkey );
-   }
+      saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
+      saved_alpha = surface->format->alpha;
+      if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
+         SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+         SDL_SetColorKey( surface, 0, surface->format->colorkey );
+      }
 
-   /* create the temp POT surface */
-   temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-         potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+      /* create the temp POT surface */
+      temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+            potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   if (temp == NULL) {
-      WARN("Unable to create POT surface: %s", SDL_GetError());
-      return 0;
-   }
-   if (SDL_FillRect( temp, NULL,
-            SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-      WARN("Unable to fill rect: %s", SDL_GetError());
-      return 0;
-   }
+      if (temp == NULL) {
+         WARN("Unable to create POT surface: %s", SDL_GetError());
+         return 0;
+      }
+      if (SDL_FillRect( temp, NULL,
+               SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
+         WARN("Unable to fill rect: %s", SDL_GetError());
+         return 0;
+      }
 
-   /* change the surface to the new blitted one */
-   SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
-   SDL_FreeSurface( surface );
-   surface = temp;
+      /* change the surface to the new blitted one */
+      SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
+      SDL_FreeSurface( surface );
+      surface = temp;
 
 #if ! SDL_VERSION_ATLEAST(1,3,0)
-   /* set saved alpha */
-   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
-      SDL_SetAlpha( surface, 0, 0 );
+      /* set saved alpha */
+      if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+         SDL_SetAlpha( surface, 0, 0 );
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+   }
 
    return surface;
 }
@@ -472,8 +468,8 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       return NULL;
    }
    npng     = npng_open( rw );
-   surface  = npng_readSurface( npng, 0, 1 );
    npng_dim( npng, &w, &h );
+   surface  = npng_readSurface( npng, 0, 1 );
    npng_close( npng );
    if (surface == NULL) {
       WARN("'%s' could not be opened", path );
