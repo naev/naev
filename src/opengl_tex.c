@@ -54,8 +54,11 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 /* glTexture */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags );
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
+/* List. */
+static glTexture* gl_texExists( const char* path );
+static int gl_texAdd( glTexture *tex );
 
 
 /**
@@ -299,7 +302,7 @@ int gl_texHasCompress (void)
  *    @param[out] rh Real height of the texture.
  *    @return The opengl texture id.
  */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags )
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur )
 {
    GLuint texture;
    GLfloat param;
@@ -358,7 +361,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    }
 
    /* cleanup */
-   SDL_FreeSurface( surface );
+   if (freesur)
+      SDL_FreeSurface( surface );
    gl_checkErr();
 
    return texture;
@@ -368,36 +372,63 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
 /**
  * @brief Loads the already padded SDL_Surface to a glTexture.
  *
+ *    @param name Name to load with.
  *    @param surface Surface to load.
  *    @param flags Flags to use.
  *    @param w Non-padded width.
  *    @param h Non-padded height.
+ *    @param sx X sprites.
+ *    @param sy Y sprites.
+ *    @param freesur Whether or not to free the surface.
  *    @return The glTexture for surface.
  */
-glTexture* gl_loadImagePad( SDL_Surface* surface, unsigned int flags, int w, int h )
+glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
+      unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
    glTexture *texture;
    int rw, rh;
+   uint8_t *trans;
+
+   /* Make sure doesn't already exist. */
+   if (name != NULL) {
+      texture = gl_texExists( name );
+      if (texture != NULL)
+         return texture;
+   }
 
    /* set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
 
+   /* Map transparency if needed .*/
+   if (flags & OPENGL_TEX_MAPTRANS) {
+      SDL_LockSurface(surface);
+      trans = SDL_MapTrans( surface, w, h );
+      SDL_UnlockSurface(surface);
+   }
+   else
+      trans = NULL;
+
    texture->w     = (double) w;
    texture->h     = (double) h;
-   texture->sx    = 1.;
-   texture->sy    = 1.;
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
 
-   texture->texture = gl_loadSurface( surface, &rw, &rh, flags );
+   texture->texture = gl_loadSurface( surface, &rw, &rh, flags, freesur );
 
    texture->rw    = (double) rw;
    texture->rh    = (double) rh;
-   texture->sw    = texture->w;
-   texture->sh    = texture->h;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->rw;
    texture->srh   = texture->sh / texture->rh;
 
-   texture->trans = NULL;
-   texture->name  = NULL;
+   texture->trans = trans;
+   if (name != NULL) {
+      texture->name = strdup(name);
+      gl_texAdd( texture );
+   }
+   else
+      texture->name = NULL;
 
    return texture;
 }
@@ -412,20 +443,14 @@ glTexture* gl_loadImagePad( SDL_Surface* surface, unsigned int flags, int w, int
  */
 glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 {
-   return gl_loadImagePad( surface, flags, surface->w, surface->h );
+   return gl_loadImagePad( NULL, surface, flags, surface->w, surface->h, 1, 1, 1 );
 }
 
 
 /**
- * @brief Loads an image as a texture.
- *
- * May not necessarily load the image but use one if it's already open.
- *
- *    @param path Image to load.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
+ * @brief Check to see if a texture matching a path already exists.
  */
-glTexture* gl_newImage( const char* path, const unsigned int flags )
+static glTexture* gl_texExists( const char* path )
 {
    glTexList *cur, *last;
 
@@ -440,24 +465,56 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
       }
    }
 
-   /* Create the new node */
-   cur = malloc(sizeof(glTexList));
-   cur->next = NULL;
-   cur->used = 1;
+   return NULL;
+}
 
-   /* Load the image */
-   cur->tex = gl_loadNewImage(path, flags);
-   if (cur->tex == NULL) {
-      free(cur);
-      return NULL;
-   }
+
+/**
+ * @brief Adds a texture to the list under the name of path.
+ */
+static int gl_texAdd( glTexture *tex )
+{
+   glTexList *new, *cur, *last;
+
+   /* Create the new node */
+   new = malloc( sizeof(glTexList) );
+   new->next = NULL;
+   new->used = 1;
+   new->tex  = tex;
 
    if (texture_list == NULL) /* special condition - creating new list */
-      texture_list = cur;
-   else
-      last->next = cur;
+      texture_list = new;
+   else {
+      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+         last = cur;
+      }
+      last->next = new;
+   }
 
-   return cur->tex;
+   return 0;
+}
+
+
+/**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ *    @param path Image to load.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+glTexture* gl_newImage( const char* path, const unsigned int flags )
+{
+   glTexture *t;
+
+   /* Check if it already exists. */
+   t = gl_texExists( path );
+   if (t != NULL)
+      return t;
+
+   /* Load the image */
+   return gl_loadNewImage( path, flags );
 }
 
 
@@ -471,8 +528,6 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
 static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
    SDL_Surface *surface;
-   glTexture* t;
-   uint8_t* trans;
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
@@ -493,20 +548,8 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       return NULL;
    }
 
-   /* do after flipping for collision detection */
-   if (flags & OPENGL_TEX_MAPTRANS) {
-      SDL_LockSurface(surface);
-      trans = SDL_MapTrans( surface, w, h );
-      SDL_UnlockSurface(surface);
-   }
-   else
-      trans = NULL;
-
    /* set the texture */
-   t        = gl_loadImagePad( surface, flags, w, h );
-   t->trans = trans;
-   t->name  = strdup(path);
-   return t;
+   return gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
 }
 
 
@@ -590,8 +633,10 @@ void gl_freeTexture( glTexture* texture )
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
-   if (texture->trans != NULL) free(texture->trans);
-   if (texture->name != NULL) free(texture->name);
+   if (texture->trans != NULL)
+      free(texture->trans);
+   if (texture->name != NULL)
+      free(texture->name);
    free(texture);
 
    gl_checkErr();

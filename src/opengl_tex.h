@@ -86,7 +86,8 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
 /*
  * Creating.
  */
-glTexture* gl_loadImagePad( SDL_Surface* surface, unsigned int flags, int w, int h );
+glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
+      unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
 glTexture* gl_newImage( const char* path, const unsigned int flags );
 glTexture* gl_newSprite( const char* path, const int sx, const int sy,
