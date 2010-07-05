@@ -52,7 +52,7 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
 /* misc */
 /*static int SDL_VFlipSurface( SDL_Surface* surface );*/
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
-static uint8_t* SDL_MapTrans( SDL_Surface* s );
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
@@ -165,16 +165,24 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  *  perfect collision routines.
  *
  *    @param s Surface to map it's transparency.
+ *    @param w Width to map.
+ *    @param h Height to map.
  *    @return 0 on success.
  */
-static uint8_t* SDL_MapTrans( SDL_Surface* s )
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
 {
    int i,j;
    int size;
    uint8_t *t;
 
+   /* Get limit.s */
+   if (w < 0)
+      w = s->w;
+   if (h < 0)
+      h = s->h;
+
    /* alloc memory for just enough bits to hold all the data we need */
-   size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);
+   size = w*h/8 + ((w*h%8)?1:0);
    t = malloc(size);
    if (t==NULL) {
       WARN("Out of Memory");
@@ -183,9 +191,9 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s )
    memset(t, 0, size); /* important, must be set to zero */
 
    /* Check each pixel individually. */
-   for (i=0; i<s->h; i++)
-      for (j=0; j<s->w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-         t[(i*s->w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*s->w+j)%8));
+   for (i=0; i<h; i++)
+      for (j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+         t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
 
    return t;
 }
@@ -455,6 +463,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    uint8_t* trans;
    SDL_RWops *rw;
    npng_t *npng;
+   png_uint_32 w, h;
 
    /* load from packfile */
    rw = ndata_rwops( path );
@@ -464,6 +473,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
    npng     = npng_open( rw );
    surface  = npng_readSurface( npng, 0, 1 );
+   npng_dim( npng, &w, &h );
    npng_close( npng );
    if (surface == NULL) {
       WARN("'%s' could not be opened", path );
@@ -473,14 +483,14 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* do after flipping for collision detection */
    if (flags & OPENGL_TEX_MAPTRANS) {
       SDL_LockSurface(surface);
-      trans = SDL_MapTrans(surface);
+      trans = SDL_MapTrans( surface, -1, -1 );
       SDL_UnlockSurface(surface);
    }
    else
       trans = NULL;
 
    /* set the texture */
-   t = gl_loadImage(surface, flags);
+   t = gl_loadImage( surface, flags );
    t->trans = trans;
    t->name  = strdup(path);
    return t;
