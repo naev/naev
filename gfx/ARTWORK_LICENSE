@@ -96,52 +96,33 @@
      * admonisher.png
      * admonisher_empire.png
      * admonisher_pirate.png
-     * admonisher_target.png
      * ancestor.png
      * ancestor_dvaered.png
      * ancestor_pirate.png
-     * ancestor_target.png
      * archimedes.png
-     * archimedes_target.png
      * derivative.png
-     * derivative_target.png
      * drone.png
-     * drone_target.png
      * gawain.png
-     * gawain_target.png
      * goddard.png
      * goddard_dvaered.png
-     * goddard_target.png
      * hawking.png
      * hawking_empire.png
-     * hawking_target.png
      * hyena.png
-     * hyena_target.png
      * kahan.png
-     * kahan_target.png
      * lancelot.png
      * lancelot_empire.png
-     * lancelot_target.png
      * llama.png
-     * llama_target.png
      * mule.png
-     * mule_target.png
      * pacifier.png
      * pacifier_empire.png
-     * pacifier_target.png
      * quicksilver.png
-     * quicksilver_target.png
      * schroedinger.png
-     * schroedinger_target.png
      * vendetta.png
      * vendetta_dvaered.png
      * vendetta_pirate.png
-     * vendetta_target.png
      * vigilance.png
      * vigilance_dvaered.png
-     * vigilance_target.png
      * watson.png
-     * watson_target.png
    * loading
      * admonisher.png
      * ancestor-pirate.png
@@ -272,11 +253,9 @@
    * ship
      * kestrel.png
      * kestrel_comm.png
-     * kestrel_target.png
      * kestrel_pirate.png
      * kestrel_pirate_comm.png
      * peacemaker.png
-     * peacemaker_target.png
    * loading
      * kestrel_pirate.png
      * peacemaker.png
