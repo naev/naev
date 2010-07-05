@@ -23,6 +23,7 @@
 #include "ndata.h"
 #include "gui.h"
 #include "conf.h"
+#include "npng.h"
 
 
 /*
@@ -451,6 +452,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    glTexture* t;
    uint8_t* trans;
    SDL_RWops *rw;
+   npng_t *npng;
 
    /* load from packfile */
    rw = ndata_rwops( path );
@@ -458,10 +460,11 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       WARN("Failed to load surface '%s' from ndata.", path);
       return NULL;
    }
-   temp = IMG_Load_RW( rw, 1 );
-
+   npng  = npng_open( rw );
+   temp  = npng_readSurface( npng );
+   npng_close( npng );
    if (temp == NULL) {
-      WARN("'%s' could not be opened: %s", path, IMG_GetError());
+      WARN("'%s' could not be opened", path );
       return NULL;
    }
 

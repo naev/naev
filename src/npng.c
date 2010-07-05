@@ -22,6 +22,8 @@
  */
 struct npng_s {
    SDL_RWops*  rw; /**< SDL_RWops to read data from. */
+   int start; /** Start position to read from. */
+   int info; /**< Loaded info already? */
    png_structp png_ptr; /**< PNG struct pointer. */
    png_infop   info_ptr; /**< PNG info struct pointer. */
 };
@@ -92,7 +94,7 @@ npng_t *npng_open( SDL_RWops *rw )
 
    /* Set up long jump for IO. */
    if (setjmp(png_jmpbuf( npng->png_ptr ))) {
-      WARN("Error during init_io");
+      WARN("Error during setjmp");
       return NULL;
    }
    
@@ -102,12 +104,15 @@ npng_t *npng_open( SDL_RWops *rw )
    /* Read information. */
    png_read_info( npng->png_ptr, npng->info_ptr );
 
+   /* Get start. */
+   npng->start = SDL_RWtell( npng->rw );
+
    return npng;
 }
 
 
 /**
- * @brief Closes an npng_t struct.
+ * @brief Closes a npng_t struct.
  *
  *    @param npng Struct to close.
  */
@@ -118,7 +123,69 @@ void npng_close( npng_t *npng )
 }
 
 
-int npng_dim( npng_t *npng, int *w, int *h )
+/**
+ * @brief Initializes the npng.
+ */
+int npng_info( npng_t *npng )
+{
+   png_uint_32 width, height;
+   int bit_depth, color_type, interface_type;
+   /*double display_exponent, gamma;*/
+
+   /* Already loaded. */
+   if (npng->info)
+      return 0;
+
+   /* Go back to position. */
+   SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );
+
+   /* Read header stuff. */
+   png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
+         &bit_depth, &color_type, &interface_type, NULL, NULL );
+
+   /* Strip down from 16 bit to 8 bit. */
+   if (bit_depth == 16)
+      png_set_strip_16( npng->png_ptr );
+
+   /* Extract small bits into separate bytes. */
+   png_set_packing( npng->png_ptr );
+
+   /* Expand palette to RGB. */
+   if (color_type == PNG_COLOR_TYPE_PALETTE)
+      png_set_expand( npng->png_ptr );
+   /* Expand low bit grayscale to 8 bit. */
+   if ((color_type == PNG_COLOR_TYPE_GRAY) && (bit_depth < 8))
+      png_set_expand( npng->png_ptr );
+   /* Expand tRNS data to alpha channel. */
+   if (png_get_valid( npng->png_ptr, npng->info_ptr, PNG_INFO_tRNS) )
+      png_set_expand( npng->png_ptr );
+
+   /* Set grayscale to 8 bits. */
+   if ((color_type == PNG_COLOR_TYPE_GRAY) ||
+         (color_type == PNG_COLOR_TYPE_GRAY_ALPHA))
+      png_set_gray_to_rgb( npng->png_ptr );
+
+   /* Set gamma. */
+   /*if (png_get_gAMA( npng->png_ptr, info_ptr, &gamma) )
+      png_set_gamma( npng->png_ptr, display_exponent, gamma );*/
+
+   /* Update information. */
+   png_read_update_info( npng->png_ptr, npng->info_ptr );
+
+   /* Success. */
+   npng->info = 1;
+   return 0;
+}
+
+
+/**
+ * @brief Gets the dimensions of a png.
+ *
+ *    @param npng PNG to get dimensions of.
+ *    @param[out] w Width of the png.
+ *    @param[out] h Height of the png.
+ */
+int npng_dim( npng_t *npng, png_uint_32 *w, png_uint_32 *h )
 {
    /* Get data.  */
    *w = png_get_image_width( npng->png_ptr, npng->info_ptr );
@@ -127,4 +194,149 @@ int npng_dim( npng_t *npng, int *w, int *h )
    return 0;
 }
 
+
+/**
+ * @brief Gets the pitch of a png.
+ */
+int npng_pitch( npng_t *npng )
+{
+   /* Make sure loaded info. */
+   if (!npng->info)
+      npng_info( npng );
+   return png_get_rowbytes( npng->png_ptr, npng->info_ptr );
+}
+
+
+/**
+ * @brief Reads the PNG into a set of rows.
+ */
+int npng_readInto( npng_t *npng, png_bytep *row_pointers )
+{
+   png_uint_32 width, height;
+   int bit_depth, color_type, interface_type;
+   int rowbytes;
+
+   /* Make sure loaded info. */
+   if (!npng->info)
+      npng_info( npng );
+
+   /* Read information. */
+   png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
+         &bit_depth, &color_type, &interface_type, NULL, NULL );
+
+   /* Get size information. */
+   rowbytes = png_get_rowbytes( npng->png_ptr, npng->info_ptr );
+
+   /* Go back to position. */
+   SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );
+
+   /* Read the entire image in one go */
+   png_read_image( npng->png_ptr, row_pointers );
+
+   /* In case we want more IDAT stuff. */
+   png_read_end( npng->png_ptr, npng->info_ptr );
+
+   /* Success. */
+   return 0;
+}
+
+
+/**
+ * @brief Reads the png data as 32 bit format.
+ */
+png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pitch )
+{
+   png_bytep image_data;
+   png_uint_32 width, height;
+   png_bytep *row_pointers;
+   png_uint_32  i, rowbytes;
+
+   /* Get info. */
+   npng_dim( npng, &width, &height );
+   rowbytes = npng_pitch( npng );
+
+   /* Create the array of pointers to image data */
+   image_data = malloc( rowbytes * height );
+   if (image_data == NULL)
+      ERR( "Out of Memory" );
+   row_pointers = malloc( sizeof(png_bytep) * height );
+   if (row_pointers == NULL)
+      ERR( "Out of Memory" );
+   for (i=0; i<height; i++)
+      row_pointers[i] = image_data + i*rowbytes;
+
+   /* Return data. */
+   if (channels != NULL)
+      *channels = png_get_channels( npng->png_ptr, npng->info_ptr );
+   if (pitch != NULL)
+      *pitch = rowbytes;
+   if (rows != NULL)
+      *rows = row_pointers;
+   else
+      free( row_pointers );
+   return image_data;
+}
+
+
+/**
+ * @brief Reads a PNG image into a surface.
+ *
+ *    @param npng PNG image to load.
+ *    @return Surface with data from the PNG image.
+ */
+SDL_Surface *npng_readSurface( npng_t *npng )
+{
+   png_bytep *row_pointers;
+   png_uint_32 width, height, row;
+   SDL_Surface *surface;
+   int channels;
+   Uint32 Rmask, Gmask, Bmask, Amask;
+   int bit_depth, color_type, interface_type;
+
+   /* Make sure loaded info. */
+   if (!npng->info)
+      npng_info( npng );
+
+   /* Read information. */
+   channels = png_get_channels( npng->png_ptr, npng->info_ptr );
+   png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
+         &bit_depth, &color_type, &interface_type, NULL, NULL );
+
+   /* Allocate the SDL surface to hold the image */
+   Rmask = Gmask = Bmask = Amask = 0 ;
+   if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
+      Rmask = 0x000000FF;
+      Gmask = 0x0000FF00;
+      Bmask = 0x00FF0000;
+      Amask = (channels == 4) ? 0xFF000000 : 0;
+   }
+   else {
+      int s = (channels == 4) ? 0 : 8;
+      Rmask = 0xFF000000 >> s;
+      Gmask = 0x00FF0000 >> s;
+      Bmask = 0x0000FF00 >> s;
+      Amask = 0x000000FF >> s;
+   }
+   surface = SDL_AllocSurface( SDL_SWSURFACE, width, height,
+         bit_depth*channels, Rmask, Gmask, Bmask, Amask);
+   if (surface == NULL) {
+      ERR( "Out of Memory" );
+      return NULL;
+   }
+
+   /* Create the array of pointers to image data */
+   row_pointers = malloc( sizeof(png_bytep)*height );
+   if (row_pointers == NULL) {
+      ERR( "Out of Memory" );
+      return NULL;
+   }
+   for (row=0; row<height; row++) {
+      row_pointers[row] = (png_bytep)
+         (Uint8 *) surface->pixels + row*surface->pitch;
+   }
+
+   /* Load the data. */
+   npng_readInto( npng, row_pointers );
+   return surface;
+}
 

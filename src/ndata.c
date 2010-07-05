@@ -46,6 +46,7 @@
 #include "pack.h"
 #include "nfile.h"
 #include "conf.h"
+#include "npng.h"
 
 
 #define NDATA_FILENAME  "ndata" /**< Generic ndata file name. */
@@ -134,6 +135,7 @@ static void ndata_notfound (void)
    SDL_Event event;
    SDL_Surface *sur, *screen;
    SDL_RWops *rw;
+   npng_t *npng;
 
    /* Make sure it's initialized. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
@@ -152,8 +154,10 @@ static void ndata_notfound (void)
    SDL_WM_SetCaption( "NAEV - INSERT NDATA", "NAEV" );
 
    /* Create the surface. */
-   rw  = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
-   sur = IMG_Load_RW( rw, 0 );
+   rw    = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
+   npng  = npng_open( rw );
+   sur   = npng_readSurface( npng );
+   npng_close( npng );
 
    /* Render. */
    SDL_BlitSurface( sur, NULL, screen, NULL );

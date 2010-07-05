@@ -1105,7 +1105,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
    SDL_RWops *rw;
    npng_t *npng;
-   int w, h;
+   png_uint_32 w, h;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
