@@ -449,7 +449,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    }
 
    /* Load the surface. */
-   temp->gfx_target = gl_loadImagePad( NULL, gfx, 0, potw, poth, 1, 1, 1 );
+   temp->gfx_target = gl_loadImagePad( NULL, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
    return 0;
 }

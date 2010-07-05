@@ -821,9 +821,9 @@ static void shipyard_open( unsigned int wid )
 
    /* target gfx */
    window_addRect( wid, -41, -50,
-         129, 96, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, -40-128, -50-96,
-         0, 0, "imgTarget", NULL, 1 );
+         SHIP_TARGET_W, SHIP_TARGET_H, "rctTarget", &cBlack, 0 );
+   window_addImage( wid, -40, -50,
+         SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* stat text */
    window_addText( wid, -40, -170, 128, 200, 0, "txtStats",
