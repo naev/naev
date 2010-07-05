@@ -50,7 +50,7 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
  * prototypes
  */
 /* misc */
-static int SDL_VFlipSurface( SDL_Surface* surface );
+/*static int SDL_VFlipSurface( SDL_Surface* surface );*/
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s );
 /* glTexture */
@@ -72,6 +72,7 @@ int gl_pot( int n )
 }
 
 
+#if 0
 /**
  * @brief Flips the surface vertically.
  *
@@ -104,6 +105,7 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
 
    return 0;
 }
+#endif
 
 
 /**
@@ -461,16 +463,10 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       return NULL;
    }
    npng     = npng_open( rw );
-   surface  = npng_readSurface( npng, 0 );
+   surface  = npng_readSurface( npng, 0, 1 );
    npng_close( npng );
    if (surface == NULL) {
       WARN("'%s' could not be opened", path );
-      return NULL;
-   }
-
-   /* we have to flip our surfaces to match the ortho */
-   if (SDL_VFlipSurface(surface)) {
-      WARN( "Error flipping surface" );
       return NULL;
    }
 

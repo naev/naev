@@ -285,7 +285,7 @@ png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pi
  *    @param npng PNG image to load.
  *    @return Surface with data from the PNG image.
  */
-SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
+SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
 {
    png_bytep *row_pointers;
    png_uint_32 width, height, row;
@@ -338,7 +338,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
       return NULL;
    }
    for (row=0; row<height; row++) {
-      row_pointers[row] = (png_bytep)
+      row_pointers[ vflip ? height-row-1 :row ] = (png_bytep)
          (Uint8 *) surface->pixels + row*surface->pitch;
    }
 
