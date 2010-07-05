@@ -158,6 +158,7 @@ static void ndata_notfound (void)
    npng  = npng_open( rw );
    sur   = npng_readSurface( npng, 0, 0 );
    npng_close( npng );
+   SDL_RWclose( rw );
 
    /* Render. */
    SDL_BlitSurface( sur, NULL, screen, NULL );

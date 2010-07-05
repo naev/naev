@@ -487,6 +487,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    npng_dim( npng, &w, &h );
    surface  = npng_readSurface( npng, 1, 1 );
    npng_close( npng );
+   SDL_RWclose( rw );
    if (surface == NULL) {
       WARN("'%s' could not be opened", path );
       return NULL;
