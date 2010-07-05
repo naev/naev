@@ -8,6 +8,8 @@
 
 
 int nmath_solve2Eq( double results[2], double a, double b, double c );
+double max3( double v1, double v2, double v3 );
+double min3( double v1, double v2, double v3 );
 
 
 #endif /* NMATH_H */

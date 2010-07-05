@@ -24,6 +24,7 @@
 #include "array.h"
 #include "conf.h"
 #include "npng.h"
+#include "colour.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -354,7 +355,9 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
    int i, j;
-   uint32_t *pix, a;
+   uint32_t *pix;
+   double r, g, b, a;
+   double h, s, v;
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    Uint32 saved_flags;
    Uint8 saved_alpha;
@@ -421,11 +424,26 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    for (j=0; j<SHIP_TARGET_H; j++) {
       for (i=0; i<SHIP_TARGET_W; i++) {
          pix   = (uint32_t*) ((uint8_t*) gfx->pixels + j*gfx->pitch + i*gfx->format->BytesPerPixel);
-         a = (j%2) ? *pix : *pix>>2;
-         *pix = (((*pix & RMASK) << 0) & RMASK) |
-                (((*pix & GMASK) >> 2) & GMASK) |
-                (((*pix & BMASK) >> 2) & BMASK) |
-                 (a & AMASK);
+         r     = ((double) (*pix & RMASK)) / (double) RMASK;
+         g     = ((double) (*pix & GMASK)) / (double) GMASK;
+         b     = ((double) (*pix & BMASK)) / (double) BMASK;
+         a     = ((double) (*pix & AMASK)) / (double) AMASK;
+         if (j%2) /* Add scanlines. */
+            a *= 0.5;
+
+         /* Convert to HSV. */
+         col_rgb2hsv( &h, &s, &v, r, g, b );
+
+         h = 0.;
+
+         /* Convert back to RGB. */
+         col_hsv2rgb( &r, &g, &b, h, s, v );
+
+         /* Convert to pixel. */
+         *pix =   ((uint32_t) (r*RMASK) & RMASK) |
+                  ((uint32_t) (g*GMASK) & GMASK) |
+                  ((uint32_t) (b*BMASK) & BMASK) |
+                  ((uint32_t) (a*AMASK) & AMASK);
       }
    }
 
