@@ -364,14 +364,17 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    return texture;
 }
 
+
 /**
- * @brief Loads the SDL_Surface to a glTexture.
+ * @brief Loads the already padded SDL_Surface to a glTexture.
  *
  *    @param surface Surface to load.
  *    @param flags Flags to use.
+ *    @param w Non-padded width.
+ *    @param h Non-padded height.
  *    @return The glTexture for surface.
  */
-glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
+glTexture* gl_loadImagePad( SDL_Surface* surface, unsigned int flags, int w, int h )
 {
    glTexture *texture;
    int rw, rh;
@@ -379,15 +382,15 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
    /* set up the texture defaults */
    texture = calloc( 1, sizeof(glTexture) );
 
-   texture->w     = (double)surface->w;
-   texture->h     = (double)surface->h;
+   texture->w     = (double) w;
+   texture->h     = (double) h;
    texture->sx    = 1.;
    texture->sy    = 1.;
 
    texture->texture = gl_loadSurface( surface, &rw, &rh, flags );
 
-   texture->rw    = (double)rw;
-   texture->rh    = (double)rh;
+   texture->rw    = (double) rw;
+   texture->rh    = (double) rh;
    texture->sw    = texture->w;
    texture->sh    = texture->h;
    texture->srw   = texture->sw / texture->rw;
@@ -397,6 +400,19 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
    texture->name  = NULL;
 
    return texture;
+}
+
+
+/**
+ * @brief Loads the SDL_Surface to a glTexture.
+ *
+ *    @param surface Surface to load.
+ *    @param flags Flags to use.
+ *    @return The glTexture for surface.
+ */
+glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
+{
+   return gl_loadImagePad( surface, flags, surface->w, surface->h );
 }
 
 
@@ -469,7 +485,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
    npng     = npng_open( rw );
    npng_dim( npng, &w, &h );
-   surface  = npng_readSurface( npng, 0, 1 );
+   surface  = npng_readSurface( npng, 1, 1 );
    npng_close( npng );
    if (surface == NULL) {
       WARN("'%s' could not be opened", path );
@@ -479,14 +495,14 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* do after flipping for collision detection */
    if (flags & OPENGL_TEX_MAPTRANS) {
       SDL_LockSurface(surface);
-      trans = SDL_MapTrans( surface, -1, -1 );
+      trans = SDL_MapTrans( surface, w, h );
       SDL_UnlockSurface(surface);
    }
    else
       trans = NULL;
 
    /* set the texture */
-   t = gl_loadImage( surface, flags );
+   t        = gl_loadImagePad( surface, flags, w, h );
    t->trans = trans;
    t->name  = strdup(path);
    return t;
@@ -506,15 +522,16 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags )
 {
    glTexture* texture;
-   if ((texture = gl_newImage(path, flags)) == NULL)
+   texture = gl_newImage( path, flags );
+   if (texture == NULL)
       return NULL;
 
    /* will possibly overwrite an existing textur properties
     * so we have to load same texture always the same sprites */
-   texture->sx    = (double)sx;
-   texture->sy    = (double)sy;
-   texture->sw    = texture->w/texture->sx;
-   texture->sh    = texture->h/texture->sy;
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->rw;
    texture->srh   = texture->sh / texture->rh;
    return texture;

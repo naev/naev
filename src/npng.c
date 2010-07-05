@@ -288,7 +288,7 @@ png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pi
 SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
 {
    png_bytep *row_pointers;
-   png_uint_32 width, height, row;
+   png_uint_32 width, height, row, rheight;
    SDL_Surface *surface;
    int channels;
    Uint32 Rmask, Gmask, Bmask, Amask;
@@ -304,6 +304,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
          &bit_depth, &color_type, &interface_type, NULL, NULL );
 
    /* Pad POT if needed. */
+   rheight = height;
    if (pad_pot && gl_needPOT()) {
       width    = gl_pot( width );
       height   = gl_pot( height );
@@ -337,8 +338,8 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
       ERR( "Out of Memory" );
       return NULL;
    }
-   for (row=0; row<height; row++) {
-      row_pointers[ vflip ? height-row-1 :row ] = (png_bytep)
+   for (row=0; row<rheight; row++) { /* We only need to go to real height, not full height. */
+      row_pointers[ vflip ? rheight-row-1 : row ] = (png_bytep)
          (Uint8 *) surface->pixels + row*surface->pitch;
    }
 
