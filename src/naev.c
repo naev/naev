@@ -752,7 +752,7 @@ static void window_caption (void)
       return;
    }
    npng        = npng_open( rw );
-   naev_icon   = npng_readSurface( npng );
+   naev_icon   = npng_readSurface( npng, 0 );
    npng_close( npng );
    if (naev_icon == NULL) {
       WARN("Unable to load gfx/icon.png!");

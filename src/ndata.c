@@ -156,7 +156,7 @@ static void ndata_notfound (void)
    /* Create the surface. */
    rw    = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
    npng  = npng_open( rw );
-   sur   = npng_readSurface( npng );
+   sur   = npng_readSurface( npng, 0 );
    npng_close( npng );
 
    /* Render. */

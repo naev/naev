@@ -15,6 +15,7 @@
 #include <png.h>
 
 #include "log.h"
+#include "opengl_tex.h"
 
 
 /**
@@ -284,7 +285,7 @@ png_bytep npng_readImage( npng_t *npng, png_bytep **rows, int *channels, int *pi
  *    @param npng PNG image to load.
  *    @return Surface with data from the PNG image.
  */
-SDL_Surface *npng_readSurface( npng_t *npng )
+SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot )
 {
    png_bytep *row_pointers;
    png_uint_32 width, height, row;
@@ -301,6 +302,12 @@ SDL_Surface *npng_readSurface( npng_t *npng )
    channels = png_get_channels( npng->png_ptr, npng->info_ptr );
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
          &bit_depth, &color_type, &interface_type, NULL, NULL );
+
+   /* Pad POT if needed. */
+   if (pad_pot && gl_needPOT()) {
+      width    = gl_pot( width );
+      height   = gl_pot( height );
+   }
 
    /* Allocate the SDL surface to hold the image */
    Rmask = Gmask = Bmask = Amask = 0 ;

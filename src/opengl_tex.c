@@ -448,7 +448,7 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
  */
 static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
-   SDL_Surface *temp, *surface;
+   SDL_Surface *surface;
    glTexture* t;
    uint8_t* trans;
    SDL_RWops *rw;
@@ -460,21 +460,13 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       WARN("Failed to load surface '%s' from ndata.", path);
       return NULL;
    }
-   npng  = npng_open( rw );
-   temp  = npng_readSurface( npng );
+   npng     = npng_open( rw );
+   surface  = npng_readSurface( npng, 0 );
    npng_close( npng );
-   if (temp == NULL) {
+   if (surface == NULL) {
       WARN("'%s' could not be opened", path );
       return NULL;
    }
-
-   surface = SDL_DisplayFormatAlpha( temp ); /* sets the surface to what we use */
-   if (surface == NULL) {
-      WARN( "Error converting image to screen format: %s", SDL_GetError() );
-      return NULL;
-   }
-
-   SDL_FreeSurface(temp); /* free the temporary surface */
 
    /* we have to flip our surfaces to match the ortho */
    if (SDL_VFlipSurface(surface)) {
