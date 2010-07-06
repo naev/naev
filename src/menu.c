@@ -401,6 +401,9 @@ static void menu_death_continue( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
+   /* Ugly hack. */
+   toolkit_update();
+
    save_reload();
 }
 
@@ -413,6 +416,9 @@ static void menu_death_restart( unsigned int wid, char* str )
 
    window_destroy( wid );
    menu_Close(MENU_DEATH);
+
+   /* Ugly hack. */
+   toolkit_update();
 
    player_new();
 }
