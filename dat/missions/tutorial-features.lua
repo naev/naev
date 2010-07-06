@@ -1,7 +1,8 @@
 --[[
 
    This is one of NAEV's tutorial modules.
-   This module is responsible for bringing 0.3.9 (and earlier) player up to speed with current developments.   
+
+   This module is responsible for bringing 0.3.9 (and earlier) players up to speed with current developments.   
    As gameplay stabilizes, it will eventually be phased out.
 
 ]]--
