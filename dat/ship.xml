@@ -359,6 +359,46 @@
    <low/>
   </slots>
  </ship>
+ <ship name="Sirius Fidelity">
+  <base_type>Fidelity</base_type>
+  <GFX>fidelity</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>350000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
+  <movement>
+   <thrust>260</thrust>
+   <turn>130</turn>
+   <speed>280</speed>
+  </movement>
+  <health>
+   <shield>220</shield>
+   <armour>160</armour>
+   <energy>650</energy>
+   <shield_regen>140</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1500</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>35</cpu>
+   <crew>2</crew>
+   <mass>95</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="10" y="-2" h="0" />
+   <high x="10" y="2" h="0" />
+   <high x="0" y="-4" h="-3" />
+   <high x="0" y="4" h="-3" />
+   <medium/>
+   <medium/>
+   <low/>
+   <low/>
+  </slots>
+ </ship>
  <ship name="Lancelot">
   <base_type>Lancelot</base_type>
   <GFX>lancelot</GFX>
@@ -684,6 +724,50 @@
   </slots>
  </ship>
  <!-- Corvettes -->
+ <ship name="Sirius Preacher">
+  <base_type>Preacher</base_type>
+  <GFX sx="10" sy="10">preacher</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>720000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>100</turn>
+   <speed>220</speed>
+  </movement>
+  <health>
+   <shield>450</shield>
+   <armour>300</armour>
+   <energy>960</energy>
+   <shield_regen>220</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2450</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>55</cpu>
+   <crew>11</crew>
+   <mass>280</mass>
+   <fuel>400</fuel>
+   <cap_cargo>20</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="15" y="1"  h="2" />
+   <high x="15" y="-1"  h="2" />
+   <high x="-9"  y="-3"  h="2" />
+   <high x="-9"  y="3" h="2" />
+   <high x="-9" y="-10" h="2" />
+   <high x="-9" y="10"  h="2" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+  </slots>
+ </ship>
  <ship name="Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher</GFX>
@@ -902,6 +986,49 @@
    <medium />
    <medium />
    <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Sirius Divinity">
+  <base_type>Divinity</base_type>
+  <GFX sx="10" sy="10">divinity</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Destroyer</class>
+  <price>1300000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>The Divinity excels at interdiction against lighter targets given its high speed relative to other light capital ships. However, this advantage is not without drawbacks; the Divinity's high mobility comes at the cost of reduced firepower relative to other destroyer-class vessels.</description>
+  <movement>
+   <thrust>175</thrust>
+   <turn>80</turn>
+   <speed>190</speed>
+  </movement>
+  <health>
+   <shield>580</shield>
+   <armour>460</armour>
+   <energy>1300</energy>
+   <shield_regen>260</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>3000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>75</cpu>
+   <crew>15</crew>
+   <mass>640</mass>
+   <fuel>400</fuel>
+   <cap_cargo>25</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="20"  y="0"   h="0" />
+   <high x="10"   y="0"  h="0" />
+   <high x="-10" y="0" h="0" />
+   <high x="-20" y="0"  h="0" />
+   <medium />
+   <medium />
+   <medium />
    <low />
    <low />
    <low />
@@ -1277,6 +1404,55 @@
    <high x="0"   y="0"  h="7" />
    <high x="-15" y="0"  h="7" />
    <high x="-33" y="0"  h="7" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Sirius Dogma">
+  <base_type>Dogma</base_type>
+  <GFX sx="12" sy="12">dogma</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>8300000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is surpassed only by House Goddard's eponymous flagship and Nexus Shipyards' Peacemaker.</description>
+  <movement>
+   <thrust>50</thrust>
+   <turn>55</turn>
+   <speed>65</speed>
+  </movement>
+  <health>
+   <shield>1400</shield>
+   <armour>700</armour>
+   <energy>3100</energy>
+   <shield_regen>340</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>5300</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>160</cpu>
+   <crew>43</crew>
+   <mass>4200</mass>
+   <fuel>400</fuel>
+   <cap_cargo>60</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="40"  y="0"  h="2" />
+   <high x="25"  y="0"  h="2" />
+   <high x="12"  y="0" h="3" />
+   <high x="0"   y="0"  h="4" />
+   <high x="-15" y="0"  h="6" />
+   <high x="-33" y="0"  h="6" />
    <medium />
    <medium />
    <medium />
