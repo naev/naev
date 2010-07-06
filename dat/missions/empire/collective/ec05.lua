@@ -93,7 +93,7 @@ function accept ()
    misn_stage = 0
    misn_base, misn_base_sys = planet.get("Omega Station")
    misn_target_sys = system.get("Rockbed")
-   misn.setMarker(misn_target_sys)
+   misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
    misn.setTitle(misn_title)
@@ -173,7 +173,7 @@ function enter ( from_sys )
       player.msg( talk[6] )
       misn.setDesc( string.format(misn_desc[2],
             misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
    end
 end
 
@@ -310,12 +310,12 @@ function trinity_kill () -- Got killed
    misn_stage = 2
    trinity_alive = false
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-   misn.setMarker(misn_base_sys)
+   misn.markerMove( misn_marker, misn_base_sys )
 end
 function trinity_jump () -- Got away
    player.msg( talk[6] )
    misn_stage = 2
    trinity_alive = true
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-   misn.setMarker(misn_base_sys)
+   misn.markerMove( misn_marker, misn_base_sys )
 end

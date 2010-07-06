@@ -27,6 +27,7 @@
 #include "gui.h"
 #include "conf.h"
 #include "spfx.h"
+#include "npng.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -793,10 +794,16 @@ static SDL_Surface* loadNebula( const char* file )
 {
    char file_path[PATH_MAX];
    SDL_Surface* sur;
+   SDL_RWops *rw;
+   npng_t *npng;
 
    /* loads the file */
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
-   sur = IMG_Load( file_path );
+   rw    = SDL_RWFromFile( file_path, "rb" );;
+   npng  = npng_open( rw );
+   sur   = npng_readSurface( npng, 0, 1 );
+   npng_close( npng );
+   SDL_RWclose( rw );
    if (sur == NULL) {
       ERR("Unable to load Nebula image: %s", file);
       return NULL;

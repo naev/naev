@@ -98,6 +98,7 @@ glColour* col_fromName( const char* name );
  * Colourspace conversion routines.
  */
 void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
+void col_rgb2hsv( double *h, double *s, double *v, double r, double g, double b );
 
 
 

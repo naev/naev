@@ -34,6 +34,7 @@
 #include "cond.h"
 #include "gui_osd.h"
 #include "npc.h"
+#include "array.h"
 
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
@@ -350,19 +351,62 @@ int mission_start( const char *name )
 
 
 /**
+ * @brief Adds a system marker to a mission.
+ */
+int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
+{
+   MissionMarker *marker;
+   int i, n, m;
+
+   /* Create array. */
+   if (misn->markers == NULL)
+      misn->markers = array_create( MissionMarker );
+
+   /* Avoid ID collisions. */
+   if (id < 0) {
+      m = -1;
+      n = array_size( misn->markers );
+      for (i=0; i<n; i++)
+         if (misn->markers[i].id > m)
+            m = misn->markers[i].id;
+      id = m+1;
+   }
+
+   /* Create the marker. */
+   marker      = &array_grow( &misn->markers );
+   marker->id  = id;
+   marker->sys = sys;
+   marker->type = type;
+
+   return marker->id;
+}
+
+
+/**
  * @brief Marks all active systems that need marking.
  */
 void mission_sysMark (void)
 {
-   int i;
+   int i, j, n;
+   MissionMarker *m;
 
+   /* Clear markers. */
    space_clearMarkers();
 
    for (i=0; i<MISSION_MAX; i++) {
-      if ((player_missions[i].id != 0) &&
-            (player_missions[i].sys_marker != NULL)) {
-         space_addMarker(player_missions[i].sys_marker,
-               player_missions[i].sys_markerType);
+      /* Must be a valid player mission. */
+      if (player_missions[i].id == 0)
+         continue;
+      /* Must have markers. */
+      if (player_missions[i].markers == NULL)
+         continue;
+
+      n = array_size( player_missions[i].markers );
+      for (j=0; j<n; j++) {
+         m = &player_missions[i].markers[j];
+
+         /* Add the individual markers. */
+         space_addMarker( m->sys, m->type );
       }
    }
 }
@@ -378,12 +422,18 @@ void mission_sysMark (void)
 void mission_sysComputerMark( Mission* misn )
 {
    StarSystem *sys;
+   int i, n;
 
+   /* Clear markers. */
    space_clearComputerMarkers();
 
-   if (misn->sys_marker != NULL) {
-      sys = system_get(misn->sys_marker);
-      sys_setFlag(sys,SYSTEM_CMARKED);
+   /* Set all the markers. */
+   if (misn->markers != NULL) {
+      n = array_size(misn->markers);
+      for (i=0; i<n; i++) {
+         sys = system_getIndex( misn->markers[i].sys );
+         sys_setFlag( sys,SYSTEM_CMARKED );
+      }
    }
 }
 
@@ -462,8 +512,8 @@ void mission_cleanup( Mission* misn )
       free(misn->npc);
 
    /* Markers. */
-   if (misn->sys_marker != NULL)
-      free(misn->sys_marker);
+   if (misn->markers != NULL)
+      array_free( misn->markers );
 
    /* Cargo. */
    if (misn->cargo != NULL) {
@@ -1161,7 +1211,7 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
  */
 int missions_saveActive( xmlTextWriterPtr writer )
 {
-   int i,j;
+   int i,j,n;
    int nitems;
    char **items;
 
@@ -1178,12 +1228,20 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_elem(writer,"title","%s",player_missions[i].title);
          xmlw_elem(writer,"desc","%s",player_missions[i].desc);
          xmlw_elem(writer,"reward","%s",player_missions[i].reward);
-         if (player_missions[i].sys_marker != NULL) {
-            xmlw_startElem(writer,"marker");
-            xmlw_attr(writer,"type","%d",player_missions[i].sys_markerType);
-            xmlw_str(writer,"%s",player_missions[i].sys_marker);
-            xmlw_endElem(writer); /* "marker" */
+
+         /* Markers. */
+         xmlw_startElem( writer, "markers" );
+         if (player_missions[i].markers != NULL) {
+            n = array_size( player_missions[i].markers );
+            for (j=0; j<n; j++) {
+               xmlw_startElem(writer,"marker");
+               xmlw_attr(writer,"id","%d",player_missions[i].markers[j].id);
+               xmlw_attr(writer,"type","%d",player_missions[i].markers[j].type);
+               xmlw_str(writer,"%s", system_getIndex(player_missions[i].markers[j].sys)->name);
+               xmlw_endElem(writer); /* "marker" */
+            }
          }
+         xmlw_endElem( writer ); /* "markers" */
 
          /* Cargo */
          xmlw_startElem(writer,"cargos");
@@ -1264,6 +1322,8 @@ static int missions_parseActive( xmlNodePtr parent )
    char *title;
    const char **items;
    int nitems;
+   int id, sys, type;
+   StarSystem *ssys;
 
    xmlNodePtr node, cur, nest;
 
@@ -1299,13 +1359,31 @@ static int missions_parseActive( xmlNodePtr parent )
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
 
-            /* Get the marker. */
-            if (xml_isNode(cur,"marker")) {
-               xmlr_attr(cur,"type",buf);
-               misn->sys_markerType = (buf != NULL) ? atoi(buf) : 0;
-               if (buf != NULL)
-                  free(buf);
-               misn->sys_marker = xml_getStrd(cur);
+            /* Get the markers. */
+            if (xml_isNode(cur,"markers")) {
+               nest = cur->xmlChildrenNode;
+               do {
+                  if (xml_isNode(nest,"marker")) {
+                     /* Get ID. */
+                     xmlr_attr(nest,"id",buf);
+                     id = (buf != NULL) ? atoi(buf) : -1;
+                     if (buf != NULL)
+                        free(buf);
+                     /* Get type. */
+                     xmlr_attr(nest,"type",buf);
+                     type = (buf != NULL) ? atoi(buf) : -1;
+                     if (buf != NULL)
+                        free(buf);
+                     /* Get system. */
+                     ssys = system_get( xml_get( nest ));
+                     if (ssys == NULL) {
+                        WARN( "System Marker to '%s' does not exist", xml_get( nest ) );
+                        continue;
+                     }
+                     sys = system_index( ssys );
+                     mission_addMarker( misn, id, sys, type );
+                  }
+               } while (xml_nextNode(nest));
             }
 
             /* Cargo. */

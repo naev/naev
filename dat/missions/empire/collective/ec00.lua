@@ -57,7 +57,7 @@ function accept ()
    misn_nearby = system.get("Coriolis")
    misn_target = system.get("Dune")
    misn_base,misn_base_sys = planet.get("Omega Station")
-   misn.setMarker(misn_nearby) -- Not exact target
+   misn_marker = misn.markerAdd( misn_nearby, "low" )
 
    -- Mission details
    misn.setTitle(misn_title)
@@ -92,7 +92,7 @@ function enter()
    if misn_stage == 0 and sys == misn_target then
       misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
       misn_stage = 1
-      misn.setMarker(misn_base_sys) -- now we mark return to base
+      misn.markerMove( misn_marker, misn_base_sys )
    end
 end
 

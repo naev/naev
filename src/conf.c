@@ -1002,7 +1002,7 @@ int conf_saveConfig ( const char* file )
       }
 
       /* Determine the textual name for the modifier */
-      switch (mod) {
+      switch ((int)mod) {
          case NMOD_CTRL:  modname = "ctrl";   break;
          case NMOD_SHIFT: modname = "shift";  break;
          case NMOD_ALT:   modname = "alt";    break;

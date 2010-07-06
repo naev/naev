@@ -172,7 +172,7 @@ function accept ()
    end
 
    -- Check for cargo space and in case there isn't enough free space end the mission. It will keep showing up in the bar.
-   if player.freeCargo() <  3 then
+   if player.cargoFree() <  3 then
       tk.msg( title, not_enough_cargospace )
       misn.finish()
    end
@@ -180,7 +180,7 @@ function accept ()
    -- Add special mission cargo, name and quantity.
    -- The cargoID is a plain normal variable that holds this information.
    -- It can later be used to remove the cargo again.
-   cargoID = misn.addCargo( cargoname, 3 )
+   cargoID = misn.cargoAdd( cargoname, 3 )
 
    -- Set up mission information for the onboard computer and OSD.
    -- The OSD Title takes up to 11 signs.
@@ -218,7 +218,7 @@ function land ()
    -- Are we at our destination?
    if planet.cur() == targetworld then
       -- If so, remove the mission cargo.
-      misn.rmCargo( cargoID )
+      misn.cargoRm( cargoID )
       -- Give the player his reward.
       player.pay( reward )
 
@@ -233,7 +233,7 @@ end
 -- This will be called when the player aborts the mission in the onboard computer.
 function abort ()
    -- Remove cargo.
-   misn.rmCargo( cargoID )
+   misn.cargoRm( cargoID )
    -- Mark mission as unsuccessfully finished. It won't show up again if this mission is marked unique in mission.xml.
    misn.finish( false )
 end

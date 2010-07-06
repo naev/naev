@@ -51,7 +51,7 @@ function create()
    if i > 10 then
       misn.finish(false)
    end
-   misn.setMarker(sys,"rush") -- set system marker
+   misn.markerAdd( sys, "computer" )
    misn_dist = sys:jumpDist()
 
    -- mission generics

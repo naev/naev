@@ -74,12 +74,12 @@ function create()
       misn_faction = rnd.int(2)
       i = rnd.int(3)
       misn.setTitle( string.format(title[i+1], pnt:name()) )
-      misn.setMarker(sys,"cargo") -- mark the system
+      misn.markerAdd( sys, "computer" )
    elseif i < 6 then -- rush delivery
       misn_type = "Rush"
       misn_faction = rnd.int(5)
       misn.setTitle( string.format(title[11], pnt:name()) )
-      misn.setMarker(sys,"rush") -- mark the system
+      misn.markerAdd( sys, "computer" )
    else -- people delivery :)
       misn_type = "People"
       misn_faction = rnd.int(1)
@@ -94,7 +94,7 @@ function create()
       end
       i = rnd.int(1)
       misn.setTitle( string.format(title[i+21], carg_type, pnt:name()) )
-      misn.setMarker(sys,"cargo") -- mark the system
+      misn.markerAdd( sys, "computer" )
    end
 
    -- more mission specifics

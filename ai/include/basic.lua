@@ -7,6 +7,15 @@
 
 
 --[[
+-- Faces the target.
+--]]
+function __face ()
+   local target = ai.target()
+   ai.face( target )
+end
+
+
+--[[
 -- Brakes the ship
 --]]
 function brake ()
@@ -20,32 +29,51 @@ end
 
 
 --[[
--- Goes to a target position without braking
+-- Brakes the ship
 --]]
-function __goto_nobrake ()
-   local target   = ai.target()
-   local dir      = ai.face( target, nil, true )
-   local dist     = ai.dist( target )
-
-   -- Need to get closer
-   if dir < 10 then
-      ai.accel()
-
-   -- Need to start braking
-   elseif dist < 50 then
-      ai.poptask()
+function __subbrake ()
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.popsubtask()
       return
    end
 end
 
 
 --[[
--- Goes to a target position roughly
+-- Goes to a target position without braking
 --]]
-function goto ()
+function __goto_nobrake ()
+   local target   = ai.target()
+   local dir      = ai.face( target, nil, true )
+   __goto_generic( target, dir, false )
+end
+
+
+--[[
+-- Goes to a target position without braking
+--]]
+function __goto_nobrake_raw ()
+   local target   = ai.target()
+   local dir      = ai.face( target )
+   __goto_generic( target, dir, false )
+end
+
+
+--[[
+-- Goes to a precise position.
+--]]
+function __goto_precise ()
    local target   = ai.target()
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
+
+   -- Handle finished
+   if ai.isstopped() and dist < 10 then
+      ai.poptask() -- Finished
+   end
+
    local bdist    = ai.minbrakedist()
 
    -- Need to get closer
@@ -54,8 +82,55 @@ function goto ()
 
    -- Need to start braking
    elseif dist < bdist then
+      ai.pushsubtask("__subbrake")
+   end
+end
+
+
+
+
+--[[
+-- Goes to a target position roughly
+--]]
+function goto ()
+   local target   = ai.target()
+   local dir      = ai.face( target, nil, true )
+   __goto_generic( target, dir, true )
+end
+
+
+--[[
+-- Goto without velocity compensation.
+--]]
+function goto_raw ()
+   local target   = ai.target()
+   local dir      = ai.face( target )
+   __goto_generic( target, dir, true )
+end
+
+
+--[[
+-- Generic GOTO function.
+--]]
+function __goto_generic( target, dir, brake, subtask )
+   local dist     = ai.dist( target )
+   local bdist
+   if brake then
+      bdist    = ai.minbrakedist()
+   else
+      bdist    = 50
+   end
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
+      ai.accel()
+
+   -- Need to start braking
+   elseif dist < bdist then
       ai.poptask()
-      ai.pushtask("brake")
+      if brake then
+         ai.pushtask("brake")
+      end
       return
    end
 end

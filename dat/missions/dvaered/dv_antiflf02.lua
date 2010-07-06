@@ -94,7 +94,7 @@ function accept()
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setTitle(misn_title)
-        misn.setMarker(system.get(destsysname), "misc")
+        misn.markerAdd( system.get(destsysname), "low" )
         
         missionstarted = false
         DVdisablefail = true

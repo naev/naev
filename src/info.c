@@ -655,8 +655,8 @@ static void mission_menu_update( unsigned int wid, char* str )
    window_enableButton( wid, "btnAbortMission" );
 
    /* Select the system. */
-   if (misn->sys_marker != NULL)
-      map_center( misn->sys_marker );
+   if (misn->markers != NULL)
+      map_center( system_getIndex( misn->markers[0].sys )->name );
 }
 /**
  * @brief Aborts a mission in the mission menu.

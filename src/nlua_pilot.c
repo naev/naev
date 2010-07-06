@@ -86,6 +86,7 @@ static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_goto( lua_State *L );
+static int pilotL_face( lua_State *L );
 static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
@@ -143,6 +144,7 @@ static const luaL_reg pilotL_methods[] = {
    { "memory", pilotL_memory },
    { "taskClear", pilotL_taskclear },
    { "goto", pilotL_goto },
+   { "face", pilotL_face },
    { "brake", pilotL_brake },
    { "follow", pilotL_follow },
    { "attack", pilotL_attack },
@@ -1722,19 +1724,26 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
  *
  * Pilot must be under manual control for this to work.
  *
+ * @usage p:goto( v ) -- Goes to v precisely and braking
+ * @usage p:goto( v, true, true ) -- Same as p:goto( v )
+ * @usage p:goto( v, false ) -- Goes to v without braking compensating velocity
+ * @usage p:goto( v, false, false ) -- Really rough aproximation of going to v without braking
+ *
  *    @luaparam p Pilot to tell to go to a position.
  *    @luaparam v Vector target for the pilot.
  *    @luaparam brake If true (or nil) brakes the pilot near target position,
  *              otherwise pops the task when it is about to brake.
+ *    @luaparam compensate If true (or nil) compensates for velocity, otherwise it
+ *              doesn't. It only affects if brake is not set.
  * @luasee control
- * @luafunc goto( p, v, brake )
+ * @luafunc goto( p, v, brake, compensate )
  */
 static int pilotL_goto( lua_State *L )
 {
    Pilot *p;
    Task *t;
    LuaVector *lv;
-   int brake;
+   int brake, compensate;
    const char *tsk;
 
    /* Get parameters. */
@@ -1744,17 +1753,65 @@ static int pilotL_goto( lua_State *L )
       brake = lua_toboolean(L,3);
    else
       brake = 1;
+   if (lua_gettop(L) > 3)
+      compensate = lua_toboolean(L,4);
+   else
+      compensate = 1;
+
 
    /* Set the task. */
    if (brake) {
-      tsk = "goto";
+      tsk = "__goto_precise";
    }
    else {
-      tsk = "__goto_nobrake";
+      if (compensate)
+         tsk = "__goto_nobrake";
+      else
+         tsk = "__goto_nobrake_raw";
    }
    t        = pilotL_newtask( L, p, tsk );
    t->dtype = TASKDATA_VEC2;
    vectcpy( &t->dat.vec, &lv->vec );
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot face a target.
+ *
+ * @usage p:face( enemy_pilot ) -- Face enemy pilot
+ * @usage p:face( vec2.new( 0, 0 ) ) -- Face origin
+ *
+ *    @luaparam p Pilot to add task to.
+ *    @luaparam target Target to face (can be vec2 or pilot).
+ * @luafunc face( p, target )
+ */
+static int pilotL_face( lua_State *L )
+{
+   Pilot *p, *pt;
+   LuaVector *vt;
+   Task *t;
+
+   /* Get parameters. */
+   pt = NULL;
+   vt = NULL;
+   p  = luaL_validpilot(L,1);
+   if (lua_ispilot(L,2))
+      pt = luaL_validpilot(L,2);
+   else
+      vt = luaL_checkvector(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "__face" );
+   if (pt != NULL) {
+      t->dtype = TASKDATA_INT;
+      t->dat.num = pt->id;
+   }
+   else {
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &vt->vec );
+   }
 
    return 0;
 }

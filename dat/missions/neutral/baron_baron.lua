@@ -94,8 +94,8 @@ function accept()
     osd_msg[1] = string.format(osd_msg[1], sysname1, planetname)
     osd_msg[2] = string.format(osd_msg[2], sysname2, shipname)
     misn.osdCreate(osd_title, osd_msg)
-    
-    misn.setMarker(system.get(sysname1), "misc")
+   
+    misn_marker = misn.markerAdd( system.get(sysname1), "low" )
     
     talked = false
     stopping = false
@@ -169,7 +169,7 @@ function talkthieves()
     carg_id = misn.cargoAdd("The Baron's holopainting", 0)
 
     misn.osdActive(2)
-    misn.setMarker(system.get(sysname2), "misc")
+    misn.markerMove( misn_marker, system.get(sysname2) )
 
     player.takeoff()
 end

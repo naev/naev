@@ -392,7 +392,7 @@ static int playerL_takeoff( lua_State *L )
  * @brief Gets the free cargo space the player has.
  *
  *    @luareturn The free cargo space in tons of the player.
- * @brief cargoFree()
+ * @luafunc cargoFree()
  */
 static int playerL_cargoFree( lua_State *L )
 {

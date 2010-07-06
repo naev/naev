@@ -242,6 +242,7 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
             }
             i++;
          }
+         cli_history = i-1;
          window_setInput( wid, "inpInput", NULL );
          return 1;
 

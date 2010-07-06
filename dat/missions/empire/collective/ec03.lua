@@ -56,7 +56,7 @@ function accept ()
       misn_stage = 0      
       misn_base, misn_base_sys = planet.get("Omega Station")
       misn_target_sys = system.get("C-28")
-      misn.setMarker(misn_target_sys)
+      misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -81,7 +81,7 @@ function jump()
       -- Maybe introducing a delay here would be interesting.
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
       hook.land("land")
 
    -- Create some opposition

@@ -14,6 +14,7 @@
 #include <math.h>
 #include <string.h>
 
+#include "nmath.h"
 #include "naev.h"
 #include "log.h"
 #include "ncompat.h"
@@ -98,10 +99,11 @@ glColour cFontFriendly  =  { .r = 0.3, .g = 0.9, .b = 0.3, .a = 1. };
 glColour cFontHostile   =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
 glColour cFontNeutral   =  { .r = 1.0, .g = 0.9, .b = 0.0, .a = 1.  };
 
+
 /**
  * @brief Changes colourspace from HSV to RGB.
  *
- * All values go from 0 to 1.
+ * All values go from 0 to 1, except H which is 0-360.
  *
  *    @param[out] r Stores R.
  *    @param[out] g Stores G.
@@ -120,7 +122,7 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
       *b = v;
    }
    else {
-      var_h = h * 6;
+      var_h = h * 6 / 360.;
       var_i = floor(var_h);
       var_1 = v * (1 - s);
       var_2 = v * (1 - s * (var_h - var_i));
@@ -134,6 +136,90 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
       else                 { *r = v     ; *g = var_1 ; *b = var_2; }
    }
 }
+
+
+/**
+ * @brief Changes colourspace from RGB to HSV.
+ *
+ * All values go from 0 to 1, except H which is 0-360.
+ *
+ * Taken from (GIFT) GNU Image Finding Tool.
+ *
+ *    @param[out] h Stores Hue.
+ *    @param[out] s Stores Saturation.
+ *    @param[out] v Stores Value.
+ *    @param r Red to convert.
+ *    @param g Green to convert.
+ *    @param b Blue to convert.
+ */
+void col_rgb2hsv( double *H, double *S, double *V, double R, double G, double B )
+{
+   double H1, S1, V1;
+#ifdef HSV_TRAVIS
+   double R1, G1, B1;
+#endif /* HSV_TRAVIS */
+   double max, min, diff;
+
+   max = max3( R, G, B );
+   min = min3( R, G, B );
+   diff = max - min;
+
+   if (max == 0)
+      H1 = S1 = V1 = 0;
+   else {
+      V1 = max;
+      S1 = diff/max;
+      if (S1 == 0)
+         /* H1 is undefined, but give it a value anyway */
+         H1 = 0;
+      else {
+#ifdef HSV_TRAVIS
+         R1 = (max - R)/diff;
+         G1 = (max - G)/diff;
+         B1 = (max - B)/diff;
+
+         if ((R == max) && (G == min))
+            H1 = 5 + B1;
+         else {
+            if ((R == max) && (G != min))
+               H1 = 1 - G1;
+            else {
+               if ((G == max) && (B == min))
+                  H1 = 1 + R1;
+               else {
+                  if ((G == max) && (B != min))
+                     H1 = 3 - B1;
+                  else {
+                     if (R == max)
+                        H1 = 3 + G1;
+                     else
+                        H1 = 5 - R1;
+                  }
+               }
+            }
+         }
+
+         H1 *= 60; /* convert to range [0, 360] degrees */
+#else /* HSV_TRAVIS */
+         /* assume Foley & VanDam HSV */
+         if (R == max)
+            H1 = (G - B)/diff;
+         if (G == max)
+            H1 = 2 + (B - R)/diff;
+         if (B == max)
+            H1 = 4 + (R - G)/diff;
+
+         H1 *= 60; /* convert to range [0, 360] degrees */
+         if (H1 < 0)
+            H1 += 360;
+#endif /* HSV_TRAVIS */
+      }
+   }
+   *H = H1;
+   *S = S1;
+   *V = V1;
+}
+
 
 /**
  * @brief Returns a colour from it's name

@@ -81,6 +81,7 @@
 #include "hook.h"
 #include "npc.h"
 #include "console.h"
+#include "npng.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -738,6 +739,7 @@ static void window_caption (void)
 {
    char buf[PATH_MAX];
    SDL_RWops *rw;
+   npng_t *npng;
 
    /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
@@ -749,7 +751,10 @@ static void window_caption (void)
       WARN("Icon (gfx/icon.png) not found!");
       return;
    }
-   naev_icon = IMG_Load_RW( rw, 1 );
+   npng        = npng_open( rw );
+   naev_icon   = npng_readSurface( npng, 0, 0 );
+   npng_close( npng );
+   SDL_RWclose( rw );
    if (naev_icon == NULL) {
       WARN("Unable to load gfx/icon.png!");
       return;

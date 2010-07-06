@@ -38,6 +38,7 @@
 #include "music.h"
 #include "gui_osd.h"
 #include "npc.h"
+#include "array.h"
 
 
 /**
@@ -78,11 +79,13 @@ extern void mission_sysMark (void);
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
-static int misn_setMarker( lua_State *L );
 static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
+static int misn_markerAdd( lua_State *L );
+static int misn_markerMove( lua_State *L );
+static int misn_markerRm( lua_State *L );
 static int misn_cargoAdd( lua_State *L );
 static int misn_cargoRm( lua_State *L );
 static int misn_cargoJet( lua_State *L );
@@ -95,11 +98,13 @@ static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
    { "setReward", misn_setReward },
-   { "setMarker", misn_setMarker },
    { "setNPC", misn_setNPC },
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
+   { "markerAdd", misn_markerAdd },
+   { "markerMove", misn_markerMove },
+   { "markerRm", misn_markerRm },
    { "cargoAdd", misn_cargoAdd },
    { "cargoRm", misn_cargoRm },
    { "cargoJet", misn_cargoJet },
@@ -351,61 +356,147 @@ static int misn_setReward( lua_State *L )
    cur_mission->reward = strdup(str);
    return 0;
 }
+
 /**
- * @brief Sets the mission marker on the system.  If no parameters are passed it
- * unsets the current marker.
+ * @brief Adds a new marker.
  *
- * There are basically three different types of markers:
+ * @usage my_marker = misn.markerAdd( system.get("Gamma Polaris"), "low" )
  *
- *  - "misc" : These markers are for unique or non-standard missions.
- *  - "cargo" : These markers are for regular cargo hauling missions.
- *  - "rush" : These markers are for timed missions.
+ * Valid marker types are:<br/>
+ *  - "plot": Important plot marker.<br/>
+ *  - "high": High importance mission marker (lower than plot).<br/>
+ *  - "low": Low importance mission marker (lower than high).<br/>
+ *  - "computer": Mission computer marker.<br/>
  *
- * @usage misn.setMarker() -- Clears the marker
- * @usage misn.setMarker( sys, "misc" ) -- Misc mission marker.
- * @usage misn.setMarker( sys, "cargo" ) -- Cargo mission marker.
- * @usage misn.setMarker( sys, "rush" ) -- Rush mission marker.
- *
- *    @luaparam sys System to mark.  Unmarks if no parameter or nil is passed.
- *    @luaparam type Optional parameter that specifies mission type.  Can be one of
- *          "misc", "rush" or "cargo".
- * @luafunc setMarker( sys, type )
+ *    @luaparam sys System to mark.
+ *    @luaparam type Colouring scheme to use.
+ *    @luareturn A marker ID to be used with markerMove and markerRm.
+ * @luafunc markerAdd( sys, type )
  */
-static int misn_setMarker( lua_State *L )
+static int misn_markerAdd( lua_State *L )
 {
-   const char *str;
+   int id;
    LuaSystem *sys;
+   const char *stype;
+   SysMarker type;
 
-   /* No parameter clears the marker */
-   if (lua_gettop(L)==0) {
-      if (cur_mission->sys_marker != NULL)
-         free(cur_mission->sys_marker);
-      cur_mission->sys_marker = NULL;
-      mission_sysMark(); /* Clear the marker */
-      return 0; /* Our job is done here. */
+   /* Check parameters. */
+   sys   = luaL_checksystem( L, 1 );
+   stype = luaL_checkstring( L, 2 );
+
+   /* Handle types. */
+   if (strcmp(stype, "computer")==0)
+      type = SYSMARKER_COMPUTER;
+   else if (strcmp(stype, "low")==0)
+      type = SYSMARKER_LOW;
+   else if (strcmp(stype, "high")==0)
+      type = SYSMARKER_HIGH;
+   else if (strcmp(stype, "plot")==0)
+      type = SYSMARKER_PLOT;
+   else
+      NLUA_ERROR(L, "Unknown marker type: %s", stype);
+
+   /* Add the marker. */
+   id = mission_addMarker( cur_mission, -1, system_index(sys->s), type );
+
+   /* Update system markers. */
+   mission_sysMark();
+
+   /* Return the ID. */
+   lua_pushnumber( L, id );
+   return 1;
+}
+
+/**
+ * @brief Moves a marker to a new system.
+ *
+ * @usage misn.markerMove( my_marker, system.get("Delta Pavonis") )
+ *
+ *    @luaparam id ID of the mission marker to move.
+ *    @luaparam sys System to move the marker to.
+ * @luafunc markerMove( id, sys )
+ */
+static int misn_markerMove( lua_State *L )
+{
+   int id;
+   LuaSystem *sys;
+   MissionMarker *marker;
+   int i, n;
+
+   /* Handle parameters. */
+   id    = luaL_checkinteger( L, 1 );
+   sys   = luaL_checksystem( L, 2 );
+
+   /* Mission must have markers. */
+   if (cur_mission->markers == NULL) {
+      NLUA_ERROR( L, "Mission has no markers set!" );
+      return 0;
    }
 
-   /* Passing in a Star System */
-   sys = luaL_checksystem(L,1);
-   if (cur_mission->sys_marker != NULL)
-      free(cur_mission->sys_marker);
-   cur_mission->sys_marker = strdup(sys->s->name);
-
-   /* Get the type. */
-   if (lua_gettop(L) > 1) {
-      str = luaL_checkstring(L,2);
-      if (strcmp(str, "misc")==0)
-         cur_mission->sys_markerType = SYSMARKER_MISC;
-      else if (strcmp(str, "rush")==0)
-         cur_mission->sys_markerType = SYSMARKER_RUSH;
-      else if (strcmp(str, "cargo")==0)
-         cur_mission->sys_markerType = SYSMARKER_CARGO;
-      else
-         NLUA_DEBUG("Unknown marker type: %s", str);
+   /* Check id. */
+   marker = NULL;
+   n = array_size( cur_mission->markers );
+   for (i=0; i<n; i++) {
+      if (id == cur_mission->markers[i].id) {
+         marker = &cur_mission->markers[i];
+         break;
+      }
+   }
+   if (marker == NULL) {
+      NLUA_ERROR( L, "Mission does not have a marker with id '%d'", id );
+      return 0;
    }
 
-   mission_sysMark(); /* mark the system */
+   /* Update system. */
+   marker->sys = system_index( sys->s );
 
+   /* Update system markers. */
+   mission_sysMark();
+   return 0;
+}
+
+/**
+ * @brief Removes a mission system marker.
+ *
+ * @usage misn.markerRm( my_marker )
+ *
+ *    @luaparam id ID of the marker to remove.
+ * @luafunc markerRm( id )
+ */
+static int misn_markerRm( lua_State *L )
+{
+   int id;
+   int i, n;
+   MissionMarker *marker;
+
+   /* Handle parameters. */
+   id    = luaL_checkinteger( L, 1 );
+
+   /* Mission must have markers. */
+   if (cur_mission->markers == NULL) {
+      /* Already removed. */
+      return 0;
+   }
+
+   /* Check id. */
+   marker = NULL;
+   n = array_size( cur_mission->markers );
+   for (i=0; i<n; i++) {
+      if (id == cur_mission->markers[i].id) {
+         marker = &cur_mission->markers[i];
+         break;
+      }
+   }
+   if (marker == NULL) {
+      /* Already removed. */
+      return 0;
+   }
+
+   /* Remove the marker. */
+   array_erase( &cur_mission->markers, marker, &marker[1] );
+
+   /* Update system markers. */
+   mission_sysMark();
    return 0;
 }
 

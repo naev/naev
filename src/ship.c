@@ -23,6 +23,8 @@
 #include "toolkit.h"
 #include "array.h"
 #include "conf.h"
+#include "npng.h"
+#include "colour.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -52,6 +54,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -343,6 +346,185 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
 
 
 /**
+ * @brief Generates a target graphic for a ship.
+ */
+static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
+{
+   SDL_Surface *gfx;
+   int potw, poth;
+   int x, y, sw, sh;
+   SDL_Rect rtemp, dstrect;
+   int i, j;
+   uint32_t *pix;
+   double r, g, b, a;
+   double h, s, v;
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   Uint32 saved_flags;
+   Uint8 saved_alpha;
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Get sprite size. */
+   sw = temp->gfx_space->w / sx;
+   sh = temp->gfx_space->h / sy;
+
+   /* POT size. */
+   if (gl_needPOT()) {
+      potw = gl_pot( SHIP_TARGET_W );
+      poth = gl_pot( SHIP_TARGET_H );
+   }
+   else {
+      potw = SHIP_TARGET_W;
+      poth = SHIP_TARGET_H;
+   }
+
+   /* Create the surface. */
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+
+   /* create the temp POT surface */
+   gfx = SDL_CreateRGBSurface( 0, potw, poth,
+         surface->format->BytesPerPixel*8, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
+   saved_alpha = surface->format->alpha;
+   if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
+      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+      SDL_SetColorKey( surface, 0, surface->format->colorkey );
+   }
+
+   /* create the temp POT surface */
+   gfx = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+         potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   if (gfx == NULL) {
+      WARN( "Unable to create ship '%s' targetting surface.", temp->name );
+      return -1;
+   }
+
+   /* Copy over. */
+   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
+   rtemp.x = sw * x;
+   rtemp.y = sh * (temp->gfx_space->sy-y-1);
+   rtemp.w = sw;
+   rtemp.h = sh;
+   dstrect.x = (SHIP_TARGET_W - sw) / 2;
+   dstrect.y = (SHIP_TARGET_H - sh) / 2;
+   dstrect.w = rtemp.w;
+   dstrect.h = rtemp.h;
+   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
+
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   /* set saved alpha */
+   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+      SDL_SetAlpha( surface, 0, 0 );
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Some filtering. */
+   for (j=0; j<SHIP_TARGET_H; j++) {
+      for (i=0; i<SHIP_TARGET_W; i++) {
+         pix   = (uint32_t*) ((uint8_t*) gfx->pixels + j*gfx->pitch + i*gfx->format->BytesPerPixel);
+         r     = ((double) (*pix & RMASK)) / (double) RMASK;
+         g     = ((double) (*pix & GMASK)) / (double) GMASK;
+         b     = ((double) (*pix & BMASK)) / (double) BMASK;
+         a     = ((double) (*pix & AMASK)) / (double) AMASK;
+         if (j%2) /* Add scanlines. */
+            a *= 0.5;
+
+         /* Convert to HSV. */
+         col_rgb2hsv( &h, &s, &v, r, g, b );
+
+         h  = 0.0;
+         s  = 1.0;
+         v *= 1.5;
+
+         /* Convert back to RGB. */
+         col_hsv2rgb( &r, &g, &b, h, s, v );
+
+         /* Convert to pixel. */
+         *pix =   ((uint32_t) (r*RMASK) & RMASK) |
+                  ((uint32_t) (g*GMASK) & GMASK) |
+                  ((uint32_t) (b*BMASK) & BMASK) |
+                  ((uint32_t) (a*AMASK) & AMASK);
+      }
+   }
+
+   /* Load the surface. */
+   temp->gfx_target = gl_loadImagePad( NULL, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the graphics for a ship.
+ *
+ *    @param temp Ship to load into.
+ *    @param buf Name of the texture to work with.
+ */
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
+{
+   char base[PATH_MAX], str[PATH_MAX];
+   int i;
+   png_uint_32 w, h;
+   SDL_RWops *rw;
+   npng_t *npng;
+   SDL_Surface *surface;
+
+   /* Get base path. */
+   for (i=0; i<PATH_MAX; i++) {
+      if ((buf[i] == '\0') || (buf[i] == '_')) {
+         base[i] = '\0';
+         break;
+      }
+      base[i] = buf[i]; 
+   }
+   if (i>=PATH_MAX) {
+      WARN("Failed to get base path of '%s'.", buf);
+      return -1;
+   }
+
+   /* Load the space sprite. */
+   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
+   rw    = SDL_RWFromFile( str, "rb" );
+   npng  = npng_open( rw );
+   npng_dim( npng, &w, &h );
+   surface = npng_readSurface( npng, gl_needPOT(), 1 );
+
+   /* Load the texture. */
+   temp->gfx_space = gl_loadImagePad( str, surface,
+         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
+         w, h, sx, sy, 0 );
+
+   /* Create the target graphic. */
+   ship_genTargetGFX( temp, surface, sx, sy );
+
+   /* Free stuff. */
+   npng_close( npng );
+   SDL_RWclose( rw );
+   SDL_FreeSurface( surface );
+
+   /* Load the engine sprite .*/
+   if (conf.engineglow && conf.interpolate) {
+      snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+      if (temp->gfx_engine == NULL)
+         WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
+   }
+
+   /* Calculate mount angle. */
+   temp->mangle  = 2.*M_PI;
+   temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
+
+   /* Get the comm graphic for future loading. */
+   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   temp->gfx_comm = strdup(str);
+
+   return 0;
+}
+
+
+/**
  * @brief Extracts the ingame ship from an XML node.
  *
  *    @param temp Ship to load data into.
@@ -353,9 +535,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
    int i;
    xmlNodePtr cur, node;
-   char str[PATH_MAX], base[PATH_MAX];
-   char *stmp, *buf;
+   char str[PATH_MAX];
    int sx, sy;
+   char *stmp, *buf;
    int l, m, h;
 
    /* Clear memory. */
@@ -403,45 +585,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          else
             sy = 8;
 
-         /* Get base path. */
-         for (i=0; i<PATH_MAX; i++) {
-            if ((buf[i] == '\0') || (buf[i] == '_')) {
-               base[i] = '\0';
-               break;
-            }
-            base[i] = buf[i]; 
-         }
-         if (i>=PATH_MAX) {
-            WARN("Failed to get base path of '%s'.", buf);
-            continue;
-         }
-
-         /* Load the space sprite. */
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
-         temp->gfx_space = gl_newSprite( str, sx, sy,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-
-         /* Load the engine sprite .*/
-         if (conf.engineglow && conf.interpolate) {
-            snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
-            temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
-            if (temp->gfx_engine == NULL)
-               WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
-         }
-
-         /* Load target graphic. */
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_TARGET SHIP_EXT, base, base );
-         temp->gfx_target = gl_newImage(str, 0);
-         if (temp->gfx_target == NULL)
-            WARN("Ship '%s' does not have a target graphic (%s).", temp->name, str );
-
-         /* Calculate mount angle. */
-         temp->mangle  = 2.*M_PI;
-         temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
-
-         /* Get the comm graphic for future loading. */
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
-         temp->gfx_comm = strdup(str);
+         /* Load the graphics. */
+         ship_loadGFX( temp, buf, sx, sy );
 
          continue;
       }

@@ -497,6 +497,18 @@ StarSystem* system_getIndex( int id )
 
 
 /**
+ * @brief Gets the index of a star system.
+ *
+ *    @param sys System to get index of.
+ *    @return The index of the system.
+ */
+int system_index( StarSystem *sys )
+{
+   return sys->id;
+}
+
+
+/**
  * @brief Get the name of a system from a planetname.
  *
  *    @param planetname Planet name to match.
@@ -859,7 +871,7 @@ void space_initStars( int n )
 void space_init ( const char* sysname )
 {
    char* nt;
-   int i, n;
+   int i, n, s;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -943,9 +955,12 @@ void space_init ( const char* sysname )
    /* Simulate system. */
    pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
+   s = sound_disabled;
+   sound_disabled = 1;
    n = SYSTEM_SIMULATE_TIME / fps_min;
    for (i=0; i<n; i++)
       update_routine( fps_min );
+   sound_disabled = s;
    player_messageToggle( 1 );
    pilot_rmFlag( player.p, PILOT_INVISIBLE );
 }
@@ -1090,7 +1105,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
    SDL_RWops *rw;
    npng_t *npng;
-   int w, h;
+   png_uint_32 w, h;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -2202,9 +2217,10 @@ void space_clearMarkers (void)
    int i;
    for (i=0; i<systems_nstack; i++) {
       sys_rmFlag(&systems_stack[i], SYSTEM_MARKED);
-      systems_stack[i].markers_misc  = 0;
-      systems_stack[i].markers_rush  = 0;
-      systems_stack[i].markers_cargo = 0;
+      systems_stack[i].markers_computer = 0;
+      systems_stack[i].markers_plot  = 0;
+      systems_stack[i].markers_high  = 0;
+      systems_stack[i].markers_low   = 0;
    }
 }
 
@@ -2223,30 +2239,33 @@ void space_clearComputerMarkers (void)
 /**
  * @brief Adds a marker to a system.
  *
- *    @param sys Name of the system to add marker to.
+ *    @param sys ID of the system to add marker to.
  *    @param type Type of the marker to add.
  *    @return 0 on success.
  */
-int space_addMarker( const char *sys, SysMarker type )
+int space_addMarker( int sys, SysMarker type )
 {
    StarSystem *ssys;
    int *markers;
 
    /* Get the system. */
-   ssys = system_get(sys);
+   ssys = system_getIndex(sys);
    if (ssys == NULL)
       return -1;
 
    /* Get the marker. */
    switch (type) {
-      case SYSMARKER_MISC:
-         markers = &ssys->markers_misc;
+      case SYSMARKER_COMPUTER:
+         markers = &ssys->markers_computer;
          break;
-      case SYSMARKER_RUSH:
-         markers = &ssys->markers_rush;
+      case SYSMARKER_LOW:
+         markers = &ssys->markers_low;
          break;
-      case SYSMARKER_CARGO:
-         markers = &ssys->markers_cargo;
+      case SYSMARKER_HIGH:
+         markers = &ssys->markers_high;
+         break;
+      case SYSMARKER_PLOT:
+         markers = &ssys->markers_plot;
          break;
       default:
          WARN("Unknown marker type.");
@@ -2264,30 +2283,33 @@ int space_addMarker( const char *sys, SysMarker type )
 /**
  * @brief Removes a marker from a system.
  *
- *    @param sys Name of the system to remove marker from.
+ *    @param sys ID of the system to remove marker from.
  *    @param type Type of the marker to remove.
  *    @return 0 on success.
  */
-int space_rmMarker( const char *sys, SysMarker type )
+int space_rmMarker( int sys, SysMarker type )
 {
    StarSystem *ssys;
    int *markers;
 
    /* Get the system. */
-   ssys = system_get(sys);
+   ssys = system_getIndex(sys);
    if (ssys == NULL)
       return -1;
 
    /* Get the marker. */
    switch (type) {
-      case SYSMARKER_MISC:
-         markers = &ssys->markers_misc;
+      case SYSMARKER_COMPUTER:
+         markers = &ssys->markers_computer;
          break;
-      case SYSMARKER_RUSH:
-         markers = &ssys->markers_rush;
+      case SYSMARKER_LOW:
+         markers = &ssys->markers_low;
          break;
-      case SYSMARKER_CARGO:
-         markers = &ssys->markers_cargo;
+      case SYSMARKER_HIGH:
+         markers = &ssys->markers_high;
+         break;
+      case SYSMARKER_PLOT:
+         markers = &ssys->markers_plot;
          break;
       default:
          WARN("Unknown marker type.");
@@ -2497,7 +2519,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
-      WARN("q is empty after getting adjancies of %s.", sys->name);
+      /* Means system isn't connected. */
+      /*WARN("q is empty after getting adjancies of %s.", sys->name);*/
       q_destroy(q);
       q_destroy(qn);
       presenceCleanup(sys);

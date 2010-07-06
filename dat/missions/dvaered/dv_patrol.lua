@@ -90,7 +90,7 @@ function create ()
       misn.finish(false)
    end
    base, base_sys = planet.cur()
-   misn.setMarker(systems[1])
+   mission_marker = misn.markerAdd( systems[1], "computer" )
 
    -- Create the description.
    desc = string.format( misn_desc[1], num_systems ) .. systems[1]:name()
@@ -183,13 +183,13 @@ function setNextGoal ()
          misn_stage = 2
          player.msg(msg_msg[5])
          misn.setDesc( string.format( misn_desc[3], base:name(), base_sys:name() ) )
-         misn.setMarker(base_sys)
+         misn.markerMove( mission_marker, base_sys )
 
       -- Need to visit more systems
       else
          player.msg(msg_msg[4])
          misn.setDesc( string.format( misn_desc[2], systems[visited+1]:name() ) )
-         misn.setMarker(systems[visited+1])
+         misn.markerMove( mission_marker, systems[ visited+1 ]  )
       end
    end
 end

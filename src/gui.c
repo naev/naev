@@ -56,9 +56,6 @@
 #define GUI_DATA     "dat/gui.xml" /**< Global GUI configuration file. */
 #define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
-#define TARGET_WIDTH 128 /**< Width of target graphics. */
-#define TARGET_HEIGHT 96 /**< Height of target graphics. */
-
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 

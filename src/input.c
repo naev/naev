@@ -482,7 +482,7 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
  */
 const char* input_modToText( SDLMod mod )
 {
-   switch (mod) {
+   switch ((int)mod) {
       case NMOD_NONE:   return "None";
       case NMOD_CTRL:   return "Ctrl";
       case NMOD_SHIFT:  return "Shift";

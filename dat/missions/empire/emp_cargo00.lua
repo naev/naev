@@ -52,7 +52,7 @@ end
 
 
 function accept ()
-   misn.setMarker(sys)
+   misn.markerAdd( sys, "low" )
 
    -- Intro text
    if not tk.yesno( title[1], text[1] ) then
