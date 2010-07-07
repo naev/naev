@@ -374,6 +374,7 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  */
 Outfit* outfit_get( const char* name );
 Outfit* outfit_getW( const char* name );
+Outfit* outfit_getAll( int *n );
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );

@@ -111,6 +111,16 @@ Outfit* outfit_getW( const char* name )
 
 
 /**
+ * @brief Gets all the outfits.
+ */
+Outfit* outfit_getAll( int *n )
+{
+   *n = array_size(outfit_stack);
+   return outfit_stack;
+}
+
+
+/**
  * @brief Function meant for use with C89, C99 algorithm qsort().
  *
  *    @param outfit1 First argument to compare.

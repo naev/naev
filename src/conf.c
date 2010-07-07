@@ -100,6 +100,7 @@ static void print_usage( char **argv )
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
 #ifdef DEBUGGING
    LOG("   --devmode             enables dev mode perks like the editors");
+   LOG("   --devcsv              generates csv output from the ndata for developement purposes");
 #endif /* DEBUGGING */
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
@@ -143,6 +144,7 @@ void conf_setDefaults (void)
    /* Misc. */
    conf.nosave       = 0;
    conf.devmode      = 0;
+   conf.devcsv       = 0;
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -501,6 +503,7 @@ void conf_parseCLI( int argc, char** argv )
       { "nondata", no_argument, 0, 'N' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
+      { "devcsv", no_argument, 0, 'C' },
 #endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' }, 
       { "version", no_argument, 0, 'v' },
@@ -558,6 +561,11 @@ void conf_parseCLI( int argc, char** argv )
          case 'D':
             conf.devmode = 1;
             LOG("Enabling developer mode.");
+            break;
+
+         case 'C':
+            conf.devcsv = 1;
+            LOG("Will generate CVS ouptut.");
             break;
 #endif /* DEBUGGING */
 

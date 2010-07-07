@@ -18,6 +18,8 @@ naev_SOURCES = \
 	conf.c \
 	console.c \
 	debris.c \
+	dev.c \
+	dev_outfit.c \
 	dev_planet.c \
 	dev_system.c \
 	dev_sysedit.c \
@@ -118,6 +120,8 @@ naev_SOURCES = \
 	config.h \
 	console.h \
 	debris.h \
+	dev.h \
+	dev_outfit.h \
 	dev_planet.h \
 	dev_system.h \
 	dev_sysedit.h \

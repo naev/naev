@@ -82,6 +82,7 @@
 #include "npc.h"
 #include "console.h"
 #include "npng.h"
+#include "dev.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -218,7 +219,6 @@ int main( int argc, char** argv )
    /* random numbers */
    rng_init();
 
-
    /*
     * OpenGL
     */
@@ -282,6 +282,10 @@ int main( int argc, char** argv )
 
    /* Data loading */
    load_all();
+
+   /* Generate the CVS. */
+   if (conf.devcsv)
+      dev_csv();
 
    /* Unload load screen. */
    loadscreen_unload();
