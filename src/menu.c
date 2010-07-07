@@ -87,6 +87,7 @@ static void exit_game (void);
 static void menu_death_continue( unsigned int wid, char* str );
 static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
+static void menu_death_close( unsigned int wid, char* str );
 /* options button. */
 static void menu_options_button( unsigned int wid, char *str );
 
@@ -401,9 +402,6 @@ static void menu_death_continue( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
-   /* Ugly hack. */
-   toolkit_update();
-
    save_reload();
 }
 
@@ -417,9 +415,6 @@ static void menu_death_restart( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
-   /* Ugly hack. */
-   toolkit_update();
-
    player_new();
 }
 
@@ -431,6 +426,7 @@ void menu_death (void)
    unsigned int wid;
    
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+   window_onClose( wid, menu_death_close );
 
    /* Propose the player to continue if the samegame exist, if not, propose to restart */
    char path[PATH_MAX];
@@ -465,6 +461,15 @@ static void menu_death_main( unsigned int wid, char* str )
 
    /* Game will repause now since toolkit closes and reopens. */
    menu_main();
+}
+/**
+ * @brief Hack to get around the fact the death menu unpauses the game.
+ */
+static void menu_death_close( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   pause_game(); /* Repause the game. */
 }
 
 
