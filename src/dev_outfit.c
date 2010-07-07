@@ -47,8 +47,8 @@ void dout_csvBolt( const char *path )
          continue;
  
       shots = 1. / o->u.blt.delay;
-      dps  += shots * o->u.blt.damage;
-      eps  += shots * o->u.blt.energy;
+      dps   = shots * o->u.blt.damage;
+      eps   = shots * o->u.blt.energy;
 
       l = snprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
