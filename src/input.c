@@ -56,7 +56,7 @@ const char *keybindNames[] = {
    "target_nextHostile", "target_prevHostile", "target_hostile",
    "target_clear",
    /* Fighting. */
-   "primary", "face", "board", "safety",
+   "primary", "face", "board",
    /* Weapon selection. */
    "weap_all", "weap_turret", "weap_forward",
    /* Secondary weapons. */
@@ -97,7 +97,6 @@ const char *keybindDescription[] = {
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
-   "Toggles weapon safety (weapons hitting friendly ships).",
    /* Weapon selection. */
    "Sets fire mode to use all weapons available (both turret and forward mounts).",
    "Sets fire mode to only use turret-class primary weapons.",
@@ -213,7 +212,6 @@ void input_setDefault (void)
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ALL );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
-   input_setKeybind( "safety", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
    /* Weapon selection. */
    input_setKeybind( "weap_all", KEYBIND_KEYBOARD, SDLK_1, NMOD_NONE );
    input_setKeybind( "weap_turret", KEYBIND_KEYBOARD, SDLK_2, NMOD_NONE );
@@ -770,9 +768,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!paused) player_abortAutonav(NULL);
          player_board();
       }
-   } else if (KEY("safety") && INGAME() && !repeat) {
-      if (value==KEY_PRESS)
-         weapon_toggleSafety();
 
 
    /* 
