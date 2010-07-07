@@ -1132,6 +1132,17 @@
    <radius>2</radius>
   </specific>
  </outfit>
+ <outfit name="Ultra Map">
+  <general>
+   <mass>0</mass>
+   <price>1</price>
+   <description>For cheating.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <radius>999</radius>
+  </specific>
+ </outfit>
  <outfit name="Civilian Jammer">
   <general>
    <slot>medium</slot>
