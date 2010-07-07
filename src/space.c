@@ -466,6 +466,24 @@ const StarSystem* system_getAll( int *nsys )
 
 
 /**
+ * @brief Checks to see if a system exists.
+ *
+ *    @param sysname Name of the system to match.
+ *    @return 1 if the system exists.
+ */
+int system_exists( const char* sysname )
+{
+   int i;
+
+   for (i=0; i<systems_nstack; i++)
+      if (strcmp(sysname, systems_stack[i].name)==0)
+         return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Get the system from it's name.
  *
  *    @param sysname Name to match.

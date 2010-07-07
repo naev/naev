@@ -651,6 +651,12 @@ static int playerL_teleport( lua_State *L )
    else
       NLUA_INVALID_PARAMETER();
 
+   /* Check if system exists. */
+   if (!system_exists( name )) {
+      NLUA_ERROR( L, "System '%s' does not exist.", name );
+      return 0;
+   }
+
    /* Jump out hook is run first. */
    hooks_run( "jumpout" );
 
