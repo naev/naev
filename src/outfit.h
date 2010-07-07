@@ -421,4 +421,10 @@ int outfit_load (void);
 void outfit_free (void);
 
 
+/*
+ * Misc.
+ */
+const char *outfit_damageTypeToStr( DamageType dmg );
+
+
 #endif /* OUTFIT_H */

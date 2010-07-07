@@ -58,7 +58,6 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
  */
 /* misc */
 static DamageType outfit_strToDamageType( char *buf );
-static const char *outfit_damageTypeToStr( DamageType dmg );
 static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
@@ -630,7 +629,7 @@ static DamageType outfit_strToDamageType( char *buf )
 /**
  * @brief Gets the human readable string from damage type.
  */
-static const char *outfit_damageTypeToStr( DamageType dmg )
+const char *outfit_damageTypeToStr( DamageType dmg )
 {
    switch (dmg) {
       case DAMAGE_TYPE_ENERGY:
