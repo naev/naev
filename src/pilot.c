@@ -238,25 +238,30 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
       if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
          continue;
 
-      if (!pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ) &&
-            (areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-               ((pilot_stack[i]->id == PLAYER_ID) && 
-                  pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+      /* Must not be invisible. */
+      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
+         continue;
 
-         /* Shouldn't be disabled. */
-         if (pilot_isDisabled(pilot_stack[i]))
-            continue;
+      /* Should either be hostile by faction or by player. */
+      if (!(areEnemies( p->faction, pilot_stack[i]->faction) ||
+               ((pilot_stack[i]->id == PLAYER_ID) &&
+                pilot_isFlag(p,PILOT_HOSTILE))))
+         continue;
 
-         /* Must be in range. */
-         if (!pilot_inRangePilot( p, pilot_stack[i] ))
-            continue;
 
-         /* Check distance. */
-         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
-         if (!tp || (td < d)) {
-            d = td;
-            tp = pilot_stack[i]->id;
-         }
+      /* Shouldn't be disabled. */
+      if (pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Must be in range. */
+      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+         continue;
+
+      /* Check distance. */
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      if (!tp || (td < d)) {
+         d = td;
+         tp = pilot_stack[i]->id;
       }
    }
    return tp;
