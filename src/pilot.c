@@ -232,7 +232,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    double d, td;
 
    tp = 0;
-   d = 0.;
+   d  = 0.;
    for (i=0; i<pilot_nstack; i++) {
       /* Must not be bribed. */
       if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
@@ -260,7 +260,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
       /* Check distance. */
       td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
       if (!tp || (td < d)) {
-         d = td;
+         d  = td;
          tp = pilot_stack[i]->id;
       }
    }

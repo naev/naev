@@ -2530,7 +2530,7 @@ static int aiL_hostile( lua_State *L )
    Pilot *p;
 
    id = luaL_checklong(L,1);
-   p = pilot_get(id);
+   p  = pilot_get(id);
    if (p==NULL) {
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
