@@ -21,6 +21,7 @@ naev_SOURCES = \
 	dev.c \
 	dev_outfit.c \
 	dev_planet.c \
+	dev_ship.c \
 	dev_system.c \
 	dev_sysedit.c \
 	dev_uniedit.c \
@@ -123,6 +124,7 @@ naev_SOURCES = \
 	dev.h \
 	dev_outfit.h \
 	dev_planet.h \
+	dev_ship.h \
 	dev_system.h \
 	dev_sysedit.h \
 	dev_uniedit.h \

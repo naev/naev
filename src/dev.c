@@ -14,18 +14,24 @@
 
 #include "SDL.h"
 
+#include "log.h"
 #include "dev_outfit.h"
+#include "dev_ship.h"
 
 
 /**
  */
 void dev_csv (void)
 {
-   printf("Generating CSV data...\n");
+   DEBUG("Generating CSV data...");
 
-   printf("  bolt.csv...");
+   DEBUG("   bolt.csv...");
    dout_csvBolt( "bolt.csv" );
-   printf("done!\n");
+   DEBUG("\b   done!");
+
+   DEBUG("   ship.csv...");
+   dship_csv( "ship.csv" );
+   DEBUG("\b   done!");
 }
 
 

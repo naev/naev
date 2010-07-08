@@ -100,6 +100,16 @@ Ship* ship_getW( const char* name )
 
 
 /**
+ * @brief Gets all the ships.
+ */
+Ship* ship_getAll( int *n )
+{
+   *n = array_size(ship_stack);
+   return ship_stack;
+}
+
+
+/**
  * @brief Comparison function for qsort().
  */
 int ship_compareTech( const void *arg1, const void *arg2 )
