@@ -1517,15 +1517,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                   temp->slot.type = OUTFIT_SLOT_HIGH;
             }
             else if (xml_isNode(cur,"size")) {
-               cprop = xml_get(cur);
-               if (cprop == NULL)
-                  WARN("Outfit Slot type invalid.");
-               else if (strcmp(cprop,"light") == 0)
-                  temp->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
-               else if (strcmp(cprop,"standard") == 0)
-                  temp->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
-               else if (strcmp(cprop,"heavy") == 0)
-                  temp->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
+               temp->slot.size = outfit_toSlotSize( xml_get(cur) );
             }
 
          } while (xml_nextNode(cur));
