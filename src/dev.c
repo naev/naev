@@ -27,11 +27,11 @@ void dev_csv (void)
 
    DEBUG("   bolt.csv...");
    dout_csvBolt( "bolt.csv" );
-   DEBUG("\b   done!");
 
    DEBUG("   ship.csv...");
    dship_csv( "ship.csv" );
-   DEBUG("\b   done!");
+
+   DEBUG("Generation complete!");
 }
 
 
