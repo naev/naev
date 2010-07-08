@@ -223,7 +223,7 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  */
 const char *outfit_slotName( const Outfit* o )
 {
-   switch (o->slot) {
+   switch (o->slot.type) {
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
@@ -1003,7 +1003,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    /* Defaults. */
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
    temp->u.amm.spfx_armour = -1;
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
@@ -1315,7 +1316,8 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xmlr_strd(node,"ship",temp->u.fig.ship);
@@ -1345,7 +1347,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xmlr_int(node,"radius",temp->u.map.radius);
@@ -1375,7 +1378,8 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    /* Licenses have no specific tidbits. */
    (void) parent;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    /*
    xmlNodePtr node;
@@ -1481,11 +1485,22 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                if (cprop == NULL)
                   WARN("Outfit Slot type invalid.");
                else if (strcmp(cprop,"low") == 0)
-                  temp->slot = OUTFIT_SLOT_LOW;
+                  temp->slot.type = OUTFIT_SLOT_LOW;
                else if (strcmp(cprop,"medium") == 0)
-                  temp->slot = OUTFIT_SLOT_MEDIUM;
+                  temp->slot.type = OUTFIT_SLOT_MEDIUM;
                else if (strcmp(cprop,"high") == 0)
-                  temp->slot = OUTFIT_SLOT_HIGH;
+                  temp->slot.type = OUTFIT_SLOT_HIGH;
+            }
+            else if (xml_isNode(cur,"size")) {
+               cprop = xml_get(cur);
+               if (cprop == NULL)
+                  WARN("Outfit Slot type invalid.");
+               else if (strcmp(cprop,"light") == 0)
+                  temp->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
+               else if (strcmp(cprop,"standard") == 0)
+                  temp->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
+               else if (strcmp(cprop,"heavy") == 0)
+                  temp->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
             }
 
          } while (xml_nextNode(cur));
@@ -1542,7 +1557,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
-   MELEMENT(temp->slot==OUTFIT_SLOT_NULL,"slot");
+   MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");

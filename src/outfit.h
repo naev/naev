@@ -141,10 +141,22 @@ typedef enum OutfitSlotType_ {
 
 
 /**
+ * @brief Outfit slot sizes.
+ */
+typedef enum OutfitSlotSize_ {
+   OUTFIT_SLOT_SIZE_NA, /**< Not applicable slot size. */
+   OUTFIT_SLOT_SIZE_LIGHT, /**< Light slot size. */
+   OUTFIT_SLOT_SIZE_STANDARD, /**< Standard slot size. */
+   OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
+} OutfitSlotSize;
+
+
+/**
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
    OutfitSlotType type; /**< Type of outfit slot. */
+   OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;
 
 
@@ -332,7 +344,7 @@ typedef struct Outfit_ {
    char *typename; /**< Overrides the base type. */
 
    /* general specs */
-   OutfitSlotType slot; /**< Type of slot the outfit needs. */
+   OutfitSlot slot; /**< Slot the outfit fits into. */
    char *license; /**< Licenses needed to buy it. */
    double mass; /**< How much weapon capacity is needed. */
 

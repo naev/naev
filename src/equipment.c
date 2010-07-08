@@ -106,7 +106,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       return;
 
    /* Figure out which slot this stuff fits into */
-   switch (o->slot) {
+   switch (o->slot.type) {
       case OUTFIT_SLOT_LOW:
          outfit_n = eq_wgt.selected->outfit_nlow;
          slots = eq_wgt.selected->outfit_low;
@@ -304,7 +304,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *lc, *c, *dc;
 
    /* Render text. */
-   if ((o != NULL) && (lst[0].slot == o->slot)) 
+   if ((o != NULL) && (lst[0].slot == o->slot.type)) 
       c = &cDConsole;
    else
       c = &cBlack;
@@ -327,7 +327,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else {
          if ((o != NULL) &&
-               (lst[i].slot == o->slot)) {
+               (lst[i].slot == o->slot.type)) {
             if (pilot_canEquip( p, NULL, o, 1 ) != NULL)
                c = &cRed;
             else
@@ -507,7 +507,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                }
             }
             else if ((wgt->outfit != NULL) &&
-                  (lst->slot == wgt->outfit->slot)) {
+                  (lst->slot == wgt->outfit->slot.type)) {
                top = 0;
                display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
                if (display != NULL)
@@ -893,7 +893,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must fit slot. */
-      if (o->slot != slot->slot)
+      if (o->slot.type != slot->slot)
          return 0;
 
       /* Must be able to add. */
