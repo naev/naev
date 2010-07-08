@@ -659,37 +659,32 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                temp->outfit_nhigh++;
          } while (xml_nextNode(cur));
          /* Allocate the space. */
-         temp->outfit_low = calloc( temp->outfit_nlow, sizeof(ShipOutfitSlot) );
-         temp->outfit_medium = calloc( temp->outfit_nmedium, sizeof(ShipOutfitSlot) );
-         temp->outfit_high = calloc( temp->outfit_nhigh, sizeof(ShipOutfitSlot) );
+         temp->outfit_low     = calloc( temp->outfit_nlow, sizeof(ShipOutfitSlot) );
+         temp->outfit_medium  = calloc( temp->outfit_nmedium, sizeof(ShipOutfitSlot) );
+         temp->outfit_high    = calloc( temp->outfit_nhigh, sizeof(ShipOutfitSlot) );
          /* Second pass, initialize the mounts. */
          l = m = h = 0;
          cur = node->children;
          do {
             if (xml_isNode(cur,"low")) {
                temp->outfit_low[l].slot = OUTFIT_SLOT_LOW;
-               /* Set default outfit if applicable. */
-               stmp = xml_get(cur);
-               if (stmp!=NULL)
-                  temp->outfit_high[l].data = outfit_get(stmp);
-               /* Increment l. */
+               temp->outfit_low[l].size = outfit_toSlotSize( xml_get(cur) );
+               if (temp->outfit_low[l].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );
                l++;
             }
             if (xml_isNode(cur,"medium")) {
                temp->outfit_medium[m].slot = OUTFIT_SLOT_MEDIUM;
-               /* Set default outfit if applicable. */
-               stmp = xml_get(cur);
-               if (stmp!=NULL)
-                  temp->outfit_high[m].data = outfit_get(stmp);
-               /* Increment m. */
+               temp->outfit_medium[m].size = outfit_toSlotSize( xml_get(cur) );
+               if (temp->outfit_medium[m].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );
                m++;
             }
             if (xml_isNode(cur,"high")) {
                temp->outfit_high[h].slot = OUTFIT_SLOT_HIGH;
-               /* Set default outfit if applicable. */
-               stmp = xml_get(cur);
-               if (stmp!=NULL)
-                  temp->outfit_high[h].data = outfit_get(stmp);
+               temp->outfit_high[h].size = outfit_toSlotSize( xml_get(cur) );
+               if (temp->outfit_high[h].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );
                /* Get mount point. */
                xmlr_attr(cur,"x",stmp);
                if (stmp!=NULL) {

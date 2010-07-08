@@ -410,6 +410,7 @@ const char* outfit_getTypeBroad( const Outfit* o );
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
+OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );

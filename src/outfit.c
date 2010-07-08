@@ -241,6 +241,31 @@ const char *outfit_slotName( const Outfit* o )
 
 
 /**
+ * @brief Gets the outfit slot size from a human readable string.
+ *
+ *    @param s String represinting an outfit slot size.
+ *    @return Outfit slot size matching string.
+ */
+OutfitSlotSize outfit_toSlotSize( const char *s )
+{
+   if (s == NULL) {
+      WARN( "(NULL) outfit slot size" );
+      return OUTFIT_SLOT_SIZE_NA;
+   }
+
+   if (strcmp(s,"Heavy")==0)
+      return OUTFIT_SLOT_SIZE_HEAVY;
+   else if (strcmp(s,"Standard")==0)
+      return OUTFIT_SLOT_SIZE_STANDARD;
+   else if (strcmp(s,"Light")==0)
+      return OUTFIT_SLOT_SIZE_LIGHT;
+
+   WARN("'%s' does not match any outfit slot sizes.", s);
+   return OUTFIT_SLOT_SIZE_NA;
+}
+
+
+/**
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
