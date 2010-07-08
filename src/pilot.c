@@ -234,6 +234,11 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    tp = 0;
    d  = 0.;
    for (i=0; i<pilot_nstack; i++) {
+      /* Must not be dead. */
+      if (pilot_isFlag( pilot_stack[i], PILOT_DELETE ) ||
+            pilot_isFlag( pilot_stack[i], PILOT_DEAD))
+         continue;
+
       /* Must not be bribed. */
       if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
          continue;
