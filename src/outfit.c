@@ -59,6 +59,7 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 /* misc */
 static DamageType outfit_strToDamageType( char *buf );
 static OutfitType outfit_strToOutfitType( char *buf );
+static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
 static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
@@ -241,6 +242,29 @@ const char *outfit_slotName( const Outfit* o )
 
 
 /**
+ * @brief Gets the name of the slot size of an outfit.
+ *
+ *    @param o Outfit to get slot size of.
+ *    @return The human readable name of the slot size.
+ */
+const char *outfit_slotSize( const Outfit* o )
+{
+   switch( o->slot.size) {
+      case OUTFIT_SLOT_SIZE_NA:
+         return "NA";
+      case OUTFIT_SLOT_SIZE_LIGHT:
+         return "Light";
+      case OUTFIT_SLOT_SIZE_STANDARD:
+         return "Standard";
+      case OUTFIT_SLOT_SIZE_HEAVY:
+         return "Heavy";
+      default:
+         return "Unknown";
+   }
+}
+
+
+/**
  * @brief Gets the outfit slot size from a human readable string.
  *
  *    @param s String represinting an outfit slot size.
@@ -262,6 +286,21 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
 
    WARN("'%s' does not match any outfit slot sizes.", s);
    return OUTFIT_SLOT_SIZE_NA;
+}
+
+
+/**
+ * @brief Sets the outfit slot size from default outfit properties.
+ */
+static int outfit_setDefaultSize( Outfit *o )
+{
+   if (o->mass < 10.)
+      o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
+   else if (o->mass < 30.)
+      o->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
+   else
+      o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
+   return 0;
 }
 
 
@@ -870,6 +909,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.blt.delay /= 1000.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -970,6 +1013,10 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -1025,6 +1072,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.lau.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1222,6 +1273,10 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.shield_regen /= 60.;
    temp->u.mod.energy_regen /= 60.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    i = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -1320,6 +1375,10 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
    temp->u.afb.speed  /= 100.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 }
 
 /**
@@ -1342,6 +1401,10 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bay.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1413,6 +1476,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       xmlr_int(node,"radius",temp->u.map.radius);
    } while (xml_nextNode(node));
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -1476,6 +1543,10 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
    temp->u.jam.energy /= 60.; /* It's per minute */
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
