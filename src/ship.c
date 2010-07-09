@@ -549,6 +549,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    int sx, sy;
    char *stmp, *buf;
    int l, m, h;
+   OutfitSlotSize base_size;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -669,22 +670,22 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             if (xml_isNode(cur,"low")) {
                temp->outfit_low[l].slot = OUTFIT_SLOT_LOW;
                temp->outfit_low[l].size = outfit_toSlotSize( xml_get(cur) );
-               if (temp->outfit_low[l].size == OUTFIT_SLOT_SIZE_NA)
-                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );
+               /*if (temp->outfit_low[l].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                l++;
             }
             if (xml_isNode(cur,"medium")) {
                temp->outfit_medium[m].slot = OUTFIT_SLOT_MEDIUM;
                temp->outfit_medium[m].size = outfit_toSlotSize( xml_get(cur) );
-               if (temp->outfit_medium[m].size == OUTFIT_SLOT_SIZE_NA)
-                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );
+               /*if (temp->outfit_medium[m].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                m++;
             }
             if (xml_isNode(cur,"high")) {
                temp->outfit_high[h].slot = OUTFIT_SLOT_HIGH;
                temp->outfit_high[h].size = outfit_toSlotSize( xml_get(cur) );
-               if (temp->outfit_high[h].size == OUTFIT_SLOT_SIZE_NA)
-                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );
+               /*if (temp->outfit_high[h].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                /* Get mount point. */
                xmlr_attr(cur,"x",stmp);
                if (stmp!=NULL) {
@@ -737,6 +738,30 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    temp->shield_regen /= 60.;
    temp->energy_regen /= 60.;
    temp->thrust *= temp->mass;
+
+   /* Second pass default values for slot size. */
+   if ((temp->class == SHIP_CLASS_BULK_CARRIER) ||
+         (temp->class == SHIP_CLASS_CRUISER) ||
+         (temp->class == SHIP_CLASS_CARRIER) ||
+         (temp->class == SHIP_CLASS_MOTHERSHIP))
+      base_size = OUTFIT_SLOT_SIZE_HEAVY;
+   else if ((temp->class == SHIP_CLASS_CRUISE_SHIP) ||
+         (temp->class == SHIP_CLASS_FREIGHTER) ||
+         (temp->class == SHIP_CLASS_DESTROYER) ||
+         (temp->class == SHIP_CLASS_CORVETTE) ||
+         (temp->class == SHIP_CLASS_HEAVY_DRONE))
+      base_size = OUTFIT_SLOT_SIZE_STANDARD;
+   else
+      base_size = OUTFIT_SLOT_SIZE_LIGHT;
+   for (i=0; i<temp->outfit_nhigh; i++)
+      if (temp->outfit_high[i].size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_high[i].size = base_size;
+   for (i=0; i<temp->outfit_nmedium; i++)
+      if (temp->outfit_medium[i].size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_medium[i].size = base_size;
+   for (i=0; i<temp->outfit_nlow; i++)
+      if (temp->outfit_low[i].size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_low[i].size = base_size;
 
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)

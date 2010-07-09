@@ -249,7 +249,7 @@ const char *outfit_slotName( const Outfit* o )
 OutfitSlotSize outfit_toSlotSize( const char *s )
 {
    if (s == NULL) {
-      WARN( "(NULL) outfit slot size" );
+      /*WARN( "(NULL) outfit slot size" );*/
       return OUTFIT_SLOT_SIZE_NA;
    }
 
