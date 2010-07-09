@@ -2218,6 +2218,10 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
    if ((p==NULL) || (o==NULL))
       return "Nothing selected.";
 
+   /* Check slot type. */
+   if ((s != NULL) && !outfit_fitsSlot( o, &s->slot ))
+      return "Does not fit slot.";
+
    /* Adding outfit. */
    if (add) {
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))

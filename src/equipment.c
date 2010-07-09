@@ -335,7 +335,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else {
          if ((o != NULL) &&
                (lst[i].slot.type == o->slot.type)) {
-            if (pilot_canEquip( p, NULL, o, 1 ) != NULL)
+            if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
                c = &cRed;
             else
                c = &cDConsole;
@@ -349,12 +349,29 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       if (i==selected) {
          lc = &cWhite;
          c  = &cGrey80;
-         dc = &cGrey60;
+         if (lst[i].slot.size == OUTFIT_SLOT_SIZE_HEAVY)
+            dc = &cRed;
+            /*dc = &cLightRed;*/
+         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_STANDARD)
+            dc = &cGreen;
+            /*dc = &cLightGreen;*/
+         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_LIGHT)
+            dc = &cBlue;
+            /*dc = &cLightBlue;*/
+         else
+            dc = &cGrey60;
       }
       else {
          lc = toolkit_colLight;
          c  = toolkit_col;
-         dc = toolkit_colDark;
+         if (lst[i].slot.size == OUTFIT_SLOT_SIZE_HEAVY)
+            dc = &cRed;
+         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_STANDARD)
+            dc = &cGreen;
+         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_LIGHT)
+            dc = &cBlue;
+         else
+            dc = toolkit_colDark;
       }
       toolkit_drawOutline( x, y, w, h, 0., lc, c );
       toolkit_drawOutline( x, y, w, h, 1., dc, NULL );
@@ -516,7 +533,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             else if ((wgt->outfit != NULL) &&
                   (lst->slot.type == wgt->outfit->slot.type)) {
                top = 0;
-               display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
+               display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit, 1 );
                if (display != NULL)
                   c = &cRed;
                else {
