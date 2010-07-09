@@ -303,6 +303,7 @@
    <slot>high</slot>
    <license>Medium Weapon License</license>
    <mass>12</mass>
+   <size>light</size>
    <price>35000</price>
    <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>ripper</gfx_store>
