@@ -277,11 +277,11 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
       return OUTFIT_SLOT_SIZE_NA;
    }
 
-   if (strcmp(s,"Heavy")==0)
+   if (strcasecmp(s,"Heavy")==0)
       return OUTFIT_SLOT_SIZE_HEAVY;
-   else if (strcmp(s,"Standard")==0)
+   else if (strcasecmp(s,"Standard")==0)
       return OUTFIT_SLOT_SIZE_STANDARD;
-   else if (strcmp(s,"Light")==0)
+   else if (strcasecmp(s,"Light")==0)
       return OUTFIT_SLOT_SIZE_LIGHT;
 
    WARN("'%s' does not match any outfit slot sizes.", s);
@@ -679,11 +679,11 @@ const char* outfit_getTypeBroad( const Outfit* o )
  */
 static DamageType outfit_strToDamageType( char *buf )
 {
-   if (strcmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
-   else if (strcmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
-   else if (strcmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
-   else if (strcmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
-   else if (strcmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
+   if (strcasecmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
+   else if (strcasecmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
+   else if (strcasecmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
+   else if (strcasecmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
+   else if (strcasecmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
 
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;
@@ -747,7 +747,7 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 
 
 #define O_CMP(s,t) \
-if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
+if (strcasecmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**
  * @brief Gets the outfit type from a human readable string.
  *
