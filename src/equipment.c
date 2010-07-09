@@ -109,15 +109,15 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    switch (o->slot.type) {
       case OUTFIT_SLOT_LOW:
          outfit_n = eq_wgt.selected->outfit_nlow;
-         slots = eq_wgt.selected->outfit_low;
+         slots    = eq_wgt.selected->outfit_low;
          break;
       case OUTFIT_SLOT_MEDIUM:
          outfit_n = eq_wgt.selected->outfit_nmedium;
-         slots = eq_wgt.selected->outfit_medium;
+         slots    = eq_wgt.selected->outfit_medium;
          break;
       case OUTFIT_SLOT_HIGH:
          outfit_n = eq_wgt.selected->outfit_nhigh;
-         slots = eq_wgt.selected->outfit_high;
+         slots    = eq_wgt.selected->outfit_high;
          break;
       default:
          return;
@@ -125,13 +125,20 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 
    /* Loop through outfit slots of the right type, try to find an empty one */
    for (i=0; i < outfit_n; i++) {
-      if (slots[i].outfit == NULL) {
-         /* Bingo! */
-         eq_wgt.outfit  = o;
-         p              = eq_wgt.selected;
-         equipment_swapSlot( wid, p, &slots[i] );
-         return;
-      }
+
+      /* Slot full. */
+      if (slots[i].outfit != NULL)
+         continue;
+
+      /* Must fit the slot. */
+      if (!outfit_fitsSlot( o, &slots[i].slot))
+         continue;
+
+      /* Bingo! */
+      eq_wgt.outfit  = o;
+      p              = eq_wgt.selected;
+      equipment_swapSlot( wid, p, &slots[i] );
+      return;
    }
 }
 
@@ -304,7 +311,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *lc, *c, *dc;
 
    /* Render text. */
-   if ((o != NULL) && (lst[0].slot == o->slot.type)) 
+   if ((o != NULL) && (lst[0].slot.type == o->slot.type)) 
       c = &cDConsole;
    else
       c = &cBlack;
@@ -327,7 +334,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else {
          if ((o != NULL) &&
-               (lst[i].slot == o->slot.type)) {
+               (lst[i].slot.type == o->slot.type)) {
             if (pilot_canEquip( p, NULL, o, 1 ) != NULL)
                c = &cRed;
             else
@@ -507,7 +514,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                }
             }
             else if ((wgt->outfit != NULL) &&
-                  (lst->slot == wgt->outfit->slot.type)) {
+                  (lst->slot.type == wgt->outfit->slot.type)) {
                top = 0;
                display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
                if (display != NULL)
@@ -700,7 +707,7 @@ static void equipment_renderShip( double bx, double by,
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
          px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
-   if ((eq_wgt.slot >=0) && (eq_wgt.slot < p->outfit_nhigh)) {
+   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < p->outfit_nhigh)) {
       p->tsx = sx;
       p->tsy = sy;
       pilot_getMount( p, &p->outfit_high[eq_wgt.slot], &v );
@@ -893,7 +900,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must fit slot. */
-      if (o->slot.type != slot->slot)
+      if (!outfit_fitsSlot( o, &slot->slot ))
          return 0;
 
       /* Must be able to add. */

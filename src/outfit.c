@@ -673,6 +673,40 @@ const char *outfit_damageTypeToStr( DamageType dmg )
 }
 
 
+/**
+ * @brief Checks to see if an outfit fits a slot.
+ *
+ *    @param o Outfit to see if fits in a slot.
+ *    @param s Slot to see if outfit fits in.
+ *    @return 1 if outfit fits the slot, 0 otherwise.
+ */
+int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
+{
+   const OutfitSlot *os;
+   os = &o->slot;
+
+   /* Outfit must have valid slot type. */
+   if ((os->type == OUTFIT_SLOT_NULL) ||
+      (os->type == OUTFIT_SLOT_NA))
+      return 0;
+
+   /* Outfit type must match outfit slot. */
+   if (os->type != s->type)
+      return 0;
+
+   /* Must have valid slot size. */
+   if (os->size == OUTFIT_SLOT_SIZE_NA)
+      return 0;
+
+   /* It doesn't fit. */
+   if (os->size > s->size)
+      return 0;
+
+   /* It meets all criteria. */
+   return 1;
+}
+
+
 #define O_CMP(s,t) \
 if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**
