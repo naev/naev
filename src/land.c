@@ -425,6 +425,7 @@ static void outfits_open( unsigned int wid )
          "Owned:\n"
          "\n"
          "Slot:\n"
+         "Size:\n"
          "Mass:\n"
          "\n"
          "Price:\n"
@@ -525,6 +526,7 @@ static void outfits_update( unsigned int wid, char* str )
             "\n"
             "NA\n"
             "NA\n"
+            "NA\n"
             "\n"
             "NA\n"
             "NA\n"
@@ -563,6 +565,7 @@ static void outfits_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%s\n"
+         "%s\n"
          "%.0f tons\n"
          "\n"
          "%s credits\n"
@@ -570,6 +573,7 @@ static void outfits_update( unsigned int wid, char* str )
          "%s\n",
          player_outfitOwned(outfit),
          outfit_slotName(outfit),
+         outfit_slotSize(outfit),
          outfit->mass,
          buf2,
          buf3,
