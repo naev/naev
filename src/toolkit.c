@@ -770,6 +770,92 @@ static void widget_kill( Widget *wgt )
  *    @param w Width.
  *    @param h Height.
  *    @param b Border width.
+ *    @param thick Thickness of the border.
+ *    @param c Colour.
+ *    @param lc Light colour.
+ */
+void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
+                          int thick, glColour* c, glColour* lc )
+{
+   GLint tri[5][4];
+   glColour colours[10];
+
+   /* Set shade model. */
+   glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
+
+   x -= b - thick;
+   w += 2 * (b - thick);
+   y -= b - thick;
+   h += 2 * (b - thick);
+   lc = lc ? lc : c;
+
+   /* Left-up. */
+   tri[0][0]     = x;         /* Inner */
+   tri[0][1]     = y;
+   tri[0][2]     = x-thick;   /* Outter */
+   tri[0][3]     = y-thick;
+   colours[0]    = *lc;
+   colours[1]    = *lc;
+
+   /* Left-down. */
+   tri[1][0]     = x;         /* Inner. */
+   tri[1][1]     = y + h;
+   tri[1][2]     = x-thick;   /* Outter. */
+   tri[1][3]     = y + h+thick;
+   colours[2]    = *c;
+   colours[3]    = *c;
+
+   /* Right-down. */
+   tri[2][0]     = x + w;       /* Inner. */
+   tri[2][1]     = y + h;
+   tri[2][2]     = x + w+thick; /* Outter. */
+   tri[2][3]     = y + h+thick;
+   colours[4]    = *c;
+   colours[5]    = *c;
+
+   /* Right-up. */
+   tri[3][0]     = x + w;       /* Inner. */
+   tri[3][1]     = y;
+   tri[3][2]     = x + w+thick; /* Outter. */
+   tri[3][3]     = y-thick;
+   colours[6]    = *lc;
+   colours[7]    = *lc;
+
+   /* Left-up. */
+   tri[4][0]     = x;         /* Inner */
+   tri[4][1]     = y;
+   tri[4][2]     = x-thick;   /* Outter */
+   tri[4][3]     = y-thick;
+   colours[8]    = *lc;
+   colours[9]    = *lc;
+
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof(tri), tri );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
+
+   /* Set up the VBO. */
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, 
+                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw the VBO. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
+}
+
+
+/**
+ * @brief Draws an outline.
+ *
+ * If lc is NULL, colour will be flat.
+ *
+ *    @param x X position to draw at.
+ *    @param y Y position to draw at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param b Border width.
  *    @param c Colour.
  *    @param lc Light colour.
  */
