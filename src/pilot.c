@@ -1128,12 +1128,14 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 {
    int mod, h;
    double damage_shield, damage_armour, knockback, dam_mod, dmg;
+   double armour_start;
    Pilot *pshooter;
 
    /* Defaults. */
    pshooter = NULL;
    dam_mod  = 0.;
    dmg      = 0.;
+   armour_start = p->armour;
 
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
@@ -1177,6 +1179,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dmg        = damage_armour;
       p->armour -= damage_armour;
    }
+
+   /* EMP does not kill. */
+   if ((dtype == DAMAGE_TYPE_EMP) && (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour*0.75))
+      p->armour = MIN( armour_start, PILOT_DISABLED_ARMOR*p->ship->armour*0.75);
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
