@@ -370,7 +370,7 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
       case SDL_BUTTON_RIGHT:
          iar_focus( iar, x, y );
          if (iar->dat.iar.rmptr != NULL)
-	    iar->dat.iar.rmptr( iar->wdw, iar->name );
+            iar->dat.iar.rmptr( iar->wdw, iar->name );
          return 1;
 
       default:
@@ -571,7 +571,7 @@ static void iar_focus( Widget* iar, double bx, double by )
          iar->dat.iar.fptr( iar->wdw, iar->name );
    }
    /* Scrollbar click. */
-   else {
+   else if (bx > iar->w - 10.) {
       /* Get bar position (center). */
       hmax = h * (yelem - (int)(iar->h / h));
       if (fabs(hmax) < 1e-05)
