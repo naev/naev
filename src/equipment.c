@@ -308,7 +308,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p )
 {
    int i;
-   glColour *lc, *c, *dc, bc;
+   glColour *c, *dc, bc;
 
    /* Render text. */
    if ((o != NULL) && (lst[0].slot.type == o->slot.type)) 
@@ -323,36 +323,34 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    for (i=0; i<n; i++) {
       /* Choose colours based on size. */
       if (i==selected) {
-         lc = &cWhite;
          c  = &cGrey80;
          if (lst[i].slot.size == OUTFIT_SLOT_SIZE_HEAVY)
-            dc = &cRed;
+            dc = &cFontBlue;
             /*dc = &cLightRed;*/
          else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_STANDARD)
-            dc = &cGreen;
+            dc = &cFontGreen;
             /*dc = &cLightGreen;*/
          else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_LIGHT)
-            dc = &cBlue;
+            dc = &cFontYellow;
             /*dc = &cLightBlue;*/
          else
             dc = &cGrey60;
       }
       else {
-         lc = toolkit_colLight;
          c  = toolkit_col;
          if (lst[i].slot.size == OUTFIT_SLOT_SIZE_HEAVY)
-            dc = &cRed;
+            dc = &cFontBlue;
          else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_STANDARD)
-            dc = &cGreen;
+            dc = &cFontGreen;
          else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_LIGHT)
-            dc = &cBlue;
+            dc = &cFontYellow;
          else
             dc = toolkit_colDark;
       }
 
       /* Draw background. */
       memcpy( &bc, dc, sizeof(bc) );
-      bc.a = 0.5;
+      bc.a = 0.4;
       if (i==selected)
          c = &cDConsole;
       else
@@ -363,6 +361,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store,
                x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
+         c = &cBlack; /* Ensures nice uniform outlines. */
       }
       else {
          if ((o != NULL) &&
@@ -370,16 +369,17 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
                c = &cRed;
             else
-               c = &cBlack;
+               c = &cDConsole;
          }
          else
-            c = &cDConsole;
+            c = &cBlack;
          gl_printMidRaw( &gl_smallFont, w,
                x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2., c, "None" );
       }
+
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, dc, NULL );
-      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, lc, c );
+      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, c, c );
       /* Go to next one. */
       y -= h+20;
    }

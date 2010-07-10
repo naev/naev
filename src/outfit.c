@@ -294,9 +294,9 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
  */
 static int outfit_setDefaultSize( Outfit *o )
 {
-   if (o->mass < 10.)
+   if (o->mass <= 10.)
       o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
-   else if (o->mass < 30.)
+   else if (o->mass <= 30.)
       o->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
    else
       o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
