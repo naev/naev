@@ -30,3 +30,4 @@ config.status
 configure
 m4/pkg.m4
 m4/sdl.m4
+naev_csv
