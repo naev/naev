@@ -308,7 +308,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p )
 {
    int i;
-   glColour *lc, *c, *dc;
+   glColour *lc, *c, *dc, bc;
 
    /* Render text. */
    if ((o != NULL) && (lst[0].slot.type == o->slot.type)) 
@@ -321,31 +321,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
-      if (lst[i].outfit != NULL) {
-         if (i==selected)
-            c = &cDConsole;
-         else
-            c = &cBlack;
-         /* Draw background. */
-         toolkit_drawRect( x, y, w, h, c, NULL );
-         /* Draw bugger. */
-         gl_blitScale( lst[i].outfit->gfx_store,
-               x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
-      }
-      else {
-         if ((o != NULL) &&
-               (lst[i].slot.type == o->slot.type)) {
-            if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
-               c = &cRed;
-            else
-               c = &cDConsole;
-         }
-         else
-            c = &cBlack;
-         gl_printMidRaw( &gl_smallFont, w,
-               x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2., c, "None" );
-      }
-      /* Draw outline. */
+      /* Choose colours based on size. */
       if (i==selected) {
          lc = &cWhite;
          c  = &cGrey80;
@@ -373,6 +349,35 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          else
             dc = toolkit_colDark;
       }
+
+      /* Draw background. */
+      memcpy( &bc, dc, sizeof(bc) );
+      bc.a = 0.5;
+      if (i==selected)
+         c = &cDConsole;
+      else
+         c = &bc;
+      toolkit_drawRect( x, y, w, h, c, NULL );
+
+      if (lst[i].outfit != NULL) {
+         /* Draw bugger. */
+         gl_blitScale( lst[i].outfit->gfx_store,
+               x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
+      }
+      else {
+         if ((o != NULL) &&
+               (lst[i].slot.type == o->slot.type)) {
+            if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
+               c = &cRed;
+            else
+               c = &cBlack;
+         }
+         else
+            c = &cDConsole;
+         gl_printMidRaw( &gl_smallFont, w,
+               x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2., c, "None" );
+      }
+      /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, dc, NULL );
       toolkit_drawOutline( x-2, y-2, w+3, h+3, 0, lc, c );
       /* Go to next one. */
