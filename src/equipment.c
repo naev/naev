@@ -379,7 +379,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, dc, NULL );
-      toolkit_drawOutline( x-2, y-2, w+3, h+3, 0, lc, c );
+      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, lc, c );
       /* Go to next one. */
       y -= h+20;
    }
