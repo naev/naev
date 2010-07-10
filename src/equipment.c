@@ -1075,7 +1075,7 @@ static void equipment_genLists( unsigned int wid )
       tships   = malloc(sizeof(glTexture*)*nships);
       /* Add player's current ship. */
       sships[0] = strdup(player.p->name);
-      tships[0] = player.p->ship->gfx_target;
+      tships[0] = player.p->ship->gfx_store;
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
          player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,

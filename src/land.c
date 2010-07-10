@@ -880,7 +880,7 @@ static void shipyard_open( unsigned int wid )
       tships = malloc(sizeof(glTexture*)*nships);
       for (i=0; i<nships; i++) {
          sships[i] = strdup(ships[i]->name);
-         tships[i] = ships[i]->gfx_target;
+         tships[i] = ships[i]->gfx_store;
       }
       free(ships);
    }
@@ -939,7 +939,7 @@ static void shipyard_update( unsigned int wid, char* str )
    ship = ship_get( shipname );
 
    /* update image */
-   window_modifyImage( wid, "imgTarget", ship->gfx_target, 0, 0 );
+   window_modifyImage( wid, "imgTarget", ship->gfx_store, 0, 0 );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );

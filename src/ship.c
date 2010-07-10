@@ -430,6 +430,9 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
       SDL_SetAlpha( surface, 0, 0 );
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
+   /* Load the store surface. */
+   temp->gfx_store = gl_loadImagePad( NULL, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 0 );
+
    /* Some filtering. */
    for (j=0; j<SHIP_TARGET_H; j++) {
       for (i=0; i<SHIP_TARGET_W; i++) {
@@ -872,7 +875,10 @@ void ships_free (void)
       gl_freeTexture(s->gfx_space);
       if (s->gfx_engine != NULL)
          gl_freeTexture(s->gfx_engine);
-      gl_freeTexture(ship_stack[i].gfx_target);
+      if (s->gfx_target != NULL)
+         gl_freeTexture(s->gfx_target);
+      if (s->gfx_store != NULL)
+         gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
    }
 
