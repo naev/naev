@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 
 static void txt_render( Widget* txt, double bx, double by );
 static void txt_cleanup( Widget* txt );

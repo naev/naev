@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 
 /* Render. */
 static void iar_render( Widget* iar, double bx, double by );

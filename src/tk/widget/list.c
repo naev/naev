@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDLKey key, SDLMod mod );

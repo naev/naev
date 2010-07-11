@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "toolkit.h"
 #include "font.h"
 #include "../../input.h" /* Hack for now. */

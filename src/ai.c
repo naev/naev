@@ -63,6 +63,7 @@
 #include <stdio.h> /* malloc realloc */
 #include <string.h> /* strncpy strlen strncat strcmp strdup */
 #include <math.h>
+#include <ctype.h> /* isdigit */
 
 /* yay more lua */
 #include "lauxlib.h"

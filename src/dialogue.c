@@ -26,6 +26,8 @@
 #include "naev.h"
 
 #include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "log.h"
 #include "toolkit.h"

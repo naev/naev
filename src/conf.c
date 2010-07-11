@@ -781,7 +781,7 @@ int conf_saveConfig ( const char* file )
       const char *tmp = nstrnstr(old, "-- "GENERATED_START_COMMENT"\n", oldsize);
       if (tmp != NULL) {
          /* Copy over the user content */
-         pos = SDL_min(sizeof(buf), (size_t)(tmp - old));
+         pos = MIN(sizeof(buf), (size_t)(tmp - old));
          memcpy(buf, old, pos);
 
          /* See if we can find the end of the section */
@@ -1037,7 +1037,7 @@ int conf_saveConfig ( const char* file )
    if (old != NULL) {
       if (oldfooter != NULL) {
          /* oldfooter and oldsize now reference the old content past the footer */
-         oldsize = SDL_min((size_t)oldsize, sizeof(buf)-pos);
+         oldsize = MIN((size_t)oldsize, sizeof(buf)-pos);
          memcpy(&buf[pos], oldfooter, oldsize);
          pos += oldsize;
       }
