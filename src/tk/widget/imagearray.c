@@ -180,10 +180,15 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
+         /* Draw background. */
          if (is_selected)
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
                   w - 4., h - 4., &cDConsole, NULL );
+         else if (iar->dat.iar.background != NULL)
+            toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
+                  ycurs-(double)SCREEN_H/2. + 2.,
+                  w - 4., h - 4., &iar->dat.iar.background[i], NULL );
 
          /* image */
          if (iar->dat.iar.images[pos] != NULL)
@@ -457,6 +462,8 @@ static void iar_cleanup( Widget* iar )
          free(iar->dat.iar.alts);
       if (iar->dat.iar.quantity)
          free(iar->dat.iar.quantity);
+      if (iar->dat.iar.background != NULL)
+         free(iar->dat.iar.background);
    }
 }
 
@@ -829,4 +836,30 @@ int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
    wgt->dat.iar.quantity = quantity;
    return 0;
 }
+
+
+/**
+ * @brief Sets the quantity text for the images in the image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param bg Background colour for the image array.
+ *    @return 0 on success.
+ */
+int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
+      glColour *bg )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   /* Free if already exists. */
+   if (wgt->dat.iar.background != NULL)
+      free( wgt->dat.iar.background );
+
+   /* Set. */
+   wgt->dat.iar.background = bg;
+   return 0;
+}
+
 

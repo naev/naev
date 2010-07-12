@@ -265,6 +265,24 @@ const char *outfit_slotSize( const Outfit* o )
 
 
 /**
+ * @brief Gets the slot size colour for an outfit slot.
+ *
+ *    @param o Outfit slot to get the slot size colour of.
+ *    @return The slot size colour of the outfit slot os.
+ */
+glColour *outfit_slotSizeColour( const OutfitSlot* os )
+{
+   if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
+      return &cFontBlue;
+   else if (os->size == OUTFIT_SLOT_SIZE_STANDARD)
+      return &cFontGreen;
+   else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
+      return &cFontYellow;
+   return NULL;
+}
+
+
+/**
  * @brief Gets the outfit slot size from a human readable string.
  *
  *    @param s String represinting an outfit slot size.

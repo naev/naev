@@ -324,27 +324,14 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Choose colours based on size. */
       if (i==selected) {
          c  = &cGrey80;
-         if (lst[i].slot.size == OUTFIT_SLOT_SIZE_HEAVY)
-            dc = &cFontBlue;
-            /*dc = &cLightRed;*/
-         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_STANDARD)
-            dc = &cFontGreen;
-            /*dc = &cLightGreen;*/
-         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_LIGHT)
-            dc = &cFontYellow;
-            /*dc = &cLightBlue;*/
-         else
+         dc = outfit_slotSizeColour( &lst[i].slot );
+         if (dc == NULL)
             dc = &cGrey60;
       }
       else {
          c  = toolkit_col;
-         if (lst[i].slot.size == OUTFIT_SLOT_SIZE_HEAVY)
-            dc = &cFontBlue;
-         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_STANDARD)
-            dc = &cFontGreen;
-         else if (lst[i].slot.size == OUTFIT_SLOT_SIZE_LIGHT)
-            dc = &cFontYellow;
-         else
+         dc = outfit_slotSizeColour( &lst[i].slot );
+         if (dc == NULL)
             dc = toolkit_colDark;
       }
 
@@ -1064,6 +1051,7 @@ static void equipment_genLists( unsigned int wid )
    Pilot *s;
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
+   glColour *bg, *c;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1139,6 +1127,7 @@ static void equipment_genLists( unsigned int wid )
    noutfits = MAX(1,player_numOutfits());
    soutfits = malloc(sizeof(char*)*noutfits);
    toutfits = malloc(sizeof(glTexture*)*noutfits);
+   bg       = malloc(sizeof(glColour)*noutfits);
    player_getOutfits( soutfits, toutfits );
    if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
       window_addImageArray( wid, 20, -40 - sh - 40,
@@ -1151,6 +1140,13 @@ static void equipment_genLists( unsigned int wid )
          quantity = malloc( sizeof(char*) * noutfits );
          for (i=0; i<noutfits; i++) {
             o      = outfit_get( soutfits[i] );
+
+            /* Background colour. */
+            c = outfit_slotSizeColour( &o->slot );
+            if (c == NULL)
+               c = &cBlack;
+            memcpy( &bg[i], c, sizeof(glColour) );
+            bg[i].a = 0.5;
 
             /* Short description. */
             if (o->desc_short == NULL)
@@ -1178,6 +1174,7 @@ static void equipment_genLists( unsigned int wid )
          }
          toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
          toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
+         toolkit_setImageArrayBackground( wid, EQUIPMENT_OUTFITS, bg );
       }
    }
 
