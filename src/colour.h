@@ -44,6 +44,7 @@ extern glColour cDarkRed;
 extern glColour cRed;
 extern glColour cOrange;
 extern glColour cYellow;
+extern glColour cMidnightBlue;
 extern glColour cDarkBlue;
 extern glColour cBlue;
 extern glColour cLightBlue;
@@ -99,6 +100,7 @@ glColour* col_fromName( const char* name );
  */
 void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
 void col_rgb2hsv( double *h, double *s, double *v, double r, double g, double b );
+void col_blend( glColour *out, glColour fg, glColour bg, double alpha );
 
 
 

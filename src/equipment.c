@@ -1051,7 +1051,7 @@ static void equipment_genLists( unsigned int wid )
    Pilot *s;
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
-   glColour *bg, *c;
+   glColour *bg, *c, blend;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1145,8 +1145,8 @@ static void equipment_genLists( unsigned int wid )
             c = outfit_slotSizeColour( &o->slot );
             if (c == NULL)
                c = &cBlack;
-            memcpy( &bg[i], c, sizeof(glColour) );
-            bg[i].a = 0.5;
+            col_blend( &blend, *c, cGrey70, 0.4 );
+            memcpy( &bg[i], &blend, sizeof(glColour) );
 
             /* Short description. */
             if (o->desc_short == NULL)
