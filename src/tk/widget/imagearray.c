@@ -188,7 +188,7 @@ static void iar_render( Widget* iar, double bx, double by )
          else if (iar->dat.iar.background != NULL)
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
-                  w - 4., h - 4., &iar->dat.iar.background[i], NULL );
+                  w - 4., h - 4., &iar->dat.iar.background[pos], NULL );
 
          /* image */
          if (iar->dat.iar.images[pos] != NULL)
