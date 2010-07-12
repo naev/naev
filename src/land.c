@@ -389,6 +389,7 @@ static void outfits_open( unsigned int wid )
    int w, h;
    int iw, ih;
    int bw, bh;
+   glColour *bg, *c, blend;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
@@ -450,9 +451,17 @@ static void outfits_open( unsigned int wid )
       /* Create the outfit arrays. */
       soutfits = malloc(sizeof(char*)*noutfits);
       toutfits = malloc(sizeof(glTexture*)*noutfits);
+      bg       = malloc(sizeof(glColour)*noutfits);
       for (i=0; i<noutfits; i++) {
          soutfits[i] = strdup(outfits[i]->name);
          toutfits[i] = outfits[i]->gfx_store;
+
+         /* Background colour. */
+         c = outfit_slotSizeColour( &outfits[i]->slot );
+         if (c == NULL)
+            c = &cBlack;
+         col_blend( &blend, *c, cGrey70, 0.4 );
+         memcpy( &bg[i], &blend, sizeof(glColour) );
       }
       free(outfits);
    }
@@ -463,6 +472,7 @@ static void outfits_open( unsigned int wid )
    /* write the outfits stuff */
    outfits_update( wid, NULL );
    outfits_updateQuantities( wid );
+   toolkit_setImageArrayBackground( wid, "iarOutfits", bg );
 }
 /**
  * @brief Updates the quantity counter for the outfits.

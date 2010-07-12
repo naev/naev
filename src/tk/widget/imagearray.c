@@ -129,7 +129,7 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    double xspace;
-   glColour *c, *dc, *lc, tc;
+   glColour *c, *dc, *lc, tc, fontcolour;
    int is_selected;
    int tw;
    double d;
@@ -180,15 +180,26 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
+         fontcolour = cWhite;
          /* Draw background. */
          if (is_selected)
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
                   w - 4., h - 4., &cDConsole, NULL );
-         else if (iar->dat.iar.background != NULL)
+         else if (iar->dat.iar.background != NULL) {
+            glColour temp;
+
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
                   w - 4., h - 4., &iar->dat.iar.background[pos], NULL );
+
+            temp = iar->dat.iar.background[pos];
+
+            if (((temp.r + temp.g + temp.b) / 3) > 0.5)
+               fontcolour = cBlack;
+            else
+               fontcolour = cWhite;
+         }
 
          /* image */
          if (iar->dat.iar.images[pos] != NULL)
@@ -199,7 +210,7 @@ static void iar_render( Widget* iar, double bx, double by )
          /* caption */
          if (iar->dat.iar.captions[pos] != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     (is_selected) ? &cBlack : &cWhite,
+                     (is_selected) ? &cBlack : &fontcolour,
                      iar->dat.iar.captions[pos] );
 
          /* quantity. */
