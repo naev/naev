@@ -136,6 +136,12 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    o1 = * (const Outfit**) outfit1;
    o2 = * (const Outfit**) outfit2;
 
+   /* Compare slot type. */
+   if (o1->slot.type < o2->slot.type)
+      return +1;
+   else if (o1->slot.type > o2->slot.type)
+      return -1;
+
    /* Compare intrinsic types. */
    if (o1->type < o2->type)
       return -1;
@@ -153,11 +159,17 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
          return ret;
    }
 
+   /* Compare slot sizes. */
+   if (o1->slot.size < o2->slot.size)
+      return +1;
+   else if (o1->slot.size > o2->slot.size)
+      return -1;
+
    /* Compare price. */
    if (o1->price < o2->price)
-      return -1;
-   else if (o1->price > o2->price)
       return +1;
+   else if (o1->price > o2->price)
+      return -1;
 
    /* It turns out they're the same. */
    return 0;
@@ -267,8 +279,8 @@ const char *outfit_slotSize( const Outfit* o )
 /**
  * @brief Gets the slot size colour for an outfit slot.
  *
- *    @param o Outfit slot to get the slot size colour of.
- *    @return The slot size colour of the outfit slot os.
+ *    @param os Outfit slot to get the slot size colour of.
+ *    @return The slot size colour of the outfit slot.
  */
 glColour *outfit_slotSizeColour( const OutfitSlot* os )
 {
