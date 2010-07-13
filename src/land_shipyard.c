@@ -22,7 +22,14 @@
 #include "player.h"
 #include "land.h"
 #include "toolkit.h"
+#include "tk/toolkit_priv.h"
 #include "dialogue.h"
+
+
+/*
+ * Vars.
+ */
+static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 
 
 /*
@@ -31,6 +38,8 @@
 static void shipyard_buy( unsigned int wid, char* str ); 
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
+static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
+static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
 
 
 /**
@@ -49,6 +58,9 @@ void shipyard_open( unsigned int wid )
    int th;
    int y;
    const char *buf;
+
+   /* Init vars. */
+   shipyard_selected = NULL;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -78,8 +90,12 @@ void shipyard_open( unsigned int wid )
    window_addImage( wid, -40, -50,
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
+   /* slot types */
+   window_addCust( wid, -20, -170, 148, 50, "cstSlots", 0.,
+         shipyard_renderSlots, NULL, NULL ); 
+
    /* stat text */
-   window_addText( wid, -40, -170, 128, 200, 0, "txtStats",
+   window_addText( wid, -40, -230, 128, 200, 0, "txtStats",
          &gl_smallFont, &cBlack, NULL );
 
    /* text */
@@ -186,6 +202,7 @@ void shipyard_update( unsigned int wid, char* str )
    }
 
    ship = ship_get( shipname );
+   shipyard_selected = ship;
 
    /* update image */
    window_modifyImage( wid, "imgTarget", ship->gfx_store, 0, 0 );
@@ -447,5 +464,65 @@ static void shipyard_trade( unsigned int wid, char* str )
    /* Update shipyard. */
    shipyard_update(wid, NULL);
 }
+
+
+/**
+ * @brief Custom widget render function for the slot widget.
+ */
+static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data )
+{
+   (void) data;
+   double y;
+   Ship *ship;
+
+   /* Make sure a valid ship is selected. */
+   ship = shipyard_selected;
+   if (ship == NULL)
+      return;
+
+   y = by + bh;
+
+   /* High slots. */
+   y -= 10;
+   shipyard_renderSlotsRow( bx, y, bw, "H", ship->outfit_high, ship->outfit_nhigh );
+
+   /* Med slots. */
+   y -= 20;
+   shipyard_renderSlotsRow( bx, y, bw, "M", ship->outfit_medium, ship->outfit_nmedium );
+
+   /* Low slots. */
+   y -= 20;
+   shipyard_renderSlotsRow( bx, y, bw, "L", ship->outfit_low, ship->outfit_nlow );
+}
+
+
+/**
+ * @brief Renders a row of ship slots.
+ */
+static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n )
+{
+   (void) bw;
+   int i;
+   double x;
+   glColour *c;
+
+   x = bx;
+
+   /* Print text. */
+   gl_print( &gl_smallFont, x + SCREEN_W/2., by + SCREEN_H/2., &cBlack, str );
+
+   /* Draw squares. */
+   for (i=0; i<n; i++) {
+      c = outfit_slotSizeColour( &s[i].slot );
+      if (c == NULL)
+         c = &cBlack;
+
+      x += 15.;
+      toolkit_drawRect( x, by, 10, 10, c, NULL );
+   }
+}
+
+
+
 
 

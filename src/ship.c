@@ -671,22 +671,22 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"low")) {
-               temp->outfit_low[l].slot = OUTFIT_SLOT_LOW;
-               temp->outfit_low[l].size = outfit_toSlotSize( xml_get(cur) );
+               temp->outfit_low[l].slot.type = OUTFIT_SLOT_LOW;
+               temp->outfit_low[l].slot.size = outfit_toSlotSize( xml_get(cur) );
                /*if (temp->outfit_low[l].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                l++;
             }
             if (xml_isNode(cur,"medium")) {
-               temp->outfit_medium[m].slot = OUTFIT_SLOT_MEDIUM;
-               temp->outfit_medium[m].size = outfit_toSlotSize( xml_get(cur) );
+               temp->outfit_medium[m].slot.type = OUTFIT_SLOT_MEDIUM;
+               temp->outfit_medium[m].slot.size = outfit_toSlotSize( xml_get(cur) );
                /*if (temp->outfit_medium[m].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                m++;
             }
             if (xml_isNode(cur,"high")) {
-               temp->outfit_high[h].slot = OUTFIT_SLOT_HIGH;
-               temp->outfit_high[h].size = outfit_toSlotSize( xml_get(cur) );
+               temp->outfit_high[h].slot.type = OUTFIT_SLOT_HIGH;
+               temp->outfit_high[h].slot.size = outfit_toSlotSize( xml_get(cur) );
                /*if (temp->outfit_high[h].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                /* Get mount point. */
@@ -757,14 +757,14 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    else
       base_size = OUTFIT_SLOT_SIZE_LIGHT;
    for (i=0; i<temp->outfit_nhigh; i++)
-      if (temp->outfit_high[i].size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_high[i].size = base_size;
+      if (temp->outfit_high[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_high[i].slot.size = base_size;
    for (i=0; i<temp->outfit_nmedium; i++)
-      if (temp->outfit_medium[i].size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_medium[i].size = base_size;
+      if (temp->outfit_medium[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_medium[i].slot.size = base_size;
    for (i=0; i<temp->outfit_nlow; i++)
-      if (temp->outfit_low[i].size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_low[i].size = base_size;
+      if (temp->outfit_low[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_low[i].slot.size = base_size;
 
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)

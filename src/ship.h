@@ -68,8 +68,7 @@ typedef struct ShipMount_ {
  * @brief Ship outfit slot.
  */
 typedef struct ShipOutfitSlot_ {
-   OutfitSlotType slot; /**< Type of slot. */
-   OutfitSlotSize size; /**< Size of the slot. */
+   OutfitSlot slot; /**< Outfit slot. */
    Outfit *data; /**< Outfit by default if applicable. */
    ShipMount mount; /**< Mountpoint. */
 } ShipOutfitSlot;

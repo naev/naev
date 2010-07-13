@@ -3272,21 +3272,21 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    p = 0;
    for (i=0; i<pilot->outfit_nlow; i++) {
       pilot->outfit_low[i].slot.type = OUTFIT_SLOT_LOW;
-      pilot->outfit_low[i].slot.size = ship->outfit_low[i].size;
+      pilot->outfit_low[i].slot.size = ship->outfit_low[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_low[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_low[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nmedium; i++) {
       pilot->outfit_medium[i].slot.type = OUTFIT_SLOT_MEDIUM;
-      pilot->outfit_medium[i].slot.size = ship->outfit_medium[i].size;
+      pilot->outfit_medium[i].slot.size = ship->outfit_medium[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_medium[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_medium[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nhigh; i++) {
       pilot->outfit_high[i].slot.type = OUTFIT_SLOT_HIGH;
-      pilot->outfit_high[i].slot.size = ship->outfit_high[i].size;
+      pilot->outfit_high[i].slot.size = ship->outfit_high[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_high[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
       p++;
