@@ -25,6 +25,14 @@
 #include "dialogue.h"
 
 
+/*
+ * Helper functions.
+ */
+static void shipyard_buy( unsigned int wid, char* str ); 
+static void shipyard_trade( unsigned int wid, char* str );
+static void shipyard_rmouse( unsigned int wid, char* widget_name );
+
+
 /**
  * @brief Opens the shipyard window.
  */
@@ -249,7 +257,7 @@ void shipyard_update( unsigned int wid, char* str )
  *    @param widget_name Name of the window. (unused)
  *    @param shipname Name of the ship the player wants to buy. (unused)
  */
-void shipyard_rmouse( unsigned int wid, char* widget_name )
+static void shipyard_rmouse( unsigned int wid, char* widget_name )
 {
     return shipyard_buy(wid, widget_name);
 }
@@ -259,7 +267,7 @@ void shipyard_rmouse( unsigned int wid, char* widget_name )
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
  */
-void shipyard_buy( unsigned int wid, char* str )
+static void shipyard_buy( unsigned int wid, char* str )
 {
    (void)str;
    char *shipname, buf[32];
@@ -387,7 +395,7 @@ int shipyard_canTrade( char* shipname )
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
  */
-void shipyard_trade( unsigned int wid, char* str )
+static void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
    char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
