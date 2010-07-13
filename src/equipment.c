@@ -1369,10 +1369,6 @@ static void equipment_transportShip( unsigned int wid )
    char *shipname, buf[32];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,"None")==0) { /* no ships */
-      dialogue_alert( "You can't transport nothing here!" );
-      return;
-   }
 
    price = equipment_transportPrice( shipname );
    if (price==0) { /* already here */
