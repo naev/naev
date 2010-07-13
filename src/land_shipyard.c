@@ -3,13 +3,13 @@
  */
 
 /**
- * @file land.c
+ * @file land_shipyard.c
  *
- * @brief Handles all the landing menus and actions.
+ * @brief Handles the shipyard at land.
  */
 
 
-#include "land.h"
+#include "land_shipyard.h"
 
 #include "naev.h"
 
@@ -21,7 +21,6 @@
 #include "log.h"
 #include "player.h"
 #include "land.h"
-#include "land_shipyard.h"
 #include "toolkit.h"
 #include "dialogue.h"
 
