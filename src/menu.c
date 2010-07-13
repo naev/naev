@@ -116,19 +116,16 @@ void menu_main (void)
       offset_logo = SCREEN_W - tex->sh;
       offset_wdw  = 0;
    }
-   else {
+   else if (freespace > 200.) {
       /* We'll want a maximum seperation of 30 between logo and text. */
-      if (freespace/3 > 25) {
-         freespace -= 25;
-         offset_logo = -25;
-         /*offset_wdw  = -25 - tex->sh - 25;*/
-         offset_wdw  = -1;
-      }
-      /* Otherwise space evenly. */
-      else {
-         offset_logo = -freespace/3;
-         offset_wdw  = freespace/3;
-      }
+      freespace  -=  25;
+      offset_logo = -25;
+      offset_wdw  = -1.;
+   }
+   /* Otherwise space evenly. */
+   else {
+      offset_logo = -freespace/4;
+      offset_wdw  = freespace/2;
    }
 
    /* create background image window */
