@@ -150,7 +150,7 @@ void shipyard_update( unsigned int wid, char* str )
    (void)str;
    char *shipname;
    Ship* ship;
-   char buf[PATH_MAX], buf2[32], buf3[32];
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
@@ -270,7 +270,7 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
 static void shipyard_buy( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[32];
+   char *shipname, buf[ECON_CRED_STRLEN];
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
@@ -314,7 +314,7 @@ int shipyard_canBuy ( char *shipname )
       failure = 1;
    }
    if (!player_hasCredits( ship->price )) {
-      char buf[32];
+      char buf[ECON_CRED_STRLEN];
       credits2str( buf, ship->price - player.p->credits, 2 );
       land_errDialogueBuild( "You need %s more credits.", buf);
       failure = 1;
@@ -379,7 +379,7 @@ int shipyard_canTrade( char* shipname )
    }
    if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
       int creditdifference = ship->price - (player_shipPrice(player.p->name) + player.p->credits);
-      char buf[32];
+      char buf[ECON_CRED_STRLEN];
       credits2str( buf, creditdifference, 2 );
       land_errDialogueBuild( "You need %s more credits.", buf);
       failure = 1;
@@ -398,7 +398,8 @@ int shipyard_canTrade( char* shipname )
 static void shipyard_trade( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[32], buf2[32], buf3[32], buf4[32];
+   char *shipname, buf[ECON_CRED_STRLEN], buf2[ECON_CRED_STRLEN],
+         buf3[ECON_CRED_STRLEN], buf4[ECON_CRED_STRLEN];
    Ship* ship;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );

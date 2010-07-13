@@ -207,7 +207,7 @@ void outfits_update( unsigned int wid, char* str )
    (void)str;
    char *outfitname;
    Outfit* outfit;
-   char buf[PATH_MAX], buf2[32], buf3[32];
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    double th;
    int iw, ih;
    int w, h;
@@ -295,7 +295,7 @@ void outfits_update( unsigned int wid, char* str )
  */
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 {
-   char buf[32];
+   char buf[ECON_CRED_STRLEN];
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)

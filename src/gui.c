@@ -822,7 +822,7 @@ void gui_render( double dt )
 {
    int i, j;
    double x;
-   char str[32];
+   char str[ECON_CRED_STRLEN];
    Pilot* p;
    glColour* c, col;
    glFont* f;

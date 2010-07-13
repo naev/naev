@@ -884,7 +884,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
  */
 void land_checkAddRefuel (void)
 {
-   char buf[32], cred[32];
+   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
    unsigned int w;
 
    /* Check to see if fuel conditions are met. */
@@ -919,20 +919,20 @@ void land_checkAddRefuel (void)
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_enableButton( land_windows[0], "btnRefuel");
       credits2str( cred, player.p->credits, 2 );
-      snprintf( buf, 32, "Credits: %s", cred );
+      snprintf( buf, sizeof(buf), "Credits: %s", cred );
       window_modifyText( land_windows[0], "txtRefuel", buf );
    }
    /* Else create it. */
    else {
       /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
-      snprintf( buf, 32, "Refuel %s", cred );
+      snprintf( buf, sizeof(buf), "Refuel %s", cred );
       window_addButton( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
       credits2str( cred, player.p->credits, 2 );
-      snprintf( buf, 32, "Credits: %s", cred );
+      snprintf( buf, sizeof(buf), "Credits: %s", cred );
       window_addText( land_windows[0], -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
