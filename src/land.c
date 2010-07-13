@@ -103,16 +103,20 @@ static int last_window = 0; /**< Default window. */
 
 
 /*
+ * Error handling.
+ */
+static char errorlist[512];
+static char errorreason[512];
+static int errorappend;
+static char *errorlist_ptr;
+
+
+/*
  * prototypes
  */
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_changeTab( unsigned int wid, char *wgt, int tab );
-/* error handling */
-static char errorlist[512];
-static char errorreason[512];
-static int append;
-static char *errorlist_ptr;
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
@@ -860,11 +864,11 @@ void land_errDialogueBuild( const char *fmt, ... )
    }
 
    if (errorlist_ptr == NULL) { /* Initialize on first run. */
-      append = snprintf( errorlist, sizeof(errorlist), errorreason);
+      errorappend = snprintf( errorlist, sizeof(errorlist), errorreason);
       errorlist_ptr = errorlist;
    }
    else { /* Append newest error to the existing list. */
-      snprintf( &errorlist[append],  sizeof(errorlist)-append, "\n%s", errorreason );
+      snprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
       errorlist_ptr = errorlist;
    }
 }
