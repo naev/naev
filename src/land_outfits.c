@@ -287,6 +287,27 @@ void outfits_update( unsigned int wid, char* str )
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
    window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
 }
+
+
+/**
+ * @brief Updates the outfitter and equipment outfit image arrays.
+ */
+void outfits_updateEquipmentOutfits( void )
+{
+   int ew, ow;
+
+   if (landed) {
+      ew = land_getWid( LAND_WINDOW_EQUIPMENT );
+      ow = land_getWid(LAND_WINDOW_OUTFITS);
+
+      outfits_update(ow, NULL);
+      outfits_updateQuantities(ow);
+      equipment_addAmmo();
+      equipment_regenLists( ew, 1, 0 );
+   }
+}
+
+
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
@@ -358,7 +379,6 @@ static void outfits_buy( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    int q;
-   unsigned int w;
 
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
@@ -372,13 +392,7 @@ static void outfits_buy( unsigned int wid, char* str )
    /* Actually buy the outfit. */
    player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    land_checkAddRefuel();
-   outfits_update(wid, NULL);
-   outfits_updateQuantities(wid);
-
-   /* Update equipment. */
-   equipment_addAmmo();
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 1, 0 );
+   outfits_updateEquipmentOutfits();
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -419,7 +433,6 @@ static void outfits_sell( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    int q;
-   unsigned int w;
 
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
@@ -432,12 +445,7 @@ static void outfits_sell( unsigned int wid, char* str )
 
    player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
    land_checkAddRefuel();
-   outfits_update(wid, NULL);
-   outfits_updateQuantities(wid);
-
-   /* Update equipment. */
-   w = land_getWid( LAND_WINDOW_EQUIPMENT );
-   equipment_regenLists( w, 1, 0 );
+   outfits_updateEquipmentOutfits();
 }
 /**
  * @brief Gets the current modifier status.

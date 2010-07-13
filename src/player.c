@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "equipment.h"
+#include "land_outfits.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -2385,6 +2386,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* special case if it's a map */
    if (outfit_isMap(o)) {
       map_map(NULL,o->u.map.radius);
+      outfits_updateEquipmentOutfits();
       return 1; /* Success. */
    }
    /* special case if it's a license. */
@@ -2397,6 +2399,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    for (i=0; i<player_noutfits; i++) {
       if (player_outfits[i].o == o) {
          player_outfits[i].q += quantity;
+         outfits_updateEquipmentOutfits();
          return quantity;
       }
    }
@@ -2412,6 +2415,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* Add the outfit. */
    player_outfits[player_noutfits-1].o = o;
    player_outfits[player_noutfits-1].q = quantity;
+   outfits_updateEquipmentOutfits();
    return quantity;
 }
 

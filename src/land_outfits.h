@@ -14,6 +14,6 @@
 void outfits_open( unsigned int wid );
 void outfits_updateQuantities( unsigned int wid );
 void outfits_update( unsigned int wid, char* str );
-
+void outfits_updateEquipmentOutfits( void );
 
 #endif /* LAND_OUTFITS_H */
