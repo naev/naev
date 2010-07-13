@@ -109,12 +109,10 @@ static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_changeTab( unsigned int wid, char *wgt, int tab );
 /* error handling */
-char errorlist[512];
-int land_errDialogue( char* shipname, char* type );
-void land_errDialogueBuild( const char *fmt, ... );
-char errorreason[512];
-int append;
-char *errorlist_ptr;
+static char errorlist[512];
+static char errorreason[512];
+static int append;
+static char *errorlist_ptr;
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
