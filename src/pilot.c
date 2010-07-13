@@ -40,6 +40,8 @@
 #include "faction.h"
 #include "font.h"
 #include "land.h"
+#include "land_outfits.h"
+#include "land_shipyard.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -3206,6 +3208,12 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
          p->credits -= ul;
    }
 
+   /* Hack to update credits in the absence of a bottom bar. */
+   DEBUG("%d",landed);
+   if ((p == player.p) && (landed)) {
+      outfits_updateEquipmentOutfits();
+      shipyard_update(land_getWid(LAND_WINDOW_SHIPYARD), NULL);
+   }
    return p->credits;
 }
 
