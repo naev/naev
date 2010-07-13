@@ -42,6 +42,8 @@ naev_SOURCES = \
 	intro.c \
 	joystick.c \
 	land.c \
+	land_outfits.c \
+	land_shipyard.c \
 	map.c \
 	md5.c \
 	menu.c \
@@ -99,7 +101,6 @@ naev_SOURCES = \
 	rng.c \
 	save.c \
 	ship.c \
-	land_shipyard.c \
 	sound.c \
 	sound_openal.c \
 	sound_sdlmix.c \
@@ -146,6 +147,8 @@ naev_SOURCES = \
 	intro.h \
 	joystick.h \
 	land.h \
+	land_outfits.h \
+	land_shipyard.h \
 	log.h \
 	map.h \
 	md5.h \
@@ -207,7 +210,6 @@ naev_SOURCES = \
 	rng.h \
 	save.h \
 	ship.h \
-	land_shipyard.h \
 	sound.h \
 	sound_openal.h \
 	sound_priv.h \
