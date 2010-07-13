@@ -3209,7 +3209,6 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
    }
 
    /* Hack to update credits in the absence of a bottom bar. */
-   DEBUG("%d",landed);
    if ((p == player.p) && (landed)) {
       outfits_updateEquipmentOutfits();
       shipyard_update(land_getWid(LAND_WINDOW_SHIPYARD), NULL);
