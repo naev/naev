@@ -1996,7 +1996,6 @@ void space_renderStars( const double dt )
    /* Do some scaling for now. */
    gl_cameraZoomGet( &z );
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
       gl_matrixScale( z, z );
 

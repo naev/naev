@@ -701,7 +701,6 @@ static void weapon_render( Weapon* w, const double dt )
          y = (w->solid->pos.y - cy)*z + gy;
 
          /* Set up the matrix. */
-         glMatrixMode(GL_PROJECTION);
          glPushMatrix();
             glTranslated( x, y, 0. );
             glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
@@ -756,7 +755,7 @@ static void weapon_render( Weapon* w, const double dt )
          /* Clean up. */
          glDisable(GL_TEXTURE_2D);
          glShadeModel(GL_FLAT);
-         glPopMatrix(); /* GL_PROJECTION */
+         glPopMatrix();
          gl_checkErr();
          break;
 

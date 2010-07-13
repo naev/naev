@@ -348,7 +348,6 @@ static void nebu_renderMultitexture( const double dt )
    /* Compensate possible rumble */
    if (!paused) {
       spfx_getShake( &sx, &sy );
-      gl_matrixMode( GL_PROJECTION );
       gl_matrixPush();
          gl_matrixTranslate( sx, sy );
    }
@@ -537,7 +536,6 @@ void nebu_renderOverlay( const double dt )
       ox += sx;
       oy += sy;
    }
-   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
    gl_matrixTranslate( ox, oy );
    gl_matrixScale( z, z );
