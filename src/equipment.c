@@ -366,7 +366,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, dc, NULL );
-      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, c, c );
+      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, c, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -1369,10 +1369,6 @@ static void equipment_transportShip( unsigned int wid )
    char *shipname, buf[ECON_CRED_STRLEN];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,"None")==0) { /* no ships */
-      dialogue_alert( "You can't transport nothing here!" );
-      return;
-   }
 
    price = equipment_transportPrice( shipname );
    if (price==0) { /* already here */
