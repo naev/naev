@@ -91,11 +91,11 @@ void shipyard_open( unsigned int wid )
          SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
 
    /* slot types */
-   window_addCust( wid, -20, -170, 148, 50, "cstSlots", 0.,
+   window_addCust( wid, -20, -160, 148, 70, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL ); 
 
    /* stat text */
-   window_addText( wid, -40, -230, 128, 200, 0, "txtStats",
+   window_addText( wid, -40, -240, 128, 200, 0, "txtStats",
          &gl_smallFont, &cBlack, NULL );
 
    /* text */
@@ -472,7 +472,7 @@ static void shipyard_trade( unsigned int wid, char* str )
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
    (void) data;
-   double y;
+   double x, y, w;
    Ship *ship;
 
    /* Make sure a valid ship is selected. */
@@ -482,17 +482,24 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    y = by + bh;
 
-   /* High slots. */
+   /* Draw rotated text. */
    y -= 10;
-   shipyard_renderSlotsRow( bx, y, bw, "H", ship->outfit_high, ship->outfit_nhigh );
+   gl_print( &gl_smallFont, bx + SCREEN_W/2., y + SCREEN_H/2., &cBlack, "Slots:" );
+
+   x = bx + 10.;
+   w = bw - 10.;
+
+   /* High slots. */
+   y -= 20;
+   shipyard_renderSlotsRow( x, y, w, "H", ship->outfit_high, ship->outfit_nhigh );
 
    /* Med slots. */
    y -= 20;
-   shipyard_renderSlotsRow( bx, y, bw, "M", ship->outfit_medium, ship->outfit_nmedium );
+   shipyard_renderSlotsRow( x, y, w, "M", ship->outfit_medium, ship->outfit_nmedium );
 
    /* Low slots. */
    y -= 20;
-   shipyard_renderSlotsRow( bx, y, bw, "L", ship->outfit_low, ship->outfit_nlow );
+   shipyard_renderSlotsRow( x, y, w, "L", ship->outfit_low, ship->outfit_nlow );
 }
 
 
