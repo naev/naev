@@ -187,15 +187,13 @@ static void iar_render( Widget* iar, double bx, double by )
                   ycurs-(double)SCREEN_H/2. + 2.,
                   w - 4., h - 4., &cDConsole, NULL );
          else if (iar->dat.iar.background != NULL) {
-            glColour temp;
-
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
                   w - 4., h - 4., &iar->dat.iar.background[pos], NULL );
 
-            temp = iar->dat.iar.background[pos];
+            tc = iar->dat.iar.background[pos];
 
-            if (((temp.r + temp.g + temp.b) / 3) > 0.5)
+            if (((tc.r + tc.g + tc.b) / 3) > 0.5)
                fontcolour = cBlack;
             else
                fontcolour = cWhite;
@@ -216,12 +214,17 @@ static void iar_render( Widget* iar, double bx, double by )
          /* quantity. */
          if (iar->dat.iar.quantity != NULL) {
             if (iar->dat.iar.quantity[pos] != NULL) {
-               /* Rectangle to hilight better. */
+               /* Rectangle to highlight better. */
                tw = gl_printWidthRaw( &gl_smallFont,
                      iar->dat.iar.quantity[pos] );
-               tc.r = cBlack.r;
-               tc.g = cBlack.g;
-               tc.b = cBlack.b;
+
+               if (is_selected)
+                  tc = cDConsole;
+               else if (iar->dat.iar.background != NULL)
+                  tc = iar->dat.iar.background[pos];
+               else
+                  tc = cBlack;
+
                tc.a = 0.75;
                toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 3.,
                      ycurs-(double)SCREEN_H/2. + 5. + iar->dat.iar.ih,
@@ -229,7 +232,7 @@ static void iar_render( Widget* iar, double bx, double by )
                /* Quantity number. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                      xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
-                     &cWhite, iar->dat.iar.quantity[pos] );
+                     &fontcolour, iar->dat.iar.quantity[pos] );
             }
          }
 
