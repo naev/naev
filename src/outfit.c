@@ -1506,10 +1506,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       xmlr_int(node,"radius",temp->u.map.radius);
    } while (xml_nextNode(node));
 
-   /* Set default outfit size if necessary. */
-   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
-      outfit_setDefaultSize( temp );
-
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
