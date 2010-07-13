@@ -99,6 +99,7 @@ naev_SOURCES = \
 	rng.c \
 	save.c \
 	ship.c \
+	land_shipyard.c \
 	sound.c \
 	sound_openal.c \
 	sound_sdlmix.c \
@@ -206,6 +207,7 @@ naev_SOURCES = \
 	rng.h \
 	save.h \
 	ship.h \
+	land_shipyard.h \
 	sound.h \
 	sound_openal.h \
 	sound_priv.h \

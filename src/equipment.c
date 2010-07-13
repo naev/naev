@@ -1347,7 +1347,7 @@ static void equipment_changeShip( unsigned int wid )
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    newship = player_getShip(shipname);
 
-   if (error_dialogue( shipname, "swapEquipment" ))
+   if (land_errDialogue( shipname, "swapEquipment" ))
       return;
 
    /* Swap ship. */
@@ -1458,7 +1458,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (error_dialogue( shipname, "sell" ))
+   if (land_errDialogue( shipname, "sell" ))
       return;
 
    /* Calculate price. */

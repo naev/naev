@@ -50,12 +50,10 @@ unsigned int land_getWid( int window );
 /*
  * Error dialogue generation and associated sanity checks.
  */
-int can_trade( char* shipname );
-int can_buy(char* shipname );
 int can_swap( char* shipname );
 int can_swapEquipment( char* shipname );
 int can_sell( char* shipname );
-int error_dialogue( char* shipname, char* type );
-void errordialogue_build( const char *format, ... );
+int land_errDialogue( char* shipname, char* type );
+void land_errDialogueBuild( const char *fmt, ... );
 
 #endif /* LAND_H */
