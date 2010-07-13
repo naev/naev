@@ -4,8 +4,8 @@
 
 
 
-#ifndef SHIPYARD_H
-#  define SHIPYARD_H
+#ifndef LAND_SHIPYARD_H
+#  define LAND_SHIPYARD_H
 
 
 /*
@@ -25,4 +25,4 @@ int shipyard_canBuy( char *shipname );
 int shipyard_canTrade( char *shipname );
 
 
-#endif /* SHIPYARD_H */
+#endif /* LAND_SHIPYARD_H */

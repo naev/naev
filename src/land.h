@@ -25,6 +25,13 @@
 
 
 /*
+ * Default button sizes.
+ */
+#define LAND_BUTTON_WIDTH 200 /**< Default button width. */
+#define LAND_BUTTON_HEIGHT 40 /**< Default button height. */
+
+
+/*
  * Landed at.
  */
 extern int landed;

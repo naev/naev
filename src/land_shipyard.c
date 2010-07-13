@@ -26,11 +26,6 @@
 #include "dialogue.h"
 
 
-/* global/main window */
-#define BUTTON_WIDTH 200 /**< Default button width. */
-#define BUTTON_HEIGHT 40 /**< Default button height. */
-
-
 /**
  * @brief Opens the shipyard window.
  */
@@ -57,7 +52,7 @@ void shipyard_open( unsigned int wid )
 
    /* Calculate button dimensions. */
    bw = (w - iw - 200) / 2;
-   bh = BUTTON_HEIGHT;
+   bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
    window_addButton( wid, -20, 20,

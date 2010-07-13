@@ -45,8 +45,6 @@
 /* global/main window */
 #define LAND_WIDTH   800 /**< Land window width. */
 #define LAND_HEIGHT  600 /**< Land window height. */
-#define BUTTON_WIDTH 200 /**< Default button width. */
-#define BUTTON_HEIGHT 40 /**< Default button height. */
 #define PORTRAIT_WIDTH 200
 #define PORTRAIT_HEIGHT 150
 
@@ -175,30 +173,30 @@ static void commodity_exchange_open( unsigned int wid )
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodityClose",
+         LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnCommodityClose",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-((BUTTON_WIDTH-20)/2), 20*2 + BUTTON_HEIGHT,
-         (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommodityBuy",
+   window_addButton( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
          "Buy", commodity_buy );
-   window_addButton( wid, -20, 20*2 + BUTTON_HEIGHT,
-         (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
+   window_addButton( wid, -20, 20*2 + LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommoditySell",
          "Sell", commodity_sell );
          
       /* cust draws the modifier */
-   window_addCust( wid, -40-((BUTTON_WIDTH-20)/2), 60+ 2*BUTTON_HEIGHT,
-         (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
+   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
-   window_addText( wid, -20, -40, BUTTON_WIDTH, 60, 0,
+   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 60, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
          "Market price:\n"
          "\n"
          "Free Space:\n" );
-   window_addText( wid, -20, -40, BUTTON_WIDTH/2, 60, 0,
+   window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 60, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, -40, -120, BUTTON_WIDTH-20,
-         h-140-BUTTON_HEIGHT, 0,
+   window_addText( wid, -40, -120, LAND_BUTTON_WIDTH-20,
+         h-140-LAND_BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* goods list */
@@ -214,7 +212,7 @@ static void commodity_exchange_open( unsigned int wid )
       ngoods   = 1;
    }
    window_addList( wid, 20, -40,
-         w-BUTTON_WIDTH-60, h-80-BUTTON_HEIGHT,
+         w-LAND_BUTTON_WIDTH-60, h-80-LAND_BUTTON_HEIGHT,
          "lstGoods", goods, ngoods, 0, commodity_update );
 
    /* update */
@@ -370,7 +368,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
    if (bw != NULL)
       *bw = (*w - (iw!=NULL?*iw:0) - 80) / 2;
    if (bh != NULL)
-      *bh = BUTTON_HEIGHT;
+      *bh = LAND_BUTTON_HEIGHT;
 }
 
 
@@ -889,7 +887,7 @@ static void bar_getDim( int wid,
 
    /* Calculate button dimensions. */
    *bw = (*w - *iw - 80)/2;
-   *bh = BUTTON_HEIGHT;
+   *bh = LAND_BUTTON_HEIGHT;
 }
 /**
  * @brief Opens the spaceport bar window.
@@ -1121,10 +1119,10 @@ static void misn_open( unsigned int wid )
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseMission",
+         LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20, 40+BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnAcceptMission",
+   window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
+         LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
          "Accept", misn_accept );
 
    /* text */
@@ -1343,7 +1341,7 @@ void land_checkAddRefuel (void)
    /* Check to see if fuel conditions are met. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
       if (!widget_exists( land_windows[0], "txtRefuel" ))
-         window_addText( land_windows[0], -20, 20 + (BUTTON_HEIGHT + 20) + 20,
+         window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
                   200, gl_defFont.h, 1, "txtRefuel",
                   &gl_defFont, &cBlack, "No refueling services." );
       return;
@@ -1380,14 +1378,14 @@ void land_checkAddRefuel (void)
       /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
       snprintf( buf, 32, "Refuel %s", cred );
-      window_addButton( land_windows[0], -20, 20 + (BUTTON_HEIGHT + 20),
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
+      window_addButton( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
+            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
       credits2str( cred, player.p->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
-      window_addText( land_windows[0], -20, 20 + 2*(BUTTON_HEIGHT + 20),
-            BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
+      window_addText( land_windows[0], -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20),
+            LAND_BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
    }
 
@@ -1633,7 +1631,7 @@ static void land_createMainTab( unsigned int wid )
     */
    window_addImage( wid, 20, -40, 0, 0, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
-         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0,
+         w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
          "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
 
    /*
@@ -1641,13 +1639,13 @@ static void land_createMainTab( unsigned int wid )
     */
    /* first column */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
+         LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
          "Takeoff", land_buttonTakeoff );
 
    /*
     * Checkboxes.
     */
-   window_addCheckbox( wid, -20, 20 + 2*(BUTTON_HEIGHT + 20) + 40,
+   window_addCheckbox( wid, -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20) + 40,
          175, 20, "chkRefuel", "Automatic Refuel",
          land_toggleRefuel, conf.autorefuel );
    land_toggleRefuel( wid, "chkRefuel" );
