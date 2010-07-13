@@ -195,8 +195,6 @@ static void iar_render( Widget* iar, double bx, double by )
 
             if (((tc.r + tc.g + tc.b) / 3) > 0.5)
                fontcolour = cBlack;
-            else
-               fontcolour = cWhite;
          }
 
          /* image */
