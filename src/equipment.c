@@ -745,8 +745,8 @@ static void equipment_renderShip( double bx, double by,
    lc = toolkit_colLight;
    c  = toolkit_col;
    dc = toolkit_colDark;
-   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 1., lc, c  );
-   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 2., dc, NULL  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., lc, c  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., dc, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.

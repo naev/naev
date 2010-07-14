@@ -116,12 +116,12 @@ static void lst_render( Widget* lst, double bx, double by )
    /* Draw scrollbar. */
    if (lst->dat.lst.height > 0) {
       /* We need to make room for list. */
-      w -= 10.;
+      w -= 11.;
 
       scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
       /* XXX lst->h is off by one */
-      toolkit_drawScrollbar( x + lst->w - 10. + 1, y, 10., lst->h + 1, scroll_pos );
+      toolkit_drawScrollbar( x + lst->w - 12. + 1, y -1, 12., lst->h + 2, scroll_pos );
    }
 
    /* draw selected */

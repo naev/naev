@@ -873,7 +873,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    lc = lc ? lc : c;
 
    /* Lines. */
-   lines[0][0]   = x;      /* left-up */
+   lines[0][0]   = x - 1;  /* left-up */
    lines[0][1]   = y;
    colours[0]    = *lc;
 
@@ -1470,7 +1470,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);
    toolkit_drawRect( x, sy, w, 30., toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( x, sy, w, 30., 0., toolkit_colDark, NULL );
+   toolkit_drawOutline( x + 1, sy, w - 1, 30., 0., toolkit_colDark, NULL );
 }
 
 
