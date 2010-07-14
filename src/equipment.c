@@ -1052,6 +1052,8 @@ static void equipment_genLists( unsigned int wid )
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
    glColour *bg, *c, blend;
+   char **slottype;
+   char typename;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1138,6 +1140,7 @@ static void equipment_genLists( unsigned int wid )
       if (strcmp(soutfits[0],"None")!=0) {
          alt      = malloc( sizeof(char*) * noutfits );
          quantity = malloc( sizeof(char*) * noutfits );
+         slottype = malloc( sizeof(char*) * noutfits );
          for (i=0; i<noutfits; i++) {
             o      = outfit_get( soutfits[i] );
 
@@ -1171,9 +1174,21 @@ static void equipment_genLists( unsigned int wid )
             l = p / 10 + 4;
             quantity[i] = malloc( l );
             snprintf( quantity[i], l, "%d", p );
+
+            /* Slot type. */
+            if ((strcmp(outfit_slotName(o),"NA") != 0) &&
+                  (strcmp(outfit_slotName(o),"NULL") != 0)) {
+               typename = *outfit_slotName(o);
+               slottype[i] = malloc( sizeof(typename) );
+               snprintf( slottype[i], 2, "%c", typename );
+            }
+            else {
+               slottype[i] = NULL;
+            }
          }
          toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
          toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
+         toolkit_setImageArraySlotType( wid, EQUIPMENT_OUTFITS, slottype );
          toolkit_setImageArrayBackground( wid, EQUIPMENT_OUTFITS, bg );
       }
    }

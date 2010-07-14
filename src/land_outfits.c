@@ -80,6 +80,8 @@ void outfits_open( unsigned int wid )
    int iw, ih;
    int bw, bh;
    glColour *bg, *c, blend;
+   char **slottype;
+   char typename;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
@@ -142,6 +144,7 @@ void outfits_open( unsigned int wid )
       soutfits = malloc(sizeof(char*)*noutfits);
       toutfits = malloc(sizeof(glTexture*)*noutfits);
       bg       = malloc(sizeof(glColour)*noutfits);
+      slottype = malloc( sizeof(char*) * noutfits );
       for (i=0; i<noutfits; i++) {
          soutfits[i] = strdup(outfits[i]->name);
          toutfits[i] = outfits[i]->gfx_store;
@@ -152,6 +155,16 @@ void outfits_open( unsigned int wid )
             c = &cBlack;
          col_blend( &blend, *c, cGrey70, 0.4 );
          memcpy( &bg[i], &blend, sizeof(glColour) );
+
+         if ((strcmp(outfit_slotName(outfits[i]),"NA") != 0) &&
+                  (strcmp(outfit_slotName(outfits[i]),"NULL") != 0)) {
+            typename = *outfit_slotName(outfits[i]);
+            slottype[i] = malloc( sizeof(typename) );
+            snprintf( slottype[i], 2, "%c", typename );
+         }
+         else {
+            slottype[i] = NULL;
+         }
       }
       free(outfits);
    }
@@ -162,6 +175,7 @@ void outfits_open( unsigned int wid )
    /* write the outfits stuff */
    outfits_update( wid, NULL );
    outfits_updateQuantities( wid );
+   toolkit_setImageArraySlotType( wid, "iarOutfits", slottype );
    toolkit_setImageArrayBackground( wid, "iarOutfits", bg );
 }
 /**

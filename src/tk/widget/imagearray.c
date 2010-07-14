@@ -185,11 +185,11 @@ static void iar_render( Widget* iar, double bx, double by )
          if (is_selected)
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
-                  w - 4., h - 4., &cDConsole, NULL );
+                  w - 5., h - 5., &cDConsole, NULL );
          else if (iar->dat.iar.background != NULL) {
             toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                   ycurs-(double)SCREEN_H/2. + 2.,
-                  w - 4., h - 4., &iar->dat.iar.background[pos], NULL );
+                  w - 5., h - 5., &iar->dat.iar.background[pos], NULL );
 
             tc = iar->dat.iar.background[pos];
 
@@ -224,13 +224,37 @@ static void iar_render( Widget* iar, double bx, double by )
                   tc = cBlack;
 
                tc.a = 0.75;
-               toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 3.,
+               toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
                      ycurs-(double)SCREEN_H/2. + 5. + iar->dat.iar.ih,
                      tw + 4., gl_smallFont.h + 4., &tc, NULL );
                /* Quantity number. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                      xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
                      &fontcolour, iar->dat.iar.quantity[pos] );
+            }
+         }
+
+         /* Slot type. */
+         if (iar->dat.iar.slottype != NULL) {
+            if (iar->dat.iar.slottype[pos] != NULL) {
+               /* Rectangle to highlight better. Width is a hack due to lack of monospace font. */
+               tw = gl_printWidthRaw( &gl_smallFont, "M" );
+
+               if (is_selected)
+                  tc = cDConsole;
+               else if (iar->dat.iar.background != NULL)
+                  tc = iar->dat.iar.background[pos];
+               else
+                  tc = cBlack;
+
+               tc.a = 0.75;
+               toolkit_drawRect( xcurs-(double)SCREEN_W/2. + iar->dat.iar.iw - 6.,
+                     ycurs-(double)SCREEN_H/2. + 5. + iar->dat.iar.ih,
+                     tw + 2., gl_smallFont.h + 4., &tc, NULL );
+               /* Slot size letter. */
+               gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
+                     xcurs + iar->dat.iar.iw - 4., ycurs + iar->dat.iar.ih + 7.,
+                     &fontcolour, iar->dat.iar.slottype[pos] );
             }
          }
 
@@ -825,7 +849,7 @@ int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **a
  *
  *    @param wid Window where image array is.
  *    @param name Name of the image array.
- *    @param alt Array of alt text the size of the images in the array.
+ *    @param quantity Array of quantities for the images in the array.
  *    @return 0 on success.
  */
 int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
@@ -851,7 +875,37 @@ int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
 
 
 /**
- * @brief Sets the quantity text for the images in the image array.
+ * @brief Sets the slot type text for the images in the image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param slottype Array of slot sizes for the images in the array.
+ *    @return 0 on success.
+ */
+int toolkit_setImageArraySlotType( const unsigned int wid, const char* name,
+      char **slottype )
+{
+   int i;
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   /* Clean up. */
+   if (wgt->dat.iar.slottype != NULL) {
+      for (i=0; i<wgt->dat.iar.nelements; i++)
+         if (wgt->dat.iar.slottype[i] != NULL)
+            free(wgt->dat.iar.slottype[i]);
+      free(wgt->dat.iar.slottype);
+   }
+
+   /* Set. */
+   wgt->dat.iar.slottype = slottype;
+   return 0;
+}
+
+
+/**
+ * @brief Sets the background colour for the images in the image array.
  *
  *    @param wid Window where image array is.
  *    @param name Name of the image array.
