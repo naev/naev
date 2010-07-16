@@ -58,8 +58,8 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
  */
 /* misc */
 static DamageType outfit_strToDamageType( char *buf );
-static const char *outfit_damageTypeToStr( DamageType dmg );
 static OutfitType outfit_strToOutfitType( char *buf );
+static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
 static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
@@ -111,6 +111,16 @@ Outfit* outfit_getW( const char* name )
 
 
 /**
+ * @brief Gets all the outfits.
+ */
+Outfit* outfit_getAll( int *n )
+{
+   *n = array_size(outfit_stack);
+   return outfit_stack;
+}
+
+
+/**
  * @brief Function meant for use with C89, C99 algorithm qsort().
  *
  *    @param outfit1 First argument to compare.
@@ -125,6 +135,12 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    /* Get outfits. */
    o1 = * (const Outfit**) outfit1;
    o2 = * (const Outfit**) outfit2;
+
+   /* Compare slot type. */
+   if (o1->slot.type < o2->slot.type)
+      return +1;
+   else if (o1->slot.type > o2->slot.type)
+      return -1;
 
    /* Compare intrinsic types. */
    if (o1->type < o2->type)
@@ -143,11 +159,17 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
          return ret;
    }
 
+   /* Compare slot sizes. */
+   if (o1->slot.size < o2->slot.size)
+      return +1;
+   else if (o1->slot.size > o2->slot.size)
+      return -1;
+
    /* Compare price. */
    if (o1->price < o2->price)
-      return -1;
-   else if (o1->price > o2->price)
       return +1;
+   else if (o1->price > o2->price)
+      return -1;
 
    /* It turns out they're the same. */
    return 0;
@@ -214,7 +236,7 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  */
 const char *outfit_slotName( const Outfit* o )
 {
-   switch (o->slot) {
+   switch (o->slot.type) {
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
@@ -228,6 +250,87 @@ const char *outfit_slotName( const Outfit* o )
       default:
          return "Unknown";
    }
+}
+
+
+/**
+ * @brief Gets the name of the slot size of an outfit.
+ *
+ *    @param o Outfit to get slot size of.
+ *    @return The human readable name of the slot size.
+ */
+const char *outfit_slotSize( const Outfit* o )
+{
+   switch( o->slot.size) {
+      case OUTFIT_SLOT_SIZE_NA:
+         return "NA";
+      case OUTFIT_SLOT_SIZE_LIGHT:
+         return "Light";
+      case OUTFIT_SLOT_SIZE_STANDARD:
+         return "Standard";
+      case OUTFIT_SLOT_SIZE_HEAVY:
+         return "Heavy";
+      default:
+         return "Unknown";
+   }
+}
+
+
+/**
+ * @brief Gets the slot size colour for an outfit slot.
+ *
+ *    @param os Outfit slot to get the slot size colour of.
+ *    @return The slot size colour of the outfit slot.
+ */
+glColour *outfit_slotSizeColour( const OutfitSlot* os )
+{
+   if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
+      return &cFontBlue;
+   else if (os->size == OUTFIT_SLOT_SIZE_STANDARD)
+      return &cFontGreen;
+   else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
+      return &cFontYellow;
+   return NULL;
+}
+
+
+/**
+ * @brief Gets the outfit slot size from a human readable string.
+ *
+ *    @param s String represinting an outfit slot size.
+ *    @return Outfit slot size matching string.
+ */
+OutfitSlotSize outfit_toSlotSize( const char *s )
+{
+   if (s == NULL) {
+      /*WARN( "(NULL) outfit slot size" );*/
+      return OUTFIT_SLOT_SIZE_NA;
+   }
+
+   if (strcasecmp(s,"Heavy")==0)
+      return OUTFIT_SLOT_SIZE_HEAVY;
+   else if (strcasecmp(s,"Standard")==0)
+      return OUTFIT_SLOT_SIZE_STANDARD;
+   else if (strcasecmp(s,"Light")==0)
+      return OUTFIT_SLOT_SIZE_LIGHT;
+
+   WARN("'%s' does not match any outfit slot sizes.", s);
+   return OUTFIT_SLOT_SIZE_NA;
+}
+
+
+/**
+ * @brief Sets the outfit slot size from default outfit properties.
+ */
+static int outfit_setDefaultSize( Outfit *o )
+{
+   if (o->mass <= 10.)
+      o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
+   else if (o->mass <= 30.)
+      o->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
+   else
+      o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
+   return 0;
 }
 
 
@@ -606,11 +709,11 @@ const char* outfit_getTypeBroad( const Outfit* o )
  */
 static DamageType outfit_strToDamageType( char *buf )
 {
-   if (strcmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
-   else if (strcmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
-   else if (strcmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
-   else if (strcmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
-   else if (strcmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
+   if (strcasecmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
+   else if (strcasecmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
+   else if (strcasecmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
+   else if (strcasecmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
+   else if (strcasecmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
 
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;
@@ -620,7 +723,7 @@ static DamageType outfit_strToDamageType( char *buf )
 /**
  * @brief Gets the human readable string from damage type.
  */
-static const char *outfit_damageTypeToStr( DamageType dmg )
+const char *outfit_damageTypeToStr( DamageType dmg )
 {
    switch (dmg) {
       case DAMAGE_TYPE_ENERGY:
@@ -639,8 +742,42 @@ static const char *outfit_damageTypeToStr( DamageType dmg )
 }
 
 
+/**
+ * @brief Checks to see if an outfit fits a slot.
+ *
+ *    @param o Outfit to see if fits in a slot.
+ *    @param s Slot to see if outfit fits in.
+ *    @return 1 if outfit fits the slot, 0 otherwise.
+ */
+int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
+{
+   const OutfitSlot *os;
+   os = &o->slot;
+
+   /* Outfit must have valid slot type. */
+   if ((os->type == OUTFIT_SLOT_NULL) ||
+      (os->type == OUTFIT_SLOT_NA))
+      return 0;
+
+   /* Outfit type must match outfit slot. */
+   if (os->type != s->type)
+      return 0;
+
+   /* Must have valid slot size. */
+   if (os->size == OUTFIT_SLOT_SIZE_NA)
+      return 0;
+
+   /* It doesn't fit. */
+   if (os->size > s->size)
+      return 0;
+
+   /* It meets all criteria. */
+   return 1;
+}
+
+
 #define O_CMP(s,t) \
-if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
+if (strcasecmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**
  * @brief Gets the outfit type from a human readable string.
  *
@@ -802,6 +939,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.blt.delay /= 1000.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -902,6 +1043,10 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -958,6 +1103,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.lau.delay /= 1000.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -994,7 +1143,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    /* Defaults. */
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
    temp->u.amm.spfx_armour = -1;
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
@@ -1153,6 +1303,10 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.shield_regen /= 60.;
    temp->u.mod.energy_regen /= 60.;
 
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
+
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    i = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -1251,6 +1405,10 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
    temp->u.afb.speed  /= 100.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 }
 
 /**
@@ -1273,6 +1431,10 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bay.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1306,7 +1468,8 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xmlr_strd(node,"ship",temp->u.fig.ship);
@@ -1336,7 +1499,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xmlr_int(node,"radius",temp->u.map.radius);
@@ -1366,7 +1530,8 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    /* Licenses have no specific tidbits. */
    (void) parent;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    /*
    xmlNodePtr node;
@@ -1404,6 +1569,10 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
    temp->u.jam.energy /= 60.; /* It's per minute */
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1472,11 +1641,14 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                if (cprop == NULL)
                   WARN("Outfit Slot type invalid.");
                else if (strcmp(cprop,"low") == 0)
-                  temp->slot = OUTFIT_SLOT_LOW;
+                  temp->slot.type = OUTFIT_SLOT_LOW;
                else if (strcmp(cprop,"medium") == 0)
-                  temp->slot = OUTFIT_SLOT_MEDIUM;
+                  temp->slot.type = OUTFIT_SLOT_MEDIUM;
                else if (strcmp(cprop,"high") == 0)
-                  temp->slot = OUTFIT_SLOT_HIGH;
+                  temp->slot.type = OUTFIT_SLOT_HIGH;
+            }
+            else if (xml_isNode(cur,"size")) {
+               temp->slot.size = outfit_toSlotSize( xml_get(cur) );
             }
 
          } while (xml_nextNode(cur));
@@ -1533,7 +1705,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
-   MELEMENT(temp->slot==OUTFIT_SLOT_NULL,"slot");
+   MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
+   MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");

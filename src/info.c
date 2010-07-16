@@ -129,7 +129,7 @@ static void info_close( unsigned int wid, char* str )
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[128], **buf, creds[32];
+   char str[128], **buf, creds[ECON_CRED_STRLEN];
    char **licenses;
    int nlicenses;
    int i;

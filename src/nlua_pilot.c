@@ -1188,7 +1188,7 @@ static int pilotL_addOutfit( lua_State *L )
          continue;
 
       /* Must fit slot. */
-      if (o->slot != p->outfits[i]->slot)
+      if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
          continue;
 
       /* Test if can add outfit. */

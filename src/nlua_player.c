@@ -532,7 +532,7 @@ static int playerL_addOutfit( lua_State *L  )
  * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
  *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it.
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
  * @luafunc addShip( ship, name )
  */
 static int playerL_addShip( lua_State *L )
@@ -549,7 +549,10 @@ static int playerL_addShip( lua_State *L )
 
    /* Handle parameters. */
    str  = luaL_checkstring(L, 1);
-   name = luaL_checkstring(L, 2);
+   if (lua_isstring(L, 2))
+      name = lua_tostring(L, 2);
+   else
+      name = str;
 
    /* Get ship. */
    s = ship_get(str);
@@ -650,6 +653,12 @@ static int playerL_teleport( lua_State *L )
       name = lua_tostring(L,1);
    else
       NLUA_INVALID_PARAMETER();
+
+   /* Check if system exists. */
+   if (!system_exists( name )) {
+      NLUA_ERROR( L, "System '%s' does not exist.", name );
+      return 0;
+   }
 
    /* Jump out hook is run first. */
    hooks_run( "jumpout" );

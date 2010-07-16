@@ -139,7 +139,7 @@ typedef struct PilotOutfitSlot_ {
    /* Outfit slot properties. */
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
-   OutfitSlotType slot; /**< Slot type. */
+   OutfitSlot slot; /**< Outfit slot. */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */

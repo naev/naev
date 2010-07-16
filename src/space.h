@@ -309,6 +309,7 @@ void space_gfxUnload( StarSystem *sys );
  * Getting stuff.
  */
 const StarSystem* system_getAll( int *nsys );
+int system_exists( const char* sysname );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );

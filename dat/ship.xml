@@ -107,7 +107,7 @@
   </characteristics>
   <slots>
    <high x="9" y="0" h="-2" />
-   <medium/>
+   <medium>standard</medium>
    <medium/>
    <medium/>
    <medium/>
@@ -305,7 +305,7 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="0" h="0" />
+   <high x="25"  y="0" h="0" >heavy</high>
    <high x="-15" y="0" h="4" />
    <high x="15"  y="0" h="4" />
    <medium />
@@ -430,7 +430,7 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
+   <high x="12" y="0" h="0" >standard</high>
    <high x="12" y="0" h="0" />
    <high x="-3" y="0" h="2" />
    <high x="-3" y="0" h="2" />
@@ -472,7 +472,7 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
+   <high x="12" y="0" h="0" >standard</high>
    <high x="12" y="0" h="0" />
    <high x="-3" y="0" h="2" />
    <high x="-3" y="0" h="2" />
@@ -757,13 +757,13 @@
   <slots>
    <high x="15" y="1"  h="2" />
    <high x="15" y="-1"  h="2" />
-   <high x="-9"  y="-3"  h="2" />
-   <high x="-9"  y="3" h="2" />
    <high x="-9" y="-10" h="2" />
    <high x="-9" y="10"  h="2" />
+   <high x="-9"  y="-3"  h="2" >light</high>
+   <high x="-9"  y="3" h="2" >light</high>
    <medium />
    <medium />
-   <medium />
+   <medium>light</medium>
    <low />
    <low />
   </slots>
@@ -802,11 +802,11 @@
    <high x="15" y="0"  h="2" />
    <high x="4"  y="2"  h="-5" />
    <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
+   <high x="-9" y="-5" h="-9" >light</high>
+   <high x="-9" y="5"  h="-9" >light</high>
    <medium />
    <medium />
-   <medium />
+   <medium>light</medium>
    <low />
    <low />
    <low />
@@ -845,11 +845,11 @@
    <high x="15" y="0"  h="2" />
    <high x="4"  y="2"  h="-5" />
    <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
+   <high x="-9" y="-5" h="-9" >light</high>
+   <high x="-9" y="5"  h="-9" >light</high>
    <medium />
    <medium />
-   <medium />
+   <medium>light</medium>
    <low />
    <low />
    <low />
@@ -889,11 +889,11 @@
    <high x="15" y="0"  h="2" />
    <high x="4"  y="2"  h="-5" />
    <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
+   <high x="-9" y="-5" h="-9" >light</high>
+   <high x="-9" y="5"  h="-9" >light</high>
    <medium />
    <medium />
-   <medium />
+   <medium>light</medium>
    <low />
    <low />
    <low />
@@ -930,16 +930,16 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" />
-	<high x="28"  y="3"   h="-0" />
+   <high x="28"  y="-3"   h="-0" >heavy</high>
+	<high x="28"  y="3"   h="-0" >heavy</high>
    <high x="10"   y="-3"  h="2" />
    <high x="10"   y="3"   h="2" />
    <high x="-22" y="-8" h="-0" />
    <high x="-22" y="8"  h="-0" />
+   <medium>heavy</medium>
+   <medium>heavy</medium>
    <medium />
-   <medium />
-   <medium />
-   <low />
+   <low>heavy</low>
    <low />
    <low />
    <low />
@@ -976,16 +976,16 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" />
-	<high x="28"  y="3"   h="-0" />
+   <high x="28"  y="-3"   h="-0" >heavy</high>
+	<high x="28"  y="3"   h="-0" >heavy</high>
    <high x="10"   y="-3"  h="2" />
    <high x="10"   y="3"   h="2" />
    <high x="-22" y="-8" h="-0" />
    <high x="-22" y="8"  h="-0" />
+   <medium>heavy</medium>
+   <medium>heavy</medium>
    <medium />
-   <medium />
-   <medium />
-   <low />
+   <low>heavy</low>
    <low />
    <low />
    <low />
@@ -1022,14 +1022,14 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="0" />
+   <high x="20"  y="0"   h="0" >heavy</high>
    <high x="10"   y="0"  h="0" />
    <high x="-10" y="0" h="0" />
    <high x="-20" y="0"  h="0" />
+   <medium>heavy</medium>
    <medium />
    <medium />
-   <medium />
-   <low />
+   <low>heavy</low>
    <low />
    <low />
   </slots>
@@ -1065,17 +1065,17 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="0"   h="5" />
-	<high x="18"  y="0"   h="5" />
+   <high x="28"  y="0"   h="5" >heavy</high>
+	<high x="18"  y="0"   h="5" >heavy</high>
    <high x="-30" y="-8" h="3" />
    <high x="-30" y="8"  h="3" />
+   <medium>heavy</medium>
+   <medium>heavy</medium>
    <medium />
    <medium />
    <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <low>heavy</low>
+   <low /> 
    <low />
   </slots>
  </ship>
@@ -1110,16 +1110,16 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
+   <high x="-15" y="-10" h="-10">heavy</high>
+   <high x="-15" y="10"  h="-10">heavy</high>
    <high x="20"  y="0"   h="-10" />
    <high x="4"   y="-5"  h="-10" />
    <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
+   <medium>heavy</medium>
+   <medium>heavy</medium>
    <medium />
    <medium />
-   <medium />
-   <medium />
-   <low />
+   <low>heavy</low>
    <low />
    <low />
   </slots>
@@ -1155,16 +1155,16 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
+   <high x="-15" y="-10" h="-10">heavy</high>
+   <high x="-15" y="10"  h="-10">heavy</high>
    <high x="20"  y="0"   h="-10" />
    <high x="4"   y="-5"  h="-10" />
    <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
+   <medium>heavy</medium>
+   <medium>heavy</medium>
    <medium />
    <medium />
-   <medium />
-   <medium />
-   <low />
+   <low>heavy</low>
    <low />
    <low />
   </slots>
@@ -1201,21 +1201,21 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
    <high x="-23" y="-15" h="5" />
    <high x="-23" y="15"  h="5" />
    <high x="44"  y="0"   h="0" />
    <high x="-6"  y="0"   h="12" />
+   <high x="-24" y="-8"  h="8" >standard</high>
+   <high x="-24" y="8"   h="8" >standard</high>
    <medium />
    <medium />
    <medium />
    <medium />
-   <medium />
+   <medium>standard</medium>
    <low />
    <low />
    <low />
-   <low />
+   <low>standard</low>
   </slots>
  </ship>
  <ship name="Pirate Kestrel">
@@ -1248,21 +1248,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
    <high x="-23" y="-15" h="5" />
    <high x="-23" y="15"  h="5" />
    <high x="44"  y="0"   h="0" />
    <high x="-6"  y="0"   h="12" />
+   <high x="-24" y="-8"  h="8" >standard</high>
+   <high x="-24" y="8"   h="8" >standard</high>
    <medium />
    <medium />
    <medium />
    <medium />
-   <medium />
+   <medium>standard</medium>
    <low />
    <low />
    <low />
-   <low />
+   <low>standard</low>
   </slots>
  </ship>
  <ship name="Proteron Archimedes">

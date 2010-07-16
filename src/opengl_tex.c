@@ -539,6 +539,10 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       return NULL;
    }
    npng     = npng_open( rw );
+   if (npng == NULL) {
+      WARN("File '%s' is not a png.", path );
+      return NULL;
+   }
    npng_dim( npng, &w, &h );
    surface  = npng_readSurface( npng, gl_needPOT(), 1 );
    npng_close( npng );

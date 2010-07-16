@@ -18,7 +18,10 @@ naev_SOURCES = \
 	conf.c \
 	console.c \
 	debris.c \
+	dev.c \
+	dev_outfit.c \
 	dev_planet.c \
+	dev_ship.c \
 	dev_system.c \
 	dev_sysedit.c \
 	dev_uniedit.c \
@@ -39,6 +42,8 @@ naev_SOURCES = \
 	intro.c \
 	joystick.c \
 	land.c \
+	land_outfits.c \
+	land_shipyard.c \
 	map.c \
 	md5.c \
 	menu.c \
@@ -118,7 +123,10 @@ naev_SOURCES = \
 	config.h \
 	console.h \
 	debris.h \
+	dev.h \
+	dev_outfit.h \
 	dev_planet.h \
+	dev_ship.h \
 	dev_system.h \
 	dev_sysedit.h \
 	dev_uniedit.h \
@@ -139,6 +147,8 @@ naev_SOURCES = \
 	intro.h \
 	joystick.h \
 	land.h \
+	land_outfits.h \
+	land_shipyard.h \
 	log.h \
 	map.h \
 	md5.h \

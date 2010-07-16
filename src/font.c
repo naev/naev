@@ -918,6 +918,7 @@ static void gl_fontRenderEnd (void)
 {
    gl_vboDeactivate();
    gl_matrixPop();
+   gl_matrixMode( GL_PROJECTION );
    glDisable(GL_TEXTURE_2D);
 
    /* Check for errors. */

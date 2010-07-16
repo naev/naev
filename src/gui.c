@@ -822,7 +822,7 @@ void gui_render( double dt )
 {
    int i, j;
    double x;
-   char str[32];
+   char str[ECON_CRED_STRLEN];
    Pilot* p;
    glColour* c, col;
    glFont* f;
@@ -1198,7 +1198,6 @@ static void gui_renderRadar( double dt )
    int i, j;
    GLfloat vertex[2*4], colours[4*4];
 
-   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
    if (gui.radar.shape==RADAR_RECT)
       gl_matrixTranslate( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,

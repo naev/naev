@@ -116,6 +116,9 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
 {
    double var_h, var_i, var_1, var_2, var_3;
 
+   if (v > 1)
+      v = 1;
+
    if (s == 0) {
       *r = v;
       *g = v;
@@ -218,6 +221,27 @@ void col_rgb2hsv( double *H, double *S, double *V, double R, double G, double B 
    *H = H1;
    *S = S1;
    *V = V1;
+}
+
+
+/**
+ * @brief Blends two colours.
+ *
+ *    @param[out] blend Stores blended output colour.
+ *    @param fg Foreground colour.
+ *    @param bg Background colour.
+ *    @param alpha Alpha value to use (0 to 1).
+ */
+void col_blend( glColour *blend, glColour fg, glColour bg, double alpha )
+{
+   glColour temp;
+
+   temp.r = (1 - alpha) * bg.r + alpha * fg.r;
+   temp.g = (1 - alpha) * bg.g + alpha * fg.g;
+   temp.b = (1 - alpha) * bg.b + alpha * fg.b;
+   temp.a = (1 - alpha) * bg.a + alpha * fg.a;
+
+   *blend = temp;
 }
 
 

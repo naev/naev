@@ -7,12 +7,12 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Empire Lancelot", 15 );
+       scom.addPilot( pilots, "Sirius Fidelity", 15 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Empire Lancelot", 15 );
-       scom.addPilot( pilots, "Empire Lancelot", 15 );
+       scom.addPilot( pilots, "Sirius Fidelity", 15 );
+       scom.addPilot( pilots, "Sirius Fidelity", 15 );
     else
-       scom.addPilot( pilots, "Empire Pacifier", 45 );
+       scom.addPilot( pilots, "Sirius Divinity", 45 );
     end
 
     return pilots
@@ -25,16 +25,16 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Admonisher", 30 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Preacher", 30 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Empire Admonisher", 40 );
-       scom.addPilot( pilots, "Empire Admonisher", 40 );
+       scom.addPilot( pilots, "Sirius Preacher", 40 );
+       scom.addPilot( pilots, "Sirius Preacher", 40 );
     else
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Pacifier", 60 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Divinity", 60 );
     end
 
     return pilots
@@ -47,24 +47,20 @@ function spawn_capship ()
     local r = rnd.rnd()
 
     -- Generate the capship
-    if r < 0.7 then
-       scom.addPilot( pilots, "Empire Hawking", 100 )
-    else
-       scom.addPilot( pilots, "Empire Peacemaker", 150 )
-    end
+    scom.addPilot( pilots, "Sirius Dogma", 100 )
 
     -- Generate the escorts
     r = rnd.rnd()
     if r < 0.5 then
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Admonisher", 40 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Preacher", 40 );
     else
-       scom.addPilot( pilots, "Empire Lancelot", 20 );
-       scom.addPilot( pilots, "Empire Pacifier", 50 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Divinity", 50 );
     end
 
     return pilots

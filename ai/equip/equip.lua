@@ -20,6 +20,7 @@ _eq_god = faction.get("Goddard")
 _eq_pro = faction.get("Proteron")
 _eq_dva = faction.get("Dvaered")
 _eq_pir = faction.get("Pirate")
+_eq_sir = faction.get("Sirius")
 
 
 --[[
@@ -29,7 +30,7 @@ _eq_pir = faction.get("Pirate")
 --    @param f Faction to which pilot belongs
 --]]
 function equip ( p, f )
-   if f == _eq_emp or f == _eq_god or f == _eq_pro then
+   if f == _eq_emp or f == _eq_god or f == _eq_pro or f == _eq_sir then
       equip_empire( p )
    elseif f == _eq_dva then
       equip_dvaered( p )

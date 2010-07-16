@@ -11,6 +11,9 @@
 #include <stdint.h>
 
 
+#define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
+
+
 /**
  * @struct Commodity
  *

@@ -40,6 +40,8 @@
 #include "faction.h"
 #include "font.h"
 #include "land.h"
+#include "land_outfits.h"
+#include "land_shipyard.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -232,31 +234,41 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    double d, td;
 
    tp = 0;
-   d = 0.;
+   d  = 0.;
    for (i=0; i<pilot_nstack; i++) {
+      /* Must not be dead. */
+      if (pilot_isFlag( pilot_stack[i], PILOT_DELETE ) ||
+            pilot_isFlag( pilot_stack[i], PILOT_DEAD))
+         continue;
+
       /* Must not be bribed. */
       if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
          continue;
 
-      if (!pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ) &&
-            (areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-               ((pilot_stack[i]->id == PLAYER_ID) && 
-                  pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+      /* Must not be invisible. */
+      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
+         continue;
 
-         /* Shouldn't be disabled. */
-         if (pilot_isDisabled(pilot_stack[i]))
-            continue;
+      /* Should either be hostile by faction or by player. */
+      if (!(areEnemies( p->faction, pilot_stack[i]->faction) ||
+               ((pilot_stack[i]->id == PLAYER_ID) &&
+                pilot_isFlag(p,PILOT_HOSTILE))))
+         continue;
 
-         /* Must be in range. */
-         if (!pilot_inRangePilot( p, pilot_stack[i] ))
-            continue;
 
-         /* Check distance. */
-         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
-         if (!tp || (td < d)) {
-            d = td;
-            tp = pilot_stack[i]->id;
-         }
+      /* Shouldn't be disabled. */
+      if (pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Must be in range. */
+      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+         continue;
+
+      /* Check distance. */
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      if (!tp || (td < d)) {
+         d  = td;
+         tp = pilot_stack[i]->id;
       }
    }
    return tp;
@@ -1118,12 +1130,14 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 {
    int mod, h;
    double damage_shield, damage_armour, knockback, dam_mod, dmg;
+   double armour_start;
    Pilot *pshooter;
 
    /* Defaults. */
    pshooter = NULL;
    dam_mod  = 0.;
    dmg      = 0.;
+   armour_start = p->armour;
 
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
@@ -1167,6 +1181,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dmg        = damage_armour;
       p->armour -= damage_armour;
    }
+
+   /* EMP does not kill. */
+   if ((dtype == DAMAGE_TYPE_EMP) && (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour*0.75))
+      p->armour = MIN( armour_start, PILOT_DISABLED_ARMOR*p->ship->armour*0.75);
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
@@ -2208,6 +2226,10 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
    if ((p==NULL) || (o==NULL))
       return "Nothing selected.";
 
+   /* Check slot type. */
+   if ((s != NULL) && !outfit_fitsSlot( o, &s->slot ))
+      return "Does not fit slot.";
+
    /* Adding outfit. */
    if (add) {
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
@@ -3186,6 +3208,11 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
          p->credits -= ul;
    }
 
+   /* Hack to update credits in the absence of a bottom bar. */
+   if ((p == player.p) && (landed)) {
+      outfits_updateEquipmentOutfits();
+      shipyard_update(land_getWid(LAND_WINDOW_SHIPYARD), NULL);
+   }
    return p->credits;
 }
 
@@ -3251,19 +3278,22 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* First pass copy data. */
    p = 0;
    for (i=0; i<pilot->outfit_nlow; i++) {
-      pilot->outfit_low[i].slot = OUTFIT_SLOT_LOW;
+      pilot->outfit_low[i].slot.type = OUTFIT_SLOT_LOW;
+      pilot->outfit_low[i].slot.size = ship->outfit_low[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_low[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_low[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nmedium; i++) {
-      pilot->outfit_medium[i].slot = OUTFIT_SLOT_MEDIUM;
+      pilot->outfit_medium[i].slot.type = OUTFIT_SLOT_MEDIUM;
+      pilot->outfit_medium[i].slot.size = ship->outfit_medium[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_medium[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_medium[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nhigh; i++) {
-      pilot->outfit_high[i].slot = OUTFIT_SLOT_HIGH;
+      pilot->outfit_high[i].slot.type = OUTFIT_SLOT_HIGH;
+      pilot->outfit_high[i].slot.size = ship->outfit_high[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_high[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
       p++;

@@ -44,7 +44,7 @@ static int debris_load (void)
    /* Calculate amount. */
    i = 0;
    do {
-      snprintf( buf, 32, "Dbr%d", i );
+      snprintf( buf, strlen(buf), "Dbr%d", i );
       i++;
    } while (spfx_get(buf) != -1);
    debris_nspfx = i-1;

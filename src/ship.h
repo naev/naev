@@ -68,7 +68,7 @@ typedef struct ShipMount_ {
  * @brief Ship outfit slot.
  */
 typedef struct ShipOutfitSlot_ {
-   OutfitSlotType slot; /**< Type of slot. */
+   OutfitSlot slot; /**< Outfit slot. */
    Outfit *data; /**< Outfit by default if applicable. */
    ShipMount mount; /**< Mountpoint. */
 } ShipOutfitSlot;
@@ -112,6 +112,7 @@ typedef struct Ship_ {
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */
+   glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm; /**< Name of graphic for communication. */
 
    /* GUI interface */
@@ -154,6 +155,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
  */
 Ship* ship_get( const char* name );
 Ship* ship_getW( const char* name );
+Ship* ship_getAll( int *n );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );

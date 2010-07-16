@@ -493,7 +493,6 @@ void spfx_begin( const double dt )
    }
 
    /* set the new viewport */
-   glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
 }

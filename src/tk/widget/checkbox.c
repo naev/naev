@@ -11,6 +11,8 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
 
 
 static Widget *chk_getWgt( const unsigned int wid, const char *name );

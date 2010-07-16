@@ -4,7 +4,7 @@
  <outfit name="Laser Cannon">
   <general>
    <slot>high</slot>
-   <mass>5</mass>
+   <mass>2</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
    <gfx_store>laser</gfx_store>
@@ -28,7 +28,7 @@
   <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>9</mass>
+   <mass>3</mass>
    <price>15000</price>
    <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
@@ -53,7 +53,7 @@
   <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>20</mass>
+   <mass>16</mass>
    <price>25000</price>
    <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
    <gfx_store>laserturret</gfx_store>
@@ -77,7 +77,7 @@
  <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>35</mass>
+   <mass>18</mass>
    <price>45000</price>
    <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
    <gfx_store>laserturret2</gfx_store>
@@ -101,7 +101,7 @@
  <outfit name="Plasma Blaster">
   <general>
    <slot>high</slot>
-   <mass>7</mass>
+   <mass>4</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
    <gfx_store>plasma</gfx_store>
@@ -125,7 +125,7 @@
   <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>13</mass>
+   <mass>5</mass>
    <price>18000</price>
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
    <gfx_store>plasma2</gfx_store>
@@ -149,7 +149,7 @@
  <outfit name="Neutron Disruptor">
   <general>
    <slot>high</slot>
-   <mass>12</mass>
+   <mass>7</mass>
    <price>45000</price>
    <license>Heavy Weapon License</license>
    <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
@@ -176,7 +176,7 @@
   <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>10</mass>
+   <mass>6</mass>
    <price>20000</price>
    <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
    <gfx_store>ioncannon</gfx_store>
@@ -302,7 +302,7 @@
   <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>12</mass>
+   <mass>10</mass>
    <price>35000</price>
    <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>ripper</gfx_store>
@@ -400,7 +400,7 @@
  <outfit name="Seeker Launcher">
   <general>
    <slot>high</slot>
-   <mass>10</mass>
+   <mass>8</mass>
    <price>25000</price>
    <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
    <gfx_store>seekerlauncher</gfx_store>
@@ -438,7 +438,7 @@
   <general>
    <slot>high</slot>
    <license>Medium Weapon License</license>
-   <mass>12</mass>
+   <mass>10</mass>
    <price>40000</price>
    <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
    <gfx_store>headhunterlauncher</gfx_store>
@@ -667,7 +667,7 @@
   <general>
    <typename>Power Modifier</typename>
    <slot>low</slot>
-   <mass>15</mass>
+   <mass>6</mass>
    <price>40000</price>
    <description>A large battery unit designed to hold 200 MJ of energy. Small enough to mount on many light vessels.</description>
    <gfx_store>capacitor-g</gfx_store>
@@ -681,7 +681,7 @@
   <general>
    <typename>Power Modifier</typename>
    <slot>low</slot>
-   <mass>60</mass>
+   <mass>30</mass>
    <price>120000</price>
    <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
    <gfx_store>capacitor2-g</gfx_store>
@@ -695,7 +695,7 @@
   <general>
    <typename>Power Modifier</typename>
    <slot>low</slot>
-   <mass>240</mass>
+   <mass>150</mass>
    <price>360000</price>
    <description>A massive battery unit designed to hold 800 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
    <gfx_store>capacitor4-g</gfx_store>
@@ -722,7 +722,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>medium</slot>
-   <mass>14</mass>
+   <mass>10</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
@@ -737,7 +737,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>medium</slot>
-   <mass>42</mass>
+   <mass>30</mass>
    <price>530000</price>
    <gfx_store>reactor_ii</gfx_store>
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
@@ -752,7 +752,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>medium</slot>
-   <mass>105</mass>
+   <mass>90</mass>
    <price>970000</price>
    <gfx_store>reactor_iii</gfx_store>
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
@@ -768,13 +768,12 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>low</slot>
-   <mass>12</mass>
+   <mass>9</mass>
    <price>60000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-3</cpu>
    <shield>40</shield>
   </specific>
  </outfit>
@@ -782,13 +781,12 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>low</slot>
-   <mass>24</mass>
+   <mass>18</mass>
    <price>110000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
    <gfx_store>capacitor2</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-7</cpu>
    <shield>75</shield>
   </specific>
  </outfit>
@@ -796,13 +794,12 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>low</slot>
-   <mass>48</mass>
+   <mass>36</mass>
    <price>220000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
    <gfx_store>capacitor4</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-14</cpu>
    <shield>145</shield>
   </specific>
  </outfit>
@@ -810,13 +807,12 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>low</slot>
-   <mass>96</mass>
+   <mass>72</mass>
    <price>400000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
    <gfx_store>capacitor8</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-29</cpu>
    <shield>280</shield>
   </specific>
  </outfit>
@@ -840,7 +836,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>low</slot>
-   <mass>15</mass>
+   <mass />
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
    <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, strong armour that seems to take the best from both plastic and steel, bending easily yet keeping its incredible strength. The Second Growth was only possible with this material. Although it is no longer cutting-edge, its low price point attracts many buyers.</description>
@@ -854,7 +850,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>low</slot>
-   <mass>35</mass>
+   <mass />
    <price>365000</price>
    <gfx_store>nanobond</gfx_store>
    <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
@@ -868,7 +864,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>low</slot>
-   <mass>57</mass>
+   <mass />
    <price>1120000</price>
    <gfx_store>biometal</gfx_store>
    <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
@@ -983,7 +979,7 @@
    <typename>CPU Modifier</typename>
    <slot>medium</slot>
    <max>1</max>
-   <mass>15</mass>
+   <mass>7</mass>
    <price>80000</price>
    <gfx_store>cpu_i</gfx_store>
    <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
@@ -998,7 +994,7 @@
    <typename>CPU Modifier</typename>
    <slot>medium</slot>
    <max>1</max>
-   <mass>45</mass>
+   <mass>28</mass>
    <price>170000</price>
    <gfx_store>cpu_ii</gfx_store>
    <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
@@ -1013,7 +1009,7 @@
    <typename>CPU Modifier</typename>
    <slot>medium</slot>
    <max>1</max>
-   <mass>120</mass>
+   <mass>112</mass>
    <price>360000</price>
    <gfx_store>cpu_iii</gfx_store>
    <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>

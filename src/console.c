@@ -12,6 +12,7 @@
 
 #include "naev.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #define lua_c

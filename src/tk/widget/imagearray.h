@@ -21,6 +21,8 @@ typedef struct WidgetImageArrayData_ {
    char **captions; /**< Corresponding caption array. */
    char **alts; /**< Alt text when mouse over. */
    char **quantity; /**< Number in top-left corner. */
+   char **slottype; /**< Letter in top-right corner. */
+   glColour *background; /**< Background of each of the elements. */
    int nelements; /**< Number of elements. */
    int xelem; /**< Number of horizontal elements. */
    int yelem; /**< Number of vertical elements. */
@@ -55,6 +57,10 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
 int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt );
 int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
       char **quantity );
+int toolkit_setImageArraySlotType( const unsigned int wid, const char* name,
+      char **slottype );
+int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
+      glColour *bg );
 
 
 #endif /* WGT_IMAGEARRAY_H */

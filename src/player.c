@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "equipment.h"
+#include "land_outfits.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -2177,7 +2178,7 @@ void player_ships( char** sships, glTexture** tships )
    /* Create the struct. */
    for (i=0; i < player_nstack; i++) {
       sships[i] = strdup(player_stack[i].p->name);
-      tships[i] = player_stack[i].p->ship->gfx_target;
+      tships[i] = player_stack[i].p->ship->gfx_store;
    }
 }
 
@@ -2385,6 +2386,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* special case if it's a map */
    if (outfit_isMap(o)) {
       map_map(NULL,o->u.map.radius);
+      outfits_updateEquipmentOutfits();
       return 1; /* Success. */
    }
    /* special case if it's a license. */
@@ -2397,6 +2399,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    for (i=0; i<player_noutfits; i++) {
       if (player_outfits[i].o == o) {
          player_outfits[i].q += quantity;
+         outfits_updateEquipmentOutfits();
          return quantity;
       }
    }
@@ -2412,6 +2415,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* Add the outfit. */
    player_outfits[player_noutfits-1].o = o;
    player_outfits[player_noutfits-1].q = quantity;
+   outfits_updateEquipmentOutfits();
    return quantity;
 }
 
@@ -3159,11 +3163,20 @@ static int player_parseEscorts( xmlNodePtr parent )
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
    int ret;
+
+   if (!outfit_fitsSlot( outfit, &s->slot )) {
+      DEBUG( "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to stock.",
+            outfit->name, pilot->name );
+      player_addOutfit( outfit, 1 );
+      return;
+   }
+
    ret = pilot_addOutfitRaw( pilot, outfit, s );
    if (ret != 0) {
       DEBUG("Outfit '%s' does not fit on player's pilot '%s', adding to stock.",
             outfit->name, pilot->name);
       player_addOutfit( outfit, 1 );
+      return;
    }
 
    /* Update stats. */

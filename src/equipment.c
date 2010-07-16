@@ -106,18 +106,18 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       return;
 
    /* Figure out which slot this stuff fits into */
-   switch (o->slot) {
+   switch (o->slot.type) {
       case OUTFIT_SLOT_LOW:
          outfit_n = eq_wgt.selected->outfit_nlow;
-         slots = eq_wgt.selected->outfit_low;
+         slots    = eq_wgt.selected->outfit_low;
          break;
       case OUTFIT_SLOT_MEDIUM:
          outfit_n = eq_wgt.selected->outfit_nmedium;
-         slots = eq_wgt.selected->outfit_medium;
+         slots    = eq_wgt.selected->outfit_medium;
          break;
       case OUTFIT_SLOT_HIGH:
          outfit_n = eq_wgt.selected->outfit_nhigh;
-         slots = eq_wgt.selected->outfit_high;
+         slots    = eq_wgt.selected->outfit_high;
          break;
       default:
          return;
@@ -125,13 +125,20 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 
    /* Loop through outfit slots of the right type, try to find an empty one */
    for (i=0; i < outfit_n; i++) {
-      if (slots[i].outfit == NULL) {
-         /* Bingo! */
-         eq_wgt.outfit  = o;
-         p              = eq_wgt.selected;
-         equipment_swapSlot( wid, p, &slots[i] );
-         return;
-      }
+
+      /* Slot full. */
+      if (slots[i].outfit != NULL)
+         continue;
+
+      /* Must fit the slot. */
+      if (!outfit_fitsSlot( o, &slots[i].slot))
+         continue;
+
+      /* Bingo! */
+      eq_wgt.outfit  = o;
+      p              = eq_wgt.selected;
+      equipment_swapSlot( wid, p, &slots[i] );
+      return;
    }
 }
 
@@ -301,10 +308,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p )
 {
    int i;
-   glColour *lc, *c, *dc;
+   glColour *c, *dc, bc;
 
    /* Render text. */
-   if ((o != NULL) && (lst[0].slot == o->slot)) 
+   if ((o != NULL) && (lst[0].slot.type == o->slot.type)) 
       c = &cDConsole;
    else
       c = &cBlack;
@@ -314,21 +321,39 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
+      /* Choose colours based on size. */
+      if (i==selected) {
+         c  = &cGrey80;
+         dc = outfit_slotSizeColour( &lst[i].slot );
+         if (dc == NULL)
+            dc = &cGrey60;
+      }
+      else {
+         c  = toolkit_col;
+         dc = outfit_slotSizeColour( &lst[i].slot );
+         if (dc == NULL)
+            dc = toolkit_colDark;
+      }
+
+      /* Draw background. */
+      memcpy( &bc, dc, sizeof(bc) );
+      bc.a = 0.4;
+      if (i==selected)
+         c = &cDConsole;
+      else
+         c = &bc;
+      toolkit_drawRect( x, y, w, h, c, NULL );
+
       if (lst[i].outfit != NULL) {
-         if (i==selected)
-            c = &cDConsole;
-         else
-            c = &cBlack;
-         /* Draw background. */
-         toolkit_drawRect( x, y, w, h, c, NULL );
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store,
                x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
+         c = &cBlack; /* Ensures nice uniform outlines. */
       }
       else {
          if ((o != NULL) &&
-               (lst[i].slot == o->slot)) {
-            if (pilot_canEquip( p, NULL, o, 1 ) != NULL)
+               (lst[i].slot.type == o->slot.type)) {
+            if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
                c = &cRed;
             else
                c = &cDConsole;
@@ -338,19 +363,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          gl_printMidRaw( &gl_smallFont, w,
                x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2., c, "None" );
       }
+
       /* Draw outline. */
-      if (i==selected) {
-         lc = &cWhite;
-         c  = &cGrey80;
-         dc = &cGrey60;
-      }
-      else {
-         lc = toolkit_colLight;
-         c  = toolkit_col;
-         dc = toolkit_colDark;
-      }
-      toolkit_drawOutline( x, y, w, h, 0., lc, c );
-      toolkit_drawOutline( x, y, w, h, 1., dc, NULL );
+      toolkit_drawOutlineThick( x, y, w, h, 1, 3, dc, NULL );
+      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, c, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -507,9 +523,9 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                }
             }
             else if ((wgt->outfit != NULL) &&
-                  (lst->slot == wgt->outfit->slot)) {
+                  (lst->slot.type == wgt->outfit->slot.type)) {
                top = 0;
-               display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
+               display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit, 1 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -700,7 +716,7 @@ static void equipment_renderShip( double bx, double by,
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
          px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
-   if ((eq_wgt.slot >=0) && (eq_wgt.slot < p->outfit_nhigh)) {
+   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < p->outfit_nhigh)) {
       p->tsx = sx;
       p->tsy = sy;
       pilot_getMount( p, &p->outfit_high[eq_wgt.slot], &v );
@@ -729,8 +745,8 @@ static void equipment_renderShip( double bx, double by,
    lc = toolkit_colLight;
    c  = toolkit_col;
    dc = toolkit_colDark;
-   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 1., lc, c  );
-   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 2., dc, NULL  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., lc, c  );
+   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., dc, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.
@@ -893,7 +909,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must fit slot. */
-      if (o->slot != slot->slot)
+      if (!outfit_fitsSlot( o, &slot->slot ))
          return 0;
 
       /* Must be able to add. */
@@ -1035,6 +1051,9 @@ static void equipment_genLists( unsigned int wid )
    Pilot *s;
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
+   glColour *bg, *c, blend;
+   char **slottype;
+   char typename;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1051,7 +1070,7 @@ static void equipment_genLists( unsigned int wid )
       tships   = malloc(sizeof(glTexture*)*nships);
       /* Add player's current ship. */
       sships[0] = strdup(player.p->name);
-      tships[0] = player.p->ship->gfx_target;
+      tships[0] = player.p->ship->gfx_store;
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
          player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
@@ -1110,6 +1129,7 @@ static void equipment_genLists( unsigned int wid )
    noutfits = MAX(1,player_numOutfits());
    soutfits = malloc(sizeof(char*)*noutfits);
    toutfits = malloc(sizeof(glTexture*)*noutfits);
+   bg       = malloc(sizeof(glColour)*noutfits);
    player_getOutfits( soutfits, toutfits );
    if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
       window_addImageArray( wid, 20, -40 - sh - 40,
@@ -1120,8 +1140,16 @@ static void equipment_genLists( unsigned int wid )
       if (strcmp(soutfits[0],"None")!=0) {
          alt      = malloc( sizeof(char*) * noutfits );
          quantity = malloc( sizeof(char*) * noutfits );
+         slottype = malloc( sizeof(char*) * noutfits );
          for (i=0; i<noutfits; i++) {
             o      = outfit_get( soutfits[i] );
+
+            /* Background colour. */
+            c = outfit_slotSizeColour( &o->slot );
+            if (c == NULL)
+               c = &cBlack;
+            col_blend( &blend, *c, cGrey70, 0.4 );
+            memcpy( &bg[i], &blend, sizeof(glColour) );
 
             /* Short description. */
             if (o->desc_short == NULL)
@@ -1146,9 +1174,22 @@ static void equipment_genLists( unsigned int wid )
             l = p / 10 + 4;
             quantity[i] = malloc( l );
             snprintf( quantity[i], l, "%d", p );
+
+            /* Slot type. */
+            if ((strcmp(outfit_slotName(o),"NA") != 0) &&
+                  (strcmp(outfit_slotName(o),"NULL") != 0)) {
+               typename = *outfit_slotName(o);
+               slottype[i] = malloc( sizeof(typename) );
+               snprintf( slottype[i], 2, "%c", typename );
+            }
+            else {
+               slottype[i] = NULL;
+            }
          }
          toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
          toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
+         toolkit_setImageArraySlotType( wid, EQUIPMENT_OUTFITS, slottype );
+         toolkit_setImageArrayBackground( wid, EQUIPMENT_OUTFITS, bg );
       }
    }
 
@@ -1164,7 +1205,7 @@ static void equipment_genLists( unsigned int wid )
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[512], sysname[128], buf2[32], buf3[32];
+   char buf[512], sysname[128], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    char *shipname;
    Pilot *ship;
    char* loc;
@@ -1321,7 +1362,7 @@ static void equipment_changeShip( unsigned int wid )
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    newship = player_getShip(shipname);
 
-   if (error_dialogue( shipname, "swapEquipment" ))
+   if (land_errDialogue( shipname, "swapEquipment" ))
       return;
 
    /* Swap ship. */
@@ -1340,13 +1381,9 @@ static void equipment_changeShip( unsigned int wid )
 static void equipment_transportShip( unsigned int wid )
 {
    unsigned int price;
-   char *shipname, buf[32];
+   char *shipname, buf[ECON_CRED_STRLEN];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   if (strcmp(shipname,"None")==0) { /* no ships */
-      dialogue_alert( "You can't transport nothing here!" );
-      return;
-   }
 
    price = equipment_transportPrice( shipname );
    if (price==0) { /* already here */
@@ -1427,12 +1464,12 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 static void equipment_sellShip( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[32], *name;
+   char *shipname, buf[ECON_CRED_STRLEN], *name;
    int price;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (error_dialogue( shipname, "sell" ))
+   if (land_errDialogue( shipname, "sell" ))
       return;
 
    /* Calculate price. */
