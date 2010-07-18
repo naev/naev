@@ -289,8 +289,8 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    /* Create the image. */
    window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
-   gw = MIN( GRAPHIC_WIDTH, comm_graphic->w );
-   gh = MIN( GRAPHIC_HEIGHT, comm_graphic->h );
+   gw = MIN( GRAPHIC_WIDTH, (comm_graphic != NULL) ? comm_graphic->w : 0 );
+   gh = MIN( GRAPHIC_HEIGHT, (comm_graphic != NULL) ? comm_graphic->h : 0 );
    window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
          -30 - (GRAPHIC_HEIGHT-gh)/2,
          gw, gh, "imgGFX", comm_graphic, 0 );
