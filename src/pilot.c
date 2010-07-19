@@ -3207,14 +3207,6 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
       else
          p->credits -= ul;
    }
-
-   /* Hack to update credits in the absence of a bottom bar. */
-   if ((p == player.p) && (landed)) {
-      if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
-         outfits_updateEquipmentOutfits();
-      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-         shipyard_update(land_getWid(LAND_WINDOW_SHIPYARD), NULL);
-   }
    return p->credits;
 }
 
