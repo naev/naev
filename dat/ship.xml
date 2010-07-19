@@ -274,6 +274,93 @@
    <jump_delay>-25</jump_delay>
   </stats>
  </ship>
+ <ship name="Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <license>Large Civilian Vessel License</license>
+  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
+  <movement>
+   <thrust>110</thrust>
+   <turn>80</turn>
+   <speed>150</speed>
+  </movement>
+  <health>
+   <shield>480</shield>
+   <armour>520</armour>
+   <energy>970</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2600</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>11</crew>
+   <mass>950</mass>
+   <fuel>500</fuel>
+   <cap_cargo>140</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="25"  y="-3" h="4" >heavy</high>
+   <high x="25"  y="3" h="4" >heavy</high>
+   <high x="-15" y="-3" h="4" />
+   <high x="-15"  y="3" h="4" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Pirate Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>80</turn>
+   <speed>160</speed>
+  </movement>
+  <health>
+   <shield>480</shield>
+   <armour>460</armour>
+   <energy>970</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2600</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>10</crew>
+   <mass>920</mass>
+   <fuel>500</fuel>
+   <cap_cargo>140</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="25"  y="-3" h="4" >heavy</high>
+   <high x="25"  y="3" h="4" >heavy</high>
+   <high x="-15" y="-3" h="4" />
+   <high x="-15"  y="3" h="4" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
+ </ship>
  <ship name="Mule">
   <base_type>Mule</base_type>
   <GFX sx="10" sy="10">mule</GFX>
@@ -397,6 +484,126 @@
    <medium/>
    <low/>
    <low/>
+  </slots>
+ </ship>
+ <ship name="Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Light Combat Vessel License</license>
+  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot,  it's still an effective addition to any fleet.</description>
+  <movement>
+   <thrust>250</thrust>
+   <turn>145</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>86</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="12" y="0" h="0" />
+   <high x="-3" y="0" h="2" />
+   <high x="3" y="0" h="2" />
+   <medium />
+   <medium />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Pirate Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
+  <movement>
+   <thrust>240</thrust>
+   <turn>140</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>90</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="12" y="0" h="0" />
+   <high x="12" y="0" h="0" />
+   <high x="-3" y="0" h="2" />
+   <high x="3" y="0" h="2" />
+   <medium />
+   <medium />
+   <low />
+   <low />
+  </slots>
+ </ship>
+ <ship name="Empire Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark_empire</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Light Combat Vessel License</license>
+  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot,  it's still an effective addition to any fleet.</description>
+  <movement>
+   <thrust>250</thrust>
+   <turn>145</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>86</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <high x="12" y="0" h="0" />
+   <high x="-3" y="0" h="2" />
+   <high x="3" y="0" h="2" />
+   <medium />
+   <medium />
+   <low />
+   <low />
   </slots>
  </ship>
  <ship name="Lancelot">

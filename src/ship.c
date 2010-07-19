@@ -160,6 +160,8 @@ char* ship_class( Ship* s )
       /* Merchant. */
       case SHIP_CLASS_COURIER:
          return "Courier";
+      case SHIP_CLASS_ARMOURED_TRANSPORT:
+         return "Armoured Transport";
       case SHIP_CLASS_FREIGHTER:
          return "Freighter";
       case SHIP_CLASS_BULK_CARRIER:
@@ -216,6 +218,8 @@ ShipClass ship_classFromString( char* str )
       return SHIP_CLASS_COURIER;
    else if (strcmp(str,"Freighter")==0)
       return SHIP_CLASS_FREIGHTER;
+   else if (strcmp(str,"Armoured Transport")==0)
+      return SHIP_CLASS_ARMOURED_TRANSPORT;
    else if (strcmp(str,"Bulk Carrier")==0)
       return SHIP_CLASS_BULK_CARRIER;
 
@@ -752,7 +756,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          (temp->class == SHIP_CLASS_FREIGHTER) ||
          (temp->class == SHIP_CLASS_DESTROYER) ||
          (temp->class == SHIP_CLASS_CORVETTE) ||
-         (temp->class == SHIP_CLASS_HEAVY_DRONE))
+         (temp->class == SHIP_CLASS_HEAVY_DRONE) ||
+         (temp->class == SHIP_CLASS_ARMOURED_TRANSPORT))
       base_size = OUTFIT_SLOT_SIZE_STANDARD;
    else
       base_size = OUTFIT_SLOT_SIZE_LIGHT;

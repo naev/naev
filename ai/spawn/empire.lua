@@ -9,7 +9,7 @@ function spawn_patrol ()
    if r < 0.5 then
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    else
       scom.addPilot( pilots, "Empire Pacifier", 90 );
@@ -25,14 +25,14 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Admonisher", 50 );
    elseif r < 0.8 then
       scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Admonisher", 50 );
    else
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Pacifier", 90 );
    end
@@ -56,7 +56,7 @@ function spawn_capship ()
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
