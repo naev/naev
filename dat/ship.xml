@@ -247,7 +247,7 @@
   </movement>
   <health>
    <shield>200</shield>
-   <armour>120</armour>
+   <armour>140</armour>
    <energy>580</energy>
    <shield_regen>120</shield_regen>
    <armour_regen>0</armour_regen>
@@ -286,8 +286,8 @@
   <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
   <movement>
    <thrust>110</thrust>
-   <turn>80</turn>
-   <speed>150</speed>
+   <turn>70</turn>
+   <speed>140</speed>
   </movement>
   <health>
    <shield>480</shield>
@@ -302,7 +302,7 @@
    <crew>11</crew>
    <mass>950</mass>
    <fuel>500</fuel>
-   <cap_cargo>140</cap_cargo>
+   <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
    <high x="25"  y="-3" h="4" >heavy</high>
@@ -326,11 +326,11 @@
   <class>Armoured Transport</class>
   <price>1100000</price>
   <fabricator>Skull and Bones</fabricator>
-  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
+  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
   <movement>
-   <thrust>120</thrust>
-   <turn>80</turn>
-   <speed>160</speed>
+   <thrust>115</thrust>
+   <turn>75</turn>
+   <speed>150</speed>
   </movement>
   <health>
    <shield>480</shield>
@@ -345,7 +345,7 @@
    <crew>10</crew>
    <mass>920</mass>
    <fuel>500</fuel>
-   <cap_cargo>140</cap_cargo>
+   <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
    <high x="25"  y="-3" h="4" >heavy</high>
