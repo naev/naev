@@ -72,7 +72,7 @@ typedef struct Hook_ {
 } Hook;
 
 
-/* 
+/*
  * the stack
  */
 static unsigned int hook_id   = 0; /**< Unique hook id generator. */
@@ -595,7 +595,7 @@ int hooks_runParam( const char* stack, unsigned int pilot )
          hook_rm( hook_stack[i].id );
          i--;
       }
-   
+
    return 0;
 }
 
@@ -721,7 +721,7 @@ static int hook_needSave( Hook *h )
          "p_death", "p_board", "p_disable", "p_jump", "p_attacked", "p_idle", /* pilot hooks */
          "timer", /* timers */
          "end" };
- 
+
    /* Impossible to save functions. */
    if (h->type == HOOK_TYPE_FUNC)
       return 0;

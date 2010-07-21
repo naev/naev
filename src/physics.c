@@ -60,7 +60,7 @@ double angle_diff( const double ref, double a )
 void limit_speed( Vector2d* vel, const double speed, const double dt )
 {
    double vmod;
-   
+
    vmod = VMOD(*vel);
    if (vmod > speed) /* shouldn't go faster */
       vect_pset( vel, (vmod-speed)*(1. - dt*3.) +  speed, VANGLE(*vel) );
@@ -157,7 +157,7 @@ void vectnull( Vector2d* v )
 double vect_angle( const Vector2d* ref, const Vector2d* v )
 {
    double x,y;
-   
+
    x = v->x - ref->x;
    y = v->y - ref->y;
 
@@ -335,7 +335,7 @@ static void rk4_update (Solid *obj, const double dt)
          vx += ax*cos(obj->dir) * h;
 
          /* y component */
-         ty = iy = vy; 
+         ty = iy = vy;
          ty += 2.*(iy + h/2.*ty);
          ty += 2.*(iy + h/2.*ty);
          ty += iy + h*ty;

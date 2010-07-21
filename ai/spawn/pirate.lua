@@ -13,7 +13,7 @@ function spawn_patrol ()
        scom.addPilot( pilots, "Pirate Hyena", 15 );
     else
        scom.addPilot( pilots, "Pirate Hyena", 15 );
-       scom.addPilot( pilots, "Pirate Hyena", 15 );
+       scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
     end
 
@@ -33,12 +33,12 @@ function spawn_squad ()
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Pirate Hyena", 15 );
-       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
     else
        scom.addPilot( pilots, "Pirate Hyena", 15 );
-       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     end
@@ -61,15 +61,15 @@ function spawn_capship ()
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Pirate Vendetta", 25 );
+       scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
-       scom.addPilot( pilots, "Pirate Admonisher", 40 );
+       scom.addPilot( pilots, "Pirate Rhino", 35 );
     else
+       scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
-       scom.addPilot( pilots, "Pirate Ancestor", 20 );
-       scom.addPilot( pilots, "Pirate Admonisher", 40 );
+       scom.addPilot( pilots, "Pirate Rhino", 35 );
        scom.addPilot( pilots, "Pirate Admonisher", 40 );
     end
 

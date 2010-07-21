@@ -52,7 +52,7 @@
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
 static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
-                                               Not guaranteed to be absolutely unique, 
+                                               Not guaranteed to be absolutely unique,
                                                only unique for each pilot. */
 
 
@@ -310,7 +310,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
       if (!pilot_inRangePilot( p, pilot_stack[i] ))
          continue;
 
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);       
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
          tp = pilot_stack[i]->id;
@@ -336,7 +336,7 @@ Pilot* pilot_get( const unsigned int id )
 
    if (id==PLAYER_ID)
       return player.p; /* special case player.p */
-  
+
    m = pilot_getStackPos(id);
 
    if ((m==-1) || (pilot_isFlag(pilot_stack[m], PILOT_DELETE)))
@@ -425,7 +425,7 @@ int pilot_isFriendly( const Pilot *p )
 double pilot_face( Pilot* p, const double dir )
 {
    double diff, turn;
-   
+
    diff = angle_diff( p->solid->dir, dir );
    turn = CLAMP( -1., 1., -10.*diff );
    pilot_setTurn( p, -turn );
@@ -784,8 +784,8 @@ int pilot_shoot( Pilot* p, int group )
    if (!p->outfits) return 0; /* no outfits */
 
    ret = 0;
-   for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
-      o = p->outfit_high[i].outfit;
+   for (i=0; i<p->outfit_nweapon; i++) { /* cycles through outfits to find primary weapons */
+      o = p->outfit_weapon[i].outfit;
 
       if (o==NULL)
          continue;
@@ -797,7 +797,7 @@ int pilot_shoot( Pilot* p, int group )
          if ((group == 0) ||
                ((group == 1) && outfit_isTurret(o)) ||
                ((group == 2) && !outfit_isTurret(o))) {
-            ret += pilot_shootWeapon( p, &p->outfit_high[i] );
+            ret += pilot_shootWeapon( p, &p->outfit_weapon[i] );
          }
       }
    }
@@ -822,9 +822,9 @@ int pilot_shootSecondary( Pilot* p )
 
    /* Fire all secondary weapon of same type. */
    ret = 0;
-   for (i=0; i<p->outfit_nhigh; i++) {
-      if (p->outfit_high[i].outfit == p->secondary->outfit)
-         ret += pilot_shootWeapon( p, &p->outfit_high[i] );
+   for (i=0; i<p->outfit_nweapon; i++) {
+      if (p->outfit_weapon[i].outfit == p->secondary->outfit)
+         ret += pilot_shootWeapon( p, &p->outfit_weapon[i] );
    }
 
    return ret;
@@ -851,8 +851,8 @@ void pilot_shootStop( Pilot* p, const int secondary )
       return;
 
    /* Iterate over them all. */
-   for (i=0; i<p->outfit_nhigh; i++) {
-      o = p->outfit_high[i].outfit;
+   for (i=0; i<p->outfit_nweapon; i++) {
+      o = p->outfit_weapon[i].outfit;
 
       /* Must have outfit. */
       if (o==NULL)
@@ -863,17 +863,17 @@ void pilot_shootStop( Pilot* p, const int secondary )
 
       if (secondary) {
          if (o == p->secondary->outfit) {
-            if (p->outfit_high[i].u.beamid > 0) {
-               beam_end( p->id, p->outfit_high[i].u.beamid );
-               p->outfit_high[i].u.beamid = 0;
+            if (p->outfit_weapon[i].u.beamid > 0) {
+               beam_end( p->id, p->outfit_weapon[i].u.beamid );
+               p->outfit_weapon[i].u.beamid = 0;
             }
          }
       }
       else {
          if (!outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)) {
-            if (p->outfit_high[i].u.beamid > 0) {
-               beam_end( p->id, p->outfit_high[i].u.beamid );
-               p->outfit_high[i].u.beamid = 0;
+            if (p->outfit_weapon[i].u.beamid > 0) {
+               beam_end( p->id, p->outfit_weapon[i].u.beamid );
+               p->outfit_weapon[i].u.beamid = 0;
             }
          }
       }
@@ -973,8 +973,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       /* Calculate last time weapon was fired. */
       q     = 0.;
       minp  = -1;
-      for (i=0; i<p->outfit_nhigh; i++) {
-         slot = &p->outfit_high[i];
+      for (i=0; i<p->outfit_nweapon; i++) {
+         slot = &p->outfit_weapon[i];
 
          /* No outfit. */
          if (slot->outfit == NULL)
@@ -1018,7 +1018,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
     * regular bolt weapons
     */
    if (outfit_isBolt(w->outfit)) {
-      
+
       /* enough energy? */
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
@@ -1250,7 +1250,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
 
    if (w != NULL)
-      /* knock back effect is dependent on both damage and mass of the weapon 
+      /* knock back effect is dependent on both damage and mass of the weapon
        * should probably get turned into a partial conservative collision */
       vect_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
@@ -1501,7 +1501,7 @@ void pilot_render( Pilot* p, const double dt )
    }
 
    /* Base ship. */
-   gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
+   gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
          p->tsx, p->tsy, NULL );
@@ -1635,12 +1635,12 @@ void pilot_update( Pilot* pilot, const double dt )
 
       /* pilot death sound */
       if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (pilot->ptimer < 0.050)) {
-         
+
          /* Play random explsion sound. */
          snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
          sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
-         
+
          pilot_setFlag(pilot,PILOT_DEATH_SOUND);
       }
       /* final explosion */
@@ -1784,7 +1784,7 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* update the solid */
    pilot->solid->update( pilot->solid, dt );
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,  
+   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
@@ -1809,7 +1809,7 @@ void pilot_update( Pilot* pilot, const double dt )
 /**
  * @brief Deletes a pilot.
  *
- *    @param p Pilot to delete3. 
+ *    @param p Pilot to delete3.
  */
 void pilot_delete( Pilot* p )
 {
@@ -2288,7 +2288,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
                (fabs(o->u.mod.energy_regen) > p->energy_regen))
             return "Insufficient energy regeneration";
 
-         /* 
+         /*
           * Misc.
           */
          if ((o->u.mod.fuel < 0) &&
@@ -2343,7 +2343,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
                (o->u.mod.energy_regen > p->energy_regen))
             return "Lower energy usage first";
 
-         /* 
+         /*
           * Misc.
           */
          if ((o->u.mod.fuel > 0) &&
@@ -2469,7 +2469,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 
 /**
  * @brief Gets all the outfits in nice text form.
- *    
+ *
  *    @param pilot Pilot to get the outfits from.
  */
 char* pilot_getOutfits( Pilot* pilot )
@@ -2699,7 +2699,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->ew_base_hide  = s->ew_hide;
    pilot->ew_detect     = s->ew_detect;
 
-   /* 
+   /*
     * Normalize stats.
     */
    /* Fighter. */
@@ -2800,7 +2800,7 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
    dest->ncommodities += src->ncommodities;
    dest->commodities   = realloc( dest->commodities,
          sizeof(PilotCommodity)*dest->ncommodities);
-  
+
    /* Copy over. */
    memmove( &dest->commodities[0], &src->commodities[0],
          sizeof(PilotCommodity) * src->ncommodities);
@@ -2902,7 +2902,7 @@ int pilot_cargoUsed( Pilot* pilot )
 {
    int i, q;
 
-   q = 0; 
+   q = 0;
    for (i=0; i<pilot->ncommodities; i++)
       q += pilot->commodities[i].quantity;
 
@@ -2930,7 +2930,7 @@ static void pilot_calcCargo( Pilot* pilot )
  *    @param pilot Pilot to add it to.
  *    @param cargo Commodity to add.
  *    @param quantity Quantity to add.
- *    @return The Mission Cargo ID of created cargo. 
+ *    @return The Mission Cargo ID of created cargo.
  */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
@@ -3010,7 +3010,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
 /**
  * @brief Tries to get rid of quantity cargo from pilot.  Can remove mission cargo.
- * 
+ *
  *    @param pilot Pilot to get rid of cargo.
  *    @param cargo Cargo to get rid of.
  *    @param quantity Amount of cargo to get rid of.
@@ -3063,7 +3063,7 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
 
 /**
  * @brief Tries to get rid of quantity cargo from pilot.
- * 
+ *
  *    @param pilot Pilot to get rid of cargo.
  *    @param cargo Cargo to get rid of.
  *    @param quantity Amount of cargo to get rid of.
@@ -3207,12 +3207,6 @@ unsigned long pilot_modCredits( Pilot *p, int amount )
       else
          p->credits -= ul;
    }
-
-   /* Hack to update credits in the absence of a bottom bar. */
-   if ((p == player.p) && (landed)) {
-      outfits_updateEquipmentOutfits();
-      shipyard_update(land_getWid(LAND_WINDOW_SHIPYARD), NULL);
-   }
    return p->credits;
 }
 
@@ -3266,36 +3260,36 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Allocate outfit memory. */
    /* Slot types. */
-   pilot->outfit_nlow    = ship->outfit_nlow;
-   pilot->outfit_low     = calloc( ship->outfit_nlow, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nmedium = ship->outfit_nmedium;
-   pilot->outfit_medium  = calloc( ship->outfit_nmedium, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nhigh   = ship->outfit_nhigh;
-   pilot->outfit_high    = calloc( ship->outfit_nhigh, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nstructure    = ship->outfit_nstructure;
+   pilot->outfit_structure     = calloc( ship->outfit_nstructure, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nsystems = ship->outfit_nsystems;
+   pilot->outfit_systems  = calloc( ship->outfit_nsystems, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nweapon   = ship->outfit_nweapon;
+   pilot->outfit_weapon    = calloc( ship->outfit_nweapon, sizeof(PilotOutfitSlot) );
    /* Global. */
-   pilot->noutfits = pilot->outfit_nlow + pilot->outfit_nmedium + pilot->outfit_nhigh;
+   pilot->noutfits = pilot->outfit_nstructure + pilot->outfit_nsystems + pilot->outfit_nweapon;
    pilot->outfits  = calloc( pilot->noutfits, sizeof(PilotOutfitSlot*) );
    /* First pass copy data. */
    p = 0;
-   for (i=0; i<pilot->outfit_nlow; i++) {
-      pilot->outfit_low[i].slot.type = OUTFIT_SLOT_LOW;
-      pilot->outfit_low[i].slot.size = ship->outfit_low[i].slot.size;
-      pilot->outfits[p] = &pilot->outfit_low[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_low[i].mount, sizeof(ShipMount) );
+   for (i=0; i<pilot->outfit_nstructure; i++) {
+      pilot->outfit_structure[i].slot.type = OUTFIT_SLOT_STRUCTURE;
+      pilot->outfit_structure[i].slot.size = ship->outfit_structure[i].slot.size;
+      pilot->outfits[p] = &pilot->outfit_structure[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_structure[i].mount, sizeof(ShipMount) );
       p++;
    }
-   for (i=0; i<pilot->outfit_nmedium; i++) {
-      pilot->outfit_medium[i].slot.type = OUTFIT_SLOT_MEDIUM;
-      pilot->outfit_medium[i].slot.size = ship->outfit_medium[i].slot.size;
-      pilot->outfits[p] = &pilot->outfit_medium[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_medium[i].mount, sizeof(ShipMount) );
+   for (i=0; i<pilot->outfit_nsystems; i++) {
+      pilot->outfit_systems[i].slot.type = OUTFIT_SLOT_SYSTEMS;
+      pilot->outfit_systems[i].slot.size = ship->outfit_systems[i].slot.size;
+      pilot->outfits[p] = &pilot->outfit_systems[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_systems[i].mount, sizeof(ShipMount) );
       p++;
    }
-   for (i=0; i<pilot->outfit_nhigh; i++) {
-      pilot->outfit_high[i].slot.type = OUTFIT_SLOT_HIGH;
-      pilot->outfit_high[i].slot.size = ship->outfit_high[i].slot.size;
-      pilot->outfits[p] = &pilot->outfit_high[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
+   for (i=0; i<pilot->outfit_nweapon; i++) {
+      pilot->outfit_weapon[i].slot.type = OUTFIT_SLOT_WEAPON;
+      pilot->outfit_weapon[i].slot.size = ship->outfit_weapon[i].slot.size;
+      pilot->outfits[p] = &pilot->outfit_weapon[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_weapon[i].mount, sizeof(ShipMount) );
       p++;
    }
 
@@ -3400,7 +3394,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Set the pilot in the stack -- must be there before initializing */
    pilot_stack[pilot_nstack] = dyn;
    pilot_nstack++; /* there's a new pilot */
-  
+
    /* Initialize the pilot. */
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, systemFleet );
 
@@ -3460,25 +3454,25 @@ Pilot* pilot_copy( Pilot* src )
    /* Copy outfits. */
    dest->noutfits = src->noutfits;
    dest->outfits  = malloc( sizeof(PilotOutfitSlot*) * dest->noutfits );
-   dest->outfit_nlow = src->outfit_nlow;
-   dest->outfit_low  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nlow );
-   memcpy( dest->outfit_low, src->outfit_low,
-         sizeof(PilotOutfitSlot) * dest->outfit_nlow );
-   dest->outfit_nmedium = src->outfit_nmedium;
-   dest->outfit_medium  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nmedium );
-   memcpy( dest->outfit_medium, src->outfit_medium,
-         sizeof(PilotOutfitSlot) * dest->outfit_nmedium );
-   dest->outfit_nhigh = src->outfit_nhigh;
-   dest->outfit_high  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nhigh );
-   memcpy( dest->outfit_high, src->outfit_high,
-         sizeof(PilotOutfitSlot) * dest->outfit_nhigh );
+   dest->outfit_nstructure = src->outfit_nstructure;
+   dest->outfit_structure  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nstructure );
+   memcpy( dest->outfit_structure, src->outfit_structure,
+         sizeof(PilotOutfitSlot) * dest->outfit_nstructure );
+   dest->outfit_nsystems = src->outfit_nsystems;
+   dest->outfit_systems  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nsystems );
+   memcpy( dest->outfit_systems, src->outfit_systems,
+         sizeof(PilotOutfitSlot) * dest->outfit_nsystems );
+   dest->outfit_nweapon = src->outfit_nweapon;
+   dest->outfit_weapon  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nweapon );
+   memcpy( dest->outfit_weapon, src->outfit_weapon,
+         sizeof(PilotOutfitSlot) * dest->outfit_nweapon );
    p = 0;
-   for (i=0; i<dest->outfit_nlow; i++)
-      dest->outfits[p++] = &dest->outfit_low[i];
-   for (i=0; i<dest->outfit_nmedium; i++)
-      dest->outfits[p++] = &dest->outfit_medium[i];
-   for (i=0; i<dest->outfit_nhigh; i++)
-      dest->outfits[p++] = &dest->outfit_high[i];
+   for (i=0; i<dest->outfit_nstructure; i++)
+      dest->outfits[p++] = &dest->outfit_structure[i];
+   for (i=0; i<dest->outfit_nsystems; i++)
+      dest->outfits[p++] = &dest->outfit_systems[i];
+   for (i=0; i<dest->outfit_nweapon; i++)
+      dest->outfits[p++] = &dest->outfit_weapon[i];
    dest->secondary   = NULL;
    dest->afterburner = NULL;
 
@@ -3517,7 +3511,7 @@ Pilot* pilot_copy( Pilot* src )
 void pilot_free( Pilot* p )
 {
    int i;
-  
+
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3527,12 +3521,12 @@ void pilot_free( Pilot* p )
    /* Free outfits. */
    if (p->outfits != NULL)
       free(p->outfits);
-   if (p->outfit_low != NULL)
-      free(p->outfit_low);
-   if (p->outfit_medium != NULL)
-      free(p->outfit_medium);
-   if (p->outfit_high != NULL)
-      free(p->outfit_high);
+   if (p->outfit_structure != NULL)
+      free(p->outfit_structure);
+   if (p->outfit_systems != NULL)
+      free(p->outfit_systems);
+   if (p->outfit_weapon != NULL)
+      free(p->outfit_weapon);
 
    /* Remove commodities. */
    while (p->commodities != NULL)
@@ -3586,7 +3580,7 @@ void pilot_destroy(Pilot* p)
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
-   
+
    /* Remove faction if necessary. */
    if (p->presence > 0) {
       system_rmCurrentPresence( cur_system, p->faction, p->presence );
@@ -3748,7 +3742,7 @@ void pilots_render( double dt )
       /* Invisible, not doing anything. */
       if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
          continue;
-      
+
       if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i], dt);
    }

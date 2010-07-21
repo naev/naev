@@ -118,4 +118,4 @@ void gl_checkHandleError( const char *func, int line );
 
 
 #endif /* OPENGL_H */
-   
+

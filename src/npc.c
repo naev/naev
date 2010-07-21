@@ -317,7 +317,7 @@ static int npc_compare( const void *arg1, const void *arg2 )
       return +1;
    else if (npc1->priority < npc2->priority)
       return -1;
-   
+
    return 0;
 }
 

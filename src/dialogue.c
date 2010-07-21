@@ -113,7 +113,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
 
 /**
  * @brief Gets the size needed for the dialogue.
- * 
+ *
  *    @param msg Message of the dialogue.
  *    @param[out] width Gets the width needed.
  *    @param[out] height Gets the height needed.
@@ -185,7 +185,7 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
  *
  *    @param caption Window title.
  *    @param text Message to display.
- */    
+ */
 void dialogue_msgRaw( const char* caption, const char *msg )
 {
    int w,h;
@@ -440,7 +440,7 @@ void dialogue_makeChoice( const char *caption, const char *msg, int opts )
    choice_result  = NULL;
    choice_nopts   = opts;
    font           = dialogue_getSize( caption, msg, &w, &h );
-   
+
    /* create window */
    choice_wid     = window_create( caption, -1, -1, w, h+100+40*choice_nopts );
    /* text */
@@ -463,7 +463,7 @@ void dialogue_addChoice( const char *caption, const char *msg, const char *opt)
       return;
 
    font = dialogue_getSize( caption, msg, &w, &h );
-   
+
    /* buttons. Add one for each option in the menu. */
    window_addButton( choice_wid, w/2-125, choice_nopts*40, 250, 30, (char *) opt,
          (char *) opt, dialogue_choiceClose );
@@ -482,7 +482,7 @@ char *dialogue_runChoice (void)
    /* tricky secondary loop */
    dialogue_open++;
    toolkit_loop();
-   
+
    return choice_result;
 }
 /**
@@ -493,7 +493,7 @@ char *dialogue_runChoice (void)
 static void dialogue_choiceClose( unsigned int wid, char* str )
 {
    choice_result = str;
-   
+
    /* destroy the window */
    window_destroy( wid );
    choice_wid = 0;

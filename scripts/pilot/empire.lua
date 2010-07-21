@@ -24,7 +24,12 @@ function empire_create( empire_create )
    local z = rnd.rnd()
    local p, o
    local ship_name
-   if z < 0.5 then
+   if z < 0.7 then
+      p,o = empire_createPeacemaker( empire_create )
+      if rnd.rnd() < 0.33 then
+         ship_name = empire_namePlanet()
+      end
+   elseif z < 0.4 then
       p,o = empire_createHawking( empire_create )
       if rnd.rnd() < 0.33 then
          ship_name = empire_namePlanet()
@@ -58,6 +63,46 @@ function empire_createEmpty( ship )
    return p
 end
 
+
+-- Creates an Empire Peacemaker warship
+function empire_createPeacemaker( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Peacemaker" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Peacemaker"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Peacemaker gets some good stuff
+   primary        = { "Heavy Ion Turret", "150mm Railgun Turret" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh-2
+   use_secondary  = 2
+   medium         = equip_mediumHig()
+   low            = equip_lowHig()
+   apu            = equip_apuHig()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
 
 
 -- Creates an Empire Hawking warship

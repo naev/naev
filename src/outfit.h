@@ -92,7 +92,7 @@ struct Outfit_;
 /**
  * @brief Different types of existing outfits.
  *
- * Outfits are organized by the order here 
+ * Outfits are organized by the order here
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
@@ -134,9 +134,9 @@ typedef enum DamageType_ {
 typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_NULL, /**< Invalid slot type. */
    OUTFIT_SLOT_NA, /**< Slot type not applicable. */
-   OUTFIT_SLOT_LOW, /**< Low energy slot. */
-   OUTFIT_SLOT_MEDIUM, /**< Medium energy slot. */
-   OUTFIT_SLOT_HIGH /**< High energy slot. */
+   OUTFIT_SLOT_STRUCTURE, /**< Low energy slot. */
+   OUTFIT_SLOT_SYSTEMS, /**< Medium energy slot. */
+   OUTFIT_SLOT_WEAPON /**< High energy slot. */
 } OutfitSlotType;
 
 
@@ -146,7 +146,7 @@ typedef enum OutfitSlotType_ {
 typedef enum OutfitSlotSize_ {
    OUTFIT_SLOT_SIZE_NA, /**< Not applicable slot size. */
    OUTFIT_SLOT_SIZE_LIGHT, /**< Light slot size. */
-   OUTFIT_SLOT_SIZE_STANDARD, /**< Standard slot size. */
+   OUTFIT_SLOT_SIZE_MEDIUM, /**< Medium slot size. */
    OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
 } OutfitSlotSize;
 
@@ -202,7 +202,7 @@ typedef struct OutfitBeamData_ {
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
-   
+
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
    int spfx_armour; /**< special effect on hit */

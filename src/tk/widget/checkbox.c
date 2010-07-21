@@ -53,7 +53,7 @@ void window_addCheckbox( const unsigned int wid,
 
    /* generic */
    wgt->type = WIDGET_CHECKBOX;
-   
+
    /* specific */
    wgt->keyevent           = chk_key;
    wgt->mclickevent        = chk_mclick;
@@ -76,11 +76,11 @@ void window_addCheckbox( const unsigned int wid,
 static Widget *chk_getWgt( const unsigned int wid, const char *name )
 {
    Widget *wgt;
-  
+
    /* Get widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
-      return NULL; 
+      return NULL;
 
    /* Check type. */
    if (wgt->type != WIDGET_CHECKBOX) {

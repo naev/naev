@@ -47,7 +47,7 @@ int economy_refresh (void);
 void economy_destroy (void);
 
 
-/* 
+/*
  * Misc stuff.
  */
 void credits2str( char *str, uint64_t credits, int decimals );

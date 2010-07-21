@@ -265,7 +265,7 @@ void input_setDefault (void)
  * @brief Initializes the input subsystem (does not set keys).
  */
 void input_init (void)
-{  
+{
    Keybind *temp;
    int i;
 
@@ -296,7 +296,7 @@ void input_init (void)
    SDL_EventState( SDL_MOUSEMOTION,     SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONUP,   SDL_ENABLE );
-   
+
    /* Joystick, enabled in joystick.c if needed. */
    SDL_EventState( SDL_JOYAXISMOTION,   SDL_DISABLE );
    SDL_EventState( SDL_JOYHATMOTION,    SDL_DISABLE );
@@ -434,7 +434,7 @@ SDLKey input_keyConv( const char *name )
  *    @param mod Modifiers to check for.
  */
 void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod )
-{  
+{
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
@@ -651,7 +651,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             if (!paused) player_abortAutonav(NULL);
             player_accel(1.);
          }
-            
+
          else if (value==KEY_RELEASE)
             player_accelOver();
 
@@ -682,14 +682,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
          if (!paused) player_abortAutonav(NULL);
-         player_setFlag(PLAYER_TURN_LEFT); 
+         player_setFlag(PLAYER_TURN_LEFT);
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
-         if (value==KEY_PRESS) { 
+         if (value==KEY_PRESS) {
             if (!paused) player_abortAutonav(NULL);
-            player_setFlag(PLAYER_TURN_LEFT); 
+            player_setFlag(PLAYER_TURN_LEFT);
             player_left = 1.;
          }
          else if (value==KEY_RELEASE) {
@@ -717,7 +717,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_right = 0.;
          }
       }
-   
+
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
@@ -733,10 +733,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     */
    /* shooting primary weapon */
    } else if (KEY("primary") && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) { 
+      if (value==KEY_PRESS) {
          player_setFlag(PLAYER_PRIMARY);
       }
-      else if (value==KEY_RELEASE) 
+      else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_PRIMARY);
    /* targetting */
    } else if (INGAME() && NODEAD() && KEY("target_next")) {
@@ -755,7 +755,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) player_targetClear();
    /* face the target */
    } else if (KEY("face") && !repeat) {
-      if (value==KEY_PRESS) { 
+      if (value==KEY_PRESS) {
          if (!paused) player_abortAutonav(NULL);
          player_setFlag(PLAYER_FACE);
       }
@@ -770,7 +770,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
 
 
-   /* 
+   /*
     * Weapon selection.
     */
    } else if (KEY("weap_all") && INGAME() && NODEAD() && !repeat) {
@@ -816,7 +816,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) player_secondaryPrev();
 
 
-   /*                                                                     
+   /*
     * space
     */
    } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
@@ -896,7 +896,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) menu_small();
-   
+
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) menu_info();

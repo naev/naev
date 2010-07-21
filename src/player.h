@@ -26,7 +26,7 @@
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
-#define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */ 
+#define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
 #define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
 
 
@@ -162,14 +162,14 @@ int player_addEscorts (void);
  * pilot related stuff
  */
 void player_dead (void);
-void player_destroyed (void); 
+void player_destroyed (void);
 void player_think( Pilot* pplayer, const double dt );
 void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 
-/* 
+/*
  * keybind actions
  */
 void player_targetHostile (void);

@@ -50,13 +50,13 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent );
  *    @return The fleet matching name or NULL if not found.
  */
 Fleet* fleet_get( const char* name )
-{  
+{
    int i;
-   
+
    for (i=0; i<nfleets; i++)
       if (strcmp(fleet_stack[i].name, name)==0)
          return &fleet_stack[i];
-   
+
    return NULL;
 }
 
@@ -169,7 +169,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
       /* Set flags. */
       if (xml_isNode(node,"flags")){
-         cur = node->children;     
+         cur = node->children;
          do {
             if (xml_isNode(cur,"guard"))
                fleet_setFlag(temp, FLEET_FLAG_GUARD);
@@ -179,7 +179,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
       /* Load pilots. */
       else if (xml_isNode(node,"pilots")) {
-         cur = node->children;     
+         cur = node->children;
          mem = 0;
          do {
             if (xml_isNode(cur,"pilot")) {
@@ -246,7 +246,7 @@ static int fleet_loadFleets (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
- 
+
    /* Load the data. */
    buf = ndata_read( FLEET_DATA, &bufsize);
    doc = xmlParseMemory( buf, bufsize );
@@ -264,7 +264,7 @@ static int fleet_loadFleets (void)
    }
 
    mem = 0;
-   do { 
+   do {
       if (xml_isNode(node,"fleet")) {
          /* See if memory must grow. */
          nfleets++;

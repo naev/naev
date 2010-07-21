@@ -430,7 +430,7 @@ static int diff_patch( xmlNodePtr parent )
                break;
 #if 0
             case HUNK_TYPE_FLEET_ADD:
-               WARN("   [%s] fleet add: '%s' (%d%% chance)", target, 
+               WARN("   [%s] fleet add: '%s' (%d%% chance)", target,
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
                break;
             case HUNK_TYPE_FLEET_REMOVE:
@@ -438,7 +438,7 @@ static int diff_patch( xmlNodePtr parent )
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
                break;
             case HUNK_TYPE_FLEETGROUP_ADD:
-               WARN("   [%s] fleetgroup add: '%s'", target, 
+               WARN("   [%s] fleetgroup add: '%s'", target,
                      fail->u.fleetgroup->name );
                break;
             case HUNK_TYPE_FLEETGROUP_REMOVE:
@@ -447,10 +447,10 @@ static int diff_patch( xmlNodePtr parent )
                break;
 #endif
             case HUNK_TYPE_TECH_ADD:
-               WARN("   [%s] tech add: '%s'", target, 
+               WARN("   [%s] tech add: '%s'", target,
                      fail->u.name );
             case HUNK_TYPE_TECH_REMOVE:
-               WARN("   [%s] tech remove: '%s'", target, 
+               WARN("   [%s] tech remove: '%s'", target,
                      fail->u.name );
 
             default:
@@ -694,7 +694,7 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
          if (hunk->u.name != NULL)
             free(hunk->u.name);
          break;
-      
+
       default:
          break;
    }

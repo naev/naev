@@ -30,7 +30,7 @@ static const luaL_reg time_methods[] = {
    { "get", time_get },
    { "str", time_str },
    { "units", time_units },
-   {0,0}                                                                  
+   {0,0}
 }; /**< Time Lua methods. */
 
 
@@ -112,7 +112,7 @@ static int time_str( lua_State *L )
  * @luafunc units( stu )
  */
 static int time_units( lua_State *L )
-{  
+{
    if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
       lua_pushnumber( L, (unsigned int)lua_tonumber(L,1) * NTIME_UNIT_LENGTH );
    else

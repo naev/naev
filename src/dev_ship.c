@@ -26,10 +26,10 @@ void dship_csv( const char *path )
    int i, n, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
-   
+
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
-   
+
    /* Write "header" */
    l = snprintf( buf, sizeof(buf),
          "name,base_type,price,license,fabricator,"
@@ -38,7 +38,7 @@ void dship_csv( const char *path )
          "armour,armour_regen,"
          "shield,shield_regen,"
          "energy,energy_regen,"
-         "slot high,slot med,slow low\n"
+         "slot weapon,slot systems,slot structure\n"
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
@@ -60,7 +60,7 @@ void dship_csv( const char *path )
             s->armour, s->armour_regen*60,
             s->shield, s->shield_regen*60,
             s->energy, s->energy_regen*60,
-            s->outfit_nhigh, s->outfit_nmedium, s->outfit_nlow
+            s->outfit_nweapon, s->outfit_nsystems, s->outfit_nstructure
             );
       SDL_RWwrite( rw, buf, l, 1 );
    }

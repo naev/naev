@@ -140,10 +140,10 @@ int misn_loadLibs( lua_State *L )
  *    @param L Lua state.
  */
 int nlua_loadMisn( lua_State *L )
-{  
+{
    luaL_register(L, "misn", misn_methods);
    return 0;
-}  
+}
 
 
 /**
@@ -812,7 +812,7 @@ static int misn_osdDestroy( lua_State *L )
  *
  * @note Uses Lua indexes, so 1 is first member, 2 is second and so on.
  *
- *    @luaparam n Element of the OSD to make active. 
+ *    @luaparam n Element of the OSD to make active.
  * @luafunc osdActive( n )
  */
 static int misn_osdActive( lua_State *L )
@@ -845,7 +845,7 @@ static int misn_osdActive( lua_State *L )
  * @luafunc npcAdd( func, name, portrait, desc, priority )
  */
 static int misn_npcAdd( lua_State *L )
-{                                                                         
+{
    unsigned int id;
    int priority;
    const char *func, *name, *gfx, *desc;
@@ -887,13 +887,13 @@ static int misn_npcAdd( lua_State *L )
  * @luafunc npcRm( id )
  */
 static int misn_npcRm( lua_State *L )
-{  
+{
    unsigned int id;
    int ret;
-   
+
    id = luaL_checklong(L, 1);
    ret = npc_rm_mission( id, cur_mission );
-   
+
    if (ret != 0)
       NLUA_ERROR(L, "Invalid NPC ID!");
    return 0;

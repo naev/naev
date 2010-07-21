@@ -27,7 +27,7 @@
 /**
  * @brief Represents a 2d vector.
  */
-typedef struct Vector2d_ {                                          
+typedef struct Vector2d_ {
    double x; /**< X cartesian position of the vector. */
    double y; /**< Y cartesian position of the vector. */
    double mod; /**< Modulus of the vector. */

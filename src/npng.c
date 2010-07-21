@@ -102,7 +102,7 @@ npng_t *npng_open( SDL_RWops *rw )
       WARN("Error during setjmp");
       return NULL;
    }
-   
+
    /* We've already checked sig. */
    png_set_sig_bytes( npng->png_ptr, 8 );
 

@@ -39,4 +39,4 @@ void gl_matrixRotate( double a );
 
 
 #endif /* OPENGL_MATRIX_H */
-   
+

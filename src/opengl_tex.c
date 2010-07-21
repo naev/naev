@@ -124,33 +124,33 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
    int bpp;
    Uint8 *p;
    Uint32 pixelcolour;
-   
-   bpp = s->format->BytesPerPixel; 
+
+   bpp = s->format->BytesPerPixel;
    /* here p is the address to the pixel we want to retrieve */
-   p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
+   p = (Uint8 *)s->pixels + y*s->pitch + x*bpp;
 
    pixelcolour = 0;
-   switch(bpp) {        
-      case 1: 
-         pixelcolour = *p; 
-         break; 
+   switch(bpp) {
+      case 1:
+         pixelcolour = *p;
+         break;
 
-      case 2: 
-         pixelcolour = *(Uint16 *)p; 
-         break; 
+      case 2:
+         pixelcolour = *(Uint16 *)p;
+         break;
 
-      case 3: 
+      case 3:
 #if HAS_BIGENDIAN
-         pixelcolour = p[0] << 16 | p[1] << 8 | p[2]; 
+         pixelcolour = p[0] << 16 | p[1] << 8 | p[2];
 #else /* HAS_BIGENDIAN */
-         pixelcolour = p[0] | p[1] << 8 | p[2] << 16; 
+         pixelcolour = p[0] | p[1] << 8 | p[2] << 16;
 #endif /* HAS_BIGENDIAN */
-         break; 
+         break;
 
-      case 4: 
-         pixelcolour = *(Uint32 *)p; 
-         break; 
-   } 
+      case 4:
+         pixelcolour = *(Uint32 *)p;
+         break;
+   }
 
    /* test whether pixels colour == colour of transparent pixels for that surface */
 #if SDL_VERSION_ATLEAST(1,3,0)
@@ -311,7 +311,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    surface = gl_prepareSurface( surface );
    if (rw != NULL)
       (*rw) = surface->w;
-   if (rh != NULL) 
+   if (rh != NULL)
       (*rh) = surface->h;
 
    /* opengl texture binding */
@@ -724,7 +724,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
    /* real dir is slightly moved downwards */
    rdir = dir + shard/2.;
-  
+
    /* now calculate the sprite we need */
    s = (int)(rdir / shard);
    sx = t->sx;

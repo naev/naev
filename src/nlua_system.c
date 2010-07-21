@@ -105,7 +105,7 @@ int nlua_loadSystem( lua_State *L, int readonly )
  *    @return The LuaSystem at ind.
  */
 LuaSystem* lua_tosystem( lua_State *L, int ind )
-{     
+{
    return (LuaSystem*) lua_touserdata(L,ind);
 }
 /**
@@ -116,7 +116,7 @@ LuaSystem* lua_tosystem( lua_State *L, int ind )
  *    @return The LuaSystem at ind.
  */
 LuaSystem* luaL_checksystem( lua_State *L, int ind )
-{     
+{
    if (lua_issystem(L,ind))
       return lua_tosystem(L,ind);
    luaL_typerror(L, ind, SYSTEM_METATABLE);
@@ -148,7 +148,7 @@ LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
  *    @return 1 if there is a system at index position.
  */
 int lua_issystem( lua_State *L, int ind )
-{  
+{
    int ret;
 
    if (lua_getmetatable(L,ind)==0)
@@ -156,7 +156,7 @@ int lua_issystem( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, SYSTEM_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
    lua_pop(L, 2);  /* remove both metatables */

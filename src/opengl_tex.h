@@ -114,4 +114,4 @@ int gl_needPOT (void);
 
 
 #endif /* OPENGL_TEX_H */
-   
+

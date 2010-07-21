@@ -15,11 +15,11 @@
 
 #include "naev.h"
 
-#include <stdio.h> 
+#include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <dirent.h> 
+#include <dirent.h>
 #if HAS_POSIX
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -68,7 +68,7 @@ char* nfile_basePath (void)
 #error "Feature needs implementation on this Operating System for NAEV to work."
 #endif
    }
-   
+
    return naev_base;
 }
 

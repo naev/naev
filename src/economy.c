@@ -102,7 +102,7 @@ void credits2str( char *str, uint64_t credits, int decimals )
       snprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000U)
       snprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
-   else 
+   else
       snprintf (str, ECON_CRED_STRLEN, "%"PRIu64, credits );
 }
 

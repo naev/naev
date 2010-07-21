@@ -241,12 +241,12 @@ const char *outfit_slotName( const Outfit* o )
          return "NULL";
       case OUTFIT_SLOT_NA:
          return "NA";
-      case OUTFIT_SLOT_LOW:
-         return "Low";
-      case OUTFIT_SLOT_MEDIUM:
-         return "Medium";
-      case OUTFIT_SLOT_HIGH:
-         return "High";
+      case OUTFIT_SLOT_STRUCTURE:
+         return "Structure";
+      case OUTFIT_SLOT_SYSTEMS:
+         return "Systems";
+      case OUTFIT_SLOT_WEAPON:
+         return "Weapon";
       default:
          return "Unknown";
    }
@@ -266,8 +266,8 @@ const char *outfit_slotSize( const Outfit* o )
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
          return "Light";
-      case OUTFIT_SLOT_SIZE_STANDARD:
-         return "Standard";
+      case OUTFIT_SLOT_SIZE_MEDIUM:
+         return "Medium";
       case OUTFIT_SLOT_SIZE_HEAVY:
          return "Heavy";
       default:
@@ -286,7 +286,7 @@ glColour *outfit_slotSizeColour( const OutfitSlot* os )
 {
    if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
       return &cFontBlue;
-   else if (os->size == OUTFIT_SLOT_SIZE_STANDARD)
+   else if (os->size == OUTFIT_SLOT_SIZE_MEDIUM)
       return &cFontGreen;
    else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
       return &cFontYellow;
@@ -309,8 +309,8 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
 
    if (strcasecmp(s,"Heavy")==0)
       return OUTFIT_SLOT_SIZE_HEAVY;
-   else if (strcasecmp(s,"Standard")==0)
-      return OUTFIT_SLOT_SIZE_STANDARD;
+   else if (strcasecmp(s,"Medium")==0)
+      return OUTFIT_SLOT_SIZE_MEDIUM;
    else if (strcasecmp(s,"Light")==0)
       return OUTFIT_SLOT_SIZE_LIGHT;
 
@@ -327,7 +327,7 @@ static int outfit_setDefaultSize( Outfit *o )
    if (o->mass <= 10.)
       o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
    else if (o->mass <= 30.)
-      o->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
+      o->slot.size = OUTFIT_SLOT_SIZE_MEDIUM;
    else
       o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
    return 0;
@@ -651,7 +651,7 @@ int outfit_soundHit( const Outfit* o )
  */
 const char* outfit_getType( const Outfit* o )
 {
-   const char* outfit_typename[] = { 
+   const char* outfit_typename[] = {
          "NULL",
          "Bolt Cannon",
          "Beam Cannon",
@@ -891,7 +891,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -903,7 +903,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (conf.interpolate && xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx_end = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          continue;
       }
 
@@ -1370,7 +1370,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* must be >= 1. */
    temp->u.afb.thrust = 1.;
    temp->u.afb.speed  = 1.;
-   
+
    do { /* parse the data */
       xmlr_float(node,"rumble",temp->u.afb.rumble);
       if (xml_isNode(node,"sound"))
@@ -1640,12 +1640,12 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                cprop = xml_get(cur);
                if (cprop == NULL)
                   WARN("Outfit Slot type invalid.");
-               else if (strcmp(cprop,"low") == 0)
-                  temp->slot.type = OUTFIT_SLOT_LOW;
-               else if (strcmp(cprop,"medium") == 0)
-                  temp->slot.type = OUTFIT_SLOT_MEDIUM;
-               else if (strcmp(cprop,"high") == 0)
-                  temp->slot.type = OUTFIT_SLOT_HIGH;
+               else if (strcmp(cprop,"structure") == 0)
+                  temp->slot.type = OUTFIT_SLOT_STRUCTURE;
+               else if (strcmp(cprop,"systems") == 0)
+                  temp->slot.type = OUTFIT_SLOT_SYSTEMS;
+               else if (strcmp(cprop,"weapon") == 0)
+                  temp->slot.type = OUTFIT_SLOT_WEAPON;
             }
             else if (xml_isNode(cur,"size")) {
                temp->slot.size = outfit_toSlotSize( xml_get(cur) );
@@ -1654,7 +1654,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      
+
       if (xml_isNode(node,"specific")) { /* has to be processed seperately */
 
          /* get the type */
@@ -1736,13 +1736,13 @@ int outfit_load (void)
    if (!xml_isNode(node,XML_OUTFIT_ID)) {
       ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
       return -1;
-   }        
+   }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
       ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
       return -1;
-   }        
+   }
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);

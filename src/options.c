@@ -630,7 +630,7 @@ static void opt_audio( unsigned int wid )
 
 
    /* Sound levels. */
-   x = 20 + cw + 20; 
+   x = 20 + cw + 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
          NULL, &cDConsole, "Volume Levels" );

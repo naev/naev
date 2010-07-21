@@ -23,7 +23,7 @@ typedef struct LuaShip_s {
 } LuaShip; /**< Wrapper for a Ship. */
 
 
-/* 
+/*
  * Library loading
  */
 int nlua_loadShip( lua_State *L, int readonly );

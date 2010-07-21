@@ -378,11 +378,11 @@ static Widget *lst_getWgt( const unsigned int wid, char* name )
  * List includes Image Arrays.
  */
 char* toolkit_getList( const unsigned int wid, char* name )
-{  
+{
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
       return NULL;
-  
+
    /* Nothing selected. */
    if (wgt->dat.lst.selected == -1)
       return NULL;

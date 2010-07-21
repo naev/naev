@@ -83,4 +83,4 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 
 
 #endif /* OPENGL_RENDER_H */
-   
+

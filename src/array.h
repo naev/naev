@@ -2,11 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-/** 
+/**
  * @file array.h
  *
  * @brief Provides macros to work with dynamic arrays.
- * 
+ *
  * @note Except were noted, macros do not have side effects from
  * expations.
  *
@@ -83,7 +83,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
    return c->_array + c->_size * e_size;
 }
 
-/** 
+/**
  * @brief Creates a new dynamic array of `basic_type'
  *
  *    @param basic_type Type of the array to create.
@@ -119,7 +119,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
    do array_grow(ptr_array) = element; while (0)
 /**
  * @brief Erases elements in interval [first, last).
- * 
+ *
  * @note Invalidates all iterators.
  *
  *    @param ptr_array Array being manipulated.
@@ -137,9 +137,9 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  */
 #define array_shrink(ptr_array) \
       (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
-/** 
+/**
  * @brief Frees memory allocated and sets array to NULL.
- * 
+ *
  * @note Invalidates all iterators.
  *
  *    @param ptr_array Array being manipulated.
@@ -147,7 +147,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 #define array_free(ptr_array) \
       _array_free_helper((void *)(ptr_array))
 
-/** 
+/**
  * @brief Returns number of elements in the array.
  *
  *    @param ptr_array Array being manipulated.
@@ -182,7 +182,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @return The first element in the array.
  */
 #define array_front(ptr_array) (*array_begin(ptr_array))
-/** 
+/**
  * @brief Returns the last element in the array.
  *
  *    @param ptr_array Array being manipulated.

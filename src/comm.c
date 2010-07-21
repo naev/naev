@@ -106,7 +106,7 @@ int comm_openPilot( unsigned int pilot )
       player_message("\e%c%s\er is jumping and can't respond.", c, comm_pilot->name);
       return 0;
    }
-  
+
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
       player_message("\e%c%s\er does not respond.", c, comm_pilot->name);
@@ -114,7 +114,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Check to see if pilot wants to communicate. */
-   msg = comm_getString( "comm_no" );   
+   msg = comm_getString( "comm_no" );
    if (msg != NULL) {
       player_message( msg );
       return 0;
@@ -289,8 +289,8 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    /* Create the image. */
    window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
-   gw = MIN( GRAPHIC_WIDTH, comm_graphic->w );
-   gh = MIN( GRAPHIC_HEIGHT, comm_graphic->h );
+   gw = MIN( GRAPHIC_WIDTH, (comm_graphic != NULL) ? comm_graphic->w : 0 );
+   gh = MIN( GRAPHIC_HEIGHT, (comm_graphic != NULL) ? comm_graphic->h : 0 );
    window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
          -30 - (GRAPHIC_HEIGHT-gh)/2,
          gw, gh, "imgGFX", comm_graphic, 0 );
@@ -302,7 +302,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       x += logo->w + 10;
       y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
    }
-   
+
    /* Name. */
    window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h*2 + 10,
          GRAPHIC_WIDTH - x, 20, 0, "txtName",
@@ -441,7 +441,7 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
    double q, r;
    double standing;
    Fleet *f;
-   
+
    /* Price. */
    standing = faction_getPlayer( comm_planet->faction );
    /* Get number of hostiles and mass of hostiles. */
@@ -597,7 +597,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
  * @brief Gets the amount the communicating pilot wants as a bribe.
  *
  * Valid targets for now are:
- *    - "bribe": amount pilot wants to be paid. 
+ *    - "bribe": amount pilot wants to be paid.
  *    - "refuel": amount pilot wants to be paid for refueling the player.
  *
  *    @param[out] val Value of the number gotten.

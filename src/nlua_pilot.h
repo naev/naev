@@ -23,7 +23,7 @@ typedef struct LuaPilot_s {
 } LuaPilot; /**< Wrapper for a Pilot. */
 
 
-/* 
+/*
  * Library loading
  */
 int nlua_loadPilot( lua_State *L, int readonly );

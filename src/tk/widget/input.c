@@ -158,7 +158,7 @@ static int inp_addKey( Widget* inp, SDLKey key )
    int i;
    int n;
    char c;
-   
+
    /*
     * Handle arrow keys.
     * @todo finish implementing, no cursor makes it complicated to see where you are.
@@ -206,16 +206,16 @@ static int inp_addKey( Widget* inp, SDLKey key )
  *    @return 1 if the event was used, 0 if it wasn't.
  */
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
-{  
+{
    (void) mod;
    int n;
-   
+
    /*
     * Handle arrow keys.
     */
     if ((key == SDLK_LEFT) || (key == SDLK_RIGHT)) {
-      /* Move pointer. */                                           
-      if (key == SDLK_LEFT) {                                       
+      /* Move pointer. */
+      if (key == SDLK_LEFT) {
          if (inp->dat.inp.pos > 0)
             inp->dat.inp.pos -= 1;
       }

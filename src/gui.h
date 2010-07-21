@@ -14,7 +14,7 @@
 /*
  * enums
  */
-typedef enum RadarShape_ { 
+typedef enum RadarShape_ {
    RADAR_RECT,  /**< Rectangular radar. */
    RADAR_CIRCLE /**< Circular radar. */
 } RadarShape; /**< Player's radar shape. */

@@ -334,7 +334,7 @@ static int music_find (void)
          len = flen - suflen;
          strncpy( tmp, files[i], len );
          tmp[MIN(len,64-1)] = '\0';
-         
+
          /* give it the new name */
          music_selection[nmusic_selection-1] = strdup(tmp);
       }
@@ -401,7 +401,7 @@ int music_load( const char* name )
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
+   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name);
    rw = ndata_rwops( filename );
    if (rw == NULL) {
       WARN("Music '%s' not found.", filename);

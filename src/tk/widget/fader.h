@@ -26,8 +26,8 @@ typedef struct WidgetFaderData_{
 /* Required functions. */
 void window_addFader( const unsigned int wid,
       const int x, const int y, /* position */
-      const int w, const int h, /* size, if w > h fader is horizontal, else vertical */     
-      char* name, const double min, const double max, /* name, minimum & maximum values */  
+      const int w, const int h, /* size, if w > h fader is horizontal, else vertical */
+      char* name, const double min, const double max, /* name, minimum & maximum values */
       const double def, /* default pos. */
       void (*call) (unsigned int,char*) ); /* function to called on value change */
 
