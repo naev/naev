@@ -97,7 +97,7 @@ int nlua_loadVar( lua_State *L, int readonly )
    else
       luaL_register(L, "var", var_cond_methods);
    return 0;
-}  
+}
 
 
 /**
@@ -163,7 +163,7 @@ int var_load( xmlNodePtr parent )
    do {
       if (xml_isNode(node,"vars")) {
          cur = node->xmlChildrenNode;
-         
+
          do {
             if (xml_isNode(cur,"var")) {
                xmlr_attr(cur,"name",var.name);
@@ -220,7 +220,7 @@ static int var_add( misn_var *new_var )
          memcpy( &var_stack[i], new_var, sizeof(misn_var) );
          return 0;
       }
-   
+
    memcpy( &var_stack[var_nstack], new_var, sizeof(misn_var) );
    var_nstack++;
 
@@ -320,7 +320,7 @@ static int var_pop( lua_State *L )
          memmove( &var_stack[i], &var_stack[i+1], sizeof(misn_var)*(var_nstack-i-1) );
          var_nstack--;
          return 0;
-      } 
+      }
 
    /*NLUA_DEBUG("Var '%s' not found in stack", str);*/
    return 0;
@@ -341,9 +341,9 @@ static int var_push( lua_State *L )
 
    str = luaL_checkstring(L,1);
    var.name = strdup(str);
-   
+
    /* store appropriate data */
-   if (lua_isnil(L,2)) 
+   if (lua_isnil(L,2))
       var.type = MISN_VAR_NIL;
    else if (lua_isnumber(L,2)) {
       var.type = MISN_VAR_NUM;

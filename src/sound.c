@@ -306,7 +306,7 @@ void sound_exit (void)
  *    @param name Name of the sound to get it's id.
  *    @return ID of the sound matching name.
  */
-int sound_get( char* name ) 
+int sound_get( char* name )
 {
    int i;
 
@@ -738,7 +738,7 @@ static void sound_free( alSound *snd )
       free(snd->name);
       snd->name = NULL;
    }
-   
+
    /* Free internals. */
    sound_sys_free(snd);
 }

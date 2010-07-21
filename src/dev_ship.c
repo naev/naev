@@ -26,10 +26,10 @@ void dship_csv( const char *path )
    int i, n, l;
    SDL_RWops *rw;
    char buf[ 1024 ];
-   
+
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
-   
+
    /* Write "header" */
    l = snprintf( buf, sizeof(buf),
          "name,base_type,price,license,fabricator,"

@@ -43,7 +43,7 @@ void window_addImageArray( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, const int iw, const int ih, /* name and image sizes */
-      glTexture** tex, char** caption, int nelem, /* elements */    
+      glTexture** tex, char** caption, int nelem, /* elements */
       void (*call) (unsigned int,char*), /* update callback */
       void (*rmcall) (unsigned int,char*) ); /* right click callback */
 

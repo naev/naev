@@ -35,7 +35,7 @@ static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 /*
  * Helper functions.
  */
-static void shipyard_buy( unsigned int wid, char* str ); 
+static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
@@ -92,7 +92,7 @@ void shipyard_open( unsigned int wid )
 
    /* slot types */
    window_addCust( wid, -20, -160, 148, 70, "cstSlots", 0.,
-         shipyard_renderSlots, NULL, NULL ); 
+         shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
    window_addText( wid, -40, -240, 128, 200, 0, "txtStats",

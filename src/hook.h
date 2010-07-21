@@ -18,7 +18,7 @@ int hook_rm( unsigned int id );
 void hook_rmMisnParent( unsigned int parent );
 void hook_rmEventParent( unsigned int parent );
 
-/* 
+/*
  * run hooks
  *
  * Currently used:

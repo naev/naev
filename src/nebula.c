@@ -353,7 +353,7 @@ static void nebu_renderMultitexture( const double dt )
    }
 
    /* Now render! */
-   gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY, 
+   gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY,
          sizeof(GL_FLOAT) * 0*2*4, 2, GL_FLOAT, 0 );
    gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE0,
          sizeof(GL_FLOAT) * 1*2*4, 2, GL_FLOAT, 0 );
@@ -481,7 +481,7 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+39] = -nebu_view;
    data[(2+4)*18+40] = -SCREEN_W/2.*z-gx;
    data[(2+4)*18+41] = -SCREEN_H/2.*z-gy;
-      
+
    /* Bottom left */
    data[(2+4)*18+42] = -SCREEN_W/2.*z-gx;
    data[(2+4)*18+43] = -SCREEN_H/2.*z-gy;
@@ -647,7 +647,7 @@ void nebu_prep( double density, double volatility )
             SCREEN_W + NEBULA_PUFF_BUFFER);
       nebu_puffs[i].y = (double)RNG(-NEBULA_PUFF_BUFFER,
             SCREEN_H + NEBULA_PUFF_BUFFER);
-      
+
       /* Maybe make size related? */
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
@@ -730,7 +730,7 @@ static void nebu_generatePuffs (void)
       nebu = noise_genNebulaPuffMap( w, h, 1. );
       sur = nebu_surfaceFromNebulaMap( nebu, w, h );
       free(nebu);
-      
+
       /* Load the texture */
       nebu_pufftexs[i] =  gl_loadImage( sur, 0 );
    }
@@ -806,7 +806,7 @@ static SDL_Surface* loadNebula( const char* file )
       ERR("Unable to load Nebula image: %s", file);
       return NULL;
    }
-   
+
    return sur;
 }
 
@@ -826,11 +826,11 @@ static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const in
    SDL_Surface *sur;
    uint32_t *pix;
    double c;
-  
+
    /* the good surface */
    sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
    pix = sur->pixels;
-   
+
    /* convert from mapping to actual colours */
    SDL_LockSurface( sur );
    for (i=0; i<h*w; i++) {
@@ -838,6 +838,6 @@ static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const in
       pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)((double)AMASK*c));
    }
    SDL_UnlockSurface( sur );
-   
+
    return sur;
-}          
+}

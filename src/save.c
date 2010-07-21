@@ -383,7 +383,7 @@ static int load_game( const char* file )
 
    xmlFreeDoc(doc);
    xmlCleanupParser();
-   
+
    return 0;
 
 err_doc:

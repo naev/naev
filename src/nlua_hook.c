@@ -122,7 +122,7 @@ void nlua_hookTarget( Mission *m, Event_t *ev )
  * @brief Removes a hook previously created.
  *
  * @usage hook.rm( h ) -- Hook is removed
- * 
+ *
  *    @luaparam h Identifier of the hook to remove.
  *    @luareturn true if the hook was removed.
  * @luafunc rm( h )
@@ -196,7 +196,7 @@ int hookL_getarg( lua_State *L, unsigned int hook )
    lua_getglobal( L, "__hook_arg" ); /* t */
    if (!lua_isnil(L,-1)) {    /* t */
       lua_pushnumber( L, hook ); /* t, k */
-      lua_gettable( L, -2 );  /* t, v */ 
+      lua_gettable( L, -2 );  /* t, v */
       lua_remove( L, -2 );    /* v */
    }
    return 0;

@@ -120,7 +120,7 @@ int nlua_loadPlayer( lua_State *L, int readonly )
    else
       luaL_register(L, "player", playerL_cond_methods);
    return 0;
-}  
+}
 
 
 /**

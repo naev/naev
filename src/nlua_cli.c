@@ -37,7 +37,7 @@ static const luaL_reg cli_methods[] = {
  *    @return 0 on success.
  */
 int nlua_loadCLI( lua_State *L )
-{  
+{
    luaL_register(L, "cli", cli_methods);
    return 0;
 }

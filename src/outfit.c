@@ -651,7 +651,7 @@ int outfit_soundHit( const Outfit* o )
  */
 const char* outfit_getType( const Outfit* o )
 {
-   const char* outfit_typename[] = { 
+   const char* outfit_typename[] = {
          "NULL",
          "Bolt Cannon",
          "Beam Cannon",
@@ -891,7 +891,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -903,7 +903,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (conf.interpolate && xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx_end = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          continue;
       }
 
@@ -1370,7 +1370,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* must be >= 1. */
    temp->u.afb.thrust = 1.;
    temp->u.afb.speed  = 1.;
-   
+
    do { /* parse the data */
       xmlr_float(node,"rumble",temp->u.afb.rumble);
       if (xml_isNode(node,"sound"))
@@ -1654,7 +1654,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      
+
       if (xml_isNode(node,"specific")) { /* has to be processed seperately */
 
          /* get the type */
@@ -1736,13 +1736,13 @@ int outfit_load (void)
    if (!xml_isNode(node,XML_OUTFIT_ID)) {
       ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
       return -1;
-   }        
+   }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
       ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
       return -1;
-   }        
+   }
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);

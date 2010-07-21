@@ -77,7 +77,7 @@ static void txt_render( Widget* txt, double bx, double by )
    /* Must have text to display. */
    if (txt->dat.txt.text==NULL)
       return;
-   
+
    if (txt->dat.txt.centered)
       gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + (double)SCREEN_W/2. + txt->x,
@@ -112,20 +112,20 @@ static void txt_cleanup( Widget* txt )
  */
 void window_modifyText( const unsigned int wid,
       const char* name, const char* newstring )
-{  
+{
    Widget *wgt;
-   
+
    /* Get the widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
-   
+
    /* Check type. */
    if (wgt->type != WIDGET_TEXT) {
       WARN("Not modifying text on non-text widget '%s'.", name);
       return;
    }
-   
+
    /* Set text. */
    if (wgt->dat.txt.text)
       free(wgt->dat.txt.text);

@@ -44,7 +44,7 @@ typedef struct Task_ {
    char *name; /**< Task name. */
 
    struct Task_* subtask; /**< Subtasks of the current task. */
-   
+
    TaskData dtype; /**< Data type. */
    union {
       unsigned int num; /**< Pilot ID, etc... */

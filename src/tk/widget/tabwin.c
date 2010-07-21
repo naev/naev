@@ -57,7 +57,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    int i;
    Window *wdw, *wtmp;
    Widget *wgt;
-  
+
    /* Create the Widget. */
    wdw = window_wget(wid);
    wgt = window_newWidget(wdw, name);
@@ -66,7 +66,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
    /* generic */
    wgt->type = WIDGET_TABBEDWINDOW;
-   
+
    /* specific */
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
    wgt->rawevent           = tab_raw;
@@ -243,7 +243,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
          }
          ret = 1;
          break;
-   
+
       default:
          break;
    }

@@ -108,7 +108,7 @@ int pfaction_load( xmlNodePtr parent );
 int faction_get( const char* name )
 {
    int i;
-   for (i=0; i<faction_nstack; i++) 
+   for (i=0; i<faction_nstack; i++)
       if (strcmp(faction_stack[i].name, name)==0)
          break;
 
@@ -400,7 +400,7 @@ double faction_getPlayer( int f )
 {
    if (faction_isFaction(f)) {
       return faction_stack[f].player;
-   }    
+   }
    else {
       WARN("%d is an invalid faction", f);
       return -1000;
@@ -418,7 +418,7 @@ double faction_getPlayerDef( int f )
 {
    if (faction_isFaction(f)) {
       return faction_stack[f].player_def;
-   }    
+   }
    else {
       WARN("%d is an invalid faction", f);
       return -1000;
@@ -594,7 +594,7 @@ int areAllies( int a, int b )
       if (faction_isFaction(a)) {
          if (faction_stack[a].player > PLAYER_ALLY) return 1;
          else return 0;
-      }    
+      }
       else {
          WARN("%d is an invalid faction", a);
          return 0;
@@ -999,7 +999,7 @@ int pfaction_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
-               xmlr_attr(cur,"name",str); 
+               xmlr_attr(cur,"name",str);
                faction = faction_get(str);
 
                if (faction != -1) { /* Faction is valid. */

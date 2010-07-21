@@ -14,7 +14,7 @@
  * @note Input is not handled here.
  */
 typedef struct PlayerConf_s {
-   
+
    /* ndata. */
    char *ndata; /**< Ndata path to use. */
 

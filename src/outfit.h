@@ -92,7 +92,7 @@ struct Outfit_;
 /**
  * @brief Different types of existing outfits.
  *
- * Outfits are organized by the order here 
+ * Outfits are organized by the order here
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
@@ -202,7 +202,7 @@ typedef struct OutfitBeamData_ {
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
-   
+
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
    int spfx_armour; /**< special effect on hit */

@@ -331,7 +331,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
    /* Calculate offset from target position. */
    a = 2*M_PI - jp->angle;
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-  
+
    /* Calculate new position. */
    x += d*cos(a);
    y += d*sin(a);
@@ -730,7 +730,7 @@ static void system_scheduler( double dt, int init )
             pilot->presence = lua_tonumber(L,-1);
             p->curUsed     += pilot->presence;
             lua_pop(L,2); /* tk, k */
-         }          
+         }
       }
       lua_pop(L,2); /* Clear arguments. */
    }
@@ -1079,7 +1079,7 @@ void space_gfxLoad( StarSystem *sys )
    Planet *planet;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      
+
       if (planet->real != ASSET_REAL)
          continue;
 
@@ -1757,7 +1757,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          cur2 = cur->xmlChildrenNode;
          do {
             if (xml_isNode(cur2,"autopos"))
-               j->flags |= JP_AUTOPOS; 
+               j->flags |= JP_AUTOPOS;
          } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));

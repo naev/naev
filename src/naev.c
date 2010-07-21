@@ -152,7 +152,7 @@ int main( int argc, char** argv )
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
-   
+
    /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
 #ifdef GIT_COMMIT
@@ -190,7 +190,7 @@ int main( int argc, char** argv )
    xmlInitParser();
 
    /* Input must be initialized for config to work. */
-   input_init(); 
+   input_init();
 
    /* Set the configuration. */
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
@@ -297,7 +297,7 @@ int main( int argc, char** argv )
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    time_ms = SDL_GetTicks(); /* initializes the time_ms */
-   /* 
+   /*
     * main loop
     */
    SDL_Event event;
@@ -596,7 +596,7 @@ static void fps_control (void)
    game_dt  = real_dt * dt_mod; /* Apply the modifier. */
    time_ms = t;
 
-   /* if fps is limited */                       
+   /* if fps is limited */
    if (!conf.vsync && conf.fps_max != 0) {
       fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {

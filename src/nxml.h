@@ -15,7 +15,7 @@
 #include "opengl.h"
 
 
-#define XML_NODE_START  1 
+#define XML_NODE_START  1
 #define XML_NODE_TEXT   3
 
 /**

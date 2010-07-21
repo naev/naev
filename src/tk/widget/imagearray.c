@@ -490,7 +490,7 @@ static void iar_cleanup( Widget* iar )
             free(iar->dat.iar.alts[i]);
          if (iar->dat.iar.quantity && iar->dat.iar.quantity[i])
             free(iar->dat.iar.quantity[i]);
-      }  
+      }
       /* Free the arrays */
       free( iar->dat.iar.captions );
       free( iar->dat.iar.images );

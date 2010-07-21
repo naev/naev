@@ -232,7 +232,7 @@ void tech_groupDestroy( tech_group_t *grp )
 
 
 /**
- * @brief Gets an item's name. 
+ * @brief Gets an item's name.
  */
 static char* tech_getItemName( tech_item_t *item )
 {
@@ -390,7 +390,7 @@ static int tech_addItemOutfit( tech_group_t *grp, const char *name )
    o = outfit_getW( name );
    if (o==NULL)
       return 1;
- 
+
    /* Load the new item. */
    item           = tech_itemGrow( grp );
    item->type     = TECH_TYPE_OUTFIT;
@@ -413,7 +413,7 @@ static int tech_addItemShip( tech_group_t *grp, const char* name )
    s = ship_getW( name );
    if (s==NULL)
       return 1;
- 
+
    /* Load the new item. */
    item           = tech_itemGrow( grp );
    item->type     = TECH_TYPE_SHIP;
@@ -436,7 +436,7 @@ static int tech_addItemCommodity( tech_group_t *grp, const char* name )
    c = commodity_getW( name );
    if (c==NULL)
       return 1;
- 
+
    /* Load the new item. */
    item           = tech_itemGrow( grp );
    item->type     = TECH_TYPE_COMMODITY;
@@ -463,7 +463,7 @@ int tech_addItem( const char *name, const char *value )
    /* Comfort. */
    tech  = &tech_groups[id];
 
-   /* Try to add the techu. */ 
+   /* Try to add the techu. */
    ret = tech_addItemGroup( tech, value );
    if (ret)
       ret = tech_addItemOutfit( tech, value );
@@ -595,7 +595,7 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
       }
       if (f == 1)
          continue;
-   
+
       /* Allocate memory if needed. */
       (*n)++;
       if ((*n) > (*m)) {
@@ -608,7 +608,7 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
       /* Add. */
       o[ (*n)-1 ]  = item->u.outfit;
    }
-   
+
    /* Now handle other groups. */
    for (i=0; i<s; i++) {
       item = &tech->items[i];
@@ -683,7 +683,7 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
       }
       if (f == 1)
          continue;
-   
+
       /* Allocate memory if needed. */
       (*n)++;
       if ((*n) > (*m)) {
@@ -696,7 +696,7 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
       /* Add. */
       s[ (*n)-1 ]  = item->u.ship;
    }
-   
+
    /* Now handle other groups. */
    for (i=0; i<size; i++) {
       item = &tech->items[i];

@@ -105,7 +105,7 @@ static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octav
 /**
  * @brief Not sure what it does.
  */
-static __inline float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy, 
+static __inline float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy,
 int iz, float fz )
 {
    int nIndex;
@@ -251,7 +251,7 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
    float r[3] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
    float w[3] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
    float value;
-   float v[8] __attribute__ ((aligned (32))); 
+   float v[8] __attribute__ ((aligned (32)));
 
    n[0] = (int)f[0];
    n[1] = (int)f[1];
@@ -276,9 +276,9 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
    v[5] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2]+1, r[2]-1);
    v[6] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2]+1, r[2]-1);
    v[7] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1);
-   value = LERP(  
-         LERP(  
-            LERP(v[0], v[1], w[0]), 
+   value = LERP(
+         LERP(
+            LERP(v[0], v[1], w[0]),
             LERP(v[2], v[3], w[0]),
             w[1]
             ),

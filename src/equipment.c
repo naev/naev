@@ -311,7 +311,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *c, *dc, bc;
 
    /* Render text. */
-   if ((o != NULL) && (lst[0].slot.type == o->slot.type)) 
+   if ((o != NULL) && (lst[0].slot.type == o->slot.type))
       c = &cDConsole;
    else
       c = &cBlack;

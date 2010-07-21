@@ -37,7 +37,7 @@ static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
 
-/* 
+/*
  * window stuff
  */
 #define MIN_WINDOWS  3 /**< Minimum windows to prealloc. */
@@ -159,7 +159,7 @@ Widget* window_newWidget( Window* w, const char *name )
 
       /* Should be destroyed. */
       if (!wgt_isFlag( wgt, WGT_FLAG_KILL )) {
-         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed", 
+         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed",
                name );
          return NULL;
       }
@@ -281,7 +281,7 @@ void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y )
 {
    Widget *wgt;
-  
+
    /* Get widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
@@ -308,7 +308,7 @@ void window_moveWidget( const unsigned int wid,
 {
    Window *wdw;
    Widget *wgt;
-  
+
    /* Get window. */
    wdw = window_wget(wid);
    if (wdw == NULL)
@@ -451,7 +451,7 @@ void window_setParent( unsigned int wid, unsigned int parent )
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return;
 
    /* Set the parent. */
@@ -471,7 +471,7 @@ unsigned int window_getParent( unsigned int wid )
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return 0;
 
    /* Get the parent. */
@@ -494,7 +494,7 @@ void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return;
 
    /* Set the close function. */
@@ -518,7 +518,7 @@ void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return;
 
    /* Set the accept function. */
@@ -835,7 +835,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
 
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, 
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
@@ -895,7 +895,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, 
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
@@ -1182,7 +1182,7 @@ static void window_renderBorder( Window* w )
    glDrawArrays( GL_POLYGON, 0, 16 );
 
 
-   /* 
+   /*
     * inner outline
     */
    /* Colour. */

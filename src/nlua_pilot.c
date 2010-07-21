@@ -285,10 +285,10 @@ int lua_ispilot( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, PILOT_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
@@ -560,7 +560,7 @@ static int pilotL_remove( lua_State *L )
  * @brief Clears the current system of pilots.  Used for epic battles and such.
  *
  * @usage pilot.clear()
- * 
+ *
  * @luafunc clear()
  */
 static int pilotL_clear( lua_State *L )
@@ -1176,7 +1176,7 @@ static int pilotL_addOutfit( lua_State *L )
    o = outfit_get( outfit );
    if (o == NULL)
       return 0;
-   
+
    /* Add outfit. */
    for (i=0; i<p->noutfits; i++) {
       /* Must still have to add outfit. */
@@ -1257,7 +1257,7 @@ static int pilotL_rmOutfit( lua_State *L )
       NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
       return 0;
    }
-   
+
    /* Remove the outfit outfit. */
    for (i=0; i<p->noutfits; i++) {
       /* Must still need to remove. */
@@ -1982,7 +1982,7 @@ static int pilotL_hyperspace( lua_State *L )
       /* Copy vector. */
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &jp->pos );
-      
+
       /* Introduce some error. */
       a     = RNGF() * M_PI * 2.;
       rad   = RNGF() * 0.5 * jp->radius;
@@ -2036,7 +2036,7 @@ static int pilotL_land( lua_State *L )
       p->nav_planet = i;
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &lp->p->pos );
-      
+
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;
       r = RNGF() * lp->p->radius;

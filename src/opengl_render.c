@@ -685,7 +685,7 @@ void gl_blitScaleSprite( const glTexture* sprite,
  *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitScale( const glTexture* texture,
-      const double bx, const double by,     
+      const double bx, const double by,
       const double bw, const double bh, const glColour* c )
 {
    double x,y;
@@ -711,7 +711,7 @@ void gl_blitScale( const glTexture* texture,
  *    @param by Y position of the texture in screen coordinates.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitStatic( const glTexture* texture, 
+void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour* c )
 {
    double x,y;
@@ -797,7 +797,7 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
    /* Starting parameters. */
    i = 0;
    x = 0;
-   y = r;    
+   y = r;
    p = (5. - (r*4.)) / 4.;
 
    PIXEL( cx,   cy+y );
@@ -815,15 +815,15 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
          PIXEL( cx,   cy-y );
          PIXEL( cx+y, cy   );
          PIXEL( cx-y, cy   );
-      }         
-      else      
+      }
+      else
          if (x==y) {
             PIXEL( cx+x, cy+y );
             PIXEL( cx-x, cy+y );
             PIXEL( cx+x, cy-y );
             PIXEL( cx-x, cy-y );
-         }        
-         else     
+         }
+         else
             if (x<y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
@@ -936,7 +936,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
    /* Starting parameters. */
    i = 0;
    x = 0;
-   y = r;    
+   y = r;
    p = (5. - (r*4.)) / 4.;
 
    PIXEL( cx,   cy+y );
@@ -954,15 +954,15 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
          PIXEL( cx,   cy-y );
          PIXEL( cx+y, cy   );
          PIXEL( cx-y, cy   );
-      }         
-      else      
+      }
+      else
          if (x==y) {
             PIXEL( cx+x, cy+y );
             PIXEL( cx-x, cy+y );
             PIXEL( cx+x, cy-y );
             PIXEL( cx-x, cy-y );
-         }        
-         else     
+         }
+         else
             if (x<y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
@@ -996,7 +996,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
 }
 #undef PIXEL
 
- 
+
 
 /**
  * @brief Generates an filled circle texture.

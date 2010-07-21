@@ -279,7 +279,7 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
 {
    (void) str;
 
-   /* 
+   /*
     * Ugly hack to prevent player.c from segfaulting due to the fact
     * that game will attempt to render while waiting for the quit event
     * pushed by exit_game() to be handled without actually having a player
@@ -325,7 +325,7 @@ void menu_small (void)
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
+   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_small_exit );
 
    menu_Open(MENU_SMALL);
@@ -348,7 +348,7 @@ static void menu_small_exit( unsigned int wid, char* str )
 {
    (void) str;
    unsigned int info_wid;
-   
+
    /* if landed we must save anyways */
    if (landed) {
       save_all();
@@ -421,7 +421,7 @@ static void menu_death_restart( unsigned int wid, char* str )
 void menu_death (void)
 {
    unsigned int wid;
-   
+
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 

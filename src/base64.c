@@ -168,7 +168,7 @@ char* base64_encode( size_t *len, char *src, size_t sz )
 
    /* setup padding */
    pad = ((sz % 3) == 0) ? 0 : 3 - sz % 3;
-   
+
    /* time to do the bulk work */
    i = 0;
    for (c=0; c<sz; c+=3) {
@@ -181,7 +181,7 @@ char* base64_encode( size_t *len, char *src, size_t sz )
       n =  (src[c] << 16);
       n += (c+1<sz) ? (src[c+1] << 8) : 0; /* may be out of range */
       n += (c+2<sz) ? (src[c+2] << 0) : 0; /* may be out of range */
-     
+
       /* ch[0-3] are 6 bits each */
       ch[0] = (n >> 18) & 63;
       ch[1] = (n >> 12) & 63;
@@ -240,7 +240,7 @@ char* base64_decode( size_t *len, char *src, size_t sz )
       n += (c+2<j) ? (dec_ch( dat[c+2] ) << 6)  : 0;
       n += (c+3<j) ? (dec_ch( dat[c+3] ) << 0)  : 0;
 
-      /* convert the 24 bits of encoded data into 3 8 bit chunks */ 
+      /* convert the 24 bits of encoded data into 3 8 bit chunks */
       r[i++] = (n >> 16) & 255;
       r[i++] = (n >> 8)  & 255;
       r[i++] = (n >> 0)  & 255;
@@ -248,7 +248,7 @@ char* base64_decode( size_t *len, char *src, size_t sz )
 
    /* cleanup */
    free(dat);
-   
+
    (*len) = i - pad; /* must decount the padding */
    return r;
 }

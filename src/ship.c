@@ -494,7 +494,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
          base[i] = '\0';
          break;
       }
-      base[i] = buf[i]; 
+      base[i] = buf[i];
    }
    if (i>=PATH_MAX) {
       WARN("Failed to get base path of '%s'.", buf);

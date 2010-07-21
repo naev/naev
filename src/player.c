@@ -93,8 +93,8 @@ static int player_hailCounter = 0; /**< Number of times to play the hail. */
 static double player_hailTimer = 0.; /**< Timer for hailing. */
 
 
-/* 
- * player.p pilot stack - ships he has 
+/*
+ * player.p pilot stack - ships he has
  */
 /**
  * @brief Player ship.
@@ -123,7 +123,7 @@ static int player_moutfits             = 0; /**< Current allocated memory. */
 #define OUTFIT_CHUNKSIZE               32 /**< Allocation chunk size. */
 
 
-/* 
+/*
  * player.p global properties
  */
 /* used in input.c */
@@ -135,7 +135,7 @@ static int player_firemode = 0; /**< Player fire mode. */
 static double player_timer = 0.; /**< For death and such. */
 
 
-/* 
+/*
  * unique mission stack.
  */
 static int* missions_done  = NULL; /**< Saves position of completed missions. */
@@ -164,10 +164,10 @@ extern int pilot_nstack;
 extern int map_npath;
 
 
-/* 
+/*
  * prototypes
  */
-/* 
+/*
  * internal
  */
 static void player_checkHail (void);
@@ -180,7 +180,7 @@ static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
-static int player_saveShip( xmlTextWriterPtr writer, 
+static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
@@ -195,7 +195,7 @@ static void player_autonav (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
-/* 
+/*
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
@@ -208,7 +208,7 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
  *
  *   - Cleans up after old players.
  *   - Prompts for name.
- * 
+ *
  * @sa player_newMake
  */
 void player_new (void)
@@ -470,7 +470,7 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
    free(ship_name);
 
    /* Update ship list if landed. */
-   if (landed) {   
+   if (landed) {
       w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
@@ -568,7 +568,7 @@ void player_swapShip( char* shipname )
          vectcpy( &player.p->solid->pos, &v );
 
          /* Fill the tank. */
-         land_checkAddRefuel();         
+         land_checkAddRefuel();
 
          gl_cameraBind( &player.p->solid->pos ); /* don't forget the camera */
          return;
@@ -1036,7 +1036,7 @@ void player_think( Pilot* pplayer, const double dt )
          player_abortAutonav("Not enough fuel for autonav to continue");
 
       /* Keep on moving. */
-      else 
+      else
          player_autonav();
 
       /* Disable turning. */
@@ -1044,7 +1044,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* turning taken over by PLAYER_FACE */
-   else if (player_isFlag(PLAYER_FACE)) { 
+   else if (player_isFlag(PLAYER_FACE)) {
       /* Try to face pilot target. */
       if (player.p->target != PLAYER_ID) {
          target = pilot_get(player.p->target);
@@ -1075,7 +1075,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* turning taken over by PLAYER_REVERSE */
    else if (player_isFlag(PLAYER_REVERSE)) {
-      
+
       /* Check to see if already stopped. */
       /*
       if (VMOD(pplayer->solid->vel) < MIN_VEL_ERR)
@@ -1143,7 +1143,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
 
-   /* 
+   /*
     * Afterburn!
     */
    if (player_isFlag(PLAYER_AFTERBURNER)) {
@@ -1295,7 +1295,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
 /**
  * @brief Updates the player.p zoom.
- * 
+ *
  *    @param dt Current deltatick.
  */
 static void player_updateZoom( double dt )
@@ -1533,7 +1533,7 @@ void player_land (void)
       player_afterburnOver();
       /* Stop accelerating. */
       player_accelOver();
-   
+
       /* Start landing. */
       if (runcount == 0)
          landtarget = player.p->nav_planet;
@@ -1600,7 +1600,7 @@ void player_targetHyperspace (void)
 
 /**
  * @brief Enables or disables jump points preempting planets in autoface and target clearing.
- * 
+ *
  *    @param preempt Boolean; 1 preempts planet target.
  */
 void player_hyperspacePreempt( int preempt )
@@ -1823,7 +1823,7 @@ void player_soundResume (void)
  * @brief Targets the nearest hostile enemy to the player.
  */
 void player_targetHostile (void)
-{  
+{
    unsigned int tp;
    int i;
    double d, td;
@@ -1834,14 +1834,14 @@ void player_targetHostile (void)
       /* Don't get if is bribed. */
       if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
          continue;
- 
+
       /* Must be in range. */
       if (pilot_inRangePilot( player.p, pilot_stack[i] ) <= 0)
          continue;
 
       /* Normal unbribed check. */
       if (pilot_isHostile(pilot_stack[i])) {
-         td = vect_dist(&pilot_stack[i]->solid->pos, &player.p->solid->pos);       
+         td = vect_dist(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
          if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
             d = td;
             tp = pilot_stack[i]->id;
@@ -2945,7 +2945,7 @@ static Planet* player_parse( xmlNodePtr parent )
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1, planet);
-     
+
       /* Parse ships. */
       else if (xml_isNode(node,"ships")) {
          cur = node->xmlChildrenNode;
@@ -3250,7 +3250,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    const char *str;
    Commodity *com;
    PilotFlags flags;
-   
+
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 

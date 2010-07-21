@@ -23,7 +23,7 @@ typedef struct LuaSystem_s {
 } LuaSystem;
 
 
-/* 
+/*
  * Load the system library.
  */
 int nlua_loadSystem( lua_State *L, int readonly );

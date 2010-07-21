@@ -210,7 +210,7 @@ int intro_display( const char *text, const char *mus )
                break;
          }
       }
-   
+
       /* Increment position. */
       offset += vel * dt;
 

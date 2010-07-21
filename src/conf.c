@@ -505,7 +505,7 @@ void conf_parseCLI( int argc, char** argv )
       { "devmode", no_argument, 0, 'D' },
       { "devcsv", no_argument, 0, 'C' },
 #endif /* DEBUGGING */
-      { "help", no_argument, 0, 'h' }, 
+      { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
    int option_index = 1;

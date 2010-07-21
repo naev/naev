@@ -137,7 +137,7 @@ void map_open (void)
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
    window_setCancel( wid, window_close );
 
-   /* 
+   /*
     * SIDE TEXT
     *
     * $System
@@ -153,7 +153,7 @@ void map_open (void)
     *
     * Services:
     *   $Services
-    * 
+    *
     * ...
     * [Autonav]
     * [ Close ]
@@ -213,9 +213,9 @@ void map_open (void)
    map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
-   
+
    /*
-    * Disable Autonav button if player lacks fuel. 
+    * Disable Autonav button if player lacks fuel.
     */
    if (player.p->fuel < HYPERSPACE_FUEL)
       window_disableButton( wid, "btnAutonav" );
@@ -287,7 +287,7 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSServices", -20, -220 );
       window_moveWidget( wid, "txtServices", -20, -220-gl_smallFont.h-5 );
       window_modifyText( wid, "txtServices", "Unknown" );
-      
+
       /*
        * Bottom Text
        */
@@ -626,7 +626,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Render the jump paths. */
    map_renderPath( x, y );
-  
+
    /* Render system names. */
    map_renderNames( x, y, 0 );
 
@@ -729,7 +729,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
       col = &cDarkBlue;
-      /* first we draw all of the paths. */  
+      /* first we draw all of the paths. */
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
@@ -763,7 +763,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       glShadeModel( GL_FLAT );
    }
 }
-   
+
    /* Now we'll draw over the lines with the new pathways. */
 /**
  * @brief Render the map path.
@@ -781,7 +781,7 @@ static void map_renderPath( double x, double y )
       glShadeModel(GL_SMOOTH);
       col = &cGreen;
       fuel = player.p->fuel;
-      
+
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
          if (fuel == player.p->fuel && fuel > 100.)
@@ -791,7 +791,7 @@ static void map_renderPath( double x, double y )
          else
             col = &cYellow;
          fuel -= 100;
-         
+
          /* Draw the lines. */
          vertex[0]  = x + lsys->pos.x * map_zoom;
          vertex[1]  = y + lsys->pos.y * map_zoom;
@@ -817,10 +817,10 @@ static void map_renderPath( double x, double y )
                sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
          gl_vboDeactivate();
-         
+
          lsys = jsys;
       }
-      
+
       glShadeModel( GL_FLAT );
    }
 }
@@ -932,7 +932,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    t = 15.*15.; /* threshold */
 
    switch (event->type) {
-      
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -1408,7 +1408,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
          /* Make sure it's reachable */
          if (!ignore_known &&
-               ((!sys_isKnown(sys) && 
+               ((!sys_isKnown(sys) &&
                   (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))
             continue;
 
@@ -1423,7 +1423,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          if (ccost != NULL) {
             closed = A_rm( closed, sys ); /* shouldn't happen */
          }
-         
+
          if ((ocost == NULL) && (ccost == NULL)) {
             neighbour->g = cost;
             neighbour->r = A_g(neighbour) + A_h(cur->sys,sys);
@@ -1560,7 +1560,7 @@ int map_isMapped( const char* targ_sys, int r )
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
          jsys = sys->jumps[i].target;
-        
+
          /* SYstem has already been parsed. */
          if (A_in(closed,jsys) != NULL)
              continue;

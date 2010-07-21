@@ -79,7 +79,7 @@ void window_addCust( const unsigned int wid,
  *    @param by Base Y position.
  */
 static void cst_render( Widget* cst, double bx, double by )
-{  
+{
    double x,y;
 
    x = bx + cst->x;
@@ -108,7 +108,7 @@ static void cst_render( Widget* cst, double bx, double by )
 static void cst_renderOverlay( Widget* cst, double bx, double by )
 {
    double x,y;
-   
+
    x = bx + cst->x;
    y = by + cst->y;
 

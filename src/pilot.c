@@ -52,7 +52,7 @@
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
 static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
-                                               Not guaranteed to be absolutely unique, 
+                                               Not guaranteed to be absolutely unique,
                                                only unique for each pilot. */
 
 
@@ -310,7 +310,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
       if (!pilot_inRangePilot( p, pilot_stack[i] ))
          continue;
 
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);       
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
          tp = pilot_stack[i]->id;
@@ -336,7 +336,7 @@ Pilot* pilot_get( const unsigned int id )
 
    if (id==PLAYER_ID)
       return player.p; /* special case player.p */
-  
+
    m = pilot_getStackPos(id);
 
    if ((m==-1) || (pilot_isFlag(pilot_stack[m], PILOT_DELETE)))
@@ -425,7 +425,7 @@ int pilot_isFriendly( const Pilot *p )
 double pilot_face( Pilot* p, const double dir )
 {
    double diff, turn;
-   
+
    diff = angle_diff( p->solid->dir, dir );
    turn = CLAMP( -1., 1., -10.*diff );
    pilot_setTurn( p, -turn );
@@ -1018,7 +1018,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
     * regular bolt weapons
     */
    if (outfit_isBolt(w->outfit)) {
-      
+
       /* enough energy? */
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
@@ -1250,7 +1250,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
 
    if (w != NULL)
-      /* knock back effect is dependent on both damage and mass of the weapon 
+      /* knock back effect is dependent on both damage and mass of the weapon
        * should probably get turned into a partial conservative collision */
       vect_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
@@ -1501,7 +1501,7 @@ void pilot_render( Pilot* p, const double dt )
    }
 
    /* Base ship. */
-   gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine, 
+   gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
          p->tsx, p->tsy, NULL );
@@ -1635,12 +1635,12 @@ void pilot_update( Pilot* pilot, const double dt )
 
       /* pilot death sound */
       if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (pilot->ptimer < 0.050)) {
-         
+
          /* Play random explsion sound. */
          snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
          sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
-         
+
          pilot_setFlag(pilot,PILOT_DEATH_SOUND);
       }
       /* final explosion */
@@ -1784,7 +1784,7 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* update the solid */
    pilot->solid->update( pilot->solid, dt );
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,  
+   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
@@ -1809,7 +1809,7 @@ void pilot_update( Pilot* pilot, const double dt )
 /**
  * @brief Deletes a pilot.
  *
- *    @param p Pilot to delete3. 
+ *    @param p Pilot to delete3.
  */
 void pilot_delete( Pilot* p )
 {
@@ -2288,7 +2288,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
                (fabs(o->u.mod.energy_regen) > p->energy_regen))
             return "Insufficient energy regeneration";
 
-         /* 
+         /*
           * Misc.
           */
          if ((o->u.mod.fuel < 0) &&
@@ -2343,7 +2343,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
                (o->u.mod.energy_regen > p->energy_regen))
             return "Lower energy usage first";
 
-         /* 
+         /*
           * Misc.
           */
          if ((o->u.mod.fuel > 0) &&
@@ -2469,7 +2469,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 
 /**
  * @brief Gets all the outfits in nice text form.
- *    
+ *
  *    @param pilot Pilot to get the outfits from.
  */
 char* pilot_getOutfits( Pilot* pilot )
@@ -2699,7 +2699,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->ew_base_hide  = s->ew_hide;
    pilot->ew_detect     = s->ew_detect;
 
-   /* 
+   /*
     * Normalize stats.
     */
    /* Fighter. */
@@ -2800,7 +2800,7 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
    dest->ncommodities += src->ncommodities;
    dest->commodities   = realloc( dest->commodities,
          sizeof(PilotCommodity)*dest->ncommodities);
-  
+
    /* Copy over. */
    memmove( &dest->commodities[0], &src->commodities[0],
          sizeof(PilotCommodity) * src->ncommodities);
@@ -2902,7 +2902,7 @@ int pilot_cargoUsed( Pilot* pilot )
 {
    int i, q;
 
-   q = 0; 
+   q = 0;
    for (i=0; i<pilot->ncommodities; i++)
       q += pilot->commodities[i].quantity;
 
@@ -2930,7 +2930,7 @@ static void pilot_calcCargo( Pilot* pilot )
  *    @param pilot Pilot to add it to.
  *    @param cargo Commodity to add.
  *    @param quantity Quantity to add.
- *    @return The Mission Cargo ID of created cargo. 
+ *    @return The Mission Cargo ID of created cargo.
  */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
@@ -3010,7 +3010,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
 /**
  * @brief Tries to get rid of quantity cargo from pilot.  Can remove mission cargo.
- * 
+ *
  *    @param pilot Pilot to get rid of cargo.
  *    @param cargo Cargo to get rid of.
  *    @param quantity Amount of cargo to get rid of.
@@ -3063,7 +3063,7 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
 
 /**
  * @brief Tries to get rid of quantity cargo from pilot.
- * 
+ *
  *    @param pilot Pilot to get rid of cargo.
  *    @param cargo Cargo to get rid of.
  *    @param quantity Amount of cargo to get rid of.
@@ -3394,7 +3394,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Set the pilot in the stack -- must be there before initializing */
    pilot_stack[pilot_nstack] = dyn;
    pilot_nstack++; /* there's a new pilot */
-  
+
    /* Initialize the pilot. */
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, systemFleet );
 
@@ -3511,7 +3511,7 @@ Pilot* pilot_copy( Pilot* src )
 void pilot_free( Pilot* p )
 {
    int i;
-  
+
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3580,7 +3580,7 @@ void pilot_destroy(Pilot* p)
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
-   
+
    /* Remove faction if necessary. */
    if (p->presence > 0) {
       system_rmCurrentPresence( cur_system, p->faction, p->presence );
@@ -3742,7 +3742,7 @@ void pilots_render( double dt )
       /* Invisible, not doing anything. */
       if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
          continue;
-      
+
       if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i], dt);
    }

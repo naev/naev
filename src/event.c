@@ -476,7 +476,7 @@ int events_load (void)
    char *buf;
    xmlNodePtr node;
    xmlDocPtr doc;
- 
+
    /* Load the data. */
    buf = ndata_read( EVENT_DATA, &bufsize );
    if (buf == NULL) {
@@ -524,7 +524,7 @@ int events_load (void)
    /* Shrink to minimum. */
    event_data = realloc(event_data, sizeof(EventData_t)*event_ndata);
 
-   /* Clean up. */                                                        
+   /* Clean up. */
    xmlFreeDoc(doc);
    free(buf);
 

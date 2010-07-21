@@ -567,7 +567,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
    mod = SDL_GetModState();
 
    switch (event->type) {
-      
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -999,7 +999,7 @@ static void sysedit_btnEditApply( unsigned int wid, char *wgt )
 {
    Planet *p;
    char *str, buf[PATH_MAX];
-  
+
    /* Comfort. */
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 

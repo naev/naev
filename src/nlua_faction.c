@@ -183,16 +183,16 @@ int lua_isfaction( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, FACTION_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
 /**
  * @brief __eq (equality) metamethod for factions.
- * 
+ *
  * You can use the '=' operator within Lua to compare factions with this.
  *
  * @usage if f == faction.get( "Dvaered" ) then

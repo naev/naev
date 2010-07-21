@@ -625,7 +625,7 @@ static int mission_compare( const void* arg1, const void* arg2 )
  *    @param faction Faction of the planet.
  *    @param planet Name of the planet.
  *    @param sysname Name of the current system.
- *    @param loc Location 
+ *    @param loc Location
  *    @return The stack of Missions created with n members.
  */
 Mission* missions_genList( int *n, int faction,
@@ -779,7 +779,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"planet",temp->avail.planet);
             xmlr_strd(cur,"system",temp->avail.system);
             if (xml_isNode(cur,"faction")) {
-               temp->avail.factions = realloc( temp->avail.factions, 
+               temp->avail.factions = realloc( temp->avail.factions,
                      sizeof(int) * ++temp->avail.nfactions );
                temp->avail.factions[temp->avail.nfactions-1] =
                      faction_get( xml_get(cur) );
@@ -1173,7 +1173,7 @@ static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 
          /* Set field. */
          lua_settable(L, -3);
-         
+
          /* cleanup */
          free(type);
          free(name);
@@ -1252,7 +1252,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
          /* OSD. */
          if (player_missions[i].osd > 0) {
             xmlw_startElem(writer,"osd");
-            
+
             /* Save attributes. */
             items = osd_getItems(player_missions[i].osd, &nitems);
             xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i].osd));
