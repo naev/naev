@@ -123,12 +123,12 @@ typedef struct Ship_ {
    int sound; /**< Sound motor uses. */
 
    /* outfits */
-   int outfit_nlow; /**< Number of low energy outfit slots. */
-   ShipOutfitSlot *outfit_low; /**< Outfit low energy slots. */
-   int outfit_nmedium; /**< Number of medium energy outfit slots. */
-   ShipOutfitSlot *outfit_medium; /**< Outfit medium energy slots. */
-   int outfit_nhigh; /**< Number of high energy outfit slots. */
-   ShipOutfitSlot *outfit_high; /**< Outfit high energy slots. */
+   int outfit_nstructure; /**< Number of structure outfit slots. */
+   ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
+   int outfit_nsystems; /**< Number of systems ooutfit slots. */
+   ShipOutfitSlot *outfit_systems; /**< Outfit systems slots. */
+   int outfit_nweapon; /**< Number of weapon outfit slots. */
+   ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */
 
    /* mounts */
    double mangle; /**< Mount angle to simplify mount calculations. */

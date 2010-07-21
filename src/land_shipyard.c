@@ -219,7 +219,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%.0f Teraflops\n"
-         "%d / %d / %d (High/Med/Low)\n"
+         "%d / %d / %d (Weap/Sys/Struct)\n"
          "%.0f Tons\n"
          "%.1f STU Average\n"
          "%.0f KN/Ton\n"
@@ -240,7 +240,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->crew,
          /* Weapons & Manoeuvrability */
          ship->cpu,
-         ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
+         ship->outfit_nweapon, ship->outfit_nsystems, ship->outfit_nstructure,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5. * (ship->stats.jump_delay/100.+1.), /**< @todo make this more portable. */
          ship->thrust / ship->mass,
@@ -489,17 +489,17 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    x = bx + 10.;
    w = bw - 10.;
 
-   /* High slots. */
+   /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "H", ship->outfit_high, ship->outfit_nhigh );
+   shipyard_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
 
-   /* Med slots. */
+   /* Systems slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "M", ship->outfit_medium, ship->outfit_nmedium );
+   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_systems, ship->outfit_nsystems );
 
-   /* Low slots. */
+   /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "L", ship->outfit_low, ship->outfit_nlow );
+   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
 }
 
 

@@ -3,7 +3,7 @@
 <!-- Short Range Weapons -->
  <outfit name="Laser Cannon">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>2</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
@@ -26,7 +26,7 @@
  </outfit>
  <outfit name="Laser Cannon MK2">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>3</mass>
    <price>15000</price>
@@ -51,7 +51,7 @@
  </outfit>
  <outfit name="Laser Turret">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>16</mass>
    <price>25000</price>
@@ -75,7 +75,7 @@
  </outfit>
  <outfit name="Laser Turret MK2">
  <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>18</mass>
    <price>45000</price>
@@ -100,7 +100,7 @@
  </outfit>
  <outfit name="Plasma Blaster">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>4</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
@@ -123,7 +123,7 @@
 </outfit>
  <outfit name="Plasma Blaster MK2">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>5</mass>
    <price>18000</price>
@@ -148,7 +148,7 @@
 </outfit>
  <outfit name="Neutron Disruptor">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>7</mass>
    <price>45000</price>
    <license>Heavy Weapon License</license>
@@ -174,7 +174,7 @@
 <!-- Medium Range Weapons -->
  <outfit name="Ion Cannon">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>6</mass>
    <price>20000</price>
@@ -199,7 +199,7 @@
  </outfit>
  <outfit name="Heavy Ion Turret">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>42</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
@@ -224,7 +224,7 @@
  </outfit>
  <outfit name="40mm Autocannon">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>15</mass>
    <price>25000</price>
@@ -249,7 +249,7 @@
 <!-- Long Range Weapons -->
  <outfit name="150mm Railgun">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Heavy Weapon License</license>
    <mass>20</mass>
    <price>55000</price>
@@ -275,7 +275,7 @@
  </outfit>
   <outfit name="150mm Railgun Turret">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>60</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
@@ -300,7 +300,7 @@
  </outfit>
  <outfit name="Ripper MK2">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>35000</price>
@@ -325,7 +325,7 @@
  </outfit>
  <outfit name="Base Ripper MK2">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>1</price>
@@ -351,7 +351,7 @@
 <!-- Beam Weapons -->
  <outfit name="Orion Beam">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>30</mass>
    <price>184000</price>
@@ -374,7 +374,7 @@
  </outfit>
  <outfit name="Ragnarok Beam">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Heavy Weapon License</license>
    <mass>140</mass>
    <price>745000</price>
@@ -399,7 +399,7 @@
 <!-- Missile Weapons -->
  <outfit name="Seeker Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>8</mass>
    <price>25000</price>
    <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
@@ -436,7 +436,7 @@
  </outfit>
  <outfit name="Headhunter Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>40000</price>
@@ -476,7 +476,7 @@
  </outfit>
  <outfit name="Banshee Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>25000</price>
@@ -514,7 +514,7 @@
  </outfit>
  <outfit name="Mace Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>19000</price>
@@ -551,7 +551,7 @@
  </outfit>
  <outfit name="Caesar IV Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
@@ -590,7 +590,7 @@
  </outfit>
  <outfit name="Imperator Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Heavy Weapon License</license>
    <mass>34</mass>
    <price>160000</price>
@@ -629,7 +629,7 @@
  </outfit>
  <outfit name="EMP Grenade Launcher">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>17</mass>
    <price>31000</price>
    <gfx_store>empgrenadelauncher</gfx_store>
@@ -666,7 +666,7 @@
  <outfit name="Battery">
   <general>
    <typename>Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>6</mass>
    <price>40000</price>
    <description>A large battery unit designed to hold 200 MJ of energy. Small enough to mount on many light vessels.</description>
@@ -680,7 +680,7 @@
   <outfit name="Battery II">
   <general>
    <typename>Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>30</mass>
    <price>120000</price>
    <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
@@ -694,7 +694,7 @@
   <outfit name="Battery III">
   <general>
    <typename>Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>150</mass>
    <price>360000</price>
    <description>A massive battery unit designed to hold 800 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
@@ -708,7 +708,7 @@
  <outfit name="Solar Panel">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>3</mass>
    <price>25000</price>
    <description>A large panel that generates energy by collecting light and converting it into electricity. This will allow your ship to regenerate its energy supplies more quickly.</description>
@@ -721,7 +721,7 @@
  <outfit name="Reactor Class I">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>10</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
@@ -736,7 +736,7 @@
  <outfit name="Reactor Class II">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>30</mass>
    <price>530000</price>
    <gfx_store>reactor_ii</gfx_store>
@@ -751,7 +751,7 @@
  <outfit name="Reactor Class III">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>90</mass>
    <price>970000</price>
    <gfx_store>reactor_iii</gfx_store>
@@ -767,7 +767,7 @@
  <outfit name="Shield Capacitor">
   <general>
    <typename>Shield Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>9</mass>
    <price>60000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
@@ -780,7 +780,7 @@
   <outfit name="Shield Capacitor II">
   <general>
    <typename>Shield Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>18</mass>
    <price>110000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
@@ -793,7 +793,7 @@
  <outfit name="Shield Capacitor III">
   <general>
    <typename>Shield Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>36</mass>
    <price>220000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
@@ -806,7 +806,7 @@
  <outfit name="Shield Capacitor IV">
   <general>
    <typename>Shield Power Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>72</mass>
    <price>400000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
@@ -819,7 +819,7 @@
  <outfit name="Shield Booster">
   <general>
    <typename>Shield Energy Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>5</mass>
    <price>145000</price>
    <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
@@ -835,7 +835,7 @@
  <outfit name="Plasteel Plating">
   <general>
    <typename>Armour Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass />
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
@@ -849,7 +849,7 @@
  <outfit name="Nanobond Plating">
   <general>
    <typename>Armour Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass />
    <price>365000</price>
    <gfx_store>nanobond</gfx_store>
@@ -863,7 +863,7 @@
  <outfit name="Biometal Armour">
   <general>
    <typename>Armour Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass />
    <price>1120000</price>
    <gfx_store>biometal</gfx_store>
@@ -878,7 +878,7 @@
  <outfit name="Droid Repair Crew">
   <general>
    <typename>Armour Repair Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>3</mass>
    <price>430000</price>
    <gfx_store>droid</gfx_store>
@@ -894,7 +894,7 @@
  <outfit name="Engine Reroute">
   <general>
    <typename>Manoevrability Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>0</mass>
    <price>125000</price>
    <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
@@ -910,7 +910,7 @@
  <outfit name="Improved Stabilizer">
   <general>
    <typename>Manoevrability Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>0</mass>
    <price>135000</price>
    <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
@@ -927,7 +927,7 @@
  <outfit name="Steering Thrusters">
   <general>
    <typename>Manoevrability Modifier</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>0</mass>
    <price>130000</price>
    <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
@@ -942,7 +942,7 @@
  </outfit>
  <outfit name="Generic Afterburner">
   <general>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>6</mass>
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
@@ -959,7 +959,7 @@
  </outfit>
  <outfit name="Hellburner">
   <general>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>10</mass>
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
@@ -977,7 +977,7 @@
   <outfit name="Auxiliary Processing Unit I">
   <general>
    <typename>CPU Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <max>1</max>
    <mass>7</mass>
    <price>80000</price>
@@ -992,7 +992,7 @@
  <outfit name="Auxiliary Processing Unit II">
   <general>
    <typename>CPU Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <max>1</max>
    <mass>28</mass>
    <price>170000</price>
@@ -1007,7 +1007,7 @@
   <outfit name="Auxiliary Processing Unit III">
   <general>
    <typename>CPU Modifier</typename>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <max>1</max>
    <mass>112</mass>
    <price>360000</price>
@@ -1023,7 +1023,7 @@
  <outfit name="Fuel Pod">
   <general>
    <typename>Fuel Expansion</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>5</mass>
    <price>15000</price>
    <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by two jumps. Without these, long-range interstellar trade would slow to a crawl.</description>
@@ -1036,7 +1036,7 @@
  <outfit name="Cargo Pod">
   <general>
    <typename>Cargo Expansion</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>3</mass>
    <price>35000</price>
    <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
@@ -1049,7 +1049,7 @@
  <outfit name="Targeting Array">
   <general>
    <typename>Weapon Modifier (Turret)</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>15</mass>
    <price>125000</price>
    <description>An improved targeting array allows your turrets to more quickly acquire targets, and minimizes accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
@@ -1063,7 +1063,7 @@
  <outfit name="Forward Shock Absorbers">
   <general>
    <typename>Weapon Modifier (Forward)</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>1</mass>
    <price>35000</price>
    <description>These shock absorbers are attached to the forward mounts, isolating them from the hull and providing increased accuracy.</description>
@@ -1076,7 +1076,7 @@
  <outfit name="Power Regulation Override">
   <general>
    <typename>Weapon Modifier (Forward)</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>0</mass>
    <price>55000</price>
    <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in decreased accuracy.</description>
@@ -1091,7 +1091,7 @@
  <outfit name="Improved Power Regulator">
   <general>
    <typename>Weapon Modfier (Turret)</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>3</mass>
    <price>130000</price>
    <gfx_store>efficiency_turret</gfx_store>
@@ -1105,7 +1105,7 @@
  <outfit name="Improved Refrigeration Cycle">
   <general>
    <typename>Weapon Modfier (Turret)</typename>
-   <slot>low</slot>
+   <slot>structure</slot>
    <mass>5</mass>
    <price>90000</price>
    <description>By adding an auxiliary coolant reservoir, the ship can keep is able to dissipate heat more quickly, allowing it to exceed standard firing rates. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage. Only the turrets are affected by this modification.</description>
@@ -1141,7 +1141,7 @@
  </outfit>
  <outfit name="Civilian Jammer">
   <general>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>2</mass>
    <price>40000</price>
    <description>This jammer allows you to interfere with the targeting systems of missiles headed toward you, yielding an unpredictable change in trajectory likely to miss your ship. Though it is widely used, many have derided the civilian jammer for its unreliable nature.</description>
@@ -1156,7 +1156,7 @@
  </outfit>
  <outfit name="Milspec Jammer">
   <general>
-   <slot>medium</slot>
+   <slot>systems</slot>
    <mass>3</mass>
    <price>250000</price>
    <description>This jammer follows strict military specifications, allowing it to deflect a greater amount of missiles at longer range than the civilian counterpart. With increased functionality, it also consumes more power than the civilian variant.</description>
@@ -1172,7 +1172,7 @@
 <!-- Escort Outfits -->
  <outfit name="Lancelot Fighter Bay">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Light Combat Vessel License</license>
    <mass>900</mass>
    <price>830000</price>
@@ -1200,7 +1200,7 @@
  </outfit>
  <outfit name="Drone Fighter Bay">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <license>Light Combat Vessel License</license>
    <mass>600</mass>
    <price>1200000</price>

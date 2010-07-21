@@ -31,12 +31,12 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="7"   y="0" h="1" />
-   <high x="-3"  y="0" h="2" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="7"   y="0" h="1" />
+   <weapon x="-3"  y="0" h="2" />
+   <systems/>
+   <systems/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Hyena">
@@ -69,11 +69,11 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="-3" />
-   <high x="15" y="0" h="-3" />
-   <high x="0"  y="0" h="0" />
-   <medium/>
-   <low/>
+   <weapon x="15" y="0" h="-3" />
+   <weapon x="15" y="0" h="-3" />
+   <weapon x="0"  y="0" h="0" />
+   <systems/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Schroedinger">
@@ -106,12 +106,12 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="9" y="0" h="-2" />
-   <medium>standard</medium>
-   <medium/>
-   <medium/>
-   <medium/>
-   <low/>
+   <weapon x="9" y="0" h="-2" />
+   <systems>medium</systems>
+   <systems/>
+   <systems/>
+   <systems/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Gawain">
@@ -144,13 +144,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="-2" />
-   <high x="-5" y="0" h="1" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="-2" />
+   <weapon x="-5" y="0" h="1" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Drone">
@@ -183,11 +183,11 @@
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
-   <high x="5" y="0" h="-5" />
-   <high x="5" y="0" h="-5" />
-   <high x="5" y="0" h="-5" />
-   <medium/>
-   <low/>
+   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5" />
+   <systems/>
+   <structure/>
   </slots>
  </ship>
  <!-- Cargo Haulers -->
@@ -221,14 +221,14 @@
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>
-   <high x="11" y="0" h="-7" />
-   <high x="-5" y="0" h="3" />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="11" y="0" h="-7" />
+   <weapon x="-5" y="0" h="3" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Quicksilver">
@@ -261,14 +261,14 @@
    <cap_cargo>45</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="5" />
-   <high x="-10" y="-3" h="0" />
-   <high x="-10" y="3" h="0" />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0" h="5" />
+   <weapon x="-10" y="-3" h="0" />
+   <weapon x="-10" y="3" h="0" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
   </slots>
   <stats>
    <jump_delay>-25</jump_delay>
@@ -305,17 +305,17 @@
    <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="-3" h="4" >heavy</high>
-   <high x="25"  y="3" h="4" >heavy</high>
-   <high x="-15" y="-3" h="4" />
-   <high x="-15"  y="3" h="4" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="25"  y="-3" h="4" >heavy</weapon>
+   <weapon x="25"  y="3" h="4" >heavy</weapon>
+   <weapon x="-15" y="-3" h="4" />
+   <weapon x="-15"  y="3" h="4" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Rhino">
@@ -348,17 +348,17 @@
    <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="-3" h="4" >heavy</high>
-   <high x="25"  y="3" h="4" >heavy</high>
-   <high x="-15" y="-3" h="4" />
-   <high x="-15"  y="3" h="4" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="25"  y="-3" h="4" >heavy</weapon>
+   <weapon x="25"  y="3" h="4" >heavy</weapon>
+   <weapon x="-15" y="-3" h="4" />
+   <weapon x="-15"  y="3" h="4" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Mule">
@@ -392,18 +392,18 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="0" h="0" >heavy</high>
-   <high x="-15" y="0" h="4" />
-   <high x="15"  y="0" h="4" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="25"  y="0" h="0" >heavy</weapon>
+   <weapon x="-15" y="0" h="4" />
+   <weapon x="15"  y="0" h="4" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Fighters -->
@@ -437,13 +437,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="10" y="0" h="0" />
-   <high x="0" y="-4" h="-3" />
-   <high x="0" y="4" h="-3" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="10" y="0" h="0" />
+   <weapon x="0" y="-4" h="-3" />
+   <weapon x="0" y="4" h="-3" />
+   <systems/>
+   <systems/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Sirius Fidelity">
@@ -476,14 +476,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="10" y="-2" h="0" />
-   <high x="10" y="2" h="0" />
-   <high x="0" y="-4" h="-3" />
-   <high x="0" y="4" h="-3" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="10" y="-2" h="0" />
+   <weapon x="10" y="2" h="0" />
+   <weapon x="0" y="-4" h="-3" />
+   <weapon x="0" y="4" h="-3" />
+   <systems/>
+   <systems/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Shark">
@@ -517,13 +517,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="3" y="0" h="2" />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Shark">
@@ -556,14 +556,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="3" y="0" h="2" />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" />
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Shark">
@@ -597,13 +597,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="3" y="0" h="2" />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Lancelot">
@@ -637,15 +637,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" >standard</high>
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="-3" y="0" h="2" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" >medium</weapon>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="-3" y="0" h="2" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Lancelot">
@@ -679,15 +679,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" >standard</high>
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="-3" y="0" h="2" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" >medium</weapon>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="-3" y="0" h="2" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Vendetta">
@@ -721,14 +721,14 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Vendetta">
@@ -761,14 +761,14 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Vendetta">
@@ -801,14 +801,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Ancestor">
@@ -842,13 +842,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <systems />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Ancestor">
@@ -882,13 +882,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <systems />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Ancestor">
@@ -921,13 +921,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <systems />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <!-- Corvettes -->
@@ -962,17 +962,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="1"  h="2" />
-   <high x="15" y="-1"  h="2" />
-   <high x="-9" y="-10" h="2" />
-   <high x="-9" y="10"  h="2" />
-   <high x="-9"  y="-3"  h="2" >light</high>
-   <high x="-9"  y="3" h="2" >light</high>
-   <medium />
-   <medium />
-   <medium>light</medium>
-   <low />
-   <low />
+   <weapon x="15" y="1"  h="2" />
+   <weapon x="15" y="-1"  h="2" />
+   <weapon x="-9" y="-10" h="2" />
+   <weapon x="-9" y="10"  h="2" />
+   <weapon x="-9"  y="-3"  h="2" >light</weapon>
+   <weapon x="-9"  y="3" h="2" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Admonisher">
@@ -1006,17 +1006,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" >light</high>
-   <high x="-9" y="5"  h="-9" >light</high>
-   <medium />
-   <medium />
-   <medium>light</medium>
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Admonisher">
@@ -1049,17 +1049,17 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" >light</high>
-   <high x="-9" y="5"  h="-9" >light</high>
-   <medium />
-   <medium />
-   <medium>light</medium>
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Admonisher">
@@ -1093,17 +1093,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" >light</high>
-   <high x="-9" y="5"  h="-9" >light</high>
-   <medium />
-   <medium />
-   <medium>light</medium>
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Vigilance">
@@ -1137,19 +1137,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" >heavy</high>
-	<high x="28"  y="3"   h="-0" >heavy</high>
-   <high x="10"   y="-3"  h="2" />
-   <high x="10"   y="3"   h="2" />
-   <high x="-22" y="-8" h="-0" />
-   <high x="-22" y="8"  h="-0" />
-   <medium>heavy</medium>
-   <medium>heavy</medium>
-   <medium />
-   <low>heavy</low>
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
+	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
+   <weapon x="10"   y="-3"  h="2" />
+   <weapon x="10"   y="3"   h="2" />
+   <weapon x="-22" y="-8" h="-0" />
+   <weapon x="-22" y="8"  h="-0" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Vigilance">
@@ -1183,19 +1183,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" >heavy</high>
-	<high x="28"  y="3"   h="-0" >heavy</high>
-   <high x="10"   y="-3"  h="2" />
-   <high x="10"   y="3"   h="2" />
-   <high x="-22" y="-8" h="-0" />
-   <high x="-22" y="8"  h="-0" />
-   <medium>heavy</medium>
-   <medium>heavy</medium>
-   <medium />
-   <low>heavy</low>
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
+	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
+   <weapon x="10"   y="-3"  h="2" />
+   <weapon x="10"   y="3"   h="2" />
+   <weapon x="-22" y="-8" h="-0" />
+   <weapon x="-22" y="8"  h="-0" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Sirius Divinity">
@@ -1229,16 +1229,16 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="0" >heavy</high>
-   <high x="10"   y="0"  h="0" />
-   <high x="-10" y="0" h="0" />
-   <high x="-20" y="0"  h="0" />
-   <medium>heavy</medium>
-   <medium />
-   <medium />
-   <low>heavy</low>
-   <low />
-   <low />
+   <weapon x="20"  y="0"   h="0" >heavy</weapon>
+   <weapon x="10"   y="0"  h="0" />
+   <weapon x="-10" y="0" h="0" />
+   <weapon x="-20" y="0"  h="0" />
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Proteron Kahan">
@@ -1272,18 +1272,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="0"   h="5" >heavy</high>
-	<high x="18"  y="0"   h="5" >heavy</high>
-   <high x="-30" y="-8" h="3" />
-   <high x="-30" y="8"  h="3" />
-   <medium>heavy</medium>
-   <medium>heavy</medium>
-   <medium />
-   <medium />
-   <medium />
-   <low>heavy</low>
-   <low /> 
-   <low />
+   <weapon x="28"  y="0"   h="5" >heavy</weapon>
+	<weapon x="18"  y="0"   h="5" >heavy</weapon>
+   <weapon x="-30" y="-8" h="3" />
+   <weapon x="-30" y="8"  h="3" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pacifier">
@@ -1317,18 +1317,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-15" y="-10" h="-10">heavy</high>
-   <high x="-15" y="10"  h="-10">heavy</high>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <medium>heavy</medium>
-   <medium>heavy</medium>
-   <medium />
-   <medium />
-   <low>heavy</low>
-   <low />
-   <low />
+   <weapon x="-15" y="-10" h="-10">heavy</weapon>
+   <weapon x="-15" y="10"  h="-10">heavy</weapon>
+   <weapon x="20"  y="0"   h="-10" />
+   <weapon x="4"   y="-5"  h="-10" />
+   <weapon x="4"   y="5"   h="-10" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Pacifier">
@@ -1362,18 +1362,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-15" y="-10" h="-10">heavy</high>
-   <high x="-15" y="10"  h="-10">heavy</high>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <medium>heavy</medium>
-   <medium>heavy</medium>
-   <medium />
-   <medium />
-   <low>heavy</low>
-   <low />
-   <low />
+   <weapon x="-15" y="-10" h="-10">heavy</weapon>
+   <weapon x="-15" y="10"  h="-10">heavy</weapon>
+   <weapon x="20"  y="0"   h="-10" />
+   <weapon x="4"   y="-5"  h="-10" />
+   <weapon x="4"   y="5"   h="-10" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Cruisers -->
@@ -1408,21 +1408,21 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <high x="-24" y="-8"  h="8" >standard</high>
-   <high x="-24" y="8"   h="8" >standard</high>
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium>standard</medium>
-   <low />
-   <low />
-   <low />
-   <low>standard</low>
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <weapon x="-24" y="-8"  h="8" >medium</weapon>
+   <weapon x="-24" y="8"   h="8" >medium</weapon>
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems>medium</systems>
+   <structure />
+   <structure />
+   <structure />
+   <structure>medium</structure>
   </slots>
  </ship>
  <ship name="Pirate Kestrel">
@@ -1455,21 +1455,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <high x="-24" y="-8"  h="8" >standard</high>
-   <high x="-24" y="8"   h="8" >standard</high>
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium>standard</medium>
-   <low />
-   <low />
-   <low />
-   <low>standard</low>
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <weapon x="-24" y="-8"  h="8" >medium</weapon>
+   <weapon x="-24" y="8"   h="8" >medium</weapon>
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems>medium</systems>
+   <structure />
+   <structure />
+   <structure />
+   <structure>medium</structure>
   </slots>
  </ship>
  <ship name="Proteron Archimedes">
@@ -1503,24 +1503,24 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="0" />
-   <high x="25"  y="-4"  h="0" />
-   <high x="25"  y="4"  h="0" />
-   <high x="0"  y="-6" h="2" />
-   <high x="0"  y="6"  h="2" />
-   <high x="-25" y="-8"  h="3" />
-   <high x="-25" y="8"  h="3" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="0" />
+   <weapon x="25"  y="-4"  h="0" />
+   <weapon x="25"  y="4"  h="0" />
+   <weapon x="0"  y="-6" h="2" />
+   <weapon x="0"  y="6"  h="2" />
+   <weapon x="-25" y="-8"  h="3" />
+   <weapon x="-25" y="8"  h="3" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Hawking">
@@ -1554,23 +1554,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Hawking">
@@ -1604,23 +1604,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Sirius Dogma">
@@ -1654,22 +1654,22 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="0" h="3" />
-   <high x="0"   y="0"  h="4" />
-   <high x="-15" y="0"  h="6" />
-   <high x="-33" y="0"  h="6" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="0" h="3" />
+   <weapon x="0"   y="0"  h="4" />
+   <weapon x="-15" y="0"  h="6" />
+   <weapon x="-33" y="0"  h="6" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Goddard">
@@ -1703,24 +1703,24 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2" />
-   <high x="-10" y="13"  h="2" />
-   <high x="-15" y="-25" h="3" />
-   <high x="-15" y="25"  h="3" />
-   <high x="16"  y="0" h="3" />
-   <high x="0"   y="0" h="5" />
-   <high x="-20" y="0" h="5" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-10" y="-13" h="2" />
+   <weapon x="-10" y="13"  h="2" />
+   <weapon x="-15" y="-25" h="3" />
+   <weapon x="-15" y="25"  h="3" />
+   <weapon x="16"  y="0" h="3" />
+   <weapon x="0"   y="0" h="5" />
+   <weapon x="-20" y="0" h="5" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Goddard">
@@ -1754,24 +1754,24 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2" />
-   <high x="-10" y="13"  h="2" />
-   <high x="-15" y="-25" h="3" />
-   <high x="-15" y="25"  h="3" />
-   <high x="16"  y="0" h="3" />
-   <high x="0"   y="0" h="5" />
-   <high x="-20" y="0" h="5" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-10" y="-13" h="2" />
+   <weapon x="-10" y="13"  h="2" />
+   <weapon x="-15" y="-25" h="3" />
+   <weapon x="-15" y="25"  h="3" />
+   <weapon x="16"  y="0" h="3" />
+   <weapon x="0"   y="0" h="5" />
+   <weapon x="-20" y="0" h="5" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Peacemaker">
@@ -1805,26 +1805,26 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->
@@ -1858,26 +1858,26 @@
    <cap_cargo>100</cap_cargo>
   </characteristics>
   <slots>
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
 </Ships>

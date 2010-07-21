@@ -659,65 +659,65 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* First pass, get number of mounts. */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"low"))
-               temp->outfit_nlow++;
-            else if (xml_isNode(cur,"medium"))
-               temp->outfit_nmedium++;
-            else if (xml_isNode(cur,"high"))
-               temp->outfit_nhigh++;
+            if (xml_isNode(cur,"structure"))
+               temp->outfit_nstructure++;
+            else if (xml_isNode(cur,"systems"))
+               temp->outfit_nsystems++;
+            else if (xml_isNode(cur,"weapon"))
+               temp->outfit_nweapon++;
          } while (xml_nextNode(cur));
          /* Allocate the space. */
-         temp->outfit_low     = calloc( temp->outfit_nlow, sizeof(ShipOutfitSlot) );
-         temp->outfit_medium  = calloc( temp->outfit_nmedium, sizeof(ShipOutfitSlot) );
-         temp->outfit_high    = calloc( temp->outfit_nhigh, sizeof(ShipOutfitSlot) );
+         temp->outfit_structure     = calloc( temp->outfit_nstructure, sizeof(ShipOutfitSlot) );
+         temp->outfit_systems  = calloc( temp->outfit_nsystems, sizeof(ShipOutfitSlot) );
+         temp->outfit_weapon    = calloc( temp->outfit_nweapon, sizeof(ShipOutfitSlot) );
          /* Second pass, initialize the mounts. */
          l = m = h = 0;
          cur = node->children;
          do {
-            if (xml_isNode(cur,"low")) {
-               temp->outfit_low[l].slot.type = OUTFIT_SLOT_LOW;
-               temp->outfit_low[l].slot.size = outfit_toSlotSize( xml_get(cur) );
-               /*if (temp->outfit_low[l].size == OUTFIT_SLOT_SIZE_NA)
+            if (xml_isNode(cur,"structure")) {
+               temp->outfit_structure[l].slot.type = OUTFIT_SLOT_STRUCTURE;
+               temp->outfit_structure[l].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_structure[l].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                l++;
             }
-            if (xml_isNode(cur,"medium")) {
-               temp->outfit_medium[m].slot.type = OUTFIT_SLOT_MEDIUM;
-               temp->outfit_medium[m].slot.size = outfit_toSlotSize( xml_get(cur) );
-               /*if (temp->outfit_medium[m].size == OUTFIT_SLOT_SIZE_NA)
+            if (xml_isNode(cur,"systems")) {
+               temp->outfit_systems[m].slot.type = OUTFIT_SLOT_SYSTEMS;
+               temp->outfit_systems[m].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_systems[m].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                m++;
             }
-            if (xml_isNode(cur,"high")) {
-               temp->outfit_high[h].slot.type = OUTFIT_SLOT_HIGH;
-               temp->outfit_high[h].slot.size = outfit_toSlotSize( xml_get(cur) );
-               /*if (temp->outfit_high[h].size == OUTFIT_SLOT_SIZE_NA)
+            if (xml_isNode(cur,"weapon")) {
+               temp->outfit_weapon[h].slot.type = OUTFIT_SLOT_WEAPON;
+               temp->outfit_weapon[h].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_weapon[h].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                /* Get mount point. */
                xmlr_attr(cur,"x",stmp);
                if (stmp!=NULL) {
-                  temp->outfit_high[h].mount.x = atof(stmp);
+                  temp->outfit_weapon[h].mount.x = atof(stmp);
                   free(stmp);
                }
                else
-                  WARN("Ship '%s' missing 'x' element of 'high' slot.",temp->name);
+                  WARN("Ship '%s' missing 'x' element of 'weapon' slot.",temp->name);
                xmlr_attr(cur,"y",stmp);
                if (stmp!=NULL) {
-                  temp->outfit_high[h].mount.y = atof(stmp);
+                  temp->outfit_weapon[h].mount.y = atof(stmp);
                   /* Since we measure in pixels, we have to modify it so it
                    *  doesn't get corrected by the ortho correction. */
-                  temp->outfit_high[h].mount.y *= M_SQRT2;
+                  temp->outfit_weapon[h].mount.y *= M_SQRT2;
                   free(stmp);
                }
                else
-                  WARN("Ship '%s' missing 'y' element of 'high' slot.",temp->name);
+                  WARN("Ship '%s' missing 'y' element of 'weapon' slot.",temp->name);
                xmlr_attr(cur,"h",stmp);
                if (stmp!=NULL) {
-                  temp->outfit_high[h].mount.h = atof(stmp);
+                  temp->outfit_weapon[h].mount.h = atof(stmp);
                   free(stmp);
                }
                else
-                  WARN("Ship '%s' missing 'h' element of 'high' slot.",temp->name);
+                  WARN("Ship '%s' missing 'h' element of 'weapon' slot.",temp->name);
                /* Increment h. */
                h++;
             }
@@ -758,18 +758,18 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          (temp->class == SHIP_CLASS_CORVETTE) ||
          (temp->class == SHIP_CLASS_HEAVY_DRONE) ||
          (temp->class == SHIP_CLASS_ARMOURED_TRANSPORT))
-      base_size = OUTFIT_SLOT_SIZE_STANDARD;
+      base_size = OUTFIT_SLOT_SIZE_MEDIUM;
    else
       base_size = OUTFIT_SLOT_SIZE_LIGHT;
-   for (i=0; i<temp->outfit_nhigh; i++)
-      if (temp->outfit_high[i].slot.size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_high[i].slot.size = base_size;
-   for (i=0; i<temp->outfit_nmedium; i++)
-      if (temp->outfit_medium[i].slot.size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_medium[i].slot.size = base_size;
-   for (i=0; i<temp->outfit_nlow; i++)
-      if (temp->outfit_low[i].slot.size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_low[i].slot.size = base_size;
+   for (i=0; i<temp->outfit_nweapon; i++)
+      if (temp->outfit_weapon[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_weapon[i].slot.size = base_size;
+   for (i=0; i<temp->outfit_nsystems; i++)
+      if (temp->outfit_systems[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_systems[i].slot.size = base_size;
+   for (i=0; i<temp->outfit_nstructure; i++)
+      if (temp->outfit_structure[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_structure[i].slot.size = base_size;
 
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)
@@ -869,12 +869,12 @@ void ships_free (void)
          free(s->desc_stats);
 
       /* Free outfits. */
-      if (s->outfit_low != NULL)
-         free(s->outfit_low);
-      if (s->outfit_medium != NULL)
-         free(s->outfit_medium);
-      if (s->outfit_high != NULL)
-         free(s->outfit_high);
+      if (s->outfit_structure != NULL)
+         free(s->outfit_structure);
+      if (s->outfit_systems != NULL)
+         free(s->outfit_systems);
+      if (s->outfit_weapon != NULL)
+         free(s->outfit_weapon);
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
@@ -917,9 +917,9 @@ void ship_view( unsigned int unused, char* shipname )
          "CPU:\n"
          "Mass:\n"
          "\n"
-         "High slots:\n"
-         "Medium slots:\n"
-         "Low slots:\n"
+         "Weapon slots:\n"
+         "Systems slots:\n"
+         "Structure slots:\n"
          "\n"
          "Thrust:\n"
          "Max Speed:\n"
@@ -946,9 +946,9 @@ void ship_view( unsigned int unused, char* shipname )
          "%.0f TFlops\n" /* CPU */
          "%.0f Tons\n" /* Mass */
          "\n"
-         "%d\n" /* high slots */
-         "%d\n" /* medium slots */
-         "%d\n" /* low slots */
+         "%d\n" /* Weapon slots */
+         "%d\n" /* Systems slots */
+         "%d\n" /* Structure slots */
          "\n"
          "%.0f MN/ton\n" /* Thrust */
          "%.0f M/s\n" /* Speed */
@@ -962,7 +962,7 @@ void ship_view( unsigned int unused, char* shipname )
          "%d Units\n" /* Fuel */
          , s->name, ship_class(s), s->fabricator,
          s->crew, s->cpu, s->mass,
-         s->outfit_nhigh, s->outfit_nmedium, s->outfit_nlow,
+         s->outfit_nweapon, s->outfit_nsystems, s->outfit_nstructure,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
          s->energy, s->energy_regen,

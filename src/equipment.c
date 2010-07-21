@@ -107,17 +107,17 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 
    /* Figure out which slot this stuff fits into */
    switch (o->slot.type) {
-      case OUTFIT_SLOT_LOW:
-         outfit_n = eq_wgt.selected->outfit_nlow;
-         slots    = eq_wgt.selected->outfit_low;
+      case OUTFIT_SLOT_STRUCTURE:
+         outfit_n = eq_wgt.selected->outfit_nstructure;
+         slots    = eq_wgt.selected->outfit_structure;
          break;
-      case OUTFIT_SLOT_MEDIUM:
-         outfit_n = eq_wgt.selected->outfit_nmedium;
-         slots    = eq_wgt.selected->outfit_medium;
+      case OUTFIT_SLOT_SYSTEMS:
+         outfit_n = eq_wgt.selected->outfit_nsystems;
+         slots    = eq_wgt.selected->outfit_systems;
          break;
-      case OUTFIT_SLOT_HIGH:
-         outfit_n = eq_wgt.selected->outfit_nhigh;
-         slots    = eq_wgt.selected->outfit_high;
+      case OUTFIT_SLOT_WEAPON:
+         outfit_n = eq_wgt.selected->outfit_nweapon;
+         slots    = eq_wgt.selected->outfit_weapon;
          break;
       default:
          return;
@@ -378,7 +378,7 @@ static void equipment_calculateSlots( Pilot *p, double bw, double bh,
    int tm;
 
    /* Calculate size. */
-   tm = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
+   tm = MAX( MAX( p->outfit_nweapon, p->outfit_nsystems ), p->outfit_nstructure );
    th = bh / (double)tm;
    tw = bw / 3.;
    s  = MIN( th, tw ) - 20.;
@@ -418,27 +418,27 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    tw = bw / (double)n;
    th = bh / (double)m;
 
-   /* Draw high outfits. */
+   /* Draw weapon outfits. */
    x  = bx + (tw-w)/2;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nhigh, p->outfit_high, "High", 
+         p->outfit_nweapon, p->outfit_weapon, "Weapon",
          selected, wgt->outfit, wgt->selected );
 
-   /* Draw medium outfits. */
-   selected -= p->outfit_nhigh;
+   /* Draw systems outfits. */
+   selected -= p->outfit_nweapon;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nmedium, p->outfit_medium, "Medium",
+         p->outfit_nsystems, p->outfit_systems, "Systems",
          selected, wgt->outfit, wgt->selected );
 
-   /* Draw low outfits. */
-   selected -= p->outfit_nmedium;
+   /* Draw structure outfits. */
+   selected -= p->outfit_nsystems;
    x += tw;
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nlow, p->outfit_low, "Low",
+         p->outfit_nstructure, p->outfit_structure, "Structure",
          selected, wgt->outfit, wgt->selected );
 }
 /**
@@ -614,21 +614,21 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       /* Get selected. */
       mover    = wgt->mouseover;
 
-      /* Render high outfits. */
+      /* Render weapon outfits. */
       x  = bx + (tw-w)/2;
       y  = by + bh - (h+20) + (h+20-h)/2;
       equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nhigh, p->outfit_high, mover, wgt );
-      mover    -= p->outfit_nhigh;
+            p->outfit_nweapon, p->outfit_weapon, mover, wgt );
+      mover    -= p->outfit_nweapon;
       x += tw;
       y  = by + bh - (h+20) + (h+20-h)/2;
       equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nmedium, p->outfit_medium, mover, wgt );
-      mover    -= p->outfit_nmedium;
+            p->outfit_nsystems, p->outfit_systems, mover, wgt );
+      mover    -= p->outfit_nsystems;
       x += tw;
       y  = by + bh - (h+20) + (h+20-h)/2;
       equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nlow, p->outfit_low, mover, wgt );
+            p->outfit_nstructure, p->outfit_structure, mover, wgt );
    }
 
    /* Mouse must be over something. */
@@ -637,15 +637,15 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Get the slot. */
    p = wgt->selected;
-   if (wgt->mouseover < p->outfit_nhigh) {
-      slot = &p->outfit_high[wgt->mouseover];
+   if (wgt->mouseover < p->outfit_nweapon) {
+      slot = &p->outfit_weapon[wgt->mouseover];
    }
-   else if (wgt->mouseover < p->outfit_nhigh + p->outfit_nmedium) {
-      slot = &p->outfit_medium[ wgt->mouseover - p->outfit_nhigh ];
+   else if (wgt->mouseover < p->outfit_nweapon + p->outfit_nsystems) {
+      slot = &p->outfit_systems[ wgt->mouseover - p->outfit_nweapon ];
    }
    else {
-      slot = &p->outfit_low[ wgt->mouseover -
-         p->outfit_nhigh - p->outfit_nmedium ];
+      slot = &p->outfit_structure[ wgt->mouseover -
+         p->outfit_nweapon - p->outfit_nsystems ];
    }
 
    /* For comfortability. */
@@ -716,10 +716,10 @@ static void equipment_renderShip( double bx, double by,
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
          px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
-   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < p->outfit_nhigh)) {
+   if ((eq_wgt.slot >= 0) && (eq_wgt.slot < p->outfit_nweapon)) {
       p->tsx = sx;
       p->tsy = sy;
-      pilot_getMount( p, &p->outfit_high[eq_wgt.slot], &v );
+      pilot_getMount( p, &p->outfit_weapon[eq_wgt.slot], &v );
       px += pw/2;
       py += ph/2;
       v.x *= pw / p->ship->gfx_space->sw;
@@ -796,19 +796,19 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    tw = bw / (double)n;
    th = bh / (double)m;
 
-   /* Render high outfits. */
+   /* Render weapon outfits. */
    selected = 0;
    x  = (tw-w)/2;
    y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
+      ret = equipment_mouseColumn( y, h, p->outfit_nweapon, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_high[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_weapon[ret] );
          }
          else {
             wgt->mouseover  = selected + ret;
@@ -818,17 +818,17 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          return;
       }
    }
-   selected += p->outfit_nhigh;
+   selected += p->outfit_nweapon;
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nmedium, my );
+      ret = equipment_mouseColumn( y, h, p->outfit_nsystems, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_medium[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_systems[ret] );
          }
          else {
             wgt->mouseover = selected + ret;
@@ -838,17 +838,17 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          return;
       }
    }
-   selected += p->outfit_nmedium;
+   selected += p->outfit_nsystems;
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nlow, my );
+      ret = equipment_mouseColumn( y, h, p->outfit_nstructure, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                wgt->slot = selected + ret;
             else if ((event->button.button == SDL_BUTTON_RIGHT) &&
                   wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_low[ret] );
+               equipment_swapSlot( wid, p, &p->outfit_structure[ret] );
          }
          else {
             wgt->mouseover = selected + ret;

@@ -2800,27 +2800,27 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_elem(writer,"fuel","%f",ship->fuel);
 
    /* save the outfits */
-   xmlw_startElem(writer,"outfits_low");
-   for (i=0; i<ship->outfit_nlow; i++) {
-      if (ship->outfit_low[i].outfit==NULL)
+   xmlw_startElem(writer,"outfits_structure");
+   for (i=0; i<ship->outfit_nstructure; i++) {
+      if (ship->outfit_structure[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_low[i], i );
+      player_saveShipSlot( writer, &ship->outfit_structure[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_low" */
-   xmlw_startElem(writer,"outfits_medium");
-   for (i=0; i<ship->outfit_nmedium; i++) {
-      if (ship->outfit_medium[i].outfit==NULL)
+   xmlw_endElem(writer); /* "outfits_structure" */
+   xmlw_startElem(writer,"outfits_systems");
+   for (i=0; i<ship->outfit_nsystems; i++) {
+      if (ship->outfit_systems[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_medium[i], i );
+      player_saveShipSlot( writer, &ship->outfit_systems[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_medium" */
-   xmlw_startElem(writer,"outfits_high");
-   for (i=0; i<ship->outfit_nhigh; i++) {
-      if (ship->outfit_high[i].outfit==NULL)
+   xmlw_endElem(writer); /* "outfits_systems" */
+   xmlw_startElem(writer,"outfits_weapon");
+   for (i=0; i<ship->outfit_nweapon; i++) {
+      if (ship->outfit_weapon[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_high[i], i );
+      player_saveShipSlot( writer, &ship->outfit_weapon[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_high" */
+   xmlw_endElem(writer); /* "outfits_weapon" */
 
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
@@ -3320,7 +3320,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       }
 
       /* New outfit loading. */
-      if (xml_isNode(node,"outfits_low")) {
+      if (xml_isNode(node,"outfits_structure")) {
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3330,15 +3330,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nlow)) {
+               if ((n<0) || (n >= ship->outfit_nstructure)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_low[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_medium")) {
+      else if (xml_isNode(node,"outfits_systems")) {
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3348,15 +3348,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nmedium)) {
+               if ((n<0) || (n >= ship->outfit_nsystems)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_medium[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_systems[n] );
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_high")) {
+      else if (xml_isNode(node,"outfits_weapon")) {
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3366,11 +3366,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nhigh)) {
+               if ((n<0) || (n >= ship->outfit_nweapon)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_high[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
             }
          } while (xml_nextNode(cur));
       }

@@ -264,12 +264,12 @@ typedef struct Pilot_ {
    int noutfits; /**< Total amount of slots. */
    PilotOutfitSlot **outfits; /**< Total outfits. */
    /* Per slot types. */
-   int outfit_nlow; /**< Number of low energy slots. */
-   PilotOutfitSlot *outfit_low; /**< The low energy slots. */
-   int outfit_nmedium; /**< Number of medium energy slots. */
-   PilotOutfitSlot *outfit_medium; /**< The medium energy slots. */
-   int outfit_nhigh; /**< Number of high energy slots. */
-   PilotOutfitSlot *outfit_high; /**< The high energy slots. */
+   int outfit_nstructure; /**< Number of structure slots. */
+   PilotOutfitSlot *outfit_structure; /**< The structure slots. */
+   int outfit_nsystems; /**< Number of systems slots. */
+   PilotOutfitSlot *outfit_systems; /**< The systems slots. */
+   int outfit_nweapon; /**< Number of weapon slots. */
+   PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
    /* For easier usage. */
    PilotOutfitSlot *secondary; /**< secondary weapon */
    PilotOutfitSlot *afterburner; /**< the afterburner */

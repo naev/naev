@@ -978,12 +978,12 @@ void gui_render( double dt )
 
          /* Get quantity. */
          q = 0;
-         for (i=0; i<player.p->outfit_nhigh; i++) {
-            if (player.p->outfit_high[i].outfit != player.p->secondary->outfit)
+         for (i=0; i<player.p->outfit_nweapon; i++) {
+            if (player.p->outfit_weapon[i].outfit != player.p->secondary->outfit)
                continue;
             
-            if (player.p->outfit_high[i].u.ammo.outfit == player.p->secondary->u.ammo.outfit)
-               q += player.p->outfit_high[i].u.ammo.quantity;
+            if (player.p->outfit_weapon[i].u.ammo.outfit == player.p->secondary->u.ammo.outfit)
+               q += player.p->outfit_weapon[i].u.ammo.quantity;
          }
 
          /* Weapon name. */

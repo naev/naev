@@ -241,12 +241,12 @@ const char *outfit_slotName( const Outfit* o )
          return "NULL";
       case OUTFIT_SLOT_NA:
          return "NA";
-      case OUTFIT_SLOT_LOW:
-         return "Low";
-      case OUTFIT_SLOT_MEDIUM:
-         return "Medium";
-      case OUTFIT_SLOT_HIGH:
-         return "High";
+      case OUTFIT_SLOT_STRUCTURE:
+         return "Structure";
+      case OUTFIT_SLOT_SYSTEMS:
+         return "Systems";
+      case OUTFIT_SLOT_WEAPON:
+         return "Weapon";
       default:
          return "Unknown";
    }
@@ -266,8 +266,8 @@ const char *outfit_slotSize( const Outfit* o )
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
          return "Light";
-      case OUTFIT_SLOT_SIZE_STANDARD:
-         return "Standard";
+      case OUTFIT_SLOT_SIZE_MEDIUM:
+         return "Medium";
       case OUTFIT_SLOT_SIZE_HEAVY:
          return "Heavy";
       default:
@@ -286,7 +286,7 @@ glColour *outfit_slotSizeColour( const OutfitSlot* os )
 {
    if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
       return &cFontBlue;
-   else if (os->size == OUTFIT_SLOT_SIZE_STANDARD)
+   else if (os->size == OUTFIT_SLOT_SIZE_MEDIUM)
       return &cFontGreen;
    else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
       return &cFontYellow;
@@ -309,8 +309,8 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
 
    if (strcasecmp(s,"Heavy")==0)
       return OUTFIT_SLOT_SIZE_HEAVY;
-   else if (strcasecmp(s,"Standard")==0)
-      return OUTFIT_SLOT_SIZE_STANDARD;
+   else if (strcasecmp(s,"Medium")==0)
+      return OUTFIT_SLOT_SIZE_MEDIUM;
    else if (strcasecmp(s,"Light")==0)
       return OUTFIT_SLOT_SIZE_LIGHT;
 
@@ -327,7 +327,7 @@ static int outfit_setDefaultSize( Outfit *o )
    if (o->mass <= 10.)
       o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
    else if (o->mass <= 30.)
-      o->slot.size = OUTFIT_SLOT_SIZE_STANDARD;
+      o->slot.size = OUTFIT_SLOT_SIZE_MEDIUM;
    else
       o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
    return 0;
@@ -1640,12 +1640,12 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                cprop = xml_get(cur);
                if (cprop == NULL)
                   WARN("Outfit Slot type invalid.");
-               else if (strcmp(cprop,"low") == 0)
-                  temp->slot.type = OUTFIT_SLOT_LOW;
-               else if (strcmp(cprop,"medium") == 0)
-                  temp->slot.type = OUTFIT_SLOT_MEDIUM;
-               else if (strcmp(cprop,"high") == 0)
-                  temp->slot.type = OUTFIT_SLOT_HIGH;
+               else if (strcmp(cprop,"structure") == 0)
+                  temp->slot.type = OUTFIT_SLOT_STRUCTURE;
+               else if (strcmp(cprop,"systems") == 0)
+                  temp->slot.type = OUTFIT_SLOT_SYSTEMS;
+               else if (strcmp(cprop,"weapon") == 0)
+                  temp->slot.type = OUTFIT_SLOT_WEAPON;
             }
             else if (xml_isNode(cur,"size")) {
                temp->slot.size = outfit_toSlotSize( xml_get(cur) );
