@@ -1317,7 +1317,7 @@ static void player_updateZoom( double dt )
     * z = A / A_v = 1. / (1 + v/d)
     */
    d     = sqrt(SCREEN_W*SCREEN_H);
-   znear = MAX( conf.zoom_far, 1. / (1. + VMOD(player.p->solid->vel)/d) );
+   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(player.p->solid->vel)/d) );
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
