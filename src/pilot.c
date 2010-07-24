@@ -1310,17 +1310,21 @@ int pilot_runHook( Pilot* p, int hook_type )
    /* Run pilot specific hooks. */
    run = 0;
    for (i=0; i<p->nhooks; i++) {
-      if (p->hooks[i].type == hook_type) {
-         ret = hook_runIDparam( p->hooks[i].id, p->id );
-         if (ret)
-            WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
-         run++;
-      }
+      if (p->hooks[i].type != hook_type)
+         continue;
+
+      ret = hook_runIDparam( p->hooks[i].id, p->id );
+      if (ret)
+         WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
+      run++;
    }
 
    /* Run global hooks. */
-   for (i=0; i<array_size(pilot_globalHooks); i++) {
-      if (pilot_globalHooks[i].type == hook_type) {
+   if (pilot_globalHooks != NULL) {
+      for (i=0; i<array_size(pilot_globalHooks); i++) {
+         if (pilot_globalHooks[i].type != hook_type)
+            continue;
+
          ret = hook_runIDparam( p->hooks[i].id, p->id );
          if (ret)
             WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
