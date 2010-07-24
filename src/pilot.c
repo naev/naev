@@ -3153,6 +3153,10 @@ void pilots_rmGlobalHook( unsigned int hook )
 {
    int i;
 
+   /* Must exist pilot hook.s */
+   if (pilot_globalHooks == NULL )
+      return;
+
    for (i=0; i<array_size(pilot_globalHooks); i++) {
       if (pilot_globalHooks[i].id == hook) {
          array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
@@ -3167,6 +3171,10 @@ void pilots_rmGlobalHook( unsigned int hook )
  */
 void pilots_clearGlobalHooks (void)
 {
+   /* Must exist pilot hook.s */
+   if (pilot_globalHooks == NULL )
+      return;
+
    array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks)-1 ] );
 }
 
@@ -3667,8 +3675,11 @@ void pilots_free (void)
    int i;
 
    /* Clear global hooks. */
-   pilots_clearGlobalHooks();
-   array_free( &pilot_globalHooks );
+   if (pilot_globalHooks != NULL) {
+      pilots_clearGlobalHooks();
+      array_free( &pilot_globalHooks );
+      pilot_globalHooks = NULL;
+   }
 
    /* Free pilots. */
    for (i=0; i < pilot_nstack; i++)
