@@ -70,6 +70,7 @@ static void map_drawMarker( double x, double y, double r,
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
+static void map_inputFind( unsigned int wid, char* str );
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
@@ -102,37 +103,49 @@ void map_exit (void)
 
 
 /**
+ * @brief Opens a search input box to find a system or planet.
+ */
+static void map_inputFind( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   char *name;
+   char *sys;
+
+   name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
+   if (name == NULL)
+      return;
+
+   /* Exact match. */
+   sys = NULL;
+   if (system_exists( name )) {
+      sys = name;
+   }
+   if (planet_exists( name )) {
+      sys = planet_getSystem(name);
+   }
+   if (sys != NULL) {
+      map_select( system_get(sys), 0 );
+      map_center( sys );
+      free(name);
+      return;
+   }
+
+   dialogue_alert( "System/Planet matching '%s' not found!", name );
+   free(name);
+   return;
+}
+
+
+/**
  * @brief Handles key input to the map window.
  */
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
 {
-   (void) wid;
    (void) mod;
-   char *name;
-   char *sys;
 
    if ((key == SDLK_SLASH) || (key == SDLK_f)) {
-      name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
-      if (name == NULL)
-         return 1;
-  
-      /* Exact match. */
-      sys = NULL;
-      if (system_exists( name )) {
-         sys = name;
-      }
-      if (planet_exists( name )) {
-         sys = planet_getSystem(name);
-      }
-      if (sys != NULL) {
-         map_select( system_get(sys), 0 );
-         map_center( sys );
-         free(name);
-         return 1;
-      }
-
-      dialogue_alert( "System/Planet matching '%s' not found!", name );
-      free(name);
+      map_inputFind( wid, NULL );
       return 1;
    }
 
@@ -198,6 +211,7 @@ void map_open (void)
     *
     * ...
     * [Autonav]
+    * [ Find ]
     * [ Close ]
     */
 
@@ -233,8 +247,11 @@ void map_open (void)
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
+   /* Find button */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnFind", "Find", map_inputFind );
    /* Autonav button */
-   window_addButton( wid, -20, 60, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+2*(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", "Autonav", player_startAutonavWindow );
 
    /*
