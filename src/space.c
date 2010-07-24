@@ -474,12 +474,26 @@ StarSystem* system_getAll( int *nsys )
 int system_exists( const char* sysname )
 {
    int i;
-
    for (i=0; i<systems_nstack; i++)
       if (strcmp(sysname, systems_stack[i].name)==0)
          return 1;
-
    return 0;
+}
+
+
+/**
+ * @brief Checks to see if a system exists case insensitively.
+ *
+ *    @param sysname Name of the system to match (case insensitive).
+ *    @return The actual name of the system of NULL if not found.
+ */
+const char *system_existsCase( const char* sysname )
+{
+   int i;
+   for (i=0; i<systems_nstack; i++)
+      if (strcasecmp(sysname, systems_stack[i].name)==0)
+         return systems_stack[i].name;
+   return NULL;
 }
 
 
@@ -624,6 +638,22 @@ int planet_exists( const char* planetname )
       if (strcmp(planet_stack[i].name,planetname)==0)
          return 1;
    return 0;
+}
+
+
+/**
+ * @brief Check to see if a planet exists (case insensitive).
+ *
+ *    @param planetname Name of the planet to see if it exists.
+ *    @return The actual name of the planet or NULL if not found.
+ */
+const char* planet_existsCase( const char* planetname )
+{
+   int i;
+   for (i=0; i<planet_nstack; i++)
+      if (strcasecmp(planet_stack[i].name,planetname)==0)
+         return planet_stack[i].name;
+   return NULL;
 }
 
 
