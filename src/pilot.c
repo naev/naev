@@ -42,6 +42,7 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
+#include "array.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -67,6 +68,8 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
                                          what is in range and what isn't. */
 static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
 static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
+static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
+
 
 
 /*
@@ -1303,15 +1306,32 @@ void pilot_dead( Pilot* p )
 int pilot_runHook( Pilot* p, int hook_type )
 {
    int i, run, ret;
+
+   /* Run pilot specific hooks. */
    run = 0;
    for (i=0; i<p->nhooks; i++) {
-      if (p->hooks[i].type == hook_type) {
+      if (p->hooks[i].type != hook_type)
+         continue;
+
+      ret = hook_runIDparam( p->hooks[i].id, p->id );
+      if (ret)
+         WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
+      run++;
+   }
+
+   /* Run global hooks. */
+   if (pilot_globalHooks != NULL) {
+      for (i=0; i<array_size(pilot_globalHooks); i++) {
+         if (pilot_globalHooks[i].type != hook_type)
+            continue;
+
          ret = hook_runIDparam( p->hooks[i].id, p->id );
          if (ret)
             WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
          run++;
       }
    }
+
    return run;
 }
 
@@ -3112,6 +3132,58 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 
 
 /**
+ * @brief Adds a pilot global hook.
+ */
+void pilots_addGlobalHook( int type, unsigned int hook )
+{
+   PilotHook *phook;
+
+   /* Allocate memory. */
+   if (pilot_globalHooks == NULL) {
+      pilot_globalHooks = array_create( PilotHook );
+   }
+
+   /* Create the new hook. */
+   phook       = &array_grow( &pilot_globalHooks );
+   phook->type = type;
+   phook->id   = hook;
+}
+
+
+/**
+ * @brief Removes a pilot global hook.
+ */
+void pilots_rmGlobalHook( unsigned int hook )
+{
+   int i;
+
+   /* Must exist pilot hook.s */
+   if (pilot_globalHooks == NULL )
+      return;
+
+   for (i=0; i<array_size(pilot_globalHooks); i++) {
+      if (pilot_globalHooks[i].id == hook) {
+         array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
+         return;
+      }
+   }
+}
+
+
+/**
+ * @brief Removes all the pilot global hooks.
+ */
+void pilots_clearGlobalHooks (void)
+{
+   /* Must exist pilot hook.s */
+   if (pilot_globalHooks == NULL )
+      return;
+
+   array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks)-1 ] );
+}
+
+
+/**
  * @brief Removes a hook from all the pilots.
  *
  *    @param hook Hook to remove.
@@ -3120,6 +3192,9 @@ void pilots_rmHook( unsigned int hook )
 {
    int i, j;
    Pilot *p;
+
+   /* Remove global hook first. */
+   pilots_rmGlobalHook( hook );
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -3602,6 +3677,15 @@ void pilot_destroy(Pilot* p)
 void pilots_free (void)
 {
    int i;
+
+   /* Clear global hooks. */
+   if (pilot_globalHooks != NULL) {
+      pilots_clearGlobalHooks();
+      array_free( &pilot_globalHooks );
+      pilot_globalHooks = NULL;
+   }
+
+   /* Free pilots. */
    for (i=0; i < pilot_nstack; i++)
       pilot_free(pilot_stack[i]);
    free(pilot_stack);
@@ -3630,6 +3714,9 @@ void pilots_clean (void)
       pilot_nstack = 1;
       pilot_clearTimers( player.p ); /* Reset the player's timers. */
    }
+
+   /* Clear global hooks. */
+   pilots_clearGlobalHooks();
 }
 
 

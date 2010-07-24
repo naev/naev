@@ -20,6 +20,7 @@
 #include "colour.h"
 #include "player.h"
 #include "faction.h"
+#include "dialogue.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -69,6 +70,8 @@ static void map_drawMarker( double x, double y, double r,
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
+static void map_inputFind( unsigned int wid, char* str );
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -96,6 +99,57 @@ void map_exit (void)
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
    }
+}
+
+
+/**
+ * @brief Opens a search input box to find a system or planet.
+ */
+static void map_inputFind( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   char *name;
+   char *sys;
+
+   name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
+   if (name == NULL)
+      return;
+
+   /* Exact match. */
+   sys = NULL;
+   if (system_exists( name )) {
+      sys = name;
+   }
+   if (planet_exists( name )) {
+      sys = planet_getSystem(name);
+   }
+   if (sys != NULL) {
+      map_select( system_get(sys), 0 );
+      map_center( sys );
+      free(name);
+      return;
+   }
+
+   dialogue_alert( "System/Planet matching '%s' not found!", name );
+   free(name);
+   return;
+}
+
+
+/**
+ * @brief Handles key input to the map window.
+ */
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+
+   if ((key == SDLK_SLASH) || (key == SDLK_f)) {
+      map_inputFind( wid, NULL );
+      return 1;
+   }
+
+   return 0;
 }
 
 
@@ -136,6 +190,7 @@ void map_open (void)
    /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
    window_setCancel( wid, window_close );
+   window_handleKeys( wid, map_keyHandler );
 
    /*
     * SIDE TEXT
@@ -156,6 +211,7 @@ void map_open (void)
     *
     * ...
     * [Autonav]
+    * [ Find ]
     * [ Close ]
     */
 
@@ -191,8 +247,11 @@ void map_open (void)
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
+   /* Find button */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnFind", "Find", map_inputFind );
    /* Autonav button */
-   window_addButton( wid, -20, 60, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+2*(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", "Autonav", player_startAutonavWindow );
 
    /*
@@ -1624,7 +1683,7 @@ int map_center( const char *sys )
 
    /* Get the system. */
    ssys = system_get( sys );
-   if (sys == NULL)
+   if (ssys == NULL)
       return -1;
 
    /* Center on the system. */

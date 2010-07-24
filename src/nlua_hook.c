@@ -422,12 +422,15 @@ static int hook_timer( lua_State *L )
  *    - "attacked" : triggered when the pilot is attacked in manual control <br />
  *    - "idle" : triggered when the pilot becomes idle in manual control <br />
  *
+ * @note If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.
+ * @note DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!
+ *
  * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
  *
  * function my_hook( pilot, arg )
  * end
  *
- *    @luaparam pilot Pilot identifier to hook.
+ *    @luaparam pilot Pilot identifier to hook (or nil for all).
  *    @luaparam type One of the supported hook types.
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -443,7 +446,10 @@ static int hook_pilot( lua_State *L )
    char buf[ PATH_MAX ];
 
    /* Parameters. */
-   p           = luaL_checkpilot(L,1);
+   if (lua_ispilot(L,1))
+      p           = luaL_checkpilot(L,1);
+   else
+      p           = NULL;
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
@@ -463,7 +469,10 @@ static int hook_pilot( lua_State *L )
    /* actually add the hook */
    snprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3 );
-   pilot_addHook( pilot_get(p->pilot), type, h );
+   if (p==NULL)
+      pilots_addGlobalHook( type, h );
+   else
+      pilot_addHook( pilot_get(p->pilot), type, h );
 
    lua_pushnumber( L, h );
    return 1;

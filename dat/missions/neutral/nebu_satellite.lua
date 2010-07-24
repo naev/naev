@@ -102,7 +102,7 @@ function jump ()
    sys = system.get()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then
-      misn.timerStart( "beginLaunch", 3000 )
+      hook.timer( 3000, "beginLaunch" )
    end
 end
 
@@ -112,12 +112,12 @@ end
 --]]
 function beginLaunch ()
    player.msg( launch[1] )
-   misn.timerStart( "beginCountdown", 3000 )
+   hook.timer( 3000, "beginCountdown" )
 end
 function beginCountdown ()
    countdown = 5
    player.msg( launch[2] )
-   misn.timerStart( "countLaunch", 1000 )
+   hook.timer( 1000, "countLaunch" )
 end
 function countLaunch ()
    countdown = countdown - 1
@@ -125,7 +125,7 @@ function countLaunch ()
       launchSatellite()
    else
       player.msg( string.format("%d...", countdown) )
-      misn.timerStart( "countLaunch", 1000 )
+      hook.timer( 1000, "countLaunch" )
    end
 end
 function launchSatellite ()

@@ -503,7 +503,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
 
    /* Load the space sprite. */
    snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
-   rw    = SDL_RWFromFile( str, "rb" );
+   rw    = ndata_rwops( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
    surface = npng_readSurface( npng, gl_needPOT(), 1 );

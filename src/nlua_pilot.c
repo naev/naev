@@ -559,6 +559,11 @@ static int pilotL_remove( lua_State *L )
 /**
  * @brief Clears the current system of pilots.  Used for epic battles and such.
  *
+ * Be careful with this command especially in big systems. It will most likely
+ *  cause issues if multiple missions are in the same system.
+ *
+ * @note Clears all global pilot hooks too.
+ *
  * @usage pilot.clear()
  *
  * @luafunc clear()
