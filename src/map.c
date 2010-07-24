@@ -20,6 +20,7 @@
 #include "colour.h"
 #include "player.h"
 #include "faction.h"
+#include "dialogue.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -69,6 +70,7 @@ static void map_drawMarker( double x, double y, double r,
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -96,6 +98,45 @@ void map_exit (void)
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
    }
+}
+
+
+/**
+ * @brief Handles key input to the map window.
+ */
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
+{
+   (void) wid;
+   (void) mod;
+   char *name;
+   char *sys;
+
+   if ((key == SDLK_SLASH) || (key == SDLK_f)) {
+      name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
+      if (name == NULL)
+         return 1;
+  
+      /* Exact match. */
+      sys = NULL;
+      if (system_exists( name )) {
+         sys = name;
+      }
+      if (planet_exists( name )) {
+         sys = planet_getSystem(name);
+      }
+      if (sys != NULL) {
+         map_select( system_get(sys), 0 );
+         map_center( sys );
+         free(name);
+         return 1;
+      }
+
+      dialogue_alert( "System/Planet matching '%s' not found!", name );
+      free(name);
+      return 1;
+   }
+
+   return 0;
 }
 
 
@@ -136,6 +177,7 @@ void map_open (void)
    /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
    window_setCancel( wid, window_close );
+   window_handleKeys( wid, map_keyHandler );
 
    /*
     * SIDE TEXT
@@ -1624,7 +1666,7 @@ int map_center( const char *sys )
 
    /* Get the system. */
    ssys = system_get( sys );
-   if (sys == NULL)
+   if (ssys == NULL)
       return -1;
 
    /* Center on the system. */
