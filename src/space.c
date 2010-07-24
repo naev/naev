@@ -458,7 +458,7 @@ int space_sysReachable( StarSystem *sys )
  *    @param[out] Number of star systems gotten.
  *    @return The star systems gotten.
  */
-const StarSystem* system_getAll( int *nsys )
+StarSystem* system_getAll( int *nsys )
 {
    *nsys = systems_nstack;
    return systems_stack;

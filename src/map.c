@@ -109,24 +109,40 @@ static void map_inputFind( unsigned int wid, char* str )
 {
    (void) wid;
    (void) str;
+   int i;
    char *name;
-   char *sys;
+   char *sysname;
+   StarSystem *sys;
+   int nsys;
+   Planet *pnt;
+   int npnt;
 
    name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
    if (name == NULL)
       return;
 
-   /* Exact match. */
-   sys = NULL;
-   if (system_exists( name )) {
-      sys = name;
+   /* Match system first. */
+   sysname = NULL;
+   sys = system_getAll( &nsys );
+   for (i=0; i<nsys; i++)
+      if (strcasecmp( sys[i].name, name )==0)
+         break;
+   if (i < nsys) {
+      map_select( &sys[i], 0 );
+      map_center( sys[i].name );
+      free(name);
+      return;
    }
-   if (planet_exists( name )) {
-      sys = planet_getSystem(name);
-   }
-   if (sys != NULL) {
-      map_select( system_get(sys), 0 );
-      map_center( sys );
+
+   /* Match planet. */
+   pnt = planet_getAll( &npnt );
+   for (i=0; i<npnt; i++)
+      if (strcasecmp( pnt[i].name, name )==0)
+         break;
+   if (i < nsys) {
+      sys = system_get( planet_getSystem(pnt[i].name) );
+      map_select( sys, 0 );
+      map_center( sys->name );
       free(name);
       return;
    }
