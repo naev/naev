@@ -264,7 +264,7 @@ static int planetL_get( lua_State *L )
       planets = space_getFactionPlanet( &nplanets, factions, nfactions );
       free(factions);
    }
-   else NLUA_INVALID_PARAMETER(); /* Bad Parameter */
+   else NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* No suitable planet found */
    if ((rndplanet == NULL) && (nplanets == 0)) {

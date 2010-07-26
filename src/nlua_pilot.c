@@ -1062,7 +1062,7 @@ static int pilotL_setFaction( lua_State *L )
       f = lua_tofaction(L,2);
       fid = f->f;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Set the new faction. */
    p->faction = fid;
@@ -1335,7 +1335,7 @@ static int pilotL_setFuel( lua_State *L )
       p->fuel = CLAMP( 0., p->fuel_max, lua_tonumber(L,2) );
    }
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    /* Return amount of fuel. */
    lua_pushnumber(L, p->fuel);

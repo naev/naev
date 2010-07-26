@@ -1292,7 +1292,7 @@ void pilot_dead( Pilot* p )
    pilot_runHook( p, PILOT_HOOK_DEATH );
 
    /* PILOT R OFFICIALLY DEADZ0R */
-   pilot_setFlag(p,PILOT_DEAD);
+   pilot_setFlag( p, PILOT_DEAD );
 }
 
 

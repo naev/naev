@@ -102,7 +102,7 @@ static int rnd_int( lua_State *L )
       h = luaL_checkint(L,2);
       lua_pushnumber(L, RNG(l,h));
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }

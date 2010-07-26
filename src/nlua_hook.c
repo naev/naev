@@ -448,8 +448,10 @@ static int hook_pilot( lua_State *L )
    /* Parameters. */
    if (lua_ispilot(L,1))
       p           = luaL_checkpilot(L,1);
-   else
+   else if (lua_isnil(L,1))
       p           = NULL;
+   else
+      NLUA_INVALID_PARAMETER(L);
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
