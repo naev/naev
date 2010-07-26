@@ -60,6 +60,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
+static int pilotL_faction( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_setDir( lua_State *L );
@@ -110,6 +111,7 @@ static const luaL_reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "faction", pilotL_faction },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -857,6 +859,29 @@ static int pilotL_dir( lua_State *L )
 
    /* Push direction. */
    lua_pushnumber( L, p->solid->dir * 180. / M_PI );
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's faction.
+ *
+ * @usage f = p:faction()
+ *
+ *    @luaparam p Pilot to get the faction of.
+ *    @luareturn The faction of the pilot.
+ * @luafunc faction( p )
+ */
+static int pilotL_faction( lua_State *L )
+{
+   Pilot *p;
+   LuaFaction f;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push faction. */
+   f.f   = p->faction;
+   lua_pushfaction(L,f);
    return 1;
 }
 
