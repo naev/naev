@@ -1,4 +1,4 @@
---[[      Test Mission
+﻿--[[      Test Mission
 
          Heavily annotated mission with the sole purpose of learning the ropes of mission creation.
 
@@ -90,9 +90,9 @@ After the texts follow the functions.
 There are bascially two types, those defined inside this file and the API functions.
 The API functions can be found here: http://bobbens.dyndns.org/naev-lua/index.html
 You can usually identify them by their appearance for example:
-misn.accept ()
-system.cur ()
-misn.factions ()
+misn.accept ()
+system.cur ()
+misn.factions ()
 
 Notice the leading name followed by a dot and the functions name.
 API functions can be called from your mission without prior import or anything like that,

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Commodities>
  <commodity name="Food">
   <description>Evolving from the military rations of centuries past, modern packaged meals are rich in nutrients and able to last decades in their vacuum-sealed packaging.</description>
@@ -31,6 +31,10 @@
  <commodity name="Packages"/>
  <commodity name="VIP"/>
  <commodity name="The Baron's holopainting"/>
+ <commodity name="Artefact? A"/>
+ <commodity name="Artefact? B"/>
+ <commodity name="Artefact? C"/>
+ <commodity name="Ancient Artefact"/>
  <commodity name="Gregar"/>
  <commodity name="Dvaered ship crew"/>
  <commodity name="FLF IFF Transponder"/>

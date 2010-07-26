@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial">
   <lua>tutorial</lua>
@@ -342,6 +342,22 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="Prince">
+  <lua>neutral/baron_prince</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 15</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Shadowrun">
   <lua>neutral/shadowrun</lua>
   <flags>
@@ -351,6 +367,16 @@
    <chance>15</chance>
    <location>Bar</location>
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
+  </avail>
+ </mission>
+ <mission name="Shadow Vigil">
+  <lua>neutral/shadowvigil</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
   </avail>
  </mission>
  <mission name="Deal with the FLF agent">

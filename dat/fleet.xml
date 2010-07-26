@@ -559,6 +559,31 @@
    <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Mercenary Wing 1">
+  <ai>generic</ai>
+  <faction>Mercenary</faction>
+  <pilots>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Mercenary Wing 2">
+  <ai>generic</ai>
+  <faction>Mercenary</faction>
+  <pilots>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Mercenary Wing 3">
+  <ai>generic</ai>
+  <faction>Mercenary</faction>
+  <pilots>
+   <pilot ship="Llama"></pilot>
+   <pilot ship="Llama"></pilot>
+   <pilot ship="Llama"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="DTS Raiders">
   <ai>pirate</ai>
   <faction>Raider</faction>
@@ -617,32 +642,81 @@
    <pilot ship="Vendetta"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mission Thugs">
+ <fleet name="crimelord Thugs">
   <ai>baddie</ai>
   <faction>Thugs</faction>
   <pilots>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Admonisher"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mission Associate">
+ <fleet name="crimelord Associate">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
-   <pilot chance="100" ship="Pacifier"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Lancelot"></pilot>
-   <pilot chance="100" ship="Admonisher"></pilot>
-   <pilot chance="100" ship="Hawking"></pilot>
+   <pilot ship="Pacifier"></pilot>
+   <pilot ship="Lancelot"></pilot>
+   <pilot ship="Lancelot"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Hawking"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mission Kestrel">
+ <fleet name="crimelord Kestrel">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
-   <pilot chance="100" ship="Kestrel"></pilot>
+   <pilot ship="Kestrel"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Four Winds Vendetta">
+  <ai>trader</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Seiryuu">
+  <ai>trader</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Seiryuu" ship="Seiryuu"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Shadowvigil Diplomat">
+  <ai>trader</ai>
+  <faction>Diplomatic</faction>
+  <pilots>
+   <pilot name="Imperial Diplomat" ship="Diplomatic Vessel"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Shadowvigil Escorts">
+  <ai>trader</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Escort" ship="Lancelot"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Shadowvigil Ambush 1">
+  <ai>baddie_norun</ai>
+  <faction>Shadow_pirates</faction>
+  <pilots>
+   <pilot name="Pirate Attacker" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Shadowvigil Ambush 2">
+  <ai>baddie_norun</ai>
+  <faction>Shadow_pirates</faction>
+  <pilots>
+   <pilot name="Pirate Attacker" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Attacker" ship="Pirate Vendetta"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
+   <pilot name="Pirate Attacker" ship="Hyena"></pilot>
   </pilots>
  </fleet>
 </Fleets>

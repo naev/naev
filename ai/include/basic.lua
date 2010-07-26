@@ -141,7 +141,7 @@ end
 --]]
 function follow ()
    local target = ai.target()
-
+ 
    -- Will just float without a target to escort.
    if not ai.exists(target) then
       return
@@ -149,23 +149,13 @@ function follow ()
    
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
-   local bdist = ai.minbrakedist()
-
-   -- Close enough.
-   if ai.isstopped() and dist < 300 then
-      return
-
-   -- Brake
-   elseif dist+100 < bdist then
-      ai.pushtask("brake")
-
+ 
    -- Must approach
-   elseif dir < 10 and dist > 300 then
+   if dir < 10 and dist > 300 then
       ai.accel()
-
+ 
    end
 end
-
 
 --[[
 -- Tries to runaway and jump asap.

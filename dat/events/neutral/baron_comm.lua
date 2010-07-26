@@ -4,7 +4,7 @@
 
 
 function create ()
-    hyena = pilot.add("Civilian Hyena")[1]
+    hyena = pilot.add("Civilian Hyena", nil, true)[1]
     
     hook.pilot(hyena, "jump", "finish")
     hook.pilot(hyena, "death", "finish")
