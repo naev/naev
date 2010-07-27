@@ -217,7 +217,7 @@ static int playerL_modFaction( lua_State *L )
    double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    mod = luaL_checknumber(L,2);
    faction_modPlayer( f, mod );
@@ -239,7 +239,7 @@ static int playerL_modFactionRaw( lua_State *L )
    double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
    mod = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, mod );
 
@@ -258,7 +258,7 @@ static int playerL_getFaction( lua_State *L )
    int f;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, faction_getPlayer(f));
 
@@ -652,7 +652,7 @@ static int playerL_teleport( lua_State *L )
    else if (lua_isstring(L,1))
       name = lua_tostring(L,1);
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    /* Check if system exists. */
    if (!system_exists( name )) {

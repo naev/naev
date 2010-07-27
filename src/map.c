@@ -110,23 +110,26 @@ static void map_inputFind( unsigned int wid, char* str )
    (void) wid;
    (void) str;
    char *name;
-   char *sys;
+   const char *sysname;
+   const char *realname;
 
    name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
    if (name == NULL)
       return;
 
-   /* Exact match. */
-   sys = NULL;
-   if (system_exists( name )) {
-      sys = name;
+   /* Match system first. */
+   sysname  = NULL;
+   realname = system_existsCase( name );
+   if (realname != NULL)
+      sysname = realname;
+   else {
+      realname = planet_existsCase( name );
+      if (realname != NULL)
+         sysname = planet_getSystem( realname );
    }
-   if (planet_exists( name )) {
-      sys = planet_getSystem(name);
-   }
-   if (sys != NULL) {
-      map_select( system_get(sys), 0 );
-      map_center( sys );
+   if (sysname != NULL) {
+      map_select( system_get(sysname), 0 );
+      map_center( sysname );
       free(name);
       return;
    }

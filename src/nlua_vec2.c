@@ -231,7 +231,7 @@ static int vectorL_add( lua_State *L )
       x = lua_tonumber(L,2);
       y = lua_tonumber(L,3);
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Actually add it */
    vect_cset( &vout.vec, v1->vec.x + x, v1->vec.y + y );
@@ -276,7 +276,7 @@ static int vectorL_sub( lua_State *L )
       x = lua_tonumber(L,2);
       y = lua_tonumber(L,3);
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Actually add it */
    vect_cset( &vout.vec, v1->vec.x - x, v1->vec.y - y );

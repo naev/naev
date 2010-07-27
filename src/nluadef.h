@@ -23,7 +23,7 @@
 #define NLUA_DEBUG(str, args...) \
    (fprintf(stdout,"Lua: "str"\n", ## args))
 #endif /* DEBUG_PARANOID */
-#define NLUA_INVALID_PARAMETER()    \
+#define NLUA_INVALID_PARAMETER(L)    \
 { \
    luaL_error( L, "Invalid parameter for %s.", __func__ ); \
    return 0; \
@@ -36,7 +36,7 @@
 #else /* DEBUGGING */
 #define NLUA_DEBUG(str, args...) do {;} while(0)
 #define NLUA_MIN_ARGS(n)         do {;} while(0)
-#define NLUA_INVALID_PARAMETER() do {;} while(0)
+#define NLUA_INVALID_PARAMETER(L) do {;} while(0)
 #endif /* DEBUGGING */
 
 

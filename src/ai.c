@@ -1029,7 +1029,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
          lv          = lua_tovector(L,2);
          vectcpy( &t->dat.vec, &lv->vec );
       }
-      else NLUA_INVALID_PARAMETER();
+      else NLUA_INVALID_PARAMETER(L);
    }
 
    return t;
@@ -1382,7 +1382,7 @@ static int aiL_getdistance( lua_State *L )
 
    /* wrong parameter */
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, vect_dist(v, &cur_pilot->solid->pos));
    return 1;
@@ -1809,7 +1809,7 @@ static int aiL_face( lua_State *L )
       lv = lua_tovector(L,1);
       tv = &lv->vec;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Default gain. */
    k_diff = 10.;
@@ -2389,7 +2389,7 @@ static int aiL_secondary( lua_State *L )
       melee = 1;
    else if (strcmp(str, "ranged")==0)
       melee = 0;
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Pilot has secondary selected - use that */
    po = NULL;
@@ -2719,7 +2719,7 @@ static int aiL_distress( lua_State *L )
    else if (lua_isnil(L,1))
       aiL_distressmsg[0] = '\0';
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    /* Set flag because code isn't reentrant. */
    ai_setFlag(AI_DISTRESS);

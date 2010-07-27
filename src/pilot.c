@@ -1292,7 +1292,7 @@ void pilot_dead( Pilot* p )
    pilot_runHook( p, PILOT_HOOK_DEATH );
 
    /* PILOT R OFFICIALLY DEADZ0R */
-   pilot_setFlag(p,PILOT_DEAD);
+   pilot_setFlag( p, PILOT_DEAD );
 }
 
 
@@ -1316,7 +1316,8 @@ int pilot_runHook( Pilot* p, int hook_type )
       ret = hook_runIDparam( p->hooks[i].id, p->id );
       if (ret)
          WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
-      run++;
+      else
+         run++;
    }
 
    /* Run global hooks. */
@@ -1325,10 +1326,11 @@ int pilot_runHook( Pilot* p, int hook_type )
          if (pilot_globalHooks[i].type != hook_type)
             continue;
 
-         ret = hook_runIDparam( p->hooks[i].id, p->id );
+         ret = hook_runIDparam( pilot_globalHooks[i].id, p->id );
          if (ret)
             WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
-         run++;
+         else
+            run++;
       }
    }
 

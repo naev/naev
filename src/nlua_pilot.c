@@ -60,6 +60,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
+static int pilotL_faction( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_setDir( lua_State *L );
@@ -110,6 +111,7 @@ static const luaL_reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "faction", pilotL_faction },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -861,6 +863,29 @@ static int pilotL_dir( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's faction.
+ *
+ * @usage f = p:faction()
+ *
+ *    @luaparam p Pilot to get the faction of.
+ *    @luareturn The faction of the pilot.
+ * @luafunc faction( p )
+ */
+static int pilotL_faction( lua_State *L )
+{
+   Pilot *p;
+   LuaFaction f;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push faction. */
+   f.f   = p->faction;
+   lua_pushfaction(L,f);
+   return 1;
+}
+
+/**
  * @brief Sets the pilot's position.
  *
  * @usage p:setPos( vec2.new( 300, 200 ) )
@@ -1037,7 +1062,7 @@ static int pilotL_setFaction( lua_State *L )
       f = lua_tofaction(L,2);
       fid = f->f;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Set the new faction. */
    p->faction = fid;
@@ -1310,7 +1335,7 @@ static int pilotL_setFuel( lua_State *L )
       p->fuel = CLAMP( 0., p->fuel_max, lua_tonumber(L,2) );
    }
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    /* Return amount of fuel. */
    lua_pushnumber(L, p->fuel);

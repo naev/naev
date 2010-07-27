@@ -5037,28 +5037,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Niger I">
-  <pos>
-   <x>-5070.000000</x>
-   <y>-1940.000000</y>
-  </pos>
-  <GFX>
-   <space>P01.png</space>
-   <exterior>(null)</exterior>
-  </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
  <asset name="Niger II">
   <pos>
    <x>2320.000000</x>
