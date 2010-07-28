@@ -3320,7 +3320,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       }
 
       /* New outfit loading. */
-      if (xml_isNode(node,"outfits_structure")) {
+      if (xml_isNode(node,"outfits_structure") || xml_isNode(node,"outfits_low")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3338,7 +3338,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_systems")) {
+      else if (xml_isNode(node,"outfits_systems") || xml_isNode(node,"outfits_medium")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3356,7 +3356,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_weapon")) {
+      else if (xml_isNode(node,"outfits_weapon") || xml_isNode(node,"outfits_high")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
