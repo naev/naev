@@ -1306,6 +1306,12 @@ void pilot_dead( Pilot* p )
 int pilot_runHook( Pilot* p, int hook_type )
 {
    int i, run, ret;
+   HookParam hparam[2];
+
+   /* Set up hook parameters. */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
 
    /* Run pilot specific hooks. */
    run = 0;
@@ -1313,7 +1319,7 @@ int pilot_runHook( Pilot* p, int hook_type )
       if (p->hooks[i].type != hook_type)
          continue;
 
-      ret = hook_runIDparam( p->hooks[i].id, p->id );
+      ret = hook_runIDparam( p->hooks[i].id, hparam );
       if (ret)
          WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
       else
@@ -1326,7 +1332,7 @@ int pilot_runHook( Pilot* p, int hook_type )
          if (pilot_globalHooks[i].type != hook_type)
             continue;
 
-         ret = hook_runIDparam( pilot_globalHooks[i].id, p->id );
+         ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
          if (ret)
             WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
          else

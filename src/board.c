@@ -57,6 +57,7 @@ void player_board (void)
    Pilot *p;
    unsigned int wdw;
    char c;
+   HookParam hparam[2];
 
 
    if (player.p->target==PLAYER_ID) {
@@ -138,7 +139,10 @@ void player_board (void)
    /*
     * run hook if needed
     */
-   hooks_runParam( "board", p->id );
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "board", hparam );
    pilot_runHook(p, PILOT_HOOK_BOARD);
 
    if (board_stopboard) {

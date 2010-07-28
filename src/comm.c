@@ -85,6 +85,7 @@ int comm_openPilot( unsigned int pilot )
    unsigned int wid;
    int run;
    Pilot *p;
+   HookParam hparam[2];
 
    /* Get the pilot. */
    p           = pilot_get( pilot );
@@ -130,8 +131,11 @@ int comm_openPilot( unsigned int pilot )
    wid = comm_openPilotWindow();
 
    /* Run generic hail hooks. */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
    run = 0;
-   run += hooks_runParam( "hail", comm_pilot->id );
+   run += hooks_runParam( "hail", hparam );
    run += pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
    /* Reopen window in case something changed. */
    if (run > 0) {
