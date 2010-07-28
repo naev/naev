@@ -128,12 +128,13 @@ static int hook_parseParam( lua_State *L, HookParam *param )
 
          default:
             WARN( "Unknown Lua parameter type." );
+            lua_pushnil( L );
             break;
       }
       n++;
    }
 
-   return n-1;
+   return n;
 }
 
 
