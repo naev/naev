@@ -419,8 +419,8 @@ static int hook_timer( lua_State *L )
  *    - "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
  *    - "hail" : triggered when pilot is hailed.<br />
  *    - "land" : triggered when pilot is landing (right when starting land descent).<br />
- *    - "attacked" : triggered when the pilot is attacked in manual control <br />
- *    - "idle" : triggered when the pilot becomes idle in manual control <br />
+ *    - "attacked" : triggered when the pilot is attacked. <br />
+ *    - "idle" : triggered when the pilot becomes idle in manual control.<br />
  *
  * @note If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.
  * @note DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!

@@ -788,10 +788,9 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    lua_State *L;
 
    /* Behaves differently if manually overriden. */
-   if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL )) {
-      pilot_runHook( attacked, PILOT_HOOK_ATTACKED );
+   pilot_runHook( attacked, PILOT_HOOK_ATTACKED );
+   if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
-   }
 
    /* Must have an AI profile. */
    if (attacked->ai == NULL)
