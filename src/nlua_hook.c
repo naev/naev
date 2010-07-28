@@ -422,13 +422,19 @@ static int hook_timer( lua_State *L )
  *    - "attacked" : triggered when the pilot is attacked. <br />
  *    - "idle" : triggered when the pilot becomes idle in manual control.<br />
  *
- * @note If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.
- * @note DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!
+ * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
  *
- * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
+ * DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!<br />
  *
- * function my_hook( pilot, arg )
- * end
+ * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:<br />
+ *
+ * function my_hook( pilot, arg )<br />
+ * end<br />
+ *
+ * The exception is the attacked hook which also passes the attacker and must be in the shape of:<br />
+ *
+ * function attacked_hook( pilot, attacker, arg )<br />
+ * end<br />
  *
  *    @luaparam pilot Pilot identifier to hook (or nil for all).
  *    @luaparam type One of the supported hook types.

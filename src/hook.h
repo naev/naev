@@ -34,6 +34,9 @@ int hook_rm( unsigned int id );
 void hook_rmMisnParent( unsigned int parent );
 void hook_rmEventParent( unsigned int parent );
 
+/* pilot hook. */
+int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
+
 /*
  * run hooks
  *
