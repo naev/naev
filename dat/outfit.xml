@@ -1287,7 +1287,7 @@
  <!-- Cheats. For missions, honest! -->
  <outfit name="Cheater's Ragnarok Beam">
   <general>
-   <slot>high</slot>
+   <slot>weapon</slot>
    <mass>1</mass>
    <price>745000</price>
    <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
