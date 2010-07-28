@@ -3290,35 +3290,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       /* get fuel */
       xmlr_float(node,"fuel",fuel);
 
-      /*
-       * LEGACY LAYER TO NOT LOSE OUTFITS FROM OLD GAMES
-       * @todo Remove it at 0.5.0 or earlier
-       */
-      if (xml_isNode(node,"outfits")) {
-         cur = node->xmlChildrenNode;
-         DEBUG("Using legacy loading for old outfits.");
-         do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr(cur,"quantity",q);
-               n = 0;
-               if (q != NULL) {
-                  n = atoi(q);
-                  free(q);
-               }
-               if (n <= 0) {
-                  WARN("Outfit '%s' has no quantity", xml_get(cur));
-                  continue;
-               }
-               /* Get the outfit. */
-               o = outfit_get(xml_get(cur));
-               if (o==NULL)
-                  continue;
-               /* Add the outfit. */
-               player_addOutfit( o, n );
-            }
-         } while (xml_nextNode(cur));
-      }
-
       /* New outfit loading. */
       if (xml_isNode(node,"outfits_structure") || xml_isNode(node,"outfits_low")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
