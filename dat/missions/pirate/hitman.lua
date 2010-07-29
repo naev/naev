@@ -13,35 +13,35 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar information
-   bar_desc = "You see a shifty looking guy sitting in the darkest corner of the bar. He is trying to make descreate motions for you to come over but is only managing to look stupid."
+   bar_desc = "You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to look stupid."
 
    -- Mission details
    misn_title  = "Pirate Hitman"
-   misn_reward = "Some easy cash" --Possibly some hard to get contraband once it is introduced
+   misn_reward = "Some easy money." -- Possibly some hard to get contraband once it is introduced
    misn_desc   = "Take out some merchant competition in the %s system."
 
    -- Text
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[How'd you like to earn some easy money.]]
-   title[3] = "Mission Compleate"
-   text[2] = [[There's some new merchants stealing my trade routs in %s. I want you to let them not welcome. You don't have to kill anyone, just rough them up a bit.]]
+   text[1]  = [[How'd you like to earn some easy money?]]
+   title[3] = "Mission Complete"
+   text[2] = [[There're some new merchants edging in on my trade routes in %s. I want you to let them know they're not welcome. You don't have to kill anyone, just rough them up a bit.]]
    text[3] = [[Did everything go well? Good, good. That should teach them to stay out of my space.]]
 
    -- Messages
    msg      = {}
-   msg[1]   = "MISSION SUCCESS! Return for payment"
+   msg[1]   = "MISSION SUCCESS! Return for payment."
 end
 
 function create ()
-   targetsystem = system.get("Delta Pavonis") --find target system
+   targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
    misn.setNPC( "Shifty Trader",  "shifty_merchant")
    misn.setDesc( bar_desc )
 
-   --some variables for keeping track of the mission
+   -- Some variables for keeping track of the mission
    attackedTraders = 0
    killedTraders = false
    misn_base, misn_base_sys = planet.cur()
@@ -66,7 +66,7 @@ function accept ()
    misn.markerAdd( targetsystem, "low" )
 
    -- Some flavour text
-   tk.msg( title[1], text[2] )
+   tk.msg( title[1], string.format( text[2], targetsystem:name()) )
 
    -- Set hooks
    hook.enter("sys_enter")
