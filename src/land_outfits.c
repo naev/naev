@@ -81,7 +81,7 @@ void outfits_open( unsigned int wid )
    int bw, bh;
    glColour *bg, *c, blend;
    char **slottype;
-   char typename;
+   const char *slotname;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
@@ -144,7 +144,7 @@ void outfits_open( unsigned int wid )
       soutfits = malloc(sizeof(char*)*noutfits);
       toutfits = malloc(sizeof(glTexture*)*noutfits);
       bg       = malloc(sizeof(glColour)*noutfits);
-      slottype = malloc( sizeof(char*) * noutfits );
+      slottype = malloc(sizeof(char*)*noutfits );
       for (i=0; i<noutfits; i++) {
          soutfits[i] = strdup(outfits[i]->name);
          toutfits[i] = outfits[i]->gfx_store;
@@ -156,11 +156,12 @@ void outfits_open( unsigned int wid )
          col_blend( &blend, *c, cGrey70, 0.4 );
          memcpy( &bg[i], &blend, sizeof(glColour) );
 
-         if ((strcmp(outfit_slotName(outfits[i]),"NA") != 0) &&
-                  (strcmp(outfit_slotName(outfits[i]),"NULL") != 0)) {
-            typename = *outfit_slotName(outfits[i]);
-            slottype[i] = malloc( sizeof(typename) );
-            snprintf( slottype[i], 2, "%c", typename );
+         /* Get slot name. */
+         slotname = outfit_slotName(outfits[i]);
+         if ((strcmp(slotname,"NA") != 0) && (strcmp(slotname,"NULL") != 0)) {
+            slottype[i]    = malloc( 2 );
+            slottype[i][0] = outfit_slotName(outfits[i])[0];
+            slottype[i][1] = '\0';
          }
          else {
             slottype[i] = NULL;
