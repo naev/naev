@@ -103,7 +103,7 @@ function trader_jumped (hook_pilot, hook_arg)
       return
    end
 
-   for i, array_pilot in pairs(attackedTraders) do
+   for i, array_pilot in ipairs(attackedTraders) do
       if array_pilot:exists() then
          if array_pilot == hook_pilot then
             fledTraders = fledTraders + 1

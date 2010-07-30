@@ -60,7 +60,7 @@ function accept ()
    misn_done      = false
    attackedTraders = {}
    attackedTraders["__save"] = true
-   fledTraders = 0
+   deadTraders = 0
    misn_base, misn_base_sys = planet.cur()
 
    -- Set mission details
@@ -103,7 +103,7 @@ function trader_death (hook_pilot, hook_arg)
       return
    end
 
-   for i, array_pilot in pairs(attackedTraders) do
+   for i, array_pilot in ipairs(attackedTraders) do
       if array_pilot:exists() then
          if array_pilot == hook_pilot then
             deadTraders = deadTraders + 1
