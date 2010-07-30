@@ -86,6 +86,7 @@
 #include "nlua_pilot.h"
 #include "nlua_faction.h"
 #include "board.h"
+#include "hook.h"
 
 
 /**
@@ -786,9 +787,14 @@ void ai_think( Pilot* pilot, const double dt )
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
    lua_State *L;
+   HookParam hparam;
+
+   /* Custom hook parameters. */
+   hparam.type       = HOOK_PARAM_PILOT;
+   hparam.u.lp.pilot = attacker;
 
    /* Behaves differently if manually overriden. */
-   pilot_runHook( attacked, PILOT_HOOK_ATTACKED );
+   pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, &hparam, 1 );
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
 

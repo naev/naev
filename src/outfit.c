@@ -1667,7 +1667,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          /* is secondary weapon? */
          prop = xml_nodeProp(node,"secondary");
          if (prop != NULL) {
-            if ((int)atoi(prop)) outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
+            if ((int)atoi(prop))
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
             free(prop);
          }
 

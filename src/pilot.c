@@ -1303,9 +1303,30 @@ void pilot_dead( Pilot* p )
  *    @param hook_type Type of hook to run.
  *    @return The number of hooks run.
  */
-int pilot_runHook( Pilot* p, int hook_type )
+int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
 {
-   int i, run, ret;
+   int n, i, run, ret;
+   HookParam hparam[3], *hdynparam;
+
+   /* Set up hook parameters. */
+   if (nparam <= 1) {
+      hparam[0].type       = HOOK_PARAM_PILOT;
+      hparam[0].u.lp.pilot = p->id;
+      n  = 1;
+      if (nparam == 1) {
+         memcpy( &hparam[n], param, sizeof(HookParam) );
+         n++;
+      }
+      hparam[n].type    = HOOK_PARAM_SENTINAL;
+      hdynparam         = NULL;
+   }
+   else {
+      hdynparam   = malloc( sizeof(HookParam) * (nparam+2) );
+      hdynparam[0].type       = HOOK_PARAM_PILOT;
+      hdynparam[0].u.lp.pilot = p->id;
+      memcpy( &hdynparam[1], param, sizeof(HookParam)*nparam );
+      hdynparam[nparam].type  = HOOK_PARAM_SENTINAL;
+   }
 
    /* Run pilot specific hooks. */
    run = 0;
@@ -1313,7 +1334,7 @@ int pilot_runHook( Pilot* p, int hook_type )
       if (p->hooks[i].type != hook_type)
          continue;
 
-      ret = hook_runIDparam( p->hooks[i].id, p->id );
+      ret = hook_runIDparam( p->hooks[i].id, hparam );
       if (ret)
          WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
       else
@@ -1326,7 +1347,7 @@ int pilot_runHook( Pilot* p, int hook_type )
          if (pilot_globalHooks[i].type != hook_type)
             continue;
 
-         ret = hook_runIDparam( pilot_globalHooks[i].id, p->id );
+         ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
          if (ret)
             WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
          else
@@ -1334,7 +1355,24 @@ int pilot_runHook( Pilot* p, int hook_type )
       }
    }
 
+   /* Clean up. */
+   if (hdynparam != NULL)
+      free( hdynparam );
+
    return run;
+}
+
+
+/**
+ * @brief Tries to run a pilot hook if he has it.
+ *
+ *    @param p Pilot to run the hook.
+ *    @param hook_type Type of hook to run.
+ *    @return The number of hooks run.
+ */
+int pilot_runHook( Pilot* p, int hook_type )
+{
+   return pilot_runHookParam( p, hook_type, NULL, 0 );
 }
 
 
@@ -3683,7 +3721,7 @@ void pilots_free (void)
    /* Clear global hooks. */
    if (pilot_globalHooks != NULL) {
       pilots_clearGlobalHooks();
-      array_free( &pilot_globalHooks );
+      array_free( pilot_globalHooks );
       pilot_globalHooks = NULL;
    }
 

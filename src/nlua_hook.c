@@ -413,22 +413,30 @@ static int hook_timer( lua_State *L )
  * @brief Hooks the function to a specific pilot.
  *
  * You can hook to different actions.  Curently hook system only supports:<br />
- *    - "death" : triggered when pilot dies (before marked as dead). <br />
- *    - "board" : triggered when pilot is boarded.<br />
- *    - "disable" : triggered when pilot is disabled (with disable set).<br />
- *    - "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
- *    - "hail" : triggered when pilot is hailed.<br />
- *    - "land" : triggered when pilot is landing (right when starting land descent).<br />
- *    - "attacked" : triggered when the pilot is attacked. <br />
- *    - "idle" : triggered when the pilot becomes idle in manual control.<br />
- *
- * @note If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.
- * @note DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!
- *
- * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
- *
- * function my_hook( pilot, arg )
- * end
+ * <ul>
+ *    <li> "death" : triggered when pilot dies (before marked as dead). <br />
+ *    <li> "board" : triggered when pilot is boarded.<br />
+ *    <li> "disable" : triggered when pilot is disabled (with disable set).<br />
+ *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
+ *    <li> "hail" : triggered when pilot is hailed.<br />
+ *    <li> "land" : triggered when pilot is landing (right when starting land descent).<br />
+ *    <li> "attacked" : triggered when the pilot is attacked. <br />
+ *    <li> "idle" : triggered when the pilot becomes idle in manual control.<br />
+ * </ul>
+ * <br />
+ * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
+ * <br />
+ * DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!<br />
+ * <br />
+ * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:<br />
+ * <br />
+ * function my_hook( pilot, arg )<br />
+ * end<br />
+ * <br />
+ * The exception is the attacked hook which also passes the attacker and must be in the shape of:<br />
+ * <br />
+ * function attacked_hook( pilot, attacker, arg )<br />
+ * end<br />
  *
  *    @luaparam pilot Pilot identifier to hook (or nil for all).
  *    @luaparam type One of the supported hook types.

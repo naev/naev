@@ -92,10 +92,11 @@ extern int misn_run( Mission *misn, const char *func );
 static Hook* hook_get( unsigned int id );
 static unsigned int hook_genID (void);
 static Hook* hook_new( HookType_t type, const char *stack );
-static int hook_runMisn( Hook *hook, unsigned int pilot );
-static int hook_runEvent( Hook *hook, unsigned int pilot );
+static int hook_parseParam( lua_State *L, HookParam *param );
+static int hook_runMisn( Hook *hook, HookParam *param );
+static int hook_runEvent( Hook *hook, HookParam *param );
 static int hook_runFunc( Hook *hook );
-static int hook_run( Hook *hook, unsigned int pilot );
+static int hook_run( Hook *hook, HookParam *param );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
 static int hook_parse( xmlNodePtr base );
@@ -105,18 +106,50 @@ int hook_load( xmlNodePtr parent );
 
 
 /**
+ * @brief Parses hook parameters.
+ *
+ *    @param L Lua state to feed parameters into.
+ *    @param param Parameters to process.
+ *    @return Parameters found.
+ */
+static int hook_parseParam( lua_State *L, HookParam *param )
+{
+   int n;
+
+   if (param == NULL)
+      return 0;
+
+   n = 0;
+   while (param[n].type != HOOK_PARAM_SENTINAL) {
+      switch (param[n].type) {
+         case HOOK_PARAM_PILOT:
+            lua_pushpilot( L, param[n].u.lp );
+            break;
+
+         default:
+            WARN( "Unknown Lua parameter type." );
+            lua_pushnil( L );
+            break;
+      }
+      n++;
+   }
+
+   return n;
+}
+
+
+/**
  * @brief Runs a mission hook.
  *
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_runMisn( Hook *hook, unsigned int pilot )
+static int hook_runMisn( Hook *hook, HookParam *param )
 {
    int i;
    unsigned int id;
    Mission* misn;
    lua_State *L;
-   LuaPilot lp;
    int n;
 
    /* Simplicity. */
@@ -142,13 +175,7 @@ static int hook_runMisn( Hook *hook, unsigned int pilot )
 
    /* Set up hook parameters. */
    L = misn_runStart( misn, hook->u.misn.func );
-   if (pilot > 0) {
-      lp.pilot = pilot;
-      lua_pushpilot( L, lp );
-      n = 1;
-   }
-   else
-      n = 0;
+   n = hook_parseParam( L, param );
 
    /* Add hook parameters. */
    hookL_getarg( L, id );
@@ -171,12 +198,11 @@ static int hook_runMisn( Hook *hook, unsigned int pilot )
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_runEvent( Hook *hook, unsigned int pilot )
+static int hook_runEvent( Hook *hook, HookParam *param )
 {
    int ret;
    unsigned int id;
    lua_State *L;
-   LuaPilot lp;
    int n;
 
    /* Simplicity. */
@@ -184,13 +210,7 @@ static int hook_runEvent( Hook *hook, unsigned int pilot )
 
    /* Set up hook parameters. */
    L = event_runStart( hook->u.event.parent, hook->u.event.func );;
-   if (pilot > 0) {
-      lp.pilot = pilot;
-      lua_pushpilot( L, lp );
-      n = 1;
-   }
-   else
-      n = 0;
+   n = hook_parseParam( L, param );
 
    /* Add hook parameters. */
    hookL_getarg( L, id );
@@ -233,17 +253,17 @@ static int hook_runFunc( Hook *hook )
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_run( Hook *hook, unsigned int pilot )
+static int hook_run( Hook *hook, HookParam *param )
 {
    if (hook->delete)
       return 0; /* hook should be deleted not run */
 
    switch (hook->type) {
       case HOOK_TYPE_MISN:
-         return hook_runMisn(hook, pilot);
+         return hook_runMisn(hook, param);
 
       case HOOK_TYPE_EVENT:
-         return hook_runEvent(hook, pilot);
+         return hook_runEvent(hook, param);
 
       case HOOK_TYPE_FUNC:
          return hook_runFunc(hook);
@@ -575,7 +595,7 @@ void hook_rmEventParent( unsigned int parent )
  *    @param stack Stack to run.
  *    @return 0 on success.
  */
-int hooks_runParam( const char* stack, unsigned int pilot )
+int hooks_runParam( const char* stack, HookParam *param )
 {
    int i;
 
@@ -586,7 +606,7 @@ int hooks_runParam( const char* stack, unsigned int pilot )
    hook_runningstack = 1; /* running hooks */
    for (i=0; i<hook_nstack; i++)
       if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
-         hook_run( &hook_stack[i], pilot );
+         hook_run( &hook_stack[i], param );
       }
    hook_runningstack = 0; /* not running hooks anymore */
 
@@ -631,7 +651,7 @@ static Hook* hook_get( unsigned int id )
  *    @param id Identifier of the hook to run.
  *    @return The ID of the hook or 0 if it got deleted.
  */
-int hook_runIDparam( unsigned int id, unsigned int pilot )
+int hook_runIDparam( unsigned int id, HookParam *param )
 {
    Hook *h;
 
@@ -645,7 +665,7 @@ int hook_runIDparam( unsigned int id, unsigned int pilot )
       WARN("Attempting to run hook of id '%d' which is not in the stack", id);
       return -1;
    }
-   hook_run( h, pilot );
+   hook_run( h, param );
 
    return 0;
 }
