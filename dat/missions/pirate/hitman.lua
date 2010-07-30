@@ -94,8 +94,7 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
    end
 
    if hook_pilot:faction() == faction.get("Trader") and hook_attacker == pilot.player() then
-      attackedTraders[1] = attackedTraders[1] + 1
-      attackedTraders[attackedTraders[1]+1] = hook_pilot
+      attackedTraders[#attackedTraders + 1] = hook_pilot
    end
 end
 
