@@ -305,7 +305,7 @@ function jumpin()
         end
     else
         if proxy then
-            misn.timerStop(proxy)
+            hook.timerStop(proxy)
         end
     end
 end
