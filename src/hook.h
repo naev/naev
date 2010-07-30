@@ -13,7 +13,7 @@
 
 
 typedef enum HookParamType_e {
-   HOOK_PARAM_NULL,
+   HOOK_PARAM_NIL,
    HOOK_PARAM_PILOT,
    HOOK_PARAM_SENTINAL
 } HookParamType;

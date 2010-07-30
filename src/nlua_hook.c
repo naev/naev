@@ -433,10 +433,16 @@ static int hook_timer( lua_State *L )
  * function my_hook( pilot, arg )<br />
  * end<br />
  * <br />
- * The exception is the attacked hook which also passes the attacker and must be in the shape of:<br />
+ * The combat hooks also pass the pilot acting on it, so for example the pilot
+ *  that disabled, attacked or killed the selected pilot. They have the
+ *  following format:<br />
  * <br />
- * function attacked_hook( pilot, attacker, arg )<br />
+ * function combat_hook( pilot, attacker, arg )<br />
  * end<br />
+ * <br />
+ * Please note that in the case of disable or death hook the attacker may be nil
+ *  indicating that it was killed by other means like for example the shockwave
+ *  of a dying ship or nebula volatility.
  *
  *    @luaparam pilot Pilot identifier to hook (or nil for all).
  *    @luaparam type One of the supported hook types.

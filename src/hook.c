@@ -122,6 +122,9 @@ static int hook_parseParam( lua_State *L, HookParam *param )
    n = 0;
    while (param[n].type != HOOK_PARAM_SENTINAL) {
       switch (param[n].type) {
+         case HOOK_PARAM_NIL:
+            lua_pushnil( L );
+            break;
          case HOOK_PARAM_PILOT:
             lua_pushpilot( L, param[n].u.lp );
             break;

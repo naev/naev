@@ -86,7 +86,7 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id );
 /* clean up. */
 void pilot_free( Pilot* p ); /* externed in player.c */
-static void pilot_dead( Pilot* p );
+static void pilot_dead( Pilot* p, unsigned int killer );
 /* misc */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
@@ -1135,6 +1135,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    double damage_shield, damage_armour, knockback, dam_mod, dmg;
    double armour_start;
    Pilot *pshooter;
+   HookParam hparam;
 
    /* Defaults. */
    pshooter = NULL;
@@ -1217,7 +1218,13 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
-      pilot_runHook( p, PILOT_HOOK_DISABLE ); /* Already disabled. */
+      if (shooter > 0) {
+         hparam.type       = HOOK_PARAM_PILOT;
+         hparam.u.lp.pilot = shooter;
+      }
+      else
+         hparam.type       = HOOK_PARAM_NIL;
+      pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
    }
 
    /* Officially dead. */
@@ -1226,8 +1233,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dam_mod   = 0.;
 
       if (!pilot_isFlag(p, PILOT_DEAD)) {
-         pilot_setFlag( p, PILOT_DISABLED ); /* Player isn't disabled so we must disable here. */
-         pilot_dead(p);
+         pilot_dead( p, shooter );
 
          /* adjust the combat rating based on pilot mass and ditto faction */
          if (pshooter == NULL)
@@ -1267,9 +1273,12 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  * @brief Pilot is dead, now will slowly explode.
  *
  *    @param p Pilot that just died.
+ *    @param killer Pilot killer or 0 if invalid.
  */
-void pilot_dead( Pilot* p )
+void pilot_dead( Pilot* p, unsigned int killer )
 {
+   HookParam hparam;
+
    if (pilot_isFlag(p,PILOT_DEAD))
       return; /* he's already dead */
 
@@ -1289,7 +1298,13 @@ void pilot_dead( Pilot* p )
       pilot_rmFlag(p,PILOT_HYPERSPACE);
 
    /* Pilot must die before setting death flag and probably messing with other flags. */
-   pilot_runHook( p, PILOT_HOOK_DEATH );
+   if (killer > 0) {
+      hparam.type       = HOOK_PARAM_PILOT;
+      hparam.u.lp.pilot = killer;
+   }
+   else
+      hparam.type       = HOOK_PARAM_NIL;
+   pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
 
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag( p, PILOT_DEAD );
@@ -1742,8 +1757,9 @@ void pilot_update( Pilot* pilot, const double dt )
          else spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
       }
    }
-   else if (pilot->armour <= 0.) /* PWNED */
-      pilot_dead(pilot); /* start death stuff */
+   else if (pilot->armour <= 0.) { /* PWNED */
+      pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
+   }
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
