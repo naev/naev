@@ -3721,7 +3721,7 @@ void pilots_free (void)
    /* Clear global hooks. */
    if (pilot_globalHooks != NULL) {
       pilots_clearGlobalHooks();
-      array_free( &pilot_globalHooks );
+      array_free( pilot_globalHooks );
       pilot_globalHooks = NULL;
    }
 
