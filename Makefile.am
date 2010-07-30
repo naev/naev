@@ -7,14 +7,19 @@ if HAVE_UTILS
 SUBDIRS += utils
 endif
 
+appicondir = $(datadir)/pixmaps
+appicon_DATA = extras/logos/naev.png
+Graphicsdir = $(datadir)/applications
+Graphics_DATA = naev.desktop
+
 dist_man6_MANS = naev.6
-dist_doc_DATA = AUTHORS README TODO extras
+dist_doc_DATA = AUTHORS README TODO LICENSE
 
 DATA_ARCHIVE = ndata
 PACK	     = utils/pack/pack$(EXEEXT)
 NAEV	     = naev$(EXEEXT)
 
-EXTRA_DIST = LICENSE conf.example
+EXTRA_DIST = LICENSE extras naev.desktop
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 .PHONY: docs help install-ndata VERSION
@@ -66,7 +71,9 @@ install-data-hook:
 
 uninstall-hook:
 	echo " rm -rf '$(DESTDIR)$(pkgdatadir)'"; \
+	echo " rm -rf '$(docdir)'"; \
 	rm -rf "$(DESTDIR)$(pkgdatadir)"
+	rm -rf "$(docdir)"
 
 docs:
 	$(MAKE) -C docs
