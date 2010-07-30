@@ -103,7 +103,7 @@ function trader_death (hook_pilot, hook_arg)
    if misn_done then
       return
    end
-   player.msg(msg[1])
+
    for i, array_pilot in pairs(attackedTraders) do
       if array_pilot == hook_pilot then
          deadTraders = deadTraders + 1
