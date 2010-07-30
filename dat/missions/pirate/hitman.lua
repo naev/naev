@@ -45,8 +45,9 @@ function create ()
 
    -- Some variables for keeping track of the mission
    misn_done      = false
-   attackedTraders = 0
-   killedTraders = false
+   attackedTraders = {}
+   attackedTraders[1] = 0
+   fledTraders = 0
    misn_base, misn_base_sys = planet.cur()
 end
 
@@ -81,6 +82,7 @@ function sys_enter ()
    -- Check to see if reaching target system
    if cur_sys == targetsystem then
       hook.pilot(nil, "attacked", "trader_attacked")
+      hook.pilot(nil, "jump", "trader_jumped")
    end
 end
 
@@ -91,9 +93,23 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
    end
 
    if hook_pilot:faction() == faction.get("Trader") and hook_attacker == pilot.player() then
-      attackedTraders = attackedTraders + 1
-      if attackedTraders >= 5 then
-         attack_finished()
+      attackedTraders[1] = attackedTraders[1] + 1
+      attackedTraders[attackedTraders[1]+1] = hook_pilot
+   end
+end
+
+-- An attacked Trader Jumped
+function trader_jumped (hook_pilot, hook_arg)
+   if misn_done then
+      return
+   end
+
+   for i, array_pilot in pairs(attackedTraders) do
+      if array_pilot == hook_pilot then
+         fledTraders = fledTraders + 1
+         if fledTraders >= 5 then
+            attack_finished()
+         end
       end
    end
 end
