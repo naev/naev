@@ -2924,8 +2924,9 @@
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>0</class>
@@ -3503,6 +3504,7 @@
     <refuel/>
     <bar/>
     <commodity/>
+   </services>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Ore</commodity>
