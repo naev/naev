@@ -105,10 +105,12 @@ function trader_jumped (hook_pilot, hook_arg)
    end
 
    for i, array_pilot in pairs(attackedTraders) do
-      if array_pilot == hook_pilot then
-         fledTraders = fledTraders + 1
-         if fledTraders >= 5 then
-            attack_finished()
+      if array_pilot:exists() then
+         if array_pilot == hook_pilot then
+            fledTraders = fledTraders + 1
+            if fledTraders >= 5 then
+               attack_finished()
+            end
          end
       end
    end
