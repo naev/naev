@@ -113,8 +113,8 @@ static void map_inputFind( unsigned int wid, char* str )
    const char *sysname;
    const char *realname;
 
-   name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
-   if (name == NULL)
+   name = dialogue_inputRaw( "Find...", 0, 32, "What do you want to find? (systems, planets)" );
+   if (name == NULL || !strcmp("",name))
       return;
 
    /* Match system first. */
