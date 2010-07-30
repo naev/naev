@@ -509,6 +509,7 @@ function escortFlee()
         end
     end
     misn.osdActive(4)
+    marker = misn.markerAdd(seirsys, "low")
     stage = 1 -- no longer spawn things
     missend = true
 end
