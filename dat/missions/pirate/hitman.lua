@@ -44,6 +44,7 @@ function create ()
    misn.setDesc( bar_desc )
 
    -- Some variables for keeping track of the mission
+   misn_done      = false
    attackedTraders = 0
    killedTraders = false
    misn_base, misn_base_sys = planet.cur()
@@ -85,6 +86,10 @@ end
 
 -- Attacked a trader
 function trader_attacked (hook_pilot, hook_attacker, hook_arg)
+   if misn_done then
+      return
+   end
+
    if hook_pilot:faction() == faction.get("Trader") and hook_attacker == pilot.player() then
       attackedTraders = attackedTraders + 1
       if attackedTraders >= 5 then
@@ -95,6 +100,7 @@ end
 
 -- attack finished
 function attack_finished()
+   misn_done = true
    player.msg( msg[1] )
    misn.setDesc( string.format( misn_desc[2], misn_base:name(), misn_base_sys:name() ) )
    misn.markerRm( misn_marker )
