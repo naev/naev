@@ -18,7 +18,9 @@ else -- Default to English
    -- Mission details
    misn_title  = "Pirate Hitman"
    misn_reward = "Some easy money." -- Possibly some hard to get contraband once it is introduced
-   misn_desc   = "Take out some merchant competition in the %s system."
+   misn_desc   = {}
+   misn_desc[1] = "Take out some merchant competition in the %s system."
+   misn_desc[2] = "Return to %s in the %s system for payment."
 
    -- Text
    title    = {}
@@ -62,8 +64,8 @@ function accept ()
    -- Set mission details
    misn.setTitle( string.format( misn_title, targetsystem:name()) )
    misn.setReward( string.format( misn_reward, credits) )
-   misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
-   misn.markerAdd( targetsystem, "low" )
+   misn.setDesc( string.format( misn_desc[1], targetsystem:name() ) )
+   misn_marker = misn.markerAdd( targetsystem, "low" )
 
    -- Some flavour text
    tk.msg( title[1], string.format( text[2], targetsystem:name()) )
@@ -93,7 +95,10 @@ end
 
 -- attack finished
 function attack_finished()
-   player.msg(msg[1])
+   player.msg( msg[1] )
+   misn.setDesc( string.format( misn_desc[2], misn_base:name(), misn_base_sys:name() ) )
+   misn.markerRm( misn_marker )
+   misn_marker = misn.markerAdd( misn_base_sys, "low" )
    hook.land("landed")
 end
 
