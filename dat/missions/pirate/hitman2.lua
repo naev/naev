@@ -60,7 +60,6 @@ function accept ()
    misn_done      = false
    attackedTraders = {}
    attackedTraders["__save"] = true
-   attackedTraders[1] = 0
    fledTraders = 0
    misn_base, misn_base_sys = planet.cur()
 
