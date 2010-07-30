@@ -112,6 +112,7 @@ static void map_inputFind( unsigned int wid, char* str )
    char *name;
    const char *sysname;
    const char *realname;
+   StarSystem *sys;
 
    name = dialogue_inputRaw( "Find...", 1, 32, "What do you want to find? (systems, planets)" );
    if (name == NULL)
@@ -128,10 +129,13 @@ static void map_inputFind( unsigned int wid, char* str )
          sysname = planet_getSystem( realname );
    }
    if (sysname != NULL) {
-      map_select( system_get(sysname), 0 );
-      map_center( sysname );
-      free(name);
-      return;
+      sys = system_get(sysname);
+      if (sys_isKnown(sys)) {
+         map_select( sys, 0 );
+         map_center( sysname );
+         free(name);
+         return;
+      }
    }
 
    dialogue_alert( "System/Planet matching '%s' not found!", name );
