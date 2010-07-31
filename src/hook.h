@@ -9,6 +9,22 @@
 
 #include "mission.h"
 
+#include "nlua_pilot.h"
+
+
+typedef enum HookParamType_e {
+   HOOK_PARAM_NIL,
+   HOOK_PARAM_PILOT,
+   HOOK_PARAM_SENTINAL
+} HookParamType;
+
+typedef struct HookParam_s {
+   HookParamType type;
+   union {
+      LuaPilot lp;
+   } u;
+} HookParam;
+
 
 /* add/run hooks */
 unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack );
@@ -18,7 +34,10 @@ int hook_rm( unsigned int id );
 void hook_rmMisnParent( unsigned int parent );
 void hook_rmEventParent( unsigned int parent );
 
-/* 
+/* pilot hook. */
+int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
+
+/*
  * run hooks
  *
  * Currently used:
@@ -38,9 +57,9 @@ void hook_rmEventParent( unsigned int parent );
  *    - "commodity" - When visited commodity exchange
  *    - "equipment" - When visiting equipment place < br/>
  */
-int hooks_runParam( const char* stack, unsigned int pilot );
+int hooks_runParam( const char* stack, HookParam *param );
 int hooks_run( const char* stack );
-int hook_runIDparam( unsigned int id, unsigned int pilot );
+int hook_runIDparam( unsigned int id, HookParam *param );
 int hook_runID( unsigned int id ); /* runs hook of specific id */
 
 /* destroys hooks */

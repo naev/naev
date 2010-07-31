@@ -73,7 +73,7 @@ function create ()
     hook.pilot(p, "board", "board")
     hook.pilot(p, "death", "destroyevent")
     hook.enter("destroyevent")
-    hook.land("endevent")
+    hook.land("destroyevent")
 end
 
 function board()

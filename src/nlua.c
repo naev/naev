@@ -157,7 +157,7 @@ static int nlua_packfileLoader( lua_State* L )
       lua_pushfstring(L, "%s not found in ndata.", filename);
       return 1;
    }
-   
+
    /* run the buffer */
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
       /* will push the current error from the dobuffer */

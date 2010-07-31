@@ -92,7 +92,7 @@ struct Outfit_;
 /**
  * @brief Different types of existing outfits.
  *
- * Outfits are organized by the order here 
+ * Outfits are organized by the order here
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
@@ -134,10 +134,21 @@ typedef enum DamageType_ {
 typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_NULL, /**< Invalid slot type. */
    OUTFIT_SLOT_NA, /**< Slot type not applicable. */
-   OUTFIT_SLOT_LOW, /**< Low energy slot. */
-   OUTFIT_SLOT_MEDIUM, /**< Medium energy slot. */
-   OUTFIT_SLOT_HIGH /**< High energy slot. */
+   OUTFIT_SLOT_STRUCTURE, /**< Low energy slot. */
+   OUTFIT_SLOT_SYSTEMS, /**< Medium energy slot. */
+   OUTFIT_SLOT_WEAPON /**< High energy slot. */
 } OutfitSlotType;
+
+
+/**
+ * @brief Outfit slot sizes.
+ */
+typedef enum OutfitSlotSize_ {
+   OUTFIT_SLOT_SIZE_NA, /**< Not applicable slot size. */
+   OUTFIT_SLOT_SIZE_LIGHT, /**< Light slot size. */
+   OUTFIT_SLOT_SIZE_MEDIUM, /**< Medium slot size. */
+   OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
+} OutfitSlotSize;
 
 
 /**
@@ -145,6 +156,7 @@ typedef enum OutfitSlotType_ {
  */
 typedef struct OutfitSlot_ {
    OutfitSlotType type; /**< Type of outfit slot. */
+   OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;
 
 
@@ -190,7 +202,7 @@ typedef struct OutfitBeamData_ {
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
-   
+
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
    int spfx_armour; /**< special effect on hit */
@@ -332,7 +344,7 @@ typedef struct Outfit_ {
    char *typename; /**< Overrides the base type. */
 
    /* general specs */
-   OutfitSlotType slot; /**< Type of slot the outfit needs. */
+   OutfitSlot slot; /**< Slot the outfit fits into. */
    char *license; /**< Licenses needed to buy it. */
    double mass; /**< How much weapon capacity is needed. */
 
@@ -374,6 +386,7 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  */
 Outfit* outfit_get( const char* name );
 Outfit* outfit_getW( const char* name );
+Outfit* outfit_getAll( int *n );
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );
@@ -397,6 +410,9 @@ const char* outfit_getTypeBroad( const Outfit* o );
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
+const char *outfit_slotSize( const Outfit* o );
+glColour *outfit_slotSizeColour( const OutfitSlot* os );
+OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
@@ -418,6 +434,13 @@ int outfit_soundHit( const Outfit* o );
  */
 int outfit_load (void);
 void outfit_free (void);
+
+
+/*
+ * Misc.
+ */
+const char *outfit_damageTypeToStr( DamageType dmg );
+int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 
 
 #endif /* OUTFIT_H */

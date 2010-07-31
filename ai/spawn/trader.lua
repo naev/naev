@@ -31,14 +31,14 @@ function spawn_squad ()
        scom.addPilot( pilots, "Trader Gawain", 20 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Trader Mule", 45 );
-       scom.addPilot( pilots, "Trader Gawain", 20 );
+       scom.addPilot( pilots, "Trader Llama", 20 );
        scom.addPilot( pilots, "Trader Quicksilver", 20 );
-       scom.addPilot( pilots, "Trader Quicksilver", 20 );
+       scom.addPilot( pilots, "Trader Rhino", 35 );
     else
        scom.addPilot( pilots, "Trader Llama", 20 );
        scom.addPilot( pilots, "Trader Mule", 45 );
        scom.addPilot( pilots, "Trader Gawain", 20 );
-       scom.addPilot( pilots, "Trader Quicksilver", 20 );
+       scom.addPilot( pilots, "Trader Rhino", 35 );
        scom.addPilot( pilots, "Trader Quicksilver", 20 );
     end
 

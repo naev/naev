@@ -6,12 +6,6 @@
 ]]--
 
 function create ()
-    dakron = system.get("Dakron")
-    tarsus = system.get("Tarsus")
-    torg = system.get("Torg")
-    tuoladis = system.get("Tuoladis")
-    ogat = system.get("Ogat")
-    
     pilot.clear()
     pilot.toggleSpawn(false)
     
@@ -29,18 +23,8 @@ function create ()
 end
 
 function FLFSpawn ()
-    if flfwave == 1 then
-        source_system = tuoladis
-    elseif flfwave == 2 then
-        source_system = tuoladis
-    elseif flfwave == 3 then
-        source_system = dakron
-    elseif flfwave == 4 then
-        source_system = dakron
-    else
-        source_system = dakron
-    end
-    
+    source_system = system.get("Zacron")
+
     flfguys[flfwave] = {}
     flfguys[flfwave][1] = pilot.add("FLF Vendetta", nil, source_system)[1]
     flfguys[flfwave][2] = pilot.add("FLF Vendetta", nil, source_system)[1]
@@ -57,17 +41,8 @@ function FLFSpawn ()
 end
 
 function DvaeredSpawn ()
-    if dvaeredwave == 1 then
-        source_system = tarsus
-    elseif dvaeredwave == 2 then
-        source_system = tarsus
-    elseif dvaeredwave == 3 then
-        source_system = torg
-    elseif dvaeredwave == 4 then
-        source_system = torg
-    else
-        source_system = ogat
-    end
+    source_system = system.get("Doranthex")
+
     dvaeredguys[dvaeredwave] = {}
     dvaeredguys[dvaeredwave][1] = pilot.add("Dvaered Vendetta", nil, source_system)[1]
     dvaeredguys[dvaeredwave][2] = pilot.add("Dvaered Vendetta", nil, source_system)[1]

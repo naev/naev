@@ -28,6 +28,7 @@
 #include "ncompat.h"
 
 #include <limits.h>
+#include <inttypes.h>
 #include <math.h>
 
 
@@ -58,6 +59,12 @@
 #endif
 #ifndef M_SQRT2
 #  define M_SQRT2       1.41421356237309504880
+#endif
+
+
+/* I've heard talk of PRIuN being evil, so there's this sad panda here. */
+#ifndef PRIu64
+#   define PRIu64    "%ju" /**< Illegal, evil and probably eats babies  too. */
 #endif
 
 

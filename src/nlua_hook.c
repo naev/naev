@@ -122,7 +122,7 @@ void nlua_hookTarget( Mission *m, Event_t *ev )
  * @brief Removes a hook previously created.
  *
  * @usage hook.rm( h ) -- Hook is removed
- * 
+ *
  *    @luaparam h Identifier of the hook to remove.
  *    @luareturn true if the hook was removed.
  * @luafunc rm( h )
@@ -196,7 +196,7 @@ int hookL_getarg( lua_State *L, unsigned int hook )
    lua_getglobal( L, "__hook_arg" ); /* t */
    if (!lua_isnil(L,-1)) {    /* t */
       lua_pushnumber( L, hook ); /* t, k */
-      lua_gettable( L, -2 );  /* t, v */ 
+      lua_gettable( L, -2 );  /* t, v */
       lua_remove( L, -2 );    /* v */
    }
    return 0;
@@ -413,21 +413,38 @@ static int hook_timer( lua_State *L )
  * @brief Hooks the function to a specific pilot.
  *
  * You can hook to different actions.  Curently hook system only supports:<br />
- *    - "death" : triggered when pilot dies (before marked as dead). <br />
- *    - "board" : triggered when pilot is boarded.<br />
- *    - "disable" : triggered when pilot is disabled (with disable set).<br />
- *    - "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
- *    - "hail" : triggered when pilot is hailed.<br />
- *    - "land" : triggered when pilot is landing (right when starting land descent).<br />
- *    - "attacked" : triggered when the pilot is attacked in manual control <br />
- *    - "idle" : triggered when the pilot becomes idle in manual control <br />
+ * <ul>
+ *    <li> "death" : triggered when pilot dies (before marked as dead). <br />
+ *    <li> "board" : triggered when pilot is boarded.<br />
+ *    <li> "disable" : triggered when pilot is disabled (with disable set).<br />
+ *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
+ *    <li> "hail" : triggered when pilot is hailed.<br />
+ *    <li> "land" : triggered when pilot is landing (right when starting land descent).<br />
+ *    <li> "attacked" : triggered when the pilot is attacked. <br />
+ *    <li> "idle" : triggered when the pilot becomes idle in manual control.<br />
+ * </ul>
+ * <br />
+ * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
+ * <br />
+ * DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!<br />
+ * <br />
+ * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:<br />
+ * <br />
+ * function my_hook( pilot, arg )<br />
+ * end<br />
+ * <br />
+ * The combat hooks also pass the pilot acting on it, so for example the pilot
+ *  that disabled, attacked or killed the selected pilot. They have the
+ *  following format:<br />
+ * <br />
+ * function combat_hook( pilot, attacker, arg )<br />
+ * end<br />
+ * <br />
+ * Please note that in the case of disable or death hook the attacker may be nil
+ *  indicating that it was killed by other means like for example the shockwave
+ *  of a dying ship or nebula volatility.
  *
- * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:
- *
- * function my_hook( pilot, arg )
- * end
- *
- *    @luaparam pilot Pilot identifier to hook.
+ *    @luaparam pilot Pilot identifier to hook (or nil for all).
  *    @luaparam type One of the supported hook types.
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -443,7 +460,12 @@ static int hook_pilot( lua_State *L )
    char buf[ PATH_MAX ];
 
    /* Parameters. */
-   p           = luaL_checkpilot(L,1);
+   if (lua_ispilot(L,1))
+      p           = luaL_checkpilot(L,1);
+   else if (lua_isnil(L,1))
+      p           = NULL;
+   else
+      NLUA_INVALID_PARAMETER(L);
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
@@ -463,7 +485,10 @@ static int hook_pilot( lua_State *L )
    /* actually add the hook */
    snprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3 );
-   pilot_addHook( pilot_get(p->pilot), type, h );
+   if (p==NULL)
+      pilots_addGlobalHook( type, h );
+   else
+      pilot_addHook( pilot_get(p->pilot), type, h );
 
    lua_pushnumber( L, h );
    return 1;

@@ -105,7 +105,7 @@ int nlua_loadSystem( lua_State *L, int readonly )
  *    @return The LuaSystem at ind.
  */
 LuaSystem* lua_tosystem( lua_State *L, int ind )
-{     
+{
    return (LuaSystem*) lua_touserdata(L,ind);
 }
 /**
@@ -116,7 +116,7 @@ LuaSystem* lua_tosystem( lua_State *L, int ind )
  *    @return The LuaSystem at ind.
  */
 LuaSystem* luaL_checksystem( lua_State *L, int ind )
-{     
+{
    if (lua_issystem(L,ind))
       return lua_tosystem(L,ind);
    luaL_typerror(L, ind, SYSTEM_METATABLE);
@@ -148,7 +148,7 @@ LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
  *    @return 1 if there is a system at index position.
  */
 int lua_issystem( lua_State *L, int ind )
-{  
+{
    int ret;
 
    if (lua_getmetatable(L,ind)==0)
@@ -156,7 +156,7 @@ int lua_issystem( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, SYSTEM_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
    lua_pop(L, 2);  /* remove both metatables */
@@ -214,7 +214,7 @@ static int systemL_get( lua_State *L )
       p = lua_toplanet(L,1);
       sys.s = system_get( planet_getSystem( p->p->name ) );
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Error checking. */
    if(sys.s == NULL) {
@@ -358,7 +358,7 @@ static int systemL_jumpdistance( lua_State *L )
          sysp = lua_tosystem(L,2);
          goal = sysp->s->name;
       }
-      else NLUA_INVALID_PARAMETER();
+      else NLUA_INVALID_PARAMETER(L);
    }
    else
       goal = cur_system->name;
@@ -434,7 +434,7 @@ static int systemL_hasPresence( lua_State *L )
       lf = lua_tofaction(L,2);
       fct = lf->f;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Try to find a fleet of the faction. */
    found = 0;
@@ -531,7 +531,7 @@ static int systemL_presence( lua_State *L )
       else if(strcmp(cmd, "neutral") == 0)
          fct = faction_getGroup(&nfct, 2);
       else /* Invalid command string. */
-         NLUA_INVALID_PARAMETER();
+         NLUA_INVALID_PARAMETER(L);
    }
    else if (lua_isfaction(L, 2)) {
       /* A faction id was given. */
@@ -540,7 +540,7 @@ static int systemL_presence( lua_State *L )
       fct    = malloc(sizeof(int) * nfct);
       fct[0] = lf->f;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Add up the presence values. */
    presence = 0;

@@ -87,9 +87,6 @@ Press yes to abort the tutorial, or no to continue it.]]
    osd_msg   = {}
    osd_title[1] = "Tutorial - Landing Tabs"
    osd_msg[1] = "Visit the: %s %s %s %s %s %s"
-   osd_msg[2] = { "Foo!"
-   }
-   
 end
 
 function create()

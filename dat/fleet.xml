@@ -83,6 +83,13 @@
    <pilot ship="Koala"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Trader Rhino">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot ship="Rhino"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trader Mule">
   <ai>trader</ai>
   <faction>Trader</faction>
@@ -193,6 +200,13 @@
    <pilot ship="Hyena"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Pirate Shark">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Shark" ship="Pirate Shark"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Pirate Admonisher">
   <ai>pirate</ai>
   <faction>Pirate</faction>
@@ -212,6 +226,13 @@
   <faction>Pirate</faction>
   <pilots>
    <pilot name="Ancestor" ship="Pirate Ancestor"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Rhino">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Rhino" ship="Pirate Rhino"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Kestrel">
@@ -264,6 +285,46 @@
    <pilot ship="Drone"></pilot>
    <pilot ship="Drone"></pilot>
    <pilot ship="Drone"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sirius Fidelity">
+  <ai>empire</ai>
+  <faction>Sirius</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Fidelity" ship="Sirius Fidelity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sirius Preacher">
+  <ai>empire</ai>
+  <faction>Sirius</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Preacher" ship="Sirius Preacher"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sirius Divinity">
+  <ai>empire</ai>
+  <faction>Sirius</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Divinity" ship="Sirius Divinity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sirius Dogma">
+  <ai>empire</ai>
+  <faction>Sirius</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Dogma" ship="Sirius Dogma"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Vendetta">
@@ -343,6 +404,16 @@
    <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
    <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
    <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Shark">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Shark" ship="Empire Shark"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lancelot">

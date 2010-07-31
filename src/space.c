@@ -331,7 +331,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
    /* Calculate offset from target position. */
    a = 2*M_PI - jp->angle;
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-  
+
    /* Calculate new position. */
    x += d*cos(a);
    y += d*sin(a);
@@ -458,10 +458,42 @@ int space_sysReachable( StarSystem *sys )
  *    @param[out] Number of star systems gotten.
  *    @return The star systems gotten.
  */
-const StarSystem* system_getAll( int *nsys )
+StarSystem* system_getAll( int *nsys )
 {
    *nsys = systems_nstack;
    return systems_stack;
+}
+
+
+/**
+ * @brief Checks to see if a system exists.
+ *
+ *    @param sysname Name of the system to match.
+ *    @return 1 if the system exists.
+ */
+int system_exists( const char* sysname )
+{
+   int i;
+   for (i=0; i<systems_nstack; i++)
+      if (strcmp(sysname, systems_stack[i].name)==0)
+         return 1;
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if a system exists case insensitively.
+ *
+ *    @param sysname Name of the system to match (case insensitive).
+ *    @return The actual name of the system of NULL if not found.
+ */
+const char *system_existsCase( const char* sysname )
+{
+   int i;
+   for (i=0; i<systems_nstack; i++)
+      if (strcasecmp(sysname, systems_stack[i].name)==0)
+         return systems_stack[i].name;
+   return NULL;
 }
 
 
@@ -610,6 +642,22 @@ int planet_exists( const char* planetname )
 
 
 /**
+ * @brief Check to see if a planet exists (case insensitive).
+ *
+ *    @param planetname Name of the planet to see if it exists.
+ *    @return The actual name of the planet or NULL if not found.
+ */
+const char* planet_existsCase( const char* planetname )
+{
+   int i;
+   for (i=0; i<planet_nstack; i++)
+      if (strcasecmp(planet_stack[i].name,planetname)==0)
+         return planet_stack[i].name;
+   return NULL;
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
@@ -712,7 +760,7 @@ static void system_scheduler( double dt, int init )
             pilot->presence = lua_tonumber(L,-1);
             p->curUsed     += pilot->presence;
             lua_pop(L,2); /* tk, k */
-         }          
+         }
       }
       lua_pop(L,2); /* Clear arguments. */
    }
@@ -871,7 +919,7 @@ void space_initStars( int n )
 void space_init ( const char* sysname )
 {
    char* nt;
-   int i, n;
+   int i, n, s;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -955,9 +1003,12 @@ void space_init ( const char* sysname )
    /* Simulate system. */
    pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
+   s = sound_disabled;
+   sound_disabled = 1;
    n = SYSTEM_SIMULATE_TIME / fps_min;
    for (i=0; i<n; i++)
       update_routine( fps_min );
+   sound_disabled = s;
    player_messageToggle( 1 );
    pilot_rmFlag( player.p, PILOT_INVISIBLE );
 }
@@ -1058,7 +1109,7 @@ void space_gfxLoad( StarSystem *sys )
    Planet *planet;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      
+
       if (planet->real != ASSET_REAL)
          continue;
 
@@ -1102,7 +1153,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    unsigned int flags;
    SDL_RWops *rw;
    npng_t *npng;
-   int w, h;
+   png_uint_32 w, h;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1736,7 +1787,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          cur2 = cur->xmlChildrenNode;
          do {
             if (xml_isNode(cur2,"autopos"))
-               j->flags |= JP_AUTOPOS; 
+               j->flags |= JP_AUTOPOS;
          } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));
@@ -1975,7 +2026,6 @@ void space_renderStars( const double dt )
    /* Do some scaling for now. */
    gl_cameraZoomGet( &z );
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
       gl_matrixScale( z, z );
 
@@ -2516,7 +2566,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
-      WARN("q is empty after getting adjancies of %s.", sys->name);
+      /* Means system isn't connected. */
+      /*WARN("q is empty after getting adjancies of %s.", sys->name);*/
       q_destroy(q);
       q_destroy(qn);
       presenceCleanup(sys);

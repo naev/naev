@@ -208,7 +208,7 @@ double randfp (void)
  *
  *  N(x) =  1 - n(x)*(b1*t + b2*t^2 + b3*t^3 + b4*t^4 + b5*t^5) + Err
  *  where t = 1 / (1 + 0.2316419*x)
- *  
+ *
  * Maximum absolute error is 7.5e^-8.
  *
  *    @param x Value to calculate the normal of.

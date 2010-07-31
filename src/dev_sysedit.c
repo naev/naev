@@ -567,7 +567,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
    mod = SDL_GetModState();
 
    switch (event->type) {
-      
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -926,10 +926,10 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   uint32_t nfiles, i;
+   uint32_t nfiles, i, j;
    char *path, buf[PATH_MAX];
-   char **files;
-   glTexture **tex;
+   char **files, **png_files;
+   glTexture **tex, *t;
    int w, h;
    Planet *p;
 
@@ -952,17 +952,26 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
    /* Find images first. */
    path           = PLANET_GFX_PATH;
    files          = ndata_list( path, &nfiles );
+   png_files      = malloc( sizeof(char*) * nfiles );
    tex            = malloc( sizeof(glTexture*) * nfiles );
    sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );
-   sysedit_ntex   = nfiles;
+   j              = 0;
    for (i=0; i<nfiles; i++) {
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
-      tex[i]         = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
-      sysedit_tex[i] = tex[i];
+      t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+      if (t != NULL) {
+         tex[j]         = t;
+         sysedit_tex[j] = tex[j];
+         png_files[j]   = strdup( files[i] );
+         j++;
+      }
+      free( files[i] );
    }
+   free( files );
+   sysedit_ntex   = j;
 
    /* Add image array. */
-   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, files, nfiles, NULL, NULL );
+   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, png_files, j, NULL, NULL );
    toolkit_setImageArray( wid, "iarGFX", p->gfx_spacePath );
 }
 
@@ -990,7 +999,7 @@ static void sysedit_btnEditApply( unsigned int wid, char *wgt )
 {
    Planet *p;
    char *str, buf[PATH_MAX];
-  
+
    /* Comfort. */
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 

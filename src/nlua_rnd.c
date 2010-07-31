@@ -85,12 +85,12 @@ int nlua_loadRnd( lua_State *L )
  * @luafunc rnd( x, y )
  */
 static int rnd_int( lua_State *L )
-{  
+{
    int o;
    int l,h;
-   
+
    o = lua_gettop(L);
-   
+
    if (o==0)
       lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
    else if (o==1) { /* random int 0 <= x <= parameter */
@@ -102,8 +102,8 @@ static int rnd_int( lua_State *L )
       h = luaL_checkint(L,2);
       lua_pushnumber(L, RNG(l,h));
    }
-   else NLUA_INVALID_PARAMETER();
-   
+   else NLUA_INVALID_PARAMETER(L);
+
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
 /**

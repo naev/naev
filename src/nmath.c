@@ -43,3 +43,29 @@ int nmath_solve2Eq( double results[2], double a, double b, double c )
    return 0;
 }
 
+
+/**
+ * @brief Returns the maximum of 3 values.
+ */
+double max3( double v1, double v2, double v3 )
+{
+   double max;
+
+   max = (v1 > v2) ? v1 : v2;
+   max = (max > v3) ? max : v3;
+   return(max);
+}
+
+
+/**
+ * @brief Returns the minimum of 3 values.
+ */
+double min3( double v1, double v2, double v3 )
+{
+   double min;
+
+   min = (v1 < v2) ? v1 : v2;
+   min = (min < v3) ? min : v3;
+   return(min);
+}
+

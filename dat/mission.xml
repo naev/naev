@@ -350,7 +350,7 @@
   <avail>
    <priority>4</priority>
    <cond>player.getRating() &gt; 15</cond>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
@@ -456,6 +456,17 @@
    <chance>20</chance>
    <location>Bar</location>
    <cond>system.get("Ogat"):jumpDist() == 4 and player.fuel() &gt;= 400</cond>
+  </avail>
+ </mission>
+ <mission name="Hitman">
+  <lua>pirate/hitman</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.get("Alteris") and player.getRating() &gt; 20</cond>
   </avail>
  </mission>
 </Missions>

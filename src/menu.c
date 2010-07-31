@@ -87,6 +87,7 @@ static void exit_game (void);
 static void menu_death_continue( unsigned int wid, char* str );
 static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
+static void menu_death_close( unsigned int wid, char* str );
 /* options button. */
 static void menu_options_button( unsigned int wid, char *str );
 
@@ -115,19 +116,16 @@ void menu_main (void)
       offset_logo = SCREEN_W - tex->sh;
       offset_wdw  = 0;
    }
-   else {
+   else if (freespace > 200.) {
       /* We'll want a maximum seperation of 30 between logo and text. */
-      if (freespace/3 > 25) {
-         freespace -= 25;
-         offset_logo = -25;
-         /*offset_wdw  = -25 - tex->sh - 25;*/
-         offset_wdw  = -1;
-      }
-      /* Otherwise space evenly. */
-      else {
-         offset_logo = -freespace/3;
-         offset_wdw  = freespace/3;
-      }
+      freespace  -=  25;
+      offset_logo = -25;
+      offset_wdw  = -1.;
+   }
+   /* Otherwise space evenly. */
+   else {
+      offset_logo = -freespace/4;
+      offset_wdw  = freespace/2;
    }
 
    /* create background image window */
@@ -281,7 +279,7 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
 {
    (void) str;
 
-   /* 
+   /*
     * Ugly hack to prevent player.c from segfaulting due to the fact
     * that game will attempt to render while waiting for the quit event
     * pushed by exit_game() to be handled without actually having a player
@@ -327,7 +325,7 @@ void menu_small (void)
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
+   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_small_exit );
 
    menu_Open(MENU_SMALL);
@@ -350,7 +348,7 @@ static void menu_small_exit( unsigned int wid, char* str )
 {
    (void) str;
    unsigned int info_wid;
-   
+
    /* if landed we must save anyways */
    if (landed) {
       save_all();
@@ -423,8 +421,9 @@ static void menu_death_restart( unsigned int wid, char* str )
 void menu_death (void)
 {
    unsigned int wid;
-   
+
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+   window_onClose( wid, menu_death_close );
 
    /* Propose the player to continue if the samegame exist, if not, propose to restart */
    char path[PATH_MAX];
@@ -459,6 +458,15 @@ static void menu_death_main( unsigned int wid, char* str )
 
    /* Game will repause now since toolkit closes and reopens. */
    menu_main();
+}
+/**
+ * @brief Hack to get around the fact the death menu unpauses the game.
+ */
+static void menu_death_close( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   pause_game(); /* Repause the game. */
 }
 
 

@@ -129,7 +129,7 @@ static void info_close( unsigned int wid, char* str )
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[128], **buf, creds[32];
+   char str[128], **buf, creds[ECON_CRED_STRLEN];
    char **licenses;
    int nlicenses;
    int i;
@@ -152,7 +152,7 @@ static void info_openMain( unsigned int wid )
          "Fuel:"
          );
    credits2str( creds, player.p->credits, 2 );
-   snprintf( str, 128, 
+   snprintf( str, 128,
          "%s\n"
          "%s\n"
          "%s\n"
@@ -390,7 +390,7 @@ static void cargo_jettison( unsigned int wid, char* str )
 
    /* Special case mission cargo. */
    if (player.p->commodities[pos].id != 0) {
-      if (!dialogue_YesNo( "Abort Mission", 
+      if (!dialogue_YesNo( "Abort Mission",
                "Are you sure you want to abort this mission?" ))
          return;
 
@@ -419,7 +419,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Now clean up mission. */
       if (ret != 2) {
          mission_cleanup( misn );
-         memmove( misn, &player_missions[i+1], 
+         memmove( misn, &player_missions[i+1],
                sizeof(Mission) * (MISSION_MAX-i-1) );
          memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
       }
@@ -580,7 +580,7 @@ static void info_openMissions( unsigned int wid )
    window_addButton( wid, -20, 40 + BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", "Abort",
          mission_menu_abort );
-   
+
    /* text */
    window_addText( wid, 300+40, -60,
          200, 40, 0, "txtSReward",
@@ -620,7 +620,7 @@ static void mission_menu_genList( unsigned int wid, int first )
       if (player_missions[i].id != 0)
          misn_names[j++] = (player_missions[i].title!=NULL) ? strdup(player_missions[i].title) : NULL;
    if (j==0) { /* no missions */
-      misn_names[0] = strdup("No Missions");                              
+      misn_names[0] = strdup("No Missions");
       j = 1;
    }
    window_addList( wid, 20, -40,
@@ -672,7 +672,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
 
    selected_misn = toolkit_getList( wid, "lstMission" );
 
-   if (dialogue_YesNo( "Abort Mission", 
+   if (dialogue_YesNo( "Abort Mission",
             "Are you sure you want to abort this mission?" )) {
 
       /* Get the mission. */
@@ -685,7 +685,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
       /* Now clean up mission. */
       if (ret != 2) {
          mission_cleanup( misn );
-         memmove( misn, &player_missions[pos+1], 
+         memmove( misn, &player_missions[pos+1],
                sizeof(Mission) * (MISSION_MAX-pos-1) );
          memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
       }

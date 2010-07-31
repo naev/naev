@@ -53,11 +53,12 @@ static void board_update( unsigned int wdw );
  * Creates the window on success.
  */
 void player_board (void)
-{  
+{
    Pilot *p;
    unsigned int wdw;
    char c;
-   
+   HookParam hparam[2];
+
 
    if (player.p->target==PLAYER_ID) {
       player_message("\erYou need a target to board first!");
@@ -102,7 +103,7 @@ void player_board (void)
 
 
    /* pilot will be boarded */
-   pilot_setFlag(p,PILOT_BOARDED); 
+   pilot_setFlag(p,PILOT_BOARDED);
    player_message("\epBoarding ship \e%c%s\e0.", c, p->name);
 
 
@@ -138,7 +139,10 @@ void player_board (void)
    /*
     * run hook if needed
     */
-   hooks_runParam( "board", p->id );
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "board", hparam );
    pilot_runHook(p, PILOT_HOOK_BOARD);
 
    if (board_stopboard) {
@@ -290,7 +294,7 @@ static int board_trySteal( Pilot *p )
       return 1;
 
    /* See if was successful. */
-   if (RNGF() > (0.5 * 
+   if (RNGF() > (0.5 *
             (10. + (double)target->ship->crew)/(10. + (double)p->ship->crew)))
       return 0;
 
@@ -341,7 +345,7 @@ static void board_update( unsigned int wdw )
 {
    int i, j;
    char str[PATH_MAX];
-   char cred[32];
+   char cred[ECON_CRED_STRLEN];
    Pilot* p;
 
    p = pilot_get(player.p->target);
@@ -367,13 +371,13 @@ static void board_update( unsigned int wdw )
    else
       j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
 
-   window_modifyText( wdw, "txtData", str ); 
+   window_modifyText( wdw, "txtData", str );
 }
 
 
 /**
  * @brief Has a pilot attempt to board another pilot.
- * 
+ *
  *    @param p Pilot doing the boarding.
  *    @return 1 if target was boarded.
  */

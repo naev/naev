@@ -11,6 +11,9 @@
 #include <stdint.h>
 
 
+#define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
+
+
 /**
  * @struct Commodity
  *
@@ -44,7 +47,7 @@ int economy_refresh (void);
 void economy_destroy (void);
 
 
-/* 
+/*
  * Misc stuff.
  */
 void credits2str( char *str, uint64_t credits, int decimals );

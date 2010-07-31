@@ -356,7 +356,7 @@ const news_t *news_generate( int *ngen, int n )
    /* str, t */
 
    /* Check to see if it's valid. */
-   if (!lua_isstring(L, -2) || !lua_istable(L, -1)) { 
+   if (!lua_isstring(L, -2) || !lua_istable(L, -1)) {
       WARN("News generated invalid output!");
       lua_pop(L,2);
       return NULL;
@@ -396,7 +396,7 @@ const news_t *news_generate( int *ngen, int n )
    news_nbuf   = i;
    if (ngen != NULL)
       (*ngen)  = news_nbuf;
-   
+
    return news_buf;
 }
 

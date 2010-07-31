@@ -21,7 +21,7 @@
  *     1.2.3) File MD5 (16 byte char*)
  *   1.3) EOF
  *
- * 
+ *
  * Program Overview:
  *
  *   2.1) Write Magic Number and Number of Files (1.1 and 1.2 above)
@@ -373,7 +373,7 @@ int pack_check( const char* filename )
    int ret;
    char *buf;
    uint64_t end64;
-   
+
    buf = malloc(sizeof(magic));
 
    /* Must convert magic. */
@@ -452,7 +452,7 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
    uint32_t end32;
    uint64_t end64;
 
-   
+
    for (namesize=0,i=0; i < nfiles; i++) { /* make sure files exist before writing */
 #if HAS_FD
       if (stat(infiles[i], &file)) {
@@ -610,7 +610,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
       fseek( file->fp, 4, SEEK_CUR );
 #endif /* HAS_FD */
    }
-   
+
    if (file->start) { /* go to the beginning of the file */
 #if HAS_FD
       if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {

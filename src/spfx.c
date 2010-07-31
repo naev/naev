@@ -468,7 +468,7 @@ void spfx_begin( const double dt )
 
          if (VMOD(shake_pos) > shake_rad) { /* change direction */
             vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
-            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, 
+            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad,
                   -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
          }
 
@@ -478,7 +478,7 @@ void spfx_begin( const double dt )
             shake_rad = 0.;
 
          x = shake_pos.x;
-         y = shake_pos.y;  
+         y = shake_pos.y;
       }
       else {
          shake_rad = 0.;
@@ -493,7 +493,6 @@ void spfx_begin( const double dt )
    }
 
    /* set the new viewport */
-   glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
 }
@@ -519,7 +518,7 @@ void spfx_end (void)
  * @brief Increases the current rumble level.
  *
  * Rumble will decay over time.
- * 
+ *
  *    @param mod Modifier to increase level by.
  */
 void spfx_shake( double mod )
@@ -668,7 +667,7 @@ void spfx_render( const int layer )
    int sx, sy;
    double time;
 
-   
+
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
@@ -698,9 +697,9 @@ void spfx_render( const int layer )
          time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
          spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
       }
-      
+
       /* Renders */
-      gl_blitSprite( effect->gfx, 
+      gl_blitSprite( effect->gfx,
             VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
             spfx_stack[i].lastframe % sx,
             spfx_stack[i].lastframe / sx,

@@ -31,12 +31,12 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="7"   y="0" h="1" />
-   <high x="-3"  y="0" h="2" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="7"   y="0" h="1" />
+   <weapon x="-3"  y="0" h="2" />
+   <systems/>
+   <systems/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Hyena">
@@ -69,11 +69,11 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="-3" />
-   <high x="15" y="0" h="-3" />
-   <high x="0"  y="0" h="0" />
-   <medium/>
-   <low/>
+   <weapon x="15" y="0" h="-3" />
+   <weapon x="15" y="0" h="-3" />
+   <weapon x="0"  y="0" h="0" />
+   <systems/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Schroedinger">
@@ -106,12 +106,12 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="9" y="0" h="-2" />
-   <medium/>
-   <medium/>
-   <medium/>
-   <medium/>
-   <low/>
+   <weapon x="9" y="0" h="-2" />
+   <systems>medium</systems>
+   <systems/>
+   <systems/>
+   <systems/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Gawain">
@@ -144,13 +144,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="-2" />
-   <high x="-5" y="0" h="1" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="-2" />
+   <weapon x="-5" y="0" h="1" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Drone">
@@ -183,11 +183,11 @@
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
-   <high x="5" y="0" h="-5" />
-   <high x="5" y="0" h="-5" />
-   <high x="5" y="0" h="-5" />
-   <medium/>
-   <low/>
+   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5" />
+   <systems/>
+   <structure/>
   </slots>
  </ship>
  <!-- Cargo Haulers -->
@@ -221,14 +221,14 @@
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>
-   <high x="11" y="0" h="-7" />
-   <high x="-5" y="0" h="3" />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="11" y="0" h="-7" />
+   <weapon x="-5" y="0" h="3" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Quicksilver">
@@ -247,7 +247,7 @@
   </movement>
   <health>
    <shield>200</shield>
-   <armour>120</armour>
+   <armour>140</armour>
    <energy>580</energy>
    <shield_regen>120</shield_regen>
    <armour_regen>0</armour_regen>
@@ -261,18 +261,105 @@
    <cap_cargo>45</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="5" />
-   <high x="-10" y="-3" h="0" />
-   <high x="-10" y="3" h="0" />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0" h="5" />
+   <weapon x="-10" y="-3" h="0" />
+   <weapon x="-10" y="3" h="0" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
   </slots>
   <stats>
    <jump_delay>-25</jump_delay>
   </stats>
+ </ship>
+ <ship name="Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <license>Large Civilian Vessel License</license>
+  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
+  <movement>
+   <thrust>110</thrust>
+   <turn>70</turn>
+   <speed>140</speed>
+  </movement>
+  <health>
+   <shield>480</shield>
+   <armour>520</armour>
+   <energy>970</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2600</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>11</crew>
+   <mass>950</mass>
+   <fuel>500</fuel>
+   <cap_cargo>160</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25"  y="-3" h="4" >heavy</weapon>
+   <weapon x="25"  y="3" h="4" >heavy</weapon>
+   <weapon x="-15" y="-3" h="4" />
+   <weapon x="-15"  y="3" h="4" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Pirate Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
+  <movement>
+   <thrust>115</thrust>
+   <turn>75</turn>
+   <speed>150</speed>
+  </movement>
+  <health>
+   <shield>480</shield>
+   <armour>460</armour>
+   <energy>970</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2600</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>10</crew>
+   <mass>920</mass>
+   <fuel>500</fuel>
+   <cap_cargo>160</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25"  y="-3" h="4" >heavy</weapon>
+   <weapon x="25"  y="3" h="4" >heavy</weapon>
+   <weapon x="-15" y="-3" h="4" />
+   <weapon x="-15"  y="3" h="4" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
  </ship>
  <ship name="Mule">
   <base_type>Mule</base_type>
@@ -305,18 +392,18 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="0" h="0" />
-   <high x="-15" y="0" h="4" />
-   <high x="15"  y="0" h="4" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="25"  y="0" h="0" >heavy</weapon>
+   <weapon x="-15" y="0" h="4" />
+   <weapon x="15"  y="0" h="4" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Fighters -->
@@ -350,13 +437,173 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="10" y="0" h="0" />
-   <high x="0" y="-4" h="-3" />
-   <high x="0" y="4" h="-3" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="10" y="0" h="0" />
+   <weapon x="0" y="-4" h="-3" />
+   <weapon x="0" y="4" h="-3" />
+   <systems/>
+   <systems/>
+   <structure/>
+   <structure/>
+  </slots>
+ </ship>
+ <ship name="Sirius Fidelity">
+  <base_type>Fidelity</base_type>
+  <GFX>fidelity</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>350000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
+  <movement>
+   <thrust>260</thrust>
+   <turn>130</turn>
+   <speed>280</speed>
+  </movement>
+  <health>
+   <shield>220</shield>
+   <armour>160</armour>
+   <energy>650</energy>
+   <shield_regen>140</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1500</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>35</cpu>
+   <crew>2</crew>
+   <mass>95</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="10" y="-2" h="0" />
+   <weapon x="10" y="2" h="0" />
+   <weapon x="0" y="-4" h="-3" />
+   <weapon x="0" y="4" h="-3" />
+   <systems/>
+   <systems/>
+   <structure/>
+   <structure/>
+  </slots>
+ </ship>
+ <ship name="Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Light Combat Vessel License</license>
+  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot,  it's still an effective addition to any fleet.</description>
+  <movement>
+   <thrust>250</thrust>
+   <turn>145</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>86</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Pirate Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
+  <movement>
+   <thrust>240</thrust>
+   <turn>140</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>90</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Empire Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark_empire</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Light Combat Vessel License</license>
+  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot,  it's still an effective addition to any fleet.</description>
+  <movement>
+   <thrust>250</thrust>
+   <turn>145</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>86</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Lancelot">
@@ -390,15 +637,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="-3" y="0" h="2" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" >medium</weapon>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="-3" y="0" h="2" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Lancelot">
@@ -432,15 +679,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="-3" y="0" h="2" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" >medium</weapon>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="-3" y="0" h="2" />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Vendetta">
@@ -474,14 +721,14 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Vendetta">
@@ -514,14 +761,14 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Vendetta">
@@ -554,14 +801,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Ancestor">
@@ -595,13 +842,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <systems />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Ancestor">
@@ -635,13 +882,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <systems />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Ancestor">
@@ -674,16 +921,60 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <systems />
+   <systems />
+   <structure />
   </slots>
  </ship>
  <!-- Corvettes -->
+ <ship name="Sirius Preacher">
+  <base_type>Preacher</base_type>
+  <GFX sx="10" sy="10">preacher</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>720000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>100</turn>
+   <speed>220</speed>
+  </movement>
+  <health>
+   <shield>450</shield>
+   <armour>300</armour>
+   <energy>960</energy>
+   <shield_regen>220</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2450</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>55</cpu>
+   <crew>11</crew>
+   <mass>280</mass>
+   <fuel>400</fuel>
+   <cap_cargo>20</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="15" y="1"  h="2" />
+   <weapon x="15" y="-1"  h="2" />
+   <weapon x="-9" y="-10" h="2" />
+   <weapon x="-9" y="10"  h="2" />
+   <weapon x="-9"  y="-3"  h="2" >light</weapon>
+   <weapon x="-9"  y="3" h="2" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+  </slots>
+ </ship>
  <ship name="Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher</GFX>
@@ -715,17 +1006,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Admonisher">
@@ -758,17 +1049,17 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Admonisher">
@@ -802,17 +1093,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <systems />
+   <systems />
+   <systems>light</systems>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Vigilance">
@@ -846,19 +1137,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" />
-	<high x="28"  y="3"   h="-0" />
-   <high x="10"   y="-3"  h="2" />
-   <high x="10"   y="3"   h="2" />
-   <high x="-22" y="-8" h="-0" />
-   <high x="-22" y="8"  h="-0" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
+	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
+   <weapon x="10"   y="-3"  h="2" />
+   <weapon x="10"   y="3"   h="2" />
+   <weapon x="-22" y="-8" h="-0" />
+   <weapon x="-22" y="8"  h="-0" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Vigilance">
@@ -892,19 +1183,62 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" />
-	<high x="28"  y="3"   h="-0" />
-   <high x="10"   y="-3"  h="2" />
-   <high x="10"   y="3"   h="2" />
-   <high x="-22" y="-8" h="-0" />
-   <high x="-22" y="8"  h="-0" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
+	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
+   <weapon x="10"   y="-3"  h="2" />
+   <weapon x="10"   y="3"   h="2" />
+   <weapon x="-22" y="-8" h="-0" />
+   <weapon x="-22" y="8"  h="-0" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Sirius Divinity">
+  <base_type>Divinity</base_type>
+  <GFX sx="10" sy="10">divinity</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Destroyer</class>
+  <price>1300000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>The Divinity excels at interdiction against lighter targets given its high speed relative to other light capital ships. However, this advantage is not without drawbacks; the Divinity's high mobility comes at the cost of reduced firepower relative to other destroyer-class vessels.</description>
+  <movement>
+   <thrust>175</thrust>
+   <turn>80</turn>
+   <speed>190</speed>
+  </movement>
+  <health>
+   <shield>580</shield>
+   <armour>460</armour>
+   <energy>1300</energy>
+   <shield_regen>260</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>3000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>75</cpu>
+   <crew>15</crew>
+   <mass>640</mass>
+   <fuel>400</fuel>
+   <cap_cargo>25</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="20"  y="0"   h="0" >heavy</weapon>
+   <weapon x="10"   y="0"  h="0" />
+   <weapon x="-10" y="0" h="0" />
+   <weapon x="-20" y="0"  h="0" />
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Proteron Kahan">
@@ -938,18 +1272,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="0"   h="5" />
-	<high x="18"  y="0"   h="5" />
-   <high x="-30" y="-8" h="3" />
-   <high x="-30" y="8"  h="3" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="0"   h="5" >heavy</weapon>
+	<weapon x="18"  y="0"   h="5" >heavy</weapon>
+   <weapon x="-30" y="-8" h="3" />
+   <weapon x="-30" y="8"  h="3" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pacifier">
@@ -983,18 +1317,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="-15" y="-10" h="-10">heavy</weapon>
+   <weapon x="-15" y="10"  h="-10">heavy</weapon>
+   <weapon x="20"  y="0"   h="-10" />
+   <weapon x="4"   y="-5"  h="-10" />
+   <weapon x="4"   y="5"   h="-10" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Pacifier">
@@ -1028,18 +1362,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="-15" y="-10" h="-10">heavy</weapon>
+   <weapon x="-15" y="10"  h="-10">heavy</weapon>
+   <weapon x="20"  y="0"   h="-10" />
+   <weapon x="4"   y="-5"  h="-10" />
+   <weapon x="4"   y="5"   h="-10" />
+   <systems>heavy</systems>
+   <systems>heavy</systems>
+   <systems />
+   <systems />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Cruisers -->
@@ -1074,21 +1408,21 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <weapon x="-24" y="-8"  h="8" >medium</weapon>
+   <weapon x="-24" y="8"   h="8" >medium</weapon>
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems>medium</systems>
+   <structure />
+   <structure />
+   <structure />
+   <structure>medium</structure>
   </slots>
  </ship>
  <ship name="Pirate Kestrel">
@@ -1121,21 +1455,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <weapon x="-24" y="-8"  h="8" >medium</weapon>
+   <weapon x="-24" y="8"   h="8" >medium</weapon>
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems>medium</systems>
+   <structure />
+   <structure />
+   <structure />
+   <structure>medium</structure>
   </slots>
  </ship>
  <ship name="Proteron Archimedes">
@@ -1169,24 +1503,24 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="0" />
-   <high x="25"  y="-4"  h="0" />
-   <high x="25"  y="4"  h="0" />
-   <high x="0"  y="-6" h="2" />
-   <high x="0"  y="6"  h="2" />
-   <high x="-25" y="-8"  h="3" />
-   <high x="-25" y="8"  h="3" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="0" />
+   <weapon x="25"  y="-4"  h="0" />
+   <weapon x="25"  y="4"  h="0" />
+   <weapon x="0"  y="-6" h="2" />
+   <weapon x="0"  y="6"  h="2" />
+   <weapon x="-25" y="-8"  h="3" />
+   <weapon x="-25" y="8"  h="3" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Hawking">
@@ -1220,23 +1554,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Hawking">
@@ -1270,23 +1604,72 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Sirius Dogma">
+  <base_type>Dogma</base_type>
+  <GFX sx="12" sy="12">dogma</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>8300000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is surpassed only by House Goddard's eponymous flagship and Nexus Shipyards' Peacemaker.</description>
+  <movement>
+   <thrust>50</thrust>
+   <turn>55</turn>
+   <speed>65</speed>
+  </movement>
+  <health>
+   <shield>1400</shield>
+   <armour>700</armour>
+   <energy>3100</energy>
+   <shield_regen>340</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>5300</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>160</cpu>
+   <crew>43</crew>
+   <mass>4200</mass>
+   <fuel>400</fuel>
+   <cap_cargo>60</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="0" h="3" />
+   <weapon x="0"   y="0"  h="4" />
+   <weapon x="-15" y="0"  h="6" />
+   <weapon x="-33" y="0"  h="6" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Goddard">
@@ -1320,24 +1703,24 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2" />
-   <high x="-10" y="13"  h="2" />
-   <high x="-15" y="-25" h="3" />
-   <high x="-15" y="25"  h="3" />
-   <high x="16"  y="0" h="3" />
-   <high x="0"   y="0" h="5" />
-   <high x="-20" y="0" h="5" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-10" y="-13" h="2" />
+   <weapon x="-10" y="13"  h="2" />
+   <weapon x="-15" y="-25" h="3" />
+   <weapon x="-15" y="25"  h="3" />
+   <weapon x="16"  y="0" h="3" />
+   <weapon x="0"   y="0" h="5" />
+   <weapon x="-20" y="0" h="5" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Goddard">
@@ -1371,24 +1754,24 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2" />
-   <high x="-10" y="13"  h="2" />
-   <high x="-15" y="-25" h="3" />
-   <high x="-15" y="25"  h="3" />
-   <high x="16"  y="0" h="3" />
-   <high x="0"   y="0" h="5" />
-   <high x="-20" y="0" h="5" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-10" y="-13" h="2" />
+   <weapon x="-10" y="13"  h="2" />
+   <weapon x="-15" y="-25" h="3" />
+   <weapon x="-15" y="25"  h="3" />
+   <weapon x="16"  y="0" h="3" />
+   <weapon x="0"   y="0" h="5" />
+   <weapon x="-20" y="0" h="5" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Peacemaker">
@@ -1422,26 +1805,26 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->
@@ -1475,26 +1858,26 @@
    <cap_cargo>100</cap_cargo>
   </characteristics>
   <slots>
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <systems />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Special craft, mainly used for missioning purposes. -->

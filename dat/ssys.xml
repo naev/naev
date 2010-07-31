@@ -349,7 +349,9 @@
    <x>570.000000</x>
    <y>100.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Doeston">
     <pos x="-1836.273680" y="-2979.613896"/>
@@ -3690,7 +3692,9 @@
    <x>501.000000</x>
    <y>117.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Arandon">
     <pos x="3398.376141" y="-837.281078"/>
@@ -3943,7 +3947,9 @@
    <x>594.000000</x>
    <y>185.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Arandon">
     <pos x="-951.051746" y="-3368.308266"/>
@@ -5134,7 +5140,9 @@
    <x>617.000000</x>
    <y>45.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Doeston">
     <pos x="-3343.050642" y="-1036.345699"/>
@@ -5602,7 +5610,9 @@
    <x>648.000000</x>
    <y>120.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Unpresence</asset>
+  </assets>
   <jumps>
    <jump target="Arandon">
     <pos x="-3390.323531" y="-869.313726"/>

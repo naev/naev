@@ -120,7 +120,7 @@ int nlua_loadPlayer( lua_State *L, int readonly )
    else
       luaL_register(L, "player", playerL_cond_methods);
    return 0;
-}  
+}
 
 
 /**
@@ -217,7 +217,7 @@ static int playerL_modFaction( lua_State *L )
    double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    mod = luaL_checknumber(L,2);
    faction_modPlayer( f, mod );
@@ -239,7 +239,7 @@ static int playerL_modFactionRaw( lua_State *L )
    double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
    mod = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, mod );
 
@@ -258,7 +258,7 @@ static int playerL_getFaction( lua_State *L )
    int f;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, faction_getPlayer(f));
 
@@ -392,7 +392,7 @@ static int playerL_takeoff( lua_State *L )
  * @brief Gets the free cargo space the player has.
  *
  *    @luareturn The free cargo space in tons of the player.
- * @brief cargoFree()
+ * @luafunc cargoFree()
  */
 static int playerL_cargoFree( lua_State *L )
 {
@@ -532,7 +532,7 @@ static int playerL_addOutfit( lua_State *L  )
  * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
  *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it.
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
  * @luafunc addShip( ship, name )
  */
 static int playerL_addShip( lua_State *L )
@@ -549,7 +549,10 @@ static int playerL_addShip( lua_State *L )
 
    /* Handle parameters. */
    str  = luaL_checkstring(L, 1);
-   name = luaL_checkstring(L, 2);
+   if (lua_isstring(L, 2))
+      name = lua_tostring(L, 2);
+   else
+      name = str;
 
    /* Get ship. */
    s = ship_get(str);
@@ -649,7 +652,13 @@ static int playerL_teleport( lua_State *L )
    else if (lua_isstring(L,1))
       name = lua_tostring(L,1);
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Check if system exists. */
+   if (!system_exists( name )) {
+      NLUA_ERROR( L, "System '%s' does not exist.", name );
+      return 0;
+   }
 
    /* Jump out hook is run first. */
    hooks_run( "jumpout" );

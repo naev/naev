@@ -147,10 +147,10 @@ int lua_isplanet( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, PLANET_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
@@ -212,7 +212,7 @@ static int planetL_get( lua_State *L )
 
    rndplanet = NULL;
    nplanets = 0;
-  
+
    /* Get the landed planet */
    if (lua_gettop(L) == 0) {
       if (land_planet != NULL) {
@@ -259,12 +259,12 @@ static int planetL_get( lua_State *L )
          factions[i++] = f->f;
          lua_pop(L,1);
       }
-      
+
       /* get the planets */
       planets = space_getFactionPlanet( &nplanets, factions, nfactions );
       free(factions);
    }
-   else NLUA_INVALID_PARAMETER(); /* Bad Parameter */
+   else NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* No suitable planet found */
    if ((rndplanet == NULL) && (nplanets == 0)) {

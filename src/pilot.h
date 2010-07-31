@@ -139,7 +139,7 @@ typedef struct PilotOutfitSlot_ {
    /* Outfit slot properties. */
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
-   OutfitSlotType slot; /**< Slot type. */
+   OutfitSlot slot; /**< Outfit slot. */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -264,12 +264,12 @@ typedef struct Pilot_ {
    int noutfits; /**< Total amount of slots. */
    PilotOutfitSlot **outfits; /**< Total outfits. */
    /* Per slot types. */
-   int outfit_nlow; /**< Number of low energy slots. */
-   PilotOutfitSlot *outfit_low; /**< The low energy slots. */
-   int outfit_nmedium; /**< Number of medium energy slots. */
-   PilotOutfitSlot *outfit_medium; /**< The medium energy slots. */
-   int outfit_nhigh; /**< Number of high energy slots. */
-   PilotOutfitSlot *outfit_high; /**< The high energy slots. */
+   int outfit_nstructure; /**< Number of structure slots. */
+   PilotOutfitSlot *outfit_structure; /**< The structure slots. */
+   int outfit_nsystems; /**< Number of systems slots. */
+   PilotOutfitSlot *outfit_systems; /**< The systems slots. */
+   int outfit_nweapon; /**< Number of weapon slots. */
+   PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
    /* For easier usage. */
    PilotOutfitSlot *secondary; /**< secondary weapon */
    PilotOutfitSlot *afterburner; /**< the afterburner */
@@ -481,6 +481,11 @@ void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
 int pilot_runHook( Pilot* p, int hook_type );
 void pilots_rmHook( unsigned int hook );
 void pilot_clearHooks( Pilot *p );
+/* Global hooks. */
+void pilots_addGlobalHook( int type, unsigned int hook );
+void pilots_rmGlobalHook( unsigned int hook );
+void pilots_clearGlobalHooks (void);
+
 
 
 #endif /* PILOT_H */

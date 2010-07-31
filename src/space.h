@@ -95,7 +95,7 @@ typedef struct Planet_ {
    double presenceAmount; /**< The amount of presence this asset exerts. */
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
-  
+
    /* Landing details. */
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
@@ -114,7 +114,7 @@ typedef struct Planet_ {
 } Planet;
 
 
-/* 
+/*
  * star system flags
  */
 #define SYSTEM_KNOWN       (1<<0) /**< System is known. */
@@ -264,6 +264,7 @@ Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 int planet_getNum (void);
 int planet_exists( const char* planetname );
+const char *planet_existsCase( const char* planetname );
 char planet_getClass( const Planet *p );
 
 /*
@@ -305,10 +306,12 @@ void space_gfxLoad( StarSystem *sys );
 void space_gfxUnload( StarSystem *sys );
 
 
-/* 
+/*
  * Getting stuff.
  */
-const StarSystem* system_getAll( int *nsys );
+StarSystem* system_getAll( int *nsys );
+int system_exists( const char* sysname );
+const char *system_existsCase( const char* sysname );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
@@ -317,7 +320,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
 
 
-/* 
+/*
  * Markers.
  */
 int space_addMarker( int sys, SysMarker type );
@@ -328,7 +331,7 @@ void space_clearComputerMarkers (void);
 int system_hasPlanet( StarSystem *sys );
 
 
-/* 
+/*
  * Hyperspace.
  */
 int space_canHyperspace( Pilot* p);

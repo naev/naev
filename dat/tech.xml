@@ -104,6 +104,7 @@
   <item>Empire Lancelot</item>
   <item>Empire Pacifier</item>
   <item>Empire Peacemaker</item>
+  <item>Empire Shark</item>
   <item>Gawain</item>
   <item>Goddard</item>
   <item>Hawking</item>
@@ -117,12 +118,20 @@
   <item>Pirate Admonisher</item>
   <item>Pirate Ancestor</item>
   <item>Pirate Kestrel</item>
+  <item>Pirate Rhino</item>
+  <item>Pirate Shark</item>
   <item>Pirate Vendetta</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>
   <item>Quicksilver</item>
+  <item>Rhino</item>
   <item>Schroedinger</item>
+  <item>Shark</item>
+  <item>Sirius Fidelity</item>
+  <item>Sirius Preacher</item>
+  <item>Sirius Divinity</item>
+  <item>Sirius Dogma</item>
   <item>Vendetta</item>
   <item>Vigilance</item>
  </tech>
@@ -273,6 +282,7 @@
  <tech name="Bulk Trade Ships">
   <item>Koala</item>
   <item>Quicksilver</item>
+  <item>Rhino</item>
   <item>Mule</item>
  </tech>
  <tech name="Light Civilian Combat Ships">
@@ -296,6 +306,7 @@
   <item>Empire Lancelot</item>
   <item>Empire Pacifier</item>
   <item>Empire Peacemaker</item>
+  <item>Empire Shark</item>
  </tech>
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>
@@ -307,7 +318,9 @@
   <item>Pirate Admonisher</item>
   <item>Pirate Ancestor</item>
   <item>Pirate Kestrel</item>
+  <item>Pirate Rhino</item>
   <item>Pirate Vendetta</item>
+  <item>Pirate Shark</item>
  </tech>
  <tech name="Proteron Military Ships">
   <item>Proteron Archimedes</item>
@@ -315,6 +328,10 @@
   <item>Proteron Kahan</item>
  </tech>
  <tech name="Sirius Military Ships">
+  <item>Sirius Fidelity</item>
+  <item>Sirius Preacher</item>
+  <item>Sirius Divinity</item>
+  <item>Sirius Dogma</item>
  </tech>
 
  <tech name="__Heavy Weapon License">

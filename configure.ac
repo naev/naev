@@ -259,15 +259,15 @@ AS_IF([test "$with_sdlmixer" = "yes"], [
 ])
 
 # SDL_image
-VAR_SAVE([LIBS])
-AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
-  AC_ERROR([SDL_image not found])
-])
-SDLIMAGE_CFLAGS=
-SDLIMAGE_LIBS="$LIBS"
-VAR_RESTORE([LIBS])
-AC_SUBST([SDLIMAGE_CFLAGS])
-AC_SUBST([SDLIMAGE_LIBS])
+#VAR_SAVE([LIBS])
+#AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
+#  AC_ERROR([SDL_image not found])
+#])
+#SDLIMAGE_CFLAGS=
+#SDLIMAGE_LIBS="$LIBS"
+#VAR_RESTORE([LIBS])
+#AC_SUBST([SDLIMAGE_CFLAGS])
+#AC_SUBST([SDLIMAGE_LIBS])
 
 # OpenGL
 AM_PATH_OPENGL([], [

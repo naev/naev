@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "equipment.h"
+#include "land_outfits.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -92,8 +93,8 @@ static int player_hailCounter = 0; /**< Number of times to play the hail. */
 static double player_hailTimer = 0.; /**< Timer for hailing. */
 
 
-/* 
- * player.p pilot stack - ships he has 
+/*
+ * player.p pilot stack - ships he has
  */
 /**
  * @brief Player ship.
@@ -122,7 +123,7 @@ static int player_moutfits             = 0; /**< Current allocated memory. */
 #define OUTFIT_CHUNKSIZE               32 /**< Allocation chunk size. */
 
 
-/* 
+/*
  * player.p global properties
  */
 /* used in input.c */
@@ -134,7 +135,7 @@ static int player_firemode = 0; /**< Player fire mode. */
 static double player_timer = 0.; /**< For death and such. */
 
 
-/* 
+/*
  * unique mission stack.
  */
 static int* missions_done  = NULL; /**< Saves position of completed missions. */
@@ -163,10 +164,10 @@ extern int pilot_nstack;
 extern int map_npath;
 
 
-/* 
+/*
  * prototypes
  */
-/* 
+/*
  * internal
  */
 static void player_checkHail (void);
@@ -179,7 +180,7 @@ static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
-static int player_saveShip( xmlTextWriterPtr writer, 
+static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
@@ -194,7 +195,7 @@ static void player_autonav (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
-/* 
+/*
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
@@ -207,7 +208,7 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
  *
  *   - Cleans up after old players.
  *   - Prompts for name.
- * 
+ *
  * @sa player_newMake
  */
 void player_new (void)
@@ -469,7 +470,7 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
    free(ship_name);
 
    /* Update ship list if landed. */
-   if (landed) {   
+   if (landed) {
       w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
@@ -567,7 +568,7 @@ void player_swapShip( char* shipname )
          vectcpy( &player.p->solid->pos, &v );
 
          /* Fill the tank. */
-         land_checkAddRefuel();         
+         land_checkAddRefuel();
 
          gl_cameraBind( &player.p->solid->pos ); /* don't forget the camera */
          return;
@@ -1035,7 +1036,7 @@ void player_think( Pilot* pplayer, const double dt )
          player_abortAutonav("Not enough fuel for autonav to continue");
 
       /* Keep on moving. */
-      else 
+      else
          player_autonav();
 
       /* Disable turning. */
@@ -1043,7 +1044,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* turning taken over by PLAYER_FACE */
-   else if (player_isFlag(PLAYER_FACE)) { 
+   else if (player_isFlag(PLAYER_FACE)) {
       /* Try to face pilot target. */
       if (player.p->target != PLAYER_ID) {
          target = pilot_get(player.p->target);
@@ -1074,7 +1075,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* turning taken over by PLAYER_REVERSE */
    else if (player_isFlag(PLAYER_REVERSE)) {
-      
+
       /* Check to see if already stopped. */
       /*
       if (VMOD(pplayer->solid->vel) < MIN_VEL_ERR)
@@ -1142,7 +1143,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
 
-   /* 
+   /*
     * Afterburn!
     */
    if (player_isFlag(PLAYER_AFTERBURNER)) {
@@ -1294,7 +1295,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
 /**
  * @brief Updates the player.p zoom.
- * 
+ *
  *    @param dt Current deltatick.
  */
 static void player_updateZoom( double dt )
@@ -1316,7 +1317,7 @@ static void player_updateZoom( double dt )
     * z = A / A_v = 1. / (1 + v/d)
     */
    d     = sqrt(SCREEN_W*SCREEN_H);
-   znear = MAX( conf.zoom_far, 1. / (1. + VMOD(player.p->solid->vel)/d) );
+   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(player.p->solid->vel)/d) );
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
@@ -1532,7 +1533,7 @@ void player_land (void)
       player_afterburnOver();
       /* Stop accelerating. */
       player_accelOver();
-   
+
       /* Start landing. */
       if (runcount == 0)
          landtarget = player.p->nav_planet;
@@ -1599,7 +1600,7 @@ void player_targetHyperspace (void)
 
 /**
  * @brief Enables or disables jump points preempting planets in autoface and target clearing.
- * 
+ *
  *    @param preempt Boolean; 1 preempts planet target.
  */
 void player_hyperspacePreempt( int preempt )
@@ -1822,7 +1823,7 @@ void player_soundResume (void)
  * @brief Targets the nearest hostile enemy to the player.
  */
 void player_targetHostile (void)
-{  
+{
    unsigned int tp;
    int i;
    double d, td;
@@ -1833,14 +1834,14 @@ void player_targetHostile (void)
       /* Don't get if is bribed. */
       if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
          continue;
- 
+
       /* Must be in range. */
       if (pilot_inRangePilot( player.p, pilot_stack[i] ) <= 0)
          continue;
 
       /* Normal unbribed check. */
       if (pilot_isHostile(pilot_stack[i])) {
-         td = vect_dist(&pilot_stack[i]->solid->pos, &player.p->solid->pos);       
+         td = vect_dist(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
          if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
             d = td;
             tp = pilot_stack[i]->id;
@@ -1895,7 +1896,8 @@ void player_targetPrev( int mode )
 void player_targetClear (void)
 {
    gui_forceBlink();
-   if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)) {
+   if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)
+         && !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
       map_clear();
@@ -2177,7 +2179,7 @@ void player_ships( char** sships, glTexture** tships )
    /* Create the struct. */
    for (i=0; i < player_nstack; i++) {
       sships[i] = strdup(player_stack[i].p->name);
-      tships[i] = player_stack[i].p->ship->gfx_target;
+      tships[i] = player_stack[i].p->ship->gfx_store;
    }
 }
 
@@ -2385,6 +2387,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* special case if it's a map */
    if (outfit_isMap(o)) {
       map_map(NULL,o->u.map.radius);
+      outfits_updateEquipmentOutfits();
       return 1; /* Success. */
    }
    /* special case if it's a license. */
@@ -2397,6 +2400,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    for (i=0; i<player_noutfits; i++) {
       if (player_outfits[i].o == o) {
          player_outfits[i].q += quantity;
+         outfits_updateEquipmentOutfits();
          return quantity;
       }
    }
@@ -2412,6 +2416,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* Add the outfit. */
    player_outfits[player_noutfits-1].o = o;
    player_outfits[player_noutfits-1].q = quantity;
+   outfits_updateEquipmentOutfits();
    return quantity;
 }
 
@@ -2796,27 +2801,27 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_elem(writer,"fuel","%f",ship->fuel);
 
    /* save the outfits */
-   xmlw_startElem(writer,"outfits_low");
-   for (i=0; i<ship->outfit_nlow; i++) {
-      if (ship->outfit_low[i].outfit==NULL)
+   xmlw_startElem(writer,"outfits_structure");
+   for (i=0; i<ship->outfit_nstructure; i++) {
+      if (ship->outfit_structure[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_low[i], i );
+      player_saveShipSlot( writer, &ship->outfit_structure[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_low" */
-   xmlw_startElem(writer,"outfits_medium");
-   for (i=0; i<ship->outfit_nmedium; i++) {
-      if (ship->outfit_medium[i].outfit==NULL)
+   xmlw_endElem(writer); /* "outfits_structure" */
+   xmlw_startElem(writer,"outfits_systems");
+   for (i=0; i<ship->outfit_nsystems; i++) {
+      if (ship->outfit_systems[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_medium[i], i );
+      player_saveShipSlot( writer, &ship->outfit_systems[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_medium" */
-   xmlw_startElem(writer,"outfits_high");
-   for (i=0; i<ship->outfit_nhigh; i++) {
-      if (ship->outfit_high[i].outfit==NULL)
+   xmlw_endElem(writer); /* "outfits_systems" */
+   xmlw_startElem(writer,"outfits_weapon");
+   for (i=0; i<ship->outfit_nweapon; i++) {
+      if (ship->outfit_weapon[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_high[i], i );
+      player_saveShipSlot( writer, &ship->outfit_weapon[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_high" */
+   xmlw_endElem(writer); /* "outfits_weapon" */
 
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
@@ -2941,7 +2946,7 @@ static Planet* player_parse( xmlNodePtr parent )
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1, planet);
-     
+
       /* Parse ships. */
       else if (xml_isNode(node,"ships")) {
          cur = node->xmlChildrenNode;
@@ -3159,11 +3164,20 @@ static int player_parseEscorts( xmlNodePtr parent )
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
    int ret;
+
+   if (!outfit_fitsSlot( outfit, &s->slot )) {
+      DEBUG( "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to stock.",
+            outfit->name, pilot->name );
+      player_addOutfit( outfit, 1 );
+      return;
+   }
+
    ret = pilot_addOutfitRaw( pilot, outfit, s );
    if (ret != 0) {
       DEBUG("Outfit '%s' does not fit on player's pilot '%s', adding to stock.",
             outfit->name, pilot->name);
       player_addOutfit( outfit, 1 );
+      return;
    }
 
    /* Update stats. */
@@ -3237,7 +3251,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    const char *str;
    Commodity *com;
    PilotFlags flags;
-   
+
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
 
@@ -3277,37 +3291,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       /* get fuel */
       xmlr_float(node,"fuel",fuel);
 
-      /*
-       * LEGACY LAYER TO NOT LOSE OUTFITS FROM OLD GAMES
-       * @todo Remove it at 0.5.0 or earlier
-       */
-      if (xml_isNode(node,"outfits")) {
-         cur = node->xmlChildrenNode;
-         DEBUG("Using legacy loading for old outfits.");
-         do { /* load each outfit */
-            if (xml_isNode(cur,"outfit")) {
-               xmlr_attr(cur,"quantity",q);
-               n = 0;
-               if (q != NULL) {
-                  n = atoi(q);
-                  free(q);
-               }
-               if (n <= 0) {
-                  WARN("Outfit '%s' has no quantity", xml_get(cur));
-                  continue;
-               }
-               /* Get the outfit. */
-               o = outfit_get(xml_get(cur));
-               if (o==NULL)
-                  continue;
-               /* Add the outfit. */
-               player_addOutfit( o, n );
-            }
-         } while (xml_nextNode(cur));
-      }
-
       /* New outfit loading. */
-      if (xml_isNode(node,"outfits_low")) {
+      if (xml_isNode(node,"outfits_structure") || xml_isNode(node,"outfits_low")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3317,15 +3302,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nlow)) {
+               if ((n<0) || (n >= ship->outfit_nstructure)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_low[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_structure[n] );
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_medium")) {
+      else if (xml_isNode(node,"outfits_systems") || xml_isNode(node,"outfits_medium")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3335,15 +3320,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nmedium)) {
+               if ((n<0) || (n >= ship->outfit_nsystems)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_medium[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_systems[n] );
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_high")) {
+      else if (xml_isNode(node,"outfits_weapon") || xml_isNode(node,"outfits_high")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3353,11 +3338,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nhigh)) {
+               if ((n<0) || (n >= ship->outfit_nweapon)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_high[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_weapon[n] );
             }
          } while (xml_nextNode(cur));
       }

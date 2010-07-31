@@ -23,6 +23,7 @@
 #include "ndata.h"
 #include "gui.h"
 #include "conf.h"
+#include "npng.h"
 
 
 /*
@@ -49,12 +50,15 @@ static int gl_tex_ext_npot = 0; /**< Support for GL_ARB_texture_non_power_of_two
  * prototypes
  */
 /* misc */
-static int SDL_VFlipSurface( SDL_Surface* surface );
+/*static int SDL_VFlipSurface( SDL_Surface* surface );*/
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
-static uint8_t* SDL_MapTrans( SDL_Surface* s );
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h );
 /* glTexture */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags );
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
+/* List. */
+static glTexture* gl_texExists( const char* path );
+static int gl_texAdd( glTexture *tex );
 
 
 /**
@@ -71,6 +75,7 @@ int gl_pot( int n )
 }
 
 
+#if 0
 /**
  * @brief Flips the surface vertically.
  *
@@ -103,6 +108,7 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
 
    return 0;
 }
+#endif
 
 
 /**
@@ -118,33 +124,33 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
    int bpp;
    Uint8 *p;
    Uint32 pixelcolour;
-   
-   bpp = s->format->BytesPerPixel; 
+
+   bpp = s->format->BytesPerPixel;
    /* here p is the address to the pixel we want to retrieve */
-   p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
+   p = (Uint8 *)s->pixels + y*s->pitch + x*bpp;
 
    pixelcolour = 0;
-   switch(bpp) {        
-      case 1: 
-         pixelcolour = *p; 
-         break; 
+   switch(bpp) {
+      case 1:
+         pixelcolour = *p;
+         break;
 
-      case 2: 
-         pixelcolour = *(Uint16 *)p; 
-         break; 
+      case 2:
+         pixelcolour = *(Uint16 *)p;
+         break;
 
-      case 3: 
+      case 3:
 #if HAS_BIGENDIAN
-         pixelcolour = p[0] << 16 | p[1] << 8 | p[2]; 
+         pixelcolour = p[0] << 16 | p[1] << 8 | p[2];
 #else /* HAS_BIGENDIAN */
-         pixelcolour = p[0] | p[1] << 8 | p[2] << 16; 
+         pixelcolour = p[0] | p[1] << 8 | p[2] << 16;
 #endif /* HAS_BIGENDIAN */
-         break; 
+         break;
 
-      case 4: 
-         pixelcolour = *(Uint32 *)p; 
-         break; 
-   } 
+      case 4:
+         pixelcolour = *(Uint32 *)p;
+         break;
+   }
 
    /* test whether pixels colour == colour of transparent pixels for that surface */
 #if SDL_VERSION_ATLEAST(1,3,0)
@@ -162,16 +168,24 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  *  perfect collision routines.
  *
  *    @param s Surface to map it's transparency.
+ *    @param w Width to map.
+ *    @param h Height to map.
  *    @return 0 on success.
  */
-static uint8_t* SDL_MapTrans( SDL_Surface* s )
+static uint8_t* SDL_MapTrans( SDL_Surface* s, int w, int h )
 {
    int i,j;
    int size;
    uint8_t *t;
 
+   /* Get limit.s */
+   if (w < 0)
+      w = s->w;
+   if (h < 0)
+      h = s->h;
+
    /* alloc memory for just enough bits to hold all the data we need */
-   size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);
+   size = w*h/8 + ((w*h%8)?1:0);
    t = malloc(size);
    if (t==NULL) {
       WARN("Out of Memory");
@@ -180,9 +194,9 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s )
    memset(t, 0, size); /* important, must be set to zero */
 
    /* Check each pixel individually. */
-   for (i=0; i<s->h; i++)
-      for (j=0; j<s->w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
-         t[(i*s->w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*s->w+j)%8));
+   for (i=0; i<h; i++)
+      for (j=0; j<w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+         t[(i*w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*w+j)%8));
 
    return t;
 }
@@ -205,60 +219,56 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Make size power of two. */
-   if (!gl_needPOT()) { /* No real need, but there's some issue with bypassing this function. */
-      potw = surface->w;
-      poth = surface->h;
-   }
-   else {
-      potw = gl_pot(surface->w);
-      poth = gl_pot(surface->h);
-   }
+   potw = gl_pot(surface->w);
+   poth = gl_pot(surface->h);
+   if (gl_needPOT() && ((potw != surface->w) || (poth != surface->h))) {
 
-   /* we must blit with an SDL_Rect */
-   rtemp.x = rtemp.y = 0;
-   rtemp.w = surface->w;
-   rtemp.h = surface->h;
+      /* we must blit with an SDL_Rect */
+      rtemp.x = rtemp.y = 0;
+      rtemp.w = surface->w;
+      rtemp.h = surface->h;
 
-   /* saves alpha */
+      /* saves alpha */
 #if SDL_VERSION_ATLEAST(1,3,0)
-   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
 
-   /* create the temp POT surface */
-   temp = SDL_CreateRGBSurface( 0, potw, poth,
-         surface->format->BytesPerPixel*8, RGBAMASK );
+      /* create the temp POT surface */
+      temp = SDL_CreateRGBSurface( 0, potw, poth,
+            surface->format->BytesPerPixel*8, RGBAMASK );
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
-   saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
-   saved_alpha = surface->format->alpha;
-   if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
-      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
-      SDL_SetColorKey( surface, 0, surface->format->colorkey );
-   }
+      saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
+      saved_alpha = surface->format->alpha;
+      if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
+         SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+         SDL_SetColorKey( surface, 0, surface->format->colorkey );
+      }
 
-   /* create the temp POT surface */
-   temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-         potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+      /* create the temp POT surface */
+      temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+            potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   if (temp == NULL) {
-      WARN("Unable to create POT surface: %s", SDL_GetError());
-      return 0;
-   }
-   if (SDL_FillRect( temp, NULL,
-            SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-      WARN("Unable to fill rect: %s", SDL_GetError());
-      return 0;
-   }
+      if (temp == NULL) {
+         WARN("Unable to create POT surface: %s", SDL_GetError());
+         return 0;
+      }
+      if (SDL_FillRect( temp, NULL,
+               SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
+         WARN("Unable to fill rect: %s", SDL_GetError());
+         return 0;
+      }
 
-   /* change the surface to the new blitted one */
-   SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
-   SDL_FreeSurface( surface );
-   surface = temp;
+      /* change the surface to the new blitted one */
+      SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
+      SDL_FreeSurface( surface );
+      surface = temp;
 
 #if ! SDL_VERSION_ATLEAST(1,3,0)
-   /* set saved alpha */
-   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
-      SDL_SetAlpha( surface, 0, 0 );
+      /* set saved alpha */
+      if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+         SDL_SetAlpha( surface, 0, 0 );
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+   }
 
    return surface;
 }
@@ -292,7 +302,7 @@ int gl_texHasCompress (void)
  *    @param[out] rh Real height of the texture.
  *    @return The opengl texture id.
  */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags )
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags, int freesur )
 {
    GLuint texture;
    GLfloat param;
@@ -301,7 +311,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    surface = gl_prepareSurface( surface );
    if (rw != NULL)
       (*rw) = surface->w;
-   if (rh != NULL) 
+   if (rh != NULL)
       (*rh) = surface->h;
 
    /* opengl texture binding */
@@ -351,11 +361,78 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    }
 
    /* cleanup */
-   SDL_FreeSurface( surface );
+   if (freesur)
+      SDL_FreeSurface( surface );
    gl_checkErr();
 
    return texture;
 }
+
+
+/**
+ * @brief Loads the already padded SDL_Surface to a glTexture.
+ *
+ *    @param name Name to load with.
+ *    @param surface Surface to load.
+ *    @param flags Flags to use.
+ *    @param w Non-padded width.
+ *    @param h Non-padded height.
+ *    @param sx X sprites.
+ *    @param sy Y sprites.
+ *    @param freesur Whether or not to free the surface.
+ *    @return The glTexture for surface.
+ */
+glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
+      unsigned int flags, int w, int h, int sx, int sy, int freesur )
+{
+   glTexture *texture;
+   int rw, rh;
+   uint8_t *trans;
+
+   /* Make sure doesn't already exist. */
+   if (name != NULL) {
+      texture = gl_texExists( name );
+      if (texture != NULL)
+         return texture;
+   }
+
+   /* set up the texture defaults */
+   texture = calloc( 1, sizeof(glTexture) );
+
+   /* Map transparency if needed .*/
+   if (flags & OPENGL_TEX_MAPTRANS) {
+      SDL_LockSurface(surface);
+      trans = SDL_MapTrans( surface, w, h );
+      SDL_UnlockSurface(surface);
+   }
+   else
+      trans = NULL;
+
+   texture->w     = (double) w;
+   texture->h     = (double) h;
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+
+   texture->texture = gl_loadSurface( surface, &rw, &rh, flags, freesur );
+
+   texture->rw    = (double) rw;
+   texture->rh    = (double) rh;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
+
+   texture->trans = trans;
+   if (name != NULL) {
+      texture->name = strdup(name);
+      gl_texAdd( texture );
+   }
+   else
+      texture->name = NULL;
+
+   return texture;
+}
+
 
 /**
  * @brief Loads the SDL_Surface to a glTexture.
@@ -366,43 +443,14 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
  */
 glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 {
-   glTexture *texture;
-   int rw, rh;
-
-   /* set up the texture defaults */
-   texture = calloc( 1, sizeof(glTexture) );
-
-   texture->w     = (double)surface->w;
-   texture->h     = (double)surface->h;
-   texture->sx    = 1.;
-   texture->sy    = 1.;
-
-   texture->texture = gl_loadSurface( surface, &rw, &rh, flags );
-
-   texture->rw    = (double)rw;
-   texture->rh    = (double)rh;
-   texture->sw    = texture->w;
-   texture->sh    = texture->h;
-   texture->srw   = texture->sw / texture->rw;
-   texture->srh   = texture->sh / texture->rh;
-
-   texture->trans = NULL;
-   texture->name  = NULL;
-
-   return texture;
+   return gl_loadImagePad( NULL, surface, flags, surface->w, surface->h, 1, 1, 1 );
 }
 
 
 /**
- * @brief Loads an image as a texture.
- *
- * May not necessarily load the image but use one if it's already open.
- *
- *    @param path Image to load.
- *    @param flags Flags to control image parameters.
- *    @return Texture loaded from image.
+ * @brief Check to see if a texture matching a path already exists.
  */
-glTexture* gl_newImage( const char* path, const unsigned int flags )
+static glTexture* gl_texExists( const char* path )
 {
    glTexList *cur, *last;
 
@@ -417,24 +465,56 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
       }
    }
 
-   /* Create the new node */
-   cur = malloc(sizeof(glTexList));
-   cur->next = NULL;
-   cur->used = 1;
+   return NULL;
+}
 
-   /* Load the image */
-   cur->tex = gl_loadNewImage(path, flags);
-   if (cur->tex == NULL) {
-      free(cur);
-      return NULL;
-   }
+
+/**
+ * @brief Adds a texture to the list under the name of path.
+ */
+static int gl_texAdd( glTexture *tex )
+{
+   glTexList *new, *cur, *last;
+
+   /* Create the new node */
+   new = malloc( sizeof(glTexList) );
+   new->next = NULL;
+   new->used = 1;
+   new->tex  = tex;
 
    if (texture_list == NULL) /* special condition - creating new list */
-      texture_list = cur;
-   else
-      last->next = cur;
+      texture_list = new;
+   else {
+      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+         last = cur;
+      }
+      last->next = new;
+   }
 
-   return cur->tex;
+   return 0;
+}
+
+
+/**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ *    @param path Image to load.
+ *    @param flags Flags to control image parameters.
+ *    @return Texture loaded from image.
+ */
+glTexture* gl_newImage( const char* path, const unsigned int flags )
+{
+   glTexture *t;
+
+   /* Check if it already exists. */
+   t = gl_texExists( path );
+   if (t != NULL)
+      return t;
+
+   /* Load the image */
+   return gl_loadNewImage( path, flags );
 }
 
 
@@ -447,10 +527,10 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
  */
 static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
-   SDL_Surface *temp, *surface;
-   glTexture* t;
-   uint8_t* trans;
+   SDL_Surface *surface;
    SDL_RWops *rw;
+   npng_t *npng;
+   png_uint_32 w, h;
 
    /* load from packfile */
    rw = ndata_rwops( path );
@@ -458,41 +538,22 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       WARN("Failed to load surface '%s' from ndata.", path);
       return NULL;
    }
-   temp = IMG_Load_RW( rw, 1 );
-
-   if (temp == NULL) {
-      WARN("'%s' could not be opened: %s", path, IMG_GetError());
+   npng     = npng_open( rw );
+   if (npng == NULL) {
+      WARN("File '%s' is not a png.", path );
       return NULL;
    }
-
-   surface = SDL_DisplayFormatAlpha( temp ); /* sets the surface to what we use */
+   npng_dim( npng, &w, &h );
+   surface  = npng_readSurface( npng, gl_needPOT(), 1 );
+   npng_close( npng );
+   SDL_RWclose( rw );
    if (surface == NULL) {
-      WARN( "Error converting image to screen format: %s", SDL_GetError() );
+      WARN("'%s' could not be opened", path );
       return NULL;
    }
-
-   SDL_FreeSurface(temp); /* free the temporary surface */
-
-   /* we have to flip our surfaces to match the ortho */
-   if (SDL_VFlipSurface(surface)) {
-      WARN( "Error flipping surface" );
-      return NULL;
-   }
-
-   /* do after flipping for collision detection */
-   if (flags & OPENGL_TEX_MAPTRANS) {
-      SDL_LockSurface(surface);
-      trans = SDL_MapTrans(surface);
-      SDL_UnlockSurface(surface);
-   }
-   else
-      trans = NULL;
 
    /* set the texture */
-   t = gl_loadImage(surface, flags);
-   t->trans = trans;
-   t->name  = strdup(path);
-   return t;
+   return gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
 }
 
 
@@ -509,15 +570,16 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags )
 {
    glTexture* texture;
-   if ((texture = gl_newImage(path, flags)) == NULL)
+   texture = gl_newImage( path, flags );
+   if (texture == NULL)
       return NULL;
 
    /* will possibly overwrite an existing textur properties
     * so we have to load same texture always the same sprites */
-   texture->sx    = (double)sx;
-   texture->sy    = (double)sy;
-   texture->sw    = texture->w/texture->sx;
-   texture->sh    = texture->h/texture->sy;
+   texture->sx    = (double) sx;
+   texture->sy    = (double) sy;
+   texture->sw    = texture->w / texture->sx;
+   texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->rw;
    texture->srh   = texture->sh / texture->rh;
    return texture;
@@ -575,8 +637,10 @@ void gl_freeTexture( glTexture* texture )
 
    /* Free anyways */
    glDeleteTextures( 1, &texture->texture );
-   if (texture->trans != NULL) free(texture->trans);
-   if (texture->name != NULL) free(texture->name);
+   if (texture->trans != NULL)
+      free(texture->trans);
+   if (texture->name != NULL)
+      free(texture->name);
    free(texture);
 
    gl_checkErr();
@@ -660,7 +724,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
    /* real dir is slightly moved downwards */
    rdir = dir + shard/2.;
-  
+
    /* now calculate the sprite we need */
    s = (int)(rdir / shard);
    sx = t->sx;

@@ -315,7 +315,7 @@ function enter()
         pinnacle:setInvincible(true)
         pinnacle:setFriendly()
         pinnacle:control()
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
     elseif artefactA ~= nil or artefactB ~= nil or artefactC ~= nil then
@@ -346,10 +346,10 @@ function idle()
     if stopping then
         pinnacle:disable()
     else
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
+        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
     end
 end
 

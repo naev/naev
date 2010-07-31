@@ -56,9 +56,6 @@
 #define GUI_DATA     "dat/gui.xml" /**< Global GUI configuration file. */
 #define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
-#define TARGET_WIDTH 128 /**< Width of target graphics. */
-#define TARGET_HEIGHT 96 /**< Height of target graphics. */
-
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
@@ -200,7 +197,7 @@ static double mesg_timeout = 15.; /**< Timeout length. */
 static double mesg_fade    = 5.; /**< Fade length. */
 /**
  * @struct Mesg
- * 
+ *
  * @brief On screen player message.
  */
 typedef struct Mesg_ {
@@ -210,15 +207,15 @@ typedef struct Mesg_ {
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 
 
-/* 
+/*
  * prototypes
  */
-/* 
+/*
  * external
  */
 extern void weapon_minimap( const double res, const double w, const double h,
       const RadarShape shape, double alpha ); /**< from weapon.c */
-/* 
+/*
  * internal
  */
 /* gui */
@@ -520,7 +517,7 @@ static void gui_renderPilotTarget( double dt )
    }
 
    /* Draw the pilot target. */
-   if (pilot_isDisabled(p)) 
+   if (pilot_isDisabled(p))
       c = &cInert;
    else if (pilot_isFlag(p,PILOT_BRIBED))
       c = &cNeutral;
@@ -618,7 +615,7 @@ static void gui_renderBorder( double dt )
    gl_cameraZoomGet( &z );
 
    /* Get player position. */
-   hw    = SCREEN_W/2; 
+   hw    = SCREEN_W/2;
    hh    = SCREEN_H/2;
 
    /* Interference. */
@@ -687,7 +684,7 @@ static void gui_renderBorder( double dt )
 
    /* Draw jump routes. */
    for (i=0; i<cur_system->njumps; i++) {
-      jp  = &cur_system->jumps[i]; 
+      jp  = &cur_system->jumps[i];
       tex = jumppoint_gfx;
 
       /* See if in sensor range. */
@@ -825,7 +822,7 @@ void gui_render( double dt )
 {
    int i, j;
    double x;
-   char str[32];
+   char str[ECON_CRED_STRLEN];
    Pilot* p;
    glColour* c, col;
    glFont* f;
@@ -878,7 +875,7 @@ void gui_render( double dt )
 
 
    /*
-    * NAV 
+    * NAV
     */
    if (player.p->nav_planet >= 0) { /* planet landing target */
       gl_printMid( NULL, (int)gui.nav.w,
@@ -953,18 +950,18 @@ void gui_render( double dt )
    gui_renderHealth( &gui.fuel, player.p->fuel / player.p->fuel_max );
 
 
-   /* 
+   /*
     * weapon
-    */ 
+    */
    if ((player.p->secondary==NULL) || (player.p->secondary->outfit == NULL)) {
       gl_printMid( NULL, (int)gui.weapon.w,
             gui.weapon.x, gui.weapon.y - 5,
-            &cConsole, "Secondary" ); 
+            &cConsole, "Secondary" );
 
       gl_printMid( &gl_smallFont, (int)gui.weapon.w,
             gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-            &cGrey, "None"); 
-   }  
+            &cGrey, "None");
+   }
    else {
       f = &gl_defFont;
 
@@ -981,12 +978,12 @@ void gui_render( double dt )
 
          /* Get quantity. */
          q = 0;
-         for (i=0; i<player.p->outfit_nhigh; i++) {
-            if (player.p->outfit_high[i].outfit != player.p->secondary->outfit)
+         for (i=0; i<player.p->outfit_nweapon; i++) {
+            if (player.p->outfit_weapon[i].outfit != player.p->secondary->outfit)
                continue;
-            
-            if (player.p->outfit_high[i].u.ammo.outfit == player.p->secondary->u.ammo.outfit)
-               q += player.p->outfit_high[i].u.ammo.quantity;
+
+            if (player.p->outfit_weapon[i].u.ammo.outfit == player.p->secondary->u.ammo.outfit)
+               q += player.p->outfit_weapon[i].u.ammo.quantity;
          }
 
          /* Weapon name. */
@@ -1014,7 +1011,7 @@ void gui_render( double dt )
                gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
                c, player.p->secondary->outfit->name );
       }
-   } 
+   }
 
 
    /*
@@ -1031,7 +1028,7 @@ void gui_render( double dt )
       if (r > 0) {
 
          /* Colourize ship name */
-         if (pilot_isDisabled(p)) 
+         if (pilot_isDisabled(p))
             c = &cInert;
          else if (pilot_isFlag(p,PILOT_BRIBED))
             c = &cNeutral;
@@ -1087,7 +1084,7 @@ void gui_render( double dt )
          else { /* on armour */
             gl_printMax( &gl_smallFont, gui.target_health.w,
                   gui.target_health.x,
-                  gui.target_health.y, NULL, 
+                  gui.target_health.y, NULL,
                   "%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
          }
       }
@@ -1140,7 +1137,7 @@ void gui_render( double dt )
       gl_print( &gl_smallFont,
             gui.misc.x + 8, j,
             &cConsole, "Cargo:" );
-      for (i=0; i < MIN(player.p->ncommodities,3); i++) { 
+      for (i=0; i < MIN(player.p->ncommodities,3); i++) {
          j -= gl_smallFont.h + 3;
          if (player.p->commodities[i].quantity > 0.) /* quantity is over */
             gl_printMax( &gl_smallFont, gui.misc.w - 15,
@@ -1148,7 +1145,7 @@ void gui_render( double dt )
                   NULL, "%d %s%s", player.p->commodities[i].quantity,
                   player.p->commodities[i].commodity->name,
                   (player.p->commodities[i].id) ? "*" : "" );
-         else /* basically for weightless mission stuff */ 
+         else /* basically for weightless mission stuff */
             gl_printMax( &gl_smallFont, gui.misc.w - 15,
                   gui.misc.x + 13, j,
                   NULL, "%s%s",  player.p->commodities[i].commodity->name,
@@ -1201,7 +1198,6 @@ static void gui_renderRadar( double dt )
    int i, j;
    GLfloat vertex[2*4], colours[4*4];
 
-   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
    if (gui.radar.shape==RADAR_RECT)
       gl_matrixTranslate( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
@@ -1624,7 +1620,7 @@ static glColour *gui_getPlanetColour( int i )
       col = &cRadar_tPlanet;
    else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
       col = &cInert; /* Override non-hostile planets without service. */
-   
+
    return col;
 }
 
@@ -1980,7 +1976,7 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
       ty = bar->gfx->sh / bar->gfx->rh;
 
       /* Set the colour. */
-      COLOUR(bar->col); 
+      COLOUR(bar->col);
 
       /* Draw the image. */
       glEnable(GL_TEXTURE_2D);
@@ -2123,7 +2119,7 @@ int gui_load( const char* name )
    if (node == NULL) {
       ERR("Malformed '"GUI_DATA"' file: does not contain elements");
       return -1;
-   }                                                                                       
+   }
    do {
       if (xml_isNode(node, XML_GUI_TAG)) {
 
@@ -2429,7 +2425,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
          }
 
          free(tmp);
-      
+
          /* load the appropriate measurements */
          if (gui.radar.shape == RADAR_RECT)
             rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, &gui.radar.h );
@@ -2576,10 +2572,10 @@ void gui_cleanup (void)
       }
    }
 
-   /* Clean up interference. */ 
-   interference_alpha = 0.; 
-   interference_layer = 0; 
-   interference_t     = 0.; 
+   /* Clean up interference. */
+   interference_alpha = 0.;
+   interference_layer = 0;
+   interference_t     = 0.;
 
    /* Destroy offset. */
    gui_xoff = 0.;

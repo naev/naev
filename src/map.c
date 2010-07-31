@@ -20,6 +20,7 @@
 #include "colour.h"
 #include "player.h"
 #include "faction.h"
+#include "dialogue.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -69,6 +70,8 @@ static void map_drawMarker( double x, double y, double r,
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
+static void map_inputFind( unsigned int wid, char* str );
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -96,6 +99,64 @@ void map_exit (void)
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
    }
+}
+
+
+/**
+ * @brief Opens a search input box to find a system or planet.
+ */
+static void map_inputFind( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   char *name;
+   const char *sysname;
+   const char *realname;
+   StarSystem *sys;
+
+   name = dialogue_inputRaw( "Find...", 0, 32, "What do you want to find? (systems, planets)" );
+   if (name == NULL || !strcmp("",name))
+      return;
+
+   /* Match system first. */
+   sysname  = NULL;
+   realname = system_existsCase( name );
+   if (realname != NULL)
+      sysname = realname;
+   else {
+      realname = planet_existsCase( name );
+      if (realname != NULL)
+         sysname = planet_getSystem( realname );
+   }
+   if (sysname != NULL) {
+      sys = system_get(sysname);
+      if (sys_isKnown(sys)) {
+         map_select( sys, 0 );
+         map_center( sysname );
+         free(name);
+         return;
+      }
+   }
+
+   dialogue_alert( "System/Planet matching '%s' not found!", name );
+   free(name);
+   return;
+}
+
+
+/**
+ * @brief Handles key input to the map window.
+ */
+static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+
+   if ((key == SDLK_SLASH) || (key == SDLK_f)) {
+      map_inputFind( wid, NULL );
+      return 1;
+   }
+
+   return 0;
 }
 
 
@@ -136,8 +197,9 @@ void map_open (void)
    /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1, w, h );
    window_setCancel( wid, window_close );
+   window_handleKeys( wid, map_keyHandler );
 
-   /* 
+   /*
     * SIDE TEXT
     *
     * $System
@@ -153,9 +215,10 @@ void map_open (void)
     *
     * Services:
     *   $Services
-    * 
+    *
     * ...
     * [Autonav]
+    * [ Find ]
     * [ Close ]
     */
 
@@ -191,8 +254,11 @@ void map_open (void)
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
+   /* Find button */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnFind", "Find", map_inputFind );
    /* Autonav button */
-   window_addButton( wid, -20, 60, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+2*(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", "Autonav", player_startAutonavWindow );
 
    /*
@@ -213,9 +279,9 @@ void map_open (void)
    map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
-   
+
    /*
-    * Disable Autonav button if player lacks fuel. 
+    * Disable Autonav button if player lacks fuel.
     */
    if (player.p->fuel < HYPERSPACE_FUEL)
       window_disableButton( wid, "btnAutonav" );
@@ -287,7 +353,7 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSServices", -20, -220 );
       window_moveWidget( wid, "txtServices", -20, -220-gl_smallFont.h-5 );
       window_modifyText( wid, "txtServices", "Unknown" );
-      
+
       /*
        * Bottom Text
        */
@@ -626,7 +692,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
    /* Render the jump paths. */
    map_renderPath( x, y );
-  
+
    /* Render system names. */
    map_renderNames( x, y, 0 );
 
@@ -729,7 +795,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
       col = &cDarkBlue;
-      /* first we draw all of the paths. */  
+      /* first we draw all of the paths. */
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
@@ -763,7 +829,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       glShadeModel( GL_FLAT );
    }
 }
-   
+
    /* Now we'll draw over the lines with the new pathways. */
 /**
  * @brief Render the map path.
@@ -781,7 +847,7 @@ static void map_renderPath( double x, double y )
       glShadeModel(GL_SMOOTH);
       col = &cGreen;
       fuel = player.p->fuel;
-      
+
       for (j=0; j<map_npath; j++) {
          jsys = map_path[j];
          if (fuel == player.p->fuel && fuel > 100.)
@@ -791,7 +857,7 @@ static void map_renderPath( double x, double y )
          else
             col = &cYellow;
          fuel -= 100;
-         
+
          /* Draw the lines. */
          vertex[0]  = x + lsys->pos.x * map_zoom;
          vertex[1]  = y + lsys->pos.y * map_zoom;
@@ -817,10 +883,10 @@ static void map_renderPath( double x, double y )
                sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
          gl_vboDeactivate();
-         
+
          lsys = jsys;
       }
-      
+
       glShadeModel( GL_FLAT );
    }
 }
@@ -932,7 +998,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    t = 15.*15.; /* threshold */
 
    switch (event->type) {
-      
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -1408,7 +1474,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
          /* Make sure it's reachable */
          if (!ignore_known &&
-               ((!sys_isKnown(sys) && 
+               ((!sys_isKnown(sys) &&
                   (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))
             continue;
 
@@ -1423,7 +1489,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          if (ccost != NULL) {
             closed = A_rm( closed, sys ); /* shouldn't happen */
          }
-         
+
          if ((ocost == NULL) && (ccost == NULL)) {
             neighbour->g = cost;
             neighbour->r = A_g(neighbour) + A_h(cur->sys,sys);
@@ -1560,7 +1626,7 @@ int map_isMapped( const char* targ_sys, int r )
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
          jsys = sys->jumps[i].target;
-        
+
          /* SYstem has already been parsed. */
          if (A_in(closed,jsys) != NULL)
              continue;
@@ -1624,7 +1690,7 @@ int map_center( const char *sys )
 
    /* Get the system. */
    ssys = system_get( sys );
-   if (sys == NULL)
+   if (ssys == NULL)
       return -1;
 
    /* Center on the system. */

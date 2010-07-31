@@ -60,6 +60,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
+static int pilotL_faction( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
 static int pilotL_setDir( lua_State *L );
@@ -86,6 +87,7 @@ static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_goto( lua_State *L );
+static int pilotL_face( lua_State *L );
 static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
@@ -109,6 +111,7 @@ static const luaL_reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "faction", pilotL_faction },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -143,6 +146,7 @@ static const luaL_reg pilotL_methods[] = {
    { "memory", pilotL_memory },
    { "taskClear", pilotL_taskclear },
    { "goto", pilotL_goto },
+   { "face", pilotL_face },
    { "brake", pilotL_brake },
    { "follow", pilotL_follow },
    { "attack", pilotL_attack },
@@ -283,10 +287,10 @@ int lua_ispilot( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, PILOT_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
@@ -557,8 +561,13 @@ static int pilotL_remove( lua_State *L )
 /**
  * @brief Clears the current system of pilots.  Used for epic battles and such.
  *
+ * Be careful with this command especially in big systems. It will most likely
+ *  cause issues if multiple missions are in the same system.
+ *
+ * @note Clears all global pilot hooks too.
+ *
  * @usage pilot.clear()
- * 
+ *
  * @luafunc clear()
  */
 static int pilotL_clear( lua_State *L )
@@ -854,6 +863,29 @@ static int pilotL_dir( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's faction.
+ *
+ * @usage f = p:faction()
+ *
+ *    @luaparam p Pilot to get the faction of.
+ *    @luareturn The faction of the pilot.
+ * @luafunc faction( p )
+ */
+static int pilotL_faction( lua_State *L )
+{
+   Pilot *p;
+   LuaFaction f;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push faction. */
+   f.f   = p->faction;
+   lua_pushfaction(L,f);
+   return 1;
+}
+
+/**
  * @brief Sets the pilot's position.
  *
  * @usage p:setPos( vec2.new( 300, 200 ) )
@@ -1030,7 +1062,7 @@ static int pilotL_setFaction( lua_State *L )
       f = lua_tofaction(L,2);
       fid = f->f;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Set the new faction. */
    p->faction = fid;
@@ -1174,7 +1206,7 @@ static int pilotL_addOutfit( lua_State *L )
    o = outfit_get( outfit );
    if (o == NULL)
       return 0;
-   
+
    /* Add outfit. */
    for (i=0; i<p->noutfits; i++) {
       /* Must still have to add outfit. */
@@ -1186,7 +1218,7 @@ static int pilotL_addOutfit( lua_State *L )
          continue;
 
       /* Must fit slot. */
-      if (o->slot != p->outfits[i]->slot)
+      if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
          continue;
 
       /* Test if can add outfit. */
@@ -1255,7 +1287,7 @@ static int pilotL_rmOutfit( lua_State *L )
       NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
       return 0;
    }
-   
+
    /* Remove the outfit outfit. */
    for (i=0; i<p->noutfits; i++) {
       /* Must still need to remove. */
@@ -1303,7 +1335,7 @@ static int pilotL_setFuel( lua_State *L )
       p->fuel = CLAMP( 0., p->fuel_max, lua_tonumber(L,2) );
    }
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    /* Return amount of fuel. */
    lua_pushnumber(L, p->fuel);
@@ -1776,6 +1808,46 @@ static int pilotL_goto( lua_State *L )
 
 
 /**
+ * @brief Makes the pilot face a target.
+ *
+ * @usage p:face( enemy_pilot ) -- Face enemy pilot
+ * @usage p:face( vec2.new( 0, 0 ) ) -- Face origin
+ *
+ *    @luaparam p Pilot to add task to.
+ *    @luaparam target Target to face (can be vec2 or pilot).
+ * @luafunc face( p, target )
+ */
+static int pilotL_face( lua_State *L )
+{
+   Pilot *p, *pt;
+   LuaVector *vt;
+   Task *t;
+
+   /* Get parameters. */
+   pt = NULL;
+   vt = NULL;
+   p  = luaL_validpilot(L,1);
+   if (lua_ispilot(L,2))
+      pt = luaL_validpilot(L,2);
+   else
+      vt = luaL_checkvector(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "__face" );
+   if (pt != NULL) {
+      t->dtype = TASKDATA_INT;
+      t->dat.num = pt->id;
+   }
+   else {
+      t->dtype = TASKDATA_VEC2;
+      vectcpy( &t->dat.vec, &vt->vec );
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Makes the pilot brake.
  *
  * Pilot must be under manual control for this to work.
@@ -1940,7 +2012,7 @@ static int pilotL_hyperspace( lua_State *L )
       /* Copy vector. */
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &jp->pos );
-      
+
       /* Introduce some error. */
       a     = RNGF() * M_PI * 2.;
       rad   = RNGF() * 0.5 * jp->radius;
@@ -1994,7 +2066,7 @@ static int pilotL_land( lua_State *L )
       p->nav_planet = i;
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &lp->p->pos );
-      
+
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;
       r = RNGF() * lp->p->radius;

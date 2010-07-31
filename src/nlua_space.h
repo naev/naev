@@ -13,7 +13,7 @@
 #include "nlua_system.h"
 
 
-/* 
+/*
  * Load the space library.
  */
 int nlua_loadSpace( lua_State *L, int readonly );

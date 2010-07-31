@@ -7,6 +7,15 @@
 
 
 --[[
+-- Faces the target.
+--]]
+function __face ()
+   local target = ai.target()
+   ai.face( target )
+end
+
+
+--[[
 -- Brakes the ship
 --]]
 function brake ()
@@ -14,6 +23,19 @@ function brake ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
+      return
+   end
+end
+
+
+--[[
+-- Brakes the ship
+--]]
+function __subbrake ()
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.popsubtask()
       return
    end
 end
@@ -49,8 +71,7 @@ function __goto_precise ()
 
    -- Handle finished
    if ai.isstopped() and dist < 10 then
-      ai.stop() -- Will stop the pilot if below err vel
-      ai.poptask()
+      ai.poptask() -- Finished
    end
 
    local bdist    = ai.minbrakedist()
@@ -61,7 +82,7 @@ function __goto_precise ()
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask("brake")
+      ai.pushsubtask("__subbrake")
    end
 end
 

@@ -35,6 +35,7 @@ typedef enum ShipClass_ {
    SHIP_CLASS_CRUISE_SHIP, /**< Medium ship. */
    /* Merchant. */
    SHIP_CLASS_COURIER, /**< Small ship. */
+   SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
    SHIP_CLASS_FREIGHTER, /**< Medium ship. */
    SHIP_CLASS_BULK_CARRIER, /**< Large ship. */
    /* Military. */
@@ -68,7 +69,7 @@ typedef struct ShipMount_ {
  * @brief Ship outfit slot.
  */
 typedef struct ShipOutfitSlot_ {
-   OutfitSlotType slot; /**< Type of slot. */
+   OutfitSlot slot; /**< Outfit slot. */
    Outfit *data; /**< Outfit by default if applicable. */
    ShipMount mount; /**< Mountpoint. */
 } ShipOutfitSlot;
@@ -112,6 +113,7 @@ typedef struct Ship_ {
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */
+   glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm; /**< Name of graphic for communication. */
 
    /* GUI interface */
@@ -121,12 +123,12 @@ typedef struct Ship_ {
    int sound; /**< Sound motor uses. */
 
    /* outfits */
-   int outfit_nlow; /**< Number of low energy outfit slots. */
-   ShipOutfitSlot *outfit_low; /**< Outfit low energy slots. */
-   int outfit_nmedium; /**< Number of medium energy outfit slots. */
-   ShipOutfitSlot *outfit_medium; /**< Outfit medium energy slots. */
-   int outfit_nhigh; /**< Number of high energy outfit slots. */
-   ShipOutfitSlot *outfit_high; /**< Outfit high energy slots. */
+   int outfit_nstructure; /**< Number of structure outfit slots. */
+   ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
+   int outfit_nsystems; /**< Number of systems ooutfit slots. */
+   ShipOutfitSlot *outfit_systems; /**< Outfit systems slots. */
+   int outfit_nweapon; /**< Number of weapon outfit slots. */
+   ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */
 
    /* mounts */
    double mangle; /**< Mount angle to simplify mount calculations. */
@@ -154,6 +156,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
  */
 Ship* ship_get( const char* name );
 Ship* ship_getW( const char* name );
+Ship* ship_getAll( int *n );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );

@@ -305,7 +305,7 @@ function jumpin()
         end
     else
         if proxy then
-            misn.timerStop(proxy)
+            hook.timerStop(proxy)
         end
     end
 end
@@ -439,15 +439,16 @@ end
 -- As soon as the diplomat is at its destination, set up final cutscene.
 function diplomatIdle()
     local mypos = {} -- Relative positions to the Dvaered diplomat.
-    mypos[1] = vec2.new(0, 100)
-    mypos[2] = vec2.new(-60, -60)
-    mypos[3] = vec2.new(60, -60)
+    mypos[1] = vec2.new(0, 130)
+    mypos[2] = vec2.new(-85, -65)
+    mypos[3] = vec2.new(85, -65)
     
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:setInvincible(true)
             j:taskClear()
             j:goto(dvaerplomat:pos() + mypos[i], true)
+            j:face(dvaerplomat:pos())
         end
     end
     
@@ -508,6 +509,7 @@ function escortFlee()
         end
     end
     misn.osdActive(4)
+    marker = misn.markerAdd(seirsys, "low")
     stage = 1 -- no longer spawn things
     missend = true
 end

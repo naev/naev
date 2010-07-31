@@ -27,7 +27,7 @@
  *
  * Specification
  *
- *   -  AI will follow basic tasks defined from Lua AI script.  
+ *   -  AI will follow basic tasks defined from Lua AI script.
  *     - if Task is NULL, AI will run "control" task
  *     - Task is continued every frame
  *     - Tasks can have subtasks which will be closed when parent task is dead.
@@ -37,7 +37,7 @@
  *     - "control" task sets another task
  *   - "control" task is also run at a set rate (depending on Lua global "control_rate")
  *     to choose optimal behaviour (task)
- * 
+ *
  * Memory
  *
  *  The AI currently has per-pilot memory which is accessible as "mem".  This
@@ -63,6 +63,7 @@
 #include <stdio.h> /* malloc realloc */
 #include <string.h> /* strncpy strlen strncat strcmp strdup */
 #include <math.h>
+#include <ctype.h> /* isdigit */
 
 /* yay more lua */
 #include "lauxlib.h"
@@ -85,6 +86,7 @@
 #include "nlua_pilot.h"
 #include "nlua_faction.h"
 #include "board.h"
+#include "hook.h"
 
 
 /**
@@ -785,12 +787,16 @@ void ai_think( Pilot* pilot, const double dt )
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
    lua_State *L;
+   HookParam hparam;
+
+   /* Custom hook parameters. */
+   hparam.type       = HOOK_PARAM_PILOT;
+   hparam.u.lp.pilot = attacker;
 
    /* Behaves differently if manually overriden. */
-   if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL )) {
-      pilot_runHook( attacked, PILOT_HOOK_ATTACKED );
+   pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, &hparam, 1 );
+   if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
-   }
 
    /* Must have an AI profile. */
    if (attacked->ai == NULL)
@@ -894,7 +900,7 @@ static void ai_create( Pilot* pilot, char *param )
       L = equip_L;
       lua_getglobal(L, "equip");
       lp.pilot = cur_pilot->id;
-      lua_pushpilot(L,lp); 
+      lua_pushpilot(L,lp);
       lf.f = cur_pilot->faction;
       lua_pushfaction(L,lf);
       if (lua_pcall(L, 2, 0, 0)) { /* Error has occurred. */
@@ -938,7 +944,7 @@ static void ai_create( Pilot* pilot, char *param )
 Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *pointer;
-   
+
    /* Create the new task. */
    t           = malloc( sizeof(Task) );
    t->next     = NULL;
@@ -1028,7 +1034,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
          lv          = lua_tovector(L,2);
          vectcpy( &t->dat.vec, &lv->vec );
       }
-      else NLUA_INVALID_PARAMETER();
+      else NLUA_INVALID_PARAMETER(L);
    }
 
    return t;
@@ -1327,9 +1333,9 @@ static int aiL_parmour( lua_State *L )
    return 1;
 }
 
-/* 
+/*
  * gets the pilot's shield in percent
- */              
+ */
 static int aiL_pshield( lua_State *L )
 {
    double d;
@@ -1347,7 +1353,7 @@ static int aiL_pshield( lua_State *L )
 
    lua_pushnumber(L, d);
    return 1;
-} 
+}
 
 /*
  * gets the distance from the pointer
@@ -1367,21 +1373,21 @@ static int aiL_getdistance( lua_State *L )
 
    else if (lua_islightuserdata(L,1))
       v = lua_touserdata(L,1);
-   
+
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
       n = (unsigned int) lua_tonumber(L,1);
       pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
-      if (pilot==NULL) { 
+      if (pilot==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
       v = &pilot->solid->pos;
    }
-   
+
    /* wrong parameter */
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, vect_dist(v, &cur_pilot->solid->pos));
    return 1;
@@ -1396,7 +1402,7 @@ static int aiL_getpos( lua_State *L )
 
    if (lua_isnumber(L,1)) {
       p = pilot_get((unsigned int)lua_tonumber(L,1)); /* Pilot ID */
-      if (p==NULL) { 
+      if (p==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
@@ -1430,7 +1436,7 @@ static int aiL_minbrakedist( lua_State *L )
       /* Get target. */
       id = luaL_checklong(L,1);
       p = pilot_get(id);
-      if (p==NULL) { 
+      if (p==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
@@ -1438,7 +1444,7 @@ static int aiL_minbrakedist( lua_State *L )
       /* Set up the vectors. */
       vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
             p->solid->vel.y - cur_pilot->solid->vel.y );
-   
+
       /* Run the same calculations. */
       time = VMOD(vv) /
             (cur_pilot->thrust / cur_pilot->solid->mass);
@@ -1492,7 +1498,7 @@ static int aiL_shipclass( lua_State *L )
    if (lua_gettop(L) > 0) {
       l = luaL_checklong(L,1);
       p = pilot_get(l);
-      if (p==NULL) { 
+      if (p==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
@@ -1516,7 +1522,7 @@ static int aiL_shipmass( lua_State *L )
    if (lua_gettop(L) > 0) {
       l = luaL_checklong(L,1);
       p = pilot_get(l);
-      if (p==NULL) { 
+      if (p==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
@@ -1555,7 +1561,7 @@ static int aiL_getstanding( lua_State *L )
    /* Get parameters. */
    id = luaL_checklong(L,1);
    p = pilot_get(id);
-   if (p==NULL) { 
+   if (p==NULL) {
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
@@ -1630,7 +1636,7 @@ static int aiL_isenemy( lua_State *L )
    /* Get the pilot. */
    id = luaL_checklong(L,1);
    p = pilot_get(id);
-   if (p==NULL) { 
+   if (p==NULL) {
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
@@ -1658,7 +1664,7 @@ static int aiL_isally( lua_State *L )
    /* Get the pilot. */
    id = luaL_checklong(L,1);
    p = pilot_get(id);
-   if (p==NULL) { 
+   if (p==NULL) {
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
@@ -1686,7 +1692,7 @@ static int aiL_incombat( lua_State *L )
    if (lua_gettop(L) > 0) {
       id = luaL_checklong(L,1);
       p = pilot_get(id);
-      if (p==NULL) { 
+      if (p==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
@@ -1713,7 +1719,7 @@ static int aiL_isdisabled( lua_State *L )
 
    id = luaL_checklong(L, 1);
    p = pilot_get(id);
-   if (p==NULL) { 
+   if (p==NULL) {
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
@@ -1772,7 +1778,7 @@ static int aiL_turn( lua_State *L )
  * @usage ai.face( a_pilot ) -- Face a pilot
  * @usage ai.face( a_pilot, true ) -- Face away from a pilot
  * @usage ai.face( a_pilot, nil, true ) -- Compensate velocity facing a pilot
- * 
+ *
  *    @param target Target to face.
  *    @param invert Invert away from target.
  *    @param compensate Compensate for velocity?
@@ -1796,7 +1802,7 @@ static int aiL_face( lua_State *L )
       else {
          id = (unsigned int)d;
          p = pilot_get(id);
-         if (p==NULL) { 
+         if (p==NULL) {
             NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
             return 0;
          }
@@ -1808,7 +1814,7 @@ static int aiL_face( lua_State *L )
       lv = lua_tovector(L,1);
       tv = &lv->vec;
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Default gain. */
    k_diff = 10.;
@@ -1847,7 +1853,7 @@ static int aiL_face( lua_State *L )
       dx += -k_vel * vx;
       dy += -k_vel * vy;
    }
-   
+
    /* Compensate error and rotate. */
    diff = angle_diff( cur_pilot->solid->dir, atan2( dy, dx ) );
 
@@ -1869,7 +1875,7 @@ static int aiL_brake( lua_State *L )
 
    d = cur_pilot->solid->dir+M_PI;
    if (d >= 2*M_PI) d = fmod(d, 2*M_PI);
-   
+
    diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
    pilot_turn = 10*diff;
 
@@ -1965,7 +1971,7 @@ static int aiL_getlandplanet( lua_State *L )
          continue;
       else if (!only_friend && areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
          continue;
-      
+
       /* Add it. */
       ind[ nplanets++ ] = i;
    }
@@ -2000,7 +2006,7 @@ static int aiL_land( lua_State *L )
 {
    int ret;
    Planet *planet;
-   
+
    ret = 0;
 
    if (cur_pilot->nav_planet < 0) {
@@ -2055,7 +2061,7 @@ static int aiL_takingoff( lua_State *L )
 static int aiL_hyperspace( lua_State *L )
 {
    int dist;
-   
+
    dist = space_hyperspace(cur_pilot);
    if (dist == 0.) {
       pilot_shootStop( cur_pilot, 0 );
@@ -2174,7 +2180,7 @@ static int aiL_relvel( lua_State *L )
          p->solid->pos.y - cur_pilot->solid->pos.y );
    dot = vect_dot( &pv, &vv );
    mod = MAX(VMOD(pv), 1.); /* Avoid /0. */
-   
+
    lua_pushnumber(L, dot / mod );
    return 1;
 }
@@ -2203,7 +2209,7 @@ static int aiL_e_attack( lua_State *L )
    return 1;
 }
 
-/* 
+/*
  * Tells the pilot's escorts to hold position.
  */
 static int aiL_e_hold( lua_State *L )
@@ -2388,7 +2394,7 @@ static int aiL_secondary( lua_State *L )
       melee = 1;
    else if (strcmp(str, "ranged")==0)
       melee = 0;
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Pilot has secondary selected - use that */
    po = NULL;
@@ -2530,7 +2536,7 @@ static int aiL_hostile( lua_State *L )
    Pilot *p;
 
    id = luaL_checklong(L,1);
-   p = pilot_get(id);
+   p  = pilot_get(id);
    if (p==NULL) {
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
@@ -2683,7 +2689,7 @@ static int aiL_comm( lua_State *L )
 {
    unsigned int p;
    const char *s;
- 
+
    /* Get parameters. */
    p = luaL_checklong(L,1);
    s = luaL_checkstring(L,2);
@@ -2718,7 +2724,7 @@ static int aiL_distress( lua_State *L )
    else if (lua_isnil(L,1))
       aiL_distressmsg[0] = '\0';
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    /* Set flag because code isn't reentrant. */
    ai_setFlag(AI_DISTRESS);
@@ -2738,7 +2744,7 @@ static int aiL_credits( lua_State *L )
    }
 
    cur_pilot->credits = luaL_checklong(L,1);
-   
+
    return 0;
 }
 

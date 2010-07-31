@@ -6,9 +6,10 @@
 function equip_pirate( p )
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
+   local class = p:ship():class()
 
    -- Split by type
-   if shiptype == "military" then
+   if shiptype == "military" or class == "Armoured Transport" then
       equip_pirateMilitary( p, shipsize )
    else
       equip_generic( p )

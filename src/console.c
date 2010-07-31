@@ -12,6 +12,7 @@
 
 #include "naev.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #define lua_c
@@ -97,7 +98,7 @@ static int cli_print( lua_State *L ) {
       lua_pushvalue(L, i);   /* value to print */
       lua_call(L, 1, 1);
       s = lua_tostring(L, -1);  /* get result */
-      if (s == NULL)                                                         
+      if (s == NULL)
          return luaL_error(L, LUA_QL("tostring") " must return a string to "
                LUA_QL("print"));
 
@@ -194,7 +195,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
       else
          c = &cBlack;
       gl_printMaxRaw( cli_font, w,
-            bx + SCREEN_W/2., by + y + SCREEN_H/2., 
+            bx + SCREEN_W/2., by + y + SCREEN_H/2.,
             c, cli_buffer[i] );
       i = (i + 1) % BUF_LINES;
    }

@@ -14,7 +14,7 @@
  * @note Input is not handled here.
  */
 typedef struct PlayerConf_s {
-   
+
    /* ndata. */
    char *ndata; /**< Ndata path to use. */
 
@@ -74,6 +74,7 @@ typedef struct PlayerConf_s {
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
+   int devcsv; /**< Output CSV data. */
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */

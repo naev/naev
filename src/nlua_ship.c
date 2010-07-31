@@ -142,10 +142,10 @@ int lua_isship( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, SHIP_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
@@ -265,10 +265,10 @@ static int shipL_class( lua_State *L )
 /**
  * @brief Gets the amount of the ship's ship slots.
  *
- * @usage slots_high, slots_medium, slots_low = p:slots()
+ * @usage slots_weapon, slots_systems, slots_structure = p:slots()
  *
  *    @luaparam s Ship to get ship slots of.
- *    @luareturn Number of high, medium and low slots.
+ *    @luareturn Number of weapon, systems and structure slots.
  * @luafunc slots( s )
  */
 static int shipL_slots( lua_State *L )
@@ -285,9 +285,9 @@ static int shipL_slots( lua_State *L )
    }
 
    /* Push slot numbers. */
-   lua_pushnumber(L, s->outfit_nhigh);
-   lua_pushnumber(L, s->outfit_nmedium);
-   lua_pushnumber(L, s->outfit_nlow);
+   lua_pushnumber(L, s->outfit_nweapon);
+   lua_pushnumber(L, s->outfit_nsystems);
+   lua_pushnumber(L, s->outfit_nstructure);
    return 3;
 }
 

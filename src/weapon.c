@@ -52,12 +52,6 @@ extern Pilot** pilot_stack;
 extern int pilot_nstack;
 
 
-/*
- * Weapon stuff.
- */
-static int weapon_safety = 1; /**< Enables shooting friendlies. */
-
-
 /**
  * @struct Weapon
  *
@@ -264,20 +258,6 @@ void weapon_minimap( const double res, const double w,
       /* Disable VBO. */
       gl_vboDeactivate();
    }
-}
-
-
-/**
- * @brief Toggles the player's weapon safety.
- */
-void weapon_toggleSafety (void)
-{
-   weapon_safety = !weapon_safety;
-
-   if (weapon_safety)
-      player_message( "\ebEnabling weapon safety." );
-   else
-      player_message( "\ebDisabling weapon safety." );
 }
 
 
@@ -721,7 +701,6 @@ static void weapon_render( Weapon* w, const double dt )
          y = (w->solid->pos.y - cy)*z + gy;
 
          /* Set up the matrix. */
-         glMatrixMode(GL_PROJECTION);
          glPushMatrix();
             glTranslated( x, y, 0. );
             glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
@@ -776,7 +755,7 @@ static void weapon_render( Weapon* w, const double dt )
          /* Clean up. */
          glDisable(GL_TEXTURE_2D);
          glShadeModel(GL_FLAT);
-         glPopMatrix(); /* GL_PROJECTION */
+         glPopMatrix();
          gl_checkErr();
          break;
 
@@ -823,12 +802,8 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    /* Player behaves differently. */
    if (w->faction == FACTION_PLAYER) {
 
-      /* Always hit without safety. */
-      if (!weapon_safety)
-         return 1;
-
       /* Always hit target. */
-      else if (w->target == p->id)
+      if (w->target == p->id)
          return 1;
 
       /* Always hit hostiles. */

@@ -81,6 +81,8 @@
 #include "hook.h"
 #include "npc.h"
 #include "console.h"
+#include "npng.h"
+#include "dev.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -150,7 +152,7 @@ int main( int argc, char** argv )
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
-   
+
    /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
 #ifdef GIT_COMMIT
@@ -188,7 +190,7 @@ int main( int argc, char** argv )
    xmlInitParser();
 
    /* Input must be initialized for config to work. */
-   input_init(); 
+   input_init();
 
    /* Set the configuration. */
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
@@ -216,7 +218,6 @@ int main( int argc, char** argv )
 
    /* random numbers */
    rng_init();
-
 
    /*
     * OpenGL
@@ -282,6 +283,10 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
+   /* Generate the CVS. */
+   if (conf.devcsv)
+      dev_csv();
+
    /* Unload load screen. */
    loadscreen_unload();
 
@@ -292,7 +297,7 @@ int main( int argc, char** argv )
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    time_ms = SDL_GetTicks(); /* initializes the time_ms */
-   /* 
+   /*
     * main loop
     */
    SDL_Event event;
@@ -591,7 +596,7 @@ static void fps_control (void)
    game_dt  = real_dt * dt_mod; /* Apply the modifier. */
    time_ms = t;
 
-   /* if fps is limited */                       
+   /* if fps is limited */
    if (!conf.vsync && conf.fps_max != 0) {
       fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
@@ -738,6 +743,7 @@ static void window_caption (void)
 {
    char buf[PATH_MAX];
    SDL_RWops *rw;
+   npng_t *npng;
 
    /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
@@ -749,7 +755,10 @@ static void window_caption (void)
       WARN("Icon (gfx/icon.png) not found!");
       return;
    }
-   naev_icon = IMG_Load_RW( rw, 1 );
+   npng        = npng_open( rw );
+   naev_icon   = npng_readSurface( npng, 0, 0 );
+   npng_close( npng );
+   SDL_RWclose( rw );
    if (naev_icon == NULL) {
       WARN("Unable to load gfx/icon.png!");
       return;

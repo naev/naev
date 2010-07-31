@@ -392,7 +392,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
    mod = SDL_GetModState();
 
    switch (event->type) {
-      
+
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -581,7 +581,7 @@ static void uniedit_renameSys (void)
       /* Keep current name. */
       if (name == NULL)
          continue;
-  
+
       /* Try again. */
       if (uniedit_checkName( name )) {
          free(name);
@@ -747,7 +747,7 @@ static void uniedit_selectAdd( StarSystem *sys )
    }
 
    /* Add system. */
-   uniedit_sys[ uniedit_nsys ] = sys; 
+   uniedit_sys[ uniedit_nsys ] = sys;
    uniedit_nsys++;
 
    /* Set text again. */
