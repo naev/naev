@@ -333,7 +333,7 @@
   </avail>
  </mission>
  <mission name="Baron">
-  <lua>neutral/baron_baron</lua>
+  <lua>baron/baron_baron</lua>
   <flags>
    <unique />
   </flags>
@@ -343,7 +343,7 @@
   </avail>
  </mission>
  <mission name="Prince">
-  <lua>neutral/baron_prince</lua>
+  <lua>baron/baron_prince</lua>
   <flags>
    <unique />
   </flags>
@@ -359,7 +359,7 @@
   </avail>
  </mission>
  <mission name="Shadowrun">
-  <lua>neutral/shadowrun</lua>
+  <lua>shadow/shadowrun</lua>
   <flags>
    <unique />
   </flags>
@@ -370,7 +370,7 @@
   </avail>
  </mission>
  <mission name="Shadow Vigil">
-  <lua>neutral/shadowvigil</lua>
+  <lua>shadow/shadowvigil</lua>
   <flags>
    <unique />
   </flags>
