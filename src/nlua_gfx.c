@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "log.h"
 #include "opengl.h"
+#include "nlua_col.h"
 #include "nlua_tex.h"
 
 
@@ -103,20 +104,26 @@ static int gfxL_dim( lua_State *L )
 static int gfxL_renderTex( lua_State *L )
 {
    LuaTex *lt;
+   LuaColour *lc;
    double x, y;
    int sx, sy;
 
    /* Parameters. */
+   lc = NULL;
    lt = luaL_checktex( L, 1 );
    x  = luaL_checknumber( L, 2 );
    y  = luaL_checknumber( L, 3 );
    if (lua_isnumber( L, 4 )) {
       sx    = luaL_checkinteger( L, 4 ) - 1;
       sy    = luaL_checkinteger( L, 5 ) - 1;
+      if (lua_iscolour(L, 5))
+         lc    = luaL_checkcolour(L,5);
    }
    else {
       sx    = 0;
       sy    = 0;
+      if (lua_iscolour(L, 4))
+         lc    = luaL_checkcolour(L,4);
    }
 
    /* Some sanity checking. */
@@ -128,7 +135,7 @@ static int gfxL_renderTex( lua_State *L )
             lt->tex->name, sy+1, lt->tex->sy );
 
    /* Render. */
-   gl_blitStaticSprite( lt->tex, x, y, sx, sy, NULL );
+   gl_blitStaticSprite( lt->tex, x, y, sx, sy, (lc==NULL) ? NULL : &lc->col );
 
    return 0;
 }
@@ -147,6 +154,7 @@ static int gfxL_renderTex( lua_State *L )
  */
 static int gfxL_renderRect( lua_State *L )
 {
+   LuaColour *lc;
    double x,y, w,h;
    int empty;
 
@@ -155,13 +163,14 @@ static int gfxL_renderRect( lua_State *L )
    y     = luaL_checknumber( L, 2 ) - SCREEN_H/2.;
    w     = luaL_checknumber( L, 3 );
    h     = luaL_checknumber( L, 4 );
+   lc    = luaL_checkcolour( L, 5 );
    empty = lua_toboolean( L, 6 );
 
    /* Render. */
    if (empty)
-      gl_renderRectEmpty( x, y, w, h, &cWhite );
+      gl_renderRectEmpty( x, y, w, h, &lc->col );
    else
-      gl_renderRect( x, y, w, h, &cWhite );
+      gl_renderRect( x, y, w, h, &lc->col );
 
    return 0;
 }
