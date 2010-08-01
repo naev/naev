@@ -57,6 +57,7 @@ static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
+static int pilotL_secondary( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -109,6 +110,7 @@ static const luaL_reg pilotL_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "secondary", pilotL_secondary },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -170,6 +172,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "secondary", pilotL_secondary },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -811,6 +814,64 @@ static int pilotL_target( lua_State *L )
    lp.pilot = p->target;
    lua_pushpilot(L, lp);
    return 1;
+}
+
+
+/**
+ * @brief Gets the secondary weapon of the pilot.
+ *
+ * @usage weapo, amm, ready = p:secondary()
+ *
+ *    @luaparam p Pilot to get secondary weapon of.
+ *    @luareturn The current secondary weapon and the amount of ammo it has (or nil if not applicable).
+ * @luafunc secondary( p )
+ */
+static int pilotL_secondary( lua_State *L )
+{
+   Pilot *p;
+   int i, q, ready;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+
+   /* Case no secondary weapon. */
+   if ((p->secondary==NULL) || (p->secondary->outfit == NULL))
+      return 0;
+
+   /* Get ready status. */
+   ready = p->secondary->timer > 0.;
+
+   /* Push name. */
+   lua_pushstring( L, p->secondary->u.ammo.outfit->name );
+
+   /* Can have ammo. */
+   if ((outfit_isLauncher(p->secondary->outfit) ||
+            outfit_isFighterBay(p->secondary->outfit)) &&
+         (p->secondary->u.ammo.outfit != NULL)) {
+
+      /* Get quantity. */
+      q = 0;
+      for (i=0; i<p->outfit_nweapon; i++) {
+         if (p->outfit_weapon[i].outfit != p->secondary->outfit)
+            continue;
+
+         if (p->outfit_weapon[i].u.ammo.outfit == p->secondary->u.ammo.outfit)
+            q += p->outfit_weapon[i].u.ammo.quantity;
+      }
+
+      /* Push ammo. */
+      lua_pushnumber( L, q );
+   }
+   else {
+      /* Not ready if it's a launcher with no ammo. */
+      if (outfit_isLauncher(p->secondary->outfit) ||
+            outfit_isFighterBay(p->secondary->outfit))
+         ready = 0;
+
+      lua_pushnil( L );
+   }
+   lua_pushboolean( L, ready );
+   return 3;
 }
 
 
