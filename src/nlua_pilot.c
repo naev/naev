@@ -57,6 +57,7 @@ static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
+static int pilotL_nav( lua_State *L );
 static int pilotL_secondary( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
@@ -110,6 +111,7 @@ static const luaL_reg pilotL_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "nav", pilotL_nav },
    { "secondary", pilotL_secondary },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
@@ -172,6 +174,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "nav", pilotL_nav },
    { "secondary", pilotL_secondary },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -816,6 +819,39 @@ static int pilotL_target( lua_State *L )
       return 0;
    lua_pushpilot(L, lp);
    return 1;
+}
+
+
+/**
+ * @brief Gets the nav target of the pilot.
+ *
+ * @usage planet, hyperspace = p:nav()
+ *
+ *    @luaparam p Pilot to get nav info of.
+ *    @luareturn The planet target followed by the hyperspace target or nil if not targetted.
+ * @luafunc( p )
+ */
+static int pilotL_nav( lua_State *L )
+{
+   Pilot *p;
+   LuaPlanet lplanet;
+   LuaSystem lsystem;
+   p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+   if (p->nav_planet >= 0) {
+      lplanet.p   = cur_system->planets[ p->nav_planet ];
+      lua_pushplanet( L, lplanet );
+   }
+   else
+      lua_pushnil(L);
+   if (p->nav_hyperspace >= 0) {
+      lsystem.s   = cur_system->jumps[ p->nav_hyperspace ].target;
+      lua_pushsystem( L, lsystem );
+   }
+   else
+      lua_pushnil(L);
+   return 2;
 }
 
 
