@@ -58,6 +58,7 @@ naev_SOURCES = \
 	nfile.c \
 	nlua.c \
 	nlua_cli.c \
+	nlua_col.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
@@ -167,6 +168,7 @@ naev_SOURCES = \
 	nfile.h \
 	nlua.h \
 	nlua_cli.h \
+	nlua_col.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
