@@ -56,6 +56,7 @@ static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
+static int pilotL_target( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -107,6 +108,7 @@ static const luaL_reg pilotL_methods[] = {
    { "name", pilotL_name },
    { "id", pilotL_id },
    { "exists", pilotL_exists },
+   { "target", pilotL_target },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -167,6 +169,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "name", pilotL_name },
    { "id", pilotL_id },
    { "exists", pilotL_exists },
+   { "target", pilotL_target },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -787,6 +790,29 @@ static int pilotL_exists( lua_State *L )
    lua_pushboolean(L, exists);
    return 1;
 }
+
+
+/**
+ * @brief Gets the pilot target of the pilot.
+ *
+ * @usage target = p:target()
+ *
+ *    @luaparam p Pilot to get target of.
+ *    @luareturn nil if no target is selected, otherwise the target of the target.
+ * @luafunc target( p )
+ */
+static int pilotL_target( lua_State *L )
+{
+   Pilot *p;
+   LuaPilot lp;
+   p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+   lp.pilot = p->target;
+   lua_pushpilot(L, lp);
+   return 1;
+}
+
 
 /**
  * @brief Changes the pilot's name.
