@@ -1,6 +1,6 @@
 --[[
 
-   Pirate Hitman
+   Pirate Hitman 2
 
    Corrupt Merchant wants you to destroy competition
 
@@ -13,23 +13,23 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar information
-   bar_desc = "You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to look stupid."
+   bar_desc = "The trader that hired you is back. It looks like he might want to talk."
 
    -- Mission details
-   misn_title  = "Pirate Hitman"
+   misn_title  = "Pirate Hitman 2"
    misn_reward = "Some easy money." -- Possibly some hard to get contraband once it is introduced
    misn_desc   = {}
-   misn_desc[1] = "Chase away merchant competition in the %s system."
+   misn_desc[1] = "Take out some merchant competition in the %s system."
    misn_desc[2] = "Return to %s in the %s system for payment."
 
    -- Text
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[How'd you like to earn some easy money?]]
+   text[1]  = [[Ah, your back. I have some more work for you. Payment will be a bit sweeter as well. Are you interested?]]
+   text[2] = [[The merchants haven't left. I'm going to need you to step it up a notch from last time. A few missing traders might send the message.]]
    title[3] = "Mission Complete"
-   text[2] = [[There're some new merchants edging in on my trade routes in %s. I want you to let them know they're not welcome. You don't have to kill anyone, just rough them up a bit.]]
-   text[3] = [[Did everything go well? Good, good. That should teach them to stay out of my space.]]
+   text[3] = [[I hope the empire didn't give you much trouble. I'm sure that after burner came in handy a few times. *chuckles*]]
 
    -- Messages
    msg      = {}
@@ -60,7 +60,7 @@ function accept ()
    misn_done      = false
    attackedTraders = {}
    attackedTraders["__save"] = true
-   fledTraders = 0
+   deadTraders = 0
    misn_base, misn_base_sys = planet.cur()
 
    -- Set mission details
@@ -82,7 +82,7 @@ function sys_enter ()
    -- Check to see if reaching target system
    if cur_sys == targetsystem then
       hook.pilot(nil, "attacked", "trader_attacked")
-      hook.pilot(nil, "jump", "trader_jumped")
+      hook.pilot(nil, "death", "trader_death")
    end
 end
 
@@ -98,7 +98,7 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
 end
 
 -- An attacked Trader Jumped
-function trader_jumped (hook_pilot, hook_arg)
+function trader_death (hook_pilot, hook_arg)
    if misn_done then
       return
    end
@@ -106,8 +106,8 @@ function trader_jumped (hook_pilot, hook_arg)
    for i, array_pilot in ipairs(attackedTraders) do
       if array_pilot:exists() then
          if array_pilot == hook_pilot then
-            fledTraders = fledTraders + 1
-            if fledTraders >= 5 then
+            deadTraders = deadTraders + 1
+            if deadTraders >= 3 then
                attack_finished()
             end
          end
@@ -129,7 +129,7 @@ end
 function landed()
    if planet.get() == misn_base then
       tk.msg(title[3], text[3])
-      player.pay(15000)
+      player.pay(25000)
       player.modFaction("Pirate",5)
       misn.finish(true)
    end
