@@ -191,6 +191,15 @@ static int colL_new( lua_State *L )
    if (lua_gettop(L)==0) {
       lc.col.r = lc.col.g = lc.col.b = lc.col.a = 1.;
    }
+   else if (lua_isnumber(L,1)) {
+      lc.col.r = luaL_checknumber(L,1);
+      lc.col.g = luaL_checknumber(L,2);
+      lc.col.b = luaL_checknumber(L,3);
+      if (lua_isnumber(L,4))
+         lc.col.a = luaL_checknumber(L,4);
+      else
+         lc.col.a = 1.;
+   }
    else if (lua_isstring(L,1)) {
       col = col_fromName( lua_tostring(L,1) );
       if (col == NULL) {
@@ -203,15 +212,8 @@ static int colL_new( lua_State *L )
       else
          lc.col.a = 1.;
    }
-   else {
-      lc.col.r = luaL_checknumber(L,1);
-      lc.col.g = luaL_checknumber(L,2);
-      lc.col.b = luaL_checknumber(L,3);
-      if (lua_isnumber(L,4))
-         lc.col.a = luaL_checknumber(L,4);
-      else
-         lc.col.a = 1.;
-   }
+   else
+      NLUA_INVALID_PARAMETER(L);
 
    lua_pushcolour( L, lc );
    return 1;
