@@ -457,7 +457,7 @@ end
 
 -- This is the final cutscene.
 function diplomatCutscene()
-    playerh1, playerh2 = player:pilot():getHealth()
+    playerh1, playerh2 = player:pilot():health()
     player:pilot():disable()
     player:pilot():setVel(vec2.new(0, 0))
     player:pilot():setInvincible(true)

@@ -112,6 +112,8 @@ static const luaL_reg pilotL_methods[] = {
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
    { "faction", pilotL_faction },
+   { "health", pilotL_getHealth },
+   { "energy", pilotL_getEnergy },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -121,8 +123,6 @@ static const luaL_reg pilotL_methods[] = {
    { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
    { "setNodisable", pilotL_setNodisable },
-   { "getHealth", pilotL_getHealth },
-   { "getEnergy", pilotL_getEnergy },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
    { "setDir", pilotL_setDir },
@@ -158,6 +158,25 @@ static const luaL_reg pilotL_methods[] = {
    { "hookClear", pilotL_hookClear },
    {0,0}
 }; /**< Pilot metatable methods. */
+static const luaL_reg pilotL_cond_methods[] = {
+   /* General. */
+   { "player", pilotL_getPlayer },
+   { "get", pilotL_getPilots },
+   { "__eq", pilotL_eq },
+   /* Info. */
+   { "name", pilotL_name },
+   { "id", pilotL_id },
+   { "exists", pilotL_exists },
+   { "pos", pilotL_position },
+   { "vel", pilotL_velocity },
+   { "dir", pilotL_dir },
+   { "faction", pilotL_faction },
+   { "health", pilotL_getHealth },
+   { "energy", pilotL_getEnergy },
+   /* Ship. */
+   { "ship", pilotL_ship },
+   {0,0}
+};
 
 
 
@@ -170,9 +189,6 @@ static const luaL_reg pilotL_methods[] = {
  */
 int nlua_loadPilot( lua_State *L, int readonly )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
    /* Create the metatable */
    luaL_newmetatable(L, PILOT_METATABLE);
 
@@ -181,7 +197,10 @@ int nlua_loadPilot( lua_State *L, int readonly )
    lua_setfield(L,-2,"__index");
 
    /* Register the values */
-   luaL_register(L, NULL, pilotL_methods);
+   if (readonly)
+      luaL_register(L, NULL, pilotL_cond_methods);
+   else
+      luaL_register(L, NULL, pilotL_methods);
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, PILOT_METATABLE);
@@ -1505,11 +1524,11 @@ static int pilotL_setNodisable( lua_State *L )
 /**
  * @brief Gets the pilot's health.
  *
- * @usage armour, shield = p:getHealth()
+ * @usage armour, shield = p:health()
  *
  *    @luaparam p Pilot to get health of.
  *    @luareturn The armour and shield of the pilot in % [0:100].
- * @luafunc getHealth( p )
+ * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
 {
@@ -1529,11 +1548,11 @@ static int pilotL_getHealth( lua_State *L )
 /**
  * @brief Gets the pilot's energy.
  *
- * @usage energy = p:getEnergy()
+ * @usage energy = p:energy()
  *
  *    @luaparam p Pilot to get energy of.
  *    @luareturn The energy of the pilot in % [0:100].
- * @luafunc getEnergy( p )
+ * @luafunc energy( p )
  */
 static int pilotL_getEnergy( lua_State *L )
 {
