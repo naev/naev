@@ -47,7 +47,7 @@ int nlua_loadGFX( lua_State *L, int readonly )
       return 0;
 
    /* Register the values */
-   luaL_register(L, NULL, gfxL_methods);
+   luaL_register(L, "gfx", gfxL_methods);
 
    return 0;
 }

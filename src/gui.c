@@ -48,6 +48,10 @@
 #include "nmath.h"
 #include "gui_osd.h"
 #include "conf.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nlua_gfx.h"
+#include "nlua_tex.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -89,6 +93,12 @@ extern int pilot_nstack;
  * map stuff for autonav
  */
 extern int map_npath;
+
+
+/**
+ * @brief The Lua state for the current GUI.
+ */
+static lua_State *gui_L;
 
 
 /**
@@ -243,6 +253,8 @@ static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const HealthBar *bar, const double w );
 static void gui_renderInterference( double dt );
+/* Lua GUI. */
+static int gui_runFunc( const char* func );
 
 
 
@@ -1185,6 +1197,11 @@ void gui_render( double dt )
          gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
       }
    }
+
+
+   if (gui_L != NULL) {
+      gui_runFunc( "render" );
+   }
 }
 
 
@@ -2094,6 +2111,42 @@ int gui_init (void)
 
 
 /**
+ * @brief Runs a GUI Lua function.
+ *
+ *    @param func Name of the function to run.
+ *    @return 0 on success.
+ */
+static int gui_runFunc( const char* func )
+{
+   int ret;
+   const char* err;
+   lua_State *L;
+
+   /* For comfort. */
+   L = gui_L;
+
+#ifdef DEBUGGING
+   if (L == NULL) {
+      WARN( "Trying to run GUI func '%s' but no GUI is loaded!", func );
+      return -1;
+   }
+#endif /* DEBUGGING */
+
+   lua_getglobal( L, func );
+   ret = lua_pcall( L, 0, 0, 0 );
+   if (ret != 0) { /* error has occured */
+      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      WARN("GUI Lua -> '%s': %s",
+            func, (err) ? err : "unknown error");
+      lua_pop(L,1);
+      return -1;
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
@@ -2147,6 +2200,25 @@ int gui_load( const char* name )
       WARN("GUI '%s' not found in '"GUI_DATA"'",name);
       return -1;
    }
+
+   /* Create Lua state. */
+   const char *path  = "dat/gui/default.lua";
+   buf = ndata_read( path, &bufsize );
+   gui_L = nlua_newState();
+   if (luaL_dobuffer( gui_L, buf, bufsize, path ) != 0) {
+      WARN("Failed to load GUI Lua: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check",
+            path, lua_tostring(gui_L,-1));
+      return -1;
+   }
+   nlua_loadStandard( gui_L, 1 );
+   nlua_loadTex( gui_L, 0 );
+   nlua_loadGFX( gui_L, 0 );
+   gui_runFunc( "create" );
+   free(buf);
+
+   /* Run create function. */
 
    return 0;
 }
@@ -2580,6 +2652,12 @@ void gui_cleanup (void)
    /* Destroy offset. */
    gui_xoff = 0.;
    gui_yoff = 0.;
+
+   /* Destroy lua. */
+   if (gui_L != NULL) {
+      lua_close( gui_L );
+      gui_L = NULL;
+   }
 }
 
 
