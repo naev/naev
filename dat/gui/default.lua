@@ -9,12 +9,15 @@ function create()
    -- Get the player
    pp = player.pilot()
 
-   -- Get screen size
+   -- Get sizes
    screen_w, screen_h = gfx.dim()
+   deffont_h = gfx.fontSize()
+   smallfont_h = gfx.fontSize(true)
 
    -- Some colours
    col_warn    = colour.new( "Red" )
    col_gray    = colour.new( "Grey70" )
+   col_neut    = colour.new( 0.9, 1.0, 0.3, 1.0 )
    col_console = colour.new( 0.1, 0.9, 0.1, 1.0 )
    shield_col  = colour.new( 0.2, 0.2, 0.8, 0.8 )
    armour_col  = colour.new( 0.5, 0.5, 0.5, 0.8 )
@@ -107,6 +110,47 @@ function render()
    -- Weapon
    gfx.print( nil, "Secondary", weapon_x, weapon_y-17, col_console, weapon_w, true )
    gfx.print( true, "None", weapon_x, weapon_y-32, col_gray, weapon_w, true )
+
+   -- Target
+   local targ = pp:target()
+   if targ ~= pp then
+      local col, shi, arm, dis
+      arm, shi, dis = targ:health()
+
+      -- Get colour
+      if dis then
+         col = col_gray
+      else
+         local tfact = targ:faction()
+         local pfact = pp:faction()
+         if pfact:areEnemies( tfact ) then
+            col = col_warn
+         elseif pfact:areAllies( tfact ) then
+            col = col_console
+         else
+            col = col_neut
+         end
+      end
+
+      -- Display name
+      local name = targ:name()
+      local w = gfx.printDim( nil, name )
+      gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
+
+      -- Display health
+      if dis then
+         str = "Disabled"
+      elseif shi < 5 then
+         str = string.format( "Armour: %.0f%%", arm )
+      else
+         str = string.format( "Shield: %.0f%%", shi )
+      end
+      gfx.print( true, str, target_x, target_y-100, col, target_w )
+
+      -- Render faction graphic and target graphic
+   else
+      gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
+   end
 
 end
 
