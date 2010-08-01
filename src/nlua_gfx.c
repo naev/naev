@@ -111,13 +111,21 @@ static int gfxL_renderTex( lua_State *L )
    x  = luaL_checknumber( L, 2 );
    y  = luaL_checknumber( L, 3 );
    if (lua_isnumber( L, 4 )) {
-      sx    = luaL_checkinteger( L, 4 );
-      sy    = luaL_checkinteger( L, 5 );
+      sx    = luaL_checkinteger( L, 4 ) - 1;
+      sy    = luaL_checkinteger( L, 5 ) - 1;
    }
    else {
       sx    = 0;
       sy    = 0;
    }
+
+   /* Some sanity checking. */
+   if (sx >= lt->tex->sx)
+      NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d.",
+            lt->tex->name, sx+1, lt->tex->sx );
+   if (sx >= lt->tex->sx)
+      NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d.",
+            lt->tex->name, sy+1, lt->tex->sy );
 
    /* Render. */
    gl_blitStaticSprite( lt->tex, x, y, sx, sy, NULL );
