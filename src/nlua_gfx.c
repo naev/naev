@@ -50,6 +50,10 @@ int nlua_loadGFX( lua_State *L, int readonly )
    /* Register the values */
    luaL_register(L, "gfx", gfxL_methods);
 
+   /* We also load the texture and colour modules as dependencies. */
+   nlua_loadTex( L, readonly );
+   nlua_loadCol( L, readonly );
+
    return 0;
 }
 

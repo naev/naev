@@ -2215,7 +2215,6 @@ int gui_load( const char* name )
       return -1;
    }
    nlua_loadStandard( gui_L, 1 );
-   nlua_loadTex( gui_L, 0 );
    nlua_loadGFX( gui_L, 0 );
    gui_runFunc( "create" );
    free(buf);
