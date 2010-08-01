@@ -24,10 +24,10 @@ function create()
    frame_y  = screen_h - frame_h - 15
    shield_w = 128
    shield_h = 7
-   shield_x, shield_y = relativize( 43, 185 )
+   shield_x, shield_y = relativize( 43, 192 )
    armour_w = 128
    armour_h = 7
-   armour_x, armour_y = relativize( 43, 199 )
+   armour_x, armour_y = relativize( 43, 206 )
 end
 
 function relativize( x, y )
@@ -47,8 +47,8 @@ function render()
 
    -- Render health
    local arm, shi = pp:health()
-   gfx.renderRect( shield_x, shield_y, shi*shield_w, shield_h )
-   gfx.renderRect( armour_x, armour_y, arm*armour_w, armour_h )
+   gfx.renderRect( shield_x, shield_y, shi/100.*shield_w, shield_h )
+   gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h )
 
 end
 
