@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "log.h"
 #include "opengl.h"
+#include "font.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
 
@@ -26,10 +27,17 @@
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
+static int gfxL_print( lua_State *L );
+static int gfxL_printText( lua_State *L );
 static const luaL_reg gfxL_methods[] = {
+   /* Information. */
    { "dim", gfxL_dim },
+   /* Render stuff. */
    { "renderTex", gfxL_renderTex },
    { "renderRect", gfxL_renderRect },
+   /* Printing. */
+   { "print", gfxL_print },
+   { "printText", gfxL_printText },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -178,6 +186,92 @@ static int gfxL_renderRect( lua_State *L )
 
    return 0;
 }
+
+
+/**
+ * @brief Prints text on the screen.
+ *
+ * @usage gfx.print( nil, "Hello World!", 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
+ * @usage gfx.print( true, "Hello World!", 50, 50, col, 100 ) -- Displays text to a maximum of 100 pixels wide.
+ * @usage gfx.print( true, str, 50, 50, col, 100, true ) -- Displays centered text to a maximum of 100 pixels.
+ *
+ *    @luaparam small Whether or not to use a small font.
+ *    @luaparam str String to print.
+ *    @luaparam x X position to print at.
+ *    @luaparam y Y position to print at.
+ *    @luaparam col Colour to print text.
+ *    @luaparam max Optional parameter to indicate maximum width to render up to.
+ *    @luaparam center Optional boolean parameter indicating whether or not to center it.
+ * @luafunc print( small, str, x, y, col, max, center )
+ */
+static int gfxL_print( lua_State *L )
+{
+   glFont *font;
+   const char *str;
+   double x, y;
+   LuaColour *lc;
+   int max, mid;
+
+   /* Parse parameters. */
+   font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
+   str   = luaL_checkstring(L,2);
+   x     = luaL_checknumber(L,3) - SCREEN_W/2.;
+   y     = luaL_checknumber(L,4) - SCREEN_H/2.;
+   lc    = luaL_checkcolour(L,5);
+   if (lua_gettop(L) >= 6)
+      max = luaL_checkinteger(L,6);
+   else
+      max = 0;
+   mid   = lua_toboolean(L,7);
+
+   /* Render. */
+   if (mid)
+      gl_printMidRaw( font, max, x, y, &lc->col, str );
+   else if (max > 0)
+      gl_printMaxRaw( font, max, x, y, &lc->col, str );
+   else
+      gl_printRaw( font, x, y, &lc->col, str );
+   return 0;
+}
+
+
+/**
+ * @brief Prints a block of text on the screen.
+ *
+ * @usage gfx.printText( true, 100, 50, 50, 100, 100, col ) -- Displays a 100x100 block of text
+ *
+ *    @luaparam small Whether or not to use a small font.
+ *    @luaparam str String to print.
+ *    @luaparam x X position to print at.
+ *    @luaparam y Y position to print at.
+ *    @luaparam w Width of the block of text.
+ *    @luaparam h Height of the block of tetx.
+ *    @luaparam col Colour to print text.
+ * @luafunc print( small, str, x, y, w, h, col )
+ */
+static int gfxL_printText( lua_State *L )
+{
+   glFont *font;
+   const char *str;
+   int w, h;
+   double x, y;
+   LuaColour *lc;
+
+   /* Parse parameters. */
+   font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
+   str   = luaL_checkstring(L,2);
+   x     = luaL_checknumber(L,3) - SCREEN_W/2.;
+   y     = luaL_checknumber(L,4) - SCREEN_H/2.;
+   w     = luaL_checkinteger(L,5);
+   h     = luaL_checkinteger(L,6);
+   lc    = luaL_checkcolour(L,7);
+
+   /* Render. */
+   gl_printTextRaw( font, w, h, x, y, &lc->col, str );
+
+   return 0;
+}
+
 
 
 
