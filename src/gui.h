@@ -30,6 +30,13 @@ void gui_cleanup (void);
 
 
 /*
+ * Triggers.
+ */
+void gui_setNav (void);
+void gui_setTarget (void);
+
+
+/*
  * render
  */
 void gui_renderReticles( double dt );

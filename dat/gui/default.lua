@@ -8,6 +8,7 @@
 function create()
    -- Get the player
    pp = player.pilot()
+   pfact = pp:faction()
 
    -- Get sizes
    screen_w, screen_h = gfx.dim()
@@ -71,10 +72,30 @@ function create()
    misc_w = 135
    misc_h = 104
    misc_x, misc_y = relativize( 35, 475 )
+
+   -- Update stuff
+   update_nav()
+   update_target()
 end
 
 function relativize( x, y )
    return frame_x + x, frame_y + frame_h - y
+end
+
+
+function update_nav ()
+   --ptarget, htarget = pp:nav()
+end
+
+
+function update_target ()
+   -- Set target
+   ptarget = pp:target()
+   if ptarget ~= nil then
+      target_fact = ptarget:faction()
+      --target_gfx = ptarget:gfxTarget()
+      --target_gfxFact = target_fact:gfxSmall()
+   end
 end
 
 
@@ -128,20 +149,17 @@ function render()
    end
 
    -- Target
-   local targ = pp:target()
-   if targ ~= pp then
+   if ptarget ~= nil then
       local col, shi, arm, dis
-      arm, shi, dis = targ:health()
+      arm, shi, dis = ptarget:health()
 
       -- Get colour
       if dis then
          col = col_gray
       else
-         local tfact = targ:faction()
-         local pfact = pp:faction()
-         if pfact:areEnemies( tfact ) then
+         if pfact:areEnemies( target_fact ) then
             col = col_warn
-         elseif pfact:areAllies( tfact ) then
+         elseif pfact:areAllies( target_fact ) then
             col = col_console
          else
             col = col_neut
@@ -149,7 +167,7 @@ function render()
       end
 
       -- Display name
-      local name = targ:name()
+      local name = ptarget:name()
       local w = gfx.printDim( nil, name )
       gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 

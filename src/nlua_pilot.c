@@ -812,6 +812,8 @@ static int pilotL_target( lua_State *L )
    if (p->target == 0)
       return 0;
    lp.pilot = p->target;
+   if (p->target == p->id)
+      return 0;
    lua_pushpilot(L, lp);
    return 1;
 }

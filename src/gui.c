@@ -519,12 +519,14 @@ static void gui_renderPilotTarget( double dt )
    /* Make sure pilot exists and is still alive. */
    if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD)) {
       player.p->target = PLAYER_ID;
+      gui_setTarget();
       return;
    }
 
    /* Make sure target is still in range. */
    if (!pilot_inRangePilot( player.p, p )) {
       player.p->target = PLAYER_ID;
+      gui_setTarget();
       return;
    }
 
@@ -2145,6 +2147,26 @@ static int gui_runFunc( const char* func )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Player just changed his nav computer target.
+ */
+void gui_setNav (void)
+{
+   if (gui_L != NULL)
+      gui_runFunc( "update_nav" );
+}
+
+
+/**
+ * @brief Player just changed his pilot target.
+ */
+void gui_setTarget (void)
+{
+   if (gui_L != NULL)
+      gui_runFunc( "update_target" );
 }
 
 
