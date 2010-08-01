@@ -673,6 +673,7 @@ glTexture* gl_dupTexture( glTexture *texture )
    }
 
    /* Invalid texture. */
+   WARN("Unable to duplicate texture '%s'.", texture->name);
    return NULL;
 }
 
