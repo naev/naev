@@ -19,7 +19,7 @@
 #include "log.h"
 
 
-/* Ship metatable methods. */
+/* Texture metatable methods. */
 static int texL_close( lua_State *L );
 static int texL_open( lua_State *L );
 static int texL_dim( lua_State *L );
@@ -30,7 +30,7 @@ static const luaL_reg texL_methods[] = {
    { "dim", texL_dim },
    { "sprites", texL_sprites },
    {0,0}
-}; /**< Ship metatable methods. */
+}; /**< Texture metatable methods. */
 
 
 
@@ -80,7 +80,7 @@ int nlua_loadTex( lua_State *L, int readonly )
 /**
  * @brief Gets texture at index.
  *
- *    @param L Lua state to get ship from.
+ *    @param L Lua state to get texture from.
  *    @param ind Index position to find the texture.
  *    @return Texture found at the index in the state.
  */
@@ -106,7 +106,7 @@ LuaTex* luaL_checktex( lua_State *L, int ind )
  * @brief Pushes a texture on the stack.
  *
  *    @param L Lua state to push texture into.
- *    @param texture Ship to push.
+ *    @param texture Texture to push.
  *    @return Newly pushed texture.
  */
 LuaTex* lua_pushtex( lua_State *L, LuaTex texture )
