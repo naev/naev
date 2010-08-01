@@ -247,7 +247,7 @@ static int gfxL_print( lua_State *L )
  *    @luaparam w Width of the block of text.
  *    @luaparam h Height of the block of tetx.
  *    @luaparam col Colour to print text.
- * @luafunc print( small, str, x, y, w, h, col )
+ * @luafunc printText( small, str, x, y, w, h, col )
  */
 static int gfxL_printText( lua_State *L )
 {
