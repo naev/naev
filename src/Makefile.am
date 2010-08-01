@@ -72,6 +72,7 @@ naev_SOURCES = \
 	nlua_ship.c \
 	nlua_space.c \
 	nlua_system.c \
+	nlua_tex.c \
 	nlua_time.c \
 	nlua_tk.c \
 	nlua_var.c \
@@ -179,6 +180,7 @@ naev_SOURCES = \
 	nlua_ship.h \
 	nlua_space.h \
 	nlua_system.h \
+	nlua_tex.h \
 	nlua_time.h \
 	nlua_tk.h \
 	nlua_var.h \
