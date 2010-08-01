@@ -6,8 +6,6 @@
  * @file nlua_space.c
  *
  * @brief Handles the Lua space bindings.
- *
- * These bindings control the planets and systems.
  */
 
 #include "nlua_ship.h"

@@ -491,13 +491,30 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
  */
 void mission_cleanup( Mission* misn )
 {
-   int i;
+   int i, ret;
 
    /* Hooks and missions. */
    if (misn->id != 0) {
       hook_rmMisnParent( misn->id ); /* remove existing hooks */
       npc_rm_parentMission( misn ); /* remove existing npc */
    }
+
+   /* Cargo. */
+   if (misn->cargo != NULL) {
+      for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
+         if (player.p != NULL) { /* Only remove if player exists. */
+            ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
+            if (ret)
+               WARN("Failed to remove mission cargo '%d' for mission '%s'.", misn->cargo[i], misn->title);
+         }
+         mission_unlinkCargo( misn, misn->cargo[i] );
+      }
+      free(misn->cargo);
+   }
+   if (misn->osd > 0)
+      osd_destroy(misn->osd);
+   if (misn->L)
+      lua_close(misn->L);
 
    /* Data. */
    if (misn->title != NULL)
@@ -514,20 +531,6 @@ void mission_cleanup( Mission* misn )
    /* Markers. */
    if (misn->markers != NULL)
       array_free( misn->markers );
-
-   /* Cargo. */
-   if (misn->cargo != NULL) {
-      for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
-         if (player.p != NULL) /* Only remove if player exists. */
-            pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
-         mission_unlinkCargo( misn, misn->cargo[i] );
-      }
-      free(misn->cargo);
-   }
-   if (misn->osd > 0)
-      osd_destroy(misn->osd);
-   if (misn->L)
-      lua_close(misn->L);
 
    /* Clear the memory. */
    memset( misn, 0, sizeof(Mission) );
