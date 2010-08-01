@@ -5,9 +5,7 @@
 /**
  * @file nlua_tex.c
  *
- * @brief Handles the Lua tetxture bindings.
- *
- * These bi
+ * @brief Handles the Lua texture bindings.
  */
 
 #include "nlua_tex.h"
