@@ -855,6 +855,7 @@ void gui_render( double dt )
    if (player.p == NULL)
       return;
 
+#if 0
    /*
     * Countdown timers.
     */
@@ -1197,6 +1198,7 @@ void gui_render( double dt )
          gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
       }
    }
+#endif
 
 
    if (gui_L != NULL) {
