@@ -22,9 +22,11 @@ function create()
    frame_w, frame_h = frame:dim()
    frame_x  = screen_w - frame_w - 15
    frame_y  = screen_h - frame_h - 15
+   shield_col = colour.new( 0.2, 0.2, 0.8, 0.8 )
    shield_w = 128
    shield_h = 7
    shield_x, shield_y = relativize( 43, 192 )
+   armour_col = colour.new( 0.5, 0.5, 0.5, 0.8 )
    armour_w = 128
    armour_h = 7
    armour_x, armour_y = relativize( 43, 206 )
@@ -47,8 +49,8 @@ function render()
 
    -- Render health
    local arm, shi = pp:health()
-   gfx.renderRect( shield_x, shield_y, shi/100.*shield_w, shield_h )
-   gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h )
+   gfx.renderRect( shield_x, shield_y, shi/100.*shield_w, shield_h, shield_col )
+   gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h, armour_col )
 
 end
 
