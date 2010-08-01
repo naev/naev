@@ -469,4 +469,16 @@
    <cond>system.get("Alteris") and player.getRating() &gt; 20</cond>
   </avail>
  </mission>
+ <mission name="Hitman 2">
+  <lua>pirate/hitman2</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <location>Bar</location>
+   <cond>system.get("Alteris") and player.getRating() &gt; 30</cond>
+   <done>Hitman</done>
+  </avail>
+ </mission>
 </Missions>

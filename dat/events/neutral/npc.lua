@@ -198,7 +198,12 @@ function create ()
 
     reputation = player.getFaction( faction:name() ) --get players affiliation with said faction
     civ_msg_fac = civ_msg["general"] --the stuff that's always said
-    for key, value in pairs(civ_msg[faction:name()]) do --add faction-specific stuff
+    local msg_tab = civ_msg[faction:name()]
+    if msg_tab == nil then -- Must have messages available
+       hook.takeoff( "leave" )
+       return
+    end
+    for key, value in pairs(msg_tab) do --add faction-specific stuff
         table.insert(civ_msg_fac, value)
     end
     civ_misn_msg = {}
