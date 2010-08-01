@@ -27,6 +27,8 @@
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
+static int gfxL_fontSize( lua_State *L );
+static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
 static const luaL_reg gfxL_methods[] = {
@@ -36,6 +38,8 @@ static const luaL_reg gfxL_methods[] = {
    { "renderTex", gfxL_renderTex },
    { "renderRect", gfxL_renderRect },
    /* Printing. */
+   { "fontSize", gfxL_fontSize },
+   { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
    {0,0}
@@ -185,6 +189,56 @@ static int gfxL_renderRect( lua_State *L )
       gl_renderRect( x, y, w, h, &lc->col );
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the size of the font.
+ *
+ *    @luaparam small Whether or not to get the size of the small font.
+ *    @luareturn The size in pixels of the font.
+ * @luafunc fontSize( small )
+ */
+static int gfxL_fontSize( lua_State *L )
+{
+   int small;
+   small = lua_toboolean(L,1);
+   lua_pushnumber( L, small ? gl_smallFont.h : gl_defFont.h );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the size of the text to print.
+ *
+ * @usage len = gfx.printDim( nil, "Hello World!" ) -- Length of string with normal font
+ * @usage height = gfx.printDim( true, "Longer text", 20 ) -- Dimensions of text block
+ *
+ *    @luaparam small Whether or not to use the small font.
+ *    @luaparam str Text to calculate length of.
+ *    @luaparam width Optional parameter to indicate it is a block of text and to use this width.
+ * @luafunc printDim( small, str, width )
+ */
+static int gfxL_printDim( lua_State *L )
+{
+   const char *str;
+   int width;
+   glFont *font;
+
+   /* Parse parameters. */
+   font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
+   str   = luaL_checkstring(L,2);
+   if (lua_gettop(L) > 2)
+      width = luaL_checkinteger(L,3);
+   else
+      width = 0;
+
+   /* Print length. */
+   if (width == 0)
+      lua_pushnumber( L, gl_printWidthRaw( font, str ) );
+   else
+      lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
+   return 1;
 }
 
 
