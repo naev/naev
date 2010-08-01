@@ -268,7 +268,7 @@ end
 
 function taunt()
 	for k,v in ipairs(llamadummy) do
-		armour, shield = v:getHealth()
+		armour, shield = v:health()
 		hook.timer(1000, "taunt2")
 	end
 end

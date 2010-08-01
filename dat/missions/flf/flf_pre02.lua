@@ -248,7 +248,7 @@ function jumpout()
     end
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
-            escarmor[i], escshield[i] = j:getHealth()
+            escarmor[i], escshield[i] = j:health()
         end
     end
 end

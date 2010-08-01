@@ -161,9 +161,9 @@ end
 -- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armor are below a certain value.
 function pollHealth()
     shieldDV = 0
-    parmor, pshield = player.pilot():getHealth()
+    parmor, pshield = player.pilot():health()
     for i, j in ipairs(fleetDV) do
-        armor, shield = j:getHealth()
+        armor, shield = j:health()
         shieldDV = shieldDV + shield
     end
     if parmor <= 70 and pshield <= 10 and shieldDV <= 250 then
