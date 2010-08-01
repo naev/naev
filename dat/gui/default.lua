@@ -93,7 +93,8 @@ function update_target ()
    ptarget = pp:target()
    if ptarget ~= nil then
       target_fact = ptarget:faction()
-      --target_gfx = ptarget:gfxTarget()
+      target_gfx = ptarget:ship():gfxTarget()
+      target_gfx_w, target_gfx_h = target_gfx:dim()
       --target_gfxFact = target_fact:gfxSmall()
    end
 end
@@ -181,7 +182,8 @@ function render()
       end
       gfx.print( true, str, target_x, target_y-100, col, target_w )
 
-      -- Render faction graphic and target graphic
+      -- Render target graphic
+      gfx.renderTex( target_gfx, target_x, target_y - target_gfx_h )
    else
       gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
    end
