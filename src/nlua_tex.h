@@ -12,7 +12,7 @@
 #include "opengl.h"
 
 
-#define TEX_METATABLE      "tex" /**< GFX metatable identifier. */
+#define TEX_METATABLE      "tex" /**< Texture metatable identifier. */
 
 
 /**
