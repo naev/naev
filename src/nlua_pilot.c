@@ -1550,7 +1550,7 @@ static int pilotL_setNodisable( lua_State *L )
 /**
  * @brief Gets the pilot's health.
  *
- * @usage armour, shield = p:health()
+ * @usage armour, shield, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
  *    @luareturn The armour and shield of the pilot in % [0:100].
@@ -1566,8 +1566,9 @@ static int pilotL_getHealth( lua_State *L )
    /* Return parameters. */
    lua_pushnumber(L, p->armour / p->armour_max * 100. );
    lua_pushnumber(L, p->shield / p->shield_max * 100. );
+   lua_pushboolean(L, pilot_isDisabled(p));
 
-   return 2;
+   return 3;
 }
 
 
