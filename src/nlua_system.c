@@ -453,7 +453,7 @@ static int systemL_hasPresence( lua_State *L )
 /**
  * @brief Gets the planets in a system.
  *
- * @usage for k,v in pairs( sys:planets() ) do -- Iterate over planets in system
+ * @usage for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system
  * @usage if #sys:planets() > 0then -- System has planets
  *
  *    @luaparam s System to get planets of
