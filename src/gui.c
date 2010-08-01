@@ -2212,12 +2212,18 @@ int gui_load( const char* name )
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
             path, lua_tostring(gui_L,-1));
+      lua_close( gui_L );
+      gui_L = NULL;
+      free(buf);
       return -1;
    }
+   free(buf);
    nlua_loadStandard( gui_L, 1 );
    nlua_loadGFX( gui_L, 0 );
-   gui_runFunc( "create" );
-   free(buf);
+   if (gui_runFunc( "create" )) {
+      lua_close( gui_L );
+      gui_L = NULL;
+   }
 
    /* Run create function. */
 
