@@ -839,7 +839,7 @@ static int pilotL_secondary( lua_State *L )
       return 0;
 
    /* Get ready status. */
-   ready = p->secondary->timer > 0.;
+   ready = !(p->secondary->timer > 0.);
 
    /* Push name. */
    lua_pushstring( L, p->secondary->u.ammo.outfit->name );
