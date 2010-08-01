@@ -17,7 +17,6 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
-#include "rng.h"
 
 
 /* Ship metatable methods. */
