@@ -16,6 +16,7 @@ function create()
    smallfont_h = gfx.fontSize(true)
 
    -- Some colours
+   col_white   = colour.new()
    col_warn    = colour.new( "Red" )
    col_gray    = colour.new( "Grey70" )
    col_neut    = colour.new( 0.9, 1.0, 0.3, 1.0 )
@@ -84,7 +85,7 @@ end
 
 
 function update_nav ()
-   --ptarget, htarget = pp:nav()
+   nav_pnt, nav_hyp = pp:nav()
 end
 
 
@@ -121,6 +122,37 @@ function render()
    --gui.radarRender( radar, radar_x, radar_y )
 
    -- NAV
+   if nav_pnt ~= nil or nav_hyp ~= nil then
+      local y = nav_y - 3 - deffont_h
+      local str
+      gfx.print( nil, "Landing", nav_x, y, col_console, nav_w, true )
+      y = y - 5 - smallfont_h
+      if nav_pnt ~= nil then
+         str = nav_pnt:name()
+         col = col_white
+      else
+         str = "Off"
+         col = col_gray
+      end
+      gfx.print( true, str, nav_x, y, col, nav_w, true )
+      y = nav_y - 33 - deffont_h
+      gfx.print( nil, "Hyperspace", nav_x, y, col_console, nav_w, true )
+      y = y - 5 - smallfont_h
+      if nav_hyp ~= nil then
+         str = nav_hyp:name()
+         col = col_white
+      else
+         str = "Off"
+         col = col_gray
+      end
+      gfx.print( true, str, nav_x, y, col, nav_w, true )
+   else
+      local y = nav_y - 20 - deffont_h
+      gfx.print( nil, "Navigation", nav_x, y, col_console, nav_w, true )
+      y = y - 5 - smallfont_h
+      gfx.print( true, "Off", nav_x, y, col_gray, nav_w, true )
+   end
+
 
    -- Render health
    local arm, shi = pp:health()
