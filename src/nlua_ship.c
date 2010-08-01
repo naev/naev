@@ -16,6 +16,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
 
@@ -28,6 +29,7 @@ static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
+static int shipL_gfxTarget( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "get", shipL_get },
    { "name", shipL_name },
@@ -36,6 +38,7 @@ static const luaL_reg shipL_methods[] = {
    { "slots", shipL_slots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
+   { "gfxTarget", shipL_gfxTarget },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -50,8 +53,7 @@ static const luaL_reg shipL_methods[] = {
  */
 int nlua_loadShip( lua_State *L, int readonly )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
+   (void) readonly; /* Everything is readonly. */
 
    /* Create the metatable */
    luaL_newmetatable(L, SHIP_METATABLE);
@@ -342,6 +344,42 @@ static int shipL_outfitCPU( lua_State *L )
 
    /* Return parameter. */
    lua_pushnumber(L, outfit_cpu(o));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ship's target graphics.
+ *
+ * Will not work without access to the Tex module.
+ *
+ * @usage gfx = s:gfxTarget()
+ *
+ *    @luaparam s Ship to get target graphics of.
+ *    @luareturn The target graphics of the ship.
+ * @luafunc gfxTarget( s )
+ */
+static int shipL_gfxTarget( lua_State *L )
+{
+   LuaShip *ls;
+   Ship *s;
+   LuaTex lt;
+
+   /* Get the ship. */
+   ls = luaL_checkship(L,1);
+   s  = ls->ship;
+   if (s==NULL) {
+      NLUA_ERROR(L,"Ship is invalid.");
+      return 0;
+   }
+
+   /* Push graphic. */
+   lt.tex = gl_dupTexture( s->gfx_target );
+   if (lt.tex == NULL) {
+      WARN("Unable to get ship target graphic for '%s'.", s->name);
+      return 0;
+   }
+   lua_pushtex( L, lt );
    return 1;
 }
 
