@@ -151,17 +151,17 @@ static int gfxL_renderRect( lua_State *L )
    int empty;
 
    /* Parse parameters. */
-   x     = luaL_checknumber( L, 1 );
-   y     = luaL_checknumber( L, 2 );
+   x     = luaL_checknumber( L, 1 ) - SCREEN_W/2.;
+   y     = luaL_checknumber( L, 2 ) - SCREEN_H/2.;
    w     = luaL_checknumber( L, 3 );
    h     = luaL_checknumber( L, 4 );
    empty = lua_toboolean( L, 6 );
 
    /* Render. */
    if (empty)
-      gl_renderRectEmpty( x, y, w, h, NULL );
+      gl_renderRectEmpty( x, y, w, h, &cWhite );
    else
-      gl_renderRect( x, y, w, h, NULL );
+      gl_renderRect( x, y, w, h, &cWhite );
 
    return 0;
 }
