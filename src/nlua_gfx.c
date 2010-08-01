@@ -215,8 +215,8 @@ static int gfxL_print( lua_State *L )
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
-   x     = luaL_checknumber(L,3) - SCREEN_W/2.;
-   y     = luaL_checknumber(L,4) - SCREEN_H/2.;
+   x     = luaL_checknumber(L,3);
+   y     = luaL_checknumber(L,4);
    lc    = luaL_checkcolour(L,5);
    if (lua_gettop(L) >= 6)
       max = luaL_checkinteger(L,6);
@@ -260,8 +260,8 @@ static int gfxL_printText( lua_State *L )
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
-   x     = luaL_checknumber(L,3) - SCREEN_W/2.;
-   y     = luaL_checknumber(L,4) - SCREEN_H/2.;
+   x     = luaL_checknumber(L,3);
+   y     = luaL_checknumber(L,4);
    w     = luaL_checkinteger(L,5);
    h     = luaL_checkinteger(L,6);
    lc    = luaL_checkcolour(L,7);
