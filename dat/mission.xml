@@ -481,4 +481,16 @@
    <done>Hitman</done>
   </avail>
  </mission>
+ <mission name="Empire Patrol Bounty">
+  <lua>pirate/pir_empbounty</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
+   <chance>10</chance>
+   <done>Hitman2</done>
+   <location>Bar</location>
+   <faction>Pirate</faction>
+   <faction>Independent</faction>
+  </avail>
+ </mission>
 </Missions>
