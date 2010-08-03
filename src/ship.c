@@ -70,8 +70,10 @@ Ship* ship_get( const char* name )
    for (i=0; i < array_size(ship_stack); i++)
       if (strcmp((temp+i)->name, name)==0) break;
 
-   if (i == array_size(ship_stack)) /* ship does not exist, game will probably crash now */
+   if (i == array_size(ship_stack)) { /* ship does not exist, game will probably crash now */
       WARN("Ship %s does not exist", name);
+      return NULL;
+   }
 
    return temp+i;
 }
