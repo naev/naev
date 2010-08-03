@@ -40,7 +40,7 @@ function create()
    -- Radar
    radar_r = 82
    radar_x, radar_y = relativize( 83, 90 )
-   --radar = gui.radarCreate( radar_r )
+   gui.radarInit( true, radar_r )
 
    -- Health position
    shield_w = 128
@@ -119,7 +119,7 @@ function render()
    gfx.renderTex( frame, frame_x, frame_y )
 
    -- Render radar
-   --gui.radarRender( radar, radar_x, radar_y )
+   gui.radarRender( radar_x, radar_y )
 
    -- NAV
    if nav_pnt ~= nil or nav_hyp ~= nil then

@@ -57,6 +57,12 @@ int gui_messageGetVisible (void);
 
 
 /*
+ * Radar.
+ */
+int gui_radarInit( int circle, int w, int h );
+void gui_radarRender( double x, double y );
+
+/*
  * misc
  */
 void gui_setDefaults (void);
