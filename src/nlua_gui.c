@@ -24,9 +24,13 @@
 /* Ship metatable methods. */
 static int guiL_radarInit( lua_State *L );
 static int guiL_radarRender( lua_State *L );
+static int guiL_targetPlanetGFX( lua_State *L );
+static int guiL_targetPilotGFX( lua_State *L );
 static const luaL_reg guiL_methods[] = {
    { "radarInit", guiL_radarInit },
    { "radarRender", guiL_radarRender },
+   { "targetPlanetGFX", guiL_targetPlanetGFX },
+   { "targetPilotGFX", guiL_targetPilotGFX },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -109,4 +113,32 @@ static int guiL_radarRender( lua_State *L )
 }
 
 
+/**
+ * @brief Sets the Lua planet target GFX.
+ *
+ *    @luaparam tex Texture to set for the planet targetting.
+ * @luafunc targetPlanetGFX( tex )
+ */
+static int guiL_targetPlanetGFX( lua_State *L )
+{
+   LuaTex *lt;
+   lt = luaL_checktex( L, 1 );
+   gui_targetPlanetGFX( lt->tex );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the Lua planet target GFX.
+ *
+ *    @luaparam tex Texture to set for the planet targetting.
+ * @luafunc targetPlanetGFX( tex )
+ */
+static int guiL_targetPilotGFX( lua_State *L )
+{
+   LuaTex *lt;
+   lt = luaL_checktex( L, 1 );
+   gui_targetPilotGFX( lt->tex );
+   return 0;
+}
 

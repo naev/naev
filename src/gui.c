@@ -152,6 +152,8 @@ static double gui_tl = 0.;
 static double gui_bl = 0.;
 
 static glTexture *gui_ico_hail = NULL;
+static glTexture *gui_target_planet = NULL;
+static glTexture *gui_target_pilot = NULL;
 
 
 /*
@@ -410,18 +412,20 @@ static void gui_renderPlanetTarget( double dt )
  */
 void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c )
 {
-#if 0
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
+   /* Must not be NULL. */
+   if (gui_target_planet == NULL)
+      return;
+
+   gl_blitSprite( gui_target_planet, x, y, 0, 0, c ); /* top left */
 
    x += w;
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
+   gl_blitSprite( gui_target_planet, x, y, 1, 0, c ); /* top right */
 
    y -= h;
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
+   gl_blitSprite( gui_target_planet, x, y, 1, 1, c ); /* bottom right */
 
    x -= w;
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
-#endif
+   gl_blitSprite( gui_target_planet, x, y, 0, 1, c ); /* bottom left */
 }
 
 
@@ -432,14 +436,13 @@ void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c )
  */
 static void gui_renderPilotTarget( double dt )
 {
-#if 0
    (void) dt;
    Pilot *p;
    glColour *c;
    double x, y;
 
    /* Player is most likely dead. */
-   if (gui.gfx_targetPilot == NULL)
+   if (gui_target_pilot == NULL)
       return;
 
    /* Get the target. */
@@ -475,17 +478,16 @@ static void gui_renderPilotTarget( double dt )
 
    x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
    y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
+   gl_blitSprite( gui_target_pilot, x, y, 0, 0, c ); /* top left */
 
    x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
+   gl_blitSprite( gui_target_pilot, x, y, 1, 0, c ); /* top right */
 
    y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
+   gl_blitSprite( gui_target_pilot, x, y, 1, 1, c ); /* bottom right */
 
    x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
-#endif
+   gl_blitSprite( gui_target_pilot, x, y, 0, 1, c ); /* bottom left */
 }
 
 
@@ -2211,6 +2213,12 @@ void gui_free (void)
    if (gui_ico_hail != NULL)
       gl_freeTexture( gui_ico_hail );
    gui_ico_hail = NULL;
+   if (gui_target_planet != NULL)
+      gl_freeTexture( gui_target_planet );
+   gui_target_planet = NULL;
+   if (gui_target_pilot != NULL)
+      gl_freeTexture( gui_target_pilot );
+   gui_target_pilot = NULL;
 }
 
 
@@ -2247,5 +2255,27 @@ void gui_getOffset( double *x, double *y )
 glTexture* gui_hailIcon (void)
 {
    return gui_ico_hail;
+}
+
+
+/**
+ * @brief Sets the planet target GFX.
+ */
+void gui_targetPlanetGFX( glTexture *gfx )
+{
+   if (gui_target_planet != NULL)
+      gl_freeTexture( gui_target_planet );
+   gui_target_planet = gl_dupTexture( gfx );
+}
+
+
+/**
+ * @brief Sets the pilot target GFX.
+ */
+void gui_targetPilotGFX( glTexture *gfx )
+{
+   if (gui_target_pilot != NULL)
+      gl_freeTexture( gui_target_pilot );
+   gui_target_pilot = gl_dupTexture( gfx );
 }
 
