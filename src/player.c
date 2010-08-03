@@ -2838,6 +2838,7 @@ static int player_parse( xmlNodePtr parent )
       /* Just give player a random ship in the stack. */
       player = player_stack[player_nstack-1].p;
       player_nstack--;
+      DEBUG("Giving player ship '%s'.", player->name );
    }
 
    /* set global thingies */
@@ -3092,8 +3093,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* Get the ship. */
    ship_parsed = ship_get(model);
    if (ship_parsed == NULL) {
-      WARN("Player ship '%s' not found", model);
-      return 0;
+      WARN("Player ship '%s' not found!", model);
+      return -1;
    }
 
    /* player is currently on this ship */
