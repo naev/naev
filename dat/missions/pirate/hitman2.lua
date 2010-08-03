@@ -13,7 +13,7 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar information
-   bar_desc = "The trader that hired you is back. It looks like he might want to talk."
+   bar_desc = "You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss."
 
    -- Mission details
    misn_title  = "Pirate Hitman 2"
@@ -26,10 +26,10 @@ else -- Default to English
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[Ah, your back. I have some more work for you. Payment will be a bit sweeter as well. Are you interested?]]
-   text[2] = [[The merchants haven't left. I'm going to need you to step it up a notch from last time. A few missing traders might send the message.]]
+   text[1]  = [[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]
+   text[2] = [[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]
    title[3] = "Mission Complete"
-   text[3] = [[I hope the empire didn't give you much trouble. I'm sure that after burner came in handy a few times. *chuckles*]]
+   text[3] = [[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]]
 
    -- Messages
    msg      = {}
