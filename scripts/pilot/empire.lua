@@ -129,7 +129,7 @@ function empire_createHawking( empire_create )
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
-   -- Kestrel gets some good stuff
+   -- Hawking gets some good stuff
    primary        = { "Heavy Ion Turret", "150mm Railgun Turret" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
