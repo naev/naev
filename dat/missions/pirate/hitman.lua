@@ -117,6 +117,9 @@ end
 
 -- attack finished
 function attack_finished()
+   if misn_done then
+      return
+   end
    misn_done = true
    player.msg( msg[1] )
    misn.setDesc( string.format( misn_desc[2], misn_base:name(), misn_base_sys:name() ) )

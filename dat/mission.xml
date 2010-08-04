@@ -487,7 +487,7 @@
    <priority>4</priority>
    <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
    <chance>10</chance>
-   <done>Hitman2</done>
+   <done>Hitman 2</done>
    <location>Bar</location>
    <faction>Pirate</faction>
    <faction>Independent</faction>
