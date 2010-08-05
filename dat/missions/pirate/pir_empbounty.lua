@@ -41,6 +41,7 @@ include("dat/missions/pirate/common.lua")
 
 -- Scripts we need
 include("scripts/pilot/empire.lua")
+include("scripts/jumpdist.lua")
 
 
 function create ()
@@ -82,27 +83,39 @@ function accept ()
    hook.enter("sys_enter")
 end
 
--- Gets a piratey system
+-- Gets a empireish system
 function get_emp_system( sys )
-   local adj_sys = sys:adjacentSystems()
-  
-   -- Only take into account system with empire presence.
-   local emp_sys = {}
-   for k,v in pairs(adj_sys) do
-      if k:hasPresence( "Empire" ) then
-         emp_sys[ #emp_sys+1 ] = k
+   local s = { }
+   local dist = 1
+   local target = {}
+   while #target == 0 do
+      target = getsysatdistance( sys, dist, dist+1, emp_systems_filter, s )
+      dist = dist + 2
+   end
+   return target[rnd.rnd(1,#target)]
+end
+
+function emp_systems_filter( sys, data )
+   -- Must have Empire
+   if not sys:hasPresence( "Empire" ) then
+      return false
+   end
+
+   -- Must not be safe
+   if sys:presence("friendly") > 3.*sys:presence("hostile") then
+      return false
+   end
+
+   -- Must not already be in list
+   local found = false
+   for k,v in ipairs(data) do
+      if sys == v then
+         return false
       end
    end
 
-   -- Make sure system has empire units
-   if #emp_sys == nil then
-      return sys
-   else
-      return emp_sys[ rnd.rnd(1,#emp_sys) ]
-   end
+   return true
 end
-
-
 
 -- Player won, gives rewards.
 function give_rewards ()
@@ -176,23 +189,23 @@ function emp_generate ()
 end
 function emp_easy ()
    if rnd.rnd() < 0.5 then
-      return empire_createAncestor(false)
+      return empire_createShark(false)
    else
-      return empire_createVendetta(false)
+      return empire_createLancelot(false)
    end
 end
 function emp_medium ()
    if rnd.rnd() < 0.5 then
-      return emp_createAdmonisher(false)
+      return empire_createAdmonisher(false)
    else
-      return emp_easy()
+      return empire_createPacifier(false)
    end
 end
 function emp_hard ()
    if rnd.rnd() < 0.5 then
-      return emp_createKestrel(false)
+      return empire_createHawking(false)
    else
-      return emp_medium()
+      return empire_createPeacemaker(false)
    end
 end
 

@@ -186,6 +186,125 @@ function empire_createPacifier( empire_create )
    return p,olist
 end
 
+-- Creates an Empire Shark warship
+function empire_createShark( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Shark" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Shark"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Shark gets some good stuff
+   primary        = { "Ion Cannon"}
+   secondary      = {}
+   use_primary    = nhigh
+   use_secondary  = 0
+   medium         = equip_mediumHig()
+   low            = equip_lowHig()
+   apu            = equip_apuHig()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
+
+-- Creates an Empire Lancelot warship
+function empire_createLancelot( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Lancelot" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Lancelot"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Lancelot gets some good stuff
+   primary        = { "Ion Cannon", "Plasma Blaster MK2" }
+   secondary      = { "Seeker Launcher" }
+   use_primary    = nhigh-1
+   use_secondary  = 2
+   medium         = equip_mediumHig()
+   low            = equip_lowHig()
+   apu            = equip_apuHig()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
+
+-- Creates an Empire Admonisher warship
+function empire_createAdmonisher( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Admonisher" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Admonisher"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Admonisher gets some good stuff
+   primary        = { "Ripper MK2", "Plasma Blaster MK2" }
+   secondary      = { "Headhunter Launcher", "Orion Beam" }
+   use_primary    = nhigh-1
+   use_secondary  = 2
+   medium         = equip_mediumHig()
+   low            = equip_lowHig()
+   apu            = equip_apuHig()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
 
 --[[
 -- @brief Tries to get a name from an Empire planet.
