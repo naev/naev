@@ -13,7 +13,7 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar information
-   bar_desc = "You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to look stupid."
+   bar_desc = "You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos."
 
    -- Mission details
    misn_title  = "Pirate Hitman"
@@ -26,10 +26,10 @@ else -- Default to English
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[How'd you like to earn some easy money?]]
+   text[1]  = [[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]
    title[3] = "Mission Complete"
-   text[2] = [[There're some new merchants edging in on my trade routes in %s. I want you to let them know they're not welcome. You don't have to kill anyone, just rough them up a bit.]]
-   text[3] = [[Did everything go well? Good, good. That should teach them to stay out of my space.]]
+   text[2] = [[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in %s. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]
+   text[3] = [[As you inform your acquaintance that you successfully scared off the traders, he grins. After transferring the payment, he comments, "That should teach them to stay out of my space."]]
 
    -- Messages
    msg      = {}
