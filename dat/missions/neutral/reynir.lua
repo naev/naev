@@ -70,7 +70,17 @@ end
 
 
 function accept ()
-   if tk.yesno( title[1], text[1] ) and tk.yesno( title[1], text[2] ) then
+   -- make sure there are at least 2 inhabited planets
+   if (function () 
+            local count = 0
+            for i, p in ipairs (system.cur():planets()) do
+               if p:services()["inhabited"] then
+                  count=count+1
+               end
+            end
+            return count > 1
+         end) ()
+      and tk.yesno( title[1], text[1] ) and tk.yesno( title[1], text[2] ) then
 
       misn.accept()  -- For missions from the Bar only.
 

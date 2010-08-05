@@ -487,9 +487,17 @@
    <unique />
   </flags>
   <avail>
-   <chance>1</chance>
+   <chance>16</chance>
    <location>Bar</location>
-   <cond>#system.cur():planets() &gt; 1</cond>
+   <cond>(function ()
+            local count = 0
+            for i, p in pairs(system.cur():planets()) do
+                if p:services()["inhabited"] then
+                    count=count+1
+                end
+            end
+            return count &gt; 1
+        end)()</cond>
   </avail>
  </mission>
 </Missions>
