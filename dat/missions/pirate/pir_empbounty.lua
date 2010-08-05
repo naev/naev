@@ -1,6 +1,6 @@
 --[[
 
-   Pirate Hitman 3
+   empire bounty
 
    Random pirate hitman mission to kill a unique empire patrolman.
 
