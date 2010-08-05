@@ -97,7 +97,7 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
    end
 end
 
--- An attacked Trader Jumped
+-- An attacked Trader died
 function trader_death (hook_pilot, hook_arg)
    if misn_done then
       return

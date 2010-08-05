@@ -466,7 +466,7 @@
   <avail>
    <chance>10</chance>
    <location>Bar</location>
-   <cond>system.get("Alteris") and player.getRating() &gt; 20</cond>
+   <cond>system.get("Alteris") and player.getRating() &gt; 30</cond>
   </avail>
  </mission>
  <mission name="Hitman 2">
@@ -477,8 +477,20 @@
   <avail>
    <chance>30</chance>
    <location>Bar</location>
-   <cond>system.get("Alteris") and player.getRating() &gt; 30</cond>
+   <cond>system.get("Alteris") and player.getRating() &gt; 40</cond>
    <done>Hitman</done>
+  </avail>
+ </mission>
+  <mission name="Hitman 3">
+  <lua>pirate/hitman3</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>40</chance>
+   <location>Bar</location>
+   <cond>system.get("Alteris") and player.getRating() &gt; 50</cond>
+   <done>Hitman 2</done>
   </avail>
  </mission>
  <mission name="Empire Patrol Bounty">
@@ -487,7 +499,7 @@
    <priority>4</priority>
    <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
    <chance>10</chance>
-   <done>Hitman 2</done>
+   <done>Hitman 3</done>
    <location>Bar</location>
    <faction>Pirate</faction>
    <faction>Independent</faction>

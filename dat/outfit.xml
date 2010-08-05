@@ -1284,6 +1284,16 @@
   </general>
   <specific type="license" />
  </outfit>
+ <outfit name="Pirate Landing Pass">
+  <!-- this outfit should be considered contraband once it is implimented -->
+  <general>
+   <mass>0</mass>
+   <price>1</price>
+   <gfx_store>license</gfx_store>
+   <description>This license gives you authorization to land on pirate worlds.</description>
+  </general>
+  <specific type="license" />
+ </outfit>
  <!-- Cheats. For missions, honest! -->
  <outfit name="Cheater's Ragnarok Beam">
   <general>

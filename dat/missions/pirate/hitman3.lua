@@ -19,75 +19,70 @@ else -- Default to English
    misn_title  = "Kill %s"
    misn_reward = "Pirate Landing permision"
    misn_desc   = "There is a empire patrol known as %s who must be terminated. He was last seen near the %s system."
+   misn_desc2  = "Return to get your rewards."
 
    -- Text
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   title[3] = "Mission Complete"
-   text[1] = [[]]
-   bargin_text = {}
-   bargin_text[1]  = [[Hello, lets get right too it. I need to hire a pilot, and I've heard from a certain trader that your good. What do you charge for the simple removal of a convoy?]]
-   bargin_text[2] = [[No, no, no. That is far too much. How about 10000.]]
-   bargin_text[3] = [[I understand you are a skilled pilot, but that is too much. I am prepared to offer you 20000.]]
-   bargin_text[4] = [[You are a stuborn one. I will go to 30000, no higher.]]
-   bargin_text[5] = [[You ask too much. I will find another pilot.]]
+   title[2] = "Mission Complete"
+   text[1]  = [[Hello, lets get right too it. I need to hire a pilot, and I've heard from a certain trader that you're good. What do you say about the removal of a empire pilot?]]
+   text[2] = [[I thought you would be ok with it. If you compleate this mission, you will receive a pass that will give you landing access at all pirate worlds. If you rat us out, we will find you, and if you fail, well, lets hope that doesn't happen. I hear the empire has some big guns on their side.]]
+   text[3] = [[Your back. Congradulations. Here is your landing pass. I look forward to working with you. Now, go plunder something. With that, the young buisnissman turns and leaves. Your begining to question how much of a buisnessman he really is.]]
 
    -- Messages
    msg      = {}
    msg[1]   = "MISSION SUCCESS! Return for payment."
 end
 
+
+
+include("dat/missions/pirate/common.lua")
+
+
+-- Scripts we need
+include("scripts/pilot/empire.lua")
+include("scripts/jumpdist.lua")
+
+
 function create ()
-   targetsystem = system.get("Delta Pavonis") -- Find target system
+   -- Create the target pirate
+   emp_name, emp_ship, emp_outfits = emp_generate()
+   
+   -- Get target system
+   near_sys = get_emp_system( system.get() )
 
    -- Spaceport bar stuff
-   misn.setNPC( "Young Businessman",  "Businessman")
+   misn.setNPC( "Young Businessman",  "none")
    misn.setDesc( bar_desc )
    
    -- hooks to let busninessman approach you
    hook.land( "businessman_timer", "bar" )
+
+   --some other stuff
+   misn_base, misn_base_sys = planet.cur()
 end
 
 function businessman_timer ()
-   hook.timer( 3000, "accept" )
+   hook.timer( 5000, "accept" )
 end
 
 --[[
 Mission entry point.
 --]]
 function accept ()
-   -- Create the target pirate
-   pir_name, pir_ship, pir_outfits = pir_generate()
-
-   -- Get target system
-   near_sys = get_pir_system( system.get() )
-
-   -- Get credits
-   credits  = rnd.rnd(5,10) * 10000
-
    -- Mission details:
-   bargin_attempt = 1
-   do
-   price = bargin()
-   if price > 30000 then
-      if bargin_attempt < 5 then
-         if tk.yesno(title[1], bargin_text[bargin_attempt]) = true then
-            price = 10000 * (bargin_attempt - 1)
-         end
-      else
-         tk.msg(bargin_text[5]
-         return
-      end
+   if not tk.yesno( title[1], string.format( text[1],
+         emp_name, credits, near_sys:name() ) ) then
+      misn.finish()
    end
-   while price > 30000
    misn.accept()
 
    -- Set mission details
-   misn.setTitle( string.format( misn_title, pir_name) )
+   misn.setTitle( string.format( misn_title, near_sys:name()) )
    misn.setReward( string.format( misn_reward, credits) )
-   misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
-   misn.markerAdd( near_sys, "low" )
+   misn.setDesc( string.format( misn_desc, emp_name, near_sys:name() ) )
+   misn_marker = misn.markerAdd( near_sys, "low" )
 
    -- Some flavour text
    tk.msg( title[1], text[2] )
@@ -96,36 +91,62 @@ function accept ()
    hook.enter("sys_enter")
 end
 
--- Gets a piratey system
-function get_pir_system( sys )
-   local adj_sys = sys:adjacentSystems()
-  
-   -- Only take into account system with pirates.
-   local pir_sys = {}
-   for k,v in pairs(adj_sys) do
-      if k:hasPresence( "Pirate" ) then
-         pir_sys[ #pir_sys+1 ] = k
+-- Gets a empireish system
+function get_emp_system( sys )
+   local s = { }
+   local dist = 1
+   local target = {}
+   while #target == 0 do
+      target = getsysatdistance( sys, dist, dist+1, emp_systems_filter, s )
+      dist = dist + 2
+   end
+   return target[rnd.rnd(1,#target)]
+end
+
+function emp_systems_filter( sys, data )
+   -- Must have Empire
+   if not sys:hasPresence( "Empire" ) then
+      return false
+   end
+
+   -- Must not be safe
+   if sys:presence("friendly") > 3.*sys:presence("hostile") then
+      return false
+   end
+
+   -- Must not already be in list
+   local found = false
+   for k,v in ipairs(data) do
+      if sys == v then
+         return false
       end
    end
 
-   -- Make sure system has pirates
-   if #pir_sys == nil then
-      return sys
-   else
-      return pir_sys[ rnd.rnd(1,#pir_sys) ]
-   end
+   return true
 end
 
-
+function misn_finished()
+   player.msg( msg[1] )
+   misn.setDesc( string.format( misn_desc2, misn_base, misn_base_sys ) )
+   misn.markerRm( misn_marker )
+   misn_marker = misn.markerAdd( misn_base_sys, "low" )
+   hook.land("landed")
+end
 
 -- Player won, gives rewards.
-function give_rewards ()
+function landed ()
+   tk.msg(title[2], text[3])
+
    -- Give factions
-   player.modFaction( "Empire", 5 )
+   local f = player.getFaction("Pirate")
+   if f < 0 then
+      f = 0 - f
+      player.modFactionRaw( "Pirate", f )
+   end
    
-   -- The goods
-   diff.apply("heavy_combat_vessel_license")
-   
+   -- Give landing pass   
+   player.addOutfit("Pirate Landing Pass")
+
    -- Finish mission
    misn.finish(true)
 end
@@ -138,75 +159,68 @@ function sys_enter ()
    if cur_sys == near_sys then
 
       -- Create the badass enemy
-      p     = pilot.add(pir_ship)
-      pir   = p[1]
-      pir:rename(pir_name)
-      pir:setHostile()
-      pir:rmOutfit("all") -- Start naked
-      pilot_outfitAddSet( pir, pir_outfits )
-      hook.pilot( pir, "death", "pir_dead" )
-      hook.pilot( pir, "jump", "pir_jump" )
+      p     = pilot.add(emp_ship)
+      emp   = p[1]
+      emp:rename(emp_name)
+      emp:setHostile()
+      emp:rmOutfit("all") -- Start naked
+      pilot_outfitAddSet( emp, emp_outfits )
+      hook.pilot( emp, "death", "misn_finished" )
+      hook.pilot( emp, "jump", "emp_jump" )
    end
 end
 
 
--- Pirate is dead
-function pir_dead ()
-   player.msg( msg[1] )
-   give_rewards()
-end
-
-
--- Pirate jumped away
-function pir_jump ()
-   player.msg( string.format(msg[2], pir_name) )
+-- Empire Patorl jumped away
+function emp_jump ()
+   player.msg( string.format(msg[2], emp_name) )
 
    -- Basically just swap the system
-   near_sys = get_pir_system( near_sys )
+   near_sys = get_emp_system( near_sys )
 end
 
 
 --[[
-Functions to create pirates based on difficulty more easily.
+Functions to create Empire Patrols based on difficulty more easily.
 --]]
-function pir_generate ()
-   -- Get the pirate name
-   pir_name = pirate_name()
+function emp_generate ()
+   -- Get the empire patrols name
+   emp_name = empire_name()
 
-   -- Get the pirate details
+   -- Get the empire patols details
    rating = player.getRating()
    if rating < 50 then
-      pir_ship, pir_outfits = pir_easy()
+      emp_ship, emp_outfits = emp_easy()
    elseif rating < 150 then
-      pir_ship, pir_outfits = pir_medium()
+      emp_ship, emp_outfits = emp_medium()
    else
-      pir_ship, pir_outfits = pir_hard()
+      emp_ship, emp_outfits = emp_hard()
    end
 
    -- Make sure to save the outfits.
-   pir_outfits["__save"] = true
+   emp_outfits["__save"] = true
 
-   return pir_name, pir_ship, pir_outfits
+   return emp_name, emp_ship, emp_outfits
 end
-function pir_easy ()
+function emp_easy ()
    if rnd.rnd() < 0.5 then
-      return pirate_createAncestor(false)
+      return empire_createShark(false)
    else
-      return pirate_createVendetta(false)
+      return empire_createLancelot(false)
    end
 end
-function pir_medium ()
+function emp_medium ()
    if rnd.rnd() < 0.5 then
-      return pirate_createAdmonisher(false)
+      return empire_createAdmonisher(false)
    else
-      return pir_easy()
+      return empire_createPacifier(false)
    end
 end
-function pir_hard ()
+function emp_hard ()
    if rnd.rnd() < 0.5 then
-      return pirate_createKestrel(false)
+      return empire_createHawking(false)
    else
-      return pir_medium()
+      return empire_createPeacemaker(false)
    end
 end
 
