@@ -7,6 +7,22 @@ from xml.sax.saxutils import escape
 version=0.1
 
 
+def indent(elem, level=0):
+    i = "\n" + level*"  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for elem in elem:
+            indent(elem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
+
+
 print "Mission XML generator, version "+str(version)
 
 name = raw_input("Mission name?: ")
@@ -56,4 +72,5 @@ if cond:
 
 print """The mission xml. Insert it right before '<missions />'.
 ===== THE XML ====="""
+indent(root)
 print ET.tostring(root)
