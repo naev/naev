@@ -2294,6 +2294,28 @@
    <item>Missiles 2</item>
   </tech>
  </asset>
+ <asset name="Edergast">
+  <pos>
+   <x>2770.000000</x>
+   <y>2280.000000</y>
+  </pos>
+  <GFX>
+   <space>P04.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Eiderdown I">
   <pos>
    <x>3700.000000</x>
