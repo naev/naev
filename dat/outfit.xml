@@ -721,7 +721,7 @@
  <outfit name="Reactor Class I">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>10</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
@@ -736,7 +736,7 @@
  <outfit name="Reactor Class II">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>30</mass>
    <price>530000</price>
    <gfx_store>reactor_ii</gfx_store>
@@ -751,7 +751,7 @@
  <outfit name="Reactor Class III">
   <general>
    <typename>Energy Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>90</mass>
    <price>970000</price>
    <gfx_store>reactor_iii</gfx_store>
@@ -819,7 +819,7 @@
  <outfit name="Shield Booster">
   <general>
    <typename>Shield Energy Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>5</mass>
    <price>145000</price>
    <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
@@ -878,7 +878,7 @@
  <outfit name="Droid Repair Crew">
   <general>
    <typename>Armour Repair Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>3</mass>
    <price>430000</price>
    <gfx_store>droid</gfx_store>
@@ -942,7 +942,7 @@
  </outfit>
  <outfit name="Generic Afterburner">
   <general>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>6</mass>
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
@@ -959,7 +959,7 @@
  </outfit>
  <outfit name="Hellburner">
   <general>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>10</mass>
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
@@ -977,7 +977,7 @@
   <outfit name="Auxiliary Processing Unit I">
   <general>
    <typename>CPU Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <max>1</max>
    <mass>7</mass>
    <price>80000</price>
@@ -992,7 +992,7 @@
  <outfit name="Auxiliary Processing Unit II">
   <general>
    <typename>CPU Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <max>1</max>
    <mass>28</mass>
    <price>170000</price>
@@ -1007,7 +1007,7 @@
   <outfit name="Auxiliary Processing Unit III">
   <general>
    <typename>CPU Modifier</typename>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <max>1</max>
    <mass>112</mass>
    <price>360000</price>
@@ -1141,7 +1141,7 @@
  </outfit>
  <outfit name="Civilian Jammer">
   <general>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>2</mass>
    <price>40000</price>
    <description>This jammer allows you to interfere with the targeting systems of missiles headed toward you, yielding an unpredictable change in trajectory likely to miss your ship. Though it is widely used, many have derided the civilian jammer for its unreliable nature.</description>
@@ -1156,7 +1156,7 @@
  </outfit>
  <outfit name="Milspec Jammer">
   <general>
-   <slot>systems</slot>
+   <slot>utility</slot>
    <mass>3</mass>
    <price>250000</price>
    <description>This jammer follows strict military specifications, allowing it to deflect a greater amount of missiles at longer range than the civilian counterpart. With increased functionality, it also consumes more power than the civilian variant.</description>

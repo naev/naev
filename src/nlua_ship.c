@@ -284,7 +284,7 @@ static int shipL_slots( lua_State *L )
 
    /* Push slot numbers. */
    lua_pushnumber(L, s->outfit_nweapon);
-   lua_pushnumber(L, s->outfit_nsystems);
+   lua_pushnumber(L, s->outfit_nutility);
    lua_pushnumber(L, s->outfit_nstructure);
    return 3;
 }
