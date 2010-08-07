@@ -263,10 +263,10 @@ static int shipL_class( lua_State *L )
 /**
  * @brief Gets the amount of the ship's ship slots.
  *
- * @usage slots_weapon, slots_systems, slots_structure = p:slots()
+ * @usage slots_weapon, slots_utility, slots_structure = p:slots()
  *
  *    @luaparam s Ship to get ship slots of.
- *    @luareturn Number of weapon, systems and structure slots.
+ *    @luareturn Number of weapon, utility and structure slots.
  * @luafunc slots( s )
  */
 static int shipL_slots( lua_State *L )
