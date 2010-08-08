@@ -61,6 +61,7 @@ static int playerL_cargoFree( lua_State *L );
 static int playerL_cargoHas( lua_State *L );
 static int playerL_cargoAdd( lua_State *L );
 static int playerL_cargoRm( lua_State *L );
+static int playerL_cargoList( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_misnDone( lua_State *L );
@@ -86,6 +87,7 @@ static const luaL_reg playerL_methods[] = {
    { "cargoHas", playerL_cargoHas },
    { "cargoAdd", playerL_cargoAdd },
    { "cargoRm", playerL_cargoRm },
+   { "cargoList", playerL_cargoList },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
    { "misnDone", playerL_misnDone },
@@ -181,14 +183,33 @@ static int playerL_pay( lua_State *L )
  * @brief Gets how many credits the player has on him.
  *
  * @usage monies = player.credits()
+ * @usage monies, readable = player.credits( 2 )
  *
- *    @luareturn The amount of credits the player has on him.
- * @luafunc credits()
+ *    @luaparam decimal Optional argument that makes it return human readable form with so many decimals.
+ *    @luareturn The amount of credits the player has on him in both numerical and human-readable form.
+ * @luafunc credits( decimal )
  */
 static int playerL_credits( lua_State *L )
 {
-   lua_pushnumber(L,player.p->credits);
-   return 1;
+   char buf[ ECON_CRED_STRLEN ];
+   int has_dec, decimals;
+
+   /* Parse parameters. */
+   if (lua_isnumber(L,1)) {
+      has_dec  = 1;
+      decimals = lua_tointeger(L,1);
+   }
+   else
+      has_dec  = 0;
+
+   /* Push return. */
+   lua_pushnumber(L, player.p->credits);
+   if (has_dec) {
+      credits2str( buf, player.p->credits, decimals );
+      lua_pushstring(L, buf);
+   }
+
+   return 1 + has_dec;
 }
 /**
  * @brief Sends the player an ingame message.
@@ -486,6 +507,47 @@ static int playerL_cargoRm( lua_State *L )
    quantity = pilot_rmCargo( player.p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
+}
+
+
+/**
+ * @brief Lists the cargo the player has.
+ *
+ * The list has the following members:<br />
+ * <ul>
+ * <li><b>name:</b> name of the cargo.
+ * <li><b>q:</b> quantity of the targo.
+ * <li><b>m:</b> true if cargo is for a mission.
+ * </ul>
+ *
+ * @usage for _,v in ipairs(player.cargoList()) do print( string.format("%s: %d", v.name, v.q ) ) end
+ *
+ *    @luareturn An ordered list with the names of the cargo the player has.
+ * @luafunc cargoList()
+ */
+static int playerL_cargoList( lua_State *L )
+{
+   int i;
+   lua_newtable(L); /* t */
+   for (i=0; i<player.p->ncommodities; i++) {
+      lua_pushnumber(L, i+1); /* t, i */
+
+      /* Represents the cargo. */
+      lua_newtable(L); /* t, i, t */
+      lua_pushstring(L, "name"); /* t, i, t, i */
+      lua_pushstring(L, player.p->commodities[i].commodity->name); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_pushstring(L, "q"); /* t, i, t, i */
+      lua_pushnumber(L, player.p->commodities[i].quantity); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_pushstring(L, "m"); /* t, i, t, i */
+      lua_pushboolean(L, player.p->commodities[i].id); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+
+      lua_rawset(L,-3); /* t */
+   }
+   return 1;
+
 }
 
 
