@@ -82,7 +82,7 @@ int nlua_loadCol( lua_State *L, int readonly )
  * col2:setHSV( col1:hsv() ) -- Set colour 2 with colour 1's HSV values
  * @endcode
  *
- * @luamod col
+ * @luamod colour
  */
 /**
  * @brief Gets colour at index.

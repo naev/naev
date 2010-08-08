@@ -34,6 +34,9 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "minimal_planet.png" ) )
    gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png" ) )
 
+   -- Messages
+   gui.mesgInit( screen_w-400, 20, 30 )
+
    -- Frame position
    frame_w, frame_h = frame:dim()
    frame_x  = screen_w - frame_w - 15
@@ -74,9 +77,10 @@ function create()
    -- Misc position
    misc_w = 135
    misc_h = 104
-   misc_x, misc_y = relativize( 35, 475 )
+   misc_x, misc_y = relativize( 40, 472 )
 
    -- Update stuff
+   update_cargo()
    update_nav()
    update_target()
 end
@@ -99,6 +103,23 @@ function update_target ()
       target_gfx = ptarget:ship():gfxTarget()
       target_gfx_w, target_gfx_h = target_gfx:dim()
       --target_gfxFact = target_fact:gfxSmall()
+   end
+end
+
+
+function update_cargo ()
+   cargol = player.cargoList()
+   misc_cargo = ""
+   for _,v in ipairs(cargol) do
+      if v.q > 0 then
+         misc_cargo = misc_cargo .. v.name
+      else
+         misc_cargo = misc_cargo .. string.format( "%d %s", v.q, v.name )
+      end
+      if v.m then
+         misc_cargo = misc_cargo .. "*"
+      end
+      misc_cargo = misc_cargo .. "\n"
    end
 end
 
@@ -222,6 +243,18 @@ function render()
       gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
    end
 
+   -- Misc
+   _, creds = player.credits(2)
+   h = 5 + smallfont_h
+   y = misc_y - h
+   gfx.print( true, "Creds:", misc_x, y, col_console, misc_w, false )
+   w = gfx.printDim( false, creds )
+   gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
+   y = y - h
+   gfx.print( true, "Cargo:", misc_x, y, col_console, misc_w, false )
+   y = y - 5
+   h = misc_h - 2*h - 8
+   gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_console )
 end
 
 

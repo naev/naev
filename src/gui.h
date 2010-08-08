@@ -32,6 +32,7 @@ void gui_cleanup (void);
 /*
  * Triggers.
  */
+void gui_setCargo (void);
 void gui_setNav (void);
 void gui_setTarget (void);
 
@@ -47,6 +48,7 @@ void gui_forceBlink (void);
 /*
  * Messages.
  */
+void gui_messageInit( int width, int x, int y );
 void player_messageToggle( int enable );
 void player_message( const char *fmt, ... );
 void gui_clearMessages (void);
