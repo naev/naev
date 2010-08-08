@@ -34,6 +34,9 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "minimal_planet.png" ) )
    gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png" ) )
 
+   -- Messages
+   gui.mesgInit( screen_w-400, 20, 30 )
+
    -- Frame position
    frame_w, frame_h = frame:dim()
    frame_x  = screen_w - frame_w - 15

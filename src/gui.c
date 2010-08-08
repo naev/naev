@@ -58,7 +58,6 @@
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
-#define GUI_DATA     "dat/gui.xml" /**< Global GUI configuration file. */
 #define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
@@ -142,18 +141,20 @@ typedef struct Mesg_ {
    double t; /**< Time to live for the message. */
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
-static int gui_mesg_w   = 0;
-static int gui_mesg_x   = 0;
-static int gui_mesg_y   = 0;
+static int gui_mesg_w   = 0; /**< Width of messages. */
+static int gui_mesg_x   = 0; /**< X positioning of messages. */
+static int gui_mesg_y   = 0; /**< Y positioning of messages. */
 
+/* Calculations to speed up borders. */
 static double gui_tr = 0.;
 static double gui_br = 0.;
 static double gui_tl = 0.;
 static double gui_bl = 0.;
 
-static glTexture *gui_ico_hail = NULL;
+/* Intrinsec graphical stuff. */
+static glTexture *gui_ico_hail      = NULL;
 static glTexture *gui_target_planet = NULL;
-static glTexture *gui_target_pilot = NULL;
+static glTexture *gui_target_pilot  = NULL;
 
 
 /*
@@ -195,6 +196,17 @@ void gui_setDefaults (void)
 {
    gui_radar.res = RADAR_RES_DEFAULT;
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
+}
+
+
+/**
+ * @brief Initializes the message system.
+ */
+void gui_messageInit( int width, int x, int y )
+{
+   gui_mesg_w = width;
+   gui_mesg_x = x;
+   gui_mesg_y = y;
 }
 
 

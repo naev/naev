@@ -22,11 +22,13 @@
 
 
 /* Ship metatable methods. */
+static int guiL_mesgInit( lua_State *L );
 static int guiL_radarInit( lua_State *L );
 static int guiL_radarRender( lua_State *L );
 static int guiL_targetPlanetGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
 static const luaL_reg guiL_methods[] = {
+   { "mesgInit", guiL_mesgInit },
    { "radarInit", guiL_radarInit },
    { "radarRender", guiL_radarRender },
    { "targetPlanetGFX", guiL_targetPlanetGFX },
@@ -64,6 +66,24 @@ int nlua_loadGUI( lua_State *L, int readonly )
  *
  * @luamod gfx
  */
+
+
+/**
+ * @luafunc mesgInit( width, x, y )
+ */
+static int guiL_mesgInit( lua_State *L )
+{
+   int w, x, y;
+
+   /* Parse parameters. */
+   w = luaL_checkinteger( L, 1 );
+   x = luaL_checkinteger( L, 2 );
+   y = luaL_checkinteger( L, 3 );
+
+   /* Initialize. */
+   gui_messageInit( w, x, y );
+   return 0;
+}
 
 
 /**
