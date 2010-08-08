@@ -2028,6 +2028,16 @@ static int gui_runFunc( const char* func )
 
 
 /**
+ * @brief Player just changed his cargo.
+ */
+void gui_setCargo (void)
+{
+   if (gui_L != NULL)
+      gui_runFunc( "update_cargo" );
+}
+
+
+/**
  * @brief Player just changed his nav computer target.
  */
 void gui_setNav (void)

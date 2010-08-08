@@ -2925,6 +2925,8 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
             pilot->mass_cargo              += q;
             pilot->solid->mass             += q;
             pilot_updateMass( pilot );
+            if (pilot_isPlayer(pilot))
+               gui_setCargo();
             return q;
          }
    }
@@ -2949,6 +2951,8 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
    pilot->solid->mass   += q;
    pilot->ncommodities++;
    pilot_updateMass( pilot );
+   if (pilot_isPlayer(pilot))
+      gui_setCargo();
 
    return q;
 }
@@ -3132,6 +3136,8 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
          pilot->mass_cargo    -= q;
          pilot->solid->mass   -= q;
          pilot_updateMass( pilot );
+         if (pilot_isPlayer(pilot))
+            gui_setCargo();
          return q;
       }
    return 0; /* pilot didn't have it */

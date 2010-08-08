@@ -29,6 +29,7 @@
 #include "event.h"
 #include "conf.h"
 #include "land.h"
+#include "gui.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -380,6 +381,9 @@ static int load_game( const char* file )
 
    /* Land the player. */
    land( pnt );
+
+   /* Sanitize the GUI. */
+   gui_setCargo();
 
    xmlFreeDoc(doc);
    xmlCleanupParser();
