@@ -30,6 +30,13 @@ void gui_cleanup (void);
 
 
 /*
+ * Triggers.
+ */
+void gui_setNav (void);
+void gui_setTarget (void);
+
+
+/*
  * render
  */
 void gui_renderReticles( double dt );
@@ -47,6 +54,20 @@ void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
 void gui_messageSetVisible( int lines );
 int gui_messageGetVisible (void);
+
+
+/*
+ * Radar.
+ */
+int gui_radarInit( int circle, int w, int h );
+void gui_radarRender( double x, double y );
+
+
+/*
+ * Targetting.
+ */
+void gui_targetPlanetGFX( glTexture *gfx );
+void gui_targetPilotGFX( glTexture *gfx );
 
 
 /*

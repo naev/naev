@@ -531,6 +531,9 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
+   int sx, sy;
+   char *str;
+   int len;
 
    /* load from packfile */
    rw = ndata_rwops( path );
@@ -544,6 +547,14 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       return NULL;
    }
    npng_dim( npng, &w, &h );
+
+   /* Process metadata. */
+   len = npng_metadata( npng, "sx", &str );
+   sx  = (len > 0) ? atoi(str) : 1;
+   len = npng_metadata( npng, "sy", &str );
+   sy  = (len > 0) ? atoi(str) : 1;
+
+   /* Load surface. */
    surface  = npng_readSurface( npng, gl_needPOT(), 1 );
    npng_close( npng );
    SDL_RWclose( rw );
@@ -553,7 +564,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    }
 
    /* set the texture */
-   return gl_loadImagePad( path, surface, flags, w, h, 1, 1, 1 );
+   return gl_loadImagePad( path, surface, flags, w, h, sx, sy, 1 );
 }
 
 
@@ -673,6 +684,7 @@ glTexture* gl_dupTexture( glTexture *texture )
    }
 
    /* Invalid texture. */
+   WARN("Unable to duplicate texture '%s'.", texture->name);
    return NULL;
 }
 

@@ -56,6 +56,9 @@ static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
+static int pilotL_target( lua_State *L );
+static int pilotL_nav( lua_State *L );
+static int pilotL_secondary( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -107,6 +110,9 @@ static const luaL_reg pilotL_methods[] = {
    { "name", pilotL_name },
    { "id", pilotL_id },
    { "exists", pilotL_exists },
+   { "target", pilotL_target },
+   { "nav", pilotL_nav },
+   { "secondary", pilotL_secondary },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -167,6 +173,9 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "name", pilotL_name },
    { "id", pilotL_id },
    { "exists", pilotL_exists },
+   { "target", pilotL_target },
+   { "nav", pilotL_nav },
+   { "secondary", pilotL_secondary },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -787,6 +796,122 @@ static int pilotL_exists( lua_State *L )
    lua_pushboolean(L, exists);
    return 1;
 }
+
+
+/**
+ * @brief Gets the pilot target of the pilot.
+ *
+ * @usage target = p:target()
+ *
+ *    @luaparam p Pilot to get target of.
+ *    @luareturn nil if no target is selected, otherwise the target of the target.
+ * @luafunc target( p )
+ */
+static int pilotL_target( lua_State *L )
+{
+   Pilot *p;
+   LuaPilot lp;
+   p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+   lp.pilot = p->target;
+   if (p->target == p->id)
+      return 0;
+   lua_pushpilot(L, lp);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the nav target of the pilot.
+ *
+ * @usage planet, hyperspace = p:nav()
+ *
+ *    @luaparam p Pilot to get nav info of.
+ *    @luareturn The planet target followed by the hyperspace target or nil if not targetted.
+ * @luafunc( p )
+ */
+static int pilotL_nav( lua_State *L )
+{
+   Pilot *p;
+   LuaPlanet lplanet;
+   LuaSystem lsystem;
+   p = luaL_validpilot(L,1);
+   if (p->target == 0)
+      return 0;
+   if (p->nav_planet >= 0) {
+      lplanet.p   = cur_system->planets[ p->nav_planet ];
+      lua_pushplanet( L, lplanet );
+   }
+   else
+      lua_pushnil(L);
+   if (p->nav_hyperspace >= 0) {
+      lsystem.s   = cur_system->jumps[ p->nav_hyperspace ].target;
+      lua_pushsystem( L, lsystem );
+   }
+   else
+      lua_pushnil(L);
+   return 2;
+}
+
+
+/**
+ * @brief Gets the secondary weapon of the pilot.
+ *
+ * @usage weapo, amm, ready = p:secondary()
+ *
+ *    @luaparam p Pilot to get secondary weapon of.
+ *    @luareturn The current secondary weapon and the amount of ammo it has (or nil if not applicable).
+ * @luafunc secondary( p )
+ */
+static int pilotL_secondary( lua_State *L )
+{
+   Pilot *p;
+   int i, q, ready;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+
+   /* Case no secondary weapon. */
+   if ((p->secondary==NULL) || (p->secondary->outfit == NULL))
+      return 0;
+
+   /* Get ready status. */
+   ready = !(p->secondary->timer > 0.);
+
+   /* Push name. */
+   lua_pushstring( L, p->secondary->u.ammo.outfit->name );
+
+   /* Can have ammo. */
+   if ((outfit_isLauncher(p->secondary->outfit) ||
+            outfit_isFighterBay(p->secondary->outfit)) &&
+         (p->secondary->u.ammo.outfit != NULL)) {
+
+      /* Get quantity. */
+      q = 0;
+      for (i=0; i<p->outfit_nweapon; i++) {
+         if (p->outfit_weapon[i].outfit != p->secondary->outfit)
+            continue;
+
+         if (p->outfit_weapon[i].u.ammo.outfit == p->secondary->u.ammo.outfit)
+            q += p->outfit_weapon[i].u.ammo.quantity;
+      }
+
+      /* Push ammo. */
+      lua_pushnumber( L, q );
+   }
+   else {
+      /* Not ready if it's a launcher with no ammo. */
+      if (outfit_isLauncher(p->secondary->outfit) ||
+            outfit_isFighterBay(p->secondary->outfit))
+         ready = 0;
+
+      lua_pushnil( L );
+   }
+   lua_pushboolean( L, ready );
+   return 3;
+}
+
 
 /**
  * @brief Changes the pilot's name.
@@ -1524,7 +1649,7 @@ static int pilotL_setNodisable( lua_State *L )
 /**
  * @brief Gets the pilot's health.
  *
- * @usage armour, shield = p:health()
+ * @usage armour, shield, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
  *    @luareturn The armour and shield of the pilot in % [0:100].
@@ -1540,8 +1665,9 @@ static int pilotL_getHealth( lua_State *L )
    /* Return parameters. */
    lua_pushnumber(L, p->armour / p->armour_max * 100. );
    lua_pushnumber(L, p->shield / p->shield_max * 100. );
+   lua_pushboolean(L, pilot_isDisabled(p));
 
-   return 2;
+   return 3;
 }
 
 
