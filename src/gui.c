@@ -2069,9 +2069,21 @@ int gui_load( const char* name )
    char *buf, path[PATH_MAX];
    uint32_t bufsize;
 
-   /* Create Lua state. */
-   snprintf( path, sizeof(path), "dat/gui/default.lua" );
+   /* Open file. */
+   snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
+   if (buf == NULL) {
+      WARN("Unable to find GUI '%s'.", path );
+      return -1;
+   }
+
+   /* Clean up. */
+   if (gui_L != NULL) {
+      lua_close( gui_L );
+      gui_L = NULL;
+   }
+
+   /* Create Lua state. */
    gui_L = nlua_newState();
    if (luaL_dobuffer( gui_L, buf, bufsize, path ) != 0) {
       WARN("Failed to load GUI Lua: %s\n"
