@@ -106,6 +106,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "fuel", playerL_fuel },
    { "cargoFree", playerL_cargoFree },
    { "cargoHas", playerL_cargoHas },
+   { "cargoList", playerL_cargoList },
    { "misnDone", playerL_misnDone },
    { "evtDone", playerL_evtDone },
    {0,0}
