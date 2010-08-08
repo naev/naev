@@ -664,14 +664,14 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"structure"))
                temp->outfit_nstructure++;
-            else if (xml_isNode(cur,"systems"))
-               temp->outfit_nsystems++;
+            else if (xml_isNode(cur,"utility"))
+               temp->outfit_nutility++;
             else if (xml_isNode(cur,"weapon"))
                temp->outfit_nweapon++;
          } while (xml_nextNode(cur));
          /* Allocate the space. */
          temp->outfit_structure     = calloc( temp->outfit_nstructure, sizeof(ShipOutfitSlot) );
-         temp->outfit_systems  = calloc( temp->outfit_nsystems, sizeof(ShipOutfitSlot) );
+         temp->outfit_utility  = calloc( temp->outfit_nutility, sizeof(ShipOutfitSlot) );
          temp->outfit_weapon    = calloc( temp->outfit_nweapon, sizeof(ShipOutfitSlot) );
          /* Second pass, initialize the mounts. */
          l = m = h = 0;
@@ -684,10 +684,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                l++;
             }
-            if (xml_isNode(cur,"systems")) {
-               temp->outfit_systems[m].slot.type = OUTFIT_SLOT_SYSTEMS;
-               temp->outfit_systems[m].slot.size = outfit_toSlotSize( xml_get(cur) );
-               /*if (temp->outfit_systems[m].size == OUTFIT_SLOT_SIZE_NA)
+            if (xml_isNode(cur,"utility")) {
+               temp->outfit_utility[m].slot.type = OUTFIT_SLOT_UTILITY;
+               temp->outfit_utility[m].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_utility[m].size == OUTFIT_SLOT_SIZE_NA)
                   WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                m++;
             }
@@ -767,9 +767,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    for (i=0; i<temp->outfit_nweapon; i++)
       if (temp->outfit_weapon[i].slot.size == OUTFIT_SLOT_SIZE_NA)
          temp->outfit_weapon[i].slot.size = base_size;
-   for (i=0; i<temp->outfit_nsystems; i++)
-      if (temp->outfit_systems[i].slot.size == OUTFIT_SLOT_SIZE_NA)
-         temp->outfit_systems[i].slot.size = base_size;
+   for (i=0; i<temp->outfit_nutility; i++)
+      if (temp->outfit_utility[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_utility[i].slot.size = base_size;
    for (i=0; i<temp->outfit_nstructure; i++)
       if (temp->outfit_structure[i].slot.size == OUTFIT_SLOT_SIZE_NA)
          temp->outfit_structure[i].slot.size = base_size;
@@ -874,8 +874,8 @@ void ships_free (void)
       /* Free outfits. */
       if (s->outfit_structure != NULL)
          free(s->outfit_structure);
-      if (s->outfit_systems != NULL)
-         free(s->outfit_systems);
+      if (s->outfit_utility != NULL)
+         free(s->outfit_utility);
       if (s->outfit_weapon != NULL)
          free(s->outfit_weapon);
 
@@ -921,7 +921,7 @@ void ship_view( unsigned int unused, char* shipname )
          "Mass:\n"
          "\n"
          "Weapon slots:\n"
-         "Systems slots:\n"
+         "Utility slots:\n"
          "Structure slots:\n"
          "\n"
          "Thrust:\n"
@@ -950,7 +950,7 @@ void ship_view( unsigned int unused, char* shipname )
          "%.0f Tons\n" /* Mass */
          "\n"
          "%d\n" /* Weapon slots */
-         "%d\n" /* Systems slots */
+         "%d\n" /* Utility slots */
          "%d\n" /* Structure slots */
          "\n"
          "%.0f MN/ton\n" /* Thrust */
@@ -965,7 +965,7 @@ void ship_view( unsigned int unused, char* shipname )
          "%d Units\n" /* Fuel */
          , s->name, ship_class(s), s->fabricator,
          s->crew, s->cpu, s->mass,
-         s->outfit_nweapon, s->outfit_nsystems, s->outfit_nstructure,
+         s->outfit_nweapon, s->outfit_nutility, s->outfit_nstructure,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
          s->energy, s->energy_regen,

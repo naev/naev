@@ -125,8 +125,8 @@ typedef struct Ship_ {
    /* outfits */
    int outfit_nstructure; /**< Number of structure outfit slots. */
    ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
-   int outfit_nsystems; /**< Number of systems ooutfit slots. */
-   ShipOutfitSlot *outfit_systems; /**< Outfit systems slots. */
+   int outfit_nutility; /**< Number of utility ooutfit slots. */
+   ShipOutfitSlot *outfit_utility; /**< Outfit utility slots. */
    int outfit_nweapon; /**< Number of weapon outfit slots. */
    ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */
 

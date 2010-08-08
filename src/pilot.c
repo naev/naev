@@ -3399,12 +3399,12 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Slot types. */
    pilot->outfit_nstructure    = ship->outfit_nstructure;
    pilot->outfit_structure     = calloc( ship->outfit_nstructure, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nsystems = ship->outfit_nsystems;
-   pilot->outfit_systems  = calloc( ship->outfit_nsystems, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nutility = ship->outfit_nutility;
+   pilot->outfit_utility  = calloc( ship->outfit_nutility, sizeof(PilotOutfitSlot) );
    pilot->outfit_nweapon   = ship->outfit_nweapon;
    pilot->outfit_weapon    = calloc( ship->outfit_nweapon, sizeof(PilotOutfitSlot) );
    /* Global. */
-   pilot->noutfits = pilot->outfit_nstructure + pilot->outfit_nsystems + pilot->outfit_nweapon;
+   pilot->noutfits = pilot->outfit_nstructure + pilot->outfit_nutility + pilot->outfit_nweapon;
    pilot->outfits  = calloc( pilot->noutfits, sizeof(PilotOutfitSlot*) );
    /* First pass copy data. */
    p = 0;
@@ -3415,11 +3415,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_structure[i].mount, sizeof(ShipMount) );
       p++;
    }
-   for (i=0; i<pilot->outfit_nsystems; i++) {
-      pilot->outfit_systems[i].slot.type = OUTFIT_SLOT_SYSTEMS;
-      pilot->outfit_systems[i].slot.size = ship->outfit_systems[i].slot.size;
-      pilot->outfits[p] = &pilot->outfit_systems[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_systems[i].mount, sizeof(ShipMount) );
+   for (i=0; i<pilot->outfit_nutility; i++) {
+      pilot->outfit_utility[i].slot.type = OUTFIT_SLOT_UTILITY;
+      pilot->outfit_utility[i].slot.size = ship->outfit_utility[i].slot.size;
+      pilot->outfits[p] = &pilot->outfit_utility[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_utility[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nweapon; i++) {
@@ -3595,10 +3595,10 @@ Pilot* pilot_copy( Pilot* src )
    dest->outfit_structure  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nstructure );
    memcpy( dest->outfit_structure, src->outfit_structure,
          sizeof(PilotOutfitSlot) * dest->outfit_nstructure );
-   dest->outfit_nsystems = src->outfit_nsystems;
-   dest->outfit_systems  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nsystems );
-   memcpy( dest->outfit_systems, src->outfit_systems,
-         sizeof(PilotOutfitSlot) * dest->outfit_nsystems );
+   dest->outfit_nutility = src->outfit_nutility;
+   dest->outfit_utility  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nutility );
+   memcpy( dest->outfit_utility, src->outfit_utility,
+         sizeof(PilotOutfitSlot) * dest->outfit_nutility );
    dest->outfit_nweapon = src->outfit_nweapon;
    dest->outfit_weapon  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nweapon );
    memcpy( dest->outfit_weapon, src->outfit_weapon,
@@ -3606,8 +3606,8 @@ Pilot* pilot_copy( Pilot* src )
    p = 0;
    for (i=0; i<dest->outfit_nstructure; i++)
       dest->outfits[p++] = &dest->outfit_structure[i];
-   for (i=0; i<dest->outfit_nsystems; i++)
-      dest->outfits[p++] = &dest->outfit_systems[i];
+   for (i=0; i<dest->outfit_nutility; i++)
+      dest->outfits[p++] = &dest->outfit_utility[i];
    for (i=0; i<dest->outfit_nweapon; i++)
       dest->outfits[p++] = &dest->outfit_weapon[i];
    dest->secondary   = NULL;
@@ -3660,8 +3660,8 @@ void pilot_free( Pilot* p )
       free(p->outfits);
    if (p->outfit_structure != NULL)
       free(p->outfit_structure);
-   if (p->outfit_systems != NULL)
-      free(p->outfit_systems);
+   if (p->outfit_utility != NULL)
+      free(p->outfit_utility);
    if (p->outfit_weapon != NULL)
       free(p->outfit_weapon);
 

@@ -1739,34 +1739,6 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="Bastion">
-    <pos x="-2756.843394" y="-2156.342853"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Bastion">
-    <pos x="-2756.843394" y="-2156.342853"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="New Haven">
-    <pos x="718.622036" y="3425.431706"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="New Haven">
-    <pos x="718.622036" y="3425.431706"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
    <jump target="New Haven">
     <pos x="718.622036" y="3425.431706"/>
     <radius>200.000000</radius>

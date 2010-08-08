@@ -129,7 +129,7 @@ function empire_createHawking( empire_create )
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
-   -- Kestrel gets some good stuff
+   -- Hawking gets some good stuff
    primary        = { "Heavy Ion Turret", "150mm Railgun Turret" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
@@ -177,7 +177,7 @@ function empire_createPacifier( empire_create )
    use_secondary  = 2
    medium         = equip_mediumMed()
    low            = equip_lowMed()
-   apu            = equip_apuMed()
+   apu            = equip_apuHig()
 
    -- Finally add outfits
    equip_ship( p, true, primary, secondary, medium, low, apu,
@@ -186,6 +186,125 @@ function empire_createPacifier( empire_create )
    return p,olist
 end
 
+-- Creates an Empire Shark warship
+function empire_createShark( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Shark" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Shark"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Shark gets some good stuff
+   primary        = { "Ion Cannon", "Ripper MK2" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh -1
+   use_secondary  = 1
+   medium         = equip_mediumLow()
+   low            = equip_lowLow()
+   apu            = equip_apuLow()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
+
+-- Creates an Empire Lancelot warship
+function empire_createLancelot( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Lancelot" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Lancelot"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Lancelot gets some good stuff
+   primary        = { "Ion Cannon", "Ripper MK2" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh-1
+   use_secondary  = 1
+   medium         = equip_mediumLow()
+   low            = equip_lowLow()
+   apu            = equip_apuLow()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
+
+-- Creates an Empire Admonisher warship
+function empire_createAdmonisher( empire_create )
+   -- Create by default
+   if empire_create == nil then
+      empire_create = true
+   end
+
+   -- Create the empire ship
+   local p, s, olist
+   if empire_create then
+      p     = empire_createEmpty( "Empire Admonisher" )
+      s     = p:ship()
+      olist = nil
+   else
+      p     = "Empire Admonisher"
+      s     = ship.get(p)
+      olist = { }
+   end
+
+   -- Equipment vars
+   local primary, secondary, medium, low, apu
+   local use_primary, use_secondary, use_medium, use_low
+   local nhigh, nmedium, nlow = s:slots()
+
+   -- Admonisher gets some good stuff
+   primary        = { "Ripper MK2", "Ion Cannon" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh-1
+   use_secondary  = 1
+   medium         = equip_mediumMed()
+   low            = equip_lowMed()
+   apu            = equip_apuMed()
+
+   -- Finally add outfits
+   equip_ship( p, true, primary, secondary, medium, low, apu,
+               use_primary, use_secondary, use_medium, use_low, olist )
+
+   return p,olist
+end
 
 --[[
 -- @brief Tries to get a name from an Empire planet.
