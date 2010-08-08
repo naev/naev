@@ -57,7 +57,9 @@ function create()
 
    -- Fuel/energy position
    energy_x, energy_y = relativize( 97, 177 )
+   energy_w, energy_h = energy:dim()
    fuel_x, fuel_y = relativize( 95, 78 )
+   fuel_w, fuel_h = fuel:dim()
 
    -- NAV position
    nav_w = 135
@@ -181,8 +183,9 @@ function render()
    local arm, shi = pp:health()
    gfx.renderRect( shield_x, shield_y, shi/100.*shield_w, shield_h, shield_col )
    gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h, armour_col )
-   -- energy
-   -- fuel
+   local ene = pp:energy() / 100
+   gfx.renderTexRaw( energy, energy_x, energy_y, ene*energy_w, energy_h, 1, 1, 0, 0, ene, 1, energy_col )
+   gfx.renderTexRaw( fuel, fuel_x, fuel_y, fuel_w, fuel_h, 1, 1, 0, 0, 1, 1, fuel_col )
 
    -- Weapon
    local sec, amm, rdy = pp:secondary()
