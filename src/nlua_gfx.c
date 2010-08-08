@@ -26,6 +26,7 @@
 /* Ship metatable methods. */
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
+static int gfxL_renderTexRaw( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 static int gfxL_printDim( lua_State *L );
@@ -36,6 +37,7 @@ static const luaL_reg gfxL_methods[] = {
    { "dim", gfxL_dim },
    /* Render stuff. */
    { "renderTex", gfxL_renderTex },
+   { "renderTexRaw", gfxL_renderTexRaw },
    { "renderRect", gfxL_renderRect },
    /* Printing. */
    { "fontSize", gfxL_fontSize },
@@ -143,16 +145,83 @@ static int gfxL_renderTex( lua_State *L )
    }
 
    /* Some sanity checking. */
+#if DEBUGGING
    if (sx >= lt->tex->sx)
       NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d.",
             lt->tex->name, sx+1, lt->tex->sx );
    if (sx >= lt->tex->sx)
       NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d.",
             lt->tex->name, sy+1, lt->tex->sy );
+#endif /* DEBUGGING */
 
    /* Render. */
    gl_blitStaticSprite( lt->tex, x, y, sx, sy, (lc==NULL) ? NULL : &lc->col );
 
+   return 0;
+}
+
+
+/**
+ * @brief Renders a texture.
+ *
+ * This function has variable parameters depending on how you want to render.
+ *
+ * @usage gfx.renderTex( tex, 0., 0. ) -- Render tex at origin
+ * @usage gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour col
+ * @usage gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3 (top-left is 1,1)
+ * @usage gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position 4,3 (top-left is 1,1) with colour col
+ *
+ *    @luaparam tex Texture to render.
+ *    @luaparam pos_x X position to render texture at.
+ *    @luaparam pos_y Y position to render texture at.
+ *    @luaparam sprite_x X sprite to render.
+ *    @luaparam sprite_y Y sprite to render.
+ *    @luaparam colour Colour to use when rendering.
+ * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
+ */
+static int gfxL_renderTexRaw( lua_State *L )
+{
+   glTexture *t;
+   LuaTex *lt;
+   LuaColour *lc;
+   double px,py, pw,ph, tx,ty, tw,th;
+   int sx, sy;
+
+   /* Parameters. */
+   lc = NULL;
+   lt = luaL_checktex( L, 1 );
+   px = luaL_checknumber( L, 2 ) - (double)SCREEN_W/2.;
+   py = luaL_checknumber( L, 3 ) - (double)SCREEN_H/2.;
+   pw = luaL_checknumber( L, 4 );
+   ph = luaL_checknumber( L, 5 );
+   sx = luaL_checkinteger( L, 6 ) - 1;
+   sy = luaL_checkinteger( L, 7 ) - 1;
+   tx = luaL_checknumber( L, 8 );
+   ty = luaL_checknumber( L, 9 );
+   tw = luaL_checknumber( L, 10 );
+   th = luaL_checknumber( L, 11 );
+   if (lua_iscolour( L, 12 ))
+      lc = lua_tocolour( L, 12 );
+
+   /* Some sanity checking. */
+#if DEBUGGING
+   if (sx >= lt->tex->sx)
+      NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d.",
+            lt->tex->name, sx+1, lt->tex->sx );
+   if (sx >= lt->tex->sx)
+      NLUA_ERROR( L, "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d.",
+            lt->tex->name, sy+1, lt->tex->sy );
+#endif /* DEBUGGING */
+
+   /* Translate as needed. */
+   t  = lt->tex;
+   tx = (tx*t->sw + t->sw*(double)(sx))/t->rw;
+   ty = (ty*t->sh + t->sh*(t->sy-(double)sy-1))/t->rh;
+   tw = tw*t->srw;
+   th = th*t->srh;
+
+   /* Render. */
+   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, (lc==NULL) ? NULL : &lc->col );
    return 0;
 }
 
