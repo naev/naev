@@ -243,8 +243,8 @@ const char *outfit_slotName( const Outfit* o )
          return "NA";
       case OUTFIT_SLOT_STRUCTURE:
          return "Structure";
-      case OUTFIT_SLOT_SYSTEMS:
-         return "Systems";
+      case OUTFIT_SLOT_UTILITY:
+         return "Utility";
       case OUTFIT_SLOT_WEAPON:
          return "Weapon";
       default:
@@ -1642,8 +1642,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                   WARN("Outfit Slot type invalid.");
                else if (strcmp(cprop,"structure") == 0)
                   temp->slot.type = OUTFIT_SLOT_STRUCTURE;
-               else if (strcmp(cprop,"systems") == 0)
-                  temp->slot.type = OUTFIT_SLOT_SYSTEMS;
+               else if (strcmp(cprop,"utility") == 0)
+                  temp->slot.type = OUTFIT_SLOT_UTILITY;
                else if (strcmp(cprop,"weapon") == 0)
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
             }

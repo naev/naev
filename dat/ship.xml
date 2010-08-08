@@ -33,8 +33,8 @@
   <slots>
    <weapon x="7"   y="0" h="1" />
    <weapon x="-3"  y="0" h="2" />
-   <systems/>
-   <systems/>
+   <utility/>
+   <utility/>
    <structure/>
    <structure/>
   </slots>
@@ -72,7 +72,7 @@
    <weapon x="15" y="0" h="-3" />
    <weapon x="15" y="0" h="-3" />
    <weapon x="0"  y="0" h="0" />
-   <systems/>
+   <utility/>
    <structure/>
   </slots>
  </ship>
@@ -107,10 +107,10 @@
   </characteristics>
   <slots>
    <weapon x="9" y="0" h="-2" />
-   <systems>medium</systems>
-   <systems/>
-   <systems/>
-   <systems/>
+   <utility>medium</utility>
+   <utility/>
+   <utility/>
+   <utility/>
    <structure/>
   </slots>
  </ship>
@@ -146,9 +146,9 @@
   <slots>
    <weapon x="12" y="0" h="-2" />
    <weapon x="-5" y="0" h="1" />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
   </slots>
@@ -186,7 +186,7 @@
    <weapon x="5" y="0" h="-5" />
    <weapon x="5" y="0" h="-5" />
    <weapon x="5" y="0" h="-5" />
-   <systems/>
+   <utility/>
    <structure/>
   </slots>
  </ship>
@@ -223,8 +223,8 @@
   <slots>
    <weapon x="11" y="0" h="-7" />
    <weapon x="-5" y="0" h="3" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -264,8 +264,8 @@
    <weapon x="15" y="0" h="5" />
    <weapon x="-10" y="-3" h="0" />
    <weapon x="-10" y="3" h="0" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -309,9 +309,9 @@
    <weapon x="25"  y="3" h="4" >heavy</weapon>
    <weapon x="-15" y="-3" h="4" />
    <weapon x="-15"  y="3" h="4" />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -352,9 +352,9 @@
    <weapon x="25"  y="3" h="4" >heavy</weapon>
    <weapon x="-15" y="-3" h="4" />
    <weapon x="-15"  y="3" h="4" />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -395,9 +395,9 @@
    <weapon x="25"  y="0" h="0" >heavy</weapon>
    <weapon x="-15" y="0" h="4" />
    <weapon x="15"  y="0" h="4" />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -440,8 +440,8 @@
    <weapon x="10" y="0" h="0" />
    <weapon x="0" y="-4" h="-3" />
    <weapon x="0" y="4" h="-3" />
-   <systems/>
-   <systems/>
+   <utility/>
+   <utility/>
    <structure/>
    <structure/>
   </slots>
@@ -480,8 +480,8 @@
    <weapon x="10" y="2" h="0" />
    <weapon x="0" y="-4" h="-3" />
    <weapon x="0" y="4" h="-3" />
-   <systems/>
-   <systems/>
+   <utility/>
+   <utility/>
    <structure/>
    <structure/>
   </slots>
@@ -520,8 +520,8 @@
    <weapon x="12" y="0" h="0" />
    <weapon x="-3" y="0" h="2" />
    <weapon x="3" y="0" h="2" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
    <structure />
   </slots>
@@ -560,8 +560,8 @@
    <weapon x="12" y="0" h="0" />
    <weapon x="-3" y="0" h="2" />
    <weapon x="3" y="0" h="2" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
    <structure />
   </slots>
@@ -600,8 +600,8 @@
    <weapon x="12" y="0" h="0" />
    <weapon x="-3" y="0" h="2" />
    <weapon x="3" y="0" h="2" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
    <structure />
   </slots>
@@ -641,9 +641,9 @@
    <weapon x="12" y="0" h="0" />
    <weapon x="-3" y="0" h="2" />
    <weapon x="-3" y="0" h="2" />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
   </slots>
@@ -683,9 +683,9 @@
    <weapon x="12" y="0" h="0" />
    <weapon x="-3" y="0" h="2" />
    <weapon x="-3" y="0" h="2" />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
   </slots>
@@ -727,7 +727,7 @@
    <weapon x="13" y="13"  h="0" />
    <weapon x="19" y="0"   h="-2" />
    <weapon x="3"  y="0"   h="2" />
-   <systems />
+   <utility />
    <structure />
   </slots>
  </ship>
@@ -767,7 +767,7 @@
    <weapon x="13" y="13"  h="0" />
    <weapon x="19" y="0"   h="-2" />
    <weapon x="3"  y="0"   h="2" />
-   <systems />
+   <utility />
    <structure />
   </slots>
  </ship>
@@ -807,7 +807,7 @@
    <weapon x="13" y="13"  h="0" />
    <weapon x="19" y="0"   h="-2" />
    <weapon x="3"  y="0"   h="2" />
-   <systems />
+   <utility />
    <structure />
   </slots>
  </ship>
@@ -846,8 +846,8 @@
    <weapon x="8"  y="0"  h="0" />
    <weapon x="-2" y="9"  h="-1" />
    <weapon x="-2" y="-9" h="-1" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
   </slots>
  </ship>
@@ -886,8 +886,8 @@
    <weapon x="8"  y="0"  h="0" />
    <weapon x="-2" y="9"  h="-1" />
    <weapon x="-2" y="-9" h="-1" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
   </slots>
  </ship>
@@ -925,8 +925,8 @@
    <weapon x="8"  y="0"  h="0" />
    <weapon x="-2" y="9"  h="-1" />
    <weapon x="-2" y="-9" h="-1" />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
    <structure />
   </slots>
  </ship>
@@ -968,9 +968,9 @@
    <weapon x="-9" y="10"  h="2" />
    <weapon x="-9"  y="-3"  h="2" >light</weapon>
    <weapon x="-9"  y="3" h="2" >light</weapon>
-   <systems />
-   <systems />
-   <systems>light</systems>
+   <utility />
+   <utility />
+   <utility>light</utility>
    <structure />
    <structure />
   </slots>
@@ -1011,9 +1011,9 @@
    <weapon x="4"  y="-2" h="-5" />
    <weapon x="-9" y="-5" h="-9" >light</weapon>
    <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <systems />
-   <systems />
-   <systems>light</systems>
+   <utility />
+   <utility />
+   <utility>light</utility>
    <structure />
    <structure />
    <structure />
@@ -1054,9 +1054,9 @@
    <weapon x="4"  y="-2" h="-5" />
    <weapon x="-9" y="-5" h="-9" >light</weapon>
    <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <systems />
-   <systems />
-   <systems>light</systems>
+   <utility />
+   <utility />
+   <utility>light</utility>
    <structure />
    <structure />
    <structure />
@@ -1098,9 +1098,9 @@
    <weapon x="4"  y="-2" h="-5" />
    <weapon x="-9" y="-5" h="-9" >light</weapon>
    <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <systems />
-   <systems />
-   <systems>light</systems>
+   <utility />
+   <utility />
+   <utility>light</utility>
    <structure />
    <structure />
    <structure />
@@ -1143,9 +1143,9 @@
    <weapon x="10"   y="3"   h="2" />
    <weapon x="-22" y="-8" h="-0" />
    <weapon x="-22" y="8"  h="-0" />
-   <systems>heavy</systems>
-   <systems>heavy</systems>
-   <systems />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
    <structure>heavy</structure>
    <structure />
    <structure />
@@ -1189,9 +1189,9 @@
    <weapon x="10"   y="3"   h="2" />
    <weapon x="-22" y="-8" h="-0" />
    <weapon x="-22" y="8"  h="-0" />
-   <systems>heavy</systems>
-   <systems>heavy</systems>
-   <systems />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
    <structure>heavy</structure>
    <structure />
    <structure />
@@ -1233,9 +1233,9 @@
    <weapon x="10"   y="0"  h="0" />
    <weapon x="-10" y="0" h="0" />
    <weapon x="-20" y="0"  h="0" />
-   <systems>heavy</systems>
-   <systems />
-   <systems />
+   <utility>heavy</utility>
+   <utility />
+   <utility />
    <structure>heavy</structure>
    <structure />
    <structure />
@@ -1276,11 +1276,11 @@
 	<weapon x="18"  y="0"   h="5" >heavy</weapon>
    <weapon x="-30" y="-8" h="3" />
    <weapon x="-30" y="8"  h="3" />
-   <systems>heavy</systems>
-   <systems>heavy</systems>
-   <systems />
-   <systems />
-   <systems />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <utility />
+   <utility />
    <structure>heavy</structure>
    <structure />
    <structure />
@@ -1322,10 +1322,10 @@
    <weapon x="20"  y="0"   h="-10" />
    <weapon x="4"   y="-5"  h="-10" />
    <weapon x="4"   y="5"   h="-10" />
-   <systems>heavy</systems>
-   <systems>heavy</systems>
-   <systems />
-   <systems />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <utility />
    <structure>heavy</structure>
    <structure />
    <structure />
@@ -1367,10 +1367,10 @@
    <weapon x="20"  y="0"   h="-10" />
    <weapon x="4"   y="-5"  h="-10" />
    <weapon x="4"   y="5"   h="-10" />
-   <systems>heavy</systems>
-   <systems>heavy</systems>
-   <systems />
-   <systems />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <utility />
    <structure>heavy</structure>
    <structure />
    <structure />
@@ -1414,11 +1414,11 @@
    <weapon x="-6"  y="0"   h="12" />
    <weapon x="-24" y="-8"  h="8" >medium</weapon>
    <weapon x="-24" y="8"   h="8" >medium</weapon>
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems>medium</systems>
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility>medium</utility>
    <structure />
    <structure />
    <structure />
@@ -1461,11 +1461,11 @@
    <weapon x="-6"  y="0"   h="12" />
    <weapon x="-24" y="-8"  h="8" >medium</weapon>
    <weapon x="-24" y="8"   h="8" >medium</weapon>
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems>medium</systems>
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility>medium</utility>
    <structure />
    <structure />
    <structure />
@@ -1510,11 +1510,11 @@
    <weapon x="0"  y="6"  h="2" />
    <weapon x="-25" y="-8"  h="3" />
    <weapon x="-25" y="8"  h="3" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1561,11 +1561,11 @@
    <weapon x="0"   y="0"  h="7" />
    <weapon x="-15" y="0"  h="7" />
    <weapon x="-33" y="0"  h="7" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1611,11 +1611,11 @@
    <weapon x="0"   y="0"  h="7" />
    <weapon x="-15" y="0"  h="7" />
    <weapon x="-33" y="0"  h="7" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1660,11 +1660,11 @@
    <weapon x="0"   y="0"  h="4" />
    <weapon x="-15" y="0"  h="6" />
    <weapon x="-33" y="0"  h="6" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1710,11 +1710,11 @@
    <weapon x="16"  y="0" h="3" />
    <weapon x="0"   y="0" h="5" />
    <weapon x="-20" y="0" h="5" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1761,11 +1761,11 @@
    <weapon x="16"  y="0" h="3" />
    <weapon x="0"   y="0" h="5" />
    <weapon x="-20" y="0" h="5" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1813,12 +1813,12 @@
    <weapon x="0"   y="0"  h="7" />
    <weapon x="-15" y="0"  h="7" />
    <weapon x="-33" y="0"  h="7" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />
@@ -1866,12 +1866,12 @@
    <weapon x="1" y="0" h="0" />
    <weapon x="1" y="0" h="0" />
    <weapon x="1" y="0" h="0" />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
-   <systems />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
    <structure />
    <structure />
    <structure />

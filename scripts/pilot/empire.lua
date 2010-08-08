@@ -177,7 +177,7 @@ function empire_createPacifier( empire_create )
    use_secondary  = 2
    medium         = equip_mediumMed()
    low            = equip_lowMed()
-   apu            = equip_apuMed()
+   apu            = equip_apuHig()
 
    -- Finally add outfits
    equip_ship( p, true, primary, secondary, medium, low, apu,
@@ -211,13 +211,13 @@ function empire_createShark( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Shark gets some good stuff
-   primary        = { "Ion Cannon"}
-   secondary      = {}
-   use_primary    = nhigh
-   use_secondary  = 0
-   medium         = equip_mediumHig()
-   low            = equip_lowHig()
-   apu            = equip_apuHig()
+   primary        = { "Ion Cannon", "Ripper MK2" }
+   secondary      = { "Headhunter Launcher" }
+   use_primary    = nhigh -1
+   use_secondary  = 1
+   medium         = equip_mediumLow()
+   low            = equip_lowLow()
+   apu            = equip_apuLow()
 
    -- Finally add outfits
    equip_ship( p, true, primary, secondary, medium, low, apu,
@@ -251,13 +251,13 @@ function empire_createLancelot( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Lancelot gets some good stuff
-   primary        = { "Ion Cannon", "Plasma Blaster MK2" }
-   secondary      = { "Seeker Launcher" }
+   primary        = { "Ion Cannon", "Ripper MK2" }
+   secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
-   use_secondary  = 2
-   medium         = equip_mediumHig()
-   low            = equip_lowHig()
-   apu            = equip_apuHig()
+   use_secondary  = 1
+   medium         = equip_mediumLow()
+   low            = equip_lowLow()
+   apu            = equip_apuLow()
 
    -- Finally add outfits
    equip_ship( p, true, primary, secondary, medium, low, apu,
@@ -291,13 +291,13 @@ function empire_createAdmonisher( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Admonisher gets some good stuff
-   primary        = { "Ripper MK2", "Plasma Blaster MK2" }
-   secondary      = { "Headhunter Launcher", "Orion Beam" }
+   primary        = { "Ripper MK2", "Ion Cannon" }
+   secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
-   use_secondary  = 2
-   medium         = equip_mediumHig()
-   low            = equip_lowHig()
-   apu            = equip_apuHig()
+   use_secondary  = 1
+   medium         = equip_mediumMed()
+   low            = equip_lowMed()
+   apu            = equip_apuMed()
 
    -- Finally add outfits
    equip_ship( p, true, primary, secondary, medium, low, apu,
