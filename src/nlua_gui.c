@@ -64,7 +64,7 @@ int nlua_loadGUI( lua_State *L, int readonly )
  * @code
  * @endcode
  *
- * @luamod gfx
+ * @luamod gui
  */
 
 
