@@ -266,8 +266,8 @@ typedef struct Pilot_ {
    /* Per slot types. */
    int outfit_nstructure; /**< Number of structure slots. */
    PilotOutfitSlot *outfit_structure; /**< The structure slots. */
-   int outfit_nsystems; /**< Number of systems slots. */
-   PilotOutfitSlot *outfit_systems; /**< The systems slots. */
+   int outfit_nutility; /**< Number of utility slots. */
+   PilotOutfitSlot *outfit_utility; /**< The utility slots. */
    int outfit_nweapon; /**< Number of weapon slots. */
    PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
    /* For easier usage. */

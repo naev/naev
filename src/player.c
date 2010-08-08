@@ -2808,13 +2808,13 @@ static int player_saveShip( xmlTextWriterPtr writer,
       player_saveShipSlot( writer, &ship->outfit_structure[i], i );
    }
    xmlw_endElem(writer); /* "outfits_structure" */
-   xmlw_startElem(writer,"outfits_systems");
-   for (i=0; i<ship->outfit_nsystems; i++) {
-      if (ship->outfit_systems[i].outfit==NULL)
+   xmlw_startElem(writer,"outfits_utility");
+   for (i=0; i<ship->outfit_nutility; i++) {
+      if (ship->outfit_utility[i].outfit==NULL)
          continue;
-      player_saveShipSlot( writer, &ship->outfit_systems[i], i );
+      player_saveShipSlot( writer, &ship->outfit_utility[i], i );
    }
-   xmlw_endElem(writer); /* "outfits_systems" */
+   xmlw_endElem(writer); /* "outfits_utility" */
    xmlw_startElem(writer,"outfits_weapon");
    for (i=0; i<ship->outfit_nweapon; i++) {
       if (ship->outfit_weapon[i].outfit==NULL)
@@ -3310,7 +3310,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
             }
          } while (xml_nextNode(cur));
       }
-      else if (xml_isNode(node,"outfits_systems") || xml_isNode(node,"outfits_medium")) { /** @todo remove legacy layer for 0.6.0 */
+      else if (xml_isNode(node,"outfits_utility") || xml_isNode(node,"outfits_medium")) { /** @todo remove legacy layer for 0.6.0 */
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
@@ -3320,11 +3320,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                   n = atoi(q);
                   free(q);
                }
-               if ((n<0) || (n >= ship->outfit_nsystems)) {
+               if ((n<0) || (n >= ship->outfit_nutility)) {
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               player_parseShipSlot( cur, ship, &ship->outfit_systems[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_utility[n] );
             }
          } while (xml_nextNode(cur));
       }
