@@ -349,6 +349,10 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
 
 /**
  * @brief Gets metadat by name.
+ *
+ *    @param txt Text name of the metadata to get.
+ *    @param[out] Data gotten.
+ *    @return The length of the metadata or -1 if not found.
  */
 int npng_metadata( npng_t *npng, char *txt, char **data )
 {
