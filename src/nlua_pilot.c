@@ -1746,6 +1746,8 @@ lua_rawset( L, -3 )
  *  <li> jam_chance <br />
  * </ul>
  *
+ * @usage stats = p:stats() print(stats.armour)
+ *
  *    @luaparam p Pilot to get stats of.
  *    @luareturn A table containing the stats of p.
  * @luafunc stats( p )
