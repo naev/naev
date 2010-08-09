@@ -786,15 +786,18 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
  */
 void gui_render( double dt )
 {
-   int i, j;
    double x;
+   glColour col;
+   /*
+   glColour *c;
+   int i, j;
    Pilot* p;
-   glColour* c, col;
    glFont* f;
    StarSystem *sys;
    int q;
    glTexture *logo;
    int r;
+   */
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
