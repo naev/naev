@@ -105,7 +105,12 @@ function update_target ()
       target_fact = ptarget:faction()
       target_gfx = ptarget:ship():gfxTarget()
       target_gfx_w, target_gfx_h = target_gfx:dim()
-      --target_gfxFact = target_fact:gfxSmall()
+      target_gfxFact = target_fact:logoTiny()
+      if target_gfxFact ~= nil then
+         target_gf_w, target_gf_h = target_gfxFact:dim()
+         target_gf_w = ( target_gf_w + 24 ) / 2
+         target_gf_h = ( target_gf_h + 24 ) / 2
+      end
    end
 end
 
@@ -250,6 +255,11 @@ function render( dt )
 
       -- Render target graphic
       gfx.renderTex( target_gfx, target_x, target_y - target_gfx_h )
+
+      -- Render faction logo.
+      if target_gfxFact ~= nil then
+         gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h - 3 )
+      end
    else
       gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
    end
