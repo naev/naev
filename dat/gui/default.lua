@@ -85,6 +85,7 @@ function create()
    update_cargo()
    update_nav()
    update_target()
+   update_ship()
 end
 
 function relativize( x, y )
@@ -106,6 +107,12 @@ function update_target ()
       target_gfx_w, target_gfx_h = target_gfx:dim()
       --target_gfxFact = target_fact:gfxSmall()
    end
+end
+
+
+function update_ship ()
+   stats = pp:stats()
+   fuel_max = stats.fuel
 end
 
 
@@ -185,7 +192,8 @@ function render( dt )
    gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h, armour_col )
    local ene = pp:energy() / 100
    gfx.renderTexRaw( energy, energy_x, energy_y, ene*energy_w, energy_h, 1, 1, 0, 0, ene, 1, energy_col )
-   gfx.renderTexRaw( fuel, fuel_x, fuel_y, fuel_w, fuel_h, 1, 1, 0, 0, 1, 1, fuel_col )
+   local fue = player.fuel() / fuel_max
+   gfx.renderTexRaw( fuel, fuel_x, fuel_y, fue*fuel_w, fuel_h, 1, 1, 0, 0, fue, 1, fuel_col )
 
    -- Weapon
    local sec, amm, rdy = pp:secondary()
