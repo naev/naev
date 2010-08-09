@@ -938,6 +938,9 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Redo the outfits thingy. */
    equipment_regenLists( wid, 1, 1 );
 
+   /* Notify GUI of modification. */
+   gui_setShip();
+
    return 0;
 }
 
@@ -1027,6 +1030,9 @@ void equipment_addAmmo (void)
       /* Remove from player. */
       player_rmOutfit( ammo, q );
    }
+
+   /* Notify GUI of modification. */
+   gui_setShip();
 }
 
 
@@ -1455,6 +1461,9 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    /* Regenerate list. */
    equipment_regenLists( wid, 1, 1 );
+
+   /* Notify GUI of modification. */
+   gui_setShip();
 }
 /**
  * @brief Player tries to sell a ship.

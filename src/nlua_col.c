@@ -161,7 +161,7 @@ static int colL_eq( lua_State *L )
 {
    LuaColour *c1, *c2;
    c1 = luaL_checkcolour(L,1);
-   c2 = luaL_checkcolour(L,1);
+   c2 = luaL_checkcolour(L,2);
    lua_pushboolean( L, (memcmp( &c1->col, &c2->col, sizeof(glColour) )==0) );
    return 1;
 }

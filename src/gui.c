@@ -2092,6 +2092,16 @@ void gui_setTarget (void)
 
 
 /**
+ * @brief Player just upgraded his ship or modified it.
+ */
+void gui_setShip (void)
+{
+   if (gui_L != NULL)
+      gui_doFunc( "update_ship" );
+}
+
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
