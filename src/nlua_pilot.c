@@ -84,6 +84,8 @@ static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNodisable( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
+static int pilotL_getLockon( lua_State *L );
+static int pilotL_getStats( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
@@ -120,6 +122,8 @@ static const luaL_reg pilotL_methods[] = {
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
+   { "lockon", pilotL_getLockon },
+   { "stats", pilotL_getStats },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -182,6 +186,8 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
+   { "lockon", pilotL_getLockon },
+   { "stats", pilotL_getStats },
    /* Ship. */
    { "ship", pilotL_ship },
    {0,0}
@@ -1652,7 +1658,7 @@ static int pilotL_setNodisable( lua_State *L )
  * @usage armour, shield, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour and shield of the pilot in % [0:100].
+ *    @luareturn The armour and shield of the pilot in % [0:100], followed by a boolean indicating if piloti s disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
@@ -1692,6 +1698,90 @@ static int pilotL_getEnergy( lua_State *L )
 
    return 1;
 }
+
+
+/**
+ * @brief Gets the lockons on the pilot.
+ *
+ * @usage lockon = p:lockon()
+ *
+ *    @luaparam p Pilot to get lockons of.
+ *    @luareturn The number of lockons on the pilot.
+ * @luafunc lockon( p )
+ */
+static int pilotL_getLockon( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Return. */
+   lua_pushnumber(L, p->lockons );
+   return 1;
+}
+
+
+#define PUSH_DOUBLE( L, name, value ) \
+lua_pushstring( L, name ); \
+lua_pushnumber( L, value ); \
+lua_rawset( L, -3 )
+/**
+ * @brief Gets stats of the pilot.
+ *
+ * Some of the stats are:<br />
+ * <ul>
+ *  <li> cpu <br />
+ *  <li> cpu_max <br />
+ *  <li> thrust <br />
+ *  <li> speed <br />
+ *  <li> turn <br />
+ *  <li> armour <br />
+ *  <li> shield <br />
+ *  <li> energy <br />
+ *  <li> armour_regen <br />
+ *  <li> shield_regen <br />
+ *  <li> energy_regen <br />
+ *  <li> jam_range <br />
+ *  <li> jam_chance <br />
+ * </ul>
+ *
+ * @usage stats = p:stats() print(stats.armour)
+ *
+ *    @luaparam p Pilot to get stats of.
+ *    @luareturn A table containing the stats of p.
+ * @luafunc stats( p )
+ */
+static int pilotL_getStats( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Create table with information. */
+   lua_newtable(L);
+   /* Core. */
+   PUSH_DOUBLE( L, "cpu", p->cpu );
+   PUSH_DOUBLE( L, "cpu_max", p->cpu_max );
+   /* Movement. */
+   PUSH_DOUBLE( L, "thrust", p->thrust );
+   PUSH_DOUBLE( L, "speed", p->speed );
+   PUSH_DOUBLE( L, "turn", p->turn );
+   /* Health. */
+   PUSH_DOUBLE( L, "armour", p->armour_max );
+   PUSH_DOUBLE( L, "shield", p->shield_max );
+   PUSH_DOUBLE( L, "energy", p->energy_max );
+   PUSH_DOUBLE( L, "armour_regen", p->armour_regen );
+   PUSH_DOUBLE( L, "shield_regen", p->shield_regen );
+   PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
+   /* Jam. */
+   PUSH_DOUBLE( L, "jam_range", p->jam_range );
+   PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
+
+   return 1;
+}
+#undef PUSH_DOUBLE
 
 
 /**

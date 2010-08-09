@@ -69,6 +69,11 @@ int nlua_loadGUI( lua_State *L, int readonly )
 
 
 /**
+ * @brief Sets up the message box from which the player recieves input.
+ *
+ *    @luaparam width Width of the message box.
+ *    @luaparam x X position of message box.
+ *    @luaparam y Y position of message box.
  * @luafunc mesgInit( width, x, y )
  */
 static int guiL_mesgInit( lua_State *L )
