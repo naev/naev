@@ -1733,6 +1733,7 @@ lua_rawset( L, -3 )
  * <ul>
  *  <li> cpu <br />
  *  <li> cpu_max <br />
+ *  <li> fuel <br />
  *  <li> thrust <br />
  *  <li> speed <br />
  *  <li> turn <br />
@@ -1764,6 +1765,7 @@ static int pilotL_getStats( lua_State *L )
    /* Core. */
    PUSH_DOUBLE( L, "cpu", p->cpu );
    PUSH_DOUBLE( L, "cpu_max", p->cpu_max );
+   PUSH_DOUBLE( L, "fuel", p->fuel );
    /* Movement. */
    PUSH_DOUBLE( L, "thrust", p->thrust );
    PUSH_DOUBLE( L, "speed", p->speed );
