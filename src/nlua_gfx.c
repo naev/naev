@@ -162,21 +162,26 @@ static int gfxL_renderTex( lua_State *L )
 
 
 /**
- * @brief Renders a texture.
+ * @brief Renders a texture using the core render function.
  *
- * This function has variable parameters depending on how you want to render.
+ * This function is much more complex than renderTex, however it allows much
+ *  more fine grained control over the entire rendering and puts you closer
+ *  to the actual OpenGL calls.
  *
- * @usage gfx.renderTex( tex, 0., 0. ) -- Render tex at origin
- * @usage gfx.renderTex( tex, 0., 0., col ) -- Render tex at origin with colour col
- * @usage gfx.renderTex( tex, 0., 0., 4, 3 ) -- Render sprite at position 4,3 (top-left is 1,1)
- * @usage gfx.renderTex( tex, 0., 0., 4, 3, col ) -- Render sprite at position 4,3 (top-left is 1,1) with colour col
+ * @usage gfx.renderTexRaw( tex, 0., 0., 100., 100., 1, 1, 0., 0., 0.5, 0.5 ) -- Renders the bottom quarter of the sprite 1,1 of the image.
  *
  *    @luaparam tex Texture to render.
  *    @luaparam pos_x X position to render texture at.
  *    @luaparam pos_y Y position to render texture at.
+ *    @luaparam pos_w Width of the image on screen.
+ *    @luaparam pos_h Height of the image on screen.
  *    @luaparam sprite_x X sprite to render.
  *    @luaparam sprite_y Y sprite to render.
- *    @luaparam colour Colour to use when rendering.
+ *    @luaparam tex_x X sprite texture offset as [0.:1.].
+ *    @luaparam tex_y Y sprite texture offset as [0.:1.].
+ *    @luaparam tex_w Sprite width to display as [0.:1.].
+ *    @luaparam tex_h Sprite height to display as [0.:1.]
+ *    @luaparam colour [OPTIONAL] Colour to use when rendering.
  * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
  */
 static int gfxL_renderTexRaw( lua_State *L )
