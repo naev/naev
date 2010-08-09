@@ -1652,7 +1652,7 @@ static int pilotL_setNodisable( lua_State *L )
  * @usage armour, shield, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour and shield of the pilot in % [0:100].
+ *    @luareturn The armour and shield of the pilot in % [0:100], followed by a boolean indicating if piloti s disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
