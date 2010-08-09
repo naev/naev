@@ -767,6 +767,10 @@ static void gui_renderBorder( double dt )
  */
 void gui_renderReticles( double dt )
 {
+   /* Player must be alive. */
+   if (player.p == NULL)
+      return;
+
    gui_renderPlanetTarget(dt);
    gui_renderPilotTarget(dt);
 }
