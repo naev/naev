@@ -77,7 +77,7 @@ function create()
    target_x, target_y = relativize( 40, 350 )
 
    -- Misc position
-   misc_w = 135
+   misc_w = 128
    misc_h = 104
    misc_x, misc_y = relativize( 40, 472 )
 
@@ -131,7 +131,7 @@ end
 
    Run every frame.
 --]]
-function render()
+function render( dt )
 
    -- Render warnings
    local sys = system.cur()
@@ -251,10 +251,13 @@ function render()
    h = 5 + smallfont_h
    y = misc_y - h
    gfx.print( true, "Creds:", misc_x, y, col_console, misc_w, false )
-   w = gfx.printDim( false, creds )
+   w = gfx.printDim( true, creds )
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
-   gfx.print( true, "Cargo:", misc_x, y, col_console, misc_w, false )
+   gfx.print( true, "Cargo Free:", misc_x, y, col_console, misc_w, false )
+   local free = string.format("%d Tn", player.cargoFree())
+   w = gfx.printDim( true, free )
+   gfx.print( true, free, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - 5
    h = misc_h - 2*h - 8
    gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_console )
