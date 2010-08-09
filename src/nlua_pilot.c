@@ -84,6 +84,7 @@ static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNodisable( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
+static int pilotL_getLockon( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
@@ -120,6 +121,7 @@ static const luaL_reg pilotL_methods[] = {
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
+   { "lockon", pilotL_getLockon },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -182,6 +184,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
+   { "lockon", pilotL_getLockon },
    /* Ship. */
    { "ship", pilotL_ship },
    {0,0}
@@ -1690,6 +1693,28 @@ static int pilotL_getEnergy( lua_State *L )
    /* Return parameter. */
    lua_pushnumber(L, p->energy / p->energy_max * 100. );
 
+   return 1;
+}
+
+
+/**
+ * @brief Gets the lockons on the pilot.
+ *
+ * @usage lockon = p:lockon()
+ *
+ *    @luaparam p Pilot to get lockons of.
+ *    @luareturn The number of lockons on the pilot.
+ * @luafunc lockon( p )
+ */
+static int pilotL_getLockon( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Return. */
+   lua_pushnumber(L, p->lockons );
    return 1;
 }
 
