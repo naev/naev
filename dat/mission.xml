@@ -19,7 +19,7 @@
    <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true and player.evtDone( "Tutorial Features" ) ~= true</cond>
    <location>Land</location>
-	<done>Tutorial</done>
+   <done>Tutorial</done>
   </avail>
  </mission>
  <mission name="Tutorial Navigation">
@@ -31,7 +31,7 @@
    <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>None</location>
-	<done>Tutorial Landing</done>
+   <done>Tutorial Landing</done>
   </avail>
  </mission>
  <mission name="Tutorial Features">
@@ -42,7 +42,7 @@
   <avail>
    <chance>100</chance>
    <location>None</location>
-	<done>Tutorial Features</done>
+   <done>Tutorial Features</done>
   </avail>
  </mission>
  <mission name="Cargo">
@@ -348,6 +348,7 @@
    <unique />
   </flags>
   <avail>
+   <done>Baron</done>
    <priority>4</priority>
    <cond>player.getRating() &gt; 15</cond>
    <chance>10</chance>
