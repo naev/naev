@@ -58,9 +58,12 @@ naev_SOURCES = \
 	nfile.c \
 	nlua.c \
 	nlua_cli.c \
+	nlua_col.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
+	nlua_gfx.c \
+	nlua_gui.c \
 	nlua_hook.c \
 	nlua_misn.c \
 	nlua_music.c \
@@ -72,6 +75,7 @@ naev_SOURCES = \
 	nlua_ship.c \
 	nlua_space.c \
 	nlua_system.c \
+	nlua_tex.c \
 	nlua_time.c \
 	nlua_tk.c \
 	nlua_var.c \
@@ -165,9 +169,12 @@ naev_SOURCES = \
 	nfile.h \
 	nlua.h \
 	nlua_cli.h \
+	nlua_col.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
+	nlua_gfx.h \
+	nlua_gui.h \
 	nlua_hook.h \
 	nlua_misn.h \
 	nlua_music.h \
@@ -179,6 +186,7 @@ naev_SOURCES = \
 	nlua_ship.h \
 	nlua_space.h \
 	nlua_system.h \
+	nlua_tex.h \
 	nlua_time.h \
 	nlua_tk.h \
 	nlua_var.h \

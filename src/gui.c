@@ -48,12 +48,16 @@
 #include "nmath.h"
 #include "gui_osd.h"
 #include "conf.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nlua_gfx.h"
+#include "nlua_gui.h"
+#include "nlua_tex.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
-#define GUI_DATA     "dat/gui.xml" /**< Global GUI configuration file. */
 #define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
@@ -92,13 +96,17 @@ extern int map_npath;
 
 
 /**
+ * @brief The Lua state for the current GUI.
+ */
+static lua_State *gui_L;
+
+
+/**
  * @struct Radar
  *
  * @brief Represents the player's radar.
  */
 typedef struct Radar_ {
-   double x; /**< X position. */
-   double y; /**< Y Position */
    double w; /**< Width. */
    double h; /**< Height. */
    RadarShape shape; /**< Shape */
@@ -110,80 +118,8 @@ typedef struct Radar_ {
 #define RADAR_RES_MIN      10. /**< Minimum radar resolution. */
 #define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
 #define RADAR_RES_DEFAULT  50. /**< Default resolution. */
+static Radar gui_radar;
 
-/**
- * @struct Rect
- *
- * @brief Represents a rectangle.
- */
-typedef struct Rect_ {
-   double x; /**< X position. */
-   double y; /**< Y position. */
-   double w; /**< Width. */
-   double h; /**< Height. */
-} Rect;
-
-
-typedef struct HealthBar_ {
-   Rect rect; /**< Position and dimensions. */
-   glColour col; /**< Colour. */
-   glTexture *gfx; /**< Graphic to use (if NULL uses a bar). */
-   /* Used to do fill aproximation. */
-   double area; /**< Total area of the graphic. */
-   double slope; /**< Slope of the aproximation. */
-   double offset; /**< Offset of the aproximation. */
-} HealthBar;
-
-/**
- * @struct GUI
- *
- * @brief Represents the ingame player graphical user interface.
- */
-typedef struct GUI_ {
-   /* Border intersections. */
-   double tl; /**< Top left. */
-   double tr; /**< Top right. */
-   double bl; /**< Bottom left. */
-   double br; /**< Bottom right. */
-
-   /* graphics */
-   glTexture *gfx_frame; /**< Frame of the GUI. */
-   glTexture *gfx_targetPilot; /**< Graphics used to target pilot. */
-   glTexture *gfx_targetPlanet; /**< Graphics used to target planets. */
-
-   /*
-    * Rects.
-    */
-   /* Radar. */
-   Radar radar; /**< The radar. */
-   /* Navigation. */
-   Rect nav; /**< Navigation computer. */
-   /* Health. */
-   HealthBar shield; /**< Shield bar. */
-   HealthBar armour; /**< Armour bar. */
-   HealthBar energy; /**< Energy bar. */
-   HealthBar fuel; /**< Fuel bar. */
-   /* Weapon. */
-   Rect weapon; /**< Weapon targetting system. */
-   /* Targetting. */
-   Rect target_health; /**< Target health. */
-   Rect target_name; /**< Name of the target. */
-   Rect target_faction; /**< Faction of the target. */
-   /* Misc. */
-   Rect misc; /**< Misc stuff: credits, cargo... */
-   /* Messages. */
-   Rect mesg; /**< Where messages go. */
-
-   /* positions */
-   Vector2d frame; /**< Global frame position. */
-   Vector2d target; /**< Global target position. */
-
-   /* icons. */
-   glTexture *ico_hail; /**< Hail icon. */
-} GUI;
-static GUI gui = { .gfx_frame = NULL,
-   .gfx_targetPilot = NULL,
-   .gfx_targetPlanet = NULL }; /**< Ze GUI. */
 /* needed to render properly */
 static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
@@ -205,6 +141,20 @@ typedef struct Mesg_ {
    double t; /**< Time to live for the message. */
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
+static int gui_mesg_w   = 0; /**< Width of messages. */
+static int gui_mesg_x   = 0; /**< X positioning of messages. */
+static int gui_mesg_y   = 0; /**< Y positioning of messages. */
+
+/* Calculations to speed up borders. */
+static double gui_tr = 0.;
+static double gui_br = 0.;
+static double gui_tl = 0.;
+static double gui_bl = 0.;
+
+/* Intrinsec graphical stuff. */
+static glTexture *gui_ico_hail      = NULL;
+static glTexture *gui_target_planet = NULL;
+static glTexture *gui_target_pilot  = NULL;
 
 
 /*
@@ -219,20 +169,12 @@ extern void weapon_minimap( const double res, const double w, const double h,
  * internal
  */
 /* gui */
-static void gui_createInterference (void);
-static void rect_parseParam( const xmlNodePtr parent,
-      char *name, double *param );
-static void rect_parse( const xmlNodePtr parent,
-      double *x, double *y, double *w, double *h );
-static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col );
-static int gui_parse( const xmlNodePtr parent, const char *name );
-static void gui_cleanupBar( HealthBar *bar );
+static void gui_createInterference( Radar *radar );
 static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget( double dt );
 static void gui_renderPlanetTarget( double dt );
 static void gui_renderBorder( double dt );
-static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
 static glColour *gui_getPlanetColour( int i );
 static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy );
@@ -241,8 +183,11 @@ static void gui_renderPlanet( int ind );
 static void gui_renderJumpPoint( int ind );
 static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderHealth( const HealthBar *bar, const double w );
-static void gui_renderInterference( double dt );
+static void gui_renderInterference (void);
+/* Lua GUI. */
+static int gui_doFunc( const char* func );
+static int gui_prepFunc( const char* func );
+static int gui_runFunc( const char* func, int nargs );
 
 
 
@@ -251,8 +196,19 @@ static void gui_renderInterference( double dt );
  */
 void gui_setDefaults (void)
 {
-   gui.radar.res = RADAR_RES_DEFAULT;
+   gui_radar.res = RADAR_RES_DEFAULT;
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
+}
+
+
+/**
+ * @brief Initializes the message system.
+ */
+void gui_messageInit( int width, int x, int y )
+{
+   gui_mesg_w = width;
+   gui_mesg_x = x;
+   gui_mesg_y = y;
 }
 
 
@@ -347,7 +303,7 @@ void player_messageRaw( const char *str )
 
    /* Get length. */
    l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui.mesg.w - ((str[0] == '\t') ? 45. : 15.) );
+   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.) );
    p = 0;
    while (p < l) {
       /* Move pointer. */
@@ -372,7 +328,7 @@ void player_messageRaw( const char *str )
       p += i;
       if ((str[p] == '\n') || (str[p] == ' '))
          p++; /* Skip "empty char". */
-      i  = gl_printWidthForText( NULL, &str[p], gui.mesg.w - 45. ); /* Theyr'e tabbed so it's shorter. */
+      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45. ); /* Theyr'e tabbed so it's shorter. */
    }
 }
 
@@ -470,16 +426,20 @@ static void gui_renderPlanetTarget( double dt )
  */
 void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c )
 {
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
+   /* Must not be NULL. */
+   if (gui_target_planet == NULL)
+      return;
+
+   gl_blitSprite( gui_target_planet, x, y, 0, 0, c ); /* top left */
 
    x += w;
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
+   gl_blitSprite( gui_target_planet, x, y, 1, 0, c ); /* top right */
 
    y -= h;
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
+   gl_blitSprite( gui_target_planet, x, y, 1, 1, c ); /* bottom right */
 
    x -= w;
-   gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
+   gl_blitSprite( gui_target_planet, x, y, 0, 1, c ); /* bottom left */
 }
 
 
@@ -496,7 +456,7 @@ static void gui_renderPilotTarget( double dt )
    double x, y;
 
    /* Player is most likely dead. */
-   if (gui.gfx_targetPilot == NULL)
+   if (gui_target_pilot == NULL)
       return;
 
    /* Get the target. */
@@ -507,12 +467,14 @@ static void gui_renderPilotTarget( double dt )
    /* Make sure pilot exists and is still alive. */
    if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD)) {
       player.p->target = PLAYER_ID;
+      gui_setTarget();
       return;
    }
 
    /* Make sure target is still in range. */
    if (!pilot_inRangePilot( player.p, p )) {
       player.p->target = PLAYER_ID;
+      gui_setTarget();
       return;
    }
 
@@ -530,16 +492,16 @@ static void gui_renderPilotTarget( double dt )
 
    x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
    y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
+   gl_blitSprite( gui_target_pilot, x, y, 0, 0, c ); /* top left */
 
    x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
+   gl_blitSprite( gui_target_pilot, x, y, 1, 0, c ); /* top right */
 
    y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
+   gl_blitSprite( gui_target_pilot, x, y, 1, 1, c ); /* bottom right */
 
    x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-   gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
+   gl_blitSprite( gui_target_pilot, x, y, 0, 1, c ); /* bottom left */
 }
 
 
@@ -570,15 +532,15 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
    h = hh-7.;
 
    /* Handle by quadrant. */
-   if ((a > gui.tr) && (a < gui.tl)) { /* Top. */
+   if ((a > gui_tr) && (a < gui_tl)) { /* Top. */
       *cx = h * (rx/ry);
       *cy = h;
    }
-   else if ((a > gui.tl) && (a < gui.bl)) { /* Left. */
+   else if ((a > gui_tl) && (a < gui_bl)) { /* Left. */
       *cx = -w;
       *cy = -w * (ry/rx);
    }
-   else if ((a > gui.bl) && (a < gui.br)) { /* Bottom. */
+   else if ((a > gui_bl) && (a < gui_br)) { /* Bottom. */
       *cx = -h * (rx/ry);
       *cy = -h;
    }
@@ -807,6 +769,10 @@ static void gui_renderBorder( double dt )
  */
 void gui_renderReticles( double dt )
 {
+   /* Player must be alive. */
+   if (player.p == NULL)
+      return;
+
    gui_renderPlanetTarget(dt);
    gui_renderPilotTarget(dt);
 }
@@ -822,7 +788,6 @@ void gui_render( double dt )
 {
    int i, j;
    double x;
-   char str[ECON_CRED_STRLEN];
    Pilot* p;
    glColour* c, col;
    glFont* f;
@@ -848,10 +813,39 @@ void gui_render( double dt )
     */
    blink_pilot    -= dt;
    blink_planet   -= dt;
+   if (interference_alpha > 0.)
+      interference_t += dt;
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
 
+   /* Run Lua. */
+   if (gui_L != NULL) {
+      gui_prepFunc( "render" );
+      lua_pushnumber( gui_L, dt );
+      gui_runFunc( "render", 1 );
+   }
+
+   /* Messages. */
+   gui_renderMessages(dt);
+
+
+   /* OSD. */
+   osd_render();
+
+   /*
+    * hyperspace
+    */
+   if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
+         (player.p->ptimer < HYPERSPACE_FADEOUT)) {
+      x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
+      col.r = 1.;
+      col.g = 1.;
+      col.b = 1.;
+      col.a = x;
+      gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
+   }
+#if 0
    /* Lockon warning */
    if (player.p->lockons > 0)
       gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h-25.,
@@ -1185,26 +1179,46 @@ void gui_render( double dt )
          gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
       }
    }
+#endif
+}
+
+
+/**
+ * @brief Initializes the radar.
+ *
+ *    @param circle Whether or not the radar is circlular.
+ */
+int gui_radarInit( int circle, int w, int h )
+{
+   gui_radar.shape   = circle ? RADAR_CIRCLE : RADAR_RECT;
+   gui_radar.res     = RADAR_RES_DEFAULT;
+   gui_radar.w       = w;
+   gui_radar.h       = h;
+   gui_createInterference( &gui_radar );
+   return 0;
 }
 
 
 /**
  * @brief Renders the GUI radar.
  *
- *    @param dt Current deltatick.
+ *    @param x X position to render at.
+ *    @param y Y position to render at.
  */
-static void gui_renderRadar( double dt )
+void gui_radarRender( double x, double y )
 {
    int i, j;
    GLfloat vertex[2*4], colours[4*4];
+   Radar *radar;
+
+   /* The global radar. */
+   radar = &gui_radar;
 
    gl_matrixPush();
-   if (gui.radar.shape==RADAR_RECT)
-      gl_matrixTranslate( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
-            gui.radar.y - SCREEN_H/2. - gui.radar.h/2.);
-   else if (gui.radar.shape==RADAR_CIRCLE)
-      gl_matrixTranslate( gui.radar.x - SCREEN_W/2.,
-            gui.radar.y - SCREEN_H/2.);
+   if (radar->shape==RADAR_RECT)
+      gl_matrixTranslate( x - SCREEN_W/2. + radar->w/2., y - SCREEN_H/2. - radar->h/2. );
+   else if (radar->shape==RADAR_CIRCLE)
+      gl_matrixTranslate( x - SCREEN_W/2., y - SCREEN_H/2.);
 
    /*
     * planets
@@ -1227,8 +1241,8 @@ static void gui_renderRadar( double dt )
    /*
     * weapons
     */
-   weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h,
-         gui.radar.shape, 1.-interference_alpha);
+   weapon_minimap( radar->res, radar->w, radar->h,
+         radar->shape, 1.-interference_alpha );
 
 
    /* render the pilot_nstack */
@@ -1244,7 +1258,7 @@ static void gui_renderRadar( double dt )
       gui_renderPilot(pilot_stack[j]);
 
    /* Intereference. */
-   gui_renderInterference(dt);
+   gui_renderInterference();
 
    /* the + sign in the middle of the radar representing the player */
    for (i=0; i<4; i++) {
@@ -1297,8 +1311,8 @@ static void gui_renderMessages( double dt )
    glColour c, cb;
 
    /* Coordinate translation. */
-   x = gui.mesg.x;
-   y = gui.mesg.y;
+   x = gui_mesg_x;
+   y = gui_mesg_y;
 
    /* Handle viewpoint hacks. */
    v = mesg_viewpoint;
@@ -1318,8 +1332,8 @@ static void gui_renderMessages( double dt )
       cb.a = 0.4;
 
       /* Set up position. */
-      vx = gui.mesg.x - SCREEN_W/2.;
-      vy = gui.mesg.y - SCREEN_H/2.;
+      vx = x - SCREEN_W/2.;
+      vy = y - SCREEN_H/2.;
 
       /* Data. */
       h  = conf.mesg_visible*gl_defFont.h*1.2;
@@ -1329,7 +1343,7 @@ static void gui_renderMessages( double dt )
          o += mesg_max;
 
       /* Render background. */
-      gl_renderRect( vx-2., vy-2., gui.mesg.w-13., h+4., &cb );
+      gl_renderRect( vx-2., vy-2., gui_mesg_w-13., h+4., &cb );
    }
 
    /* Render text. */
@@ -1357,9 +1371,9 @@ static void gui_renderMessages( double dt )
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t')
-               gl_printMaxRaw( NULL, gui.mesg.w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
+               gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
             else
-               gl_printMaxRaw( NULL, gui.mesg.w - 15., x, y, &c, mesg_stack[m].str );
+               gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &c, mesg_stack[m].str );
          }
       }
 
@@ -1371,21 +1385,19 @@ static void gui_renderMessages( double dt )
    if (mesg_viewpoint != -1) {
       /* Border. */
       c.a = 0.2;
-      gl_renderRect( vx + gui.mesg.w-10., vy, 10, h, &c );
+      gl_renderRect( vx + gui_mesg_w-10., vy, 10, h, &c );
 
       /* Inside. */
       c.a = 0.5;
-      gl_renderRect( vx + gui.mesg.w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
+      gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
    }
 }
 
 
 /**
  * @brief Renders interference if needed.
- *
- *    @param dt Current deltatick.
  */
-static void gui_renderInterference( double dt )
+static void gui_renderInterference (void)
 {
    glColour c;
    glTexture *tex;
@@ -1396,7 +1408,6 @@ static void gui_renderInterference( double dt )
       return;
 
    /* Calculate frame to draw. */
-   interference_t += dt;
    if (interference_t > INTERFERENCE_CHANGE_DT) { /* Time to change */
       t = RNG(0, INTERFERENCE_LAYERS-1);
       if (t != interference_layer)
@@ -1410,16 +1421,16 @@ static void gui_renderInterference( double dt )
    /* Render the interference. */
    c.r = c.g = c.b = 1.;
    c.a = interference_alpha;
-   tex = gui.radar.interference[interference_layer];
-   if (gui.radar.shape == RADAR_CIRCLE)
+   tex = gui_radar.interference[interference_layer];
+   if (gui_radar.shape == RADAR_CIRCLE)
    gl_blitStatic( tex,
-      SCREEN_W/2. - gui.radar.w,
-      SCREEN_H/2. - gui.radar.w,
+      SCREEN_W/2. - gui_radar.w,
+      SCREEN_H/2. - gui_radar.w,
       &c );
-   else if (gui.radar.shape == RADAR_RECT)
+   else if (gui_radar.shape == RADAR_RECT)
       gl_blitStatic( tex,
-            SCREEN_W/2. - gui.radar.w/2,
-            SCREEN_H/2. - gui.radar.h/2, &c );
+            SCREEN_W/2. - gui_radar.w/2,
+            SCREEN_H/2. - gui_radar.h/2, &c );
 }
 
 
@@ -1450,8 +1461,8 @@ static glColour* gui_getPilotColour( const Pilot* p )
  *    @param p Pilot to render.
  */
 #define CHECK_PIXEL(x,y)   \
-(gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-   (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
+(gui_radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+   (gui_radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
 static void gui_renderPilot( const Pilot* p )
 {
    int i, curs;
@@ -1469,30 +1480,30 @@ static void gui_renderPilot( const Pilot* p )
       return;
 
    /* Get position. */
-   x = (p->solid->pos.x - player.p->solid->pos.x) / gui.radar.res;
-   y = (p->solid->pos.y - player.p->solid->pos.y) / gui.radar.res;
+   x = (p->solid->pos.x - player.p->solid->pos.x) / gui_radar.res;
+   y = (p->solid->pos.y - player.p->solid->pos.y) / gui_radar.res;
    /* Get size. */
-   sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
-   sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
+   sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui_radar.res;
+   sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui_radar.res;
    if (sx < 1.)
       sx = 1.;
    if (sy < 1.)
       sy = 1.;
 
    /* Check if pilot in range. */
-   if ( ((gui.radar.shape==RADAR_RECT) &&
-            ((ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy)) ) ||
-         ((gui.radar.shape==RADAR_CIRCLE) &&
-            ((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) ) {
+   if ( ((gui_radar.shape==RADAR_RECT) &&
+            ((ABS(x) > gui_radar.w/2+sx) || (ABS(y) > gui_radar.h/2.+sy)) ) ||
+         ((gui_radar.shape==RADAR_CIRCLE) &&
+            ((x*x+y*y) > (int)(gui_radar.w*gui_radar.w))) ) {
 
       /* Draw little targetted symbol. */
       if (p->id == player.p->target) {
          /* Circle radars have it easy. */
-         if (gui.radar.shape==RADAR_CIRCLE)  {
+         if (gui_radar.shape==RADAR_CIRCLE)  {
             /* We'll create a line. */
             a = ANGLE(x,y);
-            x = gui.radar.w * cos(a);
-            y = gui.radar.w * sin(a);
+            x = gui_radar.w * cos(a);
+            y = gui_radar.w * sin(a);
             sx = 0.85 * x;
             sy = 0.85 * y;
 
@@ -1521,15 +1532,15 @@ static void gui_renderPilot( const Pilot* p )
       return;
    }
 
-   if (gui.radar.shape==RADAR_RECT) {
-      w = gui.radar.w/2.;
-      h = gui.radar.h/2.;
+   if (gui_radar.shape==RADAR_RECT) {
+      w = gui_radar.w/2.;
+      h = gui_radar.h/2.;
       rc = 0;
    }
-   else if (gui.radar.shape==RADAR_CIRCLE) {
-      w = gui.radar.w;
-      h = gui.radar.w;
-      rc = (int)(gui.radar.w*gui.radar.w);
+   else if (gui_radar.shape==RADAR_CIRCLE) {
+      w = gui_radar.w;
+      h = gui_radar.w;
+      rc = (int)(gui_radar.w*gui_radar.w);
    }
 
    /* Draw selection if targetted. */
@@ -1761,27 +1772,27 @@ static void gui_renderPlanet( int ind )
       return;
 
    /* Default values. */
-   res   = gui.radar.res;
+   res   = gui_radar.res;
    planet = cur_system->planets[ind];
-   w     = gui.radar.w;
-   h     = gui.radar.h;
+   w     = gui_radar.w;
+   h     = gui_radar.h;
    r     = (int)(planet->radius*2. / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
    cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
    cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
-   if (gui.radar.shape==RADAR_CIRCLE)
-      rc = (int)(gui.radar.w*gui.radar.w);
+   if (gui_radar.shape==RADAR_CIRCLE)
+      rc = (int)(gui_radar.w*gui_radar.w);
    else
       rc = 0;
 
    /* Check if in range. */
-   if (gui.radar.shape == RADAR_RECT) {
+   if (gui_radar.shape == RADAR_RECT) {
       x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
          return;
    }
-   else if (gui.radar.shape == RADAR_CIRCLE) {
+   else if (gui_radar.shape == RADAR_CIRCLE) {
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1849,27 +1860,27 @@ static void gui_renderJumpPoint( int ind )
    JumpPoint *jp;
 
    /* Default values. */
-   res   = gui.radar.res;
+   res   = gui_radar.res;
    jp    = &cur_system->jumps[ind];
-   w     = gui.radar.w;
-   h     = gui.radar.h;
+   w     = gui_radar.w;
+   h     = gui_radar.h;
    r     = (int)(jumppoint_gfx->sw / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
    cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
    cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
-   if (gui.radar.shape==RADAR_CIRCLE)
-      rc = (int)(gui.radar.w*gui.radar.w);
+   if (gui_radar.shape==RADAR_CIRCLE)
+      rc = (int)(gui_radar.w*gui_radar.w);
    else
       rc = 0;
 
    /* Check if in range. */
-   if (gui.radar.shape == RADAR_RECT) {
+   if (gui_radar.shape == RADAR_RECT) {
       x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
          return;
    }
-   else if (gui.radar.shape == RADAR_CIRCLE) {
+   else if (gui_radar.shape == RADAR_CIRCLE) {
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
@@ -1925,106 +1936,6 @@ static void gui_renderJumpPoint( int ind )
 
 
 /**
- * @brief Renders a health bar.
- *
- *    @param bar Health bar to render.
- *    @param w Width of the health bar.
- */
-static void gui_renderHealth( const HealthBar *bar, const double w )
-{
-   int i;
-   double res[2], rw;
-   double x,y, sx,sy, tx,ty;
-   GLfloat vertex[4*4], colours[4*4];
-
-   /* Check if need to draw. */
-   if (w == 0.)
-      return;
-
-   /* Just create a bar. */
-   if (bar->gfx == NULL) {
-      /* Set the position values. */
-      x = bar->rect.x - SCREEN_W/2.;
-      y = bar->rect.y - SCREEN_H/2.;
-      sx = w * bar->rect.w;
-      sy = bar->rect.h;
-
-      /* Render the bar. */
-      gl_renderRect( x, y-sy, sx, sy, &bar->col );
-   }
-   /* Render the texture. */
-   else {
-      /* Calculate the line.
-       * y = slope * x + offset
-       * w = 1 / area * ( slope * x^2 / 2 + offset )
-       * we need to isolate x. */
-      if (nmath_solve2Eq( res, bar->slope / 2.,
-            bar->offset, -bar->area * w ))
-         WARN("Failed to solve equation: %f*x^2 + %f*x + %f = 0",
-                bar->slope / 2., bar->offset, -bar->area * w );
-      if (res[0] > 0.)
-         rw = res[0] / bar->gfx->sw;
-      else
-         rw = res[1] / bar->gfx->sw;
-
-      /* Set the position values. */
-      x = bar->rect.x - SCREEN_W/2.;
-      y = bar->rect.y - SCREEN_H/2. + bar->gfx->sh;
-      sx = rw * bar->gfx->sw;
-      sy = bar->gfx->sh;
-      tx = bar->gfx->sw / bar->gfx->rw;
-      ty = bar->gfx->sh / bar->gfx->rh;
-
-      /* Set the colour. */
-      COLOUR(bar->col);
-
-      /* Draw the image. */
-      glEnable(GL_TEXTURE_2D);
-      glBindTexture( GL_TEXTURE_2D, bar->gfx->texture);
-      /* Set up colours. */
-      for (i=0; i<4; i++) {
-         colours[4*i + 0] = bar->col.r;
-         colours[4*i + 1] = bar->col.g;
-         colours[4*i + 2] = bar->col.b;
-         colours[4*i + 3] = bar->col.a;
-      }
-      gl_vboSubData( gui_vbo, gui_vboColourOffset,
-            sizeof(GLfloat) * 4*4, colours );
-      /* Set up vertex. */
-      /* Position. */
-      vertex[0] = x;
-      vertex[1] = y;
-      vertex[2] = x + sx;
-      vertex[3] = y;
-      vertex[4] = x + sx;
-      vertex[5] = y - sy;
-      vertex[6] = x;
-      vertex[7] = y - sy;
-      /* Texture. */
-      vertex[8]  = 0.;
-      vertex[9]  = ty;
-      vertex[10] = rw*tx;
-      vertex[11] = ty;
-      vertex[12] = rw*tx;
-      vertex[13] = 0.;
-      vertex[14] = 0.;
-      vertex[15] = 0.;
-      gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*4, vertex );
-      /* Draw tho VBO. */
-      gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-      gl_vboActivateOffset( gui_vbo, GL_TEXTURE_COORD_ARRAY,
-            sizeof(GLfloat) * 2*4, 2, GL_FLOAT, 0 );
-      gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-            gui_vboColourOffset, 4, GL_FLOAT, 0 );
-      glDrawArrays( GL_QUADS, 0, 4 );
-      gl_vboDeactivate();
-      glDisable(GL_TEXTURE_2D);
-   }
-
-}
-
-
-/**
  * @brief Initializes the GUI system.
  *
  *    @return 0 on success;
@@ -2032,21 +1943,16 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
 int gui_init (void)
 {
    /*
-    * set gfx to NULL
-    */
-   memset(&gui, 0, sizeof(GUI));
-
-   /*
     * radar
     */
-   gui.radar.res = RADAR_RES_DEFAULT;
+   gui_radar.res = RADAR_RES_DEFAULT;
 
    /*
     * messages
     */
-   gui.mesg.x = 20;
-   gui.mesg.y = 30;
-   gui.mesg.w = SCREEN_W - 400;
+   gui_mesg_x = 20;
+   gui_mesg_y = 30;
+   gui_mesg_w = SCREEN_W - 400;
    if (mesg_stack == NULL) {
       mesg_stack = calloc(mesg_max, sizeof(Mesg));
       if (mesg_stack == NULL) {
@@ -2071,25 +1977,127 @@ int gui_init (void)
    /*
     * Borders.
     */
-   gui.tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
-   if (gui.tl < 0.)
-      gui.tl += 2*M_PI;
-   gui.tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
-   if (gui.tr < 0.)
-      gui.tr += 2*M_PI;
-   gui.bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
-   if (gui.bl < 0.)
-      gui.bl += 2*M_PI;
-   gui.br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
-   if (gui.br < 0.)
-      gui.br += 2*M_PI;
+   gui_tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
+   if (gui_tl < 0.)
+      gui_tl += 2*M_PI;
+   gui_tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
+   if (gui_tr < 0.)
+      gui_tr += 2*M_PI;
+   gui_bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
+   if (gui_bl < 0.)
+      gui_bl += 2*M_PI;
+   gui_br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
+   if (gui_br < 0.)
+      gui_br += 2*M_PI;
 
    /*
     * Icons.
     */
-   gui.ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
+   gui_ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
 
    return 0;
+}
+
+
+/**
+ * @brief Runs a GUI Lua function.
+ *
+ *    @param func Name of the function to run.
+ *    @return 0 on success.
+ */
+static int gui_doFunc( const char* func )
+{
+   gui_prepFunc( func );
+   return gui_runFunc( func, 0 );
+}
+
+
+/**
+ * @brief Prepares to run a function.
+ */
+static int gui_prepFunc( const char* func )
+{
+   lua_State *L;
+
+   /* For comfort. */
+   L = gui_L;
+
+#ifdef DEBUGGING
+   if (L == NULL) {
+      WARN( "Trying to run GUI func '%s' but no GUI is loaded!", func );
+      return -1;
+   }
+#endif /* DEBUGGING */
+
+   /* Set up function. */
+   lua_getglobal( L, func );
+   return 0;
+}
+
+
+/**
+ * @brief Runs a function.
+ */
+static int gui_runFunc( const char* func, int nargs )
+{
+   int ret;
+   const char* err;
+   lua_State *L;
+
+   /* For comfort. */
+   L = gui_L;
+
+   /* Run the function. */
+   ret = lua_pcall( L, nargs, 0, 0 );
+   if (ret != 0) { /* error has occured */
+      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      WARN("GUI Lua -> '%s': %s",
+            func, (err) ? err : "unknown error");
+      lua_pop(L,1);
+      return -1;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Player just changed his cargo.
+ */
+void gui_setCargo (void)
+{
+   if (gui_L != NULL)
+      gui_doFunc( "update_cargo" );
+}
+
+
+/**
+ * @brief Player just changed his nav computer target.
+ */
+void gui_setNav (void)
+{
+   if (gui_L != NULL)
+      gui_doFunc( "update_nav" );
+}
+
+
+/**
+ * @brief Player just changed his pilot target.
+ */
+void gui_setTarget (void)
+{
+   if (gui_L != NULL)
+      gui_doFunc( "update_target" );
+}
+
+
+/**
+ * @brief Player just upgraded his ship or modified it.
+ */
+void gui_setShip (void)
+{
+   if (gui_L != NULL)
+      gui_doFunc( "update_ship" );
 }
 
 
@@ -2101,102 +2109,55 @@ int gui_init (void)
  */
 int gui_load( const char* name )
 {
+   (void) name;
+   char *buf, path[PATH_MAX];
    uint32_t bufsize;
-   char *buf = ndata_read( GUI_DATA, &bufsize );
-   char *tmp;
-   int found = 0;
 
-   xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_GUI_ID)) {
-      ERR("Malformed '"GUI_DATA"' file: missing root element '"XML_GUI_ID"'");
+   /* Open file. */
+   snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   buf = ndata_read( path, &bufsize );
+   if (buf == NULL) {
+      WARN("Unable to find GUI '%s'.", path );
       return -1;
    }
 
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"GUI_DATA"' file: does not contain elements");
+   /* Clean up. */
+   if (gui_L != NULL) {
+      lua_close( gui_L );
+      gui_L = NULL;
+   }
+
+   /* Create Lua state. */
+   gui_L = nlua_newState();
+   if (luaL_dobuffer( gui_L, buf, bufsize, path ) != 0) {
+      WARN("Failed to load GUI Lua: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check",
+            path, lua_tostring(gui_L,-1));
+      lua_close( gui_L );
+      gui_L = NULL;
+      free(buf);
       return -1;
    }
-   do {
-      if (xml_isNode(node, XML_GUI_TAG)) {
-
-         tmp = xml_nodeProp(node,"name"); /* mallocs */
-
-         /* is the gui we are looking for? */
-         if (strcmp(tmp,name)==0) {
-            found = 1;
-
-            /* parse the xml node */
-            if (gui_parse(node,name))
-               WARN("Trouble loading GUI '%s'", name);
-            free(tmp);
-            break;
-         }
-
-         free(tmp);
-      }
-   } while (xml_nextNode(node));
-
-   xmlFreeDoc(doc);
    free(buf);
-
-   if (!found) {
-      WARN("GUI '%s' not found in '"GUI_DATA"'",name);
-      return -1;
+   nlua_loadStandard( gui_L, 1 );
+   nlua_loadGFX( gui_L, 0 );
+   nlua_loadGUI( gui_L, 0 );
+   if (gui_doFunc( "create" )) {
+      lua_close( gui_L );
+      gui_L = NULL;
    }
+
+   /* Run create function. */
 
    return 0;
 }
 
 
 /**
- * @brief Parse a parameter of the rect node.
- */
-static void rect_parseParam( const xmlNodePtr parent,
-      char *name, double *param )
-{
-   char *buf;
-
-   /* Get the attribute. */
-   xmlr_attr( parent, name, buf );
-
-   /* Wants attribute. */
-   if (param != NULL) {
-      if (buf == NULL)
-         WARN("Node '%s' missing '%s' parameter.", parent->name, name);
-      else if (buf != NULL)
-         *param = atoi(buf);
-   }
-   /* Doesn't want it. */
-   else if (buf != NULL)
-      WARN("Node '%s' has superfluous '%s' parameter.", parent->name, name);
-
-   /* Clean up. */
-   if (buf != NULL)
-      free(buf);
-}
-
-
-/**
- * @brief Used to pull out a rect from an xml node.
- */
-static void rect_parse( const xmlNodePtr parent,
-      double *x, double *y, double *w, double *h )
-{
-   rect_parseParam( parent, "w", w );
-   rect_parseParam( parent, "h", h );
-   rect_parseParam( parent, "x", x );
-   rect_parseParam( parent, "y", y );
-}
-
-
-/**
  * @brief Creates teh interference map for the current gui.
  */
-static void gui_createInterference (void)
+static void gui_createInterference( Radar *radar )
 {
    uint8_t raw;
    int i, j, k;
@@ -2208,20 +2169,20 @@ static void gui_createInterference (void)
    int r;
 
    /* Dimension shortcuts. */
-   if (gui.radar.shape == RADAR_CIRCLE) {
-      w = gui.radar.w*2.;
+   if (radar->shape == RADAR_CIRCLE) {
+      w = radar->w*2.;
       h = w;
    }
-   else if (gui.radar.shape == RADAR_RECT) {
-      w = gui.radar.w;
-      h = gui.radar.h;
+   else if (radar->shape == RADAR_RECT) {
+      w = radar->w;
+      h = radar->h;
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
 
       /* Free the old texture. */
-      if (gui.radar.interference[k] != NULL)
-         gl_freeTexture(gui.radar.interference[k]);
+      if (radar->interference[k] != NULL)
+         gl_freeTexture(radar->interference[k]);
 
       /* Create the temporary surface. */
       sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
@@ -2235,8 +2196,8 @@ static void gui_createInterference (void)
 
       /* Create the texture. */
       SDL_LockSurface( sur );
-      if (gui.radar.shape == RADAR_CIRCLE) {
-         r = pow2((int)gui.radar.w);
+      if (radar->shape == RADAR_CIRCLE) {
+         r = pow2((int)radar->w);
          hw = w/2;
          hh = h/2;
          for (i=0; i<h; i++) {
@@ -2251,7 +2212,7 @@ static void gui_createInterference (void)
             }
          }
       }
-      else if (gui.radar.shape == RADAR_RECT) {
+      else if (radar->shape == RADAR_RECT) {
          for (i=0; i<h*w; i++) {
             /* Process pixels. */
             c = map[i];
@@ -2263,278 +2224,10 @@ static void gui_createInterference (void)
       SDL_UnlockSurface( sur );
 
       /* Set the interference. */
-      gui.radar.interference[k] = gl_loadImage( sur, 0 );
+      radar->interference[k] = gl_loadImage( sur, 0 );
 
       /* Clean up. */
       free(map);
-   }
-}
-
-
-/**
- * @brief Parses a healthbar.
- *
- *    @param parent Parent node of the healthbar.
- *    @param bar Bar to load into.
- *    @param col Default colour to use.
- */
-static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col )
-{
-   int i, j;
-   char *tmp, buf[PATH_MAX];
-   double x, y, m, n;
-   double sumx, sumy, sumxx, sumxy;
-
-   /* Clear memory. */
-   memset( bar, 0, sizeof(HealthBar) );
-
-   /* Parse the rectangle. */
-   rect_parse( parent, &bar->rect.x, &bar->rect.y,
-         &bar->rect.w, &bar->rect.h );
-
-   /* Load the colour. */
-   memcpy( &bar->col, col, sizeof(glColour) );
-   xmlr_attr( parent, "alpha", tmp );
-   if (tmp != NULL) {
-      bar->col.a = atof(tmp);
-      free(tmp);
-   }
-
-   /* Check for graphics. */
-   tmp = xml_get(parent);
-   if (tmp != NULL) {
-      snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-      bar->gfx = gl_newImage( buf, OPENGL_TEX_MAPTRANS );
-
-      /* We do a slope aproximation now. */
-      n = 0.;
-      sumx = 0.;
-      sumy = 0.;
-      sumxx = 0.;
-      sumxy = 0.;
-      for (i=0; i<bar->gfx->sw; i++) {
-         x = (double)i;
-         for (j=0; j<bar->gfx->sh; j++) {
-            y = (double)j;
-            /* Count dots. */
-            if (gl_isTrans( bar->gfx, i, j)) {
-               sumx += x;
-               sumy += y;
-               sumxx += x*x;
-               sumxy += x*y;
-               n++;
-            }
-         }
-      }
-
-      /* Now calculate slope parameters. */
-      bar->slope  = (sumx*sumy - n*sumxy);
-      bar->slope /= (sumx*sumx - n*sumxx);
-      bar->offset = (sumy - bar->slope*sumx) / n;
-      if (bar->offset < 0.) /* must be positive to ensure solution. */
-         bar->offset = 0.;
-
-      /* Calculate the area. */
-      bar->area = bar->slope/2. * pow(bar->gfx->sw, 2.) + bar->offset * bar->gfx->sw;
-
-      /* Check to see if area is the top triangle or bottom one. */
-      m = sumx / n;
-      if (sumy/n < bar->gfx->sh/2.) {
-      /*if ((bar->slope/2. * pow(m, 2.) + bar->offset * m) < (sumy / n)) {*/
-         bar->slope = -bar->slope;
-         bar->offset = bar->gfx->sh - bar->offset;
-         bar->area = (bar->gfx->sw * bar->gfx->sh) - bar->area;
-      }
-   }
-
-   return 0;
-}
-
-#define RELATIVIZE(a)   \
-{(a).x += VX(gui.frame); \
-(a).y = VY(gui.frame)+gui.gfx_frame->h-(a).y;}
-/**< Converts a rect to absolute coords. */
-/**
- * @brief Parses a gui node.
- *
- *    @param parent node to parse from.
- *    @param name Name of the GUI to load.
- */
-static int gui_parse( const xmlNodePtr parent, const char *name )
-{
-   xmlNodePtr cur, node;
-   char *tmp, buf[PATH_MAX];
-
-   /*
-    * Clean up.
-    */
-   gui_cleanup();
-
-   /*
-    * gfx
-    */
-   /* set as a property and not a node because it must be loaded first */
-   tmp = xml_nodeProp(parent,"gfx");
-   if (tmp==NULL) {
-      ERR("GUI '%s' has no gfx property",name);
-      return -1;
-   }
-
-   /* load gfx */
-   /* frame */
-   snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-   gui.gfx_frame = gl_newImage( buf, 0 );
-   /* pilot */
-   snprintf( buf, PATH_MAX, GUI_GFX"%s_pilot.png", tmp );
-   gui.gfx_targetPilot = gl_newSprite( buf, 2, 2, OPENGL_TEX_MIPMAPS );
-   /* planet */
-   snprintf( buf, PATH_MAX, GUI_GFX"%s_planet.png", tmp );
-   gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2, OPENGL_TEX_MIPMAPS );
-   free(tmp);
-
-   /*
-    * frame (based on gfx)
-    */
-   vect_csetmin( &gui.frame,
-         SCREEN_W - gui.gfx_frame->w - 15,     /* x */
-         SCREEN_H - gui.gfx_frame->h - 15);   /* y */
-
-   /* now actually parse the data */
-   node = parent->children;
-   do { /* load all the data */
-
-      /*
-       * offset
-       */
-      if (xml_isNode(node,"offset"))
-         rect_parse( node, &gui_xoff, &gui_yoff, NULL, NULL );
-
-      /*
-       * radar
-       */
-      else if (xml_isNode(node,"radar")) {
-
-         tmp = xml_nodeProp(node,"type");
-
-         /* make sure type is valid */
-         if (strcmp(tmp,"rectangle")==0) gui.radar.shape = RADAR_RECT;
-         else if (strcmp(tmp,"circle")==0) gui.radar.shape = RADAR_CIRCLE;
-         else {
-            WARN("Radar for GUI '%s' is missing 'type' tag or has invalid 'type' tag",name);
-            gui.radar.shape = RADAR_RECT;
-         }
-
-         free(tmp);
-
-         /* load the appropriate measurements */
-         if (gui.radar.shape == RADAR_RECT)
-            rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, &gui.radar.h );
-         else if (gui.radar.shape == RADAR_CIRCLE)
-            rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, NULL );
-         RELATIVIZE(gui.radar);
-      }
-
-      /*
-       * nav computer
-       */
-      else if (xml_isNode(node,"nav")) {
-         rect_parse( node, &gui.nav.x, &gui.nav.y, &gui.nav.w, &gui.nav.h );
-         RELATIVIZE(gui.nav);
-         gui.nav.y -= gl_defFont.h;
-      }
-
-      /*
-       * health bars
-       */
-      else if (xml_isNode(node,"health")) {
-         cur = node->children;
-         do {
-            if (xml_isNode(cur,"shield")) {
-               gui_parseBar( cur, &gui.shield, &cShield );
-               RELATIVIZE(gui.shield.rect);
-            }
-            if (xml_isNode(cur,"armour")) {
-               gui_parseBar( cur, &gui.armour, &cArmour );
-               RELATIVIZE(gui.armour.rect);
-            }
-            if (xml_isNode(cur,"energy")) {
-               gui_parseBar( cur, &gui.energy, &cEnergy );
-               RELATIVIZE(gui.energy.rect);
-            }
-            if (xml_isNode(cur,"fuel")) {
-               gui_parseBar( cur, &gui.fuel, &cFuel );
-               RELATIVIZE(gui.fuel.rect);
-            }
-         } while (xml_nextNode(cur));
-      }
-
-      /*
-       * secondary weapon
-       */
-      else if (xml_isNode(node,"weapon")) {
-         rect_parse( node, &gui.weapon.x, &gui.weapon.y,
-               &gui.weapon.w, &gui.weapon.h );
-         RELATIVIZE(gui.weapon);
-         gui.weapon.y -= gl_defFont.h;
-      }
-
-      /*
-       * target
-       */
-      else if (xml_isNode(node,"target")) {
-         cur = node->children;
-         do {
-            if (xml_isNode(cur,"gfx")) {
-               rect_parse( cur, &gui.target.x, &gui.target.y, NULL, NULL );
-               RELATIVIZE(gui.target);
-               gui.target.y -= SHIP_TARGET_H;
-            }
-            else if (xml_isNode(cur,"name")) {
-               rect_parse( cur, &gui.target_name.x, &gui.target_name.y,
-                     &gui.target_name.w, NULL );
-               RELATIVIZE(gui.target_name);
-               gui.target_name.y -= gl_defFont.h;
-            }
-            else if (xml_isNode(cur,"faction")) {
-               rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y,
-                     &gui.target_faction.w, NULL );
-               RELATIVIZE(gui.target_faction);
-               gui.target_faction.y -= gl_smallFont.h;
-            }
-            else if (xml_isNode(cur,"health")) {
-               rect_parse( cur, &gui.target_health.x, &gui.target_health.y,
-                     &gui.target_health.w, NULL );
-               RELATIVIZE(gui.target_health);
-               gui.target_health.y -= gl_smallFont.h;
-            }
-         } while (xml_nextNode(cur));
-      }
-
-      /*
-       * misc
-       */
-      else if (xml_isNode(node,"misc")) {
-         rect_parse( node, &gui.misc.x, &gui.misc.y, &gui.misc.w, &gui.misc.h );
-         RELATIVIZE(gui.misc);
-      }
-   } while (xml_nextNode(node));
-
-   /* Some postprocessing. */
-   gui_createInterference();
-
-   return 0;
-}
-#undef RELATIVIZE
-
-
-/**
- * @brief Cleans up a health bar.
- */
-static void gui_cleanupBar( HealthBar *bar )
-{
-   if (bar->gfx != NULL) {
-      gl_freeTexture( bar->gfx );
-      bar->gfx = NULL;
    }
 }
 
@@ -2546,29 +2239,11 @@ void gui_cleanup (void)
 {
    int i;
 
-   /* Free textures. */
-   if (gui.gfx_frame != NULL) {
-      gl_freeTexture( gui.gfx_frame );
-      gui.gfx_frame = NULL;
-   }
-   if (gui.gfx_targetPilot != NULL) {
-      gl_freeTexture( gui.gfx_targetPilot );
-      gui.gfx_targetPilot = NULL;
-   }
-   if (gui.gfx_targetPlanet != NULL) {
-      gl_freeTexture( gui.gfx_targetPlanet );
-      gui.gfx_targetPlanet = NULL;
-   }
-   /* Health textures. */
-   gui_cleanupBar( &gui.shield );
-   gui_cleanupBar( &gui.armour );
-   gui_cleanupBar( &gui.energy );
-   gui_cleanupBar( &gui.fuel );
    /* Interference. */
    for (i=0; i<INTERFERENCE_LAYERS; i++) {
-      if (gui.radar.interference[i] != NULL) {
-         gl_freeTexture(gui.radar.interference[i]);
-         gui.radar.interference[i] = NULL;
+      if (gui_radar.interference[i] != NULL) {
+         gl_freeTexture(gui_radar.interference[i]);
+         gui_radar.interference[i] = NULL;
       }
    }
 
@@ -2580,6 +2255,12 @@ void gui_cleanup (void)
    /* Destroy offset. */
    gui_xoff = 0.;
    gui_yoff = 0.;
+
+   /* Destroy lua. */
+   if (gui_L != NULL) {
+      lua_close( gui_L );
+      gui_L = NULL;
+   }
 }
 
 
@@ -2607,9 +2288,15 @@ void gui_free (void)
    osd_exit();
 
    /* Free icons. */
-   if (gui.ico_hail != NULL)
-      gl_freeTexture( gui.ico_hail );
-   gui.ico_hail = NULL;
+   if (gui_ico_hail != NULL)
+      gl_freeTexture( gui_ico_hail );
+   gui_ico_hail = NULL;
+   if (gui_target_planet != NULL)
+      gl_freeTexture( gui_target_planet );
+   gui_target_planet = NULL;
+   if (gui_target_pilot != NULL)
+      gl_freeTexture( gui_target_pilot );
+   gui_target_pilot = NULL;
 }
 
 
@@ -2620,10 +2307,10 @@ void gui_free (void)
  */
 void gui_setRadarRel( int mod )
 {
-   gui.radar.res += mod * RADAR_RES_INTERVAL;
-   gui.radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui.radar.res );
+   gui_radar.res += mod * RADAR_RES_INTERVAL;
+   gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
 
-   player_message( "\epRadar set to %dx.", (int)gui.radar.res );
+   player_message( "\epRadar set to %dx.", (int)gui_radar.res );
 }
 
 
@@ -2645,6 +2332,28 @@ void gui_getOffset( double *x, double *y )
  */
 glTexture* gui_hailIcon (void)
 {
-   return gui.ico_hail;
+   return gui_ico_hail;
+}
+
+
+/**
+ * @brief Sets the planet target GFX.
+ */
+void gui_targetPlanetGFX( glTexture *gfx )
+{
+   if (gui_target_planet != NULL)
+      gl_freeTexture( gui_target_planet );
+   gui_target_planet = gl_dupTexture( gfx );
+}
+
+
+/**
+ * @brief Sets the pilot target GFX.
+ */
+void gui_targetPilotGFX( glTexture *gfx )
+{
+   if (gui_target_pilot != NULL)
+      gl_freeTexture( gui_target_pilot );
+   gui_target_pilot = gl_dupTexture( gfx );
 }
 

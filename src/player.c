@@ -819,8 +819,10 @@ void player_warp( const double x, const double y )
  */
 void player_clear (void)
 {
-   if (player.p != NULL)
+   if (player.p != NULL) {
       player.p->target = PLAYER_ID;
+      gui_setTarget();
+   }
 }
 
 
@@ -1458,6 +1460,7 @@ void player_targetPlanet (void)
       if ((cur_system->planets[ player.p->nav_planet ]->real == ASSET_REAL)
             && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
          player_playSound(snd_nav, 1);
+         gui_setNav();
          return;
       }
 
@@ -1466,6 +1469,7 @@ void player_targetPlanet (void)
 
    /* Untarget if out of range. */
    player.p->nav_planet = -1;
+   gui_setNav();
 }
 
 
@@ -1565,6 +1569,7 @@ void player_land (void)
       }
       gui_forceBlink();
       player.p->nav_planet       = tp;
+      gui_setNav();
       player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
 
@@ -1596,6 +1601,7 @@ void player_targetHyperspace (void)
       map_select( NULL , 0);
    else
       map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
+   gui_setNav();
 }
 
 /**
@@ -1687,6 +1693,8 @@ void player_brokeHyperspace (void)
    hooks_run( "jumpout" );
 
    /* Prevent targeted planet # from carrying over. */
+   gui_setNav();
+   gui_setTarget();
    player.p->nav_planet = -1;
 
    /* calculates the time it takes, call before space_init */
@@ -1855,6 +1863,7 @@ void player_targetHostile (void)
    }
 
    player.p->target = tp;
+   gui_setTarget();
 }
 
 
@@ -1871,6 +1880,7 @@ void player_targetNext( int mode )
       gui_forceBlink();
       player_playSound( snd_target, 1 );
    }
+   gui_setTarget();
 }
 
 
@@ -1887,6 +1897,7 @@ void player_targetPrev( int mode )
       gui_forceBlink();
       player_playSound( snd_target, 1 );
    };
+   gui_setTarget();
 }
 
 
@@ -1906,6 +1917,8 @@ void player_targetClear (void)
       player.p->nav_planet = -1;
    else
       player.p->target = PLAYER_ID;
+   gui_setTarget();
+   gui_setNav();
 }
 
 
@@ -1955,6 +1968,7 @@ void player_targetEscort( int prev )
       gui_forceBlink();
       player_playSound( snd_target, 1 );
    }
+   gui_setTarget();
 }
 
 
@@ -1973,6 +1987,7 @@ void player_targetNearest (void)
       gui_forceBlink();
       player_playSound( snd_target, 1 );
    }
+   gui_setTarget();
 }
 
 
@@ -2074,6 +2089,7 @@ void player_autohail (void)
 
    /* Try o hail. */
    player.p->target = p->id;
+   gui_setTarget();
    player_hail();
 
    /* Clear hails if none found. */

@@ -372,6 +372,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    uint32_t *pix;
    double r, g, b, a;
    double h, s, v;
+   char buf[PATH_MAX];
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    Uint32 saved_flags;
    Uint8 saved_alpha;
@@ -435,7 +436,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Load the store surface. */
-   temp->gfx_store = gl_loadImagePad( NULL, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 0 );
+   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   temp->gfx_store = gl_loadImagePad( buf, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 0 );
 
    /* Some filtering. */
    for (j=0; j<SHIP_TARGET_H; j++) {
@@ -467,7 +469,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    }
 
    /* Load the surface. */
-   temp->gfx_target = gl_loadImagePad( NULL, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
+   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   temp->gfx_target = gl_loadImagePad( buf, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
    return 0;
 }
