@@ -13,12 +13,12 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar information
-   bar_desc = "A young buisnessman. I wonder what he is doing here."
+   bar_desc = "A well-dressed young businessman. He looks out of place, contrasting sharply with most of the bar's clientele"
 
    -- Mission details
    misn_title  = "Kill %s"
-   misn_reward = "Pirate Landing permision"
-   misn_desc   = "There is a empire patrol known as %s who must be terminated. He was last seen near the %s system."
+   misn_reward = "Pirate landing permision"
+   misn_desc   = "The Empire patrol vessel known as %s must be terminated. It was last seen near the %s system."
    misn_desc2  = "Return to get your rewards."
 
    -- Text
@@ -26,9 +26,9 @@ else -- Default to English
    text     = {}
    title[1] = "Spaceport Bar"
    title[2] = "Mission Complete"
-   text[1]  = [[Hello, lets get right too it. I need to hire a pilot, and I've heard from a certain trader that you're good. What do you say about the removal of a empire pilot?]]
-   text[2] = [[I thought you would be ok with it. If you compleate this mission, you will receive a pass that will give you landing access at all pirate worlds. If you rat us out, we will find you, and if you fail, well, lets hope that doesn't happen. I hear the empire has some big guns on their side.]]
-   text[3] = [[Your back. Congradulations. Here is your landing pass. I look forward to working with you. Now, go plunder something. With that, the young buisnissman turns and leaves. Your begining to question how much of a buisnessman he really is.]]
+   text[1]  = [[As you approach, the man merely glances at you before pushing out a chair for you. "Hello. A certain trader associate of mine has recommended your services." You nod knowingly, and he continues, "A certain Empire pilot has been... consistent in refusing our bribes. We'd like to be rid of him as soon as possible. Are you up for it?]]
+   text[2]  = [["Excellent. If you're successful in removing him, I have a token that will grant you landing access to all pirate worlds." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]]
+   text[3] = [[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's the landing pass, you're now free to land at any pirate colony. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]]
 
    -- Messages
    msg      = {}
@@ -171,7 +171,7 @@ function sys_enter ()
 end
 
 
--- Empire Patorl jumped away
+-- Empire patrol jumped away
 function emp_jump ()
    player.msg( string.format(msg[2], emp_name) )
 
@@ -181,13 +181,13 @@ end
 
 
 --[[
-Functions to create Empire Patrols based on difficulty more easily.
+Functions to create Empire patrols based on difficulty more easily.
 --]]
 function emp_generate ()
-   -- Get the empire patrols name
+   -- Get the Empire ships's name
    emp_name = empire_name()
 
-   -- Get the empire patols details
+   -- Get the Empire patrol's details
    rating = player.getRating()
    if rating < 50 then
       emp_ship, emp_outfits = emp_easy()
