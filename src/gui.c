@@ -185,7 +185,9 @@ static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderInterference (void);
 /* Lua GUI. */
-static int gui_runFunc( const char* func );
+static int gui_doFunc( const char* func );
+static int gui_prepFunc( const char* func );
+static int gui_runFunc( const char* func, int nargs );
 
 
 
@@ -819,7 +821,9 @@ void gui_render( double dt )
 
    /* Run Lua. */
    if (gui_L != NULL) {
-      gui_runFunc( "render" );
+      gui_prepFunc( "render" );
+      lua_pushnumber( gui_L, dt );
+      gui_runFunc( "render", 1 );
    }
 
    /* Messages. */
@@ -2001,10 +2005,18 @@ int gui_init (void)
  *    @param func Name of the function to run.
  *    @return 0 on success.
  */
-static int gui_runFunc( const char* func )
+static int gui_doFunc( const char* func )
 {
-   int ret;
-   const char* err;
+   gui_prepFunc( func );
+   return gui_runFunc( func, 0 );
+}
+
+
+/**
+ * @brief Prepares to run a function.
+ */
+static int gui_prepFunc( const char* func )
+{
    lua_State *L;
 
    /* For comfort. */
@@ -2017,8 +2029,26 @@ static int gui_runFunc( const char* func )
    }
 #endif /* DEBUGGING */
 
+   /* Set up function. */
    lua_getglobal( L, func );
-   ret = lua_pcall( L, 0, 0, 0 );
+   return 0;
+}
+
+
+/**
+ * @brief Runs a function.
+ */
+static int gui_runFunc( const char* func, int nargs )
+{
+   int ret;
+   const char* err;
+   lua_State *L;
+
+   /* For comfort. */
+   L = gui_L;
+
+   /* Run the function. */
+   ret = lua_pcall( L, nargs, 0, 0 );
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
@@ -2037,7 +2067,7 @@ static int gui_runFunc( const char* func )
 void gui_setCargo (void)
 {
    if (gui_L != NULL)
-      gui_runFunc( "update_cargo" );
+      gui_doFunc( "update_cargo" );
 }
 
 
@@ -2047,7 +2077,7 @@ void gui_setCargo (void)
 void gui_setNav (void)
 {
    if (gui_L != NULL)
-      gui_runFunc( "update_nav" );
+      gui_doFunc( "update_nav" );
 }
 
 
@@ -2057,7 +2087,7 @@ void gui_setNav (void)
 void gui_setTarget (void)
 {
    if (gui_L != NULL)
-      gui_runFunc( "update_target" );
+      gui_doFunc( "update_target" );
 }
 
 
@@ -2103,7 +2133,7 @@ int gui_load( const char* name )
    nlua_loadStandard( gui_L, 1 );
    nlua_loadGFX( gui_L, 0 );
    nlua_loadGUI( gui_L, 0 );
-   if (gui_runFunc( "create" )) {
+   if (gui_doFunc( "create" )) {
       lua_close( gui_L );
       gui_L = NULL;
    }

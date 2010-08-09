@@ -131,7 +131,7 @@ end
 
    Run every frame.
 --]]
-function render()
+function render( dt )
 
    -- Render warnings
    local sys = system.cur()
