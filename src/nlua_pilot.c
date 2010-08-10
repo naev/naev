@@ -57,6 +57,7 @@ static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
+static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_secondary( lua_State *L );
 static int pilotL_rename( lua_State *L );
@@ -113,6 +114,7 @@ static const luaL_reg pilotL_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "secondary", pilotL_secondary },
    { "rename", pilotL_rename },
@@ -178,6 +180,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "secondary", pilotL_secondary },
    { "pos", pilotL_position },
@@ -825,6 +828,42 @@ static int pilotL_target( lua_State *L )
       return 0;
    lua_pushpilot(L, lp);
    return 1;
+}
+
+
+/**
+ * @brief Checks to see if pilot is in range of pilot.
+ *
+ * @usage detected, fuzzy = p:inrange( target )
+ *
+ *    @luaparam p Pilot to see if another pilot is in range.
+ *    @luareturn Checks to see if the target is detected and if it's scanned.
+ * @luafunc inrange( p, target )
+ */
+static int pilotL_inrange( lua_State *L )
+{
+   Pilot *p, *t;
+   int ret;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+   t = luaL_validpilot(L,2);
+
+   /* Check if in range. */
+   ret = pilot_inRangePilot( p, t );
+   if (ret == 1) {
+      lua_pushboolean(L,1);
+      lua_pushboolean(L,0);
+   }
+   else if (ret == 0) {
+      lua_pushboolean(L,0);
+      lua_pushboolean(L,0);
+   }
+   else {
+      lua_pushboolean(L,1);
+      lua_pushboolean(L,1);
+   }
+   return 2;
 }
 
 
