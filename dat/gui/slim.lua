@@ -17,6 +17,7 @@ function create()
 	col_txt_bar = colour.new( 192/255, 198/255, 217/255 )
 	col_txt_top = colour.new(  90/255, 111/255, 160/255 )
 	col_txt_std = colour.new(  72/255,  83/255, 120/255 )
+	col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
 	col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
 	col_txt_all = colour.new(  19/255, 152/255,  41/255 )
 	col_txt_una = colour.new(  90/255,  96/255, 114/255 )
@@ -24,6 +25,7 @@ function create()
 	col_arm = colour.new( 72/255,  73/255,  60/255 )
 	col_ene = colour.new( 41/255,  92/255,  47/255 )
 	col_spe = colour.new( 77/255,  80/255,  21/255 )
+	col_spe2 = colour.new(169/255,177/255,  46/255 )
 	
 	--Load Images
 	local base = "gfx/gui/slim/"
@@ -51,6 +53,7 @@ function create()
 	bg_spe_sm = tex.open( base .. "bg_spe_sm.png" )
 	sheen = tex.open( base .. "sheen.png" )
 	sheen_sm = tex.open( base .. "sheen_sm.png" )
+	warnlight1 = tex.open( base .. "warnlight1.png" )
 	warnlight2 = tex.open( base .. "warnlight2.png" )
 	target_light_off = tex.open( base .. "targeted_off.png" )
 	target_light_on =  tex.open( base .. "targeted_on.png" )
@@ -122,7 +125,16 @@ function create()
 	speed_sm_x = shield_sm_x
 	speed_sm_y = energy_sm_y - 20
 	
+	--Targeted warning light
+	ta_warning_x = ta_pane_x + 82
+	ta_warning_y = ta_pane_y + 104
+	
+	timers = {}
+	timers[1] = 0.1
+	blinkcol = col_txt_enm
+	
 	update_target()
+	update_ship()
 end
 
 function update_target()
@@ -132,13 +144,21 @@ function update_target()
 		ptarget_gfx = ptarget:ship():gfxTarget()
 		ptarget_gfx_w, ptarget_gfx_h = ptarget_gfx:dim()
 		ptargetfact = ptarget:faction()
+		ptarget_target = ptarget:target()
 	end
 end
 
 function update_nav()
 end
 
-function render()
+function update_cargo()
+end
+
+function update_ship()
+	stats = pp:stats()
+end
+
+function render( dt )
 	
 	--Radar
 	gfx.renderTex( radar_gfx, radar_x, radar_y )
@@ -150,51 +170,106 @@ function render()
 	armor, shield = pp:health()
 	energy = pp:energy()
 	speed = pp:vel():dist()
+	lockons = pp:lockon()
+	
+	local col
 	--Shield
+	if shield == 0. then
+		col = col_txt_enm
+	elseif shield <= 0.2 then
+		col = col_txt_wrn
+	else
+		col = col_txt_bar
+	end
 	gfx.renderTex( bg_shi, shield_x + 30, shield_y + 2 )
 	gfx.renderRect( shield_x + 30, shield_y + 2, shield/100. * bar_w, bar_h, col_shi )
 	gfx.renderTex( bg_bar, shield_x, shield_y )
 	gfx.renderTex( icon_shi, shield_x + 7, shield_y + 4 )
 	gfx.renderTex( sheen, shield_x + 31, shield_y +15 )
-	gfx.print( false, tostring( math.floor(shield)) .. "%", shield_x + 30, shield_y + 6, col_txt_bar, bar_w, true)
+	gfx.print( false, tostring( math.floor(shield)) .. "% (" .. tostring(math.floor(stats.shield * shield / 100)) .. ")", shield_x + 30, shield_y + 6, col, bar_w, true)
+	
 	--Armor
+	if armor <= 0.2 then
+		col = col_txt_enm
+	else
+		col = col_txt_bar
+	end
 	gfx.renderTex( bg_arm, armor_x + 30, armor_y + 2 )
 	gfx.renderRect( armor_x + 30, armor_y + 2, armor/100. * bar_w, bar_h, col_arm )
 	gfx.renderTex( bg_bar, armor_x, armor_y )
 	gfx.renderTex( icon_arm, armor_x + 7, armor_y + 4 )
 	gfx.renderTex( sheen, armor_x + 31, armor_y +15 )
-	gfx.print( false, tostring( math.floor(armor)) .. "%", armor_x + 30, armor_y + 6, col_txt_bar, bar_w, true)
+	gfx.print( false, tostring( math.floor(armor)) .. "% (" .. tostring(math.floor(stats.armour * armor / 100)) .. ")", armor_x + 30, armor_y + 6, col, bar_w, true)
+	
 	--Energy
+	if energy == 0. then
+		col = col_txt_enm
+	elseif energy <= 0.2 then
+		col = col_txt_wrn
+	else
+		col = col_txt_bar
+	end
 	gfx.renderTex( bg_ene, energy_x + 30, energy_y + 2 )
 	gfx.renderRect( energy_x + 30, energy_y + 2, energy/100. * bar_w, bar_h, col_ene )
 	gfx.renderTex( bg_bar, energy_x, energy_y )
 	gfx.renderTex( icon_ene, energy_x + 7, energy_y + 4 )
 	gfx.renderTex( sheen, energy_x + 31, energy_y +15 )
-	gfx.print( false, tostring( math.floor(energy)) .. "%", energy_x + 30, energy_y + 6, col_txt_bar, bar_w, true)
+	gfx.print( false, tostring( math.floor(energy)) .. "% (" .. tostring(math.floor(stats.energy  * energy / 100)) .. ")", energy_x + 30, energy_y + 6, col_txt_bar, bar_w, true)
+	
 	--Speed
+	local dispspe, dispspe2
+	if math.floor(speed) > stats.speed then
+		dispspe = 1
+		dispspe2 = (2 * speed) / stats.speed - 2 --is 1 when speed = 1.5 * stats.speed
+		col = col_txt_wrn
+		if dispspe2 > 1 then
+			dispspe2 = 1
+			timers[1] = timers[1] - dt
+			if timers[1] <= 0. then
+				timers[1] = 0.1
+				if blinkcol == col_txt_una then
+					blinkcol = col_txt_enm
+				else
+					blinkcol = col_txt_una
+				end
+			end
+			col = blinkcol
+		end
+	else
+		dispspe = speed / stats.speed
+		dispspe2 = 0
+		col = col_txt_bar
+	end
 	gfx.renderTex( bg_spe, speed_x + 30, speed_y + 2 )
-	gfx.renderRect( speed_x + 30, speed_y + 2, bar_w, bar_h, col_spe )
+	gfx.renderRect( speed_x + 30, speed_y + 2, dispspe * bar_w, bar_h, col_spe )
+	if dispspe2 then
+		gfx.renderRect( speed_x + 30, speed_y + 2, dispspe2 * bar_w, bar_h, col_spe2 )
+	end
 	gfx.renderTex( bg_bar, speed_x, speed_y )
 	gfx.renderTex( icon_spe, speed_x + 7, speed_y + 4 )
 	gfx.renderTex( sheen, speed_x + 31, speed_y +15 )
-	gfx.print( false, tostring( math.floor(speed) ), speed_x + 30, speed_y + 6, col_txt_bar, bar_w, true)
+	gfx.print( false, tostring( math.floor(speed / stats.speed * 100)) .. "% (" .. tostring( math.floor(speed)) .. ")", speed_x + 30, speed_y + 6, col, bar_w, true)
 	
 	--Warning Light
+	if lockon then
+		gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
+	end
 	if armor <= 20 then
-	   gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
+		gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
 	end
 	
 	if ptarget ~= nil then
 		--Target Pane
 		gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
 		gfx.renderTex( target_bg, ta_image_x, ta_image_y )
-		gfx.renderTex( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_image_y - ptarget_gfx_h / 3)
+		gfx.renderTex( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2)
 		
 		ta_armor, ta_shield, ta_disabled = ptarget:health()
 		ta_energy = ptarget:energy()
 		ta_speed = ptarget:vel():dist()
 		ta_pos = ptarget:pos()
 		ta_dist = pp:pos():dist( ta_pos )
+		ta_dir = ptarget:dir()
 		
 		--Shield
 		gfx.renderTex( bg_shi_sm, shield_sm_x + 22, shield_sm_y + 2 )
@@ -228,9 +303,15 @@ function render()
 		gfx.renderTex( sheen_sm, speed_sm_x + 23, speed_sm_y + 9 )
 		gfx.print( false, tostring( math.floor(ta_speed) ), speed_sm_x + 22, speed_sm_y + 3, col_txt_bar, bar_sm_w, true )
 		
+		--Warning Light
+		if ptarget_target == pp then
+			gfx.renderTex( target_light_on, ta_warning_x - 3, ta_warning_y - 3 )
+		else
+			gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
+		end
+		
 		--Texts
 		gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
-		local ta_col
 		if ta_disabled then
 			col = col_txt_una
 		else
@@ -244,8 +325,11 @@ function render()
 		end
 		gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 166, col )
 		
-		gfx.print( true, "DIST", ta_pane_x + 120, ta_pane_y + 150, col_txt_top )
-		gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 110, ta_pane_y +130, col_txt_std, 38, true )
+		gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 150, col_txt_top )
+		gfx.print( false, tostring( math.floor(ta_dir) ), ta_pane_x + 86, ta_pane_y + 132, col_txt_std, 30, true)
+		
+		gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 150, col_txt_top )
+		gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
 	end
 end
 
