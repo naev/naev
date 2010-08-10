@@ -482,7 +482,7 @@
    <done>Hitman</done>
   </avail>
  </mission>
-  <mission name="Hitman 3">
+ <mission name="Hitman 3">
   <lua>pirate/hitman3</lua>
   <flags>
    <unique />
@@ -492,6 +492,25 @@
    <location>Bar</location>
    <cond>system.get("Alteris") and player.getRating() &gt; 50</cond>
    <done>Hitman 2</done>
+  </avail>
+ </mission>
+ <mission name="Hot dogs from space">
+  <lua>neutral/reynir</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>16</chance>
+   <location>Bar</location>
+   <cond>(function ()
+            local count = 0
+            for i, p in pairs(system.cur():planets()) do
+                if p:services()["inhabited"] then
+                    count=count+1
+                end
+            end
+            return count &gt; 1
+        end)()</cond>
   </avail>
  </mission>
  <mission name="Empire Patrol Bounty">

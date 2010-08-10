@@ -97,19 +97,24 @@ static int guiL_mesgInit( lua_State *L )
  * @usage gui.radarInit( true, 82 ) -- Circular radar with 82 radius.
  *
  *    @luaparam circle Whether or not it should be a circle.
- *    @luaparam radius Radius of the circle.
- * @luafunc radarInit( circle, radius )
+ *    @luaparam width Width if it's not a circle or radius if it is a circle.
+ *    @luaparam height Only needed if not a circle.
+ * @luafunc radarInit( circle, width, height )
  */
 static int guiL_radarInit( lua_State *L )
 {
-   int id, circle, radius;
+   int id, circle, width, height;
 
    /* Parse parameters. */
    circle = lua_toboolean( L, 1 );
-   radius = luaL_checkinteger( L, 2 );
+   width = luaL_checkinteger( L, 2 );
+   if (!circle)
+      height = luaL_checkinteger( L, 3 );
+   else
+      height = width;
 
    /* Create the radar. */
-   id = gui_radarInit( circle, radius, radius );
+   id = gui_radarInit( circle, width, height );
    lua_pushnumber( L, id );
    return 1;
 }
