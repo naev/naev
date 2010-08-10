@@ -484,6 +484,9 @@
  </mission>
  <mission name="Hitman 3">
   <lua>pirate/hitman3</lua>
+  <flags>
+   <unique />
+  </flags>
   <avail>
    <chance>40</chance>
    <location>Bar</location>
