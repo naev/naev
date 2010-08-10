@@ -52,6 +52,7 @@ static int playerL_getPilot( lua_State *L );
 /* Fuel stuff. */
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
+static int playerL_autonav( lua_State *L );
 /* Board stuff. */
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
@@ -81,6 +82,7 @@ static const luaL_reg playerL_methods[] = {
    { "pilot", playerL_getPilot },
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
+   { "autonav", playerL_autonav },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
    { "cargoFree", playerL_cargoFree },
@@ -104,6 +106,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
    { "fuel", playerL_fuel },
+   { "autonav", playerL_autonav },
    { "cargoFree", playerL_cargoFree },
    { "cargoHas", playerL_cargoHas },
    { "cargoList", playerL_cargoList },
@@ -373,6 +376,20 @@ static int playerL_refuel( lua_State *L )
    player.p->fuel = CLAMP(0, player.p->fuel_max, player.p->fuel);
 
    return 0;
+}
+
+
+/**
+ * @brief Checks to see if the player has autonav enabled.
+ *
+ * @usage autonav = player.autonav()
+ *    @luareturn true if the player has autonav enabled.
+ * @luafunc autonav()
+ */
+static int playerL_autonav( lua_State *L )
+{
+   lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
+   return 1;
 }
 
 

@@ -863,6 +863,16 @@ void gui_render( double dt )
       can_jump = i;
    }
 
+   /* Hyperspace. */
+   if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
+         (player.p->ptimer < HYPERSPACE_FADEOUT)) {
+      x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
+      col.r = 1.;
+      col.g = 1.;
+      col.b = 1.;
+      col.a = x;
+      gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
+   }
 #if 0
    /* Lockon warning */
    if (player.p->lockons > 0)
@@ -873,158 +883,6 @@ void gui_render( double dt )
    if (cur_system->nebu_volatility > 0.)
       gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h*2.-35.,
             &cRed, "VOLATILE ENVIRONMENT DETECTED");
-
-   /*
-    *    G U I
-    */
-   /*
-    * frame
-    */
-   gl_blitStatic( gui.gfx_frame, gui.frame.x, gui.frame.y, NULL );
-
-   /* Radar. */
-   gui_renderRadar(dt);
-
-
-   /*
-    * NAV
-    */
-   if (player.p->nav_planet >= 0) { /* planet landing target */
-      gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y,
-            &cConsole, "Landing" );
-
-      gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 5 - gl_smallFont.h,
-            NULL, "%s", cur_system->planets[player.p->nav_planet]->name );
-   }
-   if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
-
-      sys = cur_system->jumps[player.p->nav_hyperspace].target;
-
-      /* Determine if we have to play the "enter hyperspace range" sound. */
-      i = space_canHyperspace(player.p);
-      if ((i != 0) && (i != can_jump))
-         if (!pilot_isFlag(player.p, PILOT_HYPERSPACE))
-            player_playSound(snd_jump, 1);
-      can_jump = i;
-
-      /* Determine the colour of the NAV text. */
-      if (can_jump || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
-             pilot_isFlag(player.p, PILOT_HYP_PREP) ||
-             pilot_isFlag(player.p, PILOT_HYP_BEGIN))
-         c = &cConsole;
-      else c = NULL;
-      gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 33,
-            c, "Hyperspace" );
-
-      gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 38 - gl_smallFont.h,
-            NULL, "%d - %s", pilot_getJumps(player.p),
-            (sys_isKnown(sys)) ? sys->name : "Unknown" );
-   }
-   if (player.p->nav_hyperspace == -1 && player.p->nav_planet == -1) { /* no hyperspace or planet targets */
-      gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 15,
-            &cConsole, "Navigation" );
-
-      gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 20 - gl_smallFont.h,
-            &cGrey, "Off" );
-   }
-   else if (player.p->nav_hyperspace == -1) { /* no hyperspace target */
-      gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 33,
-            &cConsole, "Hyperspace" );
-
-      gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 38 - gl_smallFont.h,
-            &cGrey, "Off" );
-   }
-   else if (player.p->nav_planet == -1) { /* no planet target */
-      gl_printMid( NULL, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 0,
-            &cConsole, "Landing" );
-
-      gl_printMid( &gl_smallFont, (int)gui.nav.w,
-            gui.nav.x, gui.nav.y - 5 - gl_smallFont.h,
-            &cGrey, "Off" );
-   }
-
-
-   /*
-    * health
-    */
-   gui_renderHealth( &gui.shield, player.p->shield / player.p->shield_max );
-   gui_renderHealth( &gui.armour, player.p->armour / player.p->armour_max );
-   gui_renderHealth( &gui.energy, player.p->energy / player.p->energy_max );
-   gui_renderHealth( &gui.fuel, player.p->fuel / player.p->fuel_max );
-
-
-   /*
-    * weapon
-    */
-   if ((player.p->secondary==NULL) || (player.p->secondary->outfit == NULL)) {
-      gl_printMid( NULL, (int)gui.weapon.w,
-            gui.weapon.x, gui.weapon.y - 5,
-            &cConsole, "Secondary" );
-
-      gl_printMid( &gl_smallFont, (int)gui.weapon.w,
-            gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-            &cGrey, "None");
-   }
-   else {
-      f = &gl_defFont;
-
-      /* check to see if weapon is ready */
-      if (player.p->secondary->timer > 0.)
-         c = &cGrey;
-      else
-         c = &cConsole;
-
-      /* Launcher. */
-      if ((outfit_isLauncher(player.p->secondary->outfit) ||
-               outfit_isFighterBay(player.p->secondary->outfit)) &&
-            (player.p->secondary->u.ammo.outfit != NULL)) {
-
-         /* Get quantity. */
-         q = 0;
-         for (i=0; i<player.p->outfit_nweapon; i++) {
-            if (player.p->outfit_weapon[i].outfit != player.p->secondary->outfit)
-               continue;
-
-            if (player.p->outfit_weapon[i].u.ammo.outfit == player.p->secondary->u.ammo.outfit)
-               q += player.p->outfit_weapon[i].u.ammo.quantity;
-         }
-
-         /* Weapon name. */
-         gl_printMidRaw( f, (int)gui.weapon.w,
-               gui.weapon.x, gui.weapon.y - 5,
-               c, player.p->secondary->u.ammo.outfit->name );
-
-         /* Print ammo left underneath. */
-         gl_printMid( &gl_smallFont, (int)gui.weapon.w,
-               gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-               NULL, "%d", q );
-      }
-      /* Other. */
-      else { /* just print the item name */
-         /* Mark as out of ammo. */
-         if (outfit_isLauncher(player.p->secondary->outfit) ||
-                  outfit_isFighterBay(player.p->secondary->outfit))
-            c = &cGrey;
-
-         /* Render normally. */
-         i = gl_printWidthRaw( f, player.p->secondary->outfit->name);
-         if (i > (int)gui.weapon.w) /* font is too big */
-            f = &gl_smallFont;
-         gl_printMidRaw( f, (int)gui.weapon.w,
-               gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
-               c, player.p->secondary->outfit->name );
-      }
-   }
-
 
    /*
     * target
@@ -1130,73 +988,7 @@ void gui_render( double dt )
    }
 
 
-   /*
-    * misc
-    */
-   /* monies */
-   j = gui.misc.y - gl_smallFont.h;
-   gl_print( &gl_smallFont,
-         gui.misc.x + 8, j,
-         &cConsole, "Creds:" );
-   credits2str( str, player.p->credits, 2 );
-   i = gl_printWidth( &gl_smallFont, str );
-   gl_print( &gl_smallFont,
-         gui.misc.x + gui.misc.w - 8 - i, j,
-         NULL, str );
-   /* cargo and friends */
-   if (player.p->ncommodities > 0) {
-      j -= gl_smallFont.h + 5;
-      gl_print( &gl_smallFont,
-            gui.misc.x + 8, j,
-            &cConsole, "Cargo:" );
-      for (i=0; i < MIN(player.p->ncommodities,3); i++) {
-         j -= gl_smallFont.h + 3;
-         if (player.p->commodities[i].quantity > 0.) /* quantity is over */
-            gl_printMax( &gl_smallFont, gui.misc.w - 15,
-                  gui.misc.x + 13, j,
-                  NULL, "%d %s%s", player.p->commodities[i].quantity,
-                  player.p->commodities[i].commodity->name,
-                  (player.p->commodities[i].id) ? "*" : "" );
-         else /* basically for weightless mission stuff */
-            gl_printMax( &gl_smallFont, gui.misc.w - 15,
-                  gui.misc.x + 13, j,
-                  NULL, "%s%s",  player.p->commodities[i].commodity->name,
-                  (player.p->commodities[i].id) ? "*" : "" );
 
-      }
-   }
-
-   j -= gl_smallFont.h + 5;
-   gl_print( &gl_smallFont,
-         gui.misc.x + 8, j,
-         &cConsole, "Free:" );
-   i = gl_printWidth( &gl_smallFont, "%d", pilot_cargoFree(player.p) );
-   gl_print( &gl_smallFont,
-         gui.misc.x + gui.misc.w - 8 - i, j,
-         NULL, "%d", pilot_cargoFree(player.p) );
-
-
-   /* Messages. */
-   gui_renderMessages(dt);
-
-
-   /* OSD. */
-   osd_render();
-
-   /*
-    * hyperspace
-    */
-   if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
-         (player.p->ptimer < HYPERSPACE_FADEOUT)) {
-      if (i < j) {
-         x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
-         col.r = 1.;
-         col.g = 1.;
-         col.b = 1.;
-         col.a = x;
-         gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
-      }
-   }
 #endif
 }
 
