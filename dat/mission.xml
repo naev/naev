@@ -482,8 +482,9 @@
    <done>Hitman</done>
   </avail>
  </mission>
-  <mission name="Hitman 3">
+ <mission name="Hitman 3">
   <lua>pirate/hitman3</lua>
+  <avail>
    <chance>40</chance>
    <location>Bar</location>
    <cond>system.get("Alteris") and player.getRating() &gt; 50</cond>
