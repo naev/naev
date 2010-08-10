@@ -242,6 +242,10 @@ glTexture* faction_logoTiny( int f )
  */
 glColour* faction_colour( int f )
 {
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
    return faction_stack[f].colour;
 }
 

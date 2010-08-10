@@ -786,15 +786,19 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
  */
 void gui_render( double dt )
 {
-   int i, j;
+   int i;
    double x;
-   Pilot* p;
-   glColour* c, col;
-   glFont* f;
+   glColour col;
    StarSystem *sys;
+   /*
+   glColour *c;
+   int j;
+   Pilot* p;
+   glFont* f;
    int q;
    glTexture *logo;
    int r;
+   */
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -845,6 +849,20 @@ void gui_render( double dt )
       col.a = x;
       gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
    }
+
+   /* Noise when getting near a jump. */
+   if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
+
+      sys = cur_system->jumps[player.p->nav_hyperspace].target;
+
+      /* Determine if we have to play the "enter hyperspace range" sound. */
+      i = space_canHyperspace(player.p);
+      if ((i != 0) && (i != can_jump))
+         if (!pilot_isFlag(player.p, PILOT_HYPERSPACE))
+            player_playSound(snd_jump, 1);
+      can_jump = i;
+   }
+
 #if 0
    /* Lockon warning */
    if (player.p->lockons > 0)
