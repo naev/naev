@@ -1059,7 +1059,7 @@ static void equipment_genLists( unsigned int wid )
    double eps, dps, shots;
    glColour *bg, *c, blend;
    char **slottype;
-   char typename;
+   const char *typename;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1184,9 +1184,10 @@ static void equipment_genLists( unsigned int wid )
             /* Slot type. */
             if ((strcmp(outfit_slotName(o),"NA") != 0) &&
                   (strcmp(outfit_slotName(o),"NULL") != 0)) {
-               typename = *outfit_slotName(o);
-               slottype[i] = malloc( sizeof(typename) );
-               snprintf( slottype[i], 2, "%c", typename );
+               typename       = outfit_slotName(o);
+               slottype[i]    = malloc( sizeof(char)*2 );
+               slottype[i][0] = typename[0];
+               slottype[i][1] = '\0';
             }
             else {
                slottype[i] = NULL;
