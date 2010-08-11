@@ -452,7 +452,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* Load the store surface. */
    snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
-   temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 0 );
+   temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
    /* Some filtering. */
    for (j=0; j<sh; j++) {
