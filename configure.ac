@@ -124,15 +124,13 @@ AC_ARG_ENABLE([debug],
      [enable debug mode (default: yes)]), [
     case "$enableval" in
       no)
-         enable_debug=no
-         ;;
+        enable_debug=no
+        ;;
       paranoid)
         enable_debug=paranoid
-        enable_bfd=yes
         ;;
       *)
         enable_debug=yes
-        enable_bfd=yes
         ;;
     esac
   ], [
@@ -152,13 +150,15 @@ AS_IF([test "$enable_debug" != "no"], [
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
-      AC_CHECK_HEADERS([bfd.h], [], [
+      AC_CHECK_HEADERS([bfd.h], [
+      have_bfd=yes
+      ], [
       AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
-      enable_bfd=no
+      have_bfd=no
       ])
       ], [
       AC_WARN([debug mode is enabled but libbfd is missing; disabling])
-      enable_bfd=no
+      have_bfd=no
       ])
       ;;
   esac
@@ -313,7 +313,7 @@ NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
-  AS_IF([test "$enable_bfd" != "no"], [
+  AS_IF([test "$have_bfd" != "no"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
@@ -512,9 +512,11 @@ AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
 echo
 AC_MSG_NOTICE([debug mode:  $enable_debug])
-case "$host" in
-  *-linux*)
-    AC_MSG_NOTICE([debug bfd:   $enable_bfd])
-    ;;
-esac
+AS_IF([test "$enable_debug" != "no"], [
+   case "$host" in
+     *-linux*)
+       AC_MSG_NOTICE([  bfd:       $have_bfd])
+       ;;
+   esac
+])
 
