@@ -254,7 +254,10 @@ function render( dt )
       gfx.print( true, str, target_x, target_y-100, col, target_w )
 
       -- Render target graphic
-      gfx.renderTex( target_gfx, target_x, target_y - target_gfx_h )
+      local x, y
+      x = target_x + (target_w - target_gfx_w)/2
+      y = target_y - (target_h - target_gfx_h)/2 + 5
+      gfx.renderTex( target_gfx, x, y - target_gfx_h )
 
       -- Render faction logo.
       if target_gfxFact ~= nil then

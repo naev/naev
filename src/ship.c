@@ -364,8 +364,8 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
  */
 static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 {
-   SDL_Surface *gfx;
-   int potw, poth;
+   SDL_Surface *gfx, *gfx_store;
+   int potw, poth, potw_store, poth_store;
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
    int i, j;
@@ -384,10 +384,14 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* POT size. */
    if (gl_needPOT()) {
-      potw = gl_pot( SHIP_TARGET_W );
-      poth = gl_pot( SHIP_TARGET_H );
+      potw = gl_pot( sw );
+      poth = gl_pot( sh );
+      potw_store = gl_pot( SHIP_TARGET_W );
+      poth_store = gl_pot( SHIP_TARGET_H );
    }
    else {
+      potw = sw;
+      poth = sh;
       potw = SHIP_TARGET_W;
       poth = SHIP_TARGET_H;
    }
@@ -398,6 +402,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* create the temp POT surface */
    gfx = SDL_CreateRGBSurface( 0, potw, poth,
+         surface->format->BytesPerPixel*8, RGBAMASK );
+   gfx_store = SDL_CreateRGBSurface( 0, potw_store, poth_store,
          surface->format->BytesPerPixel*8, RGBAMASK );
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
@@ -410,6 +416,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    /* create the temp POT surface */
    gfx = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
          potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+   gfx_store = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+         potw_store, poth_store, surface->format->BytesPerPixel*8, RGBAMASK );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    if (gfx == NULL) {
@@ -417,17 +425,24 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
       return -1;
    }
 
-   /* Copy over. */
+   /* Copy over for target. */
    gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
    rtemp.x = sw * x;
    rtemp.y = sh * (temp->gfx_space->sy-y-1);
    rtemp.w = sw;
    rtemp.h = sh;
+   dstrect.x = 0;
+   dstrect.y = 0;
+   dstrect.w = rtemp.w;
+   dstrect.h = rtemp.h;
+   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
+
+   /* Copy over for store. */
    dstrect.x = (SHIP_TARGET_W - sw) / 2;
    dstrect.y = (SHIP_TARGET_H - sh) / 2;
    dstrect.w = rtemp.w;
    dstrect.h = rtemp.h;
-   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
+   SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
 
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    /* set saved alpha */
@@ -437,11 +452,11 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* Load the store surface. */
    snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
-   temp->gfx_store = gl_loadImagePad( buf, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 0 );
+   temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 0 );
 
    /* Some filtering. */
-   for (j=0; j<SHIP_TARGET_H; j++) {
-      for (i=0; i<SHIP_TARGET_W; i++) {
+   for (j=0; j<sh; j++) {
+      for (i=0; i<sw; i++) {
          pix   = (uint32_t*) ((uint8_t*) gfx->pixels + j*gfx->pitch + i*gfx->format->BytesPerPixel);
          r     = ((double) (*pix & RMASK)) / (double) RMASK;
          g     = ((double) (*pix & GMASK)) / (double) GMASK;
@@ -470,7 +485,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 
    /* Load the surface. */
    snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
-   temp->gfx_target = gl_loadImagePad( buf, gfx, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
+   temp->gfx_target = gl_loadImagePad( buf, gfx, 0, sw, sh, 1, 1, 1 );
 
    return 0;
 }
