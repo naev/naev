@@ -392,8 +392,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    else {
       potw = sw;
       poth = sh;
-      potw = SHIP_TARGET_W;
-      poth = SHIP_TARGET_H;
+      potw_store = SHIP_TARGET_W;
+      poth_store = SHIP_TARGET_H;
    }
 
    /* Create the surface. */
