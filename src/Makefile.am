@@ -86,6 +86,7 @@ naev_SOURCES = \
 	npc.c \
 	ntime.c \
 	nxml.c \
+	nxml_lua.c \
 	opengl.c \
 	opengl_ext.c \
 	opengl_matrix.c \
@@ -199,6 +200,7 @@ naev_SOURCES = \
 	nstd.h \
 	ntime.h \
 	nxml.h \
+	nxml_lua.h \
 	opengl.h \
 	opengl_ext.h \
 	opengl_matrix.h \
