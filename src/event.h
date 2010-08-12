@@ -17,6 +17,7 @@ typedef struct Event_s {
    unsigned int id; /**< Event ID. */
    int data; /**< EventData parent. */
    lua_State *L; /**< Event Lua State. */
+   int save; /**< Whether or not it should be saved. */
 } Event_t;
 
 
