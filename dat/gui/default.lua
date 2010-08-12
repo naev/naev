@@ -3,7 +3,7 @@
 --[[
    @brief Obligatory create function.
 
-   Run when the GUI is loaded.
+   Run when the GUI is loaded which is caused whenever the player gets in a different ship.
 --]]
 function create()
    -- Get the player
@@ -86,6 +86,7 @@ function create()
    update_nav()
    update_target()
    update_ship()
+   update_system()
 end
 
 function relativize( x, y )
@@ -93,11 +94,17 @@ function relativize( x, y )
 end
 
 
+--[[
+-- @brief This function is run whenever the player changes nav target (be in hyperspace or planet target).
+--]]
 function update_nav ()
    nav_pnt, nav_hyp = pp:nav()
 end
 
 
+--[[
+-- @brief This function is run whenever the player changes his pilot target.
+--]]
 function update_target ()
    -- Set target
    ptarget = pp:target()
@@ -115,12 +122,18 @@ function update_target ()
 end
 
 
+--[[
+-- @brief This function is run whenever the player modifies his ship outfits (when the ship is changed the gui is recreated).
+--]]
 function update_ship ()
    stats = pp:stats()
    fuel_max = stats.fuel
 end
 
 
+--[[
+-- @brief This function is run whenever the player changes his cargo.
+--]]
 function update_cargo ()
    cargol = player.cargoList()
    misc_cargo = ""
@@ -139,17 +152,31 @@ end
 
 
 --[[
+-- @brief This function is run whenever the player changes system (every enter).
+--]]
+function update_system ()
+end
+
+
+--[[
    @brief Obligatory render function.
 
-   Run every frame.
+   Run every frame. Note that the dt will be 0. if the game is paused.
+
+      @param dt Current deltatick in seconds since last render.
 --]]
 function render( dt )
 
    -- Render warnings
    local sys = system.cur()
    local nebu_dens, nebu_vol = sys:nebula()
+   local y = screen_h - 50 - deffont_h
+   if pp:lockon() > 0 then
+      gfx.print( nil, "LOCK-ON DETECTED", 0, y, col_warn, screen_w, true )
+      y = y - deffont_h - 10
+   end
    if nebu_vol > 0 then
-      gfx.print( nil, 0, screen_h-40, col_warn, screen_w, true )
+      gfx.print( nil, "VOLATILE ENVIRONMENT DETECTED", 0, y, col_warn, screen_w, true )
    end
 
    -- Frame
@@ -288,8 +315,9 @@ end
 --[[
    @brief Optional destroy function.
 
-   Run when exitting the game on changing GUI.
+   Run when exitting the game on changing GUI. Graphics and stuff are cleaned up automatically.
 --]]
 function destroy()
 end
+
 
