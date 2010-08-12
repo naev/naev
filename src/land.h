@@ -41,7 +41,7 @@ extern Planet* land_planet;
 /*
  * Main interface.
  */
-void land ( Planet* p );
+void land( Planet* p, int load );
 void takeoff( int delay );
 void land_cleanup (void);
 void land_exit (void);

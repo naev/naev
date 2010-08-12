@@ -380,7 +380,7 @@ static int load_game( const char* file )
    events_trigger( EVENT_TRIGGER_LOAD );
 
    /* Land the player. */
-   land( pnt );
+   land( pnt, 1 );
 
    /* Sanitize the GUI. */
    gui_setCargo();
