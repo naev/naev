@@ -570,7 +570,9 @@ void player_swapShip( char* shipname )
          /* Fill the tank. */
          land_checkAddRefuel();
 
+         /* Set some gui stuff. */
          gl_cameraBind( &player.p->solid->pos ); /* don't forget the camera */
+         gui_load( player.p->ship->gui );
          return;
       }
    }
