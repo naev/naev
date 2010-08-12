@@ -212,7 +212,13 @@ static int hook_runEvent( Hook *hook, HookParam *param )
    id = hook->id;
 
    /* Set up hook parameters. */
-   L = event_runStart( hook->u.event.parent, hook->u.event.func );;
+   L = event_runStart( hook->u.event.parent, hook->u.event.func );
+   if (L == NULL) {
+      WARN("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook.", hook->stack,
+            hook->id, hook->u.event.func);
+      hook->delete = 1; /* Set for deletion. */
+      return -1;
+   }
    n = hook_parseParam( L, param );
 
    /* Add hook parameters. */
@@ -749,10 +755,6 @@ static int hook_needSave( Hook *h )
    if (h->type == HOOK_TYPE_FUNC)
       return 0;
 
-   /* Events aren't saved atm. */
-   if (h->type == HOOK_TYPE_EVENT)
-      return 0;
-
    /* Make sure it's in the proper stack. */
    for (i=0; strcmp(nosave[i],"end") != 0; i++)
       if (strcmp(nosave[i],h->stack)==0) return 0;
@@ -776,26 +778,23 @@ int hook_save( xmlTextWriterPtr writer )
    for (i=0; i<hook_nstack; i++) {
       h = &hook_stack[i];
 
-      if (!hook_needSave(h)) continue; /* no need to save it */
+      if (!hook_needSave(h))
+         continue; /* no need to save it */
 
       xmlw_startElem(writer,"hook");
 
       switch (h->type) {
          case HOOK_TYPE_MISN:
             xmlw_attr(writer,"type","misn"); /* Save attribute. */
-            xmlw_elem(writer,"id","%u",h->id);
             xmlw_elem(writer,"parent","%u",h->u.misn.parent);
             xmlw_elem(writer,"func","%s",h->u.misn.func);
             break;
 
-         /* Do not save events until they can be persistant. */
-#if 0
          case HOOK_TYPE_EVENT:
             xmlw_attr(writer,"type","event"); /* Save attribute. */
             xmlw_elem(writer,"parent","%u",h->u.event.parent);
             xmlw_elem(writer,"func","%s",h->u.event.func);
             break;
-#endif
 
          default:
             WARN("Something has gone screwy here...");
@@ -803,7 +802,7 @@ int hook_save( xmlTextWriterPtr writer )
       }
 
       /* Generic information. */
-      /* xmlw_attr(writer,"id","%u",h->id); I don't think it's needed */
+      xmlw_elem(writer,"id","%u",h->id);
       xmlw_elem(writer,"stack","%s",h->stack);
 
       xmlw_endElem(writer); /* "hook" */
@@ -869,10 +868,8 @@ static int hook_parse( xmlNodePtr base )
          func     = NULL;
          stack    = NULL;
 
-         cur = node->xmlChildrenNode;
-
          /* Handle the type. */
-         xmlr_attr(cur,"type",stype);
+         xmlr_attr(node,"type",stype);
          /* Default to mission for old saves. */
          if (stype == NULL)
             type = HOOK_TYPE_MISN;
@@ -895,6 +892,7 @@ static int hook_parse( xmlNodePtr base )
          }
 
          /* Handle the data. */
+         cur = node->xmlChildrenNode;
          do {
             /* ID. */
             xmlr_long(cur,"id",id);
@@ -903,7 +901,7 @@ static int hook_parse( xmlNodePtr base )
             xmlr_str(cur,"stack",stack);
 
             /* Type specific. */
-            if (type == HOOK_TYPE_MISN) {
+            if ((type == HOOK_TYPE_MISN) || (type == HOOK_TYPE_EVENT)) {
                xmlr_uint(cur,"parent",parent);
                xmlr_str(cur,"func",func);
             }
