@@ -170,8 +170,13 @@ function render( dt )
    -- Render warnings
    local sys = system.cur()
    local nebu_dens, nebu_vol = sys:nebula()
+   local y = screen_h - 50 - deffont_h
+   if pp:lockon() > 0 then
+      gfx.print( nil, "LOCK-ON DETECTED", 0, y, col_warn, screen_w, true )
+      y = y - deffont_h - 10
+   end
    if nebu_vol > 0 then
-      gfx.print( nil, 0, screen_h-40, col_warn, screen_w, true )
+      gfx.print( nil, "VOLATILE ENVIRONMENT DETECTED", 0, y, col_warn, screen_w, true )
    end
 
    -- Frame
