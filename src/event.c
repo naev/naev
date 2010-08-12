@@ -663,6 +663,31 @@ const char *event_dataName( int dataid )
 
 
 /**
+ * @brief Checks the event sanity and cleans up after them.
+ */
+void event_checkSanity (void)
+{
+   int i;
+   Event_t *ev;
+
+   /* Iterate. */
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+
+      /* Check if has children. */
+      if (hook_hasEventParent( ev->id ) > 0)
+         continue;
+
+      /* Must delete. */
+      WARN("Detected event '%s' without any hooks and is therefore insane. Removing event.",
+            event_dataName( ev->data ));
+      event_remove( ev->id );
+      i--; /* Keep iteration sane. */
+   }
+}
+
+
+/**
  * @brief Saves the player's active events.
  *
  *    @param writer XML Write to use to save events.

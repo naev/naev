@@ -381,6 +381,9 @@ static int load_game( const char* file )
    /* Initialize the economy. */
    economy_init();
 
+   /* Check sanity. */
+   event_checkSanity();
+
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
 

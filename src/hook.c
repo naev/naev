@@ -599,6 +599,42 @@ void hook_rmEventParent( unsigned int parent )
 
 
 /**
+ * @brief Checks to see how many hooks there are with the same mission parent.
+ *
+ *    @param parent ID of the parent.
+ *    @return Number of children hooks the parent has.
+ */
+int hook_hasMisnParent( unsigned int parent )
+{
+   int i, num;
+   num = 0;
+   for (i=0; i<hook_nstack; i++)
+      if ((hook_stack[i].type==HOOK_TYPE_MISN) &&
+            (parent == hook_stack[i].u.misn.parent))
+         num++;
+   return num;
+}
+
+
+/**
+ * @brief Checks to see how many hooks there are with the same event parent.
+ *
+ *    @param parent ID of the parent.
+ *    @return Number of children hooks the parent has.
+ */
+int hook_hasEventParent( unsigned int parent )
+{
+   int i, num;
+   num = 0;
+   for (i=0; i<hook_nstack; i++)
+      if ((hook_stack[i].type==HOOK_TYPE_EVENT) &&
+            (parent == hook_stack[i].u.event.parent))
+         num++;
+   return num;
+}
+
+
+/**
  * @brief Runs all the hooks of stack.
  *
  *    @param stack Stack to run.
