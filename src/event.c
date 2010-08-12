@@ -82,11 +82,12 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
 /*
  * Prototypes.
  */
+static unsigned int event_genID (void);
 static Event_t *event_get( unsigned int eventid );
 static int event_alreadyRunning( int data );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
-static int event_create( int dataid, int load );
+static int event_create( int dataid, unsigned int id );
 int events_saveActive( xmlTextWriterPtr writer );
 int events_loadActive( xmlNodePtr parent );;
 static int events_parseActive( xmlNodePtr parent );
@@ -107,7 +108,7 @@ static Event_t *event_get( unsigned int eventid )
          return ev;
    }
 
-   WARN( "Event '%u' not found in stack.", eventid );
+   /*WARN( "Event '%u' not found in stack.", eventid );*/
    return NULL;
 }
 
@@ -198,11 +199,25 @@ int event_isUnique( unsigned int eventid )
 
 
 /**
+ * @brief Generates a new event ID.
+ */
+static unsigned int event_genID (void)
+{
+   unsigned int id;
+   do {
+      id = ++event_genid; /* Create unique ID. */
+   } while (event_get(id) != NULL);
+   return id;
+}
+
+
+/**
  * @brief Creates an event.
  *
  *    @param data Data to base event off of.
+ *    @param id ID to use (0 to generate).
  */
-static int event_create( int dataid, int load )
+static int event_create( int dataid, unsigned int id )
 {
    lua_State *L;
    uint32_t bufsize;
@@ -218,7 +233,10 @@ static int event_create( int dataid, int load )
    }
    ev = &event_active[ event_nactive-1 ];
    memset( ev, 0, sizeof(Event_t) );
-   ev->id = ++event_genid; /* Create unique ID. */
+   if (id > 0)
+      ev->id = id;
+   else
+      ev->id = event_genID();
 
    /* Add the data. */
    ev->data = dataid;
@@ -248,7 +266,7 @@ static int event_create( int dataid, int load )
    free(buf);
 
    /* Run Lua. */
-   if (!load)
+   if (id==0)
       event_runLua( ev, "create" );
 
    return 0;
@@ -651,8 +669,8 @@ int events_saveActive( xmlTextWriterPtr writer )
 
       xmlw_startElem(writer,"event");
 
-      /* data and id are attributes becaues they must be loaded first */
       xmlw_attr(writer,"name","%s",event_dataName(ev->data));
+      xmlw_attr(writer,"id","%u",ev->id);
 
       /* write lua magic */
       xmlw_startElem(writer,"lua");
@@ -700,7 +718,8 @@ int events_loadActive( xmlNodePtr parent )
 static int events_parseActive( xmlNodePtr parent )
 {
    char *buf;
-   int id;
+   unsigned int id;
+   int data;
    xmlNodePtr node, cur;
    Event_t *ev;
 
@@ -714,17 +733,28 @@ static int events_parseActive( xmlNodePtr parent )
          WARN("Event has missing 'name' attribute, skipping.");
          continue;
       }
-      id = event_dataID( buf );
-      if (id < 0) {
+      data = event_dataID( buf );
+      if (data < 0) {
          WARN("Event in save has name '%s' but event data not found matching name. Skipping.", buf);
          free(buf);
          continue;
       }
       free(buf);
+      xmlr_attr(node,"id",buf);
+      if (buf==NULL) {
+         WARN("Event with data '%s' has missing 'id' attribute, skipping.", event_dataName(data));
+         continue;
+      }
+      id = atoi(buf);
+      free(buf);
+      if (id==0) {
+         WARN("Event with data '%s' has invalid 'id' attribute, skipping.", event_dataName(data));
+         continue;
+      }
 
       /* Create the event. */
-      id = event_create( id, 1 );
-      ev = event_get( id );
+      event_create( data, id );
+      ev = event_get( data );
       ev->save = 1; /* Should save by default again. */
 
       /* Get the data. */
@@ -737,3 +767,5 @@ static int events_parseActive( xmlNodePtr parent )
 
    return 0;
 }
+
+
