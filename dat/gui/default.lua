@@ -86,6 +86,7 @@ function create()
    update_nav()
    update_target()
    update_ship()
+   update_system()
 end
 
 function relativize( x, y )
@@ -147,6 +148,13 @@ function update_cargo ()
       end
       misc_cargo = misc_cargo .. "\n"
    end
+end
+
+
+--[[
+-- @brief This function is run whenever the player changes system (every enter).
+--]]
+function update_system ()
 end
 
 

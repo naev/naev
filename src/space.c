@@ -1011,6 +1011,9 @@ void space_init ( const char* sysname )
    sound_disabled = s;
    player_messageToggle( 1 );
    pilot_rmFlag( player.p, PILOT_INVISIBLE );
+
+   /* Update gui. */
+   gui_setSystem();
 }
 
 

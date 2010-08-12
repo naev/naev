@@ -36,6 +36,7 @@ void gui_setCargo (void);
 void gui_setNav (void);
 void gui_setTarget (void);
 void gui_setShip (void);
+void gui_setSystem (void);
 
 
 /*

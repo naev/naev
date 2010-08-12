@@ -1912,6 +1912,16 @@ void gui_setShip (void)
 
 
 /**
+ * @brief Player just changed his system.
+ */
+void gui_setSystem (void)
+{
+   if (gui_L != NULL)
+      gui_doFunc( "update_system" );
+}
+
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
