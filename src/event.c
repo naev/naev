@@ -321,6 +321,19 @@ void event_remove( unsigned int eventid )
 
 
 /**
+ * @brief Checks to see if an event should be saved.
+ */
+int event_save( unsigned int eventid )
+{
+   Event_t *ev;
+   ev = event_get(eventid);
+   if (ev == NULL)
+      return 0;
+   return ev->save;
+}
+
+
+/**
  * @brief Check to see if an event is already running.
  *
  *    @param data ID of data event to check if is already running.
@@ -754,7 +767,11 @@ static int events_parseActive( xmlNodePtr parent )
 
       /* Create the event. */
       event_create( data, id );
-      ev = event_get( data );
+      ev = event_get( id );
+      if (ev == NULL) {
+         WARN("Event with data '%s' was not created, skipping.", event_dataName(data));
+         continue;
+      }
       ev->save = 1; /* Should save by default again. */
 
       /* Get the data. */

@@ -755,6 +755,10 @@ static int hook_needSave( Hook *h )
    if (h->type == HOOK_TYPE_FUNC)
       return 0;
 
+   /* Events must need saving. */
+   if ((h->type == HOOK_TYPE_EVENT) && !event_save(h->u.event.parent))
+      return 0;
+
    /* Make sure it's in the proper stack. */
    for (i=0; strcmp(nosave[i],"end") != 0; i++)
       if (strcmp(nosave[i],h->stack)==0) return 0;

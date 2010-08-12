@@ -53,6 +53,7 @@ void events_trigger( EventTrigger_t trigger );
  * Handling.
  */
 void event_remove( unsigned int eventid );
+int event_save( unsigned int eventid );
 const char *event_getData( unsigned int eventid );
 int event_isUnique( unsigned int eventid );
 
