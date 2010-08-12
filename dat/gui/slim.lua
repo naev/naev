@@ -240,8 +240,8 @@ function render( dt )
 	--Speed
 	local dispspe, dispspe2
 	if math.floor(speed) > stats.speed then
+		dispspe2 = dispspe - 1
 		dispspe = 1
-		dispspe2 = (2 * speed) / stats.speed - 2 --is 1 when speed = 1.5 * stats.speed
 		col = col_txt_wrn
 		if dispspe2 > 1 then
 			dispspe2 = 1
@@ -307,8 +307,8 @@ function render( dt )
 
 				
 				if math.floor(ta_speed) > ta_stats.speed then
+					dispspe2 = dispspe - 1
 					dispspe = 1
-					dispspe2 = (2 * ta_speed) / ta_stats.speed - 2 --is 1 when speed = 1.5 * stats.speed
 					specol = col_txt_wrn
 					if dispspe2 > 1 then
 						dispspe2 = 1
