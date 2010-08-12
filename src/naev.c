@@ -31,13 +31,13 @@
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
 
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <bfd.h>
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /* local */
 #include "conf.h"
@@ -111,10 +111,10 @@ static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
 const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /*
  * prototypes
@@ -202,7 +202,7 @@ int main( int argc, char** argv )
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
       feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* DEBUGGING */
+#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) */
 
    /* Open data. */
    if (ndata_open() != 0)
@@ -835,7 +835,7 @@ static void print_SDLversion (void)
 }
 
 
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -943,7 +943,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    /* Always exit. */
    exit(1);
 }
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 
 /**
@@ -951,7 +951,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
  */
 static void debug_sigInit (void)
 {
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
    char **matching;
    struct sigaction sa, so;
    long symcount;
@@ -991,7 +991,8 @@ static void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+   DEBUG("BFD backtrace catching enabled.");
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 }
 
 
@@ -1000,7 +1001,7 @@ static void debug_sigInit (void)
  */
 static void debug_sigClose (void)
 {
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
    bfd_close( abfd );
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 }

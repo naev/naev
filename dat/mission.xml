@@ -348,9 +348,8 @@
    <unique />
   </flags>
   <avail>
-   <done>Baron</done>
    <priority>4</priority>
-   <cond>player.getRating() &gt; 15</cond>
+   <cond>player.getRating() &gt; 15 and player.misnDone("Baron")</cond>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Empire</faction>
