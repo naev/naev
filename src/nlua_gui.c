@@ -18,16 +18,19 @@
 #include "nluadef.h"
 #include "log.h"
 #include "gui.h"
+#include "gui_osd.h"
 #include "nlua_tex.h"
 
 
 /* Ship metatable methods. */
+static int guiL_osdInit( lua_State *L );
 static int guiL_mesgInit( lua_State *L );
 static int guiL_radarInit( lua_State *L );
 static int guiL_radarRender( lua_State *L );
 static int guiL_targetPlanetGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
 static const luaL_reg guiL_methods[] = {
+   { "osdInit", guiL_osdInit },
    { "mesgInit", guiL_mesgInit },
    { "radarInit", guiL_radarInit },
    { "radarRender", guiL_radarRender },
@@ -66,6 +69,31 @@ int nlua_loadGUI( lua_State *L, int readonly )
  *
  * @luamod gui
  */
+
+
+/**
+ * @brief Initializes the mission OSD (on-screen display).
+ *
+ *    @luaparam x X position of the OSD display.
+ *    @luaparam y Y position of the OSD display.
+ *    @luaparam w Width of the OSD display.
+ *    @luaparam h Height of the OSD display.
+ * @luafunc osdInit( x, y, w, h )
+ */
+static int guiL_osdInit( lua_State *L )
+{
+   int x,y, w,h;
+
+   /* Parameters. */
+   x = luaL_checkinteger(L,1);
+   y = luaL_checkinteger(L,2);
+   w = luaL_checkinteger(L,3);
+   h = luaL_checkinteger(L,4);
+
+   /* Set up. */
+   osd_setup( x, y, w, h );
+   return 0;
+}
 
 
 /**
