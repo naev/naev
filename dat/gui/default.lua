@@ -270,7 +270,7 @@ function render_target ()
    arm, shi, dis = ptarget:health()
 
    -- Get colour
-   if dis then
+   if dis or fuz then
       col = col_gray
    else
       if pfact:areEnemies( target_fact ) then
