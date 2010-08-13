@@ -503,7 +503,6 @@ void mission_cleanup( Mission* misn )
             if (ret)
                WARN("Failed to remove mission cargo '%d' for mission '%s'.", misn->cargo[i], misn->title);
          }
-         mission_unlinkCargo( misn, misn->cargo[i] );
       }
       free(misn->cargo);
    }
