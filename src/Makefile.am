@@ -9,6 +9,7 @@ naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 naev_SOURCES = \
 	ai.c \
 	array.c \
+	background.c \
 	base64.c \
 	board.c \
 	collision.c \
@@ -118,6 +119,7 @@ naev_SOURCES = \
 	ai.h \
 	ai_extra.h \
 	array.h \
+	background.h \
 	base64.h \
 	board.h \
 	collision.h \

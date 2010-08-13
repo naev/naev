@@ -23,7 +23,7 @@
 #include "nlua_tex.h"
 
 
-/* Ship metatable methods. */
+/* GUI metatable methods. */
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
@@ -45,7 +45,7 @@ static const luaL_reg gfxL_methods[] = {
    { "print", gfxL_print },
    { "printText", gfxL_printText },
    {0,0}
-}; /**< Ship metatable methods. */
+}; /**< GUI metatable methods. */
 
 
 

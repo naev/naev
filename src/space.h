@@ -249,7 +249,6 @@ extern int space_spawn; /**< 1 if spawning is enabled. */
 /*
  * loading/exiting
  */
-void space_initStars( int n );
 void space_init( const char* sysname );
 int space_load (void);
 void space_exit (void);
@@ -281,7 +280,6 @@ int system_rmFleet( StarSystem *sys, Fleet *fleet );
 /*
  * render
  */
-void space_renderStars( const double dt );
 void space_render( const double dt );
 void space_renderOverlay( const double dt );
 void planets_render (void);
@@ -337,10 +335,6 @@ int system_hasPlanet( StarSystem *sys );
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
-
-
-/* Stardate. */
-extern char* stardate;
 
 
 #endif /* SPACE_H */

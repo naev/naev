@@ -39,6 +39,7 @@
 #include "nlua.h"
 #include "nlua_pilot.h"
 #include "npng.h"
+#include "background.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -105,22 +106,6 @@ glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 int space_spawn = 1; /**< Spawn enabled by default. */
 extern int pilot_nstack;
 extern Pilot** pilot_stack;
-
-
-/*
- * star stack and friends
- */
-#define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
-/**
- * @struct Star
- *
- * @brief Represents a background star. */
-static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
-static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
-static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
-static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
-static unsigned int nstars = 0; /**< total stars */
-static unsigned int mstars = 0; /**< memory stars are taking */
 
 
 /*
@@ -844,74 +829,6 @@ void space_update( const double dt )
 
 
 /**
- * @brief Initilaizes background stars.
- *
- *    @param n Number of stars to add (stars per 800x640 screen).
- */
-void space_initStars( int n )
-{
-   unsigned int i;
-   GLfloat w, h, hw, hh;
-   double size;
-
-   /* Calculate size. */
-   size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
-   size /= pow2(conf.zoom_far);
-
-   /* Calculate star buffer. */
-   w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-   h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-   hw = w / 2.;
-   hh = h / 2.;
-
-   /* Calculate stars. */
-   size  *= n;
-   nstars = (unsigned int)(size/(800.*600.));
-
-   if (mstars < nstars) {
-      /* Create data. */
-      star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
-      star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 8 );
-      mstars = nstars;
-   }
-   for (i=0; i < nstars; i++) {
-      /* Set the position. */
-      star_vertex[4*i+0] = RNGF()*w - hw;
-      star_vertex[4*i+1] = RNGF()*h - hh;
-      star_vertex[4*i+2] = 0.;
-      star_vertex[4*i+3] = 0.;
-      /* Set the colour. */
-      star_colour[8*i+0] = 1.;
-      star_colour[8*i+1] = 1.;
-      star_colour[8*i+2] = 1.;
-      star_colour[8*i+3] = RNGF()*0.6 + 0.2;
-      star_colour[8*i+4] = 1.;
-      star_colour[8*i+5] = 1.;
-      star_colour[8*i+6] = 1.;
-      star_colour[8*i+7] = 0.;
-   }
-
-   /* Destroy old VBO. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-      star_vertexVBO = NULL;
-   }
-   if (star_colourVBO != NULL) {
-      gl_vboDestroy( star_colourVBO );
-      star_colourVBO = NULL;
-   }
-
-   /* Create now VBO. */
-   star_vertexVBO = gl_vboCreateStream(
-         nstars * sizeof(GLfloat) * 4, star_vertex );
-   star_colourVBO = gl_vboCreateStatic(
-         nstars * sizeof(GLfloat) * 8, star_colour );
-}
-
-
-/**
  * @brief Initializes the system.
  *
  *    @param sysname Name of the system to initialize.
@@ -958,7 +875,7 @@ void space_init ( const char* sysname )
       }
       else {
          /* Backrgound is Stary */
-         space_initStars( cur_system->stars  );
+         background_initStars( cur_system->stars  );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NORMAL, 0. );
@@ -2007,7 +1924,7 @@ void space_render( const double dt )
    if (cur_system->nebu_density > 0.)
       nebu_render(dt);
    else
-      space_renderStars(dt);
+      background_renderStars(dt);
 }
 
 
@@ -2023,110 +1940,6 @@ void space_renderOverlay( const double dt )
 
    if (cur_system->nebu_density > 0.)
       nebu_renderOverlay(dt);
-}
-
-
-/**
- * @brief Renders the starry background.
- *
- *    @param dt Current delta tick.
- */
-void space_renderStars( const double dt )
-{
-   unsigned int i;
-   GLfloat hh, hw, h, w;
-   GLfloat x, y, m, b;
-   GLfloat brightness;
-   double z;
-
-   /*
-    * gprof claims it's the slowest thing in the game!
-    */
-
-   /* Do some scaling for now. */
-   gl_cameraZoomGet( &z );
-   z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   gl_matrixPush();
-      gl_matrixScale( z, z );
-
-      if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-            !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-         /* Calculate some dimensions. */
-         w  = (SCREEN_W + 2.*STAR_BUF);
-         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-         h  = (SCREEN_H + 2.*STAR_BUF);
-         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-         hw = w/2.;
-         hh = h/2.;
-
-         /* Calculate new star positions. */
-         for (i=0; i < nstars; i++) {
-
-            /* calculate new position */
-            b = 9. - 10.*star_colour[8*i+3];
-            star_vertex[4*i+0] = star_vertex[4*i+0] -
-               (GLfloat)player.p->solid->vel.x / b*(GLfloat)dt;
-            star_vertex[4*i+1] = star_vertex[4*i+1] -
-               (GLfloat)player.p->solid->vel.y / b*(GLfloat)dt;
-
-            /* check boundries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
-
-         /* Upload the data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      }
-
-   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
-
-      glShadeModel(GL_SMOOTH);
-
-      /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
-      m /= HYPERSPACE_STARS_BLUR;
-      m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player.p->solid->vel));
-      y = m*sin(VANGLE(player.p->solid->vel));
-
-      /* Generate lines. */
-      for (i=0; i < nstars; i++) {
-         brightness = star_colour[8*i+3];
-         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
-      }
-
-      /* Draw the lines. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, nstars );
-
-      glShadeModel(GL_FLAT);
-   }
-   else { /* normal rendering */
-      /* Render. */
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
-      glDrawArrays( GL_POINTS, 0, nstars );
-      gl_checkErr();
-   }
-
-   /* Disable vertex array. */
-   gl_vboDeactivate();
-
-   /* Pop matrix. */
-   gl_matrixPop();
 }
 
 
@@ -2250,18 +2063,6 @@ void space_exit (void)
    systems_stack = NULL;
    systems_nstack = 0;
    systems_mstack = 0;
-
-   /* stars must be free too */
-   if (star_vertex) {
-      free(star_vertex);
-      star_vertex = NULL;
-   }
-   if (star_colour) {
-      free(star_colour);
-      star_colour = NULL;
-   }
-   nstars = 0;
-   mstars = 0;
 }
 
 
