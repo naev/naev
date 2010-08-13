@@ -83,6 +83,7 @@
 #include "console.h"
 #include "npng.h"
 #include "dev.h"
+#include "background.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -402,7 +403,7 @@ void loadscreen_load (void)
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
-   space_initStars( 1000 );
+   background_initStars( 1000 );
 
    /* Clean up. */
    for (i=0; i<nload; i++)
@@ -428,7 +429,7 @@ void loadscreen_render( double done, const char *msg )
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Draw stars. */
-   space_renderStars( 0. );
+   background_renderStars( 0. );
 
    /*
     * Dimensions.
