@@ -298,6 +298,10 @@ void background_clear (void)
    int i;
    background_image_t *bkg;
 
+   /* Must have an image array created. */
+   if (bkg_image_arr == NULL)
+      return;
+
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
       gl_freeTexture( bkg->image );
@@ -314,8 +318,11 @@ void background_clear (void)
 void background_free (void)
 {
    /* Free the images. */
-   background_clear();
-   array_free( bkg_image_arr );
+   if (bkg_image_arr != NULL) {
+      background_clear();
+      array_free( bkg_image_arr );
+      bkg_image_arr = NULL;
+   }
 
    /* Free the stars. */
    if (star_vertex) {
