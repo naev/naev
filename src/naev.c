@@ -329,6 +329,7 @@ int main( int argc, char** argv )
    cond_exit(); /* destroy conditional subsystem. */
    land_exit(); /* Destroys landing vbo and friends. */
    npc_clear(); /* In case exitting while landed. */
+   background_free(); /* Destroy backgrounds. */
 
    /* data unloading */
    unload_all();
