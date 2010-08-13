@@ -295,7 +295,7 @@ static void background_renderImages (void)
 /**
  * @brief Cleans up the background stuff.
  */
-void background_cleanup (void)
+void background_clear (void)
 {
    array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr)-1 ] );
 }
@@ -307,7 +307,7 @@ void background_cleanup (void)
 void background_free (void)
 {
    /* Free the images. */
-   background_cleanup();
+   background_clear();
    array_free( bkg_image_arr );
 
    /* Free the stars. */

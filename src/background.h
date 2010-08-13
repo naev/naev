@@ -25,7 +25,7 @@ void background_renderStars( const double dt );
 
 
 /* Clean up. */
-void background_cleanup (void);
+void background_clear (void);
 void background_free (void);
 
 

@@ -844,6 +844,7 @@ void space_init ( const char* sysname )
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
+   background_clear(); /* Get rid of the background. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
 
