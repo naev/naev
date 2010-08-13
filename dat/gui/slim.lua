@@ -66,6 +66,8 @@ function create()
 	
 	--Messages
 	gui.mesgInit( screen_w - 400, 20, 30 )
+	--OSD
+	gui.osdInit( 30, screen_h-90, 150, 300 )
 	
 	--Get positions
 	--Player pane
@@ -157,12 +159,18 @@ function update_target()
 		ptarget_target = ptarget:target()
 		ta_stats = ptarget:stats()
 		
-		if ptarget_gfx_w > 92 then
-			ptarget_gfx_draw_w = 92
-			ptarget_gfx_draw_h = ptarget_gfx_draw_w / ptarget_gfx_w * ptarget_gfx_h
-		elseif ptarget_gfx_h > 92 then
-			ptarget_gfx_draw_h = 92
-			ptarget_gfx_draw_w = ptarget_gfx_draw_h / ptarget_gfx_h * ptarget_gfx_w
+		ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
+		
+		if ptarget_gfx_aspect >= 1 then
+			if ptarget_gfx_w > 92 then
+				ptarget_gfx_draw_w = 92
+				ptarget_gfx_draw_h = 92 / ptarget_gfx_w * ptarget_gfx_h
+			end
+		else
+			if ptarget_gfx_h > 92 then
+				ptarget_gfx_draw_h = 92
+				ptarget_gfx_draw_w = 92 / ptarget_gfx_h * ptarget_gfx_w
+			end
 		end
 	end
 end
@@ -175,6 +183,9 @@ end
 
 function update_ship()
 	stats = pp:stats()
+end
+
+function update_system()
 end
 
 function render( dt )
@@ -193,7 +204,7 @@ function render( dt )
 	lockons = pp:lockon()
 	autonav = player.autonav()
 	
-	local col
+	local col, small, txt
 	--Shield
 	if shield == 0. then
 		col = col_txt_enm
@@ -207,7 +218,13 @@ function render( dt )
 	gfx.renderTex( bg_bar, shield_x, shield_y )
 	gfx.renderTex( icon_shi, shield_x + 7, shield_y + 4 )
 	gfx.renderTex( sheen, shield_x + 31, shield_y +15 )
-	gfx.print( false, tostring( math.floor(shield)) .. "% (" .. tostring(math.floor(stats.shield * shield / 100)) .. ")", shield_x + 30, shield_y + 6, col, bar_w, true)
+	txt = tostring( math.floor(shield)) .. "% (" .. tostring(math.floor(stats.shield * shield / 100)) .. ")"
+	if gfx.printDim( false, txt ) > bar_w then
+		small = true
+	else
+		small = false
+	end
+	gfx.print( small, txt, shield_x + 30, shield_y + 6, col, bar_w, true)
 	
 	--Armor
 	if armor <= 0.2 then
@@ -220,7 +237,13 @@ function render( dt )
 	gfx.renderTex( bg_bar, armor_x, armor_y )
 	gfx.renderTex( icon_arm, armor_x + 7, armor_y + 4 )
 	gfx.renderTex( sheen, armor_x + 31, armor_y +15 )
-	gfx.print( false, tostring( math.floor(armor)) .. "% (" .. tostring(math.floor(stats.armour * armor / 100)) .. ")", armor_x + 30, armor_y + 6, col, bar_w, true)
+	txt = tostring( math.floor(armor)) .. "% (" .. tostring(math.floor(stats.armour * armor / 100)) .. ")"
+	if gfx.printDim( false, txt ) > bar_w then
+		small = true
+	else
+		small = false
+	end
+	gfx.print( small, txt, armor_x + 30, armor_y + 6, col, bar_w, true)
 	
 	--Energy
 	if energy == 0. then
@@ -235,12 +258,18 @@ function render( dt )
 	gfx.renderTex( bg_bar, energy_x, energy_y )
 	gfx.renderTex( icon_ene, energy_x + 7, energy_y + 4 )
 	gfx.renderTex( sheen, energy_x + 31, energy_y +15 )
-	gfx.print( false, tostring( math.floor(energy)) .. "% (" .. tostring(math.floor(stats.energy  * energy / 100)) .. ")", energy_x + 30, energy_y + 6, col_txt_bar, bar_w, true)
+	txt = tostring( math.floor(energy)) .. "% (" .. tostring(math.floor(stats.energy  * energy / 100)) .. ")"
+	if gfx.printDim( false, txt ) > bar_w then
+		small = true
+	else
+		small = false
+	end
+	gfx.print( small, txt, energy_x + 30, energy_y + 6, col_txt_bar, bar_w, true)
 	
 	--Speed
 	local dispspe, dispspe2
 	if math.floor(speed) > stats.speed then
-		dispspe2 = dispspe - 1
+		dispspe2 = speed/stats.speed - 1
 		dispspe = 1
 		col = col_txt_wrn
 		if dispspe2 > 1 then
@@ -271,7 +300,13 @@ function render( dt )
 	gfx.renderTex( bg_bar, speed_x, speed_y )
 	gfx.renderTex( icon_spe, speed_x + 7, speed_y + 4 )
 	gfx.renderTex( sheen, speed_x + 31, speed_y +15 )
-	gfx.print( false, tostring( math.floor(speed / stats.speed * 100)) .. "% (" .. tostring( math.floor(speed)) .. ")", speed_x + 30, speed_y + 6, col, bar_w, true)
+	txt = tostring( math.floor(speed / stats.speed * 100)) .. "% (" .. tostring( math.floor(speed)) .. ")"
+	if gfx.printDim( false, txt ) > bar_w then
+		small = true
+	else
+		small = false
+	end
+	gfx.print( small, txt, speed_x + 30, speed_y + 6, col, bar_w, true)
 	
 	--Warning Light
 	if lockon then
@@ -281,7 +316,7 @@ function render( dt )
 		gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
 	end
 	if autonav then
-		gfx.render( warnlight3, pl_pane_x + 162, pl_pane_y + 3 )
+		gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 3 )
 	end
 	
 	
@@ -307,7 +342,7 @@ function render( dt )
 
 				
 				if math.floor(ta_speed) > ta_stats.speed then
-					dispspe2 = dispspe - 1
+					dispspe2 = ta_speed/ta_stats.speed - 1
 					dispspe = 1
 					specol = col_txt_wrn
 					if dispspe2 > 1 then
@@ -320,8 +355,8 @@ function render( dt )
 					specol = col_txt_bar
 				end
 				--Render target graphic
-				if ta_image_w > 92 or ta_image_h > 92 then
-					gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, 1)
+				if ptarget_gfx_w > 92 or ptarget_gfx_h > 92 then
+					gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, 1)
 				else
 					gfx.renderTex( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2)
 				end
