@@ -308,7 +308,7 @@ void background_clear (void)
    }
 
    /* Erase it all. */
-   array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr)-1 ] );
+   array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr) ] );
 }
 
 
