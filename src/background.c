@@ -20,6 +20,22 @@
 #include "conf.h"
 #include "rng.h"
 #include "pause.h"
+#include "array.h"
+
+
+/**
+ * @brief Represents a background image like say a Nebula.
+ */
+typedef struct background_image_s {
+   glTexture *image; /**< Image to display. */
+   double x; /**< X center of the image. */
+   double y; /**< Y center of the image. */
+   double xmove; /**< How many X pixels it moves for each pixel the player moves. */
+   double ymove; /**< How many Y pixels it moves for each pixel the player moves. */
+   double scale; /**< How the image should be scaled. */
+   glColour *col; /**< Colour to use. */
+} background_image_t;
+static background_image_t *bkg_image_arr = NULL; /**< Background image array to display. */
 
 
 /*
@@ -33,6 +49,11 @@ static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
 
+
+/*
+ * Prototypes.
+ */
+static void background_renderImages (void);
 
 
 /**
@@ -210,11 +231,86 @@ void background_renderStars( const double dt )
 
 
 /**
+ * @brief Render the background.
+ */
+void background_render( double dt )
+{
+   background_renderStars(dt);
+   background_renderImages();
+}
+
+
+/**
+ * @brief Adds a new background image.
+ */
+int background_addImage( glTexture *image, double x, double y,
+      double xmove, double ymove, double scale, glColour *col )
+{
+   background_image_t *bkg;
+
+   /* See if must create. */
+   if (bkg_image_arr == NULL)
+      bkg_image_arr = array_create( background_image_t );
+
+   /* Create image. */
+   bkg         = &array_grow( &bkg_image_arr );
+   bkg->image  = gl_dupTexture(image);
+   bkg->x      = x;
+   bkg->y      = y;
+   bkg->xmove  = xmove;
+   bkg->ymove  = ymove;
+   bkg->scale  = scale;
+   bkg->col    = col;
+
+   return array_size(bkg_image_arr)-1;
+}
+
+
+/**
+ * @brief Renders the background images.
+ */
+static void background_renderImages (void)
+{
+   int i;
+   background_image_t *bkg;
+   double x,y, xs,ys;
+
+   /* Must have an image array created. */
+   if (bkg_image_arr == NULL)
+      return;
+
+   /* Render images in order. */
+   for (i=0; i<array_size(bkg_image_arr); i++) {
+      bkg = &bkg_image_arr[i];
+
+      x = bkg->x + player.p->solid->pos.x * bkg->xmove;
+      y = bkg->y + player.p->solid->pos.y * bkg->ymove;
+      gl_gameToScreenCoords( &xs, &ys, x, y );
+      gl_blitScale( bkg->image, xs, ys,
+            bkg->scale * bkg->image->sx, bkg->scale * bkg->image->sy, bkg->col );
+   }
+}
+
+
+/**
+ * @brief Cleans up the background stuff.
+ */
+void background_cleanup (void)
+{
+   array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr)-1 ] );
+}
+
+
+/**
  * @brief Cleans up and frees memory after the backgrounds.
  */
 void background_free (void)
 {
-   /* stars must be free too */
+   /* Free the images. */
+   background_cleanup();
+   array_free( bkg_image_arr );
+
+   /* Free the stars. */
    if (star_vertex) {
       free(star_vertex);
       star_vertex = NULL;
