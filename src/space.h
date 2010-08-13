@@ -339,8 +339,4 @@ int space_hyperspace( Pilot* p );
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
 
 
-/* Stardate. */
-extern char* stardate;
-
-
 #endif /* SPACE_H */
