@@ -1740,11 +1740,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    char *buf;
    xmlNodePtr cur, cur2;
    double x, y;
-
-   /* Allocate more space. */
-   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
-   j = &sys->jumps[ sys->njumps ];
-   memset( j, 0, sizeof(JumpPoint) );
+   StarSystem *target;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -1752,12 +1748,33 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       WARN("JumpPoint node for system '%s' has no target attribute.", sys->name);
       return -1;
    }
-   j->target = system_get( buf );
-   if (j->target == NULL) {
+   target = system_get(buf);
+   if (target == NULL) {
       WARN("JumpPoint node for system '%s' has invalid target '%s'.", sys->name, buf );
       free(buf);
       return -1;
    }
+
+#ifdef DEBUGGING
+   int i;
+   for (i=0; i<sys->njumps; i++) {
+      j = &sys->jumps[i];
+      if (j->targetid != target->id)
+         continue;
+
+      WARN("Star System '%s' has duplicate jump point to '%s'.",
+            sys->name, target->name );
+      break;
+   }
+#endif /* DEBUGGING */
+
+   /* Allocate more space. */
+   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
+   j = &sys->jumps[ sys->njumps ];
+   memset( j, 0, sizeof(JumpPoint) );
+
+   /* Set some stuff. */
+   j->target = target;
    free(buf);
    j->targetid = j->target->id;
 
