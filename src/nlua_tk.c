@@ -147,7 +147,7 @@ static int tk_input( lua_State *L )
 /**
  * @brief Creates a window with a number of selectable options
  *
- * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return "No", 2
+ * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return 2, "No"
  *
  *    @luaparam title Title of the window.
  *    @luaparam msg Message to display.
@@ -183,3 +183,4 @@ static int tk_choice( lua_State *L )
    lua_pushstring(L,result);
    return 2;
 }
+
