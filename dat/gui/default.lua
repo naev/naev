@@ -169,26 +169,19 @@ end
       @param dt Current deltatick in seconds since last render.
 --]]
 function render( dt )
-
-   -- Render warnings
-   local sys = system.cur()
-   local nebu_dens, nebu_vol = sys:nebula()
-   local y = screen_h - 50 - deffont_h
-   if pp:lockon() > 0 then
-      gfx.print( nil, "LOCK-ON DETECTED", 0, y, col_warn, screen_w, true )
-      y = y - deffont_h - 10
-   end
-   if nebu_vol > 0 then
-      gfx.print( nil, "VOLATILE ENVIRONMENT DETECTED", 0, y, col_warn, screen_w, true )
-   end
-
-   -- Frame
    gfx.renderTex( frame, frame_x, frame_y )
-
-   -- Render radar
    gui.radarRender( radar_x, radar_y )
+   render_nav()
+   render_health()
+   render_weapon()
+   render_target()
+   render_misc()
+   render_warnings()
+end
 
-   -- NAV
+
+-- Renders the navigation computer
+function render_nav ()
    if nav_pnt ~= nil or nav_hyp ~= nil then
       local y = nav_y - 3 - deffont_h
       local str
@@ -219,9 +212,11 @@ function render( dt )
       y = y - 5 - smallfont_h
       gfx.print( true, "Off", nav_x, y, col_gray, nav_w, true )
    end
+end
 
 
-   -- Render health
+-- Renders the health bars
+function render_health ()
    local arm, shi = pp:health()
    gfx.renderRect( shield_x, shield_y, shi/100.*shield_w, shield_h, shield_col )
    gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h, armour_col )
@@ -229,8 +224,11 @@ function render( dt )
    gfx.renderTexRaw( energy, energy_x, energy_y, ene*energy_w, energy_h, 1, 1, 0, 0, ene, 1, energy_col )
    local fue = player.fuel() / fuel_max
    gfx.renderTexRaw( fuel, fuel_x, fuel_y, fue*fuel_w, fuel_h, 1, 1, 0, 0, fue, 1, fuel_col )
+end
 
-   -- Weapon
+
+-- Renders the weapon systems
+function render_weapon ()
    local sec, amm, rdy = pp:secondary()
    if sec ~= nil then
       local col
@@ -249,31 +247,56 @@ function render( dt )
       gfx.print( nil, "Secondary", weapon_x, weapon_y-17, col_console, weapon_w, true )
       gfx.print( true, "None", weapon_x, weapon_y-32, col_gray, weapon_w, true )
    end
+end
 
-   -- Target
-   if ptarget ~= nil then
-      local col, shi, arm, dis
-      arm, shi, dis = ptarget:health()
 
-      -- Get colour
-      if dis then
-         col = col_gray
+-- Renders the pilot target
+function render_target ()
+   -- Target must exist
+   if ptarget == nil then
+      render_targetnone()
+      return
+   end
+
+   local det, fuz = pp:inrange(ptarget)
+
+   -- Must be detected
+   if not det then
+      render_targetnone()
+      return
+   end
+
+   local col, shi, arm, dis
+   arm, shi, dis = ptarget:health()
+
+   -- Get colour
+   if dis then
+      col = col_gray
+   else
+      if pfact:areEnemies( target_fact ) then
+         col = col_warn
+      elseif pfact:areAllies( target_fact ) then
+         col = col_console
       else
-         if pfact:areEnemies( target_fact ) then
-            col = col_warn
-         elseif pfact:areAllies( target_fact ) then
-            col = col_console
-         else
-            col = col_neut
-         end
+         col = col_neut
       end
+   end
 
-      -- Display name
-      local name = ptarget:name()
-      local w = gfx.printDim( nil, name )
-      gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
+   -- Display name
+   local name
+   if fuz then
+      name = "Unknown"
+   else
+      name = ptarget:name()
+   end
+   local w = gfx.printDim( nil, name )
+   gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
-      -- Display health
+   -- Display health
+   local str
+   if fuz then
+      str = "Unknown"
+   else
       if dis then
          str = "Disabled"
       elseif shi < 5 then
@@ -281,23 +304,35 @@ function render( dt )
       else
          str = string.format( "Shield: %.0f%%", shi )
       end
-      gfx.print( true, str, target_x, target_y-100, col, target_w )
+   end
+   gfx.print( true, str, target_x, target_y-100, col, target_w )
 
-      -- Render target graphic
-      local x, y
+   -- Render target graphic
+   local x, y
+   if fuz then
+      str = "Unknown"
+      w = gfx.printDim( true, name )
+      x = target_x + (target_w - w)/2
+      y = target_y - (target_h - smallfont_h)/2 + 5
+      gfx.print( true, str, x, y, col_gray, w, true )
+   else
       x = target_x + (target_w - target_gfx_w)/2
       y = target_y - (target_h - target_gfx_h)/2 + 5
       gfx.renderTex( target_gfx, x, y - target_gfx_h )
-
-      -- Render faction logo.
-      if target_gfxFact ~= nil then
-         gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h - 3 )
-      end
-   else
-      gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
    end
 
-   -- Misc
+   -- Render faction logo.
+   if not fuz and target_gfxFact ~= nil then
+      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h - 3 )
+   end
+end
+function render_targetnone ()
+   gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
+end
+
+
+-- Renders the miscellaneous stuff
+function render_misc ()
    _, creds = player.credits(2)
    h = 5 + smallfont_h
    y = misc_y - h
@@ -312,6 +347,22 @@ function render( dt )
    y = y - 5
    h = misc_h - 2*h - 8
    gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_console )
+end
+
+
+-- Renders the warnings like system volatility
+function render_warnings ()
+   -- Render warnings
+   local sys = system.cur()
+   local nebu_dens, nebu_vol = sys:nebula()
+   local y = screen_h - 50 - deffont_h
+   if pp:lockon() > 0 then
+      gfx.print( nil, "LOCK-ON DETECTED", 0, y, col_warn, screen_w, true )
+      y = y - deffont_h - 10
+   end
+   if nebu_vol > 0 then
+      gfx.print( nil, "VOLATILE ENVIRONMENT DETECTED", 0, y, col_warn, screen_w, true )
+   end
 end
 
 
