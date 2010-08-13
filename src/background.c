@@ -297,6 +297,15 @@ static void background_renderImages (void)
  */
 void background_clear (void)
 {
+   int i;
+   background_image_t *bkg;
+
+   for (i=0; i<array_size(bkg_image_arr); i++) {
+      bkg = &bkg_image_arr[i];
+      gl_freeTexture( bkg->image );
+   }
+
+   /* Erase it all. */
    array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr)-1 ] );
 }
 
