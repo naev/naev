@@ -495,8 +495,8 @@ char *faction_getStanding( double mod )
  */
 char *faction_getStandingBroad( double mod )
 {
-   if (mod > PLAYER_ALLY) return "Friendly";
-   else if (mod > PLAYER_ENEMY) return "Neutral";
+   if (mod >= PLAYER_ALLY) return "Friendly";
+   else if (mod >= PLAYER_ENEMY) return "Neutral";
    return "Hostile";
 
 }
