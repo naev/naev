@@ -30,8 +30,7 @@ typedef struct background_image_s {
    glTexture *image; /**< Image to display. */
    double x; /**< X center of the image. */
    double y; /**< Y center of the image. */
-   double xmove; /**< How many X pixels it moves for each pixel the player moves. */
-   double ymove; /**< How many Y pixels it moves for each pixel the player moves. */
+   double move; /**< How many pixels it moves for each pixel the player moves. */
    double scale; /**< How the image should be scaled. */
    glColour *col; /**< Colour to use. */
 } background_image_t;
@@ -244,7 +243,7 @@ void background_render( double dt )
  * @brief Adds a new background image.
  */
 int background_addImage( glTexture *image, double x, double y,
-      double xmove, double ymove, double scale, glColour *col )
+      double move, double scale, glColour *col )
 {
    background_image_t *bkg;
 
@@ -257,8 +256,7 @@ int background_addImage( glTexture *image, double x, double y,
    bkg->image  = gl_dupTexture(image);
    bkg->x      = x;
    bkg->y      = y;
-   bkg->xmove  = xmove;
-   bkg->ymove  = ymove;
+   bkg->move   = move;
    bkg->scale  = scale;
    bkg->col    = col;
 
@@ -283,8 +281,8 @@ static void background_renderImages (void)
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
 
-      x = bkg->x + player.p->solid->pos.x * bkg->xmove;
-      y = bkg->y + player.p->solid->pos.y * bkg->ymove;
+      x = bkg->x + player.p->solid->pos.x * bkg->move;
+      y = bkg->y + player.p->solid->pos.y * bkg->move;
       gl_gameToScreenCoords( &xs, &ys, x, y );
       gl_blitScale( bkg->image, xs, ys,
             bkg->scale * bkg->image->sx, bkg->scale * bkg->image->sy, bkg->col );

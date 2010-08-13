@@ -17,7 +17,7 @@ void background_render( double dt );
 
 /* Add images. */
 int background_addImage( glTexture *image, double x, double y,
-      double xmove, double ymove, double scale, glColour *col );
+      double move, double scale, glColour *col );
 
 /* Stars. */
 void background_initStars( int n );
