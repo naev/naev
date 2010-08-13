@@ -118,7 +118,11 @@ function create()
 	
 	--Targeted icon
 	ta_icon_x = ta_pane_x + 82
-	ta_icon_y = ta_pane_y + 104
+	ta_icon_y = ta_pane_y + 100
+	
+	--Target Faction icon
+	ta_fact_x = ta_pane_x + 114
+	ta_fact_y = ta_pane_y + 100
 	
 	bar_sm_w, bar_sm_h = bg_shi_sm:dim()
 	--Small Shield Bar
@@ -172,6 +176,7 @@ function update_target()
 				ptarget_gfx_draw_w = 92 / ptarget_gfx_h * ptarget_gfx_w
 			end
 		end
+		ptarget_faction_gfx = ptargetfact:logoTiny()
 	end
 end
 
@@ -428,6 +433,9 @@ function render( dt )
 				else
 					gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
 				end
+				
+				--Faction Logo
+				gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
 				
 				--Pilot name
 				if ta_disabled then
