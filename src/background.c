@@ -281,11 +281,13 @@ static void background_renderImages (void)
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
 
-      x = bkg->x + player.p->solid->pos.x * bkg->move;
-      y = bkg->y + player.p->solid->pos.y * bkg->move;
+      x  = bkg->x + (bkg->x - player.p->solid->pos.x) * bkg->move;
+      y  = bkg->y + (bkg->y - player.p->solid->pos.y) * bkg->move;
       gl_gameToScreenCoords( &xs, &ys, x, y );
+      xs = xs + (SCREEN_W - bkg->scale*bkg->image->sw)/2.;
+      ys = ys + (SCREEN_H - bkg->scale*bkg->image->sh)/2.;
       gl_blitScale( bkg->image, xs, ys,
-            bkg->scale * bkg->image->sx, bkg->scale * bkg->image->sy, bkg->col );
+            bkg->scale * bkg->image->sw, bkg->scale * bkg->image->sh, bkg->col );
    }
 }
 
