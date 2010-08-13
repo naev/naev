@@ -34,6 +34,9 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "minimal_planet.png" ) )
    gui.targetPilotGFX( tex.open( base .. "minimal_pilot.png" ) )
 
+   -- OSD
+   gui.osdInit( 30, screen_h-90, 150, 300 )
+
    -- Messages
    gui.mesgInit( screen_w-400, 20, 30 )
 
