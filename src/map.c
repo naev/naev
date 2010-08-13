@@ -21,6 +21,7 @@
 #include "player.h"
 #include "faction.h"
 #include "dialogue.h"
+#include "gui.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -1181,6 +1182,7 @@ void map_jump (void)
    else {
       player.p->nav_hyperspace = -1;
    }
+   gui_setNav();
 }
 
 
@@ -1244,6 +1246,7 @@ void map_select( StarSystem *sys, char shifted )
    }
 
    map_update(wid);
+   gui_setNav();
 }
 
 /*

@@ -995,8 +995,9 @@ unsigned int land_getWid( int window )
 /**
  * @brief Opens up all the land dialogue stuff.
  *    @param p Planet to open stuff for.
+ *    @param load Whether or not loading the game.
  */
-void land( Planet* p )
+void land( Planet* p, int load )
 {
    int i, j;
    const char *names[LAND_NUMWINDOWS];
@@ -1091,8 +1092,10 @@ void land( Planet* p )
    /* 2) Set as landed and run hooks. */
    landed = 1;
    music_choose("land"); /* Must be before hooks in case hooks change music. */
-   events_trigger( EVENT_TRIGGER_LAND );
-   hooks_run("land");
+   if (!load) {
+      events_trigger( EVENT_TRIGGER_LAND );
+      hooks_run("land");
+   }
 
    /* 3) Generate computer and bar missions. */
    if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))

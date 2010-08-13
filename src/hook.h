@@ -33,6 +33,8 @@ unsigned int hook_addFunc( int (*func)(void*), void* data, const char *stack );
 int hook_rm( unsigned int id );
 void hook_rmMisnParent( unsigned int parent );
 void hook_rmEventParent( unsigned int parent );
+int hook_hasMisnParent( unsigned int parent );
+int hook_hasEventParent( unsigned int parent );
 
 /* pilot hook. */
 int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );

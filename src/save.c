@@ -49,7 +49,10 @@ extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff
 /* mission.c */
 extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
 extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
-/* nlua_misn.c */
+/* event.c */
+extern int events_saveActive( xmlTextWriterPtr writer );
+extern int events_loadActive( xmlNodePtr parent );
+/* nlua_var.c */
 extern int var_save( xmlTextWriterPtr writer ); /**< Saves mission variables. */
 extern int var_load( xmlNodePtr parent ); /**< Loads mission variables. */
 /* faction.c */
@@ -86,6 +89,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (diff_save(writer) < 0) return -1; /* Must save first or can get cleared. */
    if (player_save(writer) < 0) return -1;
    if (missions_saveActive(writer) < 0) return -1;
+   if (events_saveActive(writer) < 0) return -1;
    if (var_save(writer) < 0) return -1;
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
@@ -370,17 +374,21 @@ static int load_game( const char* file )
    pnt = player_load(node);
    var_load(node);
    missions_loadActive(node);
+   events_loadActive(node);
    hook_load(node);
    space_sysLoad(node);
 
    /* Initialize the economy. */
    economy_init();
 
+   /* Check sanity. */
+   event_checkSanity();
+
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
 
    /* Land the player. */
-   land( pnt );
+   land( pnt, 1 );
 
    /* Sanitize the GUI. */
    gui_setCargo();

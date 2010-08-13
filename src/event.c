@@ -7,9 +7,9 @@
  *
  * @brief Handles internal events.
  *
- * Events are a lot like missions except the player has no control over when
+ * Events are a lot like events except the player has no control over when
  *  or how they happen.  They can simple do something simple or actually lead up
- *  to and open an entire set of missions.
+ *  to and open an entire set of events.
  */
 
 
@@ -30,6 +30,7 @@
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "nxml_lua.h"
 #include "cond.h"
 #include "hook.h"
 #include "player.h"
@@ -37,9 +38,9 @@
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
-#define XML_EVENT_TAG         "event" /**< XML mission tag. */
+#define XML_EVENT_TAG         "event" /**< XML event tag. */
 
-#define EVENT_DATA            "dat/event.xml" /**< Path to missions XML. */
+#define EVENT_DATA            "dat/event.xml" /**< Path to events XML. */
 #define EVENT_LUA_PATH        "dat/events/" /**< Path to Lua files. */
 
 #define EVENT_CHUNK           32 /**< Size to grow event data by. */
@@ -81,11 +82,15 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
 /*
  * Prototypes.
  */
+static unsigned int event_genID (void);
 static Event_t *event_get( unsigned int eventid );
 static int event_alreadyRunning( int data );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
-static int event_create( int dataid );
+static int event_create( int dataid, unsigned int id );
+int events_saveActive( xmlTextWriterPtr writer );
+int events_loadActive( xmlNodePtr parent );;
+static int events_parseActive( xmlNodePtr parent );
 
 
 /**
@@ -103,7 +108,7 @@ static Event_t *event_get( unsigned int eventid )
          return ev;
    }
 
-   WARN( "Event '%u' not found in stack.", eventid );
+   /*WARN( "Event '%u' not found in stack.", eventid );*/
    return NULL;
 }
 
@@ -194,11 +199,25 @@ int event_isUnique( unsigned int eventid )
 
 
 /**
+ * @brief Generates a new event ID.
+ */
+static unsigned int event_genID (void)
+{
+   unsigned int id;
+   do {
+      id = ++event_genid; /* Create unique ID. */
+   } while (event_get(id) != NULL);
+   return id;
+}
+
+
+/**
  * @brief Creates an event.
  *
  *    @param data Data to base event off of.
+ *    @param id ID to use (0 to generate).
  */
-static int event_create( int dataid )
+static int event_create( int dataid, unsigned int id )
 {
    lua_State *L;
    uint32_t bufsize;
@@ -214,7 +233,10 @@ static int event_create( int dataid )
    }
    ev = &event_active[ event_nactive-1 ];
    memset( ev, 0, sizeof(Event_t) );
-   ev->id = ++event_genid; /* Create unique ID. */
+   if (id > 0)
+      ev->id = id;
+   else
+      ev->id = event_genID();
 
    /* Add the data. */
    ev->data = dataid;
@@ -244,7 +266,8 @@ static int event_create( int dataid )
    free(buf);
 
    /* Run Lua. */
-   event_runLua( ev, "create" );
+   if (id==0)
+      event_runLua( ev, "create" );
 
    return 0;
 }
@@ -294,6 +317,19 @@ void event_remove( unsigned int eventid )
    }
 
    WARN("Event ID '%u' not valid.", eventid);
+}
+
+
+/**
+ * @brief Checks to see if an event should be saved.
+ */
+int event_save( unsigned int eventid )
+{
+   Event_t *ev;
+   ev = event_get(eventid);
+   if (ev == NULL)
+      return 0;
+   return ev->save;
 }
 
 
@@ -354,7 +390,7 @@ void events_trigger( EventTrigger_t trigger )
       }
 
       /* Create the event. */
-      event_create( i );
+      event_create( i, 0 );
    }
 }
 
@@ -373,7 +409,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
    char *buf;
 
 #ifdef DEBUGGING
-   /* To check if mission is valid. */
+   /* To check if event is valid. */
    lua_State *L;
    int ret;
    uint32_t len;
@@ -404,7 +440,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
          buf = ndata_read( temp->lua, &len );
          ret = luaL_loadbuffer(L, buf, len, temp->name );
          if (ret == LUA_ERRSYNTAX) {
-            WARN("Event Lua '%s' of mission '%s' syntax error: %s",
+            WARN("Event Lua '%s' of event '%s' syntax error: %s",
                   temp->name, temp->lua, lua_tostring(L,-1) );
          }
          free(buf);
@@ -499,7 +535,7 @@ int events_load (void)
    }
 
    /* Get the first node. */
-   node = node->xmlChildrenNode; /* first mission node */
+   node = node->xmlChildrenNode; /* first event node */
    if (node == NULL) {
       WARN("Malformed '"EVENT_DATA"' file: does not contain elements");
       return -1;
@@ -624,4 +660,154 @@ const char *event_dataName( int dataid )
 {
    return event_data[dataid].name;
 }
+
+
+/**
+ * @brief Checks the event sanity and cleans up after them.
+ */
+void event_checkSanity (void)
+{
+   int i;
+   Event_t *ev;
+
+   /* Iterate. */
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+
+      /* Check if has children. */
+      if (hook_hasEventParent( ev->id ) > 0)
+         continue;
+
+      /* Must delete. */
+      WARN("Detected event '%s' without any hooks and is therefore insane. Removing event.",
+            event_dataName( ev->data ));
+      event_remove( ev->id );
+      i--; /* Keep iteration sane. */
+   }
+}
+
+
+/**
+ * @brief Saves the player's active events.
+ *
+ *    @param writer XML Write to use to save events.
+ *    @return 0 on success.
+ */
+int events_saveActive( xmlTextWriterPtr writer )
+{
+   int i;
+   Event_t *ev;
+
+   xmlw_startElem(writer,"events");
+
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (!ev->save) /* Only save events that want to be saved. */
+         continue;
+
+      xmlw_startElem(writer,"event");
+
+      xmlw_attr(writer,"name","%s",event_dataName(ev->data));
+      xmlw_attr(writer,"id","%u",ev->id);
+
+      /* write lua magic */
+      xmlw_startElem(writer,"lua");
+      nxml_persistLua( ev->L, writer );
+      xmlw_endElem(writer); /* "lua" */
+
+      xmlw_endElem(writer); /* "event" */
+   }
+
+   xmlw_endElem(writer); /* "events" */
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the player's active events from a save.
+ *
+ *    @param parent Node containing the player's active events.
+ *    @return 0 on success.
+ */
+int events_loadActive( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   /* cleanup old events */
+   events_cleanup();
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"events"))
+         if (events_parseActive( node ) < 0) return -1;
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses the actual individual event nodes.
+ *
+ *    @param parent Parent node to parse.
+ *    @return 0 on success.
+ */
+static int events_parseActive( xmlNodePtr parent )
+{
+   char *buf;
+   unsigned int id;
+   int data;
+   xmlNodePtr node, cur;
+   Event_t *ev;
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (!xml_isNode(node,"event"))
+         continue;
+
+      xmlr_attr(node,"name",buf);
+      if (buf==NULL) {
+         WARN("Event has missing 'name' attribute, skipping.");
+         continue;
+      }
+      data = event_dataID( buf );
+      if (data < 0) {
+         WARN("Event in save has name '%s' but event data not found matching name. Skipping.", buf);
+         free(buf);
+         continue;
+      }
+      free(buf);
+      xmlr_attr(node,"id",buf);
+      if (buf==NULL) {
+         WARN("Event with data '%s' has missing 'id' attribute, skipping.", event_dataName(data));
+         continue;
+      }
+      id = atoi(buf);
+      free(buf);
+      if (id==0) {
+         WARN("Event with data '%s' has invalid 'id' attribute, skipping.", event_dataName(data));
+         continue;
+      }
+
+      /* Create the event. */
+      event_create( data, id );
+      ev = event_get( id );
+      if (ev == NULL) {
+         WARN("Event with data '%s' was not created, skipping.", event_dataName(data));
+         continue;
+      }
+      ev->save = 1; /* Should save by default again. */
+
+      /* Get the data. */
+      cur = node->xmlChildrenNode;
+      do {
+         if (xml_isNode(cur,"lua"))
+            nxml_unpersistLua( ev->L, cur );
+      } while (xml_nextNode(cur));
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
 

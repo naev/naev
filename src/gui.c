@@ -874,16 +874,6 @@ void gui_render( double dt )
       gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
    }
 #if 0
-   /* Lockon warning */
-   if (player.p->lockons > 0)
-      gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h-25.,
-            &cRed, "LOCK-ON DETECTED");
-
-   /* Volatile environment. */
-   if (cur_system->nebu_volatility > 0.)
-      gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h*2.-35.,
-            &cRed, "VOLATILE ENVIRONMENT DETECTED");
-
    /*
     * target
     */

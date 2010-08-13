@@ -273,7 +273,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       c     = &cFriend;
    }
    else {
-      stand = faction_getStandingBroad(faction_getPlayer( faction ));
+      stand = faction_getStandingBroad(faction_getPlayer(faction));
       c     = faction_getColour( faction );
    }
    w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));

@@ -46,7 +46,7 @@
 
 
 /*
- * current mission
+ * current event
  */
 static Event_t *cur_event = NULL; /**< Contains the current event for a running script. */
 static int evt_delete = 0; /**< if 1 delete current event */
@@ -60,10 +60,12 @@ static int evt_misnStart( lua_State *L );
 static int evt_npcAdd( lua_State *L );
 static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
+static int evt_save( lua_State *L );
 static const luaL_reg evt_methods[] = {
    { "misnStart", evt_misnStart },
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
+   { "save", evt_save },
    { "finish", evt_finish },
    {0,0}
 }; /**< Mission lua methods. */
@@ -116,7 +118,7 @@ int event_runLua( Event_t *ev, const char *func )
 /**
  * @brief Runs a Lua func with nargs.
  *
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *    @return -1 on error, 1 on misn.finish() call, 2 if event got deleted
  *            and 0 normally.
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
@@ -274,3 +276,22 @@ static int evt_finish( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Saves an event.
+ *
+ * @usage evt.save() -- Saves an event, which is by default disabled.
+ *
+ *    @luaparam enable If true or nil sets the event to save, otherwise tells the event to not save.
+ * @luafunc save( enable )
+ */
+static int evt_save( lua_State *L )
+{
+   int b;
+   if (lua_gettop(L)==0)
+      b = 1;
+   else
+      b = lua_toboolean(L,1);
+   cur_event->save = b;
+   return 0;
+}
