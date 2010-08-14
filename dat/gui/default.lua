@@ -241,7 +241,7 @@ function render_weapon ()
          gfx.print( nil, sec, weapon_x, weapon_y-17, col, weapon_w, true )
          gfx.print( true, string.format("%d", amm), weapon_x, weapon_y-32, col_gray, weapon_w, true )
       else
-         gfx.print( nil, sec, weapon_x, weapon_y-25, col_console, weapon_w, true )
+         gfx.print( nil, sec, weapon_x, weapon_y-25, col, weapon_w, true )
       end
    else
       gfx.print( nil, "Secondary", weapon_x, weapon_y-17, col_console, weapon_w, true )
