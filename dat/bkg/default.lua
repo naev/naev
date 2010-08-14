@@ -52,10 +52,13 @@ function background ()
    local nebula = nebulae[ prng.range(1,#nebulae) ]
    local img   = tex.open( path .. nebula )
    local w,h   = img:dim()
-   local x     = (prng.num( prng.z ) - .5) * 10000
-   local y     = (prng.num( prng.z ) - .5) * 10000
+   local r     = prng.num() * sys:radius()/2
+   local a     = 2*math.pi*prng.num()
+   local x     = r*math.cos(a)
+   local y     = r*math.sin(a)
    local move  = 0.1 + prng.num()*0.4
    local scale = 1 + (prng.num()*0.5 + 0.5)*((2000+2000)/(w+h))
+   if scale > 2 then scale = 2 end
    bkg.image( img, x, y, move, scale )
 
 end
