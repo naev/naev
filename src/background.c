@@ -302,10 +302,10 @@ static void background_renderImages (void)
       x  = px + (bkg->x - px) * bkg->move;
       y  = py + (bkg->y - py) * bkg->move;
       gl_gameToScreenCoords( &xs, &ys, x, y );
-      xs = xs + (SCREEN_W - bkg->scale*bkg->image->sw)/2.;
-      ys = ys + (SCREEN_H - bkg->scale*bkg->image->sh)/2.;
       gl_cameraZoomGet( &z );
       z *= bkg->scale;
+      xs = xs + (SCREEN_W - z*bkg->image->sw)/2.;
+      ys = ys + (SCREEN_H - z*bkg->image->sh)/2.;
       gl_blitScale( bkg->image, xs, ys,
             z*bkg->image->sw, z*bkg->image->sh, &bkg->col );
    }
