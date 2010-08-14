@@ -50,13 +50,13 @@ function background ()
    -- Set up parameters
    local path  = "gfx/bkg/"
    local nebula = nebulae[ prng.range(1,#nebulae) ]
+   local img   = tex.open( path .. nebula )
+   local w,h   = img:dim()
    local x     = (prng.num( prng.z ) - .5) * 10000
    local y     = (prng.num( prng.z ) - .5) * 10000
-   local scale = 1
-   local move  = 0.5
-   local col   = colour.new()
-   local img = tex.open( path .. nebula )
-   bkg.image( img, x, y, move, scale, col )
+   local move  = 0.1 + prng.num()*0.4
+   local scale = 1 + (prng.num()*0.5 + 0.5)*((2000+2000)/(w+h))
+   bkg.image( img, x, y, move, scale )
 
 end
 
