@@ -249,8 +249,8 @@ void background_renderStars( const double dt )
  */
 void background_render( double dt )
 {
-   background_renderStars(dt);
    background_renderImages();
+   background_renderStars(dt);
 }
 
 
