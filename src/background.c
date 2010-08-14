@@ -249,8 +249,8 @@ void background_renderStars( const double dt )
  */
 void background_render( double dt )
 {
-   background_renderStars(dt);
    background_renderImages();
+   background_renderStars(dt);
 }
 
 
@@ -297,8 +297,7 @@ static void background_renderImages (void)
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
 
-      px = player.p->solid->pos.x;
-      py = player.p->solid->pos.y;
+      gl_cameraGet( &px, &py );
       x  = px + (bkg->x - px) * bkg->move;
       y  = py + (bkg->y - py) * bkg->move;
       gl_gameToScreenCoords( &xs, &ys, x, y );
