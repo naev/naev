@@ -27,3 +27,9 @@ function prng.num ()
    return prng.z / 4294967295
 end
 
+function prng.range( min, max )
+   local n = prng.num()
+   return math.floor( min + n*(max-min) + 0.5 )
+end
+
+

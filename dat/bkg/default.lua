@@ -49,7 +49,7 @@ function background ()
 
    -- Set up parameters
    local path  = "gfx/bkg/"
-   local nebula = nebulae[ rnd.rnd(1,#nebulae) ]
+   local nebula = nebulae[ prng.range(1,#nebulae) ]
    local x     = (prng.num( prng.z ) - .5) * 10000
    local y     = (prng.num( prng.z ) - .5) * 10000
    local scale = 1
