@@ -23,6 +23,10 @@ int background_addImage( glTexture *image, double x, double y,
 void background_initStars( int n );
 void background_renderStars( const double dt );
 
+/* Init. */
+int background_init (void);
+int background_load( const char *name );
+
 
 /* Clean up. */
 void background_clear (void);

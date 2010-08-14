@@ -932,6 +932,9 @@ void space_init ( const char* sysname )
 
    /* Update gui. */
    gui_setSystem();
+
+   /* Start background. */
+   background_load( NULL );
 }
 
 

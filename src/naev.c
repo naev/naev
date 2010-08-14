@@ -345,6 +345,7 @@ int main( int argc, char** argv )
    conf_cleanup(); /* Frees some memory the configuration allocated. */
 
    /* exit subsystems */
+   cli_exit(); /* CLean up the console. */
    map_exit(); /* destroys the map. */
    toolkit_exit(); /* kills the toolkit */
    ai_exit(); /* stops the Lua AI magic */
@@ -354,7 +355,6 @@ int main( int argc, char** argv )
    gl_exit(); /* kills video output */
    sound_exit(); /* kills the sound */
    news_exit(); /* destroys the news. */
-   cli_exit(); /* CLean up the console. */
 
    /* Free the icon. */
    if (naev_icon)
@@ -526,6 +526,7 @@ void load_all (void)
    tech_load(); /* dep for space */
    loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
+   background_init();
    loadscreen_render( 1., "Loading Completed!" );
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }
