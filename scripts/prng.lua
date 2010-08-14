@@ -13,9 +13,9 @@ function prng.init( num )
 end
 
 function prng.initHash( str )
-   hash  = 5381
-   i     = 1
-   bytes = { string.byte( str, 1, string.len(str) ) }
+   local hash  = 5381
+   local i     = 1
+   local bytes = { string.byte( str, 1, string.len(str) ) }
    for _,c in ipairs(bytes) do
       hash = hash * 33 + c
    end
@@ -26,5 +26,4 @@ function prng.num ()
    prng.z = math.abs( math.fmod( prng.z * 279470273, 4294967295 ) )
    return prng.z / 4294967295
 end
-
 
