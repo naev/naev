@@ -20,6 +20,34 @@
 #include "conf.h"
 #include "rng.h"
 #include "pause.h"
+#include "array.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
+#include "nlua_bkg.h"
+
+
+/**
+ * @brief Represents a background image like say a Nebula.
+ */
+typedef struct background_image_s {
+   glTexture *image; /**< Image to display. */
+   double x; /**< X center of the image. */
+   double y; /**< Y center of the image. */
+   double move; /**< How many pixels it moves for each pixel the player moves. */
+   double scale; /**< How the image should be scaled. */
+   glColour col; /**< Colour to use. */
+} background_image_t;
+static background_image_t *bkg_image_arr = NULL; /**< Background image array to display. */
+
+
+/**
+ * @brief Backgrounds.
+ */
+static lua_State *bkg_cur_L = NULL; /**< Current Lua state. */
+static lua_State *bkg_def_L = NULL; /**< Default Lua state. */
 
 
 /*
@@ -33,6 +61,13 @@ static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
 
+
+/*
+ * Prototypes.
+ */
+static void background_renderImages (void);
+static lua_State* background_create( const char *path );
+static void background_clearCurrent (void);
 
 
 /**
@@ -210,11 +245,237 @@ void background_renderStars( const double dt )
 
 
 /**
+ * @brief Render the background.
+ */
+void background_render( double dt )
+{
+   background_renderStars(dt);
+   background_renderImages();
+}
+
+
+/**
+ * @brief Adds a new background image.
+ */
+int background_addImage( glTexture *image, double x, double y,
+      double move, double scale, glColour *col )
+{
+   background_image_t *bkg;
+
+   /* See if must create. */
+   if (bkg_image_arr == NULL)
+      bkg_image_arr = array_create( background_image_t );
+
+   /* Create image. */
+   bkg         = &array_grow( &bkg_image_arr );
+   bkg->image  = gl_dupTexture(image);
+   bkg->x      = x;
+   bkg->y      = y;
+   bkg->move   = move;
+   bkg->scale  = scale;
+   memcpy( &bkg->col, (col!=NULL) ? col : &cWhite, sizeof(glColour) );
+
+
+   return array_size(bkg_image_arr)-1;
+}
+
+
+/**
+ * @brief Renders the background images.
+ */
+static void background_renderImages (void)
+{
+   int i;
+   background_image_t *bkg;
+   double px,py, x,y, xs,ys;
+
+   /* Must have an image array created. */
+   if (bkg_image_arr == NULL)
+      return;
+
+   /* Render images in order. */
+   for (i=0; i<array_size(bkg_image_arr); i++) {
+      bkg = &bkg_image_arr[i];
+
+      px = player.p->solid->pos.x;
+      py = player.p->solid->pos.y;
+      x  = px + (bkg->x - px) * bkg->move;
+      y  = py + (bkg->y - py) * bkg->move;
+      gl_gameToScreenCoords( &xs, &ys, x, y );
+      xs = xs + (SCREEN_W - bkg->scale*bkg->image->sw)/2.;
+      ys = ys + (SCREEN_H - bkg->scale*bkg->image->sh)/2.;
+      gl_blitScale( bkg->image, xs, ys,
+            bkg->scale * bkg->image->sw, bkg->scale * bkg->image->sh, &bkg->col );
+   }
+}
+
+
+/**
+ * @brief Creates a background Lua state from a script.
+ */
+static lua_State* background_create( const char *name )
+{
+   uint32_t bufsize;
+   char path[PATH_MAX];
+   char *buf;
+   lua_State *L;
+
+   /* Create file name. */
+   snprintf( path, sizeof(path), "dat/bkg/%s.lua", name );
+
+   /* Create the Lua state. */
+   L = nlua_newState();
+   nlua_loadStandard(L,1);
+   nlua_loadTex(L,0);
+   nlua_loadCol(L,0);
+   nlua_loadBackground(L,0);
+
+   /* Open file. */
+   buf = ndata_read( path, &bufsize );
+   if (buf == NULL) {
+      WARN("Default background script '%s' not found.", path);
+      lua_close(L);
+      return NULL;
+   }
+
+   /* Load file. */
+   if (luaL_dobuffer(L, buf, bufsize, path) != 0) {
+      WARN("Error loading background file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check",
+            path, lua_tostring(L,-1));
+      free(buf);
+      lua_close(L);
+      return NULL;
+   }
+   free(buf);
+
+   return L;
+}
+
+
+/**
+ * @brief Initializes the background system.
+ */
+int background_init (void)
+{
+   /* Load Lua. */
+   bkg_def_L = background_create( "default" );
+   return 0;
+}
+
+
+/**
+ * @brief Loads a background script by name.
+ */
+int background_load( const char *name )
+{
+   int ret;
+   lua_State *L;
+   const char *err;
+
+   /* Free if exists. */
+   background_clearCurrent();
+
+   /* Load default. */
+   if (name == NULL)
+      bkg_cur_L = bkg_def_L;
+   /* Load new script. */
+   else
+      bkg_cur_L = background_create( name );
+
+   /* Comfort. */
+   L = bkg_cur_L;
+   if (L == NULL)
+      return -1;
+
+   /* Run Lua. */
+   ret = 0;
+   lua_getglobal(L,"background");
+   ret = lua_pcall(L, 0, 0, 0);
+   if (ret != 0) { /* error has occured */
+      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      WARN("Background -> 'background' : %s",
+            (err) ? err : "unknown error");
+      lua_pop(L, 1);
+      ret = -1;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Destroys the current running background script.
+ */
+static void background_clearCurrent (void)
+{
+   if (bkg_cur_L != bkg_def_L) {
+      if (bkg_cur_L != NULL)
+         lua_close( bkg_cur_L );
+   }
+   bkg_cur_L = NULL;
+}
+
+
+/**
+ * @brief Cleans up the background stuff.
+ */
+void background_clear (void)
+{
+   int i;
+   background_image_t *bkg;
+
+   /* Destroy current background script. */
+   background_clearCurrent();
+
+   /* Must have an image array created. */
+   if (bkg_image_arr == NULL)
+      return;
+
+   for (i=0; i<array_size(bkg_image_arr); i++) {
+      bkg = &bkg_image_arr[i];
+      gl_freeTexture( bkg->image );
+   }
+
+   /* Erase it all. */
+   array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr) ] );
+}
+
+
+/**
  * @brief Cleans up and frees memory after the backgrounds.
  */
 void background_free (void)
 {
-   /* stars must be free too */
+   /* Free the Lua. */
+   background_clear();
+   if (bkg_def_L != NULL)
+      lua_close( bkg_def_L );
+   bkg_def_L = NULL;
+
+   /* Free the images. */
+   if (bkg_image_arr != NULL) {
+      array_free( bkg_image_arr );
+      bkg_image_arr = NULL;
+   }
+
+   /* Free the Lua. */
+   if (bkg_cur_L == bkg_def_L) {
+      if (bkg_cur_L != NULL)
+         lua_close( bkg_cur_L );
+      bkg_cur_L = NULL;
+      bkg_def_L = NULL;
+   }
+   else {
+      if (bkg_cur_L != NULL)
+         lua_close( bkg_cur_L );
+      if (bkg_def_L != NULL)
+         lua_close( bkg_def_L );
+      bkg_cur_L = NULL;
+      bkg_def_L = NULL;
+   }
+
+   /* Free the stars. */
    if (star_vertex) {
       free(star_vertex);
       star_vertex = NULL;

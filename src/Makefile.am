@@ -58,6 +58,7 @@ naev_SOURCES = \
 	news.c \
 	nfile.c \
 	nlua.c \
+	nlua_bkg.c \
 	nlua_cli.c \
 	nlua_col.c \
 	nlua_diff.c \
@@ -171,6 +172,7 @@ naev_SOURCES = \
 	news.h \
 	nfile.h \
 	nlua.h \
+	nlua_bkg.h \
 	nlua_cli.h \
 	nlua_col.h \
 	nlua_diff.h \

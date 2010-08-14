@@ -24,6 +24,9 @@
 #include "nlua.h"
 #include "nlua_cli.h"
 #include "nlua_tk.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
+#include "nlua_bkg.h"
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
@@ -271,6 +274,9 @@ int cli_init (void)
    /* Create the state. */
    cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
+   nlua_loadCol( cli_state, 0 );
+   nlua_loadTex( cli_state, 0 );
+   nlua_loadBackground( cli_state, 0 );
    nlua_loadTk( cli_state );
    nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );
