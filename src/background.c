@@ -271,7 +271,7 @@ static void background_renderImages (void)
 {
    int i;
    background_image_t *bkg;
-   double x,y, xs,ys;
+   double px,py, x,y, xs,ys;
 
    /* Must have an image array created. */
    if (bkg_image_arr == NULL)
@@ -281,8 +281,10 @@ static void background_renderImages (void)
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
 
-      x  = bkg->x + (bkg->x - player.p->solid->pos.x) * bkg->move;
-      y  = bkg->y + (bkg->y - player.p->solid->pos.y) * bkg->move;
+      px = player.p->solid->pos.x;
+      py = player.p->solid->pos.y;
+      x  = px + (bkg->x - px) * bkg->move;
+      y  = py + (bkg->y - py) * bkg->move;
       gl_gameToScreenCoords( &xs, &ys, x, y );
       xs = xs + (SCREEN_W - bkg->scale*bkg->image->sw)/2.;
       ys = ys + (SCREEN_H - bkg->scale*bkg->image->sh)/2.;
