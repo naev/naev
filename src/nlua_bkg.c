@@ -108,7 +108,7 @@ static int bkgL_image( lua_State *L )
       lc    = NULL;
    
    /* Create image. */
-   background_addImage( lt->tex, x, y, move, scale, NULL );
+   background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite );
    return 0;
 }
 

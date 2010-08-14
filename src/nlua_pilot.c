@@ -925,7 +925,10 @@ static int pilotL_secondary( lua_State *L )
    ready = !(p->secondary->timer > 0.);
 
    /* Push name. */
-   lua_pushstring( L, p->secondary->u.ammo.outfit->name );
+   if (outfit_isLauncher(p->secondary->outfit) || outfit_isFighterBay(p->secondary->outfit))
+      lua_pushstring( L, p->secondary->u.ammo.outfit->name );
+   else
+      lua_pushstring( L, p->secondary->outfit->name );
 
    /* Can have ammo. */
    if ((outfit_isLauncher(p->secondary->outfit) ||
