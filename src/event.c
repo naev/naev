@@ -261,6 +261,7 @@ static int event_create( int dataid, unsigned int id )
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
             data->lua, lua_tostring(L,-1));
+      free(buf);
       return -1;
    }
    free(buf);

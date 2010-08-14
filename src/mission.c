@@ -179,6 +179,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
             misn->lua, lua_tostring(mission->L,-1));
+      free(buf);
       return -1;
    }
    free(buf);
