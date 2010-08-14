@@ -287,7 +287,7 @@ static void background_renderImages (void)
 {
    int i;
    background_image_t *bkg;
-   double px,py, x,y, xs,ys;
+   double px,py, x,y, xs,ys, z;
 
    /* Must have an image array created. */
    if (bkg_image_arr == NULL)
@@ -304,8 +304,10 @@ static void background_renderImages (void)
       gl_gameToScreenCoords( &xs, &ys, x, y );
       xs = xs + (SCREEN_W - bkg->scale*bkg->image->sw)/2.;
       ys = ys + (SCREEN_H - bkg->scale*bkg->image->sh)/2.;
+      gl_cameraZoomGet( &z );
+      z *= bkg->scale;
       gl_blitScale( bkg->image, xs, ys,
-            bkg->scale * bkg->image->sw, bkg->scale * bkg->image->sh, &bkg->col );
+            z*bkg->image->sw, z*bkg->image->sh, &bkg->col );
    }
 }
 
