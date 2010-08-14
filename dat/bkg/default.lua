@@ -37,8 +37,15 @@ nebulae = {
 }
 
 
-function create_nebula ()
-   
+function background ()
+
+   -- We can do systems without nebula
+   local sys = system.cur()
+   local nebud, nebuv = sys:nebula()
+   if nebud > 0 then
+      return
+   end
+
    -- Start up PRNG based on system name for deterministic nebula
    local sys = system.cur()
    prng.initHash( system.name(sys) )
@@ -56,19 +63,8 @@ function create_nebula ()
    local scale = 1 + (prng.num()*0.5 + 0.5)*((2000+2000)/(w+h))
    if scale > 1.9 then scale = 1.9 end
    bkg.image( img, x, y, move, scale )
-end
 
 
-function background ()
-
-   -- We can do systems without nebula
-   local sys = system.cur()
-   local nebud, nebuv = sys:nebula()
-   if nebud > 0 then
-      return
-   end
-
-   create_nebula()
 end
 
 
