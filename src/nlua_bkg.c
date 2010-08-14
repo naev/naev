@@ -66,6 +66,8 @@ int nlua_loadBackground( lua_State *L, int readonly )
 
 /**
  * @brief Clears any backgrounds that may currently be displaying.
+ *
+ * @luafunc clear()
  */
 static int bkgL_clear( lua_State *L )
 {
@@ -78,7 +80,7 @@ static int bkgL_clear( lua_State *L )
 /**
  * @brief Adds a background image.
  *
- * @usage bkg.image( img, 0, 0, 0.1, 0.1, 1. ) -- Adds the image without scaling that moves at 0.1 the player speed
+ * @usage bkg.image( img, 0, 0, 0.1, 1. ) -- Adds the image without scaling that moves at 0.1 the player speed
  *
  *    @luaparam image Image to use.
  *    @luaparam x X position.
@@ -86,7 +88,7 @@ static int bkgL_clear( lua_State *L )
  *    @luaparam move Fraction of a pixel to move when the player moves one pixel.
  *    @luaparam scale How much to scale the image.
  *    @luaparam col Colour to tint image (optional parameter).
- * @luafunc image( image, x, y, xmove, ymove, scale, col )
+ * @luafunc image( image, x, y, movee, scale, col )
  */
 static int bkgL_image( lua_State *L )
 {
