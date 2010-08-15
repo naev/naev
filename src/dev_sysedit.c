@@ -505,8 +505,8 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
    z  = sysedit_zoom;
 
    /* Translate coords. */
-   tx = bx + (x - gfx->sw/2.)*z + SCREEN_W/2.;
-   ty = by + (y - gfx->sh/2.)*z + SCREEN_H/2.;
+   tx = bx + (x - gfx->sw/2.)*z;
+   ty = by + (y - gfx->sh/2.)*z;
 
    /* Selection graphic. */
    if (selected) {
