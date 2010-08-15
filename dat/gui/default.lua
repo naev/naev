@@ -85,7 +85,7 @@ function create()
    misc_x, misc_y = relativize( 40, 472 )
 
    -- Bottom bar
-   gui.viewport( 0, 20, screen_w, screen_h-20 )
+   --gui.viewport( 0, 20, screen_w, screen_h-20 )
 
    -- Update stuff
    update_cargo()
@@ -185,7 +185,7 @@ end
 
 
 function render_border ()
-   gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
+   --gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 end
 
 
