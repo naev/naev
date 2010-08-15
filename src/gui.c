@@ -96,9 +96,9 @@ extern int map_npath;
 
 
 /**
- * @brief The Lua state for the current GUI.
+ * GUI Lua stuff.
  */
-static lua_State *gui_L;
+static lua_State *gui_L; /**< Current GUI lua State. */
 
 
 /**
@@ -146,15 +146,15 @@ static int gui_mesg_x   = 0; /**< X positioning of messages. */
 static int gui_mesg_y   = 0; /**< Y positioning of messages. */
 
 /* Calculations to speed up borders. */
-static double gui_tr = 0.;
-static double gui_br = 0.;
-static double gui_tl = 0.;
-static double gui_bl = 0.;
+static double gui_tr = 0.; /**< Border top-right. */
+static double gui_br = 0.; /**< Border bottom-right. */
+static double gui_tl = 0.; /**< Border top-left. */
+static double gui_bl = 0.; /**< Border bottom-left. */
 
 /* Intrinsec graphical stuff. */
-static glTexture *gui_ico_hail      = NULL;
-static glTexture *gui_target_planet = NULL;
-static glTexture *gui_target_pilot  = NULL;
+static glTexture *gui_ico_hail      = NULL; /**< Hailing icon. */
+static glTexture *gui_target_planet = NULL; /**< Planet targetting icon. */
+static glTexture *gui_target_pilot  = NULL; /**< Pilot targetting icon. */
 
 
 /*

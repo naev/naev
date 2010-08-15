@@ -76,7 +76,7 @@ function create()
 
    -- Target position
    target_w = 128
-   target_h = 128
+   target_h = 100
    target_x, target_y = relativize( 40, 350 )
 
    -- Misc position
@@ -282,6 +282,20 @@ function render_target ()
       end
    end
 
+   -- Render target graphic
+   local x, y
+   if fuz then
+      str = "Unknown"
+      w = gfx.printDim( true, str )
+      x = target_x + (target_w - w)/2
+      y = target_y - (target_h - smallfont_h)/2
+      gfx.print( true, str, x, y-smallfont_h, col_gray, w, true )
+   else
+      x = target_x + (target_w - target_gfx_w)/2
+      y = target_y + (target_h - target_gfx_h)/2
+      gfx.renderTex( target_gfx, x, y-target_h )
+   end
+
    -- Display name
    local name
    if fuz then
@@ -314,27 +328,13 @@ function render_target ()
    end
    gfx.print( true, str, target_x, target_y-105, col_white, target_w )
 
-   -- Render target graphic
-   local x, y
-   if fuz then
-      str = "Unknown"
-      w = gfx.printDim( true, name )
-      x = target_x + (target_w - w)/2
-      y = target_y - (target_h - smallfont_h)/2 + 5
-      gfx.print( true, str, x, y, col_gray, w, true )
-   else
-      x = target_x + (target_w - target_gfx_w)/2
-      y = target_y - (target_h - target_gfx_h)/2 + 5
-      gfx.renderTex( target_gfx, x, y - target_gfx_h )
-   end
-
    -- Render faction logo.
    if not fuz and target_gfxFact ~= nil then
       gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h + 3 )
    end
 end
 function render_targetnone ()
-   gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
+   gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2-deffont_h, col_gray, target_w, true )
 end
 
 
