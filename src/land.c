@@ -612,7 +612,7 @@ static void bar_close( unsigned int wid, char *name )
 static void bar_approach( unsigned int wid, char *str )
 {
    (void) str;
-   int pos;
+   int pos, n;
 
    /* Get position. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -624,8 +624,11 @@ static void bar_approach( unsigned int wid, char *str )
    /* Ignore news. */
    pos--;
 
+   n = npc_getArraySize();
    npc_approach( pos );
    bar_genList( wid ); /* Always just in case. */
+   if (n == npc_getArraySize())
+      toolkit_setImageArrayPos( wid, "iarMissions", pos+1 );
 
    /* Reset markers. */
    mission_sysMark();
