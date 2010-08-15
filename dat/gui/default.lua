@@ -314,10 +314,8 @@ function render_target ()
    end
 
    -- Display health
-   local str
-   if fuz then
-      str = "Unknown"
-   else
+   if not fuz then
+      local str
       if dis then
          str = "Disabled"
       elseif shi < 5 then
@@ -325,8 +323,8 @@ function render_target ()
       else
          str = string.format( "Shield: %.0f%%", shi )
       end
+      gfx.print( true, str, target_x, target_y-105, col_white, target_w )
    end
-   gfx.print( true, str, target_x, target_y-105, col_white, target_w )
 
    -- Render faction logo.
    if not fuz and target_gfxFact ~= nil then
