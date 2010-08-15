@@ -1591,13 +1591,14 @@ void player_targetHyperspace (void)
 {
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
-   player_hyperspacePreempt(1);
 
-   if (player.p->nav_hyperspace >= cur_system->njumps)
+   if (player.p->nav_hyperspace >= cur_system->njumps) {
       player.p->nav_hyperspace = -1;
-   else
+      player_hyperspacePreempt(0);
+   } else {
       player_playSound(snd_nav,1);
-
+      player_hyperspacePreempt(1);
+   }
    /* Map gets special treatment if open. */
    if (player.p->nav_hyperspace == -1)
       map_select( NULL , 0);

@@ -1224,6 +1224,7 @@ void map_select( StarSystem *sys, char shifted )
          }
 
          if (map_npath==0) {
+            player_hyperspacePreempt(0);
             player.p->nav_hyperspace = -1;
             player_abortAutonav(NULL);
          }
