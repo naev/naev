@@ -89,7 +89,6 @@ static void nebu_generatePuffs (void);
 static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
-static void nebu_genOverlay (void);
 /* Nebula render methods. */
 static void nebu_renderMultitexture( const double dt );
 
@@ -384,7 +383,10 @@ static void nebu_renderMultitexture( const double dt )
 #define ANG45     0.70710678118654757 /**< 1./sqrt(2) */
 #define COS225    0.92387953251128674 /**< cos(225) */
 #define SIN225    0.38268343236508978 /**< sin(225) */
-static void nebu_genOverlay (void)
+/**
+ * @brief Regenerates the overlay.
+ */
+void nebu_genOverlay (void)
 {
    int i;
    GLfloat *data;

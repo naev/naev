@@ -48,6 +48,7 @@
 #include "nmath.h"
 #include "gui_osd.h"
 #include "conf.h"
+#include "nebula.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_gfx.h"
@@ -1767,6 +1768,9 @@ void gui_setViewport( double x, double y, double w, double h )
 
    /* Run border calculations. */
    gui_calcBorders();
+
+   /* Regenerate the Nebula stuff. */
+   nebu_genOverlay();
 }
 
 
