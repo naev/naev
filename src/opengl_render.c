@@ -500,8 +500,8 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - cx + gx) * gl_cameraZ;
-   *ny = (by - cy + gy) * gl_cameraZ;
+   *nx = (bx - cx) * gl_cameraZ + gx + SCREEN_W/2.;
+   *ny = (by - cy) * gl_cameraZ + gy + SCREEN_H/2.;
 }
 
 
@@ -532,7 +532,7 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 
    /* check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
-         (y > -h) || (y > SCREEN_H+h))
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* texture coords */
@@ -602,7 +602,7 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
 
    /* check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
-         (y > -h) || (y > SCREEN_H+h))
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* texture coords */
