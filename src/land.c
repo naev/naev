@@ -330,10 +330,7 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
 
    q = commodity_getMod();
    snprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w,
-         bx + (double)SCREEN_W/2.,
-         by + (double)SCREEN_H/2.,
-         &cBlack, buf );
+   gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
 
 
