@@ -810,6 +810,9 @@ void gui_render( double dt )
    int r;
    */
 
+   /* Set viewport. */
+   glScissor( 0., 0., gl_screen.rw, gl_screen.rh );
+
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
         ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD))) {
@@ -885,7 +888,7 @@ void gui_render( double dt )
    }
 
    /* Reset vieport. */
-   gl_defViewport();
+   glScissor( gui_viewport_x, gui_viewport_y, gui_viewport_w, gui_viewport_h );
 
 #if 0
    /*
@@ -1754,12 +1757,26 @@ static void gui_renderJumpPoint( int ind )
  */
 void gui_setViewport( double x, double y, double w, double h )
 {
-   gui_viewport_x = x;
-   gui_viewport_y = y;
-   gui_viewport_w = w;
-   gui_viewport_h = h;
+   gui_viewport_x = x / gl_screen.mxscale;
+   gui_viewport_y = y / gl_screen.myscale;
+   gui_viewport_w = w / gl_screen.mxscale;
+   gui_viewport_h = h / gl_screen.myscale;
 
    gui_calcBorders();
+
+   /* We now set the viewport. */
+   glScissor( gui_viewport_x, gui_viewport_y, gui_viewport_w, gui_viewport_h );
+   glEnable( GL_SCISSOR_TEST );
+}
+
+
+/**
+ * @brief Resets the viewport.
+ */
+void gui_clearViewport (void)
+{
+   glScissor( 0., 0., gl_screen.rw, gl_screen.rh );
+   glDisable( GL_SCISSOR_TEST );
 }
 
 

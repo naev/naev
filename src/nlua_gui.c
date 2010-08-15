@@ -23,6 +23,7 @@
 
 
 /* Ship metatable methods. */
+static int guiL_viewport( lua_State *L );
 static int guiL_osdInit( lua_State *L );
 static int guiL_mesgInit( lua_State *L );
 static int guiL_radarInit( lua_State *L );
@@ -30,6 +31,7 @@ static int guiL_radarRender( lua_State *L );
 static int guiL_targetPlanetGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
 static const luaL_reg guiL_methods[] = {
+   { "viewport", guiL_viewport },
    { "osdInit", guiL_osdInit },
    { "mesgInit", guiL_mesgInit },
    { "radarInit", guiL_radarInit },
@@ -69,6 +71,37 @@ int nlua_loadGUI( lua_State *L, int readonly )
  *
  * @luamod gui
  */
+
+
+/**
+ * @brief Sets the gui viewport.
+ *
+ * Basically this limits what the rest of the game considers as the screen.
+ *  Careful when using this or you can make the game look ugly and uplayable.
+ *
+ * @usage gui.viewport( 0, 0, screen_w, screen_h ) -- Resets viewport.
+ * @usage gui.viewport( 0, 20, screen_w, screen_h-20 ) -- Gives 20 pixels for a bottombar.
+ *
+ *    @luaparam x X position to start clipping (bottom left is 0.)
+ *    @luaparam y Y position to start clipping (bottom left is 0.)
+ *    @luaparam w Width of the clipping (width of the screen is default).
+ *    @luaparam h Height of the clipping (height of the screen is default).
+ * @luafunc viewport( x, y, w, h )
+ */
+static int guiL_viewport( lua_State *L )
+{
+   double x,y, w,h;
+
+   /* Parameters. */
+   x = luaL_checknumber(L,1);
+   y = luaL_checknumber(L,2);
+   w = luaL_checknumber(L,3);
+   h = luaL_checknumber(L,4);
+
+   /* Set the viewport. */
+   gui_setViewport( x, y, w, h );
+   return 0;
+}
 
 
 /**
