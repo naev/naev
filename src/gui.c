@@ -102,6 +102,15 @@ static lua_State *gui_L; /**< Current GUI lua State. */
 
 
 /**
+ * Cropping.
+ */
+static double gui_viewport_x = 0.;
+static double gui_viewport_y = 0.;
+static double gui_viewport_w = 0.;
+static double gui_viewport_h = 0.;
+
+
+/**
  * @struct Radar
  *
  * @brief Represents the player's radar.
@@ -184,6 +193,7 @@ static void gui_renderJumpPoint( int ind );
 static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderInterference (void);
+static void gui_calcBorders (void);
 /* Lua GUI. */
 static int gui_doFunc( const char* func );
 static int gui_prepFunc( const char* func );
@@ -873,6 +883,10 @@ void gui_render( double dt )
       col.a = x;
       gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
    }
+
+   /* Reset vieport. */
+   gl_defViewport();
+
 #if 0
    /*
     * target
@@ -1736,6 +1750,54 @@ static void gui_renderJumpPoint( int ind )
 
 
 /**
+ * @brief Sets the viewport.
+ */
+void gui_setViewport( double x, double y, double w, double h )
+{
+   gui_viewport_x = x;
+   gui_viewport_y = y;
+   gui_viewport_w = w;
+   gui_viewport_h = h;
+
+   gui_calcBorders();
+}
+
+
+/**
+ * @brief Calculates and sets the GUI borders.
+ */
+static void gui_calcBorders (void)
+{
+   double w,h;
+   double vx,vy, vw,vh;
+
+   /* Precalculations. */
+   vx = gui_viewport_x;
+   vy = gui_viewport_y;
+   vw = SCREEN_W - (vx + gui_viewport_w);
+   vh = SCREEN_H - (vy + gui_viewport_h);
+   w  = SCREEN_W/2.;
+   h  = SCREEN_H/2.;
+
+   /*
+    * Borders.
+    */
+   gui_tl = atan2( +h-vh, vx-w ); /* Top left. */
+   if (gui_tl < 0.)
+      gui_tl += 2*M_PI;
+   gui_tr = atan2( +h-vh, +w-vw ); /* Top right. */
+   if (gui_tr < 0.)
+      gui_tr += 2*M_PI;
+   gui_bl = atan2( vy-h, vx-w ); /* Bottom left. */
+   if (gui_bl < 0.)
+      gui_bl += 2*M_PI;
+   gui_br = atan2( vy-h, +w-vw ); /* Bottom right. */
+   if (gui_br < 0.)
+      gui_br += 2*M_PI;
+}
+
+
+/**
  * @brief Initializes the GUI system.
  *
  *    @return 0 on success;
@@ -1775,20 +1837,9 @@ int gui_init (void)
    osd_setup( 30., SCREEN_H-90., 150., 300. );
 
    /*
-    * Borders.
+    * Set viewport.
     */
-   gui_tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
-   if (gui_tl < 0.)
-      gui_tl += 2*M_PI;
-   gui_tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
-   if (gui_tr < 0.)
-      gui_tr += 2*M_PI;
-   gui_bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
-   if (gui_bl < 0.)
-      gui_bl += 2*M_PI;
-   gui_br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
-   if (gui_br < 0.)
-      gui_br += 2*M_PI;
+   gui_setViewport( 0., 0., gl_screen.rw, gl_screen.rh );
 
    /*
     * Icons.
@@ -1923,6 +1974,9 @@ int gui_load( const char* name )
    char *buf, path[PATH_MAX];
    uint32_t bufsize;
 
+   /* Set defaults. */
+   gui_cleanup();
+
    /* Open file. */
    snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
@@ -2056,6 +2110,9 @@ void gui_cleanup (void)
          gui_radar.interference[i] = NULL;
       }
    }
+
+   /* Set the viewport. */
+   gui_setViewport( 0., 0., gl_screen.rw, gl_screen.rh );
 
    /* Clean up interference. */
    interference_alpha = 0.;
