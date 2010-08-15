@@ -1770,7 +1770,8 @@ void gui_setViewport( double x, double y, double w, double h )
    gui_calcBorders();
 
    /* Regenerate the Nebula stuff. */
-   nebu_genOverlay();
+   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
+      nebu_genOverlay();
 }
 
 
