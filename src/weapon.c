@@ -702,7 +702,7 @@ static void weapon_render( Weapon* w, const double dt )
 
          /* Set up the matrix. */
          glPushMatrix();
-            glTranslated( x, y, 0. );
+            glTranslated( SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
             glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
 
          /* Preparatives. */
