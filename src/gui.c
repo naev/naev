@@ -1799,16 +1799,16 @@ static void gui_calcBorders (void)
    /*
     * Borders.
     */
-   gui_tl = atan2( +h-vh, vx-w ); /* Top left. */
+   gui_tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
    if (gui_tl < 0.)
       gui_tl += 2*M_PI;
-   gui_tr = atan2( +h-vh, +w-vw ); /* Top right. */
+   gui_tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
    if (gui_tr < 0.)
       gui_tr += 2*M_PI;
-   gui_bl = atan2( vy-h, vx-w ); /* Bottom left. */
+   gui_bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
    if (gui_bl < 0.)
       gui_bl += 2*M_PI;
-   gui_br = atan2( vy-h, +w-vw ); /* Bottom right. */
+   gui_br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
    if (gui_br < 0.)
       gui_br += 2*M_PI;
 }
