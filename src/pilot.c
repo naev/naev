@@ -1640,8 +1640,8 @@ void pilot_renderOverlay( Pilot* p, const double dt )
             c.a = 1.;
 
          /* Display text. */
-         gl_printRaw( NULL, x - p->comm_msgWidth/2. + SCREEN_W/2.,
-               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + SCREEN_H/2.,
+         gl_printRaw( NULL, x - p->comm_msgWidth/2.,
+               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.,
                &c, p->comm_msg );
       }
    }
@@ -1692,7 +1692,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
             land( cur_system->planets[ landtarget ], 0 );
-            pilot_rmFlag(pilot,PILOT_LANDING);
+            pilot->ptimer = 0.;
          }
          else
             pilot_setFlag(pilot,PILOT_DELETE);

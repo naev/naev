@@ -23,6 +23,7 @@ void nebu_renderPuffs( const double dt, int below_player );
 /*
  * Misc
  */
+void nebu_genOverlay (void);
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility );
 void nebu_forceGenerate (void);

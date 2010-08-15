@@ -130,8 +130,8 @@ static void lst_render( Widget* lst, double bx, double by )
          w-1, gl_defFont.h + 2., &cHilight, NULL );
 
    /* draw content */
-   tx = (double)SCREEN_W/2. + x + 2.;
-   ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
+   tx = x + 2.;
+   ty = y + lst->h - 2. - gl_defFont.h;
    miny = ty - lst->h + 2 + gl_defFont.h;
    y = ty - 2.;
    w -= 4;

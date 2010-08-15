@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -440,7 +440,6 @@
   </presence>
   <general>
    <class>P</class>
-   <faction>Sirius</faction>
    <population>5000000</population>
    <services>
     <land/>
@@ -1257,7 +1256,6 @@
   </presence>
   <general>
    <class>H</class>
-   <faction>Sirius</faction>
    <population>20000000</population>
    <services>
     <land/>
@@ -2277,7 +2275,6 @@
   </presence>
   <general>
    <class>0</class>
-   <faction>Dvaered</faction>
    <population>4000</population>
    <services>
     <land/>
@@ -2541,8 +2538,8 @@
  </asset>
  <asset name="Eridani II">
   <pos>
-   <x>-266.666667</x>
-   <y>3483.333333</y>
+   <x>-1016.666667</x>
+   <y>2353.333333</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -2563,8 +2560,8 @@
  </asset>
  <asset name="Eridani III">
   <pos>
-   <x>300.000000</x>
-   <y>2908.333333</y>
+   <x>-280.000000</x>
+   <y>2088.333333</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -2930,7 +2927,6 @@
   </presence>
   <general>
    <class>0</class>
-   <faction>Sirius</faction>
    <population>10000</population>
    <services>
     <land/>
@@ -3232,7 +3228,6 @@
   </presence>
   <general>
    <class>O</class>
-   <faction>Sirius</faction>
    <population>1000000</population>
    <services>
     <land/>
@@ -3286,7 +3281,6 @@
   </presence>
   <general>
    <class>H</class>
-   <faction>Sirius</faction>
    <population>3000000</population>
    <services>
     <land/>
@@ -3510,7 +3504,6 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <commodities/>
    <description>Hankies is something of a holiday resort as well as retreat for the wealthy. It is mainly a consumer world, having neither the land for agriculture nor the resources for industry. It does, however, have a pleasant ecosystem and a wealth of beautiful geography.</description>
    <bar>Since Hankies doesn't have much to offer, the bar is almost entirely an import product. The architecture, the facilities and the drinks can all be traced offworld. The only thing that is truly authentic to this world is the view from the windows - a mountain range stretching away into the distance.</bar>
   </general>
@@ -3883,7 +3876,6 @@
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
   </tech>
-
  </asset>
  <asset name="Jaegnhild">
   <pos>
@@ -4681,7 +4673,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>600000000</population>
    <services>
     <land/>
@@ -4706,7 +4697,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Missiles 2</item>
    <item>Light Civilian Combat Ships</item>
   </tech>
-
  </asset>
  <asset name="Massia I">
   <pos>
@@ -4937,7 +4927,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </presence>
   <general>
    <class>L</class>
-   <faction>Sirius</faction>
    <population>3000000000</population>
    <services>
     <land/>
@@ -4961,7 +4950,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>High Tech Upgrades 1</item>
    <item>Basic Civilian Ships</item>
   </tech>
-
  </asset>
  <asset name="Myonei">
   <pos>
@@ -6435,7 +6423,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>O</class>
-   <faction>Sirius</faction>
    <population>4294967295</population>
    <services>
     <land/>
@@ -6457,7 +6444,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 2</item>
    <item>Bulk Trade Ships</item>
   </tech>
-
  </asset>
  <asset name="Racheka Secundus">
   <pos>
@@ -6756,7 +6742,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>H</class>
-   <faction>Sirius</faction>
    <population>50000000</population>
    <services>
     <land/>
@@ -6777,7 +6762,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <tech>
    <item>Basic Outfits 1</item>
   </tech>
-
  </asset>
  <asset name="Riun">
   <pos>
@@ -7383,7 +7367,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <faction>Sirius</faction>
    <population>2000000000</population>
    <services>
     <land/>
@@ -7407,7 +7390,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 2</item>
    <item>Basic Civilian Ships</item>
   </tech>
-
  </asset>
  <asset name="Sinclair">
   <pos>
@@ -7497,7 +7479,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>H</class>
-   <faction>Sirius</faction>
    <population>1200000</population>
    <services>
     <land/>
@@ -7515,7 +7496,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
-
  </asset>
  <asset name="Stalwart Station">
   <pos>
@@ -7570,7 +7550,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>7000000</population>
    <services>
     <land/>
@@ -7592,7 +7571,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
   </tech>
-
  </asset>
  <asset name="Sudra">
   <pos>
@@ -7610,7 +7588,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>400000</population>
    <services>
     <land/>
@@ -7633,7 +7610,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Heavy Weapons 1</item>
    <item>Missiles 1</item>
   </tech>
-
  </asset>
  <asset name="Suoer">
   <pos>
@@ -7824,8 +7800,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="The Crucible">
   <pos>
-   <x>-533.333333</x>
-   <y>2691.666667</y>
+   <x>-853.333333</x>
+   <y>1771.666667</y>
   </pos>
   <GFX>
    <space>003.png</space>
@@ -8038,7 +8014,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <faction>Dvaered</faction>
    <population>4294967295</population>
    <services>
     <land/>
@@ -8063,7 +8038,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Trade Ships</item>
    <item>Basic Civilian Ships</item>
   </tech>
-
  </asset>
  <asset name="Tuur">
   <pos>
@@ -8255,7 +8229,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <faction>Sirius</faction>
    <population>1500000000</population>
    <services>
     <land/>
@@ -8277,7 +8250,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
   </tech>
-
  </asset>
  <asset name="Urbanus II">
   <pos>
@@ -8789,7 +8761,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>P</class>
-   <faction>Dvaered</faction>
    <population>40000000</population>
    <services>
     <land/>
@@ -8812,7 +8783,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
   </tech>
-
  </asset>
  <asset name="Virtual Civilian Standard">
   <virtual/>

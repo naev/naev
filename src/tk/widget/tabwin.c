@@ -160,7 +160,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Convert to window space. */
-   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry, 0 );
+   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
    x += parent->w - tab->x;
@@ -307,8 +307,8 @@ static void tab_render( Widget* tab, double bx, double by )
                   1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
       }
       /* Draw text. */
-      gl_printRaw( &gl_defFont, bx+x + 5 + SCREEN_W/2,
-            by + (TAB_HEIGHT-gl_defFont.h)/2 + SCREEN_H/2, &cBlack,
+      gl_printRaw( &gl_defFont, bx+x + 5,
+            by + (TAB_HEIGHT-gl_defFont.h)/2, &cBlack,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */

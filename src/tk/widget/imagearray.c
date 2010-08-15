@@ -166,9 +166,9 @@ static void iar_render( Widget* iar, double bx, double by )
     * Main drawing loop.
     */
    toolkit_clip( x, y, iar->w, iar->h );
-   ycurs = y + iar->h + (double)SCREEN_H/2. - h + iar->dat.iar.pos;
+   ycurs = y + iar->h - h + iar->dat.iar.pos;
    for (j=0; j<yelem; j++) {
-      xcurs = x + xspace + (double)SCREEN_W/2.;
+      xcurs = x + xspace;
       for (i=0; i<xelem; i++) {
 
          /* Get position. */
@@ -183,12 +183,12 @@ static void iar_render( Widget* iar, double bx, double by )
          fontcolour = cWhite;
          /* Draw background. */
          if (is_selected)
-            toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
-                  ycurs-(double)SCREEN_H/2. + 2.,
+            toolkit_drawRect( xcurs + 2.,
+                  ycurs + 2.,
                   w - 5., h - 5., &cDConsole, NULL );
          else if (iar->dat.iar.background != NULL) {
-            toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
-                  ycurs-(double)SCREEN_H/2. + 2.,
+            toolkit_drawRect( xcurs + 2.,
+                  ycurs + 2.,
                   w - 5., h - 5., &iar->dat.iar.background[pos], NULL );
 
             tc = iar->dat.iar.background[pos];
@@ -224,8 +224,8 @@ static void iar_render( Widget* iar, double bx, double by )
                   tc = cBlack;
 
                tc.a = 0.75;
-               toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
-                     ycurs-(double)SCREEN_H/2. + 5. + iar->dat.iar.ih,
+               toolkit_drawRect( xcurs + 2.,
+                     ycurs + 5. + iar->dat.iar.ih,
                      tw + 4., gl_smallFont.h + 4., &tc, NULL );
                /* Quantity number. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
@@ -248,8 +248,8 @@ static void iar_render( Widget* iar, double bx, double by )
                   tc = cBlack;
 
                tc.a = 0.75;
-               toolkit_drawRect( xcurs-(double)SCREEN_W/2. + iar->dat.iar.iw - 6.,
-                     ycurs-(double)SCREEN_H/2. + 5. + iar->dat.iar.ih,
+               toolkit_drawRect( xcurs + iar->dat.iar.iw - 6.,
+                     ycurs + 5. + iar->dat.iar.ih,
                      tw + 2., gl_smallFont.h + 4., &tc, NULL );
                /* Slot size letter. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
@@ -269,11 +269,11 @@ static void iar_render( Widget* iar, double bx, double by )
             c = toolkit_col;
             dc = toolkit_colDark;
          }
-         toolkit_drawOutline( xcurs-(double)SCREEN_W/2. + 2.,
-               ycurs-(double)SCREEN_H/2. + 2.,
+         toolkit_drawOutline( xcurs + 2.,
+               ycurs + 2.,
                w - 4., h - 4., 1., lc, c );
-         toolkit_drawOutline( xcurs-(double)SCREEN_W/2. + 2.,
-               ycurs-(double)SCREEN_H/2. + 2.,
+         toolkit_drawOutline( xcurs + 2.,
+               ycurs + 2.,
                w - 4., h - 4., 2., dc, NULL );
          xcurs += w + xspace;
       }
@@ -491,6 +491,16 @@ static void iar_cleanup( Widget* iar )
          if (iar->dat.iar.quantity && iar->dat.iar.quantity[i])
             free(iar->dat.iar.quantity[i]);
       }
+
+      /* Clean up slottypes. */
+      if (iar->dat.iar.slottype != NULL) {
+         for (i=0; i<iar->dat.iar.nelements; i++) {
+            if (iar->dat.iar.slottype[i] != NULL)
+               free( iar->dat.iar.slottype[i] );
+         }
+         free(iar->dat.iar.slottype);
+      }
+
       /* Free the arrays */
       free( iar->dat.iar.captions );
       free( iar->dat.iar.images );

@@ -183,7 +183,7 @@ void weapon_minimap( const double res, const double w,
       if ((outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID)) ||
             (wp->faction == FACTION_PLAYER))
          c = &cNeutral;
-      else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
+      else if ((wp->target == PLAYER_ID) || areAllies(FACTION_PLAYER, wp->faction))
          c = &cHostile;
       else
          c = &cNeutral;
@@ -221,7 +221,7 @@ void weapon_minimap( const double res, const double w,
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
          c = &cNeutral;
-      else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
+      else if ((wp->target == PLAYER_ID) || areAllies(FACTION_PLAYER, wp->faction))
          c = &cHostile;
       else
          c = &cNeutral;
@@ -702,7 +702,7 @@ static void weapon_render( Weapon* w, const double dt )
 
          /* Set up the matrix. */
          glPushMatrix();
-            glTranslated( x, y, 0. );
+            glTranslated( SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
             glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
 
          /* Preparatives. */

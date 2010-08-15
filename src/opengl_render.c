@@ -500,8 +500,8 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - cx + gx) * gl_cameraZ;
-   *ny = (by - cy + gy) * gl_cameraZ;
+   *nx = (bx - cx) * gl_cameraZ + gx + SCREEN_W/2.;
+   *ny = (by - cy) * gl_cameraZ + gy + SCREEN_H/2.;
 }
 
 
@@ -531,8 +531,8 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    h = sprite->sh*gl_cameraZ;
 
    /* check if inbounds */
-   if ((fabs(x) > SCREEN_W/2 + w) ||
-         (fabs(y) > SCREEN_H/2 + h) )
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* texture coords */
@@ -601,8 +601,8 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
    h = sa->sh*gl_cameraZ*scaleh;
 
    /* check if inbounds */
-   if ((fabs(x) > SCREEN_W/2 + w) ||
-         (fabs(y) > SCREEN_H/2 + h) )
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
       return;
 
    /* texture coords */
@@ -629,8 +629,8 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 {
    double x,y, tx,ty;
 
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
@@ -661,8 +661,8 @@ void gl_blitScaleSprite( const glTexture* sprite,
 {
    double x,y, tx,ty;
 
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
@@ -692,8 +692,8 @@ void gl_blitScale( const glTexture* texture,
    double tx,ty;
 
    /* here we use absolute coords */
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* texture dimensions */
    tx = ty = 0.;
@@ -717,8 +717,8 @@ void gl_blitStatic( const glTexture* texture,
    double x,y;
 
    /* here we use absolute coords */
-   x = bx - (double)SCREEN_W/2.;
-   y = by - (double)SCREEN_H/2.;
+   x = bx;
+   y = by;
 
    /* actual blitting */
    gl_blitTexture( texture, x, y, texture->sw, texture->sh,

@@ -198,8 +198,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
       else
          c = &cBlack;
       gl_printMaxRaw( cli_font, w,
-            bx + SCREEN_W/2., by + y + SCREEN_H/2.,
-            c, cli_buffer[i] );
+            bx, by + y, c, cli_buffer[i] );
       i = (i + 1) % BUF_LINES;
    }
 }

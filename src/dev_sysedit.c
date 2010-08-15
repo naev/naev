@@ -449,7 +449,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render cursor position. */
-   gl_print( &gl_smallFont, bx + 5. + SCREEN_W/2., by + 5. + SCREEN_H/2.,
+   gl_print( &gl_smallFont, bx + 5., by + 5.,
          &cWhite, "%.2f, %.2f",
          (bx + sysedit_mx - x)/z,
          (by + sysedit_my - y)/z );
@@ -505,8 +505,8 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
    z  = sysedit_zoom;
 
    /* Translate coords. */
-   tx = bx + (x - gfx->sw/2.)*z + SCREEN_W/2.;
-   ty = by + (y - gfx->sh/2.)*z + SCREEN_H/2.;
+   tx = bx + (x - gfx->sw/2.)*z;
+   ty = by + (y - gfx->sh/2.)*z;
 
    /* Selection graphic. */
    if (selected) {

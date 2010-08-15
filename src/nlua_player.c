@@ -34,6 +34,7 @@
 #include "nlua_system.h"
 #include "map.h"
 #include "hook.h"
+#include "comm.h"
 
 
 /* player */
@@ -57,6 +58,8 @@ static int playerL_autonav( lua_State *L );
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
 static int playerL_takeoff( lua_State *L );
+/* Hail stuff. */
+static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
 static int playerL_cargoFree( lua_State *L );
 static int playerL_cargoHas( lua_State *L );
@@ -85,6 +88,7 @@ static const luaL_reg playerL_methods[] = {
    { "autonav", playerL_autonav },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
+   { "commClose", playerL_commclose },
    { "cargoFree", playerL_cargoFree },
    { "cargoHas", playerL_cargoHas },
    { "cargoAdd", playerL_cargoAdd },
@@ -425,6 +429,19 @@ static int playerL_takeoff( lua_State *L )
    if (landed)
       landed = 0;
 
+   return 0;
+}
+
+
+/**
+ * @brief Forces the player to close comm if he is chatting.
+ *
+ * @luafunc commClose()
+ */
+static int playerL_commclose( lua_State *L )
+{
+   (void) L;
+   comm_queueClose();
    return 0;
 }
 

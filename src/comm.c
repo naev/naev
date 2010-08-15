@@ -38,6 +38,7 @@
 static Pilot *comm_pilot       = NULL; /**< Pilot currently talking to. */
 static Planet *comm_planet     = NULL; /**< Planet currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
+static int comm_commClose      = 0; /**< Close comm when done. */
 
 
 /* We need direct pilot access. */
@@ -69,6 +70,15 @@ static const char* comm_getString( char *str );
 int comm_isOpen (void)
 {
    return window_exists( COMM_WDWNAME );
+}
+
+
+/**
+ * @brief Queues a close command when possible.
+ */
+void comm_queueClose (void)
+{
+   comm_commClose = 1;
 }
 
 
@@ -130,6 +140,9 @@ int comm_openPilot( unsigned int pilot )
    /* Create the pilot window. */
    wid = comm_openPilotWindow();
 
+   /* Don't close automatically. */
+   comm_commClose = 0;
+
    /* Run generic hail hooks. */
    hparam[0].type       = HOOK_PARAM_PILOT;
    hparam[0].u.lp.pilot = p->id;
@@ -143,6 +156,10 @@ int comm_openPilot( unsigned int pilot )
       comm_pilot = p;
       comm_openPilotWindow();
    }
+
+   /* Close window if necessary. */
+   if (comm_commClose)
+      window_close( wid, NULL );
 
    return 0;
 }

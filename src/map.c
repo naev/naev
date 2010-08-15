@@ -458,16 +458,14 @@ static void map_update( unsigned int wid )
    hasPlanets = 0;
    p = 0;
    buf[0] = '\0';
-   if (sys->nplanets > 0)
-      if(sys->planets[0]->real == ASSET_REAL) {
-         hasPlanets = 1;
-         p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
-      }
-   for (i=1; i<sys->nplanets; i++) {
+   for (i=0; i<sys->nplanets; i++) {
       if(sys->planets[i]->real != ASSET_REAL)
          continue;
+      if (!hasPlanets)
+         p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[i]->name );
+      else
+         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
       hasPlanets = 1;
-      p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
    }
    if(hasPlanets == 0)
       strncpy( buf, "None", PATH_MAX );
@@ -915,7 +913,7 @@ void map_renderNames( double x, double y, int editor )
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
       gl_print( &gl_smallFont,
-            tx + SCREEN_W/2., ty + SCREEN_H/2.,
+            tx, ty,
             &cWhite, sys->name );
    }
 }
@@ -1224,6 +1222,7 @@ void map_select( StarSystem *sys, char shifted )
          }
 
          if (map_npath==0) {
+            player_hyperspacePreempt(0);
             player.p->nav_hyperspace = -1;
             player_abortAutonav(NULL);
          }

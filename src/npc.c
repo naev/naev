@@ -350,6 +350,10 @@ void npc_generate (void)
    for (i=0; i<nmissions; i++)
       npc_add_giver( &missions[i] );
 
+   /* Clean up. */
+   if (missions != NULL)
+      free( missions );
+
    /* Sort NPC. */
    npc_sort();
 }

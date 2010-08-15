@@ -89,7 +89,6 @@ static void nebu_generatePuffs (void);
 static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
-static void nebu_genOverlay (void);
 /* Nebula render methods. */
 static void nebu_renderMultitexture( const double dt );
 
@@ -158,14 +157,14 @@ int nebu_init (void)
 
    /* Create the VBO. */
    /* Vertex. */
-   vertex[0] = -SCREEN_W/2;
-   vertex[1] = -SCREEN_H/2;
-   vertex[2] = -vertex[0];
-   vertex[3] =  vertex[0];
-   vertex[4] =  vertex[0];
-   vertex[5] = -vertex[1];
-   vertex[6] =  vertex[2];
-   vertex[7] =  vertex[5];
+   vertex[0] = 0;
+   vertex[1] = 0;
+   vertex[2] = 0;
+   vertex[3] = SCREEN_H;
+   vertex[4] = SCREEN_W;
+   vertex[5] = 0;
+   vertex[6] = SCREEN_W;
+   vertex[7] = SCREEN_H;
    /* Texture 0. */
    tw = (double)nebu_w / (double)nebu_pw;
    th = (double)nebu_h / (double)nebu_ph;
@@ -306,6 +305,10 @@ static void nebu_renderMultitexture( const double dt )
 
       /* Change timer. */
       nebu_timer += nebu_dt;
+
+      /* Case it hasn't rendered in a while so it doesn't go crazy. */
+      if (nebu_timer < 0)
+         nebu_timer = nebu_dt;
    }
 
    /* Set the colour */
@@ -380,7 +383,10 @@ static void nebu_renderMultitexture( const double dt )
 #define ANG45     0.70710678118654757 /**< 1./sqrt(2) */
 #define COS225    0.92387953251128674 /**< cos(225) */
 #define SIN225    0.38268343236508978 /**< sin(225) */
-static void nebu_genOverlay (void)
+/**
+ * @brief Regenerates the overlay.
+ */
+void nebu_genOverlay (void)
 {
    int i;
    GLfloat *data;
@@ -537,7 +543,7 @@ void nebu_renderOverlay( const double dt )
       oy += sy;
    }
    gl_matrixPush();
-   gl_matrixTranslate( ox, oy );
+   gl_matrixTranslate( SCREEN_W/2.+ox, SCREEN_H/2.+oy );
    gl_matrixScale( z, z );
 
    /*

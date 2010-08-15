@@ -484,7 +484,7 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Draw rotated text. */
    y -= 10;
-   gl_print( &gl_smallFont, bx + SCREEN_W/2., y + SCREEN_H/2., &cBlack, "Slots:" );
+   gl_print( &gl_smallFont, bx, y, &cBlack, "Slots:" );
 
    x = bx + 10.;
    w = bw - 10.;
@@ -516,7 +516,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
    x = bx;
 
    /* Print text. */
-   gl_print( &gl_smallFont, x + SCREEN_W/2., by + SCREEN_H/2., &cBlack, str );
+   gl_print( &gl_smallFont, bx, by, &cBlack, str );
 
    /* Draw squares. */
    for (i=0; i<n; i++) {

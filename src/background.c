@@ -161,6 +161,7 @@ void background_renderStars( const double dt )
    gl_cameraZoomGet( &z );
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
    gl_matrixPush();
+      gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
       gl_matrixScale( z, z );
 
       if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -298,13 +299,11 @@ static void background_renderImages (void)
       bkg = &bkg_image_arr[i];
 
       gl_cameraGet( &px, &py );
-      x  = px + (bkg->x - px) * bkg->move;
-      y  = py + (bkg->y - py) * bkg->move;
+      x  = px + (bkg->x - px) * bkg->move - bkg->scale*bkg->image->sw/2.;
+      y  = py + (bkg->y - py) * bkg->move - bkg->scale*bkg->image->sh/2.;
       gl_gameToScreenCoords( &xs, &ys, x, y );
       gl_cameraZoomGet( &z );
       z *= bkg->scale;
-      xs = xs + (SCREEN_W - z*bkg->image->sw)/2.;
-      ys = ys + (SCREEN_H - z*bkg->image->sh)/2.;
       gl_blitScale( bkg->image, xs, ys,
             z*bkg->image->sw, z*bkg->image->sh, &bkg->col );
    }

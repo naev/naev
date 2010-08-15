@@ -494,7 +494,7 @@ void spfx_begin( const double dt )
 
    /* set the new viewport */
    glLoadIdentity();
-   glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
+   glOrtho( x, SCREEN_W+x, y, SCREEN_H+y, -1., 1. );
 }
 
 
@@ -644,13 +644,8 @@ static void spfx_hapticRumble( double mod )
  */
 void spfx_cinematic (void)
 {
-   double hw, hh;
-
-   hw = SCREEN_W/2.;
-   hh = SCREEN_H/2.;
-
-   gl_renderRect( -hw, -hh,     SCREEN_W, SCREEN_H*0.2, &cBlack );
-   gl_renderRect( -hw,  0.6*hh, SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( 0., 0.,           SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &cBlack );
 }
 
 

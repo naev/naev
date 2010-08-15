@@ -76,13 +76,16 @@ function create()
 
    -- Target position
    target_w = 128
-   target_h = 128
+   target_h = 100
    target_x, target_y = relativize( 40, 350 )
 
    -- Misc position
    misc_w = 128
    misc_h = 104
    misc_x, misc_y = relativize( 40, 472 )
+
+   -- Bottom bar
+   --gui.viewport( 0, 20, screen_w, screen_h-20 )
 
    -- Update stuff
    update_cargo()
@@ -141,10 +144,10 @@ function update_cargo ()
    cargol = player.cargoList()
    misc_cargo = ""
    for _,v in ipairs(cargol) do
-      if v.q > 0 then
+      if v.q == 0 then
          misc_cargo = misc_cargo .. v.name
       else
-         misc_cargo = misc_cargo .. string.format( "%d %s", v.q, v.name )
+         misc_cargo = misc_cargo .. string.format( "%d"  .. "t %s", v.q, v.name )
       end
       if v.m then
          misc_cargo = misc_cargo .. "*"
@@ -171,12 +174,18 @@ end
 function render( dt )
    gfx.renderTex( frame, frame_x, frame_y )
    gui.radarRender( radar_x, radar_y )
+   render_border()
    render_nav()
    render_health()
    render_weapon()
    render_target()
    render_misc()
    render_warnings()
+end
+
+
+function render_border ()
+   --gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 end
 
 
@@ -282,6 +291,20 @@ function render_target ()
       end
    end
 
+   -- Render target graphic
+   local x, y
+   if fuz then
+      str = "Unknown"
+      w = gfx.printDim( true, str )
+      x = target_x + (target_w - w)/2
+      y = target_y - (target_h - smallfont_h)/2
+      gfx.print( true, str, x, y-smallfont_h, col_gray, w, true )
+   else
+      x = target_x + (target_w - target_gfx_w)/2
+      y = target_y + (target_h - target_gfx_h)/2
+      gfx.renderTex( target_gfx, x, y-target_h )
+   end
+
    -- Display name
    local name
    if fuz then
@@ -292,11 +315,16 @@ function render_target ()
    local w = gfx.printDim( nil, name )
    gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
+   -- Display faction
+   if not fuz then
+      local faction = target_fact:name()
+      local w = gfx.printDim( nil, faction )
+      gfx.print( true, faction, target_x, target_y-26, col_white, target_w )
+   end
+
    -- Display health
-   local str
-   if fuz then
-      str = "Unknown"
-   else
+   if not fuz then
+      local str
       if dis then
          str = "Disabled"
       elseif shi < 5 then
@@ -304,30 +332,16 @@ function render_target ()
       else
          str = string.format( "Shield: %.0f%%", shi )
       end
-   end
-   gfx.print( true, str, target_x, target_y-100, col, target_w )
-
-   -- Render target graphic
-   local x, y
-   if fuz then
-      str = "Unknown"
-      w = gfx.printDim( true, name )
-      x = target_x + (target_w - w)/2
-      y = target_y - (target_h - smallfont_h)/2 + 5
-      gfx.print( true, str, x, y, col_gray, w, true )
-   else
-      x = target_x + (target_w - target_gfx_w)/2
-      y = target_y - (target_h - target_gfx_h)/2 + 5
-      gfx.renderTex( target_gfx, x, y - target_gfx_h )
+      gfx.print( true, str, target_x, target_y-105, col_white, target_w )
    end
 
    -- Render faction logo.
    if not fuz and target_gfxFact ~= nil then
-      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h - 3 )
+      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h + 3 )
    end
 end
 function render_targetnone ()
-   gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2, col_gray, target_w, true )
+   gfx.print( false, "No Target", target_x, target_y-(target_h-deffont_h)/2-deffont_h, col_gray, target_w, true )
 end
 
 
@@ -341,12 +355,12 @@ function render_misc ()
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
    gfx.print( true, "Cargo Free:", misc_x, y, col_console, misc_w, false )
-   local free = string.format("%d Tn", player.cargoFree())
+   local free = string.format("%d" .. "t", player.cargoFree())
    w = gfx.printDim( true, free )
    gfx.print( true, free, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - 5
    h = misc_h - 2*h - 8
-   gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_console )
+   gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_white )
 end
 
 

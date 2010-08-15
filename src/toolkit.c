@@ -587,7 +587,7 @@ void window_handleEvents( const unsigned int wid,
       return;
 
    /* Set key event handler function. */
-   wdw->eventevent = eventhandler;;
+   wdw->eventevent = eventhandler;
 }
 
 
@@ -1002,7 +1002,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.a = 0.7;
    toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
    toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
+   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cBlack, alt );
 }
 
 
@@ -1017,8 +1017,8 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
 void toolkit_clip( int x, int y, int w, int h )
 {
    double rx, ry, rw, rh;
-   rx = (x + (double)SCREEN_W/2) / gl_screen.mxscale;
-   ry = (y + (double)SCREEN_H/2) / gl_screen.myscale;
+   rx = (x + gl_screen.x) / gl_screen.mxscale;
+   ry = (y + gl_screen.y) / gl_screen.myscale;
    rw = w / gl_screen.mxscale;
    rh = h / gl_screen.myscale;
    glScissor( rx, ry, rw, rh );
@@ -1049,8 +1049,8 @@ static void window_renderBorder( Window* w )
    GLfloat colours[31*4];
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /* colours */
    lc = &cGrey90;
@@ -1067,8 +1067,8 @@ static void window_renderBorder( Window* w )
       toolkit_drawRect( x, y+0.6*w->h, w->w, 0.4*w->h, c, NULL );
       /* Name. */
       gl_printMidRaw( &gl_defFont, w->w,
-            x + (double)SCREEN_W/2.,
-            y + w->h - 20. + (double)SCREEN_H/2.,
+            x,
+            y + w->h - 20.,
             &cBlack, w->name );
       return;
    }
@@ -1379,8 +1379,8 @@ static void window_renderBorder( Window* w )
     * render window name
     */
    gl_printMidRaw( &gl_defFont, w->w,
-         x + (double)SCREEN_W/2.,
-         y + w->h - 20. + (double)SCREEN_H/2.,
+         x,
+         y + w->h - 20.,
          &cBlack, w->name );
 }
 
@@ -1396,8 +1396,8 @@ void window_render( Window *w )
    Widget *wgt;
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /* See if needs border. */
    if (!window_isFlag( w, WINDOW_NOBORDER ))
@@ -1437,8 +1437,8 @@ void window_renderOverlay( Window *w )
    Widget *wgt;
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /*
     * overlays
@@ -1583,25 +1583,23 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
  *    @param[out] y Resulting Y coord in window space.
  *    @param[out] rx Relative X movement (only valid for motion).
  *    @param[out] ry Relative Y movement (only valid for motion).
- *    @param convert Should it convert the event also?
  *    @return The type of the event.
  */
 Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
-      int *x, int *y, int *rx, int *ry, int convert )
+      int *x, int *y, int *rx, int *ry )
 {
    /* Extract the position as event. */
    if (event->type==SDL_MOUSEMOTION) {
-      *x = (double)event->motion.x;
-      *y = (double)gl_screen.rh - (double)event->motion.y;
+      *x = event->motion.x;
+      *y = event->motion.y;
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
-      *x = (double)event->button.x;
-      *y = (double)gl_screen.rh - (double)event->button.y;
+      *x = event->button.x;
+      *y = event->button.y;
    }
 
-   /* Handle possible window scaling. */
-   *x *= gl_screen.mxscale;
-   *y *= gl_screen.myscale;
+   /* Translate offset. */
+   gl_windowToScreenPos( x, y, *x, *y );
 
    /* Transform to relative to window. */
    *x -= w->x;
@@ -1609,27 +1607,12 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 
    /* Relative only matter if mouse motion. */
    if (event->type==SDL_MOUSEMOTION) {
-      *ry = (double)event->motion.yrel * gl_screen.mxscale;;
+      *ry = (double)event->motion.yrel * gl_screen.mxscale;
       *rx = (double)event->motion.xrel * gl_screen.myscale;
    }
    else {
       *ry = 0;
       *rx = 0;
-   }
-
-   /* See if should convert base event. */
-   if (convert) {
-      if (event->type == SDL_MOUSEMOTION) {
-         event->motion.x = *x;
-         event->motion.y = *y;
-         event->motion.xrel = *rx;
-         event->motion.yrel = *ry;
-      }
-      else if ((event->type==SDL_MOUSEBUTTONDOWN) ||
-            (event->type==SDL_MOUSEBUTTONUP)) {
-         event->button.x = *x;
-         event->button.y = *y;
-      }
    }
 
    return event->type;
@@ -1649,7 +1632,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
    int x, y, rx, ry;
 
    /* Translate mouse coords. */
-   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry, 1 );
+   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
 
    /* Check each widget. */
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {

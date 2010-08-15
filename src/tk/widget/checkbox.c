@@ -238,8 +238,8 @@ static void chk_render( Widget* chk, double bx, double by )
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,
-         bx + (double)SCREEN_W/2. + chk->x + 15,
-         by + (double)SCREEN_H/2. + chk->y + (chk->h - gl_defFont.h)/2.,
+         bx + chk->x + 15,
+         by + chk->y + (chk->h - gl_defFont.h)/2.,
          &cBlack, chk->dat.chk.display );
 }
 

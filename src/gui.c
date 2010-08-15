@@ -48,6 +48,7 @@
 #include "nmath.h"
 #include "gui_osd.h"
 #include "conf.h"
+#include "nebula.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_gfx.h"
@@ -96,9 +97,18 @@ extern int map_npath;
 
 
 /**
- * @brief The Lua state for the current GUI.
+ * GUI Lua stuff.
  */
-static lua_State *gui_L;
+static lua_State *gui_L; /**< Current GUI lua State. */
+
+
+/**
+ * Cropping.
+ */
+static double gui_viewport_x = 0.;
+static double gui_viewport_y = 0.;
+static double gui_viewport_w = 0.;
+static double gui_viewport_h = 0.;
 
 
 /**
@@ -146,15 +156,15 @@ static int gui_mesg_x   = 0; /**< X positioning of messages. */
 static int gui_mesg_y   = 0; /**< Y positioning of messages. */
 
 /* Calculations to speed up borders. */
-static double gui_tr = 0.;
-static double gui_br = 0.;
-static double gui_tl = 0.;
-static double gui_bl = 0.;
+static double gui_tr = 0.; /**< Border top-right. */
+static double gui_br = 0.; /**< Border bottom-right. */
+static double gui_tl = 0.; /**< Border top-left. */
+static double gui_bl = 0.; /**< Border bottom-left. */
 
 /* Intrinsec graphical stuff. */
-static glTexture *gui_ico_hail      = NULL;
-static glTexture *gui_target_planet = NULL;
-static glTexture *gui_target_pilot  = NULL;
+static glTexture *gui_ico_hail      = NULL; /**< Hailing icon. */
+static glTexture *gui_target_planet = NULL; /**< Planet targetting icon. */
+static glTexture *gui_target_pilot  = NULL; /**< Pilot targetting icon. */
 
 
 /*
@@ -184,6 +194,7 @@ static void gui_renderJumpPoint( int ind );
 static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderInterference (void);
+static void gui_calcBorders (void);
 /* Lua GUI. */
 static int gui_doFunc( const char* func );
 static int gui_prepFunc( const char* func );
@@ -548,6 +559,10 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
       *cx = w;
       *cy = w * (ry/rx);
    }
+
+   /* Translate. */
+   *cx += hw;
+   *cy += hh;
 }
 
 
@@ -823,6 +838,9 @@ void gui_render( double dt )
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
 
+   /* Set viewport. */
+   gl_viewport( 0., 0., gl_screen.rw, gl_screen.rh );
+
    /* Run Lua. */
    if (gui_L != NULL) {
       gui_prepFunc( "render" );
@@ -847,7 +865,7 @@ void gui_render( double dt )
       col.g = 1.;
       col.b = 1.;
       col.a = x;
-      gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
+      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
    }
 
    /* Noise when getting near a jump. */
@@ -871,8 +889,12 @@ void gui_render( double dt )
       col.g = 1.;
       col.b = 1.;
       col.a = x;
-      gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
+      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
    }
+
+   /* Reset vieport. */
+   gl_defViewport();
+
 #if 0
    /*
     * target
@@ -1016,9 +1038,9 @@ void gui_radarRender( double x, double y )
 
    gl_matrixPush();
    if (radar->shape==RADAR_RECT)
-      gl_matrixTranslate( x - SCREEN_W/2. + radar->w/2., y - SCREEN_H/2. + radar->h/2. );
+      gl_matrixTranslate( x + radar->w/2., y + radar->h/2. );
    else if (radar->shape==RADAR_CIRCLE)
-      gl_matrixTranslate( x - SCREEN_W/2., y - SCREEN_H/2.);
+      gl_matrixTranslate( x, y );
 
    /*
     * planets
@@ -1132,8 +1154,8 @@ static void gui_renderMessages( double dt )
       cb.a = 0.4;
 
       /* Set up position. */
-      vx = x - SCREEN_W/2.;
-      vy = y - SCREEN_H/2.;
+      vx = x;
+      vy = y;
 
       /* Data. */
       h  = conf.mesg_visible*gl_defFont.h*1.2;
@@ -1223,14 +1245,9 @@ static void gui_renderInterference (void)
    c.a = interference_alpha;
    tex = gui_radar.interference[interference_layer];
    if (gui_radar.shape == RADAR_CIRCLE)
-   gl_blitStatic( tex,
-      SCREEN_W/2. - gui_radar.w,
-      SCREEN_H/2. - gui_radar.w,
-      &c );
+      gl_blitStatic( tex, -gui_radar.w, -gui_radar.w, &c );
    else if (gui_radar.shape == RADAR_RECT)
-      gl_blitStatic( tex,
-            SCREEN_W/2. - gui_radar.w/2,
-            SCREEN_H/2. - gui_radar.h/2, &c );
+      gl_blitStatic( tex, -gui_radar.w, -gui_radar.h, &c );
 }
 
 
@@ -1736,6 +1753,73 @@ static void gui_renderJumpPoint( int ind )
 
 
 /**
+ * @brief Sets the viewport.
+ */
+void gui_setViewport( double x, double y, double w, double h )
+{
+   gui_viewport_x = x;
+   gui_viewport_y = y;
+   gui_viewport_w = w;
+   gui_viewport_h = h;
+
+   /* We now set the viewport. */
+   gl_setDefViewport( gui_viewport_x, gui_viewport_y, gui_viewport_w, gui_viewport_h );
+   gl_defViewport();
+
+   /* Run border calculations. */
+   gui_calcBorders();
+
+   /* Regenerate the Nebula stuff. */
+   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
+      nebu_genOverlay();
+}
+
+
+/**
+ * @brief Resets the viewport.
+ */
+void gui_clearViewport (void)
+{
+   gl_setDefViewport( 0., 0., gl_screen.rw, gl_screen.rh );
+   gl_defViewport();
+}
+
+
+/**
+ * @brief Calculates and sets the GUI borders.
+ */
+static void gui_calcBorders (void)
+{
+   double w,h;
+   double vx,vy, vw,vh;
+
+   /* Precalculations. */
+   vx = gui_viewport_x;
+   vy = gui_viewport_y;
+   vw = SCREEN_W - (vx + gui_viewport_w);
+   vh = SCREEN_H - (vy + gui_viewport_h);
+   w  = SCREEN_W/2.;
+   h  = SCREEN_H/2.;
+
+   /*
+    * Borders.
+    */
+   gui_tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
+   if (gui_tl < 0.)
+      gui_tl += 2*M_PI;
+   gui_tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
+   if (gui_tr < 0.)
+      gui_tr += 2*M_PI;
+   gui_bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
+   if (gui_bl < 0.)
+      gui_bl += 2*M_PI;
+   gui_br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
+   if (gui_br < 0.)
+      gui_br += 2*M_PI;
+}
+
+
+/**
  * @brief Initializes the GUI system.
  *
  *    @return 0 on success;
@@ -1775,20 +1859,9 @@ int gui_init (void)
    osd_setup( 30., SCREEN_H-90., 150., 300. );
 
    /*
-    * Borders.
+    * Set viewport.
     */
-   gui_tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
-   if (gui_tl < 0.)
-      gui_tl += 2*M_PI;
-   gui_tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
-   if (gui_tr < 0.)
-      gui_tr += 2*M_PI;
-   gui_bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
-   if (gui_bl < 0.)
-      gui_bl += 2*M_PI;
-   gui_br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
-   if (gui_br < 0.)
-      gui_br += 2*M_PI;
+   gui_setViewport( 0., 0., gl_screen.rw, gl_screen.rh );
 
    /*
     * Icons.
@@ -1923,6 +1996,9 @@ int gui_load( const char* name )
    char *buf, path[PATH_MAX];
    uint32_t bufsize;
 
+   /* Set defaults. */
+   gui_cleanup();
+
    /* Open file. */
    snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
@@ -2056,6 +2132,9 @@ void gui_cleanup (void)
          gui_radar.interference[i] = NULL;
       }
    }
+
+   /* Set the viewport. */
+   gui_clearViewport();
 
    /* Clean up interference. */
    interference_alpha = 0.;

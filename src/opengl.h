@@ -54,6 +54,8 @@
 typedef struct glInfo_ {
    int desktop_w; /**< Desktop width. */
    int desktop_h; /**< Desktop height. */
+   int x; /**< X offset of window viewport. */
+   int y; /**< Y offset of window viewport. */
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
    int nw; /**< Scaled window width. */
@@ -77,6 +79,8 @@ typedef struct glInfo_ {
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
+#define  SCREEN_X gl_screen.x /**< Screen X offset. */
+#define  SCREEN_Y gl_screen.y /**< Screen Y offset. */
 #define  SCREEN_W gl_screen.w /**< Screen width. */
 #define  SCREEN_H gl_screen.h /**< Screen height. */
 
@@ -103,10 +107,18 @@ GLboolean gl_hasVersion( int major, int minor );
 
 
 /*
+ * Viewport.
+ */
+void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy );
+void gl_viewport( int x, int y, int w, int h );
+void gl_defViewport (void);
+void gl_setDefViewport( int x, int y, int w, int h );
+
+
+/*
  * misc
  */
 double gl_setScale( double scalefactor );
-void gl_defViewport (void);
 void gl_screenshot( const char *filename );
 int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #ifdef DEBUGGING

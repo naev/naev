@@ -63,6 +63,15 @@ static int gl_activated = 0; /**< Whether or not a window is activated. */
 
 
 /*
+ * Viewport offsets
+ */
+static int gl_view_x = 0; /* X viewport offset. */
+static int gl_view_y = 0; /* Y viewport offset. */
+static int gl_view_w = 0; /* Viewport width. */
+static int gl_view_h = 0; /* Viewport height. */
+
+
+/*
  * prototypes
  */
 /* gl */
@@ -650,6 +659,7 @@ int gl_init (void)
    gl_setupScaling();
 
    /* Handle setting the default viewport. */
+   gl_setDefViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_defViewport();
 
    /* Finishing touches. */
@@ -693,21 +703,65 @@ double gl_setScale( double scalefactor )
 
 
 /**
+ * @brief Sets the opengl viewport.
+ */
+void gl_viewport( int x, int y, int w, int h )
+{
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glOrtho( 0., /* Left edge. */
+            gl_screen.nw, /* Right edge. */
+            0., /* Bottom edge. */
+            gl_screen.nh, /* Top edge. */
+            -1., /* near */
+            1. ); /* far */
+   
+   /* Take into accunt possible translation. */
+   gl_screen.x = x;
+   gl_screen.y = y;
+   gl_matrixTranslate( x, y );
+
+   /* Set screen size. */
+   gl_screen.w = w;
+   gl_screen.h = h;
+
+   /* Take into account posible scaling. */
+   if (gl_screen.scale != 1.)
+      glScaled( gl_screen.wscale, gl_screen.hscale, 1. );
+}
+
+
+/**
+ * @brief Sets the default viewport.
+ */
+void gl_setDefViewport( int x, int y, int w, int h )
+{
+   gl_view_x  = x;
+   gl_view_y  = y;
+   gl_view_w  = w;
+   gl_view_h  = h;
+}
+
+
+/**
  * @brief Resets viewport to default
  */
 void gl_defViewport (void)
 {
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho( -(double)gl_screen.nw/2, /* left edge */
-         (double)gl_screen.nw/2, /* right edge */
-         -(double)gl_screen.nh/2, /* bottom edge */
-         (double)gl_screen.nh/2, /* top edge */
-         -1., /* near */
-         1. ); /* far */
-   /* Take into account posible scaling. */
-   if (gl_screen.scale != 1.)
-      glScaled( gl_screen.wscale, gl_screen.hscale, 1. );
+   gl_viewport( gl_view_x, gl_view_y, gl_view_w, gl_view_h );
+}
+
+
+/**
+ * @Brief Translates the window position to screen position.
+ */
+void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
+{
+   double x,y;
+   x=wx;
+   y=wy;
+   *sx = gl_screen.mxscale * (double)(wx - gl_screen.x);
+   *sy = gl_screen.myscale * (double)(gl_screen.rh - wy - gl_screen.y);
 }
 
 

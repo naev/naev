@@ -1061,7 +1061,7 @@ void player_think( Pilot* pplayer, const double dt )
          }
       }
       /* If not try to face planet target. */
-      else if (player.p->nav_planet != -1 && preemption == 0) {
+      else if ((player.p->nav_planet != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
                   &cur_system->planets[ player.p->nav_planet ]->pos ));
@@ -1591,13 +1591,14 @@ void player_targetHyperspace (void)
 {
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
-   player_hyperspacePreempt(1);
 
-   if (player.p->nav_hyperspace >= cur_system->njumps)
+   if (player.p->nav_hyperspace >= cur_system->njumps) {
       player.p->nav_hyperspace = -1;
-   else
+      player_hyperspacePreempt(0);
+   } else {
       player_playSound(snd_nav,1);
-
+      player_hyperspacePreempt(1);
+   }
    /* Map gets special treatment if open. */
    if (player.p->nav_hyperspace == -1)
       map_select( NULL , 0);

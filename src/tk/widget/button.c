@@ -250,8 +250,8 @@ static void btn_render( Widget* btn, double bx, double by )
    toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
    gl_printMidRaw( NULL, (int)btn->w,
-         bx + (double)SCREEN_W/2. + btn->x,
-         by + (double)SCREEN_H/2. + btn->y + (btn->h - gl_defFont.h)/2.,
+         bx + btn->x,
+         by + btn->y + (btn->h - gl_defFont.h)/2.,
          &cDarkRed, btn->dat.btn.display );
 }
 
