@@ -444,11 +444,11 @@ void loadscreen_render( double done, const char *msg )
    w  = gl_screen.w * 0.4;
    h  = gl_screen.h * 0.02;
    rh = h + gl_defFont.h + 4.;
-   x  = -w/2.;
+   x  = (SCREEN_W-w)/2.;
    if (SCREEN_H < 768)
-      y  = -h/2.;
+      y  = (SCREEN_H-h)/2.;
    else
-      y  = -bw/2 - rh - 5.;
+      y  = (SCREEN_H-bw)/2 - rh - 5.;
 
    /* Draw loading screen image. */
    if (loading != NULL)
@@ -474,8 +474,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x + gl_screen.w/2., y + gl_screen.h/2 + 2. + h,
-         &cConsole, msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
 
    /* Flip buffers. */
    SDL_GL_SwapBuffers();

@@ -158,14 +158,14 @@ int nebu_init (void)
 
    /* Create the VBO. */
    /* Vertex. */
-   vertex[0] = -SCREEN_W/2;
-   vertex[1] = -SCREEN_H/2;
-   vertex[2] = -vertex[0];
-   vertex[3] =  vertex[0];
-   vertex[4] =  vertex[0];
-   vertex[5] = -vertex[1];
-   vertex[6] =  vertex[2];
-   vertex[7] =  vertex[5];
+   vertex[0] = 0;
+   vertex[1] = 0;
+   vertex[2] = 0;
+   vertex[3] = SCREEN_H;
+   vertex[4] = SCREEN_W;
+   vertex[5] = 0;
+   vertex[6] = SCREEN_W;
+   vertex[7] = SCREEN_H;
    /* Texture 0. */
    tw = (double)nebu_w / (double)nebu_pw;
    th = (double)nebu_h / (double)nebu_ph;
@@ -387,6 +387,7 @@ static void nebu_genOverlay (void)
    double a;
    double gx, gy;
    double z;
+   double hh, hw;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
@@ -434,69 +435,72 @@ static void nebu_genOverlay (void)
       data[2*(i+1) + 1] = nebu_view * sin(a);
    }
 
+   hw = SCREEN_W/2.;
+   hh = SCREEN_H/2.;
+
    /* Top Left */
-   data[(2+4)*18+0]  = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+1]  = SCREEN_H/2.*z-gy;
-   data[(2+4)*18+2]  = -nebu_view;
-   data[(2+4)*18+3]  = 0.;
-   data[(2+4)*18+4]  = -nebu_view*COS225;
-   data[(2+4)*18+5]  = nebu_view*SIN225;
-   data[(2+4)*18+6]  = -nebu_view*ANG45;
-   data[(2+4)*18+7]  = nebu_view*ANG45;
-   data[(2+4)*18+8]  = -nebu_view*SIN225;
-   data[(2+4)*18+9]  = nebu_view*COS225;
-   data[(2+4)*18+10] = 0.;
-   data[(2+4)*18+11] = nebu_view;
-   data[(2+4)*18+12] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+13] = SCREEN_H/2.*z-gy;
+   data[(2+4)*18+0]  = -SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+1]  = SCREEN_H/2.*z-gy+hh;
+   data[(2+4)*18+2]  = -nebu_view+hw;
+   data[(2+4)*18+3]  = 0.+hh;
+   data[(2+4)*18+4]  = -nebu_view*COS225+hw;
+   data[(2+4)*18+5]  = nebu_view*SIN225+hh;
+   data[(2+4)*18+6]  = -nebu_view*ANG45+hw;
+   data[(2+4)*18+7]  = nebu_view*ANG45+hh;
+   data[(2+4)*18+8]  = -nebu_view*SIN225+hw;
+   data[(2+4)*18+9]  = nebu_view*COS225+hh;
+   data[(2+4)*18+10] = 0.+hw;
+   data[(2+4)*18+11] = nebu_view+hh;
+   data[(2+4)*18+12] = SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+13] = SCREEN_H/2.*z-gy+hh;
 
    /* Top Right */
-   data[(2+4)*18+14] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+15] = SCREEN_H/2.*z-gy;
-   data[(2+4)*18+16] = 0.;
-   data[(2+4)*18+17] = nebu_view;
-   data[(2+4)*18+18] = nebu_view*SIN225;
-   data[(2+4)*18+19] = nebu_view*COS225;
-   data[(2+4)*18+20] = nebu_view*ANG45;
-   data[(2+4)*18+21] = nebu_view*ANG45;
-   data[(2+4)*18+22] = nebu_view*COS225;
-   data[(2+4)*18+23] = nebu_view*SIN225;
-   data[(2+4)*18+24] = nebu_view;
-   data[(2+4)*18+25] = 0.;
-   data[(2+4)*18+26] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+27] = -SCREEN_H/2.*z-gy;
+   data[(2+4)*18+14] = SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+15] = SCREEN_H/2.*z-gy+hh;
+   data[(2+4)*18+16] = 0.+hw;
+   data[(2+4)*18+17] = nebu_view+hh;
+   data[(2+4)*18+18] = nebu_view*SIN225+hw;
+   data[(2+4)*18+19] = nebu_view*COS225+hh;
+   data[(2+4)*18+20] = nebu_view*ANG45+hw;
+   data[(2+4)*18+21] = nebu_view*ANG45+hh;
+   data[(2+4)*18+22] = nebu_view*COS225+hw;
+   data[(2+4)*18+23] = nebu_view*SIN225+hh;
+   data[(2+4)*18+24] = nebu_view+hw;
+   data[(2+4)*18+25] = 0.+hh;
+   data[(2+4)*18+26] = SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+27] = -SCREEN_H/2.*z-gy+hh;
 
    /* Bottom Right */
-   data[(2+4)*18+28] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+29] = -SCREEN_H/2.*z-gy;
-   data[(2+4)*18+30] = nebu_view;
-   data[(2+4)*18+31] = 0.;
-   data[(2+4)*18+32] = nebu_view*COS225;
-   data[(2+4)*18+33] = -nebu_view*SIN225;
-   data[(2+4)*18+34] = nebu_view*ANG45;
-   data[(2+4)*18+35] = -nebu_view*ANG45;
-   data[(2+4)*18+36] = nebu_view*SIN225;
-   data[(2+4)*18+37] = -nebu_view*COS225;
-   data[(2+4)*18+38] = 0.;
-   data[(2+4)*18+39] = -nebu_view;
-   data[(2+4)*18+40] = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+41] = -SCREEN_H/2.*z-gy;
+   data[(2+4)*18+28] = SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+29] = -SCREEN_H/2.*z-gy+hh;
+   data[(2+4)*18+30] = nebu_view+hw;
+   data[(2+4)*18+31] = 0.+hh;
+   data[(2+4)*18+32] = nebu_view*COS225+hw;
+   data[(2+4)*18+33] = -nebu_view*SIN225+hh;
+   data[(2+4)*18+34] = nebu_view*ANG45+hw;
+   data[(2+4)*18+35] = -nebu_view*ANG45+hh;
+   data[(2+4)*18+36] = nebu_view*SIN225+hw;
+   data[(2+4)*18+37] = -nebu_view*COS225+hh;
+   data[(2+4)*18+38] = 0.+hw;
+   data[(2+4)*18+39] = -nebu_view+hh;
+   data[(2+4)*18+40] = -SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+41] = -SCREEN_H/2.*z-gy+hh;
 
    /* Bottom left */
-   data[(2+4)*18+42] = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+43] = -SCREEN_H/2.*z-gy;
-   data[(2+4)*18+44] = 0.;
-   data[(2+4)*18+45] = -nebu_view;
-   data[(2+4)*18+46] = -nebu_view*SIN225;
-   data[(2+4)*18+47] = -nebu_view*COS225;
-   data[(2+4)*18+48] = -nebu_view*ANG45;
-   data[(2+4)*18+49] = -nebu_view*ANG45;
-   data[(2+4)*18+50] = -nebu_view*COS225;
-   data[(2+4)*18+51] = -nebu_view*SIN225;
-   data[(2+4)*18+52] = -nebu_view;
-   data[(2+4)*18+53] = 0.;
-   data[(2+4)*18+54] = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+55] = SCREEN_H/2.*z-gy;
+   data[(2+4)*18+42] = -SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+43] = -SCREEN_H/2.*z-gy+hh;
+   data[(2+4)*18+44] = 0.+hw;
+   data[(2+4)*18+45] = -nebu_view+hh;
+   data[(2+4)*18+46] = -nebu_view*SIN225+hw;
+   data[(2+4)*18+47] = -nebu_view*COS225+hh;
+   data[(2+4)*18+48] = -nebu_view*ANG45+hw;
+   data[(2+4)*18+49] = -nebu_view*ANG45+hh;
+   data[(2+4)*18+50] = -nebu_view*COS225+hw;
+   data[(2+4)*18+51] = -nebu_view*SIN225+hh;
+   data[(2+4)*18+52] = -nebu_view+hw;
+   data[(2+4)*18+53] = 0.+hh;
+   data[(2+4)*18+54] = -SCREEN_W/2.*z-gx+hw;
+   data[(2+4)*18+55] = SCREEN_H/2.*z-gy+hh;
 
    gl_vboUnmap( nebu_vboOverlay );
 }

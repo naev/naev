@@ -824,8 +824,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
    /* Set up matrix. */
    gl_matrixMode(GL_MODELVIEW);
    gl_matrixPush();
-      gl_matrixTranslate( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.) );
+      gl_matrixTranslate( round(x), round(y) );
 
    /* Handle colour. */
    if (c==NULL)

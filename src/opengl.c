@@ -709,12 +709,12 @@ void gl_viewport( int x, int y, int w, int h )
 {
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho( -(double)gl_screen.nw/2, /* left edge */
-         (double)gl_screen.nw/2, /* right edge */
-         -(double)gl_screen.nh/2, /* bottom edge */
-         (double)gl_screen.nh/2, /* top edge */
-         -1., /* near */
-         1. ); /* far */
+   glOrtho( 0., /* Left edge. */
+            gl_screen.nw, /* Right edge. */
+            0., /* Bottom edge. */
+            gl_screen.nh, /* Top edge. */
+            -1., /* near */
+            1. ); /* far */
    
    /* Take into accunt possible translation. */
    gl_screen.x = x;

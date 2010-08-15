@@ -915,7 +915,7 @@ void map_renderNames( double x, double y, int editor )
       tx = x + (sys->pos.x+11.) * map_zoom;
       ty = y + (sys->pos.y-5.) * map_zoom;
       gl_print( &gl_smallFont,
-            tx + SCREEN_W/2., ty + SCREEN_H/2.,
+            tx, ty,
             &cWhite, sys->name );
    }
 }

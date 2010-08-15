@@ -860,7 +860,7 @@ void gui_render( double dt )
       col.g = 1.;
       col.b = 1.;
       col.a = x;
-      gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
+      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
    }
 
    /* Noise when getting near a jump. */
@@ -884,7 +884,7 @@ void gui_render( double dt )
       col.g = 1.;
       col.b = 1.;
       col.a = x;
-      gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
+      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
    }
 
    /* Reset vieport. */
@@ -1033,9 +1033,9 @@ void gui_radarRender( double x, double y )
 
    gl_matrixPush();
    if (radar->shape==RADAR_RECT)
-      gl_matrixTranslate( x - SCREEN_W/2. + radar->w/2., y - SCREEN_H/2. + radar->h/2. );
+      gl_matrixTranslate( x + radar->w/2., y - SCREEN_H/2. + radar->h/2. );
    else if (radar->shape==RADAR_CIRCLE)
-      gl_matrixTranslate( x - SCREEN_W/2., y - SCREEN_H/2.);
+      gl_matrixTranslate( x, y - SCREEN_H/2.);
 
    /*
     * planets
@@ -1149,8 +1149,8 @@ static void gui_renderMessages( double dt )
       cb.a = 0.4;
 
       /* Set up position. */
-      vx = x - SCREEN_W/2.;
-      vy = y - SCREEN_H/2.;
+      vx = x;
+      vy = y;
 
       /* Data. */
       h  = conf.mesg_visible*gl_defFont.h*1.2;
@@ -1240,14 +1240,9 @@ static void gui_renderInterference (void)
    c.a = interference_alpha;
    tex = gui_radar.interference[interference_layer];
    if (gui_radar.shape == RADAR_CIRCLE)
-   gl_blitStatic( tex,
-      SCREEN_W/2. - gui_radar.w,
-      SCREEN_H/2. - gui_radar.w,
-      &c );
+      gl_blitStatic( tex, -gui_radar.w, -gui_radar.w, &c );
    else if (gui_radar.shape == RADAR_RECT)
-      gl_blitStatic( tex,
-            SCREEN_W/2. - gui_radar.w/2,
-            SCREEN_H/2. - gui_radar.h/2, &c );
+      gl_blitStatic( tex, -gui_radar.w, -gui_radar.h, &c );
 }
 
 
@@ -1762,10 +1757,12 @@ void gui_setViewport( double x, double y, double w, double h )
    gui_viewport_w = w;
    gui_viewport_h = h;
 
-   gui_calcBorders();
-
    /* We now set the viewport. */
    gl_setDefViewport( gui_viewport_x, gui_viewport_y, gui_viewport_w, gui_viewport_h );
+   gl_defViewport();
+
+   /* Run border calculations. */
+   gui_calcBorders();
 }
 
 

@@ -195,8 +195,8 @@ static int gfxL_renderTexRaw( lua_State *L )
    /* Parameters. */
    lc = NULL;
    lt = luaL_checktex( L, 1 );
-   px = luaL_checknumber( L, 2 ) - (double)SCREEN_W/2.;
-   py = luaL_checknumber( L, 3 ) - (double)SCREEN_H/2.;
+   px = luaL_checknumber( L, 2 );
+   py = luaL_checknumber( L, 3 );
    pw = luaL_checknumber( L, 4 );
    ph = luaL_checknumber( L, 5 );
    sx = luaL_checkinteger( L, 6 ) - 1;
@@ -249,8 +249,8 @@ static int gfxL_renderRect( lua_State *L )
    int empty;
 
    /* Parse parameters. */
-   x     = luaL_checknumber( L, 1 ) - SCREEN_W/2.;
-   y     = luaL_checknumber( L, 2 ) - SCREEN_H/2.;
+   x     = luaL_checknumber( L, 1 );
+   y     = luaL_checknumber( L, 2 );
    w     = luaL_checknumber( L, 3 );
    h     = luaL_checknumber( L, 4 );
    lc    = luaL_checkcolour( L, 5 );

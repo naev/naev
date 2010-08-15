@@ -102,8 +102,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw text. */
    gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-         x+5. + SCREEN_W/2., ty  + SCREEN_H/2.,
-         &cBlack, &inp->dat.inp.input[ inp->dat.inp.view ] );
+         x+5., ty, &cBlack, &inp->dat.inp.input[ inp->dat.inp.view ] );
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {

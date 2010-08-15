@@ -1640,8 +1640,8 @@ void pilot_renderOverlay( Pilot* p, const double dt )
             c.a = 1.;
 
          /* Display text. */
-         gl_printRaw( NULL, x - p->comm_msgWidth/2. + SCREEN_W/2.,
-               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + SCREEN_H/2.,
+         gl_printRaw( NULL, x - p->comm_msgWidth/2.,
+               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.,
                &c, p->comm_msg );
       }
    }

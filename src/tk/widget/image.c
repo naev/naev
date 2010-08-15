@@ -79,11 +79,8 @@ static void img_render( Widget* img, double bx, double by )
    /*
     * image
     */
-   gl_blitScale( img->dat.img.image,
-         x + (double)SCREEN_W/2.,
-         y + (double)SCREEN_H/2.,
-         w, h,
-         img->dat.img.colour );
+   gl_blitScale( img->dat.img.image, x, y,
+         w, h, img->dat.img.colour );
 
    if (img->dat.img.border) {
       /* inner outline (outwards) */

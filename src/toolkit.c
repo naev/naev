@@ -1002,7 +1002,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.a = 0.7;
    toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
    toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
+   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cBlack, alt );
 }
 
 
@@ -1017,8 +1017,8 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
 void toolkit_clip( int x, int y, int w, int h )
 {
    double rx, ry, rw, rh;
-   rx = (x + (double)SCREEN_W/2 + gl_screen.x) / gl_screen.mxscale;
-   ry = (y + (double)SCREEN_H/2 + gl_screen.y) / gl_screen.myscale;
+   rx = (x + gl_screen.x) / gl_screen.mxscale;
+   ry = (y + gl_screen.y) / gl_screen.myscale;
    rw = w / gl_screen.mxscale;
    rh = h / gl_screen.myscale;
    glScissor( rx, ry, rw, rh );
@@ -1049,8 +1049,8 @@ static void window_renderBorder( Window* w )
    GLfloat colours[31*4];
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /* colours */
    lc = &cGrey90;
@@ -1067,8 +1067,8 @@ static void window_renderBorder( Window* w )
       toolkit_drawRect( x, y+0.6*w->h, w->w, 0.4*w->h, c, NULL );
       /* Name. */
       gl_printMidRaw( &gl_defFont, w->w,
-            x + (double)SCREEN_W/2.,
-            y + w->h - 20. + (double)SCREEN_H/2.,
+            x,
+            y + w->h - 20.,
             &cBlack, w->name );
       return;
    }
@@ -1379,8 +1379,8 @@ static void window_renderBorder( Window* w )
     * render window name
     */
    gl_printMidRaw( &gl_defFont, w->w,
-         x + (double)SCREEN_W/2.,
-         y + w->h - 20. + (double)SCREEN_H/2.,
+         x,
+         y + w->h - 20.,
          &cBlack, w->name );
 }
 
@@ -1396,8 +1396,8 @@ void window_render( Window *w )
    Widget *wgt;
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /* See if needs border. */
    if (!window_isFlag( w, WINDOW_NOBORDER ))
@@ -1437,8 +1437,8 @@ void window_renderOverlay( Window *w )
    Widget *wgt;
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /*
     * overlays
