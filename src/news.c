@@ -117,8 +117,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
       }
 
       gl_printMidRaw( news_font, w-40.,
-            bx+10 + (double)SCREEN_W/2., by+y + (double)SCREEN_H/2.,
-            &cConsole, news_lines[i] );
+            bx+10, by+y, &cConsole, news_lines[i] );
 
       /* Increment line and position. */
       i--;
