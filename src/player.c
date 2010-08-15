@@ -1061,7 +1061,7 @@ void player_think( Pilot* pplayer, const double dt )
          }
       }
       /* If not try to face planet target. */
-      else if (player.p->nav_planet != -1 && preemption == 0) {
+      else if ((player.p->nav_planet != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos,
                   &cur_system->planets[ player.p->nav_planet ]->pos ));
