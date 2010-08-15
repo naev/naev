@@ -558,6 +558,10 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
       *cx = w;
       *cy = w * (ry/rx);
    }
+
+   /* Translate. */
+   *cx += hw;
+   *cy += hh;
 }
 
 
