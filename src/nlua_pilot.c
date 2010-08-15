@@ -874,7 +874,7 @@ static int pilotL_inrange( lua_State *L )
  *
  *    @luaparam p Pilot to get nav info of.
  *    @luareturn The planet target followed by the hyperspace target or nil if not targetted.
- * @luafunc( p )
+ * @luafunc nav( p )
  */
 static int pilotL_nav( lua_State *L )
 {
