@@ -1037,9 +1037,9 @@ void gui_radarRender( double x, double y )
 
    gl_matrixPush();
    if (radar->shape==RADAR_RECT)
-      gl_matrixTranslate( x + radar->w/2., y - SCREEN_H/2. + radar->h/2. );
+      gl_matrixTranslate( x + radar->w/2., y + radar->h/2. );
    else if (radar->shape==RADAR_CIRCLE)
-      gl_matrixTranslate( x, y - SCREEN_H/2.);
+      gl_matrixTranslate( x, y );
 
    /*
     * planets
