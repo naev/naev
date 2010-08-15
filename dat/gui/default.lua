@@ -84,6 +84,9 @@ function create()
    misc_h = 104
    misc_x, misc_y = relativize( 40, 472 )
 
+   -- Bottom bar
+   gui.viewport( 0, 20, screen_w, screen_h-20 )
+
    -- Update stuff
    update_cargo()
    update_nav()
@@ -171,12 +174,18 @@ end
 function render( dt )
    gfx.renderTex( frame, frame_x, frame_y )
    gui.radarRender( radar_x, radar_y )
+   render_border()
    render_nav()
    render_health()
    render_weapon()
    render_target()
    render_misc()
    render_warnings()
+end
+
+
+function render_border ()
+   gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 end
 
 

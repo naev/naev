@@ -39,6 +39,7 @@
 #include "comm.h"
 #include "conf.h"
 #include "dev_uniedit.h"
+#include "gui.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -101,6 +102,9 @@ void menu_main (void)
    unsigned int bwid, wid;
    glTexture *tex;
    int h, y;
+
+   /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
+   gui_cleanup();
 
    /* Play load music. */
    music_choose("load");

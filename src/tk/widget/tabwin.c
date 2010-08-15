@@ -160,7 +160,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Convert to window space. */
-   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry, 0 );
+   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
    x += parent->w - tab->x;
