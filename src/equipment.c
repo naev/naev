@@ -316,8 +316,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    else
       c = &cBlack;
    gl_printMidRaw( &gl_smallFont, w+10.,
-         x + SCREEN_W/2.-5., y+h+10. + SCREEN_H/2.,
-         c, txt );
+         x-5., y+h+10., c, txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -347,7 +346,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       if (lst[i].outfit != NULL) {
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store,
-               x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
+               x, y, w, h, NULL );
          c = &cBlack; /* Ensures nice uniform outlines. */
       }
       else {
@@ -361,7 +360,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          else
             c = &cBlack;
          gl_printMidRaw( &gl_smallFont, w,
-               x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2., c, "None" );
+               x, y + (h-gl_smallFont.h)/2., c, "None" );
       }
 
       /* Draw outline. */
@@ -469,14 +468,14 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    y = by + bh - 30 - h;
    percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
    gl_printMidRaw( &gl_smallFont, w,
-         x + SCREEN_W/2., y + h + gl_smallFont.h + 10. + SCREEN_H/2.,
+         x, y + h + gl_smallFont.h + 10.,
          &cBlack, "CPU" );
    toolkit_drawRect( x, y, w, h*percent, &cGreen, NULL );
    toolkit_drawRect( x, y+h*percent, w, h*(1.-percent), &cRed, NULL );
    toolkit_drawOutline( x, y, w, h, 1., lc, c  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, 70,
-         x - 20 + SCREEN_W/2., y - 10 - gl_smallFont.h + SCREEN_H/2.,
+         x - 20, y - 10 - gl_smallFont.h,
          &cBlack, "%.0f / %.0f", p->cpu, p->cpu_max );
 
    /* Render ship graphic. */
@@ -572,7 +571,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                   text_width+10, gl_smallFont.h+5,
                   &tc, NULL );
             gl_printMaxRaw( &gl_smallFont, text_width,
-                  x+xoff + SCREEN_W/2., y + SCREEN_H/2. + yoff,
+                  x+xoff, y + yoff,
                   c, display );
          }
       }
@@ -715,7 +714,7 @@ static void equipment_renderShip( double bx, double by,
    y  = by + bh - 30 - h + 30;
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
-         px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
+         px, py, sx, sy, pw, ph, NULL );
    if ((eq_wgt.slot >= 0) && (eq_wgt.slot < p->outfit_nweapon)) {
       p->tsx = sx;
       p->tsy = sy;
