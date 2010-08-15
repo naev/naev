@@ -1330,6 +1330,7 @@ void takeoff( int delay )
 
    /* no longer authorized to land */
    player_rmFlag(PLAYER_LANDACK);
+   pilot_rmFlag(player.p,PILOT_LANDING); /* No longer landing. */
 
    /* set player to another position with random facing direction and no vel */
    player_warp( land_planet->pos.x + r * cos(a), land_planet->pos.y + r * sin(a) );

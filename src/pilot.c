@@ -1692,7 +1692,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
             land( cur_system->planets[ landtarget ], 0 );
-            pilot_rmFlag(pilot,PILOT_LANDING);
+            pilot->ptimer = 0.;
          }
          else
             pilot_setFlag(pilot,PILOT_DELETE);
