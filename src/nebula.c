@@ -306,6 +306,10 @@ static void nebu_renderMultitexture( const double dt )
 
       /* Change timer. */
       nebu_timer += nebu_dt;
+
+      /* Case it hasn't rendered in a while so it doesn't go crazy. */
+      if (nebu_timer < 0)
+         nebu_timer = nebu_dt;
    }
 
    /* Set the colour */
