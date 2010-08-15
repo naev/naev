@@ -141,10 +141,10 @@ function update_cargo ()
    cargol = player.cargoList()
    misc_cargo = ""
    for _,v in ipairs(cargol) do
-      if v.q > 0 then
+      if v.q == 0 then
          misc_cargo = misc_cargo .. v.name
       else
-         misc_cargo = misc_cargo .. string.format( "%d %s", v.q, v.name )
+         misc_cargo = misc_cargo .. string.format( "%d"  .. "t %s", v.q, v.name )
       end
       if v.m then
          misc_cargo = misc_cargo .. "*"
@@ -292,6 +292,13 @@ function render_target ()
    local w = gfx.printDim( nil, name )
    gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
+   -- Display faction
+   if not fuz then
+      local faction = target_fact:name()
+      local w = gfx.printDim( nil, faction )
+      gfx.print( true, faction, target_x, target_y-26, col_white, target_w )
+   end
+
    -- Display health
    local str
    if fuz then
@@ -305,7 +312,7 @@ function render_target ()
          str = string.format( "Shield: %.0f%%", shi )
       end
    end
-   gfx.print( true, str, target_x, target_y-100, col, target_w )
+   gfx.print( true, str, target_x, target_y-105, col_white, target_w )
 
    -- Render target graphic
    local x, y
@@ -323,7 +330,7 @@ function render_target ()
 
    -- Render faction logo.
    if not fuz and target_gfxFact ~= nil then
-      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h - 3 )
+      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h + 3 )
    end
 end
 function render_targetnone ()
@@ -341,12 +348,12 @@ function render_misc ()
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
    gfx.print( true, "Cargo Free:", misc_x, y, col_console, misc_w, false )
-   local free = string.format("%d Tn", player.cargoFree())
+   local free = string.format("%d" .. "t", player.cargoFree())
    w = gfx.printDim( true, free )
    gfx.print( true, free, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - 5
    h = misc_h - 2*h - 8
-   gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_console )
+   gfx.printText( true, misc_cargo, misc_x+13., y-h, misc_w-15., h, col_white )
 end
 
 
