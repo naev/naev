@@ -383,9 +383,6 @@ function render( dt )
             ta_energy = ptarget:energy()
             ta_speed = ptarget:vel():dist()
             ta_pos = ptarget:pos()
-            ta_dist = pp:pos():dist( ta_pos )
-            ta_dir = ptarget:dir()
-
             
             if math.floor(ta_speed) > ta_stats.speed then
                dispspe2 = ta_speed/ta_stats.speed - 1
@@ -414,6 +411,10 @@ function render( dt )
             gfx.renderTex( question, ta_center_x - ta_question_w / 2, ta_center_y - ta_question_h / 2 )
          end
          
+         -- Dist and dir calculated without explicit target.
+         ta_dist = pp:pos():dist( ta_pos )
+         ta_dir = ptarget:dir()
+
          --Title
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
          --Bars
@@ -497,7 +498,7 @@ function render( dt )
             gfx.print( true, "UNAVAILABLE", shield_sm_x + 22, shield_sm_y + 3, col_txt_una, bar_sm_w, true )
             gfx.print( true, "UNAVAILABLE", armor_sm_x + 22, armor_sm_y + 3, col_txt_una, bar_sm_w, true )
             gfx.print( true, "UNAVAILABLE", energy_sm_x + 22, energy_sm_y + 3, col_txt_una, bar_sm_w, true )
-            gfx.print( true, "UNAVAILABLE", speed_sm_x + 22, speed_sm_y + 3, col_txt_bar, bar_sm_w, true )
+            gfx.print( false, tostring( math.floor(ta_speed) ), speed_sm_x + 22, speed_sm_y + 3, col_txt_bar, bar_sm_w, true )
             
             --Warning light
             gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
@@ -508,15 +509,11 @@ function render( dt )
          
          --Dist
          gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 150, col_txt_top )
-         if ta_dist ~= nil then
-            gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
-            end
+         gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
             
          --Dir
          gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 150, col_txt_top )
-         if ta_dir ~= nil then
-               gfx.print( false, tostring( math.floor(ta_dir) ), ta_pane_x + 86, ta_pane_y + 132, col_txt_std, 30, true)
-            end
+         gfx.print( false, tostring( math.floor(ta_dir) ), ta_pane_x + 86, ta_pane_y + 132, col_txt_std, 30, true)
          
       end
    end
