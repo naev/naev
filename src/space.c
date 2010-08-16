@@ -876,7 +876,7 @@ void space_init ( const char* sysname )
       }
       else {
          /* Backrgound is Stary */
-         background_initStars( cur_system->stars  );
+         background_initStars( cur_system->stars );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NORMAL, 0. );
@@ -934,7 +934,7 @@ void space_init ( const char* sysname )
    gui_setSystem();
 
    /* Start background. */
-   background_load( NULL );
+   background_load( cur_system->background );
 }
 
 
@@ -1576,6 +1576,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
+            xmlr_strd( cur, "background", sys->background );
             xmlr_int( cur, "stars", sys->stars );
             xmlr_float( cur, "radius", sys->radius );
             if (xml_isNode(cur,"asteroids")) {
@@ -2054,6 +2055,8 @@ void space_exit (void)
          free(systems_stack[i].fleets);
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
+      if (systems_stack[i].background)
+         free(systems_stack[i].background);
 
       if(systems_stack[i].presence)
          free(systems_stack[i].presence);

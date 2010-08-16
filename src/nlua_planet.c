@@ -19,6 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "nlua_system.h"
+#include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -34,6 +35,8 @@ static int planetL_faction( lua_State *L );
 static int planetL_class( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
+static int planetL_gfxSpace( lua_State *L );
+static int planetL_gfxExterior( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
@@ -44,6 +47,8 @@ static const luaL_reg planet_methods[] = {
    { "class", planetL_class },
    { "pos", planetL_position },
    { "services", planetL_services },
+   { "gfxSpace", planetL_gfxSpace },
+   { "gfxExterior", planetL_gfxExterior },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -449,4 +454,47 @@ static int planetL_position( lua_State *L )
    lua_pushvector(L, v);
    return 1;
 }
+
+
+/**
+ * @brief Gets the texture of the planet in space.
+ *
+ * @uasge gfx = p:gfxSpace()
+ *    @luaparam p Planet to get texture of.
+ *    @luareturn The space texture of the planet.
+ * @luafunc gfxSpace( p )
+ */
+static int planetL_gfxSpace( lua_State *L )
+{
+   LuaPlanet *p;
+   LuaTex lt;
+   p        = luaL_checkplanet(L,1);
+   if (p->p->gfx_space == NULL) /* Not loaded. */
+      lt.tex   = gl_newImage( p->p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+   else
+      lt.tex   = gl_dupTexture( p->p->gfx_space );
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the texture of the planet in exterior.
+ *
+ * @uasge gfx = p:gfxSpace()
+ *    @luaparam p Planet to get texture of.
+ *    @luareturn The exterior texture of the planet.
+ * @luafunc gfxSpace( p )
+ */
+static int planetL_gfxExterior( lua_State *L )
+{
+   LuaPlanet *p;
+   LuaTex lt;
+   p        = luaL_checkplanet(L,1);
+   lt.tex   = gl_newImage( p->p->gfx_exterior, 0 );
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
 

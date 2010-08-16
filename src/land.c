@@ -70,6 +70,7 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
  */
 int landed = 0; /**< Is player landed. */
 static unsigned int land_wid = 0; /**< Land window ID. */
+static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Landing Main",
    "Spaceport Bar",
@@ -602,6 +603,12 @@ static void bar_close( unsigned int wid, char *name )
    (void) wid;
    (void) name;
 
+   /* Must not be regenerating. */
+   if (land_regen) {
+      land_regen--;
+      return;
+   }
+
    if (mission_portrait != NULL)
       gl_freeTexture(mission_portrait);
    mission_portrait = NULL;
@@ -612,7 +619,7 @@ static void bar_close( unsigned int wid, char *name )
 static void bar_approach( unsigned int wid, char *str )
 {
    (void) str;
-   int pos;
+   int pos, n;
 
    /* Get position. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -624,8 +631,11 @@ static void bar_approach( unsigned int wid, char *str )
    /* Ignore news. */
    pos--;
 
+   n = npc_getArraySize();
    npc_approach( pos );
    bar_genList( wid ); /* Always just in case. */
+   if (n == npc_getArraySize())
+      toolkit_setImageArrayPos( wid, "iarMissions", pos+1 );
 
    /* Reset markers. */
    mission_sysMark();
@@ -967,6 +977,12 @@ static void land_cleanupWindow( unsigned int wid, char *name )
    (void) wid;
    (void) name;
 
+   /* Must not be regenerating. */
+   if (land_regen) {
+      land_regen--;
+      return;
+   }
+
    /* Clean up possible stray graphic. */
    if (gfx_exterior != NULL) {
       gl_freeTexture( gfx_exterior );
@@ -990,26 +1006,25 @@ unsigned int land_getWid( int window )
 
 
 /**
- * @brief Opens up all the land dialogue stuff.
- *    @param p Planet to open stuff for.
- *    @param load Whether or not loading the game.
+ * @brief Recreates the land windows.
  */
-void land( Planet* p, int load )
+void land_genWindows( int load )
 {
    int i, j;
    const char *names[LAND_NUMWINDOWS];
    int w, h;
+   Planet *p;
+   int regen;
 
-   /* Do not land twice. */
-   if (landed)
-      return;
+   /* Destroy old window if exists. */
+   if (land_wid > 0) {
+      land_regen = 2; /* Mark we're regenning. */
+      window_destroy(land_wid);
+   }
 
-   /* Stop player sounds. */
-   player_stopSound();
-
-   /* Load stuff */
-   land_planet = p;
-   gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
+   /* Get planet. */
+   p     = land_planet;
+   regen = landed;
 
    /* Create window. */
    if ((SCREEN_W < 1024) || (SCREEN_H < 768)) {
@@ -1022,13 +1037,6 @@ void land( Planet* p, int load )
    }
    land_wid = window_create( p->name, -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
-
-   /* Generate the news. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
-      news_load();
-
-   /* Clear the NPC. */
-   npc_clear();
 
    /* Set window map to invald. */
    for (i=0; i<LAND_NUMWINDOWS; i++)
@@ -1087,20 +1095,22 @@ void land( Planet* p, int load )
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
    /* 2) Set as landed and run hooks. */
-   landed = 1;
-   music_choose("land"); /* Must be before hooks in case hooks change music. */
-   if (!load) {
-      events_trigger( EVENT_TRIGGER_LAND );
-      hooks_run("land");
-   }
+   if (!regen) {
+      landed = 1;
+      music_choose("land"); /* Must be before hooks in case hooks change music. */
+      if (!load) {
+         events_trigger( EVENT_TRIGGER_LAND );
+         hooks_run("land");
+      }
 
-   /* 3) Generate computer and bar missions. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
-      mission_computer = missions_genList( &mission_ncomputer,
-            land_planet->faction, land_planet->name, cur_system->name,
-            MIS_AVAIL_COMPUTER );
-   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
-      npc_generate(); /* Generate bar npc. */
+      /* 3) Generate computer and bar missions. */
+      if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
+         mission_computer = missions_genList( &mission_ncomputer,
+               land_planet->faction, land_planet->name, cur_system->name,
+               MIS_AVAIL_COMPUTER );
+      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+         npc_generate(); /* Generate bar npc. */
+   }
 
    /* 4) Create other tabs. */
    /* Basic - bar + missions */
@@ -1122,14 +1132,16 @@ void land( Planet* p, int load )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
-   /* Reset markers if needed. */
-   mission_sysMark();
+   if (!regen) {
+      /* Reset markers if needed. */
+      mission_sysMark();
 
-   /* Check land missions. */
-   if (!has_visited(VISITED_LAND)) {
-      missions_run(MIS_AVAIL_LAND, land_planet->faction,
-            land_planet->name, cur_system->name);
-      visited(VISITED_LAND);
+      /* Check land missions. */
+      if (!has_visited(VISITED_LAND)) {
+         missions_run(MIS_AVAIL_LAND, land_planet->faction,
+               land_planet->name, cur_system->name);
+         visited(VISITED_LAND);
+      }
    }
 
    /* Go to last open tab. */
@@ -1139,6 +1151,36 @@ void land( Planet* p, int load )
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
+}
+
+
+/**
+ * @brief Opens up all the land dialogue stuff.
+ *    @param p Planet to open stuff for.
+ *    @param load Whether or not loading the game.
+ */
+void land( Planet* p, int load )
+{
+   /* Do not land twice. */
+   if (landed)
+      return;
+
+   /* Stop player sounds. */
+   player_stopSound();
+
+   /* Load stuff */
+   land_planet = p;
+   gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
+
+   /* Generate the news. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
+      news_load();
+
+   /* Clear the NPC. */
+   npc_clear();
+
+   /* Create all the windows. */
+   land_genWindows( load );
 
    /* Mission forced take off. */
    if (landed == 0) {
@@ -1378,6 +1420,7 @@ void land_cleanup (void)
    int i;
 
    /* Clean up default stuff. */
+   land_regen     = 0;
    land_planet    = NULL;
    landed         = 0;
    land_visited   = 0;

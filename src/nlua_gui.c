@@ -78,6 +78,8 @@ int nlua_loadGUI( lua_State *L, int readonly )
  *
  * Basically this limits what the rest of the game considers as the screen.
  *  Careful when using this or you can make the game look ugly and uplayable.
+ *  So use common sense and try to avoid windows smaller than 800x600 if
+ *  possible.
  *
  * @usage gui.viewport( 0, 0, screen_w, screen_h ) -- Resets viewport.
  * @usage gui.viewport( 0, 20, screen_w, screen_h-20 ) -- Gives 20 pixels for a bottombar.

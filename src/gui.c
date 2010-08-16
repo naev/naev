@@ -2029,12 +2029,16 @@ int gui_load( const char* name )
    nlua_loadStandard( gui_L, 1 );
    nlua_loadGFX( gui_L, 0 );
    nlua_loadGUI( gui_L, 0 );
+
+   /* Run create function. */
    if (gui_doFunc( "create" )) {
       lua_close( gui_L );
       gui_L = NULL;
    }
 
-   /* Run create function. */
+   /* Recreate land window if landed. */
+   if (landed)
+      land_genWindows( 0 );
 
    return 0;
 }

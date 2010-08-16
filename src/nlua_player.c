@@ -54,6 +54,7 @@ static int playerL_getPilot( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
+static int playerL_autonavDest( lua_State *L );
 /* Board stuff. */
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
@@ -86,6 +87,7 @@ static const luaL_reg playerL_methods[] = {
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
+   { "autonavDest", playerL_autonavDest },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
    { "commClose", playerL_commclose },
@@ -111,6 +113,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "pilot", playerL_getPilot },
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
+   { "autonavDest", playerL_autonavDest },
    { "cargoFree", playerL_cargoFree },
    { "cargoHas", playerL_cargoHas },
    { "cargoList", playerL_cargoList },
@@ -393,6 +396,28 @@ static int playerL_refuel( lua_State *L )
 static int playerL_autonav( lua_State *L )
 {
    lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the player's long term autonav destination.
+ *
+ * @usage sys = player.autonavDest()
+ *
+ *    @luareturn The system the player wants to get to or nil if none selected.
+ * @luafunc autonavDest()
+ */
+static int playerL_autonavDest( lua_State *L )
+{
+   LuaSystem ls;
+
+   /* Get destination. */
+   ls.s = map_getDestination();
+   if (ls.s == NULL)
+      return 0;
+
+   lua_pushsystem( L, ls );
    return 1;
 }
 

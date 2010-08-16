@@ -1143,6 +1143,20 @@ static void map_selectCur (void)
       map_selected = -1;
 }
 
+
+/**
+ * @brief Gets the destination system.
+ *
+ *    @return The destination system or NULL if there is no path set.
+ */
+StarSystem* map_getDestination (void)
+{
+   if (map_path == NULL)
+      return NULL;
+   return map_path[ map_npath-1 ];
+}
+
+
 /**
  * @brief Updates the map after a jump.
  */

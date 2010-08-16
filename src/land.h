@@ -42,6 +42,7 @@ extern Planet* land_planet;
  * Main interface.
  */
 void land( Planet* p, int load );
+void land_genWindows( int load );
 void takeoff( int delay );
 void land_cleanup (void);
 void land_exit (void);
@@ -62,5 +63,6 @@ int can_swapEquipment( char* shipname );
 int can_sell( char* shipname );
 int land_errDialogue( char* shipname, char* type );
 void land_errDialogueBuild( const char *fmt, ... );
+
 
 #endif /* LAND_H */
