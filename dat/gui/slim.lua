@@ -153,8 +153,10 @@ function create()
 	ta_warning_y = ta_pane_y + 100
 	
 	timers = {}
-	timers[1] = 0.1
+	timers[1] = 0.5
+   timers[2] = 0.5
 	blinkcol = col_txt_enm
+   gfxWarn = true
 	
 	update_target()
 	update_ship()
@@ -305,7 +307,7 @@ function render( dt )
 			dispspe2 = 1
 			timers[1] = timers[1] - dt
 			if timers[1] <= 0. then
-				timers[1] = 0.1
+				timers[1] = 0.5
 				if blinkcol == col_txt_una then
 					blinkcol = col_txt_enm
 				else
@@ -336,10 +338,22 @@ function render( dt )
 		small = false
 	end
 	gfx.print( small, txt, speed_x + 30, speed_y + 6, col, bar_w, true)
-	
+
 	--Warning Light
 	if lockons > 0 then
-		gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
+      timers[2] = timers[2] - dt
+      if timers[2] <= 0. then
+         if lockons < 20 then
+            timers[2] = 0.5 - (0.025 * lockons)
+            gfxWarn = not gfxWarn
+         else
+            timers[2] = 0
+            gfxWarn = true
+         end
+      end
+      if gfxWarn == true then
+         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
+      end
 	end
 	if armor <= 20 then
 		gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
@@ -361,6 +375,7 @@ function render( dt )
 			
 			local dispspe, dispspe2, specol
 			if not ta_fuzzy then
+            ptarget_target = ptarget:target()
 				ta_armor, ta_shield, ta_disabled = ptarget:health()
 				ta_energy = ptarget:energy()
 				ta_speed = ptarget:vel():dist()
@@ -413,8 +428,7 @@ function render( dt )
 				gfx.renderRect( energy_sm_x + 22, energy_sm_y + 2, ta_energy/100 * bar_sm_w, bar_sm_h, col_ene )
 				if dispspe2 < 1 then
 					gfx.renderRect( speed_sm_x + 22, speed_sm_y + 2, dispspe * bar_sm_w, bar_sm_h, col_spe )
-				end
-				if dispspe2 then
+				elseif dispspe2 then
 					gfx.renderRect( speed_sm_x + 22, speed_sm_y + 2, dispspe2 * bar_sm_w, bar_sm_h, col_spe2 )
 				end
 			else
@@ -448,7 +462,7 @@ function render( dt )
 				gfx.print( false, tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")", shield_sm_x + 22, shield_sm_y + 3, col_txt_bar, bar_sm_w, true )
 				gfx.print( false, tostring( math.floor(ta_armor) ) .. "% (" .. tostring(math.floor(ta_stats.armour  * ta_armor / 100)) .. ")", armor_sm_x + 22, armor_sm_y + 3, col_txt_bar, bar_sm_w, true )
 				gfx.print( false, tostring( math.floor(ta_energy) ) .. "%", energy_sm_x + 22, energy_sm_y + 3, col_txt_bar, bar_sm_w, true )
-				gfx.print( false, tostring( math.floor(ta_speed / ta_stats.speed * 100 )) .. "% (" .. tostring( math.floor(ta_speed) ), speed_sm_x + 22, speed_sm_y + 3, specol, bar_sm_w, true )
+				gfx.print( false, tostring( math.floor(ta_speed / ta_stats.speed * 100 )) .. "% (" .. tostring( math.floor(ta_speed) ) .. ")", speed_sm_x + 22, speed_sm_y + 3, specol, bar_sm_w, true )
 				
 				--Warning Light
 				if ptarget_target == pp then
@@ -480,7 +494,7 @@ function render( dt )
 				gfx.print( true, "UNAVAILABLE", shield_sm_x + 22, shield_sm_y + 3, col_txt_una, bar_sm_w, true )
 				gfx.print( true, "UNAVAILABLE", armor_sm_x + 22, armor_sm_y + 3, col_txt_una, bar_sm_w, true )
 				gfx.print( true, "UNAVAILABLE", energy_sm_x + 22, energy_sm_y + 3, col_txt_una, bar_sm_w, true )
-				gfx.print( false, tostring( math.floor(ta_speed) ), speed_sm_x + 22, speed_sm_y + 3, col_txt_bar, bar_sm_w, true )
+				gfx.print( true, "UNAVAILABLE", speed_sm_x + 22, speed_sm_y + 3, col_txt_bar, bar_sm_w, true )
 				
 				--Warning light
 				gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
