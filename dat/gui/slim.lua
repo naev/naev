@@ -7,16 +7,22 @@ function create()
 	--Get player
 	pp = player.pilot()
 	pfact = pp:faction()
+	pname = player.name()
+	--pshhipname = player.ship()
+	pship = pp:ship()
+	
+	--sys = system.cur()
 	
 	--Get sizes
 	screen_w, screen_h = gfx.dim()
 	deffont_h = gfx.fontSize()
 	smallfont_h = gfx.fontSize(true)
+	gui.viewport( 0, 30, screen_w, screen_h - 30 )
 	
 	--Colors
 	col_txt_bar = colour.new( 192/255, 198/255, 217/255 )
-	col_txt_top = colour.new(  90/255, 111/255, 160/255 )
-	col_txt_std = colour.new(  72/255,  83/255, 120/255 )
+	col_txt_top = colour.new( 148/255, 158/255, 192/255 )
+	col_txt_std = colour.new( 111/255, 125/255, 169/255 )
 	col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
 	col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
 	col_txt_all = colour.new(  19/255, 152/255,  41/255 )
@@ -53,6 +59,7 @@ function create()
 	bg_spe_sm = tex.open( base .. "bg_spe_sm.png" )
 	sheen = tex.open( base .. "sheen.png" )
 	sheen_sm = tex.open( base .. "sheen_sm.png" )
+	bottom_bar = tex.open( base .. "bottombar.png" )
 	warnlight1 = tex.open( base .. "warnlight1.png" )
 	warnlight2 = tex.open( base .. "warnlight2.png" )
 	warnlight3 = tex.open( base .. "warnlight3.png" )
@@ -65,7 +72,7 @@ function create()
 	gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
 	
 	--Messages
-	gui.mesgInit( screen_w - 400, 20, 30 )
+	gui.mesgInit( screen_w - 400, 20, 50 )
 	--OSD
 	gui.osdInit( 30, screen_h-90, 150, 300 )
 	
@@ -151,6 +158,7 @@ function create()
 	
 	update_target()
 	update_ship()
+	update_system()
 end
 
 function update_target()
@@ -181,9 +189,22 @@ function update_target()
 end
 
 function update_nav()
+	nav_pnt, nav_hyp = pp:nav()
 end
 
 function update_cargo()
+	cargol = player.cargoList()
+	cargo = {}
+	for k,v in ipairs(cargol) do
+		if v.q == 0 then
+			cargo[k] = v.name
+		else
+			cargo[k] = string.format( "%d"  .. "t %s", v.q, v.name )
+		end
+		if v.m then
+			cargo[k] = cargo[k] .. "*"
+		end
+	end
 end
 
 function update_ship()
@@ -191,6 +212,7 @@ function update_ship()
 end
 
 function update_system()
+	sys = system.cur()
 end
 
 function render( dt )
@@ -202,12 +224,14 @@ function render( dt )
 	--Player pane
 	gfx.renderTex( player_pane, pl_pane_x, pl_pane_y )
 	
-	--Bars
+	--Values
 	armor, shield = pp:health()
 	energy = pp:energy()
 	speed = pp:vel():dist()
 	lockons = pp:lockon()
 	autonav = player.autonav()
+	sec, amm, rdy = pp:secondary()
+	credits = player.credits()
 	
 	local col, small, txt
 	--Shield
@@ -314,7 +338,7 @@ function render( dt )
 	gfx.print( small, txt, speed_x + 30, speed_y + 6, col, bar_w, true)
 	
 	--Warning Light
-	if lockon then
+	if lockons > 0 then
 		gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
 	end
 	if armor <= 20 then
@@ -328,7 +352,6 @@ function render( dt )
 	--Target Pane
 	if ptarget ~= nil then
 	
-
 		ta_detect, ta_fuzzy = pp:inrange( ptarget )
 		if ta_detect then
 			
@@ -435,7 +458,9 @@ function render( dt )
 				end
 				
 				--Faction Logo
-				gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
+				if ptarget_faction_gfx ~= nil then
+					gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
+				end
 				
 				--Pilot name
 				if ta_disabled then
@@ -474,6 +499,103 @@ function render( dt )
 			
 		end
 	end
+	
+	
+	--Bottom bar
+	local length = 8
+	gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
+	
+	gfx.print( false, "Player: ", length, 5, col_txt_top )
+	length = length + gfx.printDim( false, "Player: " )
+	
+	gfx.print( true, pname, length, 6, col_txt_std )
+	length = length + gfx.printDim( true, pname ) + 10
+	
+	gfx.print( false, "System: ", length, 5, col_txt_top )
+	length = length + gfx.printDim( false, "System: " )
+	
+	gfx.print( true, sys:name(), length, 6, col_txt_std )
+	length = length + gfx.printDim( true, sys:name() ) + 10
+	
+	gfx.print( false, "Credits: ", length, 5, col_txt_top )
+	length = length + gfx.printDim( false, "Credits: " )
+	
+	gfx.print( true, largeNumber( credits ), length, 6, col_txt_std )
+	length = length + gfx.printDim( true, largeNumber( credits ) ) + 10
+	
+	gfx.print( false, "Nav: ", length, 5, col_txt_top )
+	length = length + gfx.printDim( false, "Nav: " )
+	
+	if nav_hyp ~= nil then
+		local navstring = nav_hyp:name() .. " (" .. tostring(nav_hyp:jumpDist()) .. ")" 
+		gfx.print( true, navstring, length, 6, col_txt_std )
+		length = length + gfx.printDim( true, navstring ) + 10
+	else
+		gfx.print( true, "none", length, 6, col_txt_una )
+		length = length + gfx.printDim( true, "none" ) + 10
+	end
+	
+	gfx.print( false, "Planet: ", length, 5, col_txt_top )
+	length = length + gfx.printDim( false, "Planet: " )
+	
+	if nav_pnt ~= nil then
+		gfx.print( true, nav_pnt:name(), length, 6, col_txt_std )
+		length = length + gfx.printDim( true, nav_pnt:name() ) + 10
+	else
+		gfx.print( true, "none", length, 6, col_txt_una )
+		length = length + gfx.printDim( true, "none" ) + 10
+	end
+	
+	gfx.print( false, "Secondary: ", length, 5, col_txt_top )
+	length = length + gfx.printDim( false, "Secondary: " )
+	
+	if sec ~= nil then
+		local col, secstr
+		if rdy then
+			col = col_txt_std
+		else
+			col = col_txt_una
+		end
+		secstr = sec
+		if amm ~= nil then
+			secstr = secstr .. " (" .. tostring(amm) .. ")"
+		end
+		gfx.print( true, secstr, length, 6, col )
+		length = length + gfx.printDim( true, secstr ) + 10
+	else
+		gfx.print( true, "none", length, 6, col_txt_una )
+		length = length + gfx.printDim( true, "none" ) + 10
+	end
+	
+	if #cargo == 0 and length + gfx.printDim( false, "Cargo: " ) + gfx.printDim( true, "none" ) <= screen_w - 8 then
+		gfx.print( false, "Cargo: ", length, 5, col_txt_top )
+		length = length + gfx.printDim( false, "Cargo: " )
+		gfx.print( true, "none", length, 6, col_txt_una )
+		
+	elseif #cargo == 1 and length + gfx.printDim( false, "Cargo: " ) + gfx.printDim( true, cargo[1] ) <= screen_w - 8 then
+		gfx.print( false, "Cargo: ", length, 5, col_txt_top )
+		length = length + gfx.printDim( false, "Cargo: " )
+		gfx.print( true, cargo[1], length, 6, col_txt_std )
+		
+	elseif #cargo > 1 and length + gfx.printDim( false, "Cargo: " ) + gfx.printDim( true, cargo[1] .. "[...]" ) <= screen_w - 8 then
+		gfx.print( false, "Cargo: ", length, 5, col_txt_top )
+		length = length + gfx.printDim( false, "Cargo: " )
+		
+		gfx.print( true, cargo[1], length, 6, col_txt_std )
+		length = length + gfx.printDim( true, cargo[1] )
+		for k,v in pairs(cargo) do
+			if k ~= 1 then
+				if length + gfx.printDim( true, v ) > screen_w - 8 then
+					gfx.print( true, "[...]", length, 6, col_txt_std )
+					break
+				else
+					gfx.print( true, ", " .. v, length, 6, col_txt_std )
+					length = length + gfx.printDim( true, v .. ", " )
+				end
+			end
+		end
+	end
+	
 end
 
 function largeNumber( number )
@@ -481,13 +603,15 @@ function largeNumber( number )
 	if number < 10000 then
 		formatted = tostring(math.floor(number))
 	elseif number < 1000000 then
-		formatted = tostring( round( number, 1) ) .. "K"
+		formatted = tostring( round( number / 1000, 2) ) .. "K"
 	elseif number < 1000000000 then
-		formatted = tostring( round( number, 2) ) .. "M"
+		formatted = tostring( round( number / 1000000, 2) ) .. "M"
 	elseif number < 1000000000000 then
-		formatted = tostring( round( number, 2) ) .. "B"
+		formatted = tostring( round( number / 1000000000, 2) ) .. "B"
 	elseif number < 1000000000000000 then
-		formatted = tostring( round( number, 2) ) .. "T"
+		formatted = tostring( round( number / 1000000000000, 2) ) .. "T"
+	else
+		formatted = "Too big!"
 	end
 	return formatted
 end
