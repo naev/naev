@@ -340,6 +340,9 @@ function render( dt )
 	--Warning Light
 	if lockons > 0 then
 		gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
+		local length
+		length = gfx.printDim( false, "Warning - Missile Lockon detected" )
+		gfx.print( false, "Warning - Missile Lockon detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
 	end
 	if armor <= 20 then
 		gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
