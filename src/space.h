@@ -205,6 +205,7 @@ struct StarSystem_ {
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
    double radius; /**< Default system radius for standard jump points. */
+   char *background; /**< Background script. */
 
    /* Planets. */
    Planet **planets; /**< planets */

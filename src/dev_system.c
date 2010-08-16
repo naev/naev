@@ -91,6 +91,8 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 
    /* General. */
    xmlw_startElem( writer, "general" );
+   if (sys->background != NULL)
+      xmlw_elem( writer, "background", "%s", sys->background );
    xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "stars", "%d", sys->stars );
    xmlw_elem( writer, "asteroids", "%d", sys->asteroids );
