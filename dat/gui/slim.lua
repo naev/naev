@@ -354,6 +354,9 @@ function render( dt )
       if gfxWarn == true then
          gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
       end
+		local length
+		length = gfx.printDim( false, "Warning - Missile Lockon detected" )
+		gfx.print( false, "Warning - Missile Lockon detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
 	end
 	if armor <= 20 then
 		gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
@@ -505,11 +508,15 @@ function render( dt )
 			
 			--Dist
 			gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 150, col_txt_top )
-			gfx.print( false, tostring( math.floor(ta_dir) ), ta_pane_x + 86, ta_pane_y + 132, col_txt_std, 30, true)
+			if ta_dist ~= nil then
+			   gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
+         end
 				
 			--Dir
 			gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 150, col_txt_top )
-			gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
+         if ta_dir ~= nil then
+            gfx.print( false, tostring( math.floor(ta_dir) ), ta_pane_x + 86, ta_pane_y + 132, col_txt_std, 30, true)
+         end
 			
 		end
 	end
