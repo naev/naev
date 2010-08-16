@@ -187,7 +187,7 @@ static void gui_renderPlanetTarget( double dt );
 static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
 static glColour *gui_getPlanetColour( int i );
-static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy );
+static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, glColour *col );
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr );
 static void gui_renderPlanet( int ind );
 static void gui_renderJumpPoint( int ind );
@@ -920,8 +920,10 @@ void gui_radarRender( double x, double y )
    radar = &gui_radar;
 
    gl_matrixPush();
-   if (radar->shape==RADAR_RECT)
+   if (radar->shape==RADAR_RECT) {
+      gl_clipRect( x, y, radar->w, radar->h );
       gl_matrixTranslate( x + radar->w/2., y + radar->h/2. );
+   }
    else if (radar->shape==RADAR_CIRCLE)
       gl_matrixTranslate( x, y );
 
@@ -992,6 +994,8 @@ void gui_radarRender( double x, double y )
    gl_vboDeactivate();
 
    gl_matrixPop();
+   if (radar->shape==RADAR_RECT)
+      gl_unclipRect();
 }
 
 
@@ -1170,7 +1174,6 @@ static void gui_renderPilot( const Pilot* p )
    double w, h;
    double px, py;
    glColour *col, ccol;
-   double a;
    GLfloat vertex[2*8], colours[4*8];
    GLfloat cx, cy;
    int rc;
@@ -1197,38 +1200,8 @@ static void gui_renderPilot( const Pilot* p )
             ((x*x+y*y) > (int)(gui_radar.w*gui_radar.w))) ) {
 
       /* Draw little targetted symbol. */
-      if (p->id == player.p->target) {
-         /* Circle radars have it easy. */
-         if (gui_radar.shape==RADAR_CIRCLE)  {
-            /* We'll create a line. */
-            a = ANGLE(x,y);
-            x = gui_radar.w * cos(a);
-            y = gui_radar.w * sin(a);
-            sx = 0.85 * x;
-            sy = 0.85 * y;
-
-            /* Set up colours. */
-            for (i=0; i<2; i++) {
-               colours[4*i + 0] = cRadar_tPilot.r;
-               colours[4*i + 1] = cRadar_tPilot.g;
-               colours[4*i + 2] = cRadar_tPilot.b;
-               colours[4*i + 3] = 1.-interference_alpha;
-            }
-            gl_vboSubData( gui_vbo, gui_vboColourOffset,
-                  sizeof(GLfloat) * 2*4, colours );
-            /* Set up vertex. */
-            vertex[0] = x;
-            vertex[1] = y;
-            vertex[2] = sx;
-            vertex[3] = sy;
-            gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 2*2, vertex );
-            /* Draw tho VBO. */
-            gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-            gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-                  gui_vboColourOffset, 4, GL_FLOAT, 0 );
-            glDrawArrays( GL_LINES, 0, 2 );
-         }
-      }
+      if (p->id == player.p->target)
+         gui_renderRadarOutOfRange( gui_radar.shape, gui_radar.w, gui_radar.h, x, y, &cRadar_tPilot );
       return;
    }
 
@@ -1414,31 +1387,51 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
 /**
  * @brief Renders an out of range marker for the planet.
  */
-static void gui_renderPlanetOutOfRangeCircle( int w, int cx, int cy )
+static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, glColour *col )
 {
    GLfloat vertex[2*2], colours[8*2];
-   double a, tx, ty;
+   double a;
    int i;
-
-   /* Draw a line like for pilots. */
-   a = ANGLE(cx,cy);
-   tx = w*cos(a);
-   ty = w*sin(a);
 
    /* Set the colour. */
    for (i=0; i<2; i++) {
-      colours[4*i + 0] = cRadar_tPlanet.r;
-      colours[4*i + 1] = cRadar_tPlanet.g;
-      colours[4*i + 2] = cRadar_tPlanet.b;
+      colours[4*i + 0] = col->r;
+      colours[4*i + 1] = col->g;
+      colours[4*i + 2] = col->b;
       colours[4*i + 3] = 1.-interference_alpha;
    }
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
          sizeof(GLfloat) * 2*4, colours );
+
+   /* Draw a line like for pilots. */
+   if (sh == RADAR_CIRCLE) {
+      a         = ANGLE(cx,cy);
+      vertex[0] = w*cos(a);
+      vertex[1] = w*sin(a);
+      vertex[2] = 0.85*vertex[0];
+      vertex[3] = 0.85*vertex[1];
+   }
+   else {
+      a = ANGLE(cx,cy);
+      /* Check X. */
+      if (cx > w/2)
+         vertex[0] = w/2;
+      else if (cx < -w/2)
+         vertex[0] = -w/2;
+      else
+         vertex[0] = cx;
+      /* Check Y. */
+      if (cy > h/2)
+         vertex[1] = h/2;
+      else if (cy < -h/2)
+         vertex[1] = -h/2;
+      else
+         vertex[1] = cy;
+      /* Calculate rest. */
+      vertex[2] = vertex[0] - 0.15*w*cos(a);
+      vertex[3] = vertex[1] - 0.15*w*sin(a);
+   }
    /* Set the vertex. */
-   vertex[0] = tx;
-   vertex[1] = ty;
-   vertex[2] = 0.85*tx;
-   vertex[3] = 0.85*ty;
    gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 2*2, vertex );
    /* Draw tho VBO. */
    gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
@@ -1489,8 +1482,11 @@ static void gui_renderPlanet( int ind )
    if (gui_radar.shape == RADAR_RECT) {
       x = y = 0;
       /* Out of range. */
-      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
+      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
+         if (player.p->nav_planet == ind)
+            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
          return;
+      }
    }
    else if (gui_radar.shape == RADAR_CIRCLE) {
       x = ABS(cx)-r;
@@ -1498,7 +1494,7 @@ static void gui_renderPlanet( int ind )
       /* Out of range. */
       if (x*x + y*y > pow2(w-r)) {
          if (player.p->nav_planet == ind)
-            gui_renderPlanetOutOfRangeCircle( w, cx, cy );
+            gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
       }
    }
@@ -1577,8 +1573,11 @@ static void gui_renderJumpPoint( int ind )
    if (gui_radar.shape == RADAR_RECT) {
       x = y = 0;
       /* Out of range. */
-      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
+      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
+         if (player.p->nav_hyperspace == ind)
+            gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
          return;
+      }
    }
    else if (gui_radar.shape == RADAR_CIRCLE) {
       x = ABS(cx)-r;
@@ -1586,7 +1585,7 @@ static void gui_renderJumpPoint( int ind )
       /* Out of range. */
       if (x*x + y*y > pow2(w-r)) {
          if (player.p->nav_hyperspace == ind)
-            gui_renderPlanetOutOfRangeCircle( w, cx, cy );
+            gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
       }
    }
