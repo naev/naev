@@ -1007,34 +1007,6 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
 
 
 /**
- * @brief Sets up 2d clipping planes around a rectangle.
- *
- *    @param x X position of the rectangle.
- *    @param y Y position of the rectangle.
- *    @param w Width of the rectangle.
- *    @param h Height of the rectangle.
- */
-void toolkit_clip( int x, int y, int w, int h )
-{
-   double rx, ry, rw, rh;
-   rx = (x + gl_screen.x) / gl_screen.mxscale;
-   ry = (y + gl_screen.y) / gl_screen.myscale;
-   rw = w / gl_screen.mxscale;
-   rh = h / gl_screen.myscale;
-   glScissor( rx, ry, rw, rh );
-   glEnable( GL_SCISSOR_TEST );
-}
-/**
- * @brief Clears the 2d clipping planes.
- */
-void toolkit_unclip (void)
-{
-   glDisable( GL_SCISSOR_TEST );
-   glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
-}
-
-
-/**
  * @brief Renders a window border.
  *
  *    @param w Window to render
