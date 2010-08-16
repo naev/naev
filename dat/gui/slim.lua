@@ -432,7 +432,8 @@ function render( dt )
             gfx.renderRect( energy_sm_x + 22, energy_sm_y + 2, ta_energy/100 * bar_sm_w, bar_sm_h, col_ene )
             if dispspe2 < 1 then
                gfx.renderRect( speed_sm_x + 22, speed_sm_y + 2, dispspe * bar_sm_w, bar_sm_h, col_spe )
-            elseif dispspe2 then
+            end
+            if dispspe2 then
                gfx.renderRect( speed_sm_x + 22, speed_sm_y + 2, dispspe2 * bar_sm_w, bar_sm_h, col_spe2 )
             end
          else
