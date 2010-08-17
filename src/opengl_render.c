@@ -227,12 +227,14 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
- *    @param x X position of the texture on the screen.
- *    @param y Y position of the texture on the screen.
- *    @param tx X position within the texture.
- *    @param ty Y position within the texture.
- *    @param tw Texture width.
- *    @param th Texture height.
+ *    @param x X position of the texture on the screen. (units pixels)
+ *    @param y Y position of the texture on the screen. (units pixels)
+ *    @param w Width on the screen. (units pixels)
+ *    @param h Height on the screen. (units pixels)
+ *    @param tx X position within the texture. [0:1]
+ *    @param ty Y position within the texture. [0:1]
+ *    @param tw Texture width. [0:1]
+ *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitTexture(  const glTexture* texture,
@@ -934,7 +936,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
       const glColour *c, int filled )
 {
    int i, j;
-   double rxw,ryh, x,y,p, w,h;
+   double rxw,ryh, x,y,p, w,h, tx,ty, tw,th, r2;
    GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
    rxw = rx+rw;
@@ -951,15 +953,23 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
 
    /* Case if filled. */
    if (filled) {
-      x = CLAMP( rx, rxw, cx-r );
-      y = CLAMP( ry, ryh, cy-r );
-      w = CLAMP( 0., rxw-x,  2.*r );
-      h = CLAMP( 0., ryh-y,  2.*r );
-      gl_blitTexture( gl_circle, x, y, w, h,
-            (x-(cx-r))/(2.*r) * gl_circle->srw,
-            (y-(cy-r))/(2.*r) * gl_circle->srh,
-            (w/(2.*r)) * gl_circle->srw,
-            (h/(2.*r)) * gl_circle->srh, c );
+      r2 = 2.*r;
+      /* Clamp bottom left. */
+      x  = CLAMP( rx, rxw, cx-r );
+      y  = CLAMP( ry, ryh, cy-r );
+      /* Clamp width. */
+      w  = CLAMP( 0., rw,  r2 );
+      h  = CLAMP( 0., rh,  r2 );
+      /* Calculate texture bottom left. */
+      tx  = x - (cx-r);
+      tx *= gl_circle->srw / r2; /* Transform to unitary coordinates. */
+      ty  = y - (cy-r);
+      ty *= gl_circle->srh / r2;
+      /* Calculate dimensions of texture. */
+      tw  = w/r2 * gl_circle->srw;
+      th  = h/r2 * gl_circle->srh;
+      /* Render. */
+      gl_blitTexture( gl_circle, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
 
@@ -1041,6 +1051,7 @@ static glTexture *gl_genCircle( int radius )
    uint8_t *pix, *buf;
    int h, w;
    double a;
+   char name[PATH_MAX];
 
    /* Calculate parameters. */
    w = 2*radius+1;
@@ -1089,7 +1100,8 @@ static glTexture *gl_genCircle( int radius )
    SDL_UnlockSurface( sur );
 
    /* Return texture. */
-   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
+   snprintf( name, sizeof(name), "gencircle%d", radius );
+   return gl_loadImagePad( name, sur, OPENGL_TEX_MIPMAPS, sur->w, sur->h, 1, 1, 1 ); 
 }
 
 
