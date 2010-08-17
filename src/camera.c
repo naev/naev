@@ -103,12 +103,14 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    if (target != NULL) {
       bias_x = target->solid->pos.x - follow->solid->pos.x;
       bias_y = target->solid->pos.y - follow->solid->pos.y;
-      if (pow2(bias_x)+pow2(bias_y) > diag2/2.) {
-         a        = atan2( bias_y, bias_x );
-         r        = sqrt(diag2)/2.;
-         bias_x   = r*cos(a);
-         bias_y   = r*sin(a);
-      }
+   }
+
+   /* Limit bias. */
+   if (pow2(bias_x)+pow2(bias_y) > diag2/2.) {
+      a        = atan2( bias_y, bias_x );
+      r        = sqrt(diag2)/2.;
+      bias_x   = r*cos(a);
+      bias_y   = r*sin(a);
    }
 
    /* Compose the target. */
@@ -123,7 +125,6 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    /* Update camera. */
    camera_X += dx;
    camera_Y += dy;
-   /*DEBUG("Cam: %5.2fx%5.2f  [%5.2fx%5.2f --> %5.2fx%5.2f]", camera_X, camera_Y, follow->solid->pos.x, follow->solid->pos.y, targ_x, targ_y );*/
 
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
