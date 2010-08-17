@@ -183,7 +183,7 @@ void weapon_minimap( const double res, const double w,
       if ((outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID)) ||
             (wp->faction == FACTION_PLAYER))
          c = &cNeutral;
-      else if ((wp->target == PLAYER_ID) || areAllies(FACTION_PLAYER, wp->faction))
+      else if (wp->target == PLAYER_ID || areEnemies(FACTION_PLAYER, wp->faction))
          c = &cHostile;
       else
          c = &cNeutral;
@@ -221,7 +221,8 @@ void weapon_minimap( const double res, const double w,
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
          c = &cNeutral;
-      else if ((wp->target == PLAYER_ID) || areAllies(FACTION_PLAYER, wp->faction))
+      else if ((wp->target == PLAYER_ID && wp->target != wp->parent) ||
+            areEnemies(FACTION_PLAYER, wp->faction))
          c = &cHostile;
       else
          c = &cNeutral;

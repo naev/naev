@@ -191,8 +191,6 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
                           int thick, glColour* c, glColour* lc );
 void toolkit_drawScrollbar( int x, int y, int w, int h, double pos );
-void toolkit_clip( int x, int y, int w, int h );
-void toolkit_unclip ( void );
 void toolkit_drawRect( int x, int y, int w, int h,
                        glColour* c, glColour* lc );
 void toolkit_drawAltText( int bx, int by, const char *alt );

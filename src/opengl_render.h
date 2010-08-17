@@ -71,15 +71,24 @@ void gl_blitScale( const glTexture* texture,
 /* blits the entire image, absolute pos */
 void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
-/* circle drawing */
+
+
+/* Circles. */
 void gl_drawCircle( const double x, const double y,
       const double r, const glColour *c, int filled );
 void gl_drawCircleInRect( const double x, const double y, const double r,
       const double rx, const double ry, const double rw, const double rh,
       const glColour *c, int filled );
 
+
+/* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
+
+
+/* Clipping. */
+void gl_clipRect( int x, int y, int w, int h );
+void gl_unclipRect (void);
 
 
 #endif /* OPENGL_RENDER_H */

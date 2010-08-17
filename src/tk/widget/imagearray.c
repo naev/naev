@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "opengl.h"
+
 
 /* Render. */
 static void iar_render( Widget* iar, double bx, double by );
@@ -165,7 +167,7 @@ static void iar_render( Widget* iar, double bx, double by )
    /*
     * Main drawing loop.
     */
-   toolkit_clip( x, y, iar->w, iar->h );
+   gl_clipRect( x, y, iar->w, iar->h );
    ycurs = y + iar->h - h + iar->dat.iar.pos;
    for (j=0; j<yelem; j++) {
       xcurs = x + xspace;
@@ -279,7 +281,7 @@ static void iar_render( Widget* iar, double bx, double by )
       }
       ycurs -= h;
    }
-   toolkit_unclip();
+   gl_unclipRect();
 
    /*
     * Final outline.
