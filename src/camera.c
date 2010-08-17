@@ -91,12 +91,14 @@ void cam_getPos( double *x, double *y )
 void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 {
    double diag2, a, r, dir;
-   double dx,dy, targ_x,targ_y, bias_x,bias_y, vx,vy;
+   double x,y, dx,dy, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Real diagonal might be a bit too harsh since it can cut out the ship,
     * we'll just use the largest of the two. */
    /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
    diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );
+   x = follow->solid->pos.x;
+   y = follow->solid->pos.y;
 
    /* No bias by default. */
    bias_x = 0.;
@@ -104,8 +106,8 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 
    /* Bias towards target. */
    if (target != NULL) {
-      bias_x += target->solid->pos.x - follow->solid->pos.x;
-      bias_y += target->solid->pos.y - follow->solid->pos.y;
+      bias_x += target->solid->pos.x - x;
+      bias_y += target->solid->pos.y - y;
    }
 
    /* Bias towards velocity and facing. */
@@ -127,8 +129,8 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    }
 
    /* Compose the target. */
-   targ_x   = follow->solid->pos.x + bias_x;
-   targ_y   = follow->solid->pos.y + bias_y;
+   targ_x   = x + bias_x;
+   targ_y   = y + bias_y;
 
    /* Head towards target. */
    dx = (targ_x-camera_X)*dt/dt_mod;
@@ -138,6 +140,18 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    /* Update camera. */
    camera_X += dx;
    camera_Y += dy;
+
+   /* Limits. */
+   dx = camera_X-x;
+   dy = camera_Y-y;
+   r  = dx*dx + dy*dy;
+   if (r > 100*100) {
+      r = sqrt(r);
+      dx /= r/100.;
+      dy /= r/100.;
+      camera_X = x + dx;
+      camera_Y = y + dy;
+   }
 
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
