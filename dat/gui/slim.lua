@@ -60,6 +60,7 @@ function create()
    sheen = tex.open( base .. "sheen.png" )
    sheen_sm = tex.open( base .. "sheen_sm.png" )
    bottom_bar = tex.open( base .. "bottombar.png" )
+   target_dir = tex.open( base .. "dir.png" )
    warnlight1 = tex.open( base .. "warnlight1.png" )
    warnlight2 = tex.open( base .. "warnlight2.png" )
    warnlight3 = tex.open( base .. "warnlight3.png" )
@@ -514,8 +515,14 @@ function render( dt )
             
          --Dir
          gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 150, col_txt_top )
-         gfx.print( false, tostring( math.floor(ta_dir) ), ta_pane_x + 86, ta_pane_y + 132, col_txt_std, 30, true)
          
+         -- Render dir sprite.
+         local sprites, sprite, sx, sy, x, y
+         sprites, sx, sy = tex.sprites( target_dir )
+         sprite = math.ceil(ta_dir/360 * sprites)
+         y = math.ceil(sprite / sx)
+         x = sprite - sx * (y-1)
+         gfx.renderTex( target_dir, ta_pane_x + 86, ta_pane_y + 126, x, y)
       end
    end
    
