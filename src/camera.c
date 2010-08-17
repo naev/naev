@@ -90,10 +90,13 @@ void cam_getPos( double *x, double *y )
  */
 void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 {
-   double diag2, a, r;
-   double dx,dy, targ_x,targ_y, bias_x,bias_y;
+   double diag2, a, r, dir;
+   double dx,dy, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
-   diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);
+   /* Real diagonal might be a bit too harsh since it can cut out the ship,
+    * we'll just use the largest of the two. */
+   /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
+   diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );
 
    /* No bias by default. */
    bias_x = 0.;
@@ -101,9 +104,19 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 
    /* Bias towards target. */
    if (target != NULL) {
-      bias_x = target->solid->pos.x - follow->solid->pos.x;
-      bias_y = target->solid->pos.y - follow->solid->pos.y;
+      bias_x += target->solid->pos.x - follow->solid->pos.x;
+      bias_y += target->solid->pos.y - follow->solid->pos.y;
    }
+
+   /* Bias towards velocity and facing. */
+   vx       = follow->solid->vel.x*1.5;
+   vy       = follow->solid->vel.y*1.5;
+   dir      = angle_diff( atan2(vy,vx), follow->solid->dir);
+   dir      = (M_PI - fabs(dir)) /  M_PI; /* Normalize. */
+   vx      *= dir;
+   vy      *= dir;
+   bias_x  += vx;
+   bias_y  += vy;
 
    /* Limit bias. */
    if (pow2(bias_x)+pow2(bias_y) > diag2/2.) {
