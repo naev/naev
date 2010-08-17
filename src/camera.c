@@ -19,6 +19,7 @@
 #include "gui.h"
 #include "nebula.h"
 #include "pause.h"
+#include "background.h"
 
 
 static Vector2d* camera_pos = NULL; /**< Camera we are using. */
@@ -90,7 +91,7 @@ void cam_getPos( double *x, double *y )
 void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 {
    double diag2, a, r;
-   double targ_x, targ_y, bias_x, bias_y;
+   double dx,dy, targ_x,targ_y, bias_x,bias_y;
 
    diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);
 
@@ -115,8 +116,14 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    targ_y   = follow->solid->pos.y + bias_y;
 
    /* Head towards target. */
-   camera_X += (targ_x-camera_X)*dt;
-   camera_Y += (targ_y-camera_Y)*dt;
+   dx = (targ_x-camera_X)*dt/dt_mod;
+   dy = (targ_y-camera_Y)*dt/dt_mod;
+   background_moveStars( dx, dy );
+
+   /* Update camera. */
+   camera_X += dx;
+   camera_Y += dy;
+   /*DEBUG("Cam: %5.2fx%5.2f  [%5.2fx%5.2f --> %5.2fx%5.2f]", camera_X, camera_Y, follow->solid->pos.x, follow->solid->pos.y, targ_x, targ_y );*/
 
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
