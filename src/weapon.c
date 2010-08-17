@@ -29,6 +29,7 @@
 #include "opengl.h"
 #include "explosion.h"
 #include "gui.h"
+#include "camera.h"
 #include "ai.h"
 #include "ai_extra.h"
 
@@ -693,10 +694,10 @@ static void weapon_render( Weapon* w, const double dt )
          gfx = outfit_gfx(w->outfit);
 
          /* Zoom. */
-         gl_cameraZoomGet( &z );
+         z = cam_getZoom();
 
          /* Position. */
-         gl_cameraGet( &cx, &cy );
+         cam_getPos( &cx, &cy );
          gui_getOffset( &gx, &gy );
          x = (w->solid->pos.x - cx)*z + gx;
          y = (w->solid->pos.y - cy)*z + gy;

@@ -27,6 +27,7 @@
 #include "nlua_tex.h"
 #include "nlua_col.h"
 #include "nlua_bkg.h"
+#include "camera.h"
 
 
 /**
@@ -158,7 +159,7 @@ void background_renderStars( const double dt )
     */
 
    /* Do some scaling for now. */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
    gl_matrixPush();
       gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
@@ -298,11 +299,11 @@ static void background_renderImages (void)
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
 
-      gl_cameraGet( &px, &py );
+      cam_getPos( &px, &py );
       x  = px + (bkg->x - px) * bkg->move - bkg->scale*bkg->image->sw/2.;
       y  = py + (bkg->y - py) * bkg->move - bkg->scale*bkg->image->sh/2.;
       gl_gameToScreenCoords( &xs, &ys, x, y );
-      gl_cameraZoomGet( &z );
+      z = cam_getZoom();
       z *= bkg->scale;
       gl_blitScale( bkg->image, xs, ys,
             z*bkg->image->sw, z*bkg->image->sh, &bkg->col );

@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "equipment.h"
+#include "camera.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -217,7 +218,7 @@ void player_new (void)
    /* to not segfault due to lack of environment */
    memset( &player, 0, sizeof(Player_t) );
    player_setFlag(PLAYER_CREATING);
-   gl_cameraStatic( 0., 0. );
+   cam_setStatic( 0., 0. );
 
    /* Set up GUI. */
    gui_setDefaults();
@@ -518,7 +519,6 @@ static void player_newShipMake( char* name )
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
    }
-   gl_cameraBind( &player.p->solid->pos ); /* set opengl camera */
 
    /* money. */
    player.p->credits = player_creds;
@@ -570,7 +570,6 @@ void player_swapShip( char* shipname )
          land_checkAddRefuel();
 
          /* Set some gui stuff. */
-         gl_cameraBind( &player.p->solid->pos ); /* don't forget the camera */
          gui_load( player.p->ship->gui );
          return;
       }
@@ -1293,6 +1292,9 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
    /* Update zoom. */
    player_updateZoom( dt );
+
+   /* Update camera. */
+   cam_update( pplayer->solid );
 }
 
 
@@ -1334,7 +1336,7 @@ static void player_updateZoom( double dt )
    /*
     * Set Zoom to pilot target.
     */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
    if (player.p->target != PLAYER_ID) {
       target = pilot_get(player.p->target);
       if (target != NULL) {
@@ -1363,7 +1365,7 @@ static void player_updateZoom( double dt )
    d *= dt / dt_mod; /* Remove dt dependence. */
    if (d < 0) /** Speed up if needed. */
       d *= 2.;
-   gl_cameraZoom( CLAMP( zfar, znear, z + d) );
+   cam_setZoom( CLAMP( zfar, znear, z + d) );
 }
 
 
@@ -2139,7 +2141,7 @@ void player_destroyed (void)
    player_setFlag(PLAYER_DESTROYED);
 
    /* Stop camera. */
-   gl_cameraStatic( player.p->solid->pos.x, player.p->solid->pos.y );
+   cam_setStatic( player.p->solid->pos.x, player.p->solid->pos.y );
 
    /* Set timer for death menu. */
    player_timer = 5.;
@@ -3048,7 +3050,6 @@ static Planet* player_parse( xmlNodePtr parent )
    r = RNGF() * pnt->radius * 0.8;
    player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
-   gl_cameraBind(&player.p->solid->pos);
 
    /* initialize the system */
    space_init( sys->name );

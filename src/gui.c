@@ -49,6 +49,7 @@
 #include "gui_osd.h"
 #include "conf.h"
 #include "nebula.h"
+#include "camera.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_gfx.h"
@@ -589,7 +590,7 @@ static void gui_renderBorder( double dt )
    GLfloat vertex[5*2], colours[5*4];
 
    /* Get zoom. */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
 
    /* Get player position. */
    hw    = SCREEN_W/2;

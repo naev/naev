@@ -34,15 +34,12 @@
 #include "ndata.h"
 #include "gui.h"
 #include "conf.h"
+#include "camera.h"
 
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
 
 
-static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
-static double gl_cameraZ    = 1.; /**< Current in-game zoom. */
-static double gl_cameraX    = 0.; /**< X position of camera. */
-static double gl_cameraY    = 0.; /**< Y position of camera. */
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
@@ -66,30 +63,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c );
-
-
-/**
- * @brief Sets the camera zoom.
- *
- * This is the zoom used in game coordinates.
- *
- *    @param zoom Zoom to set to.
- */
-void gl_cameraZoom( double zoom )
-{
-   gl_cameraZ = zoom;
-}
-
-
-/**
- * @brief Gets the camera zoom.
- *
- *    @param zoom Stores the camera zoom.
- */
-void gl_cameraZoomGet( double * zoom )
-{
-   *zoom = gl_cameraZ;
-}
 
 
 /**
@@ -495,15 +468,16 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 {
-   double cx,cy, gx,gy;
+   double cx,cy, gx,gy, z;
 
    /* Get parameters. */
-   gl_cameraGet( &cx, &cy );
+   cam_getPos( &cx, &cy );
+   z = cam_getZoom();
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   *nx = (bx - cx) * gl_cameraZ + gx + SCREEN_W/2.;
-   *ny = (by - cy) * gl_cameraZ + gy + SCREEN_H/2.;
+   *nx = (bx - cx) * z + gx + SCREEN_W/2.;
+   *ny = (by - cy) * z + gy + SCREEN_H/2.;
 }
 
 
@@ -523,14 +497,15 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, w,h, tx,ty;
+   double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
+   z = cam_getZoom();
    gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
 
    /* Scaled sprite dimensions. */
-   w = sprite->sw*gl_cameraZ;
-   h = sprite->sh*gl_cameraZ;
+   w = sprite->sw*z;
+   h = sprite->sh*z;
 
    /* check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
@@ -593,14 +568,15 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
       double scalew, double scaleh,
       const int sx, const int sy, const glColour *c )
 {
-   double x,y, w,h, tx,ty;
+   double x,y, w,h, tx,ty, z;
 
    /* Translate coords. */
    gl_gameToScreenCoords( &x, &y, bx - scalew * sa->sw/2., by - scaleh * sa->sh/2. );
 
    /* Scaled sprite dimensions. */
-   w = sa->sw*gl_cameraZ*scalew;
-   h = sa->sh*gl_cameraZ*scaleh;
+   z = cam_getZoom();
+   w = sa->sw*z*scalew;
+   h = sa->sh*z*scaleh;
 
    /* check if inbounds */
    if ((x < -w) || (x > SCREEN_W+w) ||
@@ -725,53 +701,6 @@ void gl_blitStatic( const glTexture* texture,
    /* actual blitting */
    gl_blitTexture( texture, x, y, texture->sw, texture->sh,
          0., 0., texture->srw, texture->srh, c );
-}
-
-
-/**
- * @brief Binds the camera to a vector.
- *
- * All stuff displayed with relative functions will be affected by the camera's
- *  position.  Does not affect stuff in screen coordinates.
- *
- *    @param pos Vector to use as camera.
- */
-void gl_cameraBind( Vector2d* pos )
-{
-   gl_camera = pos;
-}
-
-
-/**
- * @brief Makes the camera static and set on a position.
- *
- *    @param x X position to set camera to.
- *    @param y Y position to set camera to.
- */
-void gl_cameraStatic( double x, double y )
-{
-   gl_cameraX = x;
-   gl_cameraY = y;
-   gl_camera  = NULL;
-}
-
-
-/**
- * @brief Gets the camera position.
- *
- *    @param[out] x X position to get.
- *    @param[out] y Y position to get.
- */
-void gl_cameraGet( double *x, double *y )
-{
-   if (gl_camera != NULL) {
-      *x = gl_camera->x;
-      *y = gl_camera->y;
-   }
-   else {
-      *x = gl_cameraX;
-      *y = gl_cameraY;
-   }
 }
 
 

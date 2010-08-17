@@ -84,6 +84,7 @@
 #include "npng.h"
 #include "dev.h"
 #include "background.h"
+#include "camera.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -397,7 +398,7 @@ void loadscreen_load (void)
    }
 
    /* Set the zoom. */
-   gl_cameraZoom( conf.zoom_far );
+   cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
    snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
