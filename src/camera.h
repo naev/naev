@@ -7,6 +7,7 @@
 #  define CAMERA_H
 
 
+#include "pilot.h"
 #include "physics.h"
 
 
@@ -15,7 +16,7 @@ double cam_getZoom (void);
 void cam_bind( Vector2d* pos );
 void cam_setStatic( double x, double y );
 void cam_getPos( double *x, double *y );
-void cam_update( Solid *sld );
+void cam_updatePilot( Pilot *follow, Pilot *target, double dt );
 
 
 #endif /* CAMERA_H */

@@ -14,12 +14,23 @@
 #include "naev.h"
 
 #include "log.h"
+#include "conf.h"
+#include "space.h"
+#include "gui.h"
+#include "nebula.h"
+#include "pause.h"
 
 
 static Vector2d* camera_pos = NULL; /**< Camera we are using. */
 static double camera_Z    = 1.; /**< Current in-game zoom. */
 static double camera_X    = 0.; /**< X position of camera. */
 static double camera_Y    = 0.; /**< Y position of camera. */
+
+
+/*
+ * Prototypes.
+ */
+static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
 
 
 /**
@@ -74,11 +85,76 @@ void cam_getPos( double *x, double *y )
 
 
 /**
- * @brief Binds the camera to a solid.
+ * @brief Updates a camera following a pilot.
  */
-void cam_update( Solid *sld )
+void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 {
-   camera_X = sld->pos.x;
-   camera_Y = sld->pos.y;
+   camera_X = follow->solid->pos.x;
+   camera_Y = follow->solid->pos.y;
+
+   /* Update zoom. */
+   cam_updatePilotZoom( follow, target, dt );
+}
+
+
+/**
+ * @brief Updates the camera zoom.
+ */
+static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
+{
+   double d, x,y, z,tz, dx, dy;
+   double zfar, znear;
+   double c;
+
+   /* Minimum depends on velocity normally.
+    *
+    * w*h = A, cte    area constant
+    * w/h = K, cte    proportion constant
+    * d^2 = A, cte    geometric longitud
+    *
+    * A_v = A*(1+v/d)   area of view is based on speed
+    * A_v / A = (1 + v/d)
+    *
+    * z = A / A_v = 1. / (1 + v/d)
+    */
+   d     = sqrt(SCREEN_W*SCREEN_H);
+   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(follow->solid->vel)/d) );
+
+   /* Maximum is limited by nebulae. */
+   if (cur_system->nebu_density > 0.) {
+      c    = MIN( SCREEN_W, SCREEN_H ) / 2;
+      zfar = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
+   }
+   else {
+      zfar = conf.zoom_far;
+   }
+
+   /*
+    * Set Zoom to pilot target.
+    */
+   z = cam_getZoom();
+   if (target != NULL) {
+      /* Get current relative target position. */
+      gui_getOffset( &x, &y );
+      x += target->solid->pos.x - follow->solid->pos.x;
+      y += target->solid->pos.y - follow->solid->pos.y;
+
+      /* Get distance ratio. */
+      dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
+      dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
+
+      /* Get zoom. */
+      tz = MIN( dx, dy );
+   }
+   else {
+      tz = znear; /* Aim at in. */
+   }
+
+   /* Gradually zoom in/out. */
+   d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);
+   d *= dt / dt_mod; /* Remove dt dependence. */
+   if (d < 0) /** Speed up if needed. */
+      d *= 2.;
+   camera_Z =  CLAMP( zfar, znear, z + d);
 }
 

@@ -171,7 +171,6 @@ extern int map_npath;
  * internal
  */
 static void player_checkHail (void);
-static void player_updateZoom( double dt );
 /* creation */
 static int player_newMake (void);
 static void player_newShipMake( char *name );
@@ -1254,6 +1253,7 @@ void player_update( Pilot *pplayer, const double dt )
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int engsound;
+   Pilot *target;
 
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
@@ -1290,82 +1290,12 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
       }
    }
 
-   /* Update zoom. */
-   player_updateZoom( dt );
-
    /* Update camera. */
-   cam_update( pplayer->solid );
-}
-
-
-/**
- * @brief Updates the player.p zoom.
- *
- *    @param dt Current deltatick.
- */
-static void player_updateZoom( double dt )
-{
-   Pilot *target;
-   double d, x,y, z,tz, dx, dy;
-   double zfar, znear;
-   double c;
-
-   /* Minimum depends on velocity normally.
-    *
-    * w*h = A, cte    area constant
-    * w/h = K, cte    proportion constant
-    * d^2 = A, cte    geometric longitud
-    *
-    * A_v = A*(1+v/d)   area of view is based on speed
-    * A_v / A = (1 + v/d)
-    *
-    * z = A / A_v = 1. / (1 + v/d)
-    */
-   d     = sqrt(SCREEN_W*SCREEN_H);
-   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(player.p->solid->vel)/d) );
-
-   /* Maximum is limited by nebulae. */
-   if (cur_system->nebu_density > 0.) {
-      c    = MIN( SCREEN_W, SCREEN_H ) / 2;
-      zfar = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
-   }
-   else {
-      zfar = conf.zoom_far;
-   }
-
-   /*
-    * Set Zoom to pilot target.
-    */
-   z = cam_getZoom();
-   if (player.p->target != PLAYER_ID) {
-      target = pilot_get(player.p->target);
-      if (target != NULL) {
-
-         /* Get current relative target position. */
-         gui_getOffset( &x, &y );
-         x += target->solid->pos.x - player.p->solid->pos.x;
-         y += target->solid->pos.y - player.p->solid->pos.y;
-
-         /* Get distance ratio. */
-         dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
-         dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
-
-         /* Get zoom. */
-         tz = MIN( dx, dy );
-      }
-      else /* Avoid using uninitialized data .*/
-         tz = z;
-   }
-   else {
-      tz = znear; /* Aim at in. */
-   }
-
-   /* Gradually zoom in/out. */
-   d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);
-   d *= dt / dt_mod; /* Remove dt dependence. */
-   if (d < 0) /** Speed up if needed. */
-      d *= 2.;
-   cam_setZoom( CLAMP( zfar, znear, z + d) );
+   if (pplayer->target != PLAYER_ID)
+      target = pilot_get( pplayer->target );
+   else
+      target = NULL;
+   cam_updatePilot( pplayer, target, dt );
 }
 
 
