@@ -28,6 +28,7 @@
 #include "opengl_vbo.h"
 #include "conf.h"
 #include "gui.h"
+#include "land_outfits.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -882,11 +883,11 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Remove ammo first. */
-      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
+      ammo = outfit_ammo(o);
+      if (ammo != NULL) {
          ammo = slot->u.ammo.outfit;
          q    = pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
-         if (q > 0)
-            player_addOutfit( ammo, q );
+         q    = player_addOutfit( ammo, q );
       }
 
       /* Handle possible fuel changes. */
@@ -936,6 +937,9 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
    /* Redo the outfits thingy. */
    equipment_regenLists( wid, 1, 1 );
+
+   /* Update outfits. */
+   outfits_updateEquipmentOutfits();
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1461,6 +1465,9 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    /* Regenerate list. */
    equipment_regenLists( wid, 1, 1 );
+
+   /* Regenerate outfits. */
+   outfits_updateEquipmentOutfits();
 
    /* Notify GUI of modification. */
    gui_setShip();

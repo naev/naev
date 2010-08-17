@@ -449,8 +449,8 @@ static void outfits_sell( unsigned int wid, char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getImageArray( wid, "iarOutfits" );
-   outfit = outfit_get( outfitname );
+   outfitname  = toolkit_getImageArray( wid, "iarOutfits" );
+   outfit      = outfit_get( outfitname );
 
    q = outfits_getMod();
 
