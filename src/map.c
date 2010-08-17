@@ -256,10 +256,10 @@ void map_open (void)
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
    /* Find button */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnFind", "Find", map_inputFind );
    /* Autonav button */
-   window_addButton( wid, -20, 20+2*(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", "Autonav", player_startAutonavWindow );
 
    /*
