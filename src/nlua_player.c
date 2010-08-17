@@ -35,6 +35,7 @@
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
+#include "land_outfits.h"
 
 
 /* player */
@@ -644,6 +645,10 @@ static int playerL_addOutfit( lua_State *L  )
 
    /* Add the outfits. */
    player_addOutfit( o, q );
+
+   /* Update equipment list. */
+   outfits_updateEquipmentOutfits();
+
    return 0;
 }
 
