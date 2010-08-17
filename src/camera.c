@@ -89,8 +89,34 @@ void cam_getPos( double *x, double *y )
  */
 void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 {
-   camera_X = follow->solid->pos.x;
-   camera_Y = follow->solid->pos.y;
+   double diag2, a, r;
+   double targ_x, targ_y, bias_x, bias_y;
+
+   diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);
+
+   /* No bias by default. */
+   bias_x = 0.;
+   bias_y = 0.;
+
+   /* Bias towards target. */
+   if (target != NULL) {
+      bias_x = target->solid->pos.x - follow->solid->pos.x;
+      bias_y = target->solid->pos.y - follow->solid->pos.y;
+      if (pow2(bias_x)+pow2(bias_y) > diag2/2.) {
+         a        = atan2( bias_y, bias_x );
+         r        = sqrt(diag2)/2.;
+         bias_x   = r*cos(a);
+         bias_y   = r*sin(a);
+      }
+   }
+
+   /* Compose the target. */
+   targ_x   = follow->solid->pos.x + bias_x;
+   targ_y   = follow->solid->pos.y + bias_y;
+
+   /* Head towards target. */
+   camera_X += (targ_x-camera_X)*dt;
+   camera_Y += (targ_y-camera_Y)*dt;
 
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
@@ -157,4 +183,5 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
       d *= 2.;
    camera_Z =  CLAMP( zfar, znear, z + d);
 }
+
 

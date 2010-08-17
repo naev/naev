@@ -217,7 +217,6 @@ void player_new (void)
    /* to not segfault due to lack of environment */
    memset( &player, 0, sizeof(Player_t) );
    player_setFlag(PLAYER_CREATING);
-   cam_setStatic( 0., 0. );
 
    /* Set up GUI. */
    gui_setDefaults();
@@ -1622,6 +1621,7 @@ void player_brokeHyperspace (void)
 {
    double d;
    StarSystem *sys;
+   JumpPoint *jp;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1643,10 +1643,12 @@ void player_brokeHyperspace (void)
    space_gfxUnload( sys );
 
    /* enter the new system */
-   space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
+   jp = &cur_system->jumps[player.p->nav_hyperspace];
+   space_init( jp->target->name );
 
    /* set position, the pilot_update will handle lowering vel */
    space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
+   cam_setStatic( jp->pos.x, jp->pos.y );
 
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;
@@ -2069,9 +2071,6 @@ void player_destroyed (void)
 
    /* Mark as destroyed. */
    player_setFlag(PLAYER_DESTROYED);
-
-   /* Stop camera. */
-   cam_setStatic( player.p->solid->pos.x, player.p->solid->pos.y );
 
    /* Set timer for death menu. */
    player_timer = 5.;
