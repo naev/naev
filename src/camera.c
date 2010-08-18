@@ -22,10 +22,11 @@
 #include "background.h"
 
 
-static Vector2d* camera_pos = NULL; /**< Camera we are using. */
-static double camera_Z    = 1.; /**< Current in-game zoom. */
-static double camera_X    = 0.; /**< X position of camera. */
-static double camera_Y    = 0.; /**< Y position of camera. */
+static double camera_Z     = 1.; /**< Current in-game zoom. */
+static double camera_X     = 0.; /**< X position of camera. */
+static double camera_Y     = 0.; /**< Y position of camera. */
+static double old_X        = 0.; /**< Old X positiion. */
+static double old_Y        = 0.; /**< Old Y position. */
 
 
 /*
@@ -68,7 +69,8 @@ void cam_setStatic( double x, double y )
 {
    camera_X = x;
    camera_Y = y;
-   camera_pos  = NULL;
+   old_X    = x;
+   old_Y    = y;
 }
 
 
@@ -96,9 +98,18 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    /* Real diagonal might be a bit too harsh since it can cut out the ship,
     * we'll just use the largest of the two. */
    /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
-   diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );
+   /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
+   diag2 = 100*100;
    x = follow->solid->pos.x;
    y = follow->solid->pos.y;
+
+   /* Compensate player movement. */
+   camera_X += x - old_X;
+   camera_Y += y - old_Y;
+
+   /* Set old position. */
+   old_X     = x;
+   old_Y     = y;
 
    /* No bias by default. */
    bias_x = 0.;
@@ -140,18 +151,6 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    /* Update camera. */
    camera_X += dx;
    camera_Y += dy;
-
-   /* Limits. */
-   dx = camera_X-x;
-   dy = camera_Y-y;
-   r  = dx*dx + dy*dy;
-   if (r > 100*100) {
-      r = sqrt(r);
-      dx /= r/100.;
-      dy /= r/100.;
-      camera_X = x + dx;
-      camera_Y = y + dy;
-   }
 
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
