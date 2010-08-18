@@ -61,6 +61,8 @@ static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
+static double star_x = 0.; /**< Star X movement. */
+static double star_y = 0.; /**< Star Y movement. */
 
 
 /*
@@ -144,36 +146,8 @@ void background_initStars( int n )
  */
 void background_moveStars( double x, double y )
 {
-   unsigned int i;
-   GLfloat b, fx,fy;
-   GLfloat hh,hw, h,w;
-
-   /* Calculate some dimensions. */
-   fx = x;
-   fy = y;
-   w  = (SCREEN_W + 2.*STAR_BUF);
-   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-   h  = (SCREEN_H + 2.*STAR_BUF);
-   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-   hw = w/2.;
-   hh = h/2.;
-   for (i=0; i < nstars; i++) {
-
-      /* calculate new position */
-      b = 9. - 10.*star_colour[8*i+3];
-      star_vertex[4*i+0] = star_vertex[4*i+0] - fx / b;
-      star_vertex[4*i+1] = star_vertex[4*i+1] - fy / b;
-
-      /* check boundries */
-      if (star_vertex[4*i+0] > hw)
-         star_vertex[4*i+0] -= w;
-      else if (star_vertex[4*i+0] < -hw)
-         star_vertex[4*i+0] += w;
-      if (star_vertex[4*i+1] > hh)
-         star_vertex[4*i+1] -= h;
-      else if (star_vertex[4*i+1] < -hh)
-         star_vertex[4*i+1] += h;
-   }
+   star_x = x;
+   star_y = y;
 }
 
 
@@ -184,6 +158,7 @@ void background_moveStars( double x, double y )
  */
 void background_renderStars( const double dt )
 {
+   (void) dt;
    unsigned int i;
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
@@ -216,11 +191,9 @@ void background_renderStars( const double dt )
       for (i=0; i < nstars; i++) {
 
          /* calculate new position */
-         b = 9. - 10.*star_colour[8*i+3];
-         star_vertex[4*i+0] = star_vertex[4*i+0] -
-            (GLfloat)player.p->solid->vel.x / b*(GLfloat)dt;
-         star_vertex[4*i+1] = star_vertex[4*i+1] -
-            (GLfloat)player.p->solid->vel.y / b*(GLfloat)dt;
+         b = 1./(9. - 10.*star_colour[8*i+3]);
+         star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
+         star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
 
          /* check boundries */
          if (star_vertex[4*i+0] > hw)
@@ -273,6 +246,10 @@ void background_renderStars( const double dt )
       glDrawArrays( GL_POINTS, 0, nstars );
       gl_checkErr();
    }
+
+   /* Clear star movement. */
+   star_x = 0.;
+   star_y = 0.;
 
    /* Disable vertex array. */
    gl_vboDeactivate();

@@ -199,6 +199,7 @@ static void cam_updateFly( double x, double y, double dt )
    }
    camera_X += dx;
    camera_Y += dy;
+   background_moveStars( -dx, -dy );
 
    /* Stop within 100 pixels. */
    if (fabs((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
@@ -216,7 +217,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
 {
    Pilot *target;
    double diag2, a, r, dir, k;
-   double x,y, dx,dy, targ_x,targ_y, bias_x,bias_y, vx,vy;
+   double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
    if (follow->target != follow->id)
@@ -233,8 +234,10 @@ static void cam_updatePilot( Pilot *follow, double dt )
    y = follow->solid->pos.y;
 
    /* Compensate player movement. */
-   camera_X += x - old_X;
-   camera_Y += y - old_Y;
+   mx        = x - old_X;
+   my        = y - old_Y;
+   camera_X += mx;
+   camera_Y += my;
 
    /* Set old position. */
    old_X     = x;
@@ -276,7 +279,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
    k = 0.5*dt/dt_mod;
    dx = (targ_x-camera_X)*k;
    dy = (targ_y-camera_Y)*k;
-   background_moveStars( dx, dy );
+   background_moveStars( -(mx+dx), -(my+dy) );
 
    /* Update camera. */
    camera_X += dx;
