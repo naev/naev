@@ -105,6 +105,10 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
  */
 void cam_setTargetPos( double x, double y, int soft_over )
 {
+   /* Disable pilot override. */
+   camera_followpilot = 0;
+
+   /* Handle non soft. */
    if (!soft_over) {
          camera_X = x;
          camera_Y = y;
