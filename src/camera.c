@@ -22,6 +22,7 @@
 #include "background.h"
 
 
+static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
 static double camera_Z     = 1.; /**< Current in-game zoom. */
 static double camera_X     = 0.; /**< X position of camera. */
 static double camera_Y     = 0.; /**< Y position of camera. */
@@ -32,6 +33,7 @@ static double old_Y        = 0.; /**< Old Y position. */
 /*
  * Prototypes.
  */
+static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
 
 
@@ -60,21 +62,6 @@ double cam_getZoom (void)
 
 
 /**
- * @brief Makes the camera static and set on a position.
- *
- *    @param x X position to set camera to.
- *    @param y Y position to set camera to.
- */
-void cam_setStatic( double x, double y )
-{
-   camera_X = x;
-   camera_Y = y;
-   old_X    = x;
-   old_Y    = y;
-}
-
-
-/**
  * @brief Gets the camera position.
  *
  *    @param[out] x X position to get.
@@ -88,12 +75,78 @@ void cam_getPos( double *x, double *y )
 
 
 /**
+ * @brief Sets the target to follow.
+ */
+void cam_setTargetPilot( unsigned int follow, int soft_over )
+{
+   Pilot *p;
+   double x, y;
+
+   /* Set the target. */
+   camera_followpilot   = follow;
+
+   /* Set camera if necessary. */
+   if (!soft_over && (follow != 0)) {
+      p = pilot_get( follow );
+      if (p != NULL) {
+         x = p->solid->pos.x;
+         y = p->solid->pos.y;
+         camera_X = x;
+         camera_Y = y;
+         old_X    = x;
+         old_Y    = y;
+      }
+   }
+}
+
+
+/**
+ * @brief Sets the camera target to a position.
+ */
+void cam_setTargetPos( double x, double y, int soft_over )
+{
+   if (!soft_over) {
+         camera_X = x;
+         camera_Y = y;
+         old_X    = x;
+         old_Y    = y;
+   }
+}
+
+
+/**
+ * @brief Updates the camera.
+ *
+ *    @param dt Current delta tick.
+ */
+void cam_update( double dt )
+{
+   Pilot *p;
+
+   if (camera_followpilot != 0) {
+      p = pilot_get( camera_followpilot );
+      if (p == NULL)
+         camera_followpilot = 0;
+      else
+         cam_updatePilot( p, dt );
+   }
+}
+
+
+/**
  * @brief Updates a camera following a pilot.
  */
-void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
+static void cam_updatePilot( Pilot *follow, double dt )
 {
+   Pilot *target;
    double diag2, a, r, dir, k;
    double x,y, dx,dy, targ_x,targ_y, bias_x,bias_y, vx,vy;
+
+   /* Get target. */
+   if (follow->target != follow->id)
+      target = pilot_get( follow->target );
+   else
+      target = NULL;
 
    /* Real diagonal might be a bit too harsh since it can cut out the ship,
     * we'll just use the largest of the two. */

@@ -1376,7 +1376,7 @@ void takeoff( int delay )
    player_warp( land_planet->pos.x + r * cos(a), land_planet->pos.y + r * sin(a) );
    vect_pset( &player.p->solid->vel, 0., 0. );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
-   cam_setStatic( land_planet->pos.x, land_planet->pos.y );
+   cam_setTargetPilot( player.p->id, 0 );
 
    /* heal the player */
    player.p->armour = player.p->armour_max;

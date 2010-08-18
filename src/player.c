@@ -485,6 +485,7 @@ static void player_newShipMake( char* name )
    PilotFlags flags;
    PlayerShip_t *ship;
    double px, py, dir;
+   unsigned int id;
 
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
@@ -505,8 +506,9 @@ static void player_newShipMake( char* name )
       vect_cset( &vv, 0., 0. );
 
       /* Create the player. */
-      pilot_create( player_ship, name, faction_get("Player"), NULL,
+      id = pilot_create( player_ship, name, faction_get("Player"), NULL,
             dir, &vp, &vv, flags, -1 );
+      cam_setTargetPilot( id, 0 );
    }
    else {
       /* Grow memory. */
@@ -569,6 +571,9 @@ void player_swapShip( char* shipname )
 
          /* Set some gui stuff. */
          gui_load( player.p->ship->gui );
+
+         /* Bind camera. */
+         cam_setTargetPilot( player.p->id, 0 );
          return;
       }
    }
@@ -1252,7 +1257,6 @@ void player_update( Pilot *pplayer, const double dt )
 void player_updateSpecific( Pilot *pplayer, const double dt )
 {
    int engsound;
-   Pilot *target;
 
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
@@ -1288,13 +1292,6 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          player_hailTimer = 3.;
       }
    }
-
-   /* Update camera. */
-   if (pplayer->target != PLAYER_ID)
-      target = pilot_get( pplayer->target );
-   else
-      target = NULL;
-   cam_updatePilot( pplayer, target, dt );
 }
 
 
@@ -1648,7 +1645,7 @@ void player_brokeHyperspace (void)
 
    /* set position, the pilot_update will handle lowering vel */
    space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
-   cam_setStatic( jp->pos.x, jp->pos.y );
+   cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;
@@ -3197,6 +3194,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    const char *str;
    Commodity *com;
    PilotFlags flags;
+   unsigned int pid;
 
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3216,8 +3214,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* player.p is currently on this ship */
    if (is_player != 0) {
-      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
       ship = player.p;
+      cam_setTargetPilot( pid, 0 );
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );

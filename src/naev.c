@@ -656,11 +656,15 @@ static void update_all (void)
  */
 void update_routine( double dt )
 {
+   /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);
    spfx_update(dt);
    pilots_update(dt);
    hooks_update(dt);
+
+   /* Update camera. */
+   cam_update( dt );
 }
 
 

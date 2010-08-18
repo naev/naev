@@ -7,16 +7,25 @@
 #  define CAMERA_H
 
 
-#include "pilot.h"
-#include "physics.h"
-
-
-void cam_setZoom( double zoom );
+/*
+ * Get values.
+ */
 double cam_getZoom (void);
-void cam_bind( Vector2d* pos );
-void cam_setStatic( double x, double y );
 void cam_getPos( double *x, double *y );
-void cam_updatePilot( Pilot *follow, Pilot *target, double dt );
+
+
+/*
+ * Set targets.
+ */
+void cam_setZoom( double zoom );
+void cam_setTargetPilot( unsigned int follow, int soft_over );
+void cam_setTargetPos( double x, double y, int soft_over );
+
+
+/*
+ * Update.
+ */
+void cam_update( double dt );
 
 
 #endif /* CAMERA_H */
