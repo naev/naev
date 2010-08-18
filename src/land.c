@@ -157,6 +157,7 @@ int land_doneLoading (void)
 {
    if (landed && land_loaded)
       return 1;
+   return 0;
 }
 
 
