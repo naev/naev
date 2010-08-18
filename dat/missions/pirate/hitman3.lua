@@ -146,6 +146,7 @@ function landed ()
    
    -- Give landing pass   
    player.addOutfit("Pirate Landing Pass")
+   var.push("pir_cargo", true)
 
    -- Finish mission
    misn.finish(true)
