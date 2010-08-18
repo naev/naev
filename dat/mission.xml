@@ -529,7 +529,7 @@
   <avail>
    <priority>3</priority>
    <cond>player.getFaction("Pirate") &gt;= 0 and var.peek("pir_cargo") == true</cond>
-   <chance>350</chance>
+   <chance>960</chance>
    <location>Computer</location>
    <faction>Pirate</faction>
   </avail>
