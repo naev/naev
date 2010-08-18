@@ -20,6 +20,7 @@
 #include "nlua_vec2.h"
 #include "nlua_pilot.h"
 #include "camera.h"
+#include "player.h"
 
 
 /* Camera methods. */
@@ -66,11 +67,11 @@ int nlua_loadCamera( lua_State *L, int readonly )
  *
  * Make sure to reset camera after using it or we'll run into trouble.
  *
- * @usage camera.set( player.pilot() ) -- Resets the camera to the pilot softly
+ * @usage camera.set() -- Resets the camera to the pilot hard.
  * @usage camera.set( a_pilot, true ) -- Flies camera over to a_pilot.
  * @usage camera.set( vec2.new() ) -- Jumps camera to 0,0
  *
- *    @luaparam target Should be either a vec2 or a pilot to focus on. It will follow pilots around.
+ *    @luaparam target Should be either a vec2 or a pilot to focus on. It will follow pilots around. If nil uses the player.
  *    @luaparam soft_over Defaults to false, indicates if camera should fly over or instantly teleport.
  * @luafunc set( target, soft_over )
  */
@@ -96,8 +97,12 @@ static int camL_set( lua_State *L )
       if (p != NULL)
          cam_setTargetPilot( p->id, soft_over );
    }
-   else
+   else if (lv != NULL)
       cam_setTargetPos( lv->vec.x, lv->vec.y, soft_over );
+   else {
+      if (player.p != NULL)
+         cam_setTargetPilot( player.p->id, soft_over );
+   }
    return 0;
 }
 
