@@ -45,9 +45,9 @@ static const luaL_reg guiL_methods[] = {
 
 
 /**
- * @brief Loads the graphics library.
+ * @brief Loads the GUI library.
  *
- *    @param L State to load graphics library into.
+ *    @param L State to load GUI library into.
  *    @return 0 on success.
  */
 int nlua_loadGUI( lua_State *L, int readonly )
