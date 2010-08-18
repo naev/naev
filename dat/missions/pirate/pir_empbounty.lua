@@ -174,9 +174,9 @@ function emp_generate ()
 
    -- Get the empire patols details
    rating = player.getRating()
-   if rating < 50 then
+   if rating < 100 then
       emp_ship, emp_outfits = emp_easy()
-   elseif rating < 150 then
+   elseif rating < 200 then
       emp_ship, emp_outfits = emp_medium()
    else
       emp_ship, emp_outfits = emp_hard()
