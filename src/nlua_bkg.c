@@ -22,14 +22,14 @@
 #include "background.h"
 
 
-/* Background metatable methods. */
+/* Background methods. */
 static int bkgL_clear( lua_State *L );
 static int bkgL_image( lua_State *L );
 static const luaL_reg bkgL_methods[] = {
    { "clear", bkgL_clear },
    { "image", bkgL_image },
    {0,0}
-}; /**< Background metatable methods. */
+}; /**< Background methods. */
 
 
 

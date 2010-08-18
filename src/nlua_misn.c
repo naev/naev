@@ -75,7 +75,7 @@ extern void mission_sysMark (void);
 /*
  * libraries
  */
-/* misn */
+/* Mission methods */
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
@@ -114,7 +114,7 @@ static const luaL_reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    {0,0}
-}; /**< Mission lua methods. */
+}; /**< Mission Lua methods. */
 
 
 /**
