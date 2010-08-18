@@ -92,7 +92,7 @@ void cam_getPos( double *x, double *y )
  */
 void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
 {
-   double diag2, a, r, dir;
+   double diag2, a, r, dir, k;
    double x,y, dx,dy, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Real diagonal might be a bit too harsh since it can cut out the ship,
@@ -144,13 +144,25 @@ void cam_updatePilot( Pilot *follow, Pilot *target, double dt )
    targ_y   = y + bias_y;
 
    /* Head towards target. */
-   dx = (targ_x-camera_X)*dt/dt_mod;
-   dy = (targ_y-camera_Y)*dt/dt_mod;
+   k = 0.5*dt/dt_mod;
+   dx = (targ_x-camera_X)*k;
+   dy = (targ_y-camera_Y)*k;
    background_moveStars( dx, dy );
 
    /* Update camera. */
    camera_X += dx;
    camera_Y += dy;
+
+   /* DEBUG. */
+#if 0
+   glColor4d( 1., 1., 1., 1. );
+   glBegin(GL_LINES);
+   gl_gameToScreenCoords( &x, &y, x, y );
+   glVertex2d( x, y );
+   gl_gameToScreenCoords( &x, &y, camera_X, camera_Y );
+   glVertex2d( x, y );
+   glEnd(); /* GL_LINES */
+#endif
 
    /* Update zoom. */
    cam_updatePilotZoom( follow, target, dt );
