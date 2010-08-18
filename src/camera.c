@@ -23,16 +23,23 @@
 
 
 static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
+/* Current camera position. */
 static double camera_Z     = 1.; /**< Current in-game zoom. */
 static double camera_X     = 0.; /**< X position of camera. */
 static double camera_Y     = 0.; /**< Y position of camera. */
+/* Old is used to compensate pilot movement. */
 static double old_X        = 0.; /**< Old X positiion. */
 static double old_Y        = 0.; /**< Old Y position. */
+/* Target is used why flying over with a target set. */
+static double target_X     = 0.; /**< Target X position. */
+static double target_Y     = 0.; /**< Target Y position. */
+static int camera_fly      = 0; /**< Camera is flying to target. */
 
 
 /*
  * Prototypes.
  */
+static void cam_updateFly( double x, double y, double dt );
 static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
 
@@ -86,16 +93,24 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
    camera_followpilot   = follow;
 
    /* Set camera if necessary. */
-   if (!soft_over && (follow != 0)) {
-      p = pilot_get( follow );
-      if (p != NULL) {
-         x = p->solid->pos.x;
-         y = p->solid->pos.y;
-         camera_X = x;
-         camera_Y = y;
-         old_X    = x;
-         old_Y    = y;
+   if (!soft_over) {
+      if (follow != 0) {
+         p = pilot_get( follow );
+         if (p != NULL) {
+            x = p->solid->pos.x;
+            y = p->solid->pos.y;
+            camera_X = x;
+            camera_Y = y;
+            old_X    = x;
+            old_Y    = y;
+         }
       }
+      camera_fly = 0;
+   }
+   else {
+      old_X    = camera_X;
+      old_Y    = camera_Y;
+      camera_fly = 1;
    }
 }
 
@@ -110,10 +125,18 @@ void cam_setTargetPos( double x, double y, int soft_over )
 
    /* Handle non soft. */
    if (!soft_over) {
-         camera_X = x;
-         camera_Y = y;
-         old_X    = x;
-         old_Y    = y;
+      camera_X = x;
+      camera_Y = y;
+      old_X    = x;
+      old_Y    = y;
+      camera_fly = 0;
+   }
+   else {
+      target_X = x;
+      target_Y = y;
+      old_X    = camera_X;
+      old_Y    = camera_Y;
+      camera_fly = 1;
    }
 }
 
@@ -127,13 +150,42 @@ void cam_update( double dt )
 {
    Pilot *p;
 
-   if (camera_followpilot != 0) {
-      p = pilot_get( camera_followpilot );
-      if (p == NULL)
-         camera_followpilot = 0;
+   /* Going to position. */
+   if (camera_fly) {
+      if (camera_followpilot != 0) {
+         p = pilot_get( camera_followpilot );
+         if (p == NULL) {
+            camera_followpilot = 0;
+            camera_fly = 0;
+         }
+         else
+            cam_updateFly( p->solid->pos.x, p->solid->pos.y, dt );
+      }
       else
-         cam_updatePilot( p, dt );
+         cam_updateFly( target_X, target_Y, dt );
    }
+   else {
+      /* Track pilot. */
+      if (camera_followpilot != 0) {
+         p = pilot_get( camera_followpilot );
+         if (p == NULL)
+            camera_followpilot = 0;
+         else
+            cam_updatePilot( p, dt );
+      }
+   }
+}
+
+
+/**
+ * @brief Updates the camera flying to a position.
+ */
+static void cam_updateFly( double x, double y, double dt )
+{
+   double k;
+   k = dt/10.;
+   camera_X = old_X + (x - old_X)*k;
+   camera_Y = old_Y + (y - old_Y)*k;
 }
 
 
