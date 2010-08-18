@@ -311,7 +311,7 @@ void outfits_updateEquipmentOutfits( void )
 {
    int ew, ow;
 
-   if ((landed) && (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))) {
+   if (landed && land_doneLoading() && planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
       ew = land_getWid( LAND_WINDOW_EQUIPMENT );
       ow = land_getWid( LAND_WINDOW_OUTFITS );
 
