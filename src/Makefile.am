@@ -60,6 +60,7 @@ naev_SOURCES = \
 	nfile.c \
 	nlua.c \
 	nlua_bkg.c \
+	nlua_camera.c \
 	nlua_cli.c \
 	nlua_col.c \
 	nlua_diff.c \
@@ -175,6 +176,7 @@ naev_SOURCES = \
 	nfile.h \
 	nlua.h \
 	nlua_bkg.h \
+	nlua_camera.h \
 	nlua_cli.h \
 	nlua_col.h \
 	nlua_diff.h \
