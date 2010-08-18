@@ -38,7 +38,7 @@
 #include "land_outfits.h"
 
 
-/* player */
+/* Player methods. */
 static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
 static int playerL_pay( lua_State *L );

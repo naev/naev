@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "equipment.h"
+#include "camera.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -170,7 +171,6 @@ extern int map_npath;
  * internal
  */
 static void player_checkHail (void);
-static void player_updateZoom( double dt );
 /* creation */
 static int player_newMake (void);
 static void player_newShipMake( char *name );
@@ -217,7 +217,6 @@ void player_new (void)
    /* to not segfault due to lack of environment */
    memset( &player, 0, sizeof(Player_t) );
    player_setFlag(PLAYER_CREATING);
-   gl_cameraStatic( 0., 0. );
 
    /* Set up GUI. */
    gui_setDefaults();
@@ -486,6 +485,7 @@ static void player_newShipMake( char* name )
    PilotFlags flags;
    PlayerShip_t *ship;
    double px, py, dir;
+   unsigned int id;
 
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
@@ -506,8 +506,9 @@ static void player_newShipMake( char* name )
       vect_cset( &vv, 0., 0. );
 
       /* Create the player. */
-      pilot_create( player_ship, name, faction_get("Player"), NULL,
+      id = pilot_create( player_ship, name, faction_get("Player"), NULL,
             dir, &vp, &vv, flags, -1 );
+      cam_setTargetPilot( id, 0 );
    }
    else {
       /* Grow memory. */
@@ -518,7 +519,6 @@ static void player_newShipMake( char* name )
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
    }
-   gl_cameraBind( &player.p->solid->pos ); /* set opengl camera */
 
    /* money. */
    player.p->credits = player_creds;
@@ -570,8 +570,10 @@ void player_swapShip( char* shipname )
          land_checkAddRefuel();
 
          /* Set some gui stuff. */
-         gl_cameraBind( &player.p->solid->pos ); /* don't forget the camera */
          gui_load( player.p->ship->gui );
+
+         /* Bind camera. */
+         cam_setTargetPilot( player.p->id, 0 );
          return;
       }
    }
@@ -1290,80 +1292,6 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          player_hailTimer = 3.;
       }
    }
-
-   /* Update zoom. */
-   player_updateZoom( dt );
-}
-
-
-/**
- * @brief Updates the player.p zoom.
- *
- *    @param dt Current deltatick.
- */
-static void player_updateZoom( double dt )
-{
-   Pilot *target;
-   double d, x,y, z,tz, dx, dy;
-   double zfar, znear;
-   double c;
-
-   /* Minimum depends on velocity normally.
-    *
-    * w*h = A, cte    area constant
-    * w/h = K, cte    proportion constant
-    * d^2 = A, cte    geometric longitud
-    *
-    * A_v = A*(1+v/d)   area of view is based on speed
-    * A_v / A = (1 + v/d)
-    *
-    * z = A / A_v = 1. / (1 + v/d)
-    */
-   d     = sqrt(SCREEN_W*SCREEN_H);
-   znear = MIN( conf.zoom_near, 1. / (0.8 + VMOD(player.p->solid->vel)/d) );
-
-   /* Maximum is limited by nebulae. */
-   if (cur_system->nebu_density > 0.) {
-      c    = MIN( SCREEN_W, SCREEN_H ) / 2;
-      zfar = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
-   }
-   else {
-      zfar = conf.zoom_far;
-   }
-
-   /*
-    * Set Zoom to pilot target.
-    */
-   gl_cameraZoomGet( &z );
-   if (player.p->target != PLAYER_ID) {
-      target = pilot_get(player.p->target);
-      if (target != NULL) {
-
-         /* Get current relative target position. */
-         gui_getOffset( &x, &y );
-         x += target->solid->pos.x - player.p->solid->pos.x;
-         y += target->solid->pos.y - player.p->solid->pos.y;
-
-         /* Get distance ratio. */
-         dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
-         dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
-
-         /* Get zoom. */
-         tz = MIN( dx, dy );
-      }
-      else /* Avoid using uninitialized data .*/
-         tz = z;
-   }
-   else {
-      tz = znear; /* Aim at in. */
-   }
-
-   /* Gradually zoom in/out. */
-   d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);
-   d *= dt / dt_mod; /* Remove dt dependence. */
-   if (d < 0) /** Speed up if needed. */
-      d *= 2.;
-   gl_cameraZoom( CLAMP( zfar, znear, z + d) );
 }
 
 
@@ -1690,6 +1618,7 @@ void player_brokeHyperspace (void)
 {
    double d;
    StarSystem *sys;
+   JumpPoint *jp;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1711,10 +1640,12 @@ void player_brokeHyperspace (void)
    space_gfxUnload( sys );
 
    /* enter the new system */
-   space_init( cur_system->jumps[player.p->nav_hyperspace].target->name );
+   jp = &cur_system->jumps[player.p->nav_hyperspace];
+   space_init( jp->target->name );
 
    /* set position, the pilot_update will handle lowering vel */
    space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
+   cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
    player.p->fuel -= HYPERSPACE_FUEL;
@@ -2137,9 +2068,6 @@ void player_destroyed (void)
 
    /* Mark as destroyed. */
    player_setFlag(PLAYER_DESTROYED);
-
-   /* Stop camera. */
-   gl_cameraStatic( player.p->solid->pos.x, player.p->solid->pos.y );
 
    /* Set timer for death menu. */
    player_timer = 5.;
@@ -3048,7 +2976,6 @@ static Planet* player_parse( xmlNodePtr parent )
    r = RNGF() * pnt->radius * 0.8;
    player_warp( pnt->pos.x + r*cos(a), pnt->pos.y + r*sin(a) );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
-   gl_cameraBind(&player.p->solid->pos);
 
    /* initialize the system */
    space_init( sys->name );
@@ -3267,6 +3194,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    const char *str;
    Commodity *com;
    PilotFlags flags;
+   unsigned int pid;
 
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3286,8 +3214,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* player.p is currently on this ship */
    if (is_player != 0) {
-      pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
       ship = player.p;
+      cam_setTargetPilot( pid, 0 );
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );

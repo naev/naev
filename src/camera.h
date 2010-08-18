@@ -1,0 +1,32 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
+
+#ifndef CAMERA_H
+#  define CAMERA_H
+
+
+/*
+ * Get values.
+ */
+double cam_getZoom (void);
+void cam_getPos( double *x, double *y );
+
+
+/*
+ * Set targets.
+ */
+void cam_setZoom( double zoom );
+void cam_setTargetPilot( unsigned int follow, int soft_over );
+void cam_setTargetPos( double x, double y, int soft_over );
+
+
+/*
+ * Update.
+ */
+void cam_update( double dt );
+
+
+#endif /* CAMERA_H */
+

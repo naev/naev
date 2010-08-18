@@ -22,7 +22,7 @@
 #include "ndata.h"
 
 
-/* functions */
+/* Music methods. */
 static int musicL_delay( lua_State* L );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );

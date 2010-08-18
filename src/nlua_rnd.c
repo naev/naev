@@ -22,7 +22,7 @@
 #include "ndata.h"
 
 
-/* rnd */
+/* Random methods. */
 static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
 static int rnd_twosigma( lua_State *L );

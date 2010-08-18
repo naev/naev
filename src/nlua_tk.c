@@ -22,7 +22,7 @@
 #include "dialogue.h"
 
 
-/* toolkit */
+/* Toolkit methods. */
 static int tk_msg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );

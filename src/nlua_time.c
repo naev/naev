@@ -22,7 +22,7 @@
 #include "ntime.h"
 
 
-/* time */
+/* Time methods. */
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
 static int time_units( lua_State *L );

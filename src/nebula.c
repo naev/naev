@@ -28,6 +28,7 @@
 #include "conf.h"
 #include "spfx.h"
 #include "npng.h"
+#include "camera.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -527,7 +528,7 @@ void nebu_renderOverlay( const double dt )
    gui_getOffset( &gx, &gy );
 
    /* Get zoom. */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
 
    /*
     * Renders the puffs
