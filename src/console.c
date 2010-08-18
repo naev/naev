@@ -27,6 +27,7 @@
 #include "nlua_tex.h"
 #include "nlua_col.h"
 #include "nlua_bkg.h"
+#include "nlua_camera.h"
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
@@ -276,6 +277,7 @@ int cli_init (void)
    nlua_loadCol( cli_state, 0 );
    nlua_loadTex( cli_state, 0 );
    nlua_loadBackground( cli_state, 0 );
+   nlua_loadCamera( cli_state, 0 );
    nlua_loadTk( cli_state );
    nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );

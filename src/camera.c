@@ -158,8 +158,10 @@ void cam_update( double dt )
             camera_followpilot = 0;
             camera_fly = 0;
          }
-         else
+         else {
             cam_updateFly( p->solid->pos.x, p->solid->pos.y, dt );
+            cam_updatePilotZoom( p, NULL, dt );
+         }
       }
       else
          cam_updateFly( target_X, target_Y, dt );
@@ -182,10 +184,28 @@ void cam_update( double dt )
  */
 static void cam_updateFly( double x, double y, double dt )
 {
-   double k;
-   k = dt/10.;
-   camera_X = old_X + (x - old_X)*k;
-   camera_Y = old_Y + (y - old_Y)*k;
+   double k, dx,dy, max;
+   double a, r;
+
+   max = 2500.*dt;
+   k   = 25.*dt;
+   dx  = (x - camera_X)*k;
+   dy  = (y - camera_Y)*k;
+   if (pow2(dx)+pow2(dy) > pow2(max)) {
+      a  = atan2( dy, dx );
+      r  = max;
+      dx = r*cos(a);
+      dy = r*sin(a);
+   }
+   camera_X += dx;
+   camera_Y += dy;
+
+   /* Stop within 100 pixels. */
+   if (fabs((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
+      old_X = camera_X;
+      old_Y = camera_Y;
+      camera_fly = 0;
+   }
 }
 
 
