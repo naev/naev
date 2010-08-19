@@ -175,7 +175,7 @@ static int planetL_cur( lua_State *L )
    if (land_planet != NULL) {
       planet.p = land_planet;
       lua_pushplanet(L,planet);
-      sys.s = system_get( planet_getSystem(land_planet->name) );
+      sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
       lua_pushsystem(L,sys);
       return 2;
    }
@@ -223,7 +223,7 @@ static int planetL_get( lua_State *L )
       if (land_planet != NULL) {
          planet.p = land_planet;
          lua_pushplanet(L,planet);
-         sys.s = system_get( planet_getSystem(land_planet->name) );
+         sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
          lua_pushsystem(L,sys);
          return 2;
       }
@@ -235,7 +235,7 @@ static int planetL_get( lua_State *L )
    else if (lua_isboolean(L,1)) {
       planet.p    = planet_get( space_getRndPlanet() );
       lua_pushplanet(L,planet);
-      sys.s       = system_get( planet_getSystem(planet.p->name) );
+      sys.id      = system_index( system_get( planet_getSystem(planet.p->name) ) );
       lua_pushsystem(L,sys);
       return 2;
    }
@@ -289,7 +289,7 @@ static int planetL_get( lua_State *L )
       return 0;
    }
    lua_pushplanet(L,planet);
-   sys.s = system_get( planet_getSystem(rndplanet) );
+   sys.id = system_index( system_get( planet_getSystem(rndplanet) ) );
    lua_pushsystem(L,sys);
    return 2;
 }

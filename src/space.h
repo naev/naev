@@ -120,6 +120,7 @@ typedef struct Planet_ {
 #define SYSTEM_KNOWN       (1<<0) /**< System is known. */
 #define SYSTEM_MARKED      (1<<1) /**< System is marked by a regular mission. */
 #define SYSTEM_CMARKED     (1<<2) /**< System is marked by a computer mission. */
+#define SYSTEM_CLAIMED     (1<<3) /**< System is claimed by a mission. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */

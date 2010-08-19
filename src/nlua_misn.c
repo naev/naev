@@ -403,7 +403,7 @@ static int misn_markerAdd( lua_State *L )
       NLUA_ERROR(L, "Unknown marker type: %s", stype);
 
    /* Add the marker. */
-   id = mission_addMarker( cur_mission, -1, system_index(sys->s), type );
+   id = mission_addMarker( cur_mission, -1, sys->id, type );
 
    /* Update system markers. */
    mission_sysMark();
@@ -454,7 +454,7 @@ static int misn_markerMove( lua_State *L )
    }
 
    /* Update system. */
-   marker->sys = system_index( sys->s );
+   marker->sys = sys->id;
 
    /* Update system markers. */
    mission_sysMark();

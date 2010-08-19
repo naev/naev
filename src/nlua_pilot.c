@@ -397,6 +397,7 @@ static int pilotL_addFleet( lua_State *L )
    LuaVector *lv;
    LuaSystem *ls;
    LuaPlanet *lplanet;
+   StarSystem *ss;
    Planet *planet;
    int jump;
    PilotFlags flags;
@@ -435,15 +436,16 @@ static int pilotL_addFleet( lua_State *L )
    }
    else if (lua_issystem(L,3)) {
       ls    = lua_tosystem(L,3);
+      ss    = system_getIndex( ls->id );
       for (i=0; i<cur_system->njumps; i++) {
-         if (cur_system->jumps[i].target == ls->s) {
+         if (cur_system->jumps[i].target == ss) {
             jump = i;
             break;
          }
       }
       if (jump < 0) {
          WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
-               fltname, ls->s->name, cur_system->name );
+               fltname, ss->name, cur_system->name );
          jump = RNG_SANE(0,cur_system->njumps-1);
       }
    }
@@ -891,7 +893,7 @@ static int pilotL_nav( lua_State *L )
    else
       lua_pushnil(L);
    if (p->nav_hyperspace >= 0) {
-      lsystem.s   = cur_system->jumps[ p->nav_hyperspace ].target;
+      lsystem.id   = system_index(cur_system->jumps[ p->nav_hyperspace ].target);
       lua_pushsystem( L, lsystem );
    }
    else
@@ -2259,14 +2261,17 @@ static int pilotL_hyperspace( lua_State *L )
    Pilot *p;
    Task *t;
    LuaSystem *sys;
+   StarSystem *ss;
    int i;
    JumpPoint *jp;
    double a, rad;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_gettop(L) > 1)
+   if (lua_gettop(L) > 1) {
       sys = luaL_checksystem( L, 2 );
+      ss  = system_getIndex( sys->id );
+   }
    else
       sys = NULL;
 
@@ -2276,12 +2281,12 @@ static int pilotL_hyperspace( lua_State *L )
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
-         if (jp->target == sys->s) {
+         if (jp->target == ss) {
             break;
          }
       }
       if (i >= cur_system->njumps) {
-         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", sys->s->name, cur_system->name );
+         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", ss->name, cur_system->name );
          return 0;
       }
 

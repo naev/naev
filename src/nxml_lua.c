@@ -69,6 +69,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    LuaSystem *s;
    LuaFaction *f;
    LuaShip *sh;
+   StarSystem *ss;
    char buf[PATH_MAX];
    const char *name, *str;
    int keynum;
@@ -166,9 +167,13 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_issystem(L,-1)) {
-            s = lua_tosystem(L,-1);
-            nxml_saveData( writer, "system",
-                  name, s->s->name, keynum );
+            s  = lua_tosystem(L,-1);
+            ss = system_getIndex( s->id );
+            if (ss != NULL)
+               nxml_saveData( writer, "system",
+                     name, ss->name, keynum );
+            else
+               WARN("Failed to save invalid system.");
             /* key, value */
             break;
          }
@@ -246,6 +251,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    LuaSystem s;
    LuaFaction f;
    LuaShip sh;
+   StarSystem *ss;
    xmlNodePtr node;
    char *name, *type, *buf, *num;
    int keynum;
@@ -288,8 +294,13 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushplanet(L,p);
          }
          else if (strcmp(type,"system")==0) {
-            s.s = system_get(xml_get(node));
-            lua_pushsystem(L,s);
+            ss = system_get(xml_get(node));
+            if (ss != NULL) {
+               s.id = system_index( ss );
+               lua_pushsystem(L,s);
+            }
+            else
+               WARN("Failed to load unexistent system '%s'", xml_get(node));
          }
          else if (strcmp(type,"faction")==0) {
             f.f = faction_get(xml_get(node));
