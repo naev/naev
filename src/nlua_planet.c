@@ -122,6 +122,10 @@ LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
 }
 /**
  * @brief Gets a planet directly.
+ *
+ *    @param L Lua state to get planet from.
+ *    @param ind Index position to find the planet.
+ *    @return Planet found at the index in the state.
  */
 Planet* luaL_validplanet( lua_State *L, int ind )
 {
