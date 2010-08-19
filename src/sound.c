@@ -381,7 +381,7 @@ int sound_play( int sound )
  *    @param py Y position of the sound.
  *    @param vx X velocity of the sound.
  *    @param vy Y velocity of the sound.
- *    @return 0 on success.
+ *    @return Voice identifier on success.
  */
 int sound_playPos( int sound, double px, double py, double vx, double vy )
 {
