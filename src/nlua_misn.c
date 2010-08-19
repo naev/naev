@@ -27,6 +27,9 @@
 #include "nlua_tk.h"
 #include "nlua_faction.h"
 #include "nlua_space.h"
+#include "nlua_tex.h"
+#include "nlua_camera.h"
+#include "nlua_bkg.h"
 #include "player.h"
 #include "mission.h"
 #include "log.h"
@@ -130,6 +133,9 @@ int misn_loadLibs( lua_State *L )
    nlua_loadTk(L);
    nlua_loadHook(L);
    nlua_loadMusic(L,0);
+   nlua_loadTex(L,0);
+   nlua_loadBackground(L,0);
+   nlua_loadCamera(L,0);
    return 0;
 }
 /*
