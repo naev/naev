@@ -11,6 +11,8 @@
 
 #include "tk/toolkit_priv.h"
 
+#include "opengl.h"
+
 
 static void cst_render( Widget* cst, double bx, double by );
 static void cst_renderOverlay( Widget* cst, double bx, double by );
@@ -95,10 +97,10 @@ static void cst_render( Widget* cst, double bx, double by )
    }
 
    if (cst->dat.cst.clip != 0)
-      toolkit_clip( x, y, cst->w, cst->h );
+      gl_clipRect( x, y, cst->w, cst->h );
    cst->dat.cst.render ( x, y, cst->w, cst->h, cst->dat.cst.userdata );
    if (cst->dat.cst.clip != 0)
-      toolkit_unclip();
+      gl_unclipRect();
 }
 
 
@@ -113,11 +115,11 @@ static void cst_renderOverlay( Widget* cst, double bx, double by )
    y = by + cst->y;
 
    if (cst->dat.cst.clip != 0)
-      toolkit_clip( x, y, cst->w, cst->h );
+      gl_clipRect( x, y, cst->w, cst->h );
    if (cst->dat.cst.renderOverlay != NULL)
       cst->dat.cst.renderOverlay ( x, y, cst->w, cst->h, cst->dat.cst.userdata );
    if (cst->dat.cst.clip != 0)
-      toolkit_unclip();
+      gl_unclipRect();
 }
 
 

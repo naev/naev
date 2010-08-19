@@ -27,6 +27,9 @@
 #include "nlua_evt.h"
 #include "nlua_hook.h"
 #include "nlua_tk.h"
+#include "nlua_camera.h"
+#include "nlua_bkg.h"
+#include "nlua_tex.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -249,6 +252,9 @@ static int event_create( int dataid, unsigned int id )
    nlua_loadEvt(L);
    nlua_loadHook(L);
    nlua_loadTk(L);
+   nlua_loadBackground(L,0);
+   nlua_loadCamera(L,0);
+   nlua_loadTex(L,0);
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );

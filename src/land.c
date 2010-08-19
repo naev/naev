@@ -41,6 +41,7 @@
 #include "gui.h"
 #include "equipment.h"
 #include "npc.h"
+#include "camera.h"
 
 
 /* global/main window */
@@ -69,6 +70,7 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
  * land variables
  */
 int landed = 0; /**< Is player landed. */
+static int land_loaded = 0; /**< Finished loading? */
 static unsigned int land_wid = 0; /**< Land window ID. */
 static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
@@ -146,6 +148,17 @@ static void land_toggleRefuel( unsigned int wid, char *name );
 /* external */
 extern unsigned int economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
+
+
+/**
+ * @brief Check to see if finished loading.
+ */
+int land_doneLoading (void)
+{
+   if (landed && land_loaded)
+      return 1;
+   return 0;
+}
 
 
 /**
@@ -1021,6 +1034,7 @@ void land_genWindows( int load )
       land_regen = 2; /* Mark we're regenning. */
       window_destroy(land_wid);
    }
+   land_loaded = 0;
 
    /* Get planet. */
    p     = land_planet;
@@ -1151,6 +1165,9 @@ void land_genWindows( int load )
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
+
+   /* Finished loading. */
+   land_loaded = 1;
 }
 
 
@@ -1375,6 +1392,7 @@ void takeoff( int delay )
    player_warp( land_planet->pos.x + r * cos(a), land_planet->pos.y + r * sin(a) );
    vect_pset( &player.p->solid->vel, 0., 0. );
    player.p->solid->dir = RNG(0,359) * M_PI/180.;
+   cam_setTargetPilot( player.p->id, 0 );
 
    /* heal the player */
    player.p->armour = player.p->armour_max;

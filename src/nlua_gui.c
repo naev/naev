@@ -22,7 +22,7 @@
 #include "nlua_tex.h"
 
 
-/* Ship metatable methods. */
+/* GUI methods. */
 static int guiL_viewport( lua_State *L );
 static int guiL_osdInit( lua_State *L );
 static int guiL_mesgInit( lua_State *L );
@@ -39,15 +39,15 @@ static const luaL_reg guiL_methods[] = {
    { "targetPlanetGFX", guiL_targetPlanetGFX },
    { "targetPilotGFX", guiL_targetPilotGFX },
    {0,0}
-}; /**< Ship metatable methods. */
+}; /**< GUI methods. */
 
 
 
 
 /**
- * @brief Loads the graphics library.
+ * @brief Loads the GUI library.
  *
- *    @param L State to load graphics library into.
+ *    @param L State to load GUI library into.
  *    @return 0 on success.
  */
 int nlua_loadGUI( lua_State *L, int readonly )

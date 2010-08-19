@@ -27,6 +27,7 @@
 #include "nlua_tex.h"
 #include "nlua_col.h"
 #include "nlua_bkg.h"
+#include "camera.h"
 
 
 /**
@@ -60,6 +61,8 @@ static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
+static double star_x = 0.; /**< Star X movement. */
+static double star_y = 0.; /**< Star Y movement. */
 
 
 /*
@@ -138,6 +141,14 @@ void background_initStars( int n )
 }
 
 
+/**
+ * @brief Displaces the stars, useful with camera.
+ */
+void background_moveStars( double x, double y )
+{
+   star_x = x;
+   star_y = y;
+}
 
 
 /**
@@ -147,6 +158,7 @@ void background_initStars( int n )
  */
 void background_renderStars( const double dt )
 {
+   (void) dt;
    unsigned int i;
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
@@ -158,47 +170,45 @@ void background_renderStars( const double dt )
     */
 
    /* Do some scaling for now. */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
    gl_matrixPush();
       gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
       gl_matrixScale( z, z );
 
-      if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-            !player_isFlag(PLAYER_CREATING)) { /* update position */
+   if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING)) { /* update position */
 
-         /* Calculate some dimensions. */
-         w  = (SCREEN_W + 2.*STAR_BUF);
-         w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-         h  = (SCREEN_H + 2.*STAR_BUF);
-         h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-         hw = w/2.;
-         hh = h/2.;
+      /* Calculate some dimensions. */
+      w  = (SCREEN_W + 2.*STAR_BUF);
+      w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+      h  = (SCREEN_H + 2.*STAR_BUF);
+      h += conf.zoom_stars * (h / conf.zoom_far - 1.);
+      hw = w/2.;
+      hh = h/2.;
 
-         /* Calculate new star positions. */
-         for (i=0; i < nstars; i++) {
+      /* Calculate new star positions. */
+      for (i=0; i < nstars; i++) {
 
-            /* calculate new position */
-            b = 9. - 10.*star_colour[8*i+3];
-            star_vertex[4*i+0] = star_vertex[4*i+0] -
-               (GLfloat)player.p->solid->vel.x / b*(GLfloat)dt;
-            star_vertex[4*i+1] = star_vertex[4*i+1] -
-               (GLfloat)player.p->solid->vel.y / b*(GLfloat)dt;
+         /* calculate new position */
+         b = 1./(9. - 10.*star_colour[8*i+3]);
+         star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
+         star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
 
-            /* check boundries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
-
-         /* Upload the data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
+         /* check boundries */
+         if (star_vertex[4*i+0] > hw)
+            star_vertex[4*i+0] -= w;
+         else if (star_vertex[4*i+0] < -hw)
+            star_vertex[4*i+0] += w;
+         if (star_vertex[4*i+1] > hh)
+            star_vertex[4*i+1] -= h;
+         else if (star_vertex[4*i+1] < -hh)
+            star_vertex[4*i+1] += h;
       }
+
+      /* Upload the data. */
+      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
+   }
 
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING) &&
@@ -236,6 +246,10 @@ void background_renderStars( const double dt )
       glDrawArrays( GL_POINTS, 0, nstars );
       gl_checkErr();
    }
+
+   /* Clear star movement. */
+   star_x = 0.;
+   star_y = 0.;
 
    /* Disable vertex array. */
    gl_vboDeactivate();
@@ -298,11 +312,11 @@ static void background_renderImages (void)
    for (i=0; i<array_size(bkg_image_arr); i++) {
       bkg = &bkg_image_arr[i];
 
-      gl_cameraGet( &px, &py );
+      cam_getPos( &px, &py );
       x  = px + (bkg->x - px) * bkg->move - bkg->scale*bkg->image->sw/2.;
       y  = py + (bkg->y - py) * bkg->move - bkg->scale*bkg->image->sh/2.;
       gl_gameToScreenCoords( &xs, &ys, x, y );
-      gl_cameraZoomGet( &z );
+      z = cam_getZoom();
       z *= bkg->scale;
       gl_blitScale( bkg->image, xs, ys,
             z*bkg->image->sw, z*bkg->image->sh, &bkg->col );

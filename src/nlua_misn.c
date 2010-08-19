@@ -27,6 +27,9 @@
 #include "nlua_tk.h"
 #include "nlua_faction.h"
 #include "nlua_space.h"
+#include "nlua_tex.h"
+#include "nlua_camera.h"
+#include "nlua_bkg.h"
 #include "player.h"
 #include "mission.h"
 #include "log.h"
@@ -75,7 +78,7 @@ extern void mission_sysMark (void);
 /*
  * libraries
  */
-/* misn */
+/* Mission methods */
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
@@ -114,7 +117,7 @@ static const luaL_reg misn_methods[] = {
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    {0,0}
-}; /**< Mission lua methods. */
+}; /**< Mission Lua methods. */
 
 
 /**
@@ -130,6 +133,9 @@ int misn_loadLibs( lua_State *L )
    nlua_loadTk(L);
    nlua_loadHook(L);
    nlua_loadMusic(L,0);
+   nlua_loadTex(L,0);
+   nlua_loadBackground(L,0);
+   nlua_loadCamera(L,0);
    return 0;
 }
 /*
@@ -397,7 +403,7 @@ static int misn_markerAdd( lua_State *L )
       NLUA_ERROR(L, "Unknown marker type: %s", stype);
 
    /* Add the marker. */
-   id = mission_addMarker( cur_mission, -1, system_index(sys->s), type );
+   id = mission_addMarker( cur_mission, -1, sys->id, type );
 
    /* Update system markers. */
    mission_sysMark();
@@ -448,7 +454,7 @@ static int misn_markerMove( lua_State *L )
    }
 
    /* Update system. */
-   marker->sys = system_index( sys->s );
+   marker->sys = sys->id;
 
    /* Update system markers. */
    mission_sysMark();

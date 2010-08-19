@@ -146,6 +146,7 @@ function landed ()
    
    -- Give landing pass   
    player.addOutfit("Pirate Landing Pass")
+   var.push("pir_cargo", true)
 
    -- Finish mission
    misn.finish(true)
@@ -189,9 +190,9 @@ function emp_generate ()
 
    -- Get the Empire patrol's details
    rating = player.getRating()
-   if rating < 50 then
+   if rating < 100 then
       emp_ship, emp_outfits = emp_easy()
-   elseif rating < 150 then
+   elseif rating < 200 then
       emp_ship, emp_outfits = emp_medium()
    else
       emp_ship, emp_outfits = emp_hard()

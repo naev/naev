@@ -2452,7 +2452,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
  */
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity )
 {
-   int q;
+   int q, max;
    (void) pilot;
 
    /* Failure cases. */
@@ -2491,10 +2491,10 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
    s->u.ammo.outfit    = ammo;
 
    /* Add the ammo. */
+   max                 = outfit_amount(s->outfit) - s->u.ammo.deployed;
    q                   = s->u.ammo.quantity; /* Amount have. */
    s->u.ammo.quantity += quantity;
-   s->u.ammo.quantity  = MIN( outfit_amount(s->outfit) - s->u.ammo.deployed,
-         s->u.ammo.quantity );
+   s->u.ammo.quantity  = MIN( max, s->u.ammo.quantity );
    q                   = s->u.ammo.quantity - q; /* Amount actually added. */
    pilot->mass_outfit += q * s->u.ammo.outfit->mass;
    pilot_updateMass( pilot );
@@ -2513,8 +2513,8 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
  */
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 {
-   int q;
    (void) pilot;
+   int q;
 
    /* Failure cases. */
    if (s->outfit == NULL) {

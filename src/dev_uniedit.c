@@ -913,7 +913,7 @@ static void uniedit_editGenList( unsigned int wid )
    StarSystem *sys;
    Planet *p;
    char **str;
-   int y, h;
+   int y, h, has_assets;
 
    /* Destroy if exists. */
    if (widget_exists( wid, "lstAssets" ))
@@ -921,18 +921,35 @@ static void uniedit_editGenList( unsigned int wid )
 
    y = -75;
 
-   /* Virtual asset button. */
+   /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
    n     = sys->nplanets;
-   str   = malloc( sizeof(char*) * (n+1) );
-   j     = 0;
-   str[j++] = strdup("None");
+   has_assets = 0;
    for (i=0; i<n; i++) {
       p     = sys->planets[i];
       if (p->real == ASSET_VIRTUAL) {
-         str[j++] = strdup( p->name );
+         has_assets = 1;
+         break;
       }
    }
+
+   /* Generate list. */
+   j     = 0;
+   str   = malloc( sizeof(char*) * (n+1) );
+   if (has_assets) {
+      /* Virtual asset button. */
+      for (i=0; i<n; i++) {
+         p     = sys->planets[i];
+         if (p->real == ASSET_VIRTUAL) {
+            str[j++] = strdup( p->name );
+         }
+      }
+   }
+   else {
+      str[j++] = strdup("None");
+   }
+
+   /* Add list. */
    h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);
    window_addList( wid, 20, y, UNIEDIT_EDIT_WIDTH-40, h,
          "lstAssets", str, j, 0, NULL );

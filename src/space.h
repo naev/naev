@@ -120,6 +120,7 @@ typedef struct Planet_ {
 #define SYSTEM_KNOWN       (1<<0) /**< System is known. */
 #define SYSTEM_MARKED      (1<<1) /**< System is marked by a regular mission. */
 #define SYSTEM_CMARKED     (1<<2) /**< System is marked by a computer mission. */
+#define SYSTEM_CLAIMED     (1<<3) /**< System is claimed by a mission. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
@@ -262,6 +263,7 @@ char* planet_getSystem( const char* planetname );
 Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
+int planet_index( const Planet *p );
 int planet_getNum (void);
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );

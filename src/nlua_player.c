@@ -35,9 +35,10 @@
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
+#include "land_outfits.h"
 
 
-/* player */
+/* Player methods. */
 static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
 static int playerL_pay( lua_State *L );
@@ -411,12 +412,14 @@ static int playerL_autonav( lua_State *L )
 static int playerL_autonavDest( lua_State *L )
 {
    LuaSystem ls;
+   StarSystem *dest;
 
    /* Get destination. */
-   ls.s = map_getDestination();
-   if (ls.s == NULL)
+   dest = map_getDestination();
+   if (dest == NULL)
       return 0;
 
+   ls.id = system_index( dest );
    lua_pushsystem( L, ls );
    return 1;
 }
@@ -644,6 +647,10 @@ static int playerL_addOutfit( lua_State *L  )
 
    /* Add the outfits. */
    player_addOutfit( o, q );
+
+   /* Update equipment list. */
+   outfits_updateEquipmentOutfits();
+
    return 0;
 }
 
@@ -771,7 +778,7 @@ static int playerL_teleport( lua_State *L )
    /* Get a system. */
    if (lua_issystem(L,1)) {
       sys   = lua_tosystem(L,1);
-      name  = sys->s->name;
+      name  = system_getIndex(sys->id)->name;
    }
    else if (lua_isstring(L,1))
       name = lua_tostring(L,1);

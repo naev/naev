@@ -81,37 +81,18 @@ function sys_enter ()
    cur_sys = system.get()
    -- Check to see if reaching target system
    if cur_sys == targetsystem then
-      hook.pilot(nil, "attacked", "trader_attacked")
       hook.pilot(nil, "death", "trader_death")
    end
 end
 
--- Attacked a trader
-function trader_attacked (hook_pilot, hook_attacker, hook_arg)
+-- killed a trader
+function trader_death (hook_pilot, hook_attacker, hook_arg)
    if misn_done then
       return
    end
 
    if hook_pilot:faction() == faction.get("Trader") and hook_attacker == pilot.player() then
-      attackedTraders[#attackedTraders + 1] = hook_pilot
-   end
-end
-
--- An attacked Trader died
-function trader_death (hook_pilot, hook_arg)
-   if misn_done then
-      return
-   end
-
-   for i, array_pilot in ipairs(attackedTraders) do
-      if array_pilot:exists() then
-         if array_pilot == hook_pilot then
-            deadTraders = deadTraders + 1
-            if deadTraders >= 3 then
-               attack_finished()
-            end
-         end
-      end
+      attack_finished()
    end
 end
 
