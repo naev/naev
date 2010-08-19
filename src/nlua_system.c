@@ -199,8 +199,8 @@ static int systemL_cur( lua_State *L )
 static int systemL_get( lua_State *L )
 {
    LuaSystem sys;
-   LuaPlanet *p;
    StarSystem *ss;
+   Planet *pnt;
 
    /* Invalid by default. */
    sys.id = -1;
@@ -217,8 +217,8 @@ static int systemL_get( lua_State *L )
    }
    /* Passing a planet */
    else if (lua_isplanet(L,1)) {
-      p  = lua_toplanet(L,1);
-      ss = system_get( planet_getSystem( p->p->name ) );
+      pnt = luaL_validplanet(L,1);
+      ss = system_get( planet_getSystem( pnt->name ) );
       if (ss != NULL)
          sys.id = system_index( ss );
    }
@@ -472,7 +472,7 @@ static int systemL_hasPresence( lua_State *L )
  * @brief Gets the planets in a system.
  *
  * @usage for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system
- * @usage if #sys:planets() > 0then -- System has planets
+ * @usage if #sys:planets() > 0 then -- System has planets
  *
  *    @luaparam s System to get planets of
  *    @luareturn A table with all the planets
@@ -492,8 +492,8 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<s->nplanets; i++) {
-      p.p = s->planets[i];
-      if(p.p->real == ASSET_REAL) {
+      p.id = planet_index( s->planets[i] );
+      if(s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
          lua_pushplanet(L,p); /* value */

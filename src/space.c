@@ -587,6 +587,18 @@ Planet* planet_getIndex( int ind )
 
 
 /**
+ * @brief Gets the ID of a planet.
+ *
+ *    @param p Planet to get ID of.
+ *    @return The ID of the planet.
+ */
+int planet_index( const Planet *p )
+{
+   return p->id;
+}
+
+
+/**
  * @brief Gets the number of planets.
  *
  *    @return The number of planets.
