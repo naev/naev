@@ -320,6 +320,29 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="Anrique">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>916.000000</x>
+   <y>-475.000000</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Herakin">
+    <pos x="-2258.193761" y="-1072.642036"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Apez">
   <general>
    <radius>3500.000000</radius>
@@ -1698,9 +1721,11 @@
     </flags>
    </jump>
    <jump target="Urbanus">
-    <pos x="-3243.049588" y="-4633.108060"/>
+    <pos x="-2563.049588" y="-4293.108060"/>
     <radius>200.000000</radius>
-    <flags/>
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
   </jumps>
  </ssys>
@@ -2775,12 +2800,24 @@
    <x>836.000000</x>
    <y>-513.000000</y>
   </pos>
-  <assets>
-   <asset>Virtual Pirate Small</asset>
-  </assets>
+  <assets/>
   <jumps>
+   <jump target="Anrique">
+    <pos x="3161.471265" y="1501.698851"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="Eiderdown">
     <pos x="-44.868108" y="-3499.712396"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Suna">
+    <pos x="1253.880247" y="3267.687917"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4723,6 +4760,34 @@
    </jump>
    <jump target="Ksher">
     <pos x="0.000000" y="3500.000000"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Suna">
+  <general>
+   <radius>2500.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>869.000000</x>
+   <y>-427.000000</y>
+  </pos>
+  <assets>
+   <asset>Anifta</asset>
+   <asset>Suna I</asset>
+   <asset>Suna II</asset>
+   <asset>The Wringer</asset>
+  </assets>
+  <jumps>
+   <jump target="Herakin">
+    <pos x="-895.628748" y="-2334.062798"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
