@@ -75,7 +75,7 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
 /* input */
 static void toolkit_mouseEvent( Window *w, SDL_Event* event );
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint8 type, Uint8 button, int x, int y, int rx, int ry );
+      Uint32 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
 static void toolkit_focusClear( Window *wdw );
@@ -1557,7 +1557,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
  *    @param[out] ry Relative Y movement (only valid for motion).
  *    @return The type of the event.
  */
-Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry )
 {
    /* Extract the position as event. */
@@ -1600,7 +1600,8 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    Widget *wgt;
-   Uint8 type, button;
+   Uint32 type;
+   Uint8 button;
    int x, y, rx, ry;
 
    /* Translate mouse coords. */
@@ -1635,7 +1636,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param event Event recieved by the window.
  */
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint8 type, Uint8 button, int x, int y, int rx, int ry )
+      Uint32 type, Uint8 button, int x, int y, int rx, int ry )
 {
    int inbounds;
 

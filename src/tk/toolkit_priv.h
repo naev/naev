@@ -197,7 +197,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt );
 
 
 /* Input stuff. */
-Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry );
 
 
