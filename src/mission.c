@@ -971,12 +971,14 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_endElem(writer); /* "osd" */
          }
 
-         /* write lua magic */
+         /* Claims. */
+         xmlw_startElem(writer,"claims");
+         claim_xmlSave( writer, player_missions[i].claims );
+         xmlw_endElem(writer); /* "claims" */
+
+         /* Write lua magic */
          xmlw_startElem(writer,"lua");
-
-         /* prepare the data */
          nxml_persistLua( player_missions[i].L, writer );
-
          xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
@@ -1136,6 +1138,10 @@ static int missions_parseActive( xmlNodePtr parent )
                   free(buf);
                }
             }
+
+            /* Claims. */
+            if (xml_isNode(cur,"claims"))
+               misn->claims = claim_xmlLoad( cur );
 
             if (xml_isNode(cur,"lua"))
                /* start the unpersist routine */
