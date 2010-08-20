@@ -940,6 +940,10 @@ void player_render( double dt )
  */
 void player_startAutonav (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player.p->nav_hyperspace == -1)
       return;
 
@@ -1320,6 +1324,10 @@ void player_secondaryNext (void)
    int found;
    Outfit *o;
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    found = !!(player.p->secondary == NULL);
    for (i=0; i<player.p->noutfits; i++) {
       o = player.p->outfits[i]->outfit;
@@ -1355,6 +1363,10 @@ void player_secondaryPrev (void)
    int found;
    Outfit *o;
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    found = !!(player.p->secondary == NULL);
    for (i=player.p->noutfits-1; i>=0; i--) {
       o = player.p->outfits[i]->outfit;
@@ -1386,6 +1398,10 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
