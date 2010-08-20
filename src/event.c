@@ -374,7 +374,9 @@ static int event_alreadyRunning( int data )
 void events_trigger( EventTrigger_t trigger )
 {
    int i, c;
+   int created;
 
+   created = 0;
    for (i=0; i<event_ndata; i++) {
       /* Make sure trigger matches. */
       if (event_data[i].trigger != trigger)
@@ -402,7 +404,12 @@ void events_trigger( EventTrigger_t trigger )
 
       /* Create the event. */
       event_create( i, 0 );
+      created++;
    }
+
+   /* Run claims if necessary. */
+   if (created)
+      claim_activateAll();
 }
 
 
