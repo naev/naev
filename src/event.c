@@ -735,7 +735,12 @@ int events_saveActive( xmlTextWriterPtr writer )
       xmlw_attr(writer,"name","%s",event_dataName(ev->data));
       xmlw_attr(writer,"id","%u",ev->id);
 
-      /* write lua magic */
+      /* Claims. */
+      xmlw_startElem(writer,"claims");
+      claim_xmlSave( writer, ev->claims );
+      xmlw_endElem(writer); /* "claims" */
+
+      /* Write lua magic */
       xmlw_startElem(writer,"lua");
       nxml_persistLua( ev->L, writer );
       xmlw_endElem(writer); /* "lua" */
@@ -830,6 +835,10 @@ static int events_parseActive( xmlNodePtr parent )
          if (xml_isNode(cur,"lua"))
             nxml_unpersistLua( ev->L, cur );
       } while (xml_nextNode(cur));
+
+      /* Claims. */
+      if (xml_isNode(node,"claims"))
+         ev->claims = claim_xmlLoad( node );
    } while (xml_nextNode(node));
 
    return 0;
