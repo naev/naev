@@ -324,6 +324,9 @@ typedef struct Pilot_ {
 } Pilot;
 
 
+#include "pilot_outfit.h"
+
+
 /*
  * getting pilot stuff
  */
@@ -383,6 +386,7 @@ int pilot_cargoFree( Pilot* p ); /* cargo space */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_moveCargo( Pilot* dest, Pilot* src );
+void pilot_calcCargo( Pilot* pilot );
 /* mission cargo - not to be confused with normal cargo */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
@@ -485,7 +489,6 @@ void pilot_clearHooks( Pilot *p );
 void pilots_addGlobalHook( int type, unsigned int hook );
 void pilots_rmGlobalHook( unsigned int hook );
 void pilots_clearGlobalHooks (void);
-
 
 
 #endif /* PILOT_H */

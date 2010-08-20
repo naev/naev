@@ -105,6 +105,7 @@ naev_SOURCES = \
 	perlin.c \
 	physics.c \
 	pilot.c \
+	pilot_outfit.c \
 	plasmaf.c \
 	player.c \
 	queue.c \
@@ -224,6 +225,7 @@ naev_SOURCES = \
 	perlin.h \
 	physics.h \
 	pilot.h \
+	pilot_outfit.h \
 	plasmaf.h \
 	player.h \
 	queue.h \
