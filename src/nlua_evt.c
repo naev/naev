@@ -351,6 +351,6 @@ static int evt_claim( lua_State *L )
    cur_event->claims = claim;
    claim_activate( claim );
    lua_pushboolean(L,1);
-   return 0;
+   return 1;
 }
 
