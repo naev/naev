@@ -1429,6 +1429,10 @@ void player_land (void)
       return;
    }
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Already landing. */
    if ((pilot_isFlag( player.p, PILOT_LANDING) ||
          pilot_isFlag( player.p, PILOT_TAKEOFF)))
@@ -1527,6 +1531,10 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
 
@@ -1574,6 +1582,10 @@ void player_jump (void)
 
    /* Must have a jump target and not be already jumping. */
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    if (player.p->nav_hyperspace == -1) {
@@ -1701,6 +1713,10 @@ void player_afterburn (void)
 {
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    /** @todo fancy effect? */
@@ -1996,6 +2012,10 @@ static void player_checkHail (void)
  */
 void player_hail (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
    else if(player.p->nav_planet != -1)
@@ -2015,6 +2035,10 @@ void player_autohail (void)
 {
    int i;
    Pilot *p;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
 
    /* Find pilot to autohail. */
    for (i=0; i<pilot_nstack; i++) {
@@ -2047,6 +2071,10 @@ void player_autohail (void)
 void player_setFireMode( int mode )
 {
    if (player_firemode == mode)
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    player_firemode = mode;
