@@ -528,6 +528,10 @@ void mission_cleanup( Mission* misn )
    if (misn->markers != NULL)
       array_free( misn->markers );
 
+   /* Claims. */
+   if (misn->claims != NULL)
+      claim_destroy( misn->claims );
+
    /* Clear the memory. */
    memset( misn, 0, sizeof(Mission) );
 }
@@ -583,6 +587,19 @@ static int mission_matchFaction( MissionData* misn, int faction )
          return 1;
 
    return 0;
+}
+
+
+/**
+ * @brief Activates mission claims.
+ */
+void missions_activateClaims (void)
+{
+   int i;
+
+   for (i=0; i<MISSION_MAX; i++)
+      if (player_missions[i].claims != NULL)
+         claim_activate( player_missions[i].claims );
 }
 
 

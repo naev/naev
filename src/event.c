@@ -295,6 +295,10 @@ static void event_cleanup( Event_t *ev )
 
    /* Free NPC. */
    npc_rm_parentEvent(ev->id);
+
+   /* Free claims. */
+   if (ev->claims != NULL)
+      claim_destroy( ev->claims );
 }
 
 
@@ -666,6 +670,20 @@ int event_dataID( const char *evdata )
 const char *event_dataName( int dataid )
 {
    return event_data[dataid].name;
+}
+
+
+/**
+ * @brief Activates all the active event claims.
+ */
+void event_activateClaims (void)
+{
+   int i;
+
+   /* Free active events. */
+   for (i=0; i<event_nactive; i++)
+      if (event_active[i].claims != NULL)
+         claim_activate( event_active[i].claims );
 }
 
 
