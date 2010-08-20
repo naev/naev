@@ -224,6 +224,9 @@ SysClaim_t *claim_xmlLoad( xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
+   /* Activate the claim. */
+   claim_activate( claim );
+
    return claim;
 }
 
