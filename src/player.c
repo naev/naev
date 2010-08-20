@@ -51,6 +51,7 @@
 #include "nebula.h"
 #include "equipment.h"
 #include "camera.h"
+#include "claim.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -719,7 +720,7 @@ void player_cleanup (void)
    player_noutfits = 0;
    player_moutfits = 0;
 
-   /* clean up missions */
+   /* Clean up missions */
    if (missions_done != NULL)
       free(missions_done);
    missions_done = NULL;
@@ -741,6 +742,9 @@ void player_cleanup (void)
       player_licenses = NULL;
       player_nlicenses = 0;
    }
+
+   /* Clear claims. */
+   claim_clear();
 
    /* just in case purge the pilot stack */
    pilots_cleanAll();

@@ -26,6 +26,7 @@ void claim_destroy( SysClaim_t *claim );
  * Global claim handling.
  */
 void claim_clear (void);
+void claim_activateAll (void);
 void claim_activate( SysClaim_t *claim );
 
 

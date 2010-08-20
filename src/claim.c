@@ -15,6 +15,8 @@
 #include "log.h"
 #include "space.h"
 #include "array.h"
+#include "event.h"
+#include "mission.h"
 
 
 /**
@@ -114,6 +116,17 @@ void claim_clear (void)
    sys = system_getAll( &nsys );
    for (i=0; i<nsys; i++)
       sys_rmFlag( &sys[i], SYSTEM_CLAIMED );
+}
+
+
+/**
+ * @brief Activates all the claims.
+ */
+void claim_activateAll (void)
+{
+   claim_clear();
+   event_activateClaims();
+   missions_activateClaims();
 }
 
 
