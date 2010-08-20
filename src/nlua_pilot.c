@@ -1944,10 +1944,16 @@ static int pilotL_control( lua_State *L )
       enable = lua_toboolean(L, 2);
 
    /* See if should mark as boarded. */
-   if (enable)
+   if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
-   else
+      if (pilot_isPlayer(p))
+         ai_pinit( p, "player" );
+   }
+   else {
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
+      if (pilot_isPlayer(p))
+         ai_destroy( p );
+   }
 
    /* Clear task. */
    pilotL_taskclear( L );

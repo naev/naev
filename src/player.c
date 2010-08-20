@@ -42,6 +42,7 @@
 #include "intro.h"
 #include "perlin.h"
 #include "ai.h"
+#include "ai_extra.h"
 #include "music.h"
 #include "gui.h"
 #include "nlua_var.h"
@@ -1024,6 +1025,12 @@ void player_think( Pilot* pplayer, const double dt )
       /* no sense in accelerating or turning */
       pilot_setThrust( pplayer, 0. );
       pilot_setTurn( pplayer, 0. );
+      return;
+   }
+
+   /* Under manual control is special. */
+   if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
+      ai_think( pplayer, dt );
       return;
    }
 
