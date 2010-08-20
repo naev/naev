@@ -74,6 +74,7 @@ static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
+static int pilotL_setInvisible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
@@ -142,6 +143,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
+   { "setInvisible", pilotL_setInvisible },
    { "disable", pilotL_disable },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
@@ -1338,6 +1340,44 @@ static int pilotL_setInvincible( lua_State *L )
       pilot_setFlag(p, PILOT_INVINCIBLE);
    else
       pilot_rmFlag(p, PILOT_INVINCIBLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's invisibility status.
+ *
+ * An invisible pilot is neither updated nor drawn. It stays frozen in time
+ *  until the invisibility is lifted.
+ *
+ * @usage p:setInvisible() -- p will disappear
+ * @usage p:setInvisible(true) -- p will disappear
+ * @usage p:setInvisible(false) -- p will appear again
+ *
+ *    @luaparam p Pilot to set invisibility status of.
+ *    @luaparam state State to set invisibility, if omitted defaults to true.
+ * @luafunc setInvisible( p, state )
+ */
+static int pilotL_setInvisible( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVISIBLE);
+   else
+      pilot_rmFlag(p, PILOT_INVISIBLE);
 
    return 0;
 }
