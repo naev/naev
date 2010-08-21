@@ -34,6 +34,7 @@ static double old_Y        = 0.; /**< Old Y position. */
 static double target_X     = 0.; /**< Target X position. */
 static double target_Y     = 0.; /**< Target Y position. */
 static int camera_fly      = 0; /**< Camera is flying to target. */
+static double camera_flyspeed = 0.; /**< Speed when flying. */
 
 
 /*
@@ -111,6 +112,7 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
       old_X    = camera_X;
       old_Y    = camera_Y;
       camera_fly = 1;
+      camera_flyspeed = (double) soft_over;
    }
 }
 
@@ -137,6 +139,7 @@ void cam_setTargetPos( double x, double y, int soft_over )
       old_X    = camera_X;
       old_Y    = camera_Y;
       camera_fly = 1;
+      camera_flyspeed = (double) soft_over;
    }
 }
 
@@ -187,7 +190,7 @@ static void cam_updateFly( double x, double y, double dt )
    double k, dx,dy, max;
    double a, r;
 
-   max = 2500.*dt;
+   max = camera_flyspeed*dt;
    k   = 25.*dt;
    dx  = (x - camera_X)*k;
    dy  = (y - camera_Y)*k;
