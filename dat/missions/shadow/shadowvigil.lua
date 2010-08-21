@@ -457,15 +457,16 @@ function diplomatIdle()
         end
     end
     
-    proxy = hook.timer(100, "proximity", {location = diplomat:pos(), radius = 200, funcname = "diplomatCutscene"})
+    proxy = hook.timer(100, "proximity", {location = diplomat:pos(), radius = 400, funcname = "diplomatCutscene"})
 end
 
 -- This is the final cutscene.
 function diplomatCutscene()
-    playerh1, playerh2 = player:pilot():health()
-    player:pilot():disable()
-    player:pilot():setVel(vec2.new(0, 0))
+    player:pilot():control()
+    player:pilot():brake()
     player:pilot():setInvincible(true)
+    
+    camera.set(dvaerplomat, true)
     
     hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
     hook.timer(6000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
@@ -504,8 +505,11 @@ function diplomatKilled()
 end
 
 function escortFlee()
+    camera.set(player.pilot, true)
+
     player:pilot():setInvincible(false)
-    player:pilot():setHealth(playerh1, playerh2)
+    player.pilot():control(false)
+
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:taskClear()
