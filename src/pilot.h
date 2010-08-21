@@ -155,6 +155,18 @@ typedef struct PilotOutfitSlot_ {
 
 
 /**
+ * @brief A weapon set represents a set of weapons that have an action.
+ *
+ * By default a weapon set indicates what weapons are enabled at a given time.
+ *  However they can also be used to launch weapons.
+ */
+typedef struct PilotWeaponSet_ {
+   int fire; /**< Whether to fire the weapons or just enable them. */
+   PilotOutfitSlot **slots; /**< Slots involved with the weapon set. */
+} PilotWeaponSet;
+
+
+/**
  * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
@@ -278,6 +290,10 @@ typedef struct Pilot_ {
    double jam_range; /**< Range at which pilot starts jamming. */
    double jam_chance; /**< Jam chance. */
 
+   /* Weapon sets. */
+   PilotWeaponSet weapon_sets[10]; /**< All the weapon sets the pilot has. */
+   int active_set; /**< Index of the currently active weapon set. */
+
    /* Cargo */
    uint64_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
@@ -325,6 +341,7 @@ typedef struct Pilot_ {
 
 
 #include "pilot_outfit.h"
+#include "pilot_weapon.h"
 
 
 /*
