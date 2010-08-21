@@ -466,7 +466,7 @@ function diplomatCutscene()
     player:pilot():brake()
     player:pilot():setInvincible(true)
     
-    camera.set(dvaerplomat, true)
+    camera.set(dvaerplomat, true, 500)
     
     hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
     hook.timer(6000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
