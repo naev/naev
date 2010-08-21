@@ -7,6 +7,9 @@
 #  define CAMERA_H
 
 
+#define CAMERA_DEFSPEED    2500 /**< Default camera speed. */
+
+
 /*
  * Get values.
  */
