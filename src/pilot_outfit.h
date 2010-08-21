@@ -9,6 +9,12 @@
 
 #include "pilot.h"
 
+
+/* Shooting. */
+int pilot_shoot( Pilot* p, int type );
+int pilot_shootSecondary( Pilot* p );
+void pilot_shootStop( Pilot* p, const int secondary );
+
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn );
