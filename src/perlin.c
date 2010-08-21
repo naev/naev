@@ -553,7 +553,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    float zoom;
    float *_max;
    float max;
-   unsigned int t, s;
+   unsigned int s;
    thread_args *args;
    SDL_mutex *nebu_lock;
    SDL_cond *nebu_cond;
