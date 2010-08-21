@@ -888,7 +888,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
       y  = CLAMP( ry, ryh, cy-r );
       /* Clamp width. */
       w  = CLAMP( rx, rxw, cx+r ) - x;
-      h  = CLAMP( rx, ryh, cy+r ) - y;
+      h  = CLAMP( ry, ryh, cy+r ) - y;
       /* Calculate texture bottom left. */
       tx  = x - (cx-r);
       tx *= gl_circle->srw / r2; /* Transform to unitary coordinates. */
