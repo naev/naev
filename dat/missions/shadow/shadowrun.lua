@@ -122,6 +122,10 @@ else -- default english
 end
 
 function create ()
+    if not misn.claim( {sys, sys2} ) then
+        abort()
+    end
+
     misn.setNPC( "A dark-haired woman", "rebina" )
     misn.setDesc( bar_desc ) 
 end
