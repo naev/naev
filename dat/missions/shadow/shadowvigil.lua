@@ -122,6 +122,11 @@ end
 function accept()
     misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
     misssys["__save"] = true
+    
+    if not misn.claim(missys) then
+        abort()
+    end
+    
     alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
     alive["__save"] = true
     stage = 1 -- Keeps track of the mission stage
