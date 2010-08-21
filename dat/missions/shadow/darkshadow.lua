@@ -65,12 +65,11 @@ function create()
     jorekplanet2, joreksys2 = planet.get("The Wringer")
     
     if not misn.claim ( {seirsys, joreksys1, joreksys2} ) then
-        print(STDERR, "Claim: aborting Dark Shadow!")
         abort()
     end
     
     tk.msg(title[1], text[1]:format(player.name(), seirplanet:name(), seirsys:name()))
-    accept() -- The player automatically accepts this mission. If he doesn't want it, he'll have to manually abort.
+    accept() -- The player automatically accepts this mission.
 end
 
 -- This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
@@ -86,11 +85,11 @@ end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
 function accept2()
+    osd_msg[1] = osd_msg[1]:format(jorekplanet1:name(), joreksys1:name())
+    misn.osdCreate(osd_title, osd_msg) 
     misn.setDesc(misn_desc2)
     misn.setReward(misn_reward)
-    osd_msg[1] = osd_msg[1]:format(jorekplanet1, joreksys1)
-    misn.osdCreate(osd_title, osd_msg) 
-    marker = misn.markerAdd(joreksys1, "low");
+    marker = misn.markerAdd(joreksys1, "low")
     landhook = hook.land("land", "bar")
 end
 
@@ -128,8 +127,8 @@ end
 function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
-        tk.msg(NPCtitle, NPCtext)
         misn.npcAdd("barman", "Barman", "thief2", NPCdesc, 4)
+        tk.msg(NPCtitle, NPCtext)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
         joreknpc = misn.npcAdd("jorek", "Jorek", "jorek", Jordesc, 4)
     end
@@ -146,7 +145,6 @@ end
 
 -- NPC hook
 function jorek()
-    -- SHITMAN found, inititate blockade run sequence.
     tk.msg("lele", "Hi, I'm SHITMAN.")
     misn.npcRm(joreknpc)
     stage = 4
@@ -155,6 +153,7 @@ end
 
 -- Takeoff hook
 function takeoff()
+    -- SHITMAN found, inititate blockade run sequence.
 end
 
 -- Handle the unsuccessful end of the mission.
