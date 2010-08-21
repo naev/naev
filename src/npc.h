@@ -31,6 +31,7 @@ int npc_rm_parentMission( Mission *misn );
 /*
  * Control.
  */
+void npc_sort (void);
 void npc_generate (void);
 void npc_clear (void);
 void npc_freeAll (void);

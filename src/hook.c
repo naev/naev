@@ -671,7 +671,7 @@ int hooks_runParam( const char* stack, HookParam *param )
    if (run)
       claim_activateAll();
 
-   return 0;
+   return run;
 }
 
 
