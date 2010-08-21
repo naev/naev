@@ -3,8 +3,8 @@
  */
 
 
-#ifndef PILOT_OUTFITS_H
-#  define PILOT_OUTFITS_H
+#ifndef PILOT_OUTFIT_H
+#  define PILOT_OUTFIT_H
 
 
 #include "pilot.h"
@@ -43,4 +43,4 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
 void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
 
 
-#endif /* PILOT_OUTFITS_H */
+#endif /* PILOT_OUTFIT_H */
