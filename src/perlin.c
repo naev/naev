@@ -528,6 +528,8 @@ static int noise_genNebulaMap_thread( void *data )
       SDL_CondSignal(args->nebu_cond);
    SDL_mutexV(args->nebu_lock);
 
+   /* Clean up. */
+   free( args );
    return 0;
 }
 
