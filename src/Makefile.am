@@ -13,6 +13,7 @@ naev_SOURCES = \
 	base64.c \
 	board.c \
 	camera.c \
+	claim.c \
 	collision.c \
 	colour.c \
 	comm.c \
@@ -126,6 +127,7 @@ naev_SOURCES = \
 	base64.h \
 	board.h \
 	camera.h \
+	claim.h \
 	collision.h \
 	colour.h \
 	comm.h \

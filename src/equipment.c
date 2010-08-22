@@ -201,14 +201,14 @@ void equipment_open( unsigned int wid )
 
    /* Create the vbo if necessary. */
    if (equipment_vbo == NULL) {
-      equipment_vbo = gl_vboCreateStream( (sizeof(GLint)*2 + sizeof(GLfloat)*4)*4, NULL );
+      equipment_vbo = gl_vboCreateStream( (sizeof(GLshort)*2 + sizeof(GLfloat)*4)*4, NULL );
       for (i=0; i<4; i++) {
          colour[i*4+0] = cRadar_player.r;
          colour[i*4+1] = cRadar_player.g;
          colour[i*4+2] = cRadar_player.b;
          colour[i*4+3] = cRadar_player.a;
       }
-      gl_vboSubData( equipment_vbo, sizeof(GLint)*2*4, sizeof(colour), colour );
+      gl_vboSubData( equipment_vbo, sizeof(GLshort)*2*4, sizeof(colour), colour );
    }
 
    /* Get dimensions. */
@@ -688,7 +688,7 @@ static void equipment_renderShip( double bx, double by,
    double pw, ph;
    double w, h;
    Vector2d v;
-   GLint vertex[2*4];
+   GLshort vertex[2*4];
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -735,7 +735,7 @@ static void equipment_renderShip( double bx, double by,
       vertex[7] = vertex[5];
       glLineWidth( 3. );
       gl_vboSubData( equipment_vbo, 0, sizeof(vertex), vertex );
-      gl_vboActivateOffset( equipment_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+      gl_vboActivateOffset( equipment_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
       gl_vboActivateOffset( equipment_vbo, GL_COLOR_ARRAY,
             sizeof(vertex), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 4 );

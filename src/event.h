@@ -8,6 +8,7 @@
 
 
 #include "nlua.h"
+#include "claim.h"
 
 
 /**
@@ -18,6 +19,7 @@ typedef struct Event_s {
    int data; /**< EventData parent. */
    lua_State *L; /**< Event Lua State. */
    int save; /**< Whether or not it should be saved. */
+   SysClaim_t *claims; /**< Event claims. */
 } Event_t;
 
 
@@ -64,6 +66,12 @@ int event_isUnique( unsigned int eventid );
  */
 int event_dataID( const char *evdata );
 const char *event_dataName( int dataid );
+
+
+/*
+ * Claims.
+ */
+void event_activateClaims (void);
 
 
 #endif /* EVENT_H */

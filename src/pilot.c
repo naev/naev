@@ -1374,6 +1374,9 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    if (hdynparam != NULL)
       free( hdynparam );
 
+   if (run > 0)
+      claim_activateAll(); /* Reset claims. */
+
    return run;
 }
 

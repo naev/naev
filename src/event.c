@@ -295,6 +295,10 @@ static void event_cleanup( Event_t *ev )
 
    /* Free NPC. */
    npc_rm_parentEvent(ev->id);
+
+   /* Free claims. */
+   if (ev->claims != NULL)
+      claim_destroy( ev->claims );
 }
 
 
@@ -370,7 +374,9 @@ static int event_alreadyRunning( int data )
 void events_trigger( EventTrigger_t trigger )
 {
    int i, c;
+   int created;
 
+   created = 0;
    for (i=0; i<event_ndata; i++) {
       /* Make sure trigger matches. */
       if (event_data[i].trigger != trigger)
@@ -398,7 +404,12 @@ void events_trigger( EventTrigger_t trigger )
 
       /* Create the event. */
       event_create( i, 0 );
+      created++;
    }
+
+   /* Run claims if necessary. */
+   if (created)
+      claim_activateAll();
 }
 
 
@@ -670,6 +681,20 @@ const char *event_dataName( int dataid )
 
 
 /**
+ * @brief Activates all the active event claims.
+ */
+void event_activateClaims (void)
+{
+   int i;
+
+   /* Free active events. */
+   for (i=0; i<event_nactive; i++)
+      if (event_active[i].claims != NULL)
+         claim_activate( event_active[i].claims );
+}
+
+
+/**
  * @brief Checks the event sanity and cleans up after them.
  */
 void event_checkSanity (void)
@@ -717,7 +742,12 @@ int events_saveActive( xmlTextWriterPtr writer )
       xmlw_attr(writer,"name","%s",event_dataName(ev->data));
       xmlw_attr(writer,"id","%u",ev->id);
 
-      /* write lua magic */
+      /* Claims. */
+      xmlw_startElem(writer,"claims");
+      claim_xmlSave( writer, ev->claims );
+      xmlw_endElem(writer); /* "claims" */
+
+      /* Write lua magic */
       xmlw_startElem(writer,"lua");
       nxml_persistLua( ev->L, writer );
       xmlw_endElem(writer); /* "lua" */
@@ -812,6 +842,10 @@ static int events_parseActive( xmlNodePtr parent )
          if (xml_isNode(cur,"lua"))
             nxml_unpersistLua( ev->L, cur );
       } while (xml_nextNode(cur));
+
+      /* Claims. */
+      if (xml_isNode(node,"claims"))
+         ev->claims = claim_xmlLoad( node );
    } while (xml_nextNode(node));
 
    return 0;

@@ -22,6 +22,7 @@
 #include "nxml.h"
 #include "player.h"
 #include "event.h"
+#include "claim.h"
 #include "nlua_pilot.h"
 #include "nlua_hook.h"
 
@@ -643,25 +644,34 @@ int hook_hasEventParent( unsigned int parent )
 int hooks_runParam( const char* stack, HookParam *param )
 {
    int i;
+   int run;
 
    /* Don't update if player is dead. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
+   run = 0;
    hook_runningstack = 1; /* running hooks */
-   for (i=0; i<hook_nstack; i++)
+   for (i=0; i<hook_nstack; i++) {
       if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
          hook_run( &hook_stack[i], param );
+         run++;
       }
+   }
    hook_runningstack = 0; /* not running hooks anymore */
 
-   for (i=0; i<hook_nstack; i++)
+   for (i=0; i<hook_nstack; i++) {
       if (hook_stack[i].delete) { /* Delete any that need deleting */
          hook_rm( hook_stack[i].id );
          i--;
       }
+   }
 
-   return 0;
+   /* Check claims. */
+   if (run)
+      claim_activateAll();
+
+   return run;
 }
 
 

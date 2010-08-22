@@ -10,6 +10,7 @@
 #include "nlua_misn.h"
 
 #include "opengl.h"
+#include "claim.h"
 
 
 /* availability by location */
@@ -115,6 +116,9 @@ typedef struct Mission_ {
    unsigned int osd; /**< On-Screen Display ID. */
    int osd_set; /**< OSD was set explicitly. */
 
+   /* Claims. */
+   SysClaim_t *claims; /**< System claims. */
+
    lua_State *L; /**< The state of the running lua code. */
 } Mission;
 
@@ -167,6 +171,11 @@ int misn_tryRun( Mission *misn, const char *func );
 lua_State *misn_runStart( Mission *misn, const char *func );
 int misn_runFunc( Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
+
+/*
+ * CLaims.
+ */
+void missions_activateClaims (void);
 
 
 #endif /* MISSION_H */

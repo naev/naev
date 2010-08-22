@@ -42,6 +42,7 @@
 #include "intro.h"
 #include "perlin.h"
 #include "ai.h"
+#include "ai_extra.h"
 #include "music.h"
 #include "gui.h"
 #include "nlua_var.h"
@@ -51,6 +52,7 @@
 #include "nebula.h"
 #include "equipment.h"
 #include "camera.h"
+#include "claim.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -719,7 +721,7 @@ void player_cleanup (void)
    player_noutfits = 0;
    player_moutfits = 0;
 
-   /* clean up missions */
+   /* Clean up missions */
    if (missions_done != NULL)
       free(missions_done);
    missions_done = NULL;
@@ -741,6 +743,9 @@ void player_cleanup (void)
       player_licenses = NULL;
       player_nlicenses = 0;
    }
+
+   /* Clear claims. */
+   claim_clear();
 
    /* just in case purge the pilot stack */
    pilots_cleanAll();
@@ -935,6 +940,10 @@ void player_render( double dt )
  */
 void player_startAutonav (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player.p->nav_hyperspace == -1)
       return;
 
@@ -1020,6 +1029,12 @@ void player_think( Pilot* pplayer, const double dt )
       /* no sense in accelerating or turning */
       pilot_setThrust( pplayer, 0. );
       pilot_setTurn( pplayer, 0. );
+      return;
+   }
+
+   /* Under manual control is special. */
+   if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
+      ai_think( pplayer, dt );
       return;
    }
 
@@ -1309,6 +1324,10 @@ void player_secondaryNext (void)
    int found;
    Outfit *o;
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    found = !!(player.p->secondary == NULL);
    for (i=0; i<player.p->noutfits; i++) {
       o = player.p->outfits[i]->outfit;
@@ -1344,6 +1363,10 @@ void player_secondaryPrev (void)
    int found;
    Outfit *o;
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    found = !!(player.p->secondary == NULL);
    for (i=player.p->noutfits-1; i>=0; i--) {
       o = player.p->outfits[i]->outfit;
@@ -1375,6 +1398,10 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
@@ -1417,6 +1444,10 @@ void player_land (void)
       takeoff(1);
       return;
    }
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
 
    /* Already landing. */
    if ((pilot_isFlag( player.p, PILOT_LANDING) ||
@@ -1516,6 +1547,10 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    player.p->nav_hyperspace++;
    map_clear(); /* clear the current map path */
 
@@ -1563,6 +1598,10 @@ void player_jump (void)
 
    /* Must have a jump target and not be already jumping. */
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    if (player.p->nav_hyperspace == -1) {
@@ -1690,6 +1729,10 @@ void player_afterburn (void)
 {
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    /** @todo fancy effect? */
@@ -1985,6 +2028,10 @@ static void player_checkHail (void)
  */
 void player_hail (void)
 {
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
    else if(player.p->nav_planet != -1)
@@ -2004,6 +2051,10 @@ void player_autohail (void)
 {
    int i;
    Pilot *p;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
 
    /* Find pilot to autohail. */
    for (i=0; i<pilot_nstack; i++) {
@@ -2036,6 +2087,10 @@ void player_autohail (void)
 void player_setFireMode( int mode )
 {
    if (player_firemode == mode)
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    player_firemode = mode;

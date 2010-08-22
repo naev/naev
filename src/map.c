@@ -170,6 +170,10 @@ void map_open (void)
    StarSystem *cur;
    int w,h;
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
    if (wid > 0) {
