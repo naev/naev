@@ -512,6 +512,9 @@ static int bar_genList( unsigned int wid )
    if (widget_exists( wid, "iarMissions" ))
       window_destroyWidget( wid, "iarMissions" );
 
+   /* We sort just in case. */
+   npc_sort();
+
    /* Set up missions. */
    if (mission_portrait == NULL)
       mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
@@ -1350,7 +1353,8 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
    if ((to_visit != 0) && !has_visited(to_visit)) {
       /* Run hooks, run after music in case hook wants to change music. */
       if (torun_hook != NULL)
-         hooks_run( torun_hook );
+         if (hooks_run( torun_hook ) > 0)
+            bar_genList( w );
 
       visited(to_visit);
    }
