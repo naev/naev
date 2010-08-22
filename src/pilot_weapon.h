@@ -11,7 +11,7 @@
 
 
 /* Shooting. */
-int pilot_shoot( Pilot* p, int type );
+int pilot_shoot( Pilot* p );
 int pilot_shootSecondary( Pilot* p );
 void pilot_shootStop( Pilot* p, const int secondary );
 

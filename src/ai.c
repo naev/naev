@@ -762,7 +762,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* fire weapons if needed */
    if (ai_isFlag(AI_PRIMARY))
-      pilot_shoot(cur_pilot, pilot_firemode); /* primary */
+      pilot_shoot(cur_pilot); /* primary */
    if (ai_isFlag(AI_SECONDARY))
       pilot_shootSecondary(cur_pilot); /* secondary */
 

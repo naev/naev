@@ -1133,7 +1133,7 @@ void player_think( Pilot* pplayer, const double dt )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      ret = pilot_shoot( pplayer, player_firemode );
+      ret = pilot_shoot( pplayer );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
          player_abortAutonav(NULL);

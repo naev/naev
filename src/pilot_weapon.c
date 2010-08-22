@@ -48,6 +48,8 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static void pilot_weapSetFire( Pilot *p, PilotWeaponSet *set )
 {
+   (void) p;
+   (void) set;
 }
 
 
@@ -143,42 +145,29 @@ void pilot_weapSetCleanup( Pilot* p, int id )
    ws->slots = NULL;
 }
 
+
 /**
  * @brief Makes the pilot shoot.
  *
  *    @param p The pilot which is shooting.
- *    @param type Indicate what shoot group to use.
- *           0 = all
- *           1 = turrets
- *           2 = forward
  *    @return The number of shots fired.
  */
-int pilot_shoot( Pilot* p, int group )
+int pilot_shoot( Pilot* p )
 {
    int i, ret;
-   Outfit* o;
+   PilotWeaponSet *ws;
 
-   if (!p->outfits)
-      return 0; /* no outfits */
+   /* Get active set. */
+   ws = pilot_weapSet( p, p->active_set );
 
+   /* Case no outfits. */
+   if (ws->slots == NULL)
+      return 0;
+
+   /* Fire. */
    ret = 0;
-   for (i=0; i<p->outfit_nweapon; i++) { /* cycles through outfits to find primary weapons */
-      o = p->outfit_weapon[i].outfit;
-
-      if (o==NULL)
-         continue;
-
-      if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
-            (outfit_isBolt(o) || outfit_isBeam(o) || outfit_isLauncher(o))) {
-
-         /* Choose what to shoot dependent on type. */
-         if ((group == 0) ||
-               ((group == 1) && outfit_isTurret(o)) ||
-               ((group == 2) && !outfit_isTurret(o))) {
-            ret += pilot_shootWeapon( p, &p->outfit_weapon[i] );
-         }
-      }
-   }
+   for (i=0; i<array_size(ws->slots); i++)
+      ret += pilot_shootWeapon( p, ws->slots[i] );
 
    return ret;
 }
@@ -193,17 +182,19 @@ int pilot_shoot( Pilot* p, int group )
 int pilot_shootSecondary( Pilot* p )
 {
    int i, ret;
+   PilotWeaponSet *ws;
 
-   /* No secondary weapon. */
-   if (p->secondary == NULL)
+   /* Get active set. */
+   ws = pilot_weapSet( p, p->active_set );
+
+   /* Case no outfits. */
+   if (ws->slots == NULL)
       return 0;
 
-   /* Fire all secondary weapon of same type. */
+   /* Fire. */
    ret = 0;
-   for (i=0; i<p->outfit_nweapon; i++) {
-      if (p->outfit_weapon[i].outfit == p->secondary->outfit)
-         ret += pilot_shootWeapon( p, &p->outfit_weapon[i] );
-   }
+   for (i=0; i<array_size(ws->slots); i++)
+      ret += pilot_shootWeapon( p, ws->slots[i] );
 
    return ret;
 }
@@ -219,41 +210,31 @@ int pilot_shootSecondary( Pilot* p )
  */
 void pilot_shootStop( Pilot* p, const int secondary )
 {
-   int i;
-   Outfit* o;
+   int i, ret;
+   PilotWeaponSet *ws;
 
-   /* Non beam secondaries don't matter. */
-   if (secondary && ((p->secondary == NULL) ||
-            (p->secondary->outfit == NULL) ||
-            !outfit_isBeam(p->secondary->outfit)))
+   /* Get active set. */
+   ws = pilot_weapSet( p, p->active_set );
+
+   /* Case no outfits. */
+   if (ws->slots == NULL)
       return;
 
-   /* Iterate over them all. */
-   for (i=0; i<p->outfit_nweapon; i++) {
-      o = p->outfit_weapon[i].outfit;
+   /* Stop all beams. */
+   for (i=0; i<array_size(ws->slots); i++) {
 
-      /* Must have outfit. */
-      if (o==NULL)
-         continue;
-      /* Must be beam. */
-      if (!outfit_isBeam(o))
+      /* Must have assosciated outfit. */
+      if (ws->slots[i]->outfit != NULL)
          continue;
 
-      if (secondary) {
-         if (o == p->secondary->outfit) {
-            if (p->outfit_weapon[i].u.beamid > 0) {
-               beam_end( p->id, p->outfit_weapon[i].u.beamid );
-               p->outfit_weapon[i].u.beamid = 0;
-            }
-         }
-      }
-      else {
-         if (!outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)) {
-            if (p->outfit_weapon[i].u.beamid > 0) {
-               beam_end( p->id, p->outfit_weapon[i].u.beamid );
-               p->outfit_weapon[i].u.beamid = 0;
-            }
-         }
+      /* Only handle beams. */
+      if (!outfit_isBeam(ws->slots[i]->outfit))
+         continue;
+      
+      /* Stop beam. */
+      if (p->outfit_weapon[i].u.beamid > 0) {
+         beam_end( p->id, p->outfit_weapon[i].u.beamid );
+         p->outfit_weapon[i].u.beamid = 0;
       }
    }
 }
