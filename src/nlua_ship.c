@@ -26,6 +26,8 @@ static int shipL_get( lua_State *L );
 static int shipL_name( lua_State *L );
 static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
+static int shipL_fabricator( lua_State *L );
+static int shipL_crew( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
@@ -35,6 +37,8 @@ static const luaL_reg shipL_methods[] = {
    { "name", shipL_name },
    { "baseType", shipL_baseType },
    { "class", shipL_class },
+   { "fabricator", shipL_fabricator },
+   { "crew", shipL_crew },
    { "slots", shipL_slots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
@@ -261,6 +265,51 @@ static int shipL_class( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets the ship's fabricator.
+ *
+ * @usage type = s:fabricator()
+ *
+ */
+static int shipL_fabricator( lua_State *L )
+{
+	LuaShip *ls;
+	Ship *s;
+	
+	/* Get the ship. */
+	ls = luaL_checkship(L,1);
+	s  = ls->ship;
+	if (s==NULL) {
+		NLUA_ERROR(L,"Ship is invalid.");
+		return 0;
+	}
+	
+	lua_pushstring(L, s->fabricator);
+	return 1;
+}
+
+/**
+ * @brief Gets the ship's crew number.
+ *
+ * @usage type = s:crew()
+ *
+ */
+static int shipL_crew( lua_State *L )
+{
+	LuaShip *ls;
+	Ship *s;
+	
+	/* Get the ship. */
+	ls = luaL_checkship(L,1);
+	s  = ls->ship;
+	if (s==NULL) {
+		NLUA_ERROR(L,"Ship is invalid.");
+		return 0;
+	}
+
+	lua_pushnumber(L, s->crew );
+	return 1;
+}
 
 /**
  * @brief Gets the amount of the ship's ship slots.
