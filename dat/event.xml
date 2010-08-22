@@ -89,4 +89,29 @@
    <unique />
   </flags>
  </event>
+ <!--STH-->
+ <event name="Engine Malfunction">
+  <lua>neutral/engine_malfunction</lua>
+  <trigger>enter</trigger>
+  <!--100% is only for testing-->
+  <chance>100</chance>
+ </event>
+ <event name="Lost in Hyperspace">
+  <lua>neutral/engine_trapped</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>system.cur():name() == "ERROR: Telemetry Not Found"</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ <event name="Hails in Hyperspace">
+  <lua>neutral/engine_hyperhails</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>system.cur():name() == "ERROR: Telemetry Not Found"</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
 </Events>
