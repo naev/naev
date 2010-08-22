@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Factions>
  <faction name="Dummy">
   <static />
@@ -240,5 +240,13 @@
   <enemies>
    <enemy>Associates</enemy>
   </enemies>
+ </faction>
+ <!--STH-->
+ <faction name=" ">
+  <invisible />
+  <static />
+  <allies />
+  <player>0</player>
+  <enemies/>
  </faction>
 </Factions>
