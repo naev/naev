@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Ships>
  <!-- Light Craft -->
  <ship name="Llama">
@@ -1966,4 +1966,34 @@
    <low/>
   </slots>
  </ship>
+ <!--STH-10.08.20-->
+ <ship name="Communications Relay">
+  <base_type>Satelite</base_type>
+  <!--I know there is no satelite class, but maybe there should be?-->
+  <class>Satelite</class>
+  <GFX sx="6" sy="6">commSat</GFX>
+  <GUI>default</GUI>
+  <description>Eyecandy for missions</description>
+  <price/>
+  <fabricator/>
+  <movement>
+   <speed/>
+   <turn>150</turn>
+  </movement>
+  <health>
+   <shield>10</shield>
+   <armour>50</armour>
+   <energy/>
+   <shield_regen>40</shield_regen>
+   <energy_regen/>
+  </health>
+  <characteristics>
+   <fuel/>
+   <crew/>
+   <mass>10</mass>
+   <cpu/>
+   <cap_cargo/>
+  </characteristics>
+ </ship>
+
 </Ships>
