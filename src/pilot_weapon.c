@@ -18,6 +18,8 @@
 
 #include "log.h"
 #include "array.h"
+#include "weapon.h"
+#include "escort.h"
 
 
 /*
@@ -25,6 +27,7 @@
  */
 static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static void pilot_weapSetFire( Pilot *p, PilotWeaponSet *set );
+static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 
 
 /**
@@ -140,5 +143,293 @@ void pilot_weapSetCleanup( Pilot* p, int id )
    ws->slots = NULL;
 }
 
+/**
+ * @brief Makes the pilot shoot.
+ *
+ *    @param p The pilot which is shooting.
+ *    @param type Indicate what shoot group to use.
+ *           0 = all
+ *           1 = turrets
+ *           2 = forward
+ *    @return The number of shots fired.
+ */
+int pilot_shoot( Pilot* p, int group )
+{
+   int i, ret;
+   Outfit* o;
+
+   if (!p->outfits)
+      return 0; /* no outfits */
+
+   ret = 0;
+   for (i=0; i<p->outfit_nweapon; i++) { /* cycles through outfits to find primary weapons */
+      o = p->outfit_weapon[i].outfit;
+
+      if (o==NULL)
+         continue;
+
+      if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
+            (outfit_isBolt(o) || outfit_isBeam(o) || outfit_isLauncher(o))) {
+
+         /* Choose what to shoot dependent on type. */
+         if ((group == 0) ||
+               ((group == 1) && outfit_isTurret(o)) ||
+               ((group == 2) && !outfit_isTurret(o))) {
+            ret += pilot_shootWeapon( p, &p->outfit_weapon[i] );
+         }
+      }
+   }
+
+   return ret;
+}
+
+
+/**
+ * @brief Makes the pilot shoot it's currently selected secondary weapon.
+ *
+ *    @param p The pilot which is to shoot.
+ *    @return The number of shots fired.
+ */
+int pilot_shootSecondary( Pilot* p )
+{
+   int i, ret;
+
+   /* No secondary weapon. */
+   if (p->secondary == NULL)
+      return 0;
+
+   /* Fire all secondary weapon of same type. */
+   ret = 0;
+   for (i=0; i<p->outfit_nweapon; i++) {
+      if (p->outfit_weapon[i].outfit == p->secondary->outfit)
+         ret += pilot_shootWeapon( p, &p->outfit_weapon[i] );
+   }
+
+   return ret;
+}
+
+
+/**
+ * @brief Have pilot stop shooting his weapon.
+ *
+ * Only really deals with beam weapons.
+ *
+ *    @param p Pilot that was shooting.
+ *    @param secondary If weapon is secondary.
+ */
+void pilot_shootStop( Pilot* p, const int secondary )
+{
+   int i;
+   Outfit* o;
+
+   /* Non beam secondaries don't matter. */
+   if (secondary && ((p->secondary == NULL) ||
+            (p->secondary->outfit == NULL) ||
+            !outfit_isBeam(p->secondary->outfit)))
+      return;
+
+   /* Iterate over them all. */
+   for (i=0; i<p->outfit_nweapon; i++) {
+      o = p->outfit_weapon[i].outfit;
+
+      /* Must have outfit. */
+      if (o==NULL)
+         continue;
+      /* Must be beam. */
+      if (!outfit_isBeam(o))
+         continue;
+
+      if (secondary) {
+         if (o == p->secondary->outfit) {
+            if (p->outfit_weapon[i].u.beamid > 0) {
+               beam_end( p->id, p->outfit_weapon[i].u.beamid );
+               p->outfit_weapon[i].u.beamid = 0;
+            }
+         }
+      }
+      else {
+         if (!outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)) {
+            if (p->outfit_weapon[i].u.beamid > 0) {
+               beam_end( p->id, p->outfit_weapon[i].u.beamid );
+               p->outfit_weapon[i].u.beamid = 0;
+            }
+         }
+      }
+   }
+}
+
+/**
+ * @brief Actually handles the shooting, how often the player.p can shoot and such.
+ *
+ *    @param p Pilot that is shooting.
+ *    @param w Pilot's outfit to shoot.
+ *    @return 0 if nothing was shot and 1 if something was shot.
+ */
+static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
+{
+   Vector2d vp, vv;
+   int i;
+   PilotOutfitSlot *slot;
+   int minp;
+   double q, mint;
+   int is_launcher;
+   double rate_mod, energy_mod;
+
+   /* check to see if weapon is ready */
+   if (w->timer > 0.)
+      return 0;
+
+   /* See if is launcher. */
+   is_launcher = outfit_isLauncher(w->outfit);
+
+   /* Calculate rate modifier. */
+   switch (w->outfit->type) {
+      case OUTFIT_TYPE_BOLT:
+         rate_mod   = 2. - p->stats.firerate_forward; /* invert. */
+         energy_mod = p->stats.energy_forward;
+         break;
+      case OUTFIT_TYPE_TURRET_BOLT:
+         rate_mod   = 2. - p->stats.firerate_turret; /* invert. */
+         energy_mod = p->stats.energy_turret;
+         break;
+
+      default:
+         rate_mod   = 1.;
+         energy_mod = 1.;
+         break;
+   }
+
+   /* Count the outfits and current one - only affects non-beam. */
+   if (!outfit_isBeam(w->outfit)) {
+
+      /* Calculate last time weapon was fired. */
+      q     = 0.;
+      minp  = -1;
+      for (i=0; i<p->outfit_nweapon; i++) {
+         slot = &p->outfit_weapon[i];
+
+         /* No outfit. */
+         if (slot->outfit == NULL)
+            continue;
+
+         /* Not what we are looking for. */
+         if (outfit_delay(slot->outfit) != outfit_delay(w->outfit))
+            continue;
+
+         /* Launcher only counts with ammo. */
+         if (is_launcher && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
+            continue;
+
+         /* Save some stuff. */
+         if ((minp < 0) || (slot->timer > mint)) {
+            minp = i;
+            mint = slot->timer;
+         }
+         q++;
+      }
+
+      /* Q must be valid. */
+      if (q == 0)
+         return 0;
+
+      /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
+      if (mint > rate_mod * outfit_delay(w->outfit) * ((q-1) / q))
+         return 0;
+   }
+
+   /* Get weapon mount position. */
+   pilot_getMount( p, w, &vp );
+   vp.x += p->solid->pos.x;
+   vp.y += p->solid->pos.y;
+
+   /* Modify velocity to take into account the rotation. */
+   vect_cset( &vv, p->solid->vel.x + vp.x*p->solid->dir_vel,
+         p->solid->vel.y + vp.y*p->solid->dir_vel );
+
+   /*
+    * regular bolt weapons
+    */
+   if (outfit_isBolt(w->outfit)) {
+
+      /* enough energy? */
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
+         return 0;
+
+      p->energy -= outfit_energy(w->outfit)*energy_mod;
+      weapon_add( w->outfit, p->solid->dir,
+            &vp, &p->solid->vel, p, p->target );
+   }
+
+   /*
+    * Beam weapons.
+    */
+   else if (outfit_isBeam(w->outfit)) {
+
+      /* Check if enough energy to last a second. */
+      if (outfit_energy(w->outfit)*energy_mod > p->energy)
+         return 0;
+
+      /** @todo Handle warmup stage. */
+      w->state = PILOT_OUTFIT_ON;
+      w->u.beamid = beam_start( w->outfit, p->solid->dir,
+            &vp, &p->solid->vel, p, p->target, w );
+   }
+
+   /*
+    * missile launchers
+    *
+    * must be a secondary weapon
+    */
+   else if (outfit_isLauncher(w->outfit)) {
+
+      /* Shooter can't be the target - sanity check for the player.p */
+      if ((w->outfit->u.lau.ammo->u.amm.ai > 0) && (p->id==p->target))
+         return 0;
+
+      /* Must have ammo left. */
+      if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
+         return 0;
+
+      /* enough energy? */
+      if (outfit_energy(w->u.ammo.outfit)*energy_mod > p->energy)
+         return 0;
+
+      p->energy -= outfit_energy(w->u.ammo.outfit)*energy_mod;
+      weapon_add( w->u.ammo.outfit, p->solid->dir,
+            &vp, &p->solid->vel, p, p->target );
+
+      w->u.ammo.quantity -= 1; /* we just shot it */
+      p->mass_outfit     -= w->u.ammo.outfit->mass;
+      pilot_updateMass( p );
+   }
+
+   /*
+    * Fighter bays.
+    */
+   else if (outfit_isFighterBay(w->outfit)) {
+
+      /* Must have ammo left. */
+      if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
+         return 0;
+
+      /* Create the escort. */
+      escort_create( p, w->u.ammo.outfit->u.fig.ship,
+            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
+
+      w->u.ammo.quantity -= 1; /* we just shot it */
+      p->mass_outfit     -= w->u.ammo.outfit->mass;
+      w->u.ammo.deployed += 1; /* Mark as deployed. */
+      pilot_updateMass( p );
+   }
+
+   else {
+      WARN("Shooting unknown weapon type: %s", w->outfit->name);
+   }
+
+   /* Reset timer. */
+   w->timer += rate_mod * outfit_delay( w->outfit );
+
+   return 1;
+}
 
 
