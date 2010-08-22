@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
  <fleet name="Independent Schroedinger">
   <ai>trader</ai>
@@ -717,6 +717,14 @@
    <pilot name="Pirate Attacker" ship="Pirate Vendetta"></pilot>
    <pilot name="Pirate Attacker" ship="Hyena"></pilot>
    <pilot name="Pirate Attacker" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+  <!--STH-10.08.20-->
+ <fleet name="Communications Relay">
+  <ai>dummy</ai>
+  <faction> </faction>
+  <pilots>
+   <pilot ship="Communications Relay"></pilot>
   </pilots>
  </fleet>
 </Fleets>
