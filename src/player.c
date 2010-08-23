@@ -273,6 +273,9 @@ void player_new (void)
 
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
+
+   /* Load the GUI. */
+   gui_load( player.p->ship->gui );
 }
 
 
