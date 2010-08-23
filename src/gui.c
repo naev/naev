@@ -1947,8 +1947,8 @@ static void gui_createInterference( Radar *radar )
       h = w;
    }
    else if (radar->shape == RADAR_RECT) {
-      w = radar->w;
-      h = radar->h;
+      w = radar->w*2.;
+      h = radar->h*2.;
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
