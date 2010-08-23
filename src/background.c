@@ -146,8 +146,8 @@ void background_initStars( int n )
  */
 void background_moveStars( double x, double y )
 {
-   star_x = x;
-   star_y = y;
+   star_x = (GLfloat) x;
+   star_y = (GLfloat) y;
 }
 
 
