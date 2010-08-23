@@ -134,6 +134,6 @@ static int time_units( lua_State *L )
 static int time_inc( lua_State *L )
 {
    if (lua_isnumber(L,1))
-      ntime_inc( lua_tonumber(L, 1) * NTIME_UNIT_LENGTH );
+      ntime_inc( lua_tonumber(L, 1));
    return 0;
 }
