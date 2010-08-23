@@ -61,8 +61,8 @@ static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
 static unsigned int mstars = 0; /**< Memory stars are taking. */
-static double star_x = 0.; /**< Star X movement. */
-static double star_y = 0.; /**< Star Y movement. */
+static GLfloat star_x = 0.; /**< Star X movement. */
+static GLfloat star_y = 0.; /**< Star Y movement. */
 
 
 /*
