@@ -21,7 +21,7 @@
 #include "input.h"
 
 
-/* naev */
+/* NAEV methods. */
 static int naev_lang( lua_State *L );
 static int naev_getKey( lua_State *L );
 static const luaL_reg naev_methods[] = {

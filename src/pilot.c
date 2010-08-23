@@ -1374,6 +1374,9 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
    if (hdynparam != NULL)
       free( hdynparam );
 
+   if (run > 0)
+      claim_activateAll(); /* Reset claims. */
+
    return run;
 }
 
@@ -3450,10 +3453,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
-      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
+      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) /* Sort of a hack. */
          player.p = pilot;
-         gui_load( pilot->ship->gui ); /* load the gui */
-      }
    }
    else {
       pilot->think            = ai_think;

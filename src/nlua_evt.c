@@ -23,6 +23,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_system.h"
 #include "nlua_hook.h"
 #include "log.h"
 #include "event.h"
@@ -61,12 +62,14 @@ static int evt_npcAdd( lua_State *L );
 static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
 static int evt_save( lua_State *L );
+static int evt_claim( lua_State *L );
 static const luaL_reg evt_methods[] = {
    { "misnStart", evt_misnStart },
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
    { "save", evt_save },
    { "finish", evt_finish },
+   { "claim", evt_claim },
    {0,0}
 }; /**< Mission lua methods. */
 
@@ -295,3 +298,59 @@ static int evt_save( lua_State *L )
    cur_event->save = b;
    return 0;
 }
+
+
+/**
+ * @brief Tries to claim systems.
+ *
+ * Claiming systems is a way to avoid mission/event collisions preemptively.
+ *
+ * Note it does not actually claim the systems if it fails to claim. It also
+ *  does not work more then once.
+ *
+ * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
+ *
+ *    @luaparam systems Table of systems to claim.
+ *    @luareturn true if was able to claim, false otherwise.
+ * @luafunc claim( systems )
+ */
+static int evt_claim( lua_State *L )
+{
+   LuaSystem *ls;
+   SysClaim_t *claim;
+
+   /* Check parameter. */
+   if (!lua_istable(L,1))
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Check to see if already claimed. */
+   if (cur_event->claims != NULL) {
+      WARN( "Event trying to claim but already has." );
+      return 0;
+   }
+
+   /* Create the claim. */
+   claim = claim_create();
+
+   /* Iterate over table. */
+   lua_pushnil(L);
+   while (lua_next(L, -2) != 0) {
+      ls = lua_tosystem( L, -1 );
+      claim_add( claim, ls->id );
+      lua_pop(L,1);
+   }
+
+   /* Test claim. */
+   if (claim_test( claim )) {
+      claim_destroy( claim );
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Set the claim. */
+   cur_event->claims = claim;
+   claim_activate( claim );
+   lua_pushboolean(L,1);
+   return 1;
+}
+

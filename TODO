@@ -34,8 +34,6 @@
       *) Can't use normal gear
       *) very rare
       *) random mutation for cloaking/displacement abilities
-   *) Optimize texture usage
-      *) planet space graphics should be ondemand
    *) Graphic improvements
       *) have ships flying in nebula leave traces
       *) missile smoke
@@ -59,7 +57,6 @@
       *) Optimize cache for loading
    *) Testing improvements
       *) Allow console to reload data (to avoid restarts)
-   *) ^F for maps.
 
 
    MAYBE... SOMEDAY...

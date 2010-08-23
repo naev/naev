@@ -13,7 +13,6 @@ NAEV README
    NAEV's dependencies are intended to be relatively common. In addition to
    an OpenGL-capable graphics card and driver, NAEV requires the following:
       * SDL
-      * SDL_mixer
       * libxml2
       * freetype2
       * libpng

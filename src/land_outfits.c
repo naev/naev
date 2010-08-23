@@ -311,7 +311,7 @@ void outfits_updateEquipmentOutfits( void )
 {
    int ew, ow;
 
-   if ((landed) && (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))) {
+   if (landed && land_doneLoading() && planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
       ew = land_getWid( LAND_WINDOW_EQUIPMENT );
       ow = land_getWid( LAND_WINDOW_OUTFITS );
 
@@ -498,10 +498,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    if (q==1) return; /* Ignore no modifier. */
 
    snprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w,
-         bx + (double)SCREEN_W/2.,
-         by + (double)SCREEN_H/2.,
-         &cBlack, buf );
+   gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
 
 

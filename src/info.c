@@ -82,6 +82,10 @@ void menu_info (void)
 {
    int w, h;
 
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    /* Open closes when previously opened. */
    if (menu_isOpen(MENU_INFO) || dialogue_isOpen()) {
       info_close( 0, NULL );

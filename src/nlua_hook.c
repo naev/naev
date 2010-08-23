@@ -36,7 +36,7 @@ static Mission *running_mission = NULL; /**< Current running mission. */
 static Event_t *running_event = NULL; /**< Current running event. */
 
 
-/* hooks */
+/* Hook methods. */
 static int hookL_rm( lua_State *L );
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );

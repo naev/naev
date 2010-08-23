@@ -272,7 +272,6 @@ int var_checkflag( char* str )
  */
 static int var_peek( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    int i;
    const char *str;
 
@@ -308,7 +307,6 @@ static int var_peek( lua_State *L )
  */
 static int var_pop( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    int i;
    const char* str;
 
@@ -335,7 +333,6 @@ static int var_pop( lua_State *L )
  */
 static int var_push( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    const char *str;
    misn_var var;
 
@@ -358,7 +355,7 @@ static int var_push( lua_State *L )
       var.d.str = strdup( lua_tostring(L,2) );
    }
    else {
-      NLUA_DEBUG("Trying to push a var of invalid data type to stack");
+      NLUA_INVALID_PARAMETER(L);
       return 0;
    }
    var_add( &var );

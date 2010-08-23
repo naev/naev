@@ -20,7 +20,7 @@
  *
  * // Fill array
  * while (need_fill)
- *    need_fill = fill_array_member( &array_grow( my_array ) );
+ *    need_fill = fill_array_member( &array_grow( &my_array ) );
  *
  * // Shrink to minimum (if static it's a good idea).
  * array_shrink( my_array );

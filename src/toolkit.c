@@ -75,7 +75,7 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
 /* input */
 static void toolkit_mouseEvent( Window *w, SDL_Event* event );
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint8 type, Uint8 button, int x, int y, int rx, int ry );
+      Uint32 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
 static void toolkit_focusClear( Window *wdw );
@@ -777,7 +777,7 @@ static void widget_kill( Widget *wgt )
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
                           int thick, glColour* c, glColour* lc )
 {
-   GLint tri[5][4];
+   GLshort tri[5][4];
    glColour colours[10];
 
    /* Set shade model. */
@@ -834,7 +834,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
@@ -862,7 +862,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           glColour* c, glColour* lc )
 {
-   GLint lines[4][2];
+   GLshort lines[4][2];
    glColour colours[4];
 
    /* Set shade model. */
@@ -894,7 +894,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
@@ -919,7 +919,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 void toolkit_drawRect( int x, int y, int w, int h,
                        glColour* c, glColour* lc )
 {
-   GLint vertex[4][2];
+   GLshort vertex[4][2];
    glColour colours[4];
 
    /* Set shade model. */
@@ -950,7 +950,7 @@ void toolkit_drawRect( int x, int y, int w, int h,
 
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY,
-                         0, 2, GL_INT, 0 );
+                         0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
@@ -1014,10 +1014,10 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
 static void window_renderBorder( Window* w )
 {
    int i;
-   GLint cx, cy;
+   GLshort cx, cy;
    double x, y;
    glColour *lc, *c, *dc, *oc;
-   GLint vertex[31*4];
+   GLshort vertex[31*4];
    GLfloat colours[31*4];
 
    /* position */
@@ -1056,7 +1056,7 @@ static void window_renderBorder( Window* w )
    /* Both sides. */
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    /* Colour is shared. */
    colours[0] = c->r;
    colours[1] = c->g;
@@ -1112,8 +1112,8 @@ static void window_renderBorder( Window* w )
    vertex[29] = cy - 1;
    vertex[30] = cx + 21;
    vertex[31] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*16, vertex );
-   glDrawArrays( GL_POLYGON, 0, 16 );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
    /* Right side vertex. */
    cx = x + w->w;
    cy = y;
@@ -1150,8 +1150,8 @@ static void window_renderBorder( Window* w )
    vertex[29] = cy - 1;
    vertex[30] = cx - 21;
    vertex[31] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*16, vertex );
-   glDrawArrays( GL_POLYGON, 0, 16 );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
 
 
    /*
@@ -1251,7 +1251,7 @@ static void window_renderBorder( Window* w )
    cy = y + 1;
    vertex[60] = cx + 21;
    vertex[61] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*31, vertex );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*31, vertex );
    glDrawArrays( GL_LINE_LOOP, 0, 31 );
 
 
@@ -1341,7 +1341,7 @@ static void window_renderBorder( Window* w )
    cy = y;
    vertex[60] = cx + 21;
    vertex[61] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*31, vertex );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*31, vertex );
    glDrawArrays( GL_LINE_LOOP, 0, 31 );
 
    /* Clean up. */
@@ -1557,7 +1557,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
  *    @param[out] ry Relative Y movement (only valid for motion).
  *    @return The type of the event.
  */
-Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry )
 {
    /* Extract the position as event. */
@@ -1600,7 +1600,8 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    Widget *wgt;
-   Uint8 type, button;
+   Uint32 type;
+   Uint8 button;
    int x, y, rx, ry;
 
    /* Translate mouse coords. */
@@ -1635,7 +1636,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param event Event recieved by the window.
  */
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint8 type, Uint8 button, int x, int y, int rx, int ry )
+      Uint32 type, Uint8 button, int x, int y, int rx, int ry )
 {
    int inbounds;
 
@@ -2177,8 +2178,8 @@ int toolkit_init (void)
    GLsizei size;
 
    /* Create the VBO. */
-   toolkit_vboColourOffset = sizeof(GLint) * 2 * 31;
-   size = (sizeof(GLint)*2 + sizeof(GLfloat)*4) * 31;
+   toolkit_vboColourOffset = sizeof(GLshort) * 2 * 31;
+   size = (sizeof(GLshort)*2 + sizeof(GLfloat)*4) * 31;
    toolkit_vbo = gl_vboCreateStream( size, NULL );
 
    /* DIsable the cursor. */

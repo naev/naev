@@ -74,6 +74,7 @@ static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
+static int pilotL_setInvisible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
@@ -142,6 +143,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
+   { "setInvisible", pilotL_setInvisible },
    { "disable", pilotL_disable },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
@@ -277,7 +279,7 @@ LuaPilot* luaL_checkpilot( lua_State *L, int ind )
  *    @param ind Index of the pilot to validate.
  *    @return The pilot (doesn't return if fails - raises Lua error ).
  */
-static Pilot* luaL_validpilot( lua_State *L, int ind )
+Pilot* luaL_validpilot( lua_State *L, int ind )
 {
    LuaPilot *lp;
    Pilot *p;
@@ -396,7 +398,7 @@ static int pilotL_addFleet( lua_State *L )
    LuaPilot lp;
    LuaVector *lv;
    LuaSystem *ls;
-   LuaPlanet *lplanet;
+   StarSystem *ss;
    Planet *planet;
    int jump;
    PilotFlags flags;
@@ -435,21 +437,21 @@ static int pilotL_addFleet( lua_State *L )
    }
    else if (lua_issystem(L,3)) {
       ls    = lua_tosystem(L,3);
+      ss    = system_getIndex( ls->id );
       for (i=0; i<cur_system->njumps; i++) {
-         if (cur_system->jumps[i].target == ls->s) {
+         if (cur_system->jumps[i].target == ss) {
             jump = i;
             break;
          }
       }
       if (jump < 0) {
          WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
-               fltname, ls->s->name, cur_system->name );
+               fltname, ss->name, cur_system->name );
          jump = RNG_SANE(0,cur_system->njumps-1);
       }
    }
    else if (lua_isplanet(L,3)) {
-      lplanet = lua_toplanet(L,3);
-      planet  = lplanet->p;
+      planet  = luaL_validplanet(L,3);
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       a = RNGF() * 2. * M_PI;
       r = RNGF() * planet->radius;
@@ -885,13 +887,13 @@ static int pilotL_nav( lua_State *L )
    if (p->target == 0)
       return 0;
    if (p->nav_planet >= 0) {
-      lplanet.p   = cur_system->planets[ p->nav_planet ];
+      lplanet.id   = planet_index( cur_system->planets[ p->nav_planet ] );
       lua_pushplanet( L, lplanet );
    }
    else
       lua_pushnil(L);
    if (p->nav_hyperspace >= 0) {
-      lsystem.s   = cur_system->jumps[ p->nav_hyperspace ].target;
+      lsystem.id   = system_index(cur_system->jumps[ p->nav_hyperspace ].target);
       lua_pushsystem( L, lsystem );
    }
    else
@@ -1338,6 +1340,44 @@ static int pilotL_setInvincible( lua_State *L )
       pilot_setFlag(p, PILOT_INVINCIBLE);
    else
       pilot_rmFlag(p, PILOT_INVINCIBLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's invisibility status.
+ *
+ * An invisible pilot is neither updated nor drawn. It stays frozen in time
+ *  until the invisibility is lifted.
+ *
+ * @usage p:setInvisible() -- p will disappear
+ * @usage p:setInvisible(true) -- p will disappear
+ * @usage p:setInvisible(false) -- p will appear again
+ *
+ *    @luaparam p Pilot to set invisibility status of.
+ *    @luaparam state State to set invisibility, if omitted defaults to true.
+ * @luafunc setInvisible( p, state )
+ */
+static int pilotL_setInvisible( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVISIBLE);
+   else
+      pilot_rmFlag(p, PILOT_INVISIBLE);
 
    return 0;
 }
@@ -1904,10 +1944,16 @@ static int pilotL_control( lua_State *L )
       enable = lua_toboolean(L, 2);
 
    /* See if should mark as boarded. */
-   if (enable)
+   if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
-   else
+      if (pilot_isPlayer(p))
+         ai_pinit( p, "player" );
+   }
+   else {
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
+      if (pilot_isPlayer(p))
+         ai_destroy( p );
+   }
 
    /* Clear task. */
    pilotL_taskclear( L );
@@ -2259,14 +2305,17 @@ static int pilotL_hyperspace( lua_State *L )
    Pilot *p;
    Task *t;
    LuaSystem *sys;
+   StarSystem *ss;
    int i;
    JumpPoint *jp;
    double a, rad;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_gettop(L) > 1)
+   if (lua_gettop(L) > 1) {
       sys = luaL_checksystem( L, 2 );
+      ss  = system_getIndex( sys->id );
+   }
    else
       sys = NULL;
 
@@ -2276,12 +2325,12 @@ static int pilotL_hyperspace( lua_State *L )
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
-         if (jp->target == sys->s) {
+         if (jp->target == ss) {
             break;
          }
       }
       if (i >= cur_system->njumps) {
-         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", sys->s->name, cur_system->name );
+         NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", ss->name, cur_system->name );
          return 0;
       }
 
@@ -2316,39 +2365,39 @@ static int pilotL_land( lua_State *L )
 {
    Pilot *p;
    Task *t;
-   LuaPlanet *lp;
+   Planet *pnt;
    int i;
    double a, r;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
    if (lua_gettop(L) > 0)
-      lp = luaL_checkplanet( L, 2 );
+      pnt = luaL_validplanet( L, 2 );
    else
-      lp = NULL;
+      pnt = NULL;
 
    /* Set the task. */
    t = pilotL_newtask( L, p, "__land" );
-   if (lp != NULL) {
+   if (pnt != NULL) {
       /* Find the jump. */
       for (i=0; i < cur_system->nplanets; i++) {
-         if (cur_system->planets[i] == lp->p) {
+         if (cur_system->planets[i] == pnt) {
             break;
          }
       }
       if (i >= cur_system->nplanets) {
-         NLUA_ERROR( L, "Planet '%s' not found in system '%s'", lp->p->name, cur_system->name );
+         NLUA_ERROR( L, "Planet '%s' not found in system '%s'", pnt->name, cur_system->name );
          return 0;
       }
 
       /* Copy vector. */
       p->nav_planet = i;
       t->dtype = TASKDATA_VEC2;
-      vectcpy( &t->dat.vec, &lp->p->pos );
+      vectcpy( &t->dat.vec, &pnt->pos );
 
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;
-      r = RNGF() * lp->p->radius;
+      r = RNGF() * pnt->radius;
       vect_cadd( &t->dat.vec, r*cos(a), r*sin(a) );
    }
 

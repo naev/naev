@@ -75,7 +75,6 @@ static NPC_t *npc_array  = NULL; /**< Missions at the spaceport bar. */
 static unsigned int npc_add( NPC_t *npc );
 static unsigned int npc_add_giver( Mission *misn );
 static int npc_rm( NPC_t *npc );
-static void npc_sort (void);
 static NPC_t *npc_arrayGet( unsigned int id );
 static void npc_free( NPC_t *npc );
 
@@ -325,7 +324,7 @@ static int npc_compare( const void *arg1, const void *arg2 )
 /**
  * @brief Sorts the NPCs.
  */
-static void npc_sort (void)
+void npc_sort (void)
 {
    if (npc_array != NULL)
       qsort( npc_array, array_size(npc_array), sizeof(NPC_t), npc_compare );

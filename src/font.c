@@ -629,10 +629,10 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    int offset;
    GLubyte *data;
    GLfloat *vbo_tex;
-   GLint *vbo_vert;
+   GLshort *vbo_vert;
    GLfloat tx, ty, txw, tyh;
    GLfloat fw, fh;
-   GLint vx, vy, vw, vh;
+   GLshort vx, vy, vw, vh;
 
    /* Render characters into software. */
    total_w  = 0;
@@ -745,7 +745,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    /* Create the VBOs. */
    n           = 8 * 128;
    vbo_tex     = malloc(sizeof(GLfloat) * n);
-   vbo_vert    = malloc(sizeof(GLint) * n);
+   vbo_vert    = malloc(sizeof(GLshort) * n);
    for (i=0; i<128; i++) {
       /* We do something like the following for vertex coordinates.
        *
@@ -801,7 +801,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       vbo_vert[ 8*i + 7 ] = vy;
    }
    font->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*n, vbo_tex );
-   font->vbo_vert = gl_vboCreateStatic( sizeof(GLint)*n, vbo_vert );
+   font->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*n, vbo_vert );
 
    /* Free the data. */
    free(data);
@@ -834,7 +834,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 
    /* Activate the appropriate VBOs. */
    gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
 }
 
 

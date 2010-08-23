@@ -49,6 +49,7 @@
 #include "gui_osd.h"
 #include "conf.h"
 #include "nebula.h"
+#include "camera.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_gfx.h"
@@ -589,7 +590,7 @@ static void gui_renderBorder( double dt )
    GLfloat vertex[5*2], colours[5*4];
 
    /* Get zoom. */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
 
    /* Get player position. */
    hw    = SCREEN_W/2;
@@ -1946,8 +1947,8 @@ static void gui_createInterference( Radar *radar )
       h = w;
    }
    else if (radar->shape == RADAR_RECT) {
-      w = radar->w;
-      h = radar->h;
+      w = radar->w*2.;
+      h = radar->h*2.;
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
