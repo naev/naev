@@ -2574,7 +2574,7 @@ static int pilotL_setJumpdelay( lua_State *L )
 	p  = luaL_validpilot(L,1);
 	e  = luaL_checknumber(L, 2);
 	p->stats.jump_delay=e/100.;
-	return 0;
+	return 1;
 }
 
 static int pilotL_setJumpdelayAbs( lua_State *L )
@@ -2585,7 +2585,7 @@ static int pilotL_setJumpdelayAbs( lua_State *L )
 	p  = luaL_validpilot(L,1);
 	e  = luaL_checknumber(L, 2);
 	p->stats.jump_delay=e;
-	return 0;
+	return 1;
 }
 
 static int pilotL_getJumpdelay( lua_State *L )
