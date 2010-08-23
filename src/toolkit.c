@@ -1113,7 +1113,7 @@ static void window_renderBorder( Window* w )
    vertex[30] = cx + 21;
    vertex[31] = cy;
    gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
-   glDrawArrays( GL_POLYGON, 0, 16 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
    /* Right side vertex. */
    cx = x + w->w;
    cy = y;
@@ -1151,7 +1151,7 @@ static void window_renderBorder( Window* w )
    vertex[30] = cx - 21;
    vertex[31] = cy;
    gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
-   glDrawArrays( GL_POLYGON, 0, 16 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
 
 
    /*
