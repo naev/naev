@@ -109,8 +109,6 @@ function create()
    speed_x = shield_x
    speed_y = energy_y - 28
    
-   
-   
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
    ta_pane_x = screen_w - ta_pane_w - 16
@@ -192,6 +190,8 @@ function create()
    update_target()
    update_ship()
    update_system()
+   update_nav()
+   update_cargo()
 end
 
 function update_target()
@@ -591,15 +591,16 @@ function render( dt )
 
       -- Extend the pane depending on the services available.
       services_h = 44
-      if nav_pnt:services()["land"] then
+      local sflags = nav_pnt:services()
+      if sflags.land then
          services_h = services_h + 14
-         if nav_pnt:services()["outfits"] then
+         if sflags.outfits then
             services_h = services_h + 14
          end
-         if nav_pnt:services()["shipyard"] then
+         if sflags.shipyard then
             services_h = services_h + 14
          end
-         if nav_pnt:services()["commodity"] then
+         if sflags.commodity then
             services_h = services_h + 14
          end
       end
