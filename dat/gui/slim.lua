@@ -37,8 +37,12 @@ function create()
    local base = "gfx/gui/slim/"
    player_pane = tex.open( base .. "frame_player.png" )
    target_pane = tex.open( base .. "frame_target.png" )
+   planet_pane_t = tex.open( base .. "frame_planet_top.png" )
+   planet_pane_m = tex.open( base .. "frame_planet_middle.png" )
+   planet_pane_b = tex.open( base .. "frame_planet_bottom.png" )
    radar_gfx = tex.open( base .. "radar.png" )
    target_bg = tex.open( base .. "target_image.png" )
+   planet_bg = tex.open( base .. "planet_image.png" )
    icon_shi = tex.open( base .. "shield.png" )
    icon_arm = tex.open( base .. "armor.png" )
    icon_ene = tex.open( base .. "energy.png" )
@@ -152,7 +156,28 @@ function create()
    --Targeted warning light
    ta_warning_x = ta_pane_x + 82
    ta_warning_y = ta_pane_y + 100
-   
+
+   -- Planet pane
+   ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
+   ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
+   -- ta_pnt_pane_x = screen_w - ta_pnt_pane_w - 16
+   -- ta_pnt_pane_y = ta_pane_y - ta_pnt_pane_h - 8
+   ta_pnt_pane_x = 16
+   ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 16
+
+   -- Planet faction icon
+   ta_pnt_fact_x = ta_pnt_pane_x + 140
+   ta_pnt_fact_y = ta_pnt_pane_y + 155
+
+   -- Planet image background
+   ta_pnt_image_x = ta_pnt_pane_x + 14
+   ta_pnt_image_y = ta_pnt_pane_y
+
+   -- Planet image center
+   ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
+   ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w / 2
+   ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
+
    timers = {}
    timers[1] = 0.5
    timers[2] = 0.5
@@ -193,6 +218,29 @@ end
 
 function update_nav()
    nav_pnt, nav_hyp = pp:nav()
+   if nav_pnt ~= nil then
+      ta_pnt_gfx = nav_pnt:gfxSpace()
+      ta_pnt_gfx_w, ta_pnt_gfx_h = ta_pnt_gfx:dim()
+      ta_pntfact = nav_pnt:faction()
+
+      ta_pnt_gfx_aspect = ta_pnt_gfx_w / ta_pnt_gfx_h
+      if ta_pnt_gfx_aspect >= 1 then
+         if ta_pnt_gfx_w > 140 then
+            ta_pnt_gfx_draw_w = 140
+            ta_pnt_gfx_draw_h = 140 / ta_pnt_gfx_aspect
+         end
+      else
+         if ta_pnt_gfx_h > 140 then
+            ta_pnt_gfx_draw_h = 140
+            ta_pnt_gfx_draw_w = 140 / ta_pnt_gfx_aspect
+         end
+      end
+      if ta_pntfact ~= nil then
+         ta_pnt_faction_gfx = ta_pntfact:logoTiny()
+      else
+         ta_pnt_faction_gfx = nil
+      end
+   end
 end
 
 function update_cargo()
@@ -383,8 +431,7 @@ function render( dt )
             ta_armor, ta_shield, ta_disabled = ptarget:health()
             ta_energy = ptarget:energy()
             ta_speed = ptarget:vel():dist()
-            ta_pos = ptarget:pos()
-            
+
             if math.floor(ta_speed) > ta_stats.speed then
                dispspe2 = ta_speed/ta_stats.speed - 1
                dispspe = 1
@@ -413,8 +460,10 @@ function render( dt )
          end
          
          -- Dist and dir calculated without explicit target.
+         ta_pos = ptarget:pos()
          ta_dist = pp:pos():dist( ta_pos )
          ta_dir = ptarget:dir()
+         ta_speed = ptarget:vel():dist()
 
          --Title
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
@@ -511,7 +560,9 @@ function render( dt )
          
          --Dist
          gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 150, col_txt_top )
-         gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
+         if ta_dist ~= nil then
+            gfx.print( false, largeNumber( ta_dist ), ta_pane_x + 120, ta_pane_y +132, col_txt_std, 38, true )
+         end
             
          --Dir
          gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 150, col_txt_top )
@@ -522,11 +573,108 @@ function render( dt )
          sprite = math.ceil(ta_dir/360 * sprites)
          y = math.ceil(sprite / sx)
          x = sprite - sx * (y-1)
-         gfx.renderTex( target_dir, ta_pane_x + 86, ta_pane_y + 126, x, y)
+         gfx.renderTex( target_dir, ta_pane_x + 86, ta_pane_y + 126, x, y, col_txt_top )
       end
    end
-   
-   
+
+   -- Planet pane
+   if nav_pnt ~= nil then
+      ta_pnt_pos = nav_pnt:pos()
+      ta_pnt_dist = pp:pos():dist( ta_pnt_pos )
+      ta_pnt_class = nav_pnt:class()
+
+      -- Extend the pane depending on the services available.
+      services_h = 44
+      if nav_pnt:services()["land"] then
+         services_h = services_h + 14
+         if nav_pnt:services()["outfits"] then
+            services_h = services_h + 14
+         end
+         if nav_pnt:services()["shipyard"] then
+            services_h = services_h + 14
+         end
+         if nav_pnt:services()["commodity"] then
+            services_h = services_h + 14
+         end
+      end
+
+      -- Render background images.
+      gfx.renderTex( planet_pane_t, ta_pnt_pane_x, ta_pnt_pane_y )
+      gfx.renderTexRaw( planet_pane_m, ta_pnt_pane_x, ta_pnt_pane_y - services_h, ta_pnt_pane_w, services_h, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTex( planet_pane_b, ta_pnt_pane_x, ta_pnt_pane_y - services_h - ta_pnt_pane_h_b )
+      gfx.renderTex( planet_bg, ta_pnt_image_x, ta_pnt_image_y )
+
+      --Render planet image.
+      if ta_pnt_gfx_w > 140 or ta_pnt_gfx_h > 140 then
+         gfx.renderTexRaw( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_draw_w / 2, ta_pnt_center_y - ta_pnt_gfx_draw_h / 2, ta_pnt_gfx_draw_w, ta_pnt_gfx_draw_h, 1, 1, 0, 0, 1, 1)
+      else
+         gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
+      end
+      gfx.print( true, "TARGETED", ta_pnt_pane_x + 14, ta_pnt_pane_y + 164, col_txt_top )
+      gfx.print( true, "DISTANCE:", ta_pnt_pane_x + 35, ta_pnt_pane_y - 14, col_txt_top )
+      gfx.print( true, "CLASS:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
+
+      if ta_pnt_faction_gfx ~= nil then
+               gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
+      end
+
+      -- Colour the planet name based on friendliness.
+      if ta_pntfact ~= nil then
+         if pfact:areEnemies( ta_pntfact ) then
+            col = col_txt_enm
+         elseif pfact:areAllies( ta_pntfact ) then
+            col = col_txt_all
+         else
+            col = col_txt_std
+         end
+      end
+
+      -- Deiz hates math.
+      x1, y1 = vec2.get(player.pilot():pos())
+      x2, y2 = vec2.get(nav_pnt:pos())
+      ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) * 180 / math.pi
+      if ta_pnt_dir < 0 then
+         ta_pnt_dir = (math.atan2(y1 - y2, x1 - x2) * 180 / math.pi) + 180
+      end
+
+      -- Render dir sprite.
+      local sprites, sprite, sx, sy, x, y
+      sprites, sx, sy = tex.sprites( target_dir )
+      sprite = math.ceil(ta_pnt_dir/360 * sprites)
+      y = math.ceil(sprite / sx)
+      x = sprite - sx * (y-1)
+      gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
+
+      gfx.print( true, nav_pnt:class(), ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
+      gfx.print( true, "SERVICES:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
+
+      -- Space out the text.
+      services_h = 60
+      if nav_pnt:services()["land"] then
+         gfx.print( true, "Spaceport", ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+         services_h = services_h + 14
+         if nav_pnt:services()["outfits"] then
+            gfx.print( true, "Outfits", ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+            services_h = services_h + 14
+         end
+         if nav_pnt:services()["shipyard"] then
+            gfx.print( true, "Shipyard", ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+            services_h = services_h + 14
+         end
+         if nav_pnt:services()["commodity"] then
+            gfx.print( true, "Commodity", ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+            services_h = services_h + 14
+         end
+      else
+         gfx.print( true, "none", ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
+      end
+
+      if ta_pnt_dist ~= nil then
+            gfx.print( false, largeNumber( ta_pnt_dist ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
+      end
+      gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
+   end
+
    --Bottom bar
    local length = 8
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
@@ -593,7 +741,7 @@ function render( dt )
       length = length + gfx.printDim( true, "none" ) + 10
    end
    
-   if #cargo == 0 and length + gfx.printDim( false, "Cargo: " ) + gfx.printDim( true, "none" ) <= screen_w - 8 then
+   if cargo == nil or #cargo == 0 and length + gfx.printDim( false, "Cargo: " ) + gfx.printDim( true, "none" ) <= screen_w - 8 then
       gfx.print( false, "Cargo: ", length, 5, col_txt_top )
       length = length + gfx.printDim( false, "Cargo: " )
       gfx.print( true, "none", length, 6, col_txt_una )
@@ -621,21 +769,20 @@ function render( dt )
          end
       end
    end
-   
 end
 
 function largeNumber( number )
    local formatted
    if number < 10000 then
-      formatted = tostring(math.floor(number))
+      formatted = math.floor(number)
    elseif number < 1000000 then
-      formatted = tostring( round( number / 1000, 2) ) .. "K"
+      formatted = round( number / 1000, 2) .. "K"
    elseif number < 1000000000 then
-      formatted = tostring( round( number / 1000000, 2) ) .. "M"
+      formatted = round( number / 1000000, 2) .. "M"
    elseif number < 1000000000000 then
-      formatted = tostring( round( number / 1000000000, 2) ) .. "B"
+      formatted = round( number / 1000000000, 2) .. "B"
    elseif number < 1000000000000000 then
-      formatted = tostring( round( number / 1000000000000, 2) ) .. "T"
+      formatted = round( number / 1000000000000, 2) .. "T"
    else
       formatted = "Too big!"
    end
@@ -644,7 +791,7 @@ end
 
          
 function round(num, idp)
-   return tonumber(string.format("%." .. (idp or 0) .. "f", num))
+   return string.format("%.0" .. (idp or 0) .. "f", num)
 end
 
 function destroy()
