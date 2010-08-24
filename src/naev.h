@@ -72,6 +72,7 @@
  * Misc stuff.
  */
 extern const double fps_min;
+void fps_setPos( double x, double y );
 void update_routine( double dt );
 char *naev_version( int long_version );
 char *naev_binary (void);

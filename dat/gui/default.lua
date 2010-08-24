@@ -15,6 +15,9 @@ function create()
    deffont_h = gfx.fontSize()
    smallfont_h = gfx.fontSize(true)
 
+   -- FPS pos
+   gui.fpsPos( 15, screen_h - 15 - deffont_h );
+
    -- Some colours
    col_white   = colour.new()
    col_warn    = colour.new( "Red" )

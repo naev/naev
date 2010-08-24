@@ -24,6 +24,7 @@
 
 /* GUI methods. */
 static int guiL_viewport( lua_State *L );
+static int guiL_fpsPos( lua_State *L );
 static int guiL_osdInit( lua_State *L );
 static int guiL_mesgInit( lua_State *L );
 static int guiL_radarInit( lua_State *L );
@@ -32,6 +33,7 @@ static int guiL_targetPlanetGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
 static const luaL_reg guiL_methods[] = {
    { "viewport", guiL_viewport },
+   { "fpsPos", guiL_fpsPos },
    { "osdInit", guiL_osdInit },
    { "mesgInit", guiL_mesgInit },
    { "radarInit", guiL_radarInit },
@@ -102,6 +104,25 @@ static int guiL_viewport( lua_State *L )
 
    /* Set the viewport. */
    gui_setViewport( x, y, w, h );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the position for the fps stuff.
+ *
+ * It can display the FPS and the current speed mod.
+ *
+ *    @luaparam x X position for the fps stuff.
+ *    @luaparam y Y position for the fps stuff.
+ * @luafunc fpsPos( x, y )
+ */
+static int guiL_fpsPos( lua_State *L )
+{
+   double x,y;
+   x = luaL_checknumber(L,1);
+   y = luaL_checknumber(L,2);
+   fps_setPos( x, y );
    return 0;
 }
 
