@@ -574,11 +574,8 @@ function render( dt )
          gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 150, col_txt_top )
          
          -- Render dir sprite.
-         local sprites, sprite, sx, sy, x, y
-         sprites, sx, sy = tex.sprites( target_dir )
-         sprite = math.ceil(ta_dir/360 * sprites)
-         y = math.ceil(sprite / sx)
-         x = sprite - sx * (y-1)
+         local x, y
+         x, y = target_dir:spriteFromDir( ta_dir )
          gfx.renderTex( target_dir, ta_pane_x + 86, ta_pane_y + 126, x, y, col_txt_top )
       end
    end
@@ -639,14 +636,11 @@ function render( dt )
       -- Deiz hates math // Bobbens loves math
       x1, y1 = vec2.get(nav_pnt:pos())
       x2, y2 = vec2.get(player.pilot():pos())
-      ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) * 180 / math.pi + 180
+      ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.
-      local sprites, sprite, sx, sy, x, y
-      sprites, sx, sy = tex.sprites( target_dir )
-      sprite = math.ceil(ta_pnt_dir/360 * sprites)
-      y = math.ceil(sprite / sx)
-      x = sprite - sx * (y-1)
+      local x, y
+      x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
 
       gfx.print( true, nav_pnt:class(), ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
