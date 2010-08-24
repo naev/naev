@@ -1150,6 +1150,7 @@ static glColour* gui_getPilotColour( const Pilot* p )
    glColour *col;
 
    if (p->id == player.p->target) col = &cRadar_tPilot;
+   else if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p)) col = &cInert;
    else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
    else if (pilot_isHostile(p)) col = &cHostile;
