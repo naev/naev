@@ -223,6 +223,7 @@ end
 
 function update_nav()
    nav_pnt, nav_hyp = pp:nav()
+   autonav_hyp = player.autonavDest()
    if nav_pnt ~= nil then
       ta_pnt_gfx = nav_pnt:gfxSpace()
       ta_pnt_gfx_w, ta_pnt_gfx_h = ta_pnt_gfx:dim()
@@ -706,7 +707,10 @@ function render( dt )
    length = length + gfx.printDim( false, "Nav: " )
    
    if nav_hyp ~= nil then
-      local navstring = nav_hyp:name() .. " (" .. tostring(nav_hyp:jumpDist()) .. ")" 
+      local navstring = nav_hyp:name()
+      if autonav_hyp ~= nil then
+         navstring = navstring ..  " (" .. tostring(autonav_hyp:jumpDist()) .. ")" 
+      end
       gfx.print( true, navstring, length, 6, col_txt_std )
       length = length + gfx.printDim( true, navstring ) + 10
    else
