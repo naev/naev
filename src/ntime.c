@@ -82,6 +82,31 @@ char* ntime_pretty( unsigned int t )
    return ret;
 }
 
+/**
+ * @brief Gets the time in a pretty human readable format. Return lacks characters 'STU' or 'UST'
+ *
+ *    @param t Time to print (in STU), if 0 it'll use the current time.
+ *    @return The time in a human readable format (must free).
+ */
+char* ntime_basic( unsigned int t )
+{
+	unsigned int nt;
+	int mtu, stu;
+	char str[128], *ret;
+	
+	if (t==0) nt = naev_time;
+	else nt = t;
+	
+	/* UST (Universal Synchronized Time) - unit is STU (Synchronized Time Unit) */
+	mtu = nt / (1000*NTIME_UNIT_LENGTH);
+	stu = (nt / (NTIME_UNIT_LENGTH)) % 1000;
+	snprintf( str, 128, "%d.%03d", mtu, stu );
+	
+	ret = strdup(str);
+	
+	return ret;
+}
+
 
 /**
  * @brief Sets the time absolutely, does NOT generate an event, used at init.
