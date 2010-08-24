@@ -134,8 +134,8 @@ static int gfxL_renderTex( lua_State *L )
    if (lua_isnumber( L, 4 )) {
       sx    = luaL_checkinteger( L, 4 ) - 1;
       sy    = luaL_checkinteger( L, 5 ) - 1;
-      if (lua_iscolour(L, 5))
-         lc    = luaL_checkcolour(L,5);
+      if (lua_iscolour(L, 6))
+         lc    = luaL_checkcolour(L,6);
    }
    else {
       sx    = 0;
