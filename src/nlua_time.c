@@ -25,11 +25,13 @@
 /* Time methods. */
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
+static int time_basicStr( lua_State *L );
 static int time_units( lua_State *L );
 static int time_inc( lua_State *L );
 static const luaL_reg time_methods[] = {
 	{ "get", time_get },
 	{ "str", time_str },
+	{ "basicStr", time_basicStr },
 	{ "units", time_units },
 	{ "inc", time_inc },
 	{0,0}
@@ -103,6 +105,30 @@ static int time_str( lua_State *L )
 	free(nt);
 	return 1;
 }
+
+/**
+ * @brief Converts the time to a pretty human readable format.
+ *
+ * @usage strt = time.str()
+ * @usage strt = time.str( time.get() + time.units(5) )
+ *
+ *    @luaparam t Time to convert to pretty format.  If ommitted, current time is
+ *              used.
+ *    @luareturn The time in human readable format.
+ * @luafunc str( t )
+ */
+static int time_basicStr( lua_State *L )
+{
+	char *nt;
+	if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
+		nt = ntime_basic( (unsigned int) lua_tonumber(L,1) );
+	else
+		nt = ntime_basic( ntime_get() );
+	lua_pushstring(L, nt);
+	free(nt);
+	return 1;
+}
+
 /**
  * @brief Converts stu to internal representation time.
  *
