@@ -30,6 +30,7 @@ static int shipL_slots( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
+static int shipL_gfx( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "get", shipL_get },
    { "name", shipL_name },
@@ -39,6 +40,7 @@ static const luaL_reg shipL_methods[] = {
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
    { "gfxTarget", shipL_gfxTarget },
+   { "gfx", shipL_gfx },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -109,6 +111,28 @@ LuaShip* luaL_checkship( lua_State *L, int ind )
       return lua_toship(L,ind);
    luaL_typerror(L, ind, SHIP_METATABLE);
    return NULL;
+}
+/**
+ * @brief Makes sure the ship is valid or raises a Lua error.
+ *
+ *    @param L State currently running.
+ *    @param ind Index of the ship to validate.
+ *    @return The ship (doesn't return if fails - raises Lua error ).
+ */
+Ship* luaL_validship( lua_State *L, int ind )
+{
+   LuaShip *ls;
+   Ship *s;
+
+   /* Get the ship. */
+   ls = luaL_checkship(L,ind);
+   s  = ls->ship;
+   if (s==NULL) {
+      NLUA_ERROR(L,"Ship is invalid.");
+      return NULL;
+   }
+
+   return s;
 }
 /**
  * @brief Pushes a ship on the stack.
@@ -189,16 +213,10 @@ static int shipL_get( lua_State *L )
  */
 static int shipL_name( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /** Return the ship name. */
    lua_pushstring(L, s->name);
@@ -219,16 +237,10 @@ static int shipL_name( lua_State *L )
  */
 static int shipL_baseType( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    lua_pushstring(L, s->base_type);
    return 1;
@@ -246,16 +258,10 @@ static int shipL_baseType( lua_State *L )
  */
 static int shipL_class( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    lua_pushstring(L, ship_class(s));
    return 1;
@@ -273,16 +279,10 @@ static int shipL_class( lua_State *L )
  */
 static int shipL_slots( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /* Push slot numbers. */
    lua_pushnumber(L, s->outfit_nweapon);
@@ -303,16 +303,10 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_CPU( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /* Get CPU. */
    lua_pushnumber(L, s->cpu);
@@ -361,17 +355,11 @@ static int shipL_outfitCPU( lua_State *L )
  */
 static int shipL_gfxTarget( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
    LuaTex lt;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /* Push graphic. */
    lt.tex = gl_dupTexture( s->gfx_target );
@@ -383,4 +371,33 @@ static int shipL_gfxTarget( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Gets the ship's graphics.
+ *
+ * Will not work without access to the Tex module. These are nearly always a spritesheet.
+ *
+ * @usage gfx = s:gfx()
+ *
+ *    @luaparam s Ship to get graphics of.
+ *    @luareturn The graphics of the ship.
+ * @luafunc gfx( s )
+ */
+static int shipL_gfx( lua_State *L )
+{
+   Ship *s;
+   LuaTex lt;
+
+   /* Get the ship. */
+   s  = luaL_validship(L,1);
+
+   /* Push graphic. */
+   lt.tex = gl_dupTexture( s->gfx_space );
+   if (lt.tex == NULL) {
+      WARN("Unable to get ship graphic for '%s'.", s->name);
+      return 0;
+   }
+   lua_pushtex( L, lt );
+   return 1;
+}
 
