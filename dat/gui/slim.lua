@@ -783,16 +783,18 @@ end
 
 function largeNumber( number )
    local formatted
-   if number < 10000 then
+   if number < 1e4 then
       formatted = math.floor(number)
-   elseif number < 1000000 then
-      formatted = round( number / 1000, 2) .. "K"
-   elseif number < 1000000000 then
-      formatted = round( number / 1000000, 2) .. "M"
-   elseif number < 1000000000000 then
-      formatted = round( number / 1000000000, 2) .. "B"
-   elseif number < 1000000000000000 then
-      formatted = round( number / 1000000000000, 2) .. "T"
+   elseif number < 1e6 then
+      formatted = round( number / 1e3, 2) .. "K"
+   elseif number < 1e9 then
+      formatted = round( number / 1e6, 2) .. "M"
+   elseif number < 1e12 then
+      formatted = round( number / 1e9, 2) .. "B"
+   elseif number < 1e15 then
+      formatted = round( number / 1e12, 2) .. "T"
+   elseif number < 1e18 then
+      formatted = round( number / 1e15, 2) .. "Q"
    else
       formatted = "Too big!"
    end
