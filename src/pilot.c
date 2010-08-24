@@ -85,7 +85,6 @@ static void pilot_calcCargo( Pilot* pilot );
 static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id );
 /* clean up. */
-void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* misc */
 static void pilot_setCommMsg( Pilot *p, const char *s );

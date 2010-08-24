@@ -9,7 +9,7 @@
  */
 
 
-#include "nlua_misn.h"
+#include "nlua_player.h"
 
 #include "naev.h"
 

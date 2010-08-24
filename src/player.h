@@ -77,7 +77,6 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
 void player_new (void);
 int player_newShip( Ship* ship, const char *def_name, int trade );
 void player_cleanup (void);
-int gui_load (const char* name);
 
 
 /*
@@ -87,10 +86,15 @@ void player_render( double dt );
 
 
 /*
+ * Message stuff, in gui.c
+ */
+void player_messageToggle( int enable );
+void player_message( const char *fmt, ... );
+void player_messageRaw ( const char *str );
+
+/*
  * misc
  */
-void player_messageRaw ( const char *str );
-void player_message ( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);

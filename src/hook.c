@@ -25,6 +25,7 @@
 #include "claim.h"
 #include "nlua_pilot.h"
 #include "nlua_hook.h"
+#include "mission.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */
@@ -87,8 +88,6 @@ static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
 /*
  * prototypes
  */
-/* extern */
-extern int misn_run( Mission *misn, const char *func );
 /* intern */
 static Hook* hook_get( unsigned int id );
 static unsigned int hook_genID (void);
