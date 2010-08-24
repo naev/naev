@@ -636,13 +636,10 @@ function render( dt )
          end
       end
 
-      -- Deiz hates math.
-      x1, y1 = vec2.get(player.pilot():pos())
-      x2, y2 = vec2.get(nav_pnt:pos())
-      ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) * 180 / math.pi
-      if ta_pnt_dir < 0 then
-         ta_pnt_dir = (math.atan2(y1 - y2, x1 - x2) * 180 / math.pi) + 180
-      end
+      -- Deiz hates math // Bobbens loves math
+      x1, y1 = vec2.get(nav_pnt:pos())
+      x2, y2 = vec2.get(player.pilot():pos())
+      ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) * 180 / math.pi + 180
 
       -- Render dir sprite.
       local sprites, sprite, sx, sy, x, y
