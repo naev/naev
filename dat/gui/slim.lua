@@ -18,7 +18,7 @@ function create()
    deffont_h = gfx.fontSize()
    smallfont_h = gfx.fontSize(true)
    gui.viewport( 0, 30, screen_w, screen_h - 30 )
-   
+
    --Colors
    col_txt_bar = colour.new( 192/255, 198/255, 217/255 )
    col_txt_top = colour.new( 148/255, 158/255, 192/255 )
@@ -78,8 +78,6 @@ function create()
    
    --Messages
    gui.mesgInit( screen_w - 400, 20, 50 )
-   --OSD
-   gui.osdInit( 30, screen_h-90, 150, 300 )
    
    --Get positions
    --Player pane
@@ -178,6 +176,13 @@ function create()
    ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w / 2
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
 
+   -- Set FPS
+   gui.fpsPos( ta_pnt_pane_x + ta_pnt_pane_w + 15, screen_h - 30 - 30 - deffont_h )
+
+   -- Set OSD
+   gui.osdInit( 30, ta_pnt_pane_y - (44+14*4) - ta_pnt_pane_h_b - 15, 150, 300 )
+
+   -- Timer stuff
    timers = {}
    timers[1] = 0.5
    timers[2] = 0.5
