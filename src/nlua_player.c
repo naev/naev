@@ -73,6 +73,7 @@ static int playerL_addShip( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_teleport( lua_State *L );
+static int playerL_getJumptime( lua_State *L );
 static const luaL_reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -102,6 +103,7 @@ static const luaL_reg playerL_methods[] = {
    { "misnDone", playerL_misnDone },
    { "evtDone", playerL_evtDone },
    { "teleport", playerL_teleport },
+   { "jumpTime", playerL_getJumptime },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg playerL_cond_methods[] = {
@@ -820,6 +822,24 @@ static int playerL_teleport( lua_State *L )
    player.p->nav_planet = -1;
    player.p->nav_hyperspace = -1;
    return 0;
+}
+
+
+/**
+ * @brief Returns the (average) time (in STU) player's ship will spend in hyperspace.
+ *
+ * This is the same value one will see when viewing ship info in game.
+ *
+ * @usage player.jumpTime()
+ *
+ *    @luafunc jumpTime()
+ */
+static int playerL_getJumptime( lua_State *L )
+{
+	double val;
+	val=pilot_hyperspaceDelay(player.p);
+	lua_pushnumber(L, val);
+	return 1;
 }
 
 
