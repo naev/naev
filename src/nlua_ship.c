@@ -270,6 +270,9 @@ static int shipL_class( lua_State *L )
  *
  * @usage type = s:fabricator()
  *
+ *    @luaparam s Ship to get ship fabricator name.
+ *    @luareturn The name of the ship's fabricator.
+ * @luafunc class( s )
  */
 static int shipL_fabricator( lua_State *L )
 {
@@ -293,6 +296,8 @@ static int shipL_fabricator( lua_State *L )
  *
  * @usage type = s:crew()
  *
+ *    @luaparam s Ship to get number of people in the ship's crew.
+ *    @luareturn The number of crew members for the ship.
  */
 static int shipL_crew( lua_State *L )
 {
