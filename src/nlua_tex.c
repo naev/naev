@@ -267,8 +267,8 @@ static int texL_spriteFromDir( lua_State *L )
    gl_getSpriteFromDir( &sx, &sy, lt->tex, a );
 
    /* Return. */
-   lua_pushinteger( L, sx );
-   lua_pushinteger( L, sy );
+   lua_pushinteger( L, sx+1 );
+   lua_pushinteger( L, sy+1 );
    return 2;
 }
 
