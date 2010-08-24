@@ -81,19 +81,11 @@ static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
-static int pilotL_setArmour( lua_State *L );
-static int pilotL_setShield( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
-static int pilotL_setJumpdelay( lua_State *L );
-static int pilotL_setJumpdelayAbs( lua_State *L );
-static int pilotL_getJumpdelay( lua_State *L );
-static int pilotL_getJumptime( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNodisable( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
-static int pilotL_getShield( lua_State *L );
-static int pilotL_getArmour( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
 static int pilotL_ship( lua_State *L );
@@ -133,23 +125,15 @@ static const luaL_reg pilotL_methods[] = {
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
-   { "shield", pilotL_getShield },
-   { "armour", pilotL_getArmour },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
-   { "jumpDelay", pilotL_getJumpdelay },
-   { "jumpTime", pilotL_getJumptime },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
    { "changeAI", pilotL_changeAI },
    { "setHealth", pilotL_setHealth },
-   { "setArmour", pilotL_setArmour},
-   { "setShield", pilotL_setShield},
    { "setEnergy", pilotL_setEnergy },
-   { "setJumpDelay", pilotL_setJumpdelay },
-   { "setJumpDelayAbs", pilotL_setJumpdelayAbs },
    { "setNoboard", pilotL_setNoboard },
    { "setNodisable", pilotL_setNodisable },
    { "setPos", pilotL_setPosition },
@@ -1682,53 +1666,6 @@ static int pilotL_setEnergy( lua_State *L )
 }
 
 /**
- * @brief Sets the armour of a pilot.
- *
- * @usage p:setArmour( 100 ) -- Sets pilot to full armour.
- * @usage p:setArmour(  70 ) -- Sets pilot to 70% armour.
- *
- */
-static int pilotL_setArmour( lua_State *L )
-{
-	Pilot *p;
-	double e;
-	
-	/* Handle parameters. */
-	p  = luaL_validpilot(L,1);
-	e  = luaL_checknumber(L, 2);
-	e /= 100.;
-	
-	/* Set armour. */
-	p->armour = e * p->armour_max;
-	
-	return 0;
-}
-
-/**
- * @brief Sets the shield of a pilot.
- *
- * @usage p:setShield( 100 ) -- Sets pilot to full shield.
- * @usage p:setShield(  70 ) -- Sets pilot to 70% shield.
- *
- */
-static int pilotL_setShield( lua_State *L )
-{
-	Pilot *p;
-	double e;
-	
-	/* Handle parameters. */
-	p  = luaL_validpilot(L,1);
-	e  = luaL_checknumber(L, 2);
-	e /= 100.;
-	
-	/* Set shield. */
-	p->shield = e * p->shield_max;
-	
-	return 0;
-}
-
-
-/**
  * @brief Sets the ability to board the pilot.
  *
  * No parameter is equivalent to true.
@@ -1843,45 +1780,6 @@ static int pilotL_getEnergy( lua_State *L )
    return 1;
 }
 
-/**
- * @brief Gets the pilot's shield.
- *
- * @usage shield = p:shield()
- *
- */
-static int pilotL_getShield( lua_State *L )
-{
-	Pilot *p;
-	
-	/* Get the pilot. */
-	p  = luaL_validpilot(L,1);
-	
-	/* Return parameter. */
-	lua_pushnumber(L, p->shield / p->shield_max * 100. );
-	
-	return 1;
-}
-
-/**
- * @brief Gets the pilot's armour.
- *
- * @usage armour = p:armour()
- *
- */
-static int pilotL_getArmour( lua_State *L )
-{
-	Pilot *p;
-	
-	/* Get the pilot. */
-	p  = luaL_validpilot(L,1);
-	
-	/* Return parameter. */
-	lua_pushnumber(L, p->armour / p->armour_max * 100. );
-	
-	return 1;
-}
-
-
 
 /**
  * @brief Gets the lockons on the pilot.
@@ -1928,6 +1826,7 @@ lua_rawset( L, -3 )
  *  <li> energy_regen <br />
  *  <li> jam_range <br />
  *  <li> jam_chance <br />
+ *  <li> jump_delay <br/>
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -1963,6 +1862,8 @@ static int pilotL_getStats( lua_State *L )
    /* Jam. */
    PUSH_DOUBLE( L, "jam_range", p->jam_range );
    PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
+	/*Jump time*/
+	PUSH_DOUBLE( L, "jump_delay", p->stats.jump_delay );
 
    return 1;
 }
@@ -2564,52 +2465,4 @@ static int pilotL_hookClear( lua_State *L )
    pilot_clearHooks( p );
 
    return 0;
-}
-
-static int pilotL_setJumpdelay( lua_State *L )
-{
-	Pilot *p;
-	double e;
-	/* Get the pilot. */
-	p  = luaL_validpilot(L,1);
-	e  = luaL_checknumber(L, 2);
-	p->stats.jump_delay=e/100.;
-	return 1;
-}
-
-static int pilotL_setJumpdelayAbs( lua_State *L )
-{
-	Pilot *p;
-	double e;
-	/* Get the pilot. */
-	p  = luaL_validpilot(L,1);
-	e  = luaL_checknumber(L, 2);
-	p->stats.jump_delay=e;
-	return 1;
-}
-
-static int pilotL_getJumpdelay( lua_State *L )
-{
-	Pilot *p;
-	/* Get the pilot. */
-	p  = luaL_validpilot(L,1);
-	/* Return parameter. */
-	lua_pushnumber(L, p->stats.jump_delay );
-	return 1;
-}
-
-/*Returns the ship's base time spent in hyperspace (in STU)*/
-static int pilotL_getJumptime( lua_State *L )
-{
-	Pilot *p;
-	double val;
-	/* Get the pilot. */
-	p  = luaL_validpilot(L,1);
-	/* Calculate jump delay */
-	val=pow(p->solid->mass, 1./2.5)/5.;
-	/* Modulate by stats.*/
-	val *= p->stats.jump_delay;
-	/* Return parameter. */
-	lua_pushnumber(L, val);
-	return 1;
 }
