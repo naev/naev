@@ -1795,7 +1795,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         if ((*wgt->keyevent)( wgt, key, mod ))
+         if (wgt->keyevent( wgt, key, mod ))
             return 1;
       }
       if (wgt->textevent != NULL) {
