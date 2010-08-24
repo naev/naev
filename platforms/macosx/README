@@ -1,0 +1,34 @@
+NAEV 0.4.0 beta-1 FOR MAC OS X
+-----------------------
+
+This version is a universal binary, requiring MAC OS X 10.5+. It will not run on OS less than 10.5 because it uses a library that comes with the MAC OS X 10.5 operating system, specifically libpng.
+
+IMPORTANT!
+----------
+
+INSTRUCTIONS FOR PLACING GAME DATA FILE. MUST READ!
+---------------------------------------------------
+
+To run naev.app, place the ndata file to naev.app/Contents/Resources. You can open up naev.app as a folder by right clicking and selecting "Show Package Contents".
+
+You can probably get ndata from wherever you downloaded NAEV - It should be located at
+http://naev.googlecode.com/
+
+PLAYING
+-------
+
+Start the game by double clicking the "naev" icon in this folder.
+
+First time running the game will take a long time to start up (just over a minute on my Macbook Pro) while the game generates some graphics.  These, along with save games are stored in a hidden directory in your home directory (~/.naev/).  NAEV plays nicely with the system - it does not create or modify any files outside of the ~/.naev directory.
+
+UNINSTALL
+---------
+
+Just delete the naev.app and ~/.naev to completely remove NAEV from your system.
+The NAEV team hope you enjoy the game and report any bugs.
+
+PROBLEMS
+---------
+If it is crashing on launch and you are running Mac OS X 10.5, intel or ppc, please open up Console.app, copy and paste the error message from naev and email to lericl.mailbox@gmail.com with "naev mac" somewhere in the subject. Thanks!
+
+8 Sept 2009
