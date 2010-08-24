@@ -107,10 +107,10 @@ static int time_str( lua_State *L )
 }
 
 /**
- * @brief Converts the time to a pretty human readable format.
+ * @brief Converts the time to a pretty human readable format lacking 'UST' or 'STU'
  *
- * @usage strt = time.str()
- * @usage strt = time.str( time.get() + time.units(5) )
+ * @usage strt = time.basicStr()
+ * @usage strt = time.basicStr( time.get() + time.units(5) )
  *
  *    @luaparam t Time to convert to pretty format.  If ommitted, current time is
  *              used.
