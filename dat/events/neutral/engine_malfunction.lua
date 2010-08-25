@@ -1,21 +1,11 @@
 --[[
 -- Engine Malfunction Event 2010.08.19-STH
+--    Reworked 2010.08.23
 --
 -- Mimics a problem with the hyperdrive.
 -- Synopsis:
 --     Player starts receiving messages that time spent in hyperspace was longer than the ship's computer expeceted
 --     If the player does not repair the system (visit a bar? an outfitter?) then during one jump the player ends up stuck in hyperspace
---
--- What would make things better:
---     Right now I can't seem to store how many warnings the player has gotten. It would be nice if there were 3 or more warnings before being trapped
---     It would be great if it were possible to retrieve the ships manufacturer. Then, the warning massages could say the player should visit a <fabricator> licensed mechanic, or something
---
--- Error notes: even though the following error show up, this event appears to work. The teleport seems to break things
---		Warning: [event_runLuaFunc] Event 'Engine Malfunction' -> 'removeMalfunction': [string "dat/events/neutral/engine_malfunction.lua"]:69: No hook target was set.
---		Warning: [hook_runEvent] Hook [timer] '108' -> 'msg1' failed
---		Warning: [event_runLuaFunc] Event 'Engine Malfunction' -> 'removeMalfunction': [string "dat/events/neutral/engine_malfunction.lua"]:60: bad argument #1 to 'rmOutfit' (string expected, got nil)
---		Warning: [hook_runEvent] Hook [	] '110' -> 'removeMalfunction' failed
-
 --]]
 
 lang = naev.lang()
@@ -24,46 +14,56 @@ if lang == "es" then
 else -- default english 
     -- Text goes here. Please keep the section as organized as possible.
 	warnText1="<WARNING: Hyperspace transit malfunction>"
-	warnText2="<WARNING: Transit time significantly different than calculated>"
-	warnText3="<Resyncing with local system time servers....>"
-	warnText4="<Seek assistance in repairs as soon as possible>"
+	warnText2="<Resyncing with local system time servers....>"
+	warnText3="<WARNING: Transit time significantly different than calculated>"
+	warnText4="<WARNING: Estimated transit time: 1 Actual transit time: Z>"
+	warnText5="<Seek assistance in repairs as soon as possible"
 end 
-
-theOutfits={"Malfunction1", "Malfunction2", "Malfunction3"}
-activeItem=""
 
 function create ()
 	--set the hooks--
-	h1=hook.jumpout("grantMalfunction")
-	h2=hook.jumpin("removeMalfunction")
+	h1=hook.jumpout("onJumpout")
+	h2=hook.jumpin("onJumpin")
 end
 
 
-function grantMalfunction()
-	--player is going to jump out
-	--give them the bum outfit
-	myID=player.pilot()
-	theIndex=math.random(table.getn(theOutfits))
-	theOutfit=theOutfits[theIndex]
-	myID:addOutfit(theOutfit)
-end
-
-function removeMalfunction()
-	hook.rm(1)
-	--player has jumped in
-	--take away the outfit so the never see it
-	myID=player.pilot()
-	--there is no way to test to see if the player/pilot has an outfit
-	--so just try and take it away and too bad about the error messages
-	myID:rmOutfit(theOutfit)
-	if system.cur():name()~="ERROR: Telemetry Not Found" then
-		theRandom=rnd.rnd()
-		if theRandom>0.6 then	
-			--40% chance of going to special system
-			--I wanted this to be triggered after X# warnings, but can't seem to save the count. need to think about how more
-			player.teleport(system.get("ERROR: Telemetry Not Found"))--go to hell. do not pass go.
-		end
+function onJumpout()
+	--has the player been warned before?
+	n = var.peek( "engine_malfunctionWarning" ) -- Get the value
+	if n==nil then 
+		n=0 
 	end
+	--r=rnd.rnd(n,10)
+	r=10--for debugging
+	if r>7 then
+		n = n+1
+		var.push("engine_malfunctionWarning", n)
+		--before jump, get the time and save it
+		var.push("engine_malfunctionTime", time.get())
+		--get the ship's default (average) jump time in STU
+		t=player:jumpTime()
+		i=math.pow(n,0.5)*5.0	--borrow a similar idea to how jump time is calculated by the game engine
+		--now alter the apparent jumptime
+		time.inc(i)
+	else
+		hook.rm(h1)
+		hook.rm(h2)
+	end
+end
+
+function onJumpin()
+	hook.rm(h1)
+	n = var.peek( "engine_malfunctionWarning" ) -- Get the value
+	--if n>3 then
+	--	if system.cur():name()~="ERROR: Telemetry Not Found" then
+	--		theRandom=rnd.rnd()
+	--		if theRandom>0.6 then	
+	--			--40% chance of going to special system
+	--			--I wanted this to be triggered after X# warnings, but can't seem to save the count. need to think about how more
+	--			player.teleport(system.get("ERROR: Telemetry Not Found"))--go to hell. do not pass go.
+	--		end
+	--	end
+	--end
 	h3=hook.timer(1000, "msg1")
 end
 
@@ -82,21 +82,50 @@ end
 function msg2()
 	hook.rm(h4)
 	player.msg(warnText2)
-	h5=hook.timer(1000, "msg3")
+	h5=hook.timer(3000, "msg3")
 end
 
 function msg3()
 	hook.rm(h5)
 	player.msg(warnText3)
-	h6=hook.timer(5000, "msg4")
+	h6=hook.timer(1000, "msg4")	
 end
 
 function msg4()
 	hook.rm(h6)
+	--the estimated jump time. 1 decimal. In STU
+	estT=player:jumpTime()
+	estT=math.floor(estT*10^1+0.5)/10^1
+	--the actual jump time. 1 decimal. In STU
+	prevT=var.peek("engine_malfunctionTime")
+	presT=time.get()
+	actT=presT-prevT
+	actT=math.floor(actT*10^1+0.5)/10^1
+	actT=time.str(actT)
+	warnText4=string.gsub(warnText4, "1", estT)
+	warnText4=string.gsub(warnText4, "Z", actT)
+	--need to make time.str() drop leading zeros
 	player.msg(warnText4)
+	h7=hook.timer(3000, "msg5")
+end
+
+
+function msg5()
+	hook.rm(h7)
+	r=rnd.rnd()
+	if r>0.5 then
+		theFab=player:pilot():ship():fabricator()
+		--could come up with all sorts of cheesy promotional phrases for here
+		warnText5=warnText5..", and remember to choose only the best "..theFab.." parts>"
+	else
+		warnText5=warnText5..">"
+	end
+	player.msg(warnText5)
 end
 
 function endMalfunction()
+	var.pop("engine_malfunctionTime")
+	var.pop("engine_malfunctionWarning")
 	evt.finish(True)
 end
 
