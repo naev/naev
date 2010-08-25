@@ -29,6 +29,7 @@
 #include "conf.h"
 #include "gui.h"
 #include "land_outfits.h"
+#include "player_gui.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -1453,27 +1454,34 @@ static void setgui_close( unsigned int wdw, char *str )
 void equipment_setGui( unsigned int wid, char* str )
 {
    (void)str;
+   int i;
    char **guis;
    int nguis;
+   char **gui_copy;
+
+   /* Get the available GUIs. */
+   guis = player_guiList( &nguis );
+
+   /* In case there are none. */
+   if (guis == NULL) {
+      WARN("No GUI available.");
+      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the NAEV maintainer." );
+      return;
+   }
 
    /* window */
    wid = window_create( "Select GUI", -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
    window_setCancel( wid, setgui_close );
 
-   /* Get the available GUIs. */
-   guis = NULL;
-
-   /* In case there are none. */
-   if (guis == NULL) {
-      guis = malloc(sizeof(char*));
-      guis[0] = strdup("slim");
-      nguis = 1;
-   }
+   /* Copy GUI. */
+   gui_copy = malloc( sizeof(char*) * nguis );
+   for (i=0; i<nguis; i++)
+      gui_copy[i] = strdup( guis[i] );
 
    /* List */
    window_addList( wid, 20, -50,
          SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
-         "lstGUI", guis, nguis, 0, NULL );
+         "lstGUI", gui_copy, nguis, 0, NULL );
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
@@ -1512,7 +1520,9 @@ static void setgui_load( unsigned int wdw, char *str )
    /* Close menus before loading for proper rendering. */
    setgui_close(wdw, NULL);
 
-   player.gui = gui;
+   if (player.gui != NULL)
+      free( player.gui );
+   player.gui = strdup( gui );
    gui_load( gui_pick() );
 }
 
