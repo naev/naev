@@ -81,6 +81,7 @@ void gui_setDefaults (void);
 void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
+char* gui_pick (void);
 
 
 #endif /* GUI_H */
