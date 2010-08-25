@@ -1869,6 +1869,21 @@ void gui_setSystem (void)
 
 
 /**
+ * @brief Determines which GUI should be used.
+ */
+char* gui_pick (void)
+{
+   char* gui;
+
+   if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+      gui = player.gui;
+   else
+      gui = player.p->ship->gui;
+   return gui;
+}
+
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.

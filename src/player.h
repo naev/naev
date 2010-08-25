@@ -42,6 +42,8 @@ typedef struct Player_s {
    /* Player intrinsecs. */
    Pilot *p; /**< Player's pilot. */
    char *name; /**< Player's name. */
+   char *gui; /**< Player's GUI. */
+   int guiOverride;
 
    /* Player data. */
    unsigned int flags; /**< Player's flags. */

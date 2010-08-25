@@ -80,6 +80,7 @@ static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static unsigned int equipment_transportPrice( char *shipname );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
+static void equipment_toggleGuiOverride( unsigned int wid, char *name );
 
 
 /**
@@ -236,6 +237,15 @@ void equipment_open( unsigned int wid )
    window_addButton( wid, -20 - (20+bw)*3, 20,
          bw, bh, "btnUnequipShip",
          "Unequip", equipment_unequipShip );
+   window_addButton( wid, -20, bh + 20*2,
+         bw, bh, "btnSetGUI",
+         "Set GUI", equipment_setGui );
+
+   /* Checkboxes */
+   window_addCheckbox( wid, -20 - (20+bw), bh + 20*2,
+         bw, bh, "chkOverride", "Override GUI",
+         equipment_toggleGuiOverride, player.guiOverride );
+   equipment_toggleGuiOverride( wid, "chkOverride" );
 
    /* text */
    buf = "Name:\n"
@@ -1419,6 +1429,40 @@ static void equipment_transportShip( unsigned int wid )
    land_checkAddRefuel();
    player_setLoc( shipname, land_planet->name );
 }
+
+/**
+ * @brief Allows the player to set a different GUI.
+ */
+void equipment_setGui( unsigned int wid, char* str )
+{
+   (void)str, (void)wid;
+
+   player.gui = dialogue_input( "GUI Selector", 2, 20,
+         "Select a GUI:" );
+
+   /* Notify GUI of modification. */
+   gui_load( gui_pick() );
+}
+
+/**
+ * @brief GUI override was toggled.
+ */
+static void equipment_toggleGuiOverride( unsigned int wid, char *name )
+{
+   player.guiOverride = window_checkboxState( wid, name );
+}
+
+#if 0
+buf = player_getLicenses( &nlicenses );
+   licenses = malloc(sizeof(char*)*nlicenses);
+   for (i=0; i<nlicenses; i++)
+      licenses[i] = strdup(buf[i]);
+   window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
+         NULL, &cDConsole, "Licenses" );
+   window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
+         "lstLicenses", licenses, nlicenses, 0, NULL );
+#endif
+
 /**
  * @brief Unequips the player's ship.
  */
