@@ -1144,7 +1144,7 @@ void player_think( Pilot* pplayer, const double dt )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      ret = pilot_shoot( pplayer );
+      ret = pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
          player_abortAutonav(NULL);
@@ -1162,7 +1162,7 @@ void player_think( Pilot* pplayer, const double dt )
          pilot_shootStop( pplayer, 1 );
       }
       else {
-         ret = pilot_shootSecondary( pplayer );
+         ret = pilot_shoot( pplayer, 1 );
          if (ret)
             player_abortAutonav(NULL);
       }

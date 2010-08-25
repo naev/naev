@@ -26,7 +26,7 @@
  * Prototypes.
  */
 static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
-static void pilot_weapSetFire( Pilot *p, PilotWeaponSet *set );
+static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 
 
@@ -46,10 +46,20 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 /**
  * @brief Fires a weapon set.
  */
-static void pilot_weapSetFire( Pilot *p, PilotWeaponSet *set )
+static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   (void) p;
-   (void) set;
+   int i, ret;
+
+   /* Case no outfits. */
+   if (ws->slots == NULL)
+      return 0;
+
+   /* Fire. */
+   ret = 0;
+   for (i=0; i<array_size(ws->slots); i++)
+      ret += pilot_shootWeapon( p, ws->slots[i] );
+
+   return ret;
 }
 
 
@@ -65,7 +75,7 @@ void pilot_weapSetExec( Pilot* p, int id )
 
    ws = pilot_weapSet(p,id);
    if (ws->fire)
-      pilot_weapSetFire( p, ws );
+      pilot_weapSetFire( p, ws, -1 );
    else
       p->active_set = id;
 }
@@ -150,53 +160,18 @@ void pilot_weapSetCleanup( Pilot* p, int id )
  * @brief Makes the pilot shoot.
  *
  *    @param p The pilot which is shooting.
+ *    @param level Level of the shot.
  *    @return The number of shots fired.
  */
-int pilot_shoot( Pilot* p )
+int pilot_shoot( Pilot* p, int level )
 {
-   int i, ret;
    PilotWeaponSet *ws;
 
    /* Get active set. */
    ws = pilot_weapSet( p, p->active_set );
 
-   /* Case no outfits. */
-   if (ws->slots == NULL)
-      return 0;
-
-   /* Fire. */
-   ret = 0;
-   for (i=0; i<array_size(ws->slots); i++)
-      ret += pilot_shootWeapon( p, ws->slots[i] );
-
-   return ret;
-}
-
-
-/**
- * @brief Makes the pilot shoot it's currently selected secondary weapon.
- *
- *    @param p The pilot which is to shoot.
- *    @return The number of shots fired.
- */
-int pilot_shootSecondary( Pilot* p )
-{
-   int i, ret;
-   PilotWeaponSet *ws;
-
-   /* Get active set. */
-   ws = pilot_weapSet( p, p->active_set );
-
-   /* Case no outfits. */
-   if (ws->slots == NULL)
-      return 0;
-
-   /* Fire. */
-   ret = 0;
-   for (i=0; i<array_size(ws->slots); i++)
-      ret += pilot_shootWeapon( p, ws->slots[i] );
-
-   return ret;
+   /* Fire weapons. */
+   return pilot_weapSetFire( p, ws, level );
 }
 
 
@@ -206,11 +181,11 @@ int pilot_shootSecondary( Pilot* p )
  * Only really deals with beam weapons.
  *
  *    @param p Pilot that was shooting.
- *    @param secondary If weapon is secondary.
+ *    @param level Level of the shot.
  */
-void pilot_shootStop( Pilot* p, const int secondary )
+void pilot_shootStop( Pilot* p, int level )
 {
-   int i, ret;
+   int i;
    PilotWeaponSet *ws;
 
    /* Get active set. */

@@ -11,9 +11,8 @@
 
 
 /* Shooting. */
-int pilot_shoot( Pilot* p );
-int pilot_shootSecondary( Pilot* p );
-void pilot_shootStop( Pilot* p, const int secondary );
+int pilot_shoot( Pilot* p, int level );
+void pilot_shootStop( Pilot* p, int level );
 
 
 /* Weapon Set. */
