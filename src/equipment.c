@@ -1453,7 +1453,7 @@ static void equipment_toggleGuiOverride( unsigned int wid, char *name )
 }
 
 #if 0
-buf = player_getLicenses( &nlicenses );
+   buf = player_getLicenses( &nlicenses );
    licenses = malloc(sizeof(char*)*nlicenses);
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
