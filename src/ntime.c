@@ -73,7 +73,9 @@ char* ntime_pretty( unsigned int t )
    mtu = nt / (1000*NTIME_UNIT_LENGTH);
    stu = (nt / (NTIME_UNIT_LENGTH)) % 1000;
    if (mtu == 0) /* only STU */
-      snprintf( str, 128, "%03d STU", stu );
+      /*snprintf( str, 128, "%03d STU", stu );*/
+	  /*why would you want 3 values. "001 STU" is hard to work with*/
+	  snprintf( str, 128, "%d STU", stu );
    else /* UST format */
       snprintf( str, 128, "UST %d.%03d", mtu, stu );
 
