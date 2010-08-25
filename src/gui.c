@@ -2039,6 +2039,9 @@ void gui_cleanup (void)
    /* Set the viewport. */
    gui_clearViewport();
 
+   /* Reset FPS. */
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
+
    /* Clean up interference. */
    interference_alpha = 0.;
    interference_layer = 0;
