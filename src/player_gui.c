@@ -53,9 +53,6 @@ int player_guiAdd( char* name )
 
    new      = &array_grow( &gui_list );
    new[0]   = strdup(name);
-
-   player_guiCheck(name);
-
    return 0;
 }
 
