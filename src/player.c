@@ -53,6 +53,7 @@
 #include "equipment.h"
 #include "camera.h"
 #include "claim.h"
+#include "player_gui.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -525,6 +526,9 @@ static void player_newShipMake( char* name )
       player_nstack++;
    }
 
+   /* Add GUI. */
+   player_guiAdd( ship->p->ship->gui );
+
    /* money. */
    player.p->credits = player_creds;
    player_creds = 0;
@@ -705,6 +709,7 @@ void player_cleanup (void)
 
    /* Clean up gui. */
    gui_cleanup();
+   player_guiCleanup();
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
@@ -756,6 +761,9 @@ void player_cleanup (void)
    /* Reset some player.p stuff. */
    player_creds   = 0;
    player.crating = 0;
+   if (player.gui != NULL)
+      free( player.gui );
+   player.gui = NULL;
 
    /* Stop the sounds. */
    sound_stopAll();
@@ -3274,6 +3282,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       WARN("Player ship '%s' not found!", model);
       return -1;
    }
+
+   /* Add GUI if applicable. */
+   player_guiAdd( ship_parsed->gui );
 
    /* player.p is currently on this ship */
    if (is_player != 0) {

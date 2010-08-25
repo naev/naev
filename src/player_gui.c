@@ -17,7 +17,6 @@
 #include "array.h"
 
 
-
 static char** gui_list = NULL;
 
 
@@ -27,7 +26,12 @@ static char** gui_list = NULL;
  */
 void player_guiCleanup (void)
 {
-   array_free( &gui_list );
+   int i;
+   if (gui_list != NULL) {
+      for (i=0; i<array_size(gui_list); i++)
+         free( gui_list[i] );
+      array_free( gui_list );
+   }
    gui_list = NULL;
 }
 
@@ -37,7 +41,7 @@ void player_guiCleanup (void)
  */
 int player_guiAdd( char* name )
 {
-   char *new;
+   char **new;
 
    /* Create new array. */
    if (gui_list == NULL)
@@ -47,8 +51,11 @@ int player_guiAdd( char* name )
    if (player_guiCheck(name))
       return 1;
 
-   new = &array_grow( &gui_list );
-   new = strdup(name);
+   new      = &array_grow( &gui_list );
+   new[0]   = strdup(name);
+
+   player_guiCheck(name);
+
    return 0;
 }
 
@@ -58,6 +65,7 @@ int player_guiAdd( char* name )
  */
 void player_guiRm( char* name )
 {
+   (void) name;
    if (gui_list == NULL)
       return;
 }
@@ -73,8 +81,11 @@ int player_guiCheck( char* name )
    if (gui_list == NULL)
       return 0;
 
+   if (name == NULL)
+      return 0;
+
    for (i=0; i<array_size(gui_list); i++)
-      if (strcmp(gui_list[i],name)==0)
+      if (strcmp(gui_list[i], name)==0)
          return 1;
 
    return 0;
