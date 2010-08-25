@@ -1513,16 +1513,18 @@ static void setgui_load( unsigned int wdw, char *str )
 
    wid = window_get( "Select GUI" );
    gui = toolkit_getList( wid, "lstGUI" );
-
    if (strcmp(gui,"None") == 0)
       return;
+
+   /* Set the GUI. */
+   if (player.gui != NULL)
+      free( player.gui );
+   player.gui = strdup( gui );
 
    /* Close menus before loading for proper rendering. */
    setgui_close(wdw, NULL);
 
-   if (player.gui != NULL)
-      free( player.gui );
-   player.gui = strdup( gui );
+   /* Load the GUI. */
    gui_load( gui_pick() );
 }
 
