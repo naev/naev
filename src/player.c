@@ -2948,7 +2948,7 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_ulong(node,"credits",player_creds);
       xmlr_uint(node,"time",player_time);
       xmlr_strd(node,"gui",player.gui);
-      xmlr_uint(node,"guiOverride",player.guiOverride);
+      xmlr_int(node,"guiOverride",player.guiOverride);
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1, planet);
