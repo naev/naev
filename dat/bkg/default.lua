@@ -33,7 +33,8 @@ nebulae = {
    "nebula30.png",
    "nebula31.png",
    "nebula32.png",
-   "nebula33.png"
+   "nebula33.png",
+   "nebula34.png"
 }
 
 

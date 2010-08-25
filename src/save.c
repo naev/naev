@@ -391,7 +391,7 @@ static int load_game( const char* file )
    land( pnt, 1 );
 
    /* Load the GUI. */
-   gui_load( player.p->ship->gui );
+   gui_load( gui_pick() );
 
    /* Sanitize the GUI. */
    gui_setCargo();

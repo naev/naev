@@ -29,6 +29,7 @@
 #include "nlua_space.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
+#include "nlua_music.h"
 #include "nlua_bkg.h"
 #include "player.h"
 #include "mission.h"
@@ -69,10 +70,6 @@ static int misn_delete = 0; /**< if 1 delete current mission */
  */
 /* static */
 static void misn_setEnv( Mission *misn );
-/* externed */
-int misn_run( Mission *misn, const char *func );
-/* external */
-extern void mission_sysMark (void);
 
 
 /*

@@ -46,7 +46,6 @@ double music_playingTime (void);
 /*
  * lua control
  */
-int nlua_loadMusic( lua_State *L, int read_only );
 int music_choose( const char* situation );
 int music_chooseDelay( const char* situation, double delay );
 void music_rechoose (void);

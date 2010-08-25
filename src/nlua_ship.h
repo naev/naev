@@ -33,6 +33,7 @@ int nlua_loadShip( lua_State *L, int readonly );
  */
 LuaShip* lua_toship( lua_State *L, int ind );
 LuaShip* luaL_checkship( lua_State *L, int ind );
+Ship* luaL_validship( lua_State *L, int ind );
 LuaShip* lua_pushship( lua_State *L, LuaShip ship );
 int lua_isship( lua_State *L, int ind );
 

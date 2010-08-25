@@ -9,7 +9,7 @@
  */
 
 
-#include "nlua_misn.h"
+#include "nlua_player.h"
 
 #include "naev.h"
 
@@ -36,6 +36,7 @@
 #include "hook.h"
 #include "comm.h"
 #include "land_outfits.h"
+#include "gui.h"
 
 
 /* Player methods. */
@@ -819,6 +820,7 @@ static int playerL_teleport( lua_State *L )
    /* Reset targets when teleporting */
    player.p->nav_planet = -1;
    player.p->nav_hyperspace = -1;
+   gui_setNav();
    return 0;
 }
 
