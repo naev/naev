@@ -38,6 +38,9 @@
 
 #define SHIP_ALT_MAX 256 /**< Maximum ship alt text. */
 
+#define SETGUI_WIDTH      400 /**< Load window width. */
+#define SETGUI_HEIGHT     300 /**< Load window height. */
+
 
 /*
  * equipment stuff
@@ -81,6 +84,7 @@ static void equipment_unequipShip( unsigned int wid, char* str );
 static unsigned int equipment_transportPrice( char *shipname );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
 static void equipment_toggleGuiOverride( unsigned int wid, char *name );
+static void setgui_load( unsigned int wdw, char *str );
 
 
 /**
@@ -1430,19 +1434,88 @@ static void equipment_transportShip( unsigned int wid )
    player_setLoc( shipname, land_planet->name );
 }
 
+
+/**
+ * @brief Closes the GUI selection menu.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void setgui_close( unsigned int wdw, char *str )
+{
+   (void)str;
+   window_destroy( wdw );
+}
+
+
 /**
  * @brief Allows the player to set a different GUI.
  */
 void equipment_setGui( unsigned int wid, char* str )
 {
-   (void)str, (void)wid;
+   (void)str;
+   char **guis;
+   int nguis;
 
-   player.gui = dialogue_input( "GUI Selector", 2, 20,
-         "Select a GUI:" );
+   /* window */
+   wid = window_create( "Select GUI", -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
+   window_setCancel( wid, setgui_close );
 
-   /* Notify GUI of modification. */
+   /* Get the available GUIs. */
+   guis = NULL;
+
+   /* In case there are none. */
+   if (guis == NULL) {
+      guis = malloc(sizeof(char*));
+      guis[0] = strdup("slim");
+      nguis = 1;
+   }
+
+   /* List */
+   window_addList( wid, 20, -50,
+         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
+         "lstGUI", guis, nguis, 0, NULL );
+
+   /* buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
+         "btnBack", "Cancel", setgui_close );
+   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
+         "btnLoad", "Load", setgui_load );
+
+   /* Checkboxes */
+   window_addCheckbox( wid, 20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", "Override GUI",
+         equipment_toggleGuiOverride, player.guiOverride );
+   equipment_toggleGuiOverride( wid, "chkOverride" );
+
+   /* default action */
+   window_setAccept( wid, setgui_load );
+}
+
+
+/**
+ * @brief Loads a GUI.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void setgui_load( unsigned int wdw, char *str )
+{
+   (void)str;
+   char *gui;
+   int wid;
+
+   wid = window_get( "Select GUI" );
+   gui = toolkit_getList( wid, "lstGUI" );
+
+   if (strcmp(gui,"None") == 0)
+      return;
+
+   /* Close menus before loading for proper rendering. */
+   setgui_close(wdw, NULL);
+
+   player.gui = gui;
    gui_load( gui_pick() );
 }
+
 
 /**
  * @brief GUI override was toggled.
@@ -1452,16 +1525,6 @@ static void equipment_toggleGuiOverride( unsigned int wid, char *name )
    player.guiOverride = window_checkboxState( wid, name );
 }
 
-#if 0
-   buf = player_getLicenses( &nlicenses );
-   licenses = malloc(sizeof(char*)*nlicenses);
-   for (i=0; i<nlicenses; i++)
-      licenses[i] = strdup(buf[i]);
-   window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
-         NULL, &cDConsole, "Licenses" );
-   window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, nlicenses, 0, NULL );
-#endif
 
 /**
  * @brief Unequips the player's ship.
