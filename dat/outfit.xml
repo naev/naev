@@ -1319,45 +1319,4 @@
    <sound_off>beam_off0</sound_off>
   </specific>
  </outfit>
-  <!--Outfits not meant to be seen or bought-->
- <!--They are given/taken away by events and missions-->
-  <outfit name="Malfunction1">
- 	<general>
-        <slot>structure</slot>
-        <tech>0</tech>
-        <mass>0</mass>
-        <price>1</price>
-        <description>Malfunctioning hyperdrive</description>
-        <gfx_store>ragnarok</gfx_store>
-	</general>
-    <specific type="modification">
-        <jump_delay>100</jump_delay>
-	</specific>
-  </outfit>
-  <outfit name="Malfunction2">
- 	<general>
-        <slot>structure</slot>
-        <tech>0</tech>
-        <mass>0</mass>
-        <price>1</price>
-        <description>Malfunctioning hyperdrive</description>
-        <gfx_store>ragnarok</gfx_store>
-	</general>
-    <specific type="modification">
-        <jump_delay>200</jump_delay>
-	</specific>
-  </outfit>
-  <outfit name="Malfunction3">
- 	<general>
-        <slot>structure</slot>
-        <tech>0</tech>
-        <mass>0</mass>
-        <price>1</price>
-        <description>Malfunctioning hyperdrive</description>
-        <gfx_store>ragnarok</gfx_store>
-	</general>
-    <specific type="modification">
-        <jump_delay>1000</jump_delay>
-	</specific>
- </outfit>
 </Outfits>

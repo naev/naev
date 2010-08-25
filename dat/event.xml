@@ -99,7 +99,7 @@
  <event name="Lost in Hyperspace">
   <lua>neutral/engine_trapped</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>0</chance>
   <cond>system.cur():name() == "ERROR: Telemetry Not Found"</cond>
   <flags>
    <unique />
@@ -108,7 +108,7 @@
  <event name="Hails in Hyperspace">
   <lua>neutral/engine_hyperhails</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>0</chance>
   <cond>system.cur():name() == "ERROR: Telemetry Not Found"</cond>
   <flags>
    <unique />
