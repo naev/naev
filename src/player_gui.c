@@ -15,9 +15,10 @@
 
 #include "log.h"
 #include "array.h"
+#include "ndata.h"
 
 
-static char** gui_list = NULL;
+static char** gui_list = NULL; /**< List of GUIs the player has. */
 
 
 
@@ -51,6 +52,20 @@ int player_guiAdd( char* name )
    if (player_guiCheck(name))
       return 1;
 
+#ifdef DEBUGGING
+   /* Make sure the GUI is vaild. */
+   SDL_RWops *rw;
+   char buf[PATH_MAX];
+   snprintf( buf, sizeof(buf), "dat/gui/%s.lua", name );
+   rw = ndata_rwops( buf );
+   if (rw == NULL) {
+      WARN("GUI '%s' does not exist as a file: '%s' not found.", name, buf );
+      return -1;
+   }
+   SDL_RWclose(rw);
+#endif /* DEBUGGING */
+
+   /* Add. */
    new      = &array_grow( &gui_list );
    new[0]   = strdup(name);
    return 0;
