@@ -15,7 +15,9 @@
 
 #include "log.h"
 #include "array.h"
+#ifdef DEBUGGING
 #include "ndata.h"
+#endif /* DEBUGGING */
 
 
 static char** gui_list = NULL; /**< List of GUIs the player has. */
