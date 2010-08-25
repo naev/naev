@@ -2697,7 +2697,8 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
  */
 int player_save( xmlTextWriterPtr writer )
 {
-   int i;
+   char **guis;
+   int i, n;
    MissionData *m;
    const char *ev;
 
@@ -2721,6 +2722,13 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<player_nstack; i++)
       player_saveShip( writer, player_stack[i].p, player_stack[i].loc );
    xmlw_endElem(writer); /* "ships" */
+
+   /* GUIs. */
+   xmlw_startElem(writer,"guis");
+   guis = player_guiList( &n );
+   for (i=0; i<n; i++)
+      xmlw_elem(writer,"gui","%s",guis[i]);
+   xmlw_endElem(writer); /* "guis" */
 
    /* Outfits. */
    xmlw_startElem(writer,"outfits");
@@ -2967,6 +2975,15 @@ static Planet* player_parse( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"ship"))
                player_parseShip(cur, 0, planet);
+         } while (xml_nextNode(cur));
+      }
+
+      /* Parse GUIs. */
+      else if (xml_isNode(node,"guis")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"gui"))
+               player_guiAdd( xml_get(cur) );
          } while (xml_nextNode(cur));
       }
 
