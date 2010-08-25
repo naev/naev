@@ -77,6 +77,7 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
+static int pilotL_hasOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
@@ -150,6 +151,7 @@ static const luaL_reg pilotL_methods[] = {
    { "comm", pilotL_comm },
    /* Outfits. */
    { "addOutfit", pilotL_addOutfit },
+   { "hasOutfit", pilotL_hasOutfit },
    { "rmOutfit", pilotL_rmOutfit },
    { "setFuel", pilotL_setFuel },
    /* Ship. */
@@ -2465,4 +2467,33 @@ static int pilotL_hookClear( lua_State *L )
    pilot_clearHooks( p );
 
    return 0;
+}
+
+/**
+ * @brief Checks whether a pilot has an outfit.
+ *
+ * @usage p:hasOutfit( "Neutron Disruptor" ) -- Returns 0 if false. Returns 1 if true
+ *
+ *    @luparam p Pilot to look for outfit on.
+ *    @luaparam outfit Name of the outfit to look for.
+ *    @luafunc hasOutfit( p, outfit )
+ */
+static int pilotL_hasOutfit( lua_State *L )
+{
+	Pilot *p;
+	const char *outfit;
+	Outfit *o;
+	
+	/* Get parameters. */
+	p      = luaL_validpilot(L,1);
+	outfit = luaL_checkstring(L,2);
+	
+	/* Get the outfit. */
+	o = outfit_get( outfit );
+	if (o == NULL) {
+		lua_pushnumber(L,0);
+	}else {
+		lua_pushnumber(L,1);
+	}
+	return 1;
 }
