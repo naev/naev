@@ -40,6 +40,7 @@
 /* Misc. */
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
 #define PILOT_DISABLED_ARMOR     0.3   /**< armour % that gets it disabled */
+#define PILOT_WEAPON_SETS        10 /**< Number of weapon sets the pilot has. */
 
 /* hooks */
 #define PILOT_HOOK_NONE    0 /**< No hook. */
@@ -300,7 +301,7 @@ typedef struct Pilot_ {
    double jam_chance; /**< Jam chance. */
 
    /* Weapon sets. */
-   PilotWeaponSet weapon_sets[10]; /**< All the weapon sets the pilot has. */
+   PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
    int active_set; /**< Index of the currently active weapon set. */
 
    /* Cargo */

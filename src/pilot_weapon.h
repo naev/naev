@@ -21,5 +21,9 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
 void pilot_weapSetCleanup( Pilot* p, int id );
 
+/* High level. */
+void pilot_weaponClear( Pilot *p );
+void pilot_weaponAuto( Pilot *p );
+
 
 #endif /* PILOT_WEAPON_H */

@@ -396,3 +396,60 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 }
 
 
+/**
+ * @brief Clears the pilots weapon settings.
+ *
+ *    @param p Pilot to clear his weapons.
+ */
+void pilot_weaponClear( Pilot *p )
+{
+   int i;
+   PilotWeaponSet *ws;
+
+   for (i=0; i<PILOT_WEAPON_SETS; i++) {
+      ws = pilot_weapSet( p, i );
+      array_erase( &ws->slots, &ws->slots[0], &ws->slots[ array_size(ws->slots) ] );
+   }
+}
+
+
+/**
+ * @brief Tries to automatically set and create the pilot's weapon set.
+ *
+ * Weapon set 0 is for all weapons. <br />
+ * Weapon set 1 is for forward weapons. Ammo using weapons are secondaries. <br />
+ * Weapon set 2 is for turret weapons. Ammo using weapons are secondaries. <br />
+ * Weapon set 3 is for seeking weapons. High payload variants are secondaries. <br />
+ * Weapon set 5 is for fighter bays. <br />
+ *
+ *    @param p Pilot to automagically generate weapon lists.
+ */
+void pilot_weaponAuto( Pilot *p )
+{
+   PilotOutfitSlot *slot;
+   Outfit *o;
+   int level;
+   int id;
+
+   /* Clear weapons. */
+   pilot_weaponClear( p );
+
+   /* Iterate through all the outfits. */
+   for (i=0; i<p->outfit_nweapon; i++) {
+      slot = &p->outfit_weapon[i];
+      o    = slot->outfit;
+
+      /* Bolts and beams. */
+      if (outfit_isBolt(o) || outfit_isBeam(o) ||
+            (outfit_isLauncher(o) && !outfit_isSeeker(o))) {
+         id    = outfit_isTurret(o) ? 1 : 0;
+         level = (outfit_ammo(o) != NULL) ? 1 : 0;
+      }
+
+      /* Add the slot. */
+      pilot_weapSetAdd( p, id, slot, level );
+   }
+}
+
+
+
