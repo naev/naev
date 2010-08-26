@@ -2501,12 +2501,10 @@ static int pilotL_hasOutfit( lua_State *L )
 	j=0;
 	for (i=0; i<p->noutfits; i++) {
 		if (p->outfits[i]->outfit == o){
-			DEBUG("in theory");
 			j=1;
 			break;
 		}
 	}
-	DEBUG("here");
 	lua_pushnumber(L,j);
 	return 1;
 }
