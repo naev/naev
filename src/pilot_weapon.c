@@ -57,7 +57,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    /* Fire. */
    ret = 0;
    for (i=0; i<array_size(ws->slots); i++)
-      ret += pilot_shootWeapon( p, ws->slots[i] );
+      if ((level == -1) || (ws->slots[i].level == level))
+         ret += pilot_shootWeapon( p, ws->slots[i].slot );
 
    return ret;
 }
@@ -86,28 +87,30 @@ void pilot_weapSetExec( Pilot* p, int id )
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
+ *    @param level Level of the trigger.
  *    @param o Outfit to add.
  */
-void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o )
+void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 {
    PilotWeaponSet *ws;
-   PilotOutfitSlot **slot;
+   PilotWeaponSetOutfit *slot;
    int i;
 
    ws = pilot_weapSet(p,id);
 
    /* Create if needed. */
    if (ws->slots == NULL)
-      ws->slots = array_create( PilotOutfitSlot* );
+      ws->slots = array_create( PilotWeaponSetOutfit );
 
    /* Check if already there. */
    for (i=0; i<array_size(&ws->slots); i++)
-      if (ws->slots[i] == o)
+      if (ws->slots[i].slot == o)
          return;
 
    /* Add it. */
-   slot = &array_grow( &ws->slots );
-   *slot = o;
+   slot        = &array_grow( &ws->slots );
+   slot->level = level;
+   slot->slot  = o;
 }
 
 
@@ -130,7 +133,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 
    /* Find the slot. */
    for (i=0; i<array_size(&ws->slots); i++) {
-      if (ws->slots[i] == o) {
+      if (ws->slots[i].slot == o) {
          array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
          return;
       }
@@ -199,17 +202,21 @@ void pilot_shootStop( Pilot* p, int level )
    for (i=0; i<array_size(ws->slots); i++) {
 
       /* Must have assosciated outfit. */
-      if (ws->slots[i]->outfit != NULL)
+      if (ws->slots[i].slot->outfit != NULL)
+         continue;
+
+      /* Must match level. */
+      if ((level != -1) && (ws->slots[i].level != level))
          continue;
 
       /* Only handle beams. */
-      if (!outfit_isBeam(ws->slots[i]->outfit))
+      if (!outfit_isBeam(ws->slots[i].slot->outfit))
          continue;
       
       /* Stop beam. */
-      if (p->outfit_weapon[i].u.beamid > 0) {
-         beam_end( p->id, p->outfit_weapon[i].u.beamid );
-         p->outfit_weapon[i].u.beamid = 0;
+      if (ws->slots[i].slot->u.beamid > 0) {
+         beam_end( p->id, ws->slots[i].slot->u.beamid );
+         ws->slots[i].slot->u.beamid = 0;
       }
    }
 }

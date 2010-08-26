@@ -155,6 +155,15 @@ typedef struct PilotOutfitSlot_ {
 
 
 /**
+ * @brief A pilot Weapon Set Outfit.
+ */
+typedef struct PilotWeaponSetOutfit_ {
+   int level; /**< Level of trigger. */
+   PilotOutfitSlot *slot; /**< Slot assosciated with it. */
+} PilotWeaponSetOutfit;
+
+
+/**
  * @brief A weapon set represents a set of weapons that have an action.
  *
  * By default a weapon set indicates what weapons are enabled at a given time.
@@ -162,7 +171,7 @@ typedef struct PilotOutfitSlot_ {
  */
 typedef struct PilotWeaponSet_ {
    int fire; /**< Whether to fire the weapons or just enable them. */
-   PilotOutfitSlot **slots; /**< Slots involved with the weapon set. */
+   PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
 } PilotWeaponSet;
 
 
