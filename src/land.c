@@ -1395,7 +1395,7 @@ void takeoff( int delay )
    /* set player to another position with random facing direction and no vel */
    player_warp( land_planet->pos.x + r * cos(a), land_planet->pos.y + r * sin(a) );
    vect_pset( &player.p->solid->vel, 0., 0. );
-   player.p->solid->dir = RNG(0,359) * M_PI/180.;
+   player.p->solid->dir = RNGF() * 2. * M_PI;
    cam_setTargetPilot( player.p->id, 0 );
 
    /* heal the player */
@@ -1478,3 +1478,5 @@ void land_exit (void)
    land_cleanup();
    equipment_cleanup();
 }
+
+
