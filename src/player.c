@@ -527,7 +527,7 @@ static void player_newShipMake( char* name )
    }
 
    /* Add GUI. */
-   player_guiAdd( ship->p->ship->gui );
+   player_guiAdd( player_ship->gui );
 
    /* money. */
    player.p->credits = player_creds;
