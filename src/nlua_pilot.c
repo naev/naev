@@ -2480,6 +2480,7 @@ static int pilotL_hookClear( lua_State *L )
  */
 static int pilotL_hasOutfit( lua_State *L )
 {
+	int i, j;
 	Pilot *p;
 	const char *outfit;
 	Outfit *o;
@@ -2491,9 +2492,21 @@ static int pilotL_hasOutfit( lua_State *L )
 	/* Get the outfit. */
 	o = outfit_get( outfit );
 	if (o == NULL) {
+		/*NLUA_ERROR(L,"Outfit isn't found in outfit stack.");*/
 		lua_pushnumber(L,0);
-	}else {
-		lua_pushnumber(L,1);
+		return 1;
 	}
+	
+	/* Remove the outfit outfit. */
+	j=0;
+	for (i=0; i<p->noutfits; i++) {
+		if (p->outfits[i]->outfit == o){
+			DEBUG("in theory");
+			j=1;
+			break;
+		}
+	}
+	DEBUG("here");
+	lua_pushnumber(L,j);
 	return 1;
 }
