@@ -302,6 +302,8 @@ static int var_peek( lua_State *L )
 /**
  * @brief Pops a mission variable off the stack, destroying it.
  *
+ * This does not give you any value and destroys it permanently (or until recreated).
+ *
  *    @luaparam name Name of the mission variable to pop.
  * @luafunc pop( name )
  */
@@ -325,6 +327,9 @@ static int var_pop( lua_State *L )
 }
 /**
  * @brief Creates a new mission variable.
+ *
+ * This will overwrite existing vars, so it's a good way to update the values
+ *  of different mission variables.
  *
  *    @luaparam name Name to use for the new mission variable.
  *    @luaparam value Value of the new mission variable.  Accepted types are:

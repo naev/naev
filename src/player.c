@@ -53,6 +53,7 @@
 #include "equipment.h"
 #include "camera.h"
 #include "claim.h"
+#include "player_gui.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -275,7 +276,7 @@ void player_new (void)
    events_trigger( EVENT_TRIGGER_LOAD );
 
    /* Load the GUI. */
-   gui_load( player.p->ship->gui );
+   gui_load( gui_pick() );
 }
 
 
@@ -525,6 +526,9 @@ static void player_newShipMake( char* name )
       player_nstack++;
    }
 
+   /* Add GUI. */
+   player_guiAdd( player_ship->gui );
+
    /* money. */
    player.p->credits = player_creds;
    player_creds = 0;
@@ -575,7 +579,7 @@ void player_swapShip( char* shipname )
          land_checkAddRefuel();
 
          /* Set some gui stuff. */
-         gui_load( player.p->ship->gui );
+         gui_load( gui_pick() );
 
          /* Bind camera. */
          cam_setTargetPilot( player.p->id, 0 );
@@ -705,6 +709,7 @@ void player_cleanup (void)
 
    /* Clean up gui. */
    gui_cleanup();
+   player_guiCleanup();
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
@@ -756,6 +761,9 @@ void player_cleanup (void)
    /* Reset some player.p stuff. */
    player_creds   = 0;
    player.crating = 0;
+   if (player.gui != NULL)
+      free( player.gui );
+   player.gui = NULL;
 
    /* Stop the sounds. */
    sound_stopAll();
@@ -2689,7 +2697,8 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
  */
 int player_save( xmlTextWriterPtr writer )
 {
-   int i;
+   char **guis;
+   int i, n;
    MissionData *m;
    const char *ev;
 
@@ -2700,6 +2709,9 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
    xmlw_elem(writer,"time","%u",ntime_get());
+   if (player.gui != NULL)
+      xmlw_elem(writer,"gui","%s",player.gui);
+   xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
 
    /* Current ship. */
    xmlw_elem(writer,"location","%s",land_planet->name);
@@ -2710,6 +2722,13 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<player_nstack; i++)
       player_saveShip( writer, player_stack[i].p, player_stack[i].loc );
    xmlw_endElem(writer); /* "ships" */
+
+   /* GUIs. */
+   xmlw_startElem(writer,"guis");
+   guis = player_guiList( &n );
+   for (i=0; i<n; i++)
+      xmlw_elem(writer,"gui","%s",guis[i]);
+   xmlw_endElem(writer); /* "guis" */
 
    /* Outfits. */
    xmlw_startElem(writer,"outfits");
@@ -2944,6 +2963,8 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_float(node,"rating",player.crating);
       xmlr_ulong(node,"credits",player_creds);
       xmlr_uint(node,"time",player_time);
+      xmlr_strd(node,"gui",player.gui);
+      xmlr_int(node,"guiOverride",player.guiOverride);
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1, planet);
@@ -2954,6 +2975,15 @@ static Planet* player_parse( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"ship"))
                player_parseShip(cur, 0, planet);
+         } while (xml_nextNode(cur));
+      }
+
+      /* Parse GUIs. */
+      else if (xml_isNode(node,"guis")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"gui"))
+               player_guiAdd( xml_get(cur) );
          } while (xml_nextNode(cur));
       }
 
@@ -3269,6 +3299,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       WARN("Player ship '%s' not found!", model);
       return -1;
    }
+
+   /* Add GUI if applicable. */
+   player_guiAdd( ship_parsed->gui );
 
    /* player.p is currently on this ship */
    if (is_player != 0) {

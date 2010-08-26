@@ -1869,6 +1869,21 @@ void gui_setSystem (void)
 
 
 /**
+ * @brief Determines which GUI should be used.
+ */
+char* gui_pick (void)
+{
+   char* gui;
+
+   if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+      gui = player.gui;
+   else
+      gui = player.p->ship->gui;
+   return gui;
+}
+
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
@@ -2023,6 +2038,9 @@ void gui_cleanup (void)
 
    /* Set the viewport. */
    gui_clearViewport();
+
+   /* Reset FPS. */
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
    /* Clean up interference. */
    interference_alpha = 0.;
