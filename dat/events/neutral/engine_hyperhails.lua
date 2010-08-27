@@ -19,6 +19,7 @@ end
 
 function create ()
 	pauseHook=hook.timer(5000, "hailPlayer")
+	hook.land("endEvent")--when the player lands, there's no more need for hails
 end
 
 function hailPlayer()
@@ -47,11 +48,17 @@ function hailPlayer()
 		--the satelite does not exist
 		endEvent()
 	end
+	hook.pilot(theSat, "hail", "onHail")
     theSat:broadcast(theHail)
 	theDelay=rnd.rnd(10000,15000)
     repeatHailTimer = hook.timer(theDelay, "hailPlayer")
 end
 
+function onHail(p)
+	player.msg("yup. you hailed it")
+end
+
 function endEvent()
+	var.push("engine_hyperhails", "1")
 	evt.finish(True)
 end

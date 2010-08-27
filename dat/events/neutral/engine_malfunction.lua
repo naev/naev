@@ -54,17 +54,17 @@ end
 function onJumpin()
 	hook.rm(h1)
 	n = var.peek( "engine_malfunctionWarning" ) -- Get the value
-	--if n>3 then
-	--	if system.cur():name()~="ERROR: Telemetry Not Found" then
-	--		theRandom=rnd.rnd()
-	--		if theRandom>0.6 then	
-	--			--40% chance of going to special system
-	--			--I wanted this to be triggered after X# warnings, but can't seem to save the count. need to think about how more
-	--			player.teleport(system.get("ERROR: Telemetry Not Found"))--go to hell. do not pass go.
-	--		end
-	--	end
-	--end
-	h3=hook.timer(1000, "msg1")
+	if system.cur():name()~="ERROR: Telemetry Not Found" then
+		if n>3 then
+			theRandom=rnd.rnd()
+			if theRandom>0.6 then	
+				--40% chance of going to special system
+				--I wanted this to be triggered after X# warnings, but can't seem to save the count. need to think about how more
+				player.teleport(system.get("ERROR: Telemetry Not Found"))--go to hell. do not pass go.
+			end
+		end
+		h3=hook.timer(1000, "msg1")
+	end
 end
 
 
