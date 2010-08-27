@@ -727,4 +727,25 @@
    <pilot ship="Communications Relay"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Debris0">
+  <ai>dummy</ai>
+  <faction> </faction>
+  <pilots>
+   <pilot name="Debris" ship="Debris0"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Debris1">
+  <ai>dummy</ai>
+  <faction> </faction>
+  <pilots>
+   <pilot name="Debris" ship="Debris1"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Debris2">
+  <ai>dummy</ai>
+  <faction> </faction>
+  <pilots>
+   <pilot name="Debris" ship="Debris2"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>

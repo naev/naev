@@ -1977,7 +1977,8 @@
   <price/>
   <fabricator/>
   <movement>
-   <speed/>
+   <thrust>0</thrust>
+   <speed>0</speed>
    <turn>150</turn>
   </movement>
   <health>
@@ -1995,5 +1996,50 @@
    <cap_cargo/>
   </characteristics>
  </ship>
-
+ <!--note: the following is the bare minimum to allow a ship to appear with minimal complaints-->
+ <ship name="Debris0">
+  <base_type>Debris</base_type>
+  <GFX sx="6" sy="6">debris</GFX>
+  <class>Cruiser</class>
+  <health>
+   <armour>1</armour>
+  </health>
+  <movement>
+   <thrust>0</thrust>
+   <speed>0</speed>
+  </movement>
+  <characteristics>
+   <mass>1</mass>
+  </characteristics>
+ </ship>
+ <ship name="Debris1">
+  <base_type>Debris</base_type>
+  <GFX sx="6" sy="6">debris_1</GFX>
+  <class>Cruiser</class>
+  <health>
+   <armour>1</armour>
+  </health>
+  <movement>
+   <thrust>0</thrust>
+   <speed>0</speed>
+  </movement>
+  <characteristics>
+   <mass>1</mass>
+  </characteristics>
+ </ship>
+ <ship name="Debris2">
+  <base_type>Debris</base_type>
+  <GFX sx="6" sy="6">debris_2</GFX>
+  <class>Cruiser</class>
+  <health>
+   <armour>1</armour>
+  </health>
+  <movement>
+   <thrust>0</thrust>
+   <speed>0</speed>
+  </movement>
+  <characteristics>
+   <mass>1</mass>
+  </characteristics>
+ </ship>
 </Ships>
