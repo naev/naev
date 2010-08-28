@@ -667,7 +667,7 @@ function render( dt )
    end
 
    local cargstring = nil
-   if cargo ~= nil then
+   if cargo ~= nil and #cargo >= 1 then
       for k,v in ipairs(cargo) do
          if cargstring ~= nil then
             if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) > 10 then
@@ -680,8 +680,10 @@ function render( dt )
             cargstring = v
          end
       end
+      gfx.print( true, cargstring, length, 6, col_txt_std )
+   else
+      gfx.print( true, "none", length, 6, col_txt_una )
    end
-   gfx.print( true, cargstring, length, 6, col_txt_std )
 end
 
 function largeNumber( number )
