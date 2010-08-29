@@ -23,7 +23,7 @@ function create()
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
    col_txt_all = colour.new(  19/255, 152/255,  41/255 )
-   col_txt_una = colour.new(  44/255,  48/255,  56/255 )
+   col_txt_una = colour.new(  66/255,  72/255,  84/255 )
    col_shield = colour.new( 40/255,  51/255,  88/255 )
    col_armour = colour.new( 72/255,  73/255,  60/255 )
    col_energy = colour.new( 41/255,  92/255,  47/255 )
@@ -628,6 +628,15 @@ function render( dt )
       navstring = "none"
    end
 
+   fuel = player.fuel()
+   if fuel > 100 then
+      fuelstring = round(fuel/100.) .. " Jumps"
+   elseif fuel == 100 then
+      fuelstring = round(fuel/100.) .. " Jump"
+   else
+      fuelstring = "none"
+   end
+
    if nav_pnt ~= nil then
       pntstring = nav_pnt:name()
    else
@@ -649,8 +658,8 @@ function render( dt )
    end
 
    bartext = { "Player: ", pname, "System: ", sys:name(), "Credits: ",
-         largeNumber( credits ), "Nav: ", navstring, "Planet: ", pntstring,
-         "Secondary: ", secstr, "Cargo: " }
+         largeNumber( credits ), "Nav: ", navstring, "Fuel: ", fuelstring,
+         "Planet: ", pntstring, "Secondary: ", secstr, "Cargo: " }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( false, v, length, 5, col_txt_top )
