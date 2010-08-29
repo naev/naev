@@ -1630,6 +1630,8 @@ void player_jump (void)
 
       player.p->nav_hyperspace = j;
       player_playSound(snd_nav,1);
+      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
+      gui_setNav();
 
       /* Only follow through if within range. */
       if (mindist > pow2( cur_system->jumps[j].radius ))
