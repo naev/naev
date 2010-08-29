@@ -1208,8 +1208,8 @@ static void gui_renderPilot( const Pilot* p )
    }
 
    if (gui_radar.shape==RADAR_RECT) {
-      w = gui_radar.w/2.;
-      h = gui_radar.h/2.;
+      w = gui_radar.w;
+      h = gui_radar.h;
       rc = 0;
    }
    else if (gui_radar.shape==RADAR_CIRCLE) {
