@@ -1981,7 +1981,7 @@ static void gui_createInterference( Radar *radar )
       memset( pix, 0, sizeof(uint32_t)*w*h );
 
       /* Load the interference map. */
-      map = noise_genRadarInt( w, h, 100. );
+      map = noise_genRadarInt( w, h, (w+h)/2*1.2 );
 
       /* Create the texture. */
       SDL_LockSurface( sur );
