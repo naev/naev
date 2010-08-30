@@ -428,8 +428,7 @@ void pilot_weaponAuto( Pilot *p )
 {
    PilotOutfitSlot *slot;
    Outfit *o;
-   int level;
-   int id;
+   int i, level, id;
 
    /* Clear weapons. */
    pilot_weaponClear( p );
