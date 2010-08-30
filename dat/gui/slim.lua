@@ -505,13 +505,7 @@ function render( dt )
             if ta_disabled then
                col = col_txt_una
             else
-               if pfact:areEnemies( ptargetfact ) then
-                  col = col_txt_enm
-               elseif pfact:areAllies( ptargetfact ) then
-                  col = col_txt_all
-               else
-                  col = col_txt_std
-               end
+               col = ptarget:colour()
             end
             gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 166, col )
          else
