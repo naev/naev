@@ -17,9 +17,11 @@ void pilot_shootStop( Pilot* p, int level );
 
 /* Weapon Set. */
 void pilot_weapSetExec( Pilot* p, int id );
+void pilot_weapSetMode( Pilot* p, int id, int fire );
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
 void pilot_weapSetCleanup( Pilot* p, int id );
+
 
 /* High level. */
 void pilot_weaponClear( Pilot *p );

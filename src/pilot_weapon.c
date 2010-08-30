@@ -83,6 +83,22 @@ void pilot_weapSetExec( Pilot* p, int id )
 
 
 /**
+ * @brief Changes the weapon sets mode.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set.
+ *    @param fire Whether or not to enable fire mode.
+ */
+void pilot_weapSetMode( Pilot* p, int id, int fire )
+{
+   PilotWeaponSet *ws;
+
+   ws = pilot_weapSet(p,id);
+   ws->fire = fire;
+}
+
+
+/**
  * @brief Adds an outfit to a weapon set.
  *
  *    @param p Pilot to manipulate.
@@ -433,6 +449,13 @@ void pilot_weaponAuto( Pilot *p )
    /* Clear weapons. */
    pilot_weaponClear( p );
 
+   /* Set modes. */
+   pilot_weapSetMode( p, 0, 0 );
+   pilot_weapSetMode( p, 1, 0 );
+   pilot_weapSetMode( p, 2, 0 );
+   pilot_weapSetMode( p, 3, 1 );
+   pilot_weapSetMode( p, 5, 1 );
+
    /* Iterate through all the outfits. */
    for (i=0; i<p->outfit_nweapon; i++) {
       slot = &p->outfit_weapon[i];
@@ -441,12 +464,26 @@ void pilot_weaponAuto( Pilot *p )
       /* Bolts and beams. */
       if (outfit_isBolt(o) || outfit_isBeam(o) ||
             (outfit_isLauncher(o) && !outfit_isSeeker(o))) {
-         id    = outfit_isTurret(o) ? 1 : 0;
+         id    = outfit_isTurret(o) ? 2 : 1;
          level = (outfit_ammo(o) != NULL) ? 1 : 0;
+      }
+      /* Seekers. */
+      else if (outfit_isLauncher(o) && outfit_isSeeker(o)) {
+         id    = 3;
+         level = 0;
+      }
+      /* Fighter bays. */
+      else if (outfit_isFighterBay(o)) {
+         id    = 5;
+         level = 0;
       }
 
       /* Add the slot. */
       pilot_weapSetAdd( p, id, slot, level );
+
+      /* Add to group 0 also. */
+      if ((id == 1) || (id == 2))
+         pilot_weapSetAdd( p, 0, slot, level );
    }
 }
 
