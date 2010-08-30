@@ -527,7 +527,7 @@ static void player_newShipMake( char* name )
    }
 
    /* Add GUI. */
-   player_guiAdd( ship->p->ship->gui );
+   player_guiAdd( player_ship->gui );
 
    /* money. */
    player.p->credits = player_creds;
@@ -1630,6 +1630,8 @@ void player_jump (void)
 
       player.p->nav_hyperspace = j;
       player_playSound(snd_nav,1);
+      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
+      gui_setNav();
 
       /* Only follow through if within range. */
       if (mindist > pow2( cur_system->jumps[j].radius ))
