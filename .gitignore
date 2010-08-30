@@ -31,3 +31,9 @@ configure
 m4/pkg.m4
 m4/sdl.m4
 naev_csv
+/*.dll
+/*.exe
+asset.xml
+ssys.xml
+stderr.txt
+stdout.txt
