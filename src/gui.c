@@ -1208,8 +1208,8 @@ static void gui_renderPilot( const Pilot* p )
    }
 
    if (gui_radar.shape==RADAR_RECT) {
-      w = gui_radar.w/2.;
-      h = gui_radar.h/2.;
+      w = gui_radar.w;
+      h = gui_radar.h;
       rc = 0;
    }
    else if (gui_radar.shape==RADAR_CIRCLE) {
@@ -1415,20 +1415,23 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
    }
    else {
       a = ANGLE(cx,cy);
-      /* Check X. */
-      if (cx > w/2)
-         vertex[0] = w/2;
-      else if (cx < -w/2)
-         vertex[0] = -w/2;
-      else
-         vertex[0] = cx;
-      /* Check Y. */
-      if (cy > h/2)
-         vertex[1] = h/2;
-      else if (cy < -h/2)
-         vertex[1] = -h/2;
-      else
-         vertex[1] = cy;
+      int cxa, cya;
+      cxa = ABS(cx);
+      cya = ABS(cy);
+      /* Determine position. */
+      if (cy >= cxa) { /* Bottom */
+         vertex[0] = w/2. * (cx*1./cy);
+         vertex[1] = h/2.;
+      } else if (cx >= cya) { /* Left */
+         vertex[0] = w/2.;
+         vertex[1] = h/2. * (cy*1./cx);
+      } else if (cya >= cxa) { /* Top */
+         vertex[0] = -w/2. * (cx*1./cy);
+         vertex[1] = -h/2.;
+      } else { /* Right */
+         vertex[0] = -w/2.;
+         vertex[1] = -h/2. * (cy*1./cx);
+      }
       /* Calculate rest. */
       vertex[2] = vertex[0] - 0.15*w*cos(a);
       vertex[3] = vertex[1] - 0.15*w*sin(a);
@@ -1981,7 +1984,7 @@ static void gui_createInterference( Radar *radar )
       memset( pix, 0, sizeof(uint32_t)*w*h );
 
       /* Load the interference map. */
-      map = noise_genRadarInt( w, h, 100. );
+      map = noise_genRadarInt( w, h, (w+h)/2*1.2 );
 
       /* Create the texture. */
       SDL_LockSurface( sur );

@@ -1455,7 +1455,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* Check self. */
-   if (ssys == esys) {
+   if (ssys == esys || ssys->njumps == 0) {
       (*njumps) = 0;
       if (old_data != NULL)
          free( old_data );
