@@ -119,7 +119,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       ws->slots = array_create( PilotWeaponSetOutfit );
 
    /* Check if already there. */
-   for (i=0; i<array_size(&ws->slots); i++)
+   for (i=0; i<array_size(ws->slots); i++)
       if (ws->slots[i].slot == o)
          return;
 
@@ -148,7 +148,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
       return;
 
    /* Find the slot. */
-   for (i=0; i<array_size(&ws->slots); i++) {
+   for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot == o) {
          array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
          return;
@@ -424,7 +424,8 @@ void pilot_weaponClear( Pilot *p )
 
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       ws = pilot_weapSet( p, i );
-      array_erase( &ws->slots, &ws->slots[0], &ws->slots[ array_size(ws->slots) ] );
+      if (ws->slots != NULL)
+         array_erase( &ws->slots, &ws->slots[0], &ws->slots[ array_size(ws->slots) ] );
    }
 }
 
@@ -435,7 +436,8 @@ void pilot_weaponClear( Pilot *p )
  * Weapon set 0 is for all weapons. <br />
  * Weapon set 1 is for forward weapons. Ammo using weapons are secondaries. <br />
  * Weapon set 2 is for turret weapons. Ammo using weapons are secondaries. <br />
- * Weapon set 3 is for seeking weapons. High payload variants are secondaries. <br />
+ * Weapon set 3 is for all weapons. Forwards are primaries and turrets are secondaries. <br />
+ * Weapon set 4 is for seeking weapons. High payload variants are secondaries. <br />
  * Weapon set 5 is for fighter bays. <br />
  *
  *    @param p Pilot to automagically generate weapon lists.
@@ -453,13 +455,18 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 0, 0 );
    pilot_weapSetMode( p, 1, 0 );
    pilot_weapSetMode( p, 2, 0 );
-   pilot_weapSetMode( p, 3, 1 );
+   pilot_weapSetMode( p, 3, 0 );
+   pilot_weapSetMode( p, 4, 1 );
    pilot_weapSetMode( p, 5, 1 );
 
    /* Iterate through all the outfits. */
    for (i=0; i<p->outfit_nweapon; i++) {
       slot = &p->outfit_weapon[i];
       o    = slot->outfit;
+
+      /* Must have outfit. */
+      if (o == NULL)
+         continue;
 
       /* Bolts and beams. */
       if (outfit_isBolt(o) || outfit_isBeam(o) ||
@@ -482,8 +489,14 @@ void pilot_weaponAuto( Pilot *p )
       pilot_weapSetAdd( p, id, slot, level );
 
       /* Add to group 0 also. */
-      if ((id == 1) || (id == 2))
+      if (id == 1) { /* Forward. */
          pilot_weapSetAdd( p, 0, slot, level );
+         pilot_weapSetAdd( p, 3, slot, 0 );
+      }
+      else if (id == 2) { /* Turrets. */
+         pilot_weapSetAdd( p, 0, slot, level );
+         pilot_weapSetAdd( p, 3, slot, 1 );
+      }
    }
 }
 

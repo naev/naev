@@ -258,16 +258,10 @@ function runaway ()
 end
 function __run_turret( dist )
    -- See if we have some turret to use
-   local secondary, special = ai.secondary("melee")
-   if special == "Turret" then
-      if dist < ai.getweaprange(true) then
-         ai.shoot(true)
-      end
-   end
-
    if ai.hasturrets() then
-      if dist < ai.getweaprange() then
-         ai.shoot(false, 1)
+      if dist < ai.getweaprange(true) then
+         ai.weapset( 3 )
+         ai.shoot( true )
       end
    end
 end

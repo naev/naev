@@ -217,9 +217,9 @@ static int aiL_dock( lua_State *L ); /* dock( number ) */
 /* combat */
 static int aiL_combat( lua_State *L ); /* combat( number ) */
 static int aiL_settarget( lua_State *L ); /* settarget( number ) */
-static int aiL_secondary( lua_State *L ); /* string secondary() */
-static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
+static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
+static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_hostile( lua_State *L ); /* hostile( number ) */
 static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
@@ -306,7 +306,7 @@ static const luaL_reg aiL_methods[] = {
    { "aim", aiL_aim },
    { "combat", aiL_combat },
    { "settarget", aiL_settarget },
-   { "secondary", aiL_secondary },
+   { "weapset", aiL_weapSet },
    { "hasturrets", aiL_hasturrets },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
@@ -2341,133 +2341,19 @@ static int aiL_settarget( lua_State *L )
 
 
 /**
- * @brief Checks to see if an outfit is a melee weapon.
- *    @param p Pilot to check for.
- *    @param o Outfit to check.
+ * @brief Sets the active weapon set (or fires another weapon set).
+ *
+ *
+ *
+ *    @luaparam id ID of the weapon set to switch to or fire.
+ * @luafunc weapset( id )
  */
-static int outfit_isMelee( Pilot *p, PilotOutfitSlot *o )
+static int aiL_weapSet( lua_State *L )
 {
-   (void) p;
-   if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit) ||
-         (((o->outfit->type == OUTFIT_TYPE_LAUNCHER) ||
-           (o->outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)) &&
-          (o->outfit->u.lau.ammo->u.amm.ai == 0)))
-
-      return 1;
+   int id;
+   id = luaL_checkint(L,1);
+   pilot_weapSetExec( cur_pilot, id );
    return 0;
-}
-/**
- * @brief Checks to see if an outfit is a ranged weapon.
- *    @param p Pilot to check for.
- *    @param o Outfit to check.
- */
-static int outfit_isRanged( Pilot *p, PilotOutfitSlot *o )
-{
-   (void) p;
-   if (outfit_isFighterBay(o->outfit) ||
-         (((o->outfit->type == OUTFIT_TYPE_LAUNCHER) ||
-           (o->outfit->type == OUTFIT_TYPE_TURRET_LAUNCHER)) &&
-          (o->outfit->u.lau.ammo->u.amm.ai > 0)))
-      return 1;
-   return 0;
-}
-/**
- * @brief Sets the secondary weapon, biased towards launchers
- */
-static int aiL_secondary( lua_State *L )
-{
-   PilotOutfitSlot *co, *po;
-   int i, melee;
-   const char *str;
-   const char *otype;
-   int r;
-
-   /* Parse the parameters. */
-   str = luaL_checkstring(L,1);
-   if (strcmp(str, "melee")==0)
-      melee = 1;
-   else if (strcmp(str, "ranged")==0)
-      melee = 0;
-   else NLUA_INVALID_PARAMETER(L);
-
-   /* Pilot has secondary selected - use that */
-   po = NULL;
-   if (cur_pilot->secondary != NULL) {
-      co = cur_pilot->secondary;
-      if (melee && outfit_isMelee(cur_pilot,co))
-         po = co;
-      else if (!melee && outfit_isRanged(cur_pilot,co))
-         po = co;
-   }
-
-   /* Need to get new secondary */
-   if (po==NULL)  {
-      /* Iterate over the list */
-      for (i=0; i<cur_pilot->noutfits; i++) {
-         co = cur_pilot->outfits[i];
-
-         /* Must have an outfit. */
-         if (co->outfit == NULL)
-            continue;
-
-         /* Not a secondary weapon. */
-         if (!outfit_isProp(co->outfit, OUTFIT_PROP_WEAP_SECONDARY))
-            continue;
-
-         /* Get the first match. */
-         if (melee && outfit_isMelee(cur_pilot,co)) {
-            po = co;
-            break;
-         }
-         else if (!melee && outfit_isRanged(cur_pilot,co)) {
-            po = co;
-            break;
-         }
-      }
-   }
-
-   /* Return 0 by default. */
-   r = 0;
-
-   /* Check to see if we have a good secondary weapon. */
-   if (po != NULL) {
-      cur_pilot->secondary = po;
-      otype = outfit_getTypeBroad(po->outfit);
-      lua_pushstring( L, otype );
-
-      r = 1;
-
-      /* Turret gets priority over launcher. */
-      if (outfit_isTurret(po->outfit)) {
-         lua_pushstring( L, "Turret" );
-         r += 1;
-      }
-
-      /* Now we check for launcher. */
-      if (outfit_isLauncher(po->outfit)) {
-
-         /* Only if r == 1 in case of dumb turrets. */
-         if (r == 1) {
-            if (po->outfit->u.lau.ammo->u.amm.ai > 0)
-               lua_pushstring( L, "Smart" );
-            else
-               lua_pushstring( L, "Dumb" );
-            r += 1;
-         }
-
-         /* Get ammo. */
-         if (cur_pilot->secondary->u.ammo.outfit == NULL)
-            lua_pushnumber( L, 0. );
-         else
-            lua_pushnumber( L, cur_pilot->secondary->u.ammo.quantity );
-         r += 1;
-      }
-
-      return r;
-   }
-
-   /* Return what was found. */
-   return r;
 }
 
 

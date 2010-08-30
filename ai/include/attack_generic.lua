@@ -116,24 +116,14 @@ end
 --]]
 function atk_g_ranged( target, dist )
    local dir = ai.face(target) -- Normal face the target
-   local secondary, special, ammo = ai.secondary("ranged")
 
-   -- Always use fighter bay
-   if secondary == "" then
-
-   -- Shoot missiles if in range
-   elseif secondary == "Launcher" and
-         dist < ai.getweaprange(true) then
-
-      -- More lenient with aiming
-      if special == "Smart" and dir < 30 then
-         ai.shoot(true)
-
-      -- Non-smart miss more
-      elseif dir < 10 then
-         ai.shoot(true)
-      end
+   -- Check if in range
+   if dist < ai.getweaprange(4) and dir < 30 then
+      ai.weapset( 4 )
    end
+
+   -- Always launch fighters
+   ai.weapset( 5 )
 
    -- Approach for melee
    if dir < 10 then
@@ -157,17 +147,11 @@ end
 -- Melees the target
 --]]
 function atk_g_melee( target, dist )
-   local secondary, special = ai.secondary("melee")
    local dir = ai.aim(target) -- We aim instead of face
    local range = ai.getweaprange()
 
-   -- Fire non-smart secondary weapons
-   if (secondary == "Launcher" and special ~= "Smart") or
-         secondary == "Beam Weapon" then
-      if dir < 10 or special == "Turret" then -- Need good acuracy
-         ai.shoot(true)
-      end
-   end
+   -- Set weapon set
+   ai.weapset( 3 )
 
    -- Drifting away we'll want to get closer
    if dir < 10  and dist > 0.5*range and ai.relvel(target) > -10 then
@@ -177,9 +161,10 @@ function atk_g_melee( target, dist )
    -- Shoot if should be shooting.
    if dist < range then
       if dir < 10 then
-         ai.shoot(false)
-      elseif ai.hasturrets() then
-         ai.shoot(false, 1)
+         ai.shoot()
+      end
+      if ai.hasturrets() then
+         ai.shoot(true)
       end
    end
 end

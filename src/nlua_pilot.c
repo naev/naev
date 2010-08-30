@@ -1478,6 +1478,11 @@ static int pilotL_addOutfit( lua_State *L )
       /* We added an outfit. */
       q--;
    }
+
+   /* Update the weapon sets. */
+   if (!ret && !pilot_isPlayer(p))
+      pilot_weaponAuto(p);
+
    lua_pushboolean(L,!ret);
    return 1;
 }
