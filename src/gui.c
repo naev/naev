@@ -1415,20 +1415,23 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
    }
    else {
       a = ANGLE(cx,cy);
-      /* Check X. */
-      if (cx > w/2)
-         vertex[0] = w/2;
-      else if (cx < -w/2)
-         vertex[0] = -w/2;
-      else
-         vertex[0] = cx;
-      /* Check Y. */
-      if (cy > h/2)
-         vertex[1] = h/2;
-      else if (cy < -h/2)
-         vertex[1] = -h/2;
-      else
-         vertex[1] = cy;
+      int cxa, cya;
+      cxa = ABS(cx);
+      cya = ABS(cy);
+      /* Determine position. */
+      if (cy >= cxa) { /* Bottom */
+         vertex[0] = w/2. * (cx*1./cy);
+         vertex[1] = h/2.;
+      } else if (cx >= cya) { /* Left */
+         vertex[0] = w/2.;
+         vertex[1] = h/2. * (cy*1./cx);
+      } else if (cya >= cxa) { /* Top */
+         vertex[0] = -w/2. * (cx*1./cy);
+         vertex[1] = -h/2.;
+      } else { /* Right */
+         vertex[0] = -w/2.;
+         vertex[1] = -h/2. * (cy*1./cx);
+      }
       /* Calculate rest. */
       vertex[2] = vertex[0] - 0.15*w*cos(a);
       vertex[3] = vertex[1] - 0.15*w*sin(a);
