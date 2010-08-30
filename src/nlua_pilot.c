@@ -30,6 +30,7 @@
 #include "space.h"
 #include "ai.h"
 #include "ai_extra.h"
+#include "nlua_col.h"
 
 
 /*
@@ -75,6 +76,8 @@ static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
+static int pilotL_getColour( lua_State *L );
+static int pilotL_getHostile( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
@@ -127,6 +130,8 @@ static const luaL_reg pilotL_methods[] = {
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
+   { "colour", pilotL_getColour },
+   { "hostile", pilotL_getHostile },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -193,6 +198,8 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
+   { "colour", pilotL_getColour },
+   { "hostile", pilotL_getHostile },
    /* Ship. */
    { "ship", pilotL_ship },
    {0,0}
@@ -1866,6 +1873,65 @@ static int pilotL_getStats( lua_State *L )
    return 1;
 }
 #undef PUSH_DOUBLE
+
+
+/**
+ * @brief Gets the pilot's colour based on hostility or friendliness to the player.
+ *
+ * @usage p:colour()
+ *
+ *    @luaparam p Pilot to get the colour of.
+ *    @luareturn The pilot's colour.
+ * @luafunc colour( p )
+ */
+static int pilotL_getColour( lua_State *L )
+{
+   Pilot *p;
+   glColour *col;
+   LuaColour lc;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Set as hostile. */
+   if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
+   else if (pilot_isDisabled(p)) col = &cInert;
+   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else if (pilot_isFriendly(p)) col = &cFriend;
+   else col = faction_getColour(p->faction);
+
+   memcpy( &lc.col, col, sizeof(glColour) );
+   lua_pushcolour( L, lc );
+
+   return 1;
+}
+
+
+/**
+ * @brief Returns whether the pilot is hostile to the player.
+ *
+ * @usage p:hostile()
+ *
+ *    @luaparam p Pilot to get the hostility of.
+ *    @luareturn The pilot's hostility status.
+ * @luafunc hostile( p )
+ */
+static int pilotL_getHostile( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Set as hostile. */
+   if (pilot_isFlag( p, PILOT_HOSTILE ))
+      lua_pushboolean(L, 1);
+   else
+      lua_pushboolean(L, 0);
+
+   return 1;
+}
 
 
 /**
