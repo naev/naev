@@ -427,7 +427,7 @@ static int playerL_autonavDest( lua_State *L )
 
 
 /**
- * @brief Unboards the player from it's boarded target.
+ * @brief Unboards the player from its boarded target.
  *
  * Use from inside a board hook.
  *
