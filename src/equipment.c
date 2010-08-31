@@ -1482,6 +1482,7 @@ void equipment_setGui( unsigned int wid, char* str )
    window_addList( wid, 20, -50,
          SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
          "lstGUI", gui_copy, nguis, 0, NULL );
+   toolkit_setList( wid, "lstGUI", gui_pick() );
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,

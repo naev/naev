@@ -2094,12 +2094,8 @@ static int pilotL_getHostile( lua_State *L )
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
-   /* Set as hostile. */
-   if (pilot_isFlag( p, PILOT_HOSTILE ))
-      lua_pushboolean(L, 1);
-   else
-      lua_pushboolean(L, 0);
-
+   /* Push value. */
+   lua_pushboolean( L, pilot_isFlag(p, PILOT_HOSTILE) );
    return 1;
 }
 
