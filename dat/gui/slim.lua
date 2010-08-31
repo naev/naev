@@ -67,8 +67,8 @@ function create()
    warnlight3 = tex.open( base .. "warnlight3.png" )
    target_light_off = tex.open( base .. "targeted_off.png" )
    target_light_on =  tex.open( base .. "targeted_on.png" )
-   --cargo_light_off = tex.open( base .. "cargo_off.png" )
-   --cargo_light_on =  tex.open( base .. "cargo_on.png" )
+   cargo_light_off = tex.open( base .. "cargo_off.png" )
+   cargo_light_on =  tex.open( base .. "cargo_on.png" )
    question = tex.open( base .. "question.png" )
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
@@ -121,7 +121,7 @@ function create()
    ta_icon_y = ta_pane_y + 100
    
    --Target Faction icon
-   ta_fact_x = ta_pane_x + 114
+   ta_fact_x = ta_pane_x + 110
    ta_fact_y = ta_pane_y + 100
    
    bar_sm_w, bar_sm_h = bg_shield_sm:dim()
@@ -138,6 +138,10 @@ function create()
    --Targeted warning light
    ta_warning_x = ta_pane_x + 82
    ta_warning_y = ta_pane_y + 100
+
+   -- Cargo light
+   ta_cargo_x = ta_pane_x + 138
+   ta_cargo_y = ta_pane_y + 100
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
@@ -403,7 +407,7 @@ function render( dt )
    
    --Target Pane
    if ptarget ~= nil then
-   
+      ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
          
@@ -472,7 +476,14 @@ function render( dt )
             if ptarget_faction_gfx ~= nil then
                gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
             end
-            
+
+            -- Cargo light cargo_light_off
+            if ta_cargo ~= nil and #ta_cargo >= 1 then
+               gfx.renderTex( cargo_light_on, ta_cargo_x, ta_cargo_y )
+            else
+               gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
+            end
+
             --Pilot name
             if ta_disabled then
                col = col_txt_una
@@ -493,7 +504,10 @@ function render( dt )
             
             --Warning light
             gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
-            
+
+            -- Cargo light
+            gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
+
             --Pilot name
             gfx.print( true, "Unknown", ta_pane_x + 14, ta_pane_y + 166, col_txt_una )
          end

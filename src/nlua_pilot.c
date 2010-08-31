@@ -91,6 +91,7 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
+static int pilotL_cargoList( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
@@ -158,6 +159,7 @@ static const luaL_reg pilotL_methods[] = {
    { "rmOutfit", pilotL_rmOutfit },
    { "setFuel", pilotL_setFuel },
    /* Ship. */
+   { "cargoList", pilotL_cargoList },
    { "ship", pilotL_ship },
    /* Manual AI control. */
    { "idle", pilotL_idle },
@@ -202,6 +204,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "hostile", pilotL_getHostile },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "cargoList", pilotL_cargoList },
    {0,0}
 };
 
@@ -1873,6 +1876,49 @@ static int pilotL_getStats( lua_State *L )
    return 1;
 }
 #undef PUSH_DOUBLE
+
+
+/**
+ * @brief Lists the cargo the player has.
+ *
+ * The list has the following members:<br />
+ * <ul>
+ * <li><b>name:</b> name of the cargo.
+ * <li><b>q:</b> quantity of the targo.
+ * <li><b>m:</b> true if cargo is for a mission.
+ * </ul>
+ *
+ * @usage for _,v in ipairs(player.cargoList()) do print( string.format("%s: %d", v.name, v.q ) ) end
+ *
+ *    @luareturn An ordered list with the names of the cargo the player has.
+ * @luafunc cargoList()
+ */
+static int pilotL_cargoList( lua_State *L )
+{
+   Pilot *p;
+   int i;
+   p = luaL_validpilot(L,1);
+   lua_newtable(L); /* t */
+   for (i=0; i<p->ncommodities; i++) {
+      lua_pushnumber(L, i+1); /* t, i */
+
+      /* Represents the cargo. */
+      lua_newtable(L); /* t, i, t */
+      lua_pushstring(L, "name"); /* t, i, t, i */
+      lua_pushstring(L, p->commodities[i].commodity->name); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_pushstring(L, "q"); /* t, i, t, i */
+      lua_pushnumber(L, p->commodities[i].quantity); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_pushstring(L, "m"); /* t, i, t, i */
+      lua_pushboolean(L, p->commodities[i].id); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+
+      lua_rawset(L,-3); /* t */
+   }
+   return 1;
+
+}
 
 
 /**
