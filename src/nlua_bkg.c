@@ -88,7 +88,7 @@ static int bkgL_clear( lua_State *L )
  *    @luaparam move Fraction of a pixel to move when the player moves one pixel.
  *    @luaparam scale How much to scale the image.
  *    @luaparam col Colour to tint image (optional parameter).
- * @luafunc image( image, x, y, movee, scale, col )
+ * @luafunc image( image, x, y, move, scale, col )
  */
 static int bkgL_image( lua_State *L )
 {

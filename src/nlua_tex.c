@@ -66,7 +66,7 @@ int nlua_loadTex( lua_State *L, int readonly )
 
 
 /**
- * @brief Lua bindings to interact with opengl textures.
+ * @brief Lua bindings to interact with OpenGL textures.
  *
  * This will allow you to load textures.
  *
@@ -215,12 +215,12 @@ static int texL_dim( lua_State *L )
 
 
 /**
- * @brief Gets the amount of sprites in the texture.
+ * @brief Gets the number of sprites in the texture.
  *
  * @usage sprites, sx,sy = t:sprites()
  *
  *    @luaparam t Texture to get sprites of.
- *    @luareturn The total amount of sprites followed by the number of X sprites and the number of Y sprites.
+ *    @luareturn The total number of sprites followed by the number of X sprites and the number of Y sprites.
  * @luafunc sprites( t )
  */
 static int texL_sprites( lua_State *L )

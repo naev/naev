@@ -77,9 +77,9 @@ int nlua_loadVector( lua_State *L )
 /**
  * @defgroup META_VECTOR Vector Metatable
  *
- * @brief Represents a 2d vector in Lua.
+ * @brief Represents a 2D vector in Lua.
  *
- * This module allows you to manipulate 2d vectors.  Usagae is generally as follows:
+ * This module allows you to manipulate 2D vectors.  Usage is generally as follows:
  *
  * @code
  * my_vec = vec2.new( 3, 2 ) -- my_vec is now (3,2)

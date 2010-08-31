@@ -69,6 +69,7 @@ int nlua_loadGUI( lua_State *L, int readonly )
  *
  * An example would be:
  * @code
+ * gui.radarRender( 0, 0 ) -- Renders the radar in the bottom left.
  * @endcode
  *
  * @luamod gui

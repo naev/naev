@@ -1546,7 +1546,7 @@ static int pilotL_rmOutfit( lua_State *L )
 
 
 /**
- * @Brief Sets the fuel of a pilot.
+ * @brief Sets the fuel of a pilot.
  *
  * @usage p:setFuel( true ) -- Sets fuel to max
  *
