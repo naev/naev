@@ -28,6 +28,7 @@
 static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
+static void pilot_weapSetUpdateRange( PilotWeaponSet *ws );
 
 
 /**
@@ -127,6 +128,9 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    slot        = &array_grow( &ws->slots );
    slot->level = level;
    slot->slot  = o;
+
+   /* Update range. */
+   pilot_weapSetUpdateRange( ws );
 }
 
 
@@ -151,9 +155,81 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot == o) {
          array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
+
+         /* Update range. */
+         pilot_weapSetUpdateRange( ws );
          return;
       }
    }
+}
+
+
+/**
+ * @brief Updates the weapon range for a pilot weapon set.
+ *
+ *    @param ws Weapon Set to update range for.
+ */
+static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
+{
+   int i, lev;
+   double range;
+   double range_accum[PILOT_WEAPSET_MAX_LEVELS];
+   int range_num[PILOT_WEAPSET_MAX_LEVELS];
+
+   /* No slots. */
+   if (ws->slots)
+      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
+         ws->range[i] = 0.;
+
+   /* Calculate ranges. */
+   for (i=0; i<array_size(ws->slots); i++) {
+      if (ws->slots[i].slot->outfit == NULL)
+         continue;
+  
+      /* Get level. */
+      lev = ws->slots[i].level;
+      if (lev >= PILOT_WEAPSET_MAX_LEVELS)
+         continue;
+ 
+      /* Get range. */
+      range = outfit_range(ws->slots[i].slot->outfit);
+      if (range < 0.)
+         continue;
+      
+      /* Calculate. */
+      range_accum[ lev ] += range;
+      range_num[ lev ]++;
+   }
+
+   /* Postprocess. */
+   for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
+      ws->range[i] = range_accum[i] / (double) range_num[i];
+}
+
+
+/**
+ * @brief Gets the range of the current pilot weapon set.
+ *
+ *    @param p Pilot to get the range of.
+ *    @param id ID of weapon set to get the range of.
+ *    @param Level of the weapons to get the range of (-1 for all).
+ */
+double pilot_weapSetRange( Pilot* p, int id, int level )
+{
+   PilotWeaponSet *ws;
+   int i;
+   double range;
+
+   ws = pilot_weapSet(p,id);
+   if (level < 0) {
+      range = 0;
+      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
+         range += ws->range[i];
+   }
+   else
+      range = ws->range[ level ];
+
+   return range;
 }
 
 
@@ -172,6 +248,9 @@ void pilot_weapSetCleanup( Pilot* p, int id )
    if (ws->slots != NULL)
       array_free( ws->slots );
    ws->slots = NULL;
+   
+   /* Update range. */
+   pilot_weapSetUpdateRange( ws );
 }
 
 

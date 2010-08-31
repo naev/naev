@@ -40,7 +40,8 @@
 /* Misc. */
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
 #define PILOT_DISABLED_ARMOR     0.3   /**< armour % that gets it disabled */
-#define PILOT_WEAPON_SETS        10 /**< Number of weapon sets the pilot has. */
+#define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
+#define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maxmimum amount of weapon levels. */
 
 /* hooks */
 #define PILOT_HOOK_NONE    0 /**< No hook. */
@@ -172,6 +173,7 @@ typedef struct PilotWeaponSetOutfit_ {
  */
 typedef struct PilotWeaponSet_ {
    int fire; /**< Whether to fire the weapons or just enable them. */
+   double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
 } PilotWeaponSet;
 
