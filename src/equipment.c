@@ -1054,8 +1054,8 @@ void equipment_addAmmo (void)
    }
 
    /* Update weapon sets if needed. */
-   if (eq_wgt.selected->autoweap)
-      pilot_weaponAuto( eq_wgt.selected );
+   if (p->autoweap)
+      pilot_weaponAuto( p );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1598,8 +1598,8 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    outfits_updateEquipmentOutfits();
 
    /* Update weapon sets if needed. */
-   if (eq_wgt.selected->autoweap)
-      pilot_weaponAuto( eq_wgt.selected );
+   if (ship->autoweap)
+      pilot_weaponAuto( ship );
 
    /* Notify GUI of modification. */
    gui_setShip();
