@@ -285,13 +285,7 @@ function render_target ()
    if dis or fuz then
       col = col_gray
    else
-      if pfact:areEnemies( target_fact ) then
-         col = col_warn
-      elseif pfact:areAllies( target_fact ) then
-         col = col_console
-      else
-         col = col_neut
-      end
+      col = ptarget:colour()
    end
 
    -- Render target graphic
