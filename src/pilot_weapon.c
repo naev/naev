@@ -480,7 +480,7 @@ void pilot_weaponAuto( Pilot *p )
       }
       /* Seekers. */
       else if (outfit_isLauncher(o) && outfit_isSeeker(o)) {
-         id    = 3;
+         id    = 4;
          level = 0;
       }
       /* Fighter bays. */
@@ -488,6 +488,9 @@ void pilot_weaponAuto( Pilot *p )
          id    = 5;
          level = 0;
       }
+      /* Ignore rest. */
+      else
+         continue;
 
       /* Add the slot. */
       pilot_weapSetAdd( p, id, slot, level );
