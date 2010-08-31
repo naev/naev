@@ -2429,35 +2429,27 @@ static int aiL_hostile( lua_State *L )
 }
 
 
-/*
- * returns the maximum range of weapons, if parameter is 1, then does secondary
+/**
+ * @brief Gets the range of a weapon.
+ *
+ *    @luaparam id Optional parameter indicating id of weapon set to get range of, defaults to selected one.
+ *    @luaparam level Level of weapon set to get range of.
+ *    @luareturn The range of the weapon set.
+ * @luafunc getweaprange( id, level )
  */
 static int aiL_getweaprange( lua_State *L )
 {
-   double range;
+   int id;
+   int level;
 
-   /* if 1 is passed as a parameter, secondary weapon is checked */
-   if (lua_toboolean(L,1)) {
-      if (cur_pilot->secondary != NULL) {
-         /* get range, launchers use ammo's range */
-         if (outfit_isLauncher(cur_pilot->secondary->outfit) &&
-               (cur_pilot->secondary->u.ammo.outfit != NULL))
-            range = outfit_range(cur_pilot->secondary->u.ammo.outfit);
-         else
-            range = outfit_range(cur_pilot->secondary->outfit);
+   id    = cur_pilot->active_set; 
+   level = -1;
+   if (lua_isnumber(L,1))
+      id = luaL_checkint(L,1);
+   if (lua_isnumber(L,2))
+      level = luaL_checkint(L,2);
 
-         if (range < 0.) {
-            lua_pushnumber(L, 0.); /* secondary doesn't have range */
-            return 1;
-         }
-
-         /* secondary does have range */
-         lua_pushnumber(L, range);
-         return 1;
-      }
-   }
-
-   lua_pushnumber(L,cur_pilot->weap_range);
+   lua_pushnumber(L, pilot_weapSetRange( cur_pilot, id, level ) );
    return 1;
 }
 

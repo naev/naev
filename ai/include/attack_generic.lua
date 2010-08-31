@@ -25,7 +25,7 @@ function atk_g_think ()
    -- Get new target if it's closer
    if enemy ~= target and enemy ~= nil then
       local dist = ai.dist( target )
-      local range = ai.getweaprange()
+      local range = ai.getweaprange( 0 )
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
@@ -49,7 +49,7 @@ function atk_g_attacked( attacker )
 
    local tdist  = ai.dist(target)
    local dist   = ai.dist(attacker)
-   local range  = ai.getweaprange()
+   local range  = ai.getweaprange( 0 )
 
    if target ~= attacker and dist < tdist and
          dist < range * mem.atk_changetarget then
@@ -94,7 +94,7 @@ function atk_g ()
 
    -- Get stats about enemy
 	local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange()
+   local range = ai.getweaprange( 0 )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach then
@@ -118,7 +118,7 @@ function atk_g_ranged( target, dist )
    local dir = ai.face(target) -- Normal face the target
 
    -- Check if in range
-   if dist < ai.getweaprange(4) and dir < 30 then
+   if dist < ai.getweaprange( 4 ) and dir < 30 then
       ai.weapset( 4 )
    end
 
@@ -148,7 +148,7 @@ end
 --]]
 function atk_g_melee( target, dist )
    local dir = ai.aim(target) -- We aim instead of face
-   local range = ai.getweaprange()
+   local range = ai.getweaprange( 3 )
 
    -- Set weapon set
    ai.weapset( 3 )
@@ -159,12 +159,18 @@ function atk_g_melee( target, dist )
    end
 
    -- Shoot if should be shooting.
-   if dist < range then
-      if dir < 10 then
+   if dir < 10 then
+      local range = ai.getweaprange( 3, 0 )
+      if dist < range then
          ai.shoot()
       end
-      if ai.hasturrets() then
+   end
+   if ai.hasturrets() then
+      local range  = ai.getweaprange( 3, 1 )
+      if dist < range then
          ai.shoot(true)
       end
    end
 end
+
+
