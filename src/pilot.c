@@ -3085,6 +3085,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
    /* Update mass. */
    pilot_updateMass( pilot );
+   gui_setCargo();
 
    return 0;
 }
@@ -3109,7 +3110,7 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
    for (i=0; i<pilot->ncommodities; i++)
       if (pilot->commodities[i].commodity == cargo) {
 
-         /* Must not be missino cargo unless cleaning up. */
+         /* Must not be mission cargo unless cleaning up. */
          if (!cleanup && (pilot->commodities[i].id != 0))
             continue;
 
