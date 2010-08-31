@@ -250,7 +250,7 @@ static void commodity_update( unsigned int wid, char* str )
          "%d Credits/Ton\n"
          "\n"
          "%d Tons\n",
-         player_cargoOwned( comname ),
+         pilot_cargoOwned( player.p, comname ),
          economy_getPrice(com, cur_system, land_planet),
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );

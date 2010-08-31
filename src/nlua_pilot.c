@@ -91,6 +91,10 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
+static int pilotL_cargoFree( lua_State *L );
+static int pilotL_cargoHas( lua_State *L );
+static int pilotL_cargoAdd( lua_State *L );
+static int pilotL_cargoRm( lua_State *L );
 static int pilotL_cargoList( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
@@ -159,8 +163,12 @@ static const luaL_reg pilotL_methods[] = {
    { "rmOutfit", pilotL_rmOutfit },
    { "setFuel", pilotL_setFuel },
    /* Ship. */
-   { "cargoList", pilotL_cargoList },
    { "ship", pilotL_ship },
+   { "cargoFree", pilotL_cargoFree },
+   { "cargoHas", pilotL_cargoHas },
+   { "cargoAdd", pilotL_cargoAdd },
+   { "cargoRm", pilotL_cargoRm },
+   { "cargoList", pilotL_cargoList },
    /* Manual AI control. */
    { "idle", pilotL_idle },
    { "control", pilotL_control },
@@ -204,6 +212,8 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "hostile", pilotL_getHostile },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "cargoFree", pilotL_cargoFree },
+   { "cargoHas", pilotL_cargoHas },
    { "cargoList", pilotL_cargoList },
    {0,0}
 };
@@ -1879,7 +1889,120 @@ static int pilotL_getStats( lua_State *L )
 
 
 /**
- * @brief Lists the cargo the player has.
+ * @brief Gets the free cargo space the pilot has.
+ *
+ *    @luaparam p The pilot to get the free cargo space of.
+ *    @luareturn The free cargo space in tons of the player.
+ * @luafunc cargoFree()
+ */
+static int pilotL_cargoFree( lua_State *L )
+{
+   Pilot *p;
+   p = luaL_validpilot(L,1);
+
+   lua_pushnumber(L, pilot_cargoFree(p) );
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see how many tons of a specific type of cargo the pilot has.
+ *
+ *    @luaparam p The pilot to get the cargo count of.
+ *    @luaparam type Type of cargo to count.
+ *    @luareturn The amount of cargo the player has.
+ * @luafunc cargoHas( type )
+ */
+static int pilotL_cargoHas( lua_State *L )
+{
+   Pilot *p;
+   const char *str;
+   int quantity;
+
+   p = luaL_validpilot(L,1);
+   str = luaL_checkstring( L, 2 );
+   quantity = pilot_cargoOwned( p, str );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Tries to add cargo to the pilot's ship.
+ *
+ * @usage n = pilot.cargoAdd( player.pilot(), "Food", 20 )
+ *
+ *    @luaparam p The pilot to add cargo to.
+ *    @luaparam type Name of the cargo to add.
+ *    @luaparam quantity Quantity of cargo to add.
+ *    @luareturn The quantity of cargo added.
+ * @luafunc cargoAdd( type, quantity )
+ */
+static int pilotL_cargoAdd( lua_State *L )
+{
+   Pilot *p;
+   const char *str;
+   int quantity;
+   Commodity *cargo;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+   str      = luaL_checkstring( L, 2 );
+   quantity = luaL_checknumber( L, 3 );
+
+   /* Get cargo. */
+   cargo    = commodity_get( str );
+   if (cargo == NULL) {
+      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   /* Try to add the cargo. */
+   quantity = pilot_addCargo( player.p, cargo, quantity );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Tries to remove cargo from the pilot's ship.
+ *
+ * @usage n = pilot.cargoRm( player.pilot(), "Food", 20 )
+ *
+ *    @luaparam p The pilot to remove cargo from.
+ *    @luaparam type Name of the cargo to remove.
+ *    @luaparam quantity Quantity of the cargo to remove.
+ *    @luareturn The number of cargo removed.
+ * @luafunc cargoRm( type, quantity )
+ */
+static int pilotL_cargoRm( lua_State *L )
+{
+   Pilot *p;
+   const char *str;
+   int quantity;
+   Commodity *cargo;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+   str      = luaL_checkstring( L, 2 );
+   quantity = luaL_checknumber( L, 3 );
+
+   /* Get cargo. */
+   cargo    = commodity_get( str );
+   if (cargo == NULL) {
+      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   /* Try to add the cargo. */
+   quantity = pilot_rmCargo( p, cargo, quantity );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Lists the cargo the pilot has.
  *
  * The list has the following members:<br />
  * <ul>
@@ -1888,15 +2011,16 @@ static int pilotL_getStats( lua_State *L )
  * <li><b>m:</b> true if cargo is for a mission.
  * </ul>
  *
- * @usage for _,v in ipairs(player.cargoList()) do print( string.format("%s: %d", v.name, v.q ) ) end
+ * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
  *
- *    @luareturn An ordered list with the names of the cargo the player has.
+ *    @luareturn An ordered list with the names of the cargo the pilot has.
  * @luafunc cargoList()
  */
 static int pilotL_cargoList( lua_State *L )
 {
    Pilot *p;
    int i;
+
    p = luaL_validpilot(L,1);
    lua_newtable(L); /* t */
    for (i=0; i<p->ncommodities; i++) {

@@ -108,8 +108,7 @@ void player_playSound( int sound, int once );
 void player_stopSound (void);
 void player_soundPause (void);
 void player_soundResume (void);
-/* cargo */
-int player_cargoOwned( const char* commodityname );
+
 
 /*
  * player ships
