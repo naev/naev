@@ -2157,6 +2157,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
+   /* Defaults. */
+   pilot->autoweap = 1;
+
    /* Basic information. */
    pilot->ship = ship;
    pilot->name = strdup( (name==NULL) ? ship->name : name );

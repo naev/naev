@@ -391,7 +391,7 @@ int outfit_isAmmo( const Outfit* o )
  */
 int outfit_isSeeker( const Outfit* o )
 {
-   if (((o->type==OUTFIT_TYPE_AMMO)     ||
+   if (((o->type==OUTFIT_TYPE_AMMO) ||
             (o->type==OUTFIT_TYPE_TURRET_AMMO) ) &&
          (o->u.amm.ai > 0))
       return 1;

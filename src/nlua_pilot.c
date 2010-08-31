@@ -1480,7 +1480,7 @@ static int pilotL_addOutfit( lua_State *L )
    }
 
    /* Update the weapon sets. */
-   if (!ret && !pilot_isPlayer(p))
+   if (!ret && p->autoweap)
       pilot_weaponAuto(p);
 
    lua_pushboolean(L,!ret);

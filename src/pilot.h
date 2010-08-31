@@ -303,6 +303,7 @@ typedef struct Pilot_ {
    /* Weapon sets. */
    PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
    int active_set; /**< Index of the currently active weapon set. */
+   int autoweap; /**< Automatically update weapon sets. */
 
    /* Cargo */
    uint64_t credits; /**< monies the pilot has */
