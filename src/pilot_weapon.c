@@ -177,11 +177,15 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
    int range_num[PILOT_WEAPSET_MAX_LEVELS];
 
    /* No slots. */
-   if (ws->slots)
+   if (ws->slots == NULL)
       for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
          ws->range[i] = 0.;
 
    /* Calculate ranges. */
+   for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
+      range_accum[i] = 0.;
+      range_num[i]   = 0;
+   }
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot->outfit == NULL)
          continue;
@@ -202,8 +206,12 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
    }
 
    /* Postprocess. */
-   for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
-      ws->range[i] = range_accum[i] / (double) range_num[i];
+   for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
+      if (range_num[i] == 0)
+         ws->range[i] = 0;
+      else
+         ws->range[i] = range_accum[i] / (double) range_num[i];
+   }
 }
 
 
