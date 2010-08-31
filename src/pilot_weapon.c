@@ -218,7 +218,7 @@ void pilot_shootStop( Pilot* p, int level )
    for (i=0; i<array_size(ws->slots); i++) {
 
       /* Must have assosciated outfit. */
-      if (ws->slots[i].slot->outfit != NULL)
+      if (ws->slots[i].slot->outfit == NULL)
          continue;
 
       /* Must match level. */
@@ -253,6 +253,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    double q, mint;
    int is_launcher;
    double rate_mod, energy_mod;
+
+   /* Make sure weapon has outfit. */
+   if (w->outfit == NULL)
+      return 0;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)

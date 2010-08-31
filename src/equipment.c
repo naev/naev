@@ -956,6 +956,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Update outfits. */
    outfits_updateEquipmentOutfits();
 
+   /* Update weapon sets if needed. */
+   if (eq_wgt.selected->autoweap)
+      pilot_weaponAuto( eq_wgt.selected );
+
    /* Notify GUI of modification. */
    gui_setShip();
 
@@ -1048,6 +1052,10 @@ void equipment_addAmmo (void)
       /* Remove from player. */
       player_rmOutfit( ammo, q );
    }
+
+   /* Update weapon sets if needed. */
+   if (eq_wgt.selected->autoweap)
+      pilot_weaponAuto( eq_wgt.selected );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1588,6 +1596,10 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    /* Regenerate outfits. */
    outfits_updateEquipmentOutfits();
+
+   /* Update weapon sets if needed. */
+   if (eq_wgt.selected->autoweap)
+      pilot_weaponAuto( eq_wgt.selected );
 
    /* Notify GUI of modification. */
    gui_setShip();
