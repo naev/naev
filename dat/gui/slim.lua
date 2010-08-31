@@ -239,7 +239,7 @@ function update_nav()
 end
 
 function update_cargo()
-   cargol = player.cargoList()
+   cargol = pilot.cargoList(pp)
    cargo = {}
    for k,v in ipairs(cargol) do
       if v.q == 0 then
