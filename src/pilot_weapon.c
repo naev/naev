@@ -106,17 +106,28 @@ void pilot_weapSetMode( Pilot* p, int id, int fire )
  *    @param id ID of the weapon set.
  *    @param name Name to set for the weapon set.
  */
-void pilot_weapSetName( Pilot* p, int id, const char *name )
+void pilot_weapSetNameSet( Pilot* p, int id, const char *name )
 {
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
    if (ws->name != NULL) {
-      if (strcmp(name,name)==0)
+      if (strcmp(ws->name,name)==0)
          return;
       free( ws->name );
    }
    ws->name = strdup(name);
+}
+
+
+/**
+ * @brief Gets the name of a weapon set.
+ */
+const char *pilot_weapSetName( Pilot* p, int id )
+{
+   PilotWeaponSet *ws;
+   ws = pilot_weapSet(p,id);
+   return ws->name;
 }
 
 
@@ -576,12 +587,12 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 5, 1 );
 
    /* Set names. */
-   pilot_weapSetName( p, 0, "All" );
-   pilot_weapSetName( p, 1, "Forward" );
-   pilot_weapSetName( p, 2, "Turret" );
-   pilot_weapSetName( p, 3, "Fwd/Tur" );
-   pilot_weapSetName( p, 4, "Seekers" );
-   pilot_weapSetName( p, 5, "Fighter Bays" );
+   pilot_weapSetNameSet( p, 0, "All" );
+   pilot_weapSetNameSet( p, 1, "Forward" );
+   pilot_weapSetNameSet( p, 2, "Turret" );
+   pilot_weapSetNameSet( p, 3, "Fwd/Tur" );
+   pilot_weapSetNameSet( p, 4, "Seekers" );
+   pilot_weapSetNameSet( p, 5, "Fighter Bays" );
 
    /* Iterate through all the outfits. */
    for (i=0; i<p->outfit_nweapon; i++) {
