@@ -172,6 +172,7 @@ typedef struct PilotWeaponSetOutfit_ {
  *  However they can also be used to launch weapons.
  */
 typedef struct PilotWeaponSet_ {
+   char *name; /**< Helpful for the player. */
    int fire; /**< Whether to fire the weapons or just enable them. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */

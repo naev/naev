@@ -18,6 +18,7 @@ void pilot_shootStop( Pilot* p, int level );
 /* Weapon Set. */
 void pilot_weapSetExec( Pilot* p, int id );
 void pilot_weapSetMode( Pilot* p, int id, int fire );
+void pilot_weapSetName( Pilot* p, int id, const char *name );
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
 double pilot_weapSetRange( Pilot* p, int id, int level );
