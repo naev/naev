@@ -846,8 +846,13 @@ static int pilotL_target( lua_State *L )
    if (p->target == 0)
       return 0;
    lp.pilot = p->target;
+   /* Must be targetted. */
    if (p->target == p->id)
       return 0;
+   /* Must be valid. */
+   if (pilot_get(p->target) == NULL)
+      return 0;
+   /* Push target. */
    lua_pushpilot(L, lp);
    return 1;
 }
