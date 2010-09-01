@@ -702,7 +702,6 @@ static int pilotL_getPilots( lua_State *L )
                p.pilot = pilot_stack[i]->id;
                lua_pushpilot(L, p); /* value */
                lua_rawset(L,-3); /* table[key] = value */
-               break; /* Continue to next pilot. */
             }
          }
       }
@@ -710,7 +709,7 @@ static int pilotL_getPilots( lua_State *L )
       /* clean up. */
       free(factions);
    }
-   else {
+   else if (lua_gettop(L) == 0) {
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
@@ -721,9 +720,11 @@ static int pilotL_getPilots( lua_State *L )
             p.pilot = pilot_stack[i]->id;
             lua_pushpilot(L, p); /* value */
             lua_rawset(L,-3); /* table[key] = value */
-            break; /* Continue to next pilot. */
          }
       }
+   }
+   else {
+      NLUA_INVALID_PARAMETER(L);
    }
 
    return 1;
