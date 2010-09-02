@@ -623,7 +623,6 @@ static int ai_loadProfile( const char* filename )
          "%s", filename+strlen(AI_PREFIX) );
 
    prof->L = nlua_newState();
-   prof->L = nlua_newState();
 
    if (prof->L == NULL) {
       ERR("Unable to create a new Lua state");
