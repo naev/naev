@@ -144,7 +144,7 @@ end
 -- @brief This function is run whenever the player changes his cargo.
 --]]
 function update_cargo ()
-   cargol = player.cargoList()
+   cargol = pilot.cargoList(pp)
    misc_cargo = ""
    for _,v in ipairs(cargol) do
       if v.q == 0 then
@@ -285,13 +285,7 @@ function render_target ()
    if dis or fuz then
       col = col_gray
    else
-      if pfact:areEnemies( target_fact ) then
-         col = col_warn
-      elseif pfact:areAllies( target_fact ) then
-         col = col_console
-      else
-         col = col_neut
-      end
+      col = ptarget:colour()
    end
 
    -- Render target graphic
@@ -358,7 +352,7 @@ function render_misc ()
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
    gfx.print( true, "Cargo Free:", misc_x, y, col_console, misc_w, false )
-   local free = string.format("%d" .. "t", player.cargoFree())
+   local free = string.format("%d" .. "t", pilot.cargoFree(pp))
    w = gfx.printDim( true, free )
    gfx.print( true, free, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - 5

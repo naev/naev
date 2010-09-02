@@ -101,13 +101,13 @@ function landed()
    if planet.cur() == misn_base then
       misn.cargoRm( cargoID )
       if misn_bleeding then
-         reward = math.min(1, player.cargoFree())
+         reward = math.min(1, pilot.cargoFree(player.pilot()))
       else
-         reward = player.cargoFree()
+         reward = pilot.cargoFree(player.pilot())
          reward_text = text[5]
       end
       tk.msg( title[4], string.format(reward_text, reward) )
-     player.cargoAdd( cargoname, reward )
+     pilot.cargoAdd( player.pilot(), cargoname, reward )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then
