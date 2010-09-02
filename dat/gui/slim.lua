@@ -358,7 +358,7 @@ function render( dt )
    render_bar( "energy", energy, txt, col )
    
    --Speed
-   local hspeed = math.floor( speed / stats.max_speed * 100 )
+   local hspeed = math.floor( speed / stats.speed_max * 100 )
    txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
@@ -442,13 +442,13 @@ function render( dt )
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
 
          --Text, warning light & other texts
-         local htspeed = math.floor( ta_speed / ta_stats.max_speed * 100 )
+         local htspeed = math.floor( ta_speed / ta_stats.speed_max * 100 )
          if not ta_fuzzy then
             --Bar Texts
             shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( math.floor(ta_armour) ) .. "% (" .. tostring(math.floor(ta_stats.armour  * ta_armour / 100)) .. ")"
             ene = tostring( math.floor(ta_energy) ) .. "%"
-            spe = tostring( math.floor(ta_speed / ta_stats.max_speed * 100.) ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
+            spe = tostring( math.floor(ta_speed / ta_stats.speed_max * 100.) ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
 
             if htspeed <= 100. then
                spetxtcol = col_txt_bar
