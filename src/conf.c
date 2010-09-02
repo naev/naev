@@ -271,7 +271,6 @@ void conf_cleanup (void)
 int conf_loadConfig ( const char* file )
 {
    int i, t;
-   double d;
    const char *str, *mod;
    SDLKey key;
    int type;
@@ -279,7 +278,6 @@ int conf_loadConfig ( const char* file )
    SDLMod m;
 
    i = 0;
-   d = 0.;
 
    /* Check to see if file exists. */
    if (!nfile_fileExists(file))

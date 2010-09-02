@@ -452,7 +452,7 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
  */
 static glTexture* gl_texExists( const char* path )
 {
-   glTexList *cur, *last;
+   glTexList *cur;
 
    /* check to see if it already exists */
    if (texture_list != NULL) {
@@ -461,7 +461,6 @@ static glTexture* gl_texExists( const char* path )
             cur->used += 1;
             return cur->tex;
          }
-         last = cur;
       }
    }
 

@@ -457,12 +457,11 @@ void dialogue_makeChoice( const char *caption, const char *msg, int opts )
 void dialogue_addChoice( const char *caption, const char *msg, const char *opt)
 {
    int w,h;
-   glFont* font;
 
    if (choice_nopts < 1)
       return;
 
-   font = dialogue_getSize( caption, msg, &w, &h );
+   dialogue_getSize( caption, msg, &w, &h );
 
    /* buttons. Add one for each option in the menu. */
    window_addButton( choice_wid, w/2-125, choice_nopts*40, 250, 30, (char *) opt,
