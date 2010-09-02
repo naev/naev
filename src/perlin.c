@@ -459,6 +459,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    noise       = TCOD_noise_new( 2, hurst, lacunarity );
    map         = malloc(sizeof(float)*w*h);
    if (map == NULL) {
+      TCOD_noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }
