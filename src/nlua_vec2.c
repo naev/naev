@@ -231,11 +231,15 @@ static int vectorL_add( lua_State *L )
       x = lua_tonumber(L,2);
       y = lua_tonumber(L,3);
    }
-   else NLUA_INVALID_PARAMETER(L);
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
 
    /* Actually add it */
    vect_cset( &vout.vec, v1->vec.x + x, v1->vec.y + y );
    lua_pushvector( L, vout );
+
    return 1;
 }
 
