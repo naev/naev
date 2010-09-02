@@ -809,11 +809,11 @@ static int write_png( const char *file_name, png_bytep *rows,
    /* Create working structs. */
    if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
       WARN("Unable to create png write struct.");
-      return -1;
+      goto ERR_FAIL;
    }
    if (!(info_ptr = png_create_info_struct(png_ptr))) {
       WARN("Unable to create PNG info struct.");
-      return -1;
+      goto ERR_FAIL;
    }
 
    /* Set image details. */
@@ -833,5 +833,8 @@ static int write_png( const char *file_name, png_bytep *rows,
 
    return 0;
 
+ERR_FAIL:
+   fclose(fp);
+   return -1;
 }
 
