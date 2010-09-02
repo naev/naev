@@ -238,8 +238,12 @@ static int playerL_modFaction( lua_State *L )
    int f;
    double mod;
 
-   if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER(L);
+   if (lua_isstring(L,1))
+      f = faction_get( lua_tostring(L,1) );
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
 
    mod = luaL_checknumber(L,2);
    faction_modPlayer( f, mod );
@@ -260,8 +264,13 @@ static int playerL_modFactionRaw( lua_State *L )
    int f;
    double mod;
 
-   if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER(L);
+   if (lua_isstring(L,1))
+      f = faction_get( lua_tostring(L,1) );
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
+
    mod = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, mod );
 
@@ -279,8 +288,12 @@ static int playerL_getFaction( lua_State *L )
    NLUA_MIN_ARGS(1);
    int f;
 
-   if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER(L);
+   if (lua_isstring(L,1))
+      f = faction_get( lua_tostring(L,1) );
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
 
    lua_pushnumber(L, faction_getPlayer(f));
 
