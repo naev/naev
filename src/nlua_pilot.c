@@ -2497,7 +2497,7 @@ static int pilotL_hasOutfit( lua_State *L )
 		return 1;
 	}
 	
-	/* Remove the outfit outfit. */
+	/* identify the outfit. */
 	j=0;
 	for (i=0; i<p->noutfits; i++) {
 		if (p->outfits[i]->outfit == o){
