@@ -79,19 +79,19 @@ npng_t *npng_open( SDL_RWops *rw )
    npng->png_ptr  = png_create_read_struct( PNG_LIBPNG_VER_STRING, NULL, NULL, NULL );
    if (npng->png_ptr == NULL) {
       WARN("png_create_read_struct failed");
-      return NULL;
+      goto ERR_FAIL;
    }
    npng->info_ptr = png_create_info_struct( npng->png_ptr );
    if (npng->info_ptr == NULL) {
       WARN("png_create_info_struct failed");
-      return NULL;
+      goto ERR_FAIL;
    }
 
    /* Check header. */
    SDL_RWread( rw, header, 8, 1 );
    if (png_sig_cmp(header, 0, 8)) {
       WARN("RWops not recognized as a PNG file.");
-      return NULL;
+      goto ERR_FAIL;
    }
 
    /* Set up for reading. */
@@ -100,7 +100,7 @@ npng_t *npng_open( SDL_RWops *rw )
    /* Set up long jump for IO. */
    if (setjmp( png_jmpbuf( npng->png_ptr )) ) {
       WARN("Error during setjmp");
-      return NULL;
+      goto ERR_FAIL;
    }
 
    /* We've already checked sig. */
@@ -116,6 +116,14 @@ npng_t *npng_open( SDL_RWops *rw )
    png_get_text( npng->png_ptr, npng->info_ptr, &npng->text_ptr, &npng->num_text );
 
    return npng;
+
+ERR_FAIL:
+   if (npng != NULL) {
+      if (npng->png_ptr != NULL)
+         png_destroy_read_struct( &npng->png_ptr, (npng->info_ptr != NULL) ? &npng->info_ptr : NULL, NULL );
+      free(npng);
+   }
+   return NULL;
 }
 
 
