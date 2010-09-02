@@ -358,7 +358,16 @@ function render( dt )
    render_bar( "energy", energy, txt, col )
    
    --Speed
-   local hspeed = math.floor( speed / stats.speed_max * 100 )
+   local hspeed 
+   local realspeed = speed / stats.speed_max * 100
+   -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
+   -- Any speed between 99% and 101% will be treated as 100%.
+   if realspeed >= 99 and realspeed <= 101 then
+      hspeed = 100
+   else
+      hspeed = math.floor(realspeed)
+   end
+   local hspeed = math.ceil( speed / stats.speed_max * 100 )
    txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
@@ -442,13 +451,21 @@ function render( dt )
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
 
          --Text, warning light & other texts
-         local htspeed = math.floor( ta_speed / ta_stats.speed_max * 100 )
+         local htspeed 
+         local realspeed = ta_speed / ta_stats.speed_max * 100
+         -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
+         -- Any speed between 99% and 101% will be treated as 100%.
+         if realspeed >= 99 and realspeed <= 101 then
+            htspeed = 100
+         else
+            htspeed = math.floor(realspeed)
+         end
          if not ta_fuzzy then
             --Bar Texts
             shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( math.floor(ta_armour) ) .. "% (" .. tostring(math.floor(ta_stats.armour  * ta_armour / 100)) .. ")"
             ene = tostring( math.floor(ta_energy) ) .. "%"
-            spe = tostring( math.floor(ta_speed / ta_stats.speed_max * 100.) ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
+            spe = tostring( htspeed ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
 
             if htspeed <= 100. then
                spetxtcol = col_txt_bar
