@@ -1853,6 +1853,7 @@ lua_rawset( L, -3 )
  *  <li> energy_regen <br />
  *  <li> jam_range <br />
  *  <li> jam_chance <br />
+ *  <li> jump_delay <br />
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -1890,6 +1891,8 @@ static int pilotL_getStats( lua_State *L )
    /* Jam. */
    PUSH_DOUBLE( L, "jam_range", p->jam_range );
    PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
+   /* Stats. */
+   PUSH_DOUBLE( L, "jump_delay", pilot_hyperspaceDelay(p) );
 
    return 1;
 }
