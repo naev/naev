@@ -41,7 +41,7 @@
 #include "gui.h"
 #include "equipment.h"
 #include "npc.h"
-#include "camera.h"
+#include "camera.h" 
 
 
 /* global/main window */
@@ -1085,11 +1085,13 @@ void land_genWindows( int load )
       names[j++] = land_windowNames[LAND_WINDOW_SHIPYARD];
    }
    /* Equipment. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
+   /*if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
          planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
       names[j++] = land_windowNames[LAND_WINDOW_EQUIPMENT];
-   }
+   }*/
+	land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
+	names[j++] = land_windowNames[LAND_WINDOW_EQUIPMENT];
    /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
       land_windowsMap[LAND_WINDOW_COMMODITY] = j;
@@ -1142,9 +1144,10 @@ void land_genWindows( int load )
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
    /* Equipment. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
+   /*if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
          planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-      equipment_open( land_getWid(LAND_WINDOW_EQUIPMENT) );
+      equipment_open( land_getWid(LAND_WINDOW_EQUIPMENT) );*/
+	equipment_open( land_getWid(LAND_WINDOW_EQUIPMENT) );
    /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
