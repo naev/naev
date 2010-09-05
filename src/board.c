@@ -23,7 +23,7 @@
 #include "hook.h"
 
 
-#define BOARDING_WIDTH  300 /**< Boarding window width. */
+#define BOARDING_WIDTH  370 /**< Boarding window width. */
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
 #define BUTTON_WIDTH     50 /**< Boarding button width. */
@@ -31,7 +31,7 @@
 
 
 static int board_stopboard = 0; /**< Whether or not to unboard. */
-
+static int numbOutfits = 0; /**< number of outfits installed on boarded ship. */
 
 /*
  * prototypes
@@ -40,9 +40,11 @@ static void board_exit( unsigned int wdw, char* str );
 static void board_stealCreds( unsigned int wdw, char* str );
 static void board_stealCargo( unsigned int wdw, char* str );
 static void board_stealFuel( unsigned int wdw, char* str );
+static void board_stealEquipment( unsigned int wdw, char* str );
 static int board_trySteal( Pilot *p );
 static int board_fail( unsigned int wdw );
 static void board_update( unsigned int wdw );
+
 
 
 /**
@@ -113,23 +115,31 @@ void player_board (void)
    wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
    window_addText( wdw, 20, -30, 120, 60,
-         0, "txtCargo", &gl_smallFont, &cDConsole,
+         0, "txtGoodies", &gl_smallFont, &cDConsole,
          "Credits:\n"
          "Cargo:\n"
+		 "Outfits:\n"
          "Fuel:\n"
          );
-   window_addText( wdw, 80, -30, 120, 60,
+   window_addText( wdw, 80, -30, 120, 250,
          0, "txtData", &gl_smallFont, &cBlack, NULL );
 
-   window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCredits", "Credits", board_stealCreds);
-   window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCargo", "Cargo", board_stealCargo);
-   window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealFuel", "Fuel", board_stealFuel);
+   /*window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealCredits", "Credits", board_stealCreds);
+   window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealCargo", "Cargo", board_stealCargo);
+   window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealFuel", "Fuel", board_stealFuel);
+   window_addButton( wdw, 20+3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealFuelTest", "Test", board_stealFuel);
 
-   window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBoardingClose", "Leave", board_exit );
+   window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnBoardingClose", "Leave", board_exit );*/
+	
+   window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealCredits", "Credits", board_stealCreds);
+   window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealCargo", "Cargo", board_stealCargo);
+   window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnEquipment", "Equipment", board_stealEquipment);
+   window_addButton( wdw, 20+3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealFuel", "Fuel", board_stealFuel);
+
+	 
+   window_addButton( wdw, 20+4*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnBoardingClose", "Leave", board_exit );
+	
+
 
    board_update(wdw);
 
@@ -201,6 +211,50 @@ static void board_stealCreds( unsigned int wdw, char* str )
 
 
 /**
+ * @brief Attempt to steal the boarded ship's equipment.
+ *
+ *    @param wdw Window triggering the function.
+ *    @param str Unused.
+ */
+static void board_stealEquipment( unsigned int wdw, char* str )
+{
+   (void)str;
+   int i, q, qq, freeCargo;
+   Pilot* p;
+
+   p = pilot_get(player.p->target);
+
+	if (numbOutfits==0) { /* no outfits */
+		player_message("\epThe ship has outfts.");
+		return;
+	}
+	else if (pilot_cargoFree(player.p) <= 0) {
+      player_message("\erYou have no room for the ship's cargo.");
+      return;
+   }
+
+   if (board_fail(wdw)) return;
+
+   /** steal as many outfits as possible - maybe open up an planet equipment type window */
+   /*it bugs me that the player can get hundreds of tons of stuff. where does it all go?*/
+   q = 1;
+	i=1;
+	for (i=1; i<p->noutfits; i++){
+		if (p->outfits[i]->outfit==NULL){
+			continue;
+		}else{
+			q=player_addOutfit(p->outfits[i]->outfit, 1);
+			qq=pilot_rmOutfit(p, p->outfits[i]);
+		}
+		q=1;
+	}
+
+   board_update( wdw );
+   player_message("\epYou manage to steal the ship's equipment.");
+}
+
+
+/**
  * @brief Attempt to steal the boarded ship's cargo.
  *
  *    @param wdw Window triggering the function.
@@ -208,35 +262,34 @@ static void board_stealCreds( unsigned int wdw, char* str )
  */
 static void board_stealCargo( unsigned int wdw, char* str )
 {
-   (void)str;
-   int q;
-   Pilot* p;
-
-   p = pilot_get(player.p->target);
-
-   if (p->ncommodities==0) { /* no cargo */
-      player_message("\epThe ship has no cargo.");
-      return;
-   }
-   else if (pilot_cargoFree(player.p) <= 0) {
-      player_message("\erYou have no room for the ship's cargo.");
-      return;
-   }
-
-   if (board_fail(wdw)) return;
-
-   /** steal as much as possible until full - @todo let player choose */
-   q = 1;
-   while ((p->ncommodities > 0) && (q!=0)) {
-      q = pilot_addCargo( player.p, p->commodities[0].commodity,
-            p->commodities[0].quantity );
-      pilot_rmCargo( p, p->commodities[0].commodity, q );
-   }
-
-   board_update( wdw );
-   player_message("\epYou manage to steal the ship's cargo.");
+	(void)str;
+	int q;
+	Pilot* p;
+	
+	p = pilot_get(player.p->target);
+	
+	if (p->ncommodities==0) { /* no cargo */
+		player_message("\epThe ship has no cargo.");
+		return;
+	}
+	else if (pilot_cargoFree(player.p) <= 0) {
+		player_message("\erYou have no room for the ship's cargo.");
+		return;
+	}
+	
+	if (board_fail(wdw)) return;
+	
+	/** steal as much as possible until full - @todo let player choose */
+	q = 1;
+	while ((p->ncommodities > 0) && (q!=0)) {
+		q = pilot_addCargo( player.p, p->commodities[0].commodity,
+						   p->commodities[0].quantity );
+		pilot_rmCargo( p, p->commodities[0].commodity, q );
+	}
+	
+	board_update( wdw );
+	player_message("\epYou manage to steal the ship's cargo.");
 }
-
 
 /**
  * @brief Attempt to steal the boarded ship's fuel.
@@ -343,7 +396,7 @@ static int board_fail( unsigned int wdw )
  */
 static void board_update( unsigned int wdw )
 {
-   int i, j;
+   int i, j, k;
    char str[PATH_MAX];
    char cred[ECON_CRED_STRLEN];
    Pilot* p;
@@ -354,16 +407,33 @@ static void board_update( unsigned int wdw )
    /* Credits. */
    credits2str( cred, p->credits, 2 );
    j += snprintf( &str[j], PATH_MAX-j, "%s\n", cred );
+	
 
    /* Commodities. */
    if (p->ncommodities==0)
       j += snprintf( &str[j], PATH_MAX-j, "none\n" );
    else {
-      for (i=0; i<p->ncommodities; i++)
-         j += snprintf( &str[j], PATH_MAX-j,
-               "%d %s\n",
-               p->commodities[i].quantity, p->commodities[i].commodity->name );
+	   for (i=0; i<p->ncommodities; i++)
+		   j += snprintf( &str[j], PATH_MAX-j, "%d %s\n", p->commodities[i].quantity, p->commodities[i].commodity->name );
    }
+	
+	/*Outfits*/
+	k=0;
+	for (i=1; i<p->noutfits; i++){
+		if (p->outfits[i]->outfit==NULL){
+			continue;
+		}else{
+			numbOutfits++;
+			j += snprintf( &str[j], PATH_MAX-k, (k==0) ? "%s" : ", %s", p->outfits[i]->outfit->name);
+			k++;
+		}
+	}
+	if (numbOutfits==0){
+		j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+	}
+	j += snprintf( &str[j], PATH_MAX-j, "\n" );
+
+		
 
    /* Fuel. */
    if (p->fuel <= 0.)
@@ -371,6 +441,7 @@ static void board_update( unsigned int wdw )
    else
       j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
 
+	
    window_modifyText( wdw, "txtData", str );
 }
 
