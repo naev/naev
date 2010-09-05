@@ -104,6 +104,7 @@ static int pilotL_hyperspace( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_hookClear( lua_State *L );
+static int pilotL_setCrew( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
@@ -146,6 +147,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setInvincible", pilotL_setInvincible },
    { "setInvisible", pilotL_setInvisible },
    { "disable", pilotL_disable },
+   { "setCrew", pilotL_setCrew },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
    { "comm", pilotL_comm },
@@ -2508,3 +2510,29 @@ static int pilotL_hasOutfit( lua_State *L )
 	lua_pushnumber(L,j);
 	return 1;
 }
+
+/**
+ * @brief Sets the pilot's ship's crew number.
+ *
+ * @usage p:setCrew(10) -- Set the crew of the pilot's ship to 10
+ * @usage p:setCrew(0)  -- Set the crew of the pilot's ship to 0. Useful for derelicts and boarding odds
+ *
+ *    @luaparam p Pilot to get number of people in the ship's crew.
+ */
+static int pilotL_setCrew( lua_State *L )
+{
+	int numbCrew;
+	Pilot *p;	
+	/* Get the pilot. */
+	p = luaL_validpilot(L,1);
+	/*make sure the crew number is a number*/
+	numbCrew= luaL_checknumber(L, 2);
+	if (numbCrew<=-1){
+		NLUA_ERROR(L, "Crew number is less than zero");
+		return 0;
+	}else{
+		p->ship->crew=numbCrew;
+		return 1;
+	}
+}
+
