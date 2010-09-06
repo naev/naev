@@ -60,7 +60,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
-static int pilotL_secondary( lua_State *L );
+static int pilotL_weapset( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -125,7 +125,7 @@ static const luaL_reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
-   { "secondary", pilotL_secondary },
+   { "weapset", pilotL_weapset },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -200,7 +200,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "target", pilotL_target },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
-   { "secondary", pilotL_secondary },
+   { "weapset", pilotL_weapset },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -930,30 +930,47 @@ static int pilotL_nav( lua_State *L )
 
 
 /**
- * @brief Gets the secondary weapon of the pilot.
+ * @brief Gets the weapset weapon of the pilot.
  *
- * @usage weapo, amm, ready = p:secondary()
+ * The weapon sets have the following structure: <br />
+ * <ul>
+ *  <li> name: name of the set <br />
+ *  <li> cooldwon: [0:1] value indicating if ready to shoot (1 is ready) <br />
+ *  <li> ammo: Name of the ammo or nil if not applicable <br />
+ *  <li> left: Ammo left or nil if not applicable <br />
+ *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
+ * </ul>
  *
- *    @luaparam p Pilot to get secondary weapon of.
- *    @luareturn The current secondary weapon and the amount of ammo it has (or nil if not applicable).
- * @luafunc secondary( p )
+ * @usage set_name, slots = p:weapsets() -- Get info about the current set
+ * @usage set_name, slots = p:weapsets( 5 ) -- Get info about the set number 5
+ *
+ *    @luaparam p Pilot to get weapset weapon of.
+ *    @luaparam id ID of the set to get information of. Defaults to currently active set.
+ *    @luareturn The name of the set and a table with each slot's information.
+ * @luafunc weapset( p, id)
  */
-static int pilotL_secondary( lua_State *L )
+static int pilotL_weapset( lua_State *L )
 {
    Pilot *p;
    int i, n;
    PilotWeaponSetOutfit *po_list, *po;
    Outfit *ammo;
    double delay;
+   int id;
 
    /* Parse parameters. */
    p = luaL_validpilot(L,1);
+   if (lua_isnumber(L,2))
+      id = luaL_checkinteger(L,2) - 1;
+   else
+      id = p->active_set;
+   id = CLAMP( 0, PILOT_WEAPON_SETS, id );
 
    /* Push name. */
-   lua_pushstring( L, pilot_weapSetName( p, p->active_set ) );
+   lua_pushstring( L, pilot_weapSetName( p, id ) );
 
    /* Push set. */
-   po_list = pilot_weapSetList( p, p->active_set, &n );
+   po_list = pilot_weapSetList( p, id, &n );
    lua_newtable(L);
    for (i=0; i<n; i++) {
       po = &po_list[i];
@@ -994,6 +1011,11 @@ static int pilotL_secondary( lua_State *L )
       }
       else
          lua_pushnil( L );
+      lua_rawset(L,-3);
+
+      /* Level. */
+      lua_pushstring(L,"level");
+      lua_pushnumber(L, po->level+1);
       lua_rawset(L,-3);
 
       /* Set table in table. */
