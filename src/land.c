@@ -250,7 +250,7 @@ static void commodity_update( unsigned int wid, char* str )
          "%d Credits/Ton\n"
          "\n"
          "%d Tons\n",
-         player_cargoOwned( comname ),
+         pilot_cargoOwned( player.p, comname ),
          economy_getPrice(com, cur_system, land_planet),
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
@@ -1354,7 +1354,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
       /* Run hooks, run after music in case hook wants to change music. */
       if (torun_hook != NULL)
          if (hooks_run( torun_hook ) > 0)
-            bar_genList( w );
+            bar_genList( land_getWid(LAND_WINDOW_BAR) );
 
       visited(to_visit);
    }

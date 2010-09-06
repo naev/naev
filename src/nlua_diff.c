@@ -62,8 +62,8 @@ int nlua_loadDiff( lua_State *L, int readonly )
 /**
  * @brief Lua bindings to apply/remove Universe Diffs.
  *
- * Universe Diffs are patches you can apply to the universe to do permanent
- *  changes.  They are defined in dat/unidiff.xml.
+ * Universe Diffs are patches you can apply to the universe to make permanent
+ *  changes. They are defined in dat/unidiff.xml.
  *
  * Typical usage would be:
  * @code
@@ -106,7 +106,7 @@ static int diff_removeL( lua_State *L )
  * @brief Checks to see if a diff is currently applied.
  *
  *    @luaparam name Name of the diff to check.
- *    @luareturn true if is applied, false if it isn't.
+ *    @luareturn true if diff is applied, false if it isn't.
  * @luafunc isApplied( name )
  */
 static int diff_isappliedL( lua_State *L )

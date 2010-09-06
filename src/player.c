@@ -904,24 +904,6 @@ unsigned long player_modCredits( int amount )
 
 
 /**
- * @brief Gets how many of the commodity the player.p has.
- *
- *    @param commodityname Commodity to check how many the player.p owns.
- *    @return The number of commodities owned matching commodityname.
- */
-int player_cargoOwned( const char* commodityname )
-{
-   int i;
-
-   for (i=0; i<player.p->ncommodities; i++)
-      if (!player.p->commodities[i].id &&
-            strcmp(commodityname, player.p->commodities[i].commodity->name)==0)
-         return player.p->commodities[i].quantity;
-   return 0;
-}
-
-
-/**
  * @brief Renders the player
  */
 void player_render( double dt )

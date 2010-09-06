@@ -165,7 +165,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *
  * @usage evt.misnStart( "Tutorial" ) -- Starts the tutorial
  *
- *    @luaparam misn Name of the mission to start, should match mission in dat/mission.xml.
+ *    @luaparam misn Name of the mission to start, should match a mission in dat/mission.xml.
  * @luafunc misnStart( misn )
  */
 static int evt_misnStart( lua_State *L )
@@ -193,7 +193,7 @@ static int evt_misnStart( lua_State *L )
  *
  *    @luaparam func Name of the function to run when approaching.
  *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
+ *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits/).
  *    @luaparam desc Description assosciated to the NPC.
  *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
  *    @luareturn The ID of the NPC to pass to npcRm.

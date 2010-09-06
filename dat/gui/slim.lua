@@ -67,8 +67,8 @@ function create()
    warnlight3 = tex.open( base .. "warnlight3.png" )
    target_light_off = tex.open( base .. "targeted_off.png" )
    target_light_on =  tex.open( base .. "targeted_on.png" )
-   --cargo_light_off = tex.open( base .. "cargo_off.png" )
-   --cargo_light_on =  tex.open( base .. "cargo_on.png" )
+   cargo_light_off = tex.open( base .. "cargo_off.png" )
+   cargo_light_on =  tex.open( base .. "cargo_on.png" )
    question = tex.open( base .. "question.png" )
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
@@ -121,7 +121,7 @@ function create()
    ta_icon_y = ta_pane_y + 100
    
    --Target Faction icon
-   ta_fact_x = ta_pane_x + 114
+   ta_fact_x = ta_pane_x + 110
    ta_fact_y = ta_pane_y + 100
    
    bar_sm_w, bar_sm_h = bg_shield_sm:dim()
@@ -138,6 +138,10 @@ function create()
    --Targeted warning light
    ta_warning_x = ta_pane_x + 82
    ta_warning_y = ta_pane_y + 100
+
+   -- Cargo light
+   ta_cargo_x = ta_pane_x + 138
+   ta_cargo_y = ta_pane_y + 100
 
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
@@ -235,7 +239,7 @@ function update_nav()
 end
 
 function update_cargo()
-   cargol = player.cargoList()
+   cargol = pilot.cargoList(pp)
    cargo = {}
    for k,v in ipairs(cargol) do
       if v.q == 0 then
@@ -354,7 +358,16 @@ function render( dt )
    render_bar( "energy", energy, txt, col )
    
    --Speed
-   local hspeed = math.floor( speed / stats.speed * 100 )
+   local hspeed 
+   local realspeed = speed / stats.speed_max * 100
+   -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
+   -- Any speed between 99% and 101% will be treated as 100%.
+   if realspeed >= 99 and realspeed <= 101 then
+      hspeed = 100
+   else
+      hspeed = math.floor(realspeed)
+   end
+   local hspeed = math.ceil( speed / stats.speed_max * 100 )
    txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
@@ -403,7 +416,7 @@ function render( dt )
    
    --Target Pane
    if ptarget ~= nil then
-   
+      ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
          
@@ -438,13 +451,21 @@ function render( dt )
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
 
          --Text, warning light & other texts
-         local htspeed = math.floor( ta_speed / ta_stats.speed * 100 )
+         local htspeed 
+         local realspeed = ta_speed / ta_stats.speed_max * 100
+         -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
+         -- Any speed between 99% and 101% will be treated as 100%.
+         if realspeed >= 99 and realspeed <= 101 then
+            htspeed = 100
+         else
+            htspeed = math.floor(realspeed)
+         end
          if not ta_fuzzy then
             --Bar Texts
             shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( math.floor(ta_armour) ) .. "% (" .. tostring(math.floor(ta_stats.armour  * ta_armour / 100)) .. ")"
             ene = tostring( math.floor(ta_energy) ) .. "%"
-            spe = tostring( math.floor(ta_speed / ta_stats.speed * 100.) ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
+            spe = tostring( htspeed ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
 
             if htspeed <= 100. then
                spetxtcol = col_txt_bar
@@ -472,18 +493,19 @@ function render( dt )
             if ptarget_faction_gfx ~= nil then
                gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
             end
-            
+
+            -- Cargo light cargo_light_off
+            if ta_cargo ~= nil and #ta_cargo >= 1 then
+               gfx.renderTex( cargo_light_on, ta_cargo_x, ta_cargo_y )
+            else
+               gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
+            end
+
             --Pilot name
             if ta_disabled then
                col = col_txt_una
             else
-               if pfact:areEnemies( ptargetfact ) then
-                  col = col_txt_enm
-               elseif pfact:areAllies( ptargetfact ) then
-                  col = col_txt_all
-               else
-                  col = col_txt_std
-               end
+               col = ptarget:colour()
             end
             gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 166, col )
          else
@@ -499,7 +521,10 @@ function render( dt )
             
             --Warning light
             gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
-            
+
+            -- Cargo light
+            gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
+
             --Pilot name
             gfx.print( true, "Unknown", ta_pane_x + 14, ta_pane_y + 166, col_txt_una )
          end

@@ -115,7 +115,7 @@ int nlua_loadFaction( lua_State *L, int readonly )
  * @luamod faction
  */
 /**
- * @brief Gets the faction based on it's name.
+ * @brief Gets the faction based on its name.
  *
  * @usage f = faction.get( "Empire" )
  *
@@ -256,7 +256,7 @@ static int factionL_longname( lua_State *L )
 }
 
 /**
- * @brief Checks to see if f is an enemy.
+ * @brief Checks to see if f is an enemy of e.
  *
  * @usage if f:areEnemies( faction.get( "Dvaered" ) ) then
  *
@@ -276,7 +276,7 @@ static int factionL_areenemies( lua_State *L )
 }
 
 /**
- * @brief Checks to see if f is an enemy.
+ * @brief Checks to see if f is an ally of a.
  *
  * @usage if f:areAllies( faction.get( "Pirate" ) ) then
  *
@@ -298,7 +298,7 @@ static int factionL_areallies( lua_State *L )
 /**
  * @brief Modifies the player's standing with the faction.
  *
- * Will also modify standing with allies and enemies of the faction.
+ * Also modifies standing with allies and enemies of the faction.
  *
  * @usage f:modPlayer( -5 ) -- Lowers faction by 5
  *
@@ -426,7 +426,7 @@ static int factionL_allies( lua_State *L )
 
 
 /**
- * @brief Gets the small faction logo which is about 64x64.
+ * @brief Gets the small faction logo which is 64x64 or smaller.
  *
  *    @luaparam f Faction to get logo from.
  *    @luareturn The small faction logo or nil if not applicable.
@@ -448,7 +448,7 @@ static int factionL_logoSmall( lua_State *L )
 
 
 /**
- * @brief Gets the tiny faction logo which is about 24x24.
+ * @brief Gets the tiny faction logo which is 24x24 or smaller.
  *
  *    @luaparam f Faction to get logo from.
  *    @luareturn The tiny faction logo or nil if not applicable.

@@ -143,7 +143,7 @@ static int rnd_twosigma( lua_State *L )
 /**
  * @brief Creates a number in the three-sigma range [-3:3].
  *
- * This function behaves much like it's brothers rnd.sigma and rnd.twosigma.  The main
+ * This function behaves much like its brothers rnd.sigma and rnd.twosigma.  The main
  *  difference is that it uses the three-sigma range which is the 99% quadrant.  It
  *  will rarely generate numbers outside the [-2:2] range (about 5% of the time) and
  *  create numbers outside of the [-1:1] range about 37% of the time.  This can be used

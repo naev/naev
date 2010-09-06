@@ -91,6 +91,11 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
+static int pilotL_cargoFree( lua_State *L );
+static int pilotL_cargoHas( lua_State *L );
+static int pilotL_cargoAdd( lua_State *L );
+static int pilotL_cargoRm( lua_State *L );
+static int pilotL_cargoList( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
@@ -159,6 +164,11 @@ static const luaL_reg pilotL_methods[] = {
    { "setFuel", pilotL_setFuel },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "cargoFree", pilotL_cargoFree },
+   { "cargoHas", pilotL_cargoHas },
+   { "cargoAdd", pilotL_cargoAdd },
+   { "cargoRm", pilotL_cargoRm },
+   { "cargoList", pilotL_cargoList },
    /* Manual AI control. */
    { "idle", pilotL_idle },
    { "control", pilotL_control },
@@ -202,6 +212,9 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "hostile", pilotL_getHostile },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "cargoFree", pilotL_cargoFree },
+   { "cargoHas", pilotL_cargoHas },
+   { "cargoList", pilotL_cargoList },
    {0,0}
 };
 
@@ -689,7 +702,6 @@ static int pilotL_getPilots( lua_State *L )
                p.pilot = pilot_stack[i]->id;
                lua_pushpilot(L, p); /* value */
                lua_rawset(L,-3); /* table[key] = value */
-               break; /* Continue to next pilot. */
             }
          }
       }
@@ -697,7 +709,7 @@ static int pilotL_getPilots( lua_State *L )
       /* clean up. */
       free(factions);
    }
-   else {
+   else if (lua_gettop(L) == 0) {
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
@@ -708,9 +720,11 @@ static int pilotL_getPilots( lua_State *L )
             p.pilot = pilot_stack[i]->id;
             lua_pushpilot(L, p); /* value */
             lua_rawset(L,-3); /* table[key] = value */
-            break; /* Continue to next pilot. */
          }
       }
+   }
+   else {
+      NLUA_INVALID_PARAMETER(L);
    }
 
    return 1;
@@ -833,8 +847,13 @@ static int pilotL_target( lua_State *L )
    if (p->target == 0)
       return 0;
    lp.pilot = p->target;
+   /* Must be targetted. */
    if (p->target == p->id)
       return 0;
+   /* Must be valid. */
+   if (pilot_get(p->target) == NULL)
+      return 0;
+   /* Push target. */
    lua_pushpilot(L, lp);
    return 1;
 }
@@ -1546,7 +1565,7 @@ static int pilotL_rmOutfit( lua_State *L )
 
 
 /**
- * @Brief Sets the fuel of a pilot.
+ * @brief Sets the fuel of a pilot.
  *
  * @usage p:setFuel( true ) -- Sets fuel to max
  *
@@ -1834,6 +1853,7 @@ lua_rawset( L, -3 )
  *  <li> energy_regen <br />
  *  <li> jam_range <br />
  *  <li> jam_chance <br />
+ *  <li> jump_delay <br />
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -1855,10 +1875,12 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "cpu", p->cpu );
    PUSH_DOUBLE( L, "cpu_max", p->cpu_max );
    PUSH_DOUBLE( L, "fuel", p->fuel );
+   PUSH_DOUBLE( L, "mass", p->solid->mass );
    /* Movement. */
    PUSH_DOUBLE( L, "thrust", p->thrust );
    PUSH_DOUBLE( L, "speed", p->speed );
    PUSH_DOUBLE( L, "turn", p->turn );
+   PUSH_DOUBLE( L, "speed_max", p->speed + p->thrust/(3.*p->solid->mass) );
    /* Health. */
    PUSH_DOUBLE( L, "armour", p->armour_max );
    PUSH_DOUBLE( L, "shield", p->shield_max );
@@ -1869,10 +1891,169 @@ static int pilotL_getStats( lua_State *L )
    /* Jam. */
    PUSH_DOUBLE( L, "jam_range", p->jam_range );
    PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
+   /* Stats. */
+   PUSH_DOUBLE( L, "jump_delay", pilot_hyperspaceDelay(p) );
 
    return 1;
 }
 #undef PUSH_DOUBLE
+
+
+/**
+ * @brief Gets the free cargo space the pilot has.
+ *
+ *    @luaparam p The pilot to get the free cargo space of.
+ *    @luareturn The free cargo space in tons of the player.
+ * @luafunc cargoFree()
+ */
+static int pilotL_cargoFree( lua_State *L )
+{
+   Pilot *p;
+   p = luaL_validpilot(L,1);
+
+   lua_pushnumber(L, pilot_cargoFree(p) );
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see how many tons of a specific type of cargo the pilot has.
+ *
+ *    @luaparam p The pilot to get the cargo count of.
+ *    @luaparam type Type of cargo to count.
+ *    @luareturn The amount of cargo the player has.
+ * @luafunc cargoHas( type )
+ */
+static int pilotL_cargoHas( lua_State *L )
+{
+   Pilot *p;
+   const char *str;
+   int quantity;
+
+   p = luaL_validpilot(L,1);
+   str = luaL_checkstring( L, 2 );
+   quantity = pilot_cargoOwned( p, str );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Tries to add cargo to the pilot's ship.
+ *
+ * @usage n = pilot.cargoAdd( player.pilot(), "Food", 20 )
+ *
+ *    @luaparam p The pilot to add cargo to.
+ *    @luaparam type Name of the cargo to add.
+ *    @luaparam quantity Quantity of cargo to add.
+ *    @luareturn The quantity of cargo added.
+ * @luafunc cargoAdd( type, quantity )
+ */
+static int pilotL_cargoAdd( lua_State *L )
+{
+   Pilot *p;
+   const char *str;
+   int quantity;
+   Commodity *cargo;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+   str      = luaL_checkstring( L, 2 );
+   quantity = luaL_checknumber( L, 3 );
+
+   /* Get cargo. */
+   cargo    = commodity_get( str );
+   if (cargo == NULL) {
+      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   /* Try to add the cargo. */
+   quantity = pilot_addCargo( player.p, cargo, quantity );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Tries to remove cargo from the pilot's ship.
+ *
+ * @usage n = pilot.cargoRm( player.pilot(), "Food", 20 )
+ *
+ *    @luaparam p The pilot to remove cargo from.
+ *    @luaparam type Name of the cargo to remove.
+ *    @luaparam quantity Quantity of the cargo to remove.
+ *    @luareturn The number of cargo removed.
+ * @luafunc cargoRm( type, quantity )
+ */
+static int pilotL_cargoRm( lua_State *L )
+{
+   Pilot *p;
+   const char *str;
+   int quantity;
+   Commodity *cargo;
+
+   /* Parse parameters. */
+   p = luaL_validpilot(L,1);
+   str      = luaL_checkstring( L, 2 );
+   quantity = luaL_checknumber( L, 3 );
+
+   /* Get cargo. */
+   cargo    = commodity_get( str );
+   if (cargo == NULL) {
+      NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   /* Try to add the cargo. */
+   quantity = pilot_rmCargo( p, cargo, quantity );
+   lua_pushnumber( L, quantity );
+   return 1;
+}
+
+
+/**
+ * @brief Lists the cargo the pilot has.
+ *
+ * The list has the following members:<br />
+ * <ul>
+ * <li><b>name:</b> name of the cargo.
+ * <li><b>q:</b> quantity of the targo.
+ * <li><b>m:</b> true if cargo is for a mission.
+ * </ul>
+ *
+ * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
+ *
+ *    @luareturn An ordered list with the names of the cargo the pilot has.
+ * @luafunc cargoList()
+ */
+static int pilotL_cargoList( lua_State *L )
+{
+   Pilot *p;
+   int i;
+
+   p = luaL_validpilot(L,1);
+   lua_newtable(L); /* t */
+   for (i=0; i<p->ncommodities; i++) {
+      lua_pushnumber(L, i+1); /* t, i */
+
+      /* Represents the cargo. */
+      lua_newtable(L); /* t, i, t */
+      lua_pushstring(L, "name"); /* t, i, t, i */
+      lua_pushstring(L, p->commodities[i].commodity->name); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_pushstring(L, "q"); /* t, i, t, i */
+      lua_pushnumber(L, p->commodities[i].quantity); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+      lua_pushstring(L, "m"); /* t, i, t, i */
+      lua_pushboolean(L, p->commodities[i].id); /* t, i, t, i, s */
+      lua_rawset(L,-3); /* t, i, t */
+
+      lua_rawset(L,-3); /* t */
+   }
+   return 1;
+
+}
 
 
 /**

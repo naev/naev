@@ -2839,6 +2839,24 @@ static void pilot_updateMass( Pilot *pilot )
 
 
 /**
+ * @brief Gets how many of the commodity the player.p has.
+ *
+ *    @param commodityname Commodity to check how many the player.p owns.
+ *    @return The number of commodities owned matching commodityname.
+ */
+int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
+{
+   int i;
+
+   for (i=0; i<pilot->ncommodities; i++)
+      if (!pilot->commodities[i].id &&
+            strcmp(commodityname, pilot->commodities[i].commodity->name)==0)
+         return pilot->commodities[i].quantity;
+   return 0;
+}
+
+
+/**
  * @brief Gets the pilot's free cargo space.
  *
  *    @param p Pilot to get the free space of.
@@ -3085,6 +3103,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
    /* Update mass. */
    pilot_updateMass( pilot );
+   gui_setCargo();
 
    return 0;
 }
@@ -3109,7 +3128,7 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
    for (i=0; i<pilot->ncommodities; i++)
       if (pilot->commodities[i].commodity == cargo) {
 
-         /* Must not be missino cargo unless cleaning up. */
+         /* Must not be mission cargo unless cleaning up. */
          if (!cleanup && (pilot->commodities[i].id != 0))
             continue;
 
