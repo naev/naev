@@ -152,9 +152,12 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       ws->slots = array_create( PilotWeaponSetOutfit );
 
    /* Check if already there. */
-   for (i=0; i<array_size(ws->slots); i++)
-      if (ws->slots[i].slot == o)
+   for (i=0; i<array_size(ws->slots); i++) {
+      if (ws->slots[i].slot == o) {
+         ws->slots[i].level = level;
          return;
+      }
+   }
 
    /* Add it. */
    slot        = &array_grow( &ws->slots );

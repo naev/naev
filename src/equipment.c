@@ -72,7 +72,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       void *data );
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
-static int equipment_mouseColumn( double y, double h, int n, double my );
+static int equipment_mouseInColumn( double y, double h, int n, double my );
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
@@ -785,7 +785,7 @@ static void equipment_renderShip( double bx, double by,
 /**
  * @brief Handles a mouse press in column.
  */
-static int equipment_mouseColumn( double y, double h, int n, double my )
+static int equipment_mouseInColumn( double y, double h, int n, double my )
 {
    int i;
 
@@ -796,6 +796,52 @@ static int equipment_mouseColumn( double y, double h, int n, double my )
    }
 
    return -1;
+}
+/**
+ * @brief Handles a mouse press in a column.
+ */
+static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
+      double mx, double my, double y, double h, int n, PilotOutfitSlot* os,
+      Pilot *p, int selected, CstSlotWidget *wgt )
+{
+   int ret, exists, level;
+
+   ret = equipment_mouseInColumn( y, h, n, my );
+   if (ret < 0)
+      return 0;
+
+   if (event->type == SDL_MOUSEBUTTONDOWN) {
+      /* Normal mouse usage. */
+      if (wgt->weapons < 0) {
+         if (event->button.button == SDL_BUTTON_LEFT)
+            wgt->slot = selected + ret;
+         else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+               wgt->canmodify)
+            equipment_swapSlot( wid, p, &os[ret] );
+      }
+      /* Viewing weapon slots. */
+      else {
+         /* See if it exists. */
+         exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
+         /* Get the level of the selection. */
+         if (event->button.button== SDL_BUTTON_LEFT)
+            level = 0;
+         else if (event->button.button== SDL_BUTTON_RIGHT)
+            level = 1;
+         /* See if we should add it or remove it. */
+         if (exists==level)
+            pilot_weapSetRm( p, wgt->weapons, &os[ret] );
+         else
+            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+      }
+   }
+   else {
+      wgt->mouseover  = selected + ret;
+      wgt->altx       = mx;
+      wgt->alty       = my;
+   }
+
+   return 1;
 }
 /**
  * @brief Does mouse input for the custom equipment widget.
@@ -835,62 +881,26 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    x  = (tw-w)/2;
    y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nweapon, my );
-      if (ret >= 0) {
-         if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT)
-               wgt->slot = selected + ret;
-            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-                  wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_weapon[ret] );
-         }
-         else {
-            wgt->mouseover  = selected + ret;
-            wgt->altx       = mx;
-            wgt->alty       = my;
-         }
+      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+            p->outfit_nweapon, p->outfit_weapon, p, selected, wgt );
+      if (ret)
          return;
-      }
    }
    selected += p->outfit_nweapon;
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nutility, my );
-      if (ret >= 0) {
-         if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT)
-               wgt->slot = selected + ret;
-            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-                  wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_utility[ret] );
-         }
-         else {
-            wgt->mouseover = selected + ret;
-            wgt->altx      = mx;
-            wgt->alty      = my;
-         }
+      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+            p->outfit_nutility, p->outfit_utility, p, selected, wgt );
+      if (ret)
          return;
-      }
    }
    selected += p->outfit_nutility;
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nstructure, my );
-      if (ret >= 0) {
-         if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT)
-               wgt->slot = selected + ret;
-            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-                  wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_structure[ret] );
-         }
-         else {
-            wgt->mouseover = selected + ret;
-            wgt->altx      = mx;
-            wgt->alty      = my;
-         }
+      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+            p->outfit_nstructure, p->outfit_structure, p, selected, wgt );
+      if (ret)
          return;
-      }
    }
 
    /* Not over anything. */
