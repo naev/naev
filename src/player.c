@@ -1310,6 +1310,16 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
  *
  */
 /**
+ * @brief Actiavtes a player's weapon set.
+ */
+void player_weapSetExec( int id )
+{
+   if (player.p != NULL)
+      pilot_weapSetExec( player.p, id );
+}
+
+
+/**
  * @brief Get the next secondary weapon.
  */
 void player_secondaryNext (void)
