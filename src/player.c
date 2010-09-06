@@ -134,7 +134,6 @@ static int player_moutfits             = 0; /**< Current allocated memory. */
 double player_left         = 0.; /**< Player left turn velocity from input. */
 double player_right        = 0.; /**< Player right turn velocity from input. */
 static double player_acc   = 0.; /**< Accel velocity from input. */
-static int player_firemode = 0; /**< Player fire mode. */
 /* for death and such */
 static double player_timer = 0.; /**< For death and such. */
 
@@ -1320,84 +1319,6 @@ void player_weapSetExec( int id )
 
 
 /**
- * @brief Get the next secondary weapon.
- */
-void player_secondaryNext (void)
-{
-   int i;
-   int found;
-   Outfit *o;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   found = !!(player.p->secondary == NULL);
-   for (i=0; i<player.p->noutfits; i++) {
-      o = player.p->outfits[i]->outfit;
-
-      /* Make sure is secondary weapon. */
-      if ((o == NULL) || !(outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)))
-         continue;
-
-      /* Make sure it isn't the same as the current one. */
-      if ((player.p->secondary != NULL) &&
-            (player.p->secondary->outfit == o)) {
-         if (player.p->secondary == player.p->outfits[i])
-            found = 1;
-         continue;
-      }
-
-      /* No secondary, grab first. */
-      if (found==1) {
-         player.p->secondary = player.p->outfits[i];
-         return;
-      }
-   }
-   player.p->secondary = NULL;
-}
-
-
-/**
- * @brief Get the previous secondary weapon.
- */
-void player_secondaryPrev (void)
-{
-   int i;
-   int found;
-   Outfit *o;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   found = !!(player.p->secondary == NULL);
-   for (i=player.p->noutfits-1; i>=0; i--) {
-      o = player.p->outfits[i]->outfit;
-
-      /* Make sure is secondary weapon. */
-      if ((o == NULL) || !(outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)))
-         continue;
-
-      /* Make sure it isn't the same as the current one. */
-      if ((player.p->secondary != NULL) &&
-            (player.p->secondary->outfit == o)) {
-         if (player.p->secondary == player.p->outfits[i])
-            found = 1;
-         continue;
-      }
-
-      /* No secondary, grab first. */
-      if (found==1) {
-         player.p->secondary = player.p->outfits[i];
-         return;
-      }
-   }
-   player.p->secondary = NULL;
-}
-
-
-/**
  * @brief Cycle through planet targets.
  */
 void player_targetPlanet (void)
@@ -2084,29 +2005,6 @@ void player_autohail (void)
 
    /* Clear hails if none found. */
    player_checkHail();
-}
-
-
-/**
- * @brief Sets the ship fire mode.
- */
-void player_setFireMode( int mode )
-{
-   if (player_firemode == mode)
-      return;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   player_firemode = mode;
-
-   if (player_firemode == 0)
-      player_message("\epFire mode set to all weapons.");
-   else if (player_firemode == 1)
-      player_message("\epFire mode set to turret weapons.");
-   else if (player_firemode == 2)
-      player_message("\epFire mode set to forward weapons.");
 }
 
 
