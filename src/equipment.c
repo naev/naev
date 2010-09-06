@@ -314,13 +314,10 @@ void equipment_slotWidget( unsigned int wid,
       CstSlotWidget *data )
 {
    /* Initialize data. */
-   data->selected = NULL;
-   data->outfit   = NULL;
-   data->slot     = -1;
-   data->mouseover = -1;
-   data->altx     = 0.;
-   data->alty     = 0.;
-   data->weapons  = -1;
+   memset( data, 0, sizeof(CstSlotWidget) );
+   data->slot        = -1;
+   data->mouseover   = -1;
+   data->weapons     = -1;
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
