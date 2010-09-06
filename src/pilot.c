@@ -2412,7 +2412,6 @@ Pilot* pilot_copy( Pilot* src )
       dest->outfits[p++] = &dest->outfit_utility[i];
    for (i=0; i<dest->outfit_nweapon; i++)
       dest->outfits[p++] = &dest->outfit_weapon[i];
-   dest->secondary   = NULL;
    dest->afterburner = NULL;
 
    /* Hooks get cleared. */

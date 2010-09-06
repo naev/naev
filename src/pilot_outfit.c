@@ -22,20 +22,6 @@
 
 
 /**
- * @brief Gets the quantity of a pilot outfit.
- *
- *    @param p Pilot to which the outfit belongs.
- *    @param w Outfit to check quantity of.
- *    @return The amount of the outfit the pilot has.
- */
-int pilot_oquantity( Pilot* p, PilotOutfitSlot* w )
-{
-   return (outfit_isAmmo(w->outfit) && p->secondary) ?
-      p->secondary->quantity : w->quantity ;
-}
-
-
-/**
  * @brief Gets the mount position of a pilot.
  *
  * Position is relative to the pilot.
@@ -77,20 +63,6 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
    vect_cset( v, x, y );
 
    return 0;
-}
-
-
-
-/**
- * @brief Sets the pilot's secondary weapon.
- *
- *    @param p Pilot to set secondary weapon.
- *    @param i Index of the weapon to set to.
- */
-void pilot_switchSecondary( Pilot* p, PilotOutfitSlot* w )
-{
-   pilot_shootStop( p, 1 );
-   player.p->secondary = w;
 }
 
 
@@ -325,8 +297,6 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    s->outfit   = NULL;
 
    /* Remove secondary and such if necessary. */
-   if (pilot->secondary == s)
-      pilot->secondary = NULL;
    if (pilot->afterburner == s)
       pilot->afterburner = NULL;
 

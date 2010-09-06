@@ -2289,23 +2289,24 @@ static int aiL_aim( lua_State *L )
    dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
 
    /* Check if should recalculate weapon speed with secondary weapon. */
-   if ((cur_pilot->secondary != NULL) &&
-         outfit_isBolt(cur_pilot->secondary->outfit) &&
-         (cur_pilot->secondary->outfit->type == OUTFIT_TYPE_LAUNCHER)) {
-      speed  = cur_pilot->weap_speed + outfit_speed(cur_pilot->secondary->outfit);
-      speed /= 2.;
+   speed = pilot_weapSetSpeed( cur_pilot, cur_pilot->active_set, -1 );
+   if (speed > 0.) {
+
+      /* Time for shots to reach that distance */
+      t = dist / speed;
+
+      /* Position is calculated on where it should be */
+      x = p->solid->pos.x + p->solid->vel.x*t
+            - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
+      y = p->solid->pos.y + p->solid->vel.y*t
+         - (cur_pilot->solid->pos.y + cur_pilot->solid->vel.y*t);
+      vect_cset( &tv, x, y );
    }
-   else speed = cur_pilot->weap_speed;
-
-   /* Time for shots to reach that distance */
-   t = dist / speed;
-
-   /* Position is calculated on where it should be */
-   x = p->solid->pos.x + p->solid->vel.x*t
-         - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
-   y = p->solid->pos.y + p->solid->vel.y*t
-      - (cur_pilot->solid->pos.y + cur_pilot->solid->vel.y*t);
-   vect_cset( &tv, x, y );
+   else {
+      x = p->solid->pos.x - cur_pilot->solid->pos.x;
+      y = p->solid->pos.y - cur_pilot->solid->pos.y;
+      vect_cset( &tv, x, y );
+   }
 
    /* Calculate what we need to turn */
    mod = 10.;

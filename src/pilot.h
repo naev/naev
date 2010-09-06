@@ -175,6 +175,7 @@ typedef struct PilotWeaponSet_ {
    char *name; /**< Helpful for the player. */
    int fire; /**< Whether to fire the weapons or just enable them. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
+   double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
 } PilotWeaponSet;
 
@@ -296,7 +297,6 @@ typedef struct Pilot_ {
    int outfit_nweapon; /**< Number of weapon slots. */
    PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
    /* For easier usage. */
-   PilotOutfitSlot *secondary; /**< secondary weapon */
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */

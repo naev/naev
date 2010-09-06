@@ -235,19 +235,26 @@ int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
 static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
 {
    int i, lev;
-   double range;
+   double range, speed;
    double range_accum[PILOT_WEAPSET_MAX_LEVELS];
    int range_num[PILOT_WEAPSET_MAX_LEVELS];
+   double speed_accum[PILOT_WEAPSET_MAX_LEVELS];
+   int speed_num[PILOT_WEAPSET_MAX_LEVELS];
 
    /* No slots. */
-   if (ws->slots == NULL)
-      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
+   if (ws->slots == NULL) {
+      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
          ws->range[i] = 0.;
+         ws->speed[i] = 0.;
+      }
+   }
 
    /* Calculate ranges. */
    for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
       range_accum[i] = 0.;
       range_num[i]   = 0;
+      speed_accum[i] = 0.;
+      speed_num[i]   = 0;
    }
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot->outfit == NULL)
@@ -260,20 +267,34 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
  
       /* Get range. */
       range = outfit_range(ws->slots[i].slot->outfit);
-      if (range < 0.)
-         continue;
-      
-      /* Calculate. */
-      range_accum[ lev ] += range;
-      range_num[ lev ]++;
+      if (range >= 0.) {
+         /* Calculate. */
+         range_accum[ lev ] += range;
+         range_num[ lev ]++;
+      }
+
+      /* Get speed. */
+      speed = outfit_speed(ws->slots[i].slot->outfit);
+      if (speed >= 0.) {
+         /* Calculate. */
+         speed_accum[ lev ] += speed;
+         speed_num[ lev ]++;
+      }
    }
 
    /* Postprocess. */
    for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
+      /* Postprocess range. */
       if (range_num[i] == 0)
          ws->range[i] = 0;
       else
          ws->range[i] = range_accum[i] / (double) range_num[i];
+
+      /* Postprocess speed. */
+      if (speed_num[i] == 0)
+         ws->speed[i] = 0;
+      else
+         ws->speed[i] = speed_accum[i] / (double) speed_num[i];
    }
 }
 
@@ -305,6 +326,32 @@ double pilot_weapSetRange( Pilot* p, int id, int level )
 
 
 /**
+ * @brief Gets the speed of the current pilot weapon set.
+ *
+ *    @param p Pilot to get the speed of.
+ *    @param id ID of weapon set to get the speed of.
+ *    @param Level of the weapons to get the speed of (-1 for all).
+ */
+double pilot_weapSetSpeed( Pilot* p, int id, int level )
+{
+   PilotWeaponSet *ws;
+   int i;
+   double speed;
+
+   ws = pilot_weapSet(p,id);
+   if (level < 0) {
+      speed = 0;
+      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
+         speed += ws->speed[i];
+   }
+   else
+      speed = ws->speed[ level ];
+
+   return speed;
+}
+
+
+/**
  * @brief Cleans up a weapon set.
  *
  *    @param p Pilot who owns the weapon set.
@@ -326,6 +373,29 @@ void pilot_weapSetCleanup( Pilot* p, int id )
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
+}
+
+
+/**
+ * @brief Lists the items in a pilot weapon set.
+ *
+ *    @param p Pilot who owns the weapon set.
+ *    @param id ID of the weapon set.
+ *    @param[out] n Number of elements in the list.
+ *    @return The array of pilot weaponset outfits.
+ */
+PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n )
+{
+   PilotWeaponSet *ws;
+
+   ws = pilot_weapSet(p,id);
+   if (ws->slots == NULL) {
+      *n = 0;
+      return NULL;
+   }
+
+   *n = array_size(ws->slots);
+   return ws->slots;
 }
 
 

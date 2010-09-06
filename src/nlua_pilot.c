@@ -941,52 +941,65 @@ static int pilotL_nav( lua_State *L )
 static int pilotL_secondary( lua_State *L )
 {
    Pilot *p;
-   int i, q, ready;
+   int i, n;
+   PilotWeaponSetOutfit *po_list, *po;
+   Outfit *ammo;
+   double delay;
 
    /* Parse parameters. */
    p = luaL_validpilot(L,1);
 
-   /* Case no secondary weapon. */
-   if ((p->secondary==NULL) || (p->secondary->outfit == NULL))
-      return 0;
-
-   /* Get ready status. */
-   ready = !(p->secondary->timer > 0.);
-
    /* Push name. */
-   if (outfit_isLauncher(p->secondary->outfit) || outfit_isFighterBay(p->secondary->outfit))
-      lua_pushstring( L, p->secondary->u.ammo.outfit->name );
-   else
-      lua_pushstring( L, p->secondary->outfit->name );
+   lua_pushstring( L, pilot_weapSetName( p, p->active_set ) );
 
-   /* Can have ammo. */
-   if ((outfit_isLauncher(p->secondary->outfit) ||
-            outfit_isFighterBay(p->secondary->outfit)) &&
-         (p->secondary->u.ammo.outfit != NULL)) {
+   /* Push set. */
+   po_list = pilot_weapSetList( p, p->active_set, &n );
+   lua_newtable(L);
+   for (i=0; i<n; i++) {
+      po = &po_list[i];
 
-      /* Get quantity. */
-      q = 0;
-      for (i=0; i<p->outfit_nweapon; i++) {
-         if (p->outfit_weapon[i].outfit != p->secondary->outfit)
-            continue;
+      /* Set up for creation. */
+      lua_pushnumber(L,i+1);
+      lua_newtable(L);
 
-         if (p->outfit_weapon[i].u.ammo.outfit == p->secondary->u.ammo.outfit)
-            q += p->outfit_weapon[i].u.ammo.quantity;
+      /* Name. */
+      lua_pushstring(L,"name");
+      lua_pushstring(L,po->slot->outfit->name);
+      lua_rawset(L,-3);
+
+      /* Set cooldown. */
+      lua_pushstring(L,"cooldown");
+      delay = outfit_delay(po->slot->outfit);
+      if (delay > 0.)
+         lua_pushnumber( L, CLAMP( 0., 1., 1. - po->slot->timer / delay ) );
+      else
+         lua_pushnumber( L, 1. );
+      lua_rawset(L,-3);
+
+      /* Ammo name. */
+      lua_pushstring(L,"ammo");
+      ammo = outfit_ammo(po->slot->outfit);
+      if (ammo != NULL)
+         lua_pushstring(L,ammo->name);
+      else
+         lua_pushnil(L);
+      lua_rawset(L,-3);
+
+      /* Ammo quantity. */
+      lua_pushstring(L,"left");
+      if ((outfit_isLauncher(po->slot->outfit) ||
+               outfit_isFighterBay(po->slot->outfit)) &&
+            (po->slot->u.ammo.outfit != NULL)) {
+         lua_pushnumber( L, po->slot->u.ammo.quantity );
       }
+      else
+         lua_pushnil( L );
+      lua_rawset(L,-3);
 
-      /* Push ammo. */
-      lua_pushnumber( L, q );
+      /* Set table in table. */
+      lua_rawset(L,-3);
    }
-   else {
-      /* Not ready if it's a launcher with no ammo. */
-      if (outfit_isLauncher(p->secondary->outfit) ||
-            outfit_isFighterBay(p->secondary->outfit))
-         ready = 0;
-
-      lua_pushnil( L );
-   }
-   lua_pushboolean( L, ready );
-   return 3;
+   return 2;
 }
 
 
