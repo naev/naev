@@ -69,6 +69,7 @@ static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
 static void standings_close( unsigned int wid, char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
+static void weapons_update( unsigned int wid, char *str );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
@@ -353,7 +354,24 @@ static void weapons_genList( unsigned int wid )
    window_addList( wid, 20+180+20, -40,
          w - (20+180+20+20), 80,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
-         0, NULL );
+         0, weapons_update );
+
+   /* Update. */
+   weapons_update( wid, NULL );
+}
+
+
+/**
+ * @brief Updates the weapon sets.
+ */
+static void weapons_update( unsigned int wid, char *str )
+{
+   (void) str;
+   int pos;
+
+   /* Update the position. */
+   pos = toolkit_getListPos( wid, "lstWeapSets" );
+   info_eq_weaps.weapons = pos;
 }
 
 

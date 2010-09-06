@@ -2869,11 +2869,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_endElem(writer); /* "commodities" */
 
    xmlw_startElem(writer,"weaponsets");
-   if (ship->autoweap) {
-      xmlw_attr(writer,"autoweap","%d",1);
-   }
-   else {
-   }
+   xmlw_attr(writer,"autoweap","%d",ship->autoweap);
    xmlw_endElem(writer); /* "weaponsets" */
 
    xmlw_endElem(writer); /* "ship" */
@@ -3444,11 +3440,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          /* Check for autoweap. */
          xmlr_attr(node,"autoweap",id);
          if (str != NULL) {
-            autoweap = 1;
+            autoweap = atof(id);
             free(id);
-            break;
          }
-         autoweap = 0;
+         if (autoweap)
+            break;
 
          /* Parse weapon sets. */
          cur = node->xmlChildrenNode;

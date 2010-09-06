@@ -22,6 +22,7 @@ const char *pilot_weapSetName( Pilot* p, int id );
 void pilot_weapSetNameSet( Pilot* p, int id, const char *name );
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
+int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o );
 double pilot_weapSetRange( Pilot* p, int id, int level );
 void pilot_weapSetCleanup( Pilot* p, int id );
 

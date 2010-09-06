@@ -63,7 +63,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
-      int selected, Outfit *o, Pilot *p );
+      int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
@@ -298,6 +298,17 @@ void equipment_open( unsigned int wid )
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
 }
+
+
+/**
+ * @brief Creates the slot widget and initializes it.
+ *
+ *    @param x X position to put it at.
+ *    @param y Y position to put it at.
+ *    @param w Width.
+ *    @param h Height;
+ *    @param data Dataset to use.
+ */
 void equipment_slotWidget( unsigned int wid,
       double x, double y, double w, double h,
       CstSlotWidget *data )
@@ -309,6 +320,7 @@ void equipment_slotWidget( unsigned int wid,
    data->mouseover = -1;
    data->altx     = 0.;
    data->alty     = 0.;
+   data->weapons  = -1;
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
@@ -321,9 +333,9 @@ void equipment_slotWidget( unsigned int wid,
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
-      int selected, Outfit *o, Pilot *p )
+      int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
-   int i;
+   int i, level;
    glColour *c, *dc, bc;
 
    /* Render text. */
@@ -336,18 +348,28 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
+      /* Choose default colour. */
+      if (wgt->weapons >= 0) {
+         level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
+         if (level == 0)
+            dc = &cFontRed;
+         else if (level == 1)
+            dc = &cFontYellow;
+         else
+            dc = &cInert;
+      }
+      else {
+         dc = outfit_slotSizeColour( &lst[i].slot );
+      }
+
       /* Choose colours based on size. */
       if (i==selected) {
          c  = &cGrey80;
-         dc = outfit_slotSizeColour( &lst[i].slot );
          if (dc == NULL)
             dc = &cGrey60;
       }
       else {
          c  = toolkit_col;
-         dc = outfit_slotSizeColour( &lst[i].slot );
-         if (dc == NULL)
-            dc = toolkit_colDark;
       }
 
       /* Draw background. */
@@ -438,7 +460,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nweapon, p->outfit_weapon, "Weapon",
-         selected, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw systems outfits. */
    selected -= p->outfit_nweapon;
@@ -446,7 +468,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nutility, p->outfit_utility, "Utility",
-         selected, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw structure outfits. */
    selected -= p->outfit_nutility;
@@ -454,7 +476,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nstructure, p->outfit_structure, "Structure",
-         selected, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected, wgt );
 }
 /**
  * @brief Renders the custom equipment widget.

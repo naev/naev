@@ -197,6 +197,34 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 
 
 /**
+ * @brief Checks to see if a slot is in a weapon set.
+ *
+ *    @param p Pilot to check.
+ *    @param id ID of the weapon set.
+ *    @param o Outfit slot to check.
+ *    @return The level to which it belongs (or -1 if it isn't set).
+ */
+int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
+{
+   PilotWeaponSet *ws;
+   int i;
+
+   /* Make sure it has slots. */
+   ws = pilot_weapSet(p,id);
+   if (ws->slots == NULL)
+      return -1;
+
+   /* Find the slot. */
+   for (i=0; i<array_size(ws->slots); i++)
+      if (ws->slots[i].slot == o)
+         return ws->slots[i].level;
+
+   /* Not found. */
+   return -1;
+}
+
+
+/**
  * @brief Updates the weapon range for a pilot weapon set.
  *
  *    @param ws Weapon Set to update range for.
