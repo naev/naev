@@ -98,14 +98,8 @@ const char *keybindDescription[] = {
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
-   /* Weapon selection. */
-   "Sets fire mode to use all weapons available (both turret and forward mounts).",
-   "Sets fire mode to only use turret-class primary weapons.",
-   "Sets fire mode to only use forward-class primary weapons.",
    /* Secondary weapons. */
    "Fires your secondary weapon.",
-   "Cycles through secondary weapons.",
-   "Cycles backwards through secondary weapons.",
    "Activate Weapon Set 1",
    "Activate Weapon Set 2",
    "Activate Weapon Set 3",
@@ -295,8 +289,8 @@ void input_init (void)
    if (sizeof(keybindNames) != sizeof(keybindDescription)) {
       WARN("Keybind names and descriptions aren't of the same size!");
       WARN("   %u descriptions for %u names",
-            (unsigned int) sizeof(keybindNames),
-            (unsigned int) sizeof(keybindDescription));
+            (unsigned int) (sizeof(keybindNames) / sizeof(char*)),
+            (unsigned int) (sizeof(keybindDescription) / sizeof(char*)));
    }
 #endif /* DEBUGGING */
 
