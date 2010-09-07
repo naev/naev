@@ -143,9 +143,20 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 {
    PilotWeaponSet *ws;
    PilotWeaponSetOutfit *slot;
+   Outfit *oo;
    int i;
 
    ws = pilot_weapSet(p,id);
+
+   /* Make sure outfit is valid. */
+   oo = o->outfit;
+   if (oo == NULL)
+      return;
+
+   /* Make sure outfit type is weapon (or usable). */
+   if (!(outfit_isBeam(oo) || outfit_isBolt(oo) ||
+            outfit_isLauncher(oo) || outfit_isFighterBay(oo)))
+      return;
 
    /* Create if needed. */
    if (ws->slots == NULL)
