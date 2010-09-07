@@ -113,15 +113,15 @@ void player_board (void)
     * create the boarding window
     */
    wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
-
+	/*window coords(from side, from top, width, height)*/
    window_addText( wdw, 20, -30, 120, 60,
          0, "txtGoodies", &gl_smallFont, &cDConsole,
          "Credits:\n"
          "Cargo:\n"
-		 "Outfits:\n"
+		 "Equipment:\n"
          "Fuel:\n"
          );
-   window_addText( wdw, 80, -30, 120, 250,
+   window_addText( wdw, 90, -30, (BOARDING_WIDTH-90-20), (BOARDING_HEIGHT-30-BUTTON_HEIGHT-20 ),
          0, "txtData", &gl_smallFont, &cBlack, NULL );
 
    /*window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, "btnStealCredits", "Credits", board_stealCreds);
@@ -179,6 +179,7 @@ void board_unboard (void)
 static void board_exit( unsigned int wdw, char* str )
 {
    (void) str;
+	numbOutfits=0;
    window_destroy( wdw );
 }
 
@@ -219,15 +220,16 @@ static void board_stealCreds( unsigned int wdw, char* str )
 static void board_stealEquipment( unsigned int wdw, char* str )
 {
    (void)str;
-   int i, q, qq, freeCargo;
+   int i, q, qq;
    Pilot* p;
 
    p = pilot_get(player.p->target);
 
 	if (numbOutfits==0) { /* no outfits */
-		player_message("\epThe ship has outfts.");
+		player_message("\epThe ship has no equipment.");
 		return;
 	}
+	/*this is here under the initial assumption the player could only take as much as they had space for*/
 	else if (pilot_cargoFree(player.p) <= 0) {
       player_message("\erYou have no room for the ship's cargo.");
       return;
@@ -429,10 +431,10 @@ static void board_update( unsigned int wdw )
 		}
 	}
 	if (numbOutfits==0){
-		j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+		j += snprintf( &str[j], PATH_MAX-j, "none" );
 	}
 	j += snprintf( &str[j], PATH_MAX-j, "\n" );
-
+	
 		
 
    /* Fuel. */
@@ -443,6 +445,7 @@ static void board_update( unsigned int wdw )
 
 	
    window_modifyText( wdw, "txtData", str );
+
 }
 
 
