@@ -2042,4 +2042,19 @@
    <mass>1</mass>
   </characteristics>
  </ship>
+ <ship name="Debris6">
+  <base_type>Debris</base_type>
+  <GFX sx="6" sy="6">debris_6</GFX>
+  <class>Cruiser</class>
+  <health>
+   <armour>1</armour>
+  </health>
+  <movement>
+   <thrust>0</thrust>
+   <speed>0</speed>
+  </movement>
+  <characteristics>
+   <mass>1</mass>
+  </characteristics>
+ </ship>
 </Ships>

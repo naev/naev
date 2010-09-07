@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Techs>
  <!-- EXAMPLE showing a tech may contain outfits, ships, commodities and other techs. -->
  <!-- For details, see http://groups.google.com/group/naev/browse_thread/thread/76ece93aa9162ceb -->
@@ -90,6 +90,7 @@
   <item>Light Combat Vessel License</item>
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
+  <item>Engine Calibration</item>
  </tech>
  <tech name="All Ships">
   <item>Admonisher</item>
@@ -205,6 +206,7 @@
   <item>Star Map</item>
   <item>Civilian Jammer</item>
   <item>Light Combat Vessel License</item>
+  <item>Engine Calibration</item>
  </tech>
  <tech name="High Tech Upgrades 1">
   <item>Battery</item>

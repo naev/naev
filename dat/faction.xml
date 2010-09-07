@@ -249,4 +249,11 @@
   <player>0</player>
   <enemies/>
  </faction>
+ <faction name="  ">
+  <invisible />
+  <static />
+  <allies />
+  <player>0</player>
+  <enemies/>
+ </faction>
 </Factions>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial">
   <lua>tutorial</lua>
@@ -532,6 +532,14 @@
    <chance>960</chance>
    <location>Computer</location>
    <faction>Pirate</faction>
+  </avail>
+ </mission>
+ <mission name="Super Looting1">
+  <lua>neutral/hyper_parts1</lua>
+  <avail>
+   <cond>system.cur():name() == "ERROR: Telemetry Not Found" and var.peek("enHh_meeting")==1</cond>
+   <chance>100</chance>
+   <location>None</location>
   </avail>
  </mission>
 </Missions>

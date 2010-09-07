@@ -14,16 +14,19 @@ if lang == "es" then
 else -- default english 
     -- Text goes here. Please keep the section as organized as possible.
 	warnText1="<WARNING: Hyperspace transit malfunction>"
-	warnText2="<Resyncing with local system time servers....>"
+	warnText2="<Resyncing with local system time servers....>"--this should probably only appear in settled systems
 	warnText3="<WARNING: Transit time significantly different than calculated>"
 	warnText4="<WARNING: Estimated transit time: 1 Actual transit time: Z>"
 	warnText5="<Seek assistance in repairs as soon as possible"
+
 end 
+
+malfunctionHappened=0
 
 function create ()
 	--set the hooks--
-	h1=hook.jumpout("onJumpout")
-	h2=hook.jumpin("onJumpin")
+	enMalJumpOut=hook.jumpout("onJumpout")
+	enMalJumpIn=hook.jumpin("onJumpin")
 end
 
 
@@ -45,14 +48,19 @@ function onJumpout()
 		i=math.pow(n,0.5)*5.0	--borrow a similar idea to how jump time is calculated by the game engine
 		--now alter the apparent jumptime
 		time.inc(i)
-	else
-		hook.rm(h1)
-		hook.rm(h2)
+		malfunctionHappened=1
 	end
+	hook.rm(enMalJumpOut)
 end
 
 function onJumpin()
-	hook.rm(h1)
+	if malfunctionHappened==1 then
+		malfunctionHappened=0
+		aMalfunction()
+	end
+end
+
+function aMalfunction()
 	n = var.peek( "engine_malfunctionWarning" ) -- Get the value
 	if system.cur():name()~="ERROR: Telemetry Not Found" then
 		if n>3 then
@@ -61,71 +69,54 @@ function onJumpin()
 				--40% chance of going to special system
 				--I wanted this to be triggered after X# warnings, but can't seem to save the count. need to think about how more
 				player.teleport(system.get("ERROR: Telemetry Not Found"))--go to hell. do not pass go.
+				var.pop("engine_malfunctionTime")
+				var.pop("engine_malfunctionWarning")
+				hook.rm(enMalJumpOut)
+				hook.rm(enMalJumpIn)
+				--endEvent()
 			end
+		else
+			--gug. time delays on messages are such a pain in tha butt
+			player.msg(warnText1)
+			--player.msg(warnText2)
+			--the estimated jump time. 1 decimal. In STU
+			estT=estJumpTime()
+			--the actual jump time. 1 decimal. In STU
+			actT=actJumpTime()
+			--do some replacements
+			warnText4=string.gsub(warnText4, "1", estT)
+			warnText4=string.gsub(warnText4, "Z", actT)
+			--player.msg(warnText3)
+			player.msg(warnText4)
+			r=rnd.rnd()
+			if r>0.5 then
+				theFab=player:pilot():ship():fabricator()
+				--could come up with all sorts of cheesy promotional phrases for here
+				warnText5=warnText5..", and remember to choose only the best "..theFab.." parts>"
+			else
+				warnText5=warnText5..">"
+			end
+			player.msg(warnText5)
 		end
-		h3=hook.timer(1000, "msg1")
 	end
+	hook.rm(enMalJumpIn)
 end
 
-
-function msg1()
-	hook.rm(h2)
-	hook.rm(h3)
-	if system.cur():name()=="ERROR: Telemetry Not Found" then
-		endMalfunction()
-	else
-		player.msg(warnText1)	
-		h4=hook.timer(2000, "msg2")
-	end
-end
-
-function msg2()
-	hook.rm(h4)
-	player.msg(warnText2)
-	h5=hook.timer(3000, "msg3")
-end
-
-function msg3()
-	hook.rm(h5)
-	player.msg(warnText3)
-	h6=hook.timer(1000, "msg4")	
-end
-
-function msg4()
-	hook.rm(h6)
-	--the estimated jump time. 1 decimal. In STU
-	estT=player:jumpTime()
-	estT=math.floor(estT*10^1+0.5)/10^1
+function actJumpTime()
 	--the actual jump time. 1 decimal. In STU
 	prevT=var.peek("engine_malfunctionTime")
 	presT=time.get()
 	actT=presT-prevT
 	actT=math.floor(actT*10^1+0.5)/10^1
 	actT=time.str(actT)
-	warnText4=string.gsub(warnText4, "1", estT)
-	warnText4=string.gsub(warnText4, "Z", actT)
-	--need to make time.str() drop leading zeros
-	player.msg(warnText4)
-	h7=hook.timer(3000, "msg5")
+	return actT
 end
 
 
-function msg5()
-	hook.rm(h7)
-	r=rnd.rnd()
-	if r>0.5 then
-		theFab=player:pilot():ship():fabricator()
-		--could come up with all sorts of cheesy promotional phrases for here
-		warnText5=warnText5..", and remember to choose only the best "..theFab.." parts>"
-	else
-		warnText5=warnText5..">"
-	end
-	player.msg(warnText5)
-end
-
-function endMalfunction()
-	var.pop("engine_malfunctionTime")
-	var.pop("engine_malfunctionWarning")
-	evt.finish(True)
+function estJumpTime()
+	--the estimated jump time. 1 decimal. In STU
+	estT=player:jumpTime()
+	estT=math.floor(estT*10^1+0.5)/10^1
+	return estT
 end
 

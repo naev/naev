@@ -1295,6 +1295,17 @@
   </general>
   <specific type="license" />
  </outfit>
+ <outfit name="Engine Calibration">
+  <general>
+   <slot>utility</slot>
+   <mass>0</mass>
+   <!--price is so low for testing purposes only-->
+   <price>100</price>
+   <description>Even with the best upkeep, the delicate mechanisms in jump engines fall out of alignment. By plugging this into an utility slot, the ship's engine proceeds through a calibration routine and realigns critical components. Realignment can help compensate for worn out components, but is no substitue for repairs. Note: calibration takes place while the ship is in flight and consumes the unit.</description>
+   <gfx_store>reroute</gfx_store>
+  </general>
+  <specific type="modification"/>
+ </outfit>
  <!-- Cheats. For missions, honest! -->
  <outfit name="Cheater's Ragnarok Beam">
   <general>

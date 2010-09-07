@@ -5656,7 +5656,9 @@
    <x>-10000.000000</x>
    <y>-10000.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Talbot's Home</asset>
+  </assets>
   <jumps/>
  </ssys>
 </Systems>
