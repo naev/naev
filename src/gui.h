@@ -51,8 +51,6 @@ void gui_forceBlink (void);
  * Messages.
  */
 void gui_messageInit( int width, int x, int y );
-void player_messageToggle( int enable );
-void player_message( const char *fmt, ... );
 void gui_clearMessages (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
@@ -83,6 +81,7 @@ void gui_setDefaults (void);
 void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
+char* gui_pick (void);
 
 
 #endif /* GUI_H */

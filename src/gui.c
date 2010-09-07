@@ -1150,6 +1150,7 @@ static glColour* gui_getPilotColour( const Pilot* p )
    glColour *col;
 
    if (p->id == player.p->target) col = &cRadar_tPilot;
+   else if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p)) col = &cInert;
    else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
    else if (pilot_isHostile(p)) col = &cHostile;
@@ -1207,8 +1208,8 @@ static void gui_renderPilot( const Pilot* p )
    }
 
    if (gui_radar.shape==RADAR_RECT) {
-      w = gui_radar.w/2.;
-      h = gui_radar.h/2.;
+      w = gui_radar.w;
+      h = gui_radar.h;
       rc = 0;
    }
    else if (gui_radar.shape==RADAR_CIRCLE) {
@@ -1414,20 +1415,23 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
    }
    else {
       a = ANGLE(cx,cy);
-      /* Check X. */
-      if (cx > w/2)
-         vertex[0] = w/2;
-      else if (cx < -w/2)
-         vertex[0] = -w/2;
-      else
-         vertex[0] = cx;
-      /* Check Y. */
-      if (cy > h/2)
-         vertex[1] = h/2;
-      else if (cy < -h/2)
-         vertex[1] = -h/2;
-      else
-         vertex[1] = cy;
+      int cxa, cya;
+      cxa = ABS(cx);
+      cya = ABS(cy);
+      /* Determine position. */
+      if (cy >= cxa) { /* Bottom */
+         vertex[0] = w/2. * (cx*1./cy);
+         vertex[1] = h/2.;
+      } else if (cx >= cya) { /* Left */
+         vertex[0] = w/2.;
+         vertex[1] = h/2. * (cy*1./cx);
+      } else if (cya >= cxa) { /* Top */
+         vertex[0] = -w/2. * (cx*1./cy);
+         vertex[1] = -h/2.;
+      } else { /* Right */
+         vertex[0] = -w/2.;
+         vertex[1] = -h/2. * (cy*1./cx);
+      }
       /* Calculate rest. */
       vertex[2] = vertex[0] - 0.15*w*cos(a);
       vertex[3] = vertex[1] - 0.15*w*sin(a);
@@ -1868,6 +1872,21 @@ void gui_setSystem (void)
 
 
 /**
+ * @brief Determines which GUI should be used.
+ */
+char* gui_pick (void)
+{
+   char* gui;
+
+   if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+      gui = player.gui;
+   else
+      gui = player.p->ship->gui;
+   return gui;
+}
+
+
+/**
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
@@ -1947,8 +1966,8 @@ static void gui_createInterference( Radar *radar )
       h = w;
    }
    else if (radar->shape == RADAR_RECT) {
-      w = radar->w;
-      h = radar->h;
+      w = radar->w*2.;
+      h = radar->h*2.;
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
@@ -1965,7 +1984,7 @@ static void gui_createInterference( Radar *radar )
       memset( pix, 0, sizeof(uint32_t)*w*h );
 
       /* Load the interference map. */
-      map = noise_genRadarInt( w, h, 100. );
+      map = noise_genRadarInt( w, h, (w+h)/2*1.2 );
 
       /* Create the texture. */
       SDL_LockSurface( sur );
@@ -2022,6 +2041,9 @@ void gui_cleanup (void)
 
    /* Set the viewport. */
    gui_clearViewport();
+
+   /* Reset FPS. */
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
    /* Clean up interference. */
    interference_alpha = 0.;

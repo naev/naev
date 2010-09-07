@@ -24,11 +24,13 @@ static int texL_close( lua_State *L );
 static int texL_open( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
+static int texL_spriteFromDir( lua_State *L );
 static const luaL_reg texL_methods[] = {
    { "__gc", texL_close },
    { "open", texL_open },
    { "dim", texL_dim },
    { "sprites", texL_sprites },
+   { "spriteFromDir", texL_spriteFromDir },
    {0,0}
 }; /**< Texture metatable methods. */
 
@@ -64,7 +66,7 @@ int nlua_loadTex( lua_State *L, int readonly )
 
 
 /**
- * @brief Lua bindings to interact with opengl textures.
+ * @brief Lua bindings to interact with OpenGL textures.
  *
  * This will allow you to load textures.
  *
@@ -213,12 +215,12 @@ static int texL_dim( lua_State *L )
 
 
 /**
- * @brief Gets the amount of sprites in the texture.
+ * @brief Gets the number of sprites in the texture.
  *
  * @usage sprites, sx,sy = t:sprites()
  *
  *    @luaparam t Texture to get sprites of.
- *    @luareturn The total amount of sprites followed by the number of X sprites and the number of Y sprites.
+ *    @luareturn The total number of sprites followed by the number of X sprites and the number of Y sprites.
  * @luafunc sprites( t )
  */
 static int texL_sprites( lua_State *L )
@@ -236,4 +238,37 @@ static int texL_sprites( lua_State *L )
 }
 
 
+/**
+ * @brief Gets the sprite that corresponds to a direction.
+ *
+ * @usage sx, sy = t:spriteFromdir( math.pi ) 
+ *
+ *    @luaparam t Texture to get sprite of.
+ *    @luaparam a Direction to have sprite facing (in radians).
+ *    @luareturn x and y positions of the sprite.
+ * @luafunc spriteFromDir( t, a )
+ */
+static int texL_spriteFromDir( lua_State *L )
+{
+   double a;
+   LuaTex *lt;
+   int sx, sy;
+
+   /* Params. */
+   lt = luaL_checktex( L, 1 );
+   a  = luaL_checknumber( L, 2 );
+
+   /* Calculate with parameter sanity.. */
+   if ((a >= 2.*M_PI) || (a < 0.)) {
+      a = fmod( a, 2.*M_PI );
+      if (a < 0.)
+         a += 2.*M_PI;
+   }
+   gl_getSpriteFromDir( &sx, &sy, lt->tex, a );
+
+   /* Return. */
+   lua_pushinteger( L, sx+1 );
+   lua_pushinteger( L, sy+1 );
+   return 2;
+}
 

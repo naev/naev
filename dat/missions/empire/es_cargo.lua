@@ -87,8 +87,8 @@ end
 
 -- Mission is accepted
 function accept()
-   if player.cargoFree() < carg_mass then
-      tk.msg( full[1], string.format( full[2], carg_mass-player.cargoFree() ))
+   if pilot.cargoFree(player.pilot()) < carg_mass then
+      tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
       misn.finish()
    elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
       carg_id = misn.cargoAdd( carg_type, carg_mass )

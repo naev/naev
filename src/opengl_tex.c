@@ -452,7 +452,7 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
  */
 static glTexture* gl_texExists( const char* path )
 {
-   glTexList *cur, *last;
+   glTexList *cur;
 
    /* check to see if it already exists */
    if (texture_list != NULL) {
@@ -461,7 +461,6 @@ static glTexture* gl_texExists( const char* path )
             cur->used += 1;
             return cur->tex;
          }
-         last = cur;
       }
    }
 
@@ -725,7 +724,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
    double shard, rdir;
 
 #ifdef DEBUGGING
-   if ((dir > 2.*M_PI) || (dir < 0.)) {
+   if ((dir >= 2.*M_PI) || (dir < 0.)) {
       WARN("Angle not between 0 and 2.*M_PI [%f].", dir);
       return;
    }

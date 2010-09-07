@@ -4,7 +4,7 @@
  <ship name="Llama">
   <base_type>Llama</base_type>
   <GFX>llama</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Yacht</class>
   <price>120000</price>

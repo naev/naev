@@ -134,8 +134,8 @@ static int gfxL_renderTex( lua_State *L )
    if (lua_isnumber( L, 4 )) {
       sx    = luaL_checkinteger( L, 4 ) - 1;
       sy    = luaL_checkinteger( L, 5 ) - 1;
-      if (lua_iscolour(L, 5))
-         lc    = luaL_checkcolour(L,5);
+      if (lua_iscolour(L, 6))
+         lc    = luaL_checkcolour(L,6);
    }
    else {
       sx    = 0;
@@ -164,9 +164,9 @@ static int gfxL_renderTex( lua_State *L )
 /**
  * @brief Renders a texture using the core render function.
  *
- * This function is much more complex than renderTex, however it allows much
- *  more fine grained control over the entire rendering and puts you closer
- *  to the actual OpenGL calls.
+ * This function is far more complex than renderTex, however it allows much
+ *  more fine grained control over the entire render process and puts you
+ *  closer to the actual OpenGL calls.
  *
  * @usage gfx.renderTexRaw( tex, 0., 0., 100., 100., 1, 1, 0., 0., 0.5, 0.5 ) -- Renders the bottom quarter of the sprite 1,1 of the image.
  *

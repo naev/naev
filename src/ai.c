@@ -87,6 +87,7 @@
 #include "nlua_faction.h"
 #include "board.h"
 #include "hook.h"
+#include "array.h"
 
 
 /**
@@ -124,7 +125,6 @@
  * all the AI profiles
  */
 static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
-static int nprofiles = 0; /**< Number of AI_Profiles loaded. */
 static lua_State *equip_L = NULL; /**< Equipment state. */
 
 
@@ -531,6 +531,7 @@ int ai_load (void)
    uint32_t nfiles, i;
    char path[PATH_MAX];
    int flen, suflen;
+   int n;
 
    /* get the file list */
    files = ndata_list( AI_PREFIX, &nfiles );
@@ -551,7 +552,8 @@ int ai_load (void)
       free(files[i]);
    }
 
-   DEBUG("Loaded %d AI Profile%c", nprofiles, (nprofiles==1)?' ':'s');
+   n = array_size(profiles);
+   DEBUG("Loaded %d AI Profile%c", n, (n==1)?' ':'s');
 
    /* More clean up. */
    free(files);
@@ -608,23 +610,26 @@ static int ai_loadProfile( const char* filename )
    char* buf = NULL;
    uint32_t bufsize = 0;
    lua_State *L;
+   AI_Profile *prof;
 
-   profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
+   if (profiles == NULL)
+      profiles = array_create( AI_Profile );
 
-   profiles[nprofiles-1].name =
-      malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
-   snprintf( profiles[nprofiles-1].name,
+   prof = &array_grow(&profiles);
+
+   prof->name = malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
+   snprintf( prof->name,
          strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
          "%s", filename+strlen(AI_PREFIX) );
 
-   profiles[nprofiles-1].L = nlua_newState();
+   prof->L = nlua_newState();
 
-   if (profiles[nprofiles-1].L == NULL) {
+   if (prof->L == NULL) {
       ERR("Unable to create a new Lua state");
       return -1;
    }
 
-   L = profiles[nprofiles-1].L;
+   L = prof->L;
 
    /* open basic lua stuff */
    nlua_loadBasic(L);
@@ -675,11 +680,12 @@ static int ai_loadProfile( const char* filename )
  */
 AI_Profile* ai_getProfile( char* name )
 {
-   if (profiles == NULL) return NULL;
-
    int i;
 
-   for (i=0; i<nprofiles; i++)
+   if (profiles == NULL)
+      return NULL;
+
+   for (i=0; i<array_size(profiles); i++)
       if (strcmp(name,profiles[i].name)==0)
          return &profiles[i];
 
@@ -696,11 +702,11 @@ void ai_exit (void)
    int i;
 
    /* Free AI profiles. */
-   for (i=0; i<nprofiles; i++) {
+   for (i=0; i<array_size(profiles); i++) {
       free(profiles[i].name);
       lua_close(profiles[i].L);
    }
-   free(profiles);
+   array_free( profiles );
 
    /* Free equipment Lua. */
    if (equip_L != NULL)

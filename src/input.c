@@ -18,6 +18,7 @@
 #include "pause.h"
 #include "toolkit.h"
 #include "menu.h"
+#include "info.h"
 #include "board.h"
 #include "map.h"
 #include "escort.h"

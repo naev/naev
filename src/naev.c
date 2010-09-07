@@ -112,6 +112,8 @@ static double fps_dt  = 1.; /**< Display fps accumulator. */
 static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
 const double fps_min = 1./50.; /**< Minimum fps to run at. */
+static double fps_x = 15.; /**< FPS X position. */
+static double fps_y = -15.; /**< FPS Y position. */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 static bfd *abfd      = NULL;
@@ -269,6 +271,10 @@ int main( int argc, char** argv )
    }
    if (sound_init()) WARN("Problem setting up sound!");
    music_choose("load");
+
+
+   /* FPS stuff. */
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
 
    /* Misc graphics init */
@@ -732,14 +738,24 @@ static void display_fps( const double dt )
       fps_dt = fps_cur = 0.;
    }
 
-   x = 15.;
-   y = (double)(gl_screen.h-15-gl_defFont.h);
+   x = fps_x;
+   y = fps_y;
    if (conf.fps_show) {
       gl_print( NULL, x, y, NULL, "%3.2f", fps );
       y -= gl_defFont.h + 5.;
    }
    if (dt_mod != 1.)
       gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod);
+}
+
+
+/**
+ * @brief Sets the position to display the FPS.
+ */
+void fps_setPos( double x, double y )
+{
+   fps_x = x;
+   fps_y = y;
 }
 
 
