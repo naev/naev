@@ -355,7 +355,7 @@ static void weapons_genList( unsigned int wid )
       }
    }
    window_addList( wid, 20+180+20, -40,
-         w - (20+180+20+20), 80,
+         w - (20+180+20+20), 140,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
 
