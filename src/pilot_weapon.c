@@ -84,6 +84,22 @@ void pilot_weapSetExec( Pilot* p, int id )
 
 
 /**
+ * @brief Checks teh current weapon set mode.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set to check.
+ *    @return The fire mode of the weapon set.
+ */
+int pilot_weapoSetModeCheck( Pilot* p, int id )
+{
+   PilotWeaponSet *ws;
+
+   ws = pilot_weapSet(p,id);
+   return ws->fire;
+}
+
+
+/**
  * @brief Changes the weapon sets mode.
  *
  *    @param p Pilot to manipulate.

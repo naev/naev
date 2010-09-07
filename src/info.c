@@ -72,6 +72,7 @@ static void weapons_genList( unsigned int wid );
 static void weapons_update( unsigned int wid, char *str );
 static void weapons_rename( unsigned int wid, char *str );
 static void weapons_autoweap( unsigned int wid, char *str );
+static void weapons_fire( unsigned int wid, char *str );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
@@ -319,6 +320,9 @@ static void info_openWeapons( unsigned int wid )
    /* Checkboxes. */
    window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20), 250, 20,
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
+   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20)+20, 300, 20,
+         "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
+         pilot_weapoSetModeCheck( player.p, info_eq_weaps.weapons ) );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -380,6 +384,10 @@ static void weapons_update( unsigned int wid, char *str )
    /* Update the position. */
    pos = toolkit_getListPos( wid, "lstWeapSets" );
    info_eq_weaps.weapons = pos;
+
+   /* Update fire mode. */
+   window_checkboxSet( wid, "chkFire",
+         pilot_weapoSetModeCheck( player.p, pos ) );
 }
 
 
@@ -433,6 +441,19 @@ static void weapons_autoweap( unsigned int wid, char *str )
    }
 
    player.p->autoweap = state;
+}
+
+
+/**
+ * @brief Sets the fire mode.
+ */
+static void weapons_fire( unsigned int wid, char *str )
+{
+   int state;
+
+   /* Set state. */
+   state = window_checkboxState( wid, str );
+   pilot_weapSetMode( player.p, info_eq_weaps.weapons, state );
 }
 
 
