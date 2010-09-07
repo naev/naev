@@ -70,6 +70,7 @@ static void standings_close( unsigned int wid, char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
 static void weapons_update( unsigned int wid, char *str );
+static void weapons_rename( unsigned int wid, char *str );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
@@ -311,6 +312,8 @@ static void info_openWeapons( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeCargo", "Close", info_close );
+   window_addButton( wid, -20, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", "Rename", weapons_rename );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -372,6 +375,32 @@ static void weapons_update( unsigned int wid, char *str )
    /* Update the position. */
    pos = toolkit_getListPos( wid, "lstWeapSets" );
    info_eq_weaps.weapons = pos;
+}
+
+
+/**
+ * @brief Renames a weapon set.
+ */
+static void weapons_rename( unsigned int wid, char *str )
+{
+   (void) str;
+   char *name;
+
+   /* Prompt for new name. */
+   name = dialogue_input( "Rename Weapon Set", 3, 30,
+         "What do you want to rename the weapon set '%s'?",
+         pilot_weapSetName( player.p, info_eq_weaps.weapons ) );
+
+   /* Cancelled. */
+   if (str == NULL)
+      return;
+
+   /* Change name. */
+   pilot_weapSetNameSet( player.p, info_eq_weaps.weapons, name );
+   free(name);
+
+   /* Regenerate list. */
+   weapons_genList( wid );
 }
 
 
