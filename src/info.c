@@ -322,7 +322,7 @@ static void info_openWeapons( unsigned int wid )
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
    window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20)+20, 300, 20,
          "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
-         pilot_weapoSetModeCheck( player.p, info_eq_weaps.weapons ) );
+         pilot_weapSetModeCheck( player.p, info_eq_weaps.weapons ) );
 
    /* Custom widget. */
    equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
@@ -387,7 +387,7 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update fire mode. */
    window_checkboxSet( wid, "chkFire",
-         pilot_weapoSetModeCheck( player.p, pos ) );
+         pilot_weapSetModeCheck( player.p, pos ) );
 }
 
 

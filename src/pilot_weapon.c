@@ -90,7 +90,7 @@ void pilot_weapSetExec( Pilot* p, int id )
  *    @param id ID of the weapon set to check.
  *    @return The fire mode of the weapon set.
  */
-int pilot_weapoSetModeCheck( Pilot* p, int id )
+int pilot_weapSetModeCheck( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
 

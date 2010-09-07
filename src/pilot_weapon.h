@@ -17,7 +17,7 @@ void pilot_shootStop( Pilot* p, int level );
 
 /* Weapon Set. */
 void pilot_weapSetExec( Pilot* p, int id );
-int pilot_weapoSetModeCheck( Pilot* p, int id );
+int pilot_weapSetModeCheck( Pilot* p, int id );
 void pilot_weapSetMode( Pilot* p, int id, int fire );
 const char *pilot_weapSetName( Pilot* p, int id );
 void pilot_weapSetNameSet( Pilot* p, int id, const char *name );
