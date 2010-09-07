@@ -104,8 +104,8 @@ function placeClutter()
 			maxRings=2
 			minDist=200
 			theWidth=200
-			--shipChance=0.01
-			shipChance=1.0
+			shipChance=0.01
+			--shipChance=1.0
 			theGap=200
 			ringNum=1
 			debrisArray=""
@@ -128,7 +128,6 @@ function placeClutter()
 					p = pilot.add(theDebris, "base", pos)[1]
 					p:setFaction(" ")
 					p:setCrew(0)
-					pilot.cargoAdd(p, "Food", 20)
 					p:disable()
 					--hook.pilot(p, "board", "board", p)
 					p:rename("Debris")
