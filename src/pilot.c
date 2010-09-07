@@ -2201,10 +2201,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Allocate outfit memory. */
    /* Slot types. */
-   pilot->outfit_nstructure    = ship->outfit_nstructure;
-   pilot->outfit_structure     = calloc( ship->outfit_nstructure, sizeof(PilotOutfitSlot) );
-   pilot->outfit_nutility = ship->outfit_nutility;
-   pilot->outfit_utility  = calloc( ship->outfit_nutility, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nstructure = ship->outfit_nstructure;
+   pilot->outfit_structure = calloc( ship->outfit_nstructure, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nutility  = ship->outfit_nutility;
+   pilot->outfit_utility   = calloc( ship->outfit_nutility, sizeof(PilotOutfitSlot) );
    pilot->outfit_nweapon   = ship->outfit_nweapon;
    pilot->outfit_weapon    = calloc( ship->outfit_nweapon, sizeof(PilotOutfitSlot) );
    /* Global. */
@@ -2233,6 +2233,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_weapon[i].mount, sizeof(ShipMount) );
       p++;
    }
+   /* Second pass set ID. */
+   for (i=0; i<pilot->noutfits; i++)
+      pilot->outfits[i]->id = i;
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */

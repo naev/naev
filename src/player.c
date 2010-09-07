@@ -2697,8 +2697,10 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
 static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc )
 {
-   int i, j, k;
+   int i, j, k, n;
    int found;
+   const char *name;
+   PilotWeaponSetOutfit *weaps;
 
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name","%s",ship->name);
@@ -2775,6 +2777,24 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
    xmlw_startElem(writer,"weaponsets");
    xmlw_attr(writer,"autoweap","%d",ship->autoweap);
+   if (!ship->autoweap) {
+      for (i=0; i<PILOT_WEAPON_SETS; i++) {
+         weaps = pilot_weapSetList( ship, i, &n );
+         xmlw_startElem(writer,"weaponset");
+         name = pilot_weapSetName(ship,i);
+         if (name != NULL)
+            xmlw_attr(writer,"name","%s",name);
+         xmlw_attr(writer,"id","%d",i);
+         xmlw_attr(writer,"fire","%d",pilot_weapSetModeCheck(ship,i));
+         for (j=0; j<n;j++) {
+            xmlw_startElem(writer,"weapon");
+            xmlw_attr(writer,"level","%d",weaps[j].level);
+            xmlw_str(writer,"%d",weaps[j].slot->id);
+            xmlw_endElem(writer); /* "weapon" */
+         }
+         xmlw_endElem(writer); /* "weaponset" */
+      }
+   }
    xmlw_endElem(writer); /* "weaponsets" */
 
    xmlw_endElem(writer); /* "ship" */
@@ -3169,7 +3189,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    double fuel;
    Ship *ship_parsed;
    Pilot* ship;
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, ccur;
    int quantity;
    Outfit *o;
    int ret;
@@ -3177,7 +3197,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    Commodity *com;
    PilotFlags flags;
    unsigned int pid;
-   int autoweap;
+   int autoweap, fire, level, weapid;
 
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3340,32 +3360,81 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* Second pass for weapon sets. */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"weaponsets")) {
+      if (!xml_isNode(node,"weaponsets"))
+         continue;
 
-         /* Check for autoweap. */
-         xmlr_attr(node,"autoweap",id);
-         if (str != NULL) {
-            autoweap = atof(id);
+      /* Check for autoweap. */
+      xmlr_attr(node,"autoweap",id);
+      if (id != NULL) {
+         autoweap = atoi(id);
+         free(id);
+      }
+      if (autoweap)
+         break;
+
+      /* Parse weapon sets. */
+      cur = node->xmlChildrenNode;
+      do { /* Load each weapon set. */
+         if (!xml_isNode(cur,"weaponset"))
+            continue;
+
+         xmlr_attr(cur,"id",id);
+         if (id == NULL) {
+            WARN("Player ship '%s' missing 'id' tag for weapon set.",ship->name);
+            continue;
+         }
+         i = atoi(id);
+         free(id);
+
+         /* Set fire mode. */
+         xmlr_attr(cur,"fire",id);
+         if (id == NULL) {
+            WARN("Player ship '%s' missing 'fire' tag for weapon set.",ship->name);
+            continue;
+         }
+         fire = atoi(id);
+         if (fire)
+            pilot_weapSetMode( ship, i, fire );
+         free(id);
+
+         /* Get name. */
+         xmlr_attr(cur,"name",id);
+         if (id != NULL) {
+            pilot_weapSetNameSet( ship, i, id );
             free(id);
          }
-         if (autoweap)
-            break;
 
-         /* Parse weapon sets. */
-         cur = node->xmlChildrenNode;
-         do { /* Load each weapon set. */
-            if (xml_isNode(cur,"weaponset")) {
+         /* Parse individual weapons. */
+         ccur = cur->xmlChildrenNode;
+         do {
+            if (!xml_isNode(ccur,"weapon"))
+               continue;
+
+            xmlr_attr(ccur,"level",id);
+            if (id == NULL) {
+               WARN("Player ship '%s' missing 'level' tag for weapon set weapon.",ship->name);
+               continue;
             }
-         } while (xml_nextNode(cur));
-      }
+            level = atoi(id);
+            free(id);
+            weapid = xml_getInt(ccur);
+            if ((weapid < 0) || (weapid >= ship->noutfits)) {
+               WARN("Player ship '%s' has invalid weapon id %d [max %d].",
+                     ship->name, weapid, ship->noutfits );
+               continue;
+            }
+
+            pilot_weapSetAdd( ship, i, ship->outfits[weapid], level );
+         } while (xml_nextNode(ccur));
+      } while (xml_nextNode(cur));
    } while (xml_nextNode(node));
 
-   /* Set up autoweap if necessary. */
-   ship->autoweap = autoweap;
-   if (autoweap)
-      pilot_weaponAuto( ship );
+/* Set up autoweap if necessary. */
+ship->autoweap = autoweap;
+if (autoweap)
+   pilot_weaponAuto( ship );
 
    return 0;
-}
+   }
 
 

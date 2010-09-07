@@ -138,6 +138,8 @@ typedef struct PilotOutfitAmmo_ {
  * @brief Stores an outfit the pilot has.
  */
 typedef struct PilotOutfitSlot_ {
+   int id; /**< Position in the global slot list. */
+
    /* Outfit slot properties. */
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
