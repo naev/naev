@@ -53,6 +53,7 @@
 #include "equipment.h"
 #include "camera.h"
 #include "claim.h"
+#include "player_gui.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -273,6 +274,9 @@ void player_new (void)
 
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
+
+   /* Load the GUI. */
+   gui_load( gui_pick() );
 }
 
 
@@ -522,6 +526,9 @@ static void player_newShipMake( char* name )
       player_nstack++;
    }
 
+   /* Add GUI. */
+   player_guiAdd( player_ship->gui );
+
    /* money. */
    player.p->credits = player_creds;
    player_creds = 0;
@@ -572,7 +579,7 @@ void player_swapShip( char* shipname )
          land_checkAddRefuel();
 
          /* Set some gui stuff. */
-         gui_load( player.p->ship->gui );
+         gui_load( gui_pick() );
 
          /* Bind camera. */
          cam_setTargetPilot( player.p->id, 0 );
@@ -702,6 +709,7 @@ void player_cleanup (void)
 
    /* Clean up gui. */
    gui_cleanup();
+   player_guiCleanup();
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
@@ -753,6 +761,9 @@ void player_cleanup (void)
    /* Reset some player.p stuff. */
    player_creds   = 0;
    player.crating = 0;
+   if (player.gui != NULL)
+      free( player.gui );
+   player.gui = NULL;
 
    /* Stop the sounds. */
    sound_stopAll();
@@ -889,24 +900,6 @@ int player_hasCredits( int amount )
 unsigned long player_modCredits( int amount )
 {
    return pilot_modCredits( player.p, amount );
-}
-
-
-/**
- * @brief Gets how many of the commodity the player.p has.
- *
- *    @param commodityname Commodity to check how many the player.p owns.
- *    @return The number of commodities owned matching commodityname.
- */
-int player_cargoOwned( const char* commodityname )
-{
-   int i;
-
-   for (i=0; i<player.p->ncommodities; i++)
-      if (!player.p->commodities[i].id &&
-            strcmp(commodityname, player.p->commodities[i].commodity->name)==0)
-         return player.p->commodities[i].quantity;
-   return 0;
 }
 
 
@@ -1619,6 +1612,8 @@ void player_jump (void)
 
       player.p->nav_hyperspace = j;
       player_playSound(snd_nav,1);
+      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
+      gui_setNav();
 
       /* Only follow through if within range. */
       if (mindist > pow2( cur_system->jumps[j].radius ))
@@ -2686,7 +2681,8 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
  */
 int player_save( xmlTextWriterPtr writer )
 {
-   int i;
+   char **guis;
+   int i, n;
    MissionData *m;
    const char *ev;
 
@@ -2697,6 +2693,9 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
    xmlw_elem(writer,"time","%u",ntime_get());
+   if (player.gui != NULL)
+      xmlw_elem(writer,"gui","%s",player.gui);
+   xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
 
    /* Current ship. */
    xmlw_elem(writer,"location","%s",land_planet->name);
@@ -2707,6 +2706,13 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<player_nstack; i++)
       player_saveShip( writer, player_stack[i].p, player_stack[i].loc );
    xmlw_endElem(writer); /* "ships" */
+
+   /* GUIs. */
+   xmlw_startElem(writer,"guis");
+   guis = player_guiList( &n );
+   for (i=0; i<n; i++)
+      xmlw_elem(writer,"gui","%s",guis[i]);
+   xmlw_endElem(writer); /* "guis" */
 
    /* Outfits. */
    xmlw_startElem(writer,"outfits");
@@ -2941,6 +2947,8 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_float(node,"rating",player.crating);
       xmlr_ulong(node,"credits",player_creds);
       xmlr_uint(node,"time",player_time);
+      xmlr_strd(node,"gui",player.gui);
+      xmlr_int(node,"guiOverride",player.guiOverride);
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1, planet);
@@ -2951,6 +2959,15 @@ static Planet* player_parse( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"ship"))
                player_parseShip(cur, 0, planet);
+         } while (xml_nextNode(cur));
+      }
+
+      /* Parse GUIs. */
+      else if (xml_isNode(node,"guis")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"gui"))
+               player_guiAdd( xml_get(cur) );
          } while (xml_nextNode(cur));
       }
 
@@ -3267,6 +3284,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       return -1;
    }
 
+   /* Add GUI if applicable. */
+   player_guiAdd( ship_parsed->gui );
+
    /* player.p is currently on this ship */
    if (is_player != 0) {
       pid = pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
@@ -3406,4 +3426,3 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    return 0;
 }
-
