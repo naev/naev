@@ -3385,6 +3385,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          }
          i = atoi(id);
          free(id);
+         if ((i < 0) || (i >= PILOT_WEAPON_SETS)) {
+            WARN("Player ship '%s' has invalid weapon set id '%d' [max %d].",
+                  ship->name, i, PILOT_WEAPON_SETS-1 );
+            continue;
+         }
 
          /* Set fire mode. */
          xmlr_attr(cur,"fire",id);
@@ -3420,7 +3425,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
             weapid = xml_getInt(ccur);
             if ((weapid < 0) || (weapid >= ship->noutfits)) {
                WARN("Player ship '%s' has invalid weapon id %d [max %d].",
-                     ship->name, weapid, ship->noutfits );
+                     ship->name, weapid, ship->noutfits-1 );
                continue;
             }
 
