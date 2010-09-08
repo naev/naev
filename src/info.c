@@ -372,7 +372,7 @@ static void weapons_genList( unsigned int wid )
       str = pilot_weapSetName( info_eq_weaps.selected, i );
       if (str == NULL) {
          buf[i] = malloc( sizeof(char) * PATH_MAX );
-         snprintf( buf[i], PATH_MAX, "Weapon Set %d", i );
+         snprintf( buf[i], PATH_MAX, "Weapon Set %d", (i+1)%10 );
       }
       else {
          buf[i] = strdup( str );
