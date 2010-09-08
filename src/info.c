@@ -318,9 +318,9 @@ static void info_openWeapons( unsigned int wid )
          "btnRename", "Rename", weapons_rename );
 
    /* Checkboxes. */
-   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20), 250, 20,
+   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20), 250, BUTTON_HEIGHT,
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
-   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20)+20, 300, 20,
+   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20)+BUTTON_HEIGHT, 300, BUTTON_HEIGHT,
          "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
          pilot_weapSetModeCheck( player.p, info_eq_weaps.weapons ) );
 
