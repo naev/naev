@@ -140,6 +140,15 @@ static void info_close( unsigned int wid, char* str )
 
 
 /**
+ * @brief Updates the info windows.
+ */
+void info_update (void)
+{
+   weapons_update( info_windows[2], NULL );
+}
+
+
+/**
  * @brief Opens the main info window.
  */
 static void info_openMain( unsigned int wid )
@@ -394,6 +403,9 @@ static void weapons_update( unsigned int wid, char *str )
    /* Update fire mode. */
    window_checkboxSet( wid, "chkFire",
          pilot_weapSetModeCheck( player.p, pos ) );
+
+   /* Update autoweap. */
+   window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
 
@@ -417,6 +429,9 @@ static void weapons_rename( unsigned int wid, char *str )
    /* Change name. */
    pilot_weapSetNameSet( player.p, info_eq_weaps.weapons, name );
    free(name);
+
+   /* Disable autoweap. */
+   player.p->autoweap = 0;
 
    /* Regenerate list. */
    weapons_genList( wid );
@@ -442,11 +457,12 @@ static void weapons_autoweap( unsigned int wid, char *str )
          window_checkboxSet( wid, str, 0 );
          return;
       }
+      player.p->autoweap = 1;
       pilot_weaponAuto( player.p );
       weapons_genList( wid );
    }
-
-   player.p->autoweap = state;
+   else
+      player.p->autoweap = 0;
 }
 
 

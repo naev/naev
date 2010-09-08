@@ -12,6 +12,7 @@
  * Menu opening routines.
  */
 void menu_info (void);
+void info_update (void);
 
 
 #endif /* INFO_H */

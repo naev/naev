@@ -30,6 +30,7 @@
 #include "gui.h"
 #include "land_outfits.h"
 #include "player_gui.h"
+#include "info.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -833,6 +834,8 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
             pilot_weapSetRm( p, wgt->weapons, &os[ret] );
          else
             pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+         p->autoweap = 0; /* Disable autoweap. */
+         info_update(); /* Need to update weapons. */
       }
    }
    else {
