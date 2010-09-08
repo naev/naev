@@ -27,6 +27,7 @@
 #include "map.h"
 #include "land.h"
 #include "equipment.h"
+#include "tk/toolkit_priv.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -73,6 +74,7 @@ static void weapons_update( unsigned int wid, char *str );
 static void weapons_rename( unsigned int wid, char *str );
 static void weapons_autoweap( unsigned int wid, char *str );
 static void weapons_fire( unsigned int wid, char *str );
+static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
@@ -329,6 +331,10 @@ static void info_openWeapons( unsigned int wid )
    info_eq_weaps.selected  = player.p;
    info_eq_weaps.canmodify = 0;
 
+   /* Custom widget for legend. */
+   window_addCust( wid, 220, -220, w-200-60, 100, "cstLegend", 0,
+         weapons_renderLegend, NULL, NULL );
+
    /* List. */
    weapons_genList( wid );
 }
@@ -364,7 +370,7 @@ static void weapons_genList( unsigned int wid )
       }
    }
    window_addList( wid, 20+180+20, -40,
-         w - (20+180+20+20), 140,
+         w - (20+180+20+20), 160,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
 
@@ -454,6 +460,29 @@ static void weapons_fire( unsigned int wid, char *str )
    /* Set state. */
    state = window_checkboxState( wid, str );
    pilot_weapSetMode( player.p, info_eq_weaps.weapons, state );
+}
+
+
+/**
+ * @brief Renders the legend.
+ */
+static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data )
+{
+   (void) data;
+   (void) bw;
+   (void) bh;
+   double y;
+
+   y = by+bh-20;
+   gl_print( &gl_defFont, bx, y, &cBlack, "Legend" );
+
+   y -= 20.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Left click toggles)" );
+
+   y -= 15.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Primary Weapon (Right click toggles)" );
 }
 
 
