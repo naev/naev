@@ -25,6 +25,7 @@
 /*
  * Prototypes.
  */
+static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
@@ -76,10 +77,29 @@ void pilot_weapSetExec( Pilot* p, int id )
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
-   if (ws->fire)
+   if (ws->fire) {
       pilot_weapSetFire( p, ws, -1 );
-   else
+   }
+   else {
+      if (id != p->active_set)
+         pilot_weapSetUpdateOutfits( p, ws );
       p->active_set = id;
+   }
+}
+
+
+/**
+ * @brief Updates the outfits with their current weapon set level.
+ */
+static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
+{
+   int i;
+
+   for (i=0; i<p->noutfits; i++)
+      p->outfits[i]->level = -1;
+
+   for (i=0; i<array_size(ws->slots); i++)
+      ws->slots[i].slot->level = ws->slots[i].level;
 }
 
 

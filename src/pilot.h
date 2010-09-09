@@ -149,6 +149,7 @@ typedef struct PilotOutfitSlot_ {
    PilotOutfitState state; /**< State of the outfit. */
    double timer; /**< Used to store when it was last used. */
    int quantity; /**< Quantity. */
+   int level; /**< Level in current weapon set (-1 is none). */
 
    /* Type-specific data. */
    union {

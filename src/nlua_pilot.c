@@ -941,6 +941,7 @@ static int pilotL_nav( lua_State *L )
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  * </ul>
  *
+ * @usage set_name, slots = p:weapsets( true ) -- Gets info for all active weapons
  * @usage set_name, slots = p:weapsets() -- Get info about the current set
  * @usage set_name, slots = p:weapsets( 5 ) -- Get info about the set number 5
  *
@@ -953,15 +954,23 @@ static int pilotL_weapset( lua_State *L )
 {
    Pilot *p;
    int i, n;
-   PilotWeaponSetOutfit *po_list, *po;
-   Outfit *ammo;
+   PilotWeaponSetOutfit *po_list;
+   PilotOutfitSlot *slot;
+   Outfit *ammo, *o;
    double delay;
-   int id;
+   int id, all, level;
 
    /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-   if (lua_isnumber(L,2))
-      id = luaL_checkinteger(L,2) - 1;
+   all = 0;
+   p   = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 1) {
+      if (lua_isnumber(L,2))
+         id = luaL_checkinteger(L,2) - 1;
+      else if (lua_isboolean(L,2))
+         all = lua_toboolean(L,2);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
    else
       id = p->active_set;
    id = CLAMP( 0, PILOT_WEAPON_SETS, id );
@@ -970,10 +979,28 @@ static int pilotL_weapset( lua_State *L )
    lua_pushstring( L, pilot_weapSetName( p, id ) );
 
    /* Push set. */
-   po_list = pilot_weapSetList( p, id, &n );
+   if (all)
+      n = p->noutfits;
+   else
+      po_list = pilot_weapSetList( p, id, &n );
+
    lua_newtable(L);
    for (i=0; i<n; i++) {
-      po = &po_list[i];
+      if (all) {
+         slot  = p->outfits[i];
+         o     = slot->outfit;
+
+         /* Must be valid weapon. */
+         if ((o == NULL) || !(outfit_isBolt(o) || outfit_isBeam(o) ||
+               outfit_isLauncher(o) || outfit_isFighterBay(o)))
+            continue;
+
+         level = slot->level;
+      }
+      else {
+         slot  = po_list[i].slot;
+         level = po_list[i].level;
+      }
 
       /* Set up for creation. */
       lua_pushnumber(L,i+1);
@@ -981,21 +1008,21 @@ static int pilotL_weapset( lua_State *L )
 
       /* Name. */
       lua_pushstring(L,"name");
-      lua_pushstring(L,po->slot->outfit->name);
+      lua_pushstring(L,slot->outfit->name);
       lua_rawset(L,-3);
 
       /* Set cooldown. */
       lua_pushstring(L,"cooldown");
-      delay = outfit_delay(po->slot->outfit);
+      delay = outfit_delay(slot->outfit);
       if (delay > 0.)
-         lua_pushnumber( L, CLAMP( 0., 1., 1. - po->slot->timer / delay ) );
+         lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
       else
          lua_pushnumber( L, 1. );
       lua_rawset(L,-3);
 
       /* Ammo name. */
       lua_pushstring(L,"ammo");
-      ammo = outfit_ammo(po->slot->outfit);
+      ammo = outfit_ammo(slot->outfit);
       if (ammo != NULL)
          lua_pushstring(L,ammo->name);
       else
@@ -1004,10 +1031,10 @@ static int pilotL_weapset( lua_State *L )
 
       /* Ammo quantity. */
       lua_pushstring(L,"left");
-      if ((outfit_isLauncher(po->slot->outfit) ||
-               outfit_isFighterBay(po->slot->outfit)) &&
-            (po->slot->u.ammo.outfit != NULL)) {
-         lua_pushnumber( L, po->slot->u.ammo.quantity );
+      if ((outfit_isLauncher(slot->outfit) ||
+               outfit_isFighterBay(slot->outfit)) &&
+            (slot->u.ammo.outfit != NULL)) {
+         lua_pushnumber( L, slot->u.ammo.quantity );
       }
       else
          lua_pushnil( L );
@@ -1015,7 +1042,7 @@ static int pilotL_weapset( lua_State *L )
 
       /* Level. */
       lua_pushstring(L,"level");
-      lua_pushnumber(L, po->level+1);
+      lua_pushnumber(L, level+1);
       lua_rawset(L,-3);
 
       /* Set table in table. */
