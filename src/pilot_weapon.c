@@ -202,6 +202,10 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot == o) {
          ws->slots[i].level = level;
+
+         /* Update if needed. */
+         if (id == p->active_set)
+            pilot_weapSetUpdateOutfits( p, ws );
          return;
       }
    }
@@ -213,6 +217,10 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
+
+   /* Update if needed. */
+   if (id == p->active_set)
+      pilot_weapSetUpdateOutfits( p, ws );
 }
 
 
@@ -240,6 +248,10 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 
          /* Update range. */
          pilot_weapSetUpdateRange( ws );
+
+         /* Update if needed. */
+         if (id == p->active_set)
+            pilot_weapSetUpdateOutfits( p, ws );
          return;
       }
    }
