@@ -966,8 +966,10 @@ static int pilotL_weapset( lua_State *L )
    if (lua_gettop(L) > 1) {
       if (lua_isnumber(L,2))
          id = luaL_checkinteger(L,2) - 1;
-      else if (lua_isboolean(L,2))
+      else if (lua_isboolean(L,2)) {
          all = lua_toboolean(L,2);
+         id  = p->active_set;
+      }
       else
          NLUA_INVALID_PARAMETER(L);
    }
