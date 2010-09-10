@@ -1,5 +1,5 @@
 --[[
-   First alternate GUI skin (Mockup)
+   The new "slim" GUI
 --]]
 
 function create()
@@ -29,10 +29,15 @@ function create()
    col_energy = colour.new( 41/255,  92/255,  47/255 )
    col_speed = colour.new( 77/255,  80/255,  21/255 )
    col_speed2 = colour.new(169/255,177/255,  46/255 )
+   col_ammo = colour.new(140/255,94/255,  7/255 )
+   col_heat = colour.new(114/255,26/255, 14/255 )
+   col_ready = colour.new(14/255,108/255, 114/255 )
    
    --Load Images
    local base = "gfx/gui/slim/"
-   player_pane = tex.open( base .. "frame_player.png" )
+   player_pane_t = tex.open( base .. "frame_player_top.png" )
+   player_pane_m = tex.open( base .. "frame_player_middle.png" )
+   player_pane_b = tex.open( base .. "frame_player_bottom.png" )
    target_pane = tex.open( base .. "frame_target.png" )
    planet_pane_t = tex.open( base .. "frame_planet_top.png" )
    planet_pane_m = tex.open( base .. "frame_planet_middle.png" )
@@ -50,16 +55,22 @@ function create()
    icon_speed_sm = tex.open( base .. "speed_sm.png" )
    bg_bar = tex.open( base .. "bg_bar.png" )
    bg_bar_sm = tex.open( base .. "bg_bar_sm.png" )
+   bg_bar_weapon = tex.open( base .. "bg_bar_weapon.png" )
    bg_shield = tex.open( base .. "bg_shield.png" )
    bg_armour = tex.open( base .. "bg_armour.png" )
    bg_energy = tex.open( base .. "bg_energy.png" )
    bg_speed = tex.open( base .. "bg_speed.png" )
+   bg_ammo = tex.open( base .. "bg_ammo.png" )
+   bg_heat = tex.open( base .. "bg_heat.png" )
+   bg_ready = tex.open( base .. "bg_ready.png" )
    bg_shield_sm = tex.open( base .. "bg_shield_sm.png" )
    bg_armour_sm = tex.open( base .. "bg_armour_sm.png" )
    bg_energy_sm = tex.open( base .. "bg_energy_sm.png" )
    bg_speed_sm = tex.open( base .. "bg_speed_sm.png" )
    sheen = tex.open( base .. "sheen.png" )
    sheen_sm = tex.open( base .. "sheen_sm.png" )
+   sheen_weapon = tex.open( base .. "sheen_weapon.png" )
+   sheen_tiny = tex.open( base .. "sheen_tiny.png" )
    bottom_bar = tex.open( base .. "bottombar.png" )
    target_dir = tex.open( base .. "dir.png" )
    warnlight1 = tex.open( base .. "warnlight1.png" )
@@ -78,7 +89,10 @@ function create()
    
    --Get positions
    --Player pane
-   pl_pane_w, pl_pane_h = player_pane:dim()
+   pl_pane_w, pl_pane_h = player_pane_t:dim()
+   pl_pane_w_b, pl_pane_h_b = player_pane_b:dim()
+   -- ta_pnt_pane_x = screen_w - ta_pnt_pane_w - 16
+   -- ta_pnt_pane_y = ta_pane_y - ta_pnt_pane_h - 8
    pl_pane_x = screen_w - pl_pane_w - 16
    pl_pane_y = screen_h - pl_pane_h - 16
    
@@ -93,18 +107,32 @@ function create()
 
    --Shield Bar
    x_shield = pl_pane_x + 46
-   y_shield = pl_pane_y + 102
+   y_shield = pl_pane_y + 109
    
    bars = { "armour", "energy", "speed" }
    for k,v in ipairs(bars) do
       _G["x_" .. v] = x_shield
       _G["y_" .. v] = y_shield - k * 28
    end
+   
+   --Ammo, heat and ready bars bars
+   bar_weapon_w, bar_weapon_h = bg_ammo:dim()
+   bar_ready_w, bar_ready_h = bg_ready:dim()
+   --local i = 0
+   x_ammo = pl_pane_x + 39
+   y_ammo = pl_pane_y - 27
+   --[[for i=0,6 do
+     _G["x_ammo_" .. (i+2)] = x_ammo_1
+     _G["y_ammo_" .. (i+2)] = y_ammo_1 - i * 28
+   end
+   --]]
+   
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
    ta_pane_x = screen_w - ta_pane_w - 16
-   ta_pane_y = pl_pane_y - ta_pane_h - 8
+   --ta_pane_y = pl_pane_y - ta_pane_h - 8
+   ta_pane_y = 38
    
    --Target image background
    ta_image_x = ta_pane_x + 14
@@ -196,14 +224,14 @@ function update_target()
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
       
       if ptarget_gfx_aspect >= 1 then
-         if ptarget_gfx_w > 92 then
-            ptarget_gfx_draw_w = 92
-            ptarget_gfx_draw_h = 92 / ptarget_gfx_w * ptarget_gfx_h
+         if ptarget_gfx_w > 62 then
+            ptarget_gfx_draw_w = 62
+            ptarget_gfx_draw_h = 62 / ptarget_gfx_w * ptarget_gfx_h
          end
       else
-         if ptarget_gfx_h > 92 then
-            ptarget_gfx_draw_h = 92
-            ptarget_gfx_draw_w = 92 / ptarget_gfx_h * ptarget_gfx_w
+         if ptarget_gfx_h > 62 then
+            ptarget_gfx_draw_h = 62
+            ptarget_gfx_draw_w = 62 / ptarget_gfx_h * ptarget_gfx_w
          end
       end
       ptarget_faction_gfx = ptargetfact:logoTiny()
@@ -307,13 +335,27 @@ function render_bar(name, value, txt, txtcol, size, col, bgc )
    end
 end
 
-function render( dt )
-   --Radar
-   gfx.renderTex( radar_gfx, radar_x, radar_y )
-   gui.radarRender( radar_x + 2, radar_y + 2 )
+function render_ammoBar( name, x, y, value, txt, txtcol, col )
+   offsets = { 2, 20, 3, 13, 22, 6 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text
+   l_bg = _G["bg_" .. name]
+   l_col = _G["col_" .. name]
+   gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
+   gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
+   gfx.renderRect( x + offsets[1], y + offsets[1], value[1]/100. * bar_weapon_w, bar_weapon_h, l_col)
+   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
+   gfx.renderTex( bg_bar_weapon, x, y )
+   gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
+   gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
+   if gfx.printDim( false, txt ) > bar_weapon_w then
+      small = true
+   else
+      small = false
+   end
+   gfx.print( small, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
+end   
    
-   --Player pane
-   gfx.renderTex( player_pane, pl_pane_x, pl_pane_y )
+
+function render( dt )
    
    --Values
    armour, shield = pp:health()
@@ -321,9 +363,24 @@ function render( dt )
    speed = pp:vel():dist()
    lockons = pp:lockon()
    autonav = player.autonav()
-   wset_name, wset  = pp:weapset()
+   wset_name, wset  = pp:weapset(true)
    credits = player.credits()
-
+   
+   --Radar
+   gfx.renderTex( radar_gfx, radar_x, radar_y )
+   gui.radarRender( radar_x + 2, radar_y + 2 )
+   
+   --Player pane
+   gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
+   --extend the pane according to the number of weapon bars
+   filler_h = 0
+   for k,_ in pairs(wset) do filler_h = filler_h +  28 end
+   if filler_h > 0 then
+      filler_h = filler_h - 6
+   end
+   gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h, 1, 1, 0, 0, 1, 1)
+   gfx.renderTex( player_pane_b, pl_pane_x + 33, pl_pane_y - filler_h - pl_pane_h_b )
+   
    -- local col
    local small, txt
    --Shield
@@ -367,7 +424,7 @@ function render( dt )
    else
       hspeed = math.floor(realspeed)
    end
-   local hspeed = math.ceil( speed / stats.speed_max * 100 )
+   --local hspeed = math.ceil( speed / stats.speed_max * 100 )
    txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
@@ -386,7 +443,30 @@ function render( dt )
       col = blinkcol
       render_bar( "speed", 100, txt, col, nil, col_speed2)
    end
-
+   
+   --Weapon bars
+   local num = 0
+   for k, weapon in pairs(wset) do
+      if weapon.level > 0 then
+         if weapon.left ~= nil then
+            txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
+            if weapon.left == 0 then
+               col = col_txt_wrn
+            else
+               col = col_txt_bar
+            end
+            values = {weapon.left, weapon.cooldown}
+            render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
+         else
+            txt = weapon.name
+            col = col_txt_bar
+            values = {0, weapon.cooldown}
+            render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
+         end
+         num = num + 1
+      end
+   end  
+   
    --Warning Light
    if lockons > 0 then
       timers[2] = timers[2] - dt
@@ -400,17 +480,17 @@ function render( dt )
          end
       end
       if gfxWarn == true then
-         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 115 )
+         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 120 )
       end
       local length
       length = gfx.printDim( false, "Warning - Missile Lockon detected" )
       gfx.print( false, "Warning - Missile Lockon detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
    end
    if armour <= 20 then
-      gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y - 2 )
+      gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
    end
    if autonav then
-      gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 3 )
+      gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 8 )
    end
    
    
@@ -431,7 +511,7 @@ function render( dt )
             ta_speed = ptarget:vel():dist()
 
             --Render target graphic
-            if ptarget_gfx_w > 92 or ptarget_gfx_h > 92 then
+            if ptarget_gfx_w > 62 or ptarget_gfx_h > 62 then
                gfx.renderTexRaw( ptarget_gfx, ta_center_x - ptarget_gfx_draw_w / 2, ta_center_y - ptarget_gfx_draw_h / 2, ptarget_gfx_draw_w, ptarget_gfx_draw_h, 1, 1, 0, 0, 1, 1)
             else
                gfx.renderTex( ptarget_gfx, ta_center_x - ptarget_gfx_w / 2, ta_center_y - ptarget_gfx_h / 2)
@@ -680,7 +760,7 @@ function render( dt )
 
    bartext = { "Player: ", pname, "System: ", sys:name(), "Credits: ",
          largeNumber( credits ), "Nav: ", navstring, "Fuel: ", fuelstring,
-         "Planet: ", pntstring, "Secondary: ", wsetstr, "Cargo: " }
+         "Planet: ", pntstring, "Weapon Set: ", wsetstr, "Cargo: " }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( false, v, length, 5, col_txt_top )
