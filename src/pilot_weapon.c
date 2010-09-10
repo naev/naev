@@ -98,8 +98,9 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
    for (i=0; i<p->noutfits; i++)
       p->outfits[i]->level = -1;
 
-   for (i=0; i<array_size(ws->slots); i++)
-      ws->slots[i].slot->level = ws->slots[i].level;
+   if (ws->slots != NULL)
+      for (i=0; i<array_size(ws->slots); i++)
+         ws->slots[i].slot->level = ws->slots[i].level;
 }
 
 
