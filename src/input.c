@@ -58,10 +58,10 @@ const char *keybindNames[] = {
    "target_clear",
    /* Fighting. */
    "primary", "face", "board",
-   /* Weapon selection. */
-   "weap_all", "weap_turret", "weap_forward",
    /* Secondary weapons. */
-   "secondary", "secondary_next", "secondary_prev",
+   "secondary",
+   "weapset1", "weapset2", "weapset3", "weapset4", "weapset5",
+   "weapset6", "weapset7", "weapset8", "weapset9", "weapset0",
    /* Escorts. */
    "e_targetNext", "e_targetPrev", "e_attack", "e_hold", "e_return", "e_clear",
    /* Space navigation. */
@@ -98,14 +98,18 @@ const char *keybindDescription[] = {
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
-   /* Weapon selection. */
-   "Sets fire mode to use all weapons available (both turret and forward mounts).",
-   "Sets fire mode to only use turret-class primary weapons.",
-   "Sets fire mode to only use forward-class primary weapons.",
    /* Secondary weapons. */
    "Fires your secondary weapon.",
-   "Cycles through secondary weapons.",
-   "Cycles backwards through secondary weapons.",
+   "Activate Weapon Set 1",
+   "Activate Weapon Set 2",
+   "Activate Weapon Set 3",
+   "Activate Weapon Set 4",
+   "Activate Weapon Set 5",
+   "Activate Weapon Set 6",
+   "Activate Weapon Set 7",
+   "Activate Weapon Set 8",
+   "Activate Weapon Set 9",
+   "Activate Weapon Set 0",
    /* Escorts. */
    "Cycles through your escorts.",
    "Cycles backwards through your escorts.",
@@ -213,14 +217,18 @@ void input_setDefault (void)
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ALL );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
-   /* Weapon selection. */
-   input_setKeybind( "weap_all", KEYBIND_KEYBOARD, SDLK_1, NMOD_NONE );
-   input_setKeybind( "weap_turret", KEYBIND_KEYBOARD, SDLK_2, NMOD_NONE );
-   input_setKeybind( "weap_forward", KEYBIND_KEYBOARD, SDLK_3, NMOD_NONE );
    /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ALL );
-   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, NMOD_NONE );
-   input_setKeybind( "secondary_prev", KEYBIND_KEYBOARD, SDLK_w, NMOD_CTRL );
+   input_setKeybind( "weapset1", KEYBIND_KEYBOARD, SDLK_1, NMOD_ALL );
+   input_setKeybind( "weapset2", KEYBIND_KEYBOARD, SDLK_2, NMOD_ALL );
+   input_setKeybind( "weapset3", KEYBIND_KEYBOARD, SDLK_3, NMOD_ALL );
+   input_setKeybind( "weapset4", KEYBIND_KEYBOARD, SDLK_4, NMOD_ALL );
+   input_setKeybind( "weapset5", KEYBIND_KEYBOARD, SDLK_5, NMOD_ALL );
+   input_setKeybind( "weapset6", KEYBIND_KEYBOARD, SDLK_6, NMOD_ALL );
+   input_setKeybind( "weapset7", KEYBIND_KEYBOARD, SDLK_7, NMOD_ALL );
+   input_setKeybind( "weapset8", KEYBIND_KEYBOARD, SDLK_8, NMOD_ALL );
+   input_setKeybind( "weapset9", KEYBIND_KEYBOARD, SDLK_9, NMOD_ALL );
+   input_setKeybind( "weapset0", KEYBIND_KEYBOARD, SDLK_0, NMOD_ALL );
    /* Escorts. */
    input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, NMOD_NONE );
    input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
@@ -281,8 +289,8 @@ void input_init (void)
    if (sizeof(keybindNames) != sizeof(keybindDescription)) {
       WARN("Keybind names and descriptions aren't of the same size!");
       WARN("   %u descriptions for %u names",
-            (unsigned int) sizeof(keybindNames),
-            (unsigned int) sizeof(keybindDescription));
+            (unsigned int) (sizeof(keybindNames) / sizeof(char*)),
+            (unsigned int) (sizeof(keybindDescription) / sizeof(char*)));
    }
 #endif /* DEBUGGING */
 
@@ -772,17 +780,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
 
    /*
-    * Weapon selection.
-    */
-   } else if (KEY("weap_all") && INGAME() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) player_setFireMode( 0 );
-   } else if (KEY("weap_turret") && INGAME() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) player_setFireMode( 1 );
-   } else if (KEY("weap_forward") && INGAME() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) player_setFireMode( 2 );
-
-
-   /*
     * Escorts.
     */
    } else if (INGAME() && NODEAD() && KEY("e_targetNext") && !repeat) {
@@ -810,12 +807,27 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_SECONDARY);
 
-   /* selecting secondary weapon */
-   } else if (KEY("secondary_next") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_secondaryNext();
-   } else if (KEY("secondary_prev") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_secondaryPrev();
-
+   /* Weapon sets. */
+   } else if (KEY("weapset1") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 0 );
+   } else if (KEY("weapset2") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 1 );
+   } else if (KEY("weapset3") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 2 );
+   } else if (KEY("weapset4") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 3 );
+   } else if (KEY("weapset5") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 4 );
+   } else if (KEY("weapset6") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 5 );
+   } else if (KEY("weapset7") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 6 );
+   } else if (KEY("weapset8") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 7 );
+   } else if (KEY("weapset9") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 8 );
+   } else if (KEY("weapset0") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_weapSetExec( 9 );
 
    /*
     * space

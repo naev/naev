@@ -60,7 +60,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
-static int pilotL_secondary( lua_State *L );
+static int pilotL_weapset( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -125,7 +125,7 @@ static const luaL_reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
-   { "secondary", pilotL_secondary },
+   { "weapset", pilotL_weapset },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -163,6 +163,7 @@ static const luaL_reg pilotL_methods[] = {
    { "rmOutfit", pilotL_rmOutfit },
    { "setFuel", pilotL_setFuel },
    /* Ship. */
+   { "cargoList", pilotL_cargoList },
    { "ship", pilotL_ship },
    { "cargoFree", pilotL_cargoFree },
    { "cargoHas", pilotL_cargoHas },
@@ -199,7 +200,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "target", pilotL_target },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
-   { "secondary", pilotL_secondary },
+   { "weapset", pilotL_weapset },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -929,63 +930,125 @@ static int pilotL_nav( lua_State *L )
 
 
 /**
- * @brief Gets the secondary weapon of the pilot.
+ * @brief Gets the weapset weapon of the pilot.
  *
- * @usage weapo, amm, ready = p:secondary()
+ * The weapon sets have the following structure: <br />
+ * <ul>
+ *  <li> name: name of the set <br />
+ *  <li> cooldwon: [0:1] value indicating if ready to shoot (1 is ready) <br />
+ *  <li> ammo: Name of the ammo or nil if not applicable <br />
+ *  <li> left: Ammo left or nil if not applicable <br />
+ *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
+ * </ul>
  *
- *    @luaparam p Pilot to get secondary weapon of.
- *    @luareturn The current secondary weapon and the amount of ammo it has (or nil if not applicable).
- * @luafunc secondary( p )
+ * @usage set_name, slots = p:weapsets( true ) -- Gets info for all active weapons
+ * @usage set_name, slots = p:weapsets() -- Get info about the current set
+ * @usage set_name, slots = p:weapsets( 5 ) -- Get info about the set number 5
+ *
+ *    @luaparam p Pilot to get weapset weapon of.
+ *    @luaparam id ID of the set to get information of. Defaults to currently active set.
+ *    @luareturn The name of the set and a table with each slot's information.
+ * @luafunc weapset( p, id)
  */
-static int pilotL_secondary( lua_State *L )
+static int pilotL_weapset( lua_State *L )
 {
    Pilot *p;
-   int i, q, ready;
+   int i, n;
+   PilotWeaponSetOutfit *po_list;
+   PilotOutfitSlot *slot;
+   Outfit *ammo, *o;
+   double delay;
+   int id, all, level;
 
    /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-
-   /* Case no secondary weapon. */
-   if ((p->secondary==NULL) || (p->secondary->outfit == NULL))
-      return 0;
-
-   /* Get ready status. */
-   ready = !(p->secondary->timer > 0.);
+   all = 0;
+   p   = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 1) {
+      if (lua_isnumber(L,2))
+         id = luaL_checkinteger(L,2) - 1;
+      else if (lua_isboolean(L,2))
+         all = lua_toboolean(L,2);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else
+      id = p->active_set;
+   id = CLAMP( 0, PILOT_WEAPON_SETS, id );
 
    /* Push name. */
-   if (outfit_isLauncher(p->secondary->outfit) || outfit_isFighterBay(p->secondary->outfit))
-      lua_pushstring( L, p->secondary->u.ammo.outfit->name );
+   lua_pushstring( L, pilot_weapSetName( p, id ) );
+
+   /* Push set. */
+   if (all)
+      n = p->noutfits;
    else
-      lua_pushstring( L, p->secondary->outfit->name );
+      po_list = pilot_weapSetList( p, id, &n );
 
-   /* Can have ammo. */
-   if ((outfit_isLauncher(p->secondary->outfit) ||
-            outfit_isFighterBay(p->secondary->outfit)) &&
-         (p->secondary->u.ammo.outfit != NULL)) {
+   lua_newtable(L);
+   for (i=0; i<n; i++) {
+      if (all) {
+         slot  = p->outfits[i];
+         o     = slot->outfit;
 
-      /* Get quantity. */
-      q = 0;
-      for (i=0; i<p->outfit_nweapon; i++) {
-         if (p->outfit_weapon[i].outfit != p->secondary->outfit)
+         /* Must be valid weapon. */
+         if ((o == NULL) || !(outfit_isBolt(o) || outfit_isBeam(o) ||
+               outfit_isLauncher(o) || outfit_isFighterBay(o)))
             continue;
 
-         if (p->outfit_weapon[i].u.ammo.outfit == p->secondary->u.ammo.outfit)
-            q += p->outfit_weapon[i].u.ammo.quantity;
+         level = slot->level;
+      }
+      else {
+         slot  = po_list[i].slot;
+         level = po_list[i].level;
       }
 
-      /* Push ammo. */
-      lua_pushnumber( L, q );
-   }
-   else {
-      /* Not ready if it's a launcher with no ammo. */
-      if (outfit_isLauncher(p->secondary->outfit) ||
-            outfit_isFighterBay(p->secondary->outfit))
-         ready = 0;
+      /* Set up for creation. */
+      lua_pushnumber(L,i+1);
+      lua_newtable(L);
 
-      lua_pushnil( L );
+      /* Name. */
+      lua_pushstring(L,"name");
+      lua_pushstring(L,slot->outfit->name);
+      lua_rawset(L,-3);
+
+      /* Set cooldown. */
+      lua_pushstring(L,"cooldown");
+      delay = outfit_delay(slot->outfit);
+      if (delay > 0.)
+         lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
+      else
+         lua_pushnumber( L, 1. );
+      lua_rawset(L,-3);
+
+      /* Ammo name. */
+      lua_pushstring(L,"ammo");
+      ammo = outfit_ammo(slot->outfit);
+      if (ammo != NULL)
+         lua_pushstring(L,ammo->name);
+      else
+         lua_pushnil(L);
+      lua_rawset(L,-3);
+
+      /* Ammo quantity. */
+      lua_pushstring(L,"left");
+      if ((outfit_isLauncher(slot->outfit) ||
+               outfit_isFighterBay(slot->outfit)) &&
+            (slot->u.ammo.outfit != NULL)) {
+         lua_pushnumber( L, slot->u.ammo.quantity );
+      }
+      else
+         lua_pushnil( L );
+      lua_rawset(L,-3);
+
+      /* Level. */
+      lua_pushstring(L,"level");
+      lua_pushnumber(L, level+1);
+      lua_rawset(L,-3);
+
+      /* Set table in table. */
+      lua_rawset(L,-3);
    }
-   lua_pushboolean( L, ready );
-   return 3;
+   return 2;
 }
 
 
@@ -1497,6 +1560,11 @@ static int pilotL_addOutfit( lua_State *L )
       /* We added an outfit. */
       q--;
    }
+
+   /* Update the weapon sets. */
+   if (!ret && p->autoweap)
+      pilot_weaponAuto(p);
+
    lua_pushboolean(L,!ret);
    return 1;
 }

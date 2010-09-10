@@ -40,6 +40,8 @@
 /* Misc. */
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
 #define PILOT_DISABLED_ARMOR     0.3   /**< armour % that gets it disabled */
+#define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
+#define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maxmimum amount of weapon levels. */
 
 /* hooks */
 #define PILOT_HOOK_NONE    0 /**< No hook. */
@@ -136,6 +138,8 @@ typedef struct PilotOutfitAmmo_ {
  * @brief Stores an outfit the pilot has.
  */
 typedef struct PilotOutfitSlot_ {
+   int id; /**< Position in the global slot list. */
+
    /* Outfit slot properties. */
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
@@ -145,6 +149,7 @@ typedef struct PilotOutfitSlot_ {
    PilotOutfitState state; /**< State of the outfit. */
    double timer; /**< Used to store when it was last used. */
    int quantity; /**< Quantity. */
+   int level; /**< Level in current weapon set (-1 is none). */
 
    /* Type-specific data. */
    union {
@@ -152,6 +157,30 @@ typedef struct PilotOutfitSlot_ {
       PilotOutfitAmmo ammo; /**< Ammo for launchers. */
    } u; /**< Stores type specific data. */
 } PilotOutfitSlot;
+
+
+/**
+ * @brief A pilot Weapon Set Outfit.
+ */
+typedef struct PilotWeaponSetOutfit_ {
+   int level; /**< Level of trigger. */
+   PilotOutfitSlot *slot; /**< Slot assosciated with it. */
+} PilotWeaponSetOutfit;
+
+
+/**
+ * @brief A weapon set represents a set of weapons that have an action.
+ *
+ * By default a weapon set indicates what weapons are enabled at a given time.
+ *  However they can also be used to launch weapons.
+ */
+typedef struct PilotWeaponSet_ {
+   char *name; /**< Helpful for the player. */
+   int fire; /**< Whether to fire the weapons or just enable them. */
+   double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
+   double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
+   PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
+} PilotWeaponSet;
 
 
 /**
@@ -271,12 +300,16 @@ typedef struct Pilot_ {
    int outfit_nweapon; /**< Number of weapon slots. */
    PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
    /* For easier usage. */
-   PilotOutfitSlot *secondary; /**< secondary weapon */
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */
    double jam_range; /**< Range at which pilot starts jamming. */
    double jam_chance; /**< Jam chance. */
+
+   /* Weapon sets. */
+   PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
+   int active_set; /**< Index of the currently active weapon set. */
+   int autoweap; /**< Automatically update weapon sets. */
 
    /* Cargo */
    uint64_t credits; /**< monies the pilot has */
@@ -324,6 +357,10 @@ typedef struct Pilot_ {
 } Pilot;
 
 
+#include "pilot_outfit.h"
+#include "pilot_weapon.h"
+
+
 /*
  * getting pilot stuff
  */
@@ -339,39 +376,11 @@ int pilot_getJumps( const Pilot* p );
 /*
  * Combat.
  */
-int pilot_shoot( Pilot* p, int type );
-int pilot_shootSecondary( Pilot* p );
-void pilot_shootStop( Pilot* p, const int secondary );
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
-
-
-/*
- * Outfits.
- */
-/* Raw changes. */
-int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
-int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn );
-int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
-/* Changes with checks. */
-int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
-int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
-/* Ammo. */
-int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
-int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
-/* Checks. */
-const char* pilot_checkSanity( Pilot *p );
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add );
-int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
-/* Other. */
-char* pilot_getOutfits( Pilot* pilot );
-void pilot_calcStats( Pilot* pilot );
-/* Special outfit stuff. */
-int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
-void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
 
 
 /*
@@ -384,6 +393,7 @@ int pilot_cargoOwned( Pilot* pilot, const char* commodityname );
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_moveCargo( Pilot* dest, Pilot* src );
+void pilot_calcCargo( Pilot* pilot );
 /* mission cargo - not to be confused with normal cargo */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
@@ -486,7 +496,6 @@ void pilot_clearHooks( Pilot *p );
 void pilots_addGlobalHook( int type, unsigned int hook );
 void pilots_rmGlobalHook( unsigned int hook );
 void pilots_clearGlobalHooks (void);
-
 
 
 #endif /* PILOT_H */

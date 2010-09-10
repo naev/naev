@@ -5,7 +5,7 @@
 /**
  * @file player.c
  *
- * @brief Contains all the player.p related stuff.
+ * @brief Contains all the player related stuff.
  */
 
 
@@ -62,7 +62,7 @@
 
 
 /*
- * player.p stuff
+ * player stuff
  */
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
@@ -72,12 +72,12 @@ static char *player_mission   = NULL; /**< More hack. */
 /*
  * Licenses.
  */
-static char **player_licenses = NULL; /**< Licenses player.p has. */
-static int player_nlicenses   = 0; /**< Number of licenses player.p has. */
+static char **player_licenses = NULL; /**< Licenses player has. */
+static int player_nlicenses   = 0; /**< Number of licenses player has. */
 
 
 /*
- * player.p sounds.
+ * player sounds.
  */
 static int player_engine_group = 0; /**< Player engine sound group. */
 static int player_gui_group   = 0; /**< Player gui sound group. */
@@ -97,7 +97,7 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
 
 
 /*
- * player.p pilot stack - ships he has
+ * player pilot stack - ships he has
  */
 /**
  * @brief Player ship.
@@ -105,13 +105,14 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
 typedef struct PlayerShip_s {
    Pilot* p; /**< Pilot. */
    char *loc; /**< Location. */
+   int autoweap; /**< Automatically update weapon sets. */
 } PlayerShip_t;
-static PlayerShip_t* player_stack   = NULL; /**< Stack of ships player.p has. */
-static int player_nstack            = 0; /**< Number of ships player.p has. */
+static PlayerShip_t* player_stack   = NULL; /**< Stack of ships player has. */
+static int player_nstack            = 0; /**< Number of ships player has. */
 
 
 /*
- * player.p outfit stack - outfits he has
+ * player outfit stack - outfits he has
  */
 /**
  * @brief Wrapper for outfits.
@@ -120,20 +121,19 @@ typedef struct PlayerOutfit_s {
    const Outfit *o; /**< Actual assosciated outfit. */
    int q; /**< Amount of outfit owned. */
 } PlayerOutfit_t;
-static PlayerOutfit_t *player_outfits  = NULL; /**< Outfits player.p has. */
-static int player_noutfits             = 0; /**< Number of outfits player.p has. */
+static PlayerOutfit_t *player_outfits  = NULL; /**< Outfits player has. */
+static int player_noutfits             = 0; /**< Number of outfits player has. */
 static int player_moutfits             = 0; /**< Current allocated memory. */
 #define OUTFIT_CHUNKSIZE               32 /**< Allocation chunk size. */
 
 
 /*
- * player.p global properties
+ * player global properties
  */
 /* used in input.c */
 double player_left         = 0.; /**< Player left turn velocity from input. */
 double player_right        = 0.; /**< Player right turn velocity from input. */
 static double player_acc   = 0.; /**< Accel velocity from input. */
-static int player_firemode = 0; /**< Player fire mode. */
 /* for death and such */
 static double player_timer = 0.; /**< For death and such. */
 
@@ -155,7 +155,7 @@ static int events_ndone  = 0; /**< Number of completed events. */
 
 
 /*
- * Extern stuff for player.p ships.
+ * Extern stuff for player ships.
  */
 extern Pilot** pilot_stack;
 extern int pilot_nstack;
@@ -227,7 +227,7 @@ void player_new (void)
    /* Setup sound */
    player_initSound();
 
-   /* Clean up player.p stuff if we'll be recreating. */
+   /* Clean up player stuff if we'll be recreating. */
    diff_clear();
    player_cleanup();
    var_cleanup();
@@ -325,7 +325,7 @@ static int player_newMake (void)
       return -1;
    }
    do {
-      if (xml_isNode(node, "player")) { /* we are interested in the player.p */
+      if (xml_isNode(node, "player")) { /* we are interested in the player */
          cur = node->children;
          do {
             if (xml_isNode(cur,"ship"))
@@ -384,7 +384,7 @@ static int player_newMake (void)
    player_message( "\egWelcome to "APPNAME"!" );
    player_message( "\eg v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
-   /* Try to create the pilot, if fails reask for player.p name. */
+   /* Try to create the pilot, if fails reask for player name. */
    if (ship==NULL) {
       WARN("Ship not set by module.");
       return -1;
@@ -432,7 +432,7 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
    char *ship_name, *old_name;
    int i, len, w;
 
-   /* temporary values while player.p doesn't exist */
+   /* temporary values while player doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
    player_ship    = ship;
    ship_name      = dialogue_input( "Ship Name", 3, 20,
@@ -500,7 +500,7 @@ static void player_newShipMake( char* name )
    /* in case we're respawning */
    player_rmFlag(PLAYER_CREATING);
 
-   /* create the player.p */
+   /* create the player */
    if (player.p == NULL) {
       /* Set position to defaults. */
       if (player.p != NULL) {
@@ -547,7 +547,7 @@ void player_swapShip( char* shipname )
    Vector2d v;
 
    for (i=0; i<player_nstack; i++) {
-      if (strcmp(shipname,player_stack[i].p->name)==0) { /* swap player.p and ship */
+      if (strcmp(shipname,player_stack[i].p->name)==0) { /* swap player and ship */
          ship = player_stack[i].p;
 
          /* move credits over */
@@ -661,7 +661,7 @@ void player_rmShip( char* shipname )
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
 
-      /* Free player.p ship and location. */
+      /* Free player ship and location. */
       pilot_free(player_stack[i].p);
       free(player_stack[i].loc);
 
@@ -677,7 +677,7 @@ void player_rmShip( char* shipname )
 
 
 /**
- * @brief Cleans up player.p stuff like player_stack.
+ * @brief Cleans up player stuff like player_stack.
  */
 void player_cleanup (void)
 {
@@ -758,7 +758,7 @@ void player_cleanup (void)
    /* just in case purge the pilot stack */
    pilots_cleanAll();
 
-   /* Reset some player.p stuff. */
+   /* Reset some player stuff. */
    player_creds   = 0;
    player.crating = 0;
    if (player.gui != NULL)
@@ -770,9 +770,9 @@ void player_cleanup (void)
 }
 
 
-static int player_soundReserved = 0; /**< Has the player.p already reserved sound? */
+static int player_soundReserved = 0; /**< Has the player already reserved sound? */
 /**
- * @brief Initializes the player.p sounds.
+ * @brief Initializes the player sounds.
  */
 static void player_initSound (void)
 {
@@ -809,7 +809,7 @@ void player_playSound( int sound, int once )
 
 
 /**
- * @brief Stops playing player.p sounds.
+ * @brief Stops playing player sounds.
  */
 void player_stopSound (void)
 {
@@ -822,7 +822,7 @@ void player_stopSound (void)
 
 
 /**
- * @brief Warps the player.p to the new position
+ * @brief Warps the player to the new position
  *
  *    @param x X value of the position to warp to.
  *    @param y Y value of the position to warp to.
@@ -880,10 +880,10 @@ const char* player_rating (void)
 
 
 /**
- * @brief Checks to see if the player.p has enough credits.
+ * @brief Checks to see if the player has enough credits.
  *
- *    @param amount Amount of credits to check to see if the player.p has.
- *    @return 1 if the player.p has enough credits.
+ *    @param amount Amount of credits to check to see if the player has.
+ *    @return 1 if the player has enough credits.
  */
 int player_hasCredits( int amount )
 {
@@ -892,10 +892,10 @@ int player_hasCredits( int amount )
 
 
 /**
- * @brief Modifies the amount of credits the player.p has.
+ * @brief Modifies the amount of credits the player has.
  *
  *    @param amount Quantity to modify player's credits by.
- *    @return Amount of credits the player.p has.
+ *    @return Amount of credits the player has.
  */
 unsigned long player_modCredits( int amount )
 {
@@ -976,7 +976,7 @@ void player_startAutonavWindow( unsigned int wid, char *str)
  */
 void player_abortAutonav( char *reason )
 {
-   /* No point if player.p is beyond aborting. */
+   /* No point if player is beyond aborting. */
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
       return;
 
@@ -1126,7 +1126,7 @@ void player_think( Pilot* pplayer, const double dt )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      ret = pilot_shoot( pplayer, player_firemode );
+      ret = pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
          player_abortAutonav(NULL);
@@ -1138,13 +1138,10 @@ void player_think( Pilot* pplayer, const double dt )
    /* Secondary weapon. */
    if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
       /* Double tap stops beams. */
-      if (!player_isFlag(PLAYER_SECONDARY_L) &&
-            (pplayer->secondary != NULL) &&
-            outfit_isBeam(pplayer->secondary->outfit)) {
+      if (!player_isFlag(PLAYER_SECONDARY_L))
          pilot_shootStop( pplayer, 1 );
-      }
       else {
-         ret = pilot_shootSecondary( pplayer );
+         ret = pilot_shoot( pplayer, 1 );
          if (ret)
             player_abortAutonav(NULL);
       }
@@ -1309,80 +1306,12 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
  *
  */
 /**
- * @brief Get the next secondary weapon.
+ * @brief Actiavtes a player's weapon set.
  */
-void player_secondaryNext (void)
+void player_weapSetExec( int id )
 {
-   int i;
-   int found;
-   Outfit *o;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   found = !!(player.p->secondary == NULL);
-   for (i=0; i<player.p->noutfits; i++) {
-      o = player.p->outfits[i]->outfit;
-
-      /* Make sure is secondary weapon. */
-      if ((o == NULL) || !(outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)))
-         continue;
-
-      /* Make sure it isn't the same as the current one. */
-      if ((player.p->secondary != NULL) &&
-            (player.p->secondary->outfit == o)) {
-         if (player.p->secondary == player.p->outfits[i])
-            found = 1;
-         continue;
-      }
-
-      /* No secondary, grab first. */
-      if (found==1) {
-         player.p->secondary = player.p->outfits[i];
-         return;
-      }
-   }
-   player.p->secondary = NULL;
-}
-
-
-/**
- * @brief Get the previous secondary weapon.
- */
-void player_secondaryPrev (void)
-{
-   int i;
-   int found;
-   Outfit *o;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   found = !!(player.p->secondary == NULL);
-   for (i=player.p->noutfits-1; i>=0; i--) {
-      o = player.p->outfits[i]->outfit;
-
-      /* Make sure is secondary weapon. */
-      if ((o == NULL) || !(outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)))
-         continue;
-
-      /* Make sure it isn't the same as the current one. */
-      if ((player.p->secondary != NULL) &&
-            (player.p->secondary->outfit == o)) {
-         if (player.p->secondary == player.p->outfits[i])
-            found = 1;
-         continue;
-      }
-
-      /* No secondary, grab first. */
-      if (found==1) {
-         player.p->secondary = player.p->outfits[i];
-         return;
-      }
-   }
-   player.p->secondary = NULL;
+   if (player.p != NULL)
+      pilot_weapSetExec( player.p, id );
 }
 
 
@@ -1433,7 +1362,7 @@ void player_land (void)
    Planet *planet;
    int runcount = 0;
 
-   if (landed) { /* player.p is already landed */
+   if (landed) { /* player is already landed */
       takeoff(1);
       return;
    }
@@ -2077,29 +2006,6 @@ void player_autohail (void)
 
 
 /**
- * @brief Sets the ship fire mode.
- */
-void player_setFireMode( int mode )
-{
-   if (player_firemode == mode)
-      return;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   player_firemode = mode;
-
-   if (player_firemode == 0)
-      player_message("\epFire mode set to all weapons.");
-   else if (player_firemode == 1)
-      player_message("\epFire mode set to turret weapons.");
-   else if (player_firemode == 2)
-      player_message("\epFire mode set to forward weapons.");
-}
-
-
-/**
  * @brief Player got pwned.
  */
 void player_dead (void)
@@ -2181,9 +2087,9 @@ void player_ships( char** sships, glTexture** tships )
 
 
 /**
- * @brief Gets the amount of ships player.p has in storage.
+ * @brief Gets the amount of ships player has in storage.
  *
- *    @return The number of ships the player.p has.
+ *    @return The number of ships the player has.
  */
 int player_nships (void)
 {
@@ -2192,7 +2098,7 @@ int player_nships (void)
 
 
 /**
- * @brief Sees if player.p has a ship of a name.
+ * @brief Sees if player has a ship of a name.
  *
  *    @param shipname Nome of the ship to get.
  *    @return 1 if ship exists.
@@ -2280,9 +2186,9 @@ void player_setLoc( char* shipname, char* loc )
 
 
 /**
- * @brief Gets how many of the outfit the player.p owns.
+ * @brief Gets how many of the outfit the player owns.
  *
- *    @param outfitname Outfit to check how many the player.p owns.
+ *    @param outfitname Outfit to check how many the player owns.
  *    @return The number of outfits matching outfitname owned.
  */
 int player_outfitOwned( const Outfit* o )
@@ -2355,7 +2261,7 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
 
 
 /**
- * @brief Gets the amount of different outfits in the player.p outfit stack.
+ * @brief Gets the amount of different outfits in the player outfit stack.
  *
  *    @return Amount of different outfits.
  */
@@ -2366,7 +2272,7 @@ int player_numOutfits (void)
 
 
 /**
- * @brief Adds an outfit to the player.p outfit stack.
+ * @brief Adds an outfit to the player outfit stack.
  *
  *    @param o Outfit to add.
  *    @param quantity Amount to add.
@@ -2471,10 +2377,10 @@ void player_missionFinished( int id )
 
 
 /**
- * @brief Checks to see if player.p has already completed a mission.
+ * @brief Checks to see if player has already completed a mission.
  *
- *    @param id ID of the mission to see if player.p has completed.
- *    @return 1 if player.p has completed the mission, 0 otherwise.
+ *    @param id ID of the mission to see if player has completed.
+ *    @return 1 if player has completed the mission, 0 otherwise.
  */
 int player_missionAlreadyDone( int id )
 {
@@ -2508,10 +2414,10 @@ void player_eventFinished( int id )
 
 
 /**
- * @brief Checks to see if player.p has already completed a event.
+ * @brief Checks to see if player has already completed a event.
  *
- *    @param id ID of the event to see if player.p has completed.
- *    @return 1 if player.p has completed the event, 0 otherwise.
+ *    @param id ID of the event to see if player has completed.
+ *    @return 1 if player has completed the event, 0 otherwise.
  */
 int player_eventAlreadyDone( int id )
 {
@@ -2524,9 +2430,9 @@ int player_eventAlreadyDone( int id )
 
 
 /**
- * @brief Checks to see if player.p has license.
+ * @brief Checks to see if player has license.
  *
- *    @param license License to check to see if the player.p has.
+ *    @param license License to check to see if the player has.
  *    @return 1 if has license (or none needed), 0 if doesn't.
  */
 int player_hasLicense( char *license )
@@ -2544,7 +2450,7 @@ int player_hasLicense( char *license )
 
 
 /**
- * @brief Gives the player.p a license.
+ * @brief Gives the player a license.
  *
  *    @brief license License to give the player.
  */
@@ -2564,7 +2470,7 @@ void player_addLicense( char *license )
 /**
  * @brief Gets the player's licenses.
  *
- *    @param nlicenses Amount of licenses the player.p has.
+ *    @param nlicenses Amount of licenses the player has.
  *    @return Name of the licenses he has.
  */
 char **player_getLicenses( int *nlicenses )
@@ -2674,7 +2580,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 
 
 /**
- * @brief Save the freaking player.p in a freaking xmlfile.
+ * @brief Save the freaking player in a freaking xmlfile.
  *
  *    @param writer xml Writer to use.
  *    @return 0 on success.
@@ -2688,7 +2594,7 @@ int player_save( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"player");
 
-   /* Standard player.p details. */
+   /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
@@ -2732,7 +2638,7 @@ int player_save( xmlTextWriterPtr writer )
 
    xmlw_endElem(writer); /* "player" */
 
-   /* Mission the player.p has done. */
+   /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
    for (i=0; i<missions_ndone; i++) {
       m = mission_get(missions_done[i]);
@@ -2741,7 +2647,7 @@ int player_save( xmlTextWriterPtr writer )
    }
    xmlw_endElem(writer); /* "missions_done" */
 
-   /* Events the player.p has done. */
+   /* Events the player has done. */
    xmlw_startElem(writer,"events_done");
    for (i=0; i<events_ndone; i++) {
       ev = event_dataName(events_done[i]);
@@ -2791,8 +2697,10 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
 static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc )
 {
-   int i, j, k;
+   int i, j, k, n;
    int found;
+   const char *name;
+   PilotWeaponSetOutfit *weaps;
 
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name","%s",ship->name);
@@ -2867,6 +2775,28 @@ static int player_saveShip( xmlTextWriterPtr writer,
    }
    xmlw_endElem(writer); /* "commodities" */
 
+   xmlw_startElem(writer,"weaponsets");
+   xmlw_attr(writer,"autoweap","%d",ship->autoweap);
+   if (!ship->autoweap) {
+      for (i=0; i<PILOT_WEAPON_SETS; i++) {
+         weaps = pilot_weapSetList( ship, i, &n );
+         xmlw_startElem(writer,"weaponset");
+         name = pilot_weapSetName(ship,i);
+         if (name != NULL)
+            xmlw_attr(writer,"name","%s",name);
+         xmlw_attr(writer,"id","%d",i);
+         xmlw_attr(writer,"fire","%d",pilot_weapSetModeCheck(ship,i));
+         for (j=0; j<n;j++) {
+            xmlw_startElem(writer,"weapon");
+            xmlw_attr(writer,"level","%d",weaps[j].level);
+            xmlw_str(writer,"%d",weaps[j].slot->id);
+            xmlw_endElem(writer); /* "weapon" */
+         }
+         xmlw_endElem(writer); /* "weaponset" */
+      }
+   }
+   xmlw_endElem(writer); /* "weaponsets" */
+
    xmlw_endElem(writer); /* "ship" */
 
    return 0;
@@ -2874,9 +2804,9 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
 
 /**
- * @brief Loads the player.p stuff.
+ * @brief Loads the player stuff.
  *
- *    @param parent Node where the player.p stuff is to be found.
+ *    @param parent Node where the player stuff is to be found.
  *    @return 0 on success.
  */
 Planet* player_load( xmlNodePtr parent )
@@ -2906,9 +2836,9 @@ Planet* player_load( xmlNodePtr parent )
 
 
 /**
- * @brief Parses the player.p node.
+ * @brief Parses the player node.
  *
- *    @param parent The player.p node.
+ *    @param parent The player node.
  *    @return Planet to start on on success.
  */
 static Planet* player_parse( xmlNodePtr parent )
@@ -3022,7 +2952,7 @@ static Planet* player_parse( xmlNodePtr parent )
       WARN("Save has no time information, setting to 0.");
    ntime_set(player_time);
 
-   /* set player.p in system */
+   /* set player in system */
    pnt = planet_get( planet );
    /* Get random planet if it's NULL. */
    if (pnt == NULL)
@@ -3259,7 +3189,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    double fuel;
    Ship *ship_parsed;
    Pilot* ship;
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, ccur;
    int quantity;
    Outfit *o;
    int ret;
@@ -3267,6 +3197,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    Commodity *com;
    PilotFlags flags;
    unsigned int pid;
+   int autoweap, fire, level, weapid;
 
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3287,7 +3218,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    /* Add GUI if applicable. */
    player_guiAdd( ship_parsed->gui );
 
-   /* player.p is currently on this ship */
+   /* player is currently on this ship */
    if (is_player != 0) {
       pid = pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
       ship = player.p;
@@ -3295,14 +3226,16 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );
-
+   /* Clean up. */
    free(name);
    free(model);
 
+   /* Defaults. */
+   fuel     = -1;
+   autoweap = 1;
+
+   /* Start parsing. */
    node = parent->xmlChildrenNode;
-
-   fuel = -1;
-
    do {
       /* Get location. */
       if (is_player == 0)
@@ -3416,7 +3349,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       pilot_calcStats( ship );
    }
 
-   /* add it to the stack if it's not what the player.p is in */
+   /* add it to the stack if it's not what the player is in */
    if (is_player == 0) {
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
       player_stack[player_nstack].p    = ship;
@@ -3424,6 +3357,89 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       player_nstack++;
    }
 
+   /* Second pass for weapon sets. */
+   node = parent->xmlChildrenNode;
+   do {
+      if (!xml_isNode(node,"weaponsets"))
+         continue;
+
+      /* Check for autoweap. */
+      xmlr_attr(node,"autoweap",id);
+      if (id != NULL) {
+         autoweap = atoi(id);
+         free(id);
+      }
+      if (autoweap)
+         break;
+
+      /* Parse weapon sets. */
+      cur = node->xmlChildrenNode;
+      do { /* Load each weapon set. */
+         if (!xml_isNode(cur,"weaponset"))
+            continue;
+
+         xmlr_attr(cur,"id",id);
+         if (id == NULL) {
+            WARN("Player ship '%s' missing 'id' tag for weapon set.",ship->name);
+            continue;
+         }
+         i = atoi(id);
+         free(id);
+         if ((i < 0) || (i >= PILOT_WEAPON_SETS)) {
+            WARN("Player ship '%s' has invalid weapon set id '%d' [max %d].",
+                  ship->name, i, PILOT_WEAPON_SETS-1 );
+            continue;
+         }
+
+         /* Set fire mode. */
+         xmlr_attr(cur,"fire",id);
+         if (id == NULL) {
+            WARN("Player ship '%s' missing 'fire' tag for weapon set.",ship->name);
+            continue;
+         }
+         fire = atoi(id);
+         if (fire)
+            pilot_weapSetMode( ship, i, fire );
+         free(id);
+
+         /* Get name. */
+         xmlr_attr(cur,"name",id);
+         if (id != NULL) {
+            pilot_weapSetNameSet( ship, i, id );
+            free(id);
+         }
+
+         /* Parse individual weapons. */
+         ccur = cur->xmlChildrenNode;
+         do {
+            if (!xml_isNode(ccur,"weapon"))
+               continue;
+
+            xmlr_attr(ccur,"level",id);
+            if (id == NULL) {
+               WARN("Player ship '%s' missing 'level' tag for weapon set weapon.",ship->name);
+               continue;
+            }
+            level = atoi(id);
+            free(id);
+            weapid = xml_getInt(ccur);
+            if ((weapid < 0) || (weapid >= ship->noutfits)) {
+               WARN("Player ship '%s' has invalid weapon id %d [max %d].",
+                     ship->name, weapid, ship->noutfits-1 );
+               continue;
+            }
+
+            pilot_weapSetAdd( ship, i, ship->outfits[weapid], level );
+         } while (xml_nextNode(ccur));
+      } while (xml_nextNode(cur));
+   } while (xml_nextNode(node));
+
+/* Set up autoweap if necessary. */
+ship->autoweap = autoweap;
+if (autoweap)
+   pilot_weaponAuto( ship );
+
    return 0;
-}
+   }
+
 

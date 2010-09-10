@@ -47,6 +47,7 @@ typedef struct CstSlotWidget_ {
    double altx; /**< Alt X text position. */
    double alty; /**< Alt Y text position. */
    int canmodify; /**< Whether or not it can modify stuff. */
+   int weapons; /**< Hack to render colours for currently selected weapon set. */
 } CstSlotWidget; /**< Slot widget. */
 void equipment_slotWidget( unsigned int wid,
       double x, double y, double w, double h,

@@ -321,7 +321,7 @@ function render( dt )
    speed = pp:vel():dist()
    lockons = pp:lockon()
    autonav = player.autonav()
-   sec, amm, rdy = pp:secondary()
+   wset_name, wset  = pp:weapset()
    credits = player.credits()
 
    -- local col
@@ -668,29 +668,25 @@ function render( dt )
       pntstring = "none"
    end
 
-   if sec ~= nil then
-      if rdy then
-         col = col_txt_std
-      else
-         col = col_txt_una
-      end
-      secstr = sec
-      if amm ~= nil then
-         secstr = secstr .. " (" .. tostring(amm) .. ")"
-      end
+   if rdy then
+   col = col_txt_std
    else
-      secstr = "none"
+   col = col_txt_una
    end
+   wsetstr = wset_name
+   --[[if amm ~= nil then
+      secstr = secstr .. " (" .. tostring(amm) .. ")"
+   end]]--
 
    bartext = { "Player: ", pname, "System: ", sys:name(), "Credits: ",
          largeNumber( credits ), "Nav: ", navstring, "Fuel: ", fuelstring,
-         "Planet: ", pntstring, "Secondary: ", secstr, "Cargo: " }
+         "Planet: ", pntstring, "Secondary: ", wsetstr, "Cargo: " }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( false, v, length, 5, col_txt_top )
          length = length + gfx.printDim( false, v )
       else
-         if v == "none" or (v == secstr and not rdy) then
+         if v == "none" or (v == wsetstr and not rdy) then
             col = col_txt_una
          else
             col = col_txt_std
