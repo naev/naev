@@ -753,6 +753,10 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetNameSet( p, 3, "Fwd/Tur" );
    pilot_weapSetNameSet( p, 4, "Seekers" );
    pilot_weapSetNameSet( p, 5, "Fighter Bays" );
+   pilot_weapSetNameSet( p, 6, "Weaponset 7" );
+   pilot_weapSetNameSet( p, 7, "Weaponset 8" );
+   pilot_weapSetNameSet( p, 8, "Weaponset 9" );
+   pilot_weapSetNameSet( p, 9, "Weaponset 0" );
 
    /* Iterate through all the outfits. */
    for (i=0; i<p->outfit_nweapon; i++) {
