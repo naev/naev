@@ -3185,6 +3185,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 {
    char *name, *model, *loc, *q, *id;
+   char buf[PATH_MAX];
    int i, n;
    double fuel;
    Ship *ship_parsed;
@@ -3407,6 +3408,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          if (id != NULL) {
             pilot_weapSetNameSet( ship, i, id );
             free(id);
+         }
+         else {
+            snprintf( buf, sizeof(buf), "Weaponset %d", (i+1)%10 );
+            pilot_weapSetNameSet( ship, i, buf );
          }
 
          /* Parse individual weapons. */
