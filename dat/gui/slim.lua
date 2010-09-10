@@ -447,24 +447,22 @@ function render( dt )
    --Weapon bars
    local num = 0
    for k, weapon in pairs(wset) do
-      if weapon.level > 0 then
-         if weapon.left ~= nil then
-            txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
-            if weapon.left == 0 then
-               col = col_txt_wrn
-            else
-               col = col_txt_bar
-            end
-            values = {weapon.left, weapon.cooldown}
-            render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
+      if weapon.left ~= nil then
+         txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
+         if weapon.left == 0 then
+            col = col_txt_wrn
          else
-            txt = weapon.name
             col = col_txt_bar
-            values = {0, weapon.cooldown}
-            render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
          end
-         num = num + 1
+         values = {weapon.left, weapon.cooldown}
+         render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
+      else
+         txt = weapon.name
+         col = col_txt_bar
+         values = {0, weapon.cooldown}
+         render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
+      num = num + 1
    end  
    
    --Warning Light
