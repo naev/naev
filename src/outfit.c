@@ -73,6 +73,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 
 
@@ -447,7 +448,7 @@ int outfit_isFighterBay( const Outfit* o )
 /**
  * @brief Checks if outfit is a fighter.
  *    @param o Outfit to check.
- *    @return 1 if o is a jammer.
+ *    @return 1 if o is a Fighter.
  */
 int outfit_isFighter( const Outfit* o )
 {
@@ -465,11 +466,20 @@ int outfit_isMap( const Outfit* o )
 /**
  * @brief Checks if outfit is a license.
  *    @param o Outfit to check.
- *    @return 1 if o is a map.
+ *    @return 1 if o is a license.
  */
 int outfit_isLicense( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_LICENSE);
+}
+/**
+ * @brief Checks if outfit is a GUI.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a GUI.
+ */
+int outfit_isGUI( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_GUI);
 }
 
 
@@ -673,6 +683,7 @@ const char* outfit_getType( const Outfit* o )
          "Fighter Bay",
          "Fighter",
          "Map",
+         "GUI",
          "License"
    };
 
@@ -702,6 +713,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isFighterBay(o)) return "Fighter Bay";
    else if (outfit_isFighter(o))    return "Fighter";
    else if (outfit_isMap(o))        return "Map";
+   else if (outfit_isGUI(o))        return "GUI";
    else if (outfit_isLicense(o))    return "License";
    else                             return "Unknown";
 }
@@ -1526,6 +1538,35 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
 
 /**
+ * @brief Parses the GUI tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+
+   node = parent->children;
+
+   do {
+      xmlr_strd(node,"gui",temp->u.gui.gui);
+   } while (xml_nextNode(node));
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "GUI (Graphical User Interface)" );
+
+   if (temp->u.gui.gui==NULL)
+      WARN("Outfit '%s' missing/invalid 'gui' element", temp->name);
+}
+
+
+/**
  * @brief Parses the license tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1700,6 +1741,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             outfit_parseSFighter( temp, node );
          else if (outfit_isMap(temp))
             outfit_parseSMap( temp, node );
+         else if (outfit_isGUI(temp))
+            outfit_parseSGUI( temp, node );
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
 
@@ -1800,6 +1843,8 @@ void outfit_free (void)
          free(o->u.bay.ammo_name);
       if (outfit_isFighter(o) && o->u.fig.ship)
          free(o->u.fig.ship);
+      if (outfit_isGUI(o) && o->u.gui.gui)
+         free(o->u.gui.gui);
 
       /* strings */
       if (o->typename)

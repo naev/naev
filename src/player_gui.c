@@ -46,6 +46,10 @@ int player_guiAdd( char* name )
 {
    char **new;
 
+   /* Name must not be NULL. */
+   if (name == NULL)
+      return -1;
+
    /* Create new array. */
    if (gui_list == NULL)
       gui_list = array_create( char* );

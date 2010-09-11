@@ -2291,6 +2291,11 @@ int player_addOutfit( const Outfit *o, int quantity )
       map_map(NULL,o->u.map.radius);
       return 1; /* Success. */
    }
+   /* special case if it's an outfit */
+   else if (outfit_isGUI(o)) {
+      player_guiAdd(o->u.gui.gui);
+      return 1; /* Success. */
+   }
    /* special case if it's a license. */
    else if (outfit_isLicense(o)) {
       player_addLicense(o->name);
