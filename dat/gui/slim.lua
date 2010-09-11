@@ -341,7 +341,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    l_col = _G["col_" .. name]
    gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
    gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1]/100. * bar_weapon_w, bar_weapon_h, l_col)
+   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
    gfx.renderTex( bg_bar_weapon, x, y )
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
@@ -454,7 +454,7 @@ function render( dt )
          else
             col = col_txt_bar
          end
-         values = {weapon.left, weapon.cooldown}
+         values = {weapon.left_p, weapon.cooldown}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          txt = weapon.name
