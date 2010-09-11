@@ -1593,6 +1593,27 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    ship = eq_wgt.selected;
 
+   /* There are two conditionts when you can't unequip all, first off
+    * is when you have deployed ships, second off is when you have more cargo
+    * than you can carry "naked". */
+   for (i=0; i<ship->noutfits; i++) {
+      /* Must have outfit. */
+      if (ship->outfits[i]->outfit == NULL)
+         continue;
+      /* Must be fighter bay. */
+      if (!outfit_isFighterBay( ship->outfits[i]->outfit))
+         continue;
+      /* Must not havve deployed. */
+      if (ship->outfits[i]->u.ammo.deployed > 0) {
+         dialogue_alert( "You can not unequip your ship while you have deployed fighters!" );
+         return;
+      }
+   }
+   if (pilot_cargoUsed( ship ) > ship->ship->cap_cargo) {
+      dialogue_alert( "You can not unequip your ship when you have more cargo than it can hold without modifications!" );
+      return;
+   }
+
    /* Handle possible fuel changes. */
    f = eq_wgt.selected->fuel;
 
