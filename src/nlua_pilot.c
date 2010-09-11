@@ -937,7 +937,8 @@ static int pilotL_nav( lua_State *L )
  *  <li> name: name of the set <br />
  *  <li> cooldwon: [0:1] value indicating if ready to shoot (1 is ready) <br />
  *  <li> ammo: Name of the ammo or nil if not applicable <br />
- *  <li> left: Ammo left or nil if not applicable <br />
+ *  <li> left: Absolute ammo left or nil if not applicable <br />
+ *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  * </ul>
  *
@@ -1031,8 +1032,19 @@ static int pilotL_weapset( lua_State *L )
          lua_pushnil(L);
       lua_rawset(L,-3);
 
-      /* Ammo quantity. */
+      /* Ammo quantity absolute. */
       lua_pushstring(L,"left");
+      if ((outfit_isLauncher(slot->outfit) ||
+               outfit_isFighterBay(slot->outfit)) &&
+            (slot->u.ammo.outfit != NULL)) {
+         lua_pushnumber( L, slot->u.ammo.quantity / outfit_amount(slot->outfit) );
+      }
+      else
+         lua_pushnil( L );
+      lua_rawset(L,-3);
+
+      /* Ammo quantity relative. */
+      lua_pushstring(L,"left_p");
       if ((outfit_isLauncher(slot->outfit) ||
                outfit_isFighterBay(slot->outfit)) &&
             (slot->u.ammo.outfit != NULL)) {
