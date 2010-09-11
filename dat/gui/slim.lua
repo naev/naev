@@ -32,6 +32,8 @@ function create()
    col_ammo = colour.new(140/255,94/255,  7/255 )
    col_heat = colour.new(114/255,26/255, 14/255 )
    col_ready = colour.new(14/255,108/255, 114/255 )
+   col_prim = colour.new(71/255,234/255, 252/255 )
+   col_sec = colour.new(136/255,179/255, 255/255 )
    
    --Load Images
    local base = "gfx/gui/slim/"
@@ -447,18 +449,22 @@ function render( dt )
    --Weapon bars
    local num = 0
    for k, weapon in pairs(wset) do
+      if weapon.level == 1 then
+         col = col_prim
+      elseif weapon.level == 2 then
+         col = col_sec
+      else
+         col = col_txt_bar
+      end
       if weapon.left ~= nil then
          txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
-         else
-            col = col_txt_bar
          end
          values = {weapon.left_p, weapon.cooldown}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          txt = weapon.name
-         col = col_txt_bar
          values = {0, weapon.cooldown}
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
