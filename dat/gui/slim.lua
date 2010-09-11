@@ -341,7 +341,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    l_col = _G["col_" .. name]
    gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
    gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1]/100. * bar_weapon_w, bar_weapon_h, l_col)
+   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
    gfx.renderTex( bg_bar_weapon, x, y )
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
@@ -447,24 +447,22 @@ function render( dt )
    --Weapon bars
    local num = 0
    for k, weapon in pairs(wset) do
-      if weapon.level > 0 then
-         if weapon.left ~= nil then
-            txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
-            if weapon.left == 0 then
-               col = col_txt_wrn
-            else
-               col = col_txt_bar
-            end
-            values = {weapon.left, weapon.cooldown}
-            render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
+      if weapon.left ~= nil then
+         txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
+         if weapon.left == 0 then
+            col = col_txt_wrn
          else
-            txt = weapon.name
             col = col_txt_bar
-            values = {0, weapon.cooldown}
-            render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
          end
-         num = num + 1
+         values = {weapon.left_p, weapon.cooldown}
+         render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
+      else
+         txt = weapon.name
+         col = col_txt_bar
+         values = {0, weapon.cooldown}
+         render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
+      num = num + 1
    end  
    
    --Warning Light
