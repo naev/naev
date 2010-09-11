@@ -24,6 +24,7 @@
 #include "land.h"
 #include "outfit.h"
 #include "player.h"
+#include "player_gui.h"
 #include "toolkit.h"
 #include "dialogue.h"
 
@@ -354,6 +355,12 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
          dialogue_alert( "You already own this map." );
       return 0;
    }
+   /* GUI already owned */
+   else if (outfit_isGUI(outfit) && player_guiCheck(outfit->u.gui.gui)) {
+      if (errmsg != 0)
+         dialogue_alert( "You already own this GUI." );
+      return 0;
+   }
    /* Already has license. */
    else if (outfit_isLicense(outfit) && player_hasLicense(outfit->name)) {
       if (errmsg != 0)
@@ -420,8 +427,11 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
    (void) q;
 
    /* Map check. */
-   if ((outfit_isMap(outfit)) &&
-         map_isMapped( NULL, outfit->u.map.radius ))
+   if (outfit_isMap(outfit))
+      return 0;
+
+   /* GUI check. */
+   if (outfit_isGUI(outfit))
       return 0;
 
    /* License check. */

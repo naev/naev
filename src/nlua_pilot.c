@@ -942,6 +942,17 @@ static int pilotL_nav( lua_State *L )
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  * </ul>
  *
+ * An example would be:
+ * <pre><code>
+ * ws_name, ws = p:weapsets( true )
+ * print( "Weapnset Name: " .. ws_name )
+ * for _,w in ipairs(ws) do
+ *    print( "Name: " .. w.name )
+ *    print( "Cooldown: " .. tostring(cooldon) )
+ *    print( "Level: " .. tostring(level) )
+ * end
+ * </code></pre>
+ *
  * @usage set_name, slots = p:weapsets( true ) -- Gets info for all active weapons
  * @usage set_name, slots = p:weapsets() -- Get info about the current set
  * @usage set_name, slots = p:weapsets( 5 ) -- Get info about the set number 5

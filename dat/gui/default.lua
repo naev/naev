@@ -241,6 +241,10 @@ end
 
 -- Renders the weapon systems
 function render_weapon ()
+   col = col_console
+   ws_name, ws = pp:weapset()
+   gfx.print( nil, ws_name, weapon_x, weapon_y-25, col, weapon_w, true )
+   --[[
    local sec, amm, rdy = pp:secondary()
    if sec ~= nil then
       local col
@@ -259,6 +263,7 @@ function render_weapon ()
       gfx.print( nil, "Secondary", weapon_x, weapon_y-17, col_console, weapon_w, true )
       gfx.print( true, "None", weapon_x, weapon_y-32, col_gray, weapon_w, true )
    end
+   --]]
 end
 
 
