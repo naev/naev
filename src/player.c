@@ -1308,10 +1308,10 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 /**
  * @brief Actiavtes a player's weapon set.
  */
-void player_weapSetExec( int id )
+void player_weapSetPress( int id, int type )
 {
    if (player.p != NULL)
-      pilot_weapSetExec( player.p, id );
+      pilot_weapSetPress( player.p, id, type );
 }
 
 

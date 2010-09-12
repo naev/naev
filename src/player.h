@@ -177,7 +177,7 @@ void player_hyperspacePreempt( int );
 /*
  * keybind actions
  */
-void player_weapSetExec( int id );
+void player_weapSetPress( int id, int type );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );

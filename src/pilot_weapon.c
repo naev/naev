@@ -67,10 +67,43 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
 
 /**
+ * @brief Handles a weapon set press.
+ */
+void pilot_weapSetPress( Pilot* p, int id, int type )
+{
+   PilotWeaponSet *ws;
+
+   ws = pilot_weapSet(p,id);
+
+   /* Handle fire groups. */
+   if (ws->fire) {
+      if (type > 0)
+         ws->active = 1;
+      else if (type < 0)
+         ws->active = 0;
+   }
+}
+
+
+/**
+ * @brief Updates the pilot's weapon sets.
+ */
+void pilot_weapSetUpdate( Pilot* p )
+{
+   int i;
+
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      if (p->weapon_sets[i].active)
+         pilot_weapSetExec( p, i );
+}
+
+
+/**
  * @brief Executes a weapon set.
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
+ *    @param 1 if is keydown, -1 if is keyup, 0 if should be dry.
  */
 void pilot_weapSetExec( Pilot* p, int id )
 {

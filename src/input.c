@@ -809,25 +809,25 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Weapon sets. */
    } else if (KEY("weapset1") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 0 );
+      player_weapSetPress( 0, value );
    } else if (KEY("weapset2") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 1 );
+      player_weapSetPress( 1, value );
    } else if (KEY("weapset3") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 2 );
+      player_weapSetPress( 2, value );
    } else if (KEY("weapset4") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 3 );
+      player_weapSetPress( 3, value );
    } else if (KEY("weapset5") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 4 );
+      player_weapSetPress( 4, value );
    } else if (KEY("weapset6") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 5 );
+      player_weapSetPress( 5, value );
    } else if (KEY("weapset7") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 6 );
+      player_weapSetPress( 6, value );
    } else if (KEY("weapset8") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 7 );
+      player_weapSetPress( 7, value );
    } else if (KEY("weapset9") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 8 );
+      player_weapSetPress( 8, value );
    } else if (KEY("weapset0") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_weapSetExec( 9 );
+      player_weapSetPress( 9, value );
 
    /*
     * space
