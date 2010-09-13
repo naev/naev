@@ -82,6 +82,8 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
       else if (type < 0)
          ws->active = 0;
    }
+   else
+      pilot_weapSetExec( p, id );
 }
 
 
