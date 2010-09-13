@@ -73,7 +73,7 @@ Your comrades raise a cheer everyone shakes the postmasters hand. One of them ki
 "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]
 
 -- Other text for the mission
-   comm[8] = "You fled battle. The Empire wont forget."
+   comm[8] = "You fled battle. The Empire won't forget."
    comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
    comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
    title[4] = "Good job"
