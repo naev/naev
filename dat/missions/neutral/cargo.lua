@@ -294,7 +294,7 @@ function land()
            -- tk.msg( msg_title[2], string.format( msg_msg_pass_list[dialog_pick], carg_type ))   -- Replace with even more randomized dialogue
            tk.msg( msg_title[2], string.format( msg_msg_pass, carg_type ))
          else
-            tk.msg( msg_title[2], string.format( msg_msg_list[cargo_dialog_num], carg_type ))
+            tk.msg( msg_title[2], string.format( msg_msg_list[dialog_pick], carg_type ))
          end
 
          -- modify the faction standing
