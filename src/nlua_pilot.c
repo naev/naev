@@ -944,7 +944,7 @@ static int pilotL_nav( lua_State *L )
  *
  * An example would be:
  * <pre><code>
- * ws_name, ws = p:weapsets( true )
+ * ws_name, ws = p:weapset( true )
  * print( "Weapnset Name: " .. ws_name )
  * for _,w in ipairs(ws) do
  *    print( "Name: " .. w.name )
@@ -953,9 +953,9 @@ static int pilotL_nav( lua_State *L )
  * end
  * </code></pre>
  *
- * @usage set_name, slots = p:weapsets( true ) -- Gets info for all active weapons
- * @usage set_name, slots = p:weapsets() -- Get info about the current set
- * @usage set_name, slots = p:weapsets( 5 ) -- Get info about the set number 5
+ * @usage set_name, slots = p:weapset( true ) -- Gets info for all active weapons
+ * @usage set_name, slots = p:weapset() -- Get info about the current set
+ * @usage set_name, slots = p:weapset( 5 ) -- Get info about the set number 5
  *
  *    @luaparam p Pilot to get weapset weapon of.
  *    @luaparam id ID of the set to get information of. Defaults to currently active set.

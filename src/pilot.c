@@ -1388,6 +1388,9 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->engine_glow = 0.;
    }
 
+   /* Update weapons. */
+   pilot_weapSetUpdate( pilot );
+
    /* update the solid */
    pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,

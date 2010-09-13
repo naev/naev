@@ -15,6 +15,11 @@ int pilot_shoot( Pilot* p, int level );
 void pilot_shootStop( Pilot* p, int level );
 
 
+/* Updating. */
+void pilot_weapSetPress( Pilot* p, int id, int type );
+void pilot_weapSetUpdate( Pilot* p );
+
+
 /* Weapon Set. */
 void pilot_weapSetExec( Pilot* p, int id );
 int pilot_weapSetModeCheck( Pilot* p, int id );
