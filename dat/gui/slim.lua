@@ -58,6 +58,8 @@ function create()
    bg_bar = tex.open( base .. "bg_bar.png" )
    bg_bar_sm = tex.open( base .. "bg_bar_sm.png" )
    bg_bar_weapon = tex.open( base .. "bg_bar_weapon.png" )
+   bg_bar_weapon_prim = tex.open( base .. "bg_bar_weapon_prim.png" )
+   bg_bar_weapon_sec = tex.open( base .. "bg_bar_weapon_sec.png" )
    bg_shield = tex.open( base .. "bg_shield.png" )
    bg_armour = tex.open( base .. "bg_armour.png" )
    bg_energy = tex.open( base .. "bg_energy.png" )
@@ -345,7 +347,13 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
    gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
-   gfx.renderTex( bg_bar_weapon, x, y )
+   if value[3] == 2 then
+      gfx.renderTex( bg_bar_weapon_sec, x, y )
+   elseif value[3] == 1 then
+      gfx.renderTex( bg_bar_weapon_prim, x, y )
+   else
+      gfx.renderTex( bg_bar_weapon, x, y )
+   end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
    if gfx.printDim( false, txt ) > bar_weapon_w then
@@ -449,23 +457,19 @@ function render( dt )
    --Weapon bars
    local num = 0
    for k, weapon in pairs(wset) do
-      if weapon.level == 1 then
-         col = col_prim
-      elseif weapon.level == 2 then
-         col = col_sec
-      else
-         col = col_txt_bar
-      end
       if weapon.left ~= nil then
          txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
+         else
+            col = col_txt_bar
          end
-         values = {weapon.left_p, weapon.cooldown}
+         values = {weapon.left_p, weapon.cooldown, weapon.level}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          txt = weapon.name
-         values = {0, weapon.cooldown}
+         col = col_txt_bar
+         values = {0, weapon.cooldown, weapon.level}
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
       num = num + 1
