@@ -358,14 +358,16 @@ typedef struct Pilot_ {
 } Pilot;
 
 
+#include "pilot_cargo.h"
+#include "pilot_hook.h"
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
-#include "pilot_cargo.h"
 
 
 /*
  * getting pilot stuff
  */
+Pilot** pilot_getAll( int *n );
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
@@ -469,19 +471,6 @@ int pilot_isHostile( const Pilot *p );
 int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
-
-
-/*
- * hooks
- */
-void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
-int pilot_runHook( Pilot* p, int hook_type );
-void pilots_rmHook( unsigned int hook );
-void pilot_clearHooks( Pilot *p );
-/* Global hooks. */
-void pilots_addGlobalHook( int type, unsigned int hook );
-void pilots_rmGlobalHook( unsigned int hook );
-void pilots_clearGlobalHooks (void);
 
 
 #endif /* PILOT_H */
