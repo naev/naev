@@ -144,6 +144,7 @@ typedef struct PilotOutfitSlot_ {
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
    OutfitSlot slot; /**< Outfit slot. */
+   double T; /**< Slot temperature. */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -279,6 +280,11 @@ typedef struct Pilot_ {
    double ew_movement; /**< Movement factor. */
    double ew_evasion; /**< Dynamic evasion factor. */
    double ew_detect; /**< Static detection factor. */
+
+   /* Heat. */
+   double T; /**< Ship temperature. */
+   double emissivity; /**< Ship epsilon parameter (emissivity). */
+   double conductivity; /**< Ship conductivity parameter. */
 
    /* Ship statistics. */
    ShipStats stats; /**< Pilot's copy of ship statistics. */
