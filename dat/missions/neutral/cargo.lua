@@ -24,10 +24,6 @@ else -- default english
    full[1] = "Ship is full"
    full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
    accept_title = "Mission Accepted"
-	--accept_msg = {}
- 	--accept_msg[1] = "The workers load the %d tons of %s onto your ship."
- 	--accept_msg[2] = "The %s board your ship."
- 	--replaced with randomized dialogue below
    msg_title = {}
    msg_msg = {}
    msg_title[1] = "Too many missions"
@@ -46,24 +42,62 @@ else -- default english
    accept_msg_list[2] = "The workers slowly load the %d tons of %s onto your ship."
    msg_msg_list = {}
    msg_msg_list[1] = "The workers quickly unload the %s at the docks."
-   msg_msg_list[2] = "The people slowly unload the %s at the docks."
+   msg_msg_list[2] = "The workers slowly unload the %s at the docks."
    
-	--[[For passenger missions
-   accept_msg_pass_list = {}
-   accept_msg_pass_list[1] = "A group of %s noisily boards your ship"
-   accept_msg_pass_list[2] = "The %s march aboard your ship."
-   msg_msg_pass_list = {}
-   msg_msg_pass_list[1] = "Chattering up a storm, the %s amble out of the ship, leaving you in peace at last."
-   msg_msg_pass_list[2] = "Thanking you for the ride, the %s leave your ship." ]]-- --Replaced with better randomization
+ 
    
-   accept_msg_pass = ""
-   msg_msg_pass = ""
+   --Randomize cargo mission dialogue
+
+	--Each cargo_accept_p1 is paired with its corresponding cargo_land_p2 (*not p1*, reverse pairing), and each cargo_accept_p2 is paired with its corresponding cargo_land_p1
+	--The number of strings must be the same in each pair member, but the number of strings in p1 can be different than in p2.
+	--If this is violated, it will fall back to the size of the smaller area and print an error in stdout.txt
+
+  	accept_msg_cargo = ""
+   msg_msg_cargo = ""
+	
+	--=Accept=--
+	
+	--opening dialogue for accept
+	cargo_accept_p1 = {}
+	cargo_accept_p1[1] = "A mob of somewhat unruly dock workers load"
+	cargo_accept_p1[2] = "An army of workers rapidly stack"
+	cargo_accept_p1[3] = "A small team frantically wheels"
+
+	--closing dialogue for accept
+	cargo_accept_p2 = {}
+	cargo_accept_p2[1] = "beat-up crates containing"
+	cargo_accept_p2[2] = "steel drums loaded with"
+	cargo_accept_p2[3] = "dingy plastic cartons filled with"
+	
+	-- "%d tons of %s aboard your ship" -- end string
+
+
+	--=Landing=--
+
+	--opening dialogue for landing
+
+	cargo_land_p1 = {}
+	cargo_land_p1[1] = "The crates of"  --<<-- paired with cargo_accept_p2, don't mix this up!!
+	cargo_land_p1[2] = "The drums of"
+	cargo_land_p1[3] = "The containers of"
+
+	-- ..."%s are"... (in-between text)
+
+	--closing dialog for landing
+	cargo_land_p2 = {}
+	cargo_land_p2[1] = "carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
+	cargo_land_p2[2] = "rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
+	cargo_land_p2[3] = "unloaded by an exhasted-looking bunch of dockworkers. Still, they make fairly good time, delievering your pay upon completion of the job."
    
 	--Randomize passenger mission dialogue
 
 	--Each pass_accept_p1 is paired with its corresponding pass_land_p1, and each pass_accept_p2 is paired with its corresponding pass_land_p2
 	--The number of strings must be the same in each pair member, but the number of strings in p1 can be different than in p2. 
 	--If this is violated, it will fall back to the size of the smaller area and print an error in stdout.txt
+	
+	accept_msg_pass = ""
+   msg_msg_pass = ""
+   
 	--opening dialogue for accept
 	pass_accept_p1 = {}
 	pass_accept_p1[1] = "A talkative crowd of %s"
@@ -71,14 +105,15 @@ else -- default english
 	pass_accept_p1[3] = "A group of %s"
 	pass_accept_p1[4] = "A confident party of %s"
 
-	-- ..."the %s"... (in-between text)
-
 	--closing dialogue for accept
 	pass_accept_p2 = {}
 	pass_accept_p2[1] = "slowly makes its way to their seats aboard"
 	pass_accept_p2[2] = "files into"
 	pass_accept_p2[3] = "boards"
 	pass_accept_p2[4] = "greets you before taking their seats in"
+	
+	-- "your vessel" -- end string
+	
 
 	--opening dialogue for landing
 	pass_land_p1 = {}
@@ -98,37 +133,35 @@ else -- default english
 
 end
 
---Dialog picker for cargo missions
-i_arg = 0;
+--Dialog generator/picker for cargo missions
 function cargo_dialog()
-	if #accept_msg_list ~= #msg_msg_list then
-		-- print error to stdout.txt
-		print("Number of cargo dialogue strings is not the same for both pairs", #accept_msg_list, "strings in accept_msg_list and", #msg_msg_list, "strings in msg_msg_list. Using the lower of the two sizes.")
+	if #cargo_accept_p1 ~= #cargo_land_p2 then
+		--print error to stdout.txt
+		print("Number of p1/p2 cargo dialogue strings is not the same: " .. #cargo_accept_p1 .. " strings in cargo_accept_p1 and " .. #cargo_land_p2 ..  " strings in cargo_land_p2. Using the lower of the two sizes.")
 		--use smaller array size
-		if #accept_msg_list > #msg_msg_list then
-			dialog_pick = rnd.int(1, #msg_msg_list)
+		if #cargo_accept_p1 > #cargo_land_p2 then
+			j = rnd.int(1, #cargo_land_p2)
 		else
-			dialog_pick = rnd.int(1, #accept_msg_list)
+			j = rnd.int(1, #cargo_accept_p1)
 		end
 	else
-		dialog_pick = rnd.int(1, #accept_msg_list)  -- for cargo missions
+		j = rnd.int(1, #cargo_accept_p1)
 	end
-end
-	--[[
-	else
-		if #accept_msg_pass_list ~= #msg_msg_pass_list then
-			-- print error to stdout
-			print("Number of passenger dialogue strings is not the same for both pairs", #accept_msg_pass_list, "strings in accept_msg_pass_list and", #msg_msg_pass_list, "strings in msg_msg_pass_list. Using the lower of the two sizes.")
-			--use smaller array size
-			if #accept_msg_pass_list > #msg_msg_pass_list then
-				dialog_pick = rnd.int(1, #msg_msg_pass_list)
-			else
-				dialog_pick = rnd.int(1, #accept_msg_pass_list)
-			end
+	if #cargo_accept_p2 ~= #cargo_land_p1 then
+		--print error to stdout.txt
+		print("Number of p1/p2 cargo dialogue strings is not the same: " .. #cargo_accept_p2 .. " strings in cargo_accept_p2 and " .. #cargo_land_p1 ..  " strings in cargo_land_p1. Using the lower of the two sizes.")
+		--use smaller array size
+		if #cargo_accept_p2 > #cargo_land_p1 then
+			k = rnd.int(1, #cargo_land_p1)
 		else
-			dialog_pick = rnd.int(1, #accept_msg_pass_list)  -- for passenger missions
+			k = rnd.int(1, #cargo_accept_p2)
 		end
-	end ]]--  Replace with randomizer
+	else
+		k = rnd.int(1, #cargo_accept_p2)  -- Pick a pair of dialogue for p1 and p2
+	end
+	msg_accept_cargo = cargo_accept_p1[j] .. " " .. cargo_accept_p2[k] .. " %d tons of %s aboard your vessel."
+	msg_msg_cargo = cargo_land_p1[j] .. ", the %s " .. cargo_land_p2[k]
+end
 
 --Dialog generator/picker for passenger missions
 function passenger_dialog()
@@ -270,7 +303,7 @@ function accept()
          --tk.msg( accept_title, string.format( accept_msg_pass_list[dialog_pick], carg_type ))  -- Replace with even more randomized dialogue
          tk.msg( accept_title, string.format( msg_accept_pass, carg_type ))
       else
-         tk.msg( accept_title, string.format( accept_msg_list[dialog_pick], carg_mass, carg_type ))
+         tk.msg( accept_title, string.format( msg_accept_cargo, carg_mass, carg_type ))
       end
 
       -- set the hooks
@@ -294,7 +327,7 @@ function land()
            -- tk.msg( msg_title[2], string.format( msg_msg_pass_list[dialog_pick], carg_type ))   -- Replace with even more randomized dialogue
            tk.msg( msg_title[2], string.format( msg_msg_pass, carg_type ))
          else
-            tk.msg( msg_title[2], string.format( msg_msg_list[dialog_pick], carg_type ))
+            tk.msg( msg_title[2], string.format( msg_msg_cargo, carg_type ))
          end
 
          -- modify the faction standing
