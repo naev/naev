@@ -2073,7 +2073,7 @@ static int pilotL_cargoAdd( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_addCargo( player.p, cargo, quantity );
+   quantity = pilot_cargoAdd( player.p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }
@@ -2110,7 +2110,7 @@ static int pilotL_cargoRm( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_rmCargo( p, cargo, quantity );
+   quantity = pilot_cargoRm( p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }

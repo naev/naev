@@ -710,7 +710,7 @@ void pilot_calcStats( Pilot* pilot )
    memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
 
    /* cargo has to be reset */
-   pilot_calcCargo(pilot);
+   pilot_cargoCalc(pilot);
 
    /*
     * now add outfit changes

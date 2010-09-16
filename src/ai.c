@@ -2649,7 +2649,7 @@ static int aiL_cargo( lua_State *L )
    if (q<=0)
       return 0;
 
-   pilot_addCargo( cur_pilot, commodity_get(s), q);
+   pilot_cargoAdd( cur_pilot, commodity_get(s), q);
 
    return 0;
 }

@@ -360,6 +360,7 @@ typedef struct Pilot_ {
 
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
+#include "pilot_cargo.h"
 
 
 /*
@@ -382,22 +383,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
-
-
-/*
- * Cargo.
- */
-/* Normal. */
-int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
-int pilot_cargoFree( Pilot* p ); /* cargo space */
-int pilot_cargoOwned( Pilot* pilot, const char* commodityname );
-int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_moveCargo( Pilot* dest, Pilot* src );
-void pilot_calcCargo( Pilot* pilot );
-/* mission cargo - not to be confused with normal cargo */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 
 
 /* Misc. */
