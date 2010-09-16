@@ -239,3 +239,17 @@ void pilot_clearHooks( Pilot *p )
 }
 
 
+/**
+ * @brief Clears global pilot hooks.
+ */
+void pilot_freeGlobalHooks (void)
+{
+   /* Clear global hooks. */
+   if (pilot_globalHooks != NULL) {
+      pilots_clearGlobalHooks();
+      array_free( pilot_globalHooks );
+      pilot_globalHooks = NULL;
+   }
+}
+
+

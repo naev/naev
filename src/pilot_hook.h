@@ -25,6 +25,7 @@ void pilot_clearHooks( Pilot *p );
 void pilots_addGlobalHook( int type, unsigned int hook );
 void pilots_rmGlobalHook( unsigned int hook );
 void pilots_clearGlobalHooks (void);
+void pilot_freeGlobalHooks (void);
 
 
 #endif /* PILOT_HOOK_H */

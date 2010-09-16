@@ -65,7 +65,6 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
                                          what is in range and what isn't. */
 static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
 static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
-static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
 
 
 
@@ -2002,12 +2001,7 @@ void pilots_free (void)
 {
    int i;
 
-   /* Clear global hooks. */
-   if (pilot_globalHooks != NULL) {
-      pilots_clearGlobalHooks();
-      array_free( pilot_globalHooks );
-      pilot_globalHooks = NULL;
-   }
+   pilot_freeGlobalHooks();
 
    /* Free pilots. */
    for (i=0; i < pilot_nstack; i++)
