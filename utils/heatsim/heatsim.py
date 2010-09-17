@@ -8,53 +8,6 @@
 # Simplified stuff
 shipname = "hawking"
 weapname = "ion turret"
-# Ship info
-if shipname == "llama":
-   ship_mass   = 83. # Mass of ship
-   ship_weaps  = 2;
-elif shipname == "lancelot":
-   ship_mass   = 180
-   ship_weaps  = 4
-elif shipname == "pacifier":
-   ship_mass   = 730
-   ship_weaps  = 5
-elif shipname == "hawking":
-   ship_mass   = 3750
-   ship_weaps  = 7
-elif shipname == "peacemaker":
-   ship_mass   = 6200
-   ship_weaps  = 8
-# Weapon info
-if weapname == "laser":
-   weap_mass   = 2. # Mass of weapon
-   weap_delay  = 0.9 # Delay between weapon shots
-   weap_energy = 4.25 # Energy weapon uses
-elif weapname == "plasma":
-   weap_mass   = 4.
-   weap_delay  = 0.675
-   weap_energy = 3.75
-elif weapname == "ion":
-   weap_mass   = 6
-   weap_delay  = 1.440
-   weap_energy = 15
-elif weapname == "laser turret":
-   weap_mass   = 16
-   weap_delay  = 0.540
-   weap_energy = 6.12
-elif weapname == "ion turret":
-   weap_mass   = 42
-   weap_delay  = 0.765
-   weap_energy = 25
-# Sim parameters
-STEFAN_BOLZMANN = 5.67e-8
-SPACE_TEMP  = 250.
-STEEL_COND  = 54.
-STEEL_CAP   = 0.49
-STEEL_DENS  = 7.88e3
-# Sim info
-sim_dt      = 1./50. # Delta tick
-sim_on      = 60.
-sim_total   = 120. # Time in seconds
 
 
 #######################################################
@@ -67,70 +20,137 @@ sim_total   = 120. # Time in seconds
 from frange import *
 import math
 
-# Calculate ship parameters
-ship_kg     = ship_mass * 1000.
-ship_emis   = 0.8
-ship_cond   = STEEL_COND
-ship_C      = STEEL_CAP * ship_kg
-ship_area   = pow( ship_kg / STEEL_DENS, 2./3. )
-ship_T      = SPACE_TEMP
 
-# Calculate weapon parameters
-weap_kg     = weap_mass * 1000.
-weap_C      = STEEL_CAP * weap_kg
-weap_area   = pow( weap_kg / STEEL_DENS, 2./3. )
-weap_list   = []
-weap_T      = []
-for i in range(ship_weaps):
-   weap_list.append( i*weap_delay / ship_weaps )
-   weap_T.append( SPACE_TEMP )
+class heatsim:
 
-# Log
-print
-print("Starting NAEV HeatSim")
-print
-print("Ship:")
-print("  C: " + str(ship_C) + " J/K")
-print("  area: " + str(ship_area) + " m^2")
-print
-print("Weap:")
-print("  C: " + str(weap_C) + " J/K")
-print("  area: " + str(weap_area) + " m^2")
-print
-print("Starting...")
+   def __init__( self, shipname = "llama", weapname = "laser", sim_on = 60., sim_total = 120.):
+      # Sim parameters
+      self.STEFAN_BOLZMANN = 5.67e-8
+      self.SPACE_TEMP  = 250.
+      self.STEEL_COND  = 54.
+      self.STEEL_CAP   = 0.49
+      self.STEEL_DENS  = 7.88e3
+      # Sim info
+      self.sim_dt      = 1./50. # Delta tick
+      self.sim_on      = sim_on
+      self.sim_total   = sim_total
+      self.filename    = None
 
-dt          = sim_dt
-sim_elapsed = 0.
-while sim_elapsed < sim_total:
+      # Load some data
+      self.ship_mass, self.ship_weaps = self.loadship( shipname )
+      self.weap_mass, self.weap_delay, self.weap_energy = self.loadweap( weapname )
 
-   Q_cond = 0.
+   def saveto( self, filename ):
+      self.filename    = filename
 
-   # Check weapons
-   for i in range(len(weap_list)):
-      weap_list[i] -= dt
+   def loadship( self, shipname ):
+      "Returns mass, number of weaps."
+      if shipname == "llama":
+         return 80., 2
+      elif shipname == "lancelot":
+         return 180., 4
+      elif shipname == "pacifier":
+         return 730., 5 
+      elif shipname == "hawking":
+         return 3750., 7
+      elif shipname == "peacemaker":
+         return 6200., 8
+      else:
+         raise ValueError
 
-      # Check if shot
-      if sim_elapsed < sim_on and weap_list[i] < 0.:
-         weap_T[i]     += 1000. * weap_energy / weap_C
-         weap_list[i]  += weap_delay
+   def loadweap( self, weapname ):
+      "Returns mass, delay, energy."
+      if weapname == "laser":
+         return 2., 0.9, 4.25
+      elif weapname == "plasma":
+         return 4., 0.675, 3.75
+      elif weapname == "ion":
+         return 6., 1.440, 15.
+      elif weapname == "laser turret":
+         return 16., 0.540, 6.12
+      elif weapname == "ion turret":
+         return 42., 0.765, 25.
+      else:
+         raise ValueError
 
-      # Do heat movement (conduction)
-      Q           = -ship_cond * (weap_T[i] - ship_T) * weap_area * dt
-      weap_T[i]  += Q / weap_C
-      Q_cond     += Q
+   def prepare( self ):
+      # Calculate ship parameters
+      ship_kg          = self.ship_mass * 1000.
+      self.ship_emis   = 0.8
+      self.ship_cond   = self.STEEL_COND
+      self.ship_C      = self.STEEL_CAP * ship_kg
+      self.ship_area   = pow( ship_kg / self.STEEL_DENS, 2./3. )
+      self.ship_T      = self.SPACE_TEMP
 
-   # Do ship heat (radiation)
-   Q_rad    = STEFAN_BOLZMANN * ship_area * ship_emis * (pow(SPACE_TEMP,4.) - pow(ship_T,4.)) * dt
-   Q        = Q_rad - Q_cond
-   ship_T  += Q / ship_C
+      # Calculate weapon parameters
+      weap_kg          = self.weap_mass * 1000.
+      self.weap_C      = self.STEEL_CAP * weap_kg
+      self.weap_area   = pow( weap_kg / self.STEEL_DENS, 2./3. )
+      self.weap_list   = []
+      self.weap_T      = []
+      for i in range(self.ship_weaps):
+         self.weap_list.append( i*self.weap_delay / self.ship_weaps )
+         self.weap_T.append( self.SPACE_TEMP )
 
-   # Elapsed time
-   sim_elapsed += dt;
+   def simulate( self ):
+      "Begins the simulation."
+
+      # Prepare it
+      self.prepare()
+
+      # Write to file if necessary
+      if self.filename != None:
+         f = open( filename, 'w' )
+
+      # Run simulation
+      dt          = self.sim_dt
+      sim_elapsed = 0.
+      while sim_elapsed < self.sim_total:
+
+         Q_cond = 0.
+
+         if self.filename != None:
+            f.write( str(sim.elapsed) + ' ' )
+
+         # Check weapons
+         for i in range(len(self.weap_list)):
+            self.weap_list[i] -= dt
+
+            # Check if shot
+            if sim_elapsed < self.sim_on and self.weap_list[i] < 0.:
+               self.weap_T[i]     += 1000. * self.weap_energy / self.weap_C
+               self.weap_list[i]  += self.weap_delay
+
+            # Do heat movement (conduction)
+            Q           = -self.ship_cond * (self.weap_T[i] - self.ship_T) * self.weap_area * dt
+            self.weap_T[i]  += Q / self.weap_C
+            Q_cond     += Q
+
+            if self.filename != None:
+               f.write( str(self.weap_T[i]) + ' ' )
+
+         # Do ship heat (radiation)
+         Q_rad    = self.STEFAN_BOLZMANN * self.ship_area * self.ship_emis * (pow(self.SPACE_TEMP,4.) - pow(self.ship_T,4.)) * dt
+         Q        = Q_rad - Q_cond
+         self.ship_T  += Q / self.ship_C
+
+         if self.filename != None:
+            f.write( str(self.ship_T) + '\n' )
+
+         # Elapsed time
+         sim_elapsed += dt;
+
+      # Close file
+      if self.filename != None:
+         f.close()
 
 
-print("Finished!")
-print
-print("Ship Temp: "+str(ship_T)+" K")
-for i in range(len(weap_list)):
-   print("Outfit["+str(i)+"] Temp: "+str(weap_T[i])+" K")
+if __name__ == "__main__":
+   hs = heatsim()
+   hs.simulate()
+   print("NAEV HeatSim")
+   print
+   print("Ship Temp: "+str(hs.ship_T)+" K")
+   for i in range(len(hs.weap_list)):
+      print("Outfit["+str(i)+"] Temp: "+str(hs.weap_T[i])+" K")
 
