@@ -79,7 +79,7 @@ void pilot_heatReset( Pilot *p )
  */
 void pilot_heatAddSlot( PilotOutfitSlot *o, double energy )
 {
-   o->heat_T += energy / o->heat_C;
+   o->heat_T += 1000. * energy / o->heat_C;
 }
 
 
