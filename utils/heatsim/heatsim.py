@@ -10,7 +10,7 @@
 # Imports
 from frange import *
 import math
-from scipy import *
+import matplotlib.pyplot as plt
 
 
 class heatsim:
@@ -140,17 +140,18 @@ class heatsim:
 
 
    def plot( self ):
-      """
-      data=io.array_import.read_array('tgdata.dat')
-
-      plotfile='tgdata.png'
-
-      gplt.plot( data[:,0], data[:,1], 'title "Weight vs. time" with points')
-      gplt.xtitle('Time [h]')
-      gplt.ytitle('Hydrogen release [wt. %]')
-      gplt.grid("off")
-      gplt.output(plotfile,'png medium transparent picsize 600 400')
-      """
+      plt.figure(1)
+      plt.subplot(211)
+      plt.title(  'NAEV Heat Simulation' )
+      plt.plot( self.time_data, self.ship_data, '-' )
+      plt.ylabel( 'Ship Temperature [K]' )
+      plt.grid( True )
+      plt.subplot(212)
+      plt.plot( self.time_data, self.weap_data[0], '-' )
+      plt.ylabel( 'Weapon Temperature [K]' )
+      plt.xlabel( 'Time [s]' )
+      plt.grid( True )
+      plt.show()
 
 
 
@@ -159,6 +160,7 @@ if __name__ == "__main__":
    hs = heatsim( "llama", "laser", 60., 120. )
    hs.simulate()
    hs.display()
+   hs.plot()
 
 
 
