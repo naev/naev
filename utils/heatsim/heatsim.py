@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 class heatsim:
 
-   def __init__( self, shipname = "llama", weapname = "laser", sim_on = 60., sim_total = 120. ):
+   def __init__( self, shipname = "llama", weapname = "laser", simulation = [ 60., 120. ] ):
       # Sim parameters
       self.STEFAN_BOLZMANN = 5.67e-8
       self.SPACE_TEMP  = 250.
@@ -24,8 +24,8 @@ class heatsim:
       self.STEEL_DENS  = 7.88e3
       # Sim info
       self.sim_dt      = 1./50. # Delta tick
-      self.sim_on      = sim_on
-      self.sim_total   = sim_total
+      self.simulation  = simulation
+      self.sim_total   = simulation[-1]
 
       # Load some data
       self.ship_mass, self.ship_weaps = self.loadship( shipname )
@@ -94,6 +94,8 @@ class heatsim:
       self.prepare()
 
       # Run simulation
+      weap_on     = True
+      sim_index   = 0
       dt          = self.sim_dt
       sim_elapsed = 0.
       while sim_elapsed < self.sim_total:
@@ -102,12 +104,18 @@ class heatsim:
 
          # Check weapons
          for i in range(len(self.weap_list)):
-            self.weap_list[i] -= dt
+
+            # Check if we should start/stop shooting
+            if self.simulation[ sim_index ] < sim_elapsed:
+               weap_on     = not weap_on
+               sim_index  += 1
 
             # Check if shot
-            if sim_elapsed < self.sim_on and self.weap_list[i] < 0.:
-               self.weap_T[i]     += 1e4 * self.weap_energy / self.weap_C
-               self.weap_list[i]  += self.weap_delay
+            if weap_on:
+               self.weap_list[i] -= dt
+               if self.weap_list[i] < 0.:
+                  self.weap_T[i]     += 1e4 * self.weap_energy / self.weap_C
+                  self.weap_list[i]  += self.weap_delay
 
             # Do heat movement (conduction)
             Q           = -self.ship_cond * (self.weap_T[i] - self.ship_T) * self.weap_area * dt
@@ -160,11 +168,11 @@ class heatsim:
 if __name__ == "__main__":
    print("NAEV HeatSim\n")
    shp = 'llama'
-   wpn = 'ion'
-   hs = heatsim( shp, wpn, 60., 60. )
+   wpn = 'laser'
+   hs = heatsim( shp, wpn, frange( 30., 600., 30. ) )
    hs.simulate()
    hs.display()
-   #hs.plot()
+   hs.plot()
 
 
 
