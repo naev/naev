@@ -572,6 +572,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    double q, mint;
    int is_launcher;
    double rate_mod, energy_mod;
+   double energy;
 
    /* Make sure weapon has outfit. */
    if (w->outfit == NULL)
@@ -657,7 +658,9 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->outfit)*energy_mod;
+      energy      = outfit_energy(w->outfit)*energy_mod;
+      p->energy  -= energy;
+      pilot_heatAddSlot( w, energy );
       weapon_add( w->outfit, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
    }
@@ -696,7 +699,9 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       if (outfit_energy(w->u.ammo.outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->u.ammo.outfit)*energy_mod;
+      energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
+      p->energy  -= energy;
+      pilot_heatAddSlot( w, energy );
       weapon_add( w->u.ammo.outfit, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
 
