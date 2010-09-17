@@ -1083,7 +1083,7 @@ static int pilotL_weapset( lua_State *L )
 
          /* Temperature. */
          lua_pushstring(L,"temp");
-         lua_pushnumber(L, );
+         lua_pushnumber(L, slot->heat_T);
          lua_rawset(L,-3);
 
          /* Set table in table. */
