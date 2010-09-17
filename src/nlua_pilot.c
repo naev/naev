@@ -940,6 +940,7 @@ static int pilotL_nav( lua_State *L )
  *  <li> left: Absolute ammo left or nil if not applicable <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
+ *  <li> temp: Temperature of the weapon. <br />
  * </ul>
  *
  * An example would be:
@@ -1078,6 +1079,11 @@ static int pilotL_weapset( lua_State *L )
          /* Level. */
          lua_pushstring(L,"level");
          lua_pushnumber(L, level+1);
+         lua_rawset(L,-3);
+
+         /* Temperature. */
+         lua_pushstring(L,"temp");
+         lua_pushnumber(L, );
          lua_rawset(L,-3);
 
          /* Set table in table. */
