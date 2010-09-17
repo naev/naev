@@ -5,13 +5,46 @@
 #        SIM INFO
 #
 #######################################################
+# Simplified stuff
+shipname = "hawking"
+weapname = "ion turret"
 # Ship info
-ship_mass   = 83. # Mass of ship
+if shipname == "llama":
+   ship_mass   = 83. # Mass of ship
+   ship_weaps  = 2;
+elif shipname == "lancelot":
+   ship_mass   = 180
+   ship_weaps  = 4
+elif shipname == "pacifier":
+   ship_mass   = 730
+   ship_weaps  = 5
+elif shipname == "hawking":
+   ship_mass   = 3750
+   ship_weaps  = 7
+elif shipname == "peacemaker":
+   ship_mass   = 6200
+   ship_weaps  = 8
 # Weapon info
-weap_num    = 2 # Number of weapons
-weap_mass   = 2. # Mass of weapon
-weap_delay  = 0.9 # Delay between weapon shots
-weap_energy = 4.25 # Energy weapon uses
+if weapname == "laser":
+   weap_mass   = 2. # Mass of weapon
+   weap_delay  = 0.9 # Delay between weapon shots
+   weap_energy = 4.25 # Energy weapon uses
+elif weapname == "plasma":
+   weap_mass   = 4.
+   weap_delay  = 0.675
+   weap_energy = 3.75
+elif weapname == "ion":
+   weap_mass   = 6
+   weap_delay  = 1.440
+   weap_energy = 15
+elif weapname == "laser turret":
+   weap_mass   = 16
+   weap_delay  = 0.540
+   weap_energy = 6.12
+elif weapname == "ion turret":
+   weap_mass   = 42
+   weap_delay  = 0.765
+   weap_energy = 25
 # Sim parameters
 STEFAN_BOLZMANN = 5.67e-8
 SPACE_TEMP  = 250.
@@ -20,7 +53,8 @@ STEEL_CAP   = 0.49
 STEEL_DENS  = 7.88e3
 # Sim info
 sim_dt      = 1./50. # Delta tick
-sim_total   = 100. # Time in seconds
+sim_on      = 60.
+sim_total   = 120. # Time in seconds
 
 
 #######################################################
@@ -47,8 +81,8 @@ weap_C      = STEEL_CAP * weap_kg
 weap_area   = pow( weap_kg / STEEL_DENS, 2./3. )
 weap_list   = []
 weap_T      = []
-for i in range(weap_num):
-   weap_list.append( i*weap_delay / weap_num )
+for i in range(ship_weaps):
+   weap_list.append( i*weap_delay / ship_weaps )
    weap_T.append( SPACE_TEMP )
 
 # Log
@@ -76,7 +110,7 @@ while sim_elapsed < sim_total:
       weap_list[i] -= dt
 
       # Check if shot
-      if weap_list[i] < 0.:
+      if sim_elapsed < sim_on and weap_list[i] < 0.:
          weap_T[i]     += 1000. * weap_energy / weap_C
          weap_list[i]  += weap_delay
 
