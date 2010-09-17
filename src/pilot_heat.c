@@ -35,6 +35,23 @@ void pilot_heatCalc( Pilot *p )
    p->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
    p->heat_area   = pow( mass_kg / STEEL_DENSITY, 2./3. );
    p->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
+
+   /* We'll approximate area for a sphere.
+    *
+    * Sphere:
+    *  V = 4/3*pi*r^3
+    *  A = 4*pi*r^2
+    *
+    * Ship:
+    *  V = mass/density
+    *
+    * We then equal the ship V and sphere V to obtain r:
+    *  r = (3*mass)/(4*pi*density))^(1/3)
+    *
+    * Substituting r in A we get:
+    *  A = 4*pi*((3*mass)/(4*pi*density))^(2/3)
+    * */
+   p->heat_area = 4.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
 }
 
 
@@ -48,8 +65,15 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o )
       return;
    mass_kg        = 1000. * o->outfit->mass;
    o->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
-   o->heat_area   = pow( mass_kg / STEEL_DENSITY, 2./3. );
    o->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
+   /* We do the same for the area of the slot.
+    *
+    * However this area should actually be less (like half) because of the
+    *  that it only should be about half of a sphere or less. However with
+    *  different values it breaks everything so it's best to keep it this way
+    *  for now.
+    */
+   o->heat_area   = 4.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
 }
 
 
@@ -75,11 +99,13 @@ void pilot_heatReset( Pilot *p )
  * @brief Adds heat to an outfit slot.
  *
  *    @param o Outfit to heat.
- *    @param energy Energy recieved by outfit (in W).
+ *    @param energy Energy recieved by outfit (in MJ).
  */
 void pilot_heatAddSlot( PilotOutfitSlot *o, double energy )
 {
-   o->heat_T += 1000. * energy / o->heat_C;
+   /* We consider that only 1% of the energy is lost in the form of heat,
+    * this keeps numbers sane. */
+   o->heat_T += 0.01 * 10e6 * energy / o->heat_C;
 }
 
 
