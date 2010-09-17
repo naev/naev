@@ -70,14 +70,16 @@ class heatsim:
       self.ship_emis   = 0.8
       self.ship_cond   = self.STEEL_COND
       self.ship_C      = self.STEEL_CAP * ship_kg
-      self.ship_area   = pow( ship_kg / self.STEEL_DENS, 2./3. )
+      #self.ship_area   = pow( ship_kg / self.STEEL_DENS, 2./3. )
+      self.ship_area   = 4.*math.pi*pow( 3./4.*ship_kg/self.STEEL_DENS/math.pi, 2./3. )
       self.ship_T      = self.SPACE_TEMP
       self.ship_data   = []
 
       # Calculate weapon parameters
       weap_kg          = self.weap_mass * 1000.
       self.weap_C      = self.STEEL_CAP * weap_kg
-      self.weap_area   = pow( weap_kg / self.STEEL_DENS, 2./3. )
+      #self.weap_area   = pow( weap_kg / self.STEEL_DENS, 2./3. )
+      self.weap_area   = 4.*math.pi*pow( 3./4.*weap_kg/self.STEEL_DENS/math.pi, 2./3. )
       self.weap_list   = []
       self.weap_T      = []
       self.weap_data   = []
@@ -104,7 +106,7 @@ class heatsim:
 
             # Check if shot
             if sim_elapsed < self.sim_on and self.weap_list[i] < 0.:
-               self.weap_T[i]     += 1000. * self.weap_energy / self.weap_C
+               self.weap_T[i]     += 1e4 * self.weap_energy / self.weap_C
                self.weap_list[i]  += self.weap_delay
 
             # Do heat movement (conduction)
@@ -157,10 +159,12 @@ class heatsim:
 
 if __name__ == "__main__":
    print("NAEV HeatSim\n")
-   hs = heatsim( "llama", "laser", 60., 120. )
+   shp = 'llama'
+   wpn = 'ion'
+   hs = heatsim( shp, wpn, 60., 60. )
    hs.simulate()
    hs.display()
-   hs.plot()
+   #hs.plot()
 
 
 
