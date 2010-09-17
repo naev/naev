@@ -1,14 +1,5 @@
 #!/usr/bin/env python
 
-#######################################################
-#
-#        SIM INFO
-#
-#######################################################
-# Simplified stuff
-shipname = "hawking"
-weapname = "ion turret"
-
 
 #######################################################
 #
@@ -23,7 +14,7 @@ import math
 
 class heatsim:
 
-   def __init__( self, shipname = "llama", weapname = "laser", sim_on = 60., sim_total = 120.):
+   def __init__( self, shipname = "llama", weapname = "laser", sim_on = 60., sim_total = 120., filename=None ):
       # Sim parameters
       self.STEFAN_BOLZMANN = 5.67e-8
       self.SPACE_TEMP  = 250.
@@ -34,7 +25,7 @@ class heatsim:
       self.sim_dt      = 1./50. # Delta tick
       self.sim_on      = sim_on
       self.sim_total   = sim_total
-      self.filename    = None
+      self.filename    = filename
 
       # Load some data
       self.ship_mass, self.ship_weaps = self.loadship( shipname )
@@ -144,13 +135,17 @@ class heatsim:
       if self.filename != None:
          f.close()
 
+   def display( self ):
+      print("Ship Temp: "+str(hs.ship_T)+" K")
+      for i in range(len(hs.weap_list)):
+         print("Outfit["+str(i)+"] Temp: "+str(hs.weap_T[i])+" K")
+
 
 if __name__ == "__main__":
+   print("NAEV HeatSim\n")
    hs = heatsim()
    hs.simulate()
-   print("NAEV HeatSim")
-   print
-   print("Ship Temp: "+str(hs.ship_T)+" K")
-   for i in range(len(hs.weap_list)):
-      print("Outfit["+str(i)+"] Temp: "+str(hs.weap_T[i])+" K")
+   hs.display()
+
+
 
