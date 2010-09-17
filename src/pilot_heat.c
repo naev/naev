@@ -150,7 +150,7 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
          (CONST_SPACE_STAR_TEMP_4 - pow(p->heat_T,4.)) * dt;
 
    /* Total heat movement. */
-   Q           = Q_cond + Q_rad;
+   Q           = Q_rad - Q_cond;
 
    /* Update ship temperature. */
    p->heat_T  += Q / p->heat_C;
