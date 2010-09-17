@@ -1111,12 +1111,14 @@ void pilot_update( Pilot* pilot, const double dt )
    double a, px,py, vx,vy;
    char buf[16];
    PilotOutfitSlot *o;
+   double Q;
 
    /*
     * Update timers.
     */
    pilot->ptimer -= dt;
    pilot->tcontrol -= dt;
+   Q = 0.;
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
@@ -1124,7 +1126,12 @@ void pilot_update( Pilot* pilot, const double dt )
       o = pilot->outfits[i];
       if (o->timer > 0.)
          o->timer -= dt;
+
+      Q += pilot_heatUpdateSlot( pilot, o, dt );
    }
+
+   /* Global heat. */
+   pilot_heatUpdateShip( pilot, Q, dt );
 
    /* Update electronic warfare. */
    pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) ) / 10.;
@@ -1698,7 +1705,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
    /* set the pilot stats based on his ship and outfits */
-   pilot_calcStats(pilot);
+   pilot_calcStats( pilot );
+
+   /* Calculate the heat. */
+   pilot_heatCalc( pilot );
 
    /* Sanity check. */
 #ifdef DEBUGGING

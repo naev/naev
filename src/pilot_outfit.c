@@ -210,6 +210,9 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.deployed = 0; /* Just in case. */
    }
 
+   /* Update heat. */
+   pilot_heatCalcSlot( s );
+
    return 0;
 }
 

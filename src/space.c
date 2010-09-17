@@ -859,6 +859,7 @@ void space_init ( const char* sysname )
    background_clear(); /* Get rid of the background. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
+   pilot_heatReset(player.p); /* Resets the player's heat. */
 
    /* Must clear escorts to keep deployment sane. */
    player_clearEscorts();

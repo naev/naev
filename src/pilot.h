@@ -144,7 +144,9 @@ typedef struct PilotOutfitSlot_ {
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
    OutfitSlot slot; /**< Outfit slot. */
-   double T; /**< Slot temperature. */
+   double heat_T; /**< Slot temperature. [K] */
+   double heat_C; /**< Slot heat capacity. [W/K] */
+   double heat_area; /**< Slot area of contact with ship hull. [m^2] */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -282,9 +284,11 @@ typedef struct Pilot_ {
    double ew_detect; /**< Static detection factor. */
 
    /* Heat. */
-   double T; /**< Ship temperature. */
-   double emissivity; /**< Ship epsilon parameter (emissivity). */
-   double conductivity; /**< Ship conductivity parameter. */
+   double heat_T; /**< Ship temperature. [K] */
+   double heat_C; /**< Heat capacity of the ship. [W/K] */
+   double heat_emis; /**< Ship epsilon parameter (emissivity). [adimensional 0:1] */
+   double heat_cond; /**< Ship conductivity parameter. [W/(m*K)] */
+   double heat_area; /**< Effective heatsink area of the ship. [m^2] */
 
    /* Ship statistics. */
    ShipStats stats; /**< Pilot's copy of ship statistics. */
@@ -365,6 +369,7 @@ typedef struct Pilot_ {
 
 
 #include "pilot_cargo.h"
+#include "pilot_heat.h"
 #include "pilot_hook.h"
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
