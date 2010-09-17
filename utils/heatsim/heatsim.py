@@ -10,11 +10,12 @@
 # Imports
 from frange import *
 import math
+from scipy import *
 
 
 class heatsim:
 
-   def __init__( self, shipname = "llama", weapname = "laser", sim_on = 60., sim_total = 120., filename=None ):
+   def __init__( self, shipname = "llama", weapname = "laser", sim_on = 60., sim_total = 120. ):
       # Sim parameters
       self.STEFAN_BOLZMANN = 5.67e-8
       self.SPACE_TEMP  = 250.
@@ -25,14 +26,10 @@ class heatsim:
       self.sim_dt      = 1./50. # Delta tick
       self.sim_on      = sim_on
       self.sim_total   = sim_total
-      self.filename    = filename
 
       # Load some data
       self.ship_mass, self.ship_weaps = self.loadship( shipname )
       self.weap_mass, self.weap_delay, self.weap_energy = self.loadweap( weapname )
-
-   def saveto( self, filename ):
-      self.filename    = filename
 
    def loadship( self, shipname ):
       "Returns mass, number of weaps."
@@ -65,6 +62,9 @@ class heatsim:
          raise ValueError
 
    def prepare( self ):
+      # Time stuff
+      self.time_data   = []
+
       # Calculate ship parameters
       ship_kg          = self.ship_mass * 1000.
       self.ship_emis   = 0.8
@@ -72,6 +72,7 @@ class heatsim:
       self.ship_C      = self.STEEL_CAP * ship_kg
       self.ship_area   = pow( ship_kg / self.STEEL_DENS, 2./3. )
       self.ship_T      = self.SPACE_TEMP
+      self.ship_data   = []
 
       # Calculate weapon parameters
       weap_kg          = self.weap_mass * 1000.
@@ -79,19 +80,16 @@ class heatsim:
       self.weap_area   = pow( weap_kg / self.STEEL_DENS, 2./3. )
       self.weap_list   = []
       self.weap_T      = []
+      self.weap_data   = []
       for i in range(self.ship_weaps):
          self.weap_list.append( i*self.weap_delay / self.ship_weaps )
          self.weap_T.append( self.SPACE_TEMP )
+         self.weap_data.append( [] )
 
    def simulate( self ):
       "Begins the simulation."
-
       # Prepare it
       self.prepare()
-
-      # Write to file if necessary
-      if self.filename != None:
-         f = open( self.filename, 'w' )
 
       # Run simulation
       dt          = self.sim_dt
@@ -99,9 +97,6 @@ class heatsim:
       while sim_elapsed < self.sim_total:
 
          Q_cond = 0.
-
-         if self.filename != None:
-            f.write( str(sim_elapsed) + ' ' )
 
          # Check weapons
          for i in range(len(self.weap_list)):
@@ -116,24 +111,27 @@ class heatsim:
             Q           = -self.ship_cond * (self.weap_T[i] - self.ship_T) * self.weap_area * dt
             self.weap_T[i]  += Q / self.weap_C
             Q_cond     += Q
-
-            if self.filename != None:
-               f.write( str(self.weap_T[i]) + ' ' )
+            self.weap_data[i].append( self.weap_T[i] )
 
          # Do ship heat (radiation)
          Q_rad    = self.STEFAN_BOLZMANN * self.ship_area * self.ship_emis * (pow(self.SPACE_TEMP,4.) - pow(self.ship_T,4.)) * dt
          Q        = Q_rad - Q_cond
          self.ship_T  += Q / self.ship_C
-
-         if self.filename != None:
-            f.write( str(self.ship_T) + '\n' )
+         self.time_data.append( sim_elapsed )
+         self.ship_data.append( self.ship_T )
 
          # Elapsed time
          sim_elapsed += dt;
 
-      # Close file
-      if self.filename != None:
-         f.close()
+   def save( self, filename ):
+      "Saves the results to a file."
+      f = open( self.filename, 'w' )
+      for i in range(self.time_data):
+         f.write( str(self.time_data[i])+' '+str(self.ship_data[i]))
+         for j in range(self.weap_data):
+            f.write( ' '+str(self.weap_data[i][j]) )
+         f.write( '\n' )
+      f.close()
 
    def display( self ):
       print("Ship Temp: "+str(hs.ship_T)+" K")
@@ -141,9 +139,24 @@ class heatsim:
          print("Outfit["+str(i)+"] Temp: "+str(hs.weap_T[i])+" K")
 
 
+   def plot( self ):
+      """
+      data=io.array_import.read_array('tgdata.dat')
+
+      plotfile='tgdata.png'
+
+      gplt.plot( data[:,0], data[:,1], 'title "Weight vs. time" with points')
+      gplt.xtitle('Time [h]')
+      gplt.ytitle('Hydrogen release [wt. %]')
+      gplt.grid("off")
+      gplt.output(plotfile,'png medium transparent picsize 600 400')
+      """
+
+
+
 if __name__ == "__main__":
    print("NAEV HeatSim\n")
-   hs = heatsim( "llama", "laser", 60., 120., "llama.dat" )
+   hs = heatsim( "llama", "laser", 60., 120. )
    hs.simulate()
    hs.display()
 
