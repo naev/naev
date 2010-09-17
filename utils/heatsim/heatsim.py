@@ -91,7 +91,7 @@ class heatsim:
 
       # Write to file if necessary
       if self.filename != None:
-         f = open( filename, 'w' )
+         f = open( self.filename, 'w' )
 
       # Run simulation
       dt          = self.sim_dt
@@ -101,7 +101,7 @@ class heatsim:
          Q_cond = 0.
 
          if self.filename != None:
-            f.write( str(sim.elapsed) + ' ' )
+            f.write( str(sim_elapsed) + ' ' )
 
          # Check weapons
          for i in range(len(self.weap_list)):
@@ -143,7 +143,7 @@ class heatsim:
 
 if __name__ == "__main__":
    print("NAEV HeatSim\n")
-   hs = heatsim()
+   hs = heatsim( "llama", "laser", 60., 120., "llama.dat" )
    hs.simulate()
    hs.display()
 
