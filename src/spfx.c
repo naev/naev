@@ -629,7 +629,7 @@ static void spfx_hapticRumble( double mod )
       SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
 
       /* Set timer again. */
-      haptic_lastUpdate = HAPTIC_UPDATE_INTERVAL;
+      haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
    }
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    (void) mod;

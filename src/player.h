@@ -177,14 +177,13 @@ void player_hyperspacePreempt( int );
 /*
  * keybind actions
  */
+void player_weapSetPress( int id, int type );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
 void player_targetClear (void);
-void player_secondaryNext (void);
-void player_secondaryPrev (void);
 void player_targetPlanet (void);
 void player_land (void);
 void player_targetHyperspace (void);
@@ -199,7 +198,6 @@ void player_abortAutonav( char *reason );
 void player_startAutonavWindow( unsigned int wid, char *str);
 void player_hail (void);
 void player_autohail (void);
-void player_setFireMode( int mode );
 
 
 #endif /* PLAYER_H */

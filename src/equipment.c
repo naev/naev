@@ -30,6 +30,7 @@
 #include "gui.h"
 #include "land_outfits.h"
 #include "player_gui.h"
+#include "info.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -63,7 +64,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
-      int selected, Outfit *o, Pilot *p );
+      int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
@@ -72,7 +73,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       void *data );
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
-static int equipment_mouseColumn( double y, double h, int n, double my );
+static int equipment_mouseInColumn( double y, double h, int n, double my );
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
@@ -298,17 +299,26 @@ void equipment_open( unsigned int wid )
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
 }
+
+
+/**
+ * @brief Creates the slot widget and initializes it.
+ *
+ *    @param x X position to put it at.
+ *    @param y Y position to put it at.
+ *    @param w Width.
+ *    @param h Height;
+ *    @param data Dataset to use.
+ */
 void equipment_slotWidget( unsigned int wid,
       double x, double y, double w, double h,
       CstSlotWidget *data )
 {
    /* Initialize data. */
-   data->selected = NULL;
-   data->outfit   = NULL;
-   data->slot     = -1;
-   data->mouseover = -1;
-   data->altx     = 0.;
-   data->alty     = 0.;
+   memset( data, 0, sizeof(CstSlotWidget) );
+   data->slot        = -1;
+   data->mouseover   = -1;
+   data->weapons     = -1;
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
@@ -321,9 +331,9 @@ void equipment_slotWidget( unsigned int wid,
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
-      int selected, Outfit *o, Pilot *p )
+      int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
-   int i;
+   int i, level;
    glColour *c, *dc, bc;
 
    /* Render text. */
@@ -336,18 +346,28 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
+      /* Choose default colour. */
+      if (wgt->weapons >= 0) {
+         level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
+         if (level == 0)
+            dc = &cFontRed;
+         else if (level == 1)
+            dc = &cFontYellow;
+         else
+            dc = &cInert;
+      }
+      else {
+         dc = outfit_slotSizeColour( &lst[i].slot );
+      }
+
       /* Choose colours based on size. */
       if (i==selected) {
          c  = &cGrey80;
-         dc = outfit_slotSizeColour( &lst[i].slot );
          if (dc == NULL)
             dc = &cGrey60;
       }
       else {
          c  = toolkit_col;
-         dc = outfit_slotSizeColour( &lst[i].slot );
-         if (dc == NULL)
-            dc = toolkit_colDark;
       }
 
       /* Draw background. */
@@ -438,7 +458,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nweapon, p->outfit_weapon, "Weapon",
-         selected, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw systems outfits. */
    selected -= p->outfit_nweapon;
@@ -446,7 +466,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nutility, p->outfit_utility, "Utility",
-         selected, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected, wgt );
 
    /* Draw structure outfits. */
    selected -= p->outfit_nutility;
@@ -454,7 +474,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nstructure, p->outfit_structure, "Structure",
-         selected, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected, wgt );
 }
 /**
  * @brief Renders the custom equipment widget.
@@ -766,7 +786,7 @@ static void equipment_renderShip( double bx, double by,
 /**
  * @brief Handles a mouse press in column.
  */
-static int equipment_mouseColumn( double y, double h, int n, double my )
+static int equipment_mouseInColumn( double y, double h, int n, double my )
 {
    int i;
 
@@ -777,6 +797,54 @@ static int equipment_mouseColumn( double y, double h, int n, double my )
    }
 
    return -1;
+}
+/**
+ * @brief Handles a mouse press in a column.
+ */
+static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
+      double mx, double my, double y, double h, int n, PilotOutfitSlot* os,
+      Pilot *p, int selected, CstSlotWidget *wgt )
+{
+   int ret, exists, level;
+
+   ret = equipment_mouseInColumn( y, h, n, my );
+   if (ret < 0)
+      return 0;
+
+   if (event->type == SDL_MOUSEBUTTONDOWN) {
+      /* Normal mouse usage. */
+      if (wgt->weapons < 0) {
+         if (event->button.button == SDL_BUTTON_LEFT)
+            wgt->slot = selected + ret;
+         else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+               wgt->canmodify)
+            equipment_swapSlot( wid, p, &os[ret] );
+      }
+      /* Viewing weapon slots. */
+      else {
+         /* See if it exists. */
+         exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
+         /* Get the level of the selection. */
+         if (event->button.button== SDL_BUTTON_LEFT)
+            level = 0;
+         else if (event->button.button== SDL_BUTTON_RIGHT)
+            level = 1;
+         /* See if we should add it or remove it. */
+         if (exists==level)
+            pilot_weapSetRm( p, wgt->weapons, &os[ret] );
+         else
+            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+         p->autoweap = 0; /* Disable autoweap. */
+         info_update(); /* Need to update weapons. */
+      }
+   }
+   else {
+      wgt->mouseover  = selected + ret;
+      wgt->altx       = mx;
+      wgt->alty       = my;
+   }
+
+   return 1;
 }
 /**
  * @brief Does mouse input for the custom equipment widget.
@@ -816,62 +884,26 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    x  = (tw-w)/2;
    y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nweapon, my );
-      if (ret >= 0) {
-         if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT)
-               wgt->slot = selected + ret;
-            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-                  wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_weapon[ret] );
-         }
-         else {
-            wgt->mouseover  = selected + ret;
-            wgt->altx       = mx;
-            wgt->alty       = my;
-         }
+      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+            p->outfit_nweapon, p->outfit_weapon, p, selected, wgt );
+      if (ret)
          return;
-      }
    }
    selected += p->outfit_nweapon;
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nutility, my );
-      if (ret >= 0) {
-         if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT)
-               wgt->slot = selected + ret;
-            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-                  wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_utility[ret] );
-         }
-         else {
-            wgt->mouseover = selected + ret;
-            wgt->altx      = mx;
-            wgt->alty      = my;
-         }
+      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+            p->outfit_nutility, p->outfit_utility, p, selected, wgt );
+      if (ret)
          return;
-      }
    }
    selected += p->outfit_nutility;
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( y, h, p->outfit_nstructure, my );
-      if (ret >= 0) {
-         if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT)
-               wgt->slot = selected + ret;
-            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-                  wgt->canmodify)
-               equipment_swapSlot( wid, p, &p->outfit_structure[ret] );
-         }
-         else {
-            wgt->mouseover = selected + ret;
-            wgt->altx      = mx;
-            wgt->alty      = my;
-         }
+      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+            p->outfit_nstructure, p->outfit_structure, p, selected, wgt );
+      if (ret)
          return;
-      }
    }
 
    /* Not over anything. */
@@ -955,6 +987,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
    /* Update outfits. */
    outfits_updateEquipmentOutfits();
+
+   /* Update weapon sets if needed. */
+   if (eq_wgt.selected->autoweap)
+      pilot_weaponAuto( eq_wgt.selected );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1048,6 +1084,10 @@ void equipment_addAmmo (void)
       /* Remove from player. */
       player_rmOutfit( ammo, q );
    }
+
+   /* Update weapon sets if needed. */
+   if (p->autoweap)
+      pilot_weaponAuto( p );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1553,6 +1593,27 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    ship = eq_wgt.selected;
 
+   /* There are two conditionts when you can't unequip all, first off
+    * is when you have deployed ships, second off is when you have more cargo
+    * than you can carry "naked". */
+   for (i=0; i<ship->noutfits; i++) {
+      /* Must have outfit. */
+      if (ship->outfits[i]->outfit == NULL)
+         continue;
+      /* Must be fighter bay. */
+      if (!outfit_isFighterBay( ship->outfits[i]->outfit))
+         continue;
+      /* Must not havve deployed. */
+      if (ship->outfits[i]->u.ammo.deployed > 0) {
+         dialogue_alert( "You can not unequip your ship while you have deployed fighters!" );
+         return;
+      }
+   }
+   if (pilot_cargoUsed( ship ) > ship->ship->cap_cargo) {
+      dialogue_alert( "You can not unequip your ship when you have more cargo than it can hold without modifications!" );
+      return;
+   }
+
    /* Handle possible fuel changes. */
    f = eq_wgt.selected->fuel;
 
@@ -1588,6 +1649,10 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    /* Regenerate outfits. */
    outfits_updateEquipmentOutfits();
+
+   /* Update weapon sets if needed. */
+   if (ship->autoweap)
+      pilot_weaponAuto( ship );
 
    /* Notify GUI of modification. */
    gui_setShip();

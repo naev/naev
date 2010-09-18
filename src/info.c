@@ -27,6 +27,7 @@
 #include "map.h"
 #include "land.h"
 #include "equipment.h"
+#include "tk/toolkit_priv.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -35,11 +36,12 @@
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 
-#define INFO_WINDOWS      5 /**< Amount of windows in the tab. */
+#define INFO_WINDOWS      6 /**< Amount of windows in the tab. */
 
 static const char *info_names[INFO_WINDOWS] = {
    "Main",
    "Ship",
+   "Weapons",
    "Cargo",
    "Missions",
    "Standings"
@@ -50,6 +52,7 @@ static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
 
 static CstSlotWidget info_eq;
+static CstSlotWidget info_eq_weaps;
 static int *info_factions;
 
 
@@ -60,11 +63,18 @@ static int *info_factions;
 static void info_close( unsigned int wid, char* str );
 static void info_openMain( unsigned int wid );
 static void info_openShip( unsigned int wid );
+static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
 static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
 static void standings_close( unsigned int wid, char *str );
 static void ship_update( unsigned int wid );
+static void weapons_genList( unsigned int wid );
+static void weapons_update( unsigned int wid, char *str );
+static void weapons_rename( unsigned int wid, char *str );
+static void weapons_autoweap( unsigned int wid, char *str );
+static void weapons_fire( unsigned int wid, char *str );
+static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
 static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
@@ -107,9 +117,10 @@ void menu_info (void)
    /* Open the subwindows. */
    info_openMain( info_windows[0] );
    info_openShip( info_windows[1] );
-   info_openCargo( info_windows[2] );
-   info_openMissions( info_windows[3] );
-   info_openStandings( info_windows[4] );
+   info_openWeapons( info_windows[2] );
+   info_openCargo( info_windows[3] );
+   info_openMissions( info_windows[4] );
+   info_openStandings( info_windows[5] );
 
    menu_Open(MENU_INFO);
 }
@@ -125,6 +136,15 @@ static void info_close( unsigned int wid, char* str )
       info_wid = 0;
       menu_Close(MENU_INFO);
    }
+}
+
+
+/**
+ * @brief Updates the info windows.
+ */
+void info_update (void)
+{
+   weapons_update( info_windows[2], NULL );
 }
 
 
@@ -289,6 +309,196 @@ static void ship_update( unsigned int wid )
          pilot_cargoUsed( player.p ), cargo,
          player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
    window_modifyText( wid, "txtDDesc", buf );
+}
+
+
+/**
+ * @brief Opens the weapons window.
+ */
+static void info_openWeapons( unsigned int wid )
+{
+   int w, h;
+
+   /* Get the dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "closeCargo", "Close", info_close );
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", "Rename", weapons_rename );
+
+   /* Checkboxes. */
+   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20), 250, BUTTON_HEIGHT,
+         "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
+   window_addCheckbox( wid, -20, 20+2*(BUTTON_HEIGHT+20)+BUTTON_HEIGHT, 300, BUTTON_HEIGHT,
+         "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
+         pilot_weapSetModeCheck( player.p, info_eq_weaps.weapons ) );
+
+   /* Custom widget. */
+   equipment_slotWidget( wid, 20, -40, 180, h-60, &info_eq_weaps );
+   info_eq_weaps.selected  = player.p;
+   info_eq_weaps.canmodify = 0;
+
+   /* Custom widget for legend. */
+   window_addCust( wid, 220, -220, w-200-60, 100, "cstLegend", 0,
+         weapons_renderLegend, NULL, NULL );
+
+   /* List. */
+   weapons_genList( wid );
+}
+
+
+/**
+ * @brief Generates the weapons list.
+ */
+static void weapons_genList( unsigned int wid )
+{
+   const char *str;
+   char **buf;
+   int i;
+   int w, h;
+
+   /* Get the dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Destroy widget if needed. */
+   if (widget_exists( wid, "lstWeapSets" ))
+      window_destroyWidget( wid, "lstWeapSets" );
+
+   /* List */
+   buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
+   for (i=0; i<PILOT_WEAPON_SETS; i++) {
+      str = pilot_weapSetName( info_eq_weaps.selected, i );
+      if (str == NULL) {
+         buf[i] = malloc( sizeof(char) * PATH_MAX );
+         snprintf( buf[i], PATH_MAX, "Weapon Set %d", (i+1)%10 );
+      }
+      else {
+         buf[i] = strdup( str );
+      }
+   }
+   window_addList( wid, 20+180+20, -40,
+         w - (20+180+20+20), 160,
+         "lstWeapSets", buf, PILOT_WEAPON_SETS,
+         0, weapons_update );
+
+   /* Update. */
+   weapons_update( wid, NULL );
+}
+
+
+/**
+ * @brief Updates the weapon sets.
+ */
+static void weapons_update( unsigned int wid, char *str )
+{
+   (void) str;
+   int pos;
+
+   /* Update the position. */
+   pos = toolkit_getListPos( wid, "lstWeapSets" );
+   info_eq_weaps.weapons = pos;
+
+   /* Update fire mode. */
+   window_checkboxSet( wid, "chkFire",
+         pilot_weapSetModeCheck( player.p, pos ) );
+
+   /* Update autoweap. */
+   window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
+}
+
+
+/**
+ * @brief Renames a weapon set.
+ */
+static void weapons_rename( unsigned int wid, char *str )
+{
+   (void) str;
+   char *name;
+
+   /* Prompt for new name. */
+   name = dialogue_input( "Rename Weapon Set", 3, 30,
+         "What do you want to rename the weapon set '%s'?",
+         pilot_weapSetName( player.p, info_eq_weaps.weapons ) );
+
+   /* Cancelled. */
+   if (str == NULL)
+      return;
+
+   /* Change name. */
+   pilot_weapSetNameSet( player.p, info_eq_weaps.weapons, name );
+   free(name);
+
+   /* Disable autoweap. */
+   player.p->autoweap = 0;
+
+   /* Regenerate list. */
+   weapons_genList( wid );
+}
+
+
+/**
+ * @brief Toggles autoweap for the sihp.
+ */
+static void weapons_autoweap( unsigned int wid, char *str )
+{
+   int state, sure;
+
+   /* Set state. */
+   state = window_checkboxState( wid, str );
+
+   /* Run autoweapons if needed. */
+   if (state) {
+      sure = dialogue_YesNoRaw( "Enable autoweapons?",
+            "Are you sure you want to enable autoweapons for the ship? This "
+            "action will rewrite your current weapon set." );
+      if (!sure) {
+         window_checkboxSet( wid, str, 0 );
+         return;
+      }
+      player.p->autoweap = 1;
+      pilot_weaponAuto( player.p );
+      weapons_genList( wid );
+   }
+   else
+      player.p->autoweap = 0;
+}
+
+
+/**
+ * @brief Sets the fire mode.
+ */
+static void weapons_fire( unsigned int wid, char *str )
+{
+   int state;
+
+   /* Set state. */
+   state = window_checkboxState( wid, str );
+   pilot_weapSetMode( player.p, info_eq_weaps.weapons, state );
+}
+
+
+/**
+ * @brief Renders the legend.
+ */
+static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data )
+{
+   (void) data;
+   (void) bw;
+   (void) bh;
+   double y;
+
+   y = by+bh-20;
+   gl_print( &gl_defFont, bx, y, &cBlack, "Legend" );
+
+   y -= 20.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Left click toggles)" );
+
+   y -= 15.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Primary Weapon (Right click toggles)" );
 }
 
 
