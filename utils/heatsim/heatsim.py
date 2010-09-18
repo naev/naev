@@ -22,6 +22,8 @@ class heatsim:
       self.STEEL_COND  = 54.
       self.STEEL_CAP   = 0.49
       self.STEEL_DENS  = 7.88e3
+      self.shipname    = shipname
+      self.weapname    = weapname
       # Sim info
       self.sim_dt      = 1./50. # Delta tick
       self.simulation  = simulation
@@ -58,6 +60,8 @@ class heatsim:
          return 16., 0.540, 6.12
       elif weapname == "ion turret":
          return 42., 0.765, 25.
+      elif weapname == "railgun turret":
+         return 60., 1.102, 66.
       else:
          raise ValueError
 
@@ -149,11 +153,13 @@ class heatsim:
          print("Outfit["+str(i)+"] Temp: "+str(hs.weap_T[i])+" K")
 
 
-   def plot( self ):
+   def plot( self, filename=None ):
+      plt.hold(False)
       plt.figure(1)
       plt.subplot(211)
-      plt.title(  'NAEV Heat Simulation' )
       plt.plot( self.time_data, self.ship_data, '-' )
+      title = 'NAEV Heat Simulation ('+self.shipname+' with '+self.weapname+')'
+      plt.title( title )
       plt.ylabel( 'Ship Temperature [K]' )
       plt.grid( True )
       plt.subplot(212)
@@ -161,18 +167,23 @@ class heatsim:
       plt.ylabel( 'Weapon Temperature [K]' )
       plt.xlabel( 'Time [s]' )
       plt.grid( True )
-      plt.show()
-
+      if filename == None:
+         plt.show()
+      else:
+         plt.savefig( filename )
 
 
 if __name__ == "__main__":
    print("NAEV HeatSim\n")
-   shp = 'llama'
-   wpn = 'laser'
-   hs = heatsim( shp, wpn, frange( 30., 600., 30. ) )
-   hs.simulate()
-   hs.display()
-   hs.plot()
-
-
-
+   shp_lst = { 'llama' : 'laser',
+               'lancelot' : 'ion',
+               'pacifier' : 'laser turret',
+               'hawking' : 'ion turret',
+               'peacemaker' : 'railgun turret' }
+   
+   for shp,wpn in shp_lst.items():
+      hs = heatsim( shp, wpn )
+      #hs = heatsim( shp, wpn, frange( 30., 600., 30. ) )
+      hs.simulate()
+      hs.plot( shp+'_'+wpn+'_60_60.png' )
+      print( '   '+shp+' with '+wpn+' done!' )
