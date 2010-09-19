@@ -46,5 +46,11 @@ void pilot_heatAddSlot( PilotOutfitSlot *o, double energy );
 double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt );
 void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt );
 
+/*
+ * Modifiers.
+ */
+double pilot_heatAccuracyMod( double T );
+double pilot_heatFireRateMod( double T );
+
 
 #endif /* PILOT_HEAT_H */

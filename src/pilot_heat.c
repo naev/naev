@@ -183,3 +183,20 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
 }
 
 
+/**
+ * @brief Returns a 0:1 modifier representing accuracy (0. being normal).
+ */
+double pilot_heatAccuracyMod( double T )
+{
+   return CLAMP( 0., 1., (T-500.)/300. );
+}
+
+
+/**
+ * @brief Returns a 0:1 modifier representing fire rate (1. being normal).
+ */
+double pilot_heatFireRateMod( double T )
+{
+   return CLAMP( 0., 1., (1100.-T)/300. );
+}
+
