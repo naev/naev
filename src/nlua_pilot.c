@@ -940,6 +940,7 @@ static int pilotL_nav( lua_State *L )
  *  <li> left: Absolute ammo left or nil if not applicable <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
+ *  <li> temp: Temperature of the weapon. <br />
  * </ul>
  *
  * An example would be:
@@ -1078,6 +1079,11 @@ static int pilotL_weapset( lua_State *L )
          /* Level. */
          lua_pushstring(L,"level");
          lua_pushnumber(L, level+1);
+         lua_rawset(L,-3);
+
+         /* Temperature. */
+         lua_pushstring(L,"temp");
+         lua_pushnumber(L, CLAMP( 0., 2., (slot->heat_T - 500.) / 600.) );
          lua_rawset(L,-3);
 
          /* Set table in table. */
@@ -2073,7 +2079,7 @@ static int pilotL_cargoAdd( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_addCargo( player.p, cargo, quantity );
+   quantity = pilot_cargoAdd( player.p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }
@@ -2110,7 +2116,7 @@ static int pilotL_cargoRm( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_rmCargo( p, cargo, quantity );
+   quantity = pilot_cargoRm( p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }

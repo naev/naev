@@ -35,7 +35,6 @@ void pilot_updateMass( Pilot *pilot );
 
 /* Special outfit stuff. */
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
-void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
 
 
 #endif /* PILOT_OUTFIT_H */

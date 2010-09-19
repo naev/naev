@@ -554,7 +554,7 @@ void player_swapShip( char* shipname )
          ship->credits = player.p->credits;
 
          /* move cargo over */
-         pilot_moveCargo( ship, player.p );
+         pilot_cargoMove( ship, player.p );
 
          /* Store position. */
          vectcpy( &v, &player.p->solid->pos );
@@ -3325,7 +3325,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                }
 
                /* actually add the cargo with id hack */
-               pilot_addCargo( ship, com, quantity );
+               pilot_cargoAdd( ship, com, quantity );
                if (i != 0)
                   ship->commodities[ ship->ncommodities-1 ].id = i;
             }

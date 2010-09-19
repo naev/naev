@@ -282,7 +282,7 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
    }
 
-   q = pilot_addCargo( player.p, com, q );
+   q = pilot_cargoAdd( player.p, com, q );
    player_modCredits( -q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
@@ -304,7 +304,7 @@ static void commodity_sell( unsigned int wid, char* str )
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
-   q = pilot_rmCargo( player.p, com, q );
+   q = pilot_cargoRm( player.p, com, q );
    player_modCredits( q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);

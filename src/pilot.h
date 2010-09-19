@@ -144,6 +144,9 @@ typedef struct PilotOutfitSlot_ {
    Outfit* outfit; /**< Associated outfit. */
    ShipMount mount; /**< Outfit mountpoint. */
    OutfitSlot slot; /**< Outfit slot. */
+   double heat_T; /**< Slot temperature. [K] */
+   double heat_C; /**< Slot heat capacity. [W/K] */
+   double heat_area; /**< Slot area of contact with ship hull. [m^2] */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -280,6 +283,13 @@ typedef struct Pilot_ {
    double ew_evasion; /**< Dynamic evasion factor. */
    double ew_detect; /**< Static detection factor. */
 
+   /* Heat. */
+   double heat_T; /**< Ship temperature. [K] */
+   double heat_C; /**< Heat capacity of the ship. [W/K] */
+   double heat_emis; /**< Ship epsilon parameter (emissivity). [adimensional 0:1] */
+   double heat_cond; /**< Ship conductivity parameter. [W/(m*K)] */
+   double heat_area; /**< Effective heatsink area of the ship. [m^2] */
+
    /* Ship statistics. */
    ShipStats stats; /**< Pilot's copy of ship statistics. */
 
@@ -358,13 +368,18 @@ typedef struct Pilot_ {
 } Pilot;
 
 
+#include "pilot_cargo.h"
+#include "pilot_heat.h"
+#include "pilot_hook.h"
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
+#include "pilot_cargo.h"
 
 
 /*
  * getting pilot stuff
  */
+Pilot** pilot_getAll( int *n );
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
@@ -382,22 +397,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
-
-
-/*
- * Cargo.
- */
-/* Normal. */
-int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
-int pilot_cargoFree( Pilot* p ); /* cargo space */
-int pilot_cargoOwned( Pilot* pilot, const char* commodityname );
-int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_moveCargo( Pilot* dest, Pilot* src );
-void pilot_calcCargo( Pilot* pilot );
-/* mission cargo - not to be confused with normal cargo */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 
 
 /* Misc. */
@@ -484,19 +483,6 @@ int pilot_isHostile( const Pilot *p );
 int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
-
-
-/*
- * hooks
- */
-void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
-int pilot_runHook( Pilot* p, int hook_type );
-void pilots_rmHook( unsigned int hook );
-void pilot_clearHooks( Pilot *p );
-/* Global hooks. */
-void pilots_addGlobalHook( int type, unsigned int hook );
-void pilots_rmGlobalHook( unsigned int hook );
-void pilots_clearGlobalHooks (void);
 
 
 #endif /* PILOT_H */

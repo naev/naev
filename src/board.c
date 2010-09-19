@@ -228,9 +228,9 @@ static void board_stealCargo( unsigned int wdw, char* str )
    /** steal as much as possible until full - @todo let player choose */
    q = 1;
    while ((p->ncommodities > 0) && (q!=0)) {
-      q = pilot_addCargo( player.p, p->commodities[0].commodity,
+      q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
             p->commodities[0].quantity );
-      pilot_rmCargo( p, p->commodities[0].commodity, q );
+      pilot_cargoRm( p, p->commodities[0].commodity, q );
    }
 
    board_update( wdw );

@@ -210,6 +210,9 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.deployed = 0; /* Just in case. */
    }
 
+   /* Update heat. */
+   pilot_heatCalcSlot( s );
+
    return 0;
 }
 
@@ -710,7 +713,7 @@ void pilot_calcStats( Pilot* pilot )
    memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
 
    /* cargo has to be reset */
-   pilot_calcCargo(pilot);
+   pilot_cargoCalc(pilot);
 
    /*
     * now add outfit changes
