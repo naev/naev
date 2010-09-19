@@ -65,14 +65,9 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o )
    mass_kg        = 1000. * o->outfit->mass;
    o->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
    o->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
-   /* We do the same for the area of the slot.
-    *
-    * However this area should actually be less (like half) because of the
-    *  that it only should be about half of a sphere or less. However with
-    *  different values it breaks everything so it's best to keep it this way
-    *  for now.
+   /* We consider the effective area of outfits to be half of a sphere.
     */
-   o->heat_area   = 4.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
+   o->heat_area   = 2.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
 }
 
 
