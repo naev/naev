@@ -83,7 +83,7 @@ class heatsim:
       weap_kg          = self.weap_mass * 1000.
       self.weap_C      = self.STEEL_CAP * weap_kg
       #self.weap_area   = pow( weap_kg / self.STEEL_DENS, 2./3. )
-      self.weap_area   = 4.*math.pi*pow( 3./4.*weap_kg/self.STEEL_DENS/math.pi, 2./3. )
+      self.weap_area   = 2.*math.pi*pow( 3./4.*weap_kg/self.STEEL_DENS/math.pi, 2./3. )
       self.weap_list   = []
       self.weap_T      = []
       self.weap_data   = []
