@@ -33,7 +33,6 @@ void pilot_heatCalc( Pilot *p )
    p->heat_emis   = 0.8; /**< @TODO make it influencable. */
    p->heat_cond   = STEEL_HEAT_CONDUCTIVITY;
    p->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
-   p->heat_area   = pow( mass_kg / STEEL_DENSITY, 2./3. );
    p->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
 
    /* We'll approximate area for a sphere.
@@ -105,7 +104,7 @@ void pilot_heatAddSlot( PilotOutfitSlot *o, double energy )
 {
    /* We consider that only 1% of the energy is lost in the form of heat,
     * this keeps numbers sane. */
-   o->heat_T += 0.01 * 10e6 * energy / o->heat_C;
+   o->heat_T += 0.01 * 1e6 * energy / o->heat_C;
 }
 
 
