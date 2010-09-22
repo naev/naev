@@ -13,7 +13,7 @@
 /*
  * Fundamental heat properties.
  */
-#define HEAT_WORST_ACCURACY         38. /**< Pretty bad accuracy, a 76 degree arc. */
+#define HEAT_WORST_ACCURACY         38./180.*M_PI /**< Pretty bad accuracy, a 76 degree arc. */
 
 
 /*

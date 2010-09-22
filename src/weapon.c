@@ -1319,7 +1319,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
  */
-void weapon_add( const Outfit* outfit, const double dir, double T,
+void weapon_add( const Outfit* outfit, const double T, const double dir,
       const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, unsigned int target )
 {
@@ -1336,7 +1336,7 @@ void weapon_add( const Outfit* outfit, const double dir, double T,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, T, pos, vel, parent, target );
+   w = weapon_create( outfit, T, dir, pos, vel, parent, target );
 
    /* set the proper layer */
    switch (layer) {
@@ -1414,7 +1414,7 @@ int beam_start( const Outfit* outfit,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, 0., pos, vel, parent, target );
+   w = weapon_create( outfit, 0., dir, pos, vel, parent, target );
    w->ID = ++beam_idgen;
    w->mount = mount;
 
