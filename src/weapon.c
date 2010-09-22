@@ -111,7 +111,7 @@ static int beam_idgen = 0; /**< Beam identifier generator. */
  * Prototypes
  */
 /* static */
-static Weapon* weapon_create( const Outfit* outfit,
+static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target );
 static void weapon_render( Weapon* w, const double dt );
@@ -1073,6 +1073,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawned the weapon.
+ *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
@@ -1080,7 +1081,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param target Target ID of the shooter.
  *    @return A pointer to the newly created weapon.
  */
-static Weapon* weapon_create( const Outfit* outfit,
+static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot* parent, const unsigned int target )
 {
@@ -1093,15 +1094,14 @@ static Weapon* weapon_create( const Outfit* outfit,
    double acc_max;
 
    /* Create basic features */
-   w = malloc(sizeof(Weapon));
-   memset(w, 0, sizeof(Weapon));
-   w->dam_mod = 1.; /* Default of 100% damage. */
-   w->faction = parent->faction; /* non-changeable */
-   w->parent = parent->id; /* non-changeable */
-   w->target = target; /* non-changeable */
-   w->outfit = outfit; /* non-changeable */
-   w->update = weapon_update;
-   w->status = WEAPON_STATUS_OK;
+   w           = calloc( sizeof(Weapon), 1 );
+   w->dam_mod  = 1.; /* Default of 100% damage. */
+   w->faction  = parent->faction; /* non-changeable */
+   w->parent   = parent->id; /* non-changeable */
+   w->target   = target; /* non-changeable */
+   w->outfit   = outfit; /* non-changeable */
+   w->update   = weapon_update;
+   w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
 
    switch (outfit->type) {
@@ -1152,7 +1152,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          }
 
          /* Calculate accuarcy. */
-         acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
+         acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
          /* Stat modifiers. */
          if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
@@ -1312,13 +1312,14 @@ static Weapon* weapon_create( const Outfit* outfit,
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawns the weapon.
+ *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
  */
-void weapon_add( const Outfit* outfit, const double dir,
+void weapon_add( const Outfit* outfit, const double dir, double T,
       const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, unsigned int target )
 {
@@ -1335,7 +1336,7 @@ void weapon_add( const Outfit* outfit, const double dir,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w = weapon_create( outfit, dir, T, pos, vel, parent, target );
 
    /* set the proper layer */
    switch (layer) {
@@ -1413,7 +1414,7 @@ int beam_start( const Outfit* outfit,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w = weapon_create( outfit, dir, 0., pos, vel, parent, target );
    w->ID = ++beam_idgen;
    w->mount = mount;
 

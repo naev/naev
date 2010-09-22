@@ -1125,7 +1125,7 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
       if (o->timer > 0.)
-         o->timer -= dt;
+         o->timer -= dt*pilot_heatFireRateMod( o->heat_T );
 
       Q += pilot_heatUpdateSlot( pilot, o, dt );
    }

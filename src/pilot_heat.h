@@ -11,6 +11,12 @@
 
 
 /*
+ * Fundamental heat properties.
+ */
+#define HEAT_WORST_ACCURACY         38. /**< Pretty bad accuracy, a 76 degree arc. */
+
+
+/*
  * Some random physics constants.
  */
 #define CONST_STEFAN_BOLTZMANN      5.67e-8 /**< Stefan-Botzmann thermal radiation constant. [W/(m^2 K^4)] */
