@@ -182,7 +182,7 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
  */
 double pilot_heatAccuracyMod( double T )
 {
-   return CLAMP( 0., 1., (T-500.)/300. );
+   return CLAMP( 0., 1., (T-500.)/600. );
 }
 
 
@@ -192,5 +192,14 @@ double pilot_heatAccuracyMod( double T )
 double pilot_heatFireRateMod( double T )
 {
    return CLAMP( 0., 1., (1100.-T)/300. );
+}
+
+
+/**
+ * @brief Returns a 0:2 level of fire, 0:1 is the accuracy point, 1:2 is fire rate point.
+ */
+double pilot_heatFirePercent( double T )
+{
+   return 2*pilot_heatAccuracyMod(T);
 }
 

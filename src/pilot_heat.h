@@ -57,6 +57,7 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt );
  */
 double pilot_heatAccuracyMod( double T );
 double pilot_heatFireRateMod( double T );
+double pilot_heatFirePercent( double T );
 
 
 #endif /* PILOT_HEAT_H */
