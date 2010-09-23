@@ -28,12 +28,15 @@ class heatsim:
       self.weapname    = weapname
       # Sim info
       self.sim_dt      = 1./50. # Delta tick
-      self.simulation  = simulation
-      self.sim_total   = simulation[-1]
+      self.setSimulation( simulation )
 
       # Load some data
       self.ship_mass, self.ship_weaps = self.loadship( shipname )
       self.weap_mass, self.weap_delay, self.weap_energy = self.loadweap( weapname )
+
+   def setSimulation( self, simulation ):
+      self.simulation  = simulation
+      self.sim_total   = simulation[-1]
 
    def loadship( self, shipname ):
       "Returns mass, number of weaps."
@@ -196,8 +199,18 @@ if __name__ == "__main__":
                'peacemaker' : 'railgun turret' }
    
    for shp,wpn in shp_lst.items():
-      hs = heatsim( shp, wpn )
+      hs = heatsim( shp, wpn, (60., 120.) )
       #hs = heatsim( shp, wpn, frange( 30., 600., 30. ) )
       hs.simulate()
       hs.plot( shp+'_'+wpn+'_60_60.png' )
+      hs.setSimulation( (30., 90.) )
+      hs.simulate()
+      hs.plot( shp+'_'+wpn+'_30_60.png' )
+      hs.setSimulation( (30., 90., 120., 180.) )
+      hs.simulate()
+      hs.plot( shp+'_'+wpn+'_30_60_30_60.png' )
       print( '   '+shp+' with '+wpn+' done!' )
+
+
+
+
