@@ -384,7 +384,7 @@ const char* pilot_checkSanity( Pilot *p )
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
 {
    /* Just in case. */
-   if ((p==NULL) || (o==NULL))
+   if ((p==NULL) || (o==NULL) || (s==NULL))
       return "Nothing selected.";
 
    /* Check slot type. */
