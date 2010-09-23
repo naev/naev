@@ -139,6 +139,7 @@ void outfits_open( unsigned int wid )
       toutfits    = malloc(sizeof(glTexture*));
       toutfits[0] = NULL;
       noutfits    = 1;
+      slottype    = NULL;
    }
    else {
       /* Create the outfit arrays. */
