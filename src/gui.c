@@ -1217,6 +1217,8 @@ static void gui_renderPilot( const Pilot* p )
       h = gui_radar.w;
       rc = (int)(gui_radar.w*gui_radar.w);
    }
+   else
+      return;
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
@@ -1277,9 +1279,9 @@ static void gui_renderPilot( const Pilot* p )
    gl_vboDeactivate();
 
    /* Draw square. */
-   px = MAX(x-sx,-w);
-   py = MAX(y-sy, -h);
-   col = gui_getPilotColour(p);
+   px     = MAX(x-sx,-w);
+   py     = MAX(y-sy, -h);
+   col    = gui_getPilotColour(p);
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
