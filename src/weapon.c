@@ -1479,7 +1479,7 @@ void beam_end( const unsigned int parent, int beam )
    int i;
    WeaponLayer layer;
    Weapon **curLayer;
-   int *mLayer, *nLayer;
+   int *nLayer;
 
    layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
 
@@ -1488,12 +1488,10 @@ void beam_end( const unsigned int parent, int beam )
       case WEAPON_LAYER_BG:
          curLayer = wbackLayer;
          nLayer = &nwbackLayer;
-         mLayer = &mwbacklayer;
          break;
       case WEAPON_LAYER_FG:
          curLayer = wfrontLayer;
          nLayer = &nwfrontLayer;
-         mLayer = &mwfrontLayer;
          break;
 
       default:
