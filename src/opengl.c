@@ -409,14 +409,19 @@ static int gl_setupFullscreen( unsigned int *flags )
 
       /* try to get closest aproximation to mode asked for */
       off = -1;
-      j = 0;
-      for (i=0; modes[i]; i++) {
+      j   = -1;
+      for (i=0; modes[i] != NULL; i++) {
          toff = ABS(SCREEN_W-modes[i]->w) + ABS(SCREEN_H-modes[i]->h);
          if ((off == -1) || (toff < off)) {
-            j = i;
+            j   = i;
             off = toff;
          }
       }
+      if (j<0) {
+         ERR("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!",
+               SCREEN_W, SCREEN_H);
+      }
+
       WARN("Fullscreen mode %dx%d is not supported by your setup\n"
             "   switching to %dx%d",
             SCREEN_W, SCREEN_H,
