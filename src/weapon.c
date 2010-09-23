@@ -1095,7 +1095,8 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    double acc_max;
 
    /* Create basic features */
-   w           = calloc( sizeof(Weapon), 1 );
+   w           = malloc( sizeof(Weapon) );
+   memset( w, 0, sizeof(Weapon) );
    w->dam_mod  = 1.; /* Default of 100% damage. */
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
