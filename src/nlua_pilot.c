@@ -1546,7 +1546,7 @@ static int pilotL_disable( lua_State *L )
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @lusparam q Amount of the outfit to add (defaults to 1).
- *    @luareturn True is outfit was added successfully.
+ *    @luareturn The number of outfits added.
  * @luafunc addOutfit( p, outfit, q )
  */
 static int pilotL_addOutfit( lua_State *L )
@@ -1556,7 +1556,7 @@ static int pilotL_addOutfit( lua_State *L )
    const char *outfit;
    Outfit *o;
    int ret;
-   int q;
+   int q, added;
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
@@ -1571,6 +1571,7 @@ static int pilotL_addOutfit( lua_State *L )
       return 0;
 
    /* Add outfit. */
+   added = 0;
    for (i=0; i<p->noutfits; i++) {
       /* Must still have to add outfit. */
       if (q <= 0)
@@ -1586,10 +1587,8 @@ static int pilotL_addOutfit( lua_State *L )
 
       /* Test if can add outfit. */
       ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
-      if (ret) {
-         lua_pushboolean(L, 0);
-         return 1;
-      }
+      if (ret)
+         break;
 
       /* Add outfit - already tested. */
       ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
@@ -1601,13 +1600,14 @@ static int pilotL_addOutfit( lua_State *L )
 
       /* We added an outfit. */
       q--;
+      added++;
    }
 
    /* Update the weapon sets. */
-   if (!ret && p->autoweap)
+   if ((added > 0) && p->autoweap)
       pilot_weaponAuto(p);
 
-   lua_pushboolean(L,!ret);
+   lua_pushnumber(L,added);
    return 1;
 }
 
