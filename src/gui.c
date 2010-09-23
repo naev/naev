@@ -1459,7 +1459,8 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
 static void gui_renderPlanet( int ind )
 {
    int i;
-   int cx, cy, x, y, r, rc;
+   int x, y;
+   int cx, cy, r, rc;
    int w, h;
    double res;
    GLfloat vx, vy, vr;
@@ -1487,7 +1488,6 @@ static void gui_renderPlanet( int ind )
 
    /* Check if in range. */
    if (gui_radar.shape == RADAR_RECT) {
-      x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
          if (player.p->nav_planet == ind)
