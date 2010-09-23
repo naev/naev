@@ -22,6 +22,8 @@ class heatsim:
       self.STEEL_COND  = 54.
       self.STEEL_CAP   = 0.49
       self.STEEL_DENS  = 7.88e3
+      self.ACCURACY_LIMIT = 500
+      self.FIRERATE_LIMIT = 800
       self.shipname    = shipname
       self.weapname    = weapname
       # Sim info
@@ -164,6 +166,16 @@ class heatsim:
       plt.grid( True )
       plt.subplot(212)
       plt.plot( self.time_data, self.weap_data[0], '-' )
+      plt.hold(True)
+      plt_data = []
+      for i in range(len(self.weap_data[0])):
+         plt_data.append( self.ACCURACY_LIMIT )
+      plt.plot( self.time_data, plt_data )
+      plt_data = []
+      for i in range(len(self.weap_data[0])):
+         plt_data.append( self.FIRERATE_LIMIT )
+      plt.plot( self.time_data, plt_data )
+      plt.hold(False)
       plt.ylabel( 'Weapon Temperature [K]' )
       plt.xlabel( 'Time [s]' )
       plt.grid( True )
