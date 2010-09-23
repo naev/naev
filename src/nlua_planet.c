@@ -236,7 +236,8 @@ static int planetL_get( lua_State *L )
    Planet *pnt;
 
    rndplanet = NULL;
-   nplanets = 0;
+   planets   = NULL;
+   nplanets  = 0;
 
    /* Get the landed planet */
    if (lua_gettop(L) == 0) {
@@ -290,11 +291,11 @@ static int planetL_get( lua_State *L )
       planets = space_getFactionPlanet( &nplanets, factions, nfactions );
       free(factions);
    }
-   else NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
+   else 
+      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* No suitable planet found */
-   if ((rndplanet == NULL) && (nplanets == 0)) {
-      free(planets);
+   if ((rndplanet == NULL) && (planets == NULL)) {
       return 0;
    }
    /* Pick random planet */
