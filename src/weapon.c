@@ -850,13 +850,14 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, psx,psy;
+   int i, b, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
 
    /* Get the sprite direction to speed up calculations. */
-   if (!outfit_isBeam(w->outfit)) {
+   b = outfit_isBeam(w->outfit);
+   if (!b) {
       gfx = outfit_gfx(w->outfit);
       gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
    }
@@ -871,7 +872,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* Beam weapons have special collisions. */
-      if (outfit_isBeam(w->outfit)) {
+      if (b) {
          /* Check for collision. */
          if (weapon_checkCanHit(w,p) &&
                CollideLineSprite( &w->solid->pos, w->solid->dir,
