@@ -1721,17 +1721,23 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
          xmlr_attr( cur, "x", buf );
-         if (buf==NULL)
-            WARN("JumpPoint for system '%s' has position node missing 'x' position.", sys->name);
-         else
+         if (buf==NULL) {
+            WARN("JumpPoint for system '%s' has position node missing 'x' position, using 0.", sys->name);
+            x = 0.;
+         }
+         else {
             x = atof(buf);
-         free(buf);
+            free(buf);
+         }
          xmlr_attr( cur, "y", buf );
-         if (buf==NULL)
-            WARN("JumpPoint for system '%s' has position node missing 'y' position.", sys->name);
-         else
+         if (buf==NULL) {
+            WARN("JumpPoint for system '%s' has position node missing 'y' position, using 0.", sys->name);
+            y = 0.;
+         }
+         else {
             y = atof(buf);
-         free(buf);
+            free(buf);
+         }
 
          /* Set position. */
          vect_cset( &j->pos, x, y );
