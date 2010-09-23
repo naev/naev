@@ -304,6 +304,8 @@ static int player_newMake (void)
    h              = 0;
    tl             = 0;
    th             = 0;
+   x              = 0.;
+   y              = 0.;
 
    /* Try to read teh file. */
    buf = ndata_read( START_DATA, &bufsize );
