@@ -99,6 +99,10 @@ static void inp_render( Widget* inp, double bx, double by )
    /* center vertically */
    if (inp->dat.inp.oneline)
       ty = y - (inp->h - gl_smallFont.h)/2.;
+   else {
+      WARN("Multi-line input widgets unsupported atm.");
+      return;
+   }
 
    /* Draw text. */
    gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
