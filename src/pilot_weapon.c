@@ -342,6 +342,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
          ws->range[i] = 0.;
          ws->speed[i] = 0.;
       }
+      return;
    }
 
    /* Calculate ranges. */
