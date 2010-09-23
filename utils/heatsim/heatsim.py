@@ -162,7 +162,8 @@ class heatsim:
       plt.plot( self.time_data, self.ship_data, '-' )
       title = 'NAEV Heat Simulation ('+self.shipname+' with '+self.weapname+')'
       plt.title( title )
-      plt.ylabel( 'Ship Temperature [K]' )
+      plt.legend( ('Ship', 'Accuracy Limit', 'Fire Rate Limit'), loc='upper left')
+      plt.ylabel( 'Temperature [K]' )
       plt.grid( True )
       plt.subplot(212)
       plt.plot( self.time_data, self.weap_data[0], '-' )
@@ -170,13 +171,14 @@ class heatsim:
       plt_data = []
       for i in range(len(self.weap_data[0])):
          plt_data.append( self.ACCURACY_LIMIT )
-      plt.plot( self.time_data, plt_data )
+      plt.plot( self.time_data, plt_data, '--' )
       plt_data = []
       for i in range(len(self.weap_data[0])):
          plt_data.append( self.FIRERATE_LIMIT )
-      plt.plot( self.time_data, plt_data )
+      plt.plot( self.time_data, plt_data, '-.' )
       plt.hold(False)
-      plt.ylabel( 'Weapon Temperature [K]' )
+      plt.legend( ('Weapon', 'Accuracy Limit', 'Fire Rate Limit'), loc='upper right')
+      plt.ylabel( 'Temperature [K]' )
       plt.xlabel( 'Time [s]' )
       plt.grid( True )
       if filename == None:
