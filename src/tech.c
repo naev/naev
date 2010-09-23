@@ -135,7 +135,7 @@ int tech_load (void)
       /* Must match tag. */
       if (!xml_isNode(node, XML_TECH_TAG))
          continue;
-      if ((ret == 0) && xml_isNode(node, XML_TECH_TAG)) /* Write over failures. */
+      if (ret==0) /* Write over failures. */
          tech = &array_grow( &tech_groups );
       ret = tech_parseNode( tech, node );
    } while (xml_nextNode(node));
