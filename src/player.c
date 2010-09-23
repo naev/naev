@@ -531,6 +531,9 @@ static void player_newShipMake( char* name )
       player_nstack++;
    }
 
+   if (player.p == NULL)
+      ERR("Something seriously wonky went on, newly created player does not exist, bailing!");
+
    /* Add GUI. */
    player_guiAdd( player_ship->gui );
 
