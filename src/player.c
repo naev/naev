@@ -1320,6 +1320,9 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
  */
 void player_weapSetPress( int id, int type )
 {
+   if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
+      return;
+
    if (player.p != NULL)
       pilot_weapSetPress( player.p, id, type );
 }
