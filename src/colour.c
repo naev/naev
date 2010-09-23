@@ -204,6 +204,7 @@ void col_rgb2hsv( double *H, double *S, double *V, double R, double G, double B 
 
          H1 *= 60; /* convert to range [0, 360] degrees */
 #else /* HSV_TRAVIS */
+         H1 = 0.; /* Shuts up Clang. */
          /* assume Foley & VanDam HSV */
          if (R == max)
             H1 = (G - B)/diff;
