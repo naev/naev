@@ -508,6 +508,11 @@ static void player_newShipMake( char* name )
          py    = player.p->solid->pos.y;
          dir   = player.p->solid->dir;
       }
+      else {
+         px    = 0.;
+         py    = 0.;
+         dir   = 0.;
+      }
       vect_cset( &vp, px, py );
       vect_cset( &vv, 0., 0. );
 
