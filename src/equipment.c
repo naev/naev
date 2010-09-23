@@ -639,39 +639,38 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    p   = wgt->selected;
 
    /* Must have selected ship. */
-   if (wgt->selected != NULL) {
+   if (wgt->selected == NULL)
+      return;
 
-      /* Get dimensions. */
-      equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
-      tw = bw / (double)n;
-      th = bh / (double)m;
+   /* Get dimensions. */
+   equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
+   tw = bw / (double)n;
+   th = bh / (double)m;
 
-      /* Get selected. */
-      mover    = wgt->mouseover;
+   /* Get selected. */
+   mover    = wgt->mouseover;
 
-      /* Render weapon outfits. */
-      x  = bx + (tw-w)/2;
-      y  = by + bh - (h+20) + (h+20-h)/2;
-      equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nweapon, p->outfit_weapon, mover, wgt );
-      mover    -= p->outfit_nweapon;
-      x += tw;
-      y  = by + bh - (h+20) + (h+20-h)/2;
-      equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nutility, p->outfit_utility, mover, wgt );
-      mover    -= p->outfit_nutility;
-      x += tw;
-      y  = by + bh - (h+20) + (h+20-h)/2;
-      equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nstructure, p->outfit_structure, mover, wgt );
-   }
+   /* Render weapon outfits. */
+   x  = bx + (tw-w)/2;
+   y  = by + bh - (h+20) + (h+20-h)/2;
+   equipment_renderOverlayColumn( x, y, w, h,
+         p->outfit_nweapon, p->outfit_weapon, mover, wgt );
+   mover    -= p->outfit_nweapon;
+   x += tw;
+   y  = by + bh - (h+20) + (h+20-h)/2;
+   equipment_renderOverlayColumn( x, y, w, h,
+         p->outfit_nutility, p->outfit_utility, mover, wgt );
+   mover    -= p->outfit_nutility;
+   x += tw;
+   y  = by + bh - (h+20) + (h+20-h)/2;
+   equipment_renderOverlayColumn( x, y, w, h,
+         p->outfit_nstructure, p->outfit_structure, mover, wgt );
 
    /* Mouse must be over something. */
    if (wgt->mouseover < 0)
       return;
 
    /* Get the slot. */
-   p = wgt->selected;
    if (wgt->mouseover < p->outfit_nweapon) {
       slot = &p->outfit_weapon[wgt->mouseover];
    }
