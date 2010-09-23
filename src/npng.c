@@ -313,7 +313,6 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    }
 
    /* Allocate the SDL surface to hold the image */
-   Rmask = Gmask = Bmask = Amask = 0 ;
    if (SDL_BYTEORDER == SDL_LIL_ENDIAN) {
       Rmask = 0x000000FF;
       Gmask = 0x0000FF00;
