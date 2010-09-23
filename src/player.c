@@ -466,6 +466,8 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
 
    /* Player is trading ship in. */
    if (trade) {
+      if (player.p == NULL)
+         ERR("Player ship isn't valid... This shouldn't happen!");
       old_name = player.p->name;
       player_swapShip( ship_name ); /* Move to the new ship. */
       player_rmShip( old_name );
