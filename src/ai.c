@@ -2087,6 +2087,7 @@ static int aiL_nearhyptarget( lua_State *L )
 
    /* Find nearest jump .*/
    mindist = INFINITY;
+   jp      = NULL;
    for (i=0; i <cur_system->njumps; i++) {
       dist  = vect_dist2( &cur_pilot->solid->pos, &cur_system->jumps[i].pos );
       if (dist < mindist) {
@@ -2095,6 +2096,9 @@ static int aiL_nearhyptarget( lua_State *L )
          j        = i;
       }
    }
+   /* None available. */
+   if (jp == NULL)
+      return 0;
 
    /* Copy vector. */
    vectcpy( &lv.vec, &jp->pos );
