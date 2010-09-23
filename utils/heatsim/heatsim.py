@@ -13,6 +13,10 @@ import math
 import matplotlib.pyplot as plt
 
 
+def clamp( a, b, x ):
+   return min( b, max( a, x ) )
+
+
 class heatsim:
 
    def __init__( self, shipname = "llama", weapname = "laser", simulation = [ 60., 120. ] ):
@@ -97,6 +101,12 @@ class heatsim:
          self.weap_T.append( self.SPACE_TEMP )
          self.weap_data.append( [] )
 
+   def __accMod( self, T ):
+      return clamp( 0., 1., (T-500.)/600. )
+
+   def __frMod( self, T ):
+      return clamp( 0., 1., (1100.-T)/300. )
+
    def simulate( self ):
       "Begins the simulation."
       # Prepare it
@@ -121,7 +131,7 @@ class heatsim:
 
             # Check if shot
             if weap_on:
-               self.weap_list[i] -= dt
+               self.weap_list[i] -= dt * self.__frMod( self.weap_T[i] )
                if self.weap_list[i] < 0.:
                   self.weap_T[i]     += 1e4 * self.weap_energy / self.weap_C
                   self.weap_list[i]  += self.weap_delay
@@ -161,13 +171,19 @@ class heatsim:
    def plot( self, filename=None ):
       plt.hold(False)
       plt.figure(1)
+
+      # Plot 1 Data
       plt.subplot(211)
       plt.plot( self.time_data, self.ship_data, '-' )
-      title = 'NAEV Heat Simulation ('+self.shipname+' with '+self.weapname+')'
-      plt.title( title )
+      
+      # Plot 1 Info
+      plt.axis( [0, self.sim_total, 0, 1100] )
+      plt.title( 'NAEV Heat Simulation ('+self.shipname+' with '+self.weapname+')' )
       plt.legend( ('Ship', 'Accuracy Limit', 'Fire Rate Limit'), loc='upper left')
       plt.ylabel( 'Temperature [K]' )
       plt.grid( True )
+
+      # Plot 1 Data
       plt.subplot(212)
       plt.plot( self.time_data, self.weap_data[0], '-' )
       plt.hold(True)
@@ -180,6 +196,9 @@ class heatsim:
          plt_data.append( self.FIRERATE_LIMIT )
       plt.plot( self.time_data, plt_data, '-.' )
       plt.hold(False)
+
+      # Plot 2 Info
+      plt.axis( [0, self.sim_total, 0, 1100] )
       plt.legend( ('Weapon', 'Accuracy Limit', 'Fire Rate Limit'), loc='upper right')
       plt.ylabel( 'Temperature [K]' )
       plt.xlabel( 'Time [s]' )
