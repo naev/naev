@@ -526,16 +526,16 @@ static int pilotL_addFleet( lua_State *L )
       }
 
       /* Calculate jump chance. */
-      if ((nind > 0) || (njumpind > 0)) {
+      if ((ind != NULL) || (jumpind != NULL)) {
          chance = njumpind;
          chance = chance / (chance + nind);
 
          /* Random jump in. */
-         if ((nind == 0) || (RNGF() <= chance)) {
+         if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL))) {
             jump = jumpind[ RNG_SANE(0,njumpind-1) ];
          }
          /* Random take off. */
-         else {
+         else if (ind !=NULL) {
             planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
             pilot_setFlagRaw( flags, PILOT_TAKEOFF );
             a = RNGF() * 2. * M_PI;
