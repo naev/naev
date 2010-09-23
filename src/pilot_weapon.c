@@ -473,6 +473,18 @@ void pilot_weapSetCleanup( Pilot* p, int id )
 
 
 /**
+ * @brief Frees a pilot's weapon sets.
+ */
+void pilot_weapSetFree( Pilot* p )
+{
+   int i;
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      pilot_weapSetCleanup( p, i );
+}
+
+
+
+/**
  * @brief Lists the items in a pilot weapon set.
  *
  *    @param p Pilot who owns the weapon set.

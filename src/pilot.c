@@ -1926,6 +1926,9 @@ void pilot_free( Pilot* p )
    /* If hostile, must remove counter. */
    pilot_rmHostile(p);
 
+   /* Free weapon sets. */
+   pilot_weapSetFree(p);
+
    /* Free outfits. */
    if (p->outfits != NULL)
       free(p->outfits);
