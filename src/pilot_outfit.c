@@ -184,6 +184,8 @@ int pilot_hasDeployed( Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
+   Outfit *o;
+
    /* Set the outfit. */
    s->outfit   = outfit;
    s->quantity = 1; /* Sort of pointless, but hey. */
@@ -209,6 +211,13 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0; /* Just in case. */
    }
+
+   /* Check if active. */
+   o = s->outfit;
+   if (outfit_isWeapon(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
+      s->active = 1;
+   else
+      s->active = 0;
 
    /* Update heat. */
    pilot_heatCalcSlot( s );

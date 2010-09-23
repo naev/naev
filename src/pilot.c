@@ -1124,10 +1124,12 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->timer[i] -= dt;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
-      if (o->timer > 0.)
-         o->timer -= dt*pilot_heatFireRateMod( o->heat_T );
-
-      Q += pilot_heatUpdateSlot( pilot, o, dt );
+      if (o->outfit == NULL)
+         continue;
+      if (o->active && (o->timer > 0.)) {
+         o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+         Q        += pilot_heatUpdateSlot( pilot, o, dt );
+      }
    }
 
    /* Global heat. */
