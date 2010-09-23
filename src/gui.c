@@ -1971,6 +1971,10 @@ static void gui_createInterference( Radar *radar )
       w = radar->w*2.;
       h = radar->h*2.;
    }
+   else {
+      WARN("Radar shape is invalid.");
+      return;
+   }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {
 
