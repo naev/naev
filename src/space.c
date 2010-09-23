@@ -1767,12 +1767,14 @@ static void system_parseJumps( const xmlNodePtr parent )
    xmlNodePtr cur, node;
 
    name = xml_nodeProp(parent,"name"); /* already mallocs */
-   for (i=0; i<systems_nstack; i++)
+   sys = NULL;
+   for (i=0; i<systems_nstack; i++) {
       if (strcmp( systems_stack[i].name, name)==0) {
          sys = &systems_stack[i];
          break;
       }
-   if (i==systems_nstack) {
+   }
+   if (sys == NULL) {
       WARN("System '%s' was not found in the stack for some reason",name);
       return;
    }
