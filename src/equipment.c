@@ -1021,6 +1021,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
       s       = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
       strncpy( selship, s, sizeof(selship) );
+      selship[PATH_MAX-1] = '\0'; /* Just in case. */
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
    }
 
