@@ -393,7 +393,7 @@ const char* pilot_checkSanity( Pilot *p )
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
 {
    /* Just in case. */
-   if ((p==NULL) || (o==NULL) || (s==NULL))
+   if ((p==NULL) || (o==NULL))
       return "Nothing selected.";
 
    /* Check slot type. */
@@ -525,7 +525,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
 
       }
       else if (outfit_isFighterBay(o)) {
-         if (s->u.ammo.deployed > 0)
+         if ((s!=NULL) && (s->u.ammo.deployed > 0))
             return "Recall the fighters first";
       }
    }
