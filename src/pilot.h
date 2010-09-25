@@ -329,10 +329,6 @@ typedef struct Pilot_ {
    int ncommodities; /**< number of commodities. */
    int cargo_free; /**< Free commodity space. */
 
-   /* Weapon properties */
-   double weap_range; /**< Average range of primary weapons */
-   double weap_speed; /**< Average speed of primary weapons */
-
    /* Hook attached to the pilot */
    PilotHook *hooks; /**< Pilot hooks. */
    int nhooks; /**< Number of pilot hooks. */
