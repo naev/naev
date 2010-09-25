@@ -11,7 +11,10 @@
 
 #include "log.h"
 #include "opengl.h"
-
+#include "gui.h"
+#include "pilot.h"
+#include "player.h"
+#include "space.h"
 
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
@@ -37,13 +40,15 @@ void ovr_key( int type )
    t = SDL_GetTicks();
 
    if (type > 0) {
-      ovr_open++;
-      ovr_opened  = t;
+      if (ovr_open)
+         ovr_open = 0;
+      else {
+         ovr_open = 1;
+         ovr_opened  = t;
+      }
    }
    else if (type < 0) {
-      if (ovr_open > 1)
-         ovr_open = 0;
-      else if (t - ovr_opened < 300)
+      if (t - ovr_opened > 300)
          ovr_open = 0;
    }
 }
@@ -54,14 +59,53 @@ void ovr_key( int type )
  */
 void ovr_render( double dt )
 {
+   (void) dt;
+   int i, j;
+   Pilot **pstk;
+   int n;
+   double w, h, res;
    glColour c = { .r=0., .g=0., .b=0., .a=0.5 };
 
    /* Must be open. */
    if (!ovr_open)
       return;
 
+   /* Default values. */
+   w     = SCREEN_W;
+   h     = SCREEN_H;
+   res   = 100.;
 
    /* First render the background overlay. */
-   gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &c );
+   gl_renderRect( 0., 0., w, h, &c );
+
+   /* We need to center in the image first. */
+   gl_matrixPush();
+      gl_matrixTranslate( w/2., h/2. );
+
+   /* Render planets. */
+   for (i=0; i<cur_system->nplanets; i++)
+      if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
+         gui_renderPlanet( i, RADAR_RECT, w, h, res );
+   if (player.p->nav_planet > -1)
+      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res );
+
+   /* Render pilots. */
+   pstk  = pilot_getAll( &n );
+   j     = 0;
+   for (i=0; i<n; i++) {
+      if (pstk[i]->id == PLAYER_ID) /* Skip player. */
+         continue;
+      if (pstk[i]->id == player.p->target)
+         j = i;
+      else
+         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res );
+   }
+   /* render the targetted pilot */
+   if (j!=0)
+      gui_renderPilot( pstk[j], RADAR_RECT, w, h, res );
+
+   /* Pop the matrix. */
+   gl_matrixPop();
 }
+
 
