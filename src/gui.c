@@ -190,10 +190,7 @@ static void gui_renderMessages( double dt );
 static glColour *gui_getPlanetColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, glColour *col );
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape );
-static void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res );
-static void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res );
 static glColour* gui_getPilotColour( const Pilot* p );
-static void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res );
 static void gui_renderInterference (void);
 static void gui_calcBorders (void);
 /* Lua GUI. */
@@ -1169,7 +1166,7 @@ static glColour* gui_getPilotColour( const Pilot* p )
 #define CHECK_PIXEL(x,y)   \
 (shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
    (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
-static void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res )
+void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res )
 {
    int i, curs;
    int x, y, sx, sy;
@@ -1449,7 +1446,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  *
  * Matrix mode is already displaced to center of the minimap.
  */
-static void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res )
+void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res )
 {
    int i;
    int x, y;
@@ -1538,7 +1535,7 @@ static void gui_renderPlanet( int ind, RadarShape shape, double w, double h, dou
  *
  *    @param i Jump point to render.
  */
-static void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res )
+void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res )
 {
    int i;
    int cx, cy, x, y, r, rc;
