@@ -214,7 +214,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 
    /* Check if active. */
    o = s->outfit;
-   if (outfit_isWeapon(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
+   if (outfit_isWeapon(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
       s->active = 1;
    else
       s->active = 0;
