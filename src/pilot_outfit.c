@@ -676,8 +676,6 @@ void pilot_calcStats( Pilot* pilot )
 {
    int i;
    double q;
-   double wrange, wspeed;
-   int nweaps;
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
@@ -728,8 +726,6 @@ void pilot_calcStats( Pilot* pilot )
     * now add outfit changes
     */
    nfirerate_forward = nfirerate_turret = 0;
-   nweaps               = 0;
-   wrange = wspeed      = 0.;
    pilot->mass_outfit   = 0.;
    njammers             = 0;
    ew_ndetect           = 0;
@@ -819,12 +815,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->energy_regen     -= o->u.jam.energy * q;
          njammers                += q;;
       }
-      if ((outfit_isForward(o) || outfit_isTurret(o)) && /* Primary weapon */
-            !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
-         nweaps++;
-         wrange += outfit_range(o);
-         wspeed += outfit_speed(o);
-      }
+
       /* Add ammo mass. */
       if (outfit_ammo(o) != NULL) {
          if (slot->u.ammo.outfit != NULL)
@@ -834,16 +825,6 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-
-   /* Set weapon range and speed */
-   if (nweaps > 0) {
-      pilot->weap_range = wrange / (double)nweaps;
-      pilot->weap_speed = wspeed / (double)nweaps;
-   }
-   else {
-      pilot->weap_range = 0.;
-      pilot->weap_speed = 0.;
-   }
 
    /*
     * Calculate jammers.
