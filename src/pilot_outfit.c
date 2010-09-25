@@ -214,7 +214,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 
    /* Check if active. */
    o = s->outfit;
-   if (outfit_isWeapon(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
+   if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
       s->active = 1;
    else
       s->active = 0;
@@ -819,7 +819,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->energy_regen     -= o->u.jam.energy * q;
          njammers                += q;;
       }
-      if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
+      if ((outfit_isForward(o) || outfit_isTurret(o)) && /* Primary weapon */
             !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
          nweaps++;
          wrange += outfit_range(o);
