@@ -38,6 +38,7 @@ static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
+static int systemL_isknown( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -52,6 +53,7 @@ static const luaL_reg system_methods[] = {
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
+   { "isKnown", systemL_isknown },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -609,3 +611,19 @@ static int systemL_radius( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Checks to see if a system is known by the player.
+ *
+ * @usage b = s:isKnown()
+ *
+ *    @luaparam s System to check if the player knows.
+ *    @luareturn true if the player knows the system.
+ * @luafunc isKnown( s )
+ */
+static int systemL_isknown( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   lua_pushboolean(L, sys_isKnown(sys));
+   return 1;
+}
