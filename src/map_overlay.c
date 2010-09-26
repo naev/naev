@@ -19,6 +19,7 @@
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
 static int ovr_open = 0; /**< Is the overlay open? */
+static double ovr_res = 10.; /**< Resolution. */
 
 
 /**
@@ -43,6 +44,9 @@ void ovr_key( int type )
       if (ovr_open)
          ovr_open = 0;
       else {
+         /* We need to calculate the radius of the rendering. */
+         ovr_res = (cur_system->radius + 10.) / (MIN( SCREEN_W, SCREEN_H )/2.);
+
          ovr_open = 1;
          ovr_opened  = t;
       }
@@ -73,7 +77,7 @@ void ovr_render( double dt )
    /* Default values. */
    w     = SCREEN_W;
    h     = SCREEN_H;
-   res   = 100.;
+   res   = ovr_res;
 
    /* First render the background overlay. */
    gl_renderRect( 0., 0., w, h, &c );
