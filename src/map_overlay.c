@@ -115,21 +115,8 @@ void ovr_render( double dt )
    if (j!=0)
       gui_renderPilot( pstk[j], RADAR_RECT, w, h, res );
    
-
-   /* Render pilots. */
-   pstk  = pilot_getAll( &n );
-   j     = 0;
-   for (i=0; i<n; i++) {
-      if (pstk[i]->id == PLAYER_ID) /* Skip player. */
-         continue;
-      if (pstk[i]->id == player.p->target)
-         j = i;
-      else
-         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res );
-   }
-   /* render the targetted pilot */
-   if (j!=0)
-      gui_renderPilot( pstk[j], RADAR_RECT, w, h, res );
+   /* Render the player. */
+   gui_renderPlayer();
 
    /* Pop the matrix. */
    gl_matrixPop();
