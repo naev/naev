@@ -78,6 +78,7 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
+static int pilotL_setHilight( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_disable( lua_State *L );
@@ -158,6 +159,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setInvisible", pilotL_setInvisible },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
+   { "setHilight", pilotL_setHilight },
    { "disable", pilotL_disable },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
@@ -1523,6 +1525,8 @@ static int pilotL_setInvisible( lua_State *L )
  *
  * This cancels out ewarfare visibility ranges and only affects the visibility of the player.
  *
+ * @usage p:setVisplayer( true )
+ *
  *    @luaparam p Pilot to set player visibility status of.
  *    @luaparam state State to set player visibility, defaults to true.
  * @luafunc setVisplayer( p, state )
@@ -1556,6 +1560,8 @@ static int pilotL_setVisplayer( lua_State *L )
  *
  * This cancels out ewarfare visibility ranges and affects every pilot.
  *
+ * @usage p:setVisible( true )
+ *
  *    @luaparam p Pilot to set visibility status of.
  *    @luaparam state State to set visibility, defaults to true.
  * @luafunc setVisible( p, state )
@@ -1579,6 +1585,41 @@ static int pilotL_setVisible( lua_State *L )
       pilot_setFlag(p, PILOT_VISIBLE);
    else
       pilot_rmFlag(p, PILOT_VISIBLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes pilot stand out on radar and the likes.
+ *
+ * This makes the pilot stand out in the map overlay and radar to increase noticeability.
+ *
+ * @usage p:setVisplayer( true )
+ *
+ *    @luaparam p Pilot to set hilight status of.
+ *    @luaparam state State to set hilight, defaults to true.
+ * @luafunc setHilight( p, state )
+ */
+static int pilotL_setHilight( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_HILIGHT);
+   else
+      pilot_rmFlag(p, PILOT_HILIGHT);
 
    return 0;
 }

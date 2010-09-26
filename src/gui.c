@@ -820,7 +820,11 @@ void gui_render( double dt )
     * Countdown timers.
     */
    blink_pilot    -= dt;
+   if (blink_pilot < 0.)
+      blink_pilot += RADAR_BLINK_PILOT;
    blink_planet   -= dt;
+   if (blink_planet < 0.)
+      blink_planet += RADAR_BLINK_PLANET;
    if (interference_alpha > 0.)
       interference_t += dt;
 
@@ -1242,9 +1246,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
                gui_vboColourOffset, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINES, 0, curs/2 );
       }
-
-      if (blink_pilot < 0.)
-         blink_pilot += RADAR_BLINK_PILOT;
    }
 
    /* Deactivate VBO. */
@@ -1253,7 +1254,10 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
-   col    = gui_getPilotColour(p);
+   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot > RADAR_BLINK_PILOT/2.))
+      col = &cRadar_hilight;
+   else
+      col = gui_getPilotColour(p);
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
@@ -1399,9 +1403,6 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
             gui_vboColourOffset, 4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, curs/2 );
    }
-
-   if (blink_planet < 0.)
-      blink_planet += RADAR_BLINK_PLANET;
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
