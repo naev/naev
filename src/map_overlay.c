@@ -116,7 +116,7 @@ void ovr_render( double dt )
       gui_renderPilot( pstk[j], RADAR_RECT, w, h, res, 1 );
    
    /* Render the player. */
-   gui_renderPlayer();
+   gui_renderPlayer( res, 1 );
 
    /* Pop the matrix. */
    gl_matrixPop();

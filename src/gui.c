@@ -965,7 +965,7 @@ void gui_radarRender( double x, double y )
    gui_renderInterference();
 
    /* Render the player cross. */
-   gui_renderPlayer();
+   gui_renderPlayer( radar->res, 0 );
 
    gl_matrixPop();
    if (radar->shape==RADAR_RECT)
@@ -1157,11 +1157,17 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       return;
 
    /* Get position. */
-   x = (p->solid->pos.x - player.p->solid->pos.x) / res;
-   y = (p->solid->pos.y - player.p->solid->pos.y) / res;
+   if (overlay) {
+      x = (int)(p->solid->pos.x / res);
+      y = (int)(p->solid->pos.y / res);
+   }
+   else {
+      x = (int)((p->solid->pos.x - player.p->solid->pos.x) / res);
+      y = (int)((p->solid->pos.y - player.p->solid->pos.y) / res);
+   }
    /* Get size. */
-   sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / res;
-   sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / res;
+   sx = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / res);
+   sy = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / res);
    if (sx < 1.)
       sx = 1.;
    if (sy < 1.)
@@ -1259,10 +1265,22 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 /**
  * @brief Renders the player cross on the radar or whatever.
  */
-void gui_renderPlayer (void)
+void gui_renderPlayer( double res, int overlay )
 {
    int i;
    GLfloat vertex[2*4], colours[4*4];
+   GLfloat vx,vy, vr;
+
+   if (overlay) {
+      vx = player.p->solid->pos.x / res;
+      vy = player.p->solid->pos.y / res;
+      vr = 5.;
+   }
+   else {
+      vx = 0.;
+      vy = 0.;
+      vr = 3.;
+   }
 
    /* the + sign in the middle of the radar representing the player */
    for (i=0; i<4; i++) {
@@ -1274,14 +1292,14 @@ void gui_renderPlayer (void)
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
          sizeof(GLfloat) * 4*4, colours );
    /* Set up vertex. */
-   vertex[0] = 0.;
-   vertex[1] = -3.;
-   vertex[2] = 0.;
-   vertex[3] = +3.;
-   vertex[4] = -3.;
-   vertex[5] = 0.;
-   vertex[6] = +3.;
-   vertex[7] = 0.;
+   vertex[0] = vx+0.;
+   vertex[1] = vy-vr;
+   vertex[2] = vx+0.;
+   vertex[3] = vy+vr;
+   vertex[4] = vx-vr;
+   vertex[5] = vy+0.;
+   vertex[6] = vx+vr;
+   vertex[7] = vy+0.;
    gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
    /* Draw tho VBO. */
    gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
@@ -1476,8 +1494,14 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    planet = cur_system->planets[ind];
    r     = (int)(planet->radius*2. / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
-   cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-   cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+   if (overlay) {
+      cx    = (int)(planet->pos.x / res);
+      cy    = (int)(planet->pos.y / res);
+   }
+   else {
+      cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
+      cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+   }
    if (shape==RADAR_CIRCLE)
       rc = (int)(w*w);
    else
@@ -1565,8 +1589,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    jp    = &cur_system->jumps[ind];
    r     = (int)(jumppoint_gfx->sw / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
-   cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
-   cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+   if (overlay) {
+      cx    = (int)(jp->pos.x / res);
+      cy    = (int)(jp->pos.y / res);
+   }
+   else {
+      cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
+      cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+   }
    if (shape==RADAR_CIRCLE)
       rc = (int)(w*w);
    else
