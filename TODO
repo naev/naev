@@ -16,9 +16,6 @@
    *) Escorts available for hire
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
-   *) Secondary weapon revamp
-      *) Players should be able to configure what outfit they want as secondary
-      *) Players should also be able to set hotkeys for secondary weapons
    *) Simplify controls
       *) Emacs-style bindings
       *) Combine similar commands into one
@@ -27,8 +24,6 @@
 
    MINOR
 
-   *) Add more threads to speed up loading
-      *) Thread nebula generation.
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
