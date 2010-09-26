@@ -45,7 +45,7 @@ void ovr_key( int type )
          ovr_open = 0;
       else {
          /* We need to calculate the radius of the rendering. */
-         ovr_res = (cur_system->radius + 10.) / (MIN( SCREEN_W, SCREEN_H )/2.);
+         ovr_res = (cur_system->radius * 1.2) / (MIN( SCREEN_W, SCREEN_H )/2.);
 
          ovr_open = 1;
          ovr_opened  = t;
