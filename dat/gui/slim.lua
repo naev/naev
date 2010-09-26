@@ -738,7 +738,11 @@ function render( dt )
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    if nav_hyp ~= nil then
-      navstring = nav_hyp:name()
+      if nav_hyp:isKnown() then
+         navstring = nav_hyp:name()
+      else
+         navstring = "Unknown"
+      end
       if autonav_hyp ~= nil then
          navstring = navstring ..  " (" .. tostring(autonav_hyp:jumpDist()) .. ")" 
       end
