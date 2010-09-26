@@ -929,18 +929,18 @@ void gui_radarRender( double x, double y )
     */
    for (i=0; i<cur_system->nplanets; i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
-         gui_renderPlanet( i, gui_radar.shape, gui_radar.w, gui_radar.h, gui_radar.res );
+         gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, gui_radar.shape, gui_radar.w, gui_radar.h, gui_radar.res );
+      gui_renderPlanet( player.p->nav_planet, radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /*
     * Jump points.
     */
    for (i=0; i<cur_system->njumps; i++)
       if (i != player.p->nav_hyperspace)
-         gui_renderJumpPoint( i, gui_radar.shape, gui_radar.w, gui_radar.h, gui_radar.res );
+         gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_hyperspace > -1)
-      gui_renderJumpPoint( player.p->nav_hyperspace, gui_radar.shape, gui_radar.w, gui_radar.h, gui_radar.res );
+      gui_renderJumpPoint( player.p->nav_hyperspace, radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /*
     * weapons
@@ -955,11 +955,11 @@ void gui_radarRender( double x, double y )
       if (pilot_stack[i]->id == player.p->target)
          j = i;
       else
-         gui_renderPilot( pilot_stack[i], gui_radar.shape, gui_radar.w, gui_radar.h, gui_radar.res );
+         gui_renderPilot( pilot_stack[i], radar->shape, radar->w, radar->h, radar->res, 0 );
    }
    /* render the targetted pilot */
    if (j!=0)
-      gui_renderPilot( pilot_stack[j], gui_radar.shape, gui_radar.w, gui_radar.h, gui_radar.res );
+      gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /* Intereference. */
    gui_renderInterference();
@@ -1142,7 +1142,7 @@ static glColour* gui_getPilotColour( const Pilot* p )
 #define CHECK_PIXEL(x,y)   \
 (shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
    (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
-void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res )
+void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
    int i, curs;
    int x, y, sx, sy;
@@ -1174,7 +1174,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
             ((x*x+y*y) > (int)(w*w))) ) {
 
       /* Draw little targetted symbol. */
-      if (p->id == player.p->target)
+      if (p->id == player.p->target && !overlay)
          gui_renderRadarOutOfRange( shape, w, h, x, y, &cRadar_tPilot );
       return;
    }
@@ -1458,7 +1458,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  *
  * Matrix mode is already displaced to center of the minimap.
  */
-void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res )
+void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
    int i;
    int x, y;
@@ -1487,7 +1487,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    if (shape == RADAR_RECT) {
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if (player.p->nav_planet == ind)
+         if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
          return;
       }
@@ -1497,7 +1497,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-r)) {
-         if (player.p->nav_planet == ind)
+         if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
       }
@@ -1539,6 +1539,10 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
+
+   /* Render name. */
+   if (overlay)
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, planet->name );
 }
 
 
@@ -1547,7 +1551,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  *
  *    @param i Jump point to render.
  */
-void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res )
+void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
    int i;
    int cx, cy, x, y, r, rc;
@@ -1573,7 +1577,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if (player.p->nav_hyperspace == ind)
+         if ((player.p->nav_hyperspace == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
          return;
       }
@@ -1583,7 +1587,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-r)) {
-         if (player.p->nav_hyperspace == ind)
+         if ((player.p->nav_hyperspace == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
       }
@@ -1629,6 +1633,10 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
+
+   /* Render name. */
+   if (overlay)
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, jp->target->name );
 }
 #undef CHECK_PIXEL
 

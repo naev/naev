@@ -89,16 +89,16 @@ void ovr_render( double dt )
    /* Render planets. */
    for (i=0; i<cur_system->nplanets; i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
-         gui_renderPlanet( i, RADAR_RECT, w, h, res );
+         gui_renderPlanet( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res );
+      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, 1 );
 
    /* Render jump points. */
    for (i=0; i<cur_system->njumps; i++)
       if (i != player.p->nav_hyperspace)
-         gui_renderJumpPoint( i, RADAR_RECT, w, h, res );
+         gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_hyperspace > -1)
-      gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res );
+      gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );
 
    /* Render pilots. */
    pstk  = pilot_getAll( &n );
@@ -109,11 +109,11 @@ void ovr_render( double dt )
       if (pstk[i]->id == player.p->target)
          j = i;
       else
-         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res );
+         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
    }
    /* render the targetted pilot */
    if (j!=0)
-      gui_renderPilot( pstk[j], RADAR_RECT, w, h, res );
+      gui_renderPilot( pstk[j], RADAR_RECT, w, h, res, 1 );
    
    /* Render the player. */
    gui_renderPlayer();
