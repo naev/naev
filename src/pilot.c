@@ -486,6 +486,11 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
    double d, sense;
 
+   /* Special case player or omni-visible. */
+   if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
+         pilot_isFlag(target, PILOT_VISIBLE))
+      return 1;
+
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
