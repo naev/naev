@@ -911,7 +911,6 @@ int gui_radarInit( int circle, int w, int h )
 void gui_radarRender( double x, double y )
 {
    int i, j;
-   GLfloat vertex[2*4], colours[4*4];
    Radar *radar;
 
    /* The global radar. */
@@ -965,31 +964,8 @@ void gui_radarRender( double x, double y )
    /* Intereference. */
    gui_renderInterference();
 
-   /* the + sign in the middle of the radar representing the player */
-   for (i=0; i<4; i++) {
-      colours[4*i + 0] = cRadar_player.r;
-      colours[4*i + 1] = cRadar_player.g;
-      colours[4*i + 2] = cRadar_player.b;
-      colours[4*i + 3] = cRadar_player.a;
-   }
-   gl_vboSubData( gui_vbo, gui_vboColourOffset,
-         sizeof(GLfloat) * 4*4, colours );
-   /* Set up vertex. */
-   vertex[0] = 0.;
-   vertex[1] = -3.;
-   vertex[2] = 0.;
-   vertex[3] = +3.;
-   vertex[4] = -3.;
-   vertex[5] = 0.;
-   vertex[6] = +3.;
-   vertex[7] = 0.;
-   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
-   /* Draw tho VBO. */
-   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-         gui_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 4 );
-   gl_vboDeactivate();
+   /* Render the player cross. */
+   gui_renderPlayer();
 
    gl_matrixPop();
    if (radar->shape==RADAR_RECT)
@@ -1277,6 +1253,42 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+}
+
+
+/**
+ * @brief Renders the player cross on the radar or whatever.
+ */
+void gui_renderPlayer (void)
+{
+   int i;
+   GLfloat vertex[2*4], colours[4*4];
+
+   /* the + sign in the middle of the radar representing the player */
+   for (i=0; i<4; i++) {
+      colours[4*i + 0] = cRadar_player.r;
+      colours[4*i + 1] = cRadar_player.g;
+      colours[4*i + 2] = cRadar_player.b;
+      colours[4*i + 3] = cRadar_player.a;
+   }
+   gl_vboSubData( gui_vbo, gui_vboColourOffset,
+         sizeof(GLfloat) * 4*4, colours );
+   /* Set up vertex. */
+   vertex[0] = 0.;
+   vertex[1] = -3.;
+   vertex[2] = 0.;
+   vertex[3] = +3.;
+   vertex[4] = -3.;
+   vertex[5] = 0.;
+   vertex[6] = +3.;
+   vertex[7] = 0.;
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+         gui_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 4 );
+   gl_vboDeactivate();
 }
 
 

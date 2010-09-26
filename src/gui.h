@@ -72,6 +72,7 @@ void gui_radarRender( double x, double y );
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res );
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res );
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res );
+void gui_renderPlayer (void);
 
 
 /*
