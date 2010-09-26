@@ -89,6 +89,29 @@ void ovr_render( double dt )
    if (player.p->nav_planet > -1)
       gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res );
 
+   /* Render jump points. */
+   for (i=0; i<cur_system->njumps; i++)
+      if (i != player.p->nav_hyperspace)
+         gui_renderJumpPoint( i, RADAR_RECT, w, h, res );
+   if (player.p->nav_hyperspace > -1)
+      gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res );
+
+   /* Render pilots. */
+   pstk  = pilot_getAll( &n );
+   j     = 0;
+   for (i=0; i<n; i++) {
+      if (pstk[i]->id == PLAYER_ID) /* Skip player. */
+         continue;
+      if (pstk[i]->id == player.p->target)
+         j = i;
+      else
+         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res );
+   }
+   /* render the targetted pilot */
+   if (j!=0)
+      gui_renderPilot( pstk[j], RADAR_RECT, w, h, res );
+   
+
    /* Render pilots. */
    pstk  = pilot_getAll( &n );
    j     = 0;
