@@ -719,4 +719,58 @@
    <pilot name="Pirate Attacker" ship="Hyena"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Sml Trader Convoy">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot ship="Llama"></pilot>
+   <pilot ship="Llama"></pilot>
+   <pilot ship="Koala"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Hyena Pack">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="FLF Sml Force">
+  <ai>flf</ai>
+  <faction>FLF</faction>
+  <pilots>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="FLF Med Force">
+  <ai>flf</ai>
+  <faction>FLF</faction>
+  <pilots>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Hyena"></pilot>
+   <pilot ship="Admonisher"></pilot>
+   <pilot ship="Vendetta"></pilot>
+   <pilot ship="Pacifier"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Med Force">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+  </pilots>
+ </fleet>
 </Fleets>
