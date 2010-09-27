@@ -398,7 +398,8 @@ Outfit* outfit_getW( const char* name );
 Outfit* outfit_getAll( int *n );
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
-int outfit_isWeapon( const Outfit* o );
+int outfit_isActive( const Outfit* o );
+int outfit_isForward( const Outfit* o );
 int outfit_isBolt( const Outfit* o );
 int outfit_isBeam( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );

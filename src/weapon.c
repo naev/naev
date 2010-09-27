@@ -111,7 +111,7 @@ static int beam_idgen = 0; /**< Beam identifier generator. */
  * Prototypes
  */
 /* static */
-static Weapon* weapon_create( const Outfit* outfit,
+static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target );
 static void weapon_render( Weapon* w, const double dt );
@@ -850,13 +850,14 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, psx,psy;
+   int i, b, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
 
    /* Get the sprite direction to speed up calculations. */
-   if (!outfit_isBeam(w->outfit)) {
+   b = outfit_isBeam(w->outfit);
+   if (!b) {
       gfx = outfit_gfx(w->outfit);
       gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
    }
@@ -871,7 +872,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* Beam weapons have special collisions. */
-      if (outfit_isBeam(w->outfit)) {
+      if (b) {
          /* Check for collision. */
          if (weapon_checkCanHit(w,p) &&
                CollideLineSprite( &w->solid->pos, w->solid->dir,
@@ -1073,6 +1074,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawned the weapon.
+ *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
@@ -1080,7 +1082,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param target Target ID of the shooter.
  *    @return A pointer to the newly created weapon.
  */
-static Weapon* weapon_create( const Outfit* outfit,
+static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot* parent, const unsigned int target )
 {
@@ -1093,15 +1095,15 @@ static Weapon* weapon_create( const Outfit* outfit,
    double acc_max;
 
    /* Create basic features */
-   w = malloc(sizeof(Weapon));
-   memset(w, 0, sizeof(Weapon));
-   w->dam_mod = 1.; /* Default of 100% damage. */
-   w->faction = parent->faction; /* non-changeable */
-   w->parent = parent->id; /* non-changeable */
-   w->target = target; /* non-changeable */
-   w->outfit = outfit; /* non-changeable */
-   w->update = weapon_update;
-   w->status = WEAPON_STATUS_OK;
+   w           = malloc( sizeof(Weapon) );
+   memset( w, 0, sizeof(Weapon) );
+   w->dam_mod  = 1.; /* Default of 100% damage. */
+   w->faction  = parent->faction; /* non-changeable */
+   w->parent   = parent->id; /* non-changeable */
+   w->target   = target; /* non-changeable */
+   w->outfit   = outfit; /* non-changeable */
+   w->update   = weapon_update;
+   w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
 
    switch (outfit->type) {
@@ -1152,7 +1154,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          }
 
          /* Calculate accuarcy. */
-         acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
+         acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
          /* Stat modifiers. */
          if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
@@ -1312,13 +1314,14 @@ static Weapon* weapon_create( const Outfit* outfit,
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawns the weapon.
+ *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
  */
-void weapon_add( const Outfit* outfit, const double dir,
+void weapon_add( const Outfit* outfit, const double T, const double dir,
       const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, unsigned int target )
 {
@@ -1335,7 +1338,7 @@ void weapon_add( const Outfit* outfit, const double dir,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w = weapon_create( outfit, T, dir, pos, vel, parent, target );
 
    /* set the proper layer */
    switch (layer) {
@@ -1413,7 +1416,7 @@ int beam_start( const Outfit* outfit,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w = weapon_create( outfit, 0., dir, pos, vel, parent, target );
    w->ID = ++beam_idgen;
    w->mount = mount;
 
@@ -1476,7 +1479,7 @@ void beam_end( const unsigned int parent, int beam )
    int i;
    WeaponLayer layer;
    Weapon **curLayer;
-   int *mLayer, *nLayer;
+   int *nLayer;
 
    layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
 
@@ -1485,12 +1488,10 @@ void beam_end( const unsigned int parent, int beam )
       case WEAPON_LAYER_BG:
          curLayer = wbackLayer;
          nLayer = &nwbackLayer;
-         mLayer = &mwbacklayer;
          break;
       case WEAPON_LAYER_FG:
          curLayer = wfrontLayer;
          nLayer = &nwfrontLayer;
-         mLayer = &mwfrontLayer;
          break;
 
       default:

@@ -340,7 +340,7 @@ static int outfit_setDefaultSize( Outfit *o )
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
  */
-int outfit_isWeapon( const Outfit* o )
+int outfit_isForward( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_BOLT)      ||
          (o->type==OUTFIT_TYPE_BEAM) );

@@ -48,6 +48,7 @@ naev_SOURCES = \
 	land_outfits.c \
 	land_shipyard.c \
 	map.c \
+	map_overlay.c \
 	md5.c \
 	menu.c \
 	mission.c \
@@ -105,6 +106,9 @@ naev_SOURCES = \
 	perlin.c \
 	physics.c \
 	pilot.c \
+	pilot_cargo.c \
+	pilot_heat.c \
+	pilot_hook.c \
 	pilot_outfit.c \
 	pilot_weapon.c \
 	plasmaf.c \
@@ -167,6 +171,7 @@ naev_SOURCES = \
 	land_shipyard.h \
 	log.h \
 	map.h \
+	map_overlay.h \
 	md5.h \
 	menu.h \
 	mission.h \
@@ -227,6 +232,9 @@ naev_SOURCES = \
 	perlin.h \
 	physics.h \
 	pilot.h \
+	pilot_cargo.h \
+	pilot_heat.h \
+	pilot_hook.h \
 	pilot_outfit.h \
 	pilot_weapon.h \
 	plasmaf.h \

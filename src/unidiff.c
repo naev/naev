@@ -250,8 +250,10 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    memset(&base, 0, sizeof(UniHunk_t));
    base.target.type = HUNK_TARGET_SYSTEM;
    xmlr_attr(node,"name",base.target.u.name);
-   if (base.target.u.name==NULL)
-      WARN("Unidiff '%s' has a system node without a 'name' tag", diff->name);
+   if (base.target.u.name==NULL) {
+      WARN("Unidiff '%s' has a system node without a 'name' tag, not applying.", diff->name);
+      return -1;
+   }
 
    /* Now parse the possible changes. */
    cur = node->xmlChildrenNode;

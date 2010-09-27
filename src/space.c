@@ -859,6 +859,7 @@ void space_init ( const char* sysname )
    background_clear(); /* Get rid of the background. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
+   pilot_heatReset(player.p); /* Resets the player's heat. */
 
    /* Must clear escorts to keep deployment sane. */
    player_clearEscorts();
@@ -1720,17 +1721,23 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
          xmlr_attr( cur, "x", buf );
-         if (buf==NULL)
-            WARN("JumpPoint for system '%s' has position node missing 'x' position.", sys->name);
-         else
+         if (buf==NULL) {
+            WARN("JumpPoint for system '%s' has position node missing 'x' position, using 0.", sys->name);
+            x = 0.;
+         }
+         else {
             x = atof(buf);
-         free(buf);
+            free(buf);
+         }
          xmlr_attr( cur, "y", buf );
-         if (buf==NULL)
-            WARN("JumpPoint for system '%s' has position node missing 'y' position.", sys->name);
-         else
+         if (buf==NULL) {
+            WARN("JumpPoint for system '%s' has position node missing 'y' position, using 0.", sys->name);
+            y = 0.;
+         }
+         else {
             y = atof(buf);
-         free(buf);
+            free(buf);
+         }
 
          /* Set position. */
          vect_cset( &j->pos, x, y );
@@ -1766,12 +1773,14 @@ static void system_parseJumps( const xmlNodePtr parent )
    xmlNodePtr cur, node;
 
    name = xml_nodeProp(parent,"name"); /* already mallocs */
-   for (i=0; i<systems_nstack; i++)
+   sys = NULL;
+   for (i=0; i<systems_nstack; i++) {
       if (strcmp( systems_stack[i].name, name)==0) {
          sys = &systems_stack[i];
          break;
       }
-   if (i==systems_nstack) {
+   }
+   if (sys == NULL) {
       WARN("System '%s' was not found in the stack for some reason",name);
       return;
    }

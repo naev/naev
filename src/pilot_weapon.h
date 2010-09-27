@@ -10,6 +10,9 @@
 #include "pilot.h"
 
 
+/* Freedom. */
+void pilot_weapSetFree( Pilot* p );
+
 /* Shooting. */
 int pilot_shoot( Pilot* p, int level );
 void pilot_shootStop( Pilot* p, int level );

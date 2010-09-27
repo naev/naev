@@ -648,7 +648,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Remove the cargo */
       commodity_Jettison( player.p->id, player.p->commodities[pos].commodity,
             player.p->commodities[pos].quantity );
-      pilot_rmCargo( player.p, player.p->commodities[pos].commodity,
+      pilot_cargoRm( player.p, player.p->commodities[pos].commodity,
             player.p->commodities[pos].quantity );
    }
 

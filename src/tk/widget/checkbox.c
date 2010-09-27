@@ -198,7 +198,8 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
  */
 static void chk_render( Widget* chk, double bx, double by )
 {
-   glColour *c, *dc, *lc;
+   /*glColour *c;*/
+   glColour *dc, *lc;
    double x, y;
 
    x = bx + chk->x;
@@ -208,17 +209,17 @@ static void chk_render( Widget* chk, double bx, double by )
    switch (chk->status) {
       case WIDGET_STATUS_NORMAL:
          lc = &cGrey80;
-         c = &cGrey60;
+         /*c = &cGrey60;*/
          dc = &cGrey40;
          break;
       case WIDGET_STATUS_MOUSEOVER:
          lc = &cWhite;
-         c = &cGrey80;
+         /*c = &cGrey80;*/
          dc = &cGrey60;
          break;
       case WIDGET_STATUS_MOUSEDOWN:
          lc = &cGreen;
-         c = &cGreen;
+         /*c = &cGreen;*/
          dc = &cGrey40;
          break;
       default:

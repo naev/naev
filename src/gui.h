@@ -9,6 +9,7 @@
 
 
 #include "opengl.h"
+#include "pilot.h"
 
 
 /*
@@ -63,6 +64,15 @@ int gui_messageGetVisible (void);
  */
 int gui_radarInit( int circle, int w, int h );
 void gui_radarRender( double x, double y );
+
+
+/*
+ * Render radar.
+ */
+void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay );
+void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay );
+void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay );
+void gui_renderPlayer( double res, int overlay );
 
 
 /*

@@ -28,6 +28,7 @@
 #include "weapon.h"
 #include "console.h"
 #include "conf.h"
+#include "map_overlay.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -65,7 +66,7 @@ const char *keybindNames[] = {
    /* Escorts. */
    "e_targetNext", "e_targetPrev", "e_attack", "e_hold", "e_return", "e_clear",
    /* Space navigation. */
-   "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
+   "autonav", "target_planet", "land", "thyperspace", "starmap", "jump", "overlay",
    /* Communication. */
    "log_up", "log_down", "hail", "autohail",
    /* Misc. */
@@ -124,6 +125,7 @@ const char *keybindDescription[] = {
    "Cycles through hyperspace targets.",
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
+   "Opens the System Overlay map.",
    /* Communication. */
    "Scrolls the log upwards.",
    "Scrolls the log downwards.",
@@ -206,9 +208,9 @@ void input_setDefault (void)
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
    /* Targetting. */
-   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_NONE );
-   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_CTRL );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
+   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
+   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
+   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
    input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
    input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
@@ -243,6 +245,7 @@ void input_setDefault (void)
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, NMOD_NONE );
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
+   input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ALL );
    /* Communication. */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ALL );
@@ -855,6 +858,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!paused) player_abortAutonav(NULL);
          player_jump();
       }
+   } else if (KEY("overlay") && NOHYP() && NODEAD() && INGAME() && !repeat) {
+      ovr_key( value );
 
 
    /*

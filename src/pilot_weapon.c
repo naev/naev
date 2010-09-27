@@ -82,7 +82,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
       else if (type < 0)
          ws->active = 0;
    }
-   else
+   else if (type > 0)
       pilot_weapSetExec( p, id );
 }
 
@@ -342,6 +342,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
          ws->range[i] = 0.;
          ws->speed[i] = 0.;
       }
+      return;
    }
 
    /* Calculate ranges. */
@@ -472,6 +473,18 @@ void pilot_weapSetCleanup( Pilot* p, int id )
 
 
 /**
+ * @brief Frees a pilot's weapon sets.
+ */
+void pilot_weapSetFree( Pilot* p )
+{
+   int i;
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      pilot_weapSetCleanup( p, i );
+}
+
+
+
+/**
  * @brief Lists the items in a pilot weapon set.
  *
  *    @param p Pilot who owns the weapon set.
@@ -556,6 +569,7 @@ void pilot_shootStop( Pilot* p, int level )
    }
 }
 
+
 /**
  * @brief Actually handles the shooting, how often the player.p can shoot and such.
  *
@@ -572,6 +586,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    double q, mint;
    int is_launcher;
    double rate_mod, energy_mod;
+   double energy;
 
    /* Make sure weapon has outfit. */
    if (w->outfit == NULL)
@@ -587,11 +602,11 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* Calculate rate modifier. */
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BOLT:
-         rate_mod   = 2. - p->stats.firerate_forward; /* invert. */
+         rate_mod   = 2. - p->stats.firerate_forward; /* Invert. */
          energy_mod = p->stats.energy_forward;
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
-         rate_mod   = 2. - p->stats.firerate_turret; /* invert. */
+         rate_mod   = 2. - p->stats.firerate_turret; /* Invert. */
          energy_mod = p->stats.energy_turret;
          break;
 
@@ -657,8 +672,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       if (outfit_energy(w->outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->outfit)*energy_mod;
-      weapon_add( w->outfit, p->solid->dir,
+      energy      = outfit_energy(w->outfit)*energy_mod;
+      p->energy  -= energy;
+      pilot_heatAddSlot( w, energy );
+      weapon_add( w->outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
    }
 
@@ -696,8 +713,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       if (outfit_energy(w->u.ammo.outfit)*energy_mod > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->u.ammo.outfit)*energy_mod;
-      weapon_add( w->u.ammo.outfit, p->solid->dir,
+      energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
+      p->energy  -= energy;
+      pilot_heatAddSlot( w, energy );
+      weapon_add( w->u.ammo.outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
 
       w->u.ammo.quantity -= 1; /* we just shot it */

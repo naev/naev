@@ -184,6 +184,8 @@ int pilot_hasDeployed( Pilot *p )
  */
 int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
+   Outfit *o;
+
    /* Set the outfit. */
    s->outfit   = outfit;
    s->quantity = 1; /* Sort of pointless, but hey. */
@@ -209,6 +211,16 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0; /* Just in case. */
    }
+
+   /* Check if active. */
+   o = s->outfit;
+   if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
+      s->active = 1;
+   else
+      s->active = 0;
+
+   /* Update heat. */
+   pilot_heatCalcSlot( s );
 
    return 0;
 }
@@ -513,7 +525,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
 
       }
       else if (outfit_isFighterBay(o)) {
-         if (s->u.ammo.deployed > 0)
+         if ((s!=NULL) && (s->u.ammo.deployed > 0))
             return "Recall the fighters first";
       }
    }
@@ -664,8 +676,6 @@ void pilot_calcStats( Pilot* pilot )
 {
    int i;
    double q;
-   double wrange, wspeed;
-   int nweaps;
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
@@ -710,14 +720,12 @@ void pilot_calcStats( Pilot* pilot )
    memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
 
    /* cargo has to be reset */
-   pilot_calcCargo(pilot);
+   pilot_cargoCalc(pilot);
 
    /*
     * now add outfit changes
     */
    nfirerate_forward = nfirerate_turret = 0;
-   nweaps               = 0;
-   wrange = wspeed      = 0.;
    pilot->mass_outfit   = 0.;
    njammers             = 0;
    ew_ndetect           = 0;
@@ -807,12 +815,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->energy_regen     -= o->u.jam.energy * q;
          njammers                += q;;
       }
-      if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
-            !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
-         nweaps++;
-         wrange += outfit_range(o);
-         wspeed += outfit_speed(o);
-      }
+
       /* Add ammo mass. */
       if (outfit_ammo(o) != NULL) {
          if (slot->u.ammo.outfit != NULL)
@@ -822,16 +825,6 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
-
-   /* Set weapon range and speed */
-   if (nweaps > 0) {
-      pilot->weap_range = wrange / (double)nweaps;
-      pilot->weap_speed = wspeed / (double)nweaps;
-   }
-   else {
-      pilot->weap_range = 0.;
-      pilot->weap_speed = 0.;
-   }
 
    /*
     * Calculate jammers.

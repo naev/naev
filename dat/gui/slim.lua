@@ -31,6 +31,7 @@ function create()
    col_speed2 = colour.new(169/255,177/255,  46/255 )
    col_ammo = colour.new(140/255,94/255,  7/255 )
    col_heat = colour.new(114/255,26/255, 14/255 )
+   col_heat2 = colour.new( 222/255, 51/255, 27/255 )
    col_ready = colour.new(14/255,108/255, 114/255 )
    col_prim = colour.new(71/255,234/255, 252/255 )
    col_sec = colour.new(136/255,179/255, 255/255 )
@@ -342,10 +343,14 @@ end
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
    offsets = { 2, 20, 3, 13, 22, 6 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text
    l_bg = _G["bg_" .. name]
-   l_col = _G["col_" .. name]
+   if name == "heat" and value[1] > 1 then
+      l_col = col_heat2
+   else   
+      l_col = _G["col_" .. name]
+   end      
    gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
    gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
+   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w / 2, bar_weapon_h, l_col)
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
    if value[3] == 2 then
       gfx.renderTex( bg_bar_weapon_sec, x, y )
@@ -456,7 +461,7 @@ function render( dt )
    
    --Weapon bars
    local num = 0
-   for k, weapon in pairs(wset) do
+   for k, weapon in ipairs(wset) do
       if weapon.left ~= nil then
          txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
@@ -469,7 +474,7 @@ function render( dt )
       else
          txt = weapon.name
          col = col_txt_bar
-         values = {0, weapon.cooldown, weapon.level}
+         values = {weapon.temp, weapon.cooldown, weapon.level}
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
       num = num + 1
@@ -733,7 +738,11 @@ function render( dt )
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    if nav_hyp ~= nil then
-      navstring = nav_hyp:name()
+      if nav_hyp:isKnown() then
+         navstring = nav_hyp:name()
+      else
+         navstring = "Unknown"
+      end
       if autonav_hyp ~= nil then
          navstring = navstring ..  " (" .. tostring(autonav_hyp:jumpDist()) .. ")" 
       end

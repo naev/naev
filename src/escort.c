@@ -215,6 +215,10 @@ static int escort_command( Pilot *parent, int cmd, int param )
          case ESCORT_CLEAR:
             buf = "e_clear";
             break;
+
+         default:
+            WARN("Invalid escort command '%d'.", cmd);
+            return -1;
       }
       lua_getglobal(L, buf);
       if (param >= 0)

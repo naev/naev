@@ -85,6 +85,7 @@
 #include "dev.h"
 #include "background.h"
 #include "camera.h"
+#include "map_overlay.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -716,6 +717,7 @@ static void render_all (void)
    pilots_renderOverlay(dt);
    spfx_end();
    gui_render(dt);
+   ovr_render(dt);
    display_fps( real_dt ); /* Exception. */
 }
 

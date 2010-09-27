@@ -490,11 +490,11 @@ void background_free (void)
    }
 
    /* Free the stars. */
-   if (star_vertex) {
+   if (star_vertex != NULL) {
       free(star_vertex);
       star_vertex = NULL;
    }
-   if (star_colour) {
+   if (star_colour != NULL) {
       free(star_colour);
       star_colour = NULL;
    }

@@ -189,11 +189,8 @@ static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
 static glColour *gui_getPlanetColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, glColour *col );
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr );
-static void gui_renderPlanet( int ind );
-static void gui_renderJumpPoint( int ind );
+static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape );
 static glColour* gui_getPilotColour( const Pilot* p );
-static void gui_renderPilot( const Pilot* p );
 static void gui_renderInterference (void);
 static void gui_calcBorders (void);
 /* Lua GUI. */
@@ -387,7 +384,7 @@ static void gui_renderPlanetTarget( double dt )
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-      ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))
+      (player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
       return;
 
    /* Make sure target exists. */
@@ -823,7 +820,11 @@ void gui_render( double dt )
     * Countdown timers.
     */
    blink_pilot    -= dt;
+   if (blink_pilot < 0.)
+      blink_pilot += RADAR_BLINK_PILOT;
    blink_planet   -= dt;
+   if (blink_planet < 0.)
+      blink_planet += RADAR_BLINK_PLANET;
    if (interference_alpha > 0.)
       interference_t += dt;
 
@@ -914,7 +915,6 @@ int gui_radarInit( int circle, int w, int h )
 void gui_radarRender( double x, double y )
 {
    int i, j;
-   GLfloat vertex[2*4], colours[4*4];
    Radar *radar;
 
    /* The global radar. */
@@ -933,18 +933,18 @@ void gui_radarRender( double x, double y )
     */
    for (i=0; i<cur_system->nplanets; i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
-         gui_renderPlanet( i );
+         gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet );
+      gui_renderPlanet( player.p->nav_planet, radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /*
     * Jump points.
     */
    for (i=0; i<cur_system->njumps; i++)
       if (i != player.p->nav_hyperspace)
-         gui_renderJumpPoint( i );
+         gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_hyperspace > -1)
-      gui_renderJumpPoint( player.p->nav_hyperspace );
+      gui_renderJumpPoint( player.p->nav_hyperspace, radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /*
     * weapons
@@ -959,40 +959,17 @@ void gui_radarRender( double x, double y )
       if (pilot_stack[i]->id == player.p->target)
          j = i;
       else
-         gui_renderPilot(pilot_stack[i]);
+         gui_renderPilot( pilot_stack[i], radar->shape, radar->w, radar->h, radar->res, 0 );
    }
    /* render the targetted pilot */
    if (j!=0)
-      gui_renderPilot(pilot_stack[j]);
+      gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /* Intereference. */
    gui_renderInterference();
 
-   /* the + sign in the middle of the radar representing the player */
-   for (i=0; i<4; i++) {
-      colours[4*i + 0] = cRadar_player.r;
-      colours[4*i + 1] = cRadar_player.g;
-      colours[4*i + 2] = cRadar_player.b;
-      colours[4*i + 3] = cRadar_player.a;
-   }
-   gl_vboSubData( gui_vbo, gui_vboColourOffset,
-         sizeof(GLfloat) * 4*4, colours );
-   /* Set up vertex. */
-   vertex[0] = 0.;
-   vertex[1] = -3.;
-   vertex[2] = 0.;
-   vertex[3] = +3.;
-   vertex[4] = -3.;
-   vertex[5] = 0.;
-   vertex[6] = +3.;
-   vertex[7] = 0.;
-   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
-   /* Draw tho VBO. */
-   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-         gui_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 4 );
-   gl_vboDeactivate();
+   /* Render the player cross. */
+   gui_renderPlayer( radar->res, 0 );
 
    gl_matrixPop();
    if (radar->shape==RADAR_RECT)
@@ -1167,13 +1144,12 @@ static glColour* gui_getPilotColour( const Pilot* p )
  *    @param p Pilot to render.
  */
 #define CHECK_PIXEL(x,y)   \
-(gui_radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-   (gui_radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
-static void gui_renderPilot( const Pilot* p )
+(shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+   (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) < rc))
+void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
    int i, curs;
    int x, y, sx, sy;
-   double w, h;
    double px, py;
    glColour *col, ccol;
    GLfloat vertex[2*8], colours[4*8];
@@ -1185,38 +1161,40 @@ static void gui_renderPilot( const Pilot* p )
       return;
 
    /* Get position. */
-   x = (p->solid->pos.x - player.p->solid->pos.x) / gui_radar.res;
-   y = (p->solid->pos.y - player.p->solid->pos.y) / gui_radar.res;
+   if (overlay) {
+      x = (int)(p->solid->pos.x / res);
+      y = (int)(p->solid->pos.y / res);
+   }
+   else {
+      x = (int)((p->solid->pos.x - player.p->solid->pos.x) / res);
+      y = (int)((p->solid->pos.y - player.p->solid->pos.y) / res);
+   }
    /* Get size. */
-   sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui_radar.res;
-   sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui_radar.res;
+   sx = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / res);
+   sy = (int)(PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / res);
    if (sx < 1.)
       sx = 1.;
    if (sy < 1.)
       sy = 1.;
 
    /* Check if pilot in range. */
-   if ( ((gui_radar.shape==RADAR_RECT) &&
-            ((ABS(x) > gui_radar.w/2+sx) || (ABS(y) > gui_radar.h/2.+sy)) ) ||
-         ((gui_radar.shape==RADAR_CIRCLE) &&
-            ((x*x+y*y) > (int)(gui_radar.w*gui_radar.w))) ) {
+   if ( ((shape==RADAR_RECT) &&
+            ((ABS(x) > w/2+sx) || (ABS(y) > h/2.+sy)) ) ||
+         ((shape==RADAR_CIRCLE) &&
+            ((x*x+y*y) > (int)(w*w))) ) {
 
       /* Draw little targetted symbol. */
-      if (p->id == player.p->target)
-         gui_renderRadarOutOfRange( gui_radar.shape, gui_radar.w, gui_radar.h, x, y, &cRadar_tPilot );
+      if (p->id == player.p->target && !overlay)
+         gui_renderRadarOutOfRange( shape, w, h, x, y, &cRadar_tPilot );
       return;
    }
 
-   if (gui_radar.shape==RADAR_RECT) {
-      w = gui_radar.w;
-      h = gui_radar.h;
+   if (shape==RADAR_RECT)
       rc = 0;
-   }
-   else if (gui_radar.shape==RADAR_CIRCLE) {
-      w = gui_radar.w;
-      h = gui_radar.w;
-      rc = (int)(gui_radar.w*gui_radar.w);
-   }
+   else if (shape==RADAR_CIRCLE)
+      rc = (int)(w*w);
+   else
+      return;
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
@@ -1268,23 +1246,71 @@ static void gui_renderPilot( const Pilot* p )
                gui_vboColourOffset, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINES, 0, curs/2 );
       }
-
-      if (blink_pilot < 0.)
-         blink_pilot += RADAR_BLINK_PILOT;
    }
 
    /* Deactivate VBO. */
    gl_vboDeactivate();
 
    /* Draw square. */
-   px = MAX(x-sx,-w);
-   py = MAX(y-sy, -h);
-   col = gui_getPilotColour(p);
+   px     = MAX(x-sx,-w);
+   py     = MAX(y-sy, -h);
+   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot > RADAR_BLINK_PILOT/2.))
+      col = &cRadar_hilight;
+   else
+      col = gui_getPilotColour(p);
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+}
+
+
+/**
+ * @brief Renders the player cross on the radar or whatever.
+ */
+void gui_renderPlayer( double res, int overlay )
+{
+   int i;
+   GLfloat vertex[2*4], colours[4*4];
+   GLfloat vx,vy, vr;
+
+   if (overlay) {
+      vx = player.p->solid->pos.x / res;
+      vy = player.p->solid->pos.y / res;
+      vr = 5.;
+   }
+   else {
+      vx = 0.;
+      vy = 0.;
+      vr = 3.;
+   }
+
+   /* the + sign in the middle of the radar representing the player */
+   for (i=0; i<4; i++) {
+      colours[4*i + 0] = cRadar_player.r;
+      colours[4*i + 1] = cRadar_player.g;
+      colours[4*i + 2] = cRadar_player.b;
+      colours[4*i + 3] = cRadar_player.a;
+   }
+   gl_vboSubData( gui_vbo, gui_vboColourOffset,
+         sizeof(GLfloat) * 4*4, colours );
+   /* Set up vertex. */
+   vertex[0] = vx+0.;
+   vertex[1] = vy-vr;
+   vertex[2] = vx+0.;
+   vertex[3] = vy+vr;
+   vertex[4] = vx-vr;
+   vertex[5] = vy+0.;
+   vertex[6] = vx+vr;
+   vertex[7] = vy+0.;
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+         gui_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 4 );
+   gl_vboDeactivate();
 }
 
 
@@ -1324,7 +1350,7 @@ void gui_forceBlink (void)
 /**
  * @brief Renders the planet blink around a position on the minimap.
  */
-static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
+static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape )
 {
    GLfloat vx, vy;
    GLfloat vertex[8*2], colours[8*4];
@@ -1377,9 +1403,6 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr )
             gui_vboColourOffset, 4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, curs/2 );
    }
-
-   if (blink_planet < 0.)
-      blink_planet += RADAR_BLINK_PLANET;
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
@@ -1454,12 +1477,11 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  *
  * Matrix mode is already displaced to center of the minimap.
  */
-static void gui_renderPlanet( int ind )
+void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
    int i;
-   int cx, cy, x, y, r, rc;
-   int w, h;
-   double res;
+   int x, y;
+   int cx, cy, r, rc;
    GLfloat vx, vy, vr;
    glColour *col;
    Planet *planet;
@@ -1470,35 +1492,37 @@ static void gui_renderPlanet( int ind )
       return;
 
    /* Default values. */
-   res   = gui_radar.res;
    planet = cur_system->planets[ind];
-   w     = gui_radar.w;
-   h     = gui_radar.h;
    r     = (int)(planet->radius*2. / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
-   cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
-   cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
-   if (gui_radar.shape==RADAR_CIRCLE)
-      rc = (int)(gui_radar.w*gui_radar.w);
+   if (overlay) {
+      cx    = (int)(planet->pos.x / res);
+      cy    = (int)(planet->pos.y / res);
+   }
+   else {
+      cx    = (int)((planet->pos.x - player.p->solid->pos.x) / res);
+      cy    = (int)((planet->pos.y - player.p->solid->pos.y) / res);
+   }
+   if (shape==RADAR_CIRCLE)
+      rc = (int)(w*w);
    else
       rc = 0;
 
    /* Check if in range. */
-   if (gui_radar.shape == RADAR_RECT) {
-      x = y = 0;
+   if (shape == RADAR_RECT) {
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if (player.p->nav_planet == ind)
+         if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
          return;
       }
    }
-   else if (gui_radar.shape == RADAR_CIRCLE) {
+   else if (shape == RADAR_CIRCLE) {
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-r)) {
-         if (player.p->nav_planet == ind)
+         if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
       }
@@ -1506,7 +1530,7 @@ static void gui_renderPlanet( int ind )
 
    /* Do the blink. */
    if (ind == player.p->nav_planet)
-      gui_planetBlink( w, h, rc, cx, cy, vr );
+      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
 
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
@@ -1540,6 +1564,10 @@ static void gui_renderPlanet( int ind )
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
+
+   /* Render name. */
+   if (overlay)
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, planet->name );
 }
 
 
@@ -1548,12 +1576,10 @@ static void gui_renderPlanet( int ind )
  *
  *    @param i Jump point to render.
  */
-static void gui_renderJumpPoint( int ind )
+void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
    int i;
    int cx, cy, x, y, r, rc;
-   int w, h;
-   double res;
    GLfloat ca, sa;
    GLfloat vx, vy, vr;
    glColour *col;
@@ -1561,35 +1587,38 @@ static void gui_renderJumpPoint( int ind )
    JumpPoint *jp;
 
    /* Default values. */
-   res   = gui_radar.res;
    jp    = &cur_system->jumps[ind];
-   w     = gui_radar.w;
-   h     = gui_radar.h;
    r     = (int)(jumppoint_gfx->sw / res);
    vr    = MAX( r, 3. ); /* Make sure it's visible. */
-   cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
-   cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
-   if (gui_radar.shape==RADAR_CIRCLE)
-      rc = (int)(gui_radar.w*gui_radar.w);
+   if (overlay) {
+      cx    = (int)(jp->pos.x / res);
+      cy    = (int)(jp->pos.y / res);
+   }
+   else {
+      cx    = (int)((jp->pos.x - player.p->solid->pos.x) / res);
+      cy    = (int)((jp->pos.y - player.p->solid->pos.y) / res);
+   }
+   if (shape==RADAR_CIRCLE)
+      rc = (int)(w*w);
    else
       rc = 0;
 
    /* Check if in range. */
-   if (gui_radar.shape == RADAR_RECT) {
+   if (shape == RADAR_RECT) {
       x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
-         if (player.p->nav_hyperspace == ind)
+         if ((player.p->nav_hyperspace == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_RECT, w, h, cx, cy, &cRadar_tPlanet );
          return;
       }
    }
-   else if (gui_radar.shape == RADAR_CIRCLE) {
+   else if (shape == RADAR_CIRCLE) {
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > pow2(w-r)) {
-         if (player.p->nav_hyperspace == ind)
+         if ((player.p->nav_hyperspace == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
       }
@@ -1597,7 +1626,7 @@ static void gui_renderJumpPoint( int ind )
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
-      gui_planetBlink( w, h, rc, cx, cy, vr );
+      gui_planetBlink( w, h, rc, cx, cy, vr, shape );
       col = &cGreen;
    }
    else
@@ -1635,6 +1664,10 @@ static void gui_renderJumpPoint( int ind )
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
+
+   /* Render name. */
+   if (overlay)
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, jp->target->name );
 }
 #undef CHECK_PIXEL
 
@@ -1968,6 +2001,10 @@ static void gui_createInterference( Radar *radar )
    else if (radar->shape == RADAR_RECT) {
       w = radar->w*2.;
       h = radar->h*2.;
+   }
+   else {
+      WARN("Radar shape is invalid.");
+      return;
    }
 
    for (k=0; k<INTERFERENCE_LAYERS; k++) {

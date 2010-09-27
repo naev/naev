@@ -76,6 +76,9 @@ static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
+static int pilotL_setVisplayer( lua_State *L );
+static int pilotL_setVisible( lua_State *L );
+static int pilotL_setHilight( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_disable( lua_State *L );
@@ -154,6 +157,9 @@ static const luaL_reg pilotL_methods[] = {
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
    { "setInvisible", pilotL_setInvisible },
+   { "setVisplayer", pilotL_setVisplayer },
+   { "setVisible", pilotL_setVisible },
+   { "setHilight", pilotL_setHilight },
    { "disable", pilotL_disable },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
@@ -526,16 +532,16 @@ static int pilotL_addFleet( lua_State *L )
       }
 
       /* Calculate jump chance. */
-      if ((nind > 0) || (njumpind > 0)) {
+      if ((ind != NULL) || (jumpind != NULL)) {
          chance = njumpind;
          chance = chance / (chance + nind);
 
          /* Random jump in. */
-         if ((nind == 0) || (RNGF() <= chance)) {
+         if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL))) {
             jump = jumpind[ RNG_SANE(0,njumpind-1) ];
          }
          /* Random take off. */
-         else {
+         else if (ind !=NULL) {
             planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
             pilot_setFlagRaw( flags, PILOT_TAKEOFF );
             a = RNGF() * 2. * M_PI;
@@ -940,6 +946,7 @@ static int pilotL_nav( lua_State *L )
  *  <li> left: Absolute ammo left or nil if not applicable <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
+ *  <li> temp: Temperature of the weapon. <br />
  * </ul>
  *
  * An example would be:
@@ -1078,6 +1085,11 @@ static int pilotL_weapset( lua_State *L )
          /* Level. */
          lua_pushstring(L,"level");
          lua_pushnumber(L, level+1);
+         lua_rawset(L,-3);
+
+         /* Temperature. */
+         lua_pushstring(L,"temp");
+         lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
          lua_rawset(L,-3);
 
          /* Set table in table. */
@@ -1509,6 +1521,111 @@ static int pilotL_setInvisible( lua_State *L )
 
 
 /**
+ * @brief Marks the pilot as always visible for the player.
+ *
+ * This cancels out ewarfare visibility ranges and only affects the visibility of the player.
+ *
+ * @usage p:setVisplayer( true )
+ *
+ *    @luaparam p Pilot to set player visibility status of.
+ *    @luaparam state State to set player visibility, defaults to true.
+ * @luafunc setVisplayer( p, state )
+ */
+static int pilotL_setVisplayer( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_VISPLAYER);
+   else
+      pilot_rmFlag(p, PILOT_VISPLAYER);
+
+   return 0;
+}
+
+
+/**
+ * @brief Marks the pilot as always visible for other pilots.
+ *
+ * This cancels out ewarfare visibility ranges and affects every pilot.
+ *
+ * @usage p:setVisible( true )
+ *
+ *    @luaparam p Pilot to set visibility status of.
+ *    @luaparam state State to set visibility, defaults to true.
+ * @luafunc setVisible( p, state )
+ */
+static int pilotL_setVisible( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_VISIBLE);
+   else
+      pilot_rmFlag(p, PILOT_VISIBLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes pilot stand out on radar and the likes.
+ *
+ * This makes the pilot stand out in the map overlay and radar to increase noticeability.
+ *
+ * @usage p:setVisplayer( true )
+ *
+ *    @luaparam p Pilot to set hilight status of.
+ *    @luaparam state State to set hilight, defaults to true.
+ * @luafunc setHilight( p, state )
+ */
+static int pilotL_setHilight( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_HILIGHT);
+   else
+      pilot_rmFlag(p, PILOT_HILIGHT);
+
+   return 0;
+}
+
+
+/**
  * @brief Disables a pilot.
  *
  * @usage p:disable()
@@ -1540,7 +1657,7 @@ static int pilotL_disable( lua_State *L )
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @lusparam q Amount of the outfit to add (defaults to 1).
- *    @luareturn True is outfit was added successfully.
+ *    @luareturn The number of outfits added.
  * @luafunc addOutfit( p, outfit, q )
  */
 static int pilotL_addOutfit( lua_State *L )
@@ -1550,7 +1667,7 @@ static int pilotL_addOutfit( lua_State *L )
    const char *outfit;
    Outfit *o;
    int ret;
-   int q;
+   int q, added;
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
@@ -1565,6 +1682,7 @@ static int pilotL_addOutfit( lua_State *L )
       return 0;
 
    /* Add outfit. */
+   added = 0;
    for (i=0; i<p->noutfits; i++) {
       /* Must still have to add outfit. */
       if (q <= 0)
@@ -1580,10 +1698,8 @@ static int pilotL_addOutfit( lua_State *L )
 
       /* Test if can add outfit. */
       ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
-      if (ret) {
-         lua_pushboolean(L, 0);
-         return 1;
-      }
+      if (ret)
+         break;
 
       /* Add outfit - already tested. */
       ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
@@ -1595,13 +1711,14 @@ static int pilotL_addOutfit( lua_State *L )
 
       /* We added an outfit. */
       q--;
+      added++;
    }
 
    /* Update the weapon sets. */
-   if (!ret && p->autoweap)
+   if ((added > 0) && p->autoweap)
       pilot_weaponAuto(p);
 
-   lua_pushboolean(L,!ret);
+   lua_pushnumber(L,added);
    return 1;
 }
 
@@ -2073,7 +2190,7 @@ static int pilotL_cargoAdd( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_addCargo( player.p, cargo, quantity );
+   quantity = pilot_cargoAdd( player.p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }
@@ -2110,7 +2227,7 @@ static int pilotL_cargoRm( lua_State *L )
    }
 
    /* Try to add the cargo. */
-   quantity = pilot_rmCargo( p, cargo, quantity );
+   quantity = pilot_cargoRm( p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }

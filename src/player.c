@@ -304,6 +304,8 @@ static int player_newMake (void)
    h              = 0;
    tl             = 0;
    th             = 0;
+   x              = 0.;
+   y              = 0.;
 
    /* Try to read teh file. */
    buf = ndata_read( START_DATA, &bufsize );
@@ -466,6 +468,8 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
 
    /* Player is trading ship in. */
    if (trade) {
+      if (player.p == NULL)
+         ERR("Player ship isn't valid... This shouldn't happen!");
       old_name = player.p->name;
       player_swapShip( ship_name ); /* Move to the new ship. */
       player_rmShip( old_name );
@@ -508,6 +512,11 @@ static void player_newShipMake( char* name )
          py    = player.p->solid->pos.y;
          dir   = player.p->solid->dir;
       }
+      else {
+         px    = 0.;
+         py    = 0.;
+         dir   = 0.;
+      }
       vect_cset( &vp, px, py );
       vect_cset( &vv, 0., 0. );
 
@@ -525,6 +534,9 @@ static void player_newShipMake( char* name )
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
    }
+
+   if (player.p == NULL)
+      ERR("Something seriously wonky went on, newly created player does not exist, bailing!");
 
    /* Add GUI. */
    player_guiAdd( player_ship->gui );
@@ -554,7 +566,7 @@ void player_swapShip( char* shipname )
          ship->credits = player.p->credits;
 
          /* move cargo over */
-         pilot_moveCargo( ship, player.p );
+         pilot_cargoMove( ship, player.p );
 
          /* Store position. */
          vectcpy( &v, &player.p->solid->pos );
@@ -1310,6 +1322,9 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
  */
 void player_weapSetPress( int id, int type )
 {
+   if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
+      return;
+
    if (player.p != NULL)
       pilot_weapSetPress( player.p, id, type );
 }
@@ -3325,7 +3340,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                }
 
                /* actually add the cargo with id hack */
-               pilot_addCargo( ship, com, quantity );
+               pilot_cargoAdd( ship, com, quantity );
                if (i != 0)
                   ship->commodities[ ship->ncommodities-1 ].id = i;
             }

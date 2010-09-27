@@ -52,9 +52,6 @@
 
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
-static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
-                                               Not guaranteed to be absolutely unique,
-                                               only unique for each pilot. */
 
 
 /* stack of pilot_nstack */
@@ -68,7 +65,6 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
                                          what is in range and what isn't. */
 static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
 static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
-static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
 
 
 
@@ -78,16 +74,22 @@ static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pi
 /* update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
-/* cargo. */
-static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
-static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
-      int quantity, unsigned int id );
 /* clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* misc */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 extern int landtarget; /* From player.c  */
+
+
+/**
+ * @brief Gets the pilot stack.
+ */
+Pilot** pilot_getAll( int *n )
+{
+   *n = pilot_nstack;
+   return pilot_stack;
+}
 
 
 /**
@@ -483,6 +485,11 @@ int pilot_inRange( const Pilot *p, double x, double y )
 int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
    double d, sense;
+
+   /* Special case player or omni-visible. */
+   if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
+         pilot_isFlag(target, PILOT_VISIBLE))
+      return 1;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
@@ -945,89 +952,6 @@ static void pilot_dead( Pilot* p, unsigned int killer )
 
 
 /**
- * @brief Tries to run a pilot hook if he has it.
- *
- *    @param p Pilot to run the hook.
- *    @param hook_type Type of hook to run.
- *    @return The number of hooks run.
- */
-int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
-{
-   int n, i, run, ret;
-   HookParam hparam[3], *hdynparam;
-
-   /* Set up hook parameters. */
-   if (nparam <= 1) {
-      hparam[0].type       = HOOK_PARAM_PILOT;
-      hparam[0].u.lp.pilot = p->id;
-      n  = 1;
-      if (nparam == 1) {
-         memcpy( &hparam[n], param, sizeof(HookParam) );
-         n++;
-      }
-      hparam[n].type    = HOOK_PARAM_SENTINAL;
-      hdynparam         = NULL;
-   }
-   else {
-      hdynparam   = malloc( sizeof(HookParam) * (nparam+2) );
-      hdynparam[0].type       = HOOK_PARAM_PILOT;
-      hdynparam[0].u.lp.pilot = p->id;
-      memcpy( &hdynparam[1], param, sizeof(HookParam)*nparam );
-      hdynparam[nparam].type  = HOOK_PARAM_SENTINAL;
-   }
-
-   /* Run pilot specific hooks. */
-   run = 0;
-   for (i=0; i<p->nhooks; i++) {
-      if (p->hooks[i].type != hook_type)
-         continue;
-
-      ret = hook_runIDparam( p->hooks[i].id, hparam );
-      if (ret)
-         WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
-      else
-         run++;
-   }
-
-   /* Run global hooks. */
-   if (pilot_globalHooks != NULL) {
-      for (i=0; i<array_size(pilot_globalHooks); i++) {
-         if (pilot_globalHooks[i].type != hook_type)
-            continue;
-
-         ret = hook_runIDparam( pilot_globalHooks[i].id, hparam );
-         if (ret)
-            WARN("Pilot '%s' failed to run hook type %d", p->name, hook_type);
-         else
-            run++;
-      }
-   }
-
-   /* Clean up. */
-   if (hdynparam != NULL)
-      free( hdynparam );
-
-   if (run > 0)
-      claim_activateAll(); /* Reset claims. */
-
-   return run;
-}
-
-
-/**
- * @brief Tries to run a pilot hook if he has it.
- *
- *    @param p Pilot to run the hook.
- *    @param hook_type Type of hook to run.
- *    @return The number of hooks run.
- */
-int pilot_runHook( Pilot* p, int hook_type )
-{
-   return pilot_runHookParam( p, hook_type, NULL, 0 );
-}
-
-
-/**
  * @brief Makes the pilot explosion.
  *    @param x X position of the pilot.
  *    @param y Y position of the pilot.
@@ -1192,20 +1116,30 @@ void pilot_update( Pilot* pilot, const double dt )
    double a, px,py, vx,vy;
    char buf[16];
    PilotOutfitSlot *o;
+   double Q;
 
    /*
     * Update timers.
     */
    pilot->ptimer -= dt;
    pilot->tcontrol -= dt;
+   Q = 0.;
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
-      if (o->timer > 0.)
-         o->timer -= dt;
+      if (o->outfit == NULL)
+         continue;
+      if (o->active) {
+         if (o->timer > 0.)
+            o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+         Q  += pilot_heatUpdateSlot( pilot, o, dt );
+      }
    }
+
+   /* Global heat. */
+   pilot_heatUpdateShip( pilot, Q, dt );
 
    /* Update electronic warfare. */
    pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) ) / 10.;
@@ -1622,346 +1556,6 @@ static void pilot_refuel( Pilot *p, double dt )
 
 
 /**
- * @brief Gets how many of the commodity the player.p has.
- *
- * @param commodityname Commodity to check how many the player.p owns.
- * @return The number of commodities owned matching commodityname.
- */
-int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
-{
-   int i;
-
-   for (i=0; i<pilot->ncommodities; i++)
-      if (!pilot->commodities[i].id &&
-            strcmp(commodityname, pilot->commodities[i].commodity->name)==0)
-         return pilot->commodities[i].quantity;
-   return 0;
-}
-
-
-/**
- * @brief Gets the pilot's free cargo space.
- *
- *    @param p Pilot to get the free space of.
- *    @return Free cargo space on pilot.
- */
-int pilot_cargoFree( Pilot* p )
-{
-   return p->cargo_free;
-}
-
-
-/**
- * @brief Moves cargo from one pilot to another.
- *
- * At the end has dest have exactly the same cargo as src and leaves src with none.
- *
- *    @param dest Destination pilot.
- *    @param src Source pilot.
- *    @return 0 on success.
- */
-int pilot_moveCargo( Pilot* dest, Pilot* src )
-{
-   int i;
-
-   /* Nothing to copy, success! */
-   if (src->ncommodities == 0)
-      return 0;
-
-   /* Check if it fits. */
-   if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
-      WARN("Unable to copy cargo over from pilot '%s' to '%s'", src->name, dest->name );
-      return -1;
-   }
-
-   /* Allocate new space. */
-   i = dest->ncommodities;
-   dest->ncommodities += src->ncommodities;
-   dest->commodities   = realloc( dest->commodities,
-         sizeof(PilotCommodity)*dest->ncommodities);
-
-   /* Copy over. */
-   memmove( &dest->commodities[0], &src->commodities[0],
-         sizeof(PilotCommodity) * src->ncommodities);
-
-   /* Clean src. */
-   if (src->commodities != NULL)
-      free(src->commodities);
-   src->ncommodities = 0;
-   src->commodities  = NULL;
-
-   return 0;
-}
-
-
-/**
- * @brief Adds a cargo raw.
- *
- * Does not check if currently exists.
- *
- *    @param pilot Pilot to add cargo to.
- *    @param cargo Cargo to add.
- *    @param quantity Quantity to add.
- *    @param id Mission ID to add (0 in none).
- */
-static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
-      int quantity, unsigned int id )
-{
-   int i, f, q;
-
-   q = quantity;
-
-   /* If not mission cargo check to see if already exists. */
-   if (id == 0) {
-      for (i=0; i<pilot->ncommodities; i++)
-         if (!pilot->commodities[i].id &&
-               (pilot->commodities[i].commodity == cargo)) {
-
-            /* Check to see how much to add. */
-            f = pilot_cargoFree(pilot);
-            if (f < quantity)
-               q = f;
-
-            /* Tweak results. */
-            pilot->commodities[i].quantity += q;
-            pilot->cargo_free              -= q;
-            pilot->mass_cargo              += q;
-            pilot->solid->mass             += q;
-            pilot_updateMass( pilot );
-            if (pilot_isPlayer(pilot))
-               gui_setCargo();
-            return q;
-         }
-   }
-
-   /* Create the memory space. */
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * (pilot->ncommodities+1));
-   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-
-   /* See how much to add. */
-   f = pilot_cargoFree(pilot);
-   if (f < quantity)
-      q = f;
-
-   /* Set parameters. */
-   pilot->commodities[ pilot->ncommodities ].id       = id;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;
-
-   /* Tweak pilot. */
-   pilot->cargo_free    -= q;
-   pilot->mass_cargo    += q;
-   pilot->solid->mass   += q;
-   pilot->ncommodities++;
-   pilot_updateMass( pilot );
-   if (pilot_isPlayer(pilot))
-      gui_setCargo();
-
-   return q;
-}
-
-
-/**
- * @brief Tries to add quantity of cargo to pilot.
- *
- *    @param pilot Pilot to add cargo to.
- *    @param cargo Cargo to add.
- *    @param quantity Quantity to add.
- *    @return Quantity actually added.
- */
-int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
-{
-   return pilot_addCargoRaw( pilot, cargo, quantity, 0 );
-}
-
-
-/**
- * @brief Gets how much cargo ship has on board.
- *
- *    @param pilot Pilot to get used cargo space of.
- *    @return The used cargo space by pilot.
- */
-int pilot_cargoUsed( Pilot* pilot )
-{
-   int i, q;
-
-   q = 0;
-   for (i=0; i<pilot->ncommodities; i++)
-      q += pilot->commodities[i].quantity;
-
-   return q;
-}
-
-
-/**
- * @brief Calculates how much cargo ship has left and such.
- *
- *    @param pilot Pilot to calculate free cargo space of.
- */
-void pilot_calcCargo( Pilot* pilot )
-{
-   pilot->mass_cargo  = pilot_cargoUsed( pilot );
-   pilot->cargo_free  = pilot->ship->cap_cargo - pilot->mass_cargo;
-   pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
-   pilot_updateMass( pilot );
-}
-
-
-/**
- * @brief Adds special mission cargo, can't sell it and such.
- *
- *    @param pilot Pilot to add it to.
- *    @param cargo Commodity to add.
- *    @param quantity Quantity to add.
- *    @return The Mission Cargo ID of created cargo.
- */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
-{
-   int i;
-   unsigned int id, max_id;
-   int q;
-   q = quantity;
-
-   /* Get ID. */
-   id = ++mission_cargo_id;
-
-   /* Check for collisions with pilot and set ID generator to the max. */
-   max_id = 0;
-   for (i=0; i<pilot->ncommodities; i++)
-      if (pilot->commodities[i].id > max_id)
-         max_id = pilot->commodities[i].id;
-   if (max_id >= id) {
-      mission_cargo_id = max_id;
-      id = ++mission_cargo_id;
-   }
-
-   /* Add the cargo. */
-   pilot_addCargoRaw( pilot, cargo, quantity, id );
-
-   return id;
-}
-
-
-/**
- * @brief Removes special mission cargo based on id.
- *
- *    @param pilot Pilot to remove cargo from.
- *    @param cargo_id ID of the cargo to remove.
- *    @param jettison Should jettison the cargo?
- *    @return 0 on success (cargo removed).
- */
-int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
-{
-   int i;
-
-   /* check if pilot has it */
-   for (i=0; i<pilot->ncommodities; i++)
-      if (pilot->commodities[i].id == cargo_id)
-         break;
-   if (i>=pilot->ncommodities)
-      return 1; /* pilot doesn't have it */
-
-   if (jettison)
-      commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
-            pilot->commodities[i].quantity );
-
-   /* remove cargo */
-   pilot->cargo_free    += pilot->commodities[i].quantity;
-   pilot->mass_cargo    -= pilot->commodities[i].quantity;
-   pilot->solid->mass   -= pilot->commodities[i].quantity;
-   pilot->ncommodities--;
-   if (pilot->ncommodities <= 0) {
-      if (pilot->commodities != NULL) {
-         free( pilot->commodities );
-         pilot->commodities   = NULL;
-      }
-      pilot->ncommodities  = 0;
-   }
-   else {
-      memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-            sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-      pilot->commodities = realloc( pilot->commodities,
-            sizeof(PilotCommodity) * pilot->ncommodities );
-   }
-
-   /* Update mass. */
-   pilot_updateMass( pilot );
-   gui_setCargo();
-
-   return 0;
-}
-
-
-/**
- * @brief Tries to get rid of quantity cargo from pilot.  Can remove mission cargo.
- *
- *    @param pilot Pilot to get rid of cargo.
- *    @param cargo Cargo to get rid of.
- *    @param quantity Amount of cargo to get rid of.
- *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
- *    @return Amount of cargo gotten rid of.
- */
-static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup )
-{
-   int i;
-   int q;
-
-   /* check if pilot has it */
-   q = quantity;
-   for (i=0; i<pilot->ncommodities; i++)
-      if (pilot->commodities[i].commodity == cargo) {
-
-         /* Must not be mission cargo unless cleaning up. */
-         if (!cleanup && (pilot->commodities[i].id != 0))
-            continue;
-
-         if (quantity >= pilot->commodities[i].quantity) {
-            q = pilot->commodities[i].quantity;
-
-            /* remove cargo */
-            pilot->ncommodities--;
-            if (pilot->ncommodities <= 0) {
-               if (pilot->commodities != NULL) {
-                  free( pilot->commodities );
-                  pilot->commodities   = NULL;
-               }
-               pilot->ncommodities  = 0;
-            }
-            else {
-               memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-                     sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-               pilot->commodities = realloc( pilot->commodities,
-                     sizeof(PilotCommodity) * pilot->ncommodities );
-            }
-         }
-         else
-            pilot->commodities[i].quantity -= q;
-         pilot->cargo_free    += q;
-         pilot->mass_cargo    -= q;
-         pilot->solid->mass   -= q;
-         pilot_updateMass( pilot );
-         if (pilot_isPlayer(pilot))
-            gui_setCargo();
-         return q;
-      }
-   return 0; /* pilot didn't have it */
-}
-
-/**
- * @brief Tries to get rid of quantity cargo from pilot.
- *
- *    @param pilot Pilot to get rid of cargo.
- *    @param cargo Cargo to get rid of.
- *    @param quantity Amount of cargo to get rid of.
- *    @return Amount of cargo gotten rid of.
- */
-int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
-{
-   return pilot_rmCargoRaw( pilot, cargo, quantity, 0 );
-}
-
-
-/**
  * @brief Calculates the hyperspace delay for a pilot.
  *
  *    @param p Pilot to calculate hyperspace delay for.
@@ -1978,131 +1572,6 @@ double pilot_hyperspaceDelay( Pilot *p )
    val *= p->stats.jump_delay;
 
    return val;
-}
-
-
-/**
- * @brief Adds a hook to the pilot.
- *
- *    @param pilot Pilot to add the hook to.
- *    @param type Type of the hook to add.
- *    @param hook ID of the hook to add.
- */
-void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
-{
-   pilot->nhooks++;
-   pilot->hooks = realloc( pilot->hooks, sizeof(PilotHook) * pilot->nhooks );
-   pilot->hooks[pilot->nhooks-1].type  = type;
-   pilot->hooks[pilot->nhooks-1].id    = hook;
-}
-
-
-/**
- * @brief Adds a pilot global hook.
- */
-void pilots_addGlobalHook( int type, unsigned int hook )
-{
-   PilotHook *phook;
-
-   /* Allocate memory. */
-   if (pilot_globalHooks == NULL) {
-      pilot_globalHooks = array_create( PilotHook );
-   }
-
-   /* Create the new hook. */
-   phook       = &array_grow( &pilot_globalHooks );
-   phook->type = type;
-   phook->id   = hook;
-}
-
-
-/**
- * @brief Removes a pilot global hook.
- */
-void pilots_rmGlobalHook( unsigned int hook )
-{
-   int i;
-
-   /* Must exist pilot hook.s */
-   if (pilot_globalHooks == NULL )
-      return;
-
-   for (i=0; i<array_size(pilot_globalHooks); i++) {
-      if (pilot_globalHooks[i].id == hook) {
-         array_erase( &pilot_globalHooks, &pilot_globalHooks[i], &pilot_globalHooks[i+1] );
-         return;
-      }
-   }
-}
-
-
-/**
- * @brief Removes all the pilot global hooks.
- */
-void pilots_clearGlobalHooks (void)
-{
-   /* Must exist pilot hook.s */
-   if (pilot_globalHooks == NULL )
-      return;
-
-   array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks)-1 ] );
-}
-
-
-/**
- * @brief Removes a hook from all the pilots.
- *
- *    @param hook Hook to remove.
- */
-void pilots_rmHook( unsigned int hook )
-{
-   int i, j;
-   Pilot *p;
-
-   /* Remove global hook first. */
-   pilots_rmGlobalHook( hook );
-
-   for (i=0; i<pilot_nstack; i++) {
-      p = pilot_stack[i];
-
-      /* Must have hooks. */
-      if (p->nhooks <= 0)
-         continue;
-
-      for (j=0; j<p->nhooks; j++) {
-
-         /* Hook not found. */
-         if (p->hooks[j].id != hook)
-            continue;
-
-         p->nhooks--;
-         memmove( &p->hooks[j], &p->hooks[j+1], sizeof(PilotHook) * (p->nhooks-j) );
-         j--; /* Dun like it but we have to keep iterator sane. */
-      }
-   }
-}
-
-
-/**
- * @brief Clears the pilots hooks.
- *
- *    @param p Pilot to clear his hooks.
- */
-void pilot_clearHooks( Pilot *p )
-{
-   int i;
-
-   if (p->nhooks <= 0)
-      return;
-
-   /* Remove the hooks. */
-   for (i=0; i<p->nhooks; i++)
-      hook_rm( p->hooks[i].id );
-
-   /* Clear the hooks. */
-   free(p->hooks);
-   p->hooks  = NULL;
-   p->nhooks = 0;
 }
 
 
@@ -2244,7 +1713,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
    /* set the pilot stats based on his ship and outfits */
-   pilot_calcStats(pilot);
+   pilot_calcStats( pilot );
+
+   /* Calculate the heat. */
+   pilot_heatCalc( pilot );
 
    /* Sanity check. */
 #ifdef DEBUGGING
@@ -2440,7 +1912,7 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy commodities. */
    for (i=0; i<src->ncommodities; i++)
-      pilot_addCargoRaw( dest, src->commodities[i].commodity,
+      pilot_cargoAddRaw( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 
    return dest;
@@ -2462,6 +1934,9 @@ void pilot_free( Pilot* p )
    /* If hostile, must remove counter. */
    pilot_rmHostile(p);
 
+   /* Free weapon sets. */
+   pilot_weapSetFree(p);
+
    /* Free outfits. */
    if (p->outfits != NULL)
       free(p->outfits);
@@ -2474,7 +1949,7 @@ void pilot_free( Pilot* p )
 
    /* Remove commodities. */
    while (p->commodities != NULL)
-      pilot_rmCargoRaw( p, p->commodities[0].commodity,
+      pilot_cargoRmRaw( p, p->commodities[0].commodity,
             p->commodities[0].quantity, 1 );
 
    /* Free name and title. */
@@ -2547,12 +2022,7 @@ void pilots_free (void)
 {
    int i;
 
-   /* Clear global hooks. */
-   if (pilot_globalHooks != NULL) {
-      pilots_clearGlobalHooks();
-      array_free( pilot_globalHooks );
-      pilot_globalHooks = NULL;
-   }
+   pilot_freeGlobalHooks();
 
    /* Free pilots. */
    for (i=0; i < pilot_nstack; i++)

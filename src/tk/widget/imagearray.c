@@ -560,11 +560,10 @@ static void iar_scroll( Widget* iar, int direction )
 static int iar_focusImage( Widget* iar, double bx, double by )
 {
    int i,j;
-   double x,y, w,h, ycurs,xcurs;
+   double y, w,h, ycurs,xcurs;
    int xelem, xspace, yelem;
 
    /* positions */
-   x = bx + iar->x;
    y = by + iar->y;
 
    /* element dimensions */
