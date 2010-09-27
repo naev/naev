@@ -1263,6 +1263,10 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+
+   /* Draw name. */
+   if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
+      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., col, p->name );
 }
 
 
