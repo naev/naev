@@ -190,7 +190,8 @@ function spawnbase()
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
     base:setNodisable(true)
-    base:rename("Sindbad")
+    base:setHilight(true)
+    base:setPlayervis()
     hook.pilot(base, "death", "deathBase")
 end
 
@@ -221,8 +222,9 @@ function deathBase()
     
     hook.rm(controller)
    
-    obstinate:control(true)
+    obstinate:control()
     obstinate:hyperspace()
+    obstinate:setHilight(false)
 
     missionstarted = false
     victorious = true
@@ -238,6 +240,8 @@ function spawnDV()
     obstinate:setFriendly()
     obstinate:setNodisable(true)
     obstinate:control()
+    obstinate:setHilight(true)
+    obstinate:setPlayervis()
     obstinate:rmOutfit("all")
     obstinate:addOutfit("Engine Reroute")
     obstinate:addOutfit("Shield Booster")
@@ -501,6 +505,8 @@ function deathObstinate()
             j:hyperspace()
         end
     end
+
+    base:setHilight(false)
 
     abort()
 end

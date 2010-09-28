@@ -192,6 +192,7 @@ function board()
         player.pay(reward)
         misn.finish(true)
     end
+    pinnacle:setHilight(false)
 end
 
 function land()
@@ -315,6 +316,7 @@ function enter()
         pinnacle:setInvincible(true)
         pinnacle:setFriendly()
         pinnacle:control()
+        pinnacle:setHilight(true)
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")

@@ -220,6 +220,8 @@ function jumpin()
         hook.pilot(diplomat, "jump", "diplomatJump")
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
         diplomat:control()
+        diplomat:setHilight(true)
+        diplomat:setVisplayer()
         dpjump = false
         misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     end
@@ -231,6 +233,7 @@ function jumpin()
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
                 j:control()
+                j:setHilight(true)
                 hook.pilot(j, "death", "escortDeath")
                 controlled = true
             end
@@ -259,6 +262,8 @@ function jumpin()
             end
             dvaerplomat = pilot.add("Dvaered Vigilance", nil, vec2.new(2000, 4000))[1]
             dvaerplomat:control()
+            dvaerplomat:setHilight(true)
+            dvaerplomat:setVisplayer()
             dvaerplomat:disable()
             dvaerplomat:setDir(180)
             dvaerplomat:setFaction("Diplomatic")
@@ -289,6 +294,7 @@ function jumpin()
                 maxkills = #ambush
                 for i, j in ipairs(ambush) do
                     if j:exists() then
+                        j:setHilight(true)
                         hook.pilot(j, "death", "attackerDeath")
                     end
                 end
@@ -306,6 +312,7 @@ function jumpin()
         seiryuu:setInvincible(true)
         if missend then
             seiryuu:disable()
+            seiryuu:setHilight(true)
             hook.pilot(seiryuu, "board", "board")
         end
     else
@@ -492,6 +499,7 @@ function killDiplomats()
             j:rmOutfit("all")
             j:addOutfit("Cheater's Ragnarok Beam", 1)
             j:attack(dvaerplomat)
+            j:setHilight(false)
         end
     end
     diplomat:hookClear()
@@ -527,6 +535,7 @@ end
 function board()
     player.unboard()
     seiryuu:setHealth(100, 100)
+    diplomat:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(25000)
     var.pop("shadowvigil_active")

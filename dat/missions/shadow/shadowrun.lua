@@ -252,6 +252,7 @@ function enter()
 
         seiryuu:disable()
         seiryuu:setInvincible(true)
+        seiryuu:setHilight(true)
         
         hook.pilot(seiryuu, "board", "board")
         hook.pilot(seiryuu, "death", "abort")
@@ -273,6 +274,7 @@ function board()
     player.unboard()
     seiryuu:setHealth(100, 100)
     seiryuu:changeAI("flee")
+    seiryuu:setHilight(false)
 
     if var.peek("shadowrun") then
        var.pop("shadowrun") -- in case it was used

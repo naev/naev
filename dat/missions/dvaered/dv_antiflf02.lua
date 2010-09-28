@@ -147,6 +147,8 @@ function spawnDV()
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
         j:setHostile()
+        j:setHilight(true)
+        j:setPlayervis()
         j:rmOutfit("all")
         j:addOutfit("Plasma Blaster MK2", 2)
         j:addOutfit("Shield Booster", 1)
@@ -179,6 +181,7 @@ function spawnFLF()
     misn.osdActive(4)
     for i, j in ipairs(fleetDV) do
         j:setFriendly()
+        j:setHilight(false)
         j:changeAI("dvaered_nojump")
     end
     angle = rnd.rnd() * 2 * math.pi
@@ -188,9 +191,11 @@ function spawnFLF()
     fleetDV[1]:comm(comm_msg)
     
     for i, j in ipairs(fleetFLF) do
-       hook.pilot(j, "disable", "disableFLF")
-       hook.pilot(j, "death", "deathFLF")
-       hook.pilot(j, "board", "boardFLF")
+        j:setHilight(true)
+        j:setPlayervis()
+        hook.pilot(j, "disable", "disableFLF")
+        hook.pilot(j, "death", "deathFLF")
+        hook.pilot(j, "board", "boardFLF")
     end
 end
 
@@ -228,6 +233,13 @@ function boardFLF()
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             j:changeAI("flee") -- Make them jump out (if they're not dead!)
+        end
+    end
+    for _, j in ipairs(fleetFLF) do
+        if j:exists() then
+            j:setHilight(false)
+            j:setPlayervis(false)
+            j:setNoboard(true)
         end
     end
 end
