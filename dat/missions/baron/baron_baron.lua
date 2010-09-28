@@ -72,6 +72,11 @@ else -- default english
 end
 
 function create ()
+    missys = {system.get("Darkstone")}
+    if not misn.claim(missys) then
+        abort()
+    end
+
     if tk.choice(title[1], text[1], choice1, choice2) == 1 then
         accept()
     else

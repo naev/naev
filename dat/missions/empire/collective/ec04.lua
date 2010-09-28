@@ -39,6 +39,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
 
    misn_target, misn_target_sys = planet.get("Eiroik")
 

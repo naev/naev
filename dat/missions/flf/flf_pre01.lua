@@ -67,6 +67,11 @@ You have failed to reach the FLF's hidden base.]]
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname"))}
+    if not misn.claim(missys) then
+        abort() -- TODO: This claim should be in the event that starts this mission!
+    end 
+    
     misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 
     flfdead = false -- Flag to check if the player destroyed the FLF sentinels

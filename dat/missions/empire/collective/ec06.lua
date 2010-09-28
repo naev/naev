@@ -60,6 +60,11 @@ end
 
 
 function create ()
+    missys = {system.get("C-43"), system.get("C-28")}
+    if not misn.claim(missys) then
+        abort()
+    end
+
    misn.setNPC( "Keer", "keer" )
    misn.setDesc( bar_desc )
 end

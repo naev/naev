@@ -102,6 +102,11 @@ else -- default english
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname")), system.get("Zacron"), system.get("Torg"), system.get("Klantar")}
+    if not misn.claim(missys) then
+        abort()
+    end
+    
     misn.setNPC("FLF petty officer", "flf_officer1")
     misn.setDesc(npc_desc)
 end

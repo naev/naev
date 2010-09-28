@@ -71,6 +71,11 @@ end
 
 
 function create ()
+    missys = {system.get("Rockbed")}
+    if not misn.claim(missys) then
+        abort()
+    end
+ 
    misn.setNPC( "Dimitri?", "none" )
    misn.setDesc( bar_desc )
 end

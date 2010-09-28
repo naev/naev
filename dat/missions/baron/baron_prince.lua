@@ -115,6 +115,7 @@ else -- default english
 end
 
 function create ()
+    -- Note: this mission makes no system claims.
     misn.setNPC(npc_desc, "thief2")
     misn.setDesc(bar_desc)
 end

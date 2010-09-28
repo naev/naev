@@ -97,6 +97,13 @@ else -- default english
 end
 
 function create()
+    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
+    misssys["__save"] = true
+    
+    if not misn.claim(missys) then
+        abort()
+    end
+    
     if first then
         var.push("shadowvigil_first", false)
         tk.msg(title[1], string.format(text[1], player.name()))
@@ -120,13 +127,6 @@ function create()
 end
 
 function accept()
-    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
-    misssys["__save"] = true
-    
-    if not misn.claim(missys) then
-        abort()
-    end
-    
     alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
     alive["__save"] = true
     stage = 1 -- Keeps track of the mission stage

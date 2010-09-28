@@ -86,6 +86,11 @@ else -- default english
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname"))}
+    if not misn.claim(missys) then
+        abort()
+    end 
+
     misn.setNPC("Dvaered liaison", "dv_liason")
     misn.setDesc(npc_desc)
 end
