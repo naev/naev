@@ -137,7 +137,7 @@ Mission* missions_genList( int *n, int faction,
       const char* planet, const char* sysname, int loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( int loc, int faction, const char* planet, const char* sysname );
-int mission_start( const char *name );
+unsigned int mission_start( const char *name );
 
 /*
  * misc

@@ -171,12 +171,26 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 static int evt_misnStart( lua_State *L )
 {
    const char *str;
+   unsigned int id;
+   int i;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
+   id  = mission_start( str );
+   if (id==0) {
       /* Reset the hook. */
       nlua_hookTarget( NULL, cur_event );
       NLUA_ERROR(L,"Failed to start mission.");
+      return 0;
+   }
+
+   /* Pass on claims if necessary. */
+   if (cur_event->claims != NULL) {
+      for (i=0; i<MISSION_MAX; i++) {
+         if (player_missions[i].id == id) {
+            player_missions[i].claims  = cur_event->claims;
+            cur_event->claims          = NULL;
+         }
+      }
    }
 
    /* Has to reset the hook target since mission overrides. */

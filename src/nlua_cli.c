@@ -65,7 +65,7 @@ static int cli_missionStart( lua_State *L )
    const char *str;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
+   if (mission_start( str )==0) {
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }
@@ -86,7 +86,7 @@ static int cli_missionTest( lua_State *L )
    const char *str;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
+   if (mission_start( str )==0) {
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }
