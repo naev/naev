@@ -26,6 +26,7 @@
 #include "nlua_pilot.h"
 #include "nlua_hook.h"
 #include "mission.h"
+#include "space.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */
@@ -93,10 +94,10 @@ static Hook* hook_get( unsigned int id );
 static unsigned int hook_genID (void);
 static Hook* hook_new( HookType_t type, const char *stack );
 static int hook_parseParam( lua_State *L, HookParam *param );
-static int hook_runMisn( Hook *hook, HookParam *param );
-static int hook_runEvent( Hook *hook, HookParam *param );
+static int hook_runMisn( Hook *hook, HookParam *param, int claims );
+static int hook_runEvent( Hook *hook, HookParam *param, int claims );
 static int hook_runFunc( Hook *hook );
-static int hook_run( Hook *hook, HookParam *param );
+static int hook_run( Hook *hook, HookParam *param, int claims );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
 static int hook_parse( xmlNodePtr base );
@@ -147,7 +148,7 @@ static int hook_parseParam( lua_State *L, HookParam *param )
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_runMisn( Hook *hook, HookParam *param )
+static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 {
    int i;
    unsigned int id;
@@ -176,6 +177,10 @@ static int hook_runMisn( Hook *hook, HookParam *param )
    }
    misn = &player_missions[i];
 
+   /* Make sure it's claimed. */
+   if ((claims >= 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
+      return 0;
+
    /* Set up hook parameters. */
    L = misn_runStart( misn, hook->u.misn.func );
    n = hook_parseParam( L, param );
@@ -201,12 +206,16 @@ static int hook_runMisn( Hook *hook, HookParam *param )
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_runEvent( Hook *hook, HookParam *param )
+static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 {
    int ret;
    unsigned int id;
    lua_State *L;
    int n;
+
+   /* Must match claims. */
+   if ((claims >= 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
+      return 0;
 
    /* Simplicity. */
    id = hook->id;
@@ -262,17 +271,17 @@ static int hook_runFunc( Hook *hook )
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_run( Hook *hook, HookParam *param )
+static int hook_run( Hook *hook, HookParam *param, int claims )
 {
    if (hook->delete)
       return 0; /* hook should be deleted not run */
 
    switch (hook->type) {
       case HOOK_TYPE_MISN:
-         return hook_runMisn(hook, param);
+         return hook_runMisn(hook, param, claims);
 
       case HOOK_TYPE_EVENT:
-         return hook_runEvent(hook, param);
+         return hook_runEvent(hook, param, claims);
 
       case HOOK_TYPE_FUNC:
          return hook_runFunc(hook);
@@ -446,22 +455,25 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
  */
 void hooks_update( double dt )
 {
-   int i;
+   int i, j;
    Hook *h;
    hook_runningstack = 1; /* running hooks */
-   for (i=0; i<hook_nstack; i++) {
-      /* Find valid timer hooks. */
-      h = &hook_stack[i];
-      if (h->is_timer == 0)
-         continue;
+   for (j=1; j>=0; j--) {
+      for (i=0; i<hook_nstack; i++) {
+         /* Find valid timer hooks. */
+         h = &hook_stack[i];
+         if (h->is_timer == 0)
+            continue;
 
-      /* Decrement timer and check to see if should run. */
-      h->ms -= dt;
-      if (h->ms > 0.)
-         continue;
+         /* Decrement timer and check to see if should run. */
+         if (j==0)
+            h->ms -= dt;
+         if (h->ms > 0.)
+            continue;
 
-      /* Run the timer hook. */
-      hook_run( h, 0 );
+         /* Run the timer hook. */
+         hook_run( h, 0, j );
+      }
    }
    hook_runningstack = 0; /* not running hooks anymore */
 
@@ -642,7 +654,7 @@ int hook_hasEventParent( unsigned int parent )
  */
 int hooks_runParam( const char* stack, HookParam *param )
 {
-   int i;
+   int i, j;
    int run;
 
    /* Don't update if player is dead. */
@@ -651,10 +663,12 @@ int hooks_runParam( const char* stack, HookParam *param )
 
    run = 0;
    hook_runningstack = 1; /* running hooks */
-   for (i=0; i<hook_nstack; i++) {
-      if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
-         hook_run( &hook_stack[i], param );
-         run++;
+   for (j=1; j>=0; j--) {
+      for (i=0; i<hook_nstack; i++) {
+         if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
+            hook_run( &hook_stack[i], param, j );
+            run++;
+         }
       }
    }
    hook_runningstack = 0; /* not running hooks anymore */
@@ -719,7 +733,7 @@ int hook_runIDparam( unsigned int id, HookParam *param )
       WARN("Attempting to run hook of id '%d' which is not in the stack", id);
       return -1;
    }
-   hook_run( h, param );
+   hook_run( h, param, -1 );
 
    return 0;
 }

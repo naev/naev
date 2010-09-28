@@ -695,6 +695,17 @@ void event_activateClaims (void)
 
 
 /**
+ * @brief Tests to see if an event has claimed a system.
+ */
+int event_testClaims( unsigned int eventid, int sys )
+{
+   Event_t *ev;
+   ev = event_get( eventid );
+   return claim_testSys( ev->claims, sys );
+}
+
+
+/**
  * @brief Checks the event sanity and cleans up after them.
  */
 void event_checkSanity (void)
