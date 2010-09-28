@@ -67,7 +67,7 @@ static int mission_nstack = 0; /**< Mssions in stack. */
 /* static */
 /* Generation. */
 static unsigned int mission_genID (void);
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create );
+static unsigned int mission_init( Mission* mission, MissionData* misn, int genid, int create );
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
@@ -141,9 +141,9 @@ MissionData* mission_get( int id )
  *    @param misn Data to use.
  *    @param genid 1 if should generate id, 0 otherwise.
  *    @param create 1 if should run create function, 0 otherwise.
- *    @return ID of the newly created mission.
+ *    @return ID of the newly created mission or 0 on failure (with genid == 0, 1 becomes failure).
  */
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create )
+static unsigned int mission_init( Mission* mission, MissionData* misn, int genid, int create )
 {
    char *buf;
    uint32_t bufsize;
@@ -163,7 +163,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    mission->L = nlua_newState();
    if (mission->L == NULL) {
       WARN("Unable to create a new lua state.");
-      return -1;
+      return (genid) ? 1 : 0;
    }
    nlua_loadBasic( mission->L ); /* pairs and such */
    misn_loadLibs( mission->L ); /* load our custom libraries */
@@ -172,7 +172,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    buf = ndata_read( misn->lua, &bufsize );
    if (buf == NULL) {
       WARN("Mission '%s' Lua script not found.", misn->lua );
-      return -1;
+      return (genid) ? 1 : 0;
    }
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
       WARN("Error loading mission file: %s\n"
@@ -180,7 +180,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
           "Most likely Lua file has improper syntax, please check",
             misn->lua, lua_tostring(mission->L,-1));
       free(buf);
-      return -1;
+      return (genid) ? 1 : 0;
    }
    free(buf);
 
@@ -189,7 +189,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       /* Failed to create. */
       if (misn_run( mission, "create")) {
          mission_cleanup(mission);
-         return -1;
+         return (genid) ? 1 : 0;
       }
    }
 
@@ -327,23 +327,24 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
  * active missions.
  *
  *    @param name Name of the mission to start.
- *    @return 0 on success.
+ *    @return The id of the created mission or 0 on error.
  */
-int mission_start( const char *name )
+unsigned int mission_start( const char *name )
 {
    Mission mission;
    MissionData *mdat;
+   unsigned int ret;
 
    /* Try to get the mission. */
    mdat = mission_get( mission_getID(name) );
    if (mdat == NULL)
-      return -1;
+      return 0;
 
    /* Try to run the mission. */
-   mission_init( &mission, mdat, 1, 1 );
+   ret = mission_init( &mission, mdat, 1, 1 );
    mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
-   return 0;
+   return ret;
 }
 
 
@@ -680,7 +681,7 @@ Mission* missions_genList( int *n, int faction,
                   tmp      = realloc( tmp, sizeof(Mission) * alloced );
                }
                /* Initialize the mission. */
-               if (mission_init( &tmp[m-1], misn, 1, 1 ) < 0)
+               if (mission_init( &tmp[m-1], misn, 1, 1 ) == 0)
                   m--;
             }
       }
@@ -1049,7 +1050,11 @@ static int missions_parseActive( xmlNodePtr parent )
             continue;
          }
          else {
-            mission_init( misn, data, 0, 0 );
+            if (mission_init( misn, data, 0, 0 )) { /* Note genid==0 so 1 is error. */
+               WARN("Mission '%s' from savegame failed to load properly - ignoring.", buf);
+               free(buf);
+               continue;
+            }
             misn->accepted = 1;
          }
          free(buf);
