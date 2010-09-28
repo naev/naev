@@ -72,6 +72,7 @@ const char *event_dataName( int dataid );
  * Claims.
  */
 void event_activateClaims (void);
+int event_testClaims( unsigned int eventid, int sys );
 
 
 #endif /* EVENT_H */
