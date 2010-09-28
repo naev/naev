@@ -436,7 +436,7 @@
    <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
- <fleet name="Empire Empire Peacemaker">
+ <fleet name="Empire Peacemaker">
   <ai>empire</ai>
   <faction>Empire</faction>
   <flags>

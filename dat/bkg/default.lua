@@ -1,24 +1,12 @@
 include("scripts/prng.lua")
 
 nebulae = {
-   "nebula01.png",
    "nebula02.png",
-   "nebula03.png",
    "nebula04.png",
-   "nebula05.png",
-   "nebula06.png",
-   "nebula07.png",
-   "nebula08.png",
-   "nebula09.png",
    "nebula10.png",
-   "nebula11.png",
    "nebula12.png",
-   "nebula13.png",
-   "nebula14.png",
-   "nebula15.png",
    "nebula16.png",
    "nebula17.png",
-   "nebula18.png",
    "nebula19.png",
    "nebula20.png",
    "nebula21.png",
@@ -34,7 +22,6 @@ nebulae = {
    "nebula31.png",
    "nebula32.png",
    "nebula33.png",
-   "nebula34.png"
 }
 
 
