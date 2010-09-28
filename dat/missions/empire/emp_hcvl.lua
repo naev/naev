@@ -1,4 +1,4 @@
---[[
+﻿--[[
 
    Empire Heavy Combat Vessel License Mision
 
@@ -42,6 +42,7 @@ include("dat/missions/empire/common.lua")
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Official", emp_getOfficialRandomPortrait() )
    misn.setDesc( bar_desc )
 end

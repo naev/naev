@@ -196,6 +196,7 @@ end
 
 -- Create the mission
 function create()
+   -- Note: this mission does not make any system claims.
    landed, landed_sys = planet.get() -- Get landed planet
 
    -- Only 50% chance of appearing on Dvaered systems

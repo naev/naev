@@ -1,4 +1,4 @@
---[[
+﻿--[[
 
    MISSION: Defend the System 2
    DESCRIPTION: A mission to defend the system against swarm of pirate ships.
@@ -96,6 +96,12 @@ function create()
            this_system:hasPresence( "FLF") ) 
          then misn.finish(false) 
       end
+
+    missys = {this_system}
+    if not misn.claim(missys) then
+        misn.finish(false)
+    end
+ 
       planet_name = planet.name( this_planet)
       system_name = this_system:name()
       if tk.yesno( title[1], text[1] ) then

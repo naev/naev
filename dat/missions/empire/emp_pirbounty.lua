@@ -44,6 +44,7 @@ include("scripts/pilot/pirate.lua")
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    -- Create the target pirate
    pir_name, pir_ship, pir_outfits = pir_generate()
 

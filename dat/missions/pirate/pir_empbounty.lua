@@ -45,6 +45,7 @@ include("scripts/jumpdist.lua")
 
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    -- Create the target pirate
    emp_name, emp_ship, emp_outfits = emp_generate()
 

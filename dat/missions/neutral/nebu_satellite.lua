@@ -40,6 +40,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any mission claims.
    -- Set up mission variables
    misn_stage = 0
    homeworld, homeworld_sys = planet.get( misn.factions() )

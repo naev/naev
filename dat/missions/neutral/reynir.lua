@@ -1,4 +1,4 @@
---[[
+﻿--[[
 
    MISSION: Hot dogs from space
    DESCRIPTION: An old man who owns a hot dog factory wants to go to space
@@ -60,6 +60,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    misn.setNPC( "Reynir", "none" )
    misn.setDesc( bar_desc )
 

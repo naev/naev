@@ -37,6 +37,7 @@ else -- Default to English
 end
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
