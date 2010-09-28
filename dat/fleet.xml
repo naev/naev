@@ -4,21 +4,21 @@
   <ai>trader</ai>
   <faction>Independent</faction>
   <pilots>
-   <pilot ship="Schroedinger"></pilot>
+   <pilot name="Independent Schroedinger" ship="Schroedinger"></pilot>
   </pilots>
  </fleet>
  <fleet name="Independent Hyena">
   <ai>trader</ai>
   <faction>Independent</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Independent Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Independent Gawain">
   <ai>trader</ai>
   <faction>Independent</faction>
   <pilots>
-   <pilot ship="Gawain"></pilot>
+   <pilot name="Independent Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="Goddard Goddard">
@@ -28,7 +28,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot ship="Goddard"></pilot>
+   <pilot name="Goddard Goddard" ship="Goddard"></pilot>
   </pilots>
  </fleet>
  <fleet name="Goddard Lancelot">
@@ -38,98 +38,98 @@
    <guard />
   </flags>
   <pilots>
-   <pilot ship="Lancelot"></pilot>
+   <pilot name="Goddard Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Schroedinger">
   <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
-   <pilot ship="Schroedinger"></pilot>
+   <pilot name="Civilian Schroedinger" ship="Schroedinger"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Hyena">
   <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Civilian Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Llama">
   <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
-   <pilot ship="Llama"></pilot>
+   <pilot name="Civilian Llama" ship="Llama"></pilot>
   </pilots>
  </fleet>
  <fleet name="Civilian Gawain">
   <ai>civilian</ai>
   <faction>Civilian</faction>
   <pilots>
-   <pilot ship="Gawain"></pilot>
+   <pilot name="Civilian Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Llama"></pilot>
+   <pilot name="Trader Llama" ship="Llama"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Koala">
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Koala"></pilot>
+   <pilot name="Trader Koala" ship="Koala"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Rhino">
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Rhino"></pilot>
+   <pilot name="Trader Rhino" ship="Rhino"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Mule">
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Mule"></pilot>
+   <pilot name="Trader Mule" ship="Mule"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Gawain">
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Gawain"></pilot>
+   <pilot name="Trader Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Quicksilver">
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Quicksilver"></pilot>
+   <pilot name="Trader Quicksilver" ship="Quicksilver"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Kahan">
   <ai>proteron</ai>
   <faction>Proteron</faction>
   <pilots>
-   <pilot ship="Proteron Kahan"></pilot>
+   <pilot name="Proteron Kahan" ship="Proteron Kahan"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Archimedes">
   <ai>proteron</ai>
   <faction>Proteron</faction>
   <pilots>
-   <pilot ship="Proteron Archimedes"></pilot>
+   <pilot name="Proteron Archimedes" ship="Proteron Archimedes"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Derivative">
   <ai>proteron</ai>
   <faction>Proteron</faction>
   <pilots>
-   <pilot ship="Proteron Derivative"></pilot>
+   <pilot name="Proteron Derivative" ship="Proteron Derivative"></pilot>
   </pilots>
  </fleet>
  <fleet name="Frontier Lancelot">
@@ -139,152 +139,152 @@
    <guard />
   </flags>
   <pilots>
-   <pilot ship="Lancelot"></pilot>
+   <pilot name="Frontier Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Pacifier">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Pacifier"></pilot>
+   <pilot name="FLF Pacifier" ship="Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Vendetta">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Lancelot">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Lancelot"></pilot>
+   <pilot name="FLF Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Vendetta Trio">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Vendetta Sextet">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Ancestor Trio">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Ancestor"></pilot>
-   <pilot ship="Ancestor"></pilot>
-   <pilot ship="Ancestor"></pilot>
+   <pilot name="FLF Ancestor" ship="Ancestor"></pilot>
+   <pilot name="FLF Ancestor" ship="Ancestor"></pilot>
+   <pilot name="FLF Ancestor" ship="Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Hyena">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Shark">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Shark" ship="Pirate Shark"></pilot>
+   <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Admonisher">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Admonisher" ship="Pirate Admonisher"></pilot>
+   <pilot name="Pirate Admonisher" ship="Pirate Admonisher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Vendetta">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Vendetta" ship="Pirate Vendetta"></pilot>
+   <pilot name="Pirate Vendetta" ship="Pirate Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Ancestor">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Ancestor" ship="Pirate Ancestor"></pilot>
+   <pilot name="Pirate Ancestor" ship="Pirate Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Rhino">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Rhino" ship="Pirate Rhino"></pilot>
+   <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Kestrel">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Kestrel" ship="Pirate Kestrel"></pilot>
+   <pilot name="Pirate Kestrel" ship="Pirate Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Drone">
   <ai>collective</ai>
   <faction>Collective</faction>
   <pilots>
-   <pilot ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Lge Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
   <pilots>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Sml Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
   <pilots>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
-   <pilot ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Drone" ship="Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Fidelity">
@@ -294,7 +294,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Preacher">
@@ -304,7 +304,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Preacher" ship="Sirius Preacher"></pilot>
+   <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Divinity">
@@ -314,7 +314,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Divinity" ship="Sirius Divinity"></pilot>
+   <pilot name="Sirius Divinity" ship="Sirius Divinity"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Dogma">
@@ -324,7 +324,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Dogma" ship="Sirius Dogma"></pilot>
+   <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Vendetta">
@@ -334,7 +334,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Ancestor">
@@ -344,7 +344,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
   </pilots>
  </fleet>
   <fleet name="Dvaered Vigilance">
@@ -354,7 +354,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
   </fleet>
  <fleet name="Dvaered Goddard">
@@ -364,7 +364,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Goddard" ship="Dvaered Goddard"></pilot>
+   <pilot name="Dvaered Goddard" ship="Dvaered Goddard"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Small Patrol">
@@ -374,10 +374,10 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Big Patrol">
@@ -387,11 +387,11 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Strike Force">
@@ -401,9 +401,9 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Shark">
@@ -413,7 +413,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Shark" ship="Empire Shark"></pilot>
+   <pilot name="Empire Shark" ship="Empire Shark"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lancelot">
@@ -423,7 +423,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Hawking">
@@ -433,17 +433,17 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Hawking" ship="Empire Hawking"></pilot>
+   <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
- <fleet name="Empire Peacemaker">
+ <fleet name="Empire Empire Peacemaker">
   <ai>empire</ai>
   <faction>Empire</faction>
   <flags>
    <guard />
   </flags>
   <pilots>
-   <pilot name="Peacemaker" ship="Empire Peacemaker"></pilot>
+   <pilot name="Empire Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Sml Defense">
@@ -453,55 +453,55 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" ship="Empire Peacemaker"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
+   <pilot name="Empire Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lge Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
   <pilots>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" ship="Empire Hawking"></pilot>
-   <pilot name="Peacemaker" ship="Empire Peacemaker"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
+   <pilot name="Empire Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Med Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
   <pilots>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
-   <pilot name="Hawking" ship="Empire Hawking"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Sml Attack">
   <ai>empire</ai>
   <faction>Empire</faction>
   <pilots>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Pacifier">
@@ -521,7 +521,7 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Trinity">
@@ -542,84 +542,84 @@
   <ai>generic</ai>
   <faction>Mercenary</faction>
   <pilots>
-   <pilot ship="Pacifier"></pilot>
+   <pilot name="Mercenary Pacifier" ship="Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Ancestor">
   <ai>generic</ai>
   <faction>Mercenary</faction>
   <pilots>
-   <pilot ship="Ancestor"></pilot>
+   <pilot name="Mercenary Ancestor" ship="Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Vendetta">
   <ai>generic</ai>
   <faction>Mercenary</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Wing 1">
   <ai>generic</ai>
   <faction>Mercenary</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
+   <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Wing 2">
   <ai>generic</ai>
   <faction>Mercenary</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
+   <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Wing 3">
   <ai>generic</ai>
   <faction>Mercenary</faction>
   <pilots>
-   <pilot ship="Llama"></pilot>
-   <pilot ship="Llama"></pilot>
-   <pilot ship="Llama"></pilot>
+   <pilot name="Mercenary Llama" ship="Llama"></pilot>
+   <pilot name="Mercenary Llama" ship="Llama"></pilot>
+   <pilot name="Mercenary Llama" ship="Llama"></pilot>
   </pilots>
  </fleet>
  <fleet name="DTS Raiders">
   <ai>pirate</ai>
   <faction>Raider</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
+   <pilot name="Raider Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="DTS Defense Fleet">
   <ai>empire</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Mule"></pilot>
-   <pilot ship="Mule"></pilot>
-   <pilot ship="Lancelot"></pilot>
-   <pilot ship="Lancelot"></pilot>
-   <pilot ship="Ancestor"></pilot>
-   <pilot ship="Gawain"></pilot>
-   <pilot ship="Gawain"></pilot>
-   <pilot ship="Gawain"></pilot>
+   <pilot name="Trader Mule" ship="Mule"></pilot>
+   <pilot name="Trader Mule" ship="Mule"></pilot>
+   <pilot name="Trader Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Trader Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Trader Ancestor" ship="Ancestor"></pilot>
+   <pilot name="Trader Gawain" ship="Gawain"></pilot>
+   <pilot name="Trader Gawain" ship="Gawain"></pilot>
+   <pilot name="Trader Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Base">
@@ -629,45 +629,45 @@
    <guard />
   </flags>
   <pilots>
-   <pilot ship="Base"></pilot>
+   <pilot name="Sindbad" ship="Base"></pilot>
   </pilots>
  </fleet>
  <fleet name="Vendetta Quartet">
   <ai>flf</ai>
   <faction>Independent</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="crimelord Thugs">
   <ai>baddie</ai>
   <faction>Thugs</faction>
   <pilots>
-   <pilot ship="Admonisher"></pilot>
-   <pilot ship="Admonisher"></pilot>
-   <pilot ship="Admonisher"></pilot>
-   <pilot ship="Admonisher"></pilot>
+   <pilot name="Thug" ship="Admonisher"></pilot>
+   <pilot name="Thug" ship="Admonisher"></pilot>
+   <pilot name="Thug" ship="Admonisher"></pilot>
+   <pilot name="Thug" ship="Admonisher"></pilot>
   </pilots>
  </fleet>
  <fleet name="crimelord Associate">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
-   <pilot ship="Pacifier"></pilot>
-   <pilot ship="Lancelot"></pilot>
-   <pilot ship="Lancelot"></pilot>
-   <pilot ship="Admonisher"></pilot>
-   <pilot ship="Hawking"></pilot>
+   <pilot name="Associate Pacifier" ship="Pacifier"></pilot>
+   <pilot name="Associate Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Associate Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Associate Admonisher" ship="Admonisher"></pilot>
+   <pilot name="Associate Hawking" ship="Hawking"></pilot>
   </pilots>
  </fleet>
  <fleet name="crimelord Kestrel">
   <ai>dvaered</ai>
   <faction>Associates</faction>
   <pilots>
-   <pilot ship="Kestrel"></pilot>
+   <pilot name="Associate Kestrel" ship="Kestrel"></pilot>
   </pilots>
  </fleet>
  <fleet name="Four Winds Vendetta">
@@ -723,39 +723,39 @@
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
-   <pilot ship="Llama"></pilot>
-   <pilot ship="Llama"></pilot>
-   <pilot ship="Koala"></pilot>
+   <pilot name="Trader Llama" ship="Llama"></pilot>
+   <pilot name="Trader Llama" ship="Llama"></pilot>
+   <pilot name="Trader Koala" ship="Koala"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Hyena Pack">
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
+   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
+   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
+   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
+   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Sml Force">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Admonisher"></pilot>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="FLF Hyena" ship="Hyena"></pilot>
+   <pilot name="FLF Admonisher" ship="Admonisher"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="FLF Med Force">
   <ai>flf</ai>
   <faction>FLF</faction>
   <pilots>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Hyena"></pilot>
-   <pilot ship="Admonisher"></pilot>
-   <pilot ship="Vendetta"></pilot>
-   <pilot ship="Pacifier"></pilot>
+   <pilot name="FLF Hyena" ship="Hyena"></pilot>
+   <pilot name="FLF Hyena" ship="Hyena"></pilot>
+   <pilot name="FLF Admonisher" ship="Admonisher"></pilot>
+   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
+   <pilot name="FLF Pacifier" ship="Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Med Force">
@@ -765,12 +765,12 @@
    <guard />
   </flags>
   <pilots>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Vigilance" ship="Dvaered Vigilance"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
 </Fleets>
