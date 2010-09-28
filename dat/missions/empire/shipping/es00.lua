@@ -114,7 +114,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
    if misn_stage == 1 and sys == destsys then
 
       -- Get a position near the player

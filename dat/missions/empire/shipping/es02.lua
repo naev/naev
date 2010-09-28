@@ -118,7 +118,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 0 and sys == destsys then
 

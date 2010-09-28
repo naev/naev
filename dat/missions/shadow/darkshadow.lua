@@ -37,20 +37,22 @@ else -- default english
     text[6] = [[    You meet the barman's stare. He hesitates for a moment, then speaks up.
     "Hey man. Are you %s by any chance?"
     You tell him that yes, that's you, and ask how he knows your name.
-    "Well, your description was given to me by an old friend of mine. His name is Erkil. Do you know him?"
-    You tell him that you don't know anyone by the name of Erkil, but you do know a man named Jorek. The barman visibly relaxes when he hears that name.
-    "Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though any eavedroppers would have to be practically on top of you, given the bar's noise. "I have a message for you. Go to the %s system and land on %s. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."
+    "Well, your description was given to me by an old friend of mine. His name is Jarek. Do you know him?"
+    You tell him that you don't know anyone by the name of Jarek, but you do know a man named Jorek. The barman visibly relaxes when he hears that name.
+    "Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though the bar's music makes it difficult to overhear anyone who isn't standing right next to you. "I have a message for you. Go to the %s system and land on %s. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."
     You thank the barman, pay for your drink and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]
 
     NPCtitle = "No Jorek"
     NPCtext = [[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]
     NPCdesc = "The barman seems to be eyeing you in particular."
+    
+    Jordesc = "There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."
         
     -- Mission info stuff
     osd_title = {}
     osd_msg   = {}
     osd_title = "Dark Shadow"
-    osd_msg[1] = "Look for Jorek on %s in the %s system"
+    osd_msg[0] = "Look for Jorek on %s in the %s system" -- Note: indexing at 0 because it's a template.
     
     misn_desc1 = [[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]]
     misn_desc2 = [[You have been tasked by captain Rebina of the Four Winds to assist Jorek McArthy.]]
@@ -63,8 +65,9 @@ function create()
     seirplanet, seirsys = planet.get("Edergast")
     jorekplanet1, joreksys1 = planet.get("Manis")
     jorekplanet2, joreksys2 = planet.get("The Wringer")
+    ambushsys = system.get("Herakin")
     
-    if not misn.claim ( {seirsys, joreksys1, joreksys2} ) then
+    if not misn.claim ( {seirsys, ambushsys} ) then
         abort()
     end
     
@@ -85,7 +88,7 @@ end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
 function accept2()
-    osd_msg[1] = osd_msg[1]:format(jorekplanet1:name(), joreksys1:name())
+    osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
     misn.osdCreate(osd_title, osd_msg) 
     misn.setDesc(misn_desc2)
     misn.setReward(misn_reward)
@@ -101,9 +104,12 @@ function board()
         tk.msg(title[2], text[4])
         tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
         player.unboard()
+        seiryuu:setHilight(false)
         accept2()
         stage = 2
     elseif stage == 5 then -- Debriefing
+        player.unboard()
+        seiryuu:setHilight(false)
         var.pop("darkshadow_active") 
         misn.finish(true)
     end
@@ -116,10 +122,17 @@ function jumpin()
         seiryuu:setInvincible(true)
         seiryuu:disable()
         if stage == 1 or stage == 5 then
+            seiryuu:setHilight(true)
             hook.pilot(seiryuu, "board", "board")
         else
             seiryuu:setNoboard(true)
         end
+    elseif system.cur() == joreksys2 and stage == 3 then
+        -- TODO: Make some four winds ships lurk about
+    elseif system.cur() == joreksys2 and stage == 4 then
+        -- TODO: Cutscene where you are shown which ships to avoid
+    elseif system.cur() == ambushsys and stage == 4 then
+        -- TODO: Ambush by Genbu
     end
 end
 
@@ -127,8 +140,8 @@ end
 function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
-        misn.npcAdd("barman", "Barman", "thief2", NPCdesc, 4)
         tk.msg(NPCtitle, NPCtext)
+        barmanNPC = misn.npcAdd("barman", "Barman", "thief2", NPCdesc, 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
         joreknpc = misn.npcAdd("jorek", "Jorek", "jorek", Jordesc, 4)
     end
@@ -137,9 +150,10 @@ end
 -- NPC hook
 function barman()
     tk.msg(title[3], text[6]:format(player.name(), joreksys2:name(), jorekplanet2:name()))
-    osd_msg[1] = osd_msg[1]:format(jorekplanet2, joreksys2)
+    osd_msg[1] = osd_msg[0]:format(jorekplanet2:name(), joreksys2:name())
     misn.osdCreate(osd_title, osd_msg)
     misn.markerMove(marker, joreksys2)
+    misn.npcRm(barmanNPC)
     stage = 3
 end
 

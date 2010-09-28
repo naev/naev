@@ -109,7 +109,7 @@ end
 
 -- Handles jumping to target system
 function jump ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 0 then
 

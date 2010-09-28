@@ -66,7 +66,7 @@ end
 
 -- Handles jumping to target system
 function jump ()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- Create some havoc
@@ -98,7 +98,7 @@ end
 
 -- Creates more drones
 function drone_incoming ()
-   local sys = system.get()
+   local sys = system.cur()
    if sys == misn_target_sys then -- Not add indefinately
       pilot.add("Collective Sml Swarm")
       misn.timerStart( "drone_incoming", 9000 )

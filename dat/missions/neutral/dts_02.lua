@@ -1,7 +1,7 @@
-﻿--[[
+--[[
 
-   MISSION: Defend the System 3
-   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
+   MISSION: Defend the System 3
+   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
                 This will be the third in a series of random encounters.
                 After the mission, perhaps there'll be a regular diet of similar missions
                 Perhaps the random missions will eventually lead on to a plot line relating to the pirates.
@@ -156,7 +156,7 @@ end
 -- Decides what to do when player either takes off starting planet or jumps into another system
 function enter_system()
 
-      if this_system == system.get() and defender == true then
+      if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
          pilot.add( "Trader Koala", "def", player.pos(), false)
@@ -165,7 +165,7 @@ function enter_system()
          player.msg( comm[8])
          player.modFaction( "Empire", -3)
          misn.finish( true)
-      elseif this_system == system.get() and been_here_before ~= true then
+      elseif this_system == system.cur() and been_here_before ~= true then
          been_here_before = true
          defend_system()
       else

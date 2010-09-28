@@ -79,7 +79,7 @@ end
 
 -- Entering a system
 function sys_enter ()
-   cur_sys = system.get()
+   cur_sys = system.cur()
    -- Check to see if reaching target system
    if cur_sys == targetsystem then
       hook.pilot(nil, "attacked", "trader_attacked")

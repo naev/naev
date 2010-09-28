@@ -138,7 +138,7 @@ end
 function enter ( from_sys )
    -- Only done for stage 1
    if misn_stage == 0 then
-      local sys = system.get()
+      local sys = system.cur()
 
       -- Escorts enter a while back
       enter_vect = player.pos()

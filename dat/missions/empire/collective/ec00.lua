@@ -76,7 +76,7 @@ end
 
 
 function enter()
-   sys = system.get()
+   sys = system.cur()
 
    -- additional fleets
    if sys:name() == "Rockbed" then -- increase action for realism

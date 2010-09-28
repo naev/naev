@@ -217,11 +217,11 @@ function enter()
     end
 
     -- Random(?) pirate attacks when get closer to your system, and heavier ones when you fly away from it after meeting SHITMAN
-    if system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 2 then
+    if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()
         pilot.toggleSpawn(false)
         pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
-    elseif system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and shadowrun == 3 then
+    elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
         pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0))
@@ -231,7 +231,7 @@ function enter()
     end
     
     -- Empire ships around planet
-    if system.get() == sys then
+    if system.cur() == sys then
         pilot.clear()
         pilot.toggleSpawn(false)
         planetpos = pnt:pos()
@@ -246,7 +246,7 @@ function enter()
     end
 
     -- Handle the Seiryuu, the last stop on this mission
-    if shadowrun >= 2 and system.get() == sys2 then
+    if shadowrun >= 2 and system.cur() == sys2 then
         mypos = vec2.new(-1500, 600)
         seiryuu = pilot.add( "Seiryuu", nil, mypos )[1]
 

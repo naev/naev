@@ -49,7 +49,7 @@ function create ()
    pir_name, pir_ship, pir_outfits = pir_generate()
 
    -- Get target system
-   near_sys = get_pir_system( system.get() )
+   near_sys = get_pir_system( system.cur() )
 
    -- Get credits
    credits  = rnd.rnd(5,10) * 10000
@@ -120,7 +120,7 @@ end
 
 -- Entering a system
 function sys_enter ()
-   cur_sys = system.get()
+   cur_sys = system.cur()
    -- Check to see if reaching target system
    if cur_sys == near_sys then
 

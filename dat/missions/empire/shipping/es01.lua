@@ -135,7 +135,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 1 then
 

@@ -100,7 +100,7 @@ end
 
 
 function jump ()
-   sys = system.get()
+   sys = system.cur()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then
       hook.timer( 3000, "beginLaunch" )
