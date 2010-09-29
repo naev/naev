@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -364,8 +364,8 @@
  </asset>
  <asset name="Anifta">
   <pos>
-   <x>2330.000000</x>
-   <y>3170.000000</y>
+   <x>2190.000000</x>
+   <y>5450.000000</y>
   </pos>
   <GFX>
    <space>G02.png</space>
@@ -7657,8 +7657,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Suna I">
   <pos>
-   <x>1540.000000</x>
-   <y>690.000000</y>
+   <x>2560.000000</x>
+   <y>-1300.000000</y>
   </pos>
   <GFX>
    <space>A03.png</space>
@@ -7679,8 +7679,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Suna II">
   <pos>
-   <x>-3330.000000</x>
-   <y>2180.000000</y>
+   <x>-4670.000000</x>
+   <y>-1110.000000</y>
   </pos>
   <GFX>
    <space>C01.png</space>
@@ -7936,8 +7936,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="The Wringer">
   <pos>
-   <x>2091.744467</x>
-   <y>3411.325470</y>
+   <x>1951.744467</x>
+   <y>5691.325470</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -7957,8 +7957,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <bar/>
    </services>
    <commodities/>
-<description>The Wringer is actually called Ulysses Outpost, but apart from a few worn, rusted name plates there is nothing that reminds the people onboard of that name. Once an outlying scientific installation of the Old Empire, the facility was abandoned as the funds needed to keep it running dried up under ever increasing budget cuts following the end of the Empire's golden age. Since then, the station has been claimed by petty criminals and loners, people who are persona non grata in whatever region they come from, but are unwilling or unable to turn pirate. Needless to say, the Wringer is not the most pleasant of places, and few come here by choice. Even the Touched avoid the Wringer, despite the fact that Suna is within Sirius borders.</description>
-<bar>The Wringer doesn't have a clear infrastructure, but most people agree that this compartment counts as the spaceport bar. It distinguishes itself by having slightly more drunks lying in the corners than the rest of the station, thanks to the availability of booze at the fenced-off bar on one side.</bar>
+   <description>The Wringer is actually called Ulysses Outpost, but apart from a few worn, rusted name plates there is nothing that reminds the people onboard of that name. Once an outlying scientific installation of the Old Empire, the facility was abandoned as the funds needed to keep it running dried up under ever increasing budget cuts following the end of the Empire's golden age. Since then, the station has been claimed by petty criminals and loners, people who are persona non grata in whatever region they come from, but are unwilling or unable to turn pirate. Needless to say, the Wringer is not the most pleasant of places, and few come here by choice. Even the Touched avoid the Wringer, despite the fact that Suna is within Sirius borders.</description>
+   <bar>The Wringer doesn't have a clear infrastructure, but most people agree that this compartment counts as the spaceport bar. It distinguishes itself by having slightly more drunks lying in the corners than the rest of the station, thanks to the availability of booze at the fenced-off bar on one side.</bar>
   </general>
  </asset>
  <asset name="Theras III">

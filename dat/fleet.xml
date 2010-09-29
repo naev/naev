@@ -674,7 +674,17 @@
   <ai>trader</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Four Winds Vendetta Quad">
+  <ai>trader</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Seiryuu">

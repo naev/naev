@@ -42,6 +42,17 @@ else -- default english
     "Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though the bar's music makes it difficult to overhear anyone who isn't standing right next to you. "I have a message for you. Go to the %s system and land on %s. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."
     You thank the barman, pay for your drink and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]
 
+    title[4] = "Still an unpleasant man"
+    text[7] = [[    "Well hello there %s," Jorek says when you approach his table. "It's about damn time you showed up. I've been wastin' credits on this awful swill for days now."
+    Not at all surprised that Jorek is still as disagreeable as the last time you encountered him, you decide to ask him to explain the situation, beginning with how he knew that it was you who would be coming for him. Jorek laughs heartiily at that.
+    "Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favors already. In fact, you're the only guy she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."
+    That answers one question. But you still don't know why Jorek hasn't been reporting in like he should have.
+    "Yeah, right, about that. You know about the deal with the other branches getting too big for their britches? Good. Well, I've been lookin' into that, pokin' my nose into their business. Since I'm dealin' with my fellow Shadows here, I couldn't afford to give myself away. So that's that. But there's more."]]
+    
+    text[8] = [[    I dunno if you've seen them on your way here, but there's guys of ours hangin' around in the system. And when I say guys of ours, I mean guys of theirs, since they sure ain't our guys any more. They've been on my ass ever since I left Manis, so I think I know what they want. They want to get me and see what I know, or maybe they just want to blow me into space dust. Either way, I need you to get me out of here, but we need to take the scenic route.
+    "See, I got an inside man. A guy in their ranks who wants out. I need to get him back to the old girl so he can tell her what he knows firsthand. He's out there now, with the pack, so we need to pick him up on our way out. Now, there's two ways we can do this. We can either go in fast, grab the guy, get out fast before the wolves get us. Or we can try to fight our way through. Let me warn you though, these guys mean business, and they're not your average pirates. Unless you got a really tough ship, I recommend you run."
+    Jorek sits back in his chair. "Well, there you have it. I'll fill you in on the details once we're spaceborne. Show me to your ship, buddy, and let's get rollin' I've had enough of this damn place."]]
+
     NPCtitle = "No Jorek"
     NPCtext = [[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]
     NPCdesc = "The barman seems to be eyeing you in particular."
@@ -67,7 +78,7 @@ function create()
     jorekplanet2, joreksys2 = planet.get("The Wringer")
     ambushsys = system.get("Herakin")
     
-    if not misn.claim ( {seirsys, ambushsys} ) then
+    if not misn.claim ( {seirsys, joreksys2, ambushsys} ) then
         abort()
     end
     
@@ -83,7 +94,7 @@ function accept()
 
     stage = 1
 
-    hook.jumpin("jumpin") 
+    hook.enter("enter") 
 end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
@@ -115,8 +126,8 @@ function board()
     end
 end
 
--- Jumpin hook
-function jumpin()
+-- Enter hook
+function enter()
     if system.cur() == seirsys then
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(300, 300) + seirplanet:pos())[1]
         seiryuu:setInvincible(true)
@@ -128,11 +139,125 @@ function jumpin()
             seiryuu:setNoboard(true)
         end
     elseif system.cur() == joreksys2 and stage == 3 then
+        pilot.clear()
+        pilot.toggleSpawn(false)
+        
+        -- Start positions for the leaders
+        leaderstart1 = vec2.new(-2500, -1500)
+        leaderstart2 = vec2.new(2500, 1000)
+        leaderstart3 = vec2.new(-3500, -4500)
+        leaderstart4 = vec2.new(2500, -2500)
+        leaderstart5 = vec2.new(-2500, -6500)
+        
+        -- Leaders will patrol between their start position and this one
+        leaderdest1 = vec2.new(2500, -1000)
+        leaderdest2 = vec2.new(-2000, 2000)
+        leaderdest3 = vec2.new(-4500, -1500)
+        leaderdest4 = vec2.new(2000, -6000)
+        leaderdest5 = vec2.new(1000, -1500)
+        
+        squads = {}
+        squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart1)
+        squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart2)
+        squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart3)
+        squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart4)
+        squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart5)
+        
+        for _, j in ipairs(squads) do
+            for _, k in ipairs(j) do
+                hook.pilot(k, "attacked", attacked)
+                k:control()
+                k:follow(j[1]) -- Each ship in the squad follows the squad leader
+            end
+            j[1]:taskClear() --...except the leader himself.
+        end
+        
+        leader1 = squads[1][1]
+        leader2 = squads[2][1]
+        leader3 = squads[3][1]
+        leader4 = squads[4][1]
+        leader5 = squads[5][1]
+        
+        leader1:goto(leaderdest1, false)
+        leader2:goto(leaderdest2, false)
+        leader3:goto(leaderdest3, false)
+        leader4:goto(leaderdest4, false)
+        leader5:goto(leaderdest5, false)
+        
+        hook.pilot(leader1, "idle", leaderIdle)
+        hook.pilot(leader2, "idle", leaderIdle)
+        hook.pilot(leader3, "idle", leaderIdle)
+        hook.pilot(leader4, "idle", leaderIdle)
+        hook.pilot(leader5, "idle", leaderIdle)
+        
         -- TODO: Make some four winds ships lurk about
     elseif system.cur() == joreksys2 and stage == 4 then
+        joe = pilot.add("Four Winds Vendetta", nil, vec2.new(-500, -4000))[1]
+        joe:control()
+        pilot.clear()
+        pilot.toggleSpawn(false)
         -- TODO: Cutscene where you are shown which ships to avoid
     elseif system.cur() == ambushsys and stage == 4 then
+        pilot.clear()
+        pilot.toggleSpawn(false)
         -- TODO: Ambush by Genbu
+    end
+end
+
+-- Hook for hostile actions against a squad member
+function attacked()
+    for _, j in ipairs(squads) do
+        for _, k in ipairs(j) do
+            k:hookClear()
+            k:control()
+            k:attack(player.pilot())
+        end
+    end
+end
+
+-- Hook for the idle status of the leader of a squad.
+-- Makes the squads patrol their routes.
+function leaderIdle(pilot)
+    if pilot == leader1 then
+        if tick1 then
+            leader1:goto(leaderdest1, false)
+            tick1 = false
+        else
+            leader1:goto(leaderstart1, false)
+            tick1 = true
+        end
+    elseif pilot == leader2 then
+        if tick1 then
+            leader2:goto(leaderdest2, false)
+            tick2 = false
+        else
+            leader2:goto(leaderstart2, false)
+            tick2 = true
+        end
+    elseif pilot == leader3 then
+        if tick3 then
+            leader3:goto(leaderdest3, false)
+            tick3 = false
+        else
+            leader3:goto(leaderstart3, false)
+            tick3 = true
+        end
+    elseif pilot == leader4 then
+        if tick1 then
+            leader4:goto(leaderdest4, false)
+            tick4 = false
+        else
+            leader4:goto(leaderstart4, false)
+            tick4 = true
+        end
+    elseif pilot == leader5 then
+        if tick5 then
+            leader5:goto(leaderdest5, false)
+            tick5 = false
+        else
+            leader5:goto(leaderstart5, false)
+            tick5 = true
+        end
     end
 end
 
@@ -159,15 +284,11 @@ end
 
 -- NPC hook
 function jorek()
-    tk.msg("lele", "Hi, I'm SHITMAN.")
+    tk.msg(title[4], text[7])
+    tk.msg(title[4], text[8])
     misn.npcRm(joreknpc)
+    misn.cargoAdd("Jorek")
     stage = 4
-    hook.takeoff("takeoff")
-end
-
--- Takeoff hook
-function takeoff()
-    -- SHITMAN found, inititate blockade run sequence.
 end
 
 -- Handle the unsuccessful end of the mission.
