@@ -32,13 +32,42 @@ int ovr_isOpen (void)
 
 
 /**
+ * @brief Refreshes the map overlay recalculating the dimensions it should have.
+ *
+ * This should be called if the planets or the likes change at any given time.
+ */
+void ovr_refresh (void)
+{
+   double max_x, max_y;
+   int i;
+
+   /* Must be open. */
+   if (!ovr_isOpen())
+      return;
+
+   /* Calculate max size. */
+   max_x = 0.;
+   max_y = 0.;
+   for (i=0; i<cur_system->njumps; i++) {
+      max_x = MAX( max_x, ABS(cur_system->jumps[i].pos.x) );
+      max_y = MAX( max_y, ABS(cur_system->jumps[i].pos.y) );
+   }
+   for (i=0; i<cur_system->nplanets; i++) {
+      max_x = MAX( max_x, ABS(cur_system->planets[i]->pos.x) );
+      max_y = MAX( max_y, ABS(cur_system->planets[i]->pos.y) );
+   }
+
+   /* We need to calculate the radius of the rendering. */
+   ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / SCREEN_H );
+}
+
+
+/**
  * @brief Handles a keypress event.
  */
 void ovr_key( int type )
 {
    Uint32 t;
-   double max_x, max_y;
-   int i;
 
    t = SDL_GetTicks();
 
@@ -46,22 +75,11 @@ void ovr_key( int type )
       if (ovr_open)
          ovr_open = 0;
       else {
-         max_x = 0.;
-         max_y = 0.;
-         for (i=0; i<cur_system->njumps; i++) {
-            max_x = MAX( max_x, ABS(cur_system->jumps[i].pos.x) );
-            max_y = MAX( max_y, ABS(cur_system->jumps[i].pos.y) );
-         }
-         for (i=0; i<cur_system->nplanets; i++) {
-            max_x = MAX( max_x, ABS(cur_system->planets[i]->pos.x) );
-            max_y = MAX( max_y, ABS(cur_system->planets[i]->pos.y) );
-         }
-
-         /* We need to calculate the radius of the rendering. */
-         ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / SCREEN_H );
-
          ovr_open = 1;
          ovr_opened  = t;
+
+         /* Refresh overlay size. */
+         ovr_refresh();
       }
    }
    else if (type < 0) {
