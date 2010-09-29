@@ -149,7 +149,7 @@ static unsigned int mission_init( Mission* mission, MissionData* misn, int genid
    uint32_t bufsize;
 
    /* clear the mission */
-   memset(mission,0,sizeof(Mission));
+   memset( mission, 0, sizeof(Mission) );
 
    /* Create id if needed. */
    mission->id    = (genid) ? mission_genID() : 0;
@@ -163,7 +163,7 @@ static unsigned int mission_init( Mission* mission, MissionData* misn, int genid
    mission->L = nlua_newState();
    if (mission->L == NULL) {
       WARN("Unable to create a new lua state.");
-      return (genid) ? 1 : 0;
+      return (genid) ? 0 : 1;
    }
    nlua_loadBasic( mission->L ); /* pairs and such */
    misn_loadLibs( mission->L ); /* load our custom libraries */
@@ -172,7 +172,7 @@ static unsigned int mission_init( Mission* mission, MissionData* misn, int genid
    buf = ndata_read( misn->lua, &bufsize );
    if (buf == NULL) {
       WARN("Mission '%s' Lua script not found.", misn->lua );
-      return (genid) ? 1 : 0;
+      return (genid) ? 0 : 1;
    }
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
       WARN("Error loading mission file: %s\n"
@@ -180,7 +180,7 @@ static unsigned int mission_init( Mission* mission, MissionData* misn, int genid
           "Most likely Lua file has improper syntax, please check",
             misn->lua, lua_tostring(mission->L,-1));
       free(buf);
-      return (genid) ? 1 : 0;
+      return (genid) ? 0 : 1;
    }
    free(buf);
 
@@ -189,7 +189,7 @@ static unsigned int mission_init( Mission* mission, MissionData* misn, int genid
       /* Failed to create. */
       if (misn_run( mission, "create")) {
          mission_cleanup(mission);
-         return (genid) ? 1 : 0;
+         return (genid) ? 0 : 1;
       }
    }
 
