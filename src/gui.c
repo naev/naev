@@ -1315,6 +1315,9 @@ void gui_renderPlayer( double res, int overlay )
          gui_vboColourOffset, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_LINES, 0, 4 );
    gl_vboDeactivate();
+
+   if (overlay)
+      gl_printRaw( &gl_smallFont, vx+vr+5., vy-gl_smallFont.h/2., &cRadar_player, "You" );
 }
 
 
