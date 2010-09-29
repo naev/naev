@@ -1671,7 +1671,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, jp->target->name );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, sys_isKnown(jp->target) ? jp->target->name : "Unknown" );
 }
 #undef CHECK_PIXEL
 
