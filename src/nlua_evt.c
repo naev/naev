@@ -178,10 +178,12 @@ static int evt_misnStart( lua_State *L )
    id  = mission_start( str );
    if (id==0) {
       /* Reset the hook. */
-      nlua_hookTarget( NULL, cur_event );
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }
+
+   /* Reset hook on event. */
+   nlua_hookTarget( NULL, cur_event );
 
    /* Pass on claims if necessary. */
    if (cur_event->claims != NULL) {
