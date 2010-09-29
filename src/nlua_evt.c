@@ -187,8 +187,12 @@ static int evt_misnStart( lua_State *L )
    if (cur_event->claims != NULL) {
       for (i=0; i<MISSION_MAX; i++) {
          if (player_missions[i].id == id) {
-            player_missions[i].claims  = cur_event->claims;
-            cur_event->claims          = NULL;
+            /* Must not have claimed something by itself. */
+            if (player_missions[i].claims == NULL) {
+               player_missions[i].claims  = cur_event->claims;
+               cur_event->claims          = NULL;
+            }
+            break;
          }
       }
    }

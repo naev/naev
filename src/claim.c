@@ -120,6 +120,10 @@ int claim_testSys( SysClaim_t *claim, int sys )
 {
    int i;
 
+   /* Must actually have a claim. */
+   if (claim == NULL)
+      return 0;
+
    /* Make sure something to activate. */
    if (claim->ids == NULL)
       return 0;
