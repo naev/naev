@@ -2872,6 +2872,8 @@ static Planet* player_parse( xmlNodePtr parent )
    int i, hunting;
    StarSystem *sys;
    double a, r;
+   Pilot *old_ship;
+   PilotFlags flags;
 
    xmlr_attr(parent,"name",player.name);
 
@@ -2961,9 +2963,14 @@ static Planet* player_parse( xmlNodePtr parent )
       }
 
       /* Just give player.p a random ship in the stack. */
-      player.p = player_stack[player_nstack-1].p;
-      player_nstack--;
-      DEBUG("Giving player ship '%s'.", player.name );
+      pilot_clearFlagsRaw( flags );
+      pilot_setFlagRaw( flags, PILOT_PLAYER );
+      pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
+      old_ship = player_stack[player_nstack-1].p;
+      pilot_create( old_ship->ship, old_ship->name,
+            faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+      player_rmShip( old_ship->name );
+      DEBUG("Giving player ship '%s'.", player.p->name );
    }
 
    /* set global thingies */
