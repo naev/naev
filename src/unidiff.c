@@ -259,6 +259,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    /* Now parse the possible changes. */
    cur = node->xmlChildrenNode;
    do {
+      xml_onlyNodes(cur);
       if (xml_isNode(cur,"planet")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -282,6 +283,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
       else if (xml_isNode(cur, "fleet")) {
          hunk.target.type = base.target.type;
@@ -315,7 +317,9 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -350,6 +354,7 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
    /* Now parse the possible changes. */
    cur = node->xmlChildrenNode;
    do {
+      xml_onlyNodes(cur);
       if (xml_isNode(cur,"add")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -365,6 +370,7 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
       else if (xml_isNode(cur,"remove")) {
          hunk.target.type = base.target.type;
@@ -381,7 +387,9 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkFailed( diff, &hunk );
          else
             diff_hunkSuccess( diff, &hunk );
+         continue;
       }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
@@ -413,10 +421,13 @@ static int diff_patch( xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node,"system"))
          diff_patchSystem( diff, node );
       else if (xml_isNode(node, "tech"))
          diff_patchTech( diff, node );
+      else
+         WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
