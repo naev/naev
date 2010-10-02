@@ -124,6 +124,7 @@ function accept2()
     misn.setReward(misn_reward)
     marker = misn.markerAdd(joreksys1, "low")
     landhook = hook.land("land", "bar")
+    jumpouthook = hook.jumpout("jumpout")
 end
 
 -- Handle boarding of the Seiryuu
@@ -153,7 +154,12 @@ function joeBoard()
     misn.markerMove(marker, seirsys)
     stage = 5
 end
-    
+
+-- Jumpout hook
+function jumpout()
+    playerlastsys = system.cur() -- Keep track of which system the player came from
+end
+
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
@@ -224,6 +230,10 @@ function enter()
     elseif system.cur() == ambushsys and stage == 4 then
         tk.msg(joefailtitle, joefailtext:format(player.name()))
         abort()
+    elseif (system.cur() == joreksys2 or system.cur() == system.get("Anrique") or system.cur() == ambushsys) and genbuspawned then
+        spawnGenbu(playerlastsys) -- The Genbu follows you around, and will probably insta-kill you.
+        genbu:setHostile()
+        genbu:attack(player.pilot())
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
@@ -233,25 +243,27 @@ end
 
 function spawnSquads(highlight)
     -- Start positions for the leaders
-    leaderstart1 = vec2.new(-2500, -1500)
-    leaderstart2 = vec2.new(2500, 1000)
-    leaderstart3 = vec2.new(-3500, -4500)
-    leaderstart4 = vec2.new(2500, -2500)
-    leaderstart5 = vec2.new(-2500, -6500)
+    leaderstart = {}
+    leaderstart[1] = vec2.new(-2500, -1500)
+    leaderstart[2] = vec2.new(2500, 1000)
+    leaderstart[3] = vec2.new(-3500, -4500)
+    leaderstart[4] = vec2.new(2500, -2500)
+    leaderstart[5] = vec2.new(-2500, -6500)
 
     -- Leaders will patrol between their start position and this one
-    leaderdest1 = vec2.new(2500, -1000)
-    leaderdest2 = vec2.new(-2000, 2000)
-    leaderdest3 = vec2.new(-4500, -1500)
-    leaderdest4 = vec2.new(2000, -6000)
-    leaderdest5 = vec2.new(1000, -1500)
+    leaderdest = {}
+    leaderdest[1] = vec2.new(2500, -1000)
+    leaderdest[2] = vec2.new(-2000, 2000)
+    leaderdest[3] = vec2.new(-4500, -1500)
+    leaderdest[4] = vec2.new(2000, -6000)
+    leaderdest[5] = vec2.new(1000, -1500)
 
     squads = {}
-    squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart1)
-    squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart2)
-    squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart3)
-    squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart4)
-    squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart5)
+    squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[1])
+    squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[2])
+    squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[3])
+    squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[4])
+    squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[5])
 
     for _, squad in ipairs(squads) do
         for _, k in ipairs(squad) do
@@ -275,18 +287,14 @@ function spawnSquads(highlight)
     leaderVis(highlight)
 
     -- Kickstart the patrol sequence
-    leader[1]:goto(leaderdest1, false)
-    leader[2]:goto(leaderdest2, false)
-    leader[3]:goto(leaderdest3, false)
-    leader[4]:goto(leaderdest4, false)
-    leader[5]:goto(leaderdest5, false)
+    for i, j in ipairs(leader) do
+        j:goto(leaderdest[i], false)
+    end
 
     -- Set up the rest of the patrol sequence
-    hook.pilot(leader[1], "idle", "leaderIdle")
-    hook.pilot(leader[2], "idle", "leaderIdle")
-    hook.pilot(leader[3], "idle", "leaderIdle")
-    hook.pilot(leader[4], "idle", "leaderIdle")
-    hook.pilot(leader[5], "idle", "leaderIdle")
+    for _, j in ipairs(leader) do
+        hook.pilot(j, "idle", "leaderIdle")
+    end
 end
 
 -- Makes the squads either visible or hides them
@@ -300,16 +308,10 @@ end
 
 -- Makes the leaders visible or hides them, also highlights them (or not)
 function leaderVis(visible)
-    leader[1]:setVisplayer(visible)
-    leader[1]:setHilight(visible)
-    leader[2]:setVisplayer(visible)
-    leader[2]:setHilight(visible)
-    leader[3]:setVisplayer(visible)
-    leader[3]:setHilight(visible)
-    leader[4]:setVisplayer(visible)
-    leader[4]:setHilight(visible)
-    leader[5]:setVisplayer(visible)
-    leader[5]:setHilight(visible)
+    for _, j in ipairs(leader) do
+        j:setVisplayer(visible)
+        j:setHilight(visible)
+    end
 end
 
 -- Hook for hostile actions against a squad member
@@ -325,6 +327,7 @@ end
 
 -- Hook for the idle status of the leader of a squad.
 -- Makes the squads patrol their routes.
+-- TODO: make this shorter
 function leaderIdle(pilot)
     if pilot == leader[1] then
         if tick1 then leader[1]:goto(leaderdest1, false)
@@ -366,17 +369,18 @@ function patrolPoll()
     hook.timer(500, "patrolPoll")
 end
 
-function spawnGenbu()
-    genbu = pilot.add("Genbu", nil, system.get("Anrique"))[1]
+function spawnGenbu(sys)
+    genbu = pilot.add("Genbu", nil, sys)[1]
     genbu:rmOutfit("all")
     genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
     genbu:control()
     genbu:setHilight()
     genbu:setVisplayer()
+    genbuspawned = true
 end
 
 function startAmbush()
-    spawnGenbu()
+    spawnGenbu(system.get("Anrique"))
     
     local delay = 0
     hook.timer(delay, "playerControl", true)
@@ -392,6 +396,7 @@ end
 function continueAmbush()
     genbu:setHostile()
     genbu:attack(player.pilot())
+    -- TODO: launch interceptors
 end
 
 -- Land hook
@@ -460,7 +465,7 @@ function invProximity(trigger)
     if vec2.dist(player.pos(), trigger.location) >= trigger.radius then
         _G[trigger.funcname]()
     else
-        hook.timer(500, "proximity", trigger)
+        hook.timer(500, "invProximity", trigger)
     end
 end
 
