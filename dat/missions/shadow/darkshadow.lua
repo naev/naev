@@ -58,6 +58,10 @@ else -- default english
     title[5] = "An extra passenger"
     text[9] = [[    You board with the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
     "Come on, %s," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]]
+    
+    title[6] = "Ambush!"
+    text[10] = [[   Suddenly, your long range sensors pick up a ship jumping in behind you. Jorek checks the telemetry beside you. Suddenly, his eyes go wide and he groans. The Four Winds informant turns pale.
+    "Oh, damn it all," Jorek curses. "%s, that's the Genbu, Giornio's flagship. I never expected him to take an interest in me personally! Damn, this is bad. Listen, if you have anything to boost our speed, now would be the time. We got to get outta here as if all hell was hot on our heels, which it kinda is! If that thing catches us, we're toast. I really mean it, you don't wanna get into a fight against her, not on your own. Come on, what are you waitin' for? Step on it!"]]
 
     Jorscene[1] = [[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]]
     Jorscene[2] = [[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]]
@@ -169,7 +173,7 @@ function enter()
     elseif system.cur() == joreksys2 and stage == 4 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pilot.allowLand(false, "Landing permission denied. Our docking clamps are currently undergoing maintenance.")
+        player.allowLand(false, "Landing permission denied. Our docking clamps are currently undergoing maintenance.")
         -- Meet Joe, our informant.
         joe = pilot.add("Four Winds Vendetta", nil, vec2.new(-500, -4000))[1]
         joe:control()
@@ -223,7 +227,7 @@ function enter()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        hook.timer(500, "invProximity", { location = (system.cur():adjacentSystems()[system.get("Suna")], radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
+        hook.timer(500, "invProximity", { location = system.cur():jumpPos(system.get("Suna")), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
     end
 end
 
@@ -283,20 +287,6 @@ function spawnSquads(highlight)
     hook.pilot(leader[3], "idle", "leaderIdle")
     hook.pilot(leader[4], "idle", "leaderIdle")
     hook.pilot(leader[5], "idle", "leaderIdle")
-end
-
-function spawnGenbu()
-    genbu = pilot.add("Genbu", nil, system.get("Anrique"))[1]
-    genbu:rmOutfit("all")
-    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
-    genbu:control()
-    genbu:setHilight()
-    genbu:setVisplayer()
-    genbu:setHostile()
-    genbu:attack(player.pilot())
-end
-
-function startAmbush()
 end
 
 -- Makes the squads either visible or hides them
@@ -376,6 +366,34 @@ function patrolPoll()
     hook.timer(500, "patrolPoll")
 end
 
+function spawnGenbu()
+    genbu = pilot.add("Genbu", nil, system.get("Anrique"))[1]
+    genbu:rmOutfit("all")
+    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
+    genbu:control()
+    genbu:setHilight()
+    genbu:setVisplayer()
+end
+
+function startAmbush()
+    spawnGenbu()
+    
+    local delay = 0
+    hook.timer(delay, "playerControl", true)
+    hook.timer(delay, "zoomTo", genbu)
+    delay = delay + 4000
+    hook.timer(delay, "showMsg", {title[6], text[10]:format(player.name())})
+    delay = delay + 1000
+    hook.timer(delay, "zoomTo", player.pilot())
+    hook.timer(delay, "playerControl", false)
+    hook.timer(delay, "continueAmbush")
+end
+
+function continueAmbush()
+    genbu:setHostile()
+    genbu:attack(player.pilot())
+end
+
 -- Land hook
 function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
@@ -416,9 +434,21 @@ function showText(text)
     player.msg(text)
 end
 
+-- Capsule function for tk.msg, for timer use
+function showMsg(content)
+    tk.msg(content[1], content[2])
+end
+
 -- Capsule function for player.pilot():control(), for timer use
+-- Also saves the player's velocity.
 function playerControl(status)
     player.pilot():control(status)
+    if status then
+        pvel = player.pilot():vel()
+        player.pilot():setVel(vec2.new(0, 0))
+    else
+        player.pilot():setVel(pvel)
+    end
 end
 
 -- Poll for player proximity to a point in space. Will trigger when the player is NOT within the specified distance.
