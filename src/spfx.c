@@ -143,11 +143,15 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    /* Extract the data. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes(node);
       xmlr_float(node, "anim", temp->anim);
       xmlr_float(node, "ttl", temp->ttl);
-      if (xml_isNode(node,"gfx"))
+      if (xml_isNode(node,"gfx")) {
          temp->gfx = xml_parseTexture( node,
                SPFX_GFX_PRE"%s"SPFX_GFX_SUF, 6, 5, 0 );
+         continue;
+      }
+      WARN("SPFX '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Convert from ms to s. */
@@ -237,6 +241,7 @@ int spfx_load (void)
    /* First pass, loads up ammunition. */
    mem = 0;
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node,SPFX_XML_TAG)) {
 
          spfx_neffects++;
@@ -246,6 +251,8 @@ int spfx_load (void)
          }
          spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
       }
+      else
+         WARN("'"SPFX_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
