@@ -25,6 +25,7 @@
 #include "space.h"
 #include "ndata.h"
 #include "fleet.h"
+#include "map_overlay.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
@@ -461,6 +462,9 @@ static int diff_patch( xmlNodePtr parent )
          }
       }
    }
+
+   /* Update overlay map just in case. */
+   ovr_refresh();
 
    return 0;
 }
