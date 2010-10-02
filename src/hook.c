@@ -52,6 +52,7 @@ typedef struct Hook_ {
    unsigned int id; /**< unique id */
    char *stack; /**< stack it's a part of */
    int delete; /**< indicates it should be deleted when possible */
+   int ran_once; /**< Indicates if the hook already ran, useful when iterating. */
 
    /* Timer information. */
    int is_timer; /**< Whether or not is actually a timer. */
@@ -178,7 +179,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    misn = &player_missions[i];
 
    /* Make sure it's claimed. */
-   if ((claims >= 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
+   if ((claims > 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
       return 0;
 
    /* Set up hook parameters. */
@@ -190,12 +191,12 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    n++;
 
    /* Run mission code. */
+   hook->ran_once = 1;
    if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
             hook->id, hook->u.misn.func);
       return -1;
    }
-
    return 0;
 }
 
@@ -214,7 +215,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    int n;
 
    /* Must match claims. */
-   if ((claims >= 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
+   if ((claims > 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
       return 0;
 
    /* Simplicity. */
@@ -236,6 +237,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
+   hook->ran_once = 1;
    if (ret < 0) {
       hook_rm( id );
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
@@ -256,6 +258,7 @@ static int hook_runFunc( Hook *hook )
 {
    int ret, id;
    id = hook->id;
+   hook->ran_once = 1;
    ret = hook->u.func.func( hook->u.func.data );
    if (ret != 0) {
       hook_rm( id );
@@ -472,7 +475,8 @@ void hooks_update( double dt )
             continue;
 
          /* Run the timer hook. */
-         hook_run( h, 0, j );
+         hook_run( h, NULL, j );
+         h->delete = 1; /* Mark for deletion. */
       }
    }
    hook_runningstack = 0; /* not running hooks anymore */
@@ -481,15 +485,9 @@ void hooks_update( double dt )
    for (i=0; i<hook_nstack; i++) {
       /* Find valid timer hooks. */
       h = &hook_stack[i];
-      if (h->is_timer == 0)
-         continue;
-
-      /* See if hook should be deleted. */
-      if (h->ms > 0.)
-         continue;
-
-      /* Remove the hook (timers get run once). */
-      hook_rm( h->id );
+      if (h->delete)
+         if (hook_rm(h->id)==1)
+            i--;
    }
 }
 
@@ -656,19 +654,31 @@ int hooks_runParam( const char* stack, HookParam *param )
 {
    int i, j;
    int run;
+   Hook *h;
 
    /* Don't update if player is dead. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
+   /* Mark hooks as unrun. */
+   for (i=0; i<hook_nstack; i++)
+      hook_stack[i].ran_once = 0;
+
    run = 0;
    hook_runningstack = 1; /* running hooks */
    for (j=1; j>=0; j--) {
       for (i=0; i<hook_nstack; i++) {
-         if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
-            hook_run( &hook_stack[i], param, j );
-            run++;
-         }
+         h = &hook_stack[i];
+         /* Should be deleted. */
+         if (h->delete)
+            continue;
+         /* Doesn't match stack. */
+         if (strcmp(stack, h->stack) != 0)
+            continue;
+         if (h->ran_once)
+            continue;
+         hook_run( h, param, j );
+         run++;
       }
    }
    hook_runningstack = 0; /* not running hooks anymore */
@@ -696,7 +706,7 @@ int hooks_runParam( const char* stack, HookParam *param )
  */
 int hooks_run( const char* stack )
 {
-   return hooks_runParam( stack, 0 );
+   return hooks_runParam( stack, NULL );
 }
 
 

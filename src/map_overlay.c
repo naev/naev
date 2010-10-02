@@ -15,6 +15,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "space.h"
+#include "input.h"
 
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
@@ -97,13 +98,13 @@ void ovr_refresh (void)
 
 static void ovr_setOpen( int open )
 {
-   if (open) {
+   if (open && !ovr_open) {
       ovr_open = 1;
-      SDL_ShowCursor( SDL_ENABLE );
+      input_mouseShow();
    }
-   else {
+   else if (ovr_open) {
       ovr_open = 0;
-      SDL_ShowCursor( SDL_DISABLE );
+      input_mouseHide();
    }
 }
 

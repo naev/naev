@@ -63,9 +63,11 @@ int nlua_loadCLI( lua_State *L )
 static int cli_missionStart( lua_State *L )
 {
    const char *str;
+   int ret;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )==0) {
+   ret = mission_start( str, NULL );
+   if (ret) {
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }
@@ -84,9 +86,11 @@ static int cli_missionStart( lua_State *L )
 static int cli_missionTest( lua_State *L )
 {
    const char *str;
+   int ret;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )==0) {
+   ret = mission_start( str, NULL );
+   if (ret) {
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }

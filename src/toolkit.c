@@ -414,7 +414,7 @@ unsigned int window_create( const char* name,
    }
 
    if (toolkit_open==0) { /* toolkit is on */
-      SDL_ShowCursor(SDL_ENABLE);
+      input_mouseShow();
       toolkit_open = 1; /* enable toolkit */
       pause_game();
       gl_defViewport(); /* Reset the default viewport */
@@ -1934,7 +1934,7 @@ void toolkit_update (void)
 
    /* Killed all the windows. */
    if (windows == NULL) {
-      SDL_ShowCursor(SDL_DISABLE);
+      input_mouseHide();
       toolkit_open = 0; /* disable toolkit */
       if (paused)
          unpause_game();
@@ -2183,7 +2183,7 @@ int toolkit_init (void)
    toolkit_vbo = gl_vboCreateStream( size, NULL );
 
    /* DIsable the cursor. */
-   SDL_ShowCursor(SDL_DISABLE);
+   input_mouseHide();
 
    return 0;
 }

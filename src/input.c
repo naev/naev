@@ -171,6 +171,12 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 
 
 /*
+ * Mouse.
+ */
+static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
+
+
+/*
  * from player.c
  */
 extern double player_left;  /**< player.c */
@@ -364,6 +370,29 @@ void input_exit (void)
    free(input_keybinds);
 
    input_keyConvDestroy();
+}
+
+
+/**
+ * @brief Shows the mouse.
+ */
+void input_mouseShow (void)
+{
+   SDL_ShowCursor( SDL_ENABLE );
+   input_mouseCounter++;
+}
+
+
+/**
+ * @brief Hides the mouse.
+ */
+void input_mouseHide (void)
+{
+   input_mouseCounter--;
+   if (input_mouseCounter <= 0) {
+      SDL_ShowCursor( SDL_DISABLE );
+      input_mouseCounter = 0;
+   }
 }
 
 
