@@ -24,9 +24,6 @@
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Goddard Goddard" ship="Goddard"></pilot>
   </pilots>
@@ -34,9 +31,6 @@
  <fleet name="Goddard Lancelot">
   <ai>goddard</ai>
   <faction>Goddard</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Goddard Lancelot" ship="Lancelot"></pilot>
   </pilots>
@@ -135,9 +129,6 @@
  <fleet name="Frontier Lancelot">
   <ai>trader</ai>
   <faction>Frontier</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Frontier Lancelot" ship="Lancelot"></pilot>
   </pilots>
@@ -290,9 +281,6 @@
  <fleet name="Sirius Fidelity">
   <ai>empire</ai>
   <faction>Sirius</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
   </pilots>
@@ -300,9 +288,6 @@
  <fleet name="Sirius Preacher">
   <ai>empire</ai>
   <faction>Sirius</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
   </pilots>
@@ -310,9 +295,6 @@
  <fleet name="Sirius Divinity">
   <ai>empire</ai>
   <faction>Sirius</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Sirius Divinity" ship="Sirius Divinity"></pilot>
   </pilots>
@@ -320,9 +302,6 @@
  <fleet name="Sirius Dogma">
   <ai>empire</ai>
   <faction>Sirius</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
   </pilots>
@@ -330,9 +309,6 @@
  <fleet name="Dvaered Vendetta">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
   </pilots>
@@ -340,9 +316,6 @@
  <fleet name="Dvaered Ancestor">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
   </pilots>
@@ -350,9 +323,6 @@
   <fleet name="Dvaered Vigilance">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
@@ -360,9 +330,6 @@
  <fleet name="Dvaered Goddard">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Goddard" ship="Dvaered Goddard"></pilot>
   </pilots>
@@ -370,9 +337,6 @@
  <fleet name="Dvaered Small Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
@@ -383,9 +347,6 @@
  <fleet name="Dvaered Big Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
@@ -397,9 +358,6 @@
  <fleet name="Dvaered Strike Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
@@ -409,9 +367,6 @@
  <fleet name="Empire Shark">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Empire Shark" ship="Empire Shark"></pilot>
   </pilots>
@@ -419,9 +374,6 @@
  <fleet name="Empire Lancelot">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
   </pilots>
@@ -429,9 +381,6 @@
  <fleet name="Empire Hawking">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
   </pilots>
@@ -439,9 +388,6 @@
  <fleet name="Empire Peacemaker">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Empire Peacemaker" ship="Empire Peacemaker"></pilot>
   </pilots>
@@ -449,9 +395,6 @@
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
    <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
@@ -507,9 +450,6 @@
  <fleet name="Empire Pacifier">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
   </pilots>
@@ -517,9 +457,6 @@
  <fleet name="Empire Admonisher">
   <ai>empire</ai>
   <faction>Empire</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
   </pilots>
@@ -625,9 +562,6 @@
  <fleet name="FLF Base">
   <ai>base</ai>
   <faction>FLF</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Sindbad" ship="Base"></pilot>
   </pilots>
@@ -792,9 +726,6 @@
  <fleet name="Dvaered Med Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
-  <flags>
-   <guard />
-  </flags>
   <pilots>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
