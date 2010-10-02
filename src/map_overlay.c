@@ -32,6 +32,39 @@ int ovr_isOpen (void)
 
 
 /**
+ * @brief Handles input to the map overlay.
+ */
+int ovr_input( SDL_Event *event )
+{
+   int mx, my;
+   double x, y;
+
+   /* We only want mouse events. */
+   if (event->type != SDL_MOUSEBUTTONDOWN)
+      return 0;
+  
+   /* Autogo. */
+   if (event->button.button == SDL_BUTTON_RIGHT) {
+      /* Translate from window to screen. */
+      mx = event->button.x;
+      my = event->button.y;
+      gl_windowToScreenPos( &mx, &my, mx, my );
+
+      /* Translate to space coords. */
+      x  = ((double)mx - SCREEN_W/2.) * ovr_res;
+      y  = ((double)my - SCREEN_H/2.) * ovr_res;
+
+      /* Go to position. */
+      player_autonavPos( x, y );
+
+      return 1;
+   }
+   
+   return 0;
+}
+
+
+/**
  * @brief Refreshes the map overlay recalculating the dimensions it should have.
  *
  * This should be called if the planets or the likes change at any given time.
@@ -62,6 +95,19 @@ void ovr_refresh (void)
 }
 
 
+static void ovr_setOpen( int open )
+{
+   if (open) {
+      ovr_open = 1;
+      SDL_ShowCursor( SDL_ENABLE );
+   }
+   else {
+      ovr_open = 0;
+      SDL_ShowCursor( SDL_DISABLE );
+   }
+}
+
+
 /**
  * @brief Handles a keypress event.
  */
@@ -73,9 +119,9 @@ void ovr_key( int type )
 
    if (type > 0) {
       if (ovr_open)
-         ovr_open = 0;
+         ovr_setOpen(0);
       else {
-         ovr_open = 1;
+         ovr_setOpen(1);
          ovr_opened  = t;
 
          /* Refresh overlay size. */
@@ -84,7 +130,7 @@ void ovr_key( int type )
    }
    else if (type < 0) {
       if (t - ovr_opened > 300)
-         ovr_open = 0;
+         ovr_setOpen(0);
    }
 }
 
