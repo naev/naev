@@ -132,9 +132,12 @@ int tech_load (void)
    /* First pass create the groups - needed to reference them later. */
    ret = 0;
    do {
+      xml_onlyNodes(node);
       /* Must match tag. */
-      if (!xml_isNode(node, XML_TECH_TAG))
+      if (!xml_isNode(node, XML_TECH_TAG)) {
+         WARN("'"XML_TECH_ID"' has unknown node '%s'.", node->name);
          continue;
+      }
       if (ret==0) /* Write over failures. */
          tech = &array_grow( &tech_groups );
       ret = tech_parseNode( tech, node );
@@ -253,7 +256,7 @@ static char* tech_getItemName( tech_item_t *item )
 
 
 /**
- * @brief Writes a group in an exml node.
+ * @brief Writes a group in an xml node.
  */
 int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
 {
@@ -308,6 +311,7 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
    /* Parse the data. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node,"item")) {
 
          /* Must have name. */
@@ -363,7 +367,9 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
                continue;
             }
          }
+         continue;
       }
+      WARN("Tech group '%s' has unknown node '%s'.", tech->name, node->name);
    } while (xml_nextNode( node ));
 
    return 0;
