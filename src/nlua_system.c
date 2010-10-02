@@ -443,7 +443,7 @@ static int systemL_adjacent( lua_State *L )
  *    @luaparam from System jumping from.
  *    @luaparam to System jumping to.
  *    @luareturn A Vector2D containing the jump position or nil if not connected.
- * @luafunc jumpPos( fnom, to )
+ * @luafunc jumpPos( from, to )
  */
 static int systemL_jumpPos( lua_State *L )
 {
