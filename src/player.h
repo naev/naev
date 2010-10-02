@@ -33,6 +33,7 @@
 /* Autonav states. */
 #define AUTONAV_APPROACH   0 /**< Player is approaching a jump. */
 #define AUTONAV_BRAKE      1 /**< Player is braking at a jump. */
+#define AUTONAV_GOTO      10 /**< Player is going to a position. */
 
 
 /**
@@ -193,9 +194,9 @@ void player_afterburn (void);
 void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
-void player_startAutonav (void);
-void player_abortAutonav( char *reason );
-void player_startAutonavWindow( unsigned int wid, char *str);
+void player_autonavStart (void);
+void player_autonavAbort( char *reason );
+void player_autonavStartWindow( unsigned int wid, char *str);
 void player_hail (void);
 void player_autohail (void);
 

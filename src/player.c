@@ -943,7 +943,7 @@ void player_render( double dt )
 /**
  * @brief Starts autonav.
  */
-void player_startAutonav (void)
+void player_autonavStart (void)
 {
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -965,7 +965,7 @@ void player_startAutonav (void)
 /**
  * @brief Starts autonav and closes the window.
  */
-void player_startAutonavWindow( unsigned int wid, char *str)
+void player_autonavStartWindow( unsigned int wid, char *str)
 {
    (void) str;
 
@@ -986,7 +986,7 @@ void player_startAutonavWindow( unsigned int wid, char *str)
 /**
  * @brief Aborts autonav.
  */
-void player_abortAutonav( char *reason )
+void player_autonavAbort( char *reason )
 {
    /* No point if player is beyond aborting. */
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
@@ -1050,15 +1050,15 @@ void player_think( Pilot* pplayer, const double dt )
    if (player_isFlag(PLAYER_AUTONAV)) {
       /* Abort if lockons detected. */
       if (pplayer->lockons > 0)
-         player_abortAutonav("Missile Lockon Detected");
+         player_autonavAbort("Missile Lockon Detected");
 
       /* If we're already at the target. */
       else if (player.p->nav_hyperspace == -1)
-         player_abortAutonav("Target changed to current system");
+         player_autonavAbort("Target changed to current system");
 
       /* Need fuel. */
       else if (pplayer->fuel < HYPERSPACE_FUEL)
-         player_abortAutonav("Not enough fuel for autonav to continue");
+         player_autonavAbort("Not enough fuel for autonav to continue");
 
       /* Keep on moving. */
       else
@@ -1141,7 +1141,7 @@ void player_think( Pilot* pplayer, const double dt )
       ret = pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
-         player_abortAutonav(NULL);
+         player_autonavAbort(NULL);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1155,7 +1155,7 @@ void player_think( Pilot* pplayer, const double dt )
       else {
          ret = pilot_shoot( pplayer, 1 );
          if (ret)
-            player_abortAutonav(NULL);
+            player_autonavAbort(NULL);
       }
 
       player_setFlag(PLAYER_SECONDARY_L);
