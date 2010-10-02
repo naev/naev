@@ -178,7 +178,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    misn = &player_missions[i];
 
    /* Make sure it's claimed. */
-   if ((claims >= 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
+   if ((claims > 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
       return 0;
 
    /* Set up hook parameters. */
@@ -214,7 +214,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    int n;
 
    /* Must match claims. */
-   if ((claims >= 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
+   if ((claims > 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
       return 0;
 
    /* Simplicity. */
@@ -473,6 +473,7 @@ void hooks_update( double dt )
 
          /* Run the timer hook. */
          hook_run( h, 0, j );
+         h->delete = 1; /* Mark for deletion. */
       }
    }
    hook_runningstack = 0; /* not running hooks anymore */
@@ -481,15 +482,9 @@ void hooks_update( double dt )
    for (i=0; i<hook_nstack; i++) {
       /* Find valid timer hooks. */
       h = &hook_stack[i];
-      if (h->is_timer == 0)
-         continue;
-
-      /* See if hook should be deleted. */
-      if (h->ms > 0.)
-         continue;
-
-      /* Remove the hook (timers get run once). */
-      hook_rm( h->id );
+      if (h->delete)
+         if (hook_rm(h->id)==1)
+            i--;
    }
 }
 
