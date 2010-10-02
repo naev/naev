@@ -978,7 +978,6 @@
   <general>
    <typename>CPU Modifier</typename>
    <slot>utility</slot>
-   <max>1</max>
    <mass>7</mass>
    <price>80000</price>
    <gfx_store>cpu_i</gfx_store>
@@ -993,7 +992,6 @@
   <general>
    <typename>CPU Modifier</typename>
    <slot>utility</slot>
-   <max>1</max>
    <mass>28</mass>
    <price>170000</price>
    <gfx_store>cpu_ii</gfx_store>
@@ -1008,7 +1006,6 @@
   <general>
    <typename>CPU Modifier</typename>
    <slot>utility</slot>
-   <max>1</max>
    <mass>112</mass>
    <price>360000</price>
    <gfx_store>cpu_iii</gfx_store>

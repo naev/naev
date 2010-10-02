@@ -146,6 +146,7 @@ function joeBoard()
     tk.msg(title[5], text[9]:format(player.name()))
     misn.cargoAdd("Four Winds Informant", 0)
     player.unboard()
+    misn.markerMove(marker, seirsys)
     stage = 5
 end
     
@@ -222,7 +223,7 @@ function enter()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        invProximity(system.cur():adjacentSystems()[system.get("Suna")]) -- Starts an inverse proximity poll for distance from the jump point.
+        hook.timer(500, "invProximity", { location = (system.cur():adjacentSystems()[system.get("Suna")], radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
     end
 end
 
@@ -293,6 +294,9 @@ function spawnGenbu()
     genbu:setVisplayer()
     genbu:setHostile()
     genbu:attack(player.pilot())
+end
+
+function startAmbush()
 end
 
 -- Makes the squads either visible or hides them

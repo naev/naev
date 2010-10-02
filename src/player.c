@@ -3057,22 +3057,32 @@ static Planet* player_parse( xmlNodePtr parent )
    /* set player in system */
    pnt = planet_get( planet );
    /* Get random planet if it's NULL. */
-   if (pnt == NULL)
+   if ((pnt == NULL) || (planet_getSystem(planet) == NULL) ||
+         !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+      WARN("Player starts out in non-existant or invalid planet '%s', trying to find a suitable one instead.",
+            planet );
       pnt = planet_get( space_getRndPlanet() );
-   /* In case the planet does not exist, we need to update some variables.
-    * While we're at it, we'll also make sure the system exists as well. */
-   hunting  = 1;
-   i        = 0;
-   while (hunting && (i<100)) {
-      planet = pnt->name;
-      if (planet_getSystem( planet ) == NULL) {
-         WARN("Planet '%s' found, but its system isn't. Trying again.", planet);
-         pnt = planet_get( space_getRndPlanet() );
+      /* In case the planet does not exist, we need to update some variables.
+       * While we're at it, we'll also make sure the system exists as well. */
+      hunting  = 1;
+      i        = 0;
+      while (hunting && (i<1000)) {
+         planet = pnt->name;
+         if ((planet_getSystem(planet) == NULL) ||
+               !planet_hasService(pnt, PLANET_SERVICE_LAND) ||
+               !planet_hasService(pnt, PLANET_SERVICE_INHABITED) ||
+               !planet_hasService(pnt, PLANET_SERVICE_REFUEL) ||
+               areEnemies(pnt->faction, FACTION_PLAYER)) {
+            WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
+            pnt = planet_get( space_getRndPlanet() );
+         }
+         else {
+            hunting = 0;
+         }
+         i++;
       }
-      else {
-         hunting = 0;
-      }
-      i++;
+      if (hunting)
+         WARN("Didn't manage to find suitable planet, trying at last found...");
    }
    sys = system_get( planet_getSystem( planet ) );
    space_gfxLoad( sys );
@@ -3541,12 +3551,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       } while (xml_nextNode(cur));
    } while (xml_nextNode(node));
 
-/* Set up autoweap if necessary. */
-ship->autoweap = autoweap;
-if (autoweap)
-   pilot_weaponAuto( ship );
+   /* Set up autoweap if necessary. */
+   ship->autoweap = autoweap;
+   if (autoweap)
+      pilot_weaponAuto( ship );
 
    return 0;
-   }
+}
 
 

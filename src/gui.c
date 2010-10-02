@@ -1275,49 +1275,24 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  */
 void gui_renderPlayer( double res, int overlay )
 {
-   int i;
-   GLfloat vertex[2*4], colours[4*4];
-   GLfloat vx,vy, vr;
+   double x, y, r;
 
    if (overlay) {
-      vx = player.p->solid->pos.x / res;
-      vy = player.p->solid->pos.y / res;
-      vr = 5.;
+      x = player.p->solid->pos.x / res;
+      y = player.p->solid->pos.y / res;
+      r = 5.;
    }
    else {
-      vx = 0.;
-      vy = 0.;
-      vr = 3.;
+      x = 0.;
+      y = 0.;
+      r = 3.;
    }
 
-   /* the + sign in the middle of the radar representing the player */
-   for (i=0; i<4; i++) {
-      colours[4*i + 0] = cRadar_player.r;
-      colours[4*i + 1] = cRadar_player.g;
-      colours[4*i + 2] = cRadar_player.b;
-      colours[4*i + 3] = cRadar_player.a;
-   }
-   gl_vboSubData( gui_vbo, gui_vboColourOffset,
-         sizeof(GLfloat) * 4*4, colours );
-   /* Set up vertex. */
-   vertex[0] = vx+0.;
-   vertex[1] = vy-vr;
-   vertex[2] = vx+0.;
-   vertex[3] = vy+vr;
-   vertex[4] = vx-vr;
-   vertex[5] = vy+0.;
-   vertex[6] = vx+vr;
-   vertex[7] = vy+0.;
-   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
-   /* Draw tho VBO. */
-   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-         gui_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 4 );
-   gl_vboDeactivate();
+   /* Render the cross. */
+   gl_renderCross( x, y, r, &cRadar_player );
 
    if (overlay)
-      gl_printRaw( &gl_smallFont, vx+vr+5., vy-gl_smallFont.h/2., &cRadar_player, "You" );
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, "You" );
 }
 
 

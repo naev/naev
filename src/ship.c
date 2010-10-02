@@ -644,32 +644,41 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_float(cur,"thrust",temp->thrust);
             xmlr_float(cur,"turn",temp->turn);
             xmlr_float(cur,"speed",temp->speed);
+            /* All the xmlr_ stuff have continue cases. */
+            WARN("Ship '%s' has unknown movement node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
       if (xml_isNode(node,"health")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_float(cur,"armour",temp->armour);
             xmlr_float(cur,"armour_regen",temp->armour_regen);
             xmlr_float(cur,"shield",temp->shield);
             xmlr_float(cur,"shield_regen",temp->shield_regen);
             xmlr_float(cur,"energy",temp->energy);
             xmlr_float(cur,"energy_regen",temp->energy_regen);
+            /* All the xmlr_ stuff have continue cases. */
+            WARN("Ship '%s' has unknown health node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
       if (xml_isNode(node,"characteristics")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_int(cur,"crew",temp->crew);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_int(cur,"fuel",temp->fuel);
             xmlr_float(cur,"cap_cargo",temp->cap_cargo);
+            /* All the xmlr_ stuff have continue cases. */
+            WARN("Ship '%s' has unknown characteristic node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -677,12 +686,15 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* First pass, get number of mounts. */
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"structure"))
                temp->outfit_nstructure++;
             else if (xml_isNode(cur,"utility"))
                temp->outfit_nutility++;
             else if (xml_isNode(cur,"weapon"))
                temp->outfit_nweapon++;
+            else
+               WARN("Ship '%s' has unknown slot node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          /* Allocate the space. */
          temp->outfit_structure     = calloc( temp->outfit_nstructure, sizeof(ShipOutfitSlot) );
@@ -692,6 +704,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          l = m = h = 0;
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"structure")) {
                temp->outfit_structure[l].slot.type = OUTFIT_SLOT_STRUCTURE;
                temp->outfit_structure[l].slot.size = outfit_toSlotSize( xml_get(cur) );
@@ -755,7 +768,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
 
-      DEBUG("Unknown '%s' node in ship '%s'", node->name, temp->name );
+      DEBUG("Ship '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
