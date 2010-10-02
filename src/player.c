@@ -68,6 +68,7 @@ Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_mission   = NULL; /**< More hack. */
+static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
  * Licenses.
@@ -1452,7 +1453,7 @@ void player_land (void)
       return;
 
    if (player_isFlag( PLAYER_NOLAND)) {
-      player_messageRaw( "\erYou are not allowed to land at this moment." );
+      player_message( "\er%s", player_message_noland );
       return;
    }
 
@@ -1541,6 +1542,15 @@ void player_land (void)
 
       player_land(); /* rerun land protocol */
    }
+}
+
+
+void player_nolandMsg( const char *str )
+{
+   if (str != NULL)
+      player_message_noland = str;
+   else
+      player_message_noland = "You are not allowed to land at this moment.";
 }
 
 

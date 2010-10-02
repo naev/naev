@@ -471,22 +471,32 @@ static int playerL_takeoff( lua_State *L )
  *
  * @usage player.allowLand() -- Allows the player to land
  * @usage player.allowLand( false ) -- Doesn't allow the player to land.
+ * @usage player.allowLand( false, "No landing." ) -- Doesn't allow the player to land with the message "No landing."
  *
  *    @luaparam b Whether or not to allow the player to land (defaults to true if ommitted).
- * @luafunc allowLand( b )
+ *    @luaparam msg Message displayed when player tries to land (only if disallowed to land). Can be ommitted to use default.
+ * @luafunc allowLand( b, msg )
  */
 static int playerL_allowLand( lua_State *L )
 {
    int b;
-   if (lua_gettop(L) > 0)
-      b  = lua_toboolean(L,1);
+   const char *str;
+   
+   str = NULL;
+   if (lua_gettop(L) > 0) {
+      b     = lua_toboolean(L,1);
+      if (lua_isstring(L,2))
+         str   = lua_tostring(L,2);
+   }
    else
-      b = 1;
+      b     = 1;
 
    if (b)
-      player_setFlag( PLAYER_NOLAND );
-   else
       player_rmFlag( PLAYER_NOLAND );
+   else {
+      player_setFlag( PLAYER_NOLAND );
+      player_nolandMsg( str );
+   }
    return 0;
 }
 

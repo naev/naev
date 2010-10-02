@@ -100,6 +100,7 @@ void player_messageRaw ( const char *str );
 /*
  * misc
  */
+void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
