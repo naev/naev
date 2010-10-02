@@ -3541,12 +3541,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       } while (xml_nextNode(cur));
    } while (xml_nextNode(node));
 
-/* Set up autoweap if necessary. */
-ship->autoweap = autoweap;
-if (autoweap)
-   pilot_weaponAuto( ship );
+   /* Set up autoweap if necessary. */
+   ship->autoweap = autoweap;
+   if (autoweap)
+      pilot_weaponAuto( ship );
 
    return 0;
-   }
+}
 
 
