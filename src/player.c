@@ -1073,6 +1073,9 @@ void player_think( Pilot* pplayer, const double dt )
          /* Need fuel. */
          else if (pplayer->fuel < HYPERSPACE_FUEL)
             player_autonavAbort("Not enough fuel for autonav to continue");
+
+         else
+            player_autonav();
       }
 
       /* Keep on moving. */
@@ -1207,16 +1210,16 @@ static void player_autonav (void)
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
          /* Target jump. */
-         jp = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret = player_autonavApproach( &jp->pos );
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         ret   = player_autonavApproach( &jp->pos );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
          break;
 
       case AUTONAV_JUMP_BRAKE:
          /* Target jump. */
-         jp = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret = player_autonavBrake();
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         ret   = player_autonavBrake();
          /* Try to jump or see if braked. */
          if (space_canHyperspace(player.p)) {
             player.autonav = AUTONAV_JUMP_APPROACH;
