@@ -172,11 +172,11 @@ static int evt_misnStart( lua_State *L )
 {
    const char *str;
    unsigned int id;
-   int i;
+   int ret, i;
 
    str = luaL_checkstring(L, 1);
-   id  = mission_start( str );
-   if (id==0) {
+   ret = mission_start( str, &id );
+   if (ret) {
       /* Reset the hook. */
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
