@@ -197,6 +197,53 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
 
 
 /**
+ * @brief Renders a cross at a given position.
+ *
+ *    @param x X position to center at.
+ *    @param y Y position to center at.
+ *    @param r Radius of cross.
+ *    @param c Colour to use.
+ */
+void gl_renderCross( double x, double y, double r, const glColour *c )
+{
+   int i;
+   GLfloat vertex[2*4], colours[4*4];
+   GLfloat vx,vy, vr;
+
+   /* Set up stuff. */
+   vx = x;
+   vy = y;
+   vr = r;
+
+   /* the + sign in the middle of the radar representing the player */
+   for (i=0; i<4; i++) {
+      colours[4*i + 0] = c->r;
+      colours[4*i + 1] = c->g;
+      colours[4*i + 2] = c->b;
+      colours[4*i + 3] = c->a;
+   }
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset,
+         sizeof(GLfloat) * 4*4, colours );
+   /* Set up vertex. */
+   vertex[0] = vx+0.;
+   vertex[1] = vy-vr;
+   vertex[2] = vx+0.;
+   vertex[3] = vy+vr;
+   vertex[4] = vx-vr;
+   vertex[5] = vy+0.;
+   vertex[6] = vx+vr;
+   vertex[7] = vy+0.;
+   gl_vboSubData( gl_renderVBO, 0, sizeof(GLfloat) * 4*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 4 );
+   gl_vboDeactivate();
+}
+
+
+/**
  * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
