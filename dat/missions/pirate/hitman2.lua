@@ -37,6 +37,7 @@ else -- Default to English
 end
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
@@ -78,7 +79,7 @@ end
 
 -- Entering a system
 function sys_enter ()
-   cur_sys = system.get()
+   cur_sys = system.cur()
    -- Check to see if reaching target system
    if cur_sys == targetsystem then
       hook.pilot(nil, "death", "trader_death")

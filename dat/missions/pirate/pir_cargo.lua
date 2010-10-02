@@ -38,6 +38,7 @@ end
 
 -- Create the mission
 function create()
+   -- Note: this mission does not make any mission claims. 
 
    -- target destination
    local i = 0

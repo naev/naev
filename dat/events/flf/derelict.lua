@@ -34,6 +34,12 @@ function create()
     shipDV:disable()
     shipFLF:disable()
     
+    shipDV:setHilight(true)
+    shipFLF:setHilight(true)
+    
+    shipDV:setVisplayer()
+    shipFLF:setVisplayer()
+    
     shipDV:rename(shipnameDV)
     shipFLF:rename(shipnameFLF)
     
@@ -66,6 +72,8 @@ function broadcastFLF()
 end
 
 function boardFLF()
+    shipDV:setHilight(false)
+    shipFLF:setHilight(false)
     shipDV:setNoboard(true)
     hook.rm(timerFLF)
     player.unboard()
@@ -82,6 +90,8 @@ function deathDV()
 end
 
 function boardDV()
+    shipDV:setHilight(false)
+    shipFLF:setHilight(false)
     shipFLF:setNoboard(true)
     hook.rm(timerDV)
     player.unboard()

@@ -1,7 +1,7 @@
 --[[
 
-   MISSION: Hot dogs from space
-   DESCRIPTION: An old man who owns a hot dog factory wants to go to space
+   MISSION: Hot dogs from space
+   DESCRIPTION: An old man who owns a hot dog factory wants to go to space
 
    The old man has elevated pressure in his chochlea so he can't go to space.
    He's getting old and wants to go to space before he dies. He owns a hot dog
@@ -60,6 +60,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    misn.setNPC( "Reynir", "none" )
    misn.setDesc( bar_desc )
 

@@ -31,6 +31,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    local landed, landed_sys = planet.get()
 
    -- target destination

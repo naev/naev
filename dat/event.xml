@@ -40,6 +40,14 @@
   <flags>
   </flags>
  </event>
+ <event name="Shadowcomm2">
+  <lua>neutral/shadow_comm2</lua>
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadow Vigil") and not (player.misnDone("Dark Shadow") or var.peek("darkshadow_active") == true)</cond>
+  <flags>
+  </flags>
+ </event>
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>

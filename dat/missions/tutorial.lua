@@ -445,7 +445,7 @@ function hyenaDead()
    misn_stage = 7
 
    -- Create OSD
-   osd_msg[4][1] = string.format(osd_msg[4][1], system.get():planets()[1]:name())
+   osd_msg[4][1] = string.format(osd_msg[4][1], system.cur():planets()[1]:name())
    misn.osdCreate(osd_title[4], osd_msg[4])
 
    -- Messages
@@ -464,7 +464,7 @@ function tutLand()
 end
 
 function tutEnter()
-   enter_sys = system.get()
+   enter_sys = system.cur()
    if misn_stage ~= 8 then
       abort()
    elseif enter_sys ~= misn_sys then

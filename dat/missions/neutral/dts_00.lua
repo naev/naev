@@ -1,7 +1,7 @@
 --[[
 
-   MISSION: Defend the System 1
-   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
+   MISSION: Defend the System 1
+   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
                 This will be the first in a planned series of random encounters.
                 After the third specifically scripted pirate invasion, a militia will form.
                 The player will have the option to join the militia.
@@ -103,7 +103,13 @@ function create ()
            this_system:hasPresence( "FLF") ) 
          then misn.finish(false) 
       end
-      planet_name = planet.name( this_planet)
+ 
+    missys = {this_system}
+    if not misn.claim(missys) then
+        misn.finish(false)
+    end
+ 
+       planet_name = planet.name( this_planet)
       system_name = this_system:name()
       if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
          misn.accept()
@@ -141,7 +147,7 @@ end
 -- Decides what to do when player either takes off starting planet or jumps into another system
 function enter_system()
 
-      if this_system == system.get() and defender == true then
+      if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
          misn.timerStart( "ship_enters", 1000)
@@ -149,7 +155,7 @@ function enter_system()
          player.msg( comm[8])
          player.modFaction( "Empire", -3)
          misn.finish( true)
-      elseif this_system == system.get() and been_here_before ~= true then
+      elseif this_system == system.cur() and been_here_before ~= true then
          been_here_before = true
          defend_system()
       else

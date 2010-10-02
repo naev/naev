@@ -46,11 +46,12 @@ include("scripts/jumpdist.lua")
 
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    -- Create the target pirate
    emp_name, emp_ship, emp_outfits = emp_generate()
    
    -- Get target system
-   near_sys = get_emp_system( system.get() )
+   near_sys = get_emp_system( system.cur() )
 
    -- Spaceport bar stuff
    misn.setNPC( "Young Businessman",  "none")
@@ -155,7 +156,7 @@ end
 
 -- Entering a system
 function sys_enter ()
-   cur_sys = system.get()
+   cur_sys = system.cur()
    -- Check to see if reaching target system
    if cur_sys == near_sys then
 

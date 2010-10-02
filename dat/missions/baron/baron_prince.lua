@@ -115,6 +115,7 @@ else -- default english
 end
 
 function create ()
+    -- Note: this mission makes no system claims.
     misn.setNPC(npc_desc, "thief2")
     misn.setDesc(bar_desc)
 end
@@ -192,6 +193,7 @@ function board()
         player.pay(reward)
         misn.finish(true)
     end
+    pinnacle:setHilight(false)
 end
 
 function land()
@@ -315,6 +317,7 @@ function enter()
         pinnacle:setInvincible(true)
         pinnacle:setFriendly()
         pinnacle:control()
+        pinnacle:setHilight(true)
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")

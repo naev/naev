@@ -38,6 +38,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    -- Target destination
    dest,destsys = planet.get( faction.get("Frontier") )
    ret,retsys = planet.get( "Polaris Prime" )
@@ -113,7 +114,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
    if misn_stage == 1 and sys == destsys then
 
       -- Get a position near the player

@@ -39,6 +39,7 @@ else -- default english
 end
 
 function create()
+    -- Note: this mission makes no system claims.
     misn.accept()
     
     tk.msg(title[1], text[1])

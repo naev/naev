@@ -80,6 +80,7 @@ end
 
 -- Create the mission
 function create ()
+   -- Note: this mission makes no system claims.
 
    -- Get systems to patrol
    num_systems = rnd.rnd(2,4)
