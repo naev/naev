@@ -264,7 +264,7 @@ void map_open (void)
             "btnFind", "Find", map_inputFind );
    /* Autonav button */
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnAutonav", "Autonav", player_startAutonavWindow );
+            "btnAutonav", "Autonav", player_autonavStartWindow );
 
    /*
     * Bottom stuff
@@ -1242,7 +1242,7 @@ void map_select( StarSystem *sys, char shifted )
          if (map_npath==0) {
             player_hyperspacePreempt(0);
             player.p->nav_hyperspace = -1;
-            player_abortAutonav(NULL);
+            player_autonavAbort(NULL);
          }
          else  {
             /* see if it is a valid hyperspace target */
@@ -1250,7 +1250,7 @@ void map_select( StarSystem *sys, char shifted )
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player.p->nav_hyperspace = i;
-                  player_abortAutonav(NULL);
+                  player_autonavAbort(NULL);
                   break;
                }
             }
@@ -1258,7 +1258,7 @@ void map_select( StarSystem *sys, char shifted )
       }
       else { /* unreachable. */
          player.p->nav_hyperspace = -1;
-         player_abortAutonav(NULL);
+         player_autonavAbort(NULL);
       }
    }
 

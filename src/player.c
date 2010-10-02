@@ -194,6 +194,8 @@ static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static void player_autonav (void);
+static int player_autonavApproach( Vector2d *pos );
+static int player_autonavBrake (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
@@ -943,7 +945,7 @@ void player_render( double dt )
 /**
  * @brief Starts autonav.
  */
-void player_startAutonav (void)
+void player_autonavStart (void)
 {
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -959,13 +961,13 @@ void player_startAutonav (void)
 
    player_message("\epAutonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
-   player.autonav = AUTONAV_APPROACH;
+   player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
 /**
  * @brief Starts autonav and closes the window.
  */
-void player_startAutonavWindow( unsigned int wid, char *str)
+void player_autonavStartWindow( unsigned int wid, char *str)
 {
    (void) str;
 
@@ -984,9 +986,20 @@ void player_startAutonavWindow( unsigned int wid, char *str)
 }
 
 /**
+ * @brief Starts autonav with a local position destination.
+ */
+void player_autonavPos( double x, double y )
+{
+   player.autonav    = AUTONAV_POS_APPROACH;
+   vect_cset( &player.autonav_pos, x, y );
+   player_message("\epAutonav initialized.");
+   player_setFlag(PLAYER_AUTONAV);
+}
+
+/**
  * @brief Aborts autonav.
  */
-void player_abortAutonav( char *reason )
+void player_autonavAbort( char *reason )
 {
    /* No point if player is beyond aborting. */
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
@@ -1050,15 +1063,20 @@ void player_think( Pilot* pplayer, const double dt )
    if (player_isFlag(PLAYER_AUTONAV)) {
       /* Abort if lockons detected. */
       if (pplayer->lockons > 0)
-         player_abortAutonav("Missile Lockon Detected");
+         player_autonavAbort("Missile Lockon Detected");
+      else if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
+               (player.autonav == AUTONAV_JUMP_BRAKE)) {
+         /* If we're already at the target. */
+         if (player.p->nav_hyperspace == -1)
+            player_autonavAbort("Target changed to current system");
 
-      /* If we're already at the target. */
-      else if (player.p->nav_hyperspace == -1)
-         player_abortAutonav("Target changed to current system");
+         /* Need fuel. */
+         else if (pplayer->fuel < HYPERSPACE_FUEL)
+            player_autonavAbort("Not enough fuel for autonav to continue");
 
-      /* Need fuel. */
-      else if (pplayer->fuel < HYPERSPACE_FUEL)
-         player_abortAutonav("Not enough fuel for autonav to continue");
+         else
+            player_autonav();
+      }
 
       /* Keep on moving. */
       else
@@ -1141,7 +1159,7 @@ void player_think( Pilot* pplayer, const double dt )
       ret = pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
-         player_abortAutonav(NULL);
+         player_autonavAbort(NULL);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1155,7 +1173,7 @@ void player_think( Pilot* pplayer, const double dt )
       else {
          ret = pilot_shoot( pplayer, 1 );
          if (ret)
-            player_abortAutonav(NULL);
+            player_autonavAbort(NULL);
       }
 
       player_setFlag(PLAYER_SECONDARY_L);
@@ -1187,64 +1205,103 @@ void player_think( Pilot* pplayer, const double dt )
 static void player_autonav (void)
 {
    JumpPoint *jp;
-   double d, time, vel, dist;
-
-   /* Target jump. */
-   jp = &cur_system->jumps[ player.p->nav_hyperspace ];
+   int ret;
 
    switch (player.autonav) {
-      case AUTONAV_APPROACH:
-         /* Only accelerate if facing move dir. */
-         d = pilot_face( player.p, vect_angle( &player.p->solid->pos, &jp->pos ) );
-         if (FABS(d) < MIN_DIR_ERR) {
-            if (player_acc < 1.)
-               player_accel( 1. );
-         }
-         else if (player_acc > 0.)
-            player_accelOver();
-
-         /* Get current time to reach target. */
-         time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
-            (player.p->thrust / player.p->solid->mass);
-
-         /* Get velocity. */
-         vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
-
-         /* Get distance. */
-         dist  = vel*(time+1.1*180./player.p->turn) -
-               0.5*(player.p->thrust/player.p->solid->mass)*time*time;
-
-         /* See if should start braking. */
-         if (dist*dist > vect_dist2( &jp->pos, &player.p->solid->pos )) {
-            player_accelOver();
-            player.autonav = AUTONAV_BRAKE;
-         }
-
+      case AUTONAV_JUMP_APPROACH:
+         /* Target jump. */
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         ret   = player_autonavApproach( &jp->pos );
+         if (ret)
+            player.autonav = AUTONAV_JUMP_BRAKE;
          break;
 
-      case AUTONAV_BRAKE:
-         /* Braking procedure. */
-         d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
-         if (FABS(d) < MIN_DIR_ERR) {
-            if (player_acc < 1.)
-               player_accel( 1. );
-         }
-         else if (player_acc > 0.)
-            player_accelOver();
-
+      case AUTONAV_JUMP_BRAKE:
+         /* Target jump. */
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         ret   = player_autonavBrake();
          /* Try to jump or see if braked. */
          if (space_canHyperspace(player.p)) {
-            player.autonav = AUTONAV_APPROACH;
+            player.autonav = AUTONAV_JUMP_APPROACH;
             player_accelOver();
             player_jump();
          }
-         else if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
-            player.autonav = AUTONAV_APPROACH;
-            player_accelOver();
+         else if (ret)
+            player.autonav = AUTONAV_JUMP_APPROACH;
+         break;
+   
+      case AUTONAV_POS_APPROACH:
+         ret = player_autonavApproach( &player.autonav_pos );
+         if (ret) {
+            player_rmFlag( PLAYER_AUTONAV );
+            player_message( "\epAutonav arrived at position." );
          }
-
          break;
    }
+}
+
+
+/**
+ * @brief Handles approaching a position with autonav.
+ *
+ *    @param pos Position to go to.
+ *    @return 1 on completion.
+ */
+static int player_autonavApproach( Vector2d *pos )
+{
+   double d, time, vel, dist;
+
+   /* Only accelerate if facing move dir. */
+   d = pilot_face( player.p, vect_angle( &player.p->solid->pos, pos ) );
+   if (FABS(d) < MIN_DIR_ERR) {
+      if (player_acc < 1.)
+         player_accel( 1. );
+   }
+   else if (player_acc > 0.)
+      player_accelOver();
+
+   /* Get current time to reach target. */
+   time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
+      (player.p->thrust / player.p->solid->mass);
+
+   /* Get velocity. */
+   vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
+
+   /* Get distance. */
+   dist  = vel*(time+1.1*180./player.p->turn) -
+      0.5*(player.p->thrust/player.p->solid->mass)*time*time;
+
+   /* See if should start braking. */
+   if (dist*dist > vect_dist2( pos, &player.p->solid->pos )) {
+      player_accelOver();
+      return 1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Handles the autonav braking.
+ *
+ *    @return 1 on completion.
+ */
+static int player_autonavBrake (void)
+{
+   double d;
+
+   /* Braking procedure. */
+   d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
+   if (FABS(d) < MIN_DIR_ERR) {
+      if (player_acc < 1.)
+         player_accel( 1. );
+   }
+   else if (player_acc > 0.)
+      player_accelOver();
+
+   if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
+      player_accelOver();
+      return 1;
+   }
+   return 0;
 }
 
 

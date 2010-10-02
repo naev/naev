@@ -31,8 +31,9 @@
 
 
 /* Autonav states. */
-#define AUTONAV_APPROACH   0 /**< Player is approaching a jump. */
-#define AUTONAV_BRAKE      1 /**< Player is braking at a jump. */
+#define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
+#define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
+#define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
 
 
 /**
@@ -50,6 +51,7 @@ typedef struct Player_s {
    int enemies; /**< Amount of enemies the player has. */
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
+   Vector2d autonav_pos; /**< Target autonav position. */
 } Player_t;
 
 
@@ -193,9 +195,10 @@ void player_afterburn (void);
 void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
-void player_startAutonav (void);
-void player_abortAutonav( char *reason );
-void player_startAutonavWindow( unsigned int wid, char *str);
+void player_autonavStart (void);
+void player_autonavAbort( char *reason );
+void player_autonavStartWindow( unsigned int wid, char *str);
+void player_autonavPos( double x, double y );
 void player_hail (void);
 void player_autohail (void);
 

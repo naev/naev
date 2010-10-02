@@ -763,8 +763,8 @@ void gl_defViewport (void)
 void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
 {
    double x,y;
-   x=wx;
-   y=wy;
+   x   = wx;
+   y   = wy;
    *sx = gl_screen.mxscale * (double)(wx - gl_screen.x);
    *sy = gl_screen.myscale * (double)(gl_screen.rh - wy - gl_screen.y);
 }
