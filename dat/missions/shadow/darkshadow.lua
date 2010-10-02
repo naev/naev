@@ -66,6 +66,8 @@ else -- default english
     joefailtitle = "You forgot the informant!"
     joefailtext = [[Jorek is enraged. "Dammit, %s! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]
 
+    patrolcomm = "All pilots, we've detected McArthy on that ship! Break and intercept!"
+    
     NPCtitle = "No Jorek"
     NPCtext = [[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]
     NPCdesc = "The barman seems to be eyeing you in particular."
@@ -166,6 +168,7 @@ function enter()
     elseif system.cur() == joreksys2 and stage == 4 then
         pilot.clear()
         pilot.toggleSpawn(false)
+        pilot.allowLand(false, "Landing permission denied. Our docking clamps are currently undergoing maintenance.")
         -- Meet Joe, our informant.
         joe = pilot.add("Four Winds Vendetta", nil, vec2.new(-500, -4000))[1]
         joe:control()
@@ -173,6 +176,7 @@ function enter()
         joe:setHilight(true)
         joe:setVisplayer()
         joe:setInvincible(true)
+        joe:disable()
         spawnSquads(true)
 
         -- Make everyone visible for the cutscene
@@ -186,19 +190,19 @@ function enter()
         delay = delay + 4000
         hook.timer(delay, "showText", Jorscene[1])
         delay = delay + 4000
-        hook.timer(delay, "zoomTo", leader1)
+        hook.timer(delay, "zoomTo", leader[1])
         delay = delay + 1000
         hook.timer(delay, "showText", Jorscene[2])
         delay = delay + 2000
-        hook.timer(delay, "zoomTo", leader2)
+        hook.timer(delay, "zoomTo", leader[2])
         delay = delay + 3000
-        hook.timer(delay, "zoomTo", leader3)
+        hook.timer(delay, "zoomTo", leader[3])
         delay = delay + 2000
         hook.timer(delay, "showText", Jorscene[3])
         delay = delay + 3000
-        hook.timer(delay, "zoomTo", leader4)
+        hook.timer(delay, "zoomTo", leader[4])
         delay = delay + 4000
-        hook.timer(delay, "zoomTo", leader5)
+        hook.timer(delay, "zoomTo", leader[5])
         delay = delay + 4000
         hook.timer(delay, "zoomTo", player.pilot())
         hook.timer(delay, "playerControl", false)
@@ -211,13 +215,14 @@ function enter()
         hook.timer(delay, "leaderVis", true)
 
         hook.pilot(joe, "board", "joeBoard")
+        hook.timer(500, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
-        tk.msg(joefailtitle, joefailtext)
+        tk.msg(joefailtitle, joefailtext:format(player.name()))
         abort()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        -- TODO: Ambush by Genbu
+        invProximity(system.cur():adjacentSystems()[system.get("Suna")]) -- Starts an inverse proximity poll for distance from the jump point.
     end
 end
 
@@ -255,27 +260,39 @@ function spawnSquads(highlight)
     end
     
     -- Shorthand notation for the leader pilots
-    leader1 = squads[1][1]
-    leader2 = squads[2][1]
-    leader3 = squads[3][1]
-    leader4 = squads[4][1]
-    leader5 = squads[5][1]
+    leader = {}
+    leader[1] = squads[1][1]
+    leader[2] = squads[2][1]
+    leader[3] = squads[3][1]
+    leader[4] = squads[4][1]
+    leader[5] = squads[5][1]
 
     leaderVis(highlight)
 
     -- Kickstart the patrol sequence
-    leader1:goto(leaderdest1, false)
-    leader2:goto(leaderdest2, false)
-    leader3:goto(leaderdest3, false)
-    leader4:goto(leaderdest4, false)
-    leader5:goto(leaderdest5, false)
+    leader[1]:goto(leaderdest1, false)
+    leader[2]:goto(leaderdest2, false)
+    leader[3]:goto(leaderdest3, false)
+    leader[4]:goto(leaderdest4, false)
+    leader[5]:goto(leaderdest5, false)
 
     -- Set up the rest of the patrol sequence
-    hook.pilot(leader1, "idle", "leaderIdle")
-    hook.pilot(leader2, "idle", "leaderIdle")
-    hook.pilot(leader3, "idle", "leaderIdle")
-    hook.pilot(leader4, "idle", "leaderIdle")
-    hook.pilot(leader5, "idle", "leaderIdle")
+    hook.pilot(leader[1], "idle", "leaderIdle")
+    hook.pilot(leader[2], "idle", "leaderIdle")
+    hook.pilot(leader[3], "idle", "leaderIdle")
+    hook.pilot(leader[4], "idle", "leaderIdle")
+    hook.pilot(leader[5], "idle", "leaderIdle")
+end
+
+function spawnGenbu()
+    genbu = pilot.add("Genbu", nil, system.get("Anrique"))[1]
+    genbu:rmOutfit("all")
+    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
+    genbu:control()
+    genbu:setHilight()
+    genbu:setVisplayer()
+    genbu:setHostile()
+    genbu:attack(player.pilot())
 end
 
 -- Makes the squads either visible or hides them
@@ -289,16 +306,16 @@ end
 
 -- Makes the leaders visible or hides them, also highlights them (or not)
 function leaderVis(visible)
-    leader1:setVisplayer(visible)
-    leader1:setHilight(visible)
-    leader2:setVisplayer(visible)
-    leader2:setHilight(visible)
-    leader3:setVisplayer(visible)
-    leader3:setHilight(visible)
-    leader4:setVisplayer(visible)
-    leader4:setHilight(visible)
-    leader5:setVisplayer(visible)
-    leader5:setHilight(visible)
+    leader[1]:setVisplayer(visible)
+    leader[1]:setHilight(visible)
+    leader[2]:setVisplayer(visible)
+    leader[2]:setHilight(visible)
+    leader[3]:setVisplayer(visible)
+    leader[3]:setHilight(visible)
+    leader[4]:setVisplayer(visible)
+    leader[4]:setHilight(visible)
+    leader[5]:setVisplayer(visible)
+    leader[5]:setHilight(visible)
 end
 
 -- Hook for hostile actions against a squad member
@@ -315,32 +332,44 @@ end
 -- Hook for the idle status of the leader of a squad.
 -- Makes the squads patrol their routes.
 function leaderIdle(pilot)
-    if pilot == leader1 then
-        if tick1 then leader1:goto(leaderdest1, false)
-        else leader1:goto(leaderstart1, false)
+    if pilot == leader[1] then
+        if tick1 then leader[1]:goto(leaderdest1, false)
+        else leader[1]:goto(leaderstart1, false)
         end
         tick1 = not tick1
-    elseif pilot == leader2 then
-        if tick1 then leader2:goto(leaderdest2, false)
-        else leader2:goto(leaderstart2, false)
+    elseif pilot == leader[2] then
+        if tick1 then leader[2]:goto(leaderdest2, false)
+        else leader[2]:goto(leaderstart2, false)
         end
         tick2 = not tick2
-    elseif pilot == leader3 then
-        if tick3 then leader3:goto(leaderdest3, false)
-        else leader3:goto(leaderstart3, false)
+    elseif pilot == leader[3] then
+        if tick3 then leader[3]:goto(leaderdest3, false)
+        else leader[3]:goto(leaderstart3, false)
         end
         tick3 = not tick3
-    elseif pilot == leader4 then
-        if tick1 then leader4:goto(leaderdest4, false)
-        else leader4:goto(leaderstart4, false)
+    elseif pilot == leader[4] then
+        if tick1 then leader[4]:goto(leaderdest4, false)
+        else leader[4]:goto(leaderstart4, false)
         end
         tick4 = not tick4
-    elseif pilot == leader5 then
-        if tick5 then leader5:goto(leaderdest5, false)
-        else leader5:goto(leaderstart5, false)
+    elseif pilot == leader[5] then
+        if tick5 then leader[5]:goto(leaderdest5, false)
+        else leader[5]:goto(leaderstart5, false)
         end
         tick5 = not tick5
     end
+end
+
+-- Check if any of the patrolling leaders can see the player, and if so intercept.
+function patrolPoll()
+    for _, patroller in ipairs(leader) do
+        if vec2.dist(player.pilot():pos(), patroller:pos()) < 1000 then
+            patroller:broadcast(patrolcomm)
+            attacked()
+            return
+        end
+    end
+    hook.timer(500, "patrolPoll")
 end
 
 -- Land hook

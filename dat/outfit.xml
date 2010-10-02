@@ -1340,7 +1340,7 @@
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
    <energy>1</energy>
-   <damage type="energy">20</damage>
+   <damage type="energy">15</damage>
   </specific>
  </outfit>
 </Outfits>
