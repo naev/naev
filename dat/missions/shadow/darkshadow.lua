@@ -146,7 +146,7 @@ function joeBoard()
     player.unboard()
     stage = 5
 end
-
+    
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
@@ -172,6 +172,7 @@ function enter()
         joe:rename("Four Winds Informant")
         joe:setHilight(true)
         joe:setVisplayer()
+        joe:setInvincible(true)
         spawnSquads(true)
 
         -- Make everyone visible for the cutscene
@@ -182,23 +183,23 @@ function enter()
         hook.timer(delay, "playerControl", true)
         delay = delay + 2000
         hook.timer(delay, "zoomTo", joe)
-        delay = delay + 2000
+        delay = delay + 4000
         hook.timer(delay, "showText", Jorscene[1])
-        delay = delay + 6000
+        delay = delay + 4000
         hook.timer(delay, "zoomTo", leader1)
-        delay = delay + 2000
-        hook.timer(delay, "showText", Jorscene[2])
         delay = delay + 1000
+        hook.timer(delay, "showText", Jorscene[2])
+        delay = delay + 2000
         hook.timer(delay, "zoomTo", leader2)
         delay = delay + 3000
         hook.timer(delay, "zoomTo", leader3)
-        delay = delay + 3000
+        delay = delay + 2000
         hook.timer(delay, "showText", Jorscene[3])
         delay = delay + 3000
         hook.timer(delay, "zoomTo", leader4)
-        delay = delay + 3000
+        delay = delay + 4000
         hook.timer(delay, "zoomTo", leader5)
-        delay = delay + 3000
+        delay = delay + 4000
         hook.timer(delay, "zoomTo", player.pilot())
         hook.timer(delay, "playerControl", false)
 

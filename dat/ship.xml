@@ -1911,21 +1911,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Suzaku">
@@ -1958,21 +1958,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Byakko">
@@ -2005,21 +2005,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Genbu">
@@ -2052,21 +2052,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Diplomatic Vessel">
@@ -2099,12 +2099,12 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="9" y="0" h="-2" />
-   <medium/>
-   <medium/>
-   <medium/>
-   <medium/>
-   <low/>
+   <weapon x="9" y="0" h="-2" />
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
  </ship>
 </Ships>
