@@ -34,6 +34,7 @@ static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
+static int systemL_jumpPos( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
@@ -49,6 +50,7 @@ static const luaL_reg system_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
+   { "jumpPos", systemL_jumpPos },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -406,18 +408,16 @@ static int systemL_jumpdistance( lua_State *L )
 /**
  * @brief Gets all the adjacent systems to a system and the jump point positions.
  *
- * @usage for k,v in pairs( sys:edjacentSystems() ) do -- Iterate over adjacent systems.
- * @usage v = sys:adjacentSystems()[ system.get("Gamma Polaris") ] -- Get the position of the jump to Gamma Polaris.
+ * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *
- *    @luaparam s System to get adjacent systems of, keys are systems, values are jump position.
- *    @luareturn A table with all the adjacent systems.
+ *    @luaparam s System to get adjacent systems of.
+ *    @luareturn An ordered table with all the adjacent systems.
  * @luafunc adjacentSystems( s )
  */
 static int systemL_adjacent( lua_State *L )
 {
    int i;
    LuaSystem sysp;
-   LuaVector lv;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
@@ -426,12 +426,45 @@ static int systemL_adjacent( lua_State *L )
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
       sysp.id = system_index( s->jumps[i].target );
-      lua_pushsystem(L,sysp); /* key. */
-      vectcpy( &lv.vec, &s->jumps[i].pos );
-      lua_pushvector(L,lv); /* value. */
+      lua_pushnumber(L,i+1); /* key. */
+      lua_pushsystem(L,sysp); /* value. */
       lua_rawset(L,-3);
    }
 
+   return 1;
+}
+
+
+/**
+ * @brief Gets the position of a jump point from one system to another.
+ *
+ * @usage v = system.cur():jumpPos( neighbour_system ) -- Gets the position of the jump point to neighbour_system
+ *
+ *    @luaparam from System jumping from.
+ *    @luaparam to System jumping to.
+ *    @luareturn A Vector2D containing the jump position or nil if not connected.
+ * @luafunc jumpPos( fnom, to )
+ */
+static int systemL_jumpPos( lua_State *L )
+{
+   LuaVector lv;
+   StarSystem *from, *to;
+   int i;
+
+   from  = luaL_validsystem(L,1);
+   to    = luaL_validsystem(L,2);
+
+   for (i=0; i<from->njumps; i++) {
+      /* Wait until found. */
+      if (from->jumps[i].target != to)
+         continue;
+
+      vectcpy( &lv.vec, &from->jumps[i].pos );
+      lua_pushvector(L,lv);
+      return 1;
+   }
+
+   lua_pushnil(L);
    return 1;
 }
 
