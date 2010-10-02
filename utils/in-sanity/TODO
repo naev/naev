@@ -1,0 +1,23 @@
+
+The main purpose of this project is to provide an external sanity check to
+naev.
+
+da list: pilot.add
+         player.addOutfit
+         pilot.addOutfit
+         player.addShip
+
+MAJOR:
+ *) OptionParser to define some path
+ *) check fleet validity in pilot.add ( see dat/fleet.xml)
+    ( http://bobbens.dyndns.org/naev-lua/modules/pilot.html#pilot.add )
+    *) Could check if each ship in the fleet exists
+    *) Could check if the fleet faction exists
+ *) check validity of addShip (do not exists in the lua code yet)
+ *) check validity of addOutfit
+
+MINOR:
+ *) Check if planets images are :
+    - used and too used (eg. >10)
+    - not used
+    > Idea: can list planet names by 'space' category filenames
