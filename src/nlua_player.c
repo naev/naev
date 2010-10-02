@@ -61,6 +61,7 @@ static int playerL_autonavDest( lua_State *L );
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
 static int playerL_takeoff( lua_State *L );
+static int playerL_allowLand( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
@@ -87,6 +88,7 @@ static const luaL_reg playerL_methods[] = {
    { "autonavDest", playerL_autonavDest },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
+   { "allowLand", playerL_allowLand },
    { "commClose", playerL_commclose },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
@@ -457,6 +459,34 @@ static int playerL_takeoff( lua_State *L )
    if (landed)
       landed = 0;
 
+   return 0;
+}
+
+
+/**
+ * @brief Allows or disallows the player to land.
+ *
+ * This will allow or disallow landing on a system level and is reset when the
+ *  player enters another system.
+ *
+ * @usage player.allowLand() -- Allows the player to land
+ * @usage player.allowLand( false ) -- Doesn't allow the player to land.
+ *
+ *    @luaparam b Whether or not to allow the player to land (defaults to true if ommitted).
+ * @luafunc allowLand( b )
+ */
+static int playerL_allowLand( lua_State *L )
+{
+   int b;
+   if (lua_gettop(L) > 0)
+      b  = lua_toboolean(L,1);
+   else
+      b = 1;
+
+   if (b)
+      player_setFlag( PLAYER_NOLAND );
+   else
+      player_rmFlag( PLAYER_NOLAND );
    return 0;
 }
 

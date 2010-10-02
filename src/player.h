@@ -24,6 +24,7 @@
 #define PLAYER_LANDACK     (1<<15)  /**< player has permission to land */
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
+#define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
 #define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */

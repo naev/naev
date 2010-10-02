@@ -856,6 +856,9 @@ void player_clear (void)
       player.p->target = PLAYER_ID;
       gui_setTarget();
    }
+
+   /* Clear the noland flag. */
+   player_rmFlag( PLAYER_NOLAND );
 }
 
 
@@ -1448,16 +1451,21 @@ void player_land (void)
          pilot_isFlag( player.p, PILOT_TAKEOFF)))
       return;
 
+   if (player_isFlag( PLAYER_NOLAND)) {
+      player_messageRaw( "\erYou are not allowed to land at this moment." );
+      return;
+   }
+
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
-      player_message( "\erThere are no planets to land on." );
+      player_messageRaw( "\erThere are no planets to land on." );
       return;
    }
 
    if (player.p->nav_planet >= 0) { /* attempt to land */
       planet = cur_system->planets[player.p->nav_planet];
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-         player_message( "\erYou can't land here." );
+         player_messageRaw( "\erYou can't land here." );
          return;
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
@@ -1505,7 +1513,7 @@ void player_land (void)
    else { /* get nearest planet target */
 
       if (cur_system->nplanets == 0) {
-         player_message("\erThere are no planets to land on.");
+         player_messageRaw("\erThere are no planets to land on.");
          return;
       }
 
