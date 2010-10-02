@@ -17,10 +17,11 @@ def lineNumber(string, start):
 
 class LuaFetcher:
 
-    def __init__(self, args):
+    def __init__(self, **args):
         """
         needs to be coded when I know how this class will be called
         """
+        self.config = args
         self.luaScripts = list()
 
     def filenames_from_directory(self):
@@ -28,12 +29,13 @@ class LuaFetcher:
         retrieve a list of files from the directory (the wild viking way)
         """
 
-    def filenames_from_xml(self, datpath, missionspath):
+    def filenames_from_xml(self):
         """
         retrieve a list of files from the mission.xml (the quiet british way)
         """
         import xml.etree.ElementTree as ET
-        missionxml = ET.parse( os.path.normpath(datpath + '/mission.xml') )
+        file = os.path.normpath(self.config['datpath'] + '/mission.xml')
+        missionxml = ET.parse(file))
         print 'Compiling lua scripts list ...'
         for mission in missionxml.findall('mission'):
             for lf in mission.findall('lua'):
@@ -98,6 +100,7 @@ if __name__ == "__main__":
 
     datpath = os.path.abspath(args.datpath)
     missionpath = os.path.abspath(datpath + '/missions')
-    print datpath
-    print missionpath
+    insanity = sanitizer(datpath=datpath, missionpath=missionpath,
+                         verbose=args.verbose,use=args.use)
 
+    insanity.dah_doctor()
