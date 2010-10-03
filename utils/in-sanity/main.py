@@ -24,6 +24,9 @@ def lineNumber(string, start):
 
 class sanitizer:
 
+    _errorstring = "Can not found element %(content)s for function %(func)s "\
+                   "at line %(line)d offset %(offset)d"
+
     def __init__(self, **args):
         """
         needs to be coded when I know how this class will be called
@@ -54,8 +57,8 @@ class sanitizer:
         retrieve a list of files from the mission.xml (the quiet british way)
         """
         import xml.etree.ElementTree as ET
-        file = os.path.normpath(self.config['datpath'] + '/mission.xml')
-        missionxml = ET.parse(file))
+        file = os.path.join(self.config['datpath'],'mission.xml')
+        missionxml = ET.parse(file)
         sys.stdout.write('Compiling file list ...')
         for mission in missionxml.findall('mission'):
             for lf in mission.findall('lua'):
@@ -68,6 +71,11 @@ class sanitizer:
         """
         That's the doctor, it detect wrong stuff but can never heal you.
         """
+        from readers import fleet
+
+        fleetdata = fleet(datpath=self.config['datpath'],
+                          verbose=self.config['verbose'])
+
         rawstr = r"""
         (?P<func>
             pilot\.add\(|
@@ -84,19 +92,33 @@ class sanitizer:
 
         entry = dict()
 
+        print "Checking now ..."
         for file in self.luaScripts:
+            sys.stdout.write("Processing file %(file)s..." % {'file': file})
             try:
                 line = open(file, 'rU').read()
                 for match in search_cobj.finditer(line):
                     lineno, offset = lineNumber(file, match.start())
-                    func = match.group('func')[:-1]
-                    content = match.group('content')
-                    # TODO check if content is in xml data
-                for match in outfit_cobj.finditer(line):
+                    info = dict(
+                            ('lineno', lineno),
+                            ('offset', offset),
+                            ('func', match.group('func')[:-1]),
+                            ('content', match.group('content'))
+                    )
+
+                    if info['func'] is 'pilot.add':
+                        if not fleet.find(content):
+                            print self._errorstring % info
+                    elif info['func'] is 'addOutfit':
+                        pass
+                    elif info['func'] is 'player.addShip':
+                        pass
+
             except IOError as errno, strerror:
                 print "I/O error {0}: {1}".format(errno, strerror)
             except:
                 raise
+            print "\t\tDONE"
 
 if __name__ == "__main__":
 
