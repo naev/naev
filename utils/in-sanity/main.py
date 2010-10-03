@@ -46,9 +46,9 @@ class sanitizer:
         """
         sys.stdout.write('Compiling file list like a wild viking ...')
         for root, dir, files in os.walk(self.config['missionpath']):
-            for file in files:
-                if file[-3:] is "lua":
-                    realname = os.path.join(root,file)
+            for filen in files:
+                if filen[-3:] == "lua":
+                    realname = os.path.join(root,filen)
                     self.luaScripts.append(realname)
         print '        DONE'
         return True
