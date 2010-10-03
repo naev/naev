@@ -15,7 +15,7 @@ def lineNumber(string, start):
     offset = start - string.rfind('\n', 0, start)
     return (lineno, offset)
 
-class LuaFetcher:
+class sanitizer:
 
     def __init__(self, **args):
         """
@@ -24,19 +24,32 @@ class LuaFetcher:
         self.config = args
         self.luaScripts = list()
 
-    def filenames_from_directory(self):
+        if self.config['use'] is 'missionxml':
+            self.dirtyfiles_from_xml()
+        elif self.config['use'] is 'rawfiles':
+            self.dirtyfiles_from_directory()
+
+    def dirtyfiles_from_directory(self):
         """
         retrieve a list of files from the directory (the wild viking way)
         """
+        sys.stdout.write('Compiling file list like a wild viking ...')
+        for root, dir, files in os.walk(self.config['missionpath']):
+            for file in files:
+                if file[-3:] is "lua":
+                    realname = os.path.join(root,file)
+                    self.luaScripts.append(realname)
+        print '\t\tDONE'
+        return True
 
-    def filenames_from_xml(self):
+    def dirtyfiles_from_xml(self):
         """
         retrieve a list of files from the mission.xml (the quiet british way)
         """
         import xml.etree.ElementTree as ET
         file = os.path.normpath(self.config['datpath'] + '/mission.xml')
         missionxml = ET.parse(file))
-        print 'Compiling lua scripts list ...'
+        sys.stdout.write('Compiling lua scripts list ...')
         for mission in missionxml.findall('mission'):
             for lf in mission.findall('lua'):
                 lf = os.path.join(os.abspath(missionspath + lf + '.lua'))
@@ -44,7 +57,10 @@ class LuaFetcher:
         print "\t\tDONE"
         return True
 
-    def sanitizer(self):
+    def dah_doctor(self):
+        """
+        That's the doctor, it detect wrong stuff but can never heal you.
+        """
         rawstr = r"""
         (?P<func>
             pilot\.add\(|
