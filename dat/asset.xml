@@ -5328,11 +5328,11 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <presence>
    <faction>Frontier</faction>
    <value>60.000000</value>
-   <range>2/range>
+   <range>2</range>
   </presence>
   <general>
    <class>A</class>
-   <population>0</population>
+   <population>900000</population>
    <services>
     <land/>
     <refuel/>
@@ -5347,9 +5347,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </commodities>
 <description>Nonuri is a world with an under-developed economy, even by Frontier standards. It barely manages to keep itself from going bankrupt. The people who live here stay mainly out of a sense of belonging, a feeling that Nonuri is their birthright. In fact, Nonuri was colonized by the colony ship Petrovosk, which makes Nonuri one of the oldest extrasolar human settlements. Unfortunatel for the locals, most of the galaxy doesn't care quite as much as they do.</description>
 <bar>The spaceport bar is humble, yet tidy and functional. The Nonurians may not enjoy a rich life, but they make the most of what they've got. Though the equipment is outdated, in some cases by several generations, this bar has most of the things an intergalactic traveler needs to keep abreast of events.</bar>
-  </general>
-  <tech>
-  </tech>
   </general>
  </asset>
  <asset name="Nor">

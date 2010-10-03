@@ -151,7 +151,7 @@ function seiryuuBoard()
         accept2()
         stage = 2
     elseif stage == 6 then -- Debriefing
-        tk.msg(title[7], text[11])
+        tk.msg(title[7], text[11]:format(player.name(), player.name()))
         player.pay(500000) -- 500K
         player.unboard()
         seiryuu:setHilight(false)
