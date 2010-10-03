@@ -35,9 +35,9 @@ class sanitizer:
         self.config = args
         self.luaScripts = list()
 
-        if self.config['use'] is 'missionxml':
+        if self.config['use'] == 'missionxml':
             self.dirtyfiles_from_xml()
-        elif self.config['use'] is 'rawfiles':
+        elif self.config['use'] == 'rawfiles':
             self.dirtyfiles_from_directory()
 
     def dirtyfiles_from_directory(self):
