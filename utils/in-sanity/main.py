@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
+"""
+A sanity check tool to know where the crap is.
+
+For usage information, run ``main.py --usage``
+
+For licensing information, see the LICENSE file in this directory.
+"""
 
 import os, sys
 from argparse import ArgumentParser
@@ -49,7 +56,7 @@ class sanitizer:
         import xml.etree.ElementTree as ET
         file = os.path.normpath(self.config['datpath'] + '/mission.xml')
         missionxml = ET.parse(file))
-        sys.stdout.write('Compiling lua scripts list ...')
+        sys.stdout.write('Compiling file list ...')
         for mission in missionxml.findall('mission'):
             for lf in mission.findall('lua'):
                 lf = os.path.join(os.abspath(missionspath + lf + '.lua'))
