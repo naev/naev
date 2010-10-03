@@ -68,7 +68,7 @@ else -- default english
     "Welcome back, Jorek, %s," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
     Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, captain Rebina calls up a schematic view of the Genbu from the holotable.
     "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, %s. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
-    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. It's enough to make a lesser man nervous.]]
+    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser man might get nervous.]]
 
     Jorscene[1] = [[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]]
     Jorscene[2] = [[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]]
@@ -129,7 +129,8 @@ end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
 function accept2()
-    tick = {}
+    tick = {false, false, false, false, false}
+    tick["__save"] = true
     osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
     misn.osdCreate(osd_title, osd_msg)
     misn.setDesc(misn_desc2)
@@ -187,7 +188,7 @@ function enter()
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(300, 300) + seirplanet:pos())[1]
         seiryuu:setInvincible(true)
         seiryuu:disable()
-        if stage == 1 or stage == 5 then
+        if stage == 1 or stage == 6 then
             seiryuu:setHilight(true)
             hook.pilot(seiryuu, "board", "seiryuuBoard")
         else
@@ -248,7 +249,7 @@ function enter()
         hook.timer(delay, "leaderVis", true)
 
         hook.pilot(joe, "board", "joeBoard")
-        hook.timer(500, "patrolPoll")
+        poller = hook.timer(500, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
         tk.msg(joefailtitle, joefailtext:format(player.name()))
         abort()
@@ -353,7 +354,7 @@ end
 -- Makes the squads patrol their routes.
 -- TODO: make this shorter
 function leaderIdle(pilot)
-    for i, j in ipairs(leaders) do
+    for i, j in ipairs(leader) do
         if j == pilot then
             if tick[i] then pilot:goto(leaderdest[i], false)
             else pilot:goto(leaderstart[i], false)
@@ -454,7 +455,7 @@ function jorek()
     misn.cargoAdd("Jorek", 0)
 
     osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
-    misn.osdCreate(osd_title, osd_msg2)
+    misn.osdCreate(osd_title, osd2_msg)
 
     stage = 4
 end
