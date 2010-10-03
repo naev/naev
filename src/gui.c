@@ -820,7 +820,11 @@ void gui_render( double dt )
     * Countdown timers.
     */
    blink_pilot    -= dt;
+   if (blink_pilot < 0.)
+      blink_pilot += RADAR_BLINK_PILOT;
    blink_planet   -= dt;
+   if (blink_planet < 0.)
+      blink_planet += RADAR_BLINK_PLANET;
    if (interference_alpha > 0.)
       interference_t += dt;
 
@@ -1242,9 +1246,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
                gui_vboColourOffset, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINES, 0, curs/2 );
       }
-
-      if (blink_pilot < 0.)
-         blink_pilot += RADAR_BLINK_PILOT;
    }
 
    /* Deactivate VBO. */
@@ -1253,12 +1254,19 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
-   col    = gui_getPilotColour(p);
+   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot > RADAR_BLINK_PILOT/2.))
+      col = &cRadar_hilight;
+   else
+      col = gui_getPilotColour(p);
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
    ccol.a = 1.-interference_alpha;
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+
+   /* Draw name. */
+   if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
+      gl_printRaw( &gl_smallFont, x+2*sx+5., y-gl_smallFont.h/2., col, p->name );
 }
 
 
@@ -1267,46 +1275,24 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  */
 void gui_renderPlayer( double res, int overlay )
 {
-   int i;
-   GLfloat vertex[2*4], colours[4*4];
-   GLfloat vx,vy, vr;
+   double x, y, r;
 
    if (overlay) {
-      vx = player.p->solid->pos.x / res;
-      vy = player.p->solid->pos.y / res;
-      vr = 5.;
+      x = player.p->solid->pos.x / res;
+      y = player.p->solid->pos.y / res;
+      r = 5.;
    }
    else {
-      vx = 0.;
-      vy = 0.;
-      vr = 3.;
+      x = 0.;
+      y = 0.;
+      r = 3.;
    }
 
-   /* the + sign in the middle of the radar representing the player */
-   for (i=0; i<4; i++) {
-      colours[4*i + 0] = cRadar_player.r;
-      colours[4*i + 1] = cRadar_player.g;
-      colours[4*i + 2] = cRadar_player.b;
-      colours[4*i + 3] = cRadar_player.a;
-   }
-   gl_vboSubData( gui_vbo, gui_vboColourOffset,
-         sizeof(GLfloat) * 4*4, colours );
-   /* Set up vertex. */
-   vertex[0] = vx+0.;
-   vertex[1] = vy-vr;
-   vertex[2] = vx+0.;
-   vertex[3] = vy+vr;
-   vertex[4] = vx-vr;
-   vertex[5] = vy+0.;
-   vertex[6] = vx+vr;
-   vertex[7] = vy+0.;
-   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
-   /* Draw tho VBO. */
-   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
-         gui_vboColourOffset, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 4 );
-   gl_vboDeactivate();
+   /* Render the cross. */
+   gl_renderCross( x, y, r, &cRadar_player );
+
+   if (overlay)
+      gl_printRaw( &gl_smallFont, x+r+5., y-gl_smallFont.h/2., &cRadar_player, "You" );
 }
 
 
@@ -1399,9 +1385,6 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
             gui_vboColourOffset, 4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, curs/2 );
    }
-
-   if (blink_planet < 0.)
-      blink_planet += RADAR_BLINK_PLANET;
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
@@ -1666,7 +1649,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, jp->target->name );
+      gl_printRaw( &gl_smallFont, cx+vr+5., cy, col, sys_isKnown(jp->target) ? jp->target->name : "Unknown" );
 }
 #undef CHECK_PIXEL
 

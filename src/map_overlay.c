@@ -15,6 +15,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "space.h"
+#include "input.h"
 
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
@@ -32,6 +33,83 @@ int ovr_isOpen (void)
 
 
 /**
+ * @brief Handles input to the map overlay.
+ */
+int ovr_input( SDL_Event *event )
+{
+   int mx, my;
+   double x, y;
+
+   /* We only want mouse events. */
+   if (event->type != SDL_MOUSEBUTTONDOWN)
+      return 0;
+  
+   /* Autogo. */
+   if (event->button.button == SDL_BUTTON_RIGHT) {
+      /* Translate from window to screen. */
+      mx = event->button.x;
+      my = event->button.y;
+      gl_windowToScreenPos( &mx, &my, mx, my );
+
+      /* Translate to space coords. */
+      x  = ((double)mx - SCREEN_W/2.) * ovr_res;
+      y  = ((double)my - SCREEN_H/2.) * ovr_res;
+
+      /* Go to position. */
+      player_autonavPos( x, y );
+
+      return 1;
+   }
+   
+   return 0;
+}
+
+
+/**
+ * @brief Refreshes the map overlay recalculating the dimensions it should have.
+ *
+ * This should be called if the planets or the likes change at any given time.
+ */
+void ovr_refresh (void)
+{
+   double max_x, max_y;
+   int i;
+
+   /* Must be open. */
+   if (!ovr_isOpen())
+      return;
+
+   /* Calculate max size. */
+   max_x = 0.;
+   max_y = 0.;
+   for (i=0; i<cur_system->njumps; i++) {
+      max_x = MAX( max_x, ABS(cur_system->jumps[i].pos.x) );
+      max_y = MAX( max_y, ABS(cur_system->jumps[i].pos.y) );
+   }
+   for (i=0; i<cur_system->nplanets; i++) {
+      max_x = MAX( max_x, ABS(cur_system->planets[i]->pos.x) );
+      max_y = MAX( max_y, ABS(cur_system->planets[i]->pos.y) );
+   }
+
+   /* We need to calculate the radius of the rendering. */
+   ovr_res = 2. * 1.2 * MAX( max_x / SCREEN_W, max_y / SCREEN_H );
+}
+
+
+static void ovr_setOpen( int open )
+{
+   if (open && !ovr_open) {
+      ovr_open = 1;
+      input_mouseShow();
+   }
+   else if (ovr_open) {
+      ovr_open = 0;
+      input_mouseHide();
+   }
+}
+
+
+/**
  * @brief Handles a keypress event.
  */
 void ovr_key( int type )
@@ -42,18 +120,18 @@ void ovr_key( int type )
 
    if (type > 0) {
       if (ovr_open)
-         ovr_open = 0;
+         ovr_setOpen(0);
       else {
-         /* We need to calculate the radius of the rendering. */
-         ovr_res = (cur_system->radius * 1.2) / (MIN( SCREEN_W, SCREEN_H )/2.);
-
-         ovr_open = 1;
+         ovr_setOpen(1);
          ovr_opened  = t;
+
+         /* Refresh overlay size. */
+         ovr_refresh();
       }
    }
    else if (type < 0) {
       if (t - ovr_opened > 300)
-         ovr_open = 0;
+         ovr_setOpen(0);
    }
 }
 

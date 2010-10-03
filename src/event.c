@@ -489,8 +489,12 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"unique"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"unique")) {
                temp->flags |= EVENT_FLAG_UNIQUE;
+               continue;
+            }
+            WARN("Event '%s' has unknown flag node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -691,6 +695,17 @@ void event_activateClaims (void)
    for (i=0; i<event_nactive; i++)
       if (event_active[i].claims != NULL)
          claim_activate( event_active[i].claims );
+}
+
+
+/**
+ * @brief Tests to see if an event has claimed a system.
+ */
+int event_testClaims( unsigned int eventid, int sys )
+{
+   Event_t *ev;
+   ev = event_get( eventid );
+   return claim_testSys( ev->claims, sys );
 }
 
 

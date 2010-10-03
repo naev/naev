@@ -40,6 +40,7 @@
 #include "nlua_pilot.h"
 #include "npng.h"
 #include "background.h"
+#include "map_overlay.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -942,6 +943,9 @@ void space_init ( const char* sysname )
    sound_disabled = s;
    player_messageToggle( 1 );
    pilot_rmFlag( player.p, PILOT_INVISIBLE );
+
+   /* Refresh overlay if necessary (player kept it open). */
+   ovr_refresh();
 
    /* Update gui. */
    gui_setSystem();

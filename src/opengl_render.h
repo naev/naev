@@ -76,6 +76,10 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
 
 
+/* Cross. */
+void gl_renderCross( double x, double y, double r, const glColour *c );
+
+
 /* Clipping. */
 void gl_clipRect( int x, int y, int w, int h );
 void gl_unclipRect (void);

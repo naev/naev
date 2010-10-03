@@ -103,7 +103,10 @@
 #define PILOT_DEATH_SOUND  31 /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     32 /**< Pilot did final death explosion. */
 #define PILOT_DELETE       33 /**< Pilot will get deleted asap. */
-#define PILOT_INVISIBLE    34 /**< Pilot is invisible to other pilots. */
+#define PILOT_VISPLAYER    34 /**< Pilot is always visible to the player (only player). */
+#define PILOT_VISIBLE      35 /**< Pilot is always visible to other pilots. */
+#define PILOT_HILIGHT      37 /**< Pilot is hilighted when visible (this does not increase visibility). */
+#define PILOT_INVISIBLE    36 /**< Pilot is invisible to other pilots. */
 #define PILOT_FLAGS_MAX    PILOT_INVISIBLE+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 

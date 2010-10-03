@@ -882,6 +882,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
       xmlr_float(node,"accuracy",temp->u.blt.accuracy);
@@ -948,6 +949,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
          continue;
       }
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* If not defined assume maximum. */
@@ -1015,6 +1017,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       xmlr_float(node,"range",temp->u.bem.range);
       xmlr_float(node,"turn",temp->u.bem.turn);
       xmlr_float(node,"energy",temp->u.bem.energy);
@@ -1056,6 +1059,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.sound_off = sound_get( xml_get(node) );
          continue;
       }
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -1112,10 +1116,12 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       xmlr_int(node,"delay",temp->u.lau.delay);
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -1171,6 +1177,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.ew_lockon   = 1.;
 
    do { /* load all the data */
+      xml_onlyNodes(node);
       /* Basic */
       if (xml_isNode(node,"duration")) {
          buf = xml_nodeProp(node,"blowup");
@@ -1236,7 +1243,11 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
             temp->u.amm.ai = 1;
          else if (strcmp(buf,"smart")==0)
             temp->u.amm.ai = 2;
+         else
+            WARN("Ammo '%s' has unknown ai type '%s'.", temp->name, buf);
+         continue;
       }
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post-processing */
@@ -1290,6 +1301,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    node = parent->children;
 
    do { /* load all the data */
+      xml_onlyNodes(node);
       /* movement */
       xmlr_float(node,"thrust",temp->u.mod.thrust);
       xmlr_float(node,"thrust_rel",temp->u.mod.thrust_rel);
@@ -1312,6 +1324,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
+      /* Since we parse stats afterwards we can't be sure it isn't a stat...
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);*/
    } while (xml_nextNode(node));
    /* stats */
    ship_statsParse( &temp->u.mod.stats, parent );
@@ -1390,14 +1404,17 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->u.afb.speed  = 1.;
 
    do { /* parse the data */
+      xml_onlyNodes(node);
       xmlr_float(node,"rumble",temp->u.afb.rumble);
-      if (xml_isNode(node,"sound"))
+      if (xml_isNode(node,"sound")) {
          temp->u.afb.sound = sound_get( xml_get(node) );
-
+         continue;
+      }
       xmlr_float(node,"thrust",temp->u.afb.thrust);
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -1441,10 +1458,12 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
       xmlr_int(node,"delay",temp->u.bay.delay);
       xmlr_float(node,"cpu",temp->u.bay.cpu);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
       xmlr_int(node,"amount",temp->u.bay.amount);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -1490,7 +1509,9 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
+      xml_onlyNodes(node);
       xmlr_strd(node,"ship",temp->u.fig.ship);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set short description. */
@@ -1521,7 +1542,9 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
+      xml_onlyNodes(node);
       xmlr_int(node,"radius",temp->u.map.radius);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set short description. */
@@ -1553,7 +1576,9 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
       xmlr_strd(node,"gui",temp->u.gui.gui);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set short description. */
@@ -1574,19 +1599,16 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
  */
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 {
-   /* Licenses have no specific tidbits. */
-   (void) parent;
-
    temp->slot.type         = OUTFIT_SLOT_NA;
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
-   /*
    xmlNodePtr node;
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
-   */
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1608,10 +1630,12 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
       xmlr_float(node,"range",temp->u.jam.range);
       xmlr_float(node,"chance",temp->u.jam.chance);
       xmlr_float(node,"energy",temp->u.jam.energy);
       xmlr_float(node,"cpu",temp->u.jam.cpu);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
@@ -1674,6 +1698,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
@@ -1682,22 +1707,27 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               continue;
             }
             else if (xml_isNode(cur,"slot")) {
                cprop = xml_get(cur);
                if (cprop == NULL)
-                  WARN("Outfit Slot type invalid.");
+                  WARN("Outfit '%s' has an slot type invalid.", temp->name);
                else if (strcmp(cprop,"structure") == 0)
                   temp->slot.type = OUTFIT_SLOT_STRUCTURE;
                else if (strcmp(cprop,"utility") == 0)
                   temp->slot.type = OUTFIT_SLOT_UTILITY;
                else if (strcmp(cprop,"weapon") == 0)
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
+               else
+                  WARN("Outfit '%s' has unknown slot type '%s'.", temp->name, cprop);
+               continue;
             }
             else if (xml_isNode(cur,"size")) {
                temp->slot.size = outfit_toSlotSize( xml_get(cur) );
+               continue;
             }
-
+            WARN("Outfit '%s' has unknown general node '%s'",temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -1748,8 +1778,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 
          continue;
       }
-
-      DEBUG("Unknown node '%s' in outfit '%s'", node->name, temp->name);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \

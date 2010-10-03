@@ -171,6 +171,12 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 
 
 /*
+ * Mouse.
+ */
+static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
+
+
+/*
  * from player.c
  */
 extern double player_left;  /**< player.c */
@@ -364,6 +370,29 @@ void input_exit (void)
    free(input_keybinds);
 
    input_keyConvDestroy();
+}
+
+
+/**
+ * @brief Shows the mouse.
+ */
+void input_mouseShow (void)
+{
+   SDL_ShowCursor( SDL_ENABLE );
+   input_mouseCounter++;
+}
+
+
+/**
+ * @brief Hides the mouse.
+ */
+void input_mouseHide (void)
+{
+   input_mouseCounter--;
+   if (input_mouseCounter <= 0) {
+      SDL_ShowCursor( SDL_DISABLE );
+      input_mouseCounter = 0;
+   }
 }
 
 
@@ -655,12 +684,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* accelerating */
    if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_accel(kabs);
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
-            if (!paused) player_abortAutonav(NULL);
+            if (!paused) player_autonavAbort(NULL);
             player_accel(1.);
          }
 
@@ -693,14 +722,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning left */
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_TURN_LEFT);
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_abortAutonav(NULL);
+            if (!paused) player_autonavAbort(NULL);
             player_setFlag(PLAYER_TURN_LEFT);
             player_left = 1.;
          }
@@ -713,14 +742,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning right */
    } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_TURN_RIGHT);
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_abortAutonav(NULL);
+            if (!paused) player_autonavAbort(NULL);
             player_setFlag(PLAYER_TURN_RIGHT);
             player_right = 1.;
          }
@@ -733,7 +762,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
@@ -768,7 +797,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* face the target */
    } else if (KEY("face") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_FACE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
@@ -777,7 +806,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_board();
       }
 
@@ -836,26 +865,26 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * space
     */
    } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
-      if (value==KEY_PRESS) player_startAutonav();
+      if (value==KEY_PRESS) player_autonavStart();
    /* target planet (cycles like target) */
    } else if (KEY("target_planet") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_land();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         player_autonavAbort(NULL);
          player_targetHyperspace();
       }
    } else if (KEY("starmap") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_jump();
       }
    } else if (KEY("overlay") && NOHYP() && NODEAD() && INGAME() && !repeat) {
@@ -1021,6 +1050,10 @@ void input_handle( SDL_Event* event )
    if (toolkit_isOpen()) /* toolkit handled seperately completely */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
+
+   if (ovr_isOpen())
+      if (ovr_input(event))
+         return; /* Don't process if the map overlay wants it. */
 
    switch (event->type) {
 

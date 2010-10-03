@@ -13,7 +13,6 @@
 /*
  * Flags.
  */
-#define FLEET_FLAG_GUARD         (1<<0) /**< Fleet is considered to be guarding. */
 #define fleet_setFlag(x,f)       ((x)->flags |= (f)) /**< Sets a fleet flag. */
 #define fleet_isFlag(x,f)        ((x)->flags & (f)) /**< Checks to see if fleet has flag. */
 

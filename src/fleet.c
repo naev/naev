@@ -171,8 +171,8 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
       if (xml_isNode(node,"flags")){
          cur = node->children;
          do {
-            if (xml_isNode(cur,"guard"))
-               fleet_setFlag(temp, FLEET_FLAG_GUARD);
+            xml_onlyNodes(cur);
+            WARN("Fleet '%s' has unknown flag node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -182,6 +182,8 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          cur = node->children;
          mem = 0;
          do {
+            xml_onlyNodes(cur);
+
             if (xml_isNode(cur,"pilot")) {
 
                /* See if must grow. */
@@ -211,7 +213,10 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                   WARN("Pilot %s in Fleet %s has invalid ship", pilot->name, temp->name);
                if (c!=NULL)
                   free(c);
+               continue;
             }
+
+            WARN("Fleet '%s' has unknown pilot node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
 
          /* Resize to minimum. */

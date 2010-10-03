@@ -81,6 +81,7 @@ glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Play
 glColour cRadar_tPilot  =  { .r = 0.8, .g = 0.5, .b = 0.0, .a = 1.  }; /**< Targetted object colour on radar. */
 glColour cRadar_tPlanet =  { .r = 0.7, .g = 0.0, .b = 0.9, .a = 1.  }; /**< Targetted planet colour. */
 glColour cRadar_weap    =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Weapon colour on radar. */
+glColour cRadar_hilight =  { .r = 0.0, .g = 0.8, .b = 0.8, .a = 1.  }; /**< Radar hilighted object. */
 /* health */
 glColour cShield        =  { .r = 0.2, .g = 0.2, .b = 0.8, .a = 1.  }; /**< Shield bar colour. */
 glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armour bar colour. */
@@ -89,14 +90,14 @@ glColour cFuel          =  { .r = 0.9, .g = 0.1, .b = 0.4, .a = 1.  }; /**< Fuel
 
 /* Deiz's Super Font Palette */
 
-glColour cFontRed       =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
-glColour cFontGreen     =  { .r = 0.4, .g = 0.8, .b = 0.2, .a = 1. };
-glColour cFontBlue      =  { .r = 0.2, .g = 0.4, .b = 0.8, .a = 1. };
-glColour cFontYellow    =  { .r = 0.9, .g = 0.8, .b = 0.0, .a = 1. };
+glColour cFontRed       =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  };
+glColour cFontGreen     =  { .r = 0.4, .g = 0.8, .b = 0.2, .a = 1.  };
+glColour cFontBlue      =  { .r = 0.2, .g = 0.4, .b = 0.8, .a = 1.  };
+glColour cFontYellow    =  { .r = 0.9, .g = 0.8, .b = 0.0, .a = 1.  };
 glColour cFontWhite     =  { .r = 0.8, .g = 0.8, .b = 0.8, .a = 1.  };
 glColour cFontPurple    =  { .r = 0.7, .g = 0.3, .b = 0.7, .a = 1.  };
-glColour cFontFriendly  =  { .r = 0.3, .g = 0.9, .b = 0.3, .a = 1. };
-glColour cFontHostile   =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cFontFriendly  =  { .r = 0.3, .g = 0.9, .b = 0.3, .a = 1.  };
+glColour cFontHostile   =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  };
 glColour cFontNeutral   =  { .r = 1.0, .g = 0.9, .b = 0.0, .a = 1.  };
 
 
@@ -235,14 +236,10 @@ void col_rgb2hsv( double *H, double *S, double *V, double R, double G, double B 
  */
 void col_blend( glColour *blend, glColour fg, glColour bg, double alpha )
 {
-   glColour temp;
-
-   temp.r = (1 - alpha) * bg.r + alpha * fg.r;
-   temp.g = (1 - alpha) * bg.g + alpha * fg.g;
-   temp.b = (1 - alpha) * bg.b + alpha * fg.b;
-   temp.a = (1 - alpha) * bg.a + alpha * fg.a;
-
-   *blend = temp;
+   blend->r = (1. - alpha) * bg.r + alpha * fg.r;
+   blend->g = (1. - alpha) * bg.g + alpha * fg.g;
+   blend->b = (1. - alpha) * bg.b + alpha * fg.b;
+   blend->a = (1. - alpha) * bg.a + alpha * fg.a;
 }
 
 

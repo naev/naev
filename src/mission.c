@@ -67,7 +67,7 @@ static int mission_nstack = 0; /**< Mssions in stack. */
 /* static */
 /* Generation. */
 static unsigned int mission_genID (void);
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create );
+static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id );
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
@@ -141,18 +141,21 @@ MissionData* mission_get( int id )
  *    @param misn Data to use.
  *    @param genid 1 if should generate id, 0 otherwise.
  *    @param create 1 if should run create function, 0 otherwise.
- *    @return ID of the newly created mission.
+ *    @param[out] id ID of teh newly created mission.
+ *    @return 0 on success.
  */
-static int mission_init( Mission* mission, MissionData* misn, int genid, int create )
+static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
 {
    char *buf;
    uint32_t bufsize;
 
    /* clear the mission */
-   memset(mission,0,sizeof(Mission));
+   memset( mission, 0, sizeof(Mission) );
 
    /* Create id if needed. */
    mission->id    = (genid) ? mission_genID() : 0;
+   if (id != NULL)
+      *id         = mission->id;
    mission->data  = misn;
    if (create) {
       mission->title = strdup(misn->name);
@@ -193,7 +196,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       }
    }
 
-   return mission->id;
+   return 0;
 }
 
 
@@ -312,7 +315,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
             chance = 1.;
 
          if (RNGF() < chance) {
-            mission_init( &mission, misn, 1, 1 );
+            mission_init( &mission, misn, 1, 1, NULL );
             mission_cleanup(&mission); /* it better clean up for itself or we do it */
          }
       }
@@ -327,12 +330,14 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
  * active missions.
  *
  *    @param name Name of the mission to start.
+ *    @param[out] id ID of the newly created mission.
  *    @return 0 on success.
  */
-int mission_start( const char *name )
+int mission_start( const char *name, unsigned int *id )
 {
    Mission mission;
    MissionData *mdat;
+   int ret;
 
    /* Try to get the mission. */
    mdat = mission_get( mission_getID(name) );
@@ -340,10 +345,10 @@ int mission_start( const char *name )
       return -1;
 
    /* Try to run the mission. */
-   mission_init( &mission, mdat, 1, 1 );
+   ret = mission_init( &mission, mdat, 1, 1, id );
    mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
-   return 0;
+   return ret;
 }
 
 
@@ -680,7 +685,7 @@ Mission* missions_genList( int *n, int faction,
                   tmp      = realloc( tmp, sizeof(Mission) * alloced );
                }
                /* Initialize the mission. */
-               if (mission_init( &tmp[m-1], misn, 1, 1 ) < 0)
+               if (mission_init( &tmp[m-1], misn, 1, 1, NULL ))
                   m--;
             }
       }
@@ -779,14 +784,19 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"unique"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"unique")) {
                mis_setFlag(temp,MISSION_UNIQUE);
+               continue;
+            }
+            WARN("Mission '%s' has unknown flag node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node,"avail")) { /* mission availability */
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"location")) {
                temp->avail.loc = mission_location( xml_get(cur) );
                continue;
@@ -804,6 +814,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"cond",temp->avail.cond);
             xmlr_strd(cur,"done",temp->avail.done);
             xmlr_int(cur,"priority",temp->avail.priority);
+            WARN("Mission '%s' has unknown avail node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -1049,7 +1060,11 @@ static int missions_parseActive( xmlNodePtr parent )
             continue;
          }
          else {
-            mission_init( misn, data, 0, 0 );
+            if (mission_init( misn, data, 0, 0, NULL )) {
+               WARN("Mission '%s' from savegame failed to load properly - ignoring.", buf);
+               free(buf);
+               continue;
+            }
             misn->accepted = 1;
          }
          free(buf);

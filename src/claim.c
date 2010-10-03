@@ -110,6 +110,34 @@ int claim_test( SysClaim_t *claim )
 
 
 /**
+ * @brief Tests to see if a system is claimed by a system claim.
+ *
+ *    @param claim System claim to test.
+ *    @param sys System to see if is claimed by the system claim.
+ *    @return 0 if no collision is found, 1 otherwise.
+ */
+int claim_testSys( SysClaim_t *claim, int sys )
+{
+   int i;
+
+   /* Must actually have a claim. */
+   if (claim == NULL)
+      return 0;
+
+   /* Make sure something to activate. */
+   if (claim->ids == NULL)
+      return 0;
+
+   /* See if the system is claimed. */
+   for (i=0; i<array_size(claim->ids); i++)
+      if (claim->ids[i] == sys)
+         return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Destroys a system claim.
  *
  *    @param claim System claim to destroy.

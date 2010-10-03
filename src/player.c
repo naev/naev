@@ -68,6 +68,7 @@ Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_mission   = NULL; /**< More hack. */
+static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
  * Licenses.
@@ -194,6 +195,8 @@ static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static void player_autonav (void);
+static int player_autonavApproach( Vector2d *pos );
+static int player_autonavBrake (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
@@ -266,7 +269,7 @@ void player_new (void)
 
    /* Add the mission if found. */
    if (player_mission != NULL) {
-      if (mission_start( player_mission ) < 0)
+      if (mission_start(player_mission, NULL))
          WARN("Failed to run start mission '%s'.", player_mission);
       free(player_mission);
       player_mission = NULL;
@@ -327,46 +330,65 @@ static int player_newMake (void)
       return -1;
    }
    do {
+      xml_onlyNodes(node);
+      if (xml_isNode(node, "name")) /* Avoid warning. */
+         continue;
       if (xml_isNode(node, "player")) { /* we are interested in the player */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"ship"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"ship")) {
                ship = ship_get( xml_get(cur) );
+               continue;
+            }
             else if (xml_isNode(cur,"credits")) { /* monies range */
                tmp = cur->children;
                do {
+                  xml_onlyNodes(tmp);
                   xmlr_int(tmp, "low", l);
                   xmlr_int(tmp, "high", h);
+                  WARN("'"START_DATA"' has unknown credit node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
+               continue;
             }
             else if (xml_isNode(cur,"system")) {
                tmp = cur->children;
                do {
+                  xml_onlyNodes(tmp);
                   /** system name, @todo percent chance */
                   xmlr_strd(tmp, "name", sysname);
                   /* position */
                   xmlr_float(tmp,"x",x);
                   xmlr_float(tmp,"y",y);
+                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
+               continue;
             }
             xmlr_float(cur,"player_crating",player.crating);
             if (xml_isNode(cur,"date")) {
                tmp = cur->children;
                do {
+                  xml_onlyNodes(tmp);
                   xmlr_int(tmp, "low", tl);
                   xmlr_int(tmp, "high", th);
+                  WARN("'"START_DATA"' has unknown date node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
+               continue;
             }
             /* Check for mission. */
             if (xml_isNode(cur,"mission")) {
                if (player_mission != NULL) {
-                  WARN("start.xml already contains a mission node!");
+                  WARN("'"START_DATA"' already contains a mission node!");
                   continue;
                }
                player_mission = xml_getStrd(cur);
+               continue;
             }
+            WARN("'"START_DATA"' has unknown player node '%s'.", cur->name);
          } while (xml_nextNode(cur));
+         continue;
       }
+      WARN("'"START_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    /* Clean up. */
@@ -854,6 +876,9 @@ void player_clear (void)
       player.p->target = PLAYER_ID;
       gui_setTarget();
    }
+
+   /* Clear the noland flag. */
+   player_rmFlag( PLAYER_NOLAND );
 }
 
 
@@ -943,7 +968,7 @@ void player_render( double dt )
 /**
  * @brief Starts autonav.
  */
-void player_startAutonav (void)
+void player_autonavStart (void)
 {
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -959,13 +984,13 @@ void player_startAutonav (void)
 
    player_message("\epAutonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
-   player.autonav = AUTONAV_APPROACH;
+   player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
 /**
  * @brief Starts autonav and closes the window.
  */
-void player_startAutonavWindow( unsigned int wid, char *str)
+void player_autonavStartWindow( unsigned int wid, char *str)
 {
    (void) str;
 
@@ -984,9 +1009,20 @@ void player_startAutonavWindow( unsigned int wid, char *str)
 }
 
 /**
+ * @brief Starts autonav with a local position destination.
+ */
+void player_autonavPos( double x, double y )
+{
+   player.autonav    = AUTONAV_POS_APPROACH;
+   vect_cset( &player.autonav_pos, x, y );
+   player_message("\epAutonav initialized.");
+   player_setFlag(PLAYER_AUTONAV);
+}
+
+/**
  * @brief Aborts autonav.
  */
-void player_abortAutonav( char *reason )
+void player_autonavAbort( char *reason )
 {
    /* No point if player is beyond aborting. */
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
@@ -1050,15 +1086,20 @@ void player_think( Pilot* pplayer, const double dt )
    if (player_isFlag(PLAYER_AUTONAV)) {
       /* Abort if lockons detected. */
       if (pplayer->lockons > 0)
-         player_abortAutonav("Missile Lockon Detected");
+         player_autonavAbort("Missile Lockon Detected");
+      else if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
+               (player.autonav == AUTONAV_JUMP_BRAKE)) {
+         /* If we're already at the target. */
+         if (player.p->nav_hyperspace == -1)
+            player_autonavAbort("Target changed to current system");
 
-      /* If we're already at the target. */
-      else if (player.p->nav_hyperspace == -1)
-         player_abortAutonav("Target changed to current system");
+         /* Need fuel. */
+         else if (pplayer->fuel < HYPERSPACE_FUEL)
+            player_autonavAbort("Not enough fuel for autonav to continue");
 
-      /* Need fuel. */
-      else if (pplayer->fuel < HYPERSPACE_FUEL)
-         player_abortAutonav("Not enough fuel for autonav to continue");
+         else
+            player_autonav();
+      }
 
       /* Keep on moving. */
       else
@@ -1141,7 +1182,7 @@ void player_think( Pilot* pplayer, const double dt )
       ret = pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
-         player_abortAutonav(NULL);
+         player_autonavAbort(NULL);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1155,7 +1196,7 @@ void player_think( Pilot* pplayer, const double dt )
       else {
          ret = pilot_shoot( pplayer, 1 );
          if (ret)
-            player_abortAutonav(NULL);
+            player_autonavAbort(NULL);
       }
 
       player_setFlag(PLAYER_SECONDARY_L);
@@ -1187,64 +1228,103 @@ void player_think( Pilot* pplayer, const double dt )
 static void player_autonav (void)
 {
    JumpPoint *jp;
-   double d, time, vel, dist;
-
-   /* Target jump. */
-   jp = &cur_system->jumps[ player.p->nav_hyperspace ];
+   int ret;
 
    switch (player.autonav) {
-      case AUTONAV_APPROACH:
-         /* Only accelerate if facing move dir. */
-         d = pilot_face( player.p, vect_angle( &player.p->solid->pos, &jp->pos ) );
-         if (FABS(d) < MIN_DIR_ERR) {
-            if (player_acc < 1.)
-               player_accel( 1. );
-         }
-         else if (player_acc > 0.)
-            player_accelOver();
-
-         /* Get current time to reach target. */
-         time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
-            (player.p->thrust / player.p->solid->mass);
-
-         /* Get velocity. */
-         vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
-
-         /* Get distance. */
-         dist  = vel*(time+1.1*180./player.p->turn) -
-               0.5*(player.p->thrust/player.p->solid->mass)*time*time;
-
-         /* See if should start braking. */
-         if (dist*dist > vect_dist2( &jp->pos, &player.p->solid->pos )) {
-            player_accelOver();
-            player.autonav = AUTONAV_BRAKE;
-         }
-
+      case AUTONAV_JUMP_APPROACH:
+         /* Target jump. */
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         ret   = player_autonavApproach( &jp->pos );
+         if (ret)
+            player.autonav = AUTONAV_JUMP_BRAKE;
          break;
 
-      case AUTONAV_BRAKE:
-         /* Braking procedure. */
-         d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
-         if (FABS(d) < MIN_DIR_ERR) {
-            if (player_acc < 1.)
-               player_accel( 1. );
-         }
-         else if (player_acc > 0.)
-            player_accelOver();
-
+      case AUTONAV_JUMP_BRAKE:
+         /* Target jump. */
+         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
+         ret   = player_autonavBrake();
          /* Try to jump or see if braked. */
          if (space_canHyperspace(player.p)) {
-            player.autonav = AUTONAV_APPROACH;
+            player.autonav = AUTONAV_JUMP_APPROACH;
             player_accelOver();
             player_jump();
          }
-         else if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
-            player.autonav = AUTONAV_APPROACH;
-            player_accelOver();
+         else if (ret)
+            player.autonav = AUTONAV_JUMP_APPROACH;
+         break;
+   
+      case AUTONAV_POS_APPROACH:
+         ret = player_autonavApproach( &player.autonav_pos );
+         if (ret) {
+            player_rmFlag( PLAYER_AUTONAV );
+            player_message( "\epAutonav arrived at position." );
          }
-
          break;
    }
+}
+
+
+/**
+ * @brief Handles approaching a position with autonav.
+ *
+ *    @param pos Position to go to.
+ *    @return 1 on completion.
+ */
+static int player_autonavApproach( Vector2d *pos )
+{
+   double d, time, vel, dist;
+
+   /* Only accelerate if facing move dir. */
+   d = pilot_face( player.p, vect_angle( &player.p->solid->pos, pos ) );
+   if (FABS(d) < MIN_DIR_ERR) {
+      if (player_acc < 1.)
+         player_accel( 1. );
+   }
+   else if (player_acc > 0.)
+      player_accelOver();
+
+   /* Get current time to reach target. */
+   time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
+      (player.p->thrust / player.p->solid->mass);
+
+   /* Get velocity. */
+   vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
+
+   /* Get distance. */
+   dist  = vel*(time+1.1*180./player.p->turn) -
+      0.5*(player.p->thrust/player.p->solid->mass)*time*time;
+
+   /* See if should start braking. */
+   if (dist*dist > vect_dist2( pos, &player.p->solid->pos )) {
+      player_accelOver();
+      return 1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Handles the autonav braking.
+ *
+ *    @return 1 on completion.
+ */
+static int player_autonavBrake (void)
+{
+   double d;
+
+   /* Braking procedure. */
+   d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
+   if (FABS(d) < MIN_DIR_ERR) {
+      if (player_acc < 1.)
+         player_accel( 1. );
+   }
+   else if (player_acc > 0.)
+      player_accelOver();
+
+   if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
+      player_accelOver();
+      return 1;
+   }
+   return 0;
 }
 
 
@@ -1391,16 +1471,21 @@ void player_land (void)
          pilot_isFlag( player.p, PILOT_TAKEOFF)))
       return;
 
+   if (player_isFlag( PLAYER_NOLAND)) {
+      player_message( "\er%s", player_message_noland );
+      return;
+   }
+
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
-      player_message( "\erThere are no planets to land on." );
+      player_messageRaw( "\erThere are no planets to land on." );
       return;
    }
 
    if (player.p->nav_planet >= 0) { /* attempt to land */
       planet = cur_system->planets[player.p->nav_planet];
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-         player_message( "\erYou can't land here." );
+         player_messageRaw( "\erYou can't land here." );
          return;
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
@@ -1448,7 +1533,7 @@ void player_land (void)
    else { /* get nearest planet target */
 
       if (cur_system->nplanets == 0) {
-         player_message("\erThere are no planets to land on.");
+         player_messageRaw("\erThere are no planets to land on.");
          return;
       }
 
@@ -1476,6 +1561,15 @@ void player_land (void)
 
       player_land(); /* rerun land protocol */
    }
+}
+
+
+void player_nolandMsg( const char *str )
+{
+   if (str != NULL)
+      player_message_noland = str;
+   else
+      player_message_noland = "You are not allowed to land at this moment.";
 }
 
 
@@ -2872,6 +2966,8 @@ static Planet* player_parse( xmlNodePtr parent )
    int i, hunting;
    StarSystem *sys;
    double a, r;
+   Pilot *old_ship;
+   PilotFlags flags;
 
    xmlr_attr(parent,"name",player.name);
 
@@ -2961,9 +3057,14 @@ static Planet* player_parse( xmlNodePtr parent )
       }
 
       /* Just give player.p a random ship in the stack. */
-      player.p = player_stack[player_nstack-1].p;
-      player_nstack--;
-      DEBUG("Giving player ship '%s'.", player.name );
+      pilot_clearFlagsRaw( flags );
+      pilot_setFlagRaw( flags, PILOT_PLAYER );
+      pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
+      old_ship = player_stack[player_nstack-1].p;
+      pilot_create( old_ship->ship, old_ship->name,
+            faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+      player_rmShip( old_ship->name );
+      DEBUG("Giving player ship '%s'.", player.p->name );
    }
 
    /* set global thingies */
@@ -2975,22 +3076,32 @@ static Planet* player_parse( xmlNodePtr parent )
    /* set player in system */
    pnt = planet_get( planet );
    /* Get random planet if it's NULL. */
-   if (pnt == NULL)
+   if ((pnt == NULL) || (planet_getSystem(planet) == NULL) ||
+         !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+      WARN("Player starts out in non-existant or invalid planet '%s', trying to find a suitable one instead.",
+            planet );
       pnt = planet_get( space_getRndPlanet() );
-   /* In case the planet does not exist, we need to update some variables.
-    * While we're at it, we'll also make sure the system exists as well. */
-   hunting  = 1;
-   i        = 0;
-   while (hunting && (i<100)) {
-      planet = pnt->name;
-      if (planet_getSystem( planet ) == NULL) {
-         WARN("Planet '%s' found, but its system isn't. Trying again.", planet);
-         pnt = planet_get( space_getRndPlanet() );
+      /* In case the planet does not exist, we need to update some variables.
+       * While we're at it, we'll also make sure the system exists as well. */
+      hunting  = 1;
+      i        = 0;
+      while (hunting && (i<1000)) {
+         planet = pnt->name;
+         if ((planet_getSystem(planet) == NULL) ||
+               !planet_hasService(pnt, PLANET_SERVICE_LAND) ||
+               !planet_hasService(pnt, PLANET_SERVICE_INHABITED) ||
+               !planet_hasService(pnt, PLANET_SERVICE_REFUEL) ||
+               areEnemies(pnt->faction, FACTION_PLAYER)) {
+            WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
+            pnt = planet_get( space_getRndPlanet() );
+         }
+         else {
+            hunting = 0;
+         }
+         i++;
       }
-      else {
-         hunting = 0;
-      }
-      i++;
+      if (hunting)
+         WARN("Didn't manage to find suitable planet, trying at last found...");
    }
    sys = system_get( planet_getSystem( planet ) );
    space_gfxLoad( sys );
@@ -3459,12 +3570,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       } while (xml_nextNode(cur));
    } while (xml_nextNode(node));
 
-/* Set up autoweap if necessary. */
-ship->autoweap = autoweap;
-if (autoweap)
-   pilot_weaponAuto( ship );
+   /* Set up autoweap if necessary. */
+   ship->autoweap = autoweap;
+   if (autoweap)
+      pilot_weaponAuto( ship );
 
    return 0;
-   }
+}
 
 

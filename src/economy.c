@@ -178,8 +178,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    do {
+      xml_onlyNodes(node);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      WARN("Commodity '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
 #if 0 /* shouldn't be needed atm */
@@ -269,6 +271,7 @@ int commodity_load (void)
    }
 
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node, XML_COMMODITY_TAG)) {
 
          /* Make room for commodity. */
@@ -285,6 +288,8 @@ int commodity_load (void)
             econ_comm[econ_nprices-1] = commodity_nstack-1;
          }
       }
+      else
+         WARN("'"COMMODITY_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);

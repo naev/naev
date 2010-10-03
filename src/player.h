@@ -24,6 +24,7 @@
 #define PLAYER_LANDACK     (1<<15)  /**< player has permission to land */
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
+#define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
 #define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
@@ -31,8 +32,9 @@
 
 
 /* Autonav states. */
-#define AUTONAV_APPROACH   0 /**< Player is approaching a jump. */
-#define AUTONAV_BRAKE      1 /**< Player is braking at a jump. */
+#define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
+#define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
+#define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
 
 
 /**
@@ -50,6 +52,7 @@ typedef struct Player_s {
    int enemies; /**< Amount of enemies the player has. */
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
+   Vector2d autonav_pos; /**< Target autonav position. */
 } Player_t;
 
 
@@ -97,6 +100,7 @@ void player_messageRaw ( const char *str );
 /*
  * misc
  */
+void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
@@ -193,9 +197,10 @@ void player_afterburn (void);
 void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
-void player_startAutonav (void);
-void player_abortAutonav( char *reason );
-void player_startAutonavWindow( unsigned int wid, char *str);
+void player_autonavStart (void);
+void player_autonavAbort( char *reason );
+void player_autonavStartWindow( unsigned int wid, char *str);
+void player_autonavPos( double x, double y );
 void player_hail (void);
 void player_autohail (void);
 
