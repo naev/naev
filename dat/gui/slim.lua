@@ -329,7 +329,7 @@ function render_bar(name, value, txt, txtcol, size, col, bgc )
    gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
 
    if txt ~= nil then
-      if gfx.printDim( false, txt ) > bar_w then
+      if gfx.printDim( false, txt ) > l_bar_w then
          small = true
       else
          small = false
