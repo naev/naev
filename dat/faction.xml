@@ -199,6 +199,17 @@
   <allies />
   <enemies>
    <enemy>Shadow_pirates</enemy>
+   <enemy>Rogue Four Winds</enemy>
+  </enemies>
+ </faction>
+ <faction name="Rogue Four Winds">
+  <display>Four Winds</display>
+  <invisible />
+  <static />
+  <player>0</player>
+  <allies />
+  <enemies>
+   <enemy>Four Winds</enemy>
   </enemies>
  </faction>
  <faction name="Shadow_pirates">

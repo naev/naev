@@ -613,12 +613,21 @@
  </fleet>
  <fleet name="Four Winds Vendetta Quad">
   <ai>trader</ai>
-  <faction>Four Winds</faction>
+  <faction>Rogue Four Winds</faction>
   <pilots>
    <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
    <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
    <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
    <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Four Winds Lancelot Trio">
+  <ai>trader</ai>
+  <faction>Rogue Four Winds</faction>
+  <pilots>
+   <pilot name="Four Winds Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Seiryuu">
