@@ -31,6 +31,7 @@
 #include "ai.h"
 #include "ai_extra.h"
 #include "nlua_col.h"
+#include "weapon.h"
 
 
 /*
@@ -640,6 +641,7 @@ static int pilotL_clear( lua_State *L )
 {
    (void) L;
    pilots_clear();
+   weapon_clear();
    return 0;
 }
 /**
