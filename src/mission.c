@@ -784,14 +784,19 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"unique"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"unique")) {
                mis_setFlag(temp,MISSION_UNIQUE);
+               continue;
+            }
+            WARN("Mission '%s' has unknown flag node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node,"avail")) { /* mission availability */
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"location")) {
                temp->avail.loc = mission_location( xml_get(cur) );
                continue;
@@ -809,6 +814,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"cond",temp->avail.cond);
             xmlr_strd(cur,"done",temp->avail.done);
             xmlr_int(cur,"priority",temp->avail.priority);
+            WARN("Mission '%s' has unknown avail node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }

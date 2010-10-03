@@ -330,46 +330,65 @@ static int player_newMake (void)
       return -1;
    }
    do {
+      xml_onlyNodes(node);
+      if (xml_isNode(node, "name")) /* Avoid warning. */
+         continue;
       if (xml_isNode(node, "player")) { /* we are interested in the player */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"ship"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"ship")) {
                ship = ship_get( xml_get(cur) );
+               continue;
+            }
             else if (xml_isNode(cur,"credits")) { /* monies range */
                tmp = cur->children;
                do {
+                  xml_onlyNodes(tmp);
                   xmlr_int(tmp, "low", l);
                   xmlr_int(tmp, "high", h);
+                  WARN("'"START_DATA"' has unknown credit node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
+               continue;
             }
             else if (xml_isNode(cur,"system")) {
                tmp = cur->children;
                do {
+                  xml_onlyNodes(tmp);
                   /** system name, @todo percent chance */
                   xmlr_strd(tmp, "name", sysname);
                   /* position */
                   xmlr_float(tmp,"x",x);
                   xmlr_float(tmp,"y",y);
+                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
+               continue;
             }
             xmlr_float(cur,"player_crating",player.crating);
             if (xml_isNode(cur,"date")) {
                tmp = cur->children;
                do {
+                  xml_onlyNodes(tmp);
                   xmlr_int(tmp, "low", tl);
                   xmlr_int(tmp, "high", th);
+                  WARN("'"START_DATA"' has unknown date node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
+               continue;
             }
             /* Check for mission. */
             if (xml_isNode(cur,"mission")) {
                if (player_mission != NULL) {
-                  WARN("start.xml already contains a mission node!");
+                  WARN("'"START_DATA"' already contains a mission node!");
                   continue;
                }
                player_mission = xml_getStrd(cur);
+               continue;
             }
+            WARN("'"START_DATA"' has unknown player node '%s'.", cur->name);
          } while (xml_nextNode(cur));
+         continue;
       }
+      WARN("'"START_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    /* Clean up. */

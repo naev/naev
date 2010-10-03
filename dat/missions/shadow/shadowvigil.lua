@@ -352,7 +352,7 @@ function getNextSystem(finalsys)
         local neighs = mysys:adjacentSystems()
         local nearest = -1
         local mynextsys = finalsys
-        for j, _ in pairs(neighs) do
+        for _, j in pairs(neighs) do
             if nearest == -1 or j:jumpDist(finalsys) < nearest then
                 nearest = j:jumpDist(finalsys)
                 mynextsys = j

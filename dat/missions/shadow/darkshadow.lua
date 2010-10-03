@@ -58,6 +58,17 @@ else -- default english
     title[5] = "An extra passenger"
     text[9] = [[    You board with the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
     "Come on, %s," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]]
+    
+    title[6] = "Ambush!"
+    text[10] = [[   Suddenly, your long range sensors pick up a ship jumping in behind you. Jorek checks the telemetry beside you. Suddenly, his eyes go wide and he groans. The Four Winds informant turns pale.
+    "Oh, damn it all," Jorek curses. "%s, that's the Genbu, Giornio's flagship. I never expected him to take an interest in me personally! Damn, this is bad. Listen, if you have anything to boost our speed, now would be the time. We got to get outta here as if all hell was hot on our heels, which it kinda is! If that thing catches us, we're toast. I really mean it, you don't wanna get into a fight against her, not on your own. Get your ass movin' to Sirius space. Giornio ain't gonna risk getting into a scrap with the Sirius military, so we'll be safe once we get there. Come on, what are you waitin' for? Step on it!"]]
+    
+    title[7] = "A safe return"
+    text[11] = [[   You find yourself back on the Seiryuu, in the company of Jorek and the Four Winds informant. The informant is escorted deeper into the ship by grey-uniformed crew members, while Jorek takes you up to the bridge for a meeting with captain Rebina.
+    "Welcome back, Jorek, %s," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
+    Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, captain Rebina calls up a schematic view of the Genbu from the holotable.
+    "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, %s. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
+    You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser man might get nervous.]]
 
     Jorscene[1] = [[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]]
     Jorscene[2] = [[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]]
@@ -77,8 +88,11 @@ else -- default english
     -- Mission info stuff
     osd_title = {}
     osd_msg   = {}
+    osd2_msg  = {}
     osd_title = "Dark Shadow"
-    osd_msg[0] = "Look for Jorek on %s in the %s system" -- Note: indexing at 0 because it's a template.
+    osd_msg[0] = "Look for Jorek on %s in the %s system" -- Note: indexing at 0 because it's a template. Shouldn't actually appear ingame.
+    osd2_msg[1] = "Fetch the Four Winds informant from his ship"
+    osd2_msg[2] = "Return Jorek and the informant to the Seiryuu in the %s system"
 
     misn_desc1 = [[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]]
     misn_desc2 = [[You have been tasked by captain Rebina of the Four Winds to assist Jorek McArthy.]]
@@ -92,6 +106,7 @@ function create()
     jorekplanet1, joreksys1 = planet.get("Manis")
     jorekplanet2, joreksys2 = planet.get("The Wringer")
     ambushsys = system.get("Herakin")
+    safesys = system.get("Eiderdown")
 
     if not misn.claim ( {seirsys, joreksys2, ambushsys} ) then
         abort()
@@ -114,12 +129,15 @@ end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
 function accept2()
+    tick = {false, false, false, false, false}
+    tick["__save"] = true
     osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
     misn.osdCreate(osd_title, osd_msg)
     misn.setDesc(misn_desc2)
     misn.setReward(misn_reward)
     marker = misn.markerAdd(joreksys1, "low")
     landhook = hook.land("land", "bar")
+    jumpouthook = hook.jumpout("jumpout")
 end
 
 -- Handle boarding of the Seiryuu
@@ -133,7 +151,9 @@ function seiryuuBoard()
         seiryuu:setHilight(false)
         accept2()
         stage = 2
-    elseif stage == 5 then -- Debriefing
+    elseif stage == 6 then -- Debriefing
+        tk.msg(title[7], text[11]:format(player.name(), player.name()))
+        player.pay(500000) -- 500K
         player.unboard()
         seiryuu:setHilight(false)
         var.pop("darkshadow_active")
@@ -146,16 +166,29 @@ function joeBoard()
     tk.msg(title[5], text[9]:format(player.name()))
     misn.cargoAdd("Four Winds Informant", 0)
     player.unboard()
+    misn.markerMove(marker, seirsys)
+    misn.osdActive(2)
     stage = 5
 end
-    
+
+-- Jumpout hook
+function jumpout()
+    playerlastsys = system.cur() -- Keep track of which system the player came from
+    if not (patroller == nil) then
+        hook.rm(patroller)
+    end
+    if not (spinter == nil) then
+        hook.rm(spinter)
+    end
+end
+
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(300, 300) + seirplanet:pos())[1]
         seiryuu:setInvincible(true)
         seiryuu:disable()
-        if stage == 1 or stage == 5 then
+        if stage == 1 or stage == 6 then
             seiryuu:setHilight(true)
             hook.pilot(seiryuu, "board", "seiryuuBoard")
         else
@@ -168,7 +201,7 @@ function enter()
     elseif system.cur() == joreksys2 and stage == 4 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pilot.allowLand(false, "Landing permission denied. Our docking clamps are currently undergoing maintenance.")
+        player.allowLand(false, "Landing permission denied. Our docking clamps are currently undergoing maintenance.")
         -- Meet Joe, our informant.
         joe = pilot.add("Four Winds Vendetta", nil, vec2.new(-500, -4000))[1]
         joe:control()
@@ -184,6 +217,7 @@ function enter()
 
         -- The cutscene itself
         local delay = 0
+        zoomspeed = 2500
         hook.timer(delay, "playerControl", true)
         delay = delay + 2000
         hook.timer(delay, "zoomTo", joe)
@@ -215,42 +249,50 @@ function enter()
         hook.timer(delay, "leaderVis", true)
 
         hook.pilot(joe, "board", "joeBoard")
-        hook.timer(500, "patrolPoll")
+        poller = hook.timer(500, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
         tk.msg(joefailtitle, joefailtext:format(player.name()))
         abort()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        invProximity(system.cur():adjacentSystems()[system.get("Suna")]) -- Starts an inverse proximity poll for distance from the jump point.
+        hook.timer(500, "invProximity", { location = system.cur():jumpPos(system.get("Suna")), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
+    elseif system.cur() == safesys and stage == 5 then
+        stage = 6 -- stop spawning the Genbu
+    elseif genbuspawned and stage == 5 then
+        spawnGenbu(playerlastsys) -- The Genbu follows you around, and will probably insta-kill you.
+        continueAmbush()
     end
 end
 
 function spawnSquads(highlight)
     -- Start positions for the leaders
-    leaderstart1 = vec2.new(-2500, -1500)
-    leaderstart2 = vec2.new(2500, 1000)
-    leaderstart3 = vec2.new(-3500, -4500)
-    leaderstart4 = vec2.new(2500, -2500)
-    leaderstart5 = vec2.new(-2500, -6500)
+    leaderstart = {}
+    leaderstart[1] = vec2.new(-2500, -1500)
+    leaderstart[2] = vec2.new(2500, 1000)
+    leaderstart[3] = vec2.new(-3500, -4500)
+    leaderstart[4] = vec2.new(2500, -2500)
+    leaderstart[5] = vec2.new(-2500, -6500)
 
     -- Leaders will patrol between their start position and this one
-    leaderdest1 = vec2.new(2500, -1000)
-    leaderdest2 = vec2.new(-2000, 2000)
-    leaderdest3 = vec2.new(-4500, -1500)
-    leaderdest4 = vec2.new(2000, -6000)
-    leaderdest5 = vec2.new(1000, -1500)
+    leaderdest = {}
+    leaderdest[1] = vec2.new(2500, -1000)
+    leaderdest[2] = vec2.new(-500, 1500)
+    leaderdest[3] = vec2.new(-4500, -1500)
+    leaderdest[4] = vec2.new(2000, -6000)
+    leaderdest[5] = vec2.new(1000, -1500)
 
     squads = {}
-    squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart1)
-    squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart2)
-    squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart3)
-    squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart4)
-    squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart5)
+    squads[1] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[1])
+    squads[2] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[2])
+    squads[3] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[3])
+    squads[4] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[4])
+    squads[5] = pilot.add("Four Winds Vendetta Quad", nil, leaderstart[5])
 
     for _, squad in ipairs(squads) do
         for _, k in ipairs(squad) do
             hook.pilot(k, "attacked", "attacked")
+            k:rename("Four Winds Patrol")
             k:control()
             k:rmOutfit("all")
             k:addOutfit("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
@@ -270,29 +312,14 @@ function spawnSquads(highlight)
     leaderVis(highlight)
 
     -- Kickstart the patrol sequence
-    leader[1]:goto(leaderdest1, false)
-    leader[2]:goto(leaderdest2, false)
-    leader[3]:goto(leaderdest3, false)
-    leader[4]:goto(leaderdest4, false)
-    leader[5]:goto(leaderdest5, false)
+    for i, j in ipairs(leader) do
+        j:goto(leaderdest[i], false)
+    end
 
     -- Set up the rest of the patrol sequence
-    hook.pilot(leader[1], "idle", "leaderIdle")
-    hook.pilot(leader[2], "idle", "leaderIdle")
-    hook.pilot(leader[3], "idle", "leaderIdle")
-    hook.pilot(leader[4], "idle", "leaderIdle")
-    hook.pilot(leader[5], "idle", "leaderIdle")
-end
-
-function spawnGenbu()
-    genbu = pilot.add("Genbu", nil, system.get("Anrique"))[1]
-    genbu:rmOutfit("all")
-    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
-    genbu:control()
-    genbu:setHilight()
-    genbu:setVisplayer()
-    genbu:setHostile()
-    genbu:attack(player.pilot())
+    for _, j in ipairs(leader) do
+        hook.pilot(j, "idle", "leaderIdle")
+    end
 end
 
 -- Makes the squads either visible or hides them
@@ -306,16 +333,10 @@ end
 
 -- Makes the leaders visible or hides them, also highlights them (or not)
 function leaderVis(visible)
-    leader[1]:setVisplayer(visible)
-    leader[1]:setHilight(visible)
-    leader[2]:setVisplayer(visible)
-    leader[2]:setHilight(visible)
-    leader[3]:setVisplayer(visible)
-    leader[3]:setHilight(visible)
-    leader[4]:setVisplayer(visible)
-    leader[4]:setHilight(visible)
-    leader[5]:setVisplayer(visible)
-    leader[5]:setHilight(visible)
+    for _, j in ipairs(leader) do
+        j:setVisplayer(visible)
+        j:setHilight(visible)
+    end
 end
 
 -- Hook for hostile actions against a squad member
@@ -331,45 +352,78 @@ end
 
 -- Hook for the idle status of the leader of a squad.
 -- Makes the squads patrol their routes.
+-- TODO: make this shorter
 function leaderIdle(pilot)
-    if pilot == leader[1] then
-        if tick1 then leader[1]:goto(leaderdest1, false)
-        else leader[1]:goto(leaderstart1, false)
+    for i, j in ipairs(leader) do
+        if j == pilot then
+            if tick[i] then pilot:goto(leaderdest[i], false)
+            else pilot:goto(leaderstart[i], false)
+            end
+            tick[i] = not tick[i]
+            return
         end
-        tick1 = not tick1
-    elseif pilot == leader[2] then
-        if tick1 then leader[2]:goto(leaderdest2, false)
-        else leader[2]:goto(leaderstart2, false)
-        end
-        tick2 = not tick2
-    elseif pilot == leader[3] then
-        if tick3 then leader[3]:goto(leaderdest3, false)
-        else leader[3]:goto(leaderstart3, false)
-        end
-        tick3 = not tick3
-    elseif pilot == leader[4] then
-        if tick1 then leader[4]:goto(leaderdest4, false)
-        else leader[4]:goto(leaderstart4, false)
-        end
-        tick4 = not tick4
-    elseif pilot == leader[5] then
-        if tick5 then leader[5]:goto(leaderdest5, false)
-        else leader[5]:goto(leaderstart5, false)
-        end
-        tick5 = not tick5
     end
 end
 
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
     for _, patroller in ipairs(leader) do
-        if vec2.dist(player.pilot():pos(), patroller:pos()) < 1000 then
+        if vec2.dist(player.pilot():pos(), patroller:pos()) < 1200 then
             patroller:broadcast(patrolcomm)
             attacked()
             return
         end
     end
-    hook.timer(500, "patrolPoll")
+    poller = hook.timer(500, "patrolPoll")
+end
+
+-- Spawns the Genbu
+function spawnGenbu(sys)
+    genbu = pilot.add("Genbu", nil, sys)[1]
+    genbu:rmOutfit("all")
+    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
+    genbu:control()
+    genbu:setHilight()
+    genbu:setVisplayer()
+    genbuspawned = true
+end
+
+-- The initial ambush cutscene
+function startAmbush()
+    spawnGenbu(system.get("Anrique"))
+    
+    local delay = 0
+    zoomspeed = 4500
+    hook.timer(delay, "playerControl", true)
+    hook.timer(delay, "zoomTo", genbu)
+    delay = delay + 5000
+    hook.timer(delay, "showMsg", {title[6], text[10]:format(player.name())})
+    delay = delay + 1000
+    hook.timer(delay, "zoomTo", player.pilot())
+    hook.timer(delay, "playerControl", false)
+    hook.timer(delay, "continueAmbush")
+end
+
+-- The continuation of the ambush, for timer purposes
+function continueAmbush()
+    genbu:setHostile()
+    genbu:attack(player.pilot())
+    -- TODO: launch interceptors
+    spinter = hook.timer(5000, "spawnInterceptors")
+end
+
+-- Spawns a wing of Vendettas that intercept the player.
+function spawnInterceptors()
+    inters = pilot.add("Four Winds Lancelot Trio", nil, genbu:pos())
+    for _, j in ipairs(inters) do
+        j:rmOutfit("all")
+        j:addOutfit("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
+        j:addOutfit("Engine Reroute", 1)
+        j:addOutfit("Improved Stabilizer", 1)
+        j:control()
+        j:attack(player.pilot())
+    end
+    spinter = hook.timer(30000, "spawnInterceptors")
 end
 
 -- Land hook
@@ -399,12 +453,16 @@ function jorek()
     tk.msg(title[4], text[8])
     misn.npcRm(joreknpc)
     misn.cargoAdd("Jorek", 0)
+
+    osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
+    misn.osdCreate(osd_title, osd2_msg)
+
     stage = 4
 end
 
 -- Capsule function for camera.set, for timer use
 function zoomTo(target)
-    camera.set(target, true)
+    camera.set(target, true, zoomspeed)
 end
 
 -- Capsule function for player.msg, for timer use
@@ -412,9 +470,21 @@ function showText(text)
     player.msg(text)
 end
 
+-- Capsule function for tk.msg, for timer use
+function showMsg(content)
+    tk.msg(content[1], content[2])
+end
+
 -- Capsule function for player.pilot():control(), for timer use
+-- Also saves the player's velocity.
 function playerControl(status)
     player.pilot():control(status)
+    if status then
+        pvel = player.pilot():vel()
+        player.pilot():setVel(vec2.new(0, 0))
+    else
+        player.pilot():setVel(pvel)
+    end
 end
 
 -- Poll for player proximity to a point in space. Will trigger when the player is NOT within the specified distance.
@@ -426,7 +496,7 @@ function invProximity(trigger)
     if vec2.dist(player.pos(), trigger.location) >= trigger.radius then
         _G[trigger.funcname]()
     else
-        hook.timer(500, "proximity", trigger)
+        hook.timer(500, "invProximity", trigger)
     end
 end
 
