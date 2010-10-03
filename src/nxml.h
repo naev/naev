@@ -66,6 +66,9 @@
 #define xmlr_float(n,s,f) \
    if (xml_isNode(n,s)) { \
       f = xml_getFloat(n); continue; }
+#define xmlr_floatR(n,s,f) \
+   if (xml_isNode(n,s)) { \
+      f = xml_getFloat(n); return 0; }
 #define xmlr_str(n,s,str) \
    if (xml_isNode(n,s)) { \
       str = xml_get(n); continue; }
