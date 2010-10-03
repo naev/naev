@@ -734,7 +734,7 @@ function render( dt )
    end
 
    --Bottom bar
-   local length = 8, navstring, pntstring
+   local length = 8, navstring, pntstring, fuel, fuelstring, pntstring, wsetstr
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    if nav_hyp ~= nil then
@@ -775,7 +775,7 @@ function render( dt )
       secstr = secstr .. " (" .. tostring(amm) .. ")"
    end]]--
 
-   bartext = { "Player: ", pname, "System: ", sys:name(), "Credits: ",
+   local bartext = { "Player: ", pname, "System: ", sys:name(), "Credits: ",
          largeNumber( credits ), "Nav: ", navstring, "Fuel: ", fuelstring,
          "Planet: ", pntstring, "Weapon Set: ", wsetstr, "Cargo: " }
    for k,v in ipairs(bartext) do
@@ -794,10 +794,12 @@ function render( dt )
    end
 
    local cargstring = nil
+   local freecargo = "(" .. pp:cargoFree() .. " tons free)"
+   local finallen = gfx.printDim( true, freecargo )
    if cargo ~= nil and #cargo >= 1 then
       for k,v in ipairs(cargo) do
          if cargstring ~= nil then
-            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) > 10 then
+            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) + finallen > 10 then
                cargstring = cargstring .. ", " .. v
             else
                cargstring = cargstring .. ", [...]"
@@ -808,9 +810,12 @@ function render( dt )
          end
       end
       gfx.print( true, cargstring, length, 6, col_txt_std )
+      length = length + gfx.printDim( true, cargostring )
    else
       gfx.print( true, "none", length, 6, col_txt_una )
+      length = length + gfx.printDim( true, "none" ) + 6
    end
+   gfx.print( true, freecargo, length, 6, col_txt_std )
 end
 
 function largeNumber( number )
