@@ -13,7 +13,7 @@ import os, sys
 from argparse import ArgumentParser
 import re
 
-__version__="0.1"
+__version__="0.1.1"
 
 def lineNumber(string, start):
     """
@@ -138,9 +138,9 @@ if __name__ == "__main__":
     parser.add_argument('--use', '-u',
                         choices=['missionxml','rawfiles'], default='missionxml',
                         help="""
-                        Use the missionxml option to parse only the
-                        actives files. Otherwise, the script will walk through
-                        all the lua files.
+                        Use the rawfiles option to run into the directory like
+                        a wild viking. Otherwise, the script will use the active
+                        mission list to load the file list.
                         """)
 
     parser.add_argument('--version', action='version',
