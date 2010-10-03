@@ -104,7 +104,7 @@ class sanitizer:
             try:
                 line = open(file, 'rU').read()
                 for match in search_cobj.finditer(line):
-                    lineno, offset = lineNumber(file, match.start())
+                    lineno, offset = lineNumber(line, match.start())
                     info = dict(
                             lineno=lineno,
                             offset=offset,
