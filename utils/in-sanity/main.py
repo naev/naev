@@ -25,8 +25,8 @@ def lineNumber(string, start):
 
 class sanitizer:
 
-    _errorstring = "Can not found element %(content)s for function %(func)s "\
-                   "at line %(line)d offset %(offset)d"
+    _errorstring = "Can not found element ``%(content)s'' for function "\
+                   "%(func)s at line %(lineno)d offset %(offset)d"
 
     def __init__(self, **args):
         """
@@ -73,10 +73,15 @@ class sanitizer:
         That's the doctor, it detect wrong stuff but can never heal you.
         """
         from readers.fleet import fleet
+        from readers.ship import ship
+        from readers.outfit import outfit
 
         fleetdata = fleet(datpath=self.config['datpath'],
                           verbose=self.config['verbose'])
-
+        shipdata = ship(datpath=self.config['datpath'],
+                        verbose=self.config['verbose'])
+        outfitdata = outfit(datpath=self.config['datpath'],
+                            verbose=self.config['verbose'])
         rawstr = r"""
         (?P<func>
             pilot\.add\(|
@@ -107,13 +112,16 @@ class sanitizer:
                             content= match.group('content')
                     )
 
-                    if info['func'] == 'pilot.add':
-                        if not fleetdata.find(info['content']):
-                            print self._errorstring % info
-                    elif info['func'] == 'addOutfit':
-                        pass
-                    elif info['func'] == 'player.addShip':
-                        pass
+                    if info['func'] == 'pilot.add' and \
+                       not fleetdata.find(info['content']):
+                           print self._errorstring % info
+                    elif info['func'] == 'addOutfit' and \
+                         not outfitdata.find(info['content']):
+                             sys.stdout.write
+                             print self._errorstring % info
+                    elif info['func'] == 'player.addShip' and \
+                         not shipdata.find(info['content']):
+                             print self._errorstring % info
 
             except IOError as (errno, strerror):
                 print "I/O error {0}: {1}".format(errno, strerror)
