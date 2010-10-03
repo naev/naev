@@ -87,7 +87,7 @@ class sanitizer:
             pilot\.add\(|
             player\.addShip\(|
             addOutfit\(
-        )['"](?P<content>[^"']+)"""
+        )"(?P<content>[^"]+)"""
 
         # XXX not used
         #outfit_rawstr = r"""
