@@ -50,7 +50,7 @@ class sanitizer:
                 if filen[-3:] == "lua":
                     realname = os.path.join(root,filen)
                     self.luaScripts.append(realname)
-        print '        DONE'
+        print('        DONE')
         return True
 
     def dirtyfiles_from_xml(self):
@@ -65,7 +65,7 @@ class sanitizer:
             for lf in mission.findall('lua'):
                 lf = os.path.join(self.config['missionpath'], lf.text + '.lua')
                 self.luaScripts.append(lf)
-        print "        DONE"
+        print("        DONE")
         return True
 
     def dah_doctor(self):
@@ -98,7 +98,7 @@ class sanitizer:
 
         entry = dict()
 
-        print "Checking now ..."
+        print("Checking now ...")
         for file in self.luaScripts:
             sys.stdout.write("Processing file %(file)s..." % {'file': file})
             try:
@@ -114,20 +114,20 @@ class sanitizer:
 
                     if info['func'] == 'pilot.add' and \
                        not fleetdata.find(info['content']):
-                           print self._errorstring % info
+                           print(self._errorstring % info)
                     elif info['func'] == 'addOutfit' and \
                          not outfitdata.find(info['content']):
                              sys.stdout.write
-                             print self._errorstring % info
+                             print(self._errorstring % info)
                     elif info['func'] == 'player.addShip' and \
                          not shipdata.find(info['content']):
-                             print self._errorstring % info
+                             print(self._errorstring % info)
 
             except IOError as (errno, strerror):
-                print "I/O error {0}: {1}".format(errno, strerror)
+                print("I/O error {0}: {1}".format(errno, strerror))
             except:
                 raise
-            print "        DONE"
+            print("        DONE")
 
 if __name__ == "__main__":
 
