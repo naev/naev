@@ -11,6 +11,7 @@ For licensing information, see the LICENSE file in this directory.
 
 import os, sys
 from argparse import ArgumentParser
+import re
 
 __version__="0.1"
 
@@ -49,7 +50,7 @@ class sanitizer:
                 if file[-3:] is "lua":
                     realname = os.path.join(root,file)
                     self.luaScripts.append(realname)
-        print '\t\tDONE'
+        print '        DONE'
         return True
 
     def dirtyfiles_from_xml(self):
@@ -62,16 +63,16 @@ class sanitizer:
         sys.stdout.write('Compiling file list ...')
         for mission in missionxml.findall('mission'):
             for lf in mission.findall('lua'):
-                lf = os.path.join(os.abspath(missionspath + lf + '.lua'))
-                self.luaScripts.append(missionspath+lf+'.lua' )
-        print "\t\tDONE"
+                lf = os.path.join(self.config['missionpath'], lf.text + '.lua')
+                self.luaScripts.append(lf)
+        print "        DONE"
         return True
 
     def dah_doctor(self):
         """
         That's the doctor, it detect wrong stuff but can never heal you.
         """
-        from readers import fleet
+        from readers.fleet import fleet
 
         fleetdata = fleet(datpath=self.config['datpath'],
                           verbose=self.config['verbose'])
@@ -100,25 +101,25 @@ class sanitizer:
                 for match in search_cobj.finditer(line):
                     lineno, offset = lineNumber(file, match.start())
                     info = dict(
-                            ('lineno', lineno),
-                            ('offset', offset),
-                            ('func', match.group('func')[:-1]),
-                            ('content', match.group('content'))
+                            lineno=lineno,
+                            offset=offset,
+                            func=match.group('func')[:-1],
+                            content= match.group('content')
                     )
 
-                    if info['func'] is 'pilot.add':
-                        if not fleet.find(content):
+                    if info['func'] == 'pilot.add':
+                        if not fleetdata.find(info['content']):
                             print self._errorstring % info
-                    elif info['func'] is 'addOutfit':
+                    elif info['func'] == 'addOutfit':
                         pass
-                    elif info['func'] is 'player.addShip':
+                    elif info['func'] == 'player.addShip':
                         pass
 
-            except IOError as errno, strerror:
+            except IOError as (errno, strerror):
                 print "I/O error {0}: {1}".format(errno, strerror)
             except:
                 raise
-            print "\t\tDONE"
+            print "        DONE"
 
 if __name__ == "__main__":
 
@@ -138,7 +139,6 @@ if __name__ == "__main__":
                         version='%(prog)s '+__version__)
     parser.add_argument('--verbose', action='store_true', default=False)
     parser.add_argument('datpath',
-                        nargs='?',
                         help='Path to naev/dat/ directory')
 
     args = parser.parse_args()
