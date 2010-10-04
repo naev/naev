@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 """
@@ -12,10 +12,6 @@ For licensing information, see the LICENSE file in this directory.
 import os, sys
 from argparse import ArgumentParser
 import re
-
-# Isn't it magical ?
-if sys.version[:2] == '2.':
-    from __future__ import print_function
 
 __version__="0.1.1"
 
@@ -80,6 +76,7 @@ class sanitizer:
         from readers.ship import ship
         from readers.outfit import outfit
 
+        # TODO: must be called when needed
         fleetdata = fleet(datpath=self.config['datpath'],
                           verbose=self.config['verbose'])
         shipdata = ship(datpath=self.config['datpath'],
@@ -106,7 +103,7 @@ class sanitizer:
         print("Checking now ...")
         for file in self.luaScripts:
             if self.config['verbose']:
-                print("Processing file %(file)s..." % {'file':file},end='     ')
+                print("Processing file {0}...".format(file), end='       ')
             if len(errors) > 0:
                 for error in errors:
                     print(error, file=sys.stderr)
@@ -132,9 +129,8 @@ class sanitizer:
                          not shipdata.find(info['content'])):
                            errors.append(self._errorstring % info)
 
-            except IOError as (errno, strerror):
-                print("I/O error {0}: {1}".format(errno, strerror),
-                        file=sys.stderr)
+            except IOError as error:
+                print("I/O error: {0}".format(error), file=sys.stderr)
             except:
                 raise
 
