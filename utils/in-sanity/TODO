@@ -4,7 +4,20 @@ naev.
 
 MAJOR:
 
- *) ~
+ *) Must check lua script in scripts/ dat/events/
+ *) (idea) Could use readers to deal with validation. So, readers could
+    detect flaws and doctor will be more useless but it is more flexible.
+ *) Detect unused fleets by removing used from the reference list.
+    This also needs to compile the list of used fleets to avoid duplicates
+    and errors.
+
+    BORING STUFF:
+
+        *) first off you should make sure all the assets in asset.xml are
+           used by ssys.xml
+        *) then make sure all the techs in tech.xml are used by asset.xml
+        *) then make sure all the outfit/ships are used by both tech.xml
+           _AND_ the Lua addOutfit/addShip
 
 MINOR:
  *) Check if planets images are :
