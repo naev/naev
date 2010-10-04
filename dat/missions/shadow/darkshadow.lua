@@ -113,6 +113,7 @@ function create()
     end
 
     tk.msg(title[1], text[1]:format(player.name(), seirplanet:name(), seirsys:name()))
+    firstmarker = misn.markerAdd(seirsys, "low")
     accept() -- The player automatically accepts this mission.
 end
 
@@ -150,6 +151,7 @@ function seiryuuBoard()
         player.unboard()
         seiryuu:setHilight(false)
         accept2()
+        misn.markerRm(firstmarker)
         stage = 2
     elseif stage == 6 then -- Debriefing
         tk.msg(title[7], text[11]:format(player.name(), player.name()))
