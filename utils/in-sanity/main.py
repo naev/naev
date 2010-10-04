@@ -13,6 +13,10 @@ import os, sys
 from argparse import ArgumentParser
 import re
 
+# Isn't it magical ?
+if sys.version[:2] == '2.':
+    from __future__ import print_function
+
 __version__="0.1.1"
 
 def lineNumber(string, start):
@@ -44,13 +48,13 @@ class sanitizer:
         """
         retrieve a list of files from the directory (the wild viking way)
         """
-        sys.stdout.write('Compiling file list like a wild viking ...')
+        print('Compiling file list like a wild viking ...', end='       ')
         for root, dir, files in os.walk(self.config['missionpath']):
             for filen in files:
                 if filen[-3:] == "lua":
                     realname = os.path.join(root,filen)
                     self.luaScripts.append(realname)
-        print('        DONE')
+        print('DONE')
         return True
 
     def dirtyfiles_from_xml(self):
@@ -60,12 +64,12 @@ class sanitizer:
         import xml.etree.ElementTree as ET
         file = os.path.join(self.config['datpath'],'mission.xml')
         missionxml = ET.parse(file)
-        sys.stdout.write('Compiling file list ...')
+        print('Compiling file list ...', end='      ')
         for mission in missionxml.findall('mission'):
             for lf in mission.findall('lua'):
                 lf = os.path.join(self.config['missionpath'], lf.text + '.lua')
                 self.luaScripts.append(lf)
-        print("        DONE")
+        print("DONE")
         return True
 
     def dah_doctor(self):
@@ -97,10 +101,17 @@ class sanitizer:
         search_cobj = re.compile(rawstr, re.VERBOSE| re.UNICODE)
 
         entry = dict()
+        errors = list()
 
         print("Checking now ...")
         for file in self.luaScripts:
-            sys.stdout.write("Processing file %(file)s..." % {'file': file})
+            if self.config['verbose']:
+                print("Processing file %(file)s..." % {'file':file},end='     ')
+            if len(errors) > 0:
+                for error in errors:
+                    print(error, file=sys.stderr)
+                errors = list()
+
             try:
                 line = open(file, 'rU').read()
                 for match in search_cobj.finditer(line):
@@ -112,22 +123,23 @@ class sanitizer:
                             content= match.group('content')
                     )
 
-                    if info['func'] == 'pilot.add' and \
-                       not fleetdata.find(info['content']):
-                           print(self._errorstring % info)
-                    elif info['func'] == 'addOutfit' and \
-                         not outfitdata.find(info['content']):
-                             sys.stdout.write
-                             print(self._errorstring % info)
-                    elif info['func'] == 'player.addShip' and \
-                         not shipdata.find(info['content']):
-                             print(self._errorstring % info)
+                    # TODO create a object to handle all readers
+                    if (info['func'] == 'pilot.add' and \
+                        not fleetdata.find(info['content'])) or \
+                       (info['func'] == 'addOutfit' and \
+                        not outfitdata.find(info['content'])) or \
+                       (info['func'] == 'player.addShip' and \
+                         not shipdata.find(info['content'])):
+                           errors.append(self._errorstring % info)
 
             except IOError as (errno, strerror):
-                print("I/O error {0}: {1}".format(errno, strerror))
+                print("I/O error {0}: {1}".format(errno, strerror),
+                        file=sys.stderr)
             except:
                 raise
-            print("        DONE")
+
+            if self.config['verbose']:
+                print("DONE")
 
 if __name__ == "__main__":
 
