@@ -1,3 +1,4 @@
+include("ai/include/basic.lua")
 --[[
 -- Dummy AI - does nothing except brake and then float around.
 --]]
@@ -6,8 +7,8 @@
 control_rate = 2
 
 function create ()
-   ai.pushtask( 0, "idle" )
-   ai.pushtask( 0, "brake" )
+   ai.pushtask( "idle" )
+   ai.pushtask( "brake" )
 end
 
 -- No need for control

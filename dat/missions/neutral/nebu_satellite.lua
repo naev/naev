@@ -40,6 +40,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any mission claims.
    -- Set up mission variables
    misn_stage = 0
    homeworld, homeworld_sys = planet.get( misn.factions() )
@@ -59,19 +60,19 @@ function accept ()
    end
 
    -- Check for cargo space
-   if player.freeCargo() <  3 then
+   if pilot.cargoFree(player.pilot()) <  3 then
       tk.msg( title[1], text[9] )
-      return
+      misn.finish()
    end
 
    -- Add cargo
-   cargo = misn.addCargo( "Satellite", 3 )
+   cargo = misn.cargoAdd( "Satellite", 3 )
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
    misn.setReward( string.format( mreward[1], credits ) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
-   misn.setMarker( satellite_sys )
+   misn_marker = misn.markerAdd( satellite_sys, "low" )
 
    -- Add mission
    misn.accept()
@@ -99,10 +100,10 @@ end
 
 
 function jump ()
-   sys = system.get()
+   sys = system.cur()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then
-      misn.timerStart( "beginLaunch", 3000 )
+      hook.timer( 3000, "beginLaunch" )
    end
 end
 
@@ -112,12 +113,12 @@ end
 --]]
 function beginLaunch ()
    player.msg( launch[1] )
-   misn.timerStart( "beginCountdown", 3000 )
+   hook.timer( 3000, "beginCountdown" )
 end
 function beginCountdown ()
    countdown = 5
    player.msg( launch[2] )
-   misn.timerStart( "countLaunch", 1000 )
+   hook.timer( 1000, "countLaunch" )
 end
 function countLaunch ()
    countdown = countdown - 1
@@ -125,13 +126,13 @@ function countLaunch ()
       launchSatellite()
    else
       player.msg( string.format("%d...", countdown) )
-      misn.timerStart( "countLaunch", 1000 )
+      hook.timer( 1000, "countLaunch" )
    end
 end
 function launchSatellite ()
    misn_stage = 1
    player.msg( launch[3] )
-   misn.jetCargo( cargo )
+   misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
-   misn.setMarker( homeworld_sys )
+   misn.markerMove( misn_marker, homeworld_sys )
 end

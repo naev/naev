@@ -1,4 +1,6 @@
 include("ai/include/basic.lua")
+include("ai/personality/trader.lua")
+
 --[[
  ===FLEE AI===
 Mission specific AI to make pilots leave the system immediately.
@@ -17,16 +19,13 @@ end
 function control ()
    local task  = ai.taskname()
 
-   if task == "hyperspace" then
-      ai.hyperspace() -- try to hyperspace 
-
-   elseif task ~= "runaway" then
+   if task ~= "runaway" then
       local enemy = ai.getenemy()
 
       if enemy ~= nil then
-         ai.pushtask(0, "runaway", enemy)
+         ai.pushtask("runaway", enemy)
       else
-         ai.pushtask(0, "hyperspace" )
+         ai.pushtask("hyperspace" )
       end
    
    elseif task == "runaway" then
@@ -36,8 +35,6 @@ function control ()
          ai.poptask()
          return
       end
-
-      ai.hyperspace()
    end
 end
 
@@ -49,10 +46,10 @@ function attacked ( attacker )
       local target = ai.target()
       if target == nil or ai.target() ~= attacker then
          ai.poptask()
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
    else
-      ai.pushtask(0, "runaway", attacker)
+      ai.pushtask("runaway", attacker)
    end
 end
 

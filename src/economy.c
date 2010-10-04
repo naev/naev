@@ -83,7 +83,7 @@ unsigned int economy_getPrice( const Commodity *com,
 /**
  * @brief Converts credits to a usable string for displaying.
  *
- *    @param[out] str Output is stored here, must have at least a length of 10
+ *    @param[out] str Output is stored here, must have at least a length of 32
  *                     char.
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
@@ -91,19 +91,19 @@ unsigned int economy_getPrice( const Commodity *com,
 void credits2str( char *str, uint64_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, 32, "%"PRIu64, credits );
+      snprintf( str, ECON_CRED_STRLEN, "%"PRIu64, credits );
    else if (credits >= 1000000000000000LLU)
-      snprintf( str, 16, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+      snprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LLU)
-      snprintf( str, 16, "%.*fT", decimals, (double)credits / 1000000000000. );
+      snprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000LU)
-      snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
+      snprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000U)
-      snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
+      snprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000U)
-      snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
-   else 
-      snprintf (str, 16, "%"PRIu64, credits );
+      snprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
+   else
+      snprintf (str, ECON_CRED_STRLEN, "%"PRIu64, credits );
 }
 
 
@@ -121,6 +121,22 @@ Commodity* commodity_get( const char* name )
          return &commodity_stack[i];
 
    WARN("Commodity '%s' not found in stack", name);
+   return NULL;
+}
+
+
+/**
+ * @brief Gets a commoditiy by name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Commodity matching name.
+ */
+Commodity* commodity_getW( const char* name )
+{
+   int i;
+   for (i=0; i<commodity_nstack; i++)
+      if (strcmp(commodity_stack[i].name,name)==0)
+         return &commodity_stack[i];
    return NULL;
 }
 
@@ -162,8 +178,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    do {
+      xml_onlyNodes(node);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      WARN("Commodity '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
 #if 0 /* shouldn't be needed atm */
@@ -253,6 +271,7 @@ int commodity_load (void)
    }
 
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node, XML_COMMODITY_TAG)) {
 
          /* Make room for commodity. */
@@ -269,6 +288,8 @@ int commodity_load (void)
             econ_comm[econ_nprices-1] = commodity_nstack-1;
          }
       }
+      else
+         WARN("'"COMMODITY_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -371,7 +392,11 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  */
 static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 {
+   (void) dt;
+   (void) sys;
    (void) price;
+   return 0.;
+#if 0
    int i;
    double I;
    double prodfactor, p;
@@ -406,6 +431,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    I = p / ECON_PROD_MODIFIER;
 
    return I;
+#endif
 }
 
 
@@ -436,15 +462,15 @@ static int econ_createGMatrix (void)
       for (j=0; j < sys->njumps; j++) {
 
          /* Get the resistances. */
-         R     = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
+         R     = econ_calcJumpR( sys, sys->jumps[j].target );
          R     = 1./R; /* Must be inverted. */
          Rsum += R;
 
          /* Matrix is symetrical and non-diagonal is negative. */
-         ret = cs_entry( M, i, sys->jumps[j], -R );
+         ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
-         ret = cs_entry( M, sys->jumps[j], i, -R );
+         ret = cs_entry( M, sys->jumps[j].target->id, i, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
       }

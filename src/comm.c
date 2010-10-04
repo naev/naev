@@ -24,7 +24,9 @@
 #include "opengl.h"
 #include "ai.h"
 #include "ai_extra.h"
+#include "hook.h"
 
+#define COMM_WDWNAME    "Communication Channel" /**< Map window name. */
 
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
@@ -36,6 +38,7 @@
 static Pilot *comm_pilot       = NULL; /**< Pilot currently talking to. */
 static Planet *comm_planet     = NULL; /**< Planet currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
+static int comm_commClose      = 0; /**< Close comm when done. */
 
 
 /* We need direct pilot access. */
@@ -66,7 +69,16 @@ static const char* comm_getString( char *str );
  */
 int comm_isOpen (void)
 {
-   return window_exists( "Communication Channel" );
+   return window_exists( COMM_WDWNAME );
+}
+
+
+/**
+ * @brief Queues a close command when possible.
+ */
+void comm_queueClose (void)
+{
+   comm_commClose = 1;
 }
 
 
@@ -83,6 +95,7 @@ int comm_openPilot( unsigned int pilot )
    unsigned int wid;
    int run;
    Pilot *p;
+   HookParam hparam[2];
 
    /* Get the pilot. */
    p           = pilot_get( pilot );
@@ -92,12 +105,19 @@ int comm_openPilot( unsigned int pilot )
    if (comm_pilot == NULL)
       return -1;
 
+   /* Destroy the window if it's already present. */
+   wid = window_get(COMM_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
+      return 0;
+   }
+
    /* Must not be jumping. */
    if (pilot_isFlag(comm_pilot, PILOT_HYPERSPACE)) {
       player_message("\e%c%s\er is jumping and can't respond.", c, comm_pilot->name);
       return 0;
    }
-  
+
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
       player_message("\e%c%s\er does not respond.", c, comm_pilot->name);
@@ -105,7 +125,7 @@ int comm_openPilot( unsigned int pilot )
    }
 
    /* Check to see if pilot wants to communicate. */
-   msg = comm_getString( "comm_no" );   
+   msg = comm_getString( "comm_no" );
    if (msg != NULL) {
       player_message( msg );
       return 0;
@@ -120,14 +140,26 @@ int comm_openPilot( unsigned int pilot )
    /* Create the pilot window. */
    wid = comm_openPilotWindow();
 
-   /* Run hooks if needed. */
-   run = pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+   /* Don't close automatically. */
+   comm_commClose = 0;
+
+   /* Run generic hail hooks. */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   run = 0;
+   run += hooks_runParam( "hail", hparam );
+   run += pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
+   /* Reopen window in case something changed. */
    if (run > 0) {
-      /* Reopen window in case something changed. */
       comm_close( wid, NULL );
       comm_pilot = p;
       comm_openPilotWindow();
    }
+
+   /* Close window if necessary. */
+   if (comm_commClose)
+      window_close( wid, NULL );
 
    return 0;
 }
@@ -185,6 +217,13 @@ int comm_openPlanet( Planet *planet )
 {
    unsigned int wid;
 
+   /* Destroy the window if it's already present. */
+   wid = window_get(COMM_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
+      return 0;
+   }
+
    /* Must not be disabled. */
    if (!planet_hasService(planet, PLANET_SERVICE_INHABITED)) {
       player_message("%s does not respond.", planet->name);
@@ -198,7 +237,7 @@ int comm_openPlanet( Planet *planet )
          comm_planet->faction, 0, 0, comm_planet->name );
 
    /* Add special buttons. */
-   if (areEnemies(player->faction, planet->faction) &&
+   if (areEnemies(player.p->faction, planet->faction) &&
          !planet->bribed)
       window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
@@ -224,6 +263,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    char *stand;
    unsigned int wid;
    glColour *c;
+   int gw, gh;
 
    /* Clean up. */
    if (comm_graphic != NULL) {
@@ -250,7 +290,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       c     = &cFriend;
    }
    else {
-      stand = faction_getStandingBroad(faction_getPlayer( faction ));
+      stand = faction_getStandingBroad(faction_getPlayer(faction));
       c     = faction_getColour( faction );
    }
    w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));
@@ -262,25 +302,28 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    x = (GRAPHIC_WIDTH - w) / 2;
 
    /* Create the window. */
-   wid = window_create( "Communication Channel", -1, -1,
+   wid = window_create( COMM_WDWNAME, -1, -1,
          20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
          30 + GRAPHIC_HEIGHT + y + 5 + 20 );
+   window_setCancel( wid, comm_close );
 
-   /* Create the ship image. */
+   /* Create the image. */
    window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
-   window_addImage( wid, 20 + (GRAPHIC_WIDTH-(int)comm_graphic->w)/2,
-         -30 - (GRAPHIC_HEIGHT-(int)comm_graphic->h)/2,
-         "imgGFX", comm_graphic, 0 );
+   gw = MIN( GRAPHIC_WIDTH, (comm_graphic != NULL) ? comm_graphic->w : 0 );
+   gh = MIN( GRAPHIC_HEIGHT, (comm_graphic != NULL) ? comm_graphic->h : 0 );
+   window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
+         -30 - (GRAPHIC_HEIGHT-gh)/2,
+         gw, gh, "imgGFX", comm_graphic, 0 );
 
    /* Faction logo. */
    if (logo != NULL) {
       window_addImage( wid, x, -30 - GRAPHIC_HEIGHT - 5,
-            "imgFaction", logo, 0 );
+            0, 0, "imgFaction", logo, 0 );
       x += logo->w + 10;
       y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
    }
-   
+
    /* Name. */
    window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h*2 + 10,
          GRAPHIC_WIDTH - x, 20, 0, "txtName",
@@ -419,7 +462,7 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
    double q, r;
    double standing;
    Fleet *f;
-   
+
    /* Price. */
    standing = faction_getPlayer( comm_planet->faction );
    /* Get number of hostiles and mass of hostiles. */
@@ -432,18 +475,18 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
       }
    }
    /* Get now the presence factor - get mass of possible ships and mass */
+   /* TODO Fix this up to new presence system. */
    o = 0.;
    p = 0.;
    for (i=0; i<cur_system->nfleets; i++) {
-      f = cur_system->fleets[i].fleet;
+      f = cur_system->fleets[i];
       if (areAllies(comm_planet->faction, f->faction)) {
          q = 0;
          r = 0;
          for (j=0; j<f->npilots; j++) {
-            q += (double)f->pilots[j].chance / 100.;
+            q++;
             r += f->pilots[j].ship->mass;
          }
-         q *= (double)cur_system->fleets[i].chance / 100.;
          o += q;
          p += r;
       }
@@ -510,7 +553,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* Must need refueling. */
-   if (player->fuel >= player->fuel_max) {
+   if (player.p->fuel >= player.p->fuel_max) {
       dialogue_msg( "Request Fuel", "Your fuel deposits are already full." );
       return;
    }
@@ -551,7 +594,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
       dialogue_msg( "Request Fuel", "You need %u more credits!",
-            price - player->credits);
+            price - player.p->credits);
       return;
    }
 
@@ -560,9 +603,10 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    pilot_modCredits( comm_pilot, price );
 
    /* Start refueling. */
-   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP | PILOT_HYP_BEGIN);
+   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP);
+   pilot_rmFlag(comm_pilot, PILOT_HYP_BEGIN);
    pilot_setFlag(comm_pilot, PILOT_REFUELING);
-   ai_refuel( comm_pilot, player->id );
+   ai_refuel( comm_pilot, player.p->id );
 
    /* Last message. */
    if (price > 0)
@@ -574,7 +618,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
  * @brief Gets the amount the communicating pilot wants as a bribe.
  *
  * Valid targets for now are:
- *    - "bribe": amount pilot wants to be paid. 
+ *    - "bribe": amount pilot wants to be paid.
  *    - "refuel": amount pilot wants to be paid for refueling the player.
  *
  *    @param[out] val Value of the number gotten.

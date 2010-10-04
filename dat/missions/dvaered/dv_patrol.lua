@@ -40,21 +40,21 @@ end
 include("scripts/jumpdist.lua")
 
 
-function patrol_systems_filter( s, data )
+function patrol_systems_filter( sys, data )
    -- Must have Dvaered
-   if not s:hasPresence( "Dvaered" ) then
+   if not sys:hasPresence( "Dvaered" ) then
       return false
    end
 
    -- Must not be safe
-   if s:security() > 95 then
+   if sys:presence("friendly") > 3.*sys:presence("hostile") then
       return false
    end
 
    -- Must not already be in list
    local found = false
    for k,v in ipairs(data) do
-      if s == v then
+      if sys == v then
          return false
       end
    end
@@ -80,6 +80,7 @@ end
 
 -- Create the mission
 function create ()
+   -- Note: this mission makes no system claims.
 
    -- Get systems to patrol
    num_systems = rnd.rnd(2,4)
@@ -90,7 +91,7 @@ function create ()
       misn.finish(false)
    end
    base, base_sys = planet.cur()
-   misn.setMarker(systems[1])
+   mission_marker = misn.markerAdd( systems[1], "computer" )
 
    -- Create the description.
    desc = string.format( misn_desc[1], num_systems ) .. systems[1]:name()
@@ -183,13 +184,13 @@ function setNextGoal ()
          misn_stage = 2
          player.msg(msg_msg[5])
          misn.setDesc( string.format( misn_desc[3], base:name(), base_sys:name() ) )
-         misn.setMarker(base_sys)
+         misn.markerMove( mission_marker, base_sys )
 
       -- Need to visit more systems
       else
          player.msg(msg_msg[4])
          misn.setDesc( string.format( misn_desc[2], systems[visited+1]:name() ) )
-         misn.setMarker(systems[visited+1])
+         misn.markerMove( mission_marker, systems[ visited+1 ]  )
       end
    end
 end

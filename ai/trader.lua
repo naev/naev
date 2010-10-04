@@ -1,4 +1,12 @@
-include("ai/tpl/merchant.lua")
+include("ai/tpl/generic.lua")
+include("ai/personality/trader.lua")
+
+
+mem.shield_run = 100
+mem.armour_run = 100
+mem.defensive  = false
+mem.enemyclose = 500
+mem.distressmsgfunc = sos
 
 
 -- Sends a distress signal which causes faction loss
@@ -50,5 +58,8 @@ function create ()
       cargo = "Medicine"
    end
    ai.setcargo( cargo, rnd.int(0, ai.cargofree() ) )
+
+   -- Finish up creation
+   create_post()
 end
 

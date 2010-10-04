@@ -18,6 +18,8 @@
 
 #include "nxml.h"
 
+#include "nlua.h"
+#include "nluadef.h"
 #include "opengl.h"
 #include "log.h"
 #include "ndata.h"
@@ -54,6 +56,7 @@
 typedef struct Faction_ {
    char *name; /**< Normal Name. */
    char *longname; /**< Long Name. */
+   char *displayname; /**< Display name. */
 
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
@@ -68,15 +71,20 @@ typedef struct Faction_ {
    int *allies; /**< Allies by ID of the faction. */
    int nallies; /**< Number of allies. */
 
+   /* Player information. */
    double player_def; /**< Default player standing. */
    double player; /**< Standing with player - from -100 to 100 */
 
+   /* Scheduler. */
+   lua_State *state; /**< Lua scheduler script. */
+
+   /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
 } Faction;
 
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
-static int faction_nstack = 0; /**< Number of factions in the faction stack. */
+int faction_nstack = 0; /**< Number of factions in the faction stack. */
 
 
 /*
@@ -100,7 +108,7 @@ int pfaction_load( xmlNodePtr parent );
 int faction_get( const char* name )
 {
    int i;
-   for (i=0; i<faction_nstack; i++) 
+   for (i=0; i<faction_nstack; i++)
       if (strcmp(faction_stack[i].name, name)==0)
          break;
 
@@ -136,7 +144,7 @@ int* faction_getAll( int *n )
 
 
 /**
- * @brief Get's a factions short name.
+ * @brief Get's a factions "real" name.
  *
  *    @param f Faction to get the name of.
  *    @return Name of the faction.
@@ -150,6 +158,28 @@ char* faction_name( int f )
    /* Don't want player to see his escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
       return "Escort";
+   return faction_stack[f].name;
+}
+
+
+/**
+ * @brief Get's a factions short name.
+ *
+ *    @param f Faction to get the name of.
+ *    @return Name of the faction.
+ */
+char* faction_shortname( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   /* Don't want player to see his escorts as "Player" faction. */
+   if (f == FACTION_PLAYER)
+      return "Escort";
+   /* Possibly get display name. */
+   if (faction_stack[f].displayname != NULL)
+      return faction_stack[f].displayname;
    return faction_stack[f].name;
 }
 
@@ -212,6 +242,10 @@ glTexture* faction_logoTiny( int f )
  */
 glColour* faction_colour( int f )
 {
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
    return faction_stack[f].colour;
 }
 
@@ -249,6 +283,19 @@ int* faction_getAllies( int f, int *n )
    }
    *n = faction_stack[f].nallies;
    return faction_stack[f].allies;
+}
+
+
+/**
+ * @brief Gets the state assosciated to the faction scheduler.
+ */
+lua_State *faction_getState( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   return faction_stack[f].state;
 }
 
 
@@ -357,7 +404,7 @@ double faction_getPlayer( int f )
 {
    if (faction_isFaction(f)) {
       return faction_stack[f].player;
-   }    
+   }
    else {
       WARN("%d is an invalid faction", f);
       return -1000;
@@ -375,7 +422,7 @@ double faction_getPlayerDef( int f )
 {
    if (faction_isFaction(f)) {
       return faction_stack[f].player_def;
-   }    
+   }
    else {
       WARN("%d is an invalid faction", f);
       return -1000;
@@ -448,8 +495,8 @@ char *faction_getStanding( double mod )
  */
 char *faction_getStandingBroad( double mod )
 {
-   if (mod > PLAYER_ALLY) return "Friendly";
-   else if (mod > PLAYER_ENEMY) return "Neutral";
+   if (mod >= PLAYER_ALLY) return "Friendly";
+   else if (mod >= PLAYER_ENEMY) return "Neutral";
    return "Hostile";
 
 }
@@ -551,7 +598,7 @@ int areAllies( int a, int b )
       if (faction_isFaction(a)) {
          if (faction_stack[a].player > PLAYER_ALLY) return 1;
          else return 0;
-      }    
+      }
       else {
          WARN("%d is an invalid faction", a);
          return 0;
@@ -614,7 +661,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
    int player;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], *dat;
+   uint32_t ndat;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
@@ -638,8 +686,26 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       xmlr_strd(node,"longname",temp->longname);
+      xmlr_strd(node,"display",temp->displayname);
       if (xml_isNode(node, "colour")) {
          temp->colour = col_fromName(xml_raw(node));
+         continue;
+      }
+
+      if (xml_isNode(node, "spawn")) {
+         snprintf( buf, sizeof(buf), "ai/spawn/%s.lua", xml_raw(node) );
+         temp->state = nlua_newState();
+         nlua_loadStandard( temp->state, 0 );
+         dat = ndata_read( buf, &ndat );
+         if (luaL_dobuffer(temp->state, dat, ndat, buf) != 0) {
+            WARN("Failed to run spawn script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check",
+                  buf, lua_tostring(temp->state,-1));
+            lua_close( temp->state );
+            temp->state = NULL;
+         }
+         free(dat);
          continue;
       }
 
@@ -868,6 +934,8 @@ void factions_free (void)
       free(faction_stack[i].name);
       if (faction_stack[i].longname != NULL)
          free(faction_stack[i].longname);
+      if (faction_stack[i].displayname != NULL)
+         free(faction_stack[i].displayname);
       if (faction_stack[i].logo_small != NULL)
          gl_freeTexture(faction_stack[i].logo_small);
       if (faction_stack[i].logo_tiny != NULL)
@@ -876,6 +944,8 @@ void factions_free (void)
          free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0)
          free(faction_stack[i].enemies);
+      if (faction_stack[i].state != NULL)
+         lua_close( faction_stack[i].state );
    }
    free(faction_stack);
    faction_stack = NULL;
@@ -896,6 +966,10 @@ int pfaction_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"factions");
 
    for (i=1; i<faction_nstack; i++) { /* player is faction 0 */
+      /* Must not be static. */
+      if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
+         continue;
+
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
@@ -929,10 +1003,15 @@ int pfaction_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
-               xmlr_attr(cur,"name",str); 
+               xmlr_attr(cur,"name",str);
                faction = faction_get(str);
-               if (faction != -1) /* Faction is valid. */
-                  faction_stack[faction].player = xml_getFloat(cur);
+
+               if (faction != -1) { /* Faction is valid. */
+
+                  /* Must not be static. */
+                  if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
+                     faction_stack[faction].player = xml_getFloat(cur);
+               }
                free(str);
             }
          } while (xml_nextNode(cur));
@@ -943,3 +1022,61 @@ int pfaction_load( xmlNodePtr parent )
 }
 
 
+/**
+ * @brief Returns an array of faction ids.
+ *
+ *    @param *n Writes the number of elements.
+ *    @param which Which factions to get. (0,1,2,3 : all, friendly, neutral, hostile)
+ *    @return A pointer to an array, or NULL.
+ */
+int *faction_getGroup( int *n, int which )
+{
+   int *group;
+   int i;
+
+   /* Set defaults. */
+   group = NULL;
+   *n = 0;
+
+   switch(which) {
+      case 0: /* 'all' */
+         *n = faction_nstack;
+         group = malloc(sizeof(int) * *n);
+         for(i = 0; i < faction_nstack; i++)
+            group[i] = i;
+         break;
+
+      case 1: /* 'friendly' */
+         for(i = 0; i < faction_nstack; i++)
+            if(areAllies(FACTION_PLAYER, i)) {
+               (*n)++;
+               group = realloc(group, sizeof(int) * *n);
+               group[*n - 1] = i;
+            }
+         break;
+
+      case 2: /* 'neutral' */
+         for(i = 0; i < faction_nstack; i++)
+            if(!areAllies(FACTION_PLAYER, i) && !areEnemies(FACTION_PLAYER, i)) {
+               (*n)++;
+               group = realloc(group, sizeof(int) * *n);
+               group[*n - 1] = i;
+            }
+         break;
+
+      case 3: /* 'hostile' */
+         for(i = 0; i < faction_nstack; i++)
+            if(areEnemies(FACTION_PLAYER, i)) {
+               (*n)++;
+               group = realloc(group, sizeof(int) * *n);
+               group[*n - 1] = i;
+            }
+         break;
+
+      default:
+         /* Defaults have already been set. */
+         break;
+   }
+
+   return group;
+}

@@ -8,9 +8,7 @@
 
 
 #include "nlua.h"
-
-
-#define EVENT_TIMER_MAX       3 /**< Maximum amount of event timers. */
+#include "claim.h"
 
 
 /**
@@ -20,10 +18,8 @@ typedef struct Event_s {
    unsigned int id; /**< Event ID. */
    int data; /**< EventData parent. */
    lua_State *L; /**< Event Lua State. */
-
-   /* Timers. */
-   double timer[EVENT_TIMER_MAX]; /**< Event timers. */
-   char *tfunc[EVENT_TIMER_MAX]; /**< Functions assosciated to the timers. */
+   int save; /**< Whether or not it should be saved. */
+   SysClaim_t *claims; /**< Event claims. */
 } Event_t;
 
 
@@ -31,9 +27,10 @@ typedef struct Event_s {
  * @brief Possibly event triggers.
  */
 typedef enum EventTrigger_s {
-   EVENT_TRIGGER_NULL, /**< Invalid trigger. */
+   EVENT_TRIGGER_NULL,  /**< Invalid trigger. */
    EVENT_TRIGGER_ENTER, /**< Entering a system (jump/takeoff). */
-   EVENT_TRIGGER_LAND /**< Landing on a system. */
+   EVENT_TRIGGER_LAND,  /**< Landing on a system. */
+   EVENT_TRIGGER_LOAD,  /**< Loading or starting a new save game. */
 } EventTrigger_t;
 
 
@@ -43,12 +40,7 @@ typedef enum EventTrigger_s {
 int events_load (void);
 void events_exit (void);
 void events_cleanup (void);
-
-
-/*
- * Updating.
- */
-void events_update( double dt );
+void event_checkSanity (void);
 
 
 /*
@@ -64,6 +56,7 @@ void events_trigger( EventTrigger_t trigger );
  * Handling.
  */
 void event_remove( unsigned int eventid );
+int event_save( unsigned int eventid );
 const char *event_getData( unsigned int eventid );
 int event_isUnique( unsigned int eventid );
 
@@ -73,6 +66,13 @@ int event_isUnique( unsigned int eventid );
  */
 int event_dataID( const char *evdata );
 const char *event_dataName( int dataid );
+
+
+/*
+ * Claims.
+ */
+void event_activateClaims (void);
+int event_testClaims( unsigned int eventid, int sys );
 
 
 #endif /* EVENT_H */

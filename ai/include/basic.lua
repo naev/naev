@@ -7,6 +7,15 @@
 
 
 --[[
+-- Faces the target.
+--]]
+function __face ()
+   local target = ai.target()
+   ai.face( target )
+end
+
+
+--[[
 -- Brakes the ship
 --]]
 function brake ()
@@ -14,37 +23,57 @@ function brake ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
+      return
    end
 end
 
 
 --[[
--- Goes to a target position
+-- Brakes the ship
+--]]
+function __subbrake ()
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.popsubtask()
+      return
+   end
+end
+
+
+--[[
+-- Goes to a target position without braking
 --]]
 function __goto_nobrake ()
    local target   = ai.target()
-   local dir      = ai.face( target )
-   local dist     = ai.dist( target )
-   local bdist    = ai.minbrakedist()
-
-   -- Need to get closer
-   if dir < 10 and dist > bdist then
-      ai.accel()
-
-   -- Need to start braking
-   elseif dist < bdist then
-      ai.poptask()
-   end
+   local dir      = ai.face( target, nil, true )
+   __goto_generic( target, dir, false )
 end
 
 
 --[[
--- Goes to a target position
+-- Goes to a target position without braking
 --]]
-function goto ()
+function __goto_nobrake_raw ()
    local target   = ai.target()
    local dir      = ai.face( target )
+   __goto_generic( target, dir, false )
+end
+
+
+--[[
+-- Goes to a precise position.
+--]]
+function __goto_precise ()
+   local target   = ai.target()
+   local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
+
+   -- Handle finished
+   if ai.isstopped() and dist < 10 then
+      ai.poptask() -- Finished
+   end
+
    local bdist    = ai.minbrakedist()
 
    -- Need to get closer
@@ -53,8 +82,56 @@ function goto ()
 
    -- Need to start braking
    elseif dist < bdist then
+      ai.pushsubtask("__subbrake")
+   end
+end
+
+
+
+
+--[[
+-- Goes to a target position roughly
+--]]
+function goto ()
+   local target   = ai.target()
+   local dir      = ai.face( target, nil, true )
+   __goto_generic( target, dir, true )
+end
+
+
+--[[
+-- Goto without velocity compensation.
+--]]
+function goto_raw ()
+   local target   = ai.target()
+   local dir      = ai.face( target )
+   __goto_generic( target, dir, true )
+end
+
+
+--[[
+-- Generic GOTO function.
+--]]
+function __goto_generic( target, dir, brake, subtask )
+   local dist     = ai.dist( target )
+   local bdist
+   if brake then
+      bdist    = ai.minbrakedist()
+   else
+      bdist    = 50
+   end
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
+      ai.accel()
+
+   -- Need to start braking
+   elseif dist < bdist then
       ai.poptask()
-      ai.pushtask(0, "brake")
+      if brake then
+         ai.pushtask("brake")
+      end
+      return
    end
 end
 
@@ -64,7 +141,7 @@ end
 --]]
 function follow ()
    local target = ai.target()
-
+ 
    -- Will just float without a target to escort.
    if not ai.exists(target) then
       return
@@ -72,30 +149,19 @@ function follow ()
    
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
-   local bdist = ai.minbrakedist()
-
-   -- Close enough.
-   if ai.isstopped() and dist < 300 then
-      return
-
-   -- Brake
-   elseif dist+100 < bdist then
-      ai.pushtask(0, "brake")
-
+ 
    -- Must approach
-   elseif dir < 10 and dist > 300 then
+   if dir < 10 and dist > 300 then
       ai.accel()
-
+ 
    end
 end
-
 
 --[[
 -- Tries to runaway and jump asap.
 --]]
 function __runaway ()
    runaway()
-   ai.hyperspace()
 end
 
 
@@ -104,7 +170,11 @@ end
 --]]
 function __hyperspace ()
    hyperspace()
-   ai.hyperspace()
+end
+
+
+function __land ()
+   land()
 end
 
 
@@ -119,6 +189,20 @@ function land ()
       return
    end
 
+   -- Set target if necessary
+   local target = ai.target()
+   if target ~= nil then
+      mem.land = target
+   end
+
+   -- Make sure mem.land is valid target
+   if mem.land == nil then
+      mem.land = ai.landplanet()
+   end
+
+   ai.pushsubtask( "__landgo" )
+end
+function __landgo ()
    local target   = mem.land
    local dir      = ai.face( target )
    local dist     = ai.dist( target )
@@ -130,33 +214,17 @@ function land ()
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.poptask()
-      ai.pushtask( 0, "landstop" )
+      ai.pushsubtask( "__landstop" )
    end
 
 end
-function landstop ()
+function __landstop ()
    ai.brake()
    if ai.isstopped() then
       ai.stop() -- Will stop the pilot if below err vel
-      ai.settimer(0, rnd.int(8000,15000)) -- We wait during a while
-      ai.poptask()
-      ai.pushtask( 0, "landwait")
-   end
-end
-function landwait ()
-   local target = mem.land
-   local dist   = ai.dist( target )
-
-   -- In case for some reason landed far away
-   if dist > 50 then
-      ai.poptask()
-      ai.pushtask( 0, "land" )
-
-   -- Check if time is up
-   elseif ai.timeup(0) then
-      mem.landed = true -- Mark as landed so they don't spend time forever floating around
-      ai.poptask() -- Ready to do whatever we were doing before.
+      if not ai.land() then
+         ai.popsubtask()
+      end
    end
 end
 
@@ -176,7 +244,6 @@ function runaway ()
    -- Good to set the target for distress calls
    ai.settarget( target )
 
-   local dist  = ai.dist(target)
    local dir   = ai.face(target, true)
    ai.accel()
 
@@ -187,36 +254,93 @@ function runaway ()
    end
    ]]--
 
+   ai.pushsubtask( "__run_hyp", ai.nearhyptarget() )
+end
+function __run_turret( dist )
    -- See if we have some turret to use
-   local secondary, special = ai.secondary("melee")
-   if special == "Turret" then
+   if ai.hasturrets() then
       if dist < ai.getweaprange(true) then
-         ai.shoot(true)
+         ai.weapset( 3 )
+         ai.shoot( true )
       end
    end
+end
+function __run_hyp ()
+   -- Shoot the target
+   local target   = ai.target()
+   if ai.exists(target) then
+      ai.settarget( target )
+      local tdist    = ai.dist(target)
+      __run_turret( tdist )
+   end
 
-   if ai.hasturrets() then
-      if dist < ai.getweaprange() then
-         ai.shoot(false, 1)
-      end
+   -- Go towards jump
+   local jump     = ai.subtarget()
+   local jdir     = ai.face(jump)
+   local bdist    = ai.minbrakedist()
+   local jdist    = ai.dist(jump)
+   if jdir < 10 and jdist > bdist then
+      ai.accel()
+   elseif jdist < bdist then
+      ai.pushsubtask( "__run_hypbrake" )
+   end
+end
+function __run_hypbrake ()
+   -- Shoot the target
+   local target   = ai.target()
+   if ai.exists(target) then
+      ai.settarget( target )
+      local tdist    = ai.dist(target)
+      __run_turret( tdist )
+   end
+
+   -- The braking
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.popsubtask()
+      ai.pushsubtask( "__hyp_jump" )
    end
 end
 
 
 --[[
 -- Starts heading away to try to hyperspace.
---
--- Will need teh following in control() to work:
---
--- task = ai.taskname()
--- if task == "hyperspace" then
---    ai.hyperspace() -- Try to hyperspace
--- end
 --]]
 function hyperspace ()
-   local dir = ai.face(-1) -- face away from (0,0)
-   if (dir < 10) then
+   local target = ai.target()
+   if target == nil then
+      target = ai.rndhyptarget()
+   end
+   ai.pushsubtask( "__hyp_approach", target )
+end
+function __hyp_approach ()
+   local target   = ai.subtarget()
+   local dir      = ai.face( target )
+   local dist     = ai.dist( target )
+   local bdist    = ai.minbrakedist()
+
+   -- Need to get closer
+   if dir < 10 and dist > bdist then
       ai.accel()
+   -- Need to start braking
+   elseif dist < bdist then
+      ai.pushsubtask("__hyp_brake")
+   end
+end
+function __hyp_brake ()
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
+      ai.popsubtask()
+      ai.pushsubtask("__hyp_jump")
+   end
+end
+function __hyp_jump ()
+   if ai.hyperspace() == nil then
+      ai.poptask()
+   else
+      ai.popsubtask()
    end
 end
 
@@ -247,7 +371,7 @@ function board ()
 
    -- See if must brake or approach
    if dist < bdist then
-      ai.pushtask( 0, "boardstop", target )
+      ai.pushsubtask( "__boardstop", target )
    elseif dir < 10 then
       ai.accel()
    end
@@ -257,7 +381,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
-function boardstop ()
+function __boardstop ()
    target = ai.target()
 
    -- make sure pilot exists
@@ -289,7 +413,7 @@ function boardstop ()
 
    -- If stopped try again
    if ai.isstopped() then
-      ai.poptask()
+      ai.popsubtask()
    end
 end
 
@@ -323,7 +447,7 @@ function refuel ()
 
    -- See if must brake or approach
    if dist < bdist then
-      ai.pushtask( 0, "refuelstop", target )
+      ai.pushsubtask( "__refuelstop", target )
    elseif dir < 10 then
       ai.accel()
    end
@@ -332,7 +456,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
-function refuelstop ()
+function __refuelstop ()
    local target = ai.target()
 
    -- make sure pilot exists
@@ -361,7 +485,7 @@ function refuelstop ()
 
    -- If stopped try again
    if ai.isstopped() then
-      ai.poptask()
+      ai.popsubtask()
    end
 end
 

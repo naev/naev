@@ -35,6 +35,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Dimitri", "dimitri" )
    misn.setDesc( bar_desc )
 end
@@ -57,7 +58,7 @@ function accept ()
    misn.setTitle(misn_title)
    misn.setReward( misn_reward )
    misn.setDesc(misn_desc[1])
-   misn.setMarker( system.get("C-00"), "misc" )
+   misn_marker = misn.markerAdd( system.get("C-00"), "low" )
 
    tk.msg( title[2], text[2] )
 
@@ -66,11 +67,11 @@ end
 
 
 function enter()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- Increment System visited count
-   if misn_stage == 0 and factions["Collective"] then
+   if misn_stage == 0 and factions[ "Collective" ] and factions[ "Collective" ] > 200 then
       systems_visited = systems_visited + 1
 
       -- Visited enough systems
@@ -78,7 +79,7 @@ function enter()
          misn.setDesc( string.format(misn_desc[2],
                misn_base:name(), misn_base_sys:name()) )
          misn_stage = 1
-         misn.setMarker(misn_base_sys, "misc") -- now we mark return to base
+         misn.markerMove( misn_marker, misn_base_sys )
          hook.land("land")
          player.msg("You have enough recordings, return to base.");
       end

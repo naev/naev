@@ -723,7 +723,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
 
    /* set the new name */
    strncpy( music_vorbis.name, name, 64 );
-   
+
    /* Load new ogg. */
    music_vorbis.rw = rw;
    if (ov_open_callbacks( music_vorbis.rw, &music_vorbis.stream,
@@ -812,7 +812,7 @@ int music_al_volume( double vol )
       /* Check for errors. */
       al_checkErr();
    }
- 
+
    soundUnlock();
 
    return 0;

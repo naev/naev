@@ -58,8 +58,8 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
  */
 /* misc */
 static DamageType outfit_strToDamageType( char *buf );
-static const char *outfit_damageTypeToStr( DamageType dmg );
 static OutfitType outfit_strToOutfitType( char *buf );
+static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
 static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
@@ -73,6 +73,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 
 
@@ -95,6 +96,32 @@ Outfit* outfit_get( const char* name )
 
 
 /**
+ * @brief Gets an outfit by name without warning on no-find.
+ *
+ *    @param name Name to match.
+ *    @return Outfit matching name or NULL if not found.
+ */
+Outfit* outfit_getW( const char* name )
+{
+   int i;
+   for (i=0; i<array_size(outfit_stack); i++)
+      if (strcmp(name,outfit_stack[i].name)==0)
+         return &outfit_stack[i];
+   return NULL;
+}
+
+
+/**
+ * @brief Gets all the outfits.
+ */
+Outfit* outfit_getAll( int *n )
+{
+   *n = array_size(outfit_stack);
+   return outfit_stack;
+}
+
+
+/**
  * @brief Function meant for use with C89, C99 algorithm qsort().
  *
  *    @param outfit1 First argument to compare.
@@ -109,6 +136,12 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    /* Get outfits. */
    o1 = * (const Outfit**) outfit1;
    o2 = * (const Outfit**) outfit2;
+
+   /* Compare slot type. */
+   if (o1->slot.type < o2->slot.type)
+      return +1;
+   else if (o1->slot.type > o2->slot.type)
+      return -1;
 
    /* Compare intrinsic types. */
    if (o1->type < o2->type)
@@ -127,58 +160,20 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
          return ret;
    }
 
+   /* Compare slot sizes. */
+   if (o1->slot.size < o2->slot.size)
+      return +1;
+   else if (o1->slot.size > o2->slot.size)
+      return -1;
+
    /* Compare price. */
    if (o1->price < o2->price)
-      return -1;
-   else if (o1->price > o2->price)
       return +1;
+   else if (o1->price > o2->price)
+      return -1;
 
    /* It turns out they're the same. */
    return 0;
-}
-
-
-/**
- * @brief Gets all the outfits matching technology requirements.
- *
- * Function will already sort the outfits by type and then by price making
- *  it much easier to handle later on.
- *
- *    @param[out] n Number of outfits found.
- *    @param[in] tech Technologies to check against. The first one represents
- *                    overall technology, the others are specific technologies.
- *    @param[in] techmax Number of technologies in tech.
- *    @return An allocated array of allocated strings with the names of outfits
- *            matching the tech requirements.
- */
-Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
-{
-   int i,j, num;
-   Outfit **outfits;
-   
-   outfits = malloc(sizeof(Outfit*) * array_size(outfit_stack));
-
-   /* get the available techs */
-   num = 0;
-   for (i=0; i < array_size(outfit_stack); i++) {
-      if (outfit_stack[i].tech <= tech[0]) { /* check vs base tech */
-         outfits[num] = &outfit_stack[i];
-         num++;
-      }
-      else {
-         for(j=0; j<techmax; j++) /* check vs special techs */
-            if (tech[j] == outfit_stack[i].tech) {
-               outfits[num] = &outfit_stack[i];
-               num++;
-            }
-      }
-   }
-
-   /* Sort. */
-   qsort( outfits, num, sizeof(Outfit*), outfit_compareTech );
-   *n = num;
-
-   return outfits;
 }
 
 
@@ -242,20 +237,101 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  */
 const char *outfit_slotName( const Outfit* o )
 {
-   switch (o->slot) {
+   switch (o->slot.type) {
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
          return "NA";
-      case OUTFIT_SLOT_LOW:
-         return "Low";
-      case OUTFIT_SLOT_MEDIUM:
-         return "Medium";
-      case OUTFIT_SLOT_HIGH:
-         return "High";
+      case OUTFIT_SLOT_STRUCTURE:
+         return "Structure";
+      case OUTFIT_SLOT_UTILITY:
+         return "Utility";
+      case OUTFIT_SLOT_WEAPON:
+         return "Weapon";
       default:
          return "Unknown";
    }
+}
+
+
+/**
+ * @brief Gets the name of the slot size of an outfit.
+ *
+ *    @param o Outfit to get slot size of.
+ *    @return The human readable name of the slot size.
+ */
+const char *outfit_slotSize( const Outfit* o )
+{
+   switch( o->slot.size) {
+      case OUTFIT_SLOT_SIZE_NA:
+         return "NA";
+      case OUTFIT_SLOT_SIZE_LIGHT:
+         return "Light";
+      case OUTFIT_SLOT_SIZE_MEDIUM:
+         return "Medium";
+      case OUTFIT_SLOT_SIZE_HEAVY:
+         return "Heavy";
+      default:
+         return "Unknown";
+   }
+}
+
+
+/**
+ * @brief Gets the slot size colour for an outfit slot.
+ *
+ *    @param os Outfit slot to get the slot size colour of.
+ *    @return The slot size colour of the outfit slot.
+ */
+glColour *outfit_slotSizeColour( const OutfitSlot* os )
+{
+   if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
+      return &cFontBlue;
+   else if (os->size == OUTFIT_SLOT_SIZE_MEDIUM)
+      return &cFontGreen;
+   else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
+      return &cFontYellow;
+   return NULL;
+}
+
+
+/**
+ * @brief Gets the outfit slot size from a human readable string.
+ *
+ *    @param s String represinting an outfit slot size.
+ *    @return Outfit slot size matching string.
+ */
+OutfitSlotSize outfit_toSlotSize( const char *s )
+{
+   if (s == NULL) {
+      /*WARN( "(NULL) outfit slot size" );*/
+      return OUTFIT_SLOT_SIZE_NA;
+   }
+
+   if (strcasecmp(s,"Heavy")==0)
+      return OUTFIT_SLOT_SIZE_HEAVY;
+   else if (strcasecmp(s,"Medium")==0)
+      return OUTFIT_SLOT_SIZE_MEDIUM;
+   else if (strcasecmp(s,"Light")==0)
+      return OUTFIT_SLOT_SIZE_LIGHT;
+
+   WARN("'%s' does not match any outfit slot sizes.", s);
+   return OUTFIT_SLOT_SIZE_NA;
+}
+
+
+/**
+ * @brief Sets the outfit slot size from default outfit properties.
+ */
+static int outfit_setDefaultSize( Outfit *o )
+{
+   if (o->mass <= 10.)
+      o->slot.size = OUTFIT_SLOT_SIZE_LIGHT;
+   else if (o->mass <= 30.)
+      o->slot.size = OUTFIT_SLOT_SIZE_MEDIUM;
+   else
+      o->slot.size = OUTFIT_SLOT_SIZE_HEAVY;
+   return 0;
 }
 
 
@@ -264,7 +340,7 @@ const char *outfit_slotName( const Outfit* o )
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
  */
-int outfit_isWeapon( const Outfit* o )
+int outfit_isForward( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_BOLT)      ||
          (o->type==OUTFIT_TYPE_BEAM) );
@@ -316,8 +392,8 @@ int outfit_isAmmo( const Outfit* o )
  */
 int outfit_isSeeker( const Outfit* o )
 {
-   if (((o->type==OUTFIT_TYPE_AMMO)     ||
-            (o->type==OUTFIT_TYPE_TURRET_AMMO) ) &&
+   if (((o->type==OUTFIT_TYPE_AMMO) || (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) ||
+            (o->type==OUTFIT_TYPE_LAUNCHER) || (o->type==OUTFIT_TYPE_TURRET_AMMO) ) &&
          (o->u.amm.ai > 0))
       return 1;
    return 0;
@@ -372,7 +448,7 @@ int outfit_isFighterBay( const Outfit* o )
 /**
  * @brief Checks if outfit is a fighter.
  *    @param o Outfit to check.
- *    @return 1 if o is a jammer.
+ *    @return 1 if o is a Fighter.
  */
 int outfit_isFighter( const Outfit* o )
 {
@@ -390,11 +466,20 @@ int outfit_isMap( const Outfit* o )
 /**
  * @brief Checks if outfit is a license.
  *    @param o Outfit to check.
- *    @return 1 if o is a map.
+ *    @return 1 if o is a license.
  */
 int outfit_isLicense( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_LICENSE);
+}
+/**
+ * @brief Checks if outfit is a GUI.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a GUI.
+ */
+int outfit_isGUI( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_GUI);
 }
 
 
@@ -517,9 +602,15 @@ double outfit_cpu( const Outfit* o )
  */
 double outfit_range( const Outfit* o )
 {
+   Outfit *amm;
    if (outfit_isBolt(o)) return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
    else if (outfit_isBeam(o)) return o->u.bem.range;
    else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
+   else if (outfit_isLauncher(o)) {
+      amm = outfit_ammo(o);
+      if (amm != NULL)
+         return outfit_range(amm);
+   }
    return -1.;
 }
 /**
@@ -576,7 +667,7 @@ int outfit_soundHit( const Outfit* o )
  */
 const char* outfit_getType( const Outfit* o )
 {
-   const char* outfit_typename[] = { 
+   const char* outfit_typename[] = {
          "NULL",
          "Bolt Cannon",
          "Beam Cannon",
@@ -592,6 +683,7 @@ const char* outfit_getType( const Outfit* o )
          "Fighter Bay",
          "Fighter",
          "Map",
+         "GUI",
          "License"
    };
 
@@ -610,19 +702,20 @@ const char* outfit_getType( const Outfit* o )
  */
 const char* outfit_getTypeBroad( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return "Bolt Weapon";
-   else if (outfit_isBeam(o)) return "Beam Weapon";
-   else if (outfit_isLauncher(o)) return "Launcher";
-   else if (outfit_isAmmo(o)) return "Ammo";
-   else if (outfit_isTurret(o)) return "Turret";
-   else if (outfit_isMod(o)) return "Modification";
+   if (outfit_isBolt(o))            return "Bolt Weapon";
+   else if (outfit_isBeam(o))       return "Beam Weapon";
+   else if (outfit_isLauncher(o))   return "Launcher";
+   else if (outfit_isAmmo(o))       return "Ammo";
+   else if (outfit_isTurret(o))     return "Turret";
+   else if (outfit_isMod(o))        return "Modification";
    else if (outfit_isAfterburner(o)) return "Afterburner";
-   else if (outfit_isJammer(o)) return "Jammer";
+   else if (outfit_isJammer(o))     return "Jammer";
    else if (outfit_isFighterBay(o)) return "Fighter Bay";
-   else if (outfit_isFighter(o)) return "Fighter";
-   else if (outfit_isMap(o)) return "Map";
-   else if (outfit_isLicense(o)) return "License";
-   else return "Unknown";
+   else if (outfit_isFighter(o))    return "Fighter";
+   else if (outfit_isMap(o))        return "Map";
+   else if (outfit_isGUI(o))        return "GUI";
+   else if (outfit_isLicense(o))    return "License";
+   else                             return "Unknown";
 }
 
 
@@ -634,11 +727,11 @@ const char* outfit_getTypeBroad( const Outfit* o )
  */
 static DamageType outfit_strToDamageType( char *buf )
 {
-   if (strcmp(buf,"energy")==0) return DAMAGE_TYPE_ENERGY;
-   else if (strcmp(buf,"kinetic")==0) return DAMAGE_TYPE_KINETIC;
-   else if (strcmp(buf,"ion")==0) return DAMAGE_TYPE_ION;
-   else if (strcmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
-   else if (strcmp(buf,"emp")==0) return DAMAGE_TYPE_EMP;
+   if (strcasecmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
+   else if (strcasecmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
+   else if (strcasecmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
+   else if (strcasecmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
+   else if (strcasecmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
 
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;
@@ -648,7 +741,7 @@ static DamageType outfit_strToDamageType( char *buf )
 /**
  * @brief Gets the human readable string from damage type.
  */
-static const char *outfit_damageTypeToStr( DamageType dmg )
+const char *outfit_damageTypeToStr( DamageType dmg )
 {
    switch (dmg) {
       case DAMAGE_TYPE_ENERGY:
@@ -667,8 +760,42 @@ static const char *outfit_damageTypeToStr( DamageType dmg )
 }
 
 
+/**
+ * @brief Checks to see if an outfit fits a slot.
+ *
+ *    @param o Outfit to see if fits in a slot.
+ *    @param s Slot to see if outfit fits in.
+ *    @return 1 if outfit fits the slot, 0 otherwise.
+ */
+int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
+{
+   const OutfitSlot *os;
+   os = &o->slot;
+
+   /* Outfit must have valid slot type. */
+   if ((os->type == OUTFIT_SLOT_NULL) ||
+      (os->type == OUTFIT_SLOT_NA))
+      return 0;
+
+   /* Outfit type must match outfit slot. */
+   if (os->type != s->type)
+      return 0;
+
+   /* Must have valid slot size. */
+   if (os->size == OUTFIT_SLOT_SIZE_NA)
+      return 0;
+
+   /* It doesn't fit. */
+   if (os->size > s->size)
+      return 0;
+
+   /* It meets all criteria. */
+   return 1;
+}
+
+
 #define O_CMP(s,t) \
-if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
+if (strcasecmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**
  * @brief Gets the outfit type from a human readable string.
  *
@@ -677,21 +804,21 @@ if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType
  */
 static OutfitType outfit_strToOutfitType( char *buf )
 {
-   O_CMP("bolt",OUTFIT_TYPE_BOLT);
-   O_CMP("beam",OUTFIT_TYPE_BEAM);
-   O_CMP("turret bolt",OUTFIT_TYPE_TURRET_BOLT);
-   O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
-   O_CMP("launcher",OUTFIT_TYPE_LAUNCHER);
-   O_CMP("ammo",OUTFIT_TYPE_AMMO);
+   O_CMP("bolt",           OUTFIT_TYPE_BOLT);
+   O_CMP("beam",           OUTFIT_TYPE_BEAM);
+   O_CMP("turret bolt",    OUTFIT_TYPE_TURRET_BOLT);
+   O_CMP("turret beam",    OUTFIT_TYPE_TURRET_BEAM);
+   O_CMP("launcher",       OUTFIT_TYPE_LAUNCHER);
+   O_CMP("ammo",           OUTFIT_TYPE_AMMO);
    O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
-   O_CMP("turret ammo",OUTFIT_TYPE_TURRET_AMMO);
-   O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
-   O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
-   O_CMP("fighter bay",OUTFIT_TYPE_FIGHTER_BAY);
-   O_CMP("fighter",OUTFIT_TYPE_FIGHTER);
-   O_CMP("jammer",OUTFIT_TYPE_JAMMER);
-   O_CMP("map",OUTFIT_TYPE_MAP);
-   O_CMP("license",OUTFIT_TYPE_LICENSE);
+   O_CMP("turret ammo",    OUTFIT_TYPE_TURRET_AMMO);
+   O_CMP("modification",   OUTFIT_TYPE_MODIFCATION);
+   O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
+   O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
+   O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
+   O_CMP("jammer",         OUTFIT_TYPE_JAMMER);
+   O_CMP("map",            OUTFIT_TYPE_MAP);
+   O_CMP("license",        OUTFIT_TYPE_LICENSE);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;
@@ -751,12 +878,15 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.sound          = -1;
    temp->u.blt.sound_hit      = -1;
    temp->u.blt.falloff        = -1.;
+   temp->u.blt.ew_lockon      = 1.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
       xmlr_float(node,"accuracy",temp->u.blt.accuracy);
+      xmlr_float(node,"ew_lockon",temp->u.blt.ew_lockon);
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"cpu",temp->u.blt.cpu);
       if (xml_isNode(node,"range")) {
@@ -780,7 +910,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -792,7 +922,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (conf.interpolate && xml_isNode(node,"gfx_end")) {
          temp->u.blt.gfx_end = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          continue;
       }
 
@@ -819,6 +949,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
          continue;
       }
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* If not defined assume maximum. */
@@ -827,6 +958,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.blt.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -882,6 +1017,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       xmlr_float(node,"range",temp->u.bem.range);
       xmlr_float(node,"turn",temp->u.bem.turn);
       xmlr_float(node,"energy",temp->u.bem.energy);
@@ -923,10 +1059,15 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.sound_off = sound_get( xml_get(node) );
          continue;
       }
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -975,14 +1116,20 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
+      xml_onlyNodes(node);
       xmlr_int(node,"delay",temp->u.lau.delay);
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
    temp->u.lau.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1020,14 +1167,17 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    /* Defaults. */
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
    temp->u.amm.spfx_armour = -1;
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
    temp->u.amm.ai          = -1;
+   temp->u.amm.ew_lockon   = 1.;
 
    do { /* load all the data */
+      xml_onlyNodes(node);
       /* Basic */
       if (xml_isNode(node,"duration")) {
          buf = xml_nodeProp(node,"blowup");
@@ -1045,6 +1195,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       xmlr_float(node,"lockon",temp->u.amm.lockon);
+      xmlr_float(node,"ew_lockon",temp->u.amm.ew_lockon);
       xmlr_float(node,"resist",temp->u.amm.resist);
       /* Movement */
       xmlr_float(node,"thrust",temp->u.amm.thrust);
@@ -1092,7 +1243,11 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
             temp->u.amm.ai = 1;
          else if (strcmp(buf,"smart")==0)
             temp->u.amm.ai = 2;
+         else
+            WARN("Ammo '%s' has unknown ai type '%s'.", temp->name, buf);
+         continue;
       }
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post-processing */
@@ -1146,6 +1301,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    node = parent->children;
 
    do { /* load all the data */
+      xml_onlyNodes(node);
       /* movement */
       xmlr_float(node,"thrust",temp->u.mod.thrust);
       xmlr_float(node,"thrust_rel",temp->u.mod.thrust_rel);
@@ -1168,14 +1324,19 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
+      /* Stats. */
+      if (ship_statsParseSingle( &temp->u.mod.stats, node ))
+         WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
-   /* stats */
-   ship_statsParse( &temp->u.mod.stats, parent );
 
    /* Process some variables. */
    temp->u.mod.armour_regen /= 60.;
    temp->u.mod.shield_regen /= 60.;
    temp->u.mod.energy_regen /= 60.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1240,16 +1401,19 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* must be >= 1. */
    temp->u.afb.thrust = 1.;
    temp->u.afb.speed  = 1.;
-   
-   do { /* parse the data */
-      xmlr_float(node,"rumble",temp->u.afb.rumble);
-      if (xml_isNode(node,"sound"))
-         temp->u.afb.sound = sound_get( xml_get(node) );
 
+   do { /* parse the data */
+      xml_onlyNodes(node);
+      xmlr_float(node,"rumble",temp->u.afb.rumble);
+      if (xml_isNode(node,"sound")) {
+         temp->u.afb.sound = sound_get( xml_get(node) );
+         continue;
+      }
       xmlr_float(node,"thrust",temp->u.afb.thrust);
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -1275,6 +1439,10 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
    temp->u.afb.speed  /= 100.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 }
 
 /**
@@ -1289,14 +1457,20 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
       xmlr_int(node,"delay",temp->u.bay.delay);
       xmlr_float(node,"cpu",temp->u.bay.cpu);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
       xmlr_int(node,"amount",temp->u.bay.amount);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
    temp->u.bay.delay /= 1000.;
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1330,10 +1504,13 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
+      xml_onlyNodes(node);
       xmlr_strd(node,"ship",temp->u.fig.ship);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set short description. */
@@ -1360,10 +1537,13 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
-   temp->slot              = OUTFIT_SLOT_NA;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    do {
+      xml_onlyNodes(node);
       xmlr_int(node,"radius",temp->u.map.radius);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set short description. */
@@ -1380,6 +1560,37 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
 
 /**
+ * @brief Parses the GUI tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+
+   node = parent->children;
+
+   do {
+      xml_onlyNodes(node);
+      xmlr_strd(node,"gui",temp->u.gui.gui);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
+   } while (xml_nextNode(node));
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "GUI (Graphical User Interface)" );
+
+   if (temp->u.gui.gui==NULL)
+      WARN("Outfit '%s' missing/invalid 'gui' element", temp->name);
+}
+
+
+/**
  * @brief Parses the license tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1387,18 +1598,16 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
  */
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 {
-   /* Licenses have no specific tidbits. */
-   (void) parent;
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
-   temp->slot              = OUTFIT_SLOT_NA;
-
-   /*
    xmlNodePtr node;
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
-   */
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1420,14 +1629,20 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    node = parent->children;
 
    do {
+      xml_onlyNodes(node);
       xmlr_float(node,"range",temp->u.jam.range);
       xmlr_float(node,"chance",temp->u.jam.chance);
       xmlr_float(node,"energy",temp->u.jam.energy);
       xmlr_float(node,"cpu",temp->u.jam.cpu);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
    temp->u.jam.energy /= 60.; /* It's per minute */
+
+   /* Set default outfit size if necessary. */
+   if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
+      outfit_setDefaultSize( temp );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1482,7 +1697,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            xmlr_int(cur,"tech",temp->tech);
+            xml_onlyNodes(cur);
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
@@ -1491,23 +1706,31 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               continue;
             }
             else if (xml_isNode(cur,"slot")) {
                cprop = xml_get(cur);
                if (cprop == NULL)
-                  WARN("Outfit Slot type invalid.");
-               else if (strcmp(cprop,"low") == 0)
-                  temp->slot = OUTFIT_SLOT_LOW;
-               else if (strcmp(cprop,"medium") == 0)
-                  temp->slot = OUTFIT_SLOT_MEDIUM;
-               else if (strcmp(cprop,"high") == 0)
-                  temp->slot = OUTFIT_SLOT_HIGH;
+                  WARN("Outfit '%s' has an slot type invalid.", temp->name);
+               else if (strcmp(cprop,"structure") == 0)
+                  temp->slot.type = OUTFIT_SLOT_STRUCTURE;
+               else if (strcmp(cprop,"utility") == 0)
+                  temp->slot.type = OUTFIT_SLOT_UTILITY;
+               else if (strcmp(cprop,"weapon") == 0)
+                  temp->slot.type = OUTFIT_SLOT_WEAPON;
+               else
+                  WARN("Outfit '%s' has unknown slot type '%s'.", temp->name, cprop);
+               continue;
             }
-
+            else if (xml_isNode(cur,"size")) {
+               temp->slot.size = outfit_toSlotSize( xml_get(cur) );
+               continue;
+            }
+            WARN("Outfit '%s' has unknown general node '%s'",temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
-      
+
       if (xml_isNode(node,"specific")) { /* has to be processed seperately */
 
          /* get the type */
@@ -1520,7 +1743,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          /* is secondary weapon? */
          prop = xml_nodeProp(node,"secondary");
          if (prop != NULL) {
-            if ((int)atoi(prop)) outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
+            if ((int)atoi(prop))
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
             free(prop);
          }
 
@@ -1546,20 +1770,21 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             outfit_parseSFighter( temp, node );
          else if (outfit_isMap(temp))
             outfit_parseSMap( temp, node );
+         else if (outfit_isGUI(temp))
+            outfit_parseSGUI( temp, node );
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
 
          continue;
       }
-
-      DEBUG("Unknown node '%s' in outfit '%s'", node->name, temp->name);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
-   MELEMENT(temp->slot==OUTFIT_SLOT_NULL,"slot");
-   MELEMENT(temp->tech==0,"tech");
+   MELEMENT(temp->slot.type==OUTFIT_SLOT_NULL,"slot");
+   MELEMENT((temp->slot.type!=OUTFIT_SLOT_NA) && (temp->slot.size==OUTFIT_SLOT_SIZE_NA),"size");
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");
@@ -1589,13 +1814,13 @@ int outfit_load (void)
    if (!xml_isNode(node,XML_OUTFIT_ID)) {
       ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
       return -1;
-   }        
+   }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
       ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
       return -1;
-   }        
+   }
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
@@ -1646,6 +1871,8 @@ void outfit_free (void)
          free(o->u.bay.ammo_name);
       if (outfit_isFighter(o) && o->u.fig.ship)
          free(o->u.fig.ship);
+      if (outfit_isGUI(o) && o->u.gui.gui)
+         free(o->u.gui.gui);
 
       /* strings */
       if (o->typename)

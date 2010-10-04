@@ -26,19 +26,25 @@ function create()
     posDV = vec2.new(-1000, 0)
     posFLF = vec2.new(1000, 0)
     
-    fleetDV = pilot.add("Dvaered Vendetta", "dummy", posDV, false)
+    fleetDV = pilot.add("Dvaered Vendetta", "dummy", posDV)
     shipDV = fleetDV[1]
-    fleetFLF = pilot.add("FLF Vendetta", "dummy", posFLF, false)
+    fleetFLF = pilot.add("FLF Vendetta", "dummy", posFLF)
     shipFLF = fleetFLF[1]
     
     shipDV:disable()
     shipFLF:disable()
     
+    shipDV:setHilight(true)
+    shipFLF:setHilight(true)
+    
+    shipDV:setVisplayer()
+    shipFLF:setVisplayer()
+    
     shipDV:rename(shipnameDV)
     shipFLF:rename(shipnameFLF)
     
-    timerDV = evt.timerStart("broadcastDV", 3000) 
-    timerFLF = evt.timerStart("broadcastFLF", 5000) 
+    timerDV = hook.timer(3000, "broadcastDV")
+    timerFLF = hook.timer(5000, "broadcastFLF")
     
     boarded = false
     destroyed = false
@@ -56,25 +62,27 @@ end
 function broadcastDV()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     shipDV:broadcast(string.format(broadcastmsgDV, shipnameDV), true)
-    timerDV = evt.timerStart("broadcastDV", 10000)
+    timerDV = hook.timer(10000, "broadcastDV")
 end
 
 function broadcastFLF()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     shipFLF:broadcast(string.format(broadcastmsgFLF, shipnameFLF), true)
-    timerFLF = evt.timerStart("broadcastFLF", 10000)
+    timerFLF = hook.timer(10000, "broadcastFLF")
 end
 
 function boardFLF()
+    shipDV:setHilight(false)
+    shipFLF:setHilight(false)
     shipDV:setNoboard(true)
-    evt.timerStop(timerFLF)
+    hook.rm(timerFLF)
     player.unboard()
     evt.misnStart("Deal with the FLF agent") 
     boarded = true
 end
 
 function deathDV()
-    evt.timerStop(timerDV)
+    hook.rm(timerDV)
     destroyed = true
     if shipFLF:exists() == false then
         evt.finish(true)
@@ -82,15 +90,17 @@ function deathDV()
 end
 
 function boardDV()
+    shipDV:setHilight(false)
+    shipFLF:setHilight(false)
     shipFLF:setNoboard(true)
-    evt.timerStop(timerDV)
+    hook.rm(timerDV)
     player.unboard()
     evt.misnStart("Take the Dvaered crew home") 
     boarded = true
 end
 
 function deathFLF()
-    evt.timerStop(timerFLF)
+    hook.rm(timerFLF)
     destroyed = true
     var.push("flfbase_flfshipkilled", true)
     if shipDV:exists() == false then

@@ -67,6 +67,11 @@ You have failed to reach the FLF's hidden base.]]
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname"))}
+    if not misn.claim(missys) then
+        abort() -- TODO: This claim should be in the event that starts this mission!
+    end 
+    
     misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 
     flfdead = false -- Flag to check if the player destroyed the FLF sentinels
@@ -80,9 +85,9 @@ function create()
     misn.osdCreate(misn_title, {string.format(osd_desc[1], destsysname), osd_desc[2]})
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
-    misn.setMarker(system.get(destsysname), "misc")
+    misn.markerAdd( syste.get(destsysname), "low" )
     
-    gregar = misn.addCargo("Gregar", 0)
+    gregar = misn.cargoAdd("Gregar", 0)
     
     hook.enter("enter")
     hook.land("land")
@@ -112,13 +117,13 @@ function enter()
         player.pilot():setPos(vec2.new(dist * math.cos(angle), dist * math.sin(angle)))
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos(), false)
+        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos())
         player.pilot():setPos(player.pilot():pos() - player.pilot():vel() / 2.2) -- Compensate for hyperjump
 
         faction.get("FLF"):modPlayerRaw(-200)
         
-        misn.timerStart("commFLF", 2000)
-        misn.timerStart("wakeUpGregarYouLazyBugger", 20000) -- 20s before Gregar wakes up
+        hook.timer(2000, "commFLF")
+        hook.timer(20000, "wakeUpGregarYouLazyBugger")
     end
 end
 
@@ -130,7 +135,7 @@ function land()
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
-        misn.jetCargo(gregar)
+        misn.cargoJet(gregar)
         misn.finish(true)
     -- Case Dvaered planet
     elseif planet.cur():faction():name() == "Dvaered" and not basefound then
@@ -139,7 +144,7 @@ function land()
             faction.get("Dvaered"):modPlayerRaw(5)
             var.push("flfbase_intro", 1)
             var.pop("flfbase_flfshipkilled")
-            misn.jetCargo(gregar)
+            misn.cargoJet(gregar)
             misn.finish(true)
         end
     end
@@ -166,8 +171,8 @@ function wakeUpGregarYouLazyBugger()
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
         faction.get("FLF"):modPlayerRaw(100)
-        misn.timerStart("annai", 2000)
-        OORT = misn.timerStart("outOfRange", 4000)
+        hook.timer(2000, "annai")
+        OORT = hook.timer(4000, "outOfRange")
     end
 end
 
@@ -185,7 +190,7 @@ function annai()
             j:goto(poss[i])
         end
     end
-    spawner = misn.timerStart("spawnbase", 1000)
+    spawner = hook.timer(1000, "spawnbase")
 end
 
 -- Part of the escort script
@@ -199,9 +204,9 @@ function spawnbase()
     if mindist < 1000 then
         diff.apply("FLF_base")
         basefound = true
-        misn.timerStop(OORT)
+        hook.rm(OORT)
     else
-        spawner = misn.timerStart("spawnbase", 1000)
+        spawner = hook.timer(1000, "spawnbase")
     end
 end
 
@@ -214,7 +219,7 @@ function outOfRange()
         end
     end
     if mindist < 1000 then
-        OORT = misn.timerStart("outOfRange", 2000)
+        OORT = hook.timer(2000, "outOfRange")
     else
         -- TODO: handle mission failure due to distance to escorts
         tk.msg(contacttitle, contacttext)
@@ -223,7 +228,7 @@ function outOfRange()
                 j:rm()
             end
         end
-        misn.timerStop(spawner)
+        hook.rm(spawner)
     end
 end
 

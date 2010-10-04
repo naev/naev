@@ -19,4 +19,8 @@ void nlua_hookTarget( Mission *m, Event_t *ev );
 int nlua_loadHook( lua_State *L );
 
 
+/* Misc. */
+int hookL_getarg( lua_State *L, unsigned int hook );
+
+
 #endif /* NLUA_HOOK */

@@ -3,18 +3,48 @@
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>next(system.get():faction()) ~= nil</cond>
+  <cond>next(system.cur():faction()) ~= nil</cond>
  </event>
  <event name="Unique">
   <lua>neutral/unique</lua>
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
+ <event name="Flintley">
+  <lua>neutral/baron_flintley</lua>
+  <trigger>land</trigger>
+  <chance>100</chance>
+  <cond>var.peek("baron_active") == nil and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
+ </event>
+ <event name="Prowling baron">
+  <lua>neutral/baron_prowl</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>var.peek("baron_active") == nil and system.cur() == system.get("Ingot")</cond>
+  <flags>
+  </flags>
+ </event>
  <event name="Baroncomm_baron">
-  <lua>neutral/baroncomm</lua>
+  <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>var.peek("baron_stage") == nil and system.cur():security() &gt;= 75</cond>
+  <cond>player.misnDone("Baron") == false and var.peek("baron_active") == nil and system.cur():presence("friendly") &gt; 3.*system.cur():presence("hostile")</cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Shadowcomm">
+  <lua>neutral/shadow_comm</lua>
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or var.peek("shadowvigil_active") == true)</cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Shadowcomm2">
+  <lua>neutral/shadow_comm2</lua>
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadow Vigil") and not (player.misnDone("Dark Shadow") or var.peek("darkshadow_active") == true)</cond>
   <flags>
   </flags>
  </event>
@@ -35,13 +65,11 @@
    <unique />
   </flags>
  </event>
- <!-- Disabled until someone makes it sane.
  <event name="Spaceport Bar NPC">
   <lua>neutral/npc</lua>
   <trigger>land</trigger>
   <chance>100</chance>
  </event>
- -->
  <event name="Tutorial Navigation">
   <lua>neutral/tutorial</lua>
   <trigger>enter</trigger>
@@ -53,9 +81,18 @@
  </event>
  <event name="Tutorial Features">
   <lua>neutral/tutorial-features</lua>
-  <trigger>enter</trigger>
+  <trigger>load</trigger>
   <chance>100</chance>
   <cond>var.peek("version") == nil</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
+ <event name="Cinematic Dvaered/FLF battle">
+  <lua>cinematic/DvdFLFbattle</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():name() == "Tuoladis"</cond>
   <flags>
    <unique />
   </flags>

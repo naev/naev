@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
 static void btn_render( Widget* btn, double bx, double by );
@@ -47,7 +50,7 @@ void window_addButton( const unsigned int wid,
 
    /* generic */
    wgt->type = WIDGET_BUTTON;
-   
+
    /* specific */
    wgt->keyevent           = btn_key;
    wgt->render             = btn_render;
@@ -128,7 +131,7 @@ void window_disableButton( const unsigned int wid, char* name )
 void window_enableButton( const unsigned int wid, char *name )
 {
    Widget *wgt;
-  
+
    /* Get the widget. */
    wgt = btn_get( wid, name );
    if (wgt == NULL)
@@ -151,7 +154,7 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
 {
 
    Widget *wgt;
-  
+
    /* Get the widget. */
    wgt = btn_get( wid, name );
    if (wgt == NULL)
@@ -240,15 +243,15 @@ static void btn_render( Widget* btn, double bx, double by )
       toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
       toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
    }
-   
+
    /* inner outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
    /* outter outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
    gl_printMidRaw( NULL, (int)btn->w,
-         bx + (double)SCREEN_W/2. + btn->x,
-         by + (double)SCREEN_H/2. + btn->y + (btn->h - gl_defFont.h)/2.,
+         bx + btn->x,
+         by + btn->y + (btn->h - gl_defFont.h)/2.,
          &cDarkRed, btn->dat.btn.display );
 }
 

@@ -77,9 +77,9 @@ int nlua_loadVector( lua_State *L )
 /**
  * @defgroup META_VECTOR Vector Metatable
  *
- * @brief Represents a 2d vector in Lua.
+ * @brief Represents a 2D vector in Lua.
  *
- * This module allows you to manipulate 2d vectors.  Usagae is generally as follows:
+ * This module allows you to manipulate 2D vectors.  Usage is generally as follows:
  *
  * @code
  * my_vec = vec2.new( 3, 2 ) -- my_vec is now (3,2)
@@ -231,11 +231,15 @@ static int vectorL_add( lua_State *L )
       x = lua_tonumber(L,2);
       y = lua_tonumber(L,3);
    }
-   else NLUA_INVALID_PARAMETER();
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
 
    /* Actually add it */
    vect_cset( &vout.vec, v1->vec.x + x, v1->vec.y + y );
    lua_pushvector( L, vout );
+
    return 1;
 }
 
@@ -276,7 +280,7 @@ static int vectorL_sub( lua_State *L )
       x = lua_tonumber(L,2);
       y = lua_tonumber(L,3);
    }
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /* Actually add it */
    vect_cset( &vout.vec, v1->vec.x - x, v1->vec.y - y );

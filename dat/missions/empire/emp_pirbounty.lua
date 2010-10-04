@@ -44,11 +44,12 @@ include("scripts/pilot/pirate.lua")
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    -- Create the target pirate
    pir_name, pir_ship, pir_outfits = pir_generate()
 
    -- Get target system
-   near_sys = get_pir_system( system.get() )
+   near_sys = get_pir_system( system.cur() )
 
    -- Get credits
    credits  = rnd.rnd(5,10) * 10000
@@ -74,7 +75,7 @@ function accept ()
    misn.setTitle( string.format( misn_title, near_sys:name()) )
    misn.setReward( string.format( misn_reward, credits) )
    misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
-   misn.setMarker( near_sys, "misc" )
+   misn.markerAdd( near_sys, "low" )
 
    -- Some flavour text
    tk.msg( title[1], text[2] )
@@ -90,9 +91,9 @@ function get_pir_system( sys )
 
    -- Only take into account system with pirates.
    local pir_sys = {}
-   for k,v in ipairs(adj_sys) do
-      if v:hasPresence( "Pirate" ) then
-         table.insert( pir_sys, v )
+   for _,k in ipairs(adj_sys) do
+      if k:hasPresence( "Pirate" ) then
+         pir_sys[ #pir_sys+1 ] = k
       end
    end
 
@@ -119,7 +120,7 @@ end
 
 -- Entering a system
 function sys_enter ()
-   cur_sys = system.get()
+   cur_sys = system.cur()
    -- Check to see if reaching target system
    if cur_sys == near_sys then
 

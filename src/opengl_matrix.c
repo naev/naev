@@ -99,6 +99,21 @@ void gl_matrixScale( double x, double y )
 
 
 /**
+ * @brief Rotates the matrix.
+ *
+ *    @param a Angle to rotate by.
+ */
+void gl_matrixRotate( double a )
+{
+   if (has_glsl) {
+   }
+   else {
+      glRotated( 180./M_PI*a, 0., 0., 1. );
+   }
+}
+
+
+/**
  * @brief Destroys the last pushed matrix.
  */
 void gl_matrixPop (void)

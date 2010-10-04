@@ -235,7 +235,7 @@ static void opt_gameplay( unsigned int wid )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSMSG",
          NULL, &cBlack, s );
-   window_addInput( wid, x+l+20, y, 40, 20, "inpMSG", 4, 1 );
+   window_addInput( wid, x+l+20, y, 40, 20, "inpMSG", 4, 1, NULL );
    y -= 20;
 
    /* Restart text. */
@@ -630,7 +630,7 @@ static void opt_audio( unsigned int wid )
 
 
    /* Sound levels. */
-   x = 20 + cw + 20; 
+   x = 20 + cw + 20;
    y = -60;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSVolume",
          NULL, &cDConsole, "Volume Levels" );
@@ -937,7 +937,7 @@ static void opt_video( unsigned int wid )
    window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
          NULL, &cDConsole, "Resolution" );
    y -= 40;
-   window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1 );
+   window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
    snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
    window_setInput( wid, "inpRes", buf );
    window_setInputFilter( wid, "inpRes",
@@ -975,7 +975,7 @@ static void opt_video( unsigned int wid )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSFPS",
          NULL, &cBlack, s );
-   window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1 );
+   window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    snprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    window_setInputFilter( wid, "inpFPS",

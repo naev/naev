@@ -42,6 +42,7 @@
  * Global sound properties.
  */
 int sound_disabled            = 0; /**< Whether sound is disabled. */
+static int sound_initialized  = 0; /**< Whether or not sound is initialized. */
 
 
 /*
@@ -249,6 +250,9 @@ int sound_init (void)
       WARN("Sound has invalid value, clamping to [0:1].");
    sound_volume(conf.sound);
 
+   /* Initialized. */
+   sound_initialized = 1;
+
    return 0;
 }
 
@@ -262,7 +266,7 @@ void sound_exit (void)
    alVoice *v;
 
    /* Nothing to disable. */
-   if (sound_disabled)
+   if (sound_disabled || !sound_initialized)
       return;
 
    /* Exit music subsystem. */
@@ -297,6 +301,9 @@ void sound_exit (void)
 
    /* Exit sound subsystem. */
    sound_sys_exit();
+
+   /* Sound is done. */
+   sound_initialized = 0;
 }
 
 
@@ -306,7 +313,7 @@ void sound_exit (void)
  *    @param name Name of the sound to get it's id.
  *    @return ID of the sound matching name.
  */
-int sound_get( char* name ) 
+int sound_get( char* name )
 {
    int i;
 
@@ -381,7 +388,7 @@ int sound_play( int sound )
  *    @param py Y position of the sound.
  *    @param vx X velocity of the sound.
  *    @param vy Y velocity of the sound.
- *    @return 0 on success.
+ *    @return Voice identifier on success.
  */
 int sound_playPos( int sound, double px, double py, double vx, double vy )
 {
@@ -738,7 +745,7 @@ static void sound_free( alSound *snd )
       free(snd->name);
       snd->name = NULL;
    }
-   
+
    /* Free internals. */
    sound_sys_free(snd);
 }

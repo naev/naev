@@ -180,7 +180,7 @@ function start()
    misn_stage = 1
    tk.msg(title[1], string.format(text[2], player.name()))
    tk.msg(title[2], string.format(text[3], naev.getKey("left"), naev.getKey("right"), naev.getKey("accel")))
-   misn.timerStart("flightOver", 15000) -- 15 second timer to fly around
+   hook.timer(15000, "flightOver")
 
    -- Set Hooks
    hook.land("tutLand")
@@ -194,7 +194,7 @@ function flightOver()
    -- Update mission stuff
    misn_stage = 2
    tk.msg(title[2], string.format(text[4], naev.getKey("reverse")))
-   misn.timerStart("brakeOver", 1000)
+   hook.timer(1000, "brakeOver")
 end
 
 function brakeOver()
@@ -215,12 +215,12 @@ function brakeOver()
       for k,v in ipairs(traders) do
          v:setFaction("Dummy")
          v:rename("Dummy")
-		 v:setInvincible()
+         v:setInvincible()
       end
-      misn.timerStart("targetEnding", 15000) -- 15 seconds to target
+      hook.timer(15000, "targetEnding")
    else
       -- Keep on trying until player brakes
-      misn.timerStart("brakeOver", 1000)
+      hook.timer(1000, "brakeOver")
    end
 end
 
@@ -229,7 +229,7 @@ function targetEnding()
       v:changeAI("flee")
       v:setHealth(100, 100)
    end
-   misn.timerStart("targetOver", 10000) -- Affords targetting-practice ships 10 seconds before the new Llama flies in.
+   hook.timer(10000, "targetOver")
 end
 
 function targetOver()
@@ -262,14 +262,14 @@ function addLlamaDummy()
 	  v:comm("Your mother smells worse than the algae of Tau Prime!")
       shieldtaunt = 0
       armourtaunt = 0
-	  misn.timerStart("taunt", 5000)
+	  hook.timer(5000, "taunt")
    end
 end
 
 function taunt()
 	for k,v in ipairs(llamadummy) do
-		armour, shield = v:getHealth()
-		misn.timerStart("taunt2", 1000)
+		armour, shield = v:health()
+		hook.timer(1000, "taunt2")
 	end
 end
 
@@ -355,20 +355,20 @@ function taunt2()
             if #shield30 > shieldtaunt then
                shieldtaunt = shieldtaunt + 1
                v:comm(shield30[shieldtaunt])
-               misn.timerStart("taunt", 4000)
+               hook.timer(4000, "taunt")
             else
-                misn.timerStart("taunt", 4000)
+                hook.timer(4000, "taunt")
             end
          elseif armour >= 31 then
             if #armour31 > armourtaunt then
                armourtaunt = armourtaunt + 1
                v:comm(armour31[armourtaunt])
-               misn.timerStart("taunt", 4000)
+               hook.timer(4000, "taunt")
             else
                tk.msg("Bzzzt!", "It appears our friend has suffered a systems failure. Oh well, he was getting tiresome anyhow.")
                for k,v in ipairs(llamadummy) do
                   v:disable()
-                  misn.timerStart("llamaDisabled", 2000)
+                  hook.timer(2000, "llamaDisabled")
                end
             end
          end
@@ -403,7 +403,7 @@ function llamaBoard()
 
    misn_stage = 6
    tk.msg(title[4], text[12])
-   misn.timerStart("boardEnding", 3000)
+   hook.timer(3000, "boardEnding")
 end
 
 function boardEnding()
@@ -413,7 +413,7 @@ function boardEnding()
    v:comm("I've restored my power! You'll rue the day you crossed T. Practice!")
    v:setInvincible()
    end
-   misn.timerStart("boardOver", 8000)
+   hook.timer(8000, "boardOver")
 end
 
 function boardOver()
@@ -425,7 +425,7 @@ function boardOver()
        hook.pilot(v, "death", "hyenaWait")
        hook.pilot(v, "jump", "hyenaWait") -- Treat jump as dead
    end
-   misn.timerStart("bringHelp", 5000) -- Player "should" surive 5 seconds
+   hook.timer(5000, "bringHelp")
 end
 
 function bringHelp()
@@ -438,14 +438,14 @@ function bringHelp()
 end
 
 function hyenaWait()
-   misn.timerStart("hyenaDead", 7500)
+   hook.timer(7500, "hyenaDead")
 end
 
 function hyenaDead()
    misn_stage = 7
 
    -- Create OSD
-   osd_msg[4][1] = string.format(osd_msg[4][1], system.get():planets()[1]:name())
+   osd_msg[4][1] = string.format(osd_msg[4][1], system.cur():planets()[1]:name())
    misn.osdCreate(osd_title[4], osd_msg[4])
 
    -- Messages
@@ -464,11 +464,11 @@ function tutLand()
 end
 
 function tutEnter()
-   enter_sys = system.get()
+   enter_sys = system.cur()
    if misn_stage ~= 8 then
       abort()
    elseif enter_sys ~= misn_sys then
-      misn.timerStart("tutEnd", 5000)
+      hook.timer(5000, "tutEnd")
 
    end
 end
@@ -482,14 +482,14 @@ end
 function succeed()
    tk.msg("Tutorial Skipped", "You're a little early, but since you're here, I'll let you proceed with the next stage of the tutorial.")
    misn.finish(true)
-   var.push("version", 041)
+   var.push("version", 042)
 end
 
 function abort()
    tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
-   var.push("version", 041)
+   var.push("version", 042)
 end
 
 function reject()

@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Ships>
  <!-- Light Craft -->
  <ship name="Llama">
   <base_type>Llama</base_type>
   <GFX>llama</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Yacht</class>
   <price>120000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>2</tech>
   <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
    <thrust>220</thrust>
@@ -32,23 +31,22 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="7"   y="0" h="1" />
-   <high x="-3"  y="0" h="2" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="7"   y="0" h="1" />
+   <weapon x="-3"  y="0" h="2" />
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Hyena">
   <base_type>Hyena</base_type>
   <GFX>hyena</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>180000</price>
   <fabricator>Aerosys</fabricator>
-  <tech>2</tech>
   <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
   <movement>
    <thrust>300</thrust>
@@ -71,22 +69,21 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="-3" />
-   <high x="15" y="0" h="-3" />
-   <high x="0"  y="0" h="0" />
-   <medium/>
-   <low/>
+   <weapon x="15" y="0" h="-3" />
+   <weapon x="15" y="0" h="-3" />
+   <weapon x="0"  y="0" h="0" />
+   <utility/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Schroedinger">
   <base_type>Schroedinger</base_type>
   <GFX>schroedinger</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Scout</class>
   <price>180000</price>
   <fabricator>Sirius Systems</fabricator>
-  <tech>5</tech>
   <description>The Schroedinger is primarily used as a reconnaissance vessel. It requires a skeleton crew due to its advanced automation subsystems, and its proprietary fuel tanks allow it to have range much greater than most ships. The downside is that the ship is extremely vulnerable to attack due to its light armour and low amount of weapons space. It is also equipped with a pair of Eraedon engines, making it highly manoeuvrable.</description>
   <movement>
    <thrust>260</thrust>
@@ -109,23 +106,22 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="9" y="0" h="-2" />
-   <medium/>
-   <medium/>
-   <medium/>
-   <medium/>
-   <low/>
+   <weapon x="9" y="0" h="-2" />
+   <utility>medium</utility>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Gawain">
   <base_type>Gawain</base_type>
   <GFX>gawain</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Luxury Yacht</class>
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>11</tech>
   <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
   <movement>
    <thrust>320</thrust>
@@ -148,24 +144,23 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="-2" />
-   <high x="-5" y="0" h="1" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="-2" />
+   <weapon x="-5" y="0" h="1" />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Drone">
   <base_type>Drone</base_type>
   <GFX>drone</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Drone</class>
   <price>300000</price>
   <fabricator>Robosys</fabricator>
-  <tech>9999</tech>
   <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
   <movement>
    <thrust>320</thrust>
@@ -188,23 +183,22 @@
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
-   <high x="5" y="0" h="-5" />
-   <high x="5" y="0" h="-5" />
-   <high x="5" y="0" h="-5" />
-   <medium/>
-   <low/>
+   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5" />
+   <utility/>
+   <structure/>
   </slots>
  </ship>
  <!-- Cargo Haulers -->
  <ship name="Koala">
   <base_type>Koala</base_type>
   <GFX>koala</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Courier</class>
   <price>260000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>5</tech>
   <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
   <movement>
    <thrust>200</thrust>
@@ -227,25 +221,24 @@
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>
-   <high x="11" y="0" h="-7" />
-   <high x="-5" y="0" h="3" />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="11" y="0" h="-7" />
+   <weapon x="-5" y="0" h="3" />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Quicksilver">
   <base_type>Quicksilver</base_type>
   <GFX sx="10" sy="10">quicksilver</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Courier</class>
   <price>800000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>8</tech>
   <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
   <movement>
    <thrust>260</thrust>
@@ -254,7 +247,7 @@
   </movement>
   <health>
    <shield>200</shield>
-   <armour>120</armour>
+   <armour>140</armour>
    <energy>580</energy>
    <shield_regen>120</shield_regen>
    <armour_regen>0</armour_regen>
@@ -268,28 +261,114 @@
    <cap_cargo>45</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="5" />
-   <high x="-10" y="-3" h="0" />
-   <high x="-10" y="3" h="0" />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0" h="5" />
+   <weapon x="-10" y="-3" h="0" />
+   <weapon x="-10" y="3" h="0" />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
   </slots>
   <stats>
    <jump_delay>-25</jump_delay>
   </stats>
  </ship>
+ <ship name="Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <license>Large Civilian Vessel License</license>
+  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
+  <movement>
+   <thrust>110</thrust>
+   <turn>70</turn>
+   <speed>140</speed>
+  </movement>
+  <health>
+   <shield>480</shield>
+   <armour>520</armour>
+   <energy>970</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2600</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>11</crew>
+   <mass>950</mass>
+   <fuel>500</fuel>
+   <cap_cargo>160</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25"  y="-3" h="4" >heavy</weapon>
+   <weapon x="25"  y="3" h="4" >heavy</weapon>
+   <weapon x="-15" y="-3" h="4" />
+   <weapon x="-15"  y="3" h="4" />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Pirate Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino_pirate</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
+  <movement>
+   <thrust>115</thrust>
+   <turn>75</turn>
+   <speed>150</speed>
+  </movement>
+  <health>
+   <shield>480</shield>
+   <armour>460</armour>
+   <energy>970</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2600</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>10</crew>
+   <mass>920</mass>
+   <fuel>500</fuel>
+   <cap_cargo>160</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25"  y="-3" h="4" >heavy</weapon>
+   <weapon x="25"  y="3" h="4" >heavy</weapon>
+   <weapon x="-15" y="-3" h="4" />
+   <weapon x="-15"  y="3" h="4" />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
  <ship name="Mule">
   <base_type>Mule</base_type>
   <GFX sx="10" sy="10">mule</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Freighter</class>
   <price>900000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <tech>5</tech>
   <license>Large Civilian Vessel License</license>
   <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
   <movement>
@@ -313,30 +392,29 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="0" h="0" />
-   <high x="-15" y="0" h="4" />
-   <high x="15"  y="0" h="4" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="25"  y="0" h="0" >heavy</weapon>
+   <weapon x="-15" y="0" h="4" />
+   <weapon x="15"  y="0" h="4" />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Fighters -->
- <ship name="Derivative">
+ <ship name="Proteron Derivative">
   <base_type>Derivative</base_type>
   <GFX>derivative</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>290000</price>
   <fabricator>Krain Industries</fabricator>
-  <tech>5</tech>
   <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
   <movement>
    <thrust>280</thrust>
@@ -359,24 +437,183 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="10" y="0" h="0" />
-   <high x="0" y="-4" h="-3" />
-   <high x="0" y="4" h="-3" />
-   <medium/>
-   <medium/>
-   <low/>
-   <low/>
+   <weapon x="10" y="0" h="0" />
+   <weapon x="0" y="-4" h="-3" />
+   <weapon x="0" y="4" h="-3" />
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+  </slots>
+ </ship>
+ <ship name="Sirius Fidelity">
+  <base_type>Fidelity</base_type>
+  <GFX>fidelity</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>350000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
+  <movement>
+   <thrust>260</thrust>
+   <turn>130</turn>
+   <speed>280</speed>
+  </movement>
+  <health>
+   <shield>220</shield>
+   <armour>160</armour>
+   <energy>650</energy>
+   <shield_regen>140</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1500</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>35</cpu>
+   <crew>2</crew>
+   <mass>95</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="10" y="-2" h="0" />
+   <weapon x="10" y="2" h="0" />
+   <weapon x="0" y="-4" h="-3" />
+   <weapon x="0" y="4" h="-3" />
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+  </slots>
+ </ship>
+ <ship name="Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Light Combat Vessel License</license>
+  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot,  it's still an effective addition to any fleet.</description>
+  <movement>
+   <thrust>250</thrust>
+   <turn>145</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>86</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Pirate Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark_pirate</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
+  <movement>
+   <thrust>240</thrust>
+   <turn>140</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>90</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Empire Shark">
+  <base_type>Shark</base_type>
+  <GFX>shark_empire</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>280000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Light Combat Vessel License</license>
+  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot,  it's still an effective addition to any fleet.</description>
+  <movement>
+   <thrust>250</thrust>
+   <turn>145</turn>
+   <speed>290</speed>
+  </movement>
+  <health>
+   <shield>210</shield>
+   <armour>140</armour>
+   <energy>580</energy>
+   <shield_regen>130</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1340</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>32</cpu>
+   <crew>2</crew>
+   <mass>86</mass>
+   <fuel>300</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="3" y="0" h="2" />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Lancelot">
   <base_type>Lancelot</base_type>
   <GFX>lancelot</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>7</tech>
   <license>Light Combat Vessel License</license>
   <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
   <movement>
@@ -400,26 +637,25 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="-3" y="0" h="2" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" >medium</weapon>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="-3" y="0" h="2" />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Lancelot">
   <base_type>Lancelot</base_type>
   <GFX>lancelot_empire</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Light Combat Vessel License</license>
   <description>An Empire Lancelot.</description>
   <movement>
@@ -443,26 +679,25 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0" />
-   <high x="12" y="0" h="0" />
-   <high x="-3" y="0" h="2" />
-   <high x="-3" y="0" h="2" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
+   <weapon x="12" y="0" h="0" >medium</weapon>
+   <weapon x="12" y="0" h="0" />
+   <weapon x="-3" y="0" h="2" />
+   <weapon x="-3" y="0" h="2" />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Vendetta">
   <base_type>Vendetta</base_type>
   <GFX>vendetta</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>8</tech>
   <license>Light Combat Vessel License</license>
   <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
   <movement>
@@ -486,25 +721,24 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <utility />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Vendetta">
   <base_type>Vendetta</base_type>
   <GFX>vendetta_dvaered</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
   <description>A Dvaered Vendetta.</description>
   <movement>
    <thrust>200</thrust>
@@ -527,25 +761,24 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <utility />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Vendetta">
   <base_type>Vendetta</base_type>
   <GFX>vendetta_pirate</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>450000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
   <movement>
    <thrust>210</thrust>
@@ -568,25 +801,24 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" />
-   <high x="16" y="9"   h="0" />
-   <high x="13" y="-13" h="0" />
-   <high x="13" y="13"  h="0" />
-   <high x="19" y="0"   h="-2" />
-   <high x="3"  y="0"   h="2" />
-   <medium />
-   <low />
+   <weapon x="16" y="-9"  h="0" />
+   <weapon x="16" y="9"   h="0" />
+   <weapon x="13" y="-13" h="0" />
+   <weapon x="13" y="13"  h="0" />
+   <weapon x="19" y="0"   h="-2" />
+   <weapon x="3"  y="0"   h="2" />
+   <utility />
+   <structure />
   </slots>
  </ship>
  <ship name="Ancestor">
   <base_type>Ancestor</base_type>
   <GFX>ancestor</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9</tech>
   <license>Light Combat Vessel License</license>
   <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
   <movement>
@@ -610,24 +842,23 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <utility />
+   <utility />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Ancestor">
   <base_type>Ancestor</base_type>
   <GFX>ancestor_dvaered</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
   <license>Light Combat Vessel License</license>
   <description>A Dvaered Ancestor.</description>
   <movement>
@@ -651,24 +882,23 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <utility />
+   <utility />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Ancestor">
   <base_type>Ancestor</base_type>
   <GFX>ancestor_pirate</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>550000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targetting systems.</description>
   <movement>
    <thrust>180</thrust>
@@ -691,25 +921,68 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0" />
-   <high x="8"  y="0"  h="0" />
-   <high x="-2" y="9"  h="-1" />
-   <high x="-2" y="-9" h="-1" />
-   <medium />
-   <medium />
-   <low />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="8"  y="0"  h="0" />
+   <weapon x="-2" y="9"  h="-1" />
+   <weapon x="-2" y="-9" h="-1" />
+   <utility />
+   <utility />
+   <structure />
   </slots>
  </ship>
  <!-- Corvettes -->
+ <ship name="Sirius Preacher">
+  <base_type>Preacher</base_type>
+  <GFX sx="10" sy="10">preacher</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>720000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>100</turn>
+   <speed>220</speed>
+  </movement>
+  <health>
+   <shield>450</shield>
+   <armour>300</armour>
+   <energy>960</energy>
+   <shield_regen>220</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2450</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>55</cpu>
+   <crew>11</crew>
+   <mass>280</mass>
+   <fuel>400</fuel>
+   <cap_cargo>20</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="15" y="1"  h="2" />
+   <weapon x="15" y="-1"  h="2" />
+   <weapon x="-9" y="-10" h="2" />
+   <weapon x="-9" y="10"  h="2" />
+   <weapon x="-9"  y="-3"  h="2" >light</weapon>
+   <weapon x="-9"  y="3" h="2" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+  </slots>
+ </ship>
  <ship name="Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>900000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>10</tech>
   <license>Medium Combat Vessel License</license>
   <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <movement>
@@ -733,28 +1006,27 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pirate Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher_pirate</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>850000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
   <movement>
    <thrust>205</thrust>
@@ -777,28 +1049,27 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher_empire</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>900000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>An Empire Admonisher.</description>
   <movement>
@@ -822,28 +1093,27 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2" />
-   <high x="4"  y="2"  h="-5" />
-   <high x="4"  y="-2" h="-5" />
-   <high x="-9" y="-5" h="-9" />
-   <high x="-9" y="5"  h="-9" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="15" y="0"  h="2" />
+   <weapon x="4"  y="2"  h="-5" />
+   <weapon x="4"  y="-2" h="-5" />
+   <weapon x="-9" y="-5" h="-9" >light</weapon>
+   <weapon x="-9" y="5"  h="-9" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Vigilance">
   <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1200000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>8</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
@@ -867,30 +1137,29 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" />
-	<high x="28"  y="3"   h="-0" />
-   <high x="10"   y="-3"  h="2" />
-   <high x="10"   y="3"   h="2" />
-   <high x="-22" y="-8" h="-0" />
-   <high x="-22" y="8"  h="-0" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
+	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
+   <weapon x="10"   y="-3"  h="2" />
+   <weapon x="10"   y="3"   h="2" />
+   <weapon x="-22" y="-8" h="-0" />
+   <weapon x="-22" y="8"  h="-0" />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Vigilance">
   <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance_dvaered</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1200000</price>
   <fabricator>House Dvaered</fabricator>
-  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
   <movement>
@@ -914,30 +1183,72 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="-3"   h="-0" />
-	<high x="28"  y="3"   h="-0" />
-   <high x="10"   y="-3"  h="2" />
-   <high x="10"   y="3"   h="2" />
-   <high x="-22" y="-8" h="-0" />
-   <high x="-22" y="8"  h="-0" />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
+	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
+   <weapon x="10"   y="-3"  h="2" />
+   <weapon x="10"   y="3"   h="2" />
+   <weapon x="-22" y="-8" h="-0" />
+   <weapon x="-22" y="8"  h="-0" />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
- <ship name="Kahan">
+ <ship name="Sirius Divinity">
+  <base_type>Divinity</base_type>
+  <GFX sx="10" sy="10">divinity</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Destroyer</class>
+  <price>1300000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>The Divinity excels at interdiction against lighter targets given its high speed relative to other light capital ships. However, this advantage is not without drawbacks; the Divinity's high mobility comes at the cost of reduced firepower relative to other destroyer-class vessels.</description>
+  <movement>
+   <thrust>175</thrust>
+   <turn>80</turn>
+   <speed>190</speed>
+  </movement>
+  <health>
+   <shield>580</shield>
+   <armour>460</armour>
+   <energy>1300</energy>
+   <shield_regen>260</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>3000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>75</cpu>
+   <crew>15</crew>
+   <mass>640</mass>
+   <fuel>400</fuel>
+   <cap_cargo>25</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="20"  y="0"   h="0" >heavy</weapon>
+   <weapon x="10"   y="0"  h="0" />
+   <weapon x="-10" y="0" h="0" />
+   <weapon x="-20" y="0"  h="0" />
+   <utility>heavy</utility>
+   <utility />
+   <utility />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Proteron Kahan">
   <base_type>Kahan</base_type>
   <GFX sx="10" sy="10">kahan</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>2100000</price>
   <fabricator>House Proteron</fabricator>
-  <tech>1002</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <movement>
@@ -961,29 +1272,28 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="28"  y="0"   h="5" />
-	<high x="18"  y="0"   h="5" />
-   <high x="-30" y="-8" h="3" />
-   <high x="-30" y="8"  h="3" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="28"  y="0"   h="5" >heavy</weapon>
+	<weapon x="18"  y="0"   h="5" >heavy</weapon>
+   <weapon x="-30" y="-8" h="3" />
+   <weapon x="-30" y="8"  h="3" />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <utility />
+   <utility />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Pacifier">
   <base_type>Pacifier</base_type>
   <GFX sx="10" sy="10">pacifier</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>8</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
   <movement>
@@ -1007,29 +1317,28 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="-15" y="-10" h="-10">heavy</weapon>
+   <weapon x="-15" y="10"  h="-10">heavy</weapon>
+   <weapon x="20"  y="0"   h="-10" />
+   <weapon x="4"   y="-5"  h="-10" />
+   <weapon x="4"   y="5"   h="-10" />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <utility />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Pacifier">
   <base_type>Pacifier</base_type>
   <GFX sx="10" sy="10">pacifier_empire</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
   <movement>
@@ -1053,30 +1362,29 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10" />
-   <high x="4"   y="-5"  h="-10" />
-   <high x="4"   y="5"   h="-10" />
-   <high x="-15" y="-10" h="-10" />
-   <high x="-15" y="10"  h="-10" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
+   <weapon x="-15" y="-10" h="-10">heavy</weapon>
+   <weapon x="-15" y="10"  h="-10">heavy</weapon>
+   <weapon x="20"  y="0"   h="-10" />
+   <weapon x="4"   y="-5"  h="-10" />
+   <weapon x="4"   y="5"   h="-10" />
+   <utility>heavy</utility>
+   <utility>heavy</utility>
+   <utility />
+   <utility />
+   <structure>heavy</structure>
+   <structure />
+   <structure />
   </slots>
  </ship>
  <!-- Cruisers -->
  <ship name="Kestrel">
   <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>6000000</price>
   <fabricator>Krain Industries</fabricator>
-  <tech>12</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
   <movement>
@@ -1100,32 +1408,31 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <weapon x="-24" y="-8"  h="8" >medium</weapon>
+   <weapon x="-24" y="8"   h="8" >medium</weapon>
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility>medium</utility>
+   <structure />
+   <structure />
+   <structure />
+   <structure>medium</structure>
   </slots>
  </ship>
  <ship name="Pirate Kestrel">
   <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel_pirate</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>5700000</price>
   <fabricator>Skull and Bones</fabricator>
-  <tech>9009</tech>
   <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
   <movement>
    <thrust>110</thrust>
@@ -1148,32 +1455,31 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8" />
-   <high x="-24" y="8"   h="8" />
-   <high x="-23" y="-15" h="5" />
-   <high x="-23" y="15"  h="5" />
-   <high x="44"  y="0"   h="0" />
-   <high x="-6"  y="0"   h="12" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <weapon x="-24" y="-8"  h="8" >medium</weapon>
+   <weapon x="-24" y="8"   h="8" >medium</weapon>
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility>medium</utility>
+   <structure />
+   <structure />
+   <structure />
+   <structure>medium</structure>
   </slots>
  </ship>
- <ship name="Archimedes">
+ <ship name="Proteron Archimedes">
   <base_type>Archimedes</base_type>
   <GFX sx="12" sy="12">archimedes</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>6250000</price>
   <fabricator>House Proteron</fabricator>
-  <tech>1002</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The Archimedes is a last-generation heavy cruiser. While many were being retired at the time of the Incident, the remnants of House Proteron have retrofitted them and offered some for sale to the public.</description>
   <movement>
@@ -1197,35 +1503,34 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="0" />
-   <high x="25"  y="-4"  h="0" />
-   <high x="25"  y="4"  h="0" />
-   <high x="0"  y="-6" h="2" />
-   <high x="0"  y="6"  h="2" />
-   <high x="-25" y="-8"  h="3" />
-   <high x="-25" y="8"  h="3" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="0" />
+   <weapon x="25"  y="-4"  h="0" />
+   <weapon x="25"  y="4"  h="0" />
+   <weapon x="0"  y="-6" h="2" />
+   <weapon x="0"  y="6"  h="2" />
+   <weapon x="-25" y="-8"  h="3" />
+   <weapon x="-25" y="8"  h="3" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Hawking">
   <base_type>Hawking</base_type>
   <GFX sx="12" sy="12">hawking</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>7500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
   <movement>
@@ -1249,34 +1554,33 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Empire Hawking">
   <base_type>Hawking</base_type>
   <GFX  sx="12" sy="12">hawking_empire</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>7500000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Heavy Combat Vessel License</license>
   <description>An Empire Hawking.</description>
   <movement>
@@ -1300,34 +1604,82 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Sirius Dogma">
+  <base_type>Dogma</base_type>
+  <GFX sx="12" sy="12">dogma</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>8300000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is surpassed only by House Goddard's eponymous flagship and Nexus Shipyards' Peacemaker.</description>
+  <movement>
+   <thrust>50</thrust>
+   <turn>55</turn>
+   <speed>65</speed>
+  </movement>
+  <health>
+   <shield>1400</shield>
+   <armour>700</armour>
+   <energy>3100</energy>
+   <shield_regen>340</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>5300</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>160</cpu>
+   <crew>43</crew>
+   <mass>4200</mass>
+   <fuel>400</fuel>
+   <cap_cargo>60</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="0" h="3" />
+   <weapon x="0"   y="0"  h="4" />
+   <weapon x="-15" y="0"  h="6" />
+   <weapon x="-33" y="0"  h="6" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Goddard">
   <base_type>Goddard</base_type>
   <GFX sx="12" sy="12">goddard</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>11500000</price>
   <fabricator>House Goddard</fabricator>
-  <tech>1001</tech>
   <license>Heavy Combat Vessel License</license>
   <description>The archaic design of the Goddard is deceiving. Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
   <movement>
@@ -1351,35 +1703,34 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2" />
-   <high x="-10" y="13"  h="2" />
-   <high x="-15" y="-25" h="3" />
-   <high x="-15" y="25"  h="3" />
-   <high x="16"  y="0" h="3" />
-   <high x="0"   y="0" h="5" />
-   <high x="-20" y="0" h="5" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-10" y="-13" h="2" />
+   <weapon x="-10" y="13"  h="2" />
+   <weapon x="-15" y="-25" h="3" />
+   <weapon x="-15" y="25"  h="3" />
+   <weapon x="16"  y="0" h="3" />
+   <weapon x="0"   y="0" h="5" />
+   <weapon x="-20" y="0" h="5" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
  <ship name="Dvaered Goddard">
   <base_type>Goddard</base_type>
   <GFX sx="12" sy="12">goddard_dvaered</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>11500000</price>
   <fabricator>House Goddard</fabricator>
-  <tech>9999</tech>
   <license>Heavy Combat Vessel License</license>
   <description>A Dvaered Goddard.</description>
   <movement>
@@ -1403,35 +1754,34 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2" />
-   <high x="-10" y="13"  h="2" />
-   <high x="-15" y="-25" h="3" />
-   <high x="-15" y="25"  h="3" />
-   <high x="16"  y="0" h="3" />
-   <high x="0"   y="0" h="5" />
-   <high x="-20" y="0" h="5" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="-10" y="-13" h="2" />
+   <weapon x="-10" y="13"  h="2" />
+   <weapon x="-15" y="-25" h="3" />
+   <weapon x="-15" y="25"  h="3" />
+   <weapon x="16"  y="0" h="3" />
+   <weapon x="0"   y="0" h="5" />
+   <weapon x="-20" y="0" h="5" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
- <ship name="Peacemaker">
+ <ship name="Empire Peacemaker">
   <base_type>Peacemaker</base_type>
   <GFX sx="12" sy="12">peacemaker</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>18000000</price>
   <fabricator>Nexus Shipyards</fabricator>
-  <tech>9999</tech>
   <license>Heavy Combat Vessel License</license>
   <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the fiercest vessels in the galaxy, dwarfing even the mighty Goddard. So utterly devestating is this ship, that none are available to civilians.</description>
   <movement>
@@ -1455,37 +1805,37 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2" />
-   <high x="25"  y="0"  h="2" />
-   <high x="12"  y="-6" h="0" />
-   <high x="12"  y="6"  h="0" />
-   <high x="0"   y="0"  h="7" />
-   <high x="0"   y="0"  h="7" />
-   <high x="-15" y="0"  h="7" />
-   <high x="-33" y="0"  h="7" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="40"  y="0"  h="2" />
+   <weapon x="25"  y="0"  h="2" />
+   <weapon x="12"  y="-6" h="0" />
+   <weapon x="12"  y="6"  h="0" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="0"   y="0"  h="7" />
+   <weapon x="-15" y="0"  h="7" />
+   <weapon x="-33" y="0"  h="7" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
   </slots>
  </ship>
+ <!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->
  <ship name="Base">
   <base_type>Base</base_type>
   <GFX sx="1" sy="1">base</GFX>
-  <GUI>minimal</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>1</price>
   <fabricator>N/A</fabricator>
-  <tech>9999</tech>
   <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
   <movement>
    <thrust>0</thrust>
@@ -1508,26 +1858,253 @@
    <cap_cargo>100</cap_cargo>
   </characteristics>
   <slots>
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <high x="1" y="0" h="0" />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <medium />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
-   <low />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <weapon x="1" y="0" h="0" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <!-- Special craft, mainly used for missioning purposes. -->
+ <ship name="Seiryuu">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Suzaku">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Byakko">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Genbu">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Diplomatic Vessel">
+  <base_type>Gawain</base_type>
+  <GFX>gawain</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Scout</class>
+  <price>180000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <description>This is a diplomatic vessel. Not to be used by the player or the normal AIs.</description>
+  <movement>
+   <thrust>100</thrust>
+   <turn>135</turn>
+   <speed>100</speed>
+  </movement>
+  <health>
+   <shield>400</shield>
+   <armour>400</armour>
+   <energy>730</energy>
+   <shield_regen>150</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>1960</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>40</cpu>
+   <crew>4</crew>
+   <mass>180</mass>
+   <fuel>400</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="9" y="0" h="-2" />
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
  </ship>
 </Ships>

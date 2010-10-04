@@ -19,6 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "nlua_system.h"
+#include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -34,6 +35,8 @@ static int planetL_faction( lua_State *L );
 static int planetL_class( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
+static int planetL_gfxSpace( lua_State *L );
+static int planetL_gfxExterior( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
@@ -44,6 +47,8 @@ static const luaL_reg planet_methods[] = {
    { "class", planetL_class },
    { "pos", planetL_position },
    { "services", planetL_services },
+   { "gfxSpace", planetL_gfxSpace },
+   { "gfxExterior", planetL_gfxExterior },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -116,6 +121,25 @@ LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
    return NULL;
 }
 /**
+ * @brief Gets a planet directly.
+ *
+ *    @param L Lua state to get planet from.
+ *    @param ind Index position to find the planet.
+ *    @return Planet found at the index in the state.
+ */
+Planet* luaL_validplanet( lua_State *L, int ind )
+{
+   LuaPlanet *lp;
+   Planet *p;
+   lp = luaL_checkplanet( L, ind );
+   p  = planet_getIndex( lp->id );
+   if (p == NULL) {
+      NLUA_ERROR( L, "Planet is invalid" );
+      return NULL;
+   }
+   return p;
+}
+/**
  * @brief Pushes a planet on the stack.
  *
  *    @param L Lua state to push planet into.
@@ -147,10 +171,10 @@ int lua_isplanet( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, PLANET_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
@@ -168,9 +192,9 @@ static int planetL_cur( lua_State *L )
    LuaPlanet planet;
    LuaSystem sys;
    if (land_planet != NULL) {
-      planet.p = land_planet;
+      planet.id = planet_index(land_planet);
       lua_pushplanet(L,planet);
-      sys.s = system_get( planet_getSystem(land_planet->name) );
+      sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
       lua_pushsystem(L,sys);
       return 2;
    }
@@ -209,16 +233,18 @@ static int planetL_get( lua_State *L )
    LuaPlanet planet;
    LuaSystem sys;
    LuaFaction *f;
+   Planet *pnt;
 
    rndplanet = NULL;
-   nplanets = 0;
-  
+   planets   = NULL;
+   nplanets  = 0;
+
    /* Get the landed planet */
    if (lua_gettop(L) == 0) {
       if (land_planet != NULL) {
-         planet.p = land_planet;
+         planet.id = planet_index( land_planet );
          lua_pushplanet(L,planet);
-         sys.s = system_get( planet_getSystem(land_planet->name) );
+         sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
          lua_pushsystem(L,sys);
          return 2;
       }
@@ -228,9 +254,10 @@ static int planetL_get( lua_State *L )
 
    /* If boolean return random. */
    else if (lua_isboolean(L,1)) {
-      planet.p    = planet_get( space_getRndPlanet() );
+      pnt = planet_get( space_getRndPlanet() );
+      planet.id    = planet_index( pnt );
       lua_pushplanet(L,planet);
-      sys.s       = system_get( planet_getSystem(planet.p->name) );
+      sys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
       lua_pushsystem(L,sys);
       return 2;
    }
@@ -259,16 +286,16 @@ static int planetL_get( lua_State *L )
          factions[i++] = f->f;
          lua_pop(L,1);
       }
-      
+
       /* get the planets */
       planets = space_getFactionPlanet( &nplanets, factions, nfactions );
       free(factions);
    }
-   else NLUA_INVALID_PARAMETER(); /* Bad Parameter */
+   else 
+      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* No suitable planet found */
-   if ((rndplanet == NULL) && (nplanets == 0)) {
-      free(planets);
+   if ((rndplanet == NULL) && (planets == NULL)) {
       return 0;
    }
    /* Pick random planet */
@@ -278,13 +305,14 @@ static int planetL_get( lua_State *L )
    }
 
    /* Push the planet */
-   planet.p = planet_get(rndplanet); /* The real planet */
-   if (planet.p == NULL) {
+   pnt = planet_get(rndplanet); /* The real planet */
+   if (pnt == NULL) {
       NLUA_ERROR(L, "Planet '%s' not found in stack");
       return 0;
    }
+   planet.id = planet_index( pnt );
    lua_pushplanet(L,planet);
-   sys.s = system_get( planet_getSystem(rndplanet) );
+   sys.id = system_index( system_get( planet_getSystem(rndplanet) ) );
    lua_pushsystem(L,sys);
    return 2;
 }
@@ -304,7 +332,7 @@ static int planetL_eq( lua_State *L )
    LuaPlanet *a, *b;
    a = luaL_checkplanet(L,1);
    b = luaL_checkplanet(L,2);
-   lua_pushboolean(L,(a->p == b->p));
+   lua_pushboolean(L,(a->id == b->id));
    return 1;
 }
 
@@ -318,9 +346,9 @@ static int planetL_eq( lua_State *L )
  */
 static int planetL_name( lua_State *L )
 {
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   lua_pushstring(L,p->p->name);
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   lua_pushstring(L,p->name);
    return 1;
 }
 
@@ -334,12 +362,12 @@ static int planetL_name( lua_State *L )
  */
 static int planetL_faction( lua_State *L )
 {
-   LuaPlanet *p;
+   Planet *p;
    LuaFaction f;
-   p = luaL_checkplanet(L,1);
-   if (p->p->faction < 0)
+   p = luaL_validplanet(L,1);
+   if (p->faction < 0)
       return 0;
-   f.f = p->p->faction;
+   f.f = p->faction;
    lua_pushfaction(L, f);
    return 1;
 }
@@ -358,9 +386,9 @@ static int planetL_faction( lua_State *L )
 static int planetL_class(lua_State *L )
 {
    char buf[2];
-   LuaPlanet *p;
-   p = luaL_checkplanet(L,1);
-   buf[0] = planet_getClass(p->p);
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   buf[0] = planet_getClass(p);
    buf[1] = '\0';
    lua_pushstring(L,buf);
    return 1;
@@ -388,10 +416,8 @@ static int planetL_class(lua_State *L )
  */
 static int planetL_services( lua_State *L )
 {
-   LuaPlanet *lp;
    Planet *p;
-   lp = luaL_checkplanet(L,1);
-   p  = lp->p;
+   p = luaL_validplanet(L,1);
 
    /* Return result in table */
    lua_newtable(L);
@@ -442,11 +468,54 @@ static int planetL_services( lua_State *L )
  */
 static int planetL_position( lua_State *L )
 {
-   LuaPlanet *p;
+   Planet *p;
    LuaVector v;
-   p = luaL_checkplanet(L,1);
-   vectcpy(&v.vec, &p->p->pos);
+   p = luaL_validplanet(L,1);
+   vectcpy(&v.vec, &p->pos);
    lua_pushvector(L, v);
    return 1;
 }
+
+
+/**
+ * @brief Gets the texture of the planet in space.
+ *
+ * @uasge gfx = p:gfxSpace()
+ *    @luaparam p Planet to get texture of.
+ *    @luareturn The space texture of the planet.
+ * @luafunc gfxSpace( p )
+ */
+static int planetL_gfxSpace( lua_State *L )
+{
+   Planet *p;
+   LuaTex lt;
+   p        = luaL_validplanet(L,1);
+   if (p->gfx_space == NULL) /* Not loaded. */
+      lt.tex   = gl_newImage( p->gfx_spaceName, OPENGL_TEX_MIPMAPS );
+   else
+      lt.tex   = gl_dupTexture( p->gfx_space );
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the texture of the planet in exterior.
+ *
+ * @uasge gfx = p:gfxExterior()
+ *    @luaparam p Planet to get texture of.
+ *    @luareturn The exterior texture of the planet.
+ * @luafunc gfxExterior( p )
+ */
+static int planetL_gfxExterior( lua_State *L )
+{
+   Planet *p;
+   LuaTex lt;
+   p        = luaL_validplanet(L,1);
+   lt.tex   = gl_newImage( p->gfx_exterior, 0 );
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
 

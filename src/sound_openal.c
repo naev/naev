@@ -143,27 +143,27 @@ static void al_resumev( ALint n, ALuint *s );
  * Vorbis stuff.
  */
 static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
-{  
+{
    SDL_RWops *rw = datasource;
    return (size_t) SDL_RWread( rw, ptr, size, nmemb );
 }
 static int ovpack_seek( void *datasource, ogg_int64_t offset, int whence )
-{  
+{
    SDL_RWops *rw = datasource;
    return SDL_RWseek( rw, offset, whence );
 }
 static int ovpack_close( void *datasource )
-{  
+{
    SDL_RWops *rw = datasource;
    return SDL_RWclose( rw );
 }
 static int ovpack_closeFake( void *datasource )
-{  
+{
    (void) datasource;
    return 0;
 }
 static long ovpack_tell( void *datasource )
-{  
+{
    SDL_RWops *rw = datasource;
    return SDL_RWseek( rw, 0, SEEK_CUR );
 }
@@ -1151,7 +1151,7 @@ int sound_al_updateListener( double dir, double px, double py,
 
    c = cos(dir);
    s = sin(dir);
-   
+
    soundLock();
 
    ori[0] = c;
@@ -1318,7 +1318,7 @@ int sound_al_playGroup( int group, alSound *s, int once )
          soundLock();
          for (j=0; j<g->nsources; j++) {
             alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
-          
+
             /* No free ones, just smash the last one. */
             if (j == g->nsources-1) {
                if (state != AL_STOPPED) {

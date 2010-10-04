@@ -53,31 +53,32 @@ static void board_update( unsigned int wdw );
  * Creates the window on success.
  */
 void player_board (void)
-{  
+{
    Pilot *p;
    unsigned int wdw;
    char c;
-   
+   HookParam hparam[2];
 
-   if (player->target==PLAYER_ID) {
+
+   if (player.p->target==PLAYER_ID) {
       player_message("\erYou need a target to board first!");
       return;
    }
 
-   p = pilot_get(player->target);
+   p = pilot_get(player.p->target);
    c = pilot_getFactionColourChar( p );
 
    if (!pilot_isDisabled(p)) {
       player_message("\erYou cannot board a ship that isn't disabled!");
       return;
    }
-   else if (vect_dist(&player->solid->pos,&p->solid->pos) >
+   else if (vect_dist(&player.p->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
       player_message("\erYou are too far away to board your target.");
       return;
    }
-   else if ((pow2(VX(player->solid->vel)-VX(p->solid->vel)) +
-            pow2(VY(player->solid->vel)-VY(p->solid->vel))) >
+   else if ((pow2(VX(player.p->solid->vel)-VX(p->solid->vel)) +
+            pow2(VY(player.p->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       player_message("\erYou are going too fast to board the ship.");
       return;
@@ -93,7 +94,7 @@ void player_board (void)
    /* We'll recover it if it's the pilot's ex-escort. */
    else if (p->parent == PLAYER_ID) {
       /* Try to recover. */
-      pilot_dock( p, player, 0 );
+      pilot_dock( p, player.p, 0 );
       if (pilot_isFlag(p, PILOT_DELETE )) { /* Hack to see if it boarded. */
          player_message("\epYou recover \eg%s\ep into your fighter bay.", p->name);
          return;
@@ -102,7 +103,7 @@ void player_board (void)
 
 
    /* pilot will be boarded */
-   pilot_setFlag(p,PILOT_BOARDED); 
+   pilot_setFlag(p,PILOT_BOARDED);
    player_message("\epBoarding ship \e%c%s\e0.", c, p->name);
 
 
@@ -138,6 +139,10 @@ void player_board (void)
    /*
     * run hook if needed
     */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "board", hparam );
    pilot_runHook(p, PILOT_HOOK_BOARD);
 
    if (board_stopboard) {
@@ -179,7 +184,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
    (void)str;
    Pilot* p;
 
-   p = pilot_get(player->target);
+   p = pilot_get(player.p->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
       player_message("\epThe ship has no credits.");
@@ -207,13 +212,13 @@ static void board_stealCargo( unsigned int wdw, char* str )
    int q;
    Pilot* p;
 
-   p = pilot_get(player->target);
+   p = pilot_get(player.p->target);
 
    if (p->ncommodities==0) { /* no cargo */
       player_message("\epThe ship has no cargo.");
       return;
    }
-   else if (pilot_cargoFree(player) <= 0) {
+   else if (pilot_cargoFree(player.p) <= 0) {
       player_message("\erYou have no room for the ship's cargo.");
       return;
    }
@@ -223,9 +228,9 @@ static void board_stealCargo( unsigned int wdw, char* str )
    /** steal as much as possible until full - @todo let player choose */
    q = 1;
    while ((p->ncommodities > 0) && (q!=0)) {
-      q = pilot_addCargo( player, p->commodities[0].commodity,
+      q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
             p->commodities[0].quantity );
-      pilot_rmCargo( p, p->commodities[0].commodity, q );
+      pilot_cargoRm( p, p->commodities[0].commodity, q );
    }
 
    board_update( wdw );
@@ -244,13 +249,13 @@ static void board_stealFuel( unsigned int wdw, char* str )
    (void)str;
    Pilot* p;
 
-   p = pilot_get(player->target);
+   p = pilot_get(player.p->target);
 
    if (p->fuel <= 0.) { /* no fuel. */
       player_message("\epThe ship has no fuel.");
       return;
    }
-   else if (player->fuel == player->fuel_max) {
+   else if (player.p->fuel == player.p->fuel_max) {
       player_message("\erYour ship is at maximum fuel capacity.");
       return;
    }
@@ -259,13 +264,13 @@ static void board_stealFuel( unsigned int wdw, char* str )
       return;
 
    /* Steal fuel. */
-   player->fuel += p->fuel;
+   player.p->fuel += p->fuel;
    p->fuel = 0.;
 
    /* Make sure doesn't overflow. */
-   if (player->fuel > player->fuel_max) {
-      p->fuel      = player->fuel - player->fuel_max;
-      player->fuel = player->fuel_max;
+   if (player.p->fuel > player.p->fuel_max) {
+      p->fuel      = player.p->fuel - player.p->fuel_max;
+      player.p->fuel = player.p->fuel_max;
    }
 
    board_update( wdw );
@@ -289,7 +294,7 @@ static int board_trySteal( Pilot *p )
       return 1;
 
    /* See if was successful. */
-   if (RNGF() > (0.5 * 
+   if (RNGF() > (0.5 *
             (10. + (double)target->ship->crew)/(10. + (double)p->ship->crew)))
       return 0;
 
@@ -316,7 +321,7 @@ static int board_fail( unsigned int wdw )
 {
    int ret;
 
-   ret = board_trySteal( player );
+   ret = board_trySteal( player.p );
 
    if (ret == 0)
       return 0;
@@ -324,7 +329,7 @@ static int board_fail( unsigned int wdw )
       player_message("\epYou have tripped the ship's self destruct mechanism!");
    else /* you just got locked out */
       player_message("\epThe ship's security system locks %s out.",
-            (player->ship->crew > 0) ? "your crew" : "you" );
+            (player.p->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
    return 1;
@@ -340,10 +345,10 @@ static void board_update( unsigned int wdw )
 {
    int i, j;
    char str[PATH_MAX];
-   char cred[10];
+   char cred[ECON_CRED_STRLEN];
    Pilot* p;
 
-   p = pilot_get(player->target);
+   p = pilot_get(player.p->target);
    j = 0;
 
    /* Credits. */
@@ -366,13 +371,13 @@ static void board_update( unsigned int wdw )
    else
       j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
 
-   window_modifyText( wdw, "txtData", str ); 
+   window_modifyText( wdw, "txtData", str );
 }
 
 
 /**
  * @brief Has a pilot attempt to board another pilot.
- * 
+ *
  *    @param p Pilot doing the boarding.
  *    @return 1 if target was boarded.
  */

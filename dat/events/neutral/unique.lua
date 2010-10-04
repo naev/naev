@@ -5,7 +5,7 @@
 
 
 function create ()
-   sys = system.get()
+   sys = system.cur()
 
    -- Find possible uniques
    unique_list = {}

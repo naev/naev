@@ -18,6 +18,7 @@
 #include "pause.h"
 #include "toolkit.h"
 #include "menu.h"
+#include "info.h"
 #include "board.h"
 #include "map.h"
 #include "escort.h"
@@ -27,6 +28,7 @@
 #include "weapon.h"
 #include "console.h"
 #include "conf.h"
+#include "map_overlay.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -56,15 +58,15 @@ const char *keybindNames[] = {
    "target_nextHostile", "target_prevHostile", "target_hostile",
    "target_clear",
    /* Fighting. */
-   "primary", "face", "board", "safety",
-   /* Weapon selection. */
-   "weap_all", "weap_turret", "weap_forward",
+   "primary", "face", "board",
    /* Secondary weapons. */
-   "secondary", "secondary_next", "secondary_prev",
+   "secondary",
+   "weapset1", "weapset2", "weapset3", "weapset4", "weapset5",
+   "weapset6", "weapset7", "weapset8", "weapset9", "weapset0",
    /* Escorts. */
    "e_targetNext", "e_targetPrev", "e_attack", "e_hold", "e_return", "e_clear",
    /* Space navigation. */
-   "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
+   "autonav", "target_planet", "land", "thyperspace", "starmap", "jump", "overlay",
    /* Communication. */
    "log_up", "log_down", "hail", "autohail",
    /* Misc. */
@@ -83,29 +85,32 @@ const char *keybindDescription[] = {
    "Makes your ship accelerate forward.",
    "Makes your ship turn left.",
    "Makes your ship turn right.",
-   "Makes your ship turn around and face the direction you're moving from. Good for braking.",
+   "Makes your ship turn around and face the direction you're moving from. Useful for braking.",
    "Makes your ship afterburn if you have an afterburner installed.",
-   /* Targetting. */
+   /* Targeting. */
    "Cycles through ship targets.",
    "Cycles backwards through ship targets.",
    "Targets the nearest non-disabled ship.",
    "Cycles through hostile ship targets.",
    "Cycles backwards through hostile ship targets.",
    "Targets the nearest hostile ship.",
-   "Clears current target.",
+   "Clears the currently-targeted ship, planet or jump point.",
    /* Fighting. */
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
-   "Toggles weapon safety (hitting of friendly ships).",
-   /* Weapon selection. */
-   "Sets fire mode to use all weapons available (both turret and forward mounts).",
-   "Sets fire mode to only use turret-class primary weapons.",
-   "Sets fire mode to only use forward-class primary weapons.",
    /* Secondary weapons. */
    "Fires your secondary weapon.",
-   "Cycles through secondary weapons.",
-   "Cycles backwards through secondary weapons.",
+   "Activate Weapon Set 1",
+   "Activate Weapon Set 2",
+   "Activate Weapon Set 3",
+   "Activate Weapon Set 4",
+   "Activate Weapon Set 5",
+   "Activate Weapon Set 6",
+   "Activate Weapon Set 7",
+   "Activate Weapon Set 8",
+   "Activate Weapon Set 9",
+   "Activate Weapon Set 0",
    /* Escorts. */
    "Cycles through your escorts.",
    "Cycles backwards through your escorts.",
@@ -120,6 +125,7 @@ const char *keybindDescription[] = {
    "Cycles through hyperspace targets.",
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
+   "Opens the System Overlay map.",
    /* Communication. */
    "Scrolls the log upwards.",
    "Scrolls the log downwards.",
@@ -165,6 +171,12 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 
 
 /*
+ * Mouse.
+ */
+static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
+
+
+/*
  * from player.c
  */
 extern double player_left;  /**< player.c */
@@ -202,9 +214,9 @@ void input_setDefault (void)
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
    /* Targetting. */
-   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_NONE );
-   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_CTRL );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
+   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
+   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
+   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
    input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
    input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
@@ -213,15 +225,18 @@ void input_setDefault (void)
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ALL );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
-   input_setKeybind( "safety", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
-   /* Weapon selection. */
-   input_setKeybind( "weap_all", KEYBIND_KEYBOARD, SDLK_1, NMOD_NONE );
-   input_setKeybind( "weap_turret", KEYBIND_KEYBOARD, SDLK_2, NMOD_NONE );
-   input_setKeybind( "weap_forward", KEYBIND_KEYBOARD, SDLK_3, NMOD_NONE );
    /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ALL );
-   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, NMOD_NONE );
-   input_setKeybind( "secondary_prev", KEYBIND_KEYBOARD, SDLK_w, NMOD_CTRL );
+   input_setKeybind( "weapset1", KEYBIND_KEYBOARD, SDLK_1, NMOD_ALL );
+   input_setKeybind( "weapset2", KEYBIND_KEYBOARD, SDLK_2, NMOD_ALL );
+   input_setKeybind( "weapset3", KEYBIND_KEYBOARD, SDLK_3, NMOD_ALL );
+   input_setKeybind( "weapset4", KEYBIND_KEYBOARD, SDLK_4, NMOD_ALL );
+   input_setKeybind( "weapset5", KEYBIND_KEYBOARD, SDLK_5, NMOD_ALL );
+   input_setKeybind( "weapset6", KEYBIND_KEYBOARD, SDLK_6, NMOD_ALL );
+   input_setKeybind( "weapset7", KEYBIND_KEYBOARD, SDLK_7, NMOD_ALL );
+   input_setKeybind( "weapset8", KEYBIND_KEYBOARD, SDLK_8, NMOD_ALL );
+   input_setKeybind( "weapset9", KEYBIND_KEYBOARD, SDLK_9, NMOD_ALL );
+   input_setKeybind( "weapset0", KEYBIND_KEYBOARD, SDLK_0, NMOD_ALL );
    /* Escorts. */
    input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, NMOD_NONE );
    input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
@@ -236,6 +251,7 @@ void input_setDefault (void)
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, NMOD_NONE );
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
+   input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ALL );
    /* Communication. */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ALL );
@@ -267,7 +283,7 @@ void input_setDefault (void)
  * @brief Initializes the input subsystem (does not set keys).
  */
 void input_init (void)
-{  
+{
    Keybind *temp;
    int i;
 
@@ -282,8 +298,8 @@ void input_init (void)
    if (sizeof(keybindNames) != sizeof(keybindDescription)) {
       WARN("Keybind names and descriptions aren't of the same size!");
       WARN("   %u descriptions for %u names",
-            (unsigned int) sizeof(keybindNames),
-            (unsigned int) sizeof(keybindDescription));
+            (unsigned int) (sizeof(keybindNames) / sizeof(char*)),
+            (unsigned int) (sizeof(keybindDescription) / sizeof(char*)));
    }
 #endif /* DEBUGGING */
 
@@ -298,7 +314,7 @@ void input_init (void)
    SDL_EventState( SDL_MOUSEMOTION,     SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONUP,   SDL_ENABLE );
-   
+
    /* Joystick, enabled in joystick.c if needed. */
    SDL_EventState( SDL_JOYAXISMOTION,   SDL_DISABLE );
    SDL_EventState( SDL_JOYHATMOTION,    SDL_DISABLE );
@@ -319,8 +335,8 @@ void input_init (void)
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
 
    /* Proximity. */
-   SDL_EventState( SDL_PROXIMITYIN,     SDL_DISABLE );
-   SDL_EventState( SDL_PROXIMITYOUT,    SDL_DISABLE );
+   SDL_EventState( SDL_INPUTPROXIMITYIN,     SDL_DISABLE );
+   SDL_EventState( SDL_INPUTPROXIMITYOUT,    SDL_DISABLE );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
@@ -354,6 +370,29 @@ void input_exit (void)
    free(input_keybinds);
 
    input_keyConvDestroy();
+}
+
+
+/**
+ * @brief Shows the mouse.
+ */
+void input_mouseShow (void)
+{
+   SDL_ShowCursor( SDL_ENABLE );
+   input_mouseCounter++;
+}
+
+
+/**
+ * @brief Hides the mouse.
+ */
+void input_mouseHide (void)
+{
+   input_mouseCounter--;
+   if (input_mouseCounter <= 0) {
+      SDL_ShowCursor( SDL_DISABLE );
+      input_mouseCounter = 0;
+   }
 }
 
 
@@ -436,7 +475,7 @@ SDLKey input_keyConv( const char *name )
  *    @param mod Modifiers to check for.
  */
 void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod )
-{  
+{
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
@@ -482,7 +521,7 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
  */
 const char* input_modToText( SDLMod mod )
 {
-   switch (mod) {
+   switch ((int)mod) {
       case NMOD_NONE:   return "None";
       case NMOD_CTRL:   return "Ctrl";
       case NMOD_SHIFT:  return "Shift";
@@ -609,10 +648,10 @@ void input_update (void)
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
-(player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
-!pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
-!pilot_isFlag(player,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
-#define NODEAD()  (player && !pilot_isFlag(player,PILOT_DEAD)) /**< Player isn't dead. */
+((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
+!pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
+!pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+#define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  (!landed) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
@@ -645,15 +684,15 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* accelerating */
    if (KEY("accel") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_accel(kabs);
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
-            if (!paused) player_abortAutonav(NULL);
+            if (!paused) player_autonavAbort(NULL);
             player_accel(1.);
          }
-            
+
          else if (value==KEY_RELEASE)
             player_accelOver();
 
@@ -683,15 +722,15 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning left */
    } else if (KEY("left") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_abortAutonav(NULL);
-         player_setFlag(PLAYER_TURN_LEFT); 
+         if (!paused) player_autonavAbort(NULL);
+         player_setFlag(PLAYER_TURN_LEFT);
          player_left = kabs;
       }
       else {
          /* set flags for facing correction */
-         if (value==KEY_PRESS) { 
-            if (!paused) player_abortAutonav(NULL);
-            player_setFlag(PLAYER_TURN_LEFT); 
+         if (value==KEY_PRESS) {
+            if (!paused) player_autonavAbort(NULL);
+            player_setFlag(PLAYER_TURN_LEFT);
             player_left = 1.;
          }
          else if (value==KEY_RELEASE) {
@@ -703,14 +742,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* turning right */
    } else if (KEY("right") && !repeat) {
       if (kabs >= 0.) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_TURN_RIGHT);
          player_right = kabs;
       }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
-            if (!paused) player_abortAutonav(NULL);
+            if (!paused) player_autonavAbort(NULL);
             player_setFlag(PLAYER_TURN_RIGHT);
             player_right = 1.;
          }
@@ -719,11 +758,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_right = 0.;
          }
       }
-   
+
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
@@ -735,10 +774,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     */
    /* shooting primary weapon */
    } else if (KEY("primary") && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) { 
+      if (value==KEY_PRESS) {
          player_setFlag(PLAYER_PRIMARY);
       }
-      else if (value==KEY_RELEASE) 
+      else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_PRIMARY);
    /* targetting */
    } else if (INGAME() && NODEAD() && KEY("target_next")) {
@@ -757,8 +796,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) player_targetClear();
    /* face the target */
    } else if (KEY("face") && !repeat) {
-      if (value==KEY_PRESS) { 
-         if (!paused) player_abortAutonav(NULL);
+      if (value==KEY_PRESS) {
+         if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_FACE);
       }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
@@ -767,23 +806,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_board();
       }
-   } else if (KEY("safety") && INGAME() && !repeat) {
-      if (value==KEY_PRESS)
-         weapon_toggleSafety();
-
-
-   /* 
-    * Weapon selection.
-    */
-   } else if (KEY("weap_all") && INGAME() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) player_setFireMode( 0 );
-   } else if (KEY("weap_turret") && INGAME() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) player_setFireMode( 1 );
-   } else if (KEY("weap_forward") && INGAME() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) player_setFireMode( 2 );
 
 
    /*
@@ -794,13 +819,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (INGAME() && NODEAD() && KEY("e_targetPrev") && !repeat) {
       if (value==KEY_PRESS) player_targetEscort(1);
    } else if (INGAME() && NODEAD() && KEY("e_attack") && !repeat) {
-      if (value==KEY_PRESS) escorts_attack(player);
+      if (value==KEY_PRESS) escorts_attack(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_hold") && !repeat) {
-      if (value==KEY_PRESS) escorts_hold(player);
+      if (value==KEY_PRESS) escorts_hold(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_return") && !repeat) {
-      if (value==KEY_PRESS) escorts_return(player);
+      if (value==KEY_PRESS) escorts_return(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_clear") && !repeat) {
-      if (value==KEY_PRESS) escorts_clear(player);
+      if (value==KEY_PRESS) escorts_clear(player.p);
 
 
    /*
@@ -814,39 +839,56 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_SECONDARY);
 
-   /* selecting secondary weapon */
-   } else if (KEY("secondary_next") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_secondaryNext();
-   } else if (KEY("secondary_prev") && INGAME() && NODEAD()) {
-      if (value==KEY_PRESS) player_secondaryPrev();
+   /* Weapon sets. */
+   } else if (KEY("weapset1")) {
+      player_weapSetPress( 0, value );
+   } else if (KEY("weapset2")) {
+      player_weapSetPress( 1, value );
+   } else if (KEY("weapset3")) {
+      player_weapSetPress( 2, value );
+   } else if (KEY("weapset4")) {
+      player_weapSetPress( 3, value );
+   } else if (KEY("weapset5")) {
+      player_weapSetPress( 4, value );
+   } else if (KEY("weapset6")) {
+      player_weapSetPress( 5, value );
+   } else if (KEY("weapset7")) {
+      player_weapSetPress( 6, value );
+   } else if (KEY("weapset8")) {
+      player_weapSetPress( 7, value );
+   } else if (KEY("weapset9")) {
+      player_weapSetPress( 8, value );
+   } else if (KEY("weapset0")) {
+      player_weapSetPress( 9, value );
 
-
-   /*                                                                     
+   /*
     * space
     */
    } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
-      if (value==KEY_PRESS) player_startAutonav();
+      if (value==KEY_PRESS) player_autonavStart();
    /* target planet (cycles like target) */
    } else if (KEY("target_planet") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_land();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
+         player_autonavAbort(NULL);
          player_targetHyperspace();
       }
    } else if (KEY("starmap") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_abortAutonav(NULL);
+         if (!paused) player_autonavAbort(NULL);
          player_jump();
       }
+   } else if (KEY("overlay") && NOHYP() && NODEAD() && INGAME() && !repeat) {
+      ovr_key( value );
 
 
    /*
@@ -901,7 +943,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) menu_small();
-   
+
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) menu_info();
@@ -1008,6 +1050,10 @@ void input_handle( SDL_Event* event )
    if (toolkit_isOpen()) /* toolkit handled seperately completely */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
+
+   if (ovr_isOpen())
+      if (ovr_input(event))
+         return; /* Don't process if the map overlay wants it. */
 
    switch (event->type) {
 

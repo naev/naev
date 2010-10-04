@@ -39,6 +39,7 @@ else -- default english
 end
 
 function create()
+    -- Note: this mission makes no system claims.
     misn.accept()
     
     tk.msg(title[1], text[1])
@@ -47,7 +48,7 @@ function create()
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
     
-    DVcrew = misn.addCargo("Dvaered ship crew", 0)
+    DVcrew = misn.cargoAdd("Dvaered ship crew", 0)
     
     hook.land("land")
 end
@@ -61,7 +62,7 @@ function land()
             tk.msg(title[2], text[2] .. text[4] .. text[5])
         end
     end
-    misn.jetCargo(DVcrew)
+    misn.cargoJet(DVcrew)
     var.push("flfbase_intro", 1)
     var.pop("flfbase_flfshipkilled")
     misn.finish(true)

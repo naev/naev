@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 -- Settings
 mem.aggressive     = true
@@ -38,8 +39,10 @@ function create ()
       mem.refuel_no = "\"I can't spare fuel for you.\""
    end
 
-   -- Choose attack.
-   attack_choose()
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   -- Finish up creation
+   create_post()
 end
 
 

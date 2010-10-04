@@ -6,6 +6,7 @@ include("ai/include/attack.lua")
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
+mem.enemyclose     = nil -- Distance at which an enemy is considered close
 mem.armour_run     = 0 -- At which damage to run at
 mem.armour_return  = 0 -- At which armour to return to combat
 mem.shield_run     = 0 -- At which shield to run
@@ -14,9 +15,11 @@ mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
+mem.land_friendly  = false -- Only land on friendly planets?
 mem.distress       = true -- AI distresses
 mem.distressrate   = 3 -- Number of ticks before calling for help
 mem.distressmsg    = nil -- Message when calling for help
+mem.distressmsgfunc = nil -- Function to call when distressing
 
 
 -- Required control rate
@@ -34,17 +37,32 @@ function control ()
 
    -- Get new task
    if task == "none" then
+      local attack = false
+
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
+         -- Check if we have minimum range to engage
+         if mem.enemyclose then
+            local dist = ai.dist( enemy )
+            if mem.enemyclose > dist then
+               attack = true
+            end
+         else
+            attack = true
+         end
+      end
+
+      -- See what decision to take
+      if attack then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
-         ai.pushtask(0, "attack", enemy)
+         ai.pushtask("attack", enemy)
       else
          idle()
       end
 
    -- Don't stop boarding
-   elseif task == "board" or task == "boardstop" then
+   elseif task == "board" then
       -- We want to think in case another attacker gets close
       attack_think()
 
@@ -63,7 +81,7 @@ function control ()
                and ai.pshield() < ai.pshield(target) ) or
             (mem.armour_run > 0 and ai.parmour() < mem.armour_run
                and ai.parmour() < ai.parmour(target) ) then
-         ai.pushtask(0, "runaway", target)
+         ai.pushtask("runaway", target)
 
       -- Think like normal
       else
@@ -102,13 +120,23 @@ function control ()
 
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
-      taunt(enemy, true)
-      ai.pushtask(0, "attack", enemy)
+      local attack = false
 
-   -- Enter hyperspace if possible
-   elseif task == "hyperspace" then 
-      ai.hyperspace() -- try to hyperspace 
+      -- See if enemy is close enough to attack
+      if mem.enemyclose then
+         local dist = ai.dist( enemy )
+         if mem.enemyclose > dist then
+            attack = true
+         end
+      else
+         attack = true
+      end
 
+      -- See if really want to attack
+      if attack then
+         taunt(enemy, true)
+         ai.pushtask("attack", enemy)
+      end
    end
 end
 
@@ -128,11 +156,11 @@ function attacked ( attacker )
          taunt( attacker, false )
 
          -- Now pilot fights back
-         ai.pushtask(0, "attack", attacker)
+         ai.pushtask("attack", attacker)
       else
 
          -- Runaway
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
 
    -- Let attacker profile handle it.
@@ -142,33 +170,25 @@ function attacked ( attacker )
    elseif task == "runaway" then
       if ai.target() ~= attacker then
          ai.poptask()
-         ai.pushtask(0, "runaway", attacker)
+         ai.pushtask("runaway", attacker)
       end
-   end
-end
-
--- Default task to run when idle
-function idle ()
-   local planet = ai.landplanet()
-   -- planet must exist
-   if planet == nil or mem.land_planet == false then
-      ai.settimer(0, rnd.int(1000, 3000))
-      ai.pushtask(0, "enterdelay")
-   else
-      mem.land = planet
-      ai.pushtask(0, "hyperspace")
-      ai.pushtask(0, "land")
    end
 end
 
 -- Delays the ship when entering systems so that it doesn't leave right away
 function enterdelay ()
    if ai.timeup(0) then
-      ai.pushtask(0, "hyperspace")
+      ai.pushtask("hyperspace")
    end
 end
 
 function create ()
+   create_post()
+end
+
+-- Finishes create stuff like choose attack and prepare plans
+function create_post ()
+   mem.tookoff    = ai.takingoff()
    attack_choose()
 end
 
@@ -210,13 +230,13 @@ function distress ( pilot, attacker )
    local task = ai.taskname()
    -- If not attacking nor fleeing, begin attacking
    if task ~= "attack" and task ~= "runaway" then
-      ai.pushtask( 0, "attack", t )
+      ai.pushtask( "attack", t )
    -- We're sort of busy
    elseif task == "attack" then
       local target = ai.target()
 
       if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
-         ai.pushtask( 0, "attack", t )
+         ai.pushtask( "attack", t )
       end
    end
 end
@@ -244,7 +264,11 @@ function gen_distress ( target )
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
-      ai.distress( mem.distressmsg )
+      if mem.distressmsgfunc ~= nil then
+         mem.distressmsgfunc()
+      else
+         ai.distress( mem.distressmsg )
+      end
       mem.distressed = 1
    end
 

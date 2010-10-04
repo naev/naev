@@ -25,11 +25,11 @@ function atk_g_think ()
    -- Get new target if it's closer
    if enemy ~= target and enemy ~= nil then
       local dist = ai.dist( target )
-      local range = ai.getweaprange()
+      local range = ai.getweaprange( 0 )
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy )
+         ai.pushtask( "attack", enemy )
       end
    end
 end
@@ -43,17 +43,17 @@ function atk_g_attacked( attacker )
 
    -- If no target automatically choose it
    if not ai.exists(target) then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
       return
    end
 
    local tdist  = ai.dist(target)
    local dist   = ai.dist(attacker)
-   local range  = ai.getweaprange()
+   local range  = ai.getweaprange( 0 )
 
    if target ~= attacker and dist < tdist and
          dist < range * mem.atk_changetarget then
-      ai.pushtask(0, "attack", attacker)
+      ai.pushtask("attack", attacker)
    end
 end
 
@@ -78,7 +78,7 @@ function atk_g ()
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask( 0, "board", target );
+      ai.pushtask( "board", target );
       return
    end
 
@@ -94,7 +94,7 @@ function atk_g ()
 
    -- Get stats about enemy
 	local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange()
+   local range = ai.getweaprange( 0 )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach then
@@ -116,24 +116,14 @@ end
 --]]
 function atk_g_ranged( target, dist )
    local dir = ai.face(target) -- Normal face the target
-   local secondary, special, ammo = ai.secondary("ranged")
 
-   -- Always use fighter bay
-   if secondary == "" then
-
-   -- Shoot missiles if in range
-   elseif secondary == "Launcher" and
-         dist < ai.getweaprange(true) then
-
-      -- More lenient with aiming
-      if special == "Smart" and dir < 30 then
-         ai.shoot(true)
-
-      -- Non-smart miss more
-      elseif dir < 10 then
-         ai.shoot(true)
-      end
+   -- Check if in range
+   if dist < ai.getweaprange( 4 ) and dir < 30 then
+      ai.weapset( 4 )
    end
+
+   -- Always launch fighters
+   ai.weapset( 5 )
 
    -- Approach for melee
    if dir < 10 then
@@ -157,17 +147,11 @@ end
 -- Melees the target
 --]]
 function atk_g_melee( target, dist )
-   local secondary, special = ai.secondary("melee")
    local dir = ai.aim(target) -- We aim instead of face
-   local range = ai.getweaprange()
+   local range = ai.getweaprange( 3 )
 
-   -- Fire non-smart secondary weapons
-   if (secondary == "Launcher" and special ~= "Smart") or
-         secondary == "Beam Weapon" then
-      if dir < 10 or special == "Turret" then -- Need good acuracy
-         ai.shoot(true)
-      end
-   end
+   -- Set weapon set
+   ai.weapset( 3 )
 
    -- Drifting away we'll want to get closer
    if dir < 10  and dist > 0.5*range and ai.relvel(target) > -10 then
@@ -175,11 +159,18 @@ function atk_g_melee( target, dist )
    end
 
    -- Shoot if should be shooting.
-   if dist < range then
-      if dir < 10 then
-         ai.shoot(false)
-      elseif ai.hasturrets() then
-         ai.shoot(false, 1)
+   if dir < 10 then
+      local range = ai.getweaprange( 3, 0 )
+      if dist < range then
+         ai.shoot()
+      end
+   end
+   if ai.hasturrets() then
+      local range  = ai.getweaprange( 3, 1 )
+      if dist < range then
+         ai.shoot(true)
       end
    end
 end
+
+

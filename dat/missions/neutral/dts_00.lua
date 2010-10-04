@@ -1,7 +1,7 @@
 --[[
 
-   MISSION: Defend the System 1
-   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
+   MISSION: Defend the System 1
+   DESCRIPTION: A mission to defend the system against swarm of pirate ships.
                 This will be the first in a planned series of random encounters.
                 After the third specifically scripted pirate invasion, a militia will form.
                 The player will have the option to join the militia.
@@ -73,7 +73,7 @@ Your comrades raise a cheer everyone shakes the postmasters hand. One of them ki
 "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]
 
 -- Other text for the mission
-   comm[8] = "You fled battle. The Empire wont forget."
+   comm[8] = "You fled battle. The Empire won't forget."
    comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
    comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
    title[4] = "Good job"
@@ -103,7 +103,13 @@ function create ()
            this_system:hasPresence( "FLF") ) 
          then misn.finish(false) 
       end
-      planet_name = planet.name( this_planet)
+ 
+    missys = {this_system}
+    if not misn.claim(missys) then
+        misn.finish(false)
+    end
+ 
+       planet_name = planet.name( this_planet)
       system_name = this_system:name()
       if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
          misn.accept()
@@ -113,7 +119,7 @@ function create ()
          misn.setReward( string.format( misn_reward, reward) )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
-         misn.setMarker( this_system, "misc" )
+         misn.markerAdd( this_system, "low" )
          defender = true
 
      -- hook an abstract deciding function to player entering a system
@@ -141,7 +147,7 @@ end
 -- Decides what to do when player either takes off starting planet or jumps into another system
 function enter_system()
 
-      if this_system == system.get() and defender == true then
+      if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
          misn.timerStart( "ship_enters", 1000)
@@ -149,7 +155,7 @@ function enter_system()
          player.msg( comm[8])
          player.modFaction( "Empire", -3)
          misn.finish( true)
-      elseif this_system == system.get() and been_here_before ~= true then
+      elseif this_system == system.cur() and been_here_before ~= true then
          been_here_before = true
          defend_system()
       else

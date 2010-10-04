@@ -62,4 +62,11 @@ void input_exit (void);
 void input_update (void);
 
 
+/*
+ * Mouse.
+ */
+void input_mouseShow (void);
+void input_mouseHide (void);
+
+
 #endif /* INPUT_H */

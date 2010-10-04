@@ -28,6 +28,7 @@
 #include "ncompat.h"
 
 #include <limits.h>
+#include <inttypes.h>
 #include <math.h>
 
 
@@ -61,9 +62,20 @@
 #endif
 
 
+/* I've heard talk of PRIuN being evil, so there's this sad panda here. */
+#ifndef PRIu64
+#   define PRIu64    "%ju" /**< Illegal, evil and probably eats babies  too. */
+#endif
+
+
+/*
+ * Misc stuff.
+ */
+extern const double fps_min;
+void fps_setPos( double x, double y );
+void update_routine( double dt );
 char *naev_version( int long_version );
 char *naev_binary (void);
 
 
 #endif /* NAEV_H */
-

@@ -48,6 +48,7 @@ else -- default english
 end
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
@@ -66,7 +67,7 @@ function accept ()
    -- target destination
    destsys = system.get( "Slaccid" )
    ret,retsys = planet.get( "Polaris Prime" )
-   misn.setMarker(destsys)
+   misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
    misn_stage = 0
@@ -93,7 +94,7 @@ function land ()
       if misn_stage == 2 then
 
          -- VIP gets off
-         misn.rmCargo(vip)
+         misn.cargoRm(vip)
 
          -- Rewards
          player.pay(reward)
@@ -117,7 +118,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 0 and sys == destsys then
 
@@ -141,7 +142,7 @@ function enter ()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 0, 700 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      p = pilot.add( "FLF Med Force", "def", enter_vect )
+      p = pilot.add( "FLF Med Force", nil, enter_vect )
       for k,v in ipairs(p) do
          v:setHostile()
       end
@@ -149,7 +150,7 @@ function enter ()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 0, 700 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      p = pilot.add( "Dvaered Med Force", "def", enter_vect )
+      p = pilot.add( "Dvaered Med Force", nil, enter_vect )
       for k,v in ipairs(p) do
          v:setFriendly()
       end
@@ -166,11 +167,6 @@ function enter ()
 
       -- Notify of mission failure
       player.msg( msg[2] )
-      --[[
-      misn_stage = 3
-      misn.setMarker(retsys)
-      misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-      ]]--
       misn.finish(false)
 
    end
@@ -180,7 +176,7 @@ end
 function delay_flf ()
 
    -- More ships to pressue player from behind
-   p = pilot.add( "FLF Sml Force", "def", enter_vect )
+   p = pilot.add( "FLF Sml Force", nil, enter_vect )
    for k,v in ipairs(p) do
       v:setHostile()
    end
@@ -189,12 +185,12 @@ end
 
 function board ()
    -- VIP boards
-   vip = misn.addCargo( "VIP", 0 )
+   vip = misn.cargoAdd( "VIP", 0 )
    tk.msg( title[2], text[4] )
 
    -- Update mission details
    misn_stage = 2
-   misn.setMarker(retsys)
+   misn.markerMove( misn_marker, retsys )
    misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
 
    -- Force unboard
@@ -209,10 +205,6 @@ function death ()
 
       -- Update mission details
       misn_stage = 3
-      --[[
-      misn.setMarker(retsys)
-      misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-      ]]--
       misn.finish(false)
    end
 end

@@ -23,6 +23,8 @@
 #include "toolkit.h"
 #include "array.h"
 #include "conf.h"
+#include "npng.h"
+#include "colour.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -52,7 +54,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_compareTech( const void *arg1, const void *arg2 );
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -64,25 +66,53 @@ static int ship_parse( Ship *temp, xmlNodePtr parent );
  */
 Ship* ship_get( const char* name )
 {
-   Ship* temp = ship_stack;
+   Ship *temp;
    int i;
 
+   temp = ship_stack;
    for (i=0; i < array_size(ship_stack); i++)
-      if (strcmp((temp+i)->name, name)==0) break;
+      if (strcmp(temp[i].name, name)==0)
+         return &temp[i];
 
-   if (i == array_size(ship_stack)) { /* ship does not exist, game will probably crash now */
-      WARN("Ship %s does not exist", name);
-      return NULL;
-   }
+   WARN("Ship %s does not exist", name);
+   return NULL;
+}
 
-   return temp+i;
+
+/**
+ * @brief Gets a ship based on its name without warning.
+ *
+ *    @param name Name to match.
+ *    @return Ship matching name or NULL if not found.
+ */
+Ship* ship_getW( const char* name )
+{
+   Ship *temp;
+   int i;
+
+   temp = ship_stack;
+   for (i=0; i < array_size(ship_stack); i++)
+      if (strcmp(temp[i].name, name)==0)
+         return &temp[i];
+
+   return NULL;
+}
+
+
+/**
+ * @brief Gets all the ships.
+ */
+Ship* ship_getAll( int *n )
+{
+   *n = array_size(ship_stack);
+   return ship_stack;
 }
 
 
 /**
  * @brief Comparison function for qsort().
  */
-static int ship_compareTech( const void *arg1, const void *arg2 )
+int ship_compareTech( const void *arg1, const void *arg2 )
 {
    const Ship *s1, *s2;
 
@@ -104,47 +134,6 @@ static int ship_compareTech( const void *arg1, const void *arg2 )
 
    /* Same. */
    return 0;
-}
-
-
-/**
- * @brief Gets all the ships in text form matching tech.
- *
- * You have to free all the strings created in the string array too.
- *
- *    @param[out] n Number of ships found.
- *    @param tech List of technologies to use.
- *    @param techmax Number of technologies in tech.
- *    @return An array of allocated ship names.
- */
-Ship** ship_getTech( int *n, const int *tech, const int techmax )
-{
-   int i,j, num;
-   Ship **ships;
-  
-   /* get available ships for tech */
-   ships = malloc(sizeof(Ship*) * array_size(ship_stack));
-   num = 0;
-   for (i=0; i < array_size(ship_stack); i++) {
-      if (ship_stack[i].tech <= tech[0]) { /* check vs base tech */
-         ships[num] = &ship_stack[i];
-         num++;
-      }
-      else {
-         for (j=0; j<techmax; j++) {
-            if (tech[j] == ship_stack[i].tech) { /* check vs special tech */
-               ships[num] = &ship_stack[i];
-               num++;
-            }
-         }
-      }
-   }
-
-   /* Sort it. */
-   qsort( ships, num, sizeof(Ship*), ship_compareTech );
-   *n = num;
-
-   return ships;
 }
 
 
@@ -171,6 +160,8 @@ char* ship_class( Ship* s )
       /* Merchant. */
       case SHIP_CLASS_COURIER:
          return "Courier";
+      case SHIP_CLASS_ARMOURED_TRANSPORT:
+         return "Armoured Transport";
       case SHIP_CLASS_FREIGHTER:
          return "Freighter";
       case SHIP_CLASS_BULK_CARRIER:
@@ -227,6 +218,8 @@ ShipClass ship_classFromString( char* str )
       return SHIP_CLASS_COURIER;
    else if (strcmp(str,"Freighter")==0)
       return SHIP_CLASS_FREIGHTER;
+   else if (strcmp(str,"Armoured Transport")==0)
+      return SHIP_CLASS_ARMOURED_TRANSPORT;
    else if (strcmp(str,"Bulk Carrier")==0)
       return SHIP_CLASS_BULK_CARRIER;
 
@@ -290,34 +283,28 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
- * @brief Parses the ship stats.
+ * @brief Parses a single ship stat from a parent node if it is one.
  *
- *    @param s ShipStats to parse stats for.
- *    @param parent Statistics node.
+ *    @return 0 on success, 1 if not a node.
  */
-int ship_statsParse( ShipStats *s, xmlNodePtr parent )
+int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
 {
-   xmlNodePtr node;
-
-   /* Parse information. */
-   node = parent->xmlChildrenNode;
-   do { /* load all the data */
-      /* Fighter. */
-      xmlr_float(node,"accuracy_forward",s->accuracy_forward);
-      xmlr_float(node,"damage_forward",s->damage_forward);
-      xmlr_float(node,"firerate_forward",s->firerate_forward);
-      xmlr_float(node,"energy_forward",s->energy_forward);
-      /* Cruiser. */
-      xmlr_float(node,"accuracy_turret",s->accuracy_turret);
-      xmlr_float(node,"damage_turret",s->damage_turret);
-      xmlr_float(node,"firerate_turret",s->firerate_turret);
-      xmlr_float(node,"energy_turret",s->energy_turret);
-      /* Freighter. */
-      xmlr_float(node,"jump_delay",s->jump_delay);
-   } while (xml_nextNode(node));
-
-   /* Success. */
-   return 0;
+   /* Scout. */
+   xmlr_floatR(node,"ew_hide",s->ew_hide);
+   xmlr_floatR(node,"ew_detect",s->ew_detect);
+   /* Fighter. */
+   xmlr_floatR(node,"accuracy_forward",s->accuracy_forward);
+   xmlr_floatR(node,"damage_forward",s->damage_forward);
+   xmlr_floatR(node,"firerate_forward",s->firerate_forward);
+   xmlr_floatR(node,"energy_forward",s->energy_forward);
+   /* Cruiser. */
+   xmlr_floatR(node,"accuracy_turret",s->accuracy_turret);
+   xmlr_floatR(node,"damage_turret",s->damage_turret);
+   xmlr_floatR(node,"firerate_turret",s->firerate_turret);
+   xmlr_floatR(node,"energy_turret",s->energy_turret);
+   /* Freighter. */
+   xmlr_floatR(node,"jump_delay",s->jump_delay);
+   return 1;
 }
 
 
@@ -342,6 +329,9 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
+   /* Scout stuff. */
+   DESC_ADD(s->ew_detect,"Detection");
+   DESC_ADD(s->ew_hide,"Cloaking");
    /* Fighter Stuff. */
    DESC_ADD(s->accuracy_forward,"Accuracy (Cannon)");
    DESC_ADD(s->damage_forward,"Damage (Cannon)");
@@ -361,6 +351,206 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
 
 
 /**
+ * @brief Generates a target graphic for a ship.
+ */
+static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
+{
+   SDL_Surface *gfx, *gfx_store;
+   int potw, poth, potw_store, poth_store;
+   int x, y, sw, sh;
+   SDL_Rect rtemp, dstrect;
+   int i, j;
+   uint32_t *pix;
+   double r, g, b, a;
+   double h, s, v;
+   char buf[PATH_MAX];
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   Uint32 saved_flags;
+   Uint8 saved_alpha;
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Get sprite size. */
+   sw = temp->gfx_space->w / sx;
+   sh = temp->gfx_space->h / sy;
+
+   /* POT size. */
+   if (gl_needPOT()) {
+      potw = gl_pot( sw );
+      poth = gl_pot( sh );
+      potw_store = gl_pot( SHIP_TARGET_W );
+      poth_store = gl_pot( SHIP_TARGET_H );
+   }
+   else {
+      potw = sw;
+      poth = sh;
+      potw_store = SHIP_TARGET_W;
+      poth_store = SHIP_TARGET_H;
+   }
+
+   /* Create the surface. */
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+
+   /* create the temp POT surface */
+   gfx = SDL_CreateRGBSurface( 0, potw, poth,
+         surface->format->BytesPerPixel*8, RGBAMASK );
+   gfx_store = SDL_CreateRGBSurface( 0, potw_store, poth_store,
+         surface->format->BytesPerPixel*8, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
+   saved_alpha = surface->format->alpha;
+   if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
+      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+      SDL_SetColorKey( surface, 0, surface->format->colorkey );
+   }
+
+   /* create the temp POT surface */
+   gfx = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+         potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+   gfx_store = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+         potw_store, poth_store, surface->format->BytesPerPixel*8, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   if (gfx == NULL) {
+      WARN( "Unable to create ship '%s' targetting surface.", temp->name );
+      return -1;
+   }
+
+   /* Copy over for target. */
+   gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
+   rtemp.x = sw * x;
+   rtemp.y = sh * (temp->gfx_space->sy-y-1);
+   rtemp.w = sw;
+   rtemp.h = sh;
+   dstrect.x = 0;
+   dstrect.y = 0;
+   dstrect.w = rtemp.w;
+   dstrect.h = rtemp.h;
+   SDL_BlitSurface( surface, &rtemp, gfx, &dstrect );
+
+   /* Copy over for store. */
+   dstrect.x = (SHIP_TARGET_W - sw) / 2;
+   dstrect.y = (SHIP_TARGET_H - sh) / 2;
+   dstrect.w = rtemp.w;
+   dstrect.h = rtemp.h;
+   SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
+
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   /* set saved alpha */
+   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+      SDL_SetAlpha( surface, 0, 0 );
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Load the store surface. */
+   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
+
+   /* Some filtering. */
+   for (j=0; j<sh; j++) {
+      for (i=0; i<sw; i++) {
+         pix   = (uint32_t*) ((uint8_t*) gfx->pixels + j*gfx->pitch + i*gfx->format->BytesPerPixel);
+         r     = ((double) (*pix & RMASK)) / (double) RMASK;
+         g     = ((double) (*pix & GMASK)) / (double) GMASK;
+         b     = ((double) (*pix & BMASK)) / (double) BMASK;
+         a     = ((double) (*pix & AMASK)) / (double) AMASK;
+         if (j%2) /* Add scanlines. */
+            a *= 0.5;
+
+         /* Convert to HSV. */
+         col_rgb2hsv( &h, &s, &v, r, g, b );
+
+         h  = 0.0;
+         s  = 1.0;
+         v *= 1.5;
+
+         /* Convert back to RGB. */
+         col_hsv2rgb( &r, &g, &b, h, s, v );
+
+         /* Convert to pixel. */
+         *pix =   ((uint32_t) (r*RMASK) & RMASK) |
+                  ((uint32_t) (g*GMASK) & GMASK) |
+                  ((uint32_t) (b*BMASK) & BMASK) |
+                  ((uint32_t) (a*AMASK) & AMASK);
+      }
+   }
+
+   /* Load the surface. */
+   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   temp->gfx_target = gl_loadImagePad( buf, gfx, 0, sw, sh, 1, 1, 1 );
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the graphics for a ship.
+ *
+ *    @param temp Ship to load into.
+ *    @param buf Name of the texture to work with.
+ */
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
+{
+   char base[PATH_MAX], str[PATH_MAX];
+   int i;
+   png_uint_32 w, h;
+   SDL_RWops *rw;
+   npng_t *npng;
+   SDL_Surface *surface;
+
+   /* Get base path. */
+   for (i=0; i<PATH_MAX; i++) {
+      if ((buf[i] == '\0') || (buf[i] == '_')) {
+         base[i] = '\0';
+         break;
+      }
+      base[i] = buf[i];
+   }
+   if (i>=PATH_MAX) {
+      WARN("Failed to get base path of '%s'.", buf);
+      return -1;
+   }
+
+   /* Load the space sprite. */
+   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
+   rw    = ndata_rwops( str );
+   npng  = npng_open( rw );
+   npng_dim( npng, &w, &h );
+   surface = npng_readSurface( npng, gl_needPOT(), 1 );
+
+   /* Load the texture. */
+   temp->gfx_space = gl_loadImagePad( str, surface,
+         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
+         w, h, sx, sy, 0 );
+
+   /* Create the target graphic. */
+   ship_genTargetGFX( temp, surface, sx, sy );
+
+   /* Free stuff. */
+   npng_close( npng );
+   SDL_RWclose( rw );
+   SDL_FreeSurface( surface );
+
+   /* Load the engine sprite .*/
+   if (conf.engineglow && conf.interpolate) {
+      snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+      if (temp->gfx_engine == NULL)
+         WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
+   }
+
+   /* Calculate mount angle. */
+   temp->mangle  = 2.*M_PI;
+   temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
+
+   /* Get the comm graphic for future loading. */
+   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   temp->gfx_comm = strdup(str);
+
+   return 0;
+}
+
+
+/**
  * @brief Extracts the ingame ship from an XML node.
  *
  *    @param temp Ship to load data into.
@@ -371,10 +561,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
    int i;
    xmlNodePtr cur, node;
-   char str[PATH_MAX], base[PATH_MAX];
-   char *stmp, *buf;
+   char str[PATH_MAX];
    int sx, sy;
+   char *stmp, *buf;
    int l, m, h;
+   OutfitSlotSize base_size;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -421,45 +612,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          else
             sy = 8;
 
-         /* Get base path. */
-         for (i=0; i<PATH_MAX; i++) {
-            if ((buf[i] == '\0') || (buf[i] == '_')) {
-               base[i] = '\0';
-               break;
-            }
-            base[i] = buf[i]; 
-         }
-         if (i>=PATH_MAX) {
-            WARN("Failed to get base path of '%s'.", buf);
-            continue;
-         }
-
-         /* Load the space sprite. */
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
-         temp->gfx_space = gl_newSprite( str, sx, sy,
-               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
-
-         /* Load the engine sprite .*/
-         if (conf.engineglow && conf.interpolate) {
-            snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
-            temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
-            if (temp->gfx_engine == NULL)
-               WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
-         }
-
-         /* Load target graphic. */
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_TARGET SHIP_EXT, base, base );
-         temp->gfx_target = gl_newImage(str, 0);
-         if (temp->gfx_target == NULL)
-            WARN("Ship '%s' does not have a target graphic (%s).", temp->name, str );
-
-         /* Calculate mount angle. */
-         temp->mangle  = 2.*M_PI;
-         temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
-
-         /* Get the comm graphic for future loading. */
-         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
-         temp->gfx_comm = strdup(str);
+         /* Load the graphics. */
+         ship_loadGFX( temp, buf, sx, sy );
 
          continue;
       }
@@ -475,39 +629,47 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       xmlr_int(node,"price",temp->price);
-      xmlr_int(node,"tech",temp->tech);
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_float(cur,"thrust",temp->thrust);
             xmlr_float(cur,"turn",temp->turn);
             xmlr_float(cur,"speed",temp->speed);
+            /* All the xmlr_ stuff have continue cases. */
+            WARN("Ship '%s' has unknown movement node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
       if (xml_isNode(node,"health")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_float(cur,"armour",temp->armour);
             xmlr_float(cur,"armour_regen",temp->armour_regen);
             xmlr_float(cur,"shield",temp->shield);
             xmlr_float(cur,"shield_regen",temp->shield_regen);
             xmlr_float(cur,"energy",temp->energy);
             xmlr_float(cur,"energy_regen",temp->energy_regen);
+            /* All the xmlr_ stuff have continue cases. */
+            WARN("Ship '%s' has unknown health node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
       if (xml_isNode(node,"characteristics")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_int(cur,"crew",temp->crew);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_int(cur,"fuel",temp->fuel);
             xmlr_float(cur,"cap_cargo",temp->cap_cargo);
+            /* All the xmlr_ stuff have continue cases. */
+            WARN("Ship '%s' has unknown characteristic node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -515,70 +677,69 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* First pass, get number of mounts. */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"low"))
-               temp->outfit_nlow++;
-            else if (xml_isNode(cur,"medium"))
-               temp->outfit_nmedium++;
-            else if (xml_isNode(cur,"high"))
-               temp->outfit_nhigh++;
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"structure"))
+               temp->outfit_nstructure++;
+            else if (xml_isNode(cur,"utility"))
+               temp->outfit_nutility++;
+            else if (xml_isNode(cur,"weapon"))
+               temp->outfit_nweapon++;
+            else
+               WARN("Ship '%s' has unknown slot node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
          /* Allocate the space. */
-         temp->outfit_low = calloc( temp->outfit_nlow, sizeof(ShipOutfitSlot) );
-         temp->outfit_medium = calloc( temp->outfit_nmedium, sizeof(ShipOutfitSlot) );
-         temp->outfit_high = calloc( temp->outfit_nhigh, sizeof(ShipOutfitSlot) );
+         temp->outfit_structure     = calloc( temp->outfit_nstructure, sizeof(ShipOutfitSlot) );
+         temp->outfit_utility  = calloc( temp->outfit_nutility, sizeof(ShipOutfitSlot) );
+         temp->outfit_weapon    = calloc( temp->outfit_nweapon, sizeof(ShipOutfitSlot) );
          /* Second pass, initialize the mounts. */
          l = m = h = 0;
          cur = node->children;
          do {
-            if (xml_isNode(cur,"low")) {
-               temp->outfit_low[l].slot = OUTFIT_SLOT_LOW;
-               /* Set default outfit if applicable. */
-               stmp = xml_get(cur);
-               if (stmp!=NULL)
-                  temp->outfit_high[l].data = outfit_get(stmp);
-               /* Increment l. */
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"structure")) {
+               temp->outfit_structure[l].slot.type = OUTFIT_SLOT_STRUCTURE;
+               temp->outfit_structure[l].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_structure[l].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                l++;
             }
-            if (xml_isNode(cur,"medium")) {
-               temp->outfit_medium[m].slot = OUTFIT_SLOT_MEDIUM;
-               /* Set default outfit if applicable. */
-               stmp = xml_get(cur);
-               if (stmp!=NULL)
-                  temp->outfit_high[m].data = outfit_get(stmp);
-               /* Increment m. */
+            if (xml_isNode(cur,"utility")) {
+               temp->outfit_utility[m].slot.type = OUTFIT_SLOT_UTILITY;
+               temp->outfit_utility[m].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_utility[m].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                m++;
             }
-            if (xml_isNode(cur,"high")) {
-               temp->outfit_high[h].slot = OUTFIT_SLOT_HIGH;
-               /* Set default outfit if applicable. */
-               stmp = xml_get(cur);
-               if (stmp!=NULL)
-                  temp->outfit_high[h].data = outfit_get(stmp);
+            if (xml_isNode(cur,"weapon")) {
+               temp->outfit_weapon[h].slot.type = OUTFIT_SLOT_WEAPON;
+               temp->outfit_weapon[h].slot.size = outfit_toSlotSize( xml_get(cur) );
+               /*if (temp->outfit_weapon[h].size == OUTFIT_SLOT_SIZE_NA)
+                  WARN("Ship '%s' has invalid slot size '%s'", temp->name, xml_get(cur) );*/
                /* Get mount point. */
                xmlr_attr(cur,"x",stmp);
                if (stmp!=NULL) {
-                  temp->outfit_high[h].mount.x = atof(stmp);
+                  temp->outfit_weapon[h].mount.x = atof(stmp);
                   free(stmp);
                }
                else
-                  WARN("Ship '%s' missing 'x' element of 'high' slot.",temp->name);
+                  WARN("Ship '%s' missing 'x' element of 'weapon' slot.",temp->name);
                xmlr_attr(cur,"y",stmp);
                if (stmp!=NULL) {
-                  temp->outfit_high[h].mount.y = atof(stmp);
+                  temp->outfit_weapon[h].mount.y = atof(stmp);
                   /* Since we measure in pixels, we have to modify it so it
                    *  doesn't get corrected by the ortho correction. */
-                  temp->outfit_high[h].mount.y *= M_SQRT2;
+                  temp->outfit_weapon[h].mount.y *= M_SQRT2;
                   free(stmp);
                }
                else
-                  WARN("Ship '%s' missing 'y' element of 'high' slot.",temp->name);
+                  WARN("Ship '%s' missing 'y' element of 'weapon' slot.",temp->name);
                xmlr_attr(cur,"h",stmp);
                if (stmp!=NULL) {
-                  temp->outfit_high[h].mount.h = atof(stmp);
+                  temp->outfit_weapon[h].mount.h = atof(stmp);
                   free(stmp);
                }
                else
-                  WARN("Ship '%s' missing 'h' element of 'high' slot.",temp->name);
+                  WARN("Ship '%s' missing 'h' element of 'weapon' slot.",temp->name);
                /* Increment h. */
                h++;
             }
@@ -588,7 +749,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       /* Parse ship stats. */
       if (xml_isNode(node,"stats")) {
-         ship_statsParse( &temp->stats, node );
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            if (ship_statsParseSingle( &temp->stats, cur ))
+               WARN("Ship '%s' has unknown stat '%s'.", temp->name, cur->name);
+         } while (xml_nextNode(cur));
          temp->desc_stats = malloc( STATS_DESC_MAX );
          i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX, 0, 0 );
          if (i <= 0) {
@@ -598,7 +764,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
 
-      DEBUG("Unknown '%s' node in ship '%s'", node->name, temp->name );
+      DEBUG("Ship '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -606,6 +772,31 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    temp->shield_regen /= 60.;
    temp->energy_regen /= 60.;
    temp->thrust *= temp->mass;
+
+   /* Second pass default values for slot size. */
+   if ((temp->class == SHIP_CLASS_BULK_CARRIER) ||
+         (temp->class == SHIP_CLASS_CRUISER) ||
+         (temp->class == SHIP_CLASS_CARRIER) ||
+         (temp->class == SHIP_CLASS_MOTHERSHIP))
+      base_size = OUTFIT_SLOT_SIZE_HEAVY;
+   else if ((temp->class == SHIP_CLASS_CRUISE_SHIP) ||
+         (temp->class == SHIP_CLASS_FREIGHTER) ||
+         (temp->class == SHIP_CLASS_DESTROYER) ||
+         (temp->class == SHIP_CLASS_CORVETTE) ||
+         (temp->class == SHIP_CLASS_HEAVY_DRONE) ||
+         (temp->class == SHIP_CLASS_ARMOURED_TRANSPORT))
+      base_size = OUTFIT_SLOT_SIZE_MEDIUM;
+   else
+      base_size = OUTFIT_SLOT_SIZE_LIGHT;
+   for (i=0; i<temp->outfit_nweapon; i++)
+      if (temp->outfit_weapon[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_weapon[i].slot.size = base_size;
+   for (i=0; i<temp->outfit_nutility; i++)
+      if (temp->outfit_utility[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_utility[i].slot.size = base_size;
+   for (i=0; i<temp->outfit_nstructure; i++)
+      if (temp->outfit_structure[i].slot.size == OUTFIT_SLOT_SIZE_NA)
+         temp->outfit_structure[i].slot.size = base_size;
 
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)
@@ -615,7 +806,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
-   MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
    MELEMENT(temp->thrust==-1,"thrust");
@@ -706,18 +896,21 @@ void ships_free (void)
          free(s->desc_stats);
 
       /* Free outfits. */
-      if (s->outfit_low != NULL)
-         free(s->outfit_low);
-      if (s->outfit_medium != NULL)
-         free(s->outfit_medium);
-      if (s->outfit_high != NULL)
-         free(s->outfit_high);
+      if (s->outfit_structure != NULL)
+         free(s->outfit_structure);
+      if (s->outfit_utility != NULL)
+         free(s->outfit_utility);
+      if (s->outfit_weapon != NULL)
+         free(s->outfit_weapon);
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
       if (s->gfx_engine != NULL)
          gl_freeTexture(s->gfx_engine);
-      gl_freeTexture(ship_stack[i].gfx_target);
+      if (s->gfx_target != NULL)
+         gl_freeTexture(s->gfx_target);
+      if (s->gfx_store != NULL)
+         gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
    }
 
@@ -751,9 +944,9 @@ void ship_view( unsigned int unused, char* shipname )
          "CPU:\n"
          "Mass:\n"
          "\n"
-         "High slots:\n"
-         "Medium slots:\n"
-         "Low slots:\n"
+         "Weapon slots:\n"
+         "Utility slots:\n"
+         "Structure slots:\n"
          "\n"
          "Thrust:\n"
          "Max Speed:\n"
@@ -780,9 +973,9 @@ void ship_view( unsigned int unused, char* shipname )
          "%.0f TFlops\n" /* CPU */
          "%.0f Tons\n" /* Mass */
          "\n"
-         "%d\n" /* high slots */
-         "%d\n" /* medium slots */
-         "%d\n" /* low slots */
+         "%d\n" /* Weapon slots */
+         "%d\n" /* Utility slots */
+         "%d\n" /* Structure slots */
          "\n"
          "%.0f MN/ton\n" /* Thrust */
          "%.0f M/s\n" /* Speed */
@@ -796,7 +989,7 @@ void ship_view( unsigned int unused, char* shipname )
          "%d Units\n" /* Fuel */
          , s->name, ship_class(s), s->fabricator,
          s->crew, s->cpu, s->mass,
-         s->outfit_nhigh, s->outfit_nmedium, s->outfit_nlow,
+         s->outfit_nweapon, s->outfit_nutility, s->outfit_nstructure,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
          s->energy, s->energy_regen,

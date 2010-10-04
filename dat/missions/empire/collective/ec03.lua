@@ -39,6 +39,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Dimitri", "dimitri" )
    misn.setDesc( bar_desc )
 end
@@ -56,7 +57,7 @@ function accept ()
       misn_stage = 0      
       misn_base, misn_base_sys = planet.get("Omega Station")
       misn_target_sys = system.get("C-28")
-      misn.setMarker(misn_target_sys)
+      misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -72,7 +73,7 @@ end
 
 -- Handles jumping to target system
 function jump()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- First mission part is landing on the planet
@@ -81,11 +82,11 @@ function jump()
       -- Maybe introducing a delay here would be interesting.
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
       hook.land("land")
 
    -- Create some opposition
-   elseif misn_stage == 1 and (sys:name() == "NGC-7132" or factions["Collective"]) then
+   elseif misn_stage == 1 and (sys:name() == "Hades" or (factions[ "Collective" ] and factions[ "Collective" ] > 200)) then
       pilot.add("Collective Sml Swarm")
    end
 end

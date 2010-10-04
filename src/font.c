@@ -89,6 +89,16 @@ static int font_limitSize( const glFont *ft_font, int *width,
    /* limit size */
    n = 0;
    for (i=0; text[i] != '\0'; i++) {
+      /* Ignore escape sequence. */
+      if (text[i] == '\e') {
+         if (text[i+1] != '\0')
+            i += 2;
+         else
+            i += 1;
+         continue;
+      }
+
+      /* Count length. */
       n += ft_font->chars[ (int)text[i] ].adv_x;
       if (n > max) {
          n -= ft_font->chars[ (int)text[i] ].adv_x; /* actual size */
@@ -619,10 +629,10 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    int offset;
    GLubyte *data;
    GLfloat *vbo_tex;
-   GLint *vbo_vert;
+   GLshort *vbo_vert;
    GLfloat tx, ty, txw, tyh;
    GLfloat fw, fh;
-   GLint vx, vy, vw, vh;
+   GLshort vx, vy, vw, vh;
 
    /* Render characters into software. */
    total_w  = 0;
@@ -735,7 +745,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
    /* Create the VBOs. */
    n           = 8 * 128;
    vbo_tex     = malloc(sizeof(GLfloat) * n);
-   vbo_vert    = malloc(sizeof(GLint) * n);
+   vbo_vert    = malloc(sizeof(GLshort) * n);
    for (i=0; i<128; i++) {
       /* We do something like the following for vertex coordinates.
        *
@@ -791,7 +801,7 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
       vbo_vert[ 8*i + 7 ] = vy;
    }
    font->vbo_tex  = gl_vboCreateStatic( sizeof(GLfloat)*n, vbo_tex );
-   font->vbo_vert = gl_vboCreateStatic( sizeof(GLint)*n, vbo_vert );
+   font->vbo_vert = gl_vboCreateStatic( sizeof(GLshort)*n, vbo_vert );
 
    /* Free the data. */
    free(data);
@@ -814,8 +824,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
    /* Set up matrix. */
    gl_matrixMode(GL_MODELVIEW);
    gl_matrixPush();
-      gl_matrixTranslate( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.) );
+      gl_matrixTranslate( round(x), round(y) );
 
    /* Handle colour. */
    if (c==NULL)
@@ -825,7 +834,7 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 
    /* Activate the appropriate VBOs. */
    gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( font->vbo_vert, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
 }
 
 
@@ -843,6 +852,13 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
    if (state == 1) {
       a = (c==NULL) ? 1. : c->a;
       switch (ch) {
+         /* TOP SECRET COLOUR CONVENTION
+          * FOR YOUR EYES ONLY
+          *
+          * Lowercase characters represent base colours.
+          * Uppercase characters reperesent fancy game related colours.
+          * Digits represent states.
+          */
          /* Colours. */
          case 'r': ACOLOUR(cFontRed,a); break;
          case 'g': ACOLOUR(cFontGreen,a); break;
@@ -856,6 +872,9 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
          case 'H': ACOLOUR(cHostile,a); break;
          case 'N': ACOLOUR(cNeutral,a); break;
          case 'I': ACOLOUR(cInert,a); break;
+         case 'M': ACOLOUR(cMapNeutral,a); break;
+         case 'C': ACOLOUR(cConsole,a); break;
+         case 'D': ACOLOUR(cDConsole,a); break;
          /* Reset state. */
          case '0':
              if (c==NULL)
@@ -898,6 +917,7 @@ static void gl_fontRenderEnd (void)
 {
    gl_vboDeactivate();
    gl_matrixPop();
+   gl_matrixMode( GL_PROJECTION );
    glDisable(GL_TEXTURE_2D);
 
    /* Check for errors. */

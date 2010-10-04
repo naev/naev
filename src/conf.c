@@ -98,6 +98,10 @@ static void print_usage( char **argv )
    LOG("   -s f, --svol f        sets the sound volume to f");
    LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+#ifdef DEBUGGING
+   LOG("   --devmode             enables dev mode perks like the editors");
+   LOG("   --devcsv              generates csv output from the ndata for developement purposes");
+#endif /* DEBUGGING */
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -139,6 +143,8 @@ void conf_setDefaults (void)
 
    /* Misc. */
    conf.nosave       = 0;
+   conf.devmode      = 0;
+   conf.devcsv       = 0;
 
    /* Gameplay. */
    conf_setGameplayDefaults();
@@ -265,7 +271,6 @@ void conf_cleanup (void)
 int conf_loadConfig ( const char* file )
 {
    int i, t;
-   double d;
    const char *str, *mod;
    SDLKey key;
    int type;
@@ -273,7 +278,6 @@ int conf_loadConfig ( const char* file )
    SDLMod m;
 
    i = 0;
-   d = 0.;
 
    /* Check to see if file exists. */
    if (!nfile_fileExists(file))
@@ -495,7 +499,11 @@ void conf_parseCLI( int argc, char** argv )
       { "svol", required_argument, 0, 's' },
       { "generate", no_argument, 0, 'G' },
       { "nondata", no_argument, 0, 'N' },
-      { "help", no_argument, 0, 'h' }, 
+#ifdef DEBUGGING
+      { "devmode", no_argument, 0, 'D' },
+      { "devcsv", no_argument, 0, 'C' },
+#endif /* DEBUGGING */
+      { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
       { NULL, 0, 0, 0 } };
    int option_index = 1;
@@ -547,6 +555,17 @@ void conf_parseCLI( int argc, char** argv )
                free(conf.ndata);
             conf.ndata = NULL;
             break;
+#ifdef DEBUGGING
+         case 'D':
+            conf.devmode = 1;
+            LOG("Enabling developer mode.");
+            break;
+
+         case 'C':
+            conf.devcsv = 1;
+            LOG("Will generate CVS ouptut.");
+            break;
+#endif /* DEBUGGING */
 
          case 'v':
             /* by now it has already displayed the version
@@ -760,7 +779,7 @@ int conf_saveConfig ( const char* file )
       const char *tmp = nstrnstr(old, "-- "GENERATED_START_COMMENT"\n", oldsize);
       if (tmp != NULL) {
          /* Copy over the user content */
-         pos = SDL_min(sizeof(buf), (size_t)(tmp - old));
+         pos = MIN(sizeof(buf), (size_t)(tmp - old));
          memcpy(buf, old, pos);
 
          /* See if we can find the end of the section */
@@ -989,7 +1008,7 @@ int conf_saveConfig ( const char* file )
       }
 
       /* Determine the textual name for the modifier */
-      switch (mod) {
+      switch ((int)mod) {
          case NMOD_CTRL:  modname = "ctrl";   break;
          case NMOD_SHIFT: modname = "shift";  break;
          case NMOD_ALT:   modname = "alt";    break;
@@ -1016,7 +1035,7 @@ int conf_saveConfig ( const char* file )
    if (old != NULL) {
       if (oldfooter != NULL) {
          /* oldfooter and oldsize now reference the old content past the footer */
-         oldsize = SDL_min((size_t)oldsize, sizeof(buf)-pos);
+         oldsize = MIN((size_t)oldsize, sizeof(buf)-pos);
          memcpy(&buf[pos], oldfooter, oldsize);
          pos += oldsize;
       }

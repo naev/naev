@@ -121,17 +121,17 @@ AC_COMPILE_IFELSE([
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug=@<:@no|yes|paranoid@:>@],
-		 [enable debug mode (default: yes)]), [
+     [enable debug mode (default: yes)]), [
     case "$enableval" in
       no)
-	enable_debug=no
-	;;
+        enable_debug=no
+        ;;
       paranoid)
         enable_debug=paranoid
         ;;
       *)
-	enable_debug=yes
-	;;
+        enable_debug=yes
+        ;;
     esac
   ], [
     enable_debug=yes
@@ -142,7 +142,7 @@ AS_IF([test "$enable_debug" != "no"], [
   AS_IF([test "$have_custom_cflags" = "no"], [
     # Undo the default CFLAGS set by autoconf
     AS_IF([test "$ac_cv_prog_cc_g" = "yes"], [
-      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations"
+      CFLAGS="-g -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -Wredundant-decls -Wno-long-long"
     ], [
       CFLAGS=
     ])
@@ -150,13 +150,15 @@ AS_IF([test "$enable_debug" != "no"], [
   case "$host" in
     *-linux-gnu)
       AC_CHECK_LIB([bfd], [bfd_init], [
-	AC_CHECK_HEADERS([bfd.h], [], [
-	  AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
-	  enable_debug=no
-	])
+      AC_CHECK_HEADERS([bfd.h], [
+      have_bfd=yes
       ], [
-	AC_WARN([debug mode is enabled but libbfd is missing; disabling])
-	enable_debug=no
+      AC_WARN([debug mode is enabled but bfd.h is missing; disabling])
+      have_bfd=no
+      ])
+      ], [
+      AC_WARN([debug mode is enabled but libbfd is missing; disabling])
+      have_bfd=no
       ])
       ;;
   esac
@@ -166,7 +168,7 @@ AS_IF([test "$enable_debug" != "no"], [
 AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
   AC_HELP_STRING([--with-openal],
-		 [use the OpenAL sound backend (default: yes)]), [
+     [use the OpenAL sound backend (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_openal=yes
     ], [
@@ -181,7 +183,7 @@ AC_MSG_RESULT([$with_openal])
 AC_MSG_CHECKING([whether to use SDL_mixer])
 AC_ARG_WITH([sdlmixer],
   AC_HELP_STRING([--with-sdlmixer],
-		 [use the SDL_mixer sound backend (default: yes)]), [
+     [use the SDL_mixer sound backend (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdlmixer=yes
     ], [
@@ -245,7 +247,7 @@ AS_IF([test "$with_openal" = "yes"], [
 AS_IF([test "$with_sdlmixer" = "yes"], [
   VAR_SAVE([LIBS])
   AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
-		 [have_sdlmixer=yes], [have_sdlmixer=no])
+     [have_sdlmixer=yes], [have_sdlmixer=no])
   AS_IF([test "$have_sdlmixer" = "yes"], [
     SDLMIXER_CFLAGS=
     SDLMIXER_LIBS="$LIBS"
@@ -259,15 +261,15 @@ AS_IF([test "$with_sdlmixer" = "yes"], [
 ])
 
 # SDL_image
-VAR_SAVE([LIBS])
-AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
-  AC_ERROR([SDL_image not found])
-])
-SDLIMAGE_CFLAGS=
-SDLIMAGE_LIBS="$LIBS"
-VAR_RESTORE([LIBS])
-AC_SUBST([SDLIMAGE_CFLAGS])
-AC_SUBST([SDLIMAGE_LIBS])
+#VAR_SAVE([LIBS])
+#AC_SEARCH_LIBS([IMG_Load], [SDL_image], [], [
+#  AC_ERROR([SDL_image not found])
+#])
+#SDLIMAGE_CFLAGS=
+#SDLIMAGE_LIBS="$LIBS"
+#VAR_RESTORE([LIBS])
+#AC_SUBST([SDLIMAGE_CFLAGS])
+#AC_SUBST([SDLIMAGE_LIBS])
 
 # OpenGL
 AM_PATH_OPENGL([], [
@@ -311,11 +313,14 @@ NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
   AC_DEFINE([DEBUG], 1, [Define to 1 to enable debug code])
-  case "$host" in
-    *-linux-gnu)
-      NAEV_LIBS="$NAEV_LIBS -lbfd -rdynamic"
-      ;;
-  esac
+  AS_IF([test "$have_bfd" != "no"], [
+     case "$host" in
+       *-linux-gnu)
+         AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
+         NAEV_LIBS="$NAEV_LIBS -lbfd -rdynamic"
+         ;;
+     esac
+  ])
 ])
 AS_IF([test "$enable_debug" = "paranoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
@@ -459,12 +464,12 @@ esac
 
 # NDATA_DEF
 AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
-		   [Define to the path to the data file])
+      [Define to the path to the data file])
 
 # GIT_COMMIT
 AS_IF([test -n "$GIT_COMMIT"], [
   AC_DEFINE_UNQUOTED([GIT_COMMIT], ["$GIT_COMMIT"],
-		     [Define to the current Git commit identifier])
+     [Define to the current Git commit identifier])
 ])
 
 #
@@ -481,16 +486,16 @@ AM_CONDITIONAL([HAVE_DOCS], [test "$have_docs" = "yes"])
 #
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
-		 lib/Makefile
-		 lib/csparse/Makefile
-		 lib/lua/Makefile
-		 src/Makefile
-		 src/tk/Makefile
-		 src/tk/widget/Makefile
-		 build/shave])
+      lib/Makefile
+      lib/csparse/Makefile
+      lib/lua/Makefile
+      src/Makefile
+      src/tk/Makefile
+      src/tk/widget/Makefile
+      build/shave])
 AS_IF([test "$have_utils" = "yes"], [
   AC_CONFIG_FILES([utils/Makefile
-		   utils/pack/Makefile])
+     utils/pack/Makefile])
 ])
 AS_IF([test "$have_docs" = "yes"], [
   AC_CONFIG_FILES([docs/Makefile])
@@ -507,3 +512,11 @@ AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
 echo
 AC_MSG_NOTICE([debug mode:  $enable_debug])
+AS_IF([test "$enable_debug" != "no"], [
+   case "$host" in
+     *-linux*)
+       AC_MSG_NOTICE([  bfd:       $have_bfd])
+       ;;
+   esac
+])
+

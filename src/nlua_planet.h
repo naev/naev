@@ -19,11 +19,11 @@
  * @brief Lua Planet Wrapper.
  */
 typedef struct LuaPlanet_s {
-   Planet *p; /**< Pointer to the real Planet. */
+   int id; /**< ID to the planet. */
 } LuaPlanet;
 
 
-/* 
+/*
  * Load the planet library.
  */
 int nlua_loadPlanet( lua_State *L, int readonly );
@@ -34,6 +34,7 @@ int nlua_loadPlanet( lua_State *L, int readonly );
 LuaPlanet* lua_toplanet( lua_State *L, int ind );
 LuaPlanet* luaL_checkplanet( lua_State *L, int ind );
 LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet );
+Planet* luaL_validplanet( lua_State *L, int ind );
 int lua_isplanet( lua_State *L, int ind );
 
 

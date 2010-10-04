@@ -19,6 +19,8 @@
 #include "log.h"
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
 #include "faction.h"
 
 
@@ -34,6 +36,9 @@ static int factionL_modplayerraw( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
+static int factionL_logoSmall( lua_State *L );
+static int factionL_logoTiny( lua_State *L );
+static int factionL_colour( lua_State *L );
 static const luaL_reg faction_methods[] = {
    { "get", factionL_get },
    { "__eq", factionL_eq },
@@ -47,6 +52,9 @@ static const luaL_reg faction_methods[] = {
    { "playerStanding", factionL_playerstanding },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
+   { "logoSmall", factionL_logoSmall },
+   { "logoTiny", factionL_logoTiny },
+   { "colour", factionL_colour },
    {0,0}
 }; /**< Faction metatable methods. */
 static const luaL_reg faction_methods_cond[] = {
@@ -60,6 +68,9 @@ static const luaL_reg faction_methods_cond[] = {
    { "playerStanding", factionL_playerstanding },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
+   { "logoSmall", factionL_logoSmall },
+   { "logoTiny", factionL_logoTiny },
+   { "colour", factionL_colour },
    {0,0}
 }; /**< Factions read only metatable methods. */
 
@@ -104,7 +115,7 @@ int nlua_loadFaction( lua_State *L, int readonly )
  * @luamod faction
  */
 /**
- * @brief Gets the faction based on it's name.
+ * @brief Gets the faction based on its name.
  *
  * @usage f = faction.get( "Empire" )
  *
@@ -183,16 +194,16 @@ int lua_isfaction( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, FACTION_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
 /**
  * @brief __eq (equality) metamethod for factions.
- * 
+ *
  * You can use the '=' operator within Lua to compare factions with this.
  *
  * @usage if f == faction.get( "Dvaered" ) then
@@ -245,7 +256,7 @@ static int factionL_longname( lua_State *L )
 }
 
 /**
- * @brief Checks to see if f is an enemy.
+ * @brief Checks to see if f is an enemy of e.
  *
  * @usage if f:areEnemies( faction.get( "Dvaered" ) ) then
  *
@@ -265,7 +276,7 @@ static int factionL_areenemies( lua_State *L )
 }
 
 /**
- * @brief Checks to see if f is an enemy.
+ * @brief Checks to see if f is an ally of a.
  *
  * @usage if f:areAllies( faction.get( "Pirate" ) ) then
  *
@@ -287,7 +298,7 @@ static int factionL_areallies( lua_State *L )
 /**
  * @brief Modifies the player's standing with the faction.
  *
- * Will also modify standing with allies and enemies of the faction.
+ * Also modifies standing with allies and enemies of the faction.
  *
  * @usage f:modPlayer( -5 ) -- Lowers faction by 5
  *
@@ -412,4 +423,72 @@ static int factionL_allies( lua_State *L )
 
    return 1;
 }
+
+
+/**
+ * @brief Gets the small faction logo which is 64x64 or smaller.
+ *
+ *    @luaparam f Faction to get logo from.
+ *    @luareturn The small faction logo or nil if not applicable.
+ * @luafunc logoSmall( f )
+ */
+static int factionL_logoSmall( lua_State *L )
+{
+   LuaFaction *lf;
+   LuaTex lt;
+   glTexture *tex;
+   lf = luaL_checkfaction(L,1);
+   tex = faction_logoSmall( lf->f );
+   if (tex == NULL)
+      return 0;
+   lt.tex = gl_dupTexture( tex );
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the tiny faction logo which is 24x24 or smaller.
+ *
+ *    @luaparam f Faction to get logo from.
+ *    @luareturn The tiny faction logo or nil if not applicable.
+ * @luafunc logoTiny( f )
+ */
+static int factionL_logoTiny( lua_State *L )
+{
+   LuaFaction *lf;
+   LuaTex lt;
+   glTexture *tex;
+   lf = luaL_checkfaction(L,1);
+   tex = faction_logoTiny( lf->f );
+   if (tex == NULL)
+      return 0;
+   lt.tex = gl_dupTexture( tex );
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the faction colour.
+ *
+ *    @luaparam f Faction to get colour from.
+ *    @luareturn The faction colour or nil if not applicable.
+ * @luafunc colour( f )
+ */
+static int factionL_colour( lua_State *L )
+{
+   LuaFaction *lf;
+   LuaColour lc;
+   glColour *col;
+   lf = luaL_checkfaction(L,1);
+   col = faction_getColour(lf->f);
+   if (col == NULL)
+      return 0;
+   memcpy( &lc.col, col, sizeof(glColour) );
+   lua_pushcolour( L, lc );
+   return 1;
+}
+
+
 

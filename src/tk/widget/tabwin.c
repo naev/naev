@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "toolkit.h"
 #include "font.h"
 #include "../../input.h" /* Hack for now. */
@@ -54,7 +57,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    int i;
    Window *wdw, *wtmp;
    Widget *wgt;
-  
+
    /* Create the Widget. */
    wdw = window_wget(wid);
    wgt = window_newWidget(wdw, name);
@@ -63,7 +66,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
    /* generic */
    wgt->type = WIDGET_TABBEDWINDOW;
-   
+
    /* specific */
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
    wgt->rawevent           = tab_raw;
@@ -157,7 +160,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Convert to window space. */
-   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry, 0 );
+   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
    x += parent->w - tab->x;
@@ -240,7 +243,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
          }
          ret = 1;
          break;
-   
+
       default:
          break;
    }
@@ -304,8 +307,8 @@ static void tab_render( Widget* tab, double bx, double by )
                   1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
       }
       /* Draw text. */
-      gl_printRaw( &gl_defFont, bx+x + 5 + SCREEN_W/2,
-            by + (TAB_HEIGHT-gl_defFont.h)/2 + SCREEN_H/2, &cBlack,
+      gl_printRaw( &gl_defFont, bx+x + 5,
+            by + (TAB_HEIGHT-gl_defFont.h)/2, &cBlack,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */

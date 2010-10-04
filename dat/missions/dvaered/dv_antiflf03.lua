@@ -86,6 +86,11 @@ else -- default english
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname"))}
+    if not misn.claim(missys) then
+        abort()
+    end 
+
     misn.setNPC("Dvaered liaison", "dv_liason")
     misn.setDesc(npc_desc)
 end
@@ -112,7 +117,7 @@ function accept()
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setTitle(misn_title)
-        misn.setMarker(system.get(destsysname), "misc")
+        mission_marker = misn.markerAdd( system.get(destsysname), "high" )
         
         missionstarted = false
         victorious = false
@@ -158,10 +163,10 @@ function enter()
         spawnDV()
 
         idle()
-        misn.timerStart("spawnFLFfighters", 10000)
-        misn.timerStart("spawnFLFfighters", 15000)
-        tim_sec = misn.timerStart("security_timer", 45000) -- Security timer to make sure mission goes on
-        controller = misn.timerStart("control", 1000)
+        hook.timer(10000, "spawnFLFfighters")
+        hook.timer(15000, "spawnFLFfighters")
+        tim_sec = hook.timer(45000, "security_timer")
+        controller = hook.timer(1000, "control")
         
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
@@ -184,19 +189,20 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("FLF Base", "flf_nojump", vec2.new(0,0), false)
+    base = pilot.add("FLF Base", "flf_nojump", vec2.new(0,0))
     base = base[1]
     base:rmOutfit("all")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
     base:setNodisable(true)
-    base:rename("Sindbad")
+    base:setHilight(true)
+    base:setPlayervis()
     hook.pilot(base, "death", "deathBase")
 end
 
 function deathBase()
     misn.osdActive(4)
-    misn.setMarker(system.get(DVsys), "misc")
+    misn.markerMove( mission_marker, system.get(DVsys) )
 
     for i, j in ipairs(bombers) do
         if j:exists() then
@@ -219,10 +225,11 @@ function deathBase()
         end
     end
     
-    misn.timerStop(controller)
+    hook.rm(controller)
    
-    obstinate:control(true)
+    obstinate:control()
     obstinate:hyperspace()
+    obstinate:setHilight(false)
 
     missionstarted = false
     victorious = true
@@ -232,12 +239,14 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.add("Dvaered Goddard", "dvaered_nojump", fleetpos[1], false)[1]
+    obstinate = pilot.add("Dvaered Goddard", "dvaered_nojump", fleetpos[1])[1]
     obstinate:rename("Obstinate")
     obstinate:setDir(90)
     obstinate:setFriendly()
     obstinate:setNodisable(true)
     obstinate:control()
+    obstinate:setHilight(true)
+    obstinate:setPlayervis()
     obstinate:rmOutfit("all")
     obstinate:addOutfit("Engine Reroute")
     obstinate:addOutfit("Shield Booster")
@@ -248,7 +257,7 @@ function spawnDV()
     
     local i = 1
     while i <= 4 do
-        vigilance = pilot.add("Dvaered Vigilance", "dvaered_nojump", fleetpos[i + 1], false)[1]
+        vigilance = pilot.add("Dvaered Vigilance", "dvaered_nojump", fleetpos[i + 1])[1]
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
@@ -260,7 +269,7 @@ function spawnDV()
     
     local i = 1
     while i <= 6 do
-        vendetta = pilot.add("Dvaered Vendetta", "dvaered_nojump", fighterpos[i], false)[1]
+        vendetta = pilot.add("Dvaered Vendetta", "dvaered_nojump", fighterpos[i])[1]
         vendetta:setDir(90)
         vendetta:setFriendly()
         vendetta:control()
@@ -296,7 +305,7 @@ function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
     local targets = possibleDVtargets()
-    wingFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", base:pos(), false)
+    wingFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", base:pos())
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -310,7 +319,7 @@ end
 -- Spawns FLF bombers
 function spawnFLFbombers()
     local targets = possibleDVtargets()
-    wingFLF = pilot.add("FLF Ancestor Trio", "flf_nojump", base:pos(), false)
+    wingFLF = pilot.add("FLF Ancestor Trio", "flf_nojump", base:pos())
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -356,25 +365,25 @@ function nextStage()
     deathsFLF = 0
     misn.timerStop( tim_sec ) -- Stop security timer
     if stage == 1 then
-        misn.timerStart("spawnFLFbombers", 9000)
-        misn.timerStart("spawnFLFfighters", 13000)
-        tim_sec = misn.timerStart("security_timer", 60000)
+        hook.timer(9000, "spawnFLFbombers")
+        hook.timer(13000, "spawnFLFfighters")
+        tim_sec = hook.timer(60000, "security_timer")
     elseif stage == 2 then
-        misn.timerStart("spawnFLFfighters", 9000)
-        misn.timerStart("spawnFLFbombers", 11000)
-        misn.timerStart("spawnFLFbombers", 13000)
-        tim_sec = misn.timerStart("security_timer", 75000)
+        hook.timer(9000, "spawnFLFfighters")
+        hook.timer(11000, "spawnFLFbombers")
+        hook.timer(13000, "spawnFLFbombers")
+        tim_sec = hook.timer(75000, "security_timer")
     else
         pilot.broadcast(obstinate, phasetwo, true)
         misn.osdActive(3)
         spawnDVbomber()
-        misn.timerStart("engageBase", 60000)
+        hook.timer(60000, "engageBase")
     end
 end
 
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
-    bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos(), false)[1]
+    bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos())[1]
     bomber:rmOutfit("all")
     bomber:addOutfit("Imperator Launcher", 1)
     bomber:addOutfit("Imperator Launcher", 1)
@@ -388,7 +397,7 @@ function spawnDVbomber()
     hook.pilot(bomber, "death", "deathDVbomber")
     DVbombers = DVbombers - 1
     if DVbombers > 0 then
-        spawner = misn.timerStart("spawnDVbomber", 3000)
+        spawner = hook.timer(3000, "spawnDVbomber")
     end
 end 
 
@@ -458,7 +467,7 @@ function control()
     controlFleet( fleetDV, fleetpos, 1 )
     controlFleet( fightersDV, fighterpos, 0 )
     
-    controller = misn.timerStart("control", 1000)
+    controller = hook.timer(1000, "control")
 end
 
 -- Replaces lost bombers. The supply is limited, though.
@@ -467,7 +476,7 @@ function deathDVbomber()
         DVreinforcements = DVreinforcements - 1
         for i, j in ipairs(bombers) do
             if not j:exists() then
-                bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos(), false)[1]
+                bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos())[1]
                 bomber:rmOutfit("all")
                 bomber:addOutfit("Imperator Launcher", 1)
                 bomber:addOutfit("Imperator Launcher", 1)
@@ -501,6 +510,8 @@ function deathObstinate()
             j:hyperspace()
         end
     end
+
+    base:setHilight(false)
 
     abort()
 end

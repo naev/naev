@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 -- Settings
 mem.armour_run = 40
@@ -22,7 +23,10 @@ function create ()
       end
    end
 
-   attack_choose()
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   -- Finish up creation
+   create_post()
 end
 
 -- taunts

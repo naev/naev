@@ -1,4 +1,4 @@
- * Author: Bobbens, License: PD
+﻿ * Author: Bobbens, License: PD
    * outfit
      * space
        * lasergreen.png
@@ -8,21 +8,21 @@
      * exterior
        * methane.png
      * space
-       * A00.png
-       * C00.png
-       * D00.png
-       * D01.png
-       * G00.png
-       * H00.png
-       * H01.png
-       * I00.png
-       * J01.png
-       * M01.png
-       * M02.png
-       * M04.png
-       * O00.png
-       * P00.png
-       * P01.png
+       * moon-A00.png
+       * moon-C00.png
+       * moon-D00.png
+       * moon-D01.png
+       * moon-G00.png
+       * moon-H00.png
+       * moon-H01.png
+       * moon-I00.png
+       * moon-J01.png
+       * moon-M01.png
+       * moon-M02.png
+       * moon-M04.png
+       * moon-O00.png
+       * moon-P00.png
+       * moon-P01.png
  
  * Author: Vega Strike, License: GPLv2
    * outfit
@@ -96,52 +96,33 @@
      * admonisher.png
      * admonisher_empire.png
      * admonisher_pirate.png
-     * admonisher_target.png
      * ancestor.png
      * ancestor_dvaered.png
      * ancestor_pirate.png
-     * ancestor_target.png
      * archimedes.png
-     * archimedes_target.png
      * derivative.png
-     * derivative_target.png
      * drone.png
-     * drone_target.png
      * gawain.png
-     * gawain_target.png
      * goddard.png
      * goddard_dvaered.png
-     * goddard_target.png
      * hawking.png
      * hawking_empire.png
-     * hawking_target.png
      * hyena.png
-     * hyena_target.png
      * kahan.png
-     * kahan_target.png
      * lancelot.png
      * lancelot_empire.png
-     * lancelot_target.png
      * llama.png
-     * llama_target.png
      * mule.png
-     * mule_target.png
      * pacifier.png
      * pacifier_empire.png
-     * pacifier_target.png
      * quicksilver.png
-     * quicksilver_target.png
      * schroedinger.png
-     * schroedinger_target.png
      * vendetta.png
      * vendetta_dvaered.png
      * vendetta_pirate.png
-     * vendetta_target.png
      * vigilance.png
      * vigilance_dvaered.png
-     * vigilance_target.png
      * watson.png
-     * watson_target.png
    * loading
      * admonisher.png
      * ancestor-pirate.png
@@ -166,8 +147,8 @@
  * Author: Joel Hans, License: PD
    * planet
      * space
-       * J00.png
-       * M00.png
+       * moon-J00.png
+       * moon-M00.png
  
  * Author: Jordi Pegueroles, License: PD
    * outfit
@@ -205,18 +186,18 @@
  * Author: Justin Nichol <http://justinnichol.wordpress.com/>, License: CC-By v3.0
    * planet
      * space
-       * A01.png
-       * G01.png
-       * H02.png
-       * I01.png
-       * J02.png
-       * K00.png
-       * L00.png
-       * M03.png
-       * M05.png
-       * M06.png
-       * O01.png
-       * P02.png
+       * moon-A01.png
+       * moon-G01.png
+       * moon-H02.png
+       * moon-I01.png
+       * moon-J02.png
+       * moon-K00.png
+       * moon-L00.png
+       * moon-M03.png
+       * moon-M05.png
+       * moon-M06.png
+       * moon-O01.png
+       * moon-P02.png
 
  * Author: Camilo Polymeris <cpolymeris@gmx.net>, License: GPLv3
    * gui
@@ -272,11 +253,9 @@
    * ship
      * kestrel.png
      * kestrel_comm.png
-     * kestrel_target.png
      * kestrel_pirate.png
      * kestrel_pirate_comm.png
      * peacemaker.png
-     * peacemaker_target.png
    * loading
      * kestrel_pirate.png
      * peacemaker.png
@@ -377,12 +356,64 @@
         * proteron_small.png
         * prototype_tiny.png
         * trader_small.png
+      * ship
+        * divinity.png
+        * dogma.png
+        * fidelity.png
+        * preacher.png
 
   * Author: BTAxis, License: PD
     * gfx
       * gui
         * hail.png
+      * planet
+        * space
+          * A00.png
+          * A01.png
+          * A02.png
+          * A03.png
+          * C00.png
+          * D00.png
+          * D01.png
+          * D02.png
+          * G00.png
+          * G01.png
+          * H00.png
+          * H01.png
+          * H02.png
+          * I00.png
+          * I01.png
+          * J00.png
+          * J01.png
+          * J02.png
+          * J03.png
+          * J04.png
+          * K00.png
+          * L00.png
+          * M00.png
+          * M01.png
+          * M02.png
+          * O00.png
+          * P00.png
+          * P01.png
+          * P02.png
 
   * Author: Scaatis, CC-by v3.0
     * NAEV.png
+
+ * Author: Nikola Whallon <6.saturn.6@gmail.com>, License: GPLv3 / CC-by 3
+   * gfx
+     * planet
+       * space
+         * P03.png
+         * moon-C01.png
+
+ * Author: Vicki Li <LacrymosAmaya@gmail.com>, License: GPLv3 / CC-by 3
+   * gfx
+     * planet
+       * space
+         * P04.png
+         * C01.png
+
+
 

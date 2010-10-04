@@ -70,8 +70,8 @@ function _getsysatdistance( target, min, max, sys, n, t, filter, data )
       end
       return t
    else -- This is a branch call - recursively call over all adjacent systems
-      for i, j in pairs( sys:adjacentSystems() ) do
-         t = _getsysatdistance(target, min, max, j, n-1, t, filter, data)
+      for _,i in pairs( sys:adjacentSystems() ) do
+         t = _getsysatdistance(target, min, max, i, n-1, t, filter, data)
       end
       return t
    end

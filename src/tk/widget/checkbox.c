@@ -11,6 +11,8 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
 
 
 static Widget *chk_getWgt( const unsigned int wid, const char *name );
@@ -51,7 +53,7 @@ void window_addCheckbox( const unsigned int wid,
 
    /* generic */
    wgt->type = WIDGET_CHECKBOX;
-   
+
    /* specific */
    wgt->keyevent           = chk_key;
    wgt->mclickevent        = chk_mclick;
@@ -74,11 +76,11 @@ void window_addCheckbox( const unsigned int wid,
 static Widget *chk_getWgt( const unsigned int wid, const char *name )
 {
    Widget *wgt;
-  
+
    /* Get widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
-      return NULL; 
+      return NULL;
 
    /* Check type. */
    if (wgt->type != WIDGET_CHECKBOX) {
@@ -196,7 +198,8 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
  */
 static void chk_render( Widget* chk, double bx, double by )
 {
-   glColour *c, *dc, *lc;
+   /*glColour *c;*/
+   glColour *dc, *lc;
    double x, y;
 
    x = bx + chk->x;
@@ -206,17 +209,17 @@ static void chk_render( Widget* chk, double bx, double by )
    switch (chk->status) {
       case WIDGET_STATUS_NORMAL:
          lc = &cGrey80;
-         c = &cGrey60;
+         /*c = &cGrey60;*/
          dc = &cGrey40;
          break;
       case WIDGET_STATUS_MOUSEOVER:
          lc = &cWhite;
-         c = &cGrey80;
+         /*c = &cGrey80;*/
          dc = &cGrey60;
          break;
       case WIDGET_STATUS_MOUSEDOWN:
          lc = &cGreen;
-         c = &cGreen;
+         /*c = &cGreen;*/
          dc = &cGrey40;
          break;
       default:
@@ -236,8 +239,8 @@ static void chk_render( Widget* chk, double bx, double by )
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,
-         bx + (double)SCREEN_W/2. + chk->x + 15,
-         by + (double)SCREEN_H/2. + chk->y + (chk->h - gl_defFont.h)/2.,
+         bx + chk->x + 15,
+         by + chk->y + (chk->h - gl_defFont.h)/2.,
          &cBlack, chk->dat.chk.display );
 }
 

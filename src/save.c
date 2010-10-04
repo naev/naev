@@ -28,6 +28,8 @@
 #include "nlua_var.h"
 #include "event.h"
 #include "conf.h"
+#include "land.h"
+#include "gui.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -43,11 +45,14 @@
 /* externs */
 /* player.c */
 extern int player_save( xmlTextWriterPtr writer ); /**< Saves player related stuff. */
-extern int player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
+extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
 /* mission.c */
 extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
 extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
-/* nlua_misn.c */
+/* event.c */
+extern int events_saveActive( xmlTextWriterPtr writer );
+extern int events_loadActive( xmlNodePtr parent );
+/* nlua_var.c */
 extern int var_save( xmlTextWriterPtr writer ); /**< Saves mission variables. */
 extern int var_load( xmlNodePtr parent ); /**< Loads mission variables. */
 /* faction.c */
@@ -84,6 +89,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (diff_save(writer) < 0) return -1; /* Must save first or can get cleared. */
    if (player_save(writer) < 0) return -1;
    if (missions_saveActive(writer) < 0) return -1;
+   if (events_saveActive(writer) < 0) return -1;
    if (var_save(writer) < 0) return -1;
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
@@ -112,8 +118,7 @@ int save_all (void)
    }
 
    /* Set the writer parameters. */
-   xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
-   xmlTextWriterSetIndent(writer, 1);
+   xmlw_setParams( writer );
 
    /* Start element. */
    xmlw_start(writer);
@@ -140,7 +145,7 @@ int save_all (void)
       WARN("Aborting save...");
       goto err_writer;
    }
-   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
 
    /* Back up old savegame. */
    if (nfile_backupIfExists(file) < 0) {
@@ -172,7 +177,7 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    load_game( path );
 }
 
@@ -336,6 +341,7 @@ static int load_game( const char* file )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
+   Planet *pnt;
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
@@ -365,24 +371,34 @@ static int load_game( const char* file )
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
-   player_load(node);
+   pnt = player_load(node);
    var_load(node);
    missions_loadActive(node);
+   events_loadActive(node);
    hook_load(node);
    space_sysLoad(node);
 
    /* Initialize the economy. */
    economy_init();
 
-   /* Need to run takeoff hooks since player just "took off" */
-   hooks_run("takeoff");
-   player_addEscorts();
-   hooks_run("enter");
-   events_trigger( EVENT_TRIGGER_ENTER );
+   /* Check sanity. */
+   event_checkSanity();
+
+   /* Run the load event trigger. */
+   events_trigger( EVENT_TRIGGER_LOAD );
+
+   /* Land the player. */
+   land( pnt, 1 );
+
+   /* Load the GUI. */
+   gui_load( gui_pick() );
+
+   /* Sanitize the GUI. */
+   gui_setCargo();
 
    xmlFreeDoc(doc);
    xmlCleanupParser();
-   
+
    return 0;
 
 err_doc:

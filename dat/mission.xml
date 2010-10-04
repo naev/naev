@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial">
   <lua>tutorial</lua>
@@ -19,7 +19,7 @@
    <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true and player.evtDone( "Tutorial Features" ) ~= true</cond>
    <location>Land</location>
-	<done>Tutorial</done>
+   <done>Tutorial</done>
   </avail>
  </mission>
  <mission name="Tutorial Navigation">
@@ -31,7 +31,7 @@
    <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>None</location>
-	<done>Tutorial Landing</done>
+   <done>Tutorial Landing</done>
   </avail>
  </mission>
  <mission name="Tutorial Features">
@@ -42,7 +42,7 @@
   <avail>
    <chance>100</chance>
    <location>None</location>
-	<done>Tutorial Features</done>
+   <done>Tutorial Features</done>
   </avail>
  </mission>
  <mission name="Cargo">
@@ -127,7 +127,7 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>var.peek("es_cargo") == true and system.get("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>var.peek("es_cargo") == true and system.get("Fortitude"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <chance>80</chance>
    <location>Bar</location>
    <done>Empire Shipping 3</done>
@@ -300,7 +300,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>player.getRating() &gt; 30 and system.get():hasPresence("Pirate")</cond>
+   <cond>player.getRating() &gt; 30 and system.cur():hasPresence("Pirate")</cond>
    <chance>20</chance>
    <done>Empire Shipping 3</done>
    <location>Bar</location>
@@ -313,7 +313,7 @@
   <lua>empire/emp_pirbounty</lua>
   <avail>
    <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.get():hasPresence("Pirate")</cond>
+   <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
    <chance>10</chance>
    <done>Empire HCVL</done>
    <location>Bar</location>
@@ -333,7 +333,7 @@
   </avail>
  </mission>
  <mission name="Baron">
-  <lua>neutral/baron_baron</lua>
+  <lua>baron/baron_baron</lua>
   <flags>
    <unique />
   </flags>
@@ -342,8 +342,24 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="Prince">
+  <lua>baron/baron_prince</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 15 and player.misnDone("Baron")</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Shadowrun">
-  <lua>neutral/shadowrun</lua>
+  <lua>shadow/shadowrun</lua>
   <flags>
    <unique />
   </flags>
@@ -351,6 +367,26 @@
    <chance>15</chance>
    <location>Bar</location>
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
+  </avail>
+ </mission>
+ <mission name="Shadow Vigil">
+  <lua>shadow/shadowvigil</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Dark Shadow">
+  <lua>shadow/darkshadow</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
   </avail>
  </mission>
  <mission name="Deal with the FLF agent">
@@ -419,6 +455,93 @@
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>
+  </avail>
+ </mission>
+ <mission name="Crimelord">
+  <lua>neutral/crimelord</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>20</chance>
+   <location>Bar</location>
+   <cond>system.get("Ogat"):jumpDist() == 4 and player.fuel() &gt;= 400</cond>
+  </avail>
+ </mission>
+ <mission name="Hitman">
+  <lua>pirate/hitman</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.get("Alteris") and player.getRating() &gt; 30</cond>
+  </avail>
+ </mission>
+ <mission name="Hitman 2">
+  <lua>pirate/hitman2</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <location>Bar</location>
+   <cond>system.get("Alteris") and player.getRating() &gt; 40</cond>
+   <done>Hitman</done>
+  </avail>
+ </mission>
+ <mission name="Hitman 3">
+  <lua>pirate/hitman3</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>40</chance>
+   <location>Bar</location>
+   <cond>system.get("Alteris") and player.getRating() &gt; 50</cond>
+   <done>Hitman 2</done>
+  </avail>
+ </mission>
+ <mission name="Hot dogs from space">
+  <lua>neutral/reynir</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>16</chance>
+   <location>Bar</location>
+   <cond>(function ()
+            local count = 0
+            for i, p in pairs(system.cur():planets()) do
+                if p:services()["inhabited"] then
+                    count=count+1
+                end
+            end
+            return count &gt; 1
+        end)()</cond>
+  </avail>
+ </mission>
+ <mission name="Empire Patrol Bounty">
+  <lua>pirate/pir_empbounty</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
+   <chance>10</chance>
+   <done>Hitman 3</done>
+   <location>Bar</location>
+   <faction>Pirate</faction>
+   <faction>Independent</faction>
+  </avail>
+ </mission>
+ <mission name="Pirate Shipping">
+  <lua>pirate/pir_cargo</lua>
+  <avail>
+   <priority>3</priority>
+   <cond>player.getFaction("Pirate") &gt;= 0 and var.peek("pir_cargo") == true</cond>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
   </avail>
  </mission>
 </Missions>

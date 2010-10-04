@@ -42,7 +42,9 @@ typedef enum TaskData_ {
 typedef struct Task_ {
    struct Task_* next; /**< Next task */
    char *name; /**< Task name. */
-   
+
+   struct Task_* subtask; /**< Subtasks of the current task. */
+
    TaskData dtype; /**< Data type. */
    union {
       unsigned int num; /**< Pilot ID, etc... */

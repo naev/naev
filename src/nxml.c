@@ -72,3 +72,13 @@ glTexture* xml_parseTexture( xmlNodePtr node,
 }
 
 
+/**
+ * @brief Sets up the standard xml write parameters.
+ */
+void xmlw_setParams( xmlTextWriterPtr writer )
+{
+   xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
+   xmlTextWriterSetIndent(writer, 1);
+}
+
+

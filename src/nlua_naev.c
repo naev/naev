@@ -21,7 +21,7 @@
 #include "input.h"
 
 
-/* naev */
+/* NAEV methods. */
 static int naev_lang( lua_State *L );
 static int naev_getKey( lua_State *L );
 static const luaL_reg naev_methods[] = {
@@ -38,7 +38,7 @@ static const luaL_reg naev_methods[] = {
  *    @return 0 on success.
  */
 int nlua_loadNaev( lua_State *L )
-{  
+{
    luaL_register(L, "naev", naev_methods);
    return 0;
 }
@@ -64,7 +64,7 @@ int nlua_loadNaev( lua_State *L )
  * @luafunc lang()
  */
 static int naev_lang( lua_State *L )
-{  
+{
    /** @todo multilanguage stuff */
    lua_pushstring(L,"en");
    return 1;

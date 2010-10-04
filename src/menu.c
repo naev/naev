@@ -37,6 +37,9 @@
 #include "nfile.h"
 #include "info.h"
 #include "comm.h"
+#include "conf.h"
+#include "dev_uniedit.h"
+#include "gui.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -85,6 +88,7 @@ static void exit_game (void);
 static void menu_death_continue( unsigned int wid, char* str );
 static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
+static void menu_death_close( unsigned int wid, char* str );
 /* options button. */
 static void menu_options_button( unsigned int wid, char *str );
 
@@ -97,6 +101,10 @@ void menu_main (void)
    int offset_logo, offset_wdw, freespace;
    unsigned int bwid, wid;
    glTexture *tex;
+   int h, y;
+
+   /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
+   gui_cleanup();
 
    /* Play load music. */
    music_choose("load");
@@ -112,18 +120,16 @@ void menu_main (void)
       offset_logo = SCREEN_W - tex->sh;
       offset_wdw  = 0;
    }
-   else {
+   else if (freespace > 200.) {
       /* We'll want a maximum seperation of 30 between logo and text. */
-      if (freespace/3 > 25) {
-         freespace -= 25;
-         offset_logo = -25;
-         offset_wdw  = -25 - tex->sh - 25;
-      }
-      /* Otherwise space evenly. */
-      else {
-         offset_logo = -freespace/3;
-         offset_wdw  = freespace/3;
-      }
+      freespace  -=  25;
+      offset_logo = -25;
+      offset_wdw  = -1.;
+   }
+   /* Otherwise space evenly. */
+   else {
+      offset_logo = -freespace/4;
+      offset_wdw  = freespace/2;
    }
 
    /* create background image window */
@@ -132,29 +138,41 @@ void menu_main (void)
    window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
          menu_main_nebu, NULL, &menu_main_lasttick );
-   window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, "imgLogo", tex, 0 );
+   window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
    window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version(1) );
 
+   /* Set dimensions */
+   h  = MAIN_HEIGHT;
+   y  = 20 + (BUTTON_HEIGHT+20)*4;
+   if (conf.devmode) {
+      h += BUTTON_HEIGHT + 20;
+      y += BUTTON_HEIGHT+20;
+   }
+
    /* create menu window */
-   wid = window_create( "Main Menu", -1, offset_wdw,
-         MAIN_WIDTH, MAIN_HEIGHT );
+   wid = window_create( "Main Menu", -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
 
    /* Buttons. */
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*4,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load Game", menu_main_load );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Game", menu_main_new );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   if (conf.devmode) {
+      window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnEditor", "Editor", uniedit_open );
+      y -= BUTTON_HEIGHT+20;
+   }
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
-         BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCredits", "Credits", menu_main_credits );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_exit );
 
    /* Disable load button if there are no saves. */
@@ -265,7 +283,7 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
 {
    (void) str;
 
-   /* 
+   /*
     * Ugly hack to prevent player.c from segfaulting due to the fact
     * that game will attempt to render while waiting for the quit event
     * pushed by exit_game() to be handled without actually having a player
@@ -275,7 +293,7 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
    if (main_naevLogo != NULL)
       gl_freeTexture(main_naevLogo);
    main_naevLogo = NULL;
-   window_modifyImage( wid, "imgLogo", NULL );
+   window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
 }
 
 
@@ -292,8 +310,8 @@ void menu_small (void)
    unsigned int wid;
 
    /* Check if menu should be openable. */
-   if ((player == NULL) || player_isFlag(PLAYER_DESTROYED) ||
-         pilot_isFlag(player,PILOT_DEAD) ||
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
+         pilot_isFlag(player.p,PILOT_DEAD) ||
          comm_isOpen() ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
          (menu_isOpen(MENU_MAIN) ||
@@ -311,7 +329,7 @@ void menu_small (void)
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", menu_options_button );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
+   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_small_exit );
 
    menu_Open(MENU_SMALL);
@@ -334,11 +352,9 @@ static void menu_small_exit( unsigned int wid, char* str )
 {
    (void) str;
    unsigned int info_wid;
-   
+
    /* if landed we must save anyways */
    if (landed) {
-      /* increment time to match takeoff */
-      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
       save_all();
       land_cleanup();
    }
@@ -351,7 +367,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    }
 
    /* Stop player sounds because sometimes they hang. */
-   player_abortAutonav( "Exited game." );
+   player_autonavAbort( "Exited game." );
    player_stopSound();
 
    /* Clean up. */
@@ -368,8 +384,6 @@ static void exit_game (void)
 {
    /* if landed we must save anyways */
    if (landed) {
-      /* increment time to match takeoff */
-      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
       save_all();
       land_cleanup();
    }
@@ -411,12 +425,13 @@ static void menu_death_restart( unsigned int wid, char* str )
 void menu_death (void)
 {
    unsigned int wid;
-   
+
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+   window_onClose( wid, menu_death_close );
 
    /* Propose the player to continue if the samegame exist, if not, propose to restart */
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    if (nfile_fileExists(path))
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", "Continue", menu_death_continue );
@@ -447,6 +462,15 @@ static void menu_death_main( unsigned int wid, char* str )
 
    /* Game will repause now since toolkit closes and reopens. */
    menu_main();
+}
+/**
+ * @brief Hack to get around the fact the death menu unpauses the game.
+ */
+static void menu_death_close( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   pause_game(); /* Repause the game. */
 }
 
 

@@ -3,7 +3,6 @@
  */
 
 
-
 #ifndef PLAYER_H
 #  define PLAYER_H
 
@@ -25,26 +24,42 @@
 #define PLAYER_LANDACK     (1<<15)  /**< player has permission to land */
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
+#define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
 /* flag functions */
-#define player_isFlag(f)   (player_flags & (f)) /**< Checks for a player flag. */
-#define player_setFlag(f)  (player_flags |= (f)) /**< Sets a player flag. */ 
-#define player_rmFlag(f)   (player_flags &= ~(f)) /**< Removes a player flag. */
+#define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
+#define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
+#define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
+
+
+/* Autonav states. */
+#define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
+#define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
+#define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
+
+
+/**
+ * The player struct.
+ */
+typedef struct Player_s {
+   /* Player intrinsecs. */
+   Pilot *p; /**< Player's pilot. */
+   char *name; /**< Player's name. */
+   char *gui; /**< Player's GUI. */
+   int guiOverride;
+
+   /* Player data. */
+   unsigned int flags; /**< Player's flags. */
+   int enemies; /**< Amount of enemies the player has. */
+   double crating; /**< Combat rating. */
+   int autonav; /**< Current autonav state. */
+   Vector2d autonav_pos; /**< Target autonav position. */
+} Player_t;
 
 
 /*
- * the player
+ * Local player.
  */
-extern Pilot* player; /**< Player himself. */
-extern char* player_name; /**< Player's name. */
-extern unsigned int player_flags; /**< Player's flags. */
-extern double player_crating; /**< Player's combat rating. */
-extern int player_enemies; /**< Amount of enemies player has. */
-
-/*
- * Targetting.
- */
-extern int planet_target; /**< Targetted planet. -1 is none. */
-extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
+extern Player_t player; /**< Local player. */
 
 
 /*
@@ -65,10 +80,8 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
  * creation/cleanup
  */
 void player_new (void);
-int player_newShip( Ship* ship, double px, double py,
-      double vx, double vy, double dir, const char *def_name );
+int player_newShip( Ship* ship, const char *def_name, int trade );
 void player_cleanup (void);
-int gui_load (const char* name);
 
 
 /*
@@ -78,10 +91,16 @@ void player_render( double dt );
 
 
 /*
+ * Message stuff, in gui.c
+ */
+void player_messageToggle( int enable );
+void player_message( const char *fmt, ... );
+void player_messageRaw ( const char *str );
+
+/*
  * misc
  */
-void player_messageRaw ( const char *str );
-void player_message ( const char *fmt, ... );
+void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
@@ -93,8 +112,7 @@ void player_playSound( int sound, int once );
 void player_stopSound (void);
 void player_soundPause (void);
 void player_soundResume (void);
-/* cargo */
-int player_cargoOwned( const char* commodityname );
+
 
 /*
  * player ships
@@ -153,25 +171,23 @@ int player_addEscorts (void);
  * pilot related stuff
  */
 void player_dead (void);
-void player_destroyed (void); 
+void player_destroyed (void);
 void player_think( Pilot* pplayer, const double dt );
 void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
-double player_faceHyperspace (void);
+void player_hyperspacePreempt( int );
 
-
-/* 
+/*
  * keybind actions
  */
+void player_weapSetPress( int id, int type );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
 void player_targetClear (void);
-void player_secondaryNext (void);
-void player_secondaryPrev (void);
 void player_targetPlanet (void);
 void player_land (void);
 void player_targetHyperspace (void);
@@ -181,12 +197,12 @@ void player_afterburn (void);
 void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
-void player_startAutonav (void);
-void player_abortAutonav( char *reason );
-void player_startAutonavWindow( unsigned int wid, char *str);
+void player_autonavStart (void);
+void player_autonavAbort( char *reason );
+void player_autonavStartWindow( unsigned int wid, char *str);
+void player_autonavPos( double x, double y );
 void player_hail (void);
 void player_autohail (void);
-void player_setFireMode( int mode );
 
 
 #endif /* PLAYER_H */

@@ -7,7 +7,9 @@
 #ifndef COLOUR_H
 #  define COLOUR_H
 
-#include <GL/gl.h>
+
+#include "SDL_opengl.h"
+
 
 /**
  * @struct glColour
@@ -44,6 +46,7 @@ extern glColour cDarkRed;
 extern glColour cRed;
 extern glColour cOrange;
 extern glColour cYellow;
+extern glColour cMidnightBlue;
 extern glColour cDarkBlue;
 extern glColour cBlue;
 extern glColour cLightBlue;
@@ -52,6 +55,7 @@ extern glColour cDarkPurple;
 extern glColour cBrown;
 extern glColour cGold;
 extern glColour cSilver;
+extern glColour cAqua;
 
 /*
  * game specific
@@ -66,6 +70,7 @@ extern glColour cHilight;
 /* objects */
 extern glColour cInert;
 extern glColour cNeutral;
+extern glColour cMapNeutral;
 extern glColour cFriend;
 extern glColour cHostile;
 /* radar */
@@ -73,6 +78,7 @@ extern glColour cRadar_player;
 extern glColour cRadar_tPilot;
 extern glColour cRadar_tPlanet;
 extern glColour cRadar_weap;
+extern glColour cRadar_hilight;
 /* health */
 extern glColour cShield;
 extern glColour cArmour;
@@ -96,6 +102,8 @@ glColour* col_fromName( const char* name );
  * Colourspace conversion routines.
  */
 void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
+void col_rgb2hsv( double *h, double *s, double *v, double r, double g, double b );
+void col_blend( glColour *out, glColour fg, glColour bg, double alpha );
 
 
 

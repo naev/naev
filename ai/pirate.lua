@@ -1,4 +1,5 @@
 include("ai/tpl/generic.lua")
+include("ai/personality/patrol.lua")
 
 --[[
 
@@ -58,9 +59,10 @@ function create ()
             mem.refuel);
    end
 
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
-   -- Choose attack format
-   attack_choose()
+   -- Finish up creation
+   create_post()
 end
 
 

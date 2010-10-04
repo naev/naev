@@ -143,11 +143,15 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    /* Extract the data. */
    node = parent->xmlChildrenNode;
    do {
+      xml_onlyNodes(node);
       xmlr_float(node, "anim", temp->anim);
       xmlr_float(node, "ttl", temp->ttl);
-      if (xml_isNode(node,"gfx"))
+      if (xml_isNode(node,"gfx")) {
          temp->gfx = xml_parseTexture( node,
                SPFX_GFX_PRE"%s"SPFX_GFX_SUF, 6, 5, 0 );
+         continue;
+      }
+      WARN("SPFX '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Convert from ms to s. */
@@ -237,6 +241,7 @@ int spfx_load (void)
    /* First pass, loads up ammunition. */
    mem = 0;
    do {
+      xml_onlyNodes(node);
       if (xml_isNode(node,SPFX_XML_TAG)) {
 
          spfx_neffects++;
@@ -246,6 +251,8 @@ int spfx_load (void)
          }
          spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
       }
+      else
+         WARN("'"SPFX_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
@@ -468,7 +475,7 @@ void spfx_begin( const double dt )
 
          if (VMOD(shake_pos) > shake_rad) { /* change direction */
             vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
-            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, 
+            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad,
                   -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
          }
 
@@ -478,7 +485,7 @@ void spfx_begin( const double dt )
             shake_rad = 0.;
 
          x = shake_pos.x;
-         y = shake_pos.y;  
+         y = shake_pos.y;
       }
       else {
          shake_rad = 0.;
@@ -493,9 +500,8 @@ void spfx_begin( const double dt )
    }
 
    /* set the new viewport */
-   glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
+   glOrtho( x, SCREEN_W+x, y, SCREEN_H+y, -1., 1. );
 }
 
 
@@ -519,7 +525,7 @@ void spfx_end (void)
  * @brief Increases the current rumble level.
  *
  * Rumble will decay over time.
- * 
+ *
  *    @param mod Modifier to increase level by.
  */
 void spfx_shake( double mod )
@@ -618,7 +624,7 @@ static void spfx_hapticRumble( double mod )
 
       /* Update the effect. */
       efx = &haptic_rumbleEffect;
-      efx->periodic.magnitude    = (uint32_t)mag;;
+      efx->periodic.magnitude    = (int16_t)mag;
       efx->periodic.length       = (uint32_t)len;
       efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
       if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
@@ -630,7 +636,7 @@ static void spfx_hapticRumble( double mod )
       SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
 
       /* Set timer again. */
-      haptic_lastUpdate = HAPTIC_UPDATE_INTERVAL;
+      haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
    }
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    (void) mod;
@@ -645,13 +651,8 @@ static void spfx_hapticRumble( double mod )
  */
 void spfx_cinematic (void)
 {
-   double hw, hh;
-
-   hw = SCREEN_W/2.;
-   hh = SCREEN_H/2.;
-
-   gl_renderRect( -hw, -hh,     SCREEN_W, SCREEN_H*0.2, &cBlack );
-   gl_renderRect( -hw,  0.6*hh, SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( 0., 0.,           SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &cBlack );
 }
 
 
@@ -668,7 +669,7 @@ void spfx_render( const int layer )
    int sx, sy;
    double time;
 
-   
+
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
@@ -695,12 +696,12 @@ void spfx_render( const int layer )
       sy = (int)effect->gfx->sy;
 
       if (!paused) { /* don't calculate frame if paused */
-         time = fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+         time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
          spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
       }
-      
+
       /* Renders */
-      gl_blitSprite( effect->gfx, 
+      gl_blitSprite( effect->gfx,
             VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
             spfx_stack[i].lastframe % sx,
             spfx_stack[i].lastframe / sx,

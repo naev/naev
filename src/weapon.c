@@ -29,6 +29,7 @@
 #include "opengl.h"
 #include "explosion.h"
 #include "gui.h"
+#include "camera.h"
 #include "ai.h"
 #include "ai_extra.h"
 
@@ -50,12 +51,6 @@
  */
 extern Pilot** pilot_stack;
 extern int pilot_nstack;
-
-
-/*
- * Weapon stuff.
- */
-static int weapon_safety = 1; /**< Enables shooting friendlies. */
 
 
 /**
@@ -116,7 +111,7 @@ static int beam_idgen = 0; /**< Beam identifier generator. */
  * Prototypes
  */
 /* static */
-static Weapon* weapon_create( const Outfit* outfit,
+static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target );
 static void weapon_render( Weapon* w, const double dt );
@@ -172,12 +167,12 @@ void weapon_minimap( const double res, const double w,
       wp = wbackLayer[i];
 
       /* Make sure is in range. */
-      if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
+      if (!pilot_inRange( player.p, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
       /* Get radar position. */
-      x = (wp->solid->pos.x - player->solid->pos.x) / res;
-      y = (wp->solid->pos.y - player->solid->pos.y) / res;
+      x = (wp->solid->pos.x - player.p->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player.p->solid->pos.y) / res;
 
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
@@ -189,7 +184,7 @@ void weapon_minimap( const double res, const double w,
       if ((outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID)) ||
             (wp->faction == FACTION_PLAYER))
          c = &cNeutral;
-      else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
+      else if (wp->target == PLAYER_ID || areEnemies(FACTION_PLAYER, wp->faction))
          c = &cHostile;
       else
          c = &cNeutral;
@@ -211,12 +206,12 @@ void weapon_minimap( const double res, const double w,
       wp = wfrontLayer[i];
 
       /* Make sure is in range. */
-      if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
+      if (!pilot_inRange( player.p, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
       /* Get radar position. */
-      x = (wp->solid->pos.x - player->solid->pos.x) / res;
-      y = (wp->solid->pos.y - player->solid->pos.y) / res;
+      x = (wp->solid->pos.x - player.p->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player.p->solid->pos.y) / res;
 
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
@@ -227,7 +222,8 @@ void weapon_minimap( const double res, const double w,
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
          c = &cNeutral;
-      else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
+      else if ((wp->target == PLAYER_ID && wp->target != wp->parent) ||
+            areEnemies(FACTION_PLAYER, wp->faction))
          c = &cHostile;
       else
          c = &cNeutral;
@@ -264,20 +260,6 @@ void weapon_minimap( const double res, const double w,
       /* Disable VBO. */
       gl_vboDeactivate();
    }
-}
-
-
-/**
- * @brief Toggles the player's weapon safety.
- */
-void weapon_toggleSafety (void)
-{
-   weapon_safety = !weapon_safety;
-
-   if (weapon_safety)
-      player_message( "\ebEnabling weapon safety." );
-   else
-      player_message( "\ebDisabling weapon safety." );
 }
 
 
@@ -712,18 +694,17 @@ static void weapon_render( Weapon* w, const double dt )
          gfx = outfit_gfx(w->outfit);
 
          /* Zoom. */
-         gl_cameraZoomGet( &z );
+         z = cam_getZoom();
 
          /* Position. */
-         gl_cameraGet( &cx, &cy );
+         cam_getPos( &cx, &cy );
          gui_getOffset( &gx, &gy );
          x = (w->solid->pos.x - cx)*z + gx;
          y = (w->solid->pos.y - cy)*z + gy;
 
          /* Set up the matrix. */
-         glMatrixMode(GL_PROJECTION);
          glPushMatrix();
-            glTranslated( x, y, 0. );
+            glTranslated( SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
             glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
 
          /* Preparatives. */
@@ -776,7 +757,7 @@ static void weapon_render( Weapon* w, const double dt )
          /* Clean up. */
          glDisable(GL_TEXTURE_2D);
          glShadeModel(GL_FLAT);
-         glPopMatrix(); /* GL_PROJECTION */
+         glPopMatrix();
          gl_checkErr();
          break;
 
@@ -803,8 +784,17 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (pilot_isFlag(p, PILOT_INVINCIBLE))
       return 0;
 
+   /* Can't hit invisible stuff. */
+   if (pilot_isFlag(p, PILOT_INVISIBLE))
+      return 0;
+
    /* Can never hit same faction. */
    if (p->faction == w->faction)
+      return 0;
+
+   /* Must not be landing nor taking off. */
+   if (pilot_isFlag(p, PILOT_LANDING) ||
+         pilot_isFlag(p, PILOT_TAKEOFF))
       return 0;
 
    /* Go "through" dead pilots. */
@@ -814,12 +804,8 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    /* Player behaves differently. */
    if (w->faction == FACTION_PLAYER) {
 
-      /* Always hit without safety. */
-      if (!weapon_safety)
-         return 1;
-
       /* Always hit target. */
-      else if (w->target == p->id)
+      if (w->target == p->id)
          return 1;
 
       /* Always hit hostiles. */
@@ -864,13 +850,14 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, psx,psy;
+   int i, b, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
 
    /* Get the sprite direction to speed up calculations. */
-   if (!outfit_isBeam(w->outfit)) {
+   b = outfit_isBeam(w->outfit);
+   if (!b) {
       gfx = outfit_gfx(w->outfit);
       gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
    }
@@ -885,7 +872,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* Beam weapons have special collisions. */
-      if (outfit_isBeam(w->outfit)) {
+      if (b) {
          /* Check for collision. */
          if (weapon_checkCanHit(w,p) &&
                CollideLineSprite( &w->solid->pos, w->solid->dir,
@@ -1014,7 +1001,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage) );
 
    /* Get the layer. */
-   spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
    /* Choose spfx. */
    if (p->shield > 0.)
       spfx = outfit_spfxShield(w->outfit);
@@ -1062,7 +1049,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->lockon == -1.) {
       /* Get the layer. */
-      spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
 
       /* Choose spfx. */
       if (p->shield > 0.)
@@ -1087,6 +1074,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawned the weapon.
+ *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
@@ -1094,7 +1082,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param target Target ID of the shooter.
  *    @return A pointer to the newly created weapon.
  */
-static Weapon* weapon_create( const Outfit* outfit,
+static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot* parent, const unsigned int target )
 {
@@ -1103,17 +1091,19 @@ static Weapon* weapon_create( const Outfit* outfit,
    Pilot *pilot_target;
    double x,y, acc, t, dist;
    Weapon* w;
+   double ew_evasion;
+   double acc_max;
 
    /* Create basic features */
-   w = malloc(sizeof(Weapon));
-   memset(w, 0, sizeof(Weapon));
-   w->dam_mod = 1.; /* Default of 100% damage. */
-   w->faction = parent->faction; /* non-changeable */
-   w->parent = parent->id; /* non-changeable */
-   w->target = target; /* non-changeable */
-   w->outfit = outfit; /* non-changeable */
-   w->update = weapon_update;
-   w->status = WEAPON_STATUS_OK;
+   w           = malloc( sizeof(Weapon) );
+   memset( w, 0, sizeof(Weapon) );
+   w->dam_mod  = 1.; /* Default of 100% damage. */
+   w->faction  = parent->faction; /* non-changeable */
+   w->parent   = parent->id; /* non-changeable */
+   w->target   = target; /* non-changeable */
+   w->outfit   = outfit; /* non-changeable */
+   w->update   = weapon_update;
+   w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
 
    switch (outfit->type) {
@@ -1126,9 +1116,10 @@ static Weapon* weapon_create( const Outfit* outfit,
                (w->target != 0)) { /* Must have valid target */
 
             pilot_target = pilot_get(w->target);
-            if (pilot_target == NULL)
-               rdir = dir;
-
+            if (pilot_target == NULL) {
+               rdir        = dir;
+               ew_evasion  = 1.;
+            }
             else {
                /* Get the distance */
                dist = vect_dist( pos, &pilot_target->solid->pos );
@@ -1152,13 +1143,18 @@ static Weapon* weapon_create( const Outfit* outfit,
 
                /* Set angle to face. */
                rdir = ANGLE(x, y);
+
+               /* Evasion. */
+               ew_evasion  = pilot_target->ew_evasion;
             }
          }
-         else /* fire straight */
-            rdir = dir;
+         else { /* fire straight */
+            rdir        = dir;
+            ew_evasion  = 1.;
+         }
 
          /* Calculate accuarcy. */
-         acc =  outfit->u.blt.accuracy/2. * 1./180.*M_PI;
+         acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
          /* Stat modifiers. */
          if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
@@ -1169,7 +1165,10 @@ static Weapon* weapon_create( const Outfit* outfit,
             acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
             w->dam_mod  *= parent->stats.damage_forward;
          }
-         acc = MAX( 0., acc ); /* Make sure it doesn't become negative. */
+         acc_max = acc;
+         acc  *= ew_evasion / outfit->u.blt.ew_lockon;
+         acc   = MAX( acc_max, acc ); /* Shouldn't go below maximum accuracy, it can only get worse. */
+         acc   = MAX( 0., acc ); /* Make sure it doesn't become negative. */
 
          /* Calculate direction. */
          rdir += RNG_2SIGMA() * acc;
@@ -1221,9 +1220,10 @@ static Weapon* weapon_create( const Outfit* outfit,
       case OUTFIT_TYPE_TURRET_AMMO:
          if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
             pilot_target = pilot_get(w->target);
-            if (pilot_target == NULL)
-               rdir = dir;
-
+            if (pilot_target == NULL) {
+               rdir        = dir;
+               ew_evasion  = 1.;
+            }
             else {
                /* Get the distance */
                dist = vect_dist( pos, &pilot_target->solid->pos );
@@ -1244,10 +1244,14 @@ static Weapon* weapon_create( const Outfit* outfit,
 
                /* Set angle to face. */
                rdir = ANGLE(x, y);
+
+               /* Evasion. */
+               ew_evasion    = pilot_target->ew_evasion;
             }
          }
          else {
-            rdir = dir;
+            rdir        = dir;
+            ew_evasion  = 1.;
          }
          if (outfit->u.amm.accuracy != 0.) {
             rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
@@ -1267,7 +1271,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 
          /* Set up ammo details. */
          mass        = w->outfit->mass;
-         w->lockon   = outfit->u.amm.lockon;
+         w->lockon   = MAX( outfit->u.amm.lockon, outfit->u.amm.lockon * ew_evasion / outfit->u.amm.ew_lockon );
          w->timer    = outfit->u.amm.duration;
          w->solid    = solid_create( mass, rdir, pos, &v );
          if (w->outfit->u.amm.thrust != 0.)
@@ -1310,13 +1314,14 @@ static Weapon* weapon_create( const Outfit* outfit,
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawns the weapon.
+ *    @param T Temperature of the shooter.
  *    @param dir Direction of the shooter.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
  */
-void weapon_add( const Outfit* outfit, const double dir,
+void weapon_add( const Outfit* outfit, const double T, const double dir,
       const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, unsigned int target )
 {
@@ -1333,7 +1338,7 @@ void weapon_add( const Outfit* outfit, const double dir,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w = weapon_create( outfit, T, dir, pos, vel, parent, target );
 
    /* set the proper layer */
    switch (layer) {
@@ -1411,7 +1416,7 @@ int beam_start( const Outfit* outfit,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w = weapon_create( outfit, 0., dir, pos, vel, parent, target );
    w->ID = ++beam_idgen;
    w->mount = mount;
 
@@ -1474,7 +1479,7 @@ void beam_end( const unsigned int parent, int beam )
    int i;
    WeaponLayer layer;
    Weapon **curLayer;
-   int *mLayer, *nLayer;
+   int *nLayer;
 
    layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
 
@@ -1483,12 +1488,10 @@ void beam_end( const unsigned int parent, int beam )
       case WEAPON_LAYER_BG:
          curLayer = wbackLayer;
          nLayer = &nwbackLayer;
-         mLayer = &mwbacklayer;
          break;
       case WEAPON_LAYER_FG:
          curLayer = wfrontLayer;
          nLayer = &nwfrontLayer;
-         mLayer = &mwfrontLayer;
          break;
 
       default:

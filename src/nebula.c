@@ -27,6 +27,8 @@
 #include "gui.h"
 #include "conf.h"
 #include "spfx.h"
+#include "npng.h"
+#include "camera.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -88,7 +90,6 @@ static void nebu_generatePuffs (void);
 static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
-static void nebu_genOverlay (void);
 /* Nebula render methods. */
 static void nebu_renderMultitexture( const double dt );
 
@@ -157,14 +158,14 @@ int nebu_init (void)
 
    /* Create the VBO. */
    /* Vertex. */
-   vertex[0] = -SCREEN_W/2;
-   vertex[1] = -SCREEN_H/2;
-   vertex[2] = -vertex[0];
-   vertex[3] =  vertex[0];
-   vertex[4] =  vertex[0];
-   vertex[5] = -vertex[1];
-   vertex[6] =  vertex[2];
-   vertex[7] =  vertex[5];
+   vertex[0] = 0;
+   vertex[1] = 0;
+   vertex[2] = 0;
+   vertex[3] = SCREEN_H;
+   vertex[4] = SCREEN_W;
+   vertex[5] = 0;
+   vertex[6] = SCREEN_W;
+   vertex[7] = SCREEN_H;
    /* Texture 0. */
    tw = (double)nebu_w / (double)nebu_pw;
    th = (double)nebu_h / (double)nebu_ph;
@@ -305,6 +306,10 @@ static void nebu_renderMultitexture( const double dt )
 
       /* Change timer. */
       nebu_timer += nebu_dt;
+
+      /* Case it hasn't rendered in a while so it doesn't go crazy. */
+      if (nebu_timer < 0)
+         nebu_timer = nebu_dt;
    }
 
    /* Set the colour */
@@ -347,13 +352,12 @@ static void nebu_renderMultitexture( const double dt )
    /* Compensate possible rumble */
    if (!paused) {
       spfx_getShake( &sx, &sy );
-      gl_matrixMode( GL_PROJECTION );
       gl_matrixPush();
          gl_matrixTranslate( sx, sy );
    }
 
    /* Now render! */
-   gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY, 
+   gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY,
          sizeof(GL_FLOAT) * 0*2*4, 2, GL_FLOAT, 0 );
    gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE0,
          sizeof(GL_FLOAT) * 1*2*4, 2, GL_FLOAT, 0 );
@@ -380,7 +384,10 @@ static void nebu_renderMultitexture( const double dt )
 #define ANG45     0.70710678118654757 /**< 1./sqrt(2) */
 #define COS225    0.92387953251128674 /**< cos(225) */
 #define SIN225    0.38268343236508978 /**< sin(225) */
-static void nebu_genOverlay (void)
+/**
+ * @brief Regenerates the overlay.
+ */
+void nebu_genOverlay (void)
 {
    int i;
    GLfloat *data;
@@ -481,7 +488,7 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+39] = -nebu_view;
    data[(2+4)*18+40] = -SCREEN_W/2.*z-gx;
    data[(2+4)*18+41] = -SCREEN_H/2.*z-gy;
-      
+
    /* Bottom left */
    data[(2+4)*18+42] = -SCREEN_W/2.*z-gx;
    data[(2+4)*18+43] = -SCREEN_H/2.*z-gy;
@@ -521,7 +528,7 @@ void nebu_renderOverlay( const double dt )
    gui_getOffset( &gx, &gy );
 
    /* Get zoom. */
-   gl_cameraZoomGet( &z );
+   z = cam_getZoom();
 
    /*
     * Renders the puffs
@@ -536,9 +543,8 @@ void nebu_renderOverlay( const double dt )
       ox += sx;
       oy += sy;
    }
-   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
-   gl_matrixTranslate( ox, oy );
+   gl_matrixTranslate( SCREEN_W/2.+ox, SCREEN_H/2.+oy );
    gl_matrixScale( z, z );
 
    /*
@@ -602,9 +608,9 @@ void nebu_renderPuffs( const double dt, int below_player )
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
          /* calculate new position */
-         if (!paused && (player!=NULL)) {
-            nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
-            nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
+         if (!paused && (player.p!=NULL)) {
+            nebu_puffs[i].x -= player.p->solid->vel.x * nebu_puffs[i].height * dt;
+            nebu_puffs[i].y -= player.p->solid->vel.y * nebu_puffs[i].height * dt;
          }
 
          /* Check boundries */
@@ -648,7 +654,7 @@ void nebu_prep( double density, double volatility )
             SCREEN_W + NEBULA_PUFF_BUFFER);
       nebu_puffs[i].y = (double)RNG(-NEBULA_PUFF_BUFFER,
             SCREEN_H + NEBULA_PUFF_BUFFER);
-      
+
       /* Maybe make size related? */
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
@@ -731,7 +737,7 @@ static void nebu_generatePuffs (void)
       nebu = noise_genNebulaPuffMap( w, h, 1. );
       sur = nebu_surfaceFromNebulaMap( nebu, w, h );
       free(nebu);
-      
+
       /* Load the texture */
       nebu_pufftexs[i] =  gl_loadImage( sur, 0 );
    }
@@ -793,15 +799,21 @@ static SDL_Surface* loadNebula( const char* file )
 {
    char file_path[PATH_MAX];
    SDL_Surface* sur;
+   SDL_RWops *rw;
+   npng_t *npng;
 
    /* loads the file */
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
-   sur = IMG_Load( file_path );
+   rw    = SDL_RWFromFile( file_path, "rb" );;
+   npng  = npng_open( rw );
+   sur   = npng_readSurface( npng, 0, 1 );
+   npng_close( npng );
+   SDL_RWclose( rw );
    if (sur == NULL) {
       ERR("Unable to load Nebula image: %s", file);
       return NULL;
    }
-   
+
    return sur;
 }
 
@@ -821,11 +833,11 @@ static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const in
    SDL_Surface *sur;
    uint32_t *pix;
    double c;
-  
+
    /* the good surface */
    sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
    pix = sur->pixels;
-   
+
    /* convert from mapping to actual colours */
    SDL_LockSurface( sur );
    for (i=0; i<h*w; i++) {
@@ -833,6 +845,6 @@ static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const in
       pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)((double)AMASK*c));
    }
    SDL_UnlockSurface( sur );
-   
+
    return sur;
-}          
+}

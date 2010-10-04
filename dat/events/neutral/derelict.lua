@@ -67,12 +67,13 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(400, 1000)
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add(ship, "dummy", pos, false)[1]
+    p     = pilot.add(ship, "dummy", pos)[1]
     p:setFaction("Derelict")
     p:disable()
     hook.pilot(p, "board", "board")
     hook.pilot(p, "death", "destroyevent")
-    hook.time("destroyevent")
+    hook.enter("destroyevent")
+    hook.land("destroyevent")
 end
 
 function board()
@@ -135,10 +136,10 @@ function badevent()
         player.pilot():setFuel(false)
     elseif event == 3 then
         tk.msg(btitle, btext[3])
-        v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300), false)[1]
-        v2 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new(-300, 300), false)[1]
-        a1 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new(-300,-300), false)[1]
-        a2 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new( 300,-300), false)[1]
+        v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300))[1]
+        v2 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new(-300, 300))[1]
+        a1 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new(-300,-300))[1]
+        a2 = pilot.add("Pirate Ancestor", "pirate", player.pos() + vec2.new( 300,-300))[1]
         v1:control()
         v1:attack(player.pilot())
         v2:control()

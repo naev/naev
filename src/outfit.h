@@ -42,8 +42,6 @@
 typedef struct ShipStats_ {
 #if 0
    /* Scout type. */
-   double sensor_range; /**< Sensor detection range. */
-   double sensor_jam; /**< Sensor detection countermeasures. */
    double jam_range; /**< Range of jammer effect. */
    double jam_chance; /**< Possibility of jamming missile. */
 
@@ -63,6 +61,10 @@ typedef struct ShipStats_ {
    /* Freighter-type. */
    double cargo_inertia; /**< Lowers the effect of cargo mass. */
 #endif
+
+   /* Scout type. */
+   double ew_hide;   /**< Electronic warfare hide modifier. */
+   double ew_detect; /**< Electronic warfare detection modifier. */
 
    /* Fighter type. */
    double accuracy_forward; /**< Accuracy of forward mounts. */
@@ -90,7 +92,7 @@ struct Outfit_;
 /**
  * @brief Different types of existing outfits.
  *
- * Outfits are organized by the order here 
+ * Outfits are organized by the order here
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
@@ -108,6 +110,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
    OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
+   OUTFIT_TYPE_GUI, /**< GUI for the player. */
    OUTFIT_TYPE_LICENSE, /**< License that allows player to buy special stuff. */
    OUTFIT_TYPE_SENTINEL /**< indicates last type */
 } OutfitType;
@@ -132,10 +135,21 @@ typedef enum DamageType_ {
 typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_NULL, /**< Invalid slot type. */
    OUTFIT_SLOT_NA, /**< Slot type not applicable. */
-   OUTFIT_SLOT_LOW, /**< Low energy slot. */
-   OUTFIT_SLOT_MEDIUM, /**< Medium energy slot. */
-   OUTFIT_SLOT_HIGH /**< High energy slot. */
+   OUTFIT_SLOT_STRUCTURE, /**< Low energy slot. */
+   OUTFIT_SLOT_UTILITY, /**< Medium energy slot. */
+   OUTFIT_SLOT_WEAPON /**< High energy slot. */
 } OutfitSlotType;
+
+
+/**
+ * @brief Outfit slot sizes.
+ */
+typedef enum OutfitSlotSize_ {
+   OUTFIT_SLOT_SIZE_NA, /**< Not applicable slot size. */
+   OUTFIT_SLOT_SIZE_LIGHT, /**< Light slot size. */
+   OUTFIT_SLOT_SIZE_MEDIUM, /**< Medium slot size. */
+   OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
+} OutfitSlotSize;
 
 
 /**
@@ -143,6 +157,7 @@ typedef enum OutfitSlotType_ {
  */
 typedef struct OutfitSlot_ {
    OutfitSlotType type; /**< Type of outfit slot. */
+   OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;
 
 
@@ -156,6 +171,7 @@ typedef struct OutfitBoltData_ {
    double range; /**< how far it goes */
    double falloff; /**< Point at which damage falls off. */
    double accuracy; /**< desviation accuracy */
+   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy; /**< energy usage */
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< damage type */
@@ -187,7 +203,7 @@ typedef struct OutfitBeamData_ {
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
-   
+
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
    int spfx_armour; /**< special effect on hit */
@@ -216,6 +232,7 @@ typedef struct OutfitLauncherData_ {
 typedef struct OutfitAmmoData_ {
    double duration; /**< How long the ammo lives. */
    double lockon; /**< time it takes to lock on the target */
+   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double resist; /**< lowers chance of jamming by this amount */
    int ai; /**< Smartness of ammo. */
 
@@ -321,6 +338,13 @@ typedef struct OutfitJammerData_ {
 } OutfitJammerData;
 
 /**
+ * @brief Represents a GUI.
+ */
+typedef struct OutfitGUIData_ {
+   char *gui; /**< Name of the GUI file. */
+} OutfitGUIData;
+
+/**
  * @brief A ship outfit, depends radically on the type.
  */
 typedef struct Outfit_ {
@@ -328,8 +352,7 @@ typedef struct Outfit_ {
    char *typename; /**< Overrides the base type. */
 
    /* general specs */
-   OutfitSlotType slot; /**< Type of slot the outfit needs. */
-   int tech; /**< Tech needed to sell it. */
+   OutfitSlot slot; /**< Slot the outfit fits into. */
    char *license; /**< Licenses needed to buy it. */
    double mass; /**< How much weapon capacity is needed. */
 
@@ -355,6 +378,7 @@ typedef struct Outfit_ {
       OutfitFighterBayData bay; /**< FIGHTER_BAY */
       OutfitFighterData fig; /**< FIGHTER */
       OutfitMapData map; /**< MAP */
+      OutfitGUIData gui; /**< GUI */
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
 
@@ -370,10 +394,12 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  * get
  */
 Outfit* outfit_get( const char* name );
+Outfit* outfit_getW( const char* name );
+Outfit* outfit_getAll( int *n );
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
-Outfit** outfit_getTech( int *n, const int *tech, const int techmax );
 /* outfit types */
-int outfit_isWeapon( const Outfit* o );
+int outfit_isActive( const Outfit* o );
+int outfit_isForward( const Outfit* o );
 int outfit_isBolt( const Outfit* o );
 int outfit_isBeam( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
@@ -386,6 +412,7 @@ int outfit_isJammer( const Outfit* o );
 int outfit_isFighterBay( const Outfit* o );
 int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
+int outfit_isGUI( const Outfit* o );
 int outfit_isLicense( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
@@ -394,6 +421,9 @@ const char* outfit_getTypeBroad( const Outfit* o );
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
+const char *outfit_slotSize( const Outfit* o );
+glColour *outfit_slotSizeColour( const OutfitSlot* os );
+OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
@@ -415,6 +445,13 @@ int outfit_soundHit( const Outfit* o );
  */
 int outfit_load (void);
 void outfit_free (void);
+
+
+/*
+ * Misc.
+ */
+const char *outfit_damageTypeToStr( DamageType dmg );
+int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 
 
 #endif /* OUTFIT_H */

@@ -38,6 +38,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    -- Target destination
    dest,destsys = planet.get( faction.get("Frontier") )
    ret,retsys = planet.get( "Polaris Prime" )
@@ -59,7 +60,7 @@ function accept ()
    misn.accept()
 
    -- target destination
-   misn.setMarker(destsys)
+   misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
    misn_stage = 0
@@ -73,7 +74,7 @@ function accept ()
          dest:name(), ret:name(), retsys:name() ))
 
    -- Set up the goal
-   prisoners = misn.addCargo("Prisoners", 0)
+   prisoners = misn.cargoAdd("Prisoners", 0)
    tk.msg( title[2], text[3] )
 
    -- Set hooks
@@ -85,14 +86,14 @@ end
 function land ()
    landed = planet.get()
    if landed == dest and misn_stage == 0 then
-      if misn.rmCargo(prisoners) then
+      if misn.cargoRm(prisoners) then
          -- Go on to next stage
          misn_stage = 1
 
          -- Some text
          tk.msg(title[2], text[4] )
          tk.msg(title[2], text[5] )
-         misn.setMarker(retsys)
+         misn.markerMove( misn_marker, retsys )
          misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
 
          -- We'll take off right away again
@@ -113,7 +114,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
    if misn_stage == 1 and sys == destsys then
 
       -- Get a position near the player
@@ -123,7 +124,7 @@ function enter ()
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
 
       -- Create some pilots to go after the player
-      p = pilot.add( "FLF Sml Force", "def", enter_vect )
+      p = pilot.add( "FLF Sml Force", nil, enter_vect )
       -- Set hostile
       for k,v in ipairs(p) do
          v:setHostile()
@@ -134,12 +135,12 @@ function enter ()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 700, 1000 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      pilot.add( "FLF Med Force", "def", enter_vect )
+      pilot.add( "FLF Med Force", nil, enter_vect )
       -- Now the Dvaered
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 200, 300 )
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
-      pilot.add( "Dvaered Med Force", "def", enter_vect )
+      pilot.add( "Dvaered Med Force", nil, enter_vect )
    end
 end
 

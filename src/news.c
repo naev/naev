@@ -117,8 +117,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
       }
 
       gl_printMidRaw( news_font, w-40.,
-            bx+10 + (double)SCREEN_W/2., by+y + (double)SCREEN_H/2.,
-            &cConsole, news_lines[i] );
+            bx+10, by+y, &cConsole, news_lines[i] );
 
       /* Increment line and position. */
       i--;
@@ -194,7 +193,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Load up the news in a string. */
    p = 0;
    for (i=0; i<news_nbuf; i++) {
-      p += snprintf( &buf[p], 2048-p,
+      p += snprintf( &buf[p], sizeof(buf)-p,
             "%s\n\n"
             "%s\n\n\n\n"
             , news_buf[i].title, news_buf[i].desc );
@@ -342,6 +341,8 @@ const news_t *news_generate( int *ngen, int n )
 
    /* Allocate news. */
    news_buf = calloc( sizeof(news_t), n );
+   if (news_buf == NULL)
+      ERR("Out of Memory.");
    if (ngen != NULL)
       (*ngen)  = 0;
 
@@ -356,7 +357,7 @@ const news_t *news_generate( int *ngen, int n )
    /* str, t */
 
    /* Check to see if it's valid. */
-   if (!lua_isstring(L, -2) || !lua_istable(L, -1)) { 
+   if (!lua_isstring(L, -2) || !lua_istable(L, -1)) {
       WARN("News generated invalid output!");
       lua_pop(L,2);
       return NULL;
@@ -375,7 +376,7 @@ const news_t *news_generate( int *ngen, int n )
       news_buf[i].title = strdup( luaL_checkstring(L, -1) );
       lua_pop(L,1); /* str, table, key, val */
       lua_getfield(L, -1, "desc"); /* str, table, key, val, str */
-      news_buf[i].desc = strdup( luaL_checkstring(L, -1) );
+      news_buf[i].desc  = strdup( luaL_checkstring(L, -1) );
       lua_pop(L,1); /* str, table, key, val */
       /* Go to next element. */
       lua_pop(L,1); /* str, table, key */
@@ -396,7 +397,7 @@ const news_t *news_generate( int *ngen, int n )
    news_nbuf   = i;
    if (ngen != NULL)
       (*ngen)  = news_nbuf;
-   
+
    return news_buf;
 }
 

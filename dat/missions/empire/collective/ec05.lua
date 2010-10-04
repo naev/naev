@@ -71,6 +71,11 @@ end
 
 
 function create ()
+    missys = {system.get("Rockbed")}
+    if not misn.claim(missys) then
+        abort()
+    end
+ 
    misn.setNPC( "Dimitri?", "none" )
    misn.setDesc( bar_desc )
 end
@@ -92,8 +97,8 @@ function accept ()
    -- Mission data
    misn_stage = 0
    misn_base, misn_base_sys = planet.get("Omega Station")
-   misn_target_sys = system.get("NGC-7690")
-   misn.setMarker(misn_target_sys)
+   misn_target_sys = system.get("Rockbed")
+   misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
    misn.setTitle(misn_title)
@@ -108,21 +113,37 @@ function accept ()
    esc_lancelot1 = true
    esc_lancelot2 = true
 
-   hook.enter("jump")
+   hook.jumpout("jumout")
+   hook.jumpin("jumpin")
+   hook.takeoff("takeoff")
    hook.land("land")
 end
 
 
+function jumpout ()
+   last_sys = system.cur()
+end
+
+
+function jumpin ()
+   enter( last_sys )
+end
+
+function takeoff ()
+   enter( nil )
+end
+
+
 -- Handles jumping to target system
-function jump ()
+function enter ( from_sys )
    -- Only done for stage 1
    if misn_stage == 0 then
-      local sys = system.get()
+      local sys = system.cur()
 
       -- Escorts enter a while back
       enter_vect = player.pos()
-      if enter_vect:dist() < 1000 then -- assume landed
-         add_escorts()
+      if from_sys == nil then
+         add_escorts( true )
       else -- Just jumped
          misn.timerStart( "add_escorts", rnd.int(2000, 5000) )
       end
@@ -157,7 +178,7 @@ function jump ()
       player.msg( talk[6] )
       misn.setDesc( string.format(misn_desc[2],
             misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
    end
 end
 
@@ -222,24 +243,30 @@ end
 
 
 -- Adds escorts that weren't killed sometime.
-function add_escorts ()
+function add_escorts( landed )
+   local param
+   if landed then
+      param = enter_vect
+   else
+      param = last_sys
+   end
    if esc_pacifier then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
-      paci = pilot.add("Empire Pacifier", "escort_player", enter_vect, true)
+      paci = pilot.add("Empire Pacifier", "escort_player", param)
       paci = paci[1]
       paci:setFriendly()
       hook.pilot(paci, "death", "paci_dead")
    end
    if esc_lancelot1 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
-      lance1 = pilot.add("Empire Lancelot", "escort_player", enter_vect, true)
+      lance1 = pilot.add("Empire Lancelot", "escort_player", param)
       lance1 = lance1[1]
       lance1:setFriendly()
       hook.pilot(lance1, "death", "lance1_dead")
    end
    if esc_lancelot2 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
-      lance2 = pilot.add("Empire Lancelot", "escort_player", enter_vect, true)
+      lance2 = pilot.add("Empire Lancelot", "escort_player", param)
       lance2 = lance2[1]
       lance2:setFriendly()
       hook.pilot(lance2, "death", "lance2_dead")
@@ -288,12 +315,12 @@ function trinity_kill () -- Got killed
    misn_stage = 2
    trinity_alive = false
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-   misn.setMarker(misn_base_sys)
+   misn.markerMove( misn_marker, misn_base_sys )
 end
 function trinity_jump () -- Got away
    player.msg( talk[6] )
    misn_stage = 2
    trinity_alive = true
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-   misn.setMarker(misn_base_sys)
+   misn.markerMove( misn_marker, misn_base_sys )
 end

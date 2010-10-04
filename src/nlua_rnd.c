@@ -22,7 +22,7 @@
 #include "ndata.h"
 
 
-/* rnd */
+/* Random methods. */
 static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
 static int rnd_twosigma( lua_State *L );
@@ -85,12 +85,12 @@ int nlua_loadRnd( lua_State *L )
  * @luafunc rnd( x, y )
  */
 static int rnd_int( lua_State *L )
-{  
+{
    int o;
    int l,h;
-   
+
    o = lua_gettop(L);
-   
+
    if (o==0)
       lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
    else if (o==1) { /* random int 0 <= x <= parameter */
@@ -102,8 +102,8 @@ static int rnd_int( lua_State *L )
       h = luaL_checkint(L,2);
       lua_pushnumber(L, RNG(l,h));
    }
-   else NLUA_INVALID_PARAMETER();
-   
+   else NLUA_INVALID_PARAMETER(L);
+
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
 /**
@@ -143,7 +143,7 @@ static int rnd_twosigma( lua_State *L )
 /**
  * @brief Creates a number in the three-sigma range [-3:3].
  *
- * This function behaves much like it's brothers rnd.sigma and rnd.twosigma.  The main
+ * This function behaves much like its brothers rnd.sigma and rnd.twosigma.  The main
  *  difference is that it uses the three-sigma range which is the 99% quadrant.  It
  *  will rarely generate numbers outside the [-2:2] range (about 5% of the time) and
  *  create numbers outside of the [-1:1] range about 37% of the time.  This can be used

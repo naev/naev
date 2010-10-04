@@ -37,7 +37,7 @@ static const luaL_reg cli_methods[] = {
  *    @return 0 on success.
  */
 int nlua_loadCLI( lua_State *L )
-{  
+{
    luaL_register(L, "cli", cli_methods);
    return 0;
 }
@@ -63,9 +63,11 @@ int nlua_loadCLI( lua_State *L )
 static int cli_missionStart( lua_State *L )
 {
    const char *str;
+   int ret;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
+   ret = mission_start( str, NULL );
+   if (ret) {
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }
@@ -84,9 +86,11 @@ static int cli_missionStart( lua_State *L )
 static int cli_missionTest( lua_State *L )
 {
    const char *str;
+   int ret;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str )) {
+   ret = mission_start( str, NULL );
+   if (ret) {
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }

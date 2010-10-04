@@ -39,6 +39,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
 
    misn_target, misn_target_sys = planet.get("Eiroik")
 
@@ -48,9 +49,9 @@ function create ()
       misn.accept()
 
       misn_stage = 0
-      blockade_sys = system.get("NGC-7132")
+      blockade_sys = system.get("Hades")
       misn_base, misn_base_sys = planet.get("Omega Station")
-      misn.setMarker(misn_target_sys)
+      misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -65,7 +66,7 @@ end
 
 -- Handles jumping to target system
 function jump ()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- Create some havoc
@@ -73,10 +74,10 @@ function jump ()
       d = rnd.rnd( 900, 1200 )
       a = rnd.rnd() * 2 * math.pi
       swarm_position = vec2.new( d*math.cos(a), d*math.sin(a) )
-      pilot.add("Collective Sml Swarm", "def", swarm_position)
+      pilot.add("Collective Sml Swarm", nil, swarm_position)
       misn.timerStart( "reinforcements", 3000 )
       misn.timerStart( "drone_incoming", 9000 )
-   elseif factions["Collective"] then
+   elseif factions[ "Collectvie" ] and factions[ "Collective" ] > 200 then
       pilot.add("Collective Sml Swarm")
       pilot.add("Collective Sml Swarm")
    elseif sys == blockade_sys then
@@ -97,7 +98,7 @@ end
 
 -- Creates more drones
 function drone_incoming ()
-   local sys = system.get()
+   local sys = system.cur()
    if sys == misn_target_sys then -- Not add indefinately
       pilot.add("Collective Sml Swarm")
       misn.timerStart( "drone_incoming", 9000 )
@@ -128,15 +129,15 @@ function land ()
       tk.msg( title[2], text[5] )
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.setMarker(misn_base_sys)
+      misn.markerMove( misn_marker, misn_base_sys )
 
       -- Add goods
-      misn_cargo = misn.addCargo( "Datapad", 0 )
+      misn_cargo = misn.cargoAdd( "Datapad", 0 )
 
    elseif misn_stage == 1 and pnt == misn_base then
 
       tk.msg( title[3], text[6] )
-      misn.rmCargo( misn_cargo )
+      misn.cargoRm( misn_cargo )
 
       -- Rewards
       player.modFaction("Empire",5)

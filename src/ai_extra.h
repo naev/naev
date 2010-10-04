@@ -21,7 +21,7 @@ void ai_destroy( Pilot* p );
 /*
  * Task related.
  */
-Task *ai_newtask( Pilot *p, const char *func, int pos );
+Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos );
 void ai_freetask( Task* t );
 void ai_cleartasks( Pilot* p );
 
@@ -31,8 +31,6 @@ void ai_cleartasks( Pilot* p );
 void ai_attacked( Pilot* attacked, const unsigned int attacker );
 void ai_refuel( Pilot* refueler, unsigned int target );
 void ai_getDistress( Pilot* p, const Pilot* distressed );
-int ai_pinit( Pilot *p, const char *ai );
-void ai_destroy( Pilot* p );
 void ai_think( Pilot* pilot, const double dt );
 void ai_setPilot( Pilot *p );
 

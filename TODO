@@ -2,7 +2,6 @@
 
    VITAL
 
-   *) Integrate the resource editor possibly.
    *) Asteroids
    *) More missions
        *) FLF Nebula Campaign
@@ -17,9 +16,6 @@
    *) Escorts available for hire
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
-   *) Secondary weapon revamp
-      *) Players should be able to configure what outfit they want as secondary
-      *) Players should also be able to set hotkeys for secondary weapons
    *) Simplify controls
       *) Emacs-style bindings
       *) Combine similar commands into one
@@ -28,16 +24,11 @@
 
    MINOR
 
-   *) Add more threads to speed up loading
-      *) Thread nebula generation.
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
       *) very rare
       *) random mutation for cloaking/displacement abilities
-   *) Optimize texture usage
-      *) all land graphics should be on land only (optionally)
-      *) planet space graphics should be ondemand
    *) Graphic improvements
       *) have ships flying in nebula leave traces
       *) missile smoke
@@ -61,8 +52,6 @@
       *) Optimize cache for loading
    *) Testing improvements
       *) Allow console to reload data (to avoid restarts)
-   *) ^F for maps.
-   *) Tech packages.
 
 
    MAYBE... SOMEDAY...

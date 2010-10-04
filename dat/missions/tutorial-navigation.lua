@@ -93,7 +93,7 @@ function start()
 end
 
 function tutTakeoff()
-   misn_sys = system.get()
+   misn_sys = system.cur()
    tk.msg(title[1], string.format(text[2], naev.getKey("starmap"), naev.getKey("thyperspace"), naev.getKey("jump"), naev.getKey("autonav")))
    tk.msg(title[2], text[3])
    tk.msg(title[3], text[4])
@@ -102,9 +102,9 @@ end
 
 
 function tutEnter()
-   enter_sys = system.get()
+   enter_sys = system.cur()
    if enter_sys ~= misn_sys then
-      misn.timerStart("tutEnd", 5000)
+      hook.timer(5000, "tutEnd")
    end
 end
    

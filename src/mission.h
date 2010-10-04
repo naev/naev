@@ -10,6 +10,7 @@
 #include "nlua_misn.h"
 
 #include "opengl.h"
+#include "claim.h"
 
 
 /* availability by location */
@@ -29,16 +30,15 @@
 /* actual flags */
 #define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
 
-#define MISSION_TIMER_MAX     10 /**< Maximum amount of timers in a mission. */
-
 
 /**
  * @brief Different type of system markers.
  */
 typedef enum SysMarker_ {
-   SYSMARKER_MISC, /**< Miscellaneous marker. */
-   SYSMARKER_RUSH, /**< Rush mission marker. */
-   SYSMARKER_CARGO /**< Cargo mission marker. */
+   SYSMARKER_COMPUTER,  /**< Marker is for mission computer missions. */
+   SYSMARKER_LOW,       /**< Marker is for low priority mission targets. */
+   SYSMARKER_HIGH,      /**< Marker is for high priority mission targets. */
+   SYSMARKER_PLOT       /**< Marker is for plot priority (ultra high) mission targets. */
 } SysMarker;
 
 
@@ -80,6 +80,16 @@ typedef struct MissionData_ {
 
 
 /**
+ * @brief Mission system marker.
+ */
+typedef struct MissionMarker_ {
+   int id;
+   int sys; /**< ID of marked system. */
+   SysMarker type; /**< Marker type. */
+} MissionMarker;
+
+
+/**
  * @struct Mission
  *
  * @brief Represents an active mission.
@@ -99,16 +109,15 @@ typedef struct Mission_ {
    unsigned int *cargo; /**< Cargos given to player. */
    int ncargo; /**< Number of cargos given to player. */
 
-   char *sys_marker; /**< System to mark. */
-   SysMarker sys_markerType; /**< Type of the marker. */
-
-   /* Timers. */
-   double timer[MISSION_TIMER_MAX]; /**< Mission timers. */
-   char *tfunc[MISSION_TIMER_MAX]; /**< Functions assosciated to the timers. */
+   /* Markers. */
+   MissionMarker *markers; /**< Markers array. */
 
    /* OSD. */
    unsigned int osd; /**< On-Screen Display ID. */
    int osd_set; /**< OSD was set explicitly. */
+
+   /* Claims. */
+   SysClaim_t *claims; /**< System claims. */
 
    lua_State *L; /**< The state of the running lua code. */
 } Mission;
@@ -128,14 +137,14 @@ Mission* missions_genList( int *n, int faction,
       const char* planet, const char* sysname, int loc );
 int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( int loc, int faction, const char* planet, const char* sysname );
-int mission_start( const char *name );
+int mission_start( const char *name, unsigned int *id );
 
 /*
  * misc
  */
-void missions_update( const double dt );
 int mission_getID( const char* name );
 MissionData* mission_get( int id );
+int mission_addMarker( Mission *misn, int id, int sys, SysMarker type );
 void mission_sysMark (void);
 void mission_sysComputerMark( Mission* misn );
 
@@ -162,6 +171,11 @@ int misn_tryRun( Mission *misn, const char *func );
 lua_State *misn_runStart( Mission *misn, const char *func );
 int misn_runFunc( Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
+
+/*
+ * CLaims.
+ */
+void missions_activateClaims (void);
 
 
 #endif /* MISSION_H */

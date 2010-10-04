@@ -60,6 +60,11 @@ end
 
 
 function create ()
+    missys = {system.get("C-43"), system.get("C-28")}
+    if not misn.claim(missys) then
+        abort()
+    end
+
    misn.setNPC( "Keer", "keer" )
    misn.setDesc( bar_desc )
 end
@@ -81,7 +86,7 @@ function accept ()
    misn_base, misn_base_sys = planet.get("Omega Station")
    misn_target_sys = system.get("C-43")
    misn_final_sys = system.get("C-28")
-   misn.setMarker(misn_target_sys)
+   misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
    misn.setTitle(misn_title)
@@ -91,14 +96,20 @@ function accept ()
    tk.msg( title[2], string.format( text[2],
          misn_target_sys:name(), misn_final_sys:name() ) )
 
+   hook.jumpout("jumpout")
    hook.enter("jump")
    hook.land("land")
 end
 
 
+function jumpout ()
+   last_sys = system.cur()
+end
+
+
 -- Handles jumping to target system
 function jump ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 0 then
 
@@ -122,7 +133,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilots) do
                v:setFriendly()
             end
@@ -139,7 +150,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
                v:setHostile()
@@ -170,7 +181,7 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
             for k,v in ipairs(pilot) do
                v:setFriendly()
             end
@@ -190,7 +201,7 @@ function jump ()
          col_alive = 0
          for k,v in ipairs(col_fleets) do
             spawn_vect:add( rnd.rnd(-offset,offset), rnd.rnd(-offset,offset) )
-            pilots = pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, nil, spawn_vect )
 
             -- Handle special ships
             if v == "Starfire" then
@@ -247,7 +258,7 @@ end
 
 function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Trader Mule", "empire_refuel" )[1]
+   refship = pilot.add( "Trader Mule", "empire_refuel", last_sys )[1]
    refship:rename("Fuel Tanker")
    refship:setFaction("Empire")
    refship:setFriendly()
@@ -260,8 +271,8 @@ function addRefuelShip ()
 
    -- Add some escorts
    refesc = {}
-   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
-   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", refship:pos(), true )[1]
+   refesc[1] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
+   refesc[2] = pilot.add( "Empire Lancelot", "empire_idle", last_sys )[1]
    for k,v in ipairs(refesc) do
       v:setFriendly()
    end
@@ -280,12 +291,12 @@ function col_dead ()
       if misn_stage == 1 then
          misn.setDesc( string.format(misn_desc[2], misn_final_sys:name() ))
          player.msg( string.format( talk[1], misn_final_sys:name() ))
-         misn.setMarker(misn_final_sys)
+         misn.markerMove( misn_marker, misn_final_sys )
          misn_stage = 2
       elseif misn_stage == 3 then
          misn.setDesc( string.format(misn_desc[3], misn_base:name(), misn_base_sys:name() ))
          player.msg( string.format( talk[2], misn_base_sys:name() ))
-         misn.setMarker(misn_base_sys)
+         misn.markerMove( misn_marker, misn_base_sys )
          misn_stage = 4
       end
 

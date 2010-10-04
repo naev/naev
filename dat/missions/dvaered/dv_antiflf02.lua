@@ -78,6 +78,11 @@ else -- default english
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname"))}
+    if not misn.claim(missys) then
+        abort()
+    end
+
     misn.setNPC("Dvaered liaison", "dv_liason")
     misn.setDesc(npc_desc)
 end
@@ -94,15 +99,16 @@ function accept()
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setTitle(misn_title)
-        misn.setMarker(system.get(destsysname), "misc")
+        misn.markerAdd( system.get(destsysname), "low" )
         
         missionstarted = false
         DVdisablefail = true
         logsfound = false
         flfdead = 0
         
-        misn.addCargo("FLF IFF Transponder", 0)
-        
+        misn.cargoAdd("FLF IFF Transponder", 0)
+       
+        hook.jumpout("jumpout")
         hook.enter("enter")
         hook.land("land")
     else
@@ -111,12 +117,16 @@ function accept()
     end
 end
 
+function jumpout()
+    last_sys = system.cur()
+end
+
 function enter()
     if system.cur():name() == destsysname and not logsfound then
         pilot.clear()
         pilot.toggleSpawn(false)
         misn.osdActive(2)
-        misn.timerStart("spawnDV", 15000)
+        hook.timer(15000, "spawnDV")
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerRaw(-10)
@@ -137,11 +147,13 @@ end
 function spawnDV()
     misn.osdActive(3)
     missionstarted = true
-    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_nojump", player:pilot():pos(), true)
+    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_nojump", last_sys)
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
         j:setHostile()
+        j:setHilight(true)
+        j:setPlayervis()
         j:rmOutfit("all")
         j:addOutfit("Plasma Blaster MK2", 2)
         j:addOutfit("Shield Booster", 1)
@@ -150,21 +162,21 @@ function spawnDV()
         hook.pilot(j, "disable", "disableDV")
     end
     
-    misn.timerStart("pollHealth", 500)
+    hook.timer(500, "pollHealth")
 end
 
 -- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armor are below a certain value.
 function pollHealth()
     shieldDV = 0
-    parmor, pshield = player.pilot():getHealth()
+    parmor, pshield = player.pilot():health()
     for i, j in ipairs(fleetDV) do
-        armor, shield = j:getHealth()
+        armor, shield = j:health()
         shieldDV = shieldDV + shield
     end
     if parmor <= 70 and pshield <= 10 and shieldDV <= 250 then
         spawnFLF()
     else
-        misn.timerStart("pollHealth", 500)
+        hook.timer(500, "pollHealth")
     end
 end
 
@@ -174,18 +186,21 @@ function spawnFLF()
     misn.osdActive(4)
     for i, j in ipairs(fleetDV) do
         j:setFriendly()
+        j:setHilight(false)
         j:changeAI("dvaered_nojump")
     end
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
-    fleetFLF = pilot.add("FLF Vendetta Sextet", "flf_nojump", player:pilot():pos() + vecFLF, false)
+    fleetFLF = pilot.add("FLF Vendetta Sextet", "flf_nojump", player:pilot():pos() + vecFLF )
     fleetDV[1]:comm(comm_msg)
     
     for i, j in ipairs(fleetFLF) do
-       hook.pilot(j, "disable", "disableFLF")
-       hook.pilot(j, "death", "deathFLF")
-       hook.pilot(j, "board", "boardFLF")
+        j:setHilight(true)
+        j:setPlayervis()
+        hook.pilot(j, "disable", "disableFLF")
+        hook.pilot(j, "death", "deathFLF")
+        hook.pilot(j, "board", "boardFLF")
     end
 end
 
@@ -223,6 +238,13 @@ function boardFLF()
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             j:changeAI("flee") -- Make them jump out (if they're not dead!)
+        end
+    end
+    for _, j in ipairs(fleetFLF) do
+        if j:exists() then
+            j:setHilight(false)
+            j:setPlayervis(false)
+            j:setNoboard(true)
         end
     end
 end

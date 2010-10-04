@@ -37,7 +37,7 @@ static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
 
 
-/* 
+/*
  * window stuff
  */
 #define MIN_WINDOWS  3 /**< Minimum windows to prealloc. */
@@ -75,9 +75,10 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
 /* input */
 static void toolkit_mouseEvent( Window *w, SDL_Event* event );
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint8 type, Uint8 button, int x, int y, int rx, int ry );
+      Uint32 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
+static void toolkit_focusClear( Window *wdw );
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 /* render */
@@ -158,7 +159,7 @@ Widget* window_newWidget( Window* w, const char *name )
 
       /* Should be destroyed. */
       if (!wgt_isFlag( wgt, WGT_FLAG_KILL )) {
-         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed", 
+         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed",
                name );
          return NULL;
       }
@@ -280,7 +281,7 @@ void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y )
 {
    Widget *wgt;
-  
+
    /* Get widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
@@ -307,7 +308,7 @@ void window_moveWidget( const unsigned int wid,
 {
    Window *wdw;
    Widget *wgt;
-  
+
    /* Get window. */
    wdw = window_wget(wid);
    if (wdw == NULL)
@@ -413,7 +414,7 @@ unsigned int window_create( const char* name,
    }
 
    if (toolkit_open==0) { /* toolkit is on */
-      SDL_ShowCursor(SDL_ENABLE);
+      input_mouseShow();
       toolkit_open = 1; /* enable toolkit */
       pause_game();
       gl_defViewport(); /* Reset the default viewport */
@@ -450,7 +451,7 @@ void window_setParent( unsigned int wid, unsigned int parent )
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return;
 
    /* Set the parent. */
@@ -470,7 +471,7 @@ unsigned int window_getParent( unsigned int wid )
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return 0;
 
    /* Get the parent. */
@@ -493,7 +494,7 @@ void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return;
 
    /* Set the close function. */
@@ -517,7 +518,7 @@ void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*
 
    /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw == NULL) 
+   if (wdw == NULL)
       return;
 
    /* Set the accept function. */
@@ -586,7 +587,7 @@ void window_handleEvents( const unsigned int wid,
       return;
 
    /* Set key event handler function. */
-   wdw->eventevent = eventhandler;;
+   wdw->eventevent = eventhandler;
 }
 
 
@@ -743,6 +744,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 
    /* There's dead stuff now. */
    window_dead = 1;
+   wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    wgt_setFlag( wgt, WGT_FLAG_KILL );
 }
 
@@ -768,13 +770,99 @@ static void widget_kill( Widget *wgt )
  *    @param w Width.
  *    @param h Height.
  *    @param b Border width.
+ *    @param thick Thickness of the border.
+ *    @param c Colour.
+ *    @param lc Light colour.
+ */
+void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
+                          int thick, glColour* c, glColour* lc )
+{
+   GLshort tri[5][4];
+   glColour colours[10];
+
+   /* Set shade model. */
+   glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
+
+   x -= b - thick;
+   w += 2 * (b - thick);
+   y -= b - thick;
+   h += 2 * (b - thick);
+   lc = lc ? lc : c;
+
+   /* Left-up. */
+   tri[0][0]     = x;         /* Inner */
+   tri[0][1]     = y;
+   tri[0][2]     = x-thick;   /* Outter */
+   tri[0][3]     = y-thick;
+   colours[0]    = *lc;
+   colours[1]    = *lc;
+
+   /* Left-down. */
+   tri[1][0]     = x;         /* Inner. */
+   tri[1][1]     = y + h;
+   tri[1][2]     = x-thick;   /* Outter. */
+   tri[1][3]     = y + h+thick;
+   colours[2]    = *c;
+   colours[3]    = *c;
+
+   /* Right-down. */
+   tri[2][0]     = x + w;       /* Inner. */
+   tri[2][1]     = y + h;
+   tri[2][2]     = x + w+thick; /* Outter. */
+   tri[2][3]     = y + h+thick;
+   colours[4]    = *c;
+   colours[5]    = *c;
+
+   /* Right-up. */
+   tri[3][0]     = x + w;       /* Inner. */
+   tri[3][1]     = y;
+   tri[3][2]     = x + w+thick; /* Outter. */
+   tri[3][3]     = y-thick;
+   colours[6]    = *lc;
+   colours[7]    = *lc;
+
+   /* Left-up. */
+   tri[4][0]     = x;         /* Inner */
+   tri[4][1]     = y;
+   tri[4][2]     = x-thick;   /* Outter */
+   tri[4][3]     = y-thick;
+   colours[8]    = *lc;
+   colours[9]    = *lc;
+
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof(tri), tri );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
+
+   /* Set up the VBO. */
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw the VBO. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
+}
+
+
+/**
+ * @brief Draws an outline.
+ *
+ * If lc is NULL, colour will be flat.
+ *
+ *    @param x X position to draw at.
+ *    @param y Y position to draw at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param b Border width.
  *    @param c Colour.
  *    @param lc Light colour.
  */
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           glColour* c, glColour* lc )
 {
-   GLint lines[4][2];
+   GLshort lines[4][2];
    glColour colours[4];
 
    /* Set shade model. */
@@ -785,7 +873,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    lc = lc ? lc : c;
 
    /* Lines. */
-   lines[0][0]   = x;      /* left-up */
+   lines[0][0]   = x - 1;  /* left-up */
    lines[0][1]   = y;
    colours[0]    = *lc;
 
@@ -806,8 +894,8 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(colours), colours );
 
    /* Set up the VBO. */
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY, 
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
@@ -831,7 +919,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
 void toolkit_drawRect( int x, int y, int w, int h,
                        glColour* c, glColour* lc )
 {
-   GLint vertex[4][2];
+   GLshort vertex[4][2];
    glColour colours[4];
 
    /* Set shade model. */
@@ -862,7 +950,7 @@ void toolkit_drawRect( int x, int y, int w, int h,
 
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY,
-                         0, 2, GL_INT, 0 );
+                         0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
                          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
@@ -914,35 +1002,7 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    c2.a = 0.7;
    toolkit_drawRect( x-1, y-5, w+6, h+6, &c2, NULL );
    toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
-}
-
-
-/**
- * @brief Sets up 2d clipping planes around a rectangle.
- *
- *    @param x X position of the rectangle.
- *    @param y Y position of the rectangle.
- *    @param w Width of the rectangle.
- *    @param h Height of the rectangle.
- */
-void toolkit_clip( int x, int y, int w, int h )
-{
-   double rx, ry, rw, rh;
-   rx = (x + (double)SCREEN_W/2) / gl_screen.mxscale;
-   ry = (y + (double)SCREEN_H/2) / gl_screen.myscale;
-   rw = w / gl_screen.mxscale;
-   rh = h / gl_screen.myscale;
-   glScissor( rx, ry, rw, rh );
-   glEnable( GL_SCISSOR_TEST );
-}
-/**
- * @brief Clears the 2d clipping planes.
- */
-void toolkit_unclip (void)
-{
-   glDisable( GL_SCISSOR_TEST );
-   glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
+   gl_printTextRaw( &gl_smallFont, w, h, x, y, &cBlack, alt );
 }
 
 
@@ -954,15 +1014,15 @@ void toolkit_unclip (void)
 static void window_renderBorder( Window* w )
 {
    int i;
-   GLint cx, cy;
+   GLshort cx, cy;
    double x, y;
    glColour *lc, *c, *dc, *oc;
-   GLint vertex[31*4];
+   GLshort vertex[31*4];
    GLfloat colours[31*4];
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /* colours */
    lc = &cGrey90;
@@ -979,8 +1039,8 @@ static void window_renderBorder( Window* w )
       toolkit_drawRect( x, y+0.6*w->h, w->w, 0.4*w->h, c, NULL );
       /* Name. */
       gl_printMidRaw( &gl_defFont, w->w,
-            x + (double)SCREEN_W/2.,
-            y + w->h - 20. + (double)SCREEN_H/2.,
+            x,
+            y + w->h - 20.,
             &cBlack, w->name );
       return;
    }
@@ -996,7 +1056,7 @@ static void window_renderBorder( Window* w )
    /* Both sides. */
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
          toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
-   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_INT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    /* Colour is shared. */
    colours[0] = c->r;
    colours[1] = c->g;
@@ -1052,8 +1112,8 @@ static void window_renderBorder( Window* w )
    vertex[29] = cy - 1;
    vertex[30] = cx + 21;
    vertex[31] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*16, vertex );
-   glDrawArrays( GL_POLYGON, 0, 16 );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
    /* Right side vertex. */
    cx = x + w->w;
    cy = y;
@@ -1090,11 +1150,11 @@ static void window_renderBorder( Window* w )
    vertex[29] = cy - 1;
    vertex[30] = cx - 21;
    vertex[31] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*16, vertex );
-   glDrawArrays( GL_POLYGON, 0, 16 );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*16, vertex );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 16 );
 
 
-   /* 
+   /*
     * inner outline
     */
    /* Colour. */
@@ -1191,7 +1251,7 @@ static void window_renderBorder( Window* w )
    cy = y + 1;
    vertex[60] = cx + 21;
    vertex[61] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*31, vertex );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*31, vertex );
    glDrawArrays( GL_LINE_LOOP, 0, 31 );
 
 
@@ -1281,7 +1341,7 @@ static void window_renderBorder( Window* w )
    cy = y;
    vertex[60] = cx + 21;
    vertex[61] = cy;
-   gl_vboSubData( toolkit_vbo, 0, sizeof(GLint) * 2*31, vertex );
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLshort) * 2*31, vertex );
    glDrawArrays( GL_LINE_LOOP, 0, 31 );
 
    /* Clean up. */
@@ -1291,8 +1351,8 @@ static void window_renderBorder( Window* w )
     * render window name
     */
    gl_printMidRaw( &gl_defFont, w->w,
-         x + (double)SCREEN_W/2.,
-         y + w->h - 20. + (double)SCREEN_H/2.,
+         x,
+         y + w->h - 20.,
          &cBlack, w->name );
 }
 
@@ -1308,8 +1368,8 @@ void window_render( Window *w )
    Widget *wgt;
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /* See if needs border. */
    if (!window_isFlag( w, WINDOW_NOBORDER ))
@@ -1349,8 +1409,8 @@ void window_renderOverlay( Window *w )
    Widget *wgt;
 
    /* position */
-   x = w->x - (double)SCREEN_W/2.;
-   y = w->y - (double)SCREEN_H/2.;
+   x = w->x;
+   y = w->y;
 
    /*
     * overlays
@@ -1382,7 +1442,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);
    toolkit_drawRect( x, sy, w, 30., toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( x, sy, w, 30., 0., toolkit_colDark, NULL );
+   toolkit_drawOutline( x + 1, sy, w - 1, 30., 0., toolkit_colDark, NULL );
 }
 
 
@@ -1495,25 +1555,23 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
  *    @param[out] y Resulting Y coord in window space.
  *    @param[out] rx Relative X movement (only valid for motion).
  *    @param[out] ry Relative Y movement (only valid for motion).
- *    @param convert Should it convert the event also?
  *    @return The type of the event.
  */
-Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
-      int *x, int *y, int *rx, int *ry, int convert )
+Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+      int *x, int *y, int *rx, int *ry )
 {
    /* Extract the position as event. */
    if (event->type==SDL_MOUSEMOTION) {
-      *x = (double)event->motion.x;
-      *y = (double)gl_screen.rh - (double)event->motion.y;
+      *x = event->motion.x;
+      *y = event->motion.y;
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
-      *x = (double)event->button.x;
-      *y = (double)gl_screen.rh - (double)event->button.y;
+      *x = event->button.x;
+      *y = event->button.y;
    }
 
-   /* Handle possible window scaling. */
-   *x *= gl_screen.mxscale;
-   *y *= gl_screen.myscale;
+   /* Translate offset. */
+   gl_windowToScreenPos( x, y, *x, *y );
 
    /* Transform to relative to window. */
    *x -= w->x;
@@ -1521,27 +1579,12 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 
    /* Relative only matter if mouse motion. */
    if (event->type==SDL_MOUSEMOTION) {
-      *ry = (double)event->motion.yrel * gl_screen.mxscale;;
+      *ry = (double)event->motion.yrel * gl_screen.mxscale;
       *rx = (double)event->motion.xrel * gl_screen.myscale;
    }
    else {
       *ry = 0;
       *rx = 0;
-   }
-
-   /* See if should convert base event. */
-   if (convert) {
-      if (event->type == SDL_MOUSEMOTION) {
-         event->motion.x = *x;
-         event->motion.y = *y;
-         event->motion.xrel = *rx;
-         event->motion.yrel = *ry;
-      }
-      else if ((event->type==SDL_MOUSEBUTTONDOWN) ||
-            (event->type==SDL_MOUSEBUTTONUP)) {
-         event->button.x = *x;
-         event->button.y = *y;
-      }
    }
 
    return event->type;
@@ -1557,11 +1600,12 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    Widget *wgt;
-   Uint8 type, button;
+   Uint32 type;
+   Uint8 button;
    int x, y, rx, ry;
 
    /* Translate mouse coords. */
-   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry, 1 );
+   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
 
    /* Check each widget. */
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -1592,7 +1636,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param event Event recieved by the window.
  */
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
-      Uint8 type, Uint8 button, int x, int y, int rx, int ry )
+      Uint32 type, Uint8 button, int x, int y, int rx, int ry )
 {
    int inbounds;
 
@@ -1638,8 +1682,11 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
          if (button == SDL_BUTTON_LEFT)
             wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
-         if (toolkit_isFocusable(wgt))
+         if (toolkit_isFocusable(wgt)) {
+            toolkit_focusClear( w );
             w->focus = wgt->id;
+            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+         }
 
          /* Try to give the event to the widget. */
          if (wgt->mclickevent != NULL)
@@ -1748,7 +1795,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         if ((*wgt->keyevent)( wgt, key, mod ))
+         if (wgt->keyevent( wgt, key, mod ))
             return 1;
       }
       if (wgt->textevent != NULL) {
@@ -1887,7 +1934,7 @@ void toolkit_update (void)
 
    /* Killed all the windows. */
    if (windows == NULL) {
-      SDL_ShowCursor(SDL_DISABLE);
+      input_mouseHide();
       toolkit_open = 0; /* disable toolkit */
       if (paused)
          unpause_game();
@@ -1944,6 +1991,17 @@ void toolkit_update (void)
 
 
 /**
+ * @brief Clears the window focus.
+ */
+static void toolkit_focusClear( Window *wdw )
+{
+   Widget *wgt;
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
+}
+
+
+/**
  * @brief Sanitizes the focus of a window.
  *
  * Makes sure the window has a focusable widget focused.
@@ -1951,6 +2009,9 @@ void toolkit_update (void)
 void toolkit_focusSanitize( Window *wdw )
 {
    Widget *wgt;
+
+   /* Clear focus. */
+   toolkit_focusClear( wdw );
 
    /* No focus is always sane. */
    if (wdw->focus == -1)
@@ -1963,6 +2024,9 @@ void toolkit_focusSanitize( Window *wdw )
          if (!toolkit_isFocusable(wgt)) {
             wdw->focus = -1;
             toolkit_nextFocus( wdw ); /* Get first focus. */
+         }
+         else {
+            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
          }
          return;
       }
@@ -1978,6 +2042,9 @@ void toolkit_nextFocus( Window *wdw )
    Widget *wgt;
    int next;
 
+   /* Clear focus. */
+   toolkit_focusClear( wdw );
+
    /* See what to focus. */
    next = (wdw->focus == -1);
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -1986,6 +2053,7 @@ void toolkit_nextFocus( Window *wdw )
 
       if (next) {
          wdw->focus = wgt->id;
+         wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
          return;
       }
       else if (wdw->focus == wgt->id)
@@ -2005,6 +2073,9 @@ void toolkit_prevFocus( Window *wdw )
 {
    Widget *wgt, *prev;
 
+   /* Clear focus. */
+   toolkit_focusClear( wdw );
+
    /* See what to focus. */
    prev = NULL;
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
@@ -2015,8 +2086,10 @@ void toolkit_prevFocus( Window *wdw )
       if (wdw->focus == wgt->id) {
          if (prev == NULL)
             wdw->focus = -1;
-         else
+         else {
             wdw->focus = prev->id;
+            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+         }
          return;
       }
 
@@ -2027,8 +2100,10 @@ void toolkit_prevFocus( Window *wdw )
    /* Focus nothing. */
    if (prev == NULL)
       wdw->focus = -1;
-   else
+   else {
       wdw->focus = prev->id;
+      wgt_setFlag( prev, WGT_FLAG_FOCUSED );
+   }
    return;
 }
 
@@ -2087,6 +2162,7 @@ static Widget* toolkit_getFocus( Window *wdw )
          return wgt;
 
    /* Not found. */
+   toolkit_focusClear( wdw );
    wdw->focus = -1;
    return NULL;
 }
@@ -2102,12 +2178,12 @@ int toolkit_init (void)
    GLsizei size;
 
    /* Create the VBO. */
-   toolkit_vboColourOffset = sizeof(GLint) * 2 * 31;
-   size = (sizeof(GLint)*2 + sizeof(GLfloat)*4) * 31;
+   toolkit_vboColourOffset = sizeof(GLshort) * 2 * 31;
+   size = (sizeof(GLshort)*2 + sizeof(GLfloat)*4) * 31;
    toolkit_vbo = gl_vboCreateStream( size, NULL );
 
    /* DIsable the cursor. */
-   SDL_ShowCursor(SDL_DISABLE);
+   input_mouseHide();
 
    return 0;
 }

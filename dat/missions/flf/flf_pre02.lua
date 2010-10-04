@@ -18,8 +18,8 @@ else -- default english
     FLFosd = {}
     DVosd = {}
     
-    introfirst = [[    The FLF officer doesn't seem at all surprised that you approached him. On the contrary, he looks like he expected you to do so all along.
-    "Greetings," he says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exhange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
+    introfirst = [[    The FLF officer doesn't seem at all surprised that you approached her. On the contrary, she looks like she expected you to do so all along.
+    "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exhange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
     ]]
     
     introrepeat = [[    "Hello again, %s" Corporal Benito says to you. "I see you've come back, though I can't imagine you're here to meet up with any friends."
@@ -27,7 +27,7 @@ else -- default english
     
     title[1] = "A chance to prove yourself"
     text[1] = [[Indeed, you are constantly aware of the furtive glances the other people in this bar are giving you. They don't seem outright hostile, but you can tell that if you don't watch your step and choose your words carefully, things might quickly take a turn for the worse.
-    Benito waves his hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]
+    Benito waves her hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]
     
     title[2] = "Patrol-B-gone"
     text[2] = [[    "I'm happy to hear that. It's good to know we still have the support from the common man. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will have to go out there and make it so the Dvaered don't patrol anymore."
@@ -43,10 +43,10 @@ else -- default english
     
     title[5] = "Breaking the ice"
     text[5] = [[    When you left Sindbad station, it was a cold, lonely place for you. The FLF soldiers on the station avoided you whenever they could, and basic services were harder to get than they should have been. 
-    But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. He walks up to you and offers you his hand.
+    But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.
     "Welcome back, %s, and congratulations. We already know all about your success in battle against the Dvaered patrols. And before you ask, no, I didn't know they were going to field a Vigilance. I might not have sent you out there if I did. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"
     Benito takes you to the station's bar, and buys you what for lack of a better word must be called a drink.
-    "We will of course reward you for your service," he says once you are seated. "Though you must understand the FLF don't have that big a budget. Financial support is tricky, and the Frontier don't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass is among those you've impressed, you from today on, you can call yourself one of us! How about that, huh?"]]
+    "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF don't have that big a budget. Financial support is tricky, and the Frontier don't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, you from today on, you can call yourself one of us! How about that, huh?"]]
     
     text[6] = [[    "Of course, our work is only just beginning. You got those patrols off our backs, but they'll eventually return. No rest for the weary, we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. I'm sure you'll play an imporant role in our eventual victory over the Dvaered!"
     That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]]
@@ -97,11 +97,16 @@ else -- default english
     DVosd[1] = "Destroy your wingmen!"
     DVosd[2] = "Fly to the %s system and land on %s"
         
-    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. He seems somewhat more receptive than most people in the bar."
+    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. She seems somewhat more receptive than most people in the bar."
     
 end
 
 function create()
+    missys = {system.get(var.peek("flfbase_sysname")), system.get("Zacron"), system.get("Torg"), system.get("Klantar")}
+    if not misn.claim(missys) then
+        abort()
+    end
+    
     misn.setNPC("FLF petty officer", "flf_officer1")
     misn.setDesc(npc_desc)
 end
@@ -132,7 +137,7 @@ function accept()
             misn.osdCreate(misn_title, osd_desc)
             misn.setDesc(misn_desc)
             misn.setTitle(misn_title)
-            misn.setMarker(system.get(sysname[encounters]), "misc")
+            misn_marker = misn.markerAdd( system.get( sysname[encounters] ), "low" )
             misn.setReward(misn_rwrd)
             
             escarmor = {100, 100, 100, 100}
@@ -169,10 +174,10 @@ end
 
 function land()
     if spawnie ~= nil then
-        misn.timerStop(spawnie)
+        hook.rm(spawnie)
     end
     if hailie ~= nil then
-        misn.timerStop(hailie)
+        hook.rm(hailie)
     end
     
     if planet.cur():name() == "Sindbad" and encounters == 4 then
@@ -205,7 +210,7 @@ function takeoff()
     end
 
     -- Add the FLF wing, no need to keep track of health since it's a takeoff situation (other than death, obviously)
-    fleetFLF = pilot.add("Independent Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos(), false)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos())
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:rename("FLF Wingman")
@@ -232,22 +237,23 @@ function jumpin()
         tk.msg(failtitle, failtext)
         misn.finish(false) -- The player can accept the mission again, so don't abort().
     else
-        misn.timerStart("spawnFLF", 2000)
+        hook.timer(2000, "spawnFLF")
     end
 
     checkPatrol()
 end
 
 function jumpout()
+    last_sys = system.cur()
     if spawnie ~= nil then
-        misn.timerStop(spawnie)
+        hook.rm(spawnie)
     end
     if hailie ~= nil then
-        misn.timerStop(hailie)
+        hook.rm(hailie)
     end
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
-            escarmor[i], escshield[i] = j:getHealth()
+            escarmor[i], escshield[i] = j:health()
         end
     end
 end
@@ -261,13 +267,13 @@ function checkPatrol()
         pilot.toggleSpawn(false)
         
         if encounters < 3 then
-            spawnie = misn.timerStart("spawnSmallDV", 12000)
+            spawnie = hook.timer(12000, "spawnSmallDV")
         else
-            spawnie = misn.timerStart("spawnBigDV", 12000)
+            spawnie = hook.timer(12000, "spawnBigDV")
             dv_patrol = var.peek("dv_patrol")
             if dv_patrol ~= nil then
                 if var.peek("dv_patrol") >= 3 then
-                    hailie = misn.timerStart("hailEvent", 20000)
+                    hailie = hook.timer(20000, "hailEvent")
                 end
             end
         end
@@ -323,7 +329,7 @@ function hail()
             end
             
             if wingAlive then
-                misn.timerStart("commFLF", 3000)
+                hook.timer(3000, "commFLF")
                 
                 osd_desc[1] = DVosd[1]
                 osd_desc[2] = nil
@@ -344,7 +350,7 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = pilot.add("Independent Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos(), true)
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", last_sys))
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])
@@ -375,7 +381,7 @@ end
 
 -- Spawns a small Dvaered patrol
 function spawnSmallDV()
-    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", player.pos(), true)
+    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", last_sys)
     for i, j in ipairs(fleetDV) do
         j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         hook.pilot(j, "death", "DVdeath")
@@ -391,7 +397,7 @@ end
 
 -- Spawns a big Dvaered patrol
 function spawnBigDV()
-    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", player.pos(), true)
+    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", last_sys)
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then -- It's a mini-boss of sorts, but it should still be dumbed down.
             j:rmOutfit("all")
@@ -432,13 +438,13 @@ function DVdeath()
             osd_desc[2] = nil
             misn.osdActive(1)
             misn.osdCreate(misn_title, osd_desc)
-            misn.setMarker(system.get(var.peek("flfbase_sysname")), "misc")
+            misn.markerMove( misn_marker, system.get(var.peek("flfbase_sysname")) )
             retreat = false
         else
             osd_desc[1] = string.format(FLFosd[1], sysname[encounters])
             misn.osdCreate(misn_title, osd_desc)
             misn.osdActive(1)
-            misn.setMarker(system.get(sysname[encounters]), "misc")
+            misn.markerMove( misn_marker, system.get(sysname[encounters]) )
             retreat = true
         end
         -- Patrol clear.
@@ -470,7 +476,7 @@ function winDV()
     osd_desc[2] = nil
     misn.osdActive(1)
     misn.osdCreate(misn_title, osd_desc)
-    misn.setMarker(system.get(DVsys), "misc")
+    misn.markerMove( misn_marker, system.get(DVsys) )
     
     for i, j in ipairs(fleetDV) do
         if j:exists() then

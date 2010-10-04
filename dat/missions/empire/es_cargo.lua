@@ -37,19 +37,22 @@ end
 
 -- Create the mission
 function create()
+   -- Note: this mission does not make any system claims.
 
    -- target destination
    local i = 0
    local landed, landed_sys = planet.get()
+   local s
    repeat
       pnt,sys = planet.get( misn.factions() )
+      s = pnt:services()
       i = i + 1
-   until sys ~= landed_sys or i > 10
+   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
    end
-   misn.setMarker(sys,"rush") -- set system marker
+   misn.markerAdd( sys, "computer" )
    misn_dist = sys:jumpDist()
 
    -- mission generics
@@ -85,14 +88,14 @@ end
 
 -- Mission is accepted
 function accept()
-   if player.freeCargo() < carg_mass then
-      tk.msg( full[1], string.format( full[2], carg_mass-player.freeCargo() ))
+   if pilot.cargoFree(player.pilot()) < carg_mass then
+      tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
       misn.finish()
    elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-      carg_id = misn.addCargo( carg_type, carg_mass )
+      carg_id = misn.cargoAdd( carg_type, carg_mass )
       tk.msg( msg_title[1], string.format( msg_msg[1], carg_mass, carg_type ))
       hook.land( "land" ) -- only hook after accepting
-      hook.time( "timeup" )
+      hook.enter( "timeup" )
    else
       tk.msg( msg_title[2], msg_msg [2] )
       misn.finish()
@@ -104,7 +107,7 @@ function land()
 
    local landed = pnt.get()
    if landed == pnt then
-      if misn.rmCargo( carg_id ) then
+      if misn.cargoRm( carg_id ) then
          player.pay( reward )
          tk.msg( msg_title[3], string.format( msg_msg[3], carg_type ))
 
@@ -131,7 +134,7 @@ end
 -- Time hook
 function timeup()
    if time.get() > misn_time then
-      misn.timerStart("failed", 2000)
+      hook.timer(2000, "failed")
    else
       misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
             pnt:name(), sys:name(),
@@ -142,13 +145,13 @@ end
 function failed ()
    player.msg( miss[3] )
    if misn_type ~= "People" then
-      misn.jetCargo( carg_id )
+      misn.cargoJet( carg_id )
    end
    misn.finish(false)
 end   
 
 function abort ()
    if misn_type ~= "People" then
-      misn.jetCargo( carg_id )
+      misn.cargoJet( carg_id )
    end
 end

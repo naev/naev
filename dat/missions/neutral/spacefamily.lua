@@ -67,6 +67,7 @@ include("scripts/jumpdist.lua")
 
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    misn.accept() -- You boarded their ship, now you're stuck with them.
    misn.setTitle( misn_title )
    misn.setReward( misn_reward )
@@ -79,7 +80,7 @@ function create ()
    tk.msg(title[1], text[1])
    tk.msg(title[1], string.format(text[2], shipname))
 
-   carg_id = misn.addCargo( carg_type, 0 )
+   carg_id = misn.cargoAdd( carg_type, 0 )
 
    -- First stop; subsequent stops will be handled in the land function
    nextstop = 1
@@ -92,7 +93,7 @@ function create ()
    destplanetname = destplanet:name()
    tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
    misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
-   misn.setMarker (destsys, "misc")
+   misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Force unboard
    player.unboard()
@@ -125,7 +126,7 @@ function land()
       if nextstop == 3 then -- This is the last stop
          tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
          player.pay(20000)
-         misn.jetCargo(carg_id)
+         misn.cargoJet(carg_id)
          misn.finish(true)
       else
          nextstop = nextstop + 1
@@ -138,7 +139,7 @@ function land()
          destplanetname = destplanet:name()
          tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
          misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
-         misn.setMarker (destsys, "misc")
+         misn.markerMove( misn_marker, destsys )
       end
    end
    inspace = false
@@ -164,7 +165,7 @@ end
 
 function enter()
    if harrassmsg then
-      misn.timerStart("harrassme", 3000) -- Harrass the player in 3s
+      hook.timer(3000, "harrassme")
       harrassmsg = false
    else
    end
@@ -180,6 +181,6 @@ function abort ()
    else
       tk.msg(msg_abortTitle, msg_abort_landed)
    end
-   misn.jetCargo(carg_id)
+   misn.cargoJet(carg_id)
    misn.finish(true)
 end

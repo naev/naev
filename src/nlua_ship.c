@@ -6,8 +6,6 @@
  * @file nlua_space.c
  *
  * @brief Handles the Lua space bindings.
- *
- * These bindings control the planets and systems.
  */
 
 #include "nlua_ship.h"
@@ -18,6 +16,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_tex.h"
 #include "log.h"
 #include "rng.h"
 
@@ -30,6 +29,8 @@ static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
+static int shipL_gfxTarget( lua_State *L );
+static int shipL_gfx( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "get", shipL_get },
    { "name", shipL_name },
@@ -38,6 +39,8 @@ static const luaL_reg shipL_methods[] = {
    { "slots", shipL_slots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
+   { "gfxTarget", shipL_gfxTarget },
+   { "gfx", shipL_gfx },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -52,8 +55,7 @@ static const luaL_reg shipL_methods[] = {
  */
 int nlua_loadShip( lua_State *L, int readonly )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
+   (void) readonly; /* Everything is readonly. */
 
    /* Create the metatable */
    luaL_newmetatable(L, SHIP_METATABLE);
@@ -111,6 +113,28 @@ LuaShip* luaL_checkship( lua_State *L, int ind )
    return NULL;
 }
 /**
+ * @brief Makes sure the ship is valid or raises a Lua error.
+ *
+ *    @param L State currently running.
+ *    @param ind Index of the ship to validate.
+ *    @return The ship (doesn't return if fails - raises Lua error ).
+ */
+Ship* luaL_validship( lua_State *L, int ind )
+{
+   LuaShip *ls;
+   Ship *s;
+
+   /* Get the ship. */
+   ls = luaL_checkship(L,ind);
+   s  = ls->ship;
+   if (s==NULL) {
+      NLUA_ERROR(L,"Ship is invalid.");
+      return NULL;
+   }
+
+   return s;
+}
+/**
  * @brief Pushes a ship on the stack.
  *
  *    @param L Lua state to push ship into.
@@ -142,10 +166,10 @@ int lua_isship( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, SHIP_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
-   lua_pop(L, 2);  /* remove both metatables */ 
+   lua_pop(L, 2);  /* remove both metatables */
    return ret;
 }
 
@@ -189,16 +213,10 @@ static int shipL_get( lua_State *L )
  */
 static int shipL_name( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /** Return the ship name. */
    lua_pushstring(L, s->name);
@@ -219,16 +237,10 @@ static int shipL_name( lua_State *L )
  */
 static int shipL_baseType( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    lua_pushstring(L, s->base_type);
    return 1;
@@ -246,16 +258,10 @@ static int shipL_baseType( lua_State *L )
  */
 static int shipL_class( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    lua_pushstring(L, ship_class(s));
    return 1;
@@ -265,29 +271,23 @@ static int shipL_class( lua_State *L )
 /**
  * @brief Gets the amount of the ship's ship slots.
  *
- * @usage slots_high, slots_medium, slots_low = p:slots()
+ * @usage slots_weapon, slots_utility, slots_structure = p:slots()
  *
  *    @luaparam s Ship to get ship slots of.
- *    @luareturn Number of high, medium and low slots.
+ *    @luareturn Number of weapon, utility and structure slots.
  * @luafunc slots( s )
  */
 static int shipL_slots( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /* Push slot numbers. */
-   lua_pushnumber(L, s->outfit_nhigh);
-   lua_pushnumber(L, s->outfit_nmedium);
-   lua_pushnumber(L, s->outfit_nlow);
+   lua_pushnumber(L, s->outfit_nweapon);
+   lua_pushnumber(L, s->outfit_nutility);
+   lua_pushnumber(L, s->outfit_nstructure);
    return 3;
 }
 
@@ -303,16 +303,10 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_CPU( lua_State *L )
 {
-   LuaShip *ls;
    Ship *s;
 
    /* Get the ship. */
-   ls = luaL_checkship(L,1);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
-      return 0;
-   }
+   s  = luaL_validship(L,1);
 
    /* Get CPU. */
    lua_pushnumber(L, s->cpu);
@@ -347,4 +341,63 @@ static int shipL_outfitCPU( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Gets the ship's target graphics.
+ *
+ * Will not work without access to the Tex module.
+ *
+ * @usage gfx = s:gfxTarget()
+ *
+ *    @luaparam s Ship to get target graphics of.
+ *    @luareturn The target graphics of the ship.
+ * @luafunc gfxTarget( s )
+ */
+static int shipL_gfxTarget( lua_State *L )
+{
+   Ship *s;
+   LuaTex lt;
+
+   /* Get the ship. */
+   s  = luaL_validship(L,1);
+
+   /* Push graphic. */
+   lt.tex = gl_dupTexture( s->gfx_target );
+   if (lt.tex == NULL) {
+      WARN("Unable to get ship target graphic for '%s'.", s->name);
+      return 0;
+   }
+   lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ship's graphics.
+ *
+ * Will not work without access to the Tex module. These are nearly always a spritesheet.
+ *
+ * @usage gfx = s:gfx()
+ *
+ *    @luaparam s Ship to get graphics of.
+ *    @luareturn The graphics of the ship.
+ * @luafunc gfx( s )
+ */
+static int shipL_gfx( lua_State *L )
+{
+   Ship *s;
+   LuaTex lt;
+
+   /* Get the ship. */
+   s  = luaL_validship(L,1);
+
+   /* Push graphic. */
+   lt.tex = gl_dupTexture( s->gfx_space );
+   if (lt.tex == NULL) {
+      WARN("Unable to get ship graphic for '%s'.", s->name);
+      return 0;
+   }
+   lua_pushtex( L, lt );
+   return 1;
+}
 

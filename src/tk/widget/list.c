@@ -11,6 +11,9 @@
 
 #include "tk/toolkit_priv.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
@@ -113,12 +116,12 @@ static void lst_render( Widget* lst, double bx, double by )
    /* Draw scrollbar. */
    if (lst->dat.lst.height > 0) {
       /* We need to make room for list. */
-      w -= 10.;
+      w -= 11.;
 
       scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
       /* XXX lst->h is off by one */
-      toolkit_drawScrollbar( x + lst->w - 10. + 1, y, 10., lst->h + 1, scroll_pos );
+      toolkit_drawScrollbar( x + lst->w - 12. + 1, y -1, 12., lst->h + 2, scroll_pos );
    }
 
    /* draw selected */
@@ -127,8 +130,8 @@ static void lst_render( Widget* lst, double bx, double by )
          w-1, gl_defFont.h + 2., &cHilight, NULL );
 
    /* draw content */
-   tx = (double)SCREEN_W/2. + x + 2.;
-   ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
+   tx = x + 2.;
+   ty = y + lst->h - 2. - gl_defFont.h;
    miny = ty - lst->h + 2 + gl_defFont.h;
    y = ty - 2.;
    w -= 4;
@@ -375,11 +378,11 @@ static Widget *lst_getWgt( const unsigned int wid, char* name )
  * List includes Image Arrays.
  */
 char* toolkit_getList( const unsigned int wid, char* name )
-{  
+{
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
       return NULL;
-  
+
    /* Nothing selected. */
    if (wgt->dat.lst.selected == -1)
       return NULL;

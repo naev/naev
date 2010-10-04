@@ -35,6 +35,7 @@ typedef enum ShipClass_ {
    SHIP_CLASS_CRUISE_SHIP, /**< Medium ship. */
    /* Merchant. */
    SHIP_CLASS_COURIER, /**< Small ship. */
+   SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
    SHIP_CLASS_FREIGHTER, /**< Medium ship. */
    SHIP_CLASS_BULK_CARRIER, /**< Large ship. */
    /* Military. */
@@ -68,7 +69,7 @@ typedef struct ShipMount_ {
  * @brief Ship outfit slot.
  */
 typedef struct ShipOutfitSlot_ {
-   OutfitSlotType slot; /**< Type of slot. */
+   OutfitSlot slot; /**< Outfit slot. */
    Outfit *data; /**< Outfit by default if applicable. */
    ShipMount mount; /**< Mountpoint. */
 } ShipOutfitSlot;
@@ -84,7 +85,6 @@ typedef struct Ship_ {
 
    /* store stuff */
    unsigned int price; /**< Cost to buy */
-   int tech; /**< Tech needed for it to be available.  See space.h. */
    char* license; /**< License needed to buy it. */
    char* fabricator; /**< company that makes it */
    char* description; /**< selling description */
@@ -113,6 +113,7 @@ typedef struct Ship_ {
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */
+   glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm; /**< Name of graphic for communication. */
 
    /* GUI interface */
@@ -122,12 +123,12 @@ typedef struct Ship_ {
    int sound; /**< Sound motor uses. */
 
    /* outfits */
-   int outfit_nlow; /**< Number of low energy outfit slots. */
-   ShipOutfitSlot *outfit_low; /**< Outfit low energy slots. */
-   int outfit_nmedium; /**< Number of medium energy outfit slots. */
-   ShipOutfitSlot *outfit_medium; /**< Outfit medium energy slots. */
-   int outfit_nhigh; /**< Number of high energy outfit slots. */
-   ShipOutfitSlot *outfit_high; /**< Outfit high energy slots. */
+   int outfit_nstructure; /**< Number of structure outfit slots. */
+   ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
+   int outfit_nutility; /**< Number of utility ooutfit slots. */
+   ShipOutfitSlot *outfit_utility; /**< Outfit utility slots. */
+   int outfit_nweapon; /**< Number of weapon outfit slots. */
+   ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */
 
    /* mounts */
    double mangle; /**< Mount angle to simplify mount calculations. */
@@ -147,13 +148,15 @@ void ships_free (void);
 /*
  * stats
  */
-int ship_statsParse( ShipStats *s, xmlNodePtr parent );
+int ship_statsParseSingle( ShipStats *s, xmlNodePtr node );
 int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
 
 /*
  * get
  */
 Ship* ship_get( const char* name );
+Ship* ship_getW( const char* name );
+Ship* ship_getAll( int *n );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
@@ -165,6 +168,12 @@ glTexture* ship_loadCommGFX( Ship* s );
  * toolkit
  */
 void ship_view( unsigned int unused, char* shipname );
+
+
+/*
+ * misc.
+ */
+int ship_compareTech( const void *arg1, const void *arg2 );
 
 
 #endif /* SHIP_H */

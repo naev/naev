@@ -22,7 +22,7 @@
 #include "dialogue.h"
 
 
-/* toolkit */
+/* Toolkit methods. */
 static int tk_msg( lua_State *L );
 static int tk_yesno( lua_State *L );
 static int tk_input( lua_State *L );
@@ -78,13 +78,13 @@ int nlua_loadTk( lua_State *L )
  * @luafunc msg( title, message )
  */
 static int tk_msg( lua_State *L )
-{  
+{
    const char *title, *str;
    NLUA_MIN_ARGS(2);
-  
+
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
-   
+
    dialogue_msgRaw( title, str );
    return 0;
 }
@@ -99,14 +99,14 @@ static int tk_msg( lua_State *L )
  * @luafunc yesno( title, message )
  */
 static int tk_yesno( lua_State *L )
-{  
+{
    int ret;
    const char *title, *str;
    NLUA_MIN_ARGS(2);
-  
+
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
-   
+
    ret = dialogue_YesNoRaw( title, str );
    lua_pushboolean(L,ret);
    return 1;
@@ -124,7 +124,7 @@ static int tk_yesno( lua_State *L )
  * @luafunc input( title, min, max, str )
  */
 static int tk_input( lua_State *L )
-{  
+{
    const char *title, *str;
    char *ret;
    int min, max;
@@ -134,7 +134,7 @@ static int tk_input( lua_State *L )
    min   = luaL_checkint(L,2);
    max   = luaL_checkint(L,3);
    str   = luaL_checkstring(L,4);
-   
+
    ret = dialogue_inputRaw( title, min, max, str );
    if (ret != NULL) {
       lua_pushstring(L, ret);
@@ -147,7 +147,7 @@ static int tk_input( lua_State *L )
 /**
  * @brief Creates a window with a number of selectable options
  *
- * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return "No", 2
+ * @usage num, chosen = tk.choice( "Title", "Ready to go?", "Yes", "No" ) -- If "No" was clicked it would return 2, "No"
  *
  *    @luaparam title Title of the window.
  *    @luaparam msg Message to display.
@@ -175,7 +175,7 @@ static int tk_choice( lua_State *L )
    /* Handle results. */
    ret = -1;
    for (i=0; i<opts && ret==-1; i++) {
-      if (strcmp(result, luaL_checkstring(L,i+3)) == 0) 
+      if (strcmp(result, luaL_checkstring(L,i+3)) == 0)
          ret = i+1; /* Lua uses 1 as first index. */
    }
 
@@ -183,3 +183,4 @@ static int tk_choice( lua_State *L )
    lua_pushstring(L,result);
    return 2;
 }
+

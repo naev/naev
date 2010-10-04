@@ -50,6 +50,7 @@
 #include <string.h>
 
 #include "SDL.h"
+#include "SDL_thread.h"
 
 #include "log.h"
 #include "rng.h"
@@ -81,6 +82,25 @@ typedef struct perlin_data_s {
 } perlin_data_t; /**< Internal perlin noise data. */
 
 
+/**
+ * @brief Threading stuff.
+ */
+typedef struct thread_args_ {
+   int z;
+   float zoom;
+   int n;
+   int h;
+   int w;
+   perlin_data_t *noise;
+   int octaves;
+   float *max;
+   float *nebula;
+   int *count;
+   SDL_mutex *nebu_lock;
+   SDL_cond *nebu_cond;
+} thread_args;
+
+
 /*
  * prototypes
  */
@@ -100,12 +120,14 @@ static float TCOD_noise_get2( perlin_data_t* pdata, float f[2] );
 /* turbulence */
 static float TCOD_noise_turbulence3( perlin_data_t* noise, float f[3], int octaves );
 static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octaves );
+/*Threading */
+static int noise_genNebulaMap_thread( void *data );
 
 
 /**
  * @brief Not sure what it does.
  */
-static __inline float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy, 
+static __inline float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy,
 int iz, float fz )
 {
    int nIndex;
@@ -251,7 +273,7 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
    float r[3] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
    float w[3] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
    float value;
-   float v[8] __attribute__ ((aligned (32))); 
+   float v[8] __attribute__ ((aligned (32)));
 
    n[0] = (int)f[0];
    n[1] = (int)f[1];
@@ -276,9 +298,9 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
    v[5] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2]+1, r[2]-1);
    v[6] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2]+1, r[2]-1);
    v[7] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1);
-   value = LERP(  
-         LERP(  
-            LERP(v[0], v[1], w[0]), 
+   value = LERP(
+         LERP(
+            LERP(v[0], v[1], w[0]),
             LERP(v[2], v[3], w[0]),
             w[1]
             ),
@@ -437,6 +459,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    noise       = TCOD_noise_new( 2, hurst, lacunarity );
    map         = malloc(sizeof(float)*w*h);
    if (map == NULL) {
+      TCOD_noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }
@@ -466,6 +489,53 @@ float* noise_genRadarInt( const int w, const int h, float rug )
 
 
 /**
+ * @brief Thread worker for generating nebula stuff.
+ *
+ *    @param data Data to pass.
+ */
+static int noise_genNebulaMap_thread( void *data )
+{
+   thread_args *args = (thread_args*) data;
+   float f[3];
+   float value;
+   int y, x;
+   float max;
+
+   /* Generate the layer. */
+   max = 0;
+   f[2] = args->zoom * (float)args->z / (float)args->n;
+ 
+   for (y=0; y<args->h; y++) {
+      f[1] = args->zoom * (float)y / (float)args->h;
+
+      for (x=0; x<args->w; x++) {
+         f[0] = args->zoom * (float)x / (float)args->w;
+
+         value = TCOD_noise_turbulence3( args->noise, f, args->octaves );
+         if (max < value)
+            max = value;
+
+         args->nebula[args->z * args->w * args->h + y * args->w + x] = value;
+       }
+   }
+
+   /* Set up output. */
+   *args->max = max;
+
+   /* Signal done. */
+   SDL_mutexP(args->nebu_lock);
+   (*args->count) --;
+   if (*args->count <= 0)
+      SDL_CondSignal(args->nebu_cond);
+   SDL_mutexV(args->nebu_lock);
+
+   /* Clean up. */
+   free( args );
+   return 0;
+}
+
+
+/**
  * @brief Generates a 3d nebula map.
  *
  *    @param w Width of the map.
@@ -476,8 +546,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
  */
 float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 {
-   int x, y, z;
-   float f[3];
+   int x, y, z, count;
    int octaves;
    float hurst;
    float lacunarity;
@@ -485,8 +554,12 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    float *nebula;
    float value;
    float zoom;
+   float *_max;
    float max;
-   unsigned int *t, s;
+   unsigned int s;
+   thread_args *args;
+   SDL_mutex *nebu_lock;
+   SDL_cond *nebu_cond;
 
    /* pretty default values */
    octaves     = 3;
@@ -504,35 +577,44 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 
    /* Some debug information and time setting */
    s = SDL_GetTicks();
-   t = malloc(sizeof(unsigned int)*n);
    DEBUG("Generating Nebula of size %dx%dx%d", w, h, n);
 
+   /* Prepare for generation. */
+   _max        = malloc( sizeof(float) * n );
+   nebu_lock   = SDL_CreateMutex();
+   nebu_cond   = SDL_CreateCond();
+   count       = n;
+
    /* Start to create the nebula */
-   max = 0.;
+   SDL_mutexP(nebu_lock);
    for (z=0; z<n; z++) {
+      /* Make ze arguments! */
+      args     = malloc( sizeof(thread_args) );
+      args->z  = z;
+      args->zoom = zoom;
+      args->n  = n;
+      args->h  = h;
+      args->w  = w;
+      args->noise = noise;
+      args->octaves = octaves;
+      args->max = &_max[z];
+      args->nebula = nebula;
+      args->count = &count;
+      args->nebu_lock = nebu_lock;
+      args->nebu_cond = nebu_cond;
 
-      f[2] = zoom * (float)z / (float)n;
-
-      for (y=0; y<h; y++) {
-
-         f[1] = zoom * (float)y / (float)h;
-
-         for (x=0; x<w; x++) {
-
-            f[0] = zoom * (float)x / (float)w;
-
-            value = TCOD_noise_turbulence3( noise, f, octaves );
-            if (max < value) max = value;
-
-            nebula[z*w*h + y*w + x] = value;
-         }
-      }
-
-      /* More time magic debug */
-      t[z] = SDL_GetTicks();
-      DEBUG("   Layer %d/%d generated in %d ms", z+1, n,
-            (z>0) ? t[z] - t[z-1] : t[z] - s );
+      /* Launch ze thread. */
+      SDL_CreateThread( noise_genNebulaMap_thread, args );
    }
+
+   /* Wait for threads to signal completion. */
+   SDL_CondWait( nebu_cond, nebu_lock );
+   max = 0.;
+   for (count=0; count<n; count++) {
+      if (_max[count]>max)
+         max = _max[count];
+   }
+   SDL_mutexV(nebu_lock);
 
    /* Post filtering */
    value = 1. - max;
@@ -543,6 +625,9 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 
    /* Clean up */
    TCOD_noise_delete( noise );
+   SDL_DestroyMutex(nebu_lock);
+   SDL_DestroyCond(nebu_cond);
+   free(_max);
 
    /* Results */
    DEBUG("Nebula Generated in %d ms", SDL_GetTicks() - s );

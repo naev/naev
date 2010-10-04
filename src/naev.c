@@ -31,13 +31,13 @@
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
 
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <bfd.h>
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /* local */
 #include "conf.h"
@@ -77,6 +77,15 @@
 #include "event.h"
 #include "cond.h"
 #include "land.h"
+#include "tech.h"
+#include "hook.h"
+#include "npc.h"
+#include "console.h"
+#include "npng.h"
+#include "dev.h"
+#include "background.h"
+#include "camera.h"
+#include "map_overlay.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -103,11 +112,14 @@ static int fps_skipped = 0; /**< Skipped last frame? */
 static double fps_dt  = 1.; /**< Display fps accumulator. */
 static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt = 0.; /**< Real deltatick. */
+const double fps_min = 1./50.; /**< Minimum fps to run at. */
+static double fps_x = 15.; /**< FPS X position. */
+static double fps_y = -15.; /**< FPS Y position. */
 
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 /*
  * prototypes
@@ -121,10 +133,10 @@ static void unload_all (void);
 static void display_fps( const double dt );
 static void window_caption (void);
 static void debug_sigInit (void);
+static void debug_sigClose (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
-static void update_routine( double dt );
 static void render_all (void);
 /* Misc. */
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
@@ -145,7 +157,7 @@ int main( int argc, char** argv )
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
-   
+
    /* Print the version */
    LOG( " "APPNAME" v%s", naev_version(0) );
 #ifdef GIT_COMMIT
@@ -183,7 +195,7 @@ int main( int argc, char** argv )
    xmlInitParser();
 
    /* Input must be initialized for config to work. */
-   input_init(); 
+   input_init();
 
    /* Set the configuration. */
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
@@ -195,7 +207,7 @@ int main( int argc, char** argv )
 #if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
       feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* DEBUGGING */
+#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) */
 
    /* Open data. */
    if (ndata_open() != 0)
@@ -211,7 +223,6 @@ int main( int argc, char** argv )
 
    /* random numbers */
    rng_init();
-
 
    /*
     * OpenGL
@@ -263,6 +274,10 @@ int main( int argc, char** argv )
    music_choose("load");
 
 
+   /* FPS stuff. */
+   fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
+
+
    /* Misc graphics init */
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
@@ -277,6 +292,10 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
+   /* Generate the CVS. */
+   if (conf.devcsv)
+      dev_csv();
+
    /* Unload load screen. */
    loadscreen_unload();
 
@@ -287,7 +306,7 @@ int main( int argc, char** argv )
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    time_ms = SDL_GetTicks(); /* initializes the time_ms */
-   /* 
+   /*
     * main loop
     */
    SDL_Event event;
@@ -317,6 +336,8 @@ int main( int argc, char** argv )
    pilots_free(); /* frees the pilots, they were locked up :( */
    cond_exit(); /* destroy conditional subsystem. */
    land_exit(); /* Destroys landing vbo and friends. */
+   npc_clear(); /* In case exitting while landed. */
+   background_free(); /* Destroy backgrounds. */
 
    /* data unloading */
    unload_all();
@@ -332,6 +353,7 @@ int main( int argc, char** argv )
    conf_cleanup(); /* Frees some memory the configuration allocated. */
 
    /* exit subsystems */
+   cli_exit(); /* CLean up the console. */
    map_exit(); /* destroys the map. */
    toolkit_exit(); /* kills the toolkit */
    ai_exit(); /* stops the Lua AI magic */
@@ -347,6 +369,12 @@ int main( int argc, char** argv )
       SDL_FreeSurface(naev_icon);
 
    SDL_Quit(); /* quits SDL */
+
+   /* Clean up parser. */
+   xmlCleanupParser();
+
+   /* Clean up signal handler. */
+   debug_sigClose();
 
    /* Last free. */
    free(binary_path);
@@ -377,14 +405,14 @@ void loadscreen_load (void)
    }
 
    /* Set the zoom. */
-   gl_cameraZoom( conf.zoom_far );
+   cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
    snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
-   space_initStars( 1000 );
+   background_initStars( 1000 );
 
    /* Clean up. */
    for (i=0; i<nload; i++)
@@ -410,7 +438,7 @@ void loadscreen_render( double done, const char *msg )
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Draw stars. */
-   space_renderStars( 0. );
+   background_renderStars( 0. );
 
    /*
     * Dimensions.
@@ -424,11 +452,11 @@ void loadscreen_render( double done, const char *msg )
    w  = gl_screen.w * 0.4;
    h  = gl_screen.h * 0.02;
    rh = h + gl_defFont.h + 4.;
-   x  = -w/2.;
+   x  = (SCREEN_W-w)/2.;
    if (SCREEN_H < 768)
-      y  = -h/2.;
+      y  = (SCREEN_H-h)/2.;
    else
-      y  = -bw/2 - rh - 5.;
+      y  = (SCREEN_H-bw)/2 - rh - 5.;
 
    /* Draw loading screen image. */
    if (loading != NULL)
@@ -454,8 +482,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x + gl_screen.w/2., y + gl_screen.h/2 + 2. + h,
-         &cConsole, msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
 
    /* Flip buffers. */
    SDL_GL_SwapBuffers();
@@ -480,7 +507,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     10. /**< Amount of loading stages. */
+#define LOADING_STAGES     12. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* order is very important as they're interdependent */
@@ -488,22 +515,25 @@ void load_all (void)
    commodity_load(); /* dep for space */
    loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
    factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 2./LOADING_STAGES, "Loading AI..." );
+   loadscreen_render( 3./LOADING_STAGES, "Loading AI..." );
    ai_load(); /* dep for fleets */
-   loadscreen_render( 3./LOADING_STAGES, "Loading Missions..." );
+   loadscreen_render( 4./LOADING_STAGES, "Loading Missions..." );
    missions_load(); /* no dep */
-   loadscreen_render( 4./LOADING_STAGES, "Loading Events..." );
+   loadscreen_render( 5./LOADING_STAGES, "Loading Events..." );
    events_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, "Loading Special Effects..." );
+   loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Outfits..." );
+   loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
    outfit_load(); /* dep for ships */
-   loadscreen_render( 7./LOADING_STAGES, "Loading Ships..." );
+   loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 8./LOADING_STAGES, "Loading Fleets..." );
+   loadscreen_render( 9./LOADING_STAGES, "Loading Fleets..." );
    fleet_load(); /* dep for space */
-   loadscreen_render( 9./LOADING_STAGES, "Loading the Universe..." );
+   loadscreen_render( 10./LOADING_STAGES, "Loading Techs..." );
+   tech_load(); /* dep for space */
+   loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
+   background_init();
    loadscreen_render( 1., "Loading Completed!" );
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }
@@ -515,6 +545,7 @@ void unload_all (void)
    /* data unloading - inverse load_all is a good order */
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
+   tech_free(); /* Frees tech stuff. */
    fleet_free();
    ships_free();
    outfit_free();
@@ -575,7 +606,7 @@ static void fps_control (void)
    game_dt  = real_dt * dt_mod; /* Apply the modifier. */
    time_ms = t;
 
-   /* if fps is limited */                       
+   /* if fps is limited */
    if (!conf.vsync && conf.fps_max != 0) {
       fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
@@ -595,7 +626,6 @@ static void fps_control (void)
 static void update_all (void)
 {
    double tempdt;
-   static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)game_dt*1000);
@@ -631,14 +661,17 @@ static void update_all (void)
  *
  *    @param[in] dt Current delta tick.
  */
-static void update_routine( double dt )
+void update_routine( double dt )
 {
+   /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);
    spfx_update(dt);
    pilots_update(dt);
-   missions_update(dt);
-   events_update(dt);
+   hooks_update(dt);
+
+   /* Update camera. */
+   cam_update( dt );
 }
 
 
@@ -684,6 +717,7 @@ static void render_all (void)
    pilots_renderOverlay(dt);
    spfx_end();
    gui_render(dt);
+   ovr_render(dt);
    display_fps( real_dt ); /* Exception. */
 }
 
@@ -706,8 +740,8 @@ static void display_fps( const double dt )
       fps_dt = fps_cur = 0.;
    }
 
-   x = 15.;
-   y = (double)(gl_screen.h-15-gl_defFont.h);
+   x = fps_x;
+   y = fps_y;
    if (conf.fps_show) {
       gl_print( NULL, x, y, NULL, "%3.2f", fps );
       y -= gl_defFont.h + 5.;
@@ -718,12 +752,23 @@ static void display_fps( const double dt )
 
 
 /**
+ * @brief Sets the position to display the FPS.
+ */
+void fps_setPos( double x, double y )
+{
+   fps_x = x;
+   fps_y = y;
+}
+
+
+/**
  * @brief Sets the window caption.
  */
 static void window_caption (void)
 {
    char buf[PATH_MAX];
    SDL_RWops *rw;
+   npng_t *npng;
 
    /* Set caption. */
    snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
@@ -735,7 +780,10 @@ static void window_caption (void)
       WARN("Icon (gfx/icon.png) not found!");
       return;
    }
-   naev_icon = IMG_Load_RW( rw, 1 );
+   npng        = npng_open( rw );
+   naev_icon   = npng_readSurface( npng, 0, 0 );
+   npng_close( npng );
+   SDL_RWclose( rw );
    if (naev_icon == NULL) {
       WARN("Unable to load gfx/icon.png!");
       return;
@@ -812,7 +860,7 @@ static void print_SDLversion (void)
 }
 
 
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -920,7 +968,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    /* Always exit. */
    exit(1);
 }
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 
 
 /**
@@ -928,9 +976,11 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
  */
 static void debug_sigInit (void)
 {
-#if HAS_LINUX && defined(DEBUGGING)
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
    char **matching;
    struct sigaction sa, so;
+   long symcount;
+   unsigned int size;
 
    bfd_init();
 
@@ -941,8 +991,6 @@ static void debug_sigInit (void)
 
       /* Read symbols */
       if (bfd_get_file_flags(abfd) & HAS_SYMS) {
-         long symcount;
-         unsigned int size;
 
          /* static */
          symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
@@ -968,5 +1016,17 @@ static void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
-#endif /* HAS_LINUX && defined(DEBUGGING) */
+   DEBUG("BFD backtrace catching enabled.");
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+}
+
+
+/**
+ * @brief Closes the SignalHandler for linux.
+ */
+static void debug_sigClose (void)
+{
+#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
+   bfd_close( abfd );
+#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 }

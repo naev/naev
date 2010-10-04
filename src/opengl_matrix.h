@@ -35,7 +35,8 @@ void gl_matrixPop (void);
  */
 void gl_matrixTranslate( double x, double y );
 void gl_matrixScale( double x, double y );
+void gl_matrixRotate( double a );
 
 
 #endif /* OPENGL_MATRIX_H */
-   
+

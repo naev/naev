@@ -63,6 +63,15 @@ static int gl_activated = 0; /**< Whether or not a window is activated. */
 
 
 /*
+ * Viewport offsets
+ */
+static int gl_view_x = 0; /* X viewport offset. */
+static int gl_view_y = 0; /* Y viewport offset. */
+static int gl_view_w = 0; /* Viewport width. */
+static int gl_view_h = 0; /* Viewport height. */
+
+
+/*
  * prototypes
  */
 /* gl */
@@ -400,14 +409,19 @@ static int gl_setupFullscreen( unsigned int *flags )
 
       /* try to get closest aproximation to mode asked for */
       off = -1;
-      j = 0;
-      for (i=0; modes[i]; i++) {
+      j   = -1;
+      for (i=0; modes[i] != NULL; i++) {
          toff = ABS(SCREEN_W-modes[i]->w) + ABS(SCREEN_H-modes[i]->h);
          if ((off == -1) || (toff < off)) {
-            j = i;
+            j   = i;
             off = toff;
          }
       }
+      if (j<0) {
+         ERR("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!",
+               SCREEN_W, SCREEN_H);
+      }
+
       WARN("Fullscreen mode %dx%d is not supported by your setup\n"
             "   switching to %dx%d",
             SCREEN_W, SCREEN_H,
@@ -650,6 +664,7 @@ int gl_init (void)
    gl_setupScaling();
 
    /* Handle setting the default viewport. */
+   gl_setDefViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_defViewport();
 
    /* Finishing touches. */
@@ -693,21 +708,65 @@ double gl_setScale( double scalefactor )
 
 
 /**
+ * @brief Sets the opengl viewport.
+ */
+void gl_viewport( int x, int y, int w, int h )
+{
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glOrtho( 0., /* Left edge. */
+            gl_screen.nw, /* Right edge. */
+            0., /* Bottom edge. */
+            gl_screen.nh, /* Top edge. */
+            -1., /* near */
+            1. ); /* far */
+   
+   /* Take into accunt possible translation. */
+   gl_screen.x = x;
+   gl_screen.y = y;
+   gl_matrixTranslate( x, y );
+
+   /* Set screen size. */
+   gl_screen.w = w;
+   gl_screen.h = h;
+
+   /* Take into account posible scaling. */
+   if (gl_screen.scale != 1.)
+      glScaled( gl_screen.wscale, gl_screen.hscale, 1. );
+}
+
+
+/**
+ * @brief Sets the default viewport.
+ */
+void gl_setDefViewport( int x, int y, int w, int h )
+{
+   gl_view_x  = x;
+   gl_view_y  = y;
+   gl_view_w  = w;
+   gl_view_h  = h;
+}
+
+
+/**
  * @brief Resets viewport to default
  */
 void gl_defViewport (void)
 {
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho( -(double)gl_screen.nw/2, /* left edge */
-         (double)gl_screen.nw/2, /* right edge */
-         -(double)gl_screen.nh/2, /* bottom edge */
-         (double)gl_screen.nh/2, /* top edge */
-         -1., /* near */
-         1. ); /* far */
-   /* Take into account posible scaling. */
-   if (gl_screen.scale != 1.)
-      glScaled( gl_screen.wscale, gl_screen.hscale, 1. );
+   gl_viewport( gl_view_x, gl_view_y, gl_view_w, gl_view_h );
+}
+
+
+/**
+ * @Brief Translates the window position to screen position.
+ */
+void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
+{
+   double x,y;
+   x   = wx;
+   y   = wy;
+   *sx = gl_screen.mxscale * (double)(wx - gl_screen.x);
+   *sy = gl_screen.myscale * (double)(gl_screen.rh - wy - gl_screen.y);
 }
 
 
@@ -755,17 +814,17 @@ static int write_png( const char *file_name, png_bytep *rows,
    /* Create working structs. */
    if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
       WARN("Unable to create png write struct.");
-      return -1;
+      goto ERR_FAIL;
    }
    if (!(info_ptr = png_create_info_struct(png_ptr))) {
       WARN("Unable to create PNG info struct.");
-      return -1;
+      goto ERR_FAIL;
    }
 
    /* Set image details. */
    png_init_io(png_ptr, fp);
    png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
-   png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype, 
+   png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype,
          PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
          PNG_FILTER_TYPE_DEFAULT);
 
@@ -779,5 +838,8 @@ static int write_png( const char *file_name, png_bytep *rows,
 
    return 0;
 
+ERR_FAIL:
+   fclose(fp);
+   return -1;
 }
 

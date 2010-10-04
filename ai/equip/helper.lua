@@ -27,7 +27,7 @@ function equip_getShipBroad( class )
    -- Merchant
    elseif class == "Courier" then
       return "merchant", "small"
-   elseif class == "Freighter" then
+   elseif class == "Freighter" or class == "Armoured Transport" then
       return "merchant", "medium"
    elseif class == "Bulk Carrier" then
       return "merchant", "large"

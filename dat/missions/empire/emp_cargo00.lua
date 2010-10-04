@@ -31,14 +31,17 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    local landed, landed_sys = planet.get()
 
    -- target destination
    local i = 0
+   local s
    repeat
       dest,sys = planet.get( misn.factions() )
+      s = dest:services()
       i = i + 1
-   until sys ~= landed_sys or i > 10
+   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
@@ -50,7 +53,7 @@ end
 
 
 function accept ()
-   misn.setMarker(sys)
+   misn.markerAdd( sys, "low" )
 
    -- Intro text
    if not tk.yesno( title[1], text[1] ) then
@@ -70,7 +73,7 @@ function accept ()
    tk.msg( title[2], string.format( text[2], dest:name() ))
 
    -- Set up the goal
-   parcels = misn.addCargo("Parcels", 0)
+   parcels = misn.cargoAdd("Parcels", 0)
    hook.land("land")
 end
 
@@ -79,7 +82,7 @@ function land()
 
    local landed = planet.get()
    if landed == dest then
-      if misn.rmCargo(parcels) then
+      if misn.cargoRm(parcels) then
          player.pay(reward)
          -- More flavour text
          tk.msg(title[3], string.format( text[3], dest:name() ))

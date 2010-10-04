@@ -120,7 +120,7 @@ static void print_MixerVersion (void)
       WARN("SDL_Mixer is older than compiled version.");
    /* Print other debug info. */
    DEBUG("Renderer: %s",device);
-   DEBUG("Version: %d.%d.%d [compiled: %d.%d.%d]", 
+   DEBUG("Version: %d.%d.%d [compiled: %d.%d.%d]",
          compiled.major, compiled.minor, compiled.patch,
          linked->major, linked->minor, linked->patch);
    DEBUG();
@@ -156,7 +156,7 @@ int sound_mix_play( alVoice *v, alSound *s )
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
    if (v->u.mix.channel >= 0)
       Mix_Volume( v->u.mix.channel, sound_mixVolume );
- 
+
    /* Check to see if played. */
    /*
    if (v->channel < 0) {

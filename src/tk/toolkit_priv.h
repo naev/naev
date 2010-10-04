@@ -61,6 +61,7 @@ typedef enum WidgetStatus_ {
 #define WGT_FLAG_CANFOCUS     (1<<0)   /**< Widget can get focus. */
 #define WGT_FLAG_RAWINPUT     (1<<1)   /**< Widget should always get raw input. */
 #define WGT_FLAG_ALWAYSMMOVE  (1<<2)   /**< Widget should always get mouse motion events. */
+#define WGT_FLAG_FOCUSED      (1<<3)   /**< Widget is focused. */
 #define WGT_FLAG_KILL         (1<<9)   /**< Widget should die. */
 #define wgt_setFlag(w,f)      ((w)->flags |= (f)) /**< Sets a widget flag. */
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
@@ -187,17 +188,17 @@ void toolkit_prevFocus( Window *wdw );
 /* Render stuff. */
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           glColour* c, glColour* lc );
+void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
+                          int thick, glColour* c, glColour* lc );
 void toolkit_drawScrollbar( int x, int y, int w, int h, double pos );
-void toolkit_clip( int x, int y, int w, int h );
-void toolkit_unclip ( void );
 void toolkit_drawRect( int x, int y, int w, int h,
                        glColour* c, glColour* lc );
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 
 /* Input stuff. */
-Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
-      int *x, int *y, int *rx, int *ry, int convert );
+Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+      int *x, int *y, int *rx, int *ry );
 
 
 #endif /* TOOLKIT_PRIV_H */

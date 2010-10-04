@@ -22,15 +22,17 @@
 #include "ntime.h"
 
 
-/* time */
+/* Time methods. */
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
 static int time_units( lua_State *L );
+static int time_inc( lua_State *L );
 static const luaL_reg time_methods[] = {
    { "get", time_get },
    { "str", time_str },
    { "units", time_units },
-   {0,0}                                                                  
+   { "inc", time_inc },
+   {0,0}
 }; /**< Time Lua methods. */
 
 
@@ -112,7 +114,7 @@ static int time_str( lua_State *L )
  * @luafunc units( stu )
  */
 static int time_units( lua_State *L )
-{  
+{
    if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
       lua_pushnumber( L, (unsigned int)lua_tonumber(L,1) * NTIME_UNIT_LENGTH );
    else
@@ -120,3 +122,18 @@ static int time_units( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Increases or decreases the time.
+ *
+ * @usage time.inc( time.units(100) ) -- Increments the time by 100 STU.
+ *
+ *    @luaparam t Amount to increment or decrement the time by.
+ * @luafunc inc( t )
+ */
+static int time_inc( lua_State *L )
+{
+   if (lua_isnumber(L,1))
+      ntime_inc( lua_tonumber(L, 1));
+   return 0;
+}

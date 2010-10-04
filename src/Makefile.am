@@ -9,8 +9,11 @@ naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 naev_SOURCES = \
 	ai.c \
 	array.c \
+	background.c \
 	base64.c \
 	board.c \
+	camera.c \
+	claim.c \
 	collision.c \
 	colour.c \
 	comm.c \
@@ -18,6 +21,13 @@ naev_SOURCES = \
 	conf.c \
 	console.c \
 	debris.c \
+	dev.c \
+	dev_outfit.c \
+	dev_planet.c \
+	dev_ship.c \
+	dev_system.c \
+	dev_sysedit.c \
+	dev_uniedit.c \
 	dialogue.c \
 	economy.c \
 	equipment.c \
@@ -35,7 +45,10 @@ naev_SOURCES = \
 	intro.c \
 	joystick.c \
 	land.c \
+	land_outfits.c \
+	land_shipyard.c \
 	map.c \
+	map_overlay.c \
 	md5.c \
 	menu.c \
 	mission.c \
@@ -48,10 +61,15 @@ naev_SOURCES = \
 	news.c \
 	nfile.c \
 	nlua.c \
+	nlua_bkg.c \
+	nlua_camera.c \
 	nlua_cli.c \
+	nlua_col.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
+	nlua_gfx.c \
+	nlua_gui.c \
 	nlua_hook.c \
 	nlua_misn.c \
 	nlua_music.c \
@@ -63,15 +81,18 @@ naev_SOURCES = \
 	nlua_ship.c \
 	nlua_space.c \
 	nlua_system.c \
+	nlua_tex.c \
 	nlua_time.c \
 	nlua_tk.c \
 	nlua_var.c \
 	nlua_vec2.c \
 	nmath.c \
 	nondata.c \
+	npng.c \
 	npc.c \
 	ntime.c \
 	nxml.c \
+	nxml_lua.c \
 	opengl.c \
 	opengl_ext.c \
 	opengl_matrix.c \
@@ -85,8 +106,15 @@ naev_SOURCES = \
 	perlin.c \
 	physics.c \
 	pilot.c \
+	pilot_cargo.c \
+	pilot_heat.c \
+	pilot_hook.c \
+	pilot_outfit.c \
+	pilot_weapon.c \
 	plasmaf.c \
 	player.c \
+	player_gui.c \
+	queue.c \
 	rng.c \
 	save.c \
 	ship.c \
@@ -95,14 +123,18 @@ naev_SOURCES = \
 	sound_sdlmix.c \
 	space.c \
 	spfx.c \
+	tech.c \
 	toolkit.c \
 	unidiff.c \
 	weapon.c \
 	ai.h \
-   ai_extra.h \
+	ai_extra.h \
 	array.h \
+	background.h \
 	base64.h \
 	board.h \
+	camera.h \
+	claim.h \
 	collision.h \
 	colour.h \
 	comm.h \
@@ -111,6 +143,13 @@ naev_SOURCES = \
 	config.h \
 	console.h \
 	debris.h \
+	dev.h \
+	dev_outfit.h \
+	dev_planet.h \
+	dev_ship.h \
+	dev_system.h \
+	dev_sysedit.h \
+	dev_uniedit.h \
 	dialogue.h \
 	economy.h \
 	equipment.h \
@@ -128,8 +167,11 @@ naev_SOURCES = \
 	intro.h \
 	joystick.h \
 	land.h \
+	land_outfits.h \
+	land_shipyard.h \
 	log.h \
 	map.h \
+	map_overlay.h \
 	md5.h \
 	menu.h \
 	mission.h \
@@ -143,10 +185,15 @@ naev_SOURCES = \
 	news.h \
 	nfile.h \
 	nlua.h \
+	nlua_bkg.h \
+	nlua_camera.h \
 	nlua_cli.h \
+	nlua_col.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
+	nlua_gfx.h \
+	nlua_gui.h \
 	nlua_hook.h \
 	nlua_misn.h \
 	nlua_music.h \
@@ -158,6 +205,7 @@ naev_SOURCES = \
 	nlua_ship.h \
 	nlua_space.h \
 	nlua_system.h \
+	nlua_tex.h \
 	nlua_time.h \
 	nlua_tk.h \
 	nlua_var.h \
@@ -165,10 +213,12 @@ naev_SOURCES = \
 	nluadef.h \
 	nmath.h \
 	nopenal.h \
+	npng.h \
 	npc.h \
 	nstd.h \
 	ntime.h \
 	nxml.h \
+	nxml_lua.h \
 	opengl.h \
 	opengl_ext.h \
 	opengl_matrix.h \
@@ -182,8 +232,15 @@ naev_SOURCES = \
 	perlin.h \
 	physics.h \
 	pilot.h \
+	pilot_cargo.h \
+	pilot_heat.h \
+	pilot_hook.h \
+	pilot_outfit.h \
+	pilot_weapon.h \
 	plasmaf.h \
 	player.h \
+	player_gui.h \
+	queue.h \
 	rng.h \
 	save.h \
 	ship.h \
@@ -193,6 +250,7 @@ naev_SOURCES = \
 	sound_sdlmix.h \
 	space.h \
 	spfx.h \
+	tech.h \
 	toolkit.h \
 	unidiff.h \
 	weapon.h

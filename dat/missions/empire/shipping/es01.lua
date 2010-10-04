@@ -44,6 +44,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
@@ -61,7 +62,7 @@ function accept ()
    pickup,pickupsys = planet.get( "Selphod" )
    dest,destsys = planet.get( "Cerberus" )
    ret,retsys = planet.get( "Polaris Prime" )
-   misn.setMarker(pickupsys)
+   misn_marker = misn.markerAdd( pickupsys, "low" )
 
    -- Mission details
    misn_stage = 0
@@ -89,28 +90,28 @@ function land ()
    if landed == pickup and misn_stage == 0 then
 
       -- Make sure player has room.
-      if player.freeCargo() < 3 then
-         tk.msg( errtitle[1], string.format( err[1], 3 - player.freeCargo() ) )
+      if pilot.cargoFree(player.pilot()) < 3 then
+         tk.msg( errtitle[1], string.format( err[1], 3 - pilot.cargoFree(playerpilot()) ) )
          return
       end
 
       -- Update mission
-      package = misn.addCargo("Packages", 3)
+      package = misn.cargoAdd("Packages", 3)
       misn_stage = 1
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
-      misn.setMarker(destsys)
+      misn.markerMove( misn_marker, destsys )
 
       -- Load message
       tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
-      if misn.rmCargo(package) then
+      if misn.cargoRm(package) then
 
          -- Update mission
          misn_stage = 2
          misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
-         misn.setMarker(retsys)
+         misn.markerMove( misn_marker, retsys )
 
          -- Some text
          tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )
@@ -134,7 +135,7 @@ end
 
 
 function enter ()
-   sys = system.get()
+   sys = system.cur()
 
    if misn_stage == 1 then
 

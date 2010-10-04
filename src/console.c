@@ -12,6 +12,7 @@
 
 #include "naev.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #define lua_c
@@ -23,6 +24,10 @@
 #include "nlua.h"
 #include "nlua_cli.h"
 #include "nlua_tk.h"
+#include "nlua_tex.h"
+#include "nlua_col.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
@@ -97,7 +102,7 @@ static int cli_print( lua_State *L ) {
       lua_pushvalue(L, i);   /* value to print */
       lua_call(L, 1, 1);
       s = lua_tostring(L, -1);  /* get result */
-      if (s == NULL)                                                         
+      if (s == NULL)
          return luaL_error(L, LUA_QL("tostring") " must return a string to "
                LUA_QL("print"));
 
@@ -194,8 +199,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
       else
          c = &cBlack;
       gl_printMaxRaw( cli_font, w,
-            bx + SCREEN_W/2., by + y + SCREEN_H/2., 
-            c, cli_buffer[i] );
+            bx, by + y, c, cli_buffer[i] );
       i = (i + 1) % BUF_LINES;
    }
 }
@@ -242,6 +246,7 @@ static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
             }
             i++;
          }
+         cli_history = i-1;
          window_setInput( wid, "inpInput", NULL );
          return 1;
 
@@ -269,6 +274,10 @@ int cli_init (void)
    /* Create the state. */
    cli_state   = nlua_newState();
    nlua_loadStandard( cli_state, 0 );
+   nlua_loadCol( cli_state, 0 );
+   nlua_loadTex( cli_state, 0 );
+   nlua_loadBackground( cli_state, 0 );
+   nlua_loadCamera( cli_state, 0 );
    nlua_loadTk( cli_state );
    nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );
@@ -416,7 +425,7 @@ void cli_open (void)
    /* Input box. */
    window_addInput( wid, 20, 20,
          cli_width-60-BUTTON_WIDTH, BUTTON_HEIGHT,
-         "inpInput", LINE_LENGTH, 1 );
+         "inpInput", LINE_LENGTH, 1, cli_font );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
