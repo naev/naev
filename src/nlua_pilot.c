@@ -1094,6 +1094,16 @@ static int pilotL_weapset( lua_State *L )
          lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
          lua_rawset(L,-3);
 
+         /* Type. */
+         lua_pushstring(L, "type");
+         lua_pushstring(L, outfit_getType(slot->outfit));
+         lua_rawset(L,-3);
+
+         /* Damage type. */
+         lua_pushstring(L, "dtype");
+         lua_pushstring(L, outfit_damageTypeToStr( outfit_damageType(slot->outfit) ));
+         lua_rawset(L,-3);
+
          /* Set table in table. */
          lua_rawset(L,-3);
       }
