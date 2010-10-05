@@ -1928,6 +1928,147 @@
    <structure />
   </slots>
  </ship>
+ <ship name="Suzaku">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Byakko">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
+ <ship name="Genbu">
+  <base_type>Kestrel</base_type>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>This is one of the Four Winds flagships. It's tough.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+  </movement>
+  <health>
+   <shield>9000</shield>
+   <armour>15000</armour>
+   <energy>5000</energy>
+   <shield_regen>700</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>10000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>180</cpu>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_cargo>55</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="-24" y="-8"  h="8" />
+   <weapon x="-24" y="8"   h="8" />
+   <weapon x="-23" y="-15" h="5" />
+   <weapon x="-23" y="15"  h="5" />
+   <weapon x="44"  y="0"   h="0" />
+   <weapon x="-6"  y="0"   h="12" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+ </ship>
  <ship name="Diplomatic Vessel">
   <base_type>Gawain</base_type>
   <GFX>gawain</GFX>
@@ -1959,11 +2100,11 @@
   </characteristics>
   <slots>
    <weapon x="9" y="0" h="-2" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
  </ship>
 </Ships>

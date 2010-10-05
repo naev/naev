@@ -67,6 +67,7 @@ include("scripts/jumpdist.lua")
 
 
 function create ()
+   -- Note: this mission does not make any mission claims. 
    misn.accept() -- You boarded their ship, now you're stuck with them.
    misn.setTitle( misn_title )
    misn.setReward( misn_reward )

@@ -1324,11 +1324,10 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
-      /* Since we parse stats afterwards we can't be sure it isn't a stat...
-      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);*/
+      /* Stats. */
+      if (ship_statsParseSingle( &temp->u.mod.stats, node ))
+         WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
-   /* stats */
-   ship_statsParse( &temp->u.mod.stats, parent );
 
    /* Process some variables. */
    temp->u.mod.armour_regen /= 60.;

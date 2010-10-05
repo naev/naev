@@ -142,6 +142,13 @@ function create ()
    -- This will get called when the conditions in mission.xml are met.
    -- It is used to set up mission variables.
 
+   -- IMPORTANT: system claiming
+   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
+   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
+   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
+   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
+   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
+
    -- Get the planet and system at which we currently are.
    startworld, startworld_sys = planet.cur()
 

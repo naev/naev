@@ -39,6 +39,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Dimitri", "dimitri" )
    misn.setDesc( bar_desc )
 end
@@ -72,7 +73,7 @@ end
 
 -- Handles jumping to target system
 function jump()
-   local sys = system.get()
+   local sys = system.cur()
    local factions = sys:faction()
 
    -- First mission part is landing on the planet

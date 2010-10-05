@@ -39,6 +39,7 @@ end
 
 
 function create ()
+   -- Note: this mission does not make any system claims.
    misn.setNPC( "Lt. Commander", "dimitri" )
    misn.setDesc( bar_desc )
 end
@@ -75,7 +76,7 @@ end
 
 
 function enter()
-   sys = system.get()
+   sys = system.cur()
 
    -- additional fleets
    if sys:name() == "Rockbed" then -- increase action for realism

@@ -97,6 +97,13 @@ else -- default english
 end
 
 function create()
+    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
+    misssys["__save"] = true
+    
+    if not misn.claim(missys) then
+        abort()
+    end
+    
     if first then
         var.push("shadowvigil_first", false)
         tk.msg(title[1], string.format(text[1], player.name()))
@@ -120,8 +127,6 @@ function create()
 end
 
 function accept()
-    misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
-    misssys["__save"] = true
     alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
     alive["__save"] = true
     stage = 1 -- Keeps track of the mission stage
@@ -215,6 +220,8 @@ function jumpin()
         hook.pilot(diplomat, "jump", "diplomatJump")
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
         diplomat:control()
+        diplomat:setHilight(true)
+        diplomat:setVisplayer()
         dpjump = false
         misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     end
@@ -226,6 +233,7 @@ function jumpin()
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
                 j:control()
+                j:setHilight(true)
                 hook.pilot(j, "death", "escortDeath")
                 controlled = true
             end
@@ -254,6 +262,8 @@ function jumpin()
             end
             dvaerplomat = pilot.add("Dvaered Vigilance", nil, vec2.new(2000, 4000))[1]
             dvaerplomat:control()
+            dvaerplomat:setHilight(true)
+            dvaerplomat:setVisplayer()
             dvaerplomat:disable()
             dvaerplomat:setDir(180)
             dvaerplomat:setFaction("Diplomatic")
@@ -284,6 +294,7 @@ function jumpin()
                 maxkills = #ambush
                 for i, j in ipairs(ambush) do
                     if j:exists() then
+                        j:setHilight(true)
                         hook.pilot(j, "death", "attackerDeath")
                     end
                 end
@@ -301,6 +312,7 @@ function jumpin()
         seiryuu:setInvincible(true)
         if missend then
             seiryuu:disable()
+            seiryuu:setHilight(true)
             hook.pilot(seiryuu, "board", "board")
         end
     else
@@ -340,7 +352,7 @@ function getNextSystem(finalsys)
         local neighs = mysys:adjacentSystems()
         local nearest = -1
         local mynextsys = finalsys
-        for j, _ in pairs(neighs) do
+        for _, j in pairs(neighs) do
             if nearest == -1 or j:jumpDist(finalsys) < nearest then
                 nearest = j:jumpDist(finalsys)
                 mynextsys = j
@@ -452,15 +464,16 @@ function diplomatIdle()
         end
     end
     
-    proxy = hook.timer(100, "proximity", {location = diplomat:pos(), radius = 200, funcname = "diplomatCutscene"})
+    proxy = hook.timer(100, "proximity", {location = diplomat:pos(), radius = 400, funcname = "diplomatCutscene"})
 end
 
 -- This is the final cutscene.
 function diplomatCutscene()
-    playerh1, playerh2 = player:pilot():health()
-    player:pilot():disable()
-    player:pilot():setVel(vec2.new(0, 0))
+    player:pilot():control()
+    player:pilot():brake()
     player:pilot():setInvincible(true)
+    
+    camera.set(dvaerplomat, true, 500)
     
     hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
     hook.timer(6000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
@@ -486,6 +499,7 @@ function killDiplomats()
             j:rmOutfit("all")
             j:addOutfit("Cheater's Ragnarok Beam", 1)
             j:attack(dvaerplomat)
+            j:setHilight(false)
         end
     end
     diplomat:hookClear()
@@ -499,8 +513,11 @@ function diplomatKilled()
 end
 
 function escortFlee()
+    camera.set(player.pilot, true)
+
     player:pilot():setInvincible(false)
-    player:pilot():setHealth(playerh1, playerh2)
+    player.pilot():control(false)
+
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:taskClear()
@@ -518,6 +535,7 @@ end
 function board()
     player.unboard()
     seiryuu:setHealth(100, 100)
+    diplomat:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(25000)
     var.pop("shadowvigil_active")

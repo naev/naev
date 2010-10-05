@@ -71,6 +71,11 @@ end
 
 
 function create ()
+    missys = {system.get("Rockbed")}
+    if not misn.claim(missys) then
+        abort()
+    end
+ 
    misn.setNPC( "Dimitri?", "none" )
    misn.setDesc( bar_desc )
 end
@@ -133,7 +138,7 @@ end
 function enter ( from_sys )
    -- Only done for stage 1
    if misn_stage == 0 then
-      local sys = system.get()
+      local sys = system.cur()
 
       -- Escorts enter a while back
       enter_vect = player.pos()

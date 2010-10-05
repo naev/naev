@@ -283,37 +283,28 @@ glTexture* ship_loadCommGFX( Ship* s )
 
 
 /**
- * @brief Parses the ship stats.
+ * @brief Parses a single ship stat from a parent node if it is one.
  *
- *    @param s ShipStats to parse stats for.
- *    @param parent Statistics node.
+ *    @return 0 on success, 1 if not a node.
  */
-int ship_statsParse( ShipStats *s, xmlNodePtr parent )
+int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
 {
-   xmlNodePtr node;
-
-   /* Parse information. */
-   node = parent->xmlChildrenNode;
-   do { /* load all the data */
-      /* Scout. */
-      xmlr_float(node,"ew_hide",s->ew_hide);
-      xmlr_float(node,"ew_detect",s->ew_detect);
-      /* Fighter. */
-      xmlr_float(node,"accuracy_forward",s->accuracy_forward);
-      xmlr_float(node,"damage_forward",s->damage_forward);
-      xmlr_float(node,"firerate_forward",s->firerate_forward);
-      xmlr_float(node,"energy_forward",s->energy_forward);
-      /* Cruiser. */
-      xmlr_float(node,"accuracy_turret",s->accuracy_turret);
-      xmlr_float(node,"damage_turret",s->damage_turret);
-      xmlr_float(node,"firerate_turret",s->firerate_turret);
-      xmlr_float(node,"energy_turret",s->energy_turret);
-      /* Freighter. */
-      xmlr_float(node,"jump_delay",s->jump_delay);
-   } while (xml_nextNode(node));
-
-   /* Success. */
-   return 0;
+   /* Scout. */
+   xmlr_floatR(node,"ew_hide",s->ew_hide);
+   xmlr_floatR(node,"ew_detect",s->ew_detect);
+   /* Fighter. */
+   xmlr_floatR(node,"accuracy_forward",s->accuracy_forward);
+   xmlr_floatR(node,"damage_forward",s->damage_forward);
+   xmlr_floatR(node,"firerate_forward",s->firerate_forward);
+   xmlr_floatR(node,"energy_forward",s->energy_forward);
+   /* Cruiser. */
+   xmlr_floatR(node,"accuracy_turret",s->accuracy_turret);
+   xmlr_floatR(node,"damage_turret",s->damage_turret);
+   xmlr_floatR(node,"firerate_turret",s->firerate_turret);
+   xmlr_floatR(node,"energy_turret",s->energy_turret);
+   /* Freighter. */
+   xmlr_floatR(node,"jump_delay",s->jump_delay);
+   return 1;
 }
 
 
@@ -758,7 +749,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       /* Parse ship stats. */
       if (xml_isNode(node,"stats")) {
-         ship_statsParse( &temp->stats, node );
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            if (ship_statsParseSingle( &temp->stats, cur ))
+               WARN("Ship '%s' has unknown stat '%s'.", temp->name, cur->name);
+         } while (xml_nextNode(cur));
          temp->desc_stats = malloc( STATS_DESC_MAX );
          i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX, 0, 0 );
          if (i <= 0) {

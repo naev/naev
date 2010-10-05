@@ -608,7 +608,26 @@
   <ai>trader</ai>
   <faction>Four Winds</faction>
   <pilots>
-   <pilot ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Four Winds Vendetta Quad">
+  <ai>trader</ai>
+  <faction>Rogue Four Winds</faction>
+  <pilots>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+   <pilot name="Four Winds Vendetta" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Four Winds Lancelot Trio">
+  <ai>trader</ai>
+  <faction>Rogue Four Winds</faction>
+  <pilots>
+   <pilot name="Four Winds Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Four Winds Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Seiryuu">
@@ -616,6 +635,27 @@
   <faction>Four Winds</faction>
   <pilots>
    <pilot name="Seiryuu" ship="Seiryuu"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Genbu">
+  <ai>baddie</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Genbu" ship="Genbu"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Suzaku">
+  <ai>baddie</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Suzaku" ship="Suzaku"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Byakko">
+  <ai>baddie</ai>
+  <faction>Four Winds</faction>
+  <pilots>
+   <pilot name="Byakko" ship="Byakko"></pilot>
   </pilots>
  </fleet>
  <fleet name="Shadowvigil Diplomat">

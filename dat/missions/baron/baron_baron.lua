@@ -72,6 +72,11 @@ else -- default english
 end
 
 function create ()
+    missys = {system.get("Darkstone")}
+    if not misn.claim(missys) then
+        abort()
+    end
+
     if tk.choice(title[1], text[1], choice1, choice2) == 1 then
         accept()
     else
@@ -119,6 +124,7 @@ function jumpin()
         pinnacle:rename("Pinnacle")
         pinnacle:setInvincible(true)
         pinnacle:control()
+        pinnacle:setHilight(true)
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
         hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
@@ -154,6 +160,7 @@ function board()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
     pinnacle:changeAI("flee")
+    pinnacle.setHilight(false)
     var.pop("baron_active")
     misn.finish(true)
 end
