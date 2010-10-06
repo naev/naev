@@ -819,6 +819,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("jammer",         OUTFIT_TYPE_JAMMER);
    O_CMP("map",            OUTFIT_TYPE_MAP);
    O_CMP("license",        OUTFIT_TYPE_LICENSE);
+   O_CMP("gui",            OUTFIT_TYPE_GUI);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;
