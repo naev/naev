@@ -241,6 +241,9 @@ static int gfxL_renderTexRaw( lua_State *L )
  *    @luaparam y Y position to render at.
  *    @luaparam w Width of the rectangle.
  *    @luaparam h Height of the rectangle.
+ *    @luaparam col Colour to use.
+ *    @luaparam empty Optional parameter on whether or not it should be empty, defaults to true.
+ * @luaparam renderRect( x, y, w, h, col, empty )
  */
 static int gfxL_renderRect( lua_State *L )
 {
