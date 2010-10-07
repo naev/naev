@@ -11,6 +11,7 @@
 
 #include "log.h"
 #include "opengl.h"
+#include "font.h"
 #include "gui.h"
 #include "pilot.h"
 #include "player.h"
@@ -146,6 +147,7 @@ void ovr_render( double dt )
    Pilot **pstk;
    int n;
    double w, h, res;
+   double x,y;
    glColour c = { .r=0., .g=0., .b=0., .a=0.5 };
 
    /* Must be open. */
@@ -192,6 +194,14 @@ void ovr_render( double dt )
    /* render the targetted pilot */
    if (j!=0)
       gui_renderPilot( pstk[j], RADAR_RECT, w, h, res, 1 );
+
+   /* Check if player has goto target. */
+   if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
+      x = player.autonav_pos.x / res;
+      y = player.autonav_pos.y / res;
+      gl_renderCross( x, y, 5., &cRadar_hilight );
+      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, "GOTO" );
+   }
    
    /* Render the player. */
    gui_renderPlayer( res, 1 );
