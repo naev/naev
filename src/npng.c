@@ -23,7 +23,7 @@
  */
 struct npng_s {
    SDL_RWops*  rw; /**< SDL_RWops to read data from. */
-   int start; /** Start position to read from. */
+   int start; /**< Start position to read from. */
    png_structp png_ptr; /**< PNG struct pointer. */
    png_infop   info_ptr; /**< PNG info struct pointer. */
 

@@ -82,19 +82,18 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static gl_vbo *gui_vbo = NULL; /**< GUI VBO. */
 static GLsizei gui_vboColourOffset = 0; /**< Offset of colour pixels. */
 
-/* Whether or not should recieve messages. */
-static int gui_getMessage     = 1;
+static int gui_getMessage     = 1; /**< Whether or not the palyer should recieve messages. */
 
 /*
  * pilot stuff for GUI
  */
-extern Pilot** pilot_stack;
-extern int pilot_nstack;
+extern Pilot** pilot_stack; /**< @todo remove */
+extern int pilot_nstack; /**< @todo remove */
 
 /*
  * map stuff for autonav
  */
-extern int map_npath;
+extern int map_npath; /**< @todo remove. */
 
 
 /**
@@ -106,10 +105,10 @@ static lua_State *gui_L; /**< Current GUI lua State. */
 /**
  * Cropping.
  */
-static double gui_viewport_x = 0.;
-static double gui_viewport_y = 0.;
-static double gui_viewport_w = 0.;
-static double gui_viewport_h = 0.;
+static double gui_viewport_x = 0.; /**< GUI Viewport X offset. */
+static double gui_viewport_y = 0.; /**< GUI Viewport Y offset. */
+static double gui_viewport_w = 0.; /**< GUI Viewport width. */
+static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
 
 /**
@@ -212,6 +211,9 @@ void gui_setDefaults (void)
 
 /**
  * @brief Initializes the message system.
+ *
+ *    @param x X position to set at.
+ *    @param y Y position to set at.
  */
 void gui_messageInit( int width, int x, int y )
 {

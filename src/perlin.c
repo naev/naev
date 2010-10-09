@@ -86,18 +86,18 @@ typedef struct perlin_data_s {
  * @brief Threading stuff.
  */
 typedef struct thread_args_ {
-   int z;
-   float zoom;
-   int n;
-   int h;
-   int w;
-   perlin_data_t *noise;
-   int octaves;
-   float *max;
-   float *nebula;
-   int *count;
-   SDL_mutex *nebu_lock;
-   SDL_cond *nebu_cond;
+   int z; /**< Z level working on. */
+   float zoom; /**< Zoom level of detail. */
+   int n; /**< Number of layers to generate. */
+   int h; /**< Height. */
+   int w; /**< Width. */
+   perlin_data_t *noise; /**< Parent noise. */
+   int octaves; /**< Octave parameters. */
+   float *max; /**< Maximum value. */
+   float *nebula; /**< Nebula loading into. */
+   int *count; /**< Count of threads. */
+   SDL_mutex *nebu_lock; /**< Shared loc k. */
+   SDL_cond *nebu_cond; /**< Shared conditional. */
 } thread_args;
 
 

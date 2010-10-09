@@ -68,7 +68,6 @@ static int cli_firstline   = 1; /**< Is this the first line? */
 /*
  * CLI stuff.
  */
-static int cli_print( lua_State *L );
 static int cli_script( lua_State *L );
 static const luaL_Reg cli_methods[] = {
    { "print", cli_print },
@@ -82,14 +81,14 @@ static const luaL_Reg cli_methods[] = {
  * Prototypes.
  */
 static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
-static void cli_addMessage( const char *msg );
 static void cli_render( double bx, double by, double w, double h, void *data );
 
 
 /**
  * @brief Replacement for the internal Lua print to print to console instead of terminal.
  */
-static int cli_print( lua_State *L ) {
+int cli_print( lua_State *L )
+{
    int n = lua_gettop(L);  /* number of arguments */
    int i;
    char buf[LINE_LENGTH];
@@ -159,9 +158,13 @@ static int cli_script( lua_State *L )
  *
  *    @param msg Message to add.
  */
-static void cli_addMessage( const char *msg )
+void cli_addMessage( const char *msg )
 {
    int n;
+
+   /* Not initialized. */
+   if (cli_state == NULL)
+      return;
 
    if (msg != NULL)
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );

@@ -34,6 +34,7 @@
  * @brief Represents a background image like say a Nebula.
  */
 typedef struct background_image_s {
+   unsigned int id; /**< Background id. */
    glTexture *image; /**< Image to display. */
    double x; /**< X center of the image. */
    double y; /**< Y center of the image. */
@@ -42,6 +43,9 @@ typedef struct background_image_s {
    glColour col; /**< Colour to use. */
 } background_image_t;
 static background_image_t *bkg_image_arr = NULL; /**< Background image array to display. */
+
+
+static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 
 
 /**
@@ -71,6 +75,9 @@ static GLfloat star_y = 0.; /**< Star Y movement. */
 static void background_renderImages (void);
 static lua_State* background_create( const char *path );
 static void background_clearCurrent (void);
+/* Sorting. */
+static int bkg_compare( const void *p1, const void *p2 );
+static void bkg_sort (void);
 
 
 /**
@@ -270,9 +277,36 @@ void background_render( double dt )
 
 
 /**
+ * @brief Compares two different backgrounds and sorts them.
+ */
+static int bkg_compare( const void *p1, const void *p2 )
+{
+   background_image_t *bkg1, *bkg2;
+
+   bkg1 = (background_image_t*) p1;
+   bkg2 = (background_image_t*) p2;
+
+   if (bkg1->move < bkg2->move)
+      return -1;
+   else if (bkg1->move > bkg2->move)
+      return +1;
+   return  0;
+}
+
+
+/**
+ * @brief Sorts the backgrounds by movement.
+ */
+static void bkg_sort (void)
+{
+   qsort( bkg_image_arr, array_size(bkg_image_arr), sizeof(background_image_t), bkg_compare );
+}
+
+
+/**
  * @brief Adds a new background image.
  */
-int background_addImage( glTexture *image, double x, double y,
+unsigned int background_addImage( glTexture *image, double x, double y,
       double move, double scale, glColour *col )
 {
    background_image_t *bkg;
@@ -283,6 +317,7 @@ int background_addImage( glTexture *image, double x, double y,
 
    /* Create image. */
    bkg         = &array_grow( &bkg_image_arr );
+   bkg->id     = ++bkg_idgen;
    bkg->image  = gl_dupTexture(image);
    bkg->x      = x;
    bkg->y      = y;
@@ -290,8 +325,10 @@ int background_addImage( glTexture *image, double x, double y,
    bkg->scale  = scale;
    memcpy( &bkg->col, (col!=NULL) ? col : &cWhite, sizeof(glColour) );
 
+   /* Sort if necessary. */
+   bkg_sort();
 
-   return array_size(bkg_image_arr)-1;
+   return bkg_idgen;
 }
 
 

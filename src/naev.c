@@ -288,6 +288,7 @@ int main( int argc, char** argv )
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
    cond_init(); /* Initialize conditional subsystem. */
+   cli_init(); /* Initialize console. */
 
    /* Data loading */
    load_all();

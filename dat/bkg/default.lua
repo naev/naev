@@ -26,7 +26,7 @@ nebulae = {
 
 
 stars = {
-   "blua01.png",
+   "blue01.png",
    "blue02.png",
    "green01.png",
    "orange01.png",

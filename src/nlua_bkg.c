@@ -88,6 +88,7 @@ static int bkgL_clear( lua_State *L )
  *    @luaparam move Fraction of a pixel to move when the player moves one pixel.
  *    @luaparam scale How much to scale the image.
  *    @luaparam col Colour to tint image (optional parameter).
+ *    @luareturn ID of the background.
  * @luafunc image( image, x, y, move, scale, col )
  */
 static int bkgL_image( lua_State *L )
@@ -95,6 +96,7 @@ static int bkgL_image( lua_State *L )
    LuaTex *lt;
    double x,y, move, scale;
    LuaColour *lc;
+   unsigned int id;
 
    /* Parse parameters. */
    lt    = luaL_checktex(L,1);
@@ -108,8 +110,9 @@ static int bkgL_image( lua_State *L )
       lc    = NULL;
    
    /* Create image. */
-   background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite );
-   return 0;
+   id = background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite );
+   lua_pushnumber(L,id);
+   return 1;
 }
 
 

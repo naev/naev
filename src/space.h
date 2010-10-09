@@ -167,8 +167,6 @@ typedef struct SystemPresence_ {
 
 
 /**
- * @struct JumpPoint
- *
  * @brief Represents a jump lane.
  */
 typedef struct JumpPoint_ {
@@ -188,8 +186,6 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
 
 /**
- * @struct StarSystem
- *
  * @brief Represents a star system.
  *
  * The star system is the basic setting in NAEV.

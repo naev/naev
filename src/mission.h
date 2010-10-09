@@ -83,7 +83,7 @@ typedef struct MissionData_ {
  * @brief Mission system marker.
  */
 typedef struct MissionMarker_ {
-   int id;
+   int id; /**< ID of the mission marker. */
    int sys; /**< ID of marked system. */
    SysMarker type; /**< Marker type. */
 } MissionMarker;

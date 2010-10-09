@@ -19,7 +19,7 @@
  * @brief Lua texture wrapper.
  */
 typedef struct LuaTex_s {
-   glTexture *tex;
+   glTexture *tex; /**< Texture wrapped around. */
 } LuaTex; /**< Wrapper for a texture. */
 
 
