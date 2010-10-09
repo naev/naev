@@ -20,7 +20,7 @@
 #include "dev_ship.h"
 
 
-#define CSV_DIR      "naev_csv"
+#define CSV_DIR      "naev_csv" /**< Name of the directory to create all the csv data into. */
 
 
 /**
