@@ -1779,9 +1779,10 @@ static int aiL_turn( lua_State *L )
  * @usage ai.face( a_pilot, true ) -- Face away from a pilot
  * @usage ai.face( a_pilot, nil, true ) -- Compensate velocity facing a pilot
  *
- *    @param target Target to face.
- *    @param invert Invert away from target.
- *    @param compensate Compensate for velocity?
+ *    @pluaaram target Target to face.
+ *    @luaparam invert Invert away from target.
+ *    @luaparam compensate Compensate for velocity?
+ *    @luareturn Angle offset in degrees.
  * @luafunc face( target, invert, compensate )
  */
 static int aiL_face( lua_State *L )
