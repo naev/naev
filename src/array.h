@@ -43,12 +43,15 @@
 #include <stdint.h>
 
 #ifdef DEBUGGING
-#define SENTINEL ((int)0xbabecafe)
+#define SENTINEL ((int)0xbabecafe) /**< Badass sentinal. */
 #endif
 
+/**
+ * @brief Private container type for the arrays.
+ */
 typedef struct {
 #ifdef DEBUGGING
-   int _sentinel;
+   int _sentinel;         /**< Sentinal for when debugging. */
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
@@ -63,6 +66,12 @@ void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
 
+/**
+ * @brief Gets the container of an array.
+ *
+ *    @param a Array to get container of.
+ *    @return The container of the array a.
+ */
 __inline__ static _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
@@ -77,6 +86,13 @@ __inline__ static _private_container *_array_private_container(void *a)
    return c;
 }
 
+/**
+ * @brief Gets the end of the array.
+ *
+ *    @param a Array to get end of.
+ *    @param e_size Size of array members.
+ *    @return The end of the array a.
+ */
 __inline__ static void *_array_end_helper(void *a, size_t e_size)
 {
    _private_container *c = _array_private_container(a);
