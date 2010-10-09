@@ -406,6 +406,19 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       y -= h+20;
    }
 }
+
+
+/**
+ * @brief Calculates the size the slots need to be for a given window.
+ *
+ *    @param p Pilot to calculate the slots of.
+ *    @param bw Base widget width.
+ *    @param bh Base window height.
+ *    @param w Width to use.
+ *    @param h Height to use.
+ *    @param n Number of columns.
+ *    @param m Number of rows.
+ */
 static void equipment_calculateSlots( Pilot *p, double bw, double bh,
       double *w, double *h, int *n, int *m )
 {
@@ -428,6 +441,12 @@ static void equipment_calculateSlots( Pilot *p, double bw, double bh,
 }
 /**
  * @brief Renders the equipment slots.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param data Custom widget data.
  */
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
@@ -478,6 +497,12 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
 }
 /**
  * @brief Renders the custom equipment widget.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param data Custom widget data.
  */
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data )
 {
@@ -521,7 +546,15 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
 /**
  * @brief Renders an outfit column.
- * @param mover Slot for which mouseover is active
+ *
+ *    @param x X position to render at.
+ *    @param y Y position to render at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param n Number of elements.
+ *    @param lst List of elements.
+ *    @param mover Slot for which mouseover is active
+ *    @param wgt Widget rendering.
  */
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
@@ -617,6 +650,12 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 }
 /**
  * @brief Renders the equipment overlay.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param data Custom widget data.
  */
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data )
@@ -710,6 +749,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
 /**
  * @brief Renders the ship in the equipment window.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param x X position to render at.
+ *    @param y Y positon to render at.
+ *    @param p Pilot to render.
  */
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
@@ -784,6 +831,12 @@ static void equipment_renderShip( double bx, double by,
 }
 /**
  * @brief Handles a mouse press in column.
+ *
+ *    @param y Y position of the column.
+ *    @param h Height of column.
+ *    @param n Number of elements in column.
+ *    @param my Mouse press position.
+ *    @return Number pressed (or -1 if none).
  */
 static int equipment_mouseInColumn( double y, double h, int n, double my )
 {
@@ -799,6 +852,18 @@ static int equipment_mouseInColumn( double y, double h, int n, double my )
 }
 /**
  * @brief Handles a mouse press in a column.
+ *
+ *    @param wid Parent window id.
+ *    @param event Mouse input event.
+ *    @param mx Mouse X event position.
+ *    @param my Mouse Y event position.
+ *    @param y Y position of the column.
+ *    @param h Heighto f the column.
+ *    @param n Number of elements in the column.
+ *    @param os Pointer to elements in the column.
+ *    @param p Pilot to which the elements belong.
+ *    @param selected Currently selected element.
+ *    @param wgt Slot widget.
  */
 static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
       double mx, double my, double y, double h, int n, PilotOutfitSlot* os,
@@ -849,6 +914,14 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
 }
 /**
  * @brief Does mouse input for the custom equipment widget.
+ *
+ *    @param wid Parent window id.
+ *    @param event Mouse input event.
+ *    @param mx Mouse X event position.
+ *    @param my Mouse Y event position.
+ *    @param bw Base window width.
+ *    @param bh Base window height.
+ *    @param data Custom widget data.
  */
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double mx, double my, double bw, double bh, void *data )
@@ -914,6 +987,10 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 
 /**
  * @brief Swaps an equipment slot.
+ *
+ *    @param wid Parent window id.
+ *    @param p Pilot swapping slots.
+ *    @param slot Slot to swap.
  */
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
@@ -1002,6 +1079,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
 /**
  * @brief Regenerates the equipment window lists.
+ *
+ *    @param wid Window to regenrate lists.
+ *    @param outfits Whether or not should regenerate outfits list.
+ *    @param ships Whether or not to regenerate ships list.
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
@@ -1098,6 +1179,8 @@ void equipment_addAmmo (void)
 
 /**
  * @brief Generates a new ship/outfit lists if needed.
+ *
+ *    @param wid Parent window id.
  */
 static void equipment_genLists( unsigned int wid )
 {
@@ -1443,6 +1526,7 @@ static void equipment_changeShip( unsigned int wid )
 }
 /**
  * @brief Player attempts to transport his ship to the planet he is at.
+ *
  *    @param wid Window player is trying to transport his ship from.
  */
 static void equipment_transportShip( unsigned int wid )
@@ -1480,6 +1564,7 @@ static void equipment_transportShip( unsigned int wid )
 
 /**
  * @brief Closes the GUI selection menu.
+ *
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
@@ -1492,6 +1577,9 @@ static void setgui_close( unsigned int wdw, char *str )
 
 /**
  * @brief Allows the player to set a different GUI.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
  */
 void equipment_setGui( unsigned int wid, char* str )
 {
@@ -1545,6 +1633,7 @@ void equipment_setGui( unsigned int wid, char* str )
 
 /**
  * @brief Loads a GUI.
+ *
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
@@ -1574,6 +1663,9 @@ static void setgui_load( unsigned int wdw, char *str )
 
 /**
  * @brief GUI override was toggled.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
  */
 static void equipment_toggleGuiOverride( unsigned int wid, char *name )
 {
@@ -1583,6 +1675,9 @@ static void equipment_toggleGuiOverride( unsigned int wid, char *name )
 
 /**
  * @brief Unequips the player's ship.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {
