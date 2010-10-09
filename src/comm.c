@@ -252,7 +252,7 @@ int comm_openPlanet( Planet *planet )
  *    @param gfx Graphic to use for the comm window (is freed).
  *    @param faction Faction of what you're communicating with.
  *    @param override If positive sets to ally, if negative sets to hostile.
- *    @param bribe Whether or not the target is bribed.
+ *    @param bribed Whether or not the target is bribed.
  *    @param name Name of object talking to.
  *    @return The comm window id.
  */
