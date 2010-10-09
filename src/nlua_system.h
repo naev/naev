@@ -19,7 +19,7 @@
  * @brief Lua StarSystem Wrapper.
  */
 typedef struct LuaSystem_s {
-   int id; /*< Star system ID. */
+   int id; /**< Star system ID. */
 } LuaSystem;
 
 
