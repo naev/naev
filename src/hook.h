@@ -12,17 +12,23 @@
 #include "nlua_pilot.h"
 
 
+/**
+ * @Brief The hook parameter types.
+ */
 typedef enum HookParamType_e {
-   HOOK_PARAM_NIL,
-   HOOK_PARAM_PILOT,
-   HOOK_PARAM_SENTINAL
+   HOOK_PARAM_NIL, /**< No hook parameter. */
+   HOOK_PARAM_PILOT, /**< Pilolt hook parameter. */
+   HOOK_PARAM_SENTINAL /**< Enum sentinal. */
 } HookParamType;
 
+/**
+ * @brief The actual hook parameter.
+ */
 typedef struct HookParam_s {
-   HookParamType type;
+   HookParamType type; /**< Type of parameter. */
    union {
-      LuaPilot lp;
-   } u;
+      LuaPilot lp; /**< Hook parameter pilot data. */
+   } u; /**< Hook parameter data. */
 } HookParam;
 
 
