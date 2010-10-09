@@ -38,17 +38,17 @@
  * @brief Stores a font character.
  */
 typedef struct font_char_s {
-   GLubyte *data;
-   int w;
-   int h;
-   int off_x;
-   int off_y;
-   int adv_x;
-   int adv_y;
-   int tx;
-   int ty;
-   int tw;
-   int th;
+   GLubyte *data; /**< Data of the character. */
+   int w; /**< Width. */
+   int h; /**< Height. */
+   int off_x; /**< X offset when rendering. */
+   int off_y; /**< Y offset when rendering. */
+   int adv_x; /**< X advancement. */
+   int adv_y; /**< Y advancement. */
+   int tx; /**< Texture x position. */
+   int ty; /**< Texture y position. */
+   int tw; /**< Texture width. */
+   int th; /**< Texture height. */
 } font_char_t;
 
 
