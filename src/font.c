@@ -886,22 +886,24 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
       return 0;
    }
 
-   /*
-    * Global  Local
-    * 0--1      0--1 4
-    * | /|  =>  | / /|
-    * |/ |      |/ / |
-    * 3--2      2 3--5
-    */
-   ind[0] = 4*ch + 0;
-   ind[1] = 4*ch + 1;
-   ind[2] = 4*ch + 3;
-   ind[3] = 4*ch + 1;
-   ind[4] = 4*ch + 3;
-   ind[5] = 4*ch + 2;
+   if (!isspace(ch)) {
+      /*
+       * Global  Local
+       * 0--1      0--1 4
+       * | /|  =>  | / /|
+       * |/ |      |/ / |
+       * 3--2      2 3--5
+       */
+      ind[0] = 4*ch + 0;
+      ind[1] = 4*ch + 1;
+      ind[2] = 4*ch + 3;
+      ind[3] = 4*ch + 1;
+      ind[4] = 4*ch + 3;
+      ind[5] = 4*ch + 2;
 
-   /* Draw the element. */
-   glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+      /* Draw the element. */
+      glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, ind );
+   }
 
    /* Translate matrix. */
    gl_matrixTranslate( font->chars[ch].adv_x, font->chars[ch].adv_y );

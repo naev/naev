@@ -11,6 +11,8 @@
 
 
 int nlua_loadCLI( lua_State *L ); /* always write only */
+int cli_print( lua_State *L );
+int nlua_regPrint( lua_State *L );
 
 
 #endif /* NLUA_CLI_H */
