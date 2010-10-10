@@ -26,7 +26,8 @@ class fleet(readers):
             return False
 
     def show_unused(self):
+        print('Unused fleets name:')
         for name in self.used:
             if name not in self.fleetsName:
-                print('Unused fleet:', name)
+                print(name)
 

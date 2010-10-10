@@ -137,6 +137,9 @@ class sanitizer:
             if self.config['verbose']:
                 print("DONE")
 
+        if self.config['show_unused']:
+            fleetdata.show_unused()
+
 if __name__ == "__main__":
 
     parser = ArgumentParser(description="""
@@ -150,6 +153,10 @@ if __name__ == "__main__":
                         a wild viking. Otherwise, the script will use the active
                         mission list to load the file list.
                         """)
+    
+    gfleet = parser.add_argument_group('Fleets')
+    gfleet.add_argument('--show-unused', action='store_true', default=False,
+                        help='Show unused fleets from the xml files')
 
     parser.add_argument('--version', action='version',
                         version='%(prog)s '+__version__)
@@ -162,6 +169,7 @@ if __name__ == "__main__":
     datpath = os.path.abspath(args.datpath)
     missionpath = os.path.abspath(datpath + '/missions')
     insanity = sanitizer(datpath=datpath, missionpath=missionpath,
-                         verbose=args.verbose,use=args.use)
+                         verbose=args.verbose,use=args.use,
+                         show_unused=args.show_unused)
 
     insanity.dah_doctor()
