@@ -10,10 +10,10 @@ class outfit(readers):
         readers.__init__(self, outfitXml, config['verbose'])
 
         self.outfitsName = list()
-        sys.stdout.write('Compiling outfit list ...')
+        print('Compiling outfit list ...',end='     ')
         for outfit in self.xmlData.findall('outfit'):
             self.outfitsName.append(outfit.attrib['name'])
-        print "        DONE"
+        print("DONE")
 
     def find(self, name):
         if name in self.outfitsName:

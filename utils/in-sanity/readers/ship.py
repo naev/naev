@@ -10,10 +10,10 @@ class ship(readers):
         readers.__init__(self, shipXml, config['verbose'])
 
         self.shipsName = list()
-        sys.stdout.write('Compiling ship list ...')
+        print('Compiling ship list ...',end='       ')
         for ship in self.xmlData.findall('ship'):
             self.shipsName.append(ship.attrib['name'])
-        print "        DONE"
+        print "DONE"
 
     def find(self, name):
         if name in self.shipsName:
