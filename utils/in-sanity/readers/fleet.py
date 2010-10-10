@@ -5,20 +5,27 @@ import os,sys
 from readers import readers
 
 class fleet(readers):
+    used = list()
+
     def __init__(self, **config):
         fleetXml = os.path.join(config['datpath'], 'fleet.xml')
         readers.__init__(self, fleetXml, config['verbose'])
 
         self.fleetsName = list()
-        sys.stdout.write('Compiling fleet list ...')
+        print('Compiling fleet list ...',end='      ')
         for fleet in self.xmlData.findall('fleet'):
             self.fleetsName.append(fleet.attrib['name'])
-        print "        DONE"
+        print("DONE")
 
     def find(self, name):
         if name in self.fleetsName:
+            self.used.append(name)
             return True
         else:
             return False
 
+    def show_unused(self):
+        for name in self.used:
+            if name not in self.fleetsName:
+                print('Unused fleet:', name)
 
