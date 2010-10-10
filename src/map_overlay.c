@@ -262,6 +262,9 @@ static void ovr_mrkRenderAll( double res )
    ovr_marker_t *mrk;
    double x, y;
 
+   if (ovr_markers == NULL)
+      return;
+
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
