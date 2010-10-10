@@ -22,6 +22,6 @@ class readers:
 
     def v(self, msg):
         if self._verbose:
-            print msg
+            print(msg)
         else:
             pass
