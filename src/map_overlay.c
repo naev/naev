@@ -191,6 +191,10 @@ void ovr_render( double dt )
    if (!ovr_open)
       return;
 
+   /* Player must be alive. */
+   if (player_isFlag( PLAYER_DESTROYED ) || (player.p == NULL))
+      return;
+
    /* Default values. */
    w     = SCREEN_W;
    h     = SCREEN_H;
