@@ -296,6 +296,8 @@ void ovr_mrkFree (void)
 void ovr_mrkClear (void)
 {
    int i;
+   if (ovr_markers == NULL)
+      return;
    for (i=0; i<array_size(ovr_markers); i++)
       ovr_mrkCleanup( &ovr_markers[i] );
    array_erase( &ovr_markers, ovr_markers, &ovr_markers[ array_size(ovr_markers) ] );
