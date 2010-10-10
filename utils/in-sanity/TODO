@@ -7,9 +7,6 @@ MAJOR:
  *) Must check lua script in scripts/ dat/events/
  *) (idea) Could use readers to deal with validation. So, readers could
     detect flaws and doctor will be more useless but it is more flexible.
- *) Detect unused fleets by removing used from the reference list.
-    This also needs to compile the list of used fleets to avoid duplicates
-    and errors.
 
     BORING STUFF:
 
