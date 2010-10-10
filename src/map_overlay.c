@@ -243,11 +243,11 @@ void ovr_render( double dt )
    /* Render the player. */
    gui_renderPlayer( res, 1 );
 
-   /* Pop the matrix. */
-   gl_matrixPop();
-
    /* Render markers. */
    ovr_mrkRenderAll( res );
+
+   /* Pop the matrix. */
+   gl_matrixPop();
 }
 
 
@@ -342,13 +342,13 @@ static ovr_marker_t *ovr_mrkNew (void)
  *    @param y Y position of the marker.
  *    @return The id of the newly created marker.
  */
-unsigned int ovr_mrkAddPoint( char *text, double x, double y )
+unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 {
-    ovr_marker_t *mrk;
+   ovr_marker_t *mrk;
 
    mrk = ovr_mrkNew();
    mrk->type = 0;
-   if (mrk->text != NULL)
+   if (text != NULL)
       mrk->text = strdup( text );
    mrk->u.pt.x = x;
    mrk->u.pt.y = y;

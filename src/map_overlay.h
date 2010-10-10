@@ -19,7 +19,7 @@ void ovr_refresh (void);
 /* Markers. */
 void ovr_mrkFree (void);
 void ovr_mrkClear (void);
-unsigned int ovr_mrkAddPoint( char *text, double x, double y );
+unsigned int ovr_mrkAddPoint( const char *text, double x, double y );
 void ovr_mrkRm( unsigned int id );
 
 
