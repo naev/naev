@@ -19,7 +19,8 @@ class fleet(readers):
 
     def find(self, name):
         if name in self.fleetsName:
-            self.used.append(name)
+            if name not in self.used:
+                self.used.append(name)
             return True
         else:
             return False
