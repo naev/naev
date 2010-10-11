@@ -40,16 +40,29 @@ class sanitizer:
         elif self.config['use'] == 'rawfiles':
             self.dirtyfiles_from_directory()
 
+        print('Compiling script files...',end='      ')
+        for root, dir, files in os.walk(self.config['basepath']+'/scripts/'):
+            self.addLuaFile(files, root)
+        print('DONE')
+
+        print('Compiling events files...',end='     ')
+        for root, dir, files in os.walk(self.config['basepath']+'/dat/events/'):
+            self.addLuaFile(files, root)
+        print('DONE')
+
+    def addLuaFile(self, files, root):
+        for filename in files:
+            if filename[-3:] == "lua":
+                realname = os.path.join(root, filename)
+                self.luaScripts.append(realname)
+
     def dirtyfiles_from_directory(self):
         """
         retrieve a list of files from the directory (the wild viking way)
         """
         print('Compiling file list like a wild viking ...', end='       ')
         for root, dir, files in os.walk(self.config['missionpath']):
-            for filen in files:
-                if filen[-3:] == "lua":
-                    realname = os.path.join(root,filen)
-                    self.luaScripts.append(realname)
+            self.addLuaFile(files, root)
         print('DONE')
         return True
 
@@ -77,11 +90,11 @@ class sanitizer:
         from readers.outfit import outfit
 
         # TODO: must be called when needed
-        fleetdata = fleet(datpath=self.config['basepath']+'dat/',
+        fleetdata = fleet(datpath=self.config['basepath']+'/dat/',
                           verbose=self.config['verbose'])
-        shipdata = ship(datpath=self.config['basepath']+'dat/',
+        shipdata = ship(datpath=self.config['basepath']+'/dat/',
                         verbose=self.config['verbose'])
-        outfitdata = outfit(datpath=self.config['basepath']+'dat/',
+        outfitdata = outfit(datpath=self.config['basepath']+'/dat/',
                             verbose=self.config['verbose'])
         rawstr = r"""
         (?P<func>
@@ -153,7 +166,7 @@ if __name__ == "__main__":
                         a wild viking. Otherwise, the script will use the active
                         mission list to load the file list.
                         """)
-/dat
+
     gfleet = parser.add_argument_group('Fleets')
     gfleet.add_argument('--show-unused', action='store_true', default=False,
                         help='Show unused fleets from the xml files')
