@@ -331,7 +331,7 @@ static void ovr_mrkCleanup(  ovr_marker_t *mrk )
  */
 static ovr_marker_t *ovr_mrkNew (void)
 {
-    ovr_marker_t *mrk;
+   ovr_marker_t *mrk;
 
    if (ovr_markers == NULL)
       ovr_markers = array_create(  ovr_marker_t );
@@ -374,6 +374,8 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 void ovr_mrkRm( unsigned int id )
 {
    int i;
+   if (ovr_markers == NULL)
+      return;
    for (i=0; i<array_size(ovr_markers); i++) {
       if (id!=ovr_markers[i].id)
          continue;
