@@ -58,7 +58,7 @@ class sanitizer:
         retrieve a list of files from the mission.xml (the quiet british way)
         """
         import xml.etree.ElementTree as ET
-        file = os.path.join(self.config['datpath'],'mission.xml')
+        file = os.path.join(self.config['basepath'],'dat/mission.xml')
         missionxml = ET.parse(file)
         print('Compiling file list ...', end='      ')
         for mission in missionxml.findall('mission'):
@@ -77,11 +77,11 @@ class sanitizer:
         from readers.outfit import outfit
 
         # TODO: must be called when needed
-        fleetdata = fleet(datpath=self.config['datpath'],
+        fleetdata = fleet(datpath=self.config['basepath']+'dat/',
                           verbose=self.config['verbose'])
-        shipdata = ship(datpath=self.config['datpath'],
+        shipdata = ship(datpath=self.config['basepath']+'dat/',
                         verbose=self.config['verbose'])
-        outfitdata = outfit(datpath=self.config['datpath'],
+        outfitdata = outfit(datpath=self.config['basepath']+'dat/',
                             verbose=self.config['verbose'])
         rawstr = r"""
         (?P<func>
@@ -153,7 +153,7 @@ if __name__ == "__main__":
                         a wild viking. Otherwise, the script will use the active
                         mission list to load the file list.
                         """)
-    
+/dat
     gfleet = parser.add_argument_group('Fleets')
     gfleet.add_argument('--show-unused', action='store_true', default=False,
                         help='Show unused fleets from the xml files')
@@ -161,14 +161,14 @@ if __name__ == "__main__":
     parser.add_argument('--version', action='version',
                         version='%(prog)s '+__version__)
     parser.add_argument('--verbose', action='store_true', default=False)
-    parser.add_argument('datpath',
-                        help='Path to naev/dat/ directory')
+    parser.add_argument('basepath',
+                        help='Path to naev/ directory')
 
     args = parser.parse_args()
 
-    datpath = os.path.abspath(args.datpath)
-    missionpath = os.path.abspath(datpath + '/missions')
-    insanity = sanitizer(datpath=datpath, missionpath=missionpath,
+    basepath = os.path.abspath(args.basepath)
+    missionpath = os.path.abspath(basepath + '/dat/missions')
+    insanity = sanitizer(basepath=basepath, missionpath=missionpath,
                          verbose=args.verbose,use=args.use,
                          show_unused=args.show_unused)
 
