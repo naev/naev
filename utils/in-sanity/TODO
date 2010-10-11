@@ -4,7 +4,6 @@ naev.
 
 MAJOR:
 
- *) Must check lua script in scripts/ dat/events/
  *) (idea) Could use readers to deal with validation. So, readers could
     detect flaws and doctor will be more useless but it is more flexible.
 
