@@ -77,6 +77,7 @@ static int equipment_mouseInColumn( double y, double h, int n, double my );
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
+static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
@@ -1347,6 +1348,23 @@ static void equipment_genLists( unsigned int wid )
    equipment_updateOutfits(wid, NULL);
    equipment_updateShips(wid, NULL);
 }
+
+
+/**
+ * @brief Gets the colour for comparing a current value vs a ship base value.
+ */
+static char eq_qCol( double cur, double base, int inv )
+{
+   if (cur > 1.2*base)
+      return (inv) ? 'r' : 'D';
+   else if (cur < 0.8*base)
+      return (inv) ? 'D' : 'r';
+   return '0';
+}
+
+
+#define EQ_COMP( cur, base, inv ) \
+eq_qCol( cur, base, inv ), cur
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
@@ -1397,17 +1415,17 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s Credits\n"
          "\n"
-         "%.0f Tons\n"
-         "%.1f STU Average\n"
-         "%.0f KN/Ton\n"
-         "%.0f M/s\n"
-         "%.0f Grad/s\n"
+         "\e%c%.0f\e0 Tons\n"
+         "\e%c%.1f\e0 STU Average\n"
+         "\e%c%.0f\e0 KN/Ton\n"
+         "\e%c%.0f\e0 M/s\n"
+         "\e%c%.0f\e0 Grad/s\n"
          "\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%d / %d Tons\n"
-         "%.0f / %.0f Units (%d Jumps)\n"
+         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
+         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
+         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
+         "%d / \e%c%d\e0 Tons\n"
+         "%.0f / \e%c%.0f\e0 Units (%d Jumps)\n"
          "\n"
          "%s Credits\n"
          "%s%s",
@@ -1417,18 +1435,21 @@ void equipment_updateShips( unsigned int wid, char* str )
       ship_class(ship->ship),
       buf3,
       /* Movement. */
-      ship->solid->mass,
-      pilot_hyperspaceDelay( ship ),
-      ship->thrust/ship->solid->mass,
-      ship->speed,
-      ship->turn,
+      EQ_COMP( ship->solid->mass, ship->ship->mass, 1 ),
+      '0', pilot_hyperspaceDelay( ship ),
+      EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
+      EQ_COMP( ship->speed, ship->ship->speed, 0 ),
+      EQ_COMP( ship->turn, ship->ship->turn, 0 ),
       /* Health. */
-      ship->shield_max, ship->shield_regen,
-      ship->armour_max, ship->armour_regen,
-      ship->energy_max, ship->energy_regen,
+      EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
+      EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ),
+      EQ_COMP( ship->armour_max, ship->ship->armour, 0 ),
+      EQ_COMP( ship->armour_regen, ship->ship->armour_regen, 0 ),
+      EQ_COMP( ship->energy_max, ship->ship->energy, 0 ),
+      EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
-      pilot_cargoUsed(ship), cargo,
-      ship->fuel, ship->fuel_max, pilot_getJumps(ship),
+      pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
+      ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
       /* Transportation. */
       buf2,
       loc, sysname );
@@ -1455,6 +1476,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       window_enableButton( wid, "btnSellShip" );
    }
 }
+#undef EQ_COMP
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
