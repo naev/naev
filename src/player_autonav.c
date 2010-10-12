@@ -314,9 +314,9 @@ void player_updateAutonav( double dt )
    else if (tc_mod == tc_max)
       return;
    else if (tc_mod > 3.)
-      tc_mod += dt*2.;
+      tc_mod += 2. * dt * (tc_max-1.)/10.;
    else
-      tc_mod += dt;
+      tc_mod += 1. * dt * (tc_max-1.)/10.;
    pause_setSpeed( tc_mod );
 }
 
