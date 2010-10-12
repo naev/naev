@@ -20,6 +20,8 @@
 
 extern double player_acc; /**< Player acceleration. */
 
+static double tc_mod    = 1.; /**< Time compression modifier. */
+
 
 /*
  * Prototypes.
@@ -49,6 +51,18 @@ void player_autonavStart (void)
    player_message("\epAutonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
    player.autonav = AUTONAV_JUMP_APPROACH;
+   tc_mod         = 1.;
+}
+
+
+/**
+ * @brief Ends the autonav.
+ */
+void player_autonavEnd (void)
+{
+   player_rmFlag(PLAYER_AUTONAV);
+   tc_mod         = 1.;
+   pause_setSpeed( 1. );
 }
 
 
@@ -105,15 +119,14 @@ void player_autonavAbort( char *reason )
       /* Get rid of acceleration. */
       player_accelOver();
 
-      /* Drop out of possible different speed modes. */
-      if (dt_mod != 1.)
-         pause_compressEnd();
-
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
          player_message("\epAborting hyperspace sequence.");
       }
+
+      /* Reset time compression. */
+      player_autonavEnd();
    }
 }
 
@@ -152,8 +165,8 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos );
          if (ret) {
-            player_rmFlag( PLAYER_AUTONAV );
             player_message( "\epAutonav arrived at position." );
+            player_autonavEnd();
          }
          break;
    }
@@ -253,5 +266,30 @@ void player_thinkAutonav( Pilot *pplayer )
    else
       player_autonav();
 }
+
+
+/**
+ * @brief Updates the player's autonav.
+ *
+ *    @param dt Current delta tick (should be real delta tick, not game delta tick).
+ */
+void player_updateAutonav( double dt )
+{
+   /* Must be autonaving. */
+   if (!player_isFlag(PLAYER_AUTONAV))
+      return;
+
+   /* We'll update the time compression here. */
+   if (tc_mod > TIME_COMPRESSION_MAX)
+      tc_mod = TIME_COMPRESSION_MAX;
+   else if (tc_mod == TIME_COMPRESSION_MAX)
+      return;
+   else if (tc_mod > 3.)
+      tc_mod += dt*2.;
+   else
+      tc_mod += dt;
+   pause_setSpeed( tc_mod );
+}
+
 
 

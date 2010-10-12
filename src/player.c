@@ -1523,7 +1523,7 @@ void player_brokeHyperspace (void)
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
          player_message( "\epAutonav arrived at destination.");
-         player_rmFlag(PLAYER_AUTONAV);
+         player_autonavEnd();
       }
       else {
          player_message( "\epAutonav continuing until destination (%d jump%s left).",

@@ -12,6 +12,9 @@
 #endif /* PLAYER_H */
 
 
+#define TIME_COMPRESSION_MAX     30. /**< Maximum level of time compression. */
+
+
 /* Autonav states. */
 #define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
 #define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
@@ -19,7 +22,9 @@
 
 
 void player_thinkAutonav( Pilot *pplayer );
+void player_updateAutonav( double dt );
 void player_autonavStart (void);
+void player_autonavEnd (void);
 void player_autonavAbort( char *reason );
 void player_autonavStartWindow( unsigned int wid, char *str);
 void player_autonavPos( double x, double y );

@@ -572,6 +572,9 @@ void main_loop (void)
 
    fps_control(); /* everyone loves fps control */
 
+   /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
+   player_updateAutonav( real_dt );
+
    input_update(); /* handle key repeats. */
 
    sound_update( real_dt ); /* Update sounds. */
