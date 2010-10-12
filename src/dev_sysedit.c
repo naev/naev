@@ -206,8 +206,9 @@ void sysedit_open( StarSystem *sys )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", sysedit_buttonZoom );
 
    /* Selected text. */
+   snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
-         "txtSelected", &gl_smallFont, &cBlack, NULL );
+         "txtSelected", &gl_smallFont, &cBlack, buf );
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
@@ -386,7 +387,7 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   char *str;
+   char *str, buf[PATH_MAX];
    double s;
    Planet *p;
    JumpPoint *jp;
@@ -411,6 +412,8 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 
    /* Scale radius. */
    sys->radius *= s;
+   snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
+   window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
    for (i=0; i<sys->nplanets; i++) {
