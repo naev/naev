@@ -350,10 +350,8 @@ void player_updateAutonav( double dt )
    /* We'll update the time compression here. */
    if (tc_mod == tc_max)
       return;
-   else if (tc_mod > 3.)
-      tc_mod += 0.2 * dt * (tc_max-1.);
    else
-      tc_mod += 0.1 * dt * (tc_max-1.);
+      tc_mod += 0.2 * dt * (tc_max-1.);
    /* Avoid going over. */ 
    if (tc_mod > tc_max)
       tc_mod = tc_max;
