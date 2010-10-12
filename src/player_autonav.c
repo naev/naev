@@ -22,13 +22,16 @@ extern double player_acc; /**< Player acceleration. */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_max    = 1.; /**< Maximum time compression. */
+static double tc_down   = 0.; /**< Rate of decrement. */
+static int tc_rampdown  = 0; /**< Ramping down time compression? */
 
 
 /*
  * Prototypes.
  */
+static void player_autonavSetup (void);
 static void player_autonav (void);
-static int player_autonavApproach( Vector2d *pos );
+static int player_autonavApproach( Vector2d *pos, double *dist2 );
 static int player_autonavBrake (void);
 
 
@@ -49,11 +52,24 @@ void player_autonavStart (void)
       return;
    }
 
-   player_message("\epAutonav initialized.");
-   player_setFlag(PLAYER_AUTONAV);
+   player_autonavSetup();
    player.autonav = AUTONAV_JUMP_APPROACH;
-   tc_mod         = 1.;
-   tc_max         = TIME_COMPRESSION_MAX / player.p->speed;
+}
+
+
+/**
+ * @brief Prepares the player to enter autonav.
+ */
+static void player_autonavSetup (void)
+{
+   player_message("\epAutonav initialized.");
+   if (!player_isFlag(PLAYER_AUTONAV)) {
+      tc_mod         = 1.;
+      tc_max         = TIME_COMPRESSION_MAX / player.p->speed;
+      tc_rampdown    = 0;
+      tc_down        = 0.;
+   }
+   player_setFlag(PLAYER_AUTONAV);
 }
 
 
@@ -74,18 +90,7 @@ void player_autonavEnd (void)
 void player_autonavStartWindow( unsigned int wid, char *str)
 {
    (void) str;
-
-   if (player.p->nav_hyperspace == -1)
-      return;
-
-   if (player.p->fuel < HYPERSPACE_FUEL) {
-      player_message("\erNot enough fuel to jump for autonav.");
-      return;
-   }
-
-   player_message("\epAutonav initialized.");
-   player_setFlag(PLAYER_AUTONAV);
-
+   player_autonavStart();
    window_destroy( wid );
 }
 
@@ -95,10 +100,9 @@ void player_autonavStartWindow( unsigned int wid, char *str)
  */
 void player_autonavPos( double x, double y )
 {
+   player_autonavSetup();
    player.autonav    = AUTONAV_POS_APPROACH;
    vect_cset( &player.autonav_pos, x, y );
-   player_message("\epAutonav initialized.");
-   player_setFlag(PLAYER_AUTONAV);
 }
 
 
@@ -140,12 +144,13 @@ static void player_autonav (void)
 {
    JumpPoint *jp;
    int ret;
+   double dist2;
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
          /* Target jump. */
          jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret   = player_autonavApproach( &jp->pos );
+         ret   = player_autonavApproach( &jp->pos, &dist2 );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
          break;
@@ -165,7 +170,7 @@ static void player_autonav (void)
          break;
    
       case AUTONAV_POS_APPROACH:
-         ret = player_autonavApproach( &player.autonav_pos );
+         ret = player_autonavApproach( &player.autonav_pos, &dist2 );
          if (ret) {
             player_message( "\epAutonav arrived at position." );
             player_autonavEnd();
@@ -181,7 +186,7 @@ static void player_autonav (void)
  *    @param pos Position to go to.
  *    @return 1 on completion.
  */
-static int player_autonavApproach( Vector2d *pos )
+static int player_autonavApproach( Vector2d *pos, double *dist2 )
 {
    double d, time, vel, dist;
 
@@ -205,8 +210,11 @@ static int player_autonavApproach( Vector2d *pos )
    dist  = vel*(time+1.1*180./player.p->turn) -
       0.5*(player.p->thrust/player.p->solid->mass)*time*time;
 
+   /* Output distance^2 */
+   *dist2 = vect_dist2( pos, &player.p->solid->pos );
+
    /* See if should start braking. */
-   if (dist*dist > vect_dist2( pos, &player.p->solid->pos )) {
+   if (dist*dist > *dist2) {
       player_accelOver();
       return 1;
    }
@@ -280,6 +288,15 @@ void player_updateAutonav( double dt )
    /* Must be autonaving. */
    if (!player_isFlag(PLAYER_AUTONAV))
       return;
+
+   /* Ramping down. */
+   if (tc_rampdown) {
+      if (tc_mod != 1.) {
+         tc_mod = MAX( 1., tc_mod-tc_down );
+         pause_setSpeed( tc_mod );
+      }
+      return;
+   }
 
    /* We'll update the time compression here. */
    if (tc_mod > tc_max)
