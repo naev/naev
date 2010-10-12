@@ -144,7 +144,7 @@ static void player_autonav (void)
 {
    JumpPoint *jp;
    int ret;
-   double d, dist2, t;
+   double d, dist2, t, tint;
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
@@ -178,11 +178,12 @@ static void player_autonav (void)
             player_autonavEnd();
          }
          else if (!tc_rampdown) {
-            d = sqrt( dist2 );
-            t = d / (sqrt(tc_mod) * VMOD(player.p->solid->vel));
-            if (t < 3.) {
+            d     = dist2;
+            t     = d / VMOD(player.p->solid->vel) * 0.925;
+            tint  = 3. + 0.5*(3.*(tc_mod-1.));
+            if (t < tint) {
                tc_rampdown = 1;
-               tc_down     = tc_mod - 1.;
+               tc_down     = (tc_mod-1.) / 3.;
             }
          }
          break;
@@ -221,10 +222,10 @@ static int player_autonavApproach( Vector2d *pos, double *dist2 )
       0.5*(player.p->thrust/player.p->solid->mass)*time*time;
 
    /* Output distance^2 */
-   *dist2 = vect_dist2( pos, &player.p->solid->pos ) - dist*dist;
+   *dist2 = vect_dist( pos, &player.p->solid->pos ) - dist;
 
    /* See if should start braking. */
-   if (0. > *dist2) {
+   if (*dist2 < 0.) {
       player_accelOver();
       return 1;
    }
@@ -309,14 +310,15 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
-   if (tc_mod > tc_max)
-      tc_mod = tc_max;
-   else if (tc_mod == tc_max)
+   if (tc_mod == tc_max)
       return;
    else if (tc_mod > 3.)
-      tc_mod += 2. * dt * (tc_max-1.)/10.;
+      tc_mod += 0.2 * dt * (tc_max-1.);
    else
-      tc_mod += 1. * dt * (tc_max-1.)/10.;
+      tc_mod += 0.1 * dt * (tc_max-1.);
+   /* Avoid going over. */ 
+   if (tc_mod > tc_max)
+      tc_mod = tc_max;
    pause_setSpeed( tc_mod );
 }
 
