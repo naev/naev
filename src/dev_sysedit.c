@@ -38,6 +38,10 @@
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
 
+#define SYSEDIT_ZOOM_MAX         1.    /**< Maximum zoom (close). */
+#define SYSEDIT_ZOOM_MIN         0.01  /**< Minimum zoom (far). */
+
+
 #define PLANET_GFX_PATH    "gfx/planet/space" /**< Path to planet space graphics. */
 
 
@@ -790,11 +794,11 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
       sysedit_zoom *= 1.2;
-      sysedit_zoom = MIN(1., sysedit_zoom);
+      sysedit_zoom = MIN( SYSEDIT_ZOOM_MAX, sysedit_zoom );
    }
    else if (strcmp(str,"btnZoomOut")==0) {
       sysedit_zoom *= 0.8;
-      sysedit_zoom = MAX(0.10, sysedit_zoom);
+      sysedit_zoom = MAX( SYSEDIT_ZOOM_MIN, sysedit_zoom );
    }
 
    /* Transform coords back. */
