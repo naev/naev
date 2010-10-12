@@ -113,6 +113,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
 static void sysedit_btnReset( unsigned int wid_unused, char *unused );
+static void sysedit_btnScale( unsigned int wid_unused, char *unused );
 static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
 /* Property editor. */
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -135,6 +136,7 @@ void sysedit_open( StarSystem *sys )
 {
    unsigned int wid;
    char buf[PATH_MAX];
+   int i;
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -158,33 +160,45 @@ void sysedit_open( StarSystem *sys )
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_close );
+   i = 1;
 
    /* Save button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save", sysedit_save );
+   i += 2;
+
+   /* Scale. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnScale", "Scale", sysedit_btnScale );
+   i += 1;
 
    /* Reset. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnReset", "Reset", sysedit_btnReset );
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnReset", "Reset Jumps", sysedit_btnReset );
+   i += 1;
 
    /* Editing. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnEdit", "Edit", sysedit_btnEdit );
+   i += 1;
 
    /* Remove. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*5, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnRemove", "Remove", sysedit_btnRemove );
+   i += 1;
 
    /* Rename. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnRename", "Rename", sysedit_btnRename );
+   i += 1;
 
    /* New system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*7, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Planet", sysedit_btnNew );
+   i += 2;
 
    /* Toggle Grid. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*9, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnGrid", "Grid", sysedit_btnGrid );
 
    /* Zoom buttons */
@@ -362,6 +376,40 @@ static void sysedit_btnReset( unsigned int wid_unused, char *unused )
 
    /* Must reconstruct jumps. */
    systems_reconstructJumps();
+}
+
+
+/**
+ * @brief Scales a system.
+ */
+static void sysedit_btnScale( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   char *str;
+   double s;
+   Planet *p;
+   JumpPoint *jp;
+   int i;
+   StarSystem *sys;
+
+   /* Prompt scale amount. */
+   str = dialogue_inputRaw( "Scale Star System", 1, 32, "By how much do you want to scale the star system?" );
+   if (str == NULL)
+      return;
+
+   s     = atof(str);
+   sys   = sysedit_sys;
+
+   for (i=0; i<sys->nplanets; i++) {
+      p     = sys->planets[i];
+      vect_cset( &p->pos, p->pos.x*s, p->pos.y*s );
+   }
+
+   for (i=0; i<sys->njumps; i++) {
+      jp    = &sys->jumps[i];
+      vect_cset( &jp->pos, jp->pos.x*s, jp->pos.y*s );
+   }
 }
 
 
