@@ -146,6 +146,7 @@ static void player_autonav (void)
    JumpPoint *jp;
    int ret;
    double d, t, tint;
+   double vel;
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
@@ -155,7 +156,8 @@ static void player_autonav (void)
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
          else if (!tc_rampdown && (map_npath<=1)) {
-            t     = d / VMOD(player.p->solid->vel) * 1.1;
+            vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
+            t     = d / vel * 1.1;
             tint  = 3. + 0.5*(3.*(tc_mod-1.));
             if (t < tint) {
                tc_rampdown = 1;
@@ -185,7 +187,8 @@ static void player_autonav (void)
             player_autonavEnd();
          }
          else if (!tc_rampdown) {
-            t     = d / VMOD(player.p->solid->vel) * 0.925;
+            vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
+            t     = d / vel * 0.925;
             tint  = 3. + 0.5*(3.*(tc_mod-1.));
             if (t < tint) {
                tc_rampdown = 1;
