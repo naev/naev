@@ -23,6 +23,7 @@
 #include "rng.h"
 #include "land.h"
 #include "map.h"
+#include "map_overlay.h"
 
 
 /* System metatable methods */
@@ -40,6 +41,9 @@ static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
+static int systemL_mrkClear( lua_State *L );
+static int systemL_mrkAdd( lua_State *L );
+static int systemL_mrkRm( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -56,8 +60,29 @@ static const luaL_reg system_methods[] = {
    { "presence", systemL_presence },
    { "radius", systemL_radius },
    { "isKnown", systemL_isknown },
+   { "mrkClear", systemL_mrkClear },
+   { "mrkAdd", systemL_mrkAdd },
+   { "mrkRm", systemL_mrkRm },
    {0,0}
 }; /**< System metatable methods. */
+static const luaL_reg system_cond_methods[] = {
+   { "cur", systemL_cur },
+   { "get", systemL_get },
+   { "__eq", systemL_eq },
+   { "__tostring", systemL_name },
+   { "name", systemL_name },
+   { "faction", systemL_faction },
+   { "nebula", systemL_nebula },
+   { "jumpDist", systemL_jumpdistance },
+   { "adjacentSystems", systemL_adjacent },
+   { "jumpPos", systemL_jumpPos },
+   { "hasPresence", systemL_hasPresence },
+   { "planets", systemL_planets },
+   { "presence", systemL_presence },
+   { "radius", systemL_radius },
+   { "isKnown", systemL_isknown },
+   {0,0}
+}; /**< Read only system metatable methods. */
 
 
 /**
@@ -79,7 +104,10 @@ int nlua_loadSystem( lua_State *L, int readonly )
    lua_setfield(L,-2,"__index");
 
    /* Register the values */
-   luaL_register(L, NULL, system_methods);
+   if (readonly)
+      luaL_register(L, NULL, system_cond_methods);
+   else
+      luaL_register(L, NULL, system_methods);
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, SYSTEM_METATABLE);
@@ -660,3 +688,65 @@ static int systemL_isknown( lua_State *L )
    lua_pushboolean(L, sys_isKnown(sys));
    return 1;
 }
+
+
+/**
+ * @brief Clears the system markers.
+ *
+ * This can be dangerous and clash with other missions, do not try this at home kids.
+ *
+ * @usagre system.mrkClear()
+ *
+ * @luafunc mrkClear()
+ */
+static int systemL_mrkClear( lua_State *L )
+{
+   (void) L;
+   ovr_mrkClear();
+   return 0;
+}
+
+
+/**
+ * @brief Adds a system marker.
+ *
+ * @usage mrk_id = system.mrkAdd( "Hello", vec2.new( 50, 30 ) ) -- Creates a marker at (50,30)
+ *
+ *    @luaparam str String to display next to marker.
+ *    @luaparam v Position to display marker at.
+ *    @luareturn The id of the marker.
+ * @luafunc mrkAdd( str, v )
+ */
+static int systemL_mrkAdd( lua_State *L )
+{
+   const char *str;
+   LuaVector *lv;
+   unsigned int id;
+
+   /* Handle parameters. */
+   str   = luaL_checkstring( L, 1 );
+   lv    = luaL_checkvector( L, 2 );
+
+   /* Create marker. */
+   id    = ovr_mrkAddPoint( str, lv->vec.x, lv->vec.y );
+   lua_pushnumber( L, id );
+   return 1;
+}
+
+
+/**
+ * @brief Removes a system marker.
+ *
+ * @usage system.mrkRm( mrk_id ) -- Removes a marker by mrk_id
+ *
+ *    @luaparam id ID of the marker to remove.
+ * @luaparam mrkRm( id )
+ */
+static int systemL_mrkRm( lua_State *L )
+{
+   unsigned int id;
+   id = luaL_checklong( L, 1 );
+   ovr_mrkRm( id );   
+   return 0;
+}
+

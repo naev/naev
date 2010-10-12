@@ -17,11 +17,39 @@
 #include "player.h"
 #include "space.h"
 #include "input.h"
+#include "array.h"
+
+
+/**
+ * @brief Ano verlay map marker.
+ */
+typedef struct ovr_marker_s {
+   unsigned int id; /**< ID of the marker. */
+   char *text; /**< Marker dispaly text. */
+   int type; /**< Marker type. */
+   union {
+      struct {
+         double x; /**< X center of point marker. */
+         double y; /**< Y center of point marker. */
+      } pt; /**< Point marker. */
+   } u; /**< Type data. */
+} ovr_marker_t;
+static unsigned int mrk_idgen = 0; /**< ID generator for markers. */
+static ovr_marker_t *ovr_markers = NULL; /**< Overlay markers. */
 
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
 static int ovr_open = 0; /**< Is the overlay open? */
 static double ovr_res = 10.; /**< Resolution. */
+
+
+/*
+ * Prototypes
+ */
+/* Markers. */
+static void ovr_mrkRenderAll( double res );
+static void ovr_mrkCleanup(  ovr_marker_t *mrk );
+static ovr_marker_t *ovr_mrkNew (void);
 
 
 /**
@@ -97,6 +125,11 @@ void ovr_refresh (void)
 }
 
 
+/**
+ * @brief Properly opens or closes the overlay map.
+ *
+ *    @param open Whether or not to open it.
+ */
 static void ovr_setOpen( int open )
 {
    if (open && !ovr_open) {
@@ -112,6 +145,8 @@ static void ovr_setOpen( int open )
 
 /**
  * @brief Handles a keypress event.
+ *
+ *    @param type Type of event.
  */
 void ovr_key( int type )
 {
@@ -139,6 +174,8 @@ void ovr_key( int type )
 
 /**
  * @brief Renders the overlay map.
+ *
+ *    @param dt Current delta tick.
  */
 void ovr_render( double dt )
 {
@@ -152,6 +189,10 @@ void ovr_render( double dt )
 
    /* Must be open. */
    if (!ovr_open)
+      return;
+
+   /* Player must be alive. */
+   if (player_isFlag( PLAYER_DESTROYED ) || (player.p == NULL))
       return;
 
    /* Default values. */
@@ -206,8 +247,142 @@ void ovr_render( double dt )
    /* Render the player. */
    gui_renderPlayer( res, 1 );
 
+   /* Render markers. */
+   ovr_mrkRenderAll( res );
+
    /* Pop the matrix. */
    gl_matrixPop();
+}
+
+
+/**
+ * @brief Renders all the markers.
+ *
+ *    @param res Resolution to render at.
+ */
+static void ovr_mrkRenderAll( double res )
+{
+   int i;
+   ovr_marker_t *mrk;
+   double x, y;
+
+   if (ovr_markers == NULL)
+      return;
+
+   for (i=0; i<array_size(ovr_markers); i++) {
+      mrk = &ovr_markers[i];
+
+      x = mrk->u.pt.x / res;
+      y = mrk->u.pt.y / res;
+      gl_renderCross( x, y, 5., &cRadar_hilight );
+
+      if (mrk->text != NULL)
+         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+   }
+}
+
+
+/**
+ * @brief Frees up and clears all marker related stuff.
+ */
+void ovr_mrkFree (void)
+{
+   /* Clear markers. */
+   ovr_mrkClear();
+
+   /* Free arary. */
+   if (ovr_markers != NULL)
+      array_free( &ovr_markers );
+   ovr_markers = NULL;
+}
+
+
+/**
+ * @brief Clears the curent markers.
+ */
+void ovr_mrkClear (void)
+{
+   int i;
+   if (ovr_markers == NULL)
+      return;
+   for (i=0; i<array_size(ovr_markers); i++)
+      ovr_mrkCleanup( &ovr_markers[i] );
+   array_erase( &ovr_markers, ovr_markers, &ovr_markers[ array_size(ovr_markers) ] );
+}
+
+
+/**
+ * @brief Clears up after an individual marker.
+ *
+ *    @param mrk Marker to clean up after.
+ */
+static void ovr_mrkCleanup(  ovr_marker_t *mrk )
+{
+   if (mrk->text != NULL)
+      free( mrk->text );
+   mrk->text = NULL;
+}
+
+
+/**
+ * @brief Creates a new marker.
+ *
+ *    @return The newly created marker.
+ */
+static ovr_marker_t *ovr_mrkNew (void)
+{
+   ovr_marker_t *mrk;
+
+   if (ovr_markers == NULL)
+      ovr_markers = array_create(  ovr_marker_t );
+
+   mrk = &array_grow( &ovr_markers );
+   memset( mrk, 0, sizeof( ovr_marker_t ) );
+   mrk->id = ++mrk_idgen;
+   return mrk;
+}
+
+
+/**
+ * @brief Creates a new point marker.
+ *
+ *    @param text Text to display with the marker.
+ *    @param x X position of the marker.
+ *    @param y Y position of the marker.
+ *    @return The id of the newly created marker.
+ */
+unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
+{
+   ovr_marker_t *mrk;
+
+   mrk = ovr_mrkNew();
+   mrk->type = 0;
+   if (text != NULL)
+      mrk->text = strdup( text );
+   mrk->u.pt.x = x;
+   mrk->u.pt.y = y;
+
+   return mrk->id;
+}
+
+
+/**
+ * @brief Removes a marker by id.
+ *
+ *    @param id ID of the marker to remove.
+ */
+void ovr_mrkRm( unsigned int id )
+{
+   int i;
+   if (ovr_markers == NULL)
+      return;
+   for (i=0; i<array_size(ovr_markers); i++) {
+      if (id!=ovr_markers[i].id)
+         continue;
+      ovr_mrkCleanup( &ovr_markers[i] );
+      array_erase( &ovr_markers, &ovr_markers[i], &ovr_markers[i+1] );
+      break;
+   }
 }
 
 

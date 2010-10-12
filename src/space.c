@@ -853,6 +853,7 @@ void space_init ( const char* sysname )
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
+   ovr_mrkClear(); /* Clear markers when jumping. */
    pilot_clearTimers(player.p); /* Clear timers. */
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
