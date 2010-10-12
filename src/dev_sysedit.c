@@ -399,6 +399,12 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
       return;
 
    s     = atof(str);
+   if ((s < 0.1) || (s > 10.)) {
+      i = dialogue_YesNo( "Scale Star System", "Are you sure you want to scale the star system by %f?", s );
+      if (i==0)
+         return;
+   }
+
    sys   = sysedit_sys;
 
    for (i=0; i<sys->nplanets; i++) {
