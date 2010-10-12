@@ -201,7 +201,7 @@ void ovr_render( double dt )
    res   = ovr_res;
 
    /* First render the background overlay. */
-   gl_renderRect( 0., 0., w, h, &c );
+   gl_renderRect( -2., -2., w+2., h+2., &c );
 
    /* We need to center in the image first. */
    gl_matrixPush();
