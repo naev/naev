@@ -196,6 +196,12 @@ static void player_autonav (void)
          }
          else if (ret)
             player.autonav = AUTONAV_JUMP_APPROACH;
+
+         /* See if should ramp down. */
+         if (!tc_rampdown && (map_npath<=1)) {
+            tc_rampdown = 1;
+            tc_down     = (tc_mod-1.) / 3.;
+         }
          break;
    
       case AUTONAV_POS_APPROACH:
