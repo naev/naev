@@ -21,6 +21,7 @@
 extern double player_acc; /**< Player acceleration. */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
+static double tc_max    = 1.; /**< Maximum time compression. */
 
 
 /*
@@ -52,6 +53,7 @@ void player_autonavStart (void)
    player_setFlag(PLAYER_AUTONAV);
    player.autonav = AUTONAV_JUMP_APPROACH;
    tc_mod         = 1.;
+   tc_max         = TIME_COMPRESSION_MAX / player.p->speed;
 }
 
 
@@ -280,9 +282,9 @@ void player_updateAutonav( double dt )
       return;
 
    /* We'll update the time compression here. */
-   if (tc_mod > TIME_COMPRESSION_MAX)
-      tc_mod = TIME_COMPRESSION_MAX;
-   else if (tc_mod == TIME_COMPRESSION_MAX)
+   if (tc_mod > tc_max)
+      tc_mod = tc_max;
+   else if (tc_mod == tc_max)
       return;
    else if (tc_mod > 3.)
       tc_mod += dt*2.;
