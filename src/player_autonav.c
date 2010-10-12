@@ -66,9 +66,9 @@ static void player_autonavSetup (void)
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_mod         = 1.;
       tc_max         = TIME_COMPRESSION_MAX / player.p->speed;
-      tc_rampdown    = 0;
-      tc_down        = 0.;
    }
+   tc_rampdown    = 0;
+   tc_down        = 0.;
    player_setFlag(PLAYER_AUTONAV);
 }
 
@@ -144,7 +144,7 @@ static void player_autonav (void)
 {
    JumpPoint *jp;
    int ret;
-   double dist2;
+   double d, dist2, t;
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
@@ -153,6 +153,8 @@ static void player_autonav (void)
          ret   = player_autonavApproach( &jp->pos, &dist2 );
          if (ret)
             player.autonav = AUTONAV_JUMP_BRAKE;
+         else {
+         }
          break;
 
       case AUTONAV_JUMP_BRAKE:
@@ -174,6 +176,14 @@ static void player_autonav (void)
          if (ret) {
             player_message( "\epAutonav arrived at position." );
             player_autonavEnd();
+         }
+         else if (!tc_rampdown) {
+            d = sqrt( dist2 );
+            t = d / (sqrt(tc_mod) * VMOD(player.p->solid->vel));
+            if (t < 3.) {
+               tc_rampdown = 1;
+               tc_down     = tc_mod - 1.;
+            }
          }
          break;
    }
@@ -211,10 +221,10 @@ static int player_autonavApproach( Vector2d *pos, double *dist2 )
       0.5*(player.p->thrust/player.p->solid->mass)*time*time;
 
    /* Output distance^2 */
-   *dist2 = vect_dist2( pos, &player.p->solid->pos );
+   *dist2 = vect_dist2( pos, &player.p->solid->pos ) - dist*dist;
 
    /* See if should start braking. */
-   if (dist*dist > *dist2) {
+   if (0. > *dist2) {
       player_accelOver();
       return 1;
    }
@@ -292,7 +302,7 @@ void player_updateAutonav( double dt )
    /* Ramping down. */
    if (tc_rampdown) {
       if (tc_mod != 1.) {
-         tc_mod = MAX( 1., tc_mod-tc_down );
+         tc_mod = MAX( 1., tc_mod-tc_down*dt );
          pause_setSpeed( tc_mod );
       }
       return;
