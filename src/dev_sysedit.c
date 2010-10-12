@@ -398,24 +398,34 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
    if (str == NULL)
       return;
 
+   sys   = sysedit_sys; /* Comfort. */
    s     = atof(str);
+
+   /* In case screwed up. */
    if ((s < 0.1) || (s > 10.)) {
-      i = dialogue_YesNo( "Scale Star System", "Are you sure you want to scale the star system by %f?", s );
+      i = dialogue_YesNo( "Scale Star System", "Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?",
+            s, sys->radius, sys->radius*s );
       if (i==0)
          return;
    }
 
-   sys   = sysedit_sys;
+   /* Scale radius. */
+   sys->radius *= s;
 
+   /* Scale planets. */
    for (i=0; i<sys->nplanets; i++) {
       p     = sys->planets[i];
       vect_cset( &p->pos, p->pos.x*s, p->pos.y*s );
    }
 
+   /* Scale jumps. */
    for (i=0; i<sys->njumps; i++) {
       jp    = &sys->jumps[i];
       vect_cset( &jp->pos, jp->pos.x*s, jp->pos.y*s );
    }
+
+   /* Must reconstruct jumps. */
+   systems_reconstructJumps();
 }
 
 
