@@ -2554,8 +2554,8 @@
  </asset>
  <asset name="Emperor's Fist">
   <pos>
-   <x>3212.633927</x>
-   <y>766.029254</y>
+   <x>14437.024197</x>
+   <y>4251.607749</y>
   </pos>
   <GFX>
    <space>C00.png</space>
@@ -3519,6 +3519,45 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Halir">
+  <pos>
+   <x>-12053.358215</x>
+   <y>-6447.649991</y>
+  </pos>
+  <GFX>
+   <space>M07.png</space>
+   <exterior>oceanic.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>3000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+<description>Before there was Emperor's Fist, before there was even the Incident, there was Halir, located in the Gamma Polaris system. While near the outskirts of the Empire, it served as one of the largest local civilian hubs, with a strong economy and considerable political influence. Then, one day, the new Emperor had Polaris Prime built, renamed most of the worlds in the system, and subsequently started the Emperor's Fist project. Halir was reduced to an economical support role. However, the local government has stubbornly clung on to the right to sovreignty, and so Halir remains a civilian world.</description>
+<bar>Halir's bar has everything the weary traveler could hope for, from drinks to data uplink terminals to per-table sound dampening fields and music generators. In short it is a luxurious place, which is largely due to Halir's long history of economic success. Anything you can't find in the bar you can find in the pleasure district, which is just a single tube station away.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>Basic Civilian Ships</item>
+  </tech>
  </asset>
  <asset name="Hankies">
   <pos>
@@ -5085,8 +5124,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="New Deimos">
   <pos>
-   <x>-860.378029</x>
-   <y>2378.013489</y>
+   <x>-6162.268174</x>
+   <y>13968.080934</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -5190,30 +5229,35 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="New Mars">
   <pos>
-   <x>-1932.012161</x>
-   <y>-1675.159492</y>
+   <x>-8030.663893</x>
+   <y>-17678.909866</y>
   </pos>
   <GFX>
    <space>K00.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>desertic.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
   </presence>
   <general>
    <class>K</class>
-   <population>0</population>
-   <services/>
+   <population>100000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
    <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+<description>The Emperor's Fist project needs a lot of raw materials. A portion of those materials are mined right here on New Mars, which has the advantage that no trip through hyperspace is needed to get them to location. New Mars is being systematically strip-mined, and as such the planet has nothing to offer in the way of leisure or tourism.</description>
+   <bar>Clean and functional, this bar has been built according to recent Imperial standards. It's more a utility service than a place to unwind.</bar>
   </general>
  </asset>
  <asset name="New Phobos">
   <pos>
-   <x>2010.000000</x>
-   <y>-3380.000000</y>
+   <x>13308.284716</x>
+   <y>-18718.048070</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -5345,8 +5389,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-<description>Nonuri is a world with an under-developed economy, even by Frontier standards. It barely manages to keep itself from going bankrupt. The people who live here stay mainly out of a sense of belonging, a feeling that Nonuri is their birthright. In fact, Nonuri was colonized by the colony ship Petrovosk, which makes Nonuri one of the oldest extrasolar human settlements. Unfortunatel for the locals, most of the galaxy doesn't care quite as much as they do.</description>
-<bar>The spaceport bar is humble, yet tidy and functional. The Nonurians may not enjoy a rich life, but they make the most of what they've got. Though the equipment is outdated, in some cases by several generations, this bar has most of the things an intergalactic traveler needs to keep abreast of events.</bar>
+   <description>Nonuri is a world with an under-developed economy, even by Frontier standards. It barely manages to keep itself from going bankrupt. The people who live here stay mainly out of a sense of belonging, a feeling that Nonuri is their birthright. In fact, Nonuri was colonized by the colony ship Petrovosk, which makes Nonuri one of the oldest extrasolar human settlements. Unfortunatel for the locals, most of the galaxy doesn't care quite as much as they do.</description>
+   <bar>The spaceport bar is humble, yet tidy and functional. The Nonurians may not enjoy a rich life, but they make the most of what they've got. Though the equipment is outdated, in some cases by several generations, this bar has most of the things an intergalactic traveler needs to keep abreast of events.</bar>
   </general>
  </asset>
  <asset name="Nor">
@@ -6140,8 +6184,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Polaris Prime">
   <pos>
-   <x>3532.901161</x>
-   <y>1137.613422</y>
+   <x>14797.406966</x>
+   <y>4825.680532</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -9152,6 +9196,37 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Vuere">
+  <pos>
+   <x>13730.708028</x>
+   <y>16547.906437</y>
+  </pos>
+  <GFX>
+   <space>C01.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>C</class>
+   <population>50000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+<description>The Emperor's Fist project needs labor. A lot of labor. And while the world itself remains unfit for habitation, the workforce needs someplace else to live. The inhabitants of Halir refused to privide them shelter, invoking various complicated rights and regulations, so rather than persuade the local government, the Imperial Council decided to deploy prefab survival units on Vuere. As such, Vuere should be considered a temporary camp rather than a colony. However, with a population this size and a projected duration of stay this long, it is doubtful if Vuere will ever truly be abandoned.</description>
+<bar>The bar is surprisingly hospitable for such a makeshift settlement. The inhabitants apparently feel the need to make up for the harsh environment of their C-class planet by making their indoor areas as comfortable and appeasing as they can. The bar is a prime example of this.</bar>
   </general>
  </asset>
  <asset name="Warden's End">
