@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -22,7 +22,38 @@
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Alteris I">
+ <asset name="Aillis">
+  <pos>
+   <x>7879.119607</x>
+   <y>-14515.904442</y>
+  </pos>
+  <GFX>
+   <space>moon-J01.png</space>
+   <exterior>mining6.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>1000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Aillis is the base of operations for miners who mine Koralis VI. Koralis VI itself is highly radioactive, so no human habitation is, or will ever be, possible. However, some of the heavy elements of the planet are quite valuable, and so Aillis offers a fair living for those who don't shun heavy, dangerous labor.</description>
+   <bar>Though this bar is not exactly inhospitable, it also doesn't make you feel very welcome. Running costs are kept low, which means maintenance and service suffer. Nevertheless, it's quite possible to have a good time here.</bar>
+  </general>
+ </asset> <asset name="Alteris I">
   <pos>
    <x>-3620.000000</x>
    <y>-1290.000000</y>
@@ -3124,6 +3155,48 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Fuzka">
+  <pos>
+   <x>-13133.181669</x>
+   <y>-5107.348427</y>
+  </pos>
+  <GFX>
+   <space>M02.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>400000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Fuzka is a fairly typical Imperial civilian world. It has a good atmosphere, stable tectonics and a large population. The world grows most of its own food, but still needs imports to make ends meet. The local population is as well off as can be expected from a middle-class Imperial colony. Otherwise, there is little to note about Fuzka.</description>
+   <bar>The bar caters to its clientele with considerable efficiency. Since Fuzka has quite a high amount of civilian traffic, its bar needs to handle the many passengers who are waiting for their transport to depart.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>Basic Civilian Ships</item>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
+ </asset>
  <asset name="Gamma">
   <pos>
    <x>-330.000000</x>
@@ -4221,6 +4294,50 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Koralis IV">
+  <pos>
+   <x>-2040.407967</x>
+   <y>-1971.707362</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Koralis VI">
+  <pos>
+   <x>7372.949583</x>
+   <y>-14577.941627</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Kotori">
   <pos>
    <x>4070.000000</x>
@@ -4639,8 +4756,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Luxsor">
   <pos>
-   <x>720.000000</x>
-   <y>-110.000000</y>
+   <x>-638.461900</x>
+   <y>8974.249360</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -5997,8 +6114,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Paxsor">
   <pos>
-   <x>250.000000</x>
-   <y>180.000000</y>
+   <x>-1290.185819</x>
+   <y>9645.898630</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -6024,7 +6141,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Paxsor is the primary Nexus mining planet within Empire space, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
+   <description>Paxsor is a mining planet within Empire space, supplying ore to the shipyards in the system and sending surplus ore to help with the Emperor's Fist project.</description>
    <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
   </general>
  </asset>
