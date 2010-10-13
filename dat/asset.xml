@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -53,7 +53,8 @@
    <description>Aillis is the base of operations for miners who mine Koralis VI. Koralis VI itself is highly radioactive, so no human habitation is, or will ever be, possible. However, some of the heavy elements of the planet are quite valuable, and so Aillis offers a fair living for those who don't shun heavy, dangerous labor.</description>
    <bar>Though this bar is not exactly inhospitable, it also doesn't make you feel very welcome. Running costs are kept low, which means maintenance and service suffer. Nevertheless, it's quite possible to have a good time here.</bar>
   </general>
- </asset> <asset name="Alteris I">
+ </asset>
+ <asset name="Alteris I">
   <pos>
    <x>-3620.000000</x>
    <y>-1290.000000</y>
@@ -165,8 +166,8 @@
  </asset>
  <asset name="Ammu">
   <pos>
-   <x>90.000000</x>
-   <y>2490.000000</y>
+   <x>8159.024083</x>
+   <y>10841.160191</y>
   </pos>
   <GFX>
    <space>A00.png</space>
@@ -6624,12 +6625,56 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Qex II">
   <pos>
-   <x>-610.000000</x>
-   <y>-920.000000</y>
+   <x>-8211.694386</x>
+   <y>2773.849123</y>
   </pos>
   <GFX>
    <space>M05.png</space>
    <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Qex IV">
+  <pos>
+   <x>6044.547579</x>
+   <y>709.309155</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Qex V">
+  <pos>
+   <x>-477.598690</x>
+   <y>4420.129056</y>
+  </pos>
+  <GFX>
+   <space>moon-G00.png</space>
+   <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -6852,6 +6897,42 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Reidd">
+  <pos>
+   <x>-2022.772268</x>
+   <y>-6442.366937</y>
+  </pos>
+  <GFX>
+   <space>moon-M04.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>10000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Some planets just don't have the capacity to feed its own population, despite advanced crop-growing techniques. Reidd is not one of those planets. In fact, Reidd's orbit and axial inclination make it such a good farming world that it can supply many worlds in nearby systems. The local government knows this, and has dedicated 97% of Reidd's land surface to farming operations.</description>
+   <bar>In what might be a slight case of over-reaction, Reidd's bar is underground, so as not to have to sacrifice any land surface. Still, the main difference between this bar and most others in the galaxy is that pilots have to take an elevator to reach this one.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+  </tech>
  </asset>
  <asset name="Rhaana">
   <pos>
@@ -7411,6 +7492,45 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>Selphod is a harsh and barren ice planet. Most of the locals have never ventured outside the established bases. Outdoor travels require heavy thermal protection with a personal generator to keep the wearer from succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed thermal suits.</description>
    <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices. They are meant to bring warmth and energy in the cold corridors of the base.</bar>
   </general>
+ </asset>
+ <asset name="Semper">
+  <pos>
+   <x>15142.959028</x>
+   <y>-8883.759308</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>aquatic3.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>6000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+    <description>Though Semper is slightly on the poor side by Imperial standards, the people who live here at least have the comfort of tight Imperial security. For that reason, it is quite popular among immigrants into the Empire, who usually don't have the means to settle on the richer civilian worlds.</description>
+   <bar>Semper is an immigrant world, which is reflected in its spaceport bar. The design betrays influences from all over the galaxy, such as a holograph of a Dvaered cruiser, a Sirius crest on some of the furniture and even some Soromid-oriented drinks.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Basic Civilian Ships</item>
+  </tech>
  </asset>
  <asset name="Sergio Vix I">
   <pos>

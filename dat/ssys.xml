@@ -4175,7 +4175,7 @@
  </ssys>
  <ssys name="Qex">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4188,29 +4188,35 @@
   <assets>
    <asset>Ammu</asset>
    <asset>Qex II</asset>
+   <asset>Qex IV</asset>
+   <asset>Qex V</asset>
+   <asset>Reidd</asset>
+   <asset>Semper</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
   <jumps>
    <jump target="Eneguoz">
-    <pos x="1749.387521" y="-2028.391192"/>
+    <pos x="6884.083705" y="-12741.656927"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-1712.754127" y="3651.568533"/>
+    <pos x="2586.229364" y="17307.842664"/>
     <radius>200.000000</radius>
-    <flags/>
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
    <jump target="Koralis">
-    <pos x="-2003.482487" y="2869.853293"/>
+    <pos x="-10017.412437" y="14349.266464"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Uhriabi">
-    <pos x="-3130.495168" y="-1565.247584"/>
+    <pos x="-15652.475842" y="-7826.237921"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
