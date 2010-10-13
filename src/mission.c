@@ -148,6 +148,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 {
    char *buf;
    uint32_t bufsize;
+   int ret;
 
    /* clear the mission */
    memset( mission, 0, sizeof(Mission) );
@@ -190,9 +191,12 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    /* run create function */
    if (create) {
       /* Failed to create. */
-      if (misn_run( mission, "create")) {
+      ret = misn_run( mission, "create");
+      if (ret) {
          mission_cleanup(mission);
-         return -1;
+         if (ret < 0) /* Bad failure. */
+            return -1;
+         return 0; /* Mission used misn.finish. */
       }
    }
 
