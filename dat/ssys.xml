@@ -671,7 +671,7 @@
  </ssys>
  <ssys name="Borla">
   <general>
-   <radius>3500.000000</radius>
+   <radius>10500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -684,14 +684,14 @@
   <assets/>
   <jumps>
    <jump target="Arcturus">
-    <pos x="2540.834394" y="-2407.106268"/>
+    <pos x="7622.503181" y="-7221.318803"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Shakar">
-    <pos x="-3482.630166" y="-348.263017"/>
+    <pos x="-10447.890497" y="-1044.789050"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2196,6 +2196,7 @@
    <asset>New Deimos</asset>
    <asset>New Mars</asset>
    <asset>New Phobos</asset>
+   <asset>New Pluto</asset>
    <asset>Polaris Prime</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Civilian Standard</asset>
@@ -2204,9 +2205,11 @@
   </assets>
   <jumps>
    <jump target="Apez">
-    <pos x="37223.718756" y="-2005.894626"/>
+    <pos x="29363.718758" y="-6145.894624"/>
     <radius>200.000000</radius>
-    <flags/>
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
    <jump target="Koralis">
     <pos x="-24807.795062" y="-16869.300642"/>
@@ -3814,7 +3817,7 @@
  </ssys>
  <ssys name="Pas">
   <general>
-   <radius>3500.000000</radius>
+   <radius>10500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3827,7 +3830,7 @@
   <assets/>
   <jumps>
    <jump target="Overture">
-    <pos x="3457.429555" y="544.225022"/>
+    <pos x="10372.288664" y="1632.675067"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4476,7 +4479,7 @@
  </ssys>
  <ssys name="Shakar">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4489,19 +4492,21 @@
   <assets>
    <asset>Nova Shakar</asset>
    <asset>Shakar I</asset>
+   <asset>Shakar III</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
+   <asset>Zembla Shakar</asset>
   </assets>
   <jumps>
    <jump target="Borla">
-    <pos x="3482.630166" y="348.263017"/>
+    <pos x="13930.520663" y="1393.052066"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-69.293346" y="-3499.313995"/>
+    <pos x="-277.173386" y="-13997.255978"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4631,7 +4636,7 @@
  </ssys>
  <ssys name="Sirou">
   <general>
-   <radius>3500.000000</radius>
+   <radius>10500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4644,7 +4649,7 @@
   <assets/>
   <jumps>
    <jump target="Gamma Polaris">
-    <pos x="3207.586652" y="-1400.495580"/>
+    <pos x="9622.759956" y="-4201.486741"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

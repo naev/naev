@@ -3549,8 +3549,8 @@
    <commodities>
     <commodity>Food</commodity>
    </commodities>
-<description>Before there was Emperor's Fist, before there was even the Incident, there was Halir, located in the Gamma Polaris system. While near the outskirts of the Empire, it served as one of the largest local civilian hubs, with a strong economy and considerable political influence. Then, one day, the new Emperor had Polaris Prime built, renamed most of the worlds in the system, and subsequently started the Emperor's Fist project. Halir was reduced to an economical support role. However, the local government has stubbornly clung on to the right to sovreignty, and so Halir remains a civilian world.</description>
-<bar>Halir's bar has everything the weary traveler could hope for, from drinks to data uplink terminals to per-table sound dampening fields and music generators. In short it is a luxurious place, which is largely due to Halir's long history of economic success. Anything you can't find in the bar you can find in the pleasure district, which is just a single tube station away.</bar>
+   <description>Before there was Emperor's Fist, before there was even the Incident, there was Halir, located in the Gamma Polaris system. While near the outskirts of the Empire, it served as one of the largest local civilian hubs, with a strong economy and considerable political influence. Then, one day, the new Emperor had Polaris Prime built, renamed most of the worlds in the system, and subsequently started the Emperor's Fist project. Halir was reduced to an economical support role. However, the local government has stubbornly clung on to the right to sovreignty, and so Halir remains a civilian world.</description>
+   <bar>Halir's bar has everything the weary traveler could hope for, from drinks to data uplink terminals to per-table sound dampening fields and music generators. In short it is a luxurious place, which is largely due to Halir's long history of economic success. Anything you can't find in the bar you can find in the pleasure district, which is just a single tube station away.</bar>
   </general>
   <tech>
    <item>Basic Outfits 1</item>
@@ -5124,8 +5124,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="New Deimos">
   <pos>
-   <x>-6162.268174</x>
-   <y>13968.080934</y>
+   <x>-1403.081683</x>
+   <y>3894.469528</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -5229,8 +5229,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="New Mars">
   <pos>
-   <x>-8030.663893</x>
-   <y>-17678.909866</y>
+   <x>12735.693828</x>
+   <y>-19340.936117</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -5250,18 +5250,40 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <bar/>
    </services>
    <commodities/>
-<description>The Emperor's Fist project needs a lot of raw materials. A portion of those materials are mined right here on New Mars, which has the advantage that no trip through hyperspace is needed to get them to location. New Mars is being systematically strip-mined, and as such the planet has nothing to offer in the way of leisure or tourism.</description>
+   <description>The Emperor's Fist project needs a lot of raw materials. A portion of those materials are mined right here on New Mars, which has the advantage that no trip through hyperspace is needed to get them to location. New Mars is being systematically strip-mined, and as such the planet has nothing to offer in the way of leisure or tourism.</description>
    <bar>Clean and functional, this bar has been built according to recent Imperial standards. It's more a utility service than a place to unwind.</bar>
   </general>
  </asset>
  <asset name="New Phobos">
   <pos>
-   <x>13308.284716</x>
-   <y>-18718.048070</y>
+   <x>-2831.086139</x>
+   <y>-18662.964893</y>
   </pos>
   <GFX>
    <space>D01.png</space>
    <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="New Pluto">
+  <pos>
+   <x>-10360.291323</x>
+   <y>14032.927476</y>
+  </pos>
+  <GFX>
+   <space>moon-P02.png</space>
+   <exterior>station00.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -5536,8 +5558,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Nova Shakar">
   <pos>
-   <x>-3150.000000</x>
-   <y>-60.000000</y>
+   <x>-10796.405599</x>
+   <y>-7216.167022</y>
   </pos>
   <GFX>
    <space>M05.png</space>
@@ -7319,12 +7341,34 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shakar I">
   <pos>
-   <x>20.000000</x>
-   <y>2140.000000</y>
+   <x>80.000000</x>
+   <y>8560.000000</y>
   </pos>
   <GFX>
    <space>D02.png</space>
    <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Shakar III">
+  <pos>
+   <x>6359.007813</x>
+   <y>-7100.286078</y>
+  </pos>
+  <GFX>
+   <space>moon-G01.png</space>
+   <exterior>aquatic.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -9200,8 +9244,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vuere">
   <pos>
-   <x>13730.708028</x>
-   <y>16547.906437</y>
+   <x>4053.695496</x>
+   <y>17341.104186</y>
   </pos>
   <GFX>
    <space>C01.png</space>
@@ -9225,8 +9269,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities>
     <commodity>Food</commodity>
    </commodities>
-<description>The Emperor's Fist project needs labor. A lot of labor. And while the world itself remains unfit for habitation, the workforce needs someplace else to live. The inhabitants of Halir refused to privide them shelter, invoking various complicated rights and regulations, so rather than persuade the local government, the Imperial Council decided to deploy prefab survival units on Vuere. As such, Vuere should be considered a temporary camp rather than a colony. However, with a population this size and a projected duration of stay this long, it is doubtful if Vuere will ever truly be abandoned.</description>
-<bar>The bar is surprisingly hospitable for such a makeshift settlement. The inhabitants apparently feel the need to make up for the harsh environment of their C-class planet by making their indoor areas as comfortable and appeasing as they can. The bar is a prime example of this.</bar>
+   <description>The Emperor's Fist project needs labor. A lot of labor. And while the world itself remains unfit for habitation, the workforce needs someplace else to live. The inhabitants of Halir refused to privide them shelter, invoking various complicated rights and regulations, so rather than persuade the local government, the Imperial Council decided to deploy prefab survival units on Vuere. As such, Vuere should be considered a temporary camp rather than a colony. However, with a population this size and a projected duration of stay this long, it is doubtful if Vuere will ever truly be abandoned.</description>
+   <bar>The bar is surprisingly hospitable for such a makeshift settlement. The inhabitants apparently feel the need to make up for the harsh environment of their C-class planet by making their indoor areas as comfortable and appeasing as they can. The bar is a prime example of this.</bar>
   </general>
  </asset>
  <asset name="Warden's End">
@@ -9346,6 +9390,43 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Civilian Ships</item>
    <item>Light Civilian Combat Ships</item>
    <item>Missiles 1</item>
+  </tech>
+ </asset>
+ <asset name="Zembla Shakar">
+  <pos>
+   <x>-5765.480628</x>
+   <y>3573.203240</y>
+  </pos>
+  <GFX>
+   <space>moon-M06.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>500000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Zembla Shakar is like a resort for the elite within the Shakar system. The people who live here live on gigantic estates that they usually haven't seen all of. Most of the planet is off-limits to offworlders, and most traffic to the planet consists of import luxury goods and export waste products.</description>
+   <bar>The bar is where traders wait until their cargo is loaded and unloaded. Pilots who come here expecting a glimpse of the rich lands that cover the surface of the planet will be disappointed, as there is very little to see here.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
   </tech>
  </asset>
  <asset name="Zepei">
