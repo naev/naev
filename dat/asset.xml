@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -418,8 +418,8 @@
  </asset>
  <asset name="Antica">
   <pos>
-   <x>1910.000000</x>
-   <y>-740.000000</y>
+   <x>9550.000000</x>
+   <y>-3700.000000</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -586,8 +586,8 @@
  </asset>
  <asset name="Arcturus Gamma">
   <pos>
-   <x>1910.000000</x>
-   <y>600.000000</y>
+   <x>11296.801928</x>
+   <y>6891.698934</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -631,8 +631,8 @@
  </asset>
  <asset name="Arcturus I">
   <pos>
-   <x>-1290.000000</x>
-   <y>-950.000000</y>
+   <x>-4256.504551</x>
+   <y>1153.374908</y>
   </pos>
   <GFX>
    <space>moon-G01.png</space>
@@ -653,8 +653,8 @@
  </asset>
  <asset name="Arcturus II">
   <pos>
-   <x>-760.000000</x>
-   <y>1450.000000</y>
+   <x>2004.349784</x>
+   <y>10011.747075</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -1054,6 +1054,43 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Brooks">
+  <pos>
+   <x>-10667.555844</x>
+   <y>-4262.926639</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>7000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Brooks is a bustling, highly populated Imperial civilian planet. With the decline of the Empire, it has found itself on the border with dangerous space, a rather uncomfortable position. As Brooks is a rich planet with a lot of economical and political weight within the Empire, the Imperial Navy protects Arcturus for Brooks' sake as much as for the Imperial core systems.</description>
+   <bar>On Brooks, everything is expensive, something that comes with most economically booming worlds. However, most traders put up with the inflated prices for refreshments and services at the spaceport bar, because Brooks is a place where profit is made.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Caladan">
   <pos>
@@ -5173,6 +5210,37 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <tech>
    <item>Basic Outfits 2</item>
   </tech>
+ </asset>
+ <asset name="Mouddar">
+  <pos>
+   <x>4755.463992</x>
+   <y>-15972.357019</y>
+  </pos>
+  <GFX>
+   <space>O00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>400000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>Mouddar is a bit of a leisure resort, in all but name. While the planet does have a resident population, most of its income is from tourism. The planet is speckled with tiny coral peninsulae, which are prefect for all kinds of water sports. Unfortunately, the enthusiasm of the Imperial adolescents who come here has had a detrimental effect on the environment.</description>
+   <bar>Nobody really cares about Mouddar's spaceport bar, apart from the traders who only stop here to load and unload. Most civilian visitors, though, immediately head for the sun, sand and surf that they came here to enjoy.</bar>
+  </general>
  </asset>
  <asset name="Mutris">
   <pos>
