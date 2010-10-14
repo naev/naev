@@ -568,8 +568,7 @@ void conf_parseCLI( int argc, char** argv )
 #endif /* DEBUGGING */
 
          case 'v':
-            /* by now it has already displayed the version
-            LOG(APPNAME": version %d.%d.%d", VMAJOR, VMINOR, VREV); */
+            /* by now it has already displayed the version */
             exit(EXIT_SUCCESS);
          case 'h':
             print_usage(argv);
