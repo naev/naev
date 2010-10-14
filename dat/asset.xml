@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -455,6 +455,50 @@
    <item>Basic Outfits 1</item>
    <item>Basic Civilian Ships</item>
   </tech>
+ </asset>
+ <asset name="Apez II">
+  <pos>
+   <x>7491.526812</x>
+   <y>-8027.260412</y>
+  </pos>
+  <GFX>
+   <space>J04.png</space>
+   <exterior>(null)</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Apez V">
+  <pos>
+   <x>-5998.401103</x>
+   <y>10755.037640</y>
+  </pos>
+  <GFX>
+   <space>L00.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
  </asset>
  <asset name="Arai">
   <pos>
@@ -1424,25 +1468,43 @@
  </asset>
  <asset name="Crylo">
   <pos>
-   <x>-240.000000</x>
-   <y>1570.000000</y>
+   <x>-12956.459922</x>
+   <y>-11240.786446</y>
   </pos>
   <GFX>
    <space>J02.png</space>
-   <exterior>(null)</exterior>
+   <exterior>aquatic3.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>O</class>
+   <population>200000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Crylo is an oceanic world with very little land surface, but it sports a surprising number of inhabitants. As it happens, the aquatic life found on this world is considered a delicacy in large parts of the galaxy, which has both attracted people to settle on the planet and spawned a flourishing fishing industry.</description>
+   <bar>Fishing is the name of the game on Crylo, and the spaceport bar is nothing if not in character. Almost everything in here is fish-themed, including the bar, which has been made out of the spine of some gargantuan aquatic creature.</bar>
   </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Culex">
   <pos>
@@ -1883,8 +1945,8 @@
  </asset>
  <asset name="Dowue">
   <pos>
-   <x>406.530912</x>
-   <y>-1222.614199</y>
+   <x>-2774.694760</x>
+   <y>-3802.503709</y>
   </pos>
   <GFX>
    <space>P02.png</space>
@@ -3363,8 +3425,8 @@
  </asset>
  <asset name="Gem">
   <pos>
-   <x>660.000000</x>
-   <y>-930.000000</y>
+   <x>-2316.897947</x>
+   <y>-3385.866684</y>
   </pos>
   <GFX>
    <space>moon-P02.png</space>
@@ -7509,7 +7571,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <population>6000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -7523,7 +7585,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
    </commodities>
-    <description>Though Semper is slightly on the poor side by Imperial standards, the people who live here at least have the comfort of tight Imperial security. For that reason, it is quite popular among immigrants into the Empire, who usually don't have the means to settle on the richer civilian worlds.</description>
+   <description>Though Semper is slightly on the poor side by Imperial standards, the people who live here at least have the comfort of tight Imperial security. For that reason, it is quite popular among immigrants into the Empire, who usually don't have the means to settle on the richer civilian worlds.</description>
    <bar>Semper is an immigrant world, which is reflected in its spaceport bar. The design betrays influences from all over the galaxy, such as a holograph of a Dvaered cruiser, a Sirius crest on some of the furniture and even some Soromid-oriented drinks.</bar>
   </general>
   <tech>
@@ -9664,6 +9726,42 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </general>
   <tech>
    <item>Basic Outfits 2</item>
+  </tech>
+ </asset>
+ <asset name="Zeo">
+  <pos>
+   <x>11360.407598</x>
+   <y>6364.565702</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>15000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Most of Zeo's inhabitation is recently new. After the Incident, real estate prices had a major overhaul all across the galaxy, and the once neglected backwater world of Zeo quickly became prime land to settle for Imperial citizens. Though the population is still on the low side compared to older civilian worlds, the number of people living here rises by the day.</description>
+   <bar>Because of Zeo's abrupt rise in value after the Incident, the antiquated facilities at the time had to be replaced to handle the influx of Imperial colonist. As a result, most of the infrastructure here is relatively modern. You won't find anything out of order or slow to respond in this bar.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
   </tech>
  </asset>
  <asset name="Zepei">

@@ -345,7 +345,7 @@
  </ssys>
  <ssys name="Apez">
   <general>
-   <radius>3500.000000</radius>
+   <radius>19687.500000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -356,29 +356,32 @@
    <y>-314.000000</y>
   </pos>
   <assets>
+   <asset>Apez II</asset>
+   <asset>Apez V</asset>
    <asset>Crylo</asset>
    <asset>Dowue</asset>
    <asset>Gem</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
+   <asset>Zeo</asset>
   </assets>
   <jumps>
    <jump target="Arcturus">
-    <pos x="1794.593917" y="3004.901442"/>
+    <pos x="10094.590781" y="16902.570610"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-3425.767188" y="717.021039"/>
+    <pos x="-19269.940435" y="4033.243347"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hekaras">
-    <pos x="2453.631348" y="-2495.935337"/>
+    <pos x="13801.676334" y="-14039.636271"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
