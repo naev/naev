@@ -279,28 +279,28 @@
   </pilots>
  </fleet>
  <fleet name="Sirius Fidelity">
-  <ai>empire</ai>
+  <ai>sirius</ai>
   <faction>Sirius</faction>
   <pilots>
    <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Preacher">
-  <ai>empire</ai>
+  <ai>sirius</ai>
   <faction>Sirius</faction>
   <pilots>
    <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Divinity">
-  <ai>empire</ai>
+  <ai>sirius</ai>
   <faction>Sirius</faction>
   <pilots>
    <pilot name="Sirius Divinity" ship="Sirius Divinity"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Dogma">
-  <ai>empire</ai>
+  <ai>sirius</ai>
   <faction>Sirius</faction>
   <pilots>
    <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
