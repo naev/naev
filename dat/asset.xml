@@ -2711,6 +2711,28 @@
    <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
   </general>
  </asset>
+ <asset name="Eneguoz II">
+  <pos>
+   <x>6851.814693</x>
+   <y>-2653.657026</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Eridani II">
   <pos>
    <x>-1016.666667</x>
@@ -5955,8 +5977,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Oma">
   <pos>
-   <x>50.000000</x>
-   <y>-170.000000</y>
+   <x>-3100.298044</x>
+   <y>-3366.492496</y>
   </pos>
   <GFX>
    <space>H01.png</space>
@@ -6025,8 +6047,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Opa">
   <pos>
-   <x>-300.000000</x>
-   <y>70.000000</y>
+   <x>-3548.243133</x>
+   <y>-3056.307753</y>
   </pos>
   <GFX>
    <space>moon-G01.png</space>
@@ -7772,6 +7794,44 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Shiarta">
+  <pos>
+   <x>3548.820120</x>
+   <y>8089.172879</y>
+  </pos>
+  <GFX>
+   <space>P04.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>P</class>
+   <population>150000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Where Oma is too hot, Shiarta is too cold for comfort. Still, the Empire is always in need of raw materials, and Shiarta is rich in same.</description>
+   <bar>The spaceport bar sells only a select number of drinks. Like most mining worlds, there is not much in the way of luxury to be found on Shiarta. There is, however, one small piece of good news: ice cubes are free of charge.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
+ </asset>
  <asset name="Shickhaw I">
   <pos>
    <x>585.000000</x>
@@ -9442,7 +9502,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </presence>
   <general>
    <class>M</class>
-   <population>6500000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
