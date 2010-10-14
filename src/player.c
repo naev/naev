@@ -266,7 +266,7 @@ void player_new (void)
 
    /* Add the mission if found. */
    if (player_mission != NULL) {
-      if (mission_start(player_mission, NULL))
+      if (mission_start(player_mission, NULL) < 0)
          WARN("Failed to run start mission '%s'.", player_mission);
       free(player_mission);
       player_mission = NULL;
