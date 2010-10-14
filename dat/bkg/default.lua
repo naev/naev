@@ -29,6 +29,7 @@ stars = {
    "blue01.png",
    "blue02.png",
    "green01.png",
+   "green02.png",
    "orange01.png",
    "orange02.png",
    "orange05.png",
