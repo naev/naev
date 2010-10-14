@@ -2772,7 +2772,7 @@
  </ssys>
  <ssys name="Hekaras">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2784,17 +2784,18 @@
   </pos>
   <assets>
    <asset>Hekaras III</asset>
+   <asset>Hekaras IV</asset>
    <asset>Hurada</asset>
+   <asset>Three and a half Kings</asset>
+   <asset>Vino</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
   <jumps>
    <jump target="Apez">
-    <pos x="-2453.631348" y="2495.935337"/>
+    <pos x="-26069.057388" y="26604.261598"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
   </jumps>
  </ssys>
