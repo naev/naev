@@ -266,7 +266,7 @@ void player_new (void)
 
    /* Add the mission if found. */
    if (player_mission != NULL) {
-      if (mission_start(player_mission, NULL))
+      if (mission_start(player_mission, NULL) < 0)
          WARN("Failed to run start mission '%s'.", player_mission);
       free(player_mission);
       player_mission = NULL;
@@ -403,7 +403,7 @@ static int player_newMake (void)
 
    /* Welcome message - must be before space_init. */
    player_message( "\egWelcome to "APPNAME"!" );
-   player_message( "\eg v%d.%d.%d", VMAJOR, VMINOR, VREV );
+   player_message( "\eg v%s", naev_version(0) );
 
    /* Try to create the pilot, if fails reask for player name. */
    if (ship==NULL) {

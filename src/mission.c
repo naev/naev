@@ -194,9 +194,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       ret = misn_run( mission, "create");
       if (ret) {
          mission_cleanup(mission);
-         if (ret < 0) /* Bad failure. */
-            return -1;
-         return 0; /* Mission used misn.finish. */
+         return ret;
       }
    }
 
@@ -335,7 +333,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
  *
  *    @param name Name of the mission to start.
  *    @param[out] id ID of the newly created mission.
- *    @return 0 on success.
+ *    @return 0 on success, >0 on forced exit (misn.finish), <0 on error.
  */
 int mission_start( const char *name, unsigned int *id )
 {
