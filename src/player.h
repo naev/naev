@@ -31,10 +31,7 @@
 #define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
 
 
-/* Autonav states. */
-#define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
-#define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
-#define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
+#include "player_autonav.h"
 
 
 /**
@@ -197,10 +194,6 @@ void player_afterburn (void);
 void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
-void player_autonavStart (void);
-void player_autonavAbort( char *reason );
-void player_autonavStartWindow( unsigned int wid, char *str);
-void player_autonavPos( double x, double y );
 void player_hail (void);
 void player_autohail (void);
 

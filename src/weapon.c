@@ -1521,24 +1521,6 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
    int i;
    Weapon** wlayer;
    int *nlayer;
-   Pilot *pilot_target;
-
-   /* Decrement target lockons if needed */
-   if (outfit_isSeeker(w->outfit)) {
-      pilot_target = pilot_get( w->target );
-      if (pilot_target != NULL)
-         pilot_target->lockons--;
-   }
-
-   /* Stop playing sound if beam weapon. */
-   if (outfit_isBeam(w->outfit)) {
-      sound_stop( w->voice );
-      sound_playPos(w->outfit->u.bem.sound_off,
-            w->solid->pos.x,
-            w->solid->pos.y,
-            w->solid->vel.x,
-            w->solid->vel.y);
-   }
 
    switch (layer) {
       case WEAPON_LAYER_BG:
@@ -1577,6 +1559,26 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
  */
 static void weapon_free( Weapon* w )
 {
+   Pilot *pilot_target;
+
+   /* Decrement target lockons if needed */
+   if (outfit_isSeeker(w->outfit)) {
+      pilot_target = pilot_get( w->target );
+      if (pilot_target != NULL)
+         pilot_target->lockons--;
+   }
+
+   /* Stop playing sound if beam weapon. */
+   if (outfit_isBeam(w->outfit)) {
+      sound_stop( w->voice );
+      sound_playPos(w->outfit->u.bem.sound_off,
+            w->solid->pos.x,
+            w->solid->pos.y,
+            w->solid->vel.x,
+            w->solid->vel.y);
+   }
+
+   /* Free the solid. */
    solid_free(w->solid);
 
 #ifdef DEBUGGING

@@ -31,9 +31,11 @@ stars = {
    "green01.png",
    "orange01.png",
    "orange02.png",
+   "orange05.png",
    "redgiant01.png",
    "white01.png",
-   "yellow01.png"
+   "yellow01.png",
+   "yellow02.png"
 }
 
 
@@ -92,24 +94,37 @@ function background_stars ()
 
    -- Generate the stars
    local i = 0
+   local added = {}
    while i < n do
-      star_add()
+      num = star_add( added )
+      added[ num ] = true
       i = i + 1
    end
 end
 
 
-function star_add ()
+function star_add( added )
    -- Set up parameters
    local path  = "gfx/bkg/star/"
-   local star  = stars[ prng.range(1,#stars) ]
+   -- Avoid repeating stars
+   local num   = prng.range(1,#stars)
+   local i     = 0
+   while added[num] and i < 10 do
+      num = prng.range(1,#stars)
+      i   = i + 1
+   end
+   local star  = stars[ num ]
    local img   = tex.open( path .. star )
    local w,h   = img:dim()
    local r     = prng.num() * cur_sys:radius()/3
    local a     = 2*math.pi*prng.num()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local move  = 0.15 + prng.num()*0.2
-   local scale = 0.9 + (move/0.35)/5
+   local nmove = prng.num()*0.2
+   local move  = 0.15 + nmove
+   local scale = 1.0 - (1. - nmove/0.2)/5
    bkg.image( img, x, y, move, scale )
+   return num
 end
+
+

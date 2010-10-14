@@ -92,6 +92,12 @@ static ALuint efx_reverb      = 0; /**< Reverb effect. */
 static ALuint efx_echo        = 0; /**< Echo effect. */
 
 
+/*
+ * Sound speed.
+ */
+static double sound_speed     = 1.; /**< Sound speed. */
+
+
 /**
  * @brief Group implementation similar to SDL_Mixer.
  */
@@ -946,6 +952,10 @@ static ALuint sound_al_getSource (void)
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative )
 {
+   /* Must be below the limit. */
+   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
+      return 0;
+
    /* Set up the source and buffer. */
    v->u.al.source = sound_al_getSource();
    if (v->u.al.source == 0)
@@ -1132,6 +1142,7 @@ void sound_al_setSpeed( double s )
 {
    int i;
    soundLock();
+   sound_speed = s; /* Set the speed. */
    for (i=0; i<source_nall; i++)
       alSourcef( source_all[i], AL_PITCH, s );
    /* Check for errors. */
