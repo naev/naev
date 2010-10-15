@@ -1587,6 +1587,28 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Cygnus IV">
+  <pos>
+   <x>5161.902151</x>
+   <y>3973.009236</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Daal">
   <pos>
    <x>-1320.000000</x>
@@ -3914,6 +3936,37 @@
    <bar>Since Hankies doesn't have much to offer, the bar is almost entirely an import product. The architecture, the facilities and the drinks can all be traced offworld. The only thing that is truly authentic to this world is the view from the windows - a mountain range stretching away into the distance.</bar>
   </general>
  </asset>
+ <asset name="Hassak">
+  <pos>
+   <x>21594.608970</x>
+   <y>10226.293190</y>
+  </pos>
+  <GFX>
+   <space>C00.png</space>
+   <exterior>mining2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>C</class>
+   <population>60000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Not exactly unhabitable and not exactly habitable, Hassak is one of those places where the less fortunate in society end up. The people here have it hard, with storms of almost every variety plagueing the landscape on a regular basis. The population feeds itself with the sale of raw minerals to the Nexus corporation, which buys well under the market price, because it can.</description>
+   <bar>The bar on Hassak is a lousy affair. The planet is poor, and so can't afford any luxury, least of all for offworlders. The Empire has provided the world with basic facilities and equipment because it is bound to do so by intergalactic treaties, but most of it is old and run-down.</bar>
+  </general>
+ </asset>
  <asset name="Hatter I">
   <pos>
    <x>2950.000000</x>
@@ -4246,8 +4299,8 @@
  </asset>
  <asset name="Inca">
   <pos>
-   <x>-1358.836734</x>
-   <y>792.566337</y>
+   <x>-6756.276409</x>
+   <y>7401.062317</y>
   </pos>
   <GFX>
    <space>moon-I01.png</space>
@@ -4325,6 +4378,44 @@
   <tech>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
+  </tech>
+ </asset>
+ <asset name="Jaan">
+  <pos>
+   <x>-17106.988508</x>
+   <y>-10288.870591</y>
+  </pos>
+  <GFX>
+   <space>M00.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>8000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Jaan is one of the most densely populated planets in this corner of the galaxy. The world benefits greatly from nearby Nexus operations, which makes it a popular place to live despite the environmental issues that inevitably come with a large population, and the problems with security that have arisen in recent years.</description>
+   <bar>Jaan has a big spaceport, and to facilitate the many pilots and crews that pass through it has multiple spaceport bars. Each spaceport bar is exactly the same as all the others, though. Not even the people who frequently visit Jaan can tell them apart. This regularly causes problems for unsuspecting people who promised to meet at the spaceport bar.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
   </tech>
  </asset>
  <asset name="Jaegnhild">
@@ -5302,8 +5393,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Maya">
   <pos>
-   <x>-920.000000</x>
-   <y>1100.000000</y>
+   <x>-6440.000000</x>
+   <y>7700.000000</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>
@@ -6108,6 +6199,42 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <tech>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
+  </tech>
+ </asset>
+ <asset name="Oberon">
+  <pos>
+   <x>-589.969301</x>
+   <y>15169.574360</y>
+  </pos>
+  <GFX>
+   <space>002.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1500</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Oberon is a shipyard station that's owned by the Empire, but most of its compartments have been leased by the Nexus corporation. The company produces combat-capable ships here, and given the stability of the neighboring systems, there certainly is a market for them.</description>
+   <bar>The spaceport bar is a public facility onboard the station, and so the Empire runs it. As such, the bar complies with galactic standards, something that might not have been the case if Nexus had been in charge.</bar>
+  </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Civilian Ships</item>
   </tech>
  </asset>
  <asset name="Oberon I">
@@ -8872,8 +8999,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Torloth">
   <pos>
-   <x>970.000000</x>
-   <y>-1360.000000</y>
+   <x>7357.793065</x>
+   <y>-12642.861857</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -8899,7 +9026,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Torloth is a heavy mining planet. It has rich ores and minerals in abundance with no local fauna to speak of. It's one of the strongholds of the Nexus corporation, housing some of their important ship factories, though the heavy gravity of the planet necessitates constructing larger ships off-world. Torloth produces ships exclusively for delivery to Nexus depots and endorsed shipyards, and does not operate any publicly-accessible shipyards.</description>
+   <description>Torloth is a heavy mining planet. It has rich ores and minerals in abundance with no local fauna to speak of. It's one of the strongholds of the Nexus corporation, housing some of their important ship factories, though the heavy gravity of the planet necessitates constructing larger ships off-world. Torloth produces ships exclusively for delivery to Nexus depots and endorsed shipyards.</description>
    <bar>The spaceport bar is carved from a rich mineral deposit lending the walls a glimmering, reflective quality. The local brews often include minerals in their production process, giving them a rich, somewhat saline taste.</bar>
   </general>
  </asset>

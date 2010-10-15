@@ -1113,7 +1113,7 @@
  </ssys>
  <ssys name="Cygnus">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>50.000000</interference>
@@ -1124,15 +1124,19 @@
    <y>-81.000000</y>
   </pos>
   <assets>
+   <asset>Cygnus IV</asset>
+   <asset>Hassak</asset>
    <asset>Inca</asset>
+   <asset>Jaan</asset>
    <asset>Maya</asset>
+   <asset>Oberon</asset>
    <asset>Torloth</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
   <jumps>
    <jump target="Delta Pavonis">
-    <pos x="-2260.797845" y="2671.851999"/>
+    <pos x="-15825.584916" y="18702.963992"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
