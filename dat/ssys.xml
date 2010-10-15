@@ -105,7 +105,7 @@
  </ssys>
  <ssys name="Alteris">
   <general>
-   <radius>5000.000000</radius>
+   <radius>21500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -117,38 +117,39 @@
   </pos>
   <assets>
    <asset>Alteris I</asset>
-   <asset>Alteris II</asset>
    <asset>Alteris IV</asset>
+   <asset>Alteris V</asset>
    <asset>Darkshed</asset>
    <asset>Ozogo X</asset>
+   <asset>Takeru</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Empire Small</asset>
    <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Coriolis">
-    <pos x="-99.980006" y="4999.000300"/>
+    <pos x="-429.914026" y="21495.701290"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Delta Pavonis">
-    <pos x="-573.120540" y="-4967.044679"/>
+    <pos x="-2464.418322" y="-21358.292121"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eridani">
-    <pos x="4900.646656" y="991.797537"/>
+    <pos x="21072.780620" y="4264.729411"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sikh">
-    <pos x="-4724.930367" y="1635.552819"/>
+    <pos x="-20317.200579" y="7032.877123"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
