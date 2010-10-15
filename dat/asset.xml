@@ -3504,6 +3504,46 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Geron">
+  <pos>
+   <x>2938.557652</x>
+   <y>11505.793602</y>
+  </pos>
+  <GFX>
+   <space>M06.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Goddard</faction>
+   <value>100.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>5000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>Geron was once an Imperial colony, but when House Goddard was established and granted full authority over the system, it also acquired jurisdiction over Geron. In the decades that followed the Imperial bureaucracy was largely dismantled and replaced by a more governorial arrangement. That improved the efficiency at which the world was run, but without its Imperial status the economy took a serious hit. Nowadays, Geron is a fairly average civilian world that houses the majority of Goddard's citizens.</description>
+   <bar>Like many spaceport bars, this one is loud, crowded and a little smelly. In other words, it's a home away from home for those who make their living in space.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Gilligan's Memory">
   <pos>
    <x>320.000000</x>
@@ -3591,6 +3631,50 @@
   <GFX>
    <space>moon-D00.png</space>
    <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Goddard III">
+  <pos>
+   <x>-7131.741933</x>
+   <y>-8453.589513</y>
+  </pos>
+  <GFX>
+   <space>D02.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Goddard IV">
+  <pos>
+   <x>17801.100623</x>
+   <y>12942.126729</y>
+  </pos>
+  <GFX>
+   <space>P02.png</space>
+   <exterior>desertic4.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -4093,6 +4177,28 @@
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
   </tech>
+ </asset>
+ <asset name="Imk">
+  <pos>
+   <x>3303.666819</x>
+   <y>11690.405671</y>
+  </pos>
+  <GFX>
+   <space>moon-P01.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
  </asset>
  <asset name="Inca">
   <pos>
@@ -5040,6 +5146,48 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Missiles 1</item>
    <item>Missiles 2</item>
    <item>Light Civilian Combat Ships</item>
+  </tech>
+ </asset>
+ <asset name="Manuel Station">
+  <pos>
+   <x>-6490.624381</x>
+   <y>-8887.528980</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Goddard</faction>
+   <value>100.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Manuel Station is named after Eduard Manual Goddard, the man to which House Goddard owes its existence. The station is primarily a shipyard, and thus contributes a great deal to House Goddard's local economy. Its position around Goddard III is no coincidence, as the lifeless planet provides many of the raw materials needed to produce space ships.</description>
+   <bar>The station's bar is more businesslike than recreative. The people who come here are either traders who came to load or unload goods, or potential customers looking for a Goddard-made ship. Nobody is really interested in just passing the time, because time is money on Manuel Station.</bar>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>Bulk Trade Ships</item>
+   <item>Goddard Ship</item>
+   <item>Basic Outfits 2</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
   </tech>
  </asset>
  <asset name="Massia I">
@@ -10083,8 +10231,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Zhiru">
   <pos>
-   <x>240.000000</x>
-   <y>-1050.000000</y>
+   <x>9549.349193</x>
+   <y>-1582.542056</y>
   </pos>
   <GFX>
    <space>M04.png</space>
