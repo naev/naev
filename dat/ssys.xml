@@ -1290,7 +1290,7 @@
  </ssys>
  <ssys name="Delta Pavonis">
   <general>
-   <radius>3500.000000</radius>
+   <radius>19250.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1303,7 +1303,11 @@
   <assets>
    <asset>Caladan</asset>
    <asset>Delta Pavonis I</asset>
+   <asset>Delta Pavonis II</asset>
+   <asset>Delta Pavonis IIa</asset>
+   <asset>Nappi</asset>
    <asset>Ridrack</asset>
+   <asset>Seanich</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Dvaered Unpresence</asset>
    <asset>Virtual Pirate Medium</asset>
@@ -1311,21 +1315,21 @@
   </assets>
   <jumps>
    <jump target="Alteris">
-    <pos x="401.184378" y="3476.931276"/>
+    <pos x="2206.514079" y="19123.122016"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Cygnus">
-    <pos x="2260.797845" y="-2671.851999"/>
+    <pos x="12434.388148" y="-14695.185993"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Goddard">
-    <pos x="-2852.657084" y="-3849.893193"/>
+    <pos x="-15689.613962" y="-21174.412562"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
