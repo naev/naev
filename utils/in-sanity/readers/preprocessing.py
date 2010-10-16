@@ -31,20 +31,39 @@ class items(readers):
         print('Unused {0}:'.format(config['item']))
         print(''.join(tmp))
 
+class tech(items):
+    def __init__(self, **config):
+        config['xml_file'] = 'tech.xml'
+        config['item'] = 'tech'
+        items.__init__(self, **config)
+        self.assets = assets(**config)
+
+        print('techs validation ...')
+        self.assets.validateTechs(self.itemNames)
+
 class assets(items):
     def __init__(self, **config):
-        items.__init__(self, **config):
+        config['xml_file'] = 'asset.xml'
+        config['item'] = 'asset']
+        items.__init__(self, **config)
+        self.ssys = ssys(**config)
+
+        print('assets validation ...')
+        self.ssys.validateAssets(self.itemNames)
+
+    def validateTechs(self, techNames):
+        techs = self.xmlData.findall('asset/tech')
+        for tech in techNames:
+            if tech not in techNames:
+                print('Warning: tech {0} not used by tech.xml'.format(tech))
 
 class ssys(readers):
     def __init__(self, **config):
-        config['xml_file'] = 'asset.xml'
-        config['item'] = 'asset'
         xmlFile = os.path.join(config['datpath'], 'ssys.xml')
         readers.__init__(self, xmlFile, config['verbose'])
-        self.assets = assets(**config)
 
-    def findobjects(self):
+    def validateAssets(self, assetNames):
         assets = self.xmlData.findall('ssys/assets')
-        for asset in assets:
-            if not self.assets.find(asset):
-                print('Warning')
+        for asset in assetNames:
+            if asset not in assets:
+                print('Warning: asset {0} not used by ssys.xml'.format(asset))
