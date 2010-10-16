@@ -94,7 +94,7 @@ class assets(items):
 
         for tech in techNames:
             if tech not in techList:
-                print("Warning: tech ''{0}`` not used by asset.xml".format(tech))
+                print("Warning: tech ''{0}`` not present in asset.xml".format(tech))
 
 class ssys(readers):
     def __init__(self, **config):
@@ -110,4 +110,4 @@ class ssys(readers):
 
         for asset in assetNames:
             if asset not in assetList:
-                print("Warning: asset ''{0}`` not used by ssys.xml".format(asset))
+                print("Warning: asset ''{0}`` not present in ssys.xml".format(asset))
