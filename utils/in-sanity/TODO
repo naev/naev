@@ -4,16 +4,14 @@ naev.
 
 MAJOR:
 
- *) (idea) Could use readers to deal with validation. So, readers could
-    detect flaws and doctor will be more useless but it is more flexible.
-
-    BORING STUFF:
-
-        *) first off you should make sure all the assets in asset.xml are
-           used by ssys.xml
-        *) then make sure all the techs in tech.xml are used by asset.xml
-        *) then make sure all the outfit/ships are used by both tech.xml
-           _AND_ the Lua addOutfit/addShip
+DONE     *) first off you should make sure all the assets in asset.xml are
+DONE        used by ssys.xml
+DONE     *) then make sure all the techs in tech.xml are used by asset.xml
+         *) then :
+                If something is in ship.xml or outfit.xml and not (in tech.xml
+                or used by lua files) -> problem
+            This assume that we have a list of outfit and ship from the lua
+            files.
 
 MINOR:
  *) Check if planets images are :
