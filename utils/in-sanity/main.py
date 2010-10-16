@@ -95,6 +95,7 @@ class sanitizer:
         from readers.preprocessing import tech
 
         # This will do some preprocessing check in the xml files
+        print('Preprocess valitation :')
         otech = tech(**self.config)
 
         # TODO: must be called when needed

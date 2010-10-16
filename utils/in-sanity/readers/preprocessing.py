@@ -86,10 +86,15 @@ class assets(items):
         self.ssys.validateAssets(self.itemNames)
 
     def validateTechs(self, techNames):
-        techs = self.xmlData.findall('asset/tech')
+        techs = self.xmlData.findall('asset/tech/item')
+        techList = list()
+        for tech in techs:
+            techList.append(tech.text)
+        del(techs)
+
         for tech in techNames:
-            if tech not in techNames:
-                print('Warning: tech {0} not used by tech.xml'.format(tech))
+            if tech not in techList:
+                print("Warning: tech ''{0}`` not used by asset.xml".format(tech))
 
 class ssys(readers):
     def __init__(self, **config):
@@ -97,7 +102,12 @@ class ssys(readers):
         readers.__init__(self, xmlFile, config['verbose'])
 
     def validateAssets(self, assetNames):
-        assets = self.xmlData.findall('ssys/assets')
+        assets = self.xmlData.findall('ssys/assets/asset')
+        assetList = list()
+        for asset in assets:
+            assetList.append(asset.text)
+        del(assets)
+
         for asset in assetNames:
-            if asset not in assets:
-                print('Warning: asset {0} not used by ssys.xml'.format(asset))
+            if asset not in assetList:
+                print("Warning: asset ''{0}`` not used by ssys.xml".format(asset))
