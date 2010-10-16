@@ -37,9 +37,9 @@
  * Introduction text lines.
  */
 static char **intro_lines = NULL;  /**< Introduction text lines. */
-static int intro_nlines = 0; /**< Number of introduction text lines. */
-static int intro_length = 0; /**< Length of the text. */
-static glFont intro_font; /**< Introduction font. */
+static int intro_nlines = 0;       /**< Number of introduction text lines. */
+static int intro_length = 0;       /**< Length of the text. */
+static glFont intro_font;          /**< Introduction font. */
 
 
 /*
@@ -56,6 +56,8 @@ static int intro_load( const char *text )
 {
    uint32_t intro_size;
    char *intro_buf;
+   char img_src[128];     /* path to image to be displayed alongside text. */
+   int length;
    int i, p, n;
    int mem;
 
@@ -71,17 +73,40 @@ static int intro_load( const char *text )
    n = 0;
    mem = 0;
    while ((uint32_t)p < intro_size) {
-      /* Get the length. */
-      i = gl_printWidthForText( &intro_font, &intro_buf[p], SCREEN_W - 200. );
 
       /* Copy the line. */
       if (n+1 > mem) {
          mem += 128;
          intro_lines = realloc( intro_lines, sizeof(char*) * mem );
       }
-      intro_lines[n] = malloc( i + 1 );
-      strncpy( intro_lines[n], &intro_buf[p], i );
-      intro_lines[n][i] = '\0';
+
+      if ( sscanf( &intro_buf[p], "[fadein %s", img_src ) == 1 ) {
+         /* an image to appear next to text. */
+         /* Get the length. */
+         /* FIXME: don't do this.  This is silly.  Just find the newline and set
+            i accordingly. */
+         i = gl_printWidthForText( &intro_font,
+                                   &intro_buf[p],
+                                   SCREEN_W - 500. );
+
+         length = strlen( img_src );
+         intro_lines[n] = malloc( length + 2 );
+         intro_lines[n][0] = 'i';
+         strncpy( &intro_lines[n][1], img_src, length );
+         intro_lines[n][length] = '\0';
+      } else {
+         /* plain old text. */
+
+         /* Get the length. */
+         i = gl_printWidthForText( &intro_font,
+                                   &intro_buf[p],
+                                   SCREEN_W - 500. );
+
+         intro_lines[n] = malloc( i + 2 );
+         intro_lines[n][0] = 't';
+         strncpy( &intro_lines[n][1], &intro_buf[p], i );
+         intro_lines[n][i+1] = '\0';
+      }
 
       p += i + 1; /* Move pointer. */
       n++; /* New line. */
@@ -151,7 +176,7 @@ int intro_display( const char *text, const char *mus )
    SDL_EnableKeyRepeat( conf.repeat_delay, conf.repeat_freq );
 
    /* Prepare for intro loop. */
-   x = 100.;
+   x = 400.;
    y = 0.;
    tlast = SDL_GetTicks();
    offset = 0.;
@@ -232,11 +257,11 @@ int intro_display( const char *text, const char *mus )
             continue;
          }
 
-         gl_print( &intro_font, x, y, &cConsole, intro_lines[i] );
+	 gl_print( &intro_font, x, y, &cConsole, &intro_lines[i][1] );
 
-         /* Increment line and position. */
-         i--;
-         y += intro_font.h + 5.;
+	 /* Increment line and position. */
+	 i--;
+	 y += intro_font.h + 5.;
       }
 
       /* Only thing we actually care about updating is music. */
