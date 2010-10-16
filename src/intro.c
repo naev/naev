@@ -138,7 +138,177 @@ static void intro_cleanup (void)
    intro_nlines = 0;
 }
 
+typedef struct scroll_buf_t scroll_buf_t;
 
+struct scroll_buf_t {
+   const char *text;
+   scroll_buf_t *next;
+};
+
+
+/**
+ * @brief Convert an array of scroll_buf_t into a circularly linked list.
+ *
+ *    @brief arr Input array.
+ *    @brief n Number of elements.
+ *    @return A pointer into the circular list.
+ */
+static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
+{
+   scroll_buf_t *sb_list = &arr[n - 1];
+   int i;
+
+   for (i = 0; i < n; ++i) {
+      arr[i].text = NULL;
+      arr[i].next = sb_list;
+      sb_list = &arr[i];
+   }
+
+   return sb_list;
+}
+
+
+/**
+ * @brief Displays the introduction sequence.
+ *
+ *    @brief text Path of text file to use.
+ *    @brief mus Type of music to use (run through music.lua).
+ *    @return 0 on success.
+ */
+int intro_display( const char *text, const char *mus )
+{
+   double offset = 0.;        /* distance from bottom of the top line. */
+   double line_height;        /* # pixels per line. */
+   int lines_per_screen;      /* max appearing lines on the screen. */
+   scroll_buf_t *sb_arr;      /* array of lines to render. */
+   scroll_buf_t *sb_list;     /* list   "   "    "    "    */
+   scroll_buf_t *list_iter;   /* iterator through sb_list. */
+   double vel = 15.;          /* velocity: speed of text. */
+   int stop = 0;              /* stop the intro. */
+   double x, y;               /* render position. */
+   unsigned int tcur, tlast;  /* timers. */
+   double delta;              /* time diff from last render to this one. */
+   int line_index = 0;        /* index into the big list of intro lines. */
+   SDL_Event event;           /* user key-press, mouse-push, etc. */
+
+   /* Load the introduction. */
+   if (intro_load(text) < 0)
+      return -1;
+
+   /* Change music to intro music. */
+   if (mus != NULL)
+      music_choose(mus);
+
+   /* We need to clear key repeat to avoid infinite loops. */
+   toolkit_clearKey();
+
+   /* Enable keyrepeat just for the intro. */
+   SDL_EnableKeyRepeat( conf.repeat_delay, conf.repeat_freq );
+
+   line_height = (double)intro_font.h * 1.3;
+   lines_per_screen = (int)(SCREEN_H / line_height + 1.5); /* round up + 1 */
+   sb_arr = (scroll_buf_t*)malloc( sizeof(scroll_buf_t) * lines_per_screen );
+
+   /* create a cycle of lines. */
+   sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
+
+   x = 400.;
+   y = 0.;
+
+   tlast = SDL_GetTicks();
+   while (!stop) {
+      tcur = SDL_GetTicks();
+      delta = (double)(tcur - tlast) / 1000.;
+      tlast = tcur;
+
+      /* Handle events. */
+      while (SDL_PollEvent(&event)) {
+         switch (event.type) {
+         case SDL_KEYDOWN:
+
+            /* Escape skips directly. */
+            if (event.key.keysym.sym == SDLK_ESCAPE) {
+               stop = 1;
+               break;
+            }
+
+            /* User is clearly flailing on keyboard. */
+            else {
+               vel = 30.;
+            }
+
+         default:
+            break;
+         }
+      } /* while (SDL_PollEvent(&event)) */
+
+      /* Increment position. */
+      offset += vel * delta;
+      while (offset > line_height) {
+         /* One line has scrolled off, and another one on. */
+
+         if (line_index < intro_nlines) {
+            switch (intro_lines[line_index][0]) {
+            case 't': /* plain ol' text. */
+               sb_list->text = &intro_lines[line_index][1];
+               offset -= line_height;
+               sb_list = sb_list->next;
+               break;
+            case 'i': /* fade in image. */
+               printf("fade in an image: %s\n", &intro_lines[line_index][1]);
+               break;
+            default:  /* unknown. */
+               break;
+            }
+            ++line_index;
+         } else {
+            sb_list->text = NULL;
+            offset -= line_height;
+            sb_list = sb_list->next;
+         }
+      } /* while (offset > line_height) */
+
+      /* Clear stuff. */
+      glClear(GL_COLOR_BUFFER_BIT);
+
+      /* Only thing we actually care about updating is music. */
+      music_update( 0. );
+
+      /* Draw text. */
+      list_iter = sb_list;
+      y = SCREEN_H + offset - line_height;
+      do {
+         if (NULL != list_iter->text) {
+            gl_print( &intro_font, x, y, &cConsole, list_iter->text );
+         }
+
+         y -= line_height;
+         list_iter = list_iter->next;
+      } while (list_iter != sb_list);
+
+      /* Display stuff. */
+      SDL_GL_SwapBuffers();
+
+      SDL_Delay(10); /* No need to burn CPU. */
+
+   } /* while (!stop) */
+
+   /* free malloc'd memory. */
+   free( sb_arr );
+
+   /* Disable intro's key repeat. */
+   SDL_EnableKeyRepeat( 0, 0 );
+
+   /* Stop music, normal music will start shortly after. */
+   music_stop();
+
+   /* Clean up after the introduction. */
+   intro_cleanup();
+
+   return 0;
+}
+
+#if 0
 /**
  * @brief Displays the introduction sequence.
  *
@@ -284,4 +454,6 @@ int intro_display( const char *text, const char *mus )
 
    return 0;
 }
+
+#endif /* 0 */
 
