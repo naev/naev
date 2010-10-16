@@ -35,6 +35,10 @@ class sanitizer:
         self.config = args
         self.luaScripts = list()
 
+        if 'datpath' not in self.config.keys():
+            self.config['datpath'] = os.path.join(self.config['basepath'],
+                                                  'dat/')
+
         if self.config['use'] == 'missionxml':
             self.dirtyfiles_from_xml()
         elif self.config['use'] == 'rawfiles':
@@ -88,13 +92,17 @@ class sanitizer:
         from readers.fleet import fleet
         from readers.ship import ship
         from readers.outfit import outfit
+        from readers.preprocessing import tech
+
+        # This will do some preprocessing check in the xml files
+        otech = tech(**self.config)
 
         # TODO: must be called when needed
-        fleetdata = fleet(datpath=self.config['basepath']+'/dat/',
+        fleetdata = fleet(datpath=self.config['datpath'],
                           verbose=self.config['verbose'])
-        shipdata = ship(datpath=self.config['basepath']+'/dat/',
+        shipdata = ship(datpath=self.config['datpath'],
                         verbose=self.config['verbose'])
-        outfitdata = outfit(datpath=self.config['basepath']+'/dat/',
+        outfitdata = outfit(datpath=self.config['datpath'],
                             verbose=self.config['verbose'])
         rawstr = r"""
         (?P<func>

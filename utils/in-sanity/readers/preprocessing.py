@@ -78,7 +78,7 @@ class tech(items):
 class assets(items):
     def __init__(self, **config):
         config['xml_file'] = 'asset.xml'
-        config['item'] = 'asset']
+        config['item'] = 'asset'
         items.__init__(self, **config)
         self.ssys = ssys(**config)
 
