@@ -190,6 +190,8 @@ int intro_display( const char *text, const char *mus )
    double delta;              /* time diff from last render to this one. */
    int line_index = 0;        /* index into the big list of intro lines. */
    SDL_Event event;           /* user key-press, mouse-push, etc. */
+   glTexture *image = NULL;   /* image to go along with the text. */
+   double x_img, y_img;       /* offsets for the location of the image. */
 
    /* Load the introduction. */
    if (intro_load(text) < 0)
@@ -214,6 +216,8 @@ int intro_display( const char *text, const char *mus )
 
    x = 400.;
    y = 0.;
+   x_img = 100.;
+   y_img = 0.;
 
    tlast = SDL_GetTicks();
    while (!stop) {
@@ -255,7 +259,12 @@ int intro_display( const char *text, const char *mus )
                sb_list = sb_list->next;
                break;
             case 'i': /* fade in image. */
-               printf("fade in an image: %s\n", &intro_lines[line_index][1]);
+               if (NULL != image) {
+                  /* really should have faded out, first. */
+                  gl_freeTexture(image);
+               }
+               image = gl_newImage( &intro_lines[line_index][1], 0 );
+               y_img = (double)SCREEN_H / 2.0 - (image->h / 2.0);
                break;
             default:  /* unknown. */
                break;
@@ -285,6 +294,11 @@ int intro_display( const char *text, const char *mus )
          y -= line_height;
          list_iter = list_iter->next;
       } while (list_iter != sb_list);
+
+      if (NULL != image) {
+         /* Draw the image next to the text. */
+         gl_blitScale( image, x_img, y_img, image->w, image->h, NULL);
+      }
 
       /* Display stuff. */
       SDL_GL_SwapBuffers();
