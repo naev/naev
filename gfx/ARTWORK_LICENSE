@@ -361,6 +361,15 @@
         * dogma.png
         * fidelity.png
         * preacher.png
+      * planet
+        * space
+          * station-agriculture.png
+          * station-battlestation.png
+          * station-cylinder.png
+          * station-fleetbase.png
+          * station-powerplant.png
+          * station-shipyard.png
+          * station-sphere.png
 
   * Author: BTAxis, License: PD
     * gfx
