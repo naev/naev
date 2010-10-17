@@ -756,7 +756,7 @@
  </ssys>
  <ssys name="C-00">
   <general>
-   <radius>3500.000000</radius>
+   <radius>28000.000000</radius>
    <stars>100</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -769,17 +769,19 @@
   <assets>
    <asset>P0125</asset>
    <asset>S00000</asset>
+   <asset>S23001</asset>
+   <asset>S49588</asset>
   </assets>
   <jumps>
    <jump target="C-14">
-    <pos x="-2982.599290" y="-1831.420617"/>
+    <pos x="-23860.794320" y="-14651.364933"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-28">
-    <pos x="1601.752011" y="3111.975336"/>
+    <pos x="12814.016091" y="24895.802691"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -789,7 +791,7 @@
  </ssys>
  <ssys name="C-14">
   <general>
-   <radius>3500.000000</radius>
+   <radius>19250.000000</radius>
    <stars>100</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -802,17 +804,18 @@
   <assets>
    <asset>P9234</asset>
    <asset>S49281</asset>
+   <asset>S49335</asset>
   </assets>
   <jumps>
    <jump target="C-00">
-    <pos x="2982.599290" y="1831.420617"/>
+    <pos x="16404.296095" y="10072.813392"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-43">
-    <pos x="3290.667186" y="-1192.270720"/>
+    <pos x="18098.669525" y="-6557.488958"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -822,7 +825,7 @@
  </ssys>
  <ssys name="C-28">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>200</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -836,18 +839,21 @@
    <asset>P2020</asset>
    <asset>P2021</asset>
    <asset>P2022</asset>
+   <asset>S00018</asset>
+   <asset>S00522</asset>
+   <asset>S00653</asset>
    <asset>S38729</asset>
   </assets>
   <jumps>
    <jump target="C-00">
-    <pos x="-1601.752011" y="-3111.975336"/>
+    <pos x="-11212.264080" y="-21783.827355"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-59">
-    <pos x="1043.962476" y="-3340.679923"/>
+    <pos x="7307.737332" y="-23384.759462"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -857,7 +863,7 @@
  </ssys>
  <ssys name="C-43">
   <general>
-   <radius>3500.000000</radius>
+   <radius>21000.000000</radius>
    <stars>200</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -870,24 +876,26 @@
   <assets>
    <asset>Eiroik</asset>
    <asset>S23491</asset>
+   <asset>S58309</asset>
+   <asset>S91456</asset>
   </assets>
   <jumps>
    <jump target="C-14">
-    <pos x="-3290.667186" y="1192.270720"/>
+    <pos x="-19744.003118" y="7153.624318"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-59">
-    <pos x="2474.873734" y="2474.873734"/>
+    <pos x="14849.242405" y="14849.242405"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hades">
-    <pos x="3487.121952" y="299.967480"/>
+    <pos x="20922.731715" y="1799.804879"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -897,7 +905,7 @@
  </ssys>
  <ssys name="C-59">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>200</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -909,25 +917,27 @@
   </pos>
   <assets>
    <asset>P9122</asset>
+   <asset>S13024</asset>
+   <asset>S72288</asset>
    <asset>S72839</asset>
   </assets>
   <jumps>
    <jump target="C-28">
-    <pos x="-1043.962476" y="3340.679923"/>
+    <pos x="-5219.812380" y="16703.399616"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-43">
-    <pos x="-2474.873734" y="-2474.873734"/>
+    <pos x="-12374.368671" y="-12374.368671"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hades">
-    <pos x="2615.932615" y="-2325.273436"/>
+    <pos x="13079.663077" y="-11626.367180"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

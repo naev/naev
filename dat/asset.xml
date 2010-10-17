@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -2581,8 +2581,8 @@
  </asset>
  <asset name="Eiroik">
   <pos>
-   <x>73.000000</x>
-   <y>239.000000</y>
+   <x>438.000000</x>
+   <y>1434.000000</y>
   </pos>
   <GFX>
    <space>J01.png</space>
@@ -6615,8 +6615,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="P0125">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>1295.028995</x>
+   <y>1003.839044</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -6637,8 +6637,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="P2020">
   <pos>
-   <x>-2780.000000</x>
-   <y>4040.000000</y>
+   <x>-19460.000000</x>
+   <y>28280.000000</y>
   </pos>
   <GFX>
    <space>moon-I01.png</space>
@@ -6659,8 +6659,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="P2021">
   <pos>
-   <x>1910.000000</x>
-   <y>3520.000000</y>
+   <x>13370.000000</x>
+   <y>24640.000000</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -6681,8 +6681,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="P2022">
   <pos>
-   <x>-390.000000</x>
-   <y>-40.000000</y>
+   <x>-2730.000000</x>
+   <y>-280.000000</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>
@@ -6703,8 +6703,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="P9122">
   <pos>
-   <x>-629.568950</x>
-   <y>-449.692107</y>
+   <x>-3147.844750</x>
+   <y>-2248.460535</y>
   </pos>
   <GFX>
    <space>P03.png</space>
@@ -6725,8 +6725,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="P9234">
   <pos>
-   <x>-1220.000000</x>
-   <y>130.000000</y>
+   <x>-6710.000000</x>
+   <y>715.000000</y>
   </pos>
   <GFX>
    <space>H00.png</space>
@@ -7825,8 +7825,123 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="S00000">
   <pos>
-   <x>820.000000</x>
-   <y>-800.000000</y>
+   <x>9572.019538</x>
+   <y>-9077.350700</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S00018">
+  <pos>
+   <x>-23417.732367</x>
+   <y>7299.766158</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S00522">
+  <pos>
+   <x>21619.399415</x>
+   <y>48.582912</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S00653">
+  <pos>
+   <x>-819.877534</x>
+   <y>-15031.088127</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S13024">
+  <pos>
+   <x>1813.437925</x>
+   <y>-11001.523413</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S23001">
+  <pos>
+   <x>21126.563236</x>
+   <y>10505.507311</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -7848,8 +7963,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="S23491">
   <pos>
-   <x>-306.608255</x>
-   <y>-228.934164</y>
+   <x>-4205.084310</x>
+   <y>-6703.318792</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -7871,8 +7986,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="S38729">
   <pos>
-   <x>-110.000000</x>
-   <y>2000.000000</y>
+   <x>10884.449588</x>
+   <y>23122.620885</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -7894,8 +8009,100 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="S49281">
   <pos>
-   <x>-2300.000000</x>
-   <y>-50.000000</y>
+   <x>-12650.000000</x>
+   <y>-275.000000</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S49335">
+  <pos>
+   <x>7450.580597</x>
+   <y>82.784229</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S49588">
+  <pos>
+   <x>-7079.113401</x>
+   <y>5771.445061</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S58309">
+  <pos>
+   <x>-6856.766641</x>
+   <y>7365.784251</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S72288">
+  <pos>
+   <x>-11606.002722</x>
+   <y>2901.500680</y>
   </pos>
   <GFX>
    <space>001.png</space>
@@ -7917,8 +8124,31 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="S72839">
   <pos>
-   <x>760.388472</x>
-   <y>1267.314121</y>
+   <x>3801.942360</x>
+   <y>6336.570605</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Collective</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>3</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="S91456">
+  <pos>
+   <x>10058.711979</x>
+   <y>5427.025998</y>
   </pos>
   <GFX>
    <space>001.png</space>
