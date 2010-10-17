@@ -1130,8 +1130,8 @@
    <asset>Inca</asset>
    <asset>Jaan</asset>
    <asset>Maya</asset>
-   <asset>Oberon</asset>
    <asset>Torloth</asset>
+   <asset>Triton Station</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
@@ -1853,7 +1853,7 @@
  </ssys>
  <ssys name="Eridani">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>50.000000</interference>
@@ -1873,14 +1873,14 @@
   </assets>
   <jumps>
    <jump target="Alteris">
-    <pos x="-3430.452659" y="-694.258276"/>
+    <pos x="-17152.263295" y="-3471.291381"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dune">
-    <pos x="-129.540812" y="3497.601918"/>
+    <pos x="-647.704059" y="17488.009591"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
