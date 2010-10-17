@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -3407,8 +3407,8 @@
  </asset>
  <asset name="Fury I">
   <pos>
-   <x>-1270.000000</x>
-   <y>100.000000</y>
+   <x>-6350.000000</x>
+   <y>500.000000</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -4097,8 +4097,8 @@
  </asset>
  <asset name="Haven">
   <pos>
-   <x>2128.601074</x>
-   <y>2052.307129</y>
+   <x>8514.404296</x>
+   <y>8209.228516</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -5529,8 +5529,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Merisi I">
   <pos>
-   <x>-2400.000000</x>
-   <y>770.000000</y>
+   <x>-16800.000000</x>
+   <y>5390.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -5551,8 +5551,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Merisi II">
   <pos>
-   <x>1400.000000</x>
-   <y>-3020.000000</y>
+   <x>9800.000000</x>
+   <y>-21140.000000</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -5573,8 +5573,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Merisi III">
   <pos>
-   <x>-3500.000000</x>
-   <y>-2780.000000</y>
+   <x>-24500.000000</x>
+   <y>-19460.000000</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -5595,8 +5595,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Merisi IV">
   <pos>
-   <x>2760.000000</x>
-   <y>70.000000</y>
+   <x>19320.000000</x>
+   <y>490.000000</y>
   </pos>
   <GFX>
    <space>moon-P02.png</space>
@@ -6527,8 +6527,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Overture I">
   <pos>
-   <x>-950.000000</x>
-   <y>-1360.000000</y>
+   <x>-5700.000000</x>
+   <y>-8160.000000</y>
   </pos>
   <GFX>
    <space>moon-H00.png</space>
@@ -6549,8 +6549,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Overture II">
   <pos>
-   <x>400.000000</x>
-   <y>2300.000000</y>
+   <x>2247.706032</x>
+   <y>9840.356839</y>
   </pos>
   <GFX>
    <space>L00.png</space>
@@ -6571,8 +6571,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Overture III">
   <pos>
-   <x>1980.000000</x>
-   <y>-1310.000000</y>
+   <x>11880.000000</x>
+   <y>-7860.000000</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -9330,8 +9330,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uhriabi-17">
   <pos>
-   <x>-820.000000</x>
-   <y>4360.000000</y>
+   <x>-3280.000000</x>
+   <y>17440.000000</y>
   </pos>
   <GFX>
    <space>J02.png</space>
@@ -9352,8 +9352,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uhriabi-9">
   <pos>
-   <x>-350.000000</x>
-   <y>370.000000</y>
+   <x>-1400.000000</x>
+   <y>1480.000000</y>
   </pos>
   <GFX>
    <space>A01.png</space>
