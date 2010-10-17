@@ -587,7 +587,7 @@ static int ai_loadEquip (void)
    /* Load the file. */
    buf = ndata_read( filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
-      ERR("Error loading file: %s\n"
+      WARN("Error loading file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
             filename, lua_tostring(L,-1));
@@ -625,7 +625,7 @@ static int ai_loadProfile( const char* filename )
    prof->L = nlua_newState();
 
    if (prof->L == NULL) {
-      ERR("Unable to create a new Lua state");
+      WARN("Unable to create a new Lua state");
       return -1;
    }
 
@@ -660,10 +660,14 @@ static int ai_loadProfile( const char* filename )
    /* now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
-      ERR("Error loading AI file: %s\n"
+      WARN("Error loading AI file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
             filename, lua_tostring(L,-1));
+      array_erase( &profiles, prof, &prof[1] );
+      free(prof->name);
+      lua_close( L );
+      free(buf);
       return -1;
    }
    free(buf);
