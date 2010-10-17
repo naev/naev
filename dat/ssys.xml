@@ -2055,7 +2055,7 @@
  </ssys>
  <ssys name="Fortitude">
   <general>
-   <radius>3500.000000</radius>
+   <radius>22750.000000</radius>
    <stars>300</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2066,25 +2066,28 @@
    <y>23.000000</y>
   </pos>
   <assets>
+   <asset>Fortitude I</asset>
+   <asset>Fortitude II</asset>
+   <asset>Fortitude III</asset>
    <asset>Omega Station</asset>
   </assets>
   <jumps>
    <jump target="Acheron">
-    <pos x="3195.232527" y="-1428.456894"/>
+    <pos x="20769.011425" y="-9284.969813"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hades">
-    <pos x="-2980.804108" y="1834.340990"/>
+    <pos x="-19375.226705" y="11923.216434"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pontus">
-    <pos x="1785.706697" y="3010.191289"/>
+    <pos x="11607.093528" y="19566.243376"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
