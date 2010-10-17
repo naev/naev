@@ -675,8 +675,8 @@
  </asset>
  <asset name="Arrakis">
   <pos>
-   <x>-2200.000000</x>
-   <y>-360.000000</y>
+   <x>-8182.701784</x>
+   <y>-5241.257434</y>
   </pos>
   <GFX>
    <space>H00.png</space>
@@ -5988,6 +5988,36 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Nixa">
+  <pos>
+   <x>6416.652506</x>
+   <y>-7838.062872</y>
+  </pos>
+  <GFX>
+   <space>M05.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>10000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Nixa is a young colony. It was first settled mere years before the Incident occurred. With the galaxy-wide economic collapse that followed in its wake, Nixa's budding growth came close to a halt. The population struggles to make the colonization project a success even so, but now that Dune has become a fringe system, chances of that seem remote.</description>
+   <bar>Nixa's bar is still the makeshift affair it was when the planet was first colonized. There haven't been the resources nor the time to replace it with something more solid.</bar>
+  </general>
+ </asset>
  <asset name="Nonuri">
   <pos>
    <x>3504.753113</x>
@@ -8835,8 +8865,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <land/>
     <refuel/>
    </services>
-   <commodities>
-   </commodities>
+   <commodities/>
    <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here, including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online, so they make sure the local Imperial forces have more important things to worry about than shutting down the Crucible.</description>
    <bar>(null)</bar>
   </general>
@@ -9849,8 +9878,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vert">
   <pos>
-   <x>840.000000</x>
-   <y>830.000000</y>
+   <x>5666.745964</x>
+   <y>7218.725573</y>
   </pos>
   <GFX>
    <space>moon-M06.png</space>

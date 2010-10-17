@@ -1627,7 +1627,7 @@
  </ssys>
  <ssys name="Dune">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>300</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1639,27 +1639,28 @@
   </pos>
   <assets>
    <asset>Arrakis</asset>
+   <asset>Nixa</asset>
    <asset>Vert</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Eridani">
-    <pos x="129.540812" y="-3497.601918"/>
+    <pos x="518.163247" y="-13990.407673"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamel">
-    <pos x="-2688.774479" y="2240.645399"/>
+    <pos x="-10755.097914" y="8962.581595"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Halo">
-    <pos x="991.274316" y="3821.393584"/>
+    <pos x="3965.097264" y="15285.574336"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
