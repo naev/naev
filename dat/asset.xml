@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -1136,8 +1136,8 @@
  </asset>
  <asset name="Capricorn II">
   <pos>
-   <x>2000.000000</x>
-   <y>330.000000</y>
+   <x>15400.000000</x>
+   <y>2540.000000</y>
   </pos>
   <GFX>
    <space>A03.png</space>
@@ -1158,8 +1158,8 @@
  </asset>
  <asset name="Capricorn III">
   <pos>
-   <x>5250.000000</x>
-   <y>3360.000000</y>
+   <x>35465.029656</x>
+   <y>29824.260295</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -1180,8 +1180,8 @@
  </asset>
  <asset name="Capricorn IIIa">
   <pos>
-   <x>4930.000000</x>
-   <y>3640.000000</y>
+   <x>34940.000000</x>
+   <y>30320.000000</y>
   </pos>
   <GFX>
    <space>moon-M00.png</space>
@@ -2219,8 +2219,8 @@
  </asset>
  <asset name="Durea">
   <pos>
-   <x>-2300.000000</x>
-   <y>-430.000000</y>
+   <x>-18400.000000</x>
+   <y>-3440.000000</y>
   </pos>
   <GFX>
    <space>G01.png</space>
