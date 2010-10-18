@@ -422,7 +422,13 @@
           * yellow02.png
 
   * Author: Scaatis, CC-by v3.0
-    * NAEV.png
+    * gfx
+      * NAEV.png
+      * gui
+         * slim
+            * *
+         * brushed
+            * *
 
  * Author: Nikola Whallon <6.saturn.6@gmail.com>, License: GPLv3 / CC-by 3
    * gfx
