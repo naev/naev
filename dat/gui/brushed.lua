@@ -40,6 +40,10 @@ function create()
    ext_right = tex.open( base .. "extRight.png" )
    end_right = tex.open( base .. "endRight.png" )
    popup_bottom = tex.open( base .. "popupBottom.png" )
+   popup_bottom_side_left = tex.open( base .. "tooltipRightSideLeft.png" )
+   popup_bottom2 = tex.open( base .. "tooltipRightBottom.png" )
+   popup_body = tex.open( base .. "tooltipRight.png" )
+   popup_top = tex.open( base .. "tooltipRightTop.png" )
    popup_empty = tex.open( base .. "tooltipEmpty.png" )
    popup_pilot = tex.open( base .. "pilotFrame.png" )
    bar_bg = tex.open( base .. "barBg.png" )
@@ -126,6 +130,8 @@ function create()
    end_right_w, end_right_h = end_right:dim()
    popup_left_x = 42
    popup_left_y = 88
+   popup_right_x = 432
+   popup_right_y = 88
    
    weapbars = math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) --number of weapon bars that can fit on the screen
    
@@ -224,56 +230,59 @@ end
 
 function renderWeapBar( weapon, x, y )
    local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centers of the two weapon icons
-   if weapon.ammo ~= nil then
-      width = bar_w/2
-   else
-       width = bar_w
-   end
-   if weapon.temp <= 1 then
-      heatcol = col_heat
-      heatcol_top = col_top_heat
-   else
-      heatcol = col_heat2
-      heatcol_top = col_top_heat2
-   end
-   
-   if weapon.dtype ~= "Unknown" then
-      top_icon = _G[ "icon_" .. weapon.dtype ]
-   else
-      top_icon = icon_Kinetic
-   end
-   
-   if weapon.type == "Bolt Cannon" or weapon.type == "Bolt Turret" then
-      bottom_icon = icon_projectile
-   elseif weapon.type == "Beam Cannon" or weapon.type == "Beam Turret" then
-      bottom_icon = icon_beam
-   elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
-      bottom_icon = icon_missile
-   end
-   top_icon_w, top_icon_h = top_icon:dim()
-   bottom_icon_w, bottom_icon_h = bottom_icon:dim()
-   
-   gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
-   gfx.renderRect( x + offsets[1], y + offsets[2], width, weapon.temp/2 *bar_h, heatcol ) --Heat bar, mandatory
-   if weapon.temp < 2 then
-      gfx.renderRect( x + offsets[1], y + offsets[2] + weapon.temp/2 * bar_h, width, 1, heatcol_top ) --top bit
-   end
-   if weapon.ammo ~= nil then
-      gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
-      if weapon.left_p < 1 then
-         gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
+   if weapon ~= nil then
+      if weapon.ammo ~= nil then
+         width = bar_w/2
+      else
+          width = bar_w
+      end
+      if weapon.temp <= 1 then
+         heatcol = col_heat
+         heatcol_top = col_top_heat
+      else
+         heatcol = col_heat2
+         heatcol_top = col_top_heat2
       end
       
-      --Icon
-      gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )
+      if weapon.dtype ~= "Unknown" then
+         top_icon = _G[ "icon_" .. weapon.dtype ]
+      else
+         top_icon = icon_Kinetic
+      end
+      
+      if weapon.type == "Bolt Cannon" or weapon.type == "Bolt Turret" then
+         bottom_icon = icon_projectile
+      elseif weapon.type == "Beam Cannon" or weapon.type == "Beam Turret" then
+         bottom_icon = icon_beam
+      elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
+         bottom_icon = icon_missile
+      end
+      top_icon_w, top_icon_h = top_icon:dim()
+      bottom_icon_w, bottom_icon_h = bottom_icon:dim()
+      gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
+      gfx.renderRect( x + offsets[1], y + offsets[2], width, weapon.temp/2 *bar_h, heatcol ) --Heat bar, mandatory
+      if weapon.temp < 2 then
+      gfx.renderRect( x + offsets[1], y + offsets[2] + weapon.temp/2 * bar_h, width, 1, heatcol_top ) --top bit
+      end
+      if weapon.ammo ~= nil then
+         gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
+         if weapon.left_p < 1 then
+            gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
+         end
+      
+         --Icon
+         gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )
+      else
+         --Icon
+         gfx.renderTex( icon_weapon1, x + offsets[1], y + offsets[5] )
+      end
+      --Weapon-specific Icon
+      gfx.renderTex( top_icon, x + offsets[1] + bar_w/2 - top_icon_w/2, y + offsets[2] + offsets[7] - top_icon_h/2 )
+      gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2 )
    else
-      --Icon
-      gfx.renderTex( icon_weapon1, x + offsets[1], y + offsets[5] )
+      gfx.renderTex( bar_lock, x + offsets[1], y + offsets[2] )
    end
-   --Weapon-specific Icon
-   gfx.renderTex( top_icon, x + offsets[1] + bar_w/2 - top_icon_w/2, y + offsets[2] + offsets[7] - top_icon_h/2 )
-   gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2 )
-   
+
    gfx.renderTex( bar_frame, x, y ) --Frame
    gfx.renderTex( bar_sheen, x + offsets[3], y + offsets[4] )
 end
@@ -311,6 +320,29 @@ function render( dt )
    for k=1,wbars_right do
       renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6), bar_y )
    end
+   if wbars_right ~= #wset then
+      --Draw a popup of (theoretically) arbitrary size.
+      amount = #wset - wbars_right
+      height = math.ceil(amount/3. ) * (bar_h+6) - 3
+      gfx.renderTex( popup_bottom2, popup_right_x, popup_right_y )
+      gfx.renderTex( popup_top, popup_right_x, popup_right_y + 6 + height )
+      gfx.renderTexRaw( popup_body, popup_right_x, popup_right_y + 6, 165, height, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTex( popup_bottom_side_left, popup_right_x + 7, popup_right_y )
+      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158, popup_right_y, -3, 19, 1, 1, 0, 0, 1, 1 )
+      
+      local drawn
+      for i=1, (amount+1) do
+         local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
+         local y = math.floor( (i-1) / 3. ) * (bar_h+6) + 3 + popup_right_y
+         renderWeapBar( wset[ wbars_right + i ], x, y )
+      end
+      for i=(amount+1), math.ceil( amount/3. )*3 do
+         local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
+         local y = math.floor( (i-1) / 3. ) * (bar_h+6) + 3 + popup_right_y
+         renderWeapBar( nil, x, y )
+      end
+      gfx.renderTex( popup_bottom, popup_right_x, popup_right_y - 5 )
+   end
    
    --Main window left
    gfx.renderTex( main, 0, 0 )
@@ -320,8 +352,8 @@ function render( dt )
    end
    
    --Popup right
-   gfx.renderTex( popup_empty, popup_left_x, popup_left_y )
-   gfx.renderTex( popup_bottom, popup_left_x, popup_left_y - 5 )
+   --gfx.renderTex( popup_empty, popup_left_x, popup_left_y )
+   --gfx.renderTex( popup_bottom, popup_left_x, popup_left_y - 5 )
    
    --Popup left
    if ptarget ~= nil then
