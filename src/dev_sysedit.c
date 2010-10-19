@@ -299,6 +299,8 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
    p->gfx_exterior      = strdup( b->gfx_exterior );
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
+   p->pos.x             = sysedit_xpos / sysedit_zoom;
+   p->pos.y             = sysedit_ypos / sysedit_zoom;
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );

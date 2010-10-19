@@ -1166,6 +1166,17 @@
    <energy>30</energy>
   </specific>
  </outfit>
+ <outfit name="GUI - Brushed">
+  <general>
+   <mass>0</mass>
+   <price>75000</price>
+   <description>This is a new GUI which will become available to you by purchase. It has a brushed steel look.</description>
+   <gfx_store>brushedGUI</gfx_store>
+  </general>
+  <specific type="gui">
+   <gui>brushed</gui>
+  </specific>
+ </outfit>
 <!-- Escort Outfits -->
  <outfit name="Lancelot Fighter Bay">
   <general>
