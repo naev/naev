@@ -535,6 +535,8 @@ end
 function board()
     player.unboard()
     seiryuu:setHealth(100, 100)
+    seiryuu:control()
+    seiryuu:hyperspace()
     diplomat:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(25000)

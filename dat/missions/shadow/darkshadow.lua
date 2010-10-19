@@ -158,6 +158,9 @@ function seiryuuBoard()
         player.pay(500000) -- 500K
         player.unboard()
         seiryuu:setHilight(false)
+        seiryuu:setHealth(100, 100)
+        seiryuu:control()
+        seiryuu:hyperspace()
         var.pop("darkshadow_active")
         misn.finish(true)
     end
