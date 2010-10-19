@@ -1973,8 +1973,8 @@
  </asset>
  <asset name="Dohriabi Prime">
   <pos>
-   <x>-2140.000000</x>
-   <y>240.000000</y>
+   <x>-10029.931087</x>
+   <y>2322.809402</y>
   </pos>
   <GFX>
    <space>S01.png</space>
@@ -4327,7 +4327,7 @@
   </pos>
   <GFX>
    <space>station-agriculture.png</space>
-   <exterior>snow.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <faction>Empire</faction>
@@ -4350,10 +4350,40 @@
    <bar>Trim and functional, the bar here is situated in the central growing dome of ISS-1. The windows look out on vast stretches of multi-layered crop beds, and there's always a harvester to be seen at work somewhere out there.</bar>
   </general>
  </asset>
+ <asset name="INSS-2">
+  <pos>
+   <x>-4539.645412</x>
+   <y>9719.966587</y>
+  </pos>
+  <GFX>
+   <space>station-agriculture.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>800</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>INSS-2, or Imperial Nutrient Supply Station 2, was built in this remote secion of space to compensate for the lack of farming output in the sector. Food is not a very profitable commodity to trade over long distances, and the colonies in Nartur found themselves limited in their growth due to chronic shortages. INSS-2 has allowed them to grow.</description>
+   <bar>Trim and functional, the bar here is situated in the central growing dome of ISS-2. The windows look out on vast stretches of multi-layered crop beds, and there's always a harvester to be seen at work somewhere out there.</bar>
+  </general>
+ </asset>
  <asset name="Ian">
   <pos>
-   <x>-4040.000000</x>
-   <y>1190.000000</y>
+   <x>-30777.238017</x>
+   <y>7088.682857</y>
   </pos>
   <GFX>
    <space>moon-M02.png</space>
@@ -5778,8 +5808,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Nartur I">
   <pos>
-   <x>-2080.000000</x>
-   <y>-1180.000000</y>
+   <x>-14560.000000</x>
+   <y>-8260.000000</y>
   </pos>
   <GFX>
    <space>K02.png</space>
@@ -5800,8 +5830,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Nartur II">
   <pos>
-   <x>-4450.000000</x>
-   <y>950.000000</y>
+   <x>-31150.000000</x>
+   <y>6650.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
@@ -5822,12 +5852,56 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Nartur III">
   <pos>
-   <x>2610.000000</x>
-   <y>2680.000000</y>
+   <x>18270.000000</x>
+   <y>18760.000000</y>
   </pos>
   <GFX>
    <space>I01.png</space>
    <exterior>aquatic.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Nartur IV">
+  <pos>
+   <x>-2384.730872</x>
+   <y>26572.715435</y>
+  </pos>
+  <GFX>
+   <space>I00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Nartur IVa">
+  <pos>
+   <x>-1543.405283</x>
+   <y>26314.461681</y>
+  </pos>
+  <GFX>
+   <space>moon-J00.png</space>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -6020,11 +6094,11 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Niflheim">
   <pos>
-   <x>-1752.186214</x>
-   <y>172.807356</y>
+   <x>-9965.863598</x>
+   <y>2823.758187</y>
   </pos>
   <GFX>
-   <space>002.png</space>
+   <space>station-sphere.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
@@ -7320,6 +7394,45 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Qoral">
+  <pos>
+   <x>17749.592764</x>
+   <y>3014.081790</y>
+  </pos>
+  <GFX>
+   <space>S01.png</space>
+   <exterior>mining4.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>S</class>
+   <population>500000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Qoral is primarily a resource-producing world. The terrain is mostly barren and unfit for human habitation, so most of the population is concentrated on a few stretches of suitable land, scattered around the globe, while the rest of the land mass is littlered with strip mines.</description>
+   <bar>This is a fairly typical spaceport bar. The clientele consists mostly of merchants, though some locals come here also, if not for the drinks then for the chance to talk to people who come from more interesting places than Qoral.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Racheka">
   <pos>
@@ -10240,6 +10353,38 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Vertigo">
+  <pos>
+   <x>-1176.579442</x>
+   <y>26162.619259</y>
+  </pos>
+  <GFX>
+   <space>moon-D01.png</space>
+   <exterior>mining5.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>D</class>
+   <population>10000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Vertigo is the second moon orbiting Nartur IV. While the rock itself is utterly uninteresting, it's Nartur's first moon that is. It is a semi-fluid sphere of valuable mineral that often get used in hyperdrives. Vertigo is the closest place where a harvesting base can be set up, short of building a whole new starbase.</description>
+   <bar>Vertig's spaceport bar has an excellent view of Nartur IV and IVa. Depending on the phase of the various orbital cycles, it can be quite a fetching sight. Of course, some of the time there's very little to see at all.</bar>
   </general>
  </asset>
  <asset name="Vilati Vilata">

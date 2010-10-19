@@ -1492,7 +1492,7 @@
  </ssys>
  <ssys name="Dohriabi">
   <general>
-   <radius>3500.000000</radius>
+   <radius>10500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1510,7 +1510,7 @@
   </assets>
   <jumps>
    <jump target="Overture">
-    <pos x="686.406473" y="-3432.032365"/>
+    <pos x="2059.219419" y="-10296.097095"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3519,7 +3519,7 @@
  </ssys>
  <ssys name="Nartur">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3530,16 +3530,21 @@
    <y>-421.000000</y>
   </pos>
   <assets>
+   <asset>INSS-2</asset>
    <asset>Ian</asset>
    <asset>Nartur I</asset>
    <asset>Nartur II</asset>
    <asset>Nartur III</asset>
+   <asset>Nartur IV</asset>
+   <asset>Nartur IVa</asset>
+   <asset>Qoral</asset>
+   <asset>Vertigo</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
   <jumps>
    <jump target="Overture">
-    <pos x="2864.104373" y="-2011.692357"/>
+    <pos x="20048.730611" y="-14081.846501"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
