@@ -160,7 +160,7 @@ function cargo_dialog()
 		k = rnd.int(1, #cargo_accept_p2)  -- Pick a pair of dialogue for p1 and p2
 	end
 	msg_accept_cargo = cargo_accept_p1[j] .. " " .. cargo_accept_p2[k] .. " %d tons of %s aboard your vessel."
-	msg_msg_cargo = cargo_land_p1[j] .. ", the %s " .. cargo_land_p2[k]
+	msg_msg_cargo = cargo_land_p1[j] .. " %s are " .. cargo_land_p2[k]
 end
 
 --Dialog generator/picker for passenger missions

@@ -810,6 +810,7 @@ function render( dt )
          end
       end
       gfx.print( true, cargstring, length, 6, col_txt_std )
+
       length = length + gfx.printDim( true, cargstring )
    else
       gfx.print( true, "none", length, 6, col_txt_una )
