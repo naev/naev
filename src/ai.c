@@ -454,8 +454,10 @@ int ai_pinit( Pilot *p, const char *ai )
    L = p->ai->L;
 
    /* Set fuel.  Hack until we do it through AI itself. */
-   p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
-   p->fuel += HYPERSPACE_FUEL;
+   if (!pilot_isPlayer(p)) {
+      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
+      p->fuel += HYPERSPACE_FUEL;
+   }
 
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, "pilotmem"); /* pm */
