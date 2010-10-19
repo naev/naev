@@ -517,7 +517,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
+      mission_portrait = gl_newImage( "gfx/portraits/news.png", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
