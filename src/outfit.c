@@ -1079,7 +1079,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Range",
-         outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
+         outfit_getType(temp), outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.cpu,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
