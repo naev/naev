@@ -5327,6 +5327,42 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Madeleine Station">
+  <pos>
+   <x>14794.876439</x>
+   <y>-4639.755662</y>
+  </pos>
+  <GFX>
+   <space>002.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <outfits/>
+   </services>
+   <commodities>
+   </commodities>
+   <description>In a strange twist of fate, Madeleine station was named after the granddaughter of the first commander to be stationed here. The place serves as the Empire's southernmost military base. It was originally little more than a minor depot, but has grown into an important line of defense against the southern pirates in recent years.</description>
+   <bar>Since traders don't come to this military base, the bar is only frequented by Imperial military personnel. It's more like a canteen than a bar, really.</bar>
+  </general>
+  <tech>
+   <item>High Tech Upgrades 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Malebolge">
   <pos>
    <x>-792.602095</x>
@@ -10766,8 +10802,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Waterhole">
   <pos>
-   <x>-1010.000000</x>
-   <y>-400.000000</y>
+   <x>-5555.000000</x>
+   <y>-2200.000000</y>
   </pos>
   <GFX>
    <space>O00.png</space>
@@ -10788,8 +10824,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Waterhole's Moon">
   <pos>
-   <x>-410.000000</x>
-   <y>-20.000000</y>
+   <x>-5089.422980</x>
+   <y>-1733.131108</y>
   </pos>
   <GFX>
    <space>moon-G00.png</space>
