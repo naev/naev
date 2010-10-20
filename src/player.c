@@ -217,10 +217,6 @@ void player_new (void)
 {
    int r;
 
-   /* to not segfault due to lack of environment */
-   memset( &player, 0, sizeof(Player_t) );
-   player_setFlag(PLAYER_CREATING);
-
    /* Set up GUI. */
    gui_setDefaults();
 
@@ -236,6 +232,10 @@ void player_new (void)
    space_clearKnown();
    land_cleanup();
    map_cleanup();
+
+   /* To not segfault due to lack of environment */
+   memset( &player, 0, sizeof(Player_t) );
+   player_setFlag(PLAYER_CREATING);
 
    player.name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
