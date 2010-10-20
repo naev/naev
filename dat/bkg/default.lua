@@ -125,7 +125,7 @@ function star_add( added )
    local nmove = prng.num()*0.2
    local move  = 0.15 + nmove
    local scale = 1.0 - (1. - nmove/0.2)/5
-   bkg.image( img, x, y, move, scale )
+   bkg.image( img, x, y, move, scale, true ) -- On the foreground
    return num
 end
 
