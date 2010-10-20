@@ -937,8 +937,13 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
       if ((value==KEY_PRESS) && !player_isFlag(PLAYER_AUTONAV)) {
-         if (dt_mod == 1.) pause_setSpeed(2.);
-         else pause_setSpeed(1.);
+         if (player_isFlag(PLAYER_DOUBLESPEED)) {
+            pause_setSpeed(1.);
+            player_rmFlag(PLAYER_DOUBLESPEED);
+         } else {
+            pause_setSpeed(2.);
+            player_setFlag(PLAYER_DOUBLESPEED);
+         }
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
