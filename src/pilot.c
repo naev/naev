@@ -79,7 +79,6 @@ static void pilot_dead( Pilot* p, unsigned int killer );
 /* misc */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-extern int landtarget; /* From player.c  */
 
 
 /**
@@ -1155,7 +1154,7 @@ void pilot_update( Pilot* pilot, const double dt )
    else if (pilot_isFlag(pilot,PILOT_LANDING)) {
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
-            land( cur_system->planets[ landtarget ], 0 );
+            land( cur_system->planets[ pilot->nav_planet ], 0 );
             pilot->ptimer = 0.;
          }
          else
