@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -815,8 +815,8 @@
  </asset>
  <asset name="Babylon I">
   <pos>
-   <x>2650.000000</x>
-   <y>770.000000</y>
+   <x>15900.000000</x>
+   <y>4620.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
@@ -837,8 +837,8 @@
  </asset>
  <asset name="Babylon II">
   <pos>
-   <x>-2600.000000</x>
-   <y>-520.000000</y>
+   <x>-15600.000000</x>
+   <y>-3120.000000</y>
   </pos>
   <GFX>
    <space>P03.png</space>
@@ -859,8 +859,8 @@
  </asset>
  <asset name="Babylon IIa">
   <pos>
-   <x>-2230.000000</x>
-   <y>-540.000000</y>
+   <x>-13380.000000</x>
+   <y>-3240.000000</y>
   </pos>
   <GFX>
    <space>moon-J00.png</space>
@@ -925,8 +925,8 @@
  </asset>
  <asset name="Beene">
   <pos>
-   <x>2340.000000</x>
-   <y>-1580.000000</y>
+   <x>9360.000000</x>
+   <y>-6320.000000</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -1240,8 +1240,8 @@
  </asset>
  <asset name="Cerberus">
   <pos>
-   <x>130.000000</x>
-   <y>-310.000000</y>
+   <x>2340.937745</x>
+   <y>-3014.492093</y>
   </pos>
   <GFX>
    <space>003.png</space>
@@ -1268,8 +1268,8 @@
  </asset>
  <asset name="Cerberus I">
   <pos>
-   <x>-2010.000000</x>
-   <y>-60.000000</y>
+   <x>-15075.000000</x>
+   <y>-450.000000</y>
   </pos>
   <GFX>
    <space>A01.png</space>
@@ -1290,8 +1290,8 @@
  </asset>
  <asset name="Cerberus II">
   <pos>
-   <x>3730.000000</x>
-   <y>820.000000</y>
+   <x>29678.984882</x>
+   <y>5229.599407</y>
   </pos>
   <GFX>
    <space>G02.png</space>
@@ -1312,8 +1312,8 @@
  </asset>
  <asset name="Cerberus IIa">
   <pos>
-   <x>4020.000000</x>
-   <y>640.000000</y>
+   <x>30150.000000</x>
+   <y>4800.000000</y>
   </pos>
   <GFX>
    <space>moon-K00.png</space>
@@ -1334,8 +1334,8 @@
  </asset>
  <asset name="Cerberus IV">
   <pos>
-   <x>-1190.000000</x>
-   <y>5990.000000</y>
+   <x>-8925.000000</x>
+   <y>44925.000000</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -1393,8 +1393,8 @@
  </asset>
  <asset name="Charred">
   <pos>
-   <x>210.000000</x>
-   <y>1880.000000</y>
+   <x>945.000000</x>
+   <y>8460.000000</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -1583,8 +1583,8 @@
  </asset>
  <asset name="Culex">
   <pos>
-   <x>2430.000000</x>
-   <y>4600.000000</y>
+   <x>18225.000000</x>
+   <y>34500.000000</y>
   </pos>
   <GFX>
    <space>moon-M06.png</space>
@@ -1605,8 +1605,8 @@
  </asset>
  <asset name="Cutha">
   <pos>
-   <x>3700.000000</x>
-   <y>3570.000000</y>
+   <x>25900.000000</x>
+   <y>24990.000000</y>
   </pos>
   <GFX>
    <space>M04.png</space>
@@ -1945,8 +1945,8 @@
  </asset>
  <asset name="Diadem I">
   <pos>
-   <x>740.000000</x>
-   <y>-2530.000000</y>
+   <x>2738.000000</x>
+   <y>-9361.000000</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -1967,8 +1967,8 @@
  </asset>
  <asset name="Diadem II">
   <pos>
-   <x>-1180.000000</x>
-   <y>1010.000000</y>
+   <x>-4366.000000</x>
+   <y>3737.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -1989,8 +1989,8 @@
  </asset>
  <asset name="Doeston Prime">
   <pos>
-   <x>520.000000</x>
-   <y>-690.000000</y>
+   <x>2763.404821</x>
+   <y>-3302.910419</y>
   </pos>
   <GFX>
    <space>J02.png</space>
@@ -2310,8 +2310,8 @@
  </asset>
  <asset name="Dust">
   <pos>
-   <x>-550.000000</x>
-   <y>420.000000</y>
+   <x>-3850.000000</x>
+   <y>2940.000000</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -2496,8 +2496,8 @@
  </asset>
  <asset name="Ebenezer">
   <pos>
-   <x>-2000.000000</x>
-   <y>1190.000000</y>
+   <x>-13000.000000</x>
+   <y>7735.000000</y>
   </pos>
   <GFX>
    <space>moon-M00.png</space>
@@ -3055,8 +3055,8 @@
  </asset>
  <asset name="Father's Pride I">
   <pos>
-   <x>-1870.000000</x>
-   <y>1380.000000</y>
+   <x>-9350.000000</x>
+   <y>6900.000000</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -3077,8 +3077,8 @@
  </asset>
  <asset name="Father's Pride II">
   <pos>
-   <x>2150.000000</x>
-   <y>-2200.000000</y>
+   <x>10750.000000</x>
+   <y>-11000.000000</y>
   </pos>
   <GFX>
    <space>H02.png</space>
@@ -3099,8 +3099,8 @@
  </asset>
  <asset name="Father's Pride III">
   <pos>
-   <x>-4630.000000</x>
-   <y>-1390.000000</y>
+   <x>-23150.000000</x>
+   <y>-6950.000000</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -3165,8 +3165,8 @@
  </asset>
  <asset name="Flach">
   <pos>
-   <x>5660.000000</x>
-   <y>-530.000000</y>
+   <x>28300.000000</x>
+   <y>-2650.000000</y>
   </pos>
   <GFX>
    <space>Y00.png</space>
@@ -3619,8 +3619,8 @@
  </asset>
  <asset name="Gaula">
   <pos>
-   <x>4470.000000</x>
-   <y>-2750.000000</y>
+   <x>19668.000000</x>
+   <y>-12100.000000</y>
   </pos>
   <GFX>
    <space>O00.png</space>
@@ -3879,8 +3879,8 @@
  </asset>
  <asset name="Green Eye">
   <pos>
-   <x>-7230.000000</x>
-   <y>1050.000000</y>
+   <x>-57840.000000</x>
+   <y>8400.000000</y>
   </pos>
   <GFX>
    <space>moon-J01.png</space>
@@ -4091,8 +4091,8 @@
  </asset>
  <asset name="Hatter I">
   <pos>
-   <x>2950.000000</x>
-   <y>-110.000000</y>
+   <x>12980.000000</x>
+   <y>-484.000000</y>
   </pos>
   <GFX>
    <space>A00.png</space>
@@ -4113,8 +4113,8 @@
  </asset>
  <asset name="Hatter II">
   <pos>
-   <x>-600.000000</x>
-   <y>1230.000000</y>
+   <x>-2640.000000</x>
+   <y>5412.000000</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -4503,8 +4503,8 @@
  </asset>
  <asset name="Ingot I">
   <pos>
-   <x>-1650.000000</x>
-   <y>-610.000000</y>
+   <x>-9900.000000</x>
+   <y>-3660.000000</y>
   </pos>
   <GFX>
    <space>C00.png</space>
@@ -5146,8 +5146,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Larling">
   <pos>
-   <x>-2160.000000</x>
-   <y>170.000000</y>
+   <x>-8640.000000</x>
+   <y>680.000000</y>
   </pos>
   <GFX>
    <space>M07.png</space>
@@ -5234,8 +5234,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Leo">
   <pos>
-   <x>-1595.341828</x>
-   <y>1295.352045</y>
+   <x>-5902.764764</x>
+   <y>4792.802567</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -5345,8 +5345,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="M.K.">
   <pos>
-   <x>-2710.000000</x>
-   <y>570.000000</y>
+   <x>-10298.000000</x>
+   <y>2166.000000</y>
   </pos>
   <GFX>
    <space>M01.png</space>
@@ -5828,8 +5828,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Myonei">
   <pos>
-   <x>2070.000000</x>
-   <y>4320.000000</y>
+   <x>17608.422019</x>
+   <y>33902.001921</y>
   </pos>
   <GFX>
    <space>K03.png</space>
@@ -6053,8 +6053,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="New Haven">
   <pos>
-   <x>-7190.000000</x>
-   <y>550.000000</y>
+   <x>-57520.000000</x>
+   <y>4400.000000</y>
   </pos>
   <GFX>
    <space>X01.png</space>
@@ -6494,8 +6494,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Oberon I">
   <pos>
-   <x>4250.000000</x>
-   <y>-840.000000</y>
+   <x>16150.000000</x>
+   <y>-3192.000000</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -6516,8 +6516,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Oberon III">
   <pos>
-   <x>970.000000</x>
-   <y>500.000000</y>
+   <x>3686.000000</x>
+   <y>1900.000000</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -6538,8 +6538,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Oberon IV">
   <pos>
-   <x>-50.000000</x>
-   <y>-3600.000000</y>
+   <x>-190.000000</x>
+   <y>-13680.000000</y>
   </pos>
   <GFX>
    <space>J01.png</space>
@@ -6560,8 +6560,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Old Man Jack">
   <pos>
-   <x>-790.000000</x>
-   <y>1880.000000</y>
+   <x>-6320.000000</x>
+   <y>15040.000000</y>
   </pos>
   <GFX>
    <space>G02.png</space>
@@ -7030,8 +7030,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pilatis I">
   <pos>
-   <x>762.939453</x>
-   <y>-2222.061157</y>
+   <x>3356.933593</x>
+   <y>-9777.069091</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -7052,8 +7052,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pilatis II">
   <pos>
-   <x>-476.837158</x>
-   <y>1459.121704</y>
+   <x>-2098.083495</x>
+   <y>6420.135498</y>
   </pos>
   <GFX>
    <space>moon-M01.png</space>
@@ -7074,8 +7074,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pilatis III">
   <pos>
-   <x>-1602.172852</x>
-   <y>-829.696655</y>
+   <x>-7049.560549</x>
+   <y>-3650.665282</y>
   </pos>
   <GFX>
    <space>moon-O00.png</space>
@@ -7096,8 +7096,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Point Zero 0">
   <pos>
-   <x>900.000000</x>
-   <y>660.000000</y>
+   <x>2700.000000</x>
+   <y>1980.000000</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -7118,8 +7118,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Point Zero Station">
   <pos>
-   <x>580.000000</x>
-   <y>370.000000</y>
+   <x>2341.655181</x>
+   <y>1502.747132</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -7733,8 +7733,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Red Eye">
   <pos>
-   <x>-6760.000000</x>
-   <y>220.000000</y>
+   <x>-54080.000000</x>
+   <y>1760.000000</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -7938,8 +7938,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Riun">
   <pos>
-   <x>-1490.000000</x>
-   <y>1210.000000</y>
+   <x>-5513.000000</x>
+   <y>4477.000000</y>
   </pos>
   <GFX>
    <space>moon-J00.png</space>
@@ -7960,8 +7960,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rudderfern">
   <pos>
-   <x>-4210.000000</x>
-   <y>-1670.000000</y>
+   <x>-21050.000000</x>
+   <y>-8350.000000</y>
   </pos>
   <GFX>
    <space>moon-L00.png</space>
@@ -8393,8 +8393,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sarcophagus I">
   <pos>
-   <x>4910.000000</x>
-   <y>-1820.000000</y>
+   <x>31915.000000</x>
+   <y>-11830.000000</y>
   </pos>
   <GFX>
    <space>S01.png</space>
@@ -8415,8 +8415,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sarcophagus II">
   <pos>
-   <x>-1530.000000</x>
-   <y>950.000000</y>
+   <x>-12547.664172</x>
+   <y>7337.493844</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -8437,8 +8437,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sarcophagus IIb">
   <pos>
-   <x>-2398.216307</x>
-   <y>1412.056327</y>
+   <x>-13519.748039</x>
+   <y>8039.294972</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -8481,8 +8481,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Scipio">
   <pos>
-   <x>5300.000000</x>
-   <y>-1910.000000</y>
+   <x>31800.000000</x>
+   <y>-11460.000000</y>
   </pos>
   <GFX>
    <space>C00.png</space>
@@ -8655,8 +8655,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sergio Vix I">
   <pos>
-   <x>1520.000000</x>
-   <y>-2040.000000</y>
+   <x>6080.000000</x>
+   <y>-8160.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -8677,8 +8677,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sergio Vix III">
   <pos>
-   <x>2050.000000</x>
-   <y>4090.000000</y>
+   <x>8200.000000</x>
+   <y>16360.000000</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -8847,8 +8847,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shikima II">
   <pos>
-   <x>1590.000000</x>
-   <y>2420.000000</y>
+   <x>6360.000000</x>
+   <y>9680.000000</y>
   </pos>
   <GFX>
    <space>moon-G01.png</space>
@@ -8869,8 +8869,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shikima III">
   <pos>
-   <x>-3040.000000</x>
-   <y>1720.000000</y>
+   <x>-12160.000000</x>
+   <y>6880.000000</y>
   </pos>
   <GFX>
    <space>Y00.png</space>
@@ -9358,8 +9358,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Terminus">
   <pos>
-   <x>1450.000000</x>
-   <y>-2980.000000</y>
+   <x>10150.000000</x>
+   <y>-20860.000000</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -9827,8 +9827,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ulios">
   <pos>
-   <x>2980.000000</x>
-   <y>-1350.000000</y>
+   <x>17880.000000</x>
+   <y>-8100.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
@@ -10048,8 +10048,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uridhrion I">
   <pos>
-   <x>2100.000000</x>
-   <y>1430.000000</y>
+   <x>14700.000000</x>
+   <y>10010.000000</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -10070,8 +10070,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uridhrion II">
   <pos>
-   <x>-2470.000000</x>
-   <y>-1520.000000</y>
+   <x>-17290.000000</x>
+   <y>-10640.000000</y>
   </pos>
   <GFX>
    <space>X00.png</space>
@@ -10092,8 +10092,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uridhrion III">
   <pos>
-   <x>1610.000000</x>
-   <y>-3330.000000</y>
+   <x>10635.441801</x>
+   <y>-21279.413764</y>
   </pos>
   <GFX>
    <space>A03.png</space>
@@ -11076,8 +11076,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Zepei">
   <pos>
-   <x>5100.000000</x>
-   <y>960.000000</y>
+   <x>20400.000000</x>
+   <y>3840.000000</y>
   </pos>
   <GFX>
    <space>M02.png</space>
