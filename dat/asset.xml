@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -122,8 +122,8 @@
  </asset>
  <asset name="Amaroq I">
   <pos>
-   <x>-840.000000</x>
-   <y>-900.000000</y>
+   <x>-3780.000000</x>
+   <y>-4050.000000</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -144,8 +144,8 @@
  </asset>
  <asset name="Amaroq III">
   <pos>
-   <x>1900.000000</x>
-   <y>-5060.000000</y>
+   <x>8550.000000</x>
+   <y>-22770.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
@@ -1483,8 +1483,8 @@
  </asset>
  <asset name="Claudius Mehan">
   <pos>
-   <x>-115.000000</x>
-   <y>-3062.000000</y>
+   <x>-575.000000</x>
+   <y>-15310.000000</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -3297,8 +3297,8 @@
  </asset>
  <asset name="Fried I">
   <pos>
-   <x>-2500.000000</x>
-   <y>420.000000</y>
+   <x>-12500.000000</x>
+   <y>2100.000000</y>
   </pos>
   <GFX>
    <space>Y00.png</space>
@@ -3319,8 +3319,8 @@
  </asset>
  <asset name="Fried II">
   <pos>
-   <x>-356.000000</x>
-   <y>-3194.000000</y>
+   <x>-8895.688943</x>
+   <y>-12416.732467</y>
   </pos>
   <GFX>
    <space>S00.png</space>
@@ -3341,8 +3341,8 @@
  </asset>
  <asset name="Fried III">
   <pos>
-   <x>2090.000000</x>
-   <y>540.000000</y>
+   <x>12505.292605</x>
+   <y>2285.984224</y>
   </pos>
   <GFX>
    <space>I01.png</space>
@@ -3363,8 +3363,8 @@
  </asset>
  <asset name="Fried IIIa">
   <pos>
-   <x>2600.000000</x>
-   <y>510.000000</y>
+   <x>13000.000000</x>
+   <y>2550.000000</y>
   </pos>
   <GFX>
    <space>moon-H01.png</space>
@@ -3385,8 +3385,8 @@
  </asset>
  <asset name="Fried Ia">
   <pos>
-   <x>-2090.000000</x>
-   <y>120.000000</y>
+   <x>-12094.025264</x>
+   <y>1795.654737</y>
   </pos>
   <GFX>
    <space>moon-P01.png</space>
@@ -3493,8 +3493,8 @@
  </asset>
  <asset name="Gammacron IV">
   <pos>
-   <x>250.000000</x>
-   <y>840.000000</y>
+   <x>1200.000000</x>
+   <y>4032.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -3515,8 +3515,8 @@
  </asset>
  <asset name="Gammacron V">
   <pos>
-   <x>3460.000000</x>
-   <y>2110.000000</y>
+   <x>17964.422940</x>
+   <y>9988.554651</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -3537,8 +3537,8 @@
  </asset>
  <asset name="Gammacron Va">
   <pos>
-   <x>3870.000000</x>
-   <y>2130.000000</y>
+   <x>18474.585201</x>
+   <y>10021.170402</y>
   </pos>
   <GFX>
    <space>moon-J02.png</space>
@@ -3559,8 +3559,8 @@
  </asset>
  <asset name="Gammacron Vb">
   <pos>
-   <x>4251.634470</x>
-   <y>2174.874556</y>
+   <x>18823.239218</x>
+   <y>9932.323873</y>
   </pos>
   <GFX>
    <space>moon-J01.png</space>
@@ -4672,8 +4672,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Jugreny">
   <pos>
-   <x>-500.000000</x>
-   <y>-2160.000000</y>
+   <x>-2500.000000</x>
+   <y>-10800.000000</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -4957,8 +4957,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Ksher I">
   <pos>
-   <x>1420.000000</x>
-   <y>1750.000000</y>
+   <x>6248.000000</x>
+   <y>7700.000000</y>
   </pos>
   <GFX>
    <space>J02.png</space>
@@ -4979,8 +4979,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Ksher II">
   <pos>
-   <x>-4530.000000</x>
-   <y>1660.000000</y>
+   <x>-19932.000000</x>
+   <y>7304.000000</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -5001,8 +5001,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Ksher III">
   <pos>
-   <x>-830.000000</x>
-   <y>-1710.000000</y>
+   <x>-3652.000000</x>
+   <y>-7524.000000</y>
   </pos>
   <GFX>
    <space>M01.png</space>
@@ -5218,8 +5218,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Limbo I">
   <pos>
-   <x>1560.000000</x>
-   <y>1670.000000</y>
+   <x>7800.000000</x>
+   <y>8350.000000</y>
   </pos>
   <GFX>
    <space>K02.png</space>
@@ -5240,8 +5240,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Limbo II">
   <pos>
-   <x>-2300.000000</x>
-   <y>1190.000000</y>
+   <x>-11500.000000</x>
+   <y>5950.000000</y>
   </pos>
   <GFX>
    <space>A03.png</space>
@@ -5351,8 +5351,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <missions/>
     <outfits/>
    </services>
-   <commodities>
-   </commodities>
+   <commodities/>
    <description>In a strange twist of fate, Madeleine station was named after the granddaughter of the first commander to be stationed here. The place serves as the Empire's southernmost military base. It was originally little more than a minor depot, but has grown into an important line of defense against the southern pirates in recent years.</description>
    <bar>Since traders don't come to this military base, the bar is only frequented by Imperial military personnel. It's more like a canteen than a bar, really.</bar>
   </general>
@@ -5365,8 +5364,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Malebolge">
   <pos>
-   <x>-792.602095</x>
-   <y>-2485.352045</y>
+   <x>-2964.262874</x>
+   <y>-11151.251241</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -7191,8 +7190,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Provectus Nova I">
   <pos>
-   <x>460.000000</x>
-   <y>-170.000000</y>
+   <x>-5688.034187</x>
+   <y>-2424.300604</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -7213,8 +7212,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Provectus Nova Ia">
   <pos>
-   <x>0.000000</x>
-   <y>0.000000</y>
+   <x>-6064.192692</x>
+   <y>-2294.350136</y>
   </pos>
   <GFX>
    <space>moon-O01.png</space>
@@ -7279,8 +7278,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pultatis I">
   <pos>
-   <x>-5910.000000</x>
-   <y>2400.000000</y>
+   <x>-29550.000000</x>
+   <y>12000.000000</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -7301,8 +7300,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pultatis II">
   <pos>
-   <x>-1650.000000</x>
-   <y>1250.000000</y>
+   <x>-8250.000000</x>
+   <y>6250.000000</y>
   </pos>
   <GFX>
    <space>H01.png</space>
@@ -7323,8 +7322,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pultatis III">
   <pos>
-   <x>760.000000</x>
-   <y>-2650.000000</y>
+   <x>3800.000000</x>
+   <y>-13250.000000</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -7345,8 +7344,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pund">
   <pos>
-   <x>1110.000000</x>
-   <y>-3690.000000</y>
+   <x>5328.000000</x>
+   <y>-17712.000000</y>
   </pos>
   <GFX>
    <space>P00.png</space>
@@ -7717,8 +7716,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rhaana">
   <pos>
-   <x>3280.000000</x>
-   <y>-1830.000000</y>
+   <x>14760.000000</x>
+   <y>-8235.000000</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -9817,8 +9816,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Unicorn I">
   <pos>
-   <x>-1765.160309</x>
-   <y>-354.856592</y>
+   <x>-8825.801545</x>
+   <y>-1774.282960</y>
   </pos>
   <GFX>
    <space>J03.png</space>
@@ -9839,8 +9838,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Unicorn II">
   <pos>
-   <x>1342.186819</x>
-   <y>1596.349353</y>
+   <x>6710.934095</x>
+   <y>7981.746765</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>

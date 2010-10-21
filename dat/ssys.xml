@@ -159,7 +159,7 @@
  </ssys>
  <ssys name="Amaroq">
   <general>
-   <radius>3500.000000</radius>
+   <radius>15750.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -176,14 +176,14 @@
   </assets>
   <jumps>
    <jump target="Marat">
-    <pos x="-3354.349893" y="999.168053"/>
+    <pos x="-15094.574516" y="4496.256239"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sultan">
-    <pos x="1278.507205" y="3258.131263"/>
+    <pos x="5753.282420" y="14661.590684"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2107,7 +2107,7 @@
  </ssys>
  <ssys name="Fried">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2127,7 +2127,7 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="764.014433" y="3415.593937"/>
+    <pos x="3820.072167" y="17077.969687"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2269,7 +2269,7 @@
  </ssys>
  <ssys name="Gammacron">
   <general>
-   <radius>3500.000000</radius>
+   <radius>16800.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2288,14 +2288,14 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="-3488.156887" y="-287.683042"/>
+    <pos x="-16743.153057" y="-1380.878603"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Volus">
-    <pos x="6335.057512" y="-3304.281734"/>
+    <pos x="30408.276058" y="-15860.552323"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
@@ -3138,7 +3138,7 @@
  </ssys>
  <ssys name="Ksher">
   <general>
-   <radius>3500.000000</radius>
+   <radius>15400.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3155,14 +3155,14 @@
   </assets>
   <jumps>
    <jump target="Sultan">
-    <pos x="-0.000000" y="-3500.000000"/>
+    <pos x="-0.000000" y="-15400.000000"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Urbanus">
-    <pos x="-1282.835814" y="3256.429375"/>
+    <pos x="-5644.477583" y="14328.289249"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3250,7 +3250,7 @@
  </ssys>
  <ssys name="Limbo">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3270,26 +3270,26 @@
   </assets>
   <jumps>
    <jump target="Fried">
-    <pos x="-1174.014433" y="-5035.593937"/>
+    <pos x="-5870.072165" y="-25177.969685"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gammacron">
-    <pos x="3488.156887" y="287.683042"/>
+    <pos x="17440.784434" y="1438.415211"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Provectus Nova">
-    <pos x="449.195366" y="3471.055102"/>
+    <pos x="2245.976831" y="17355.275511"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pultatis">
-    <pos x="-5137.630227" y="-1619.783303"/>
+    <pos x="-25688.151135" y="-8098.916515"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
@@ -3297,7 +3297,7 @@
  </ssys>
  <ssys name="Marat">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3310,14 +3310,14 @@
   <assets/>
   <jumps>
    <jump target="Amaroq">
-    <pos x="3354.349893" y="-999.168053"/>
+    <pos x="13417.399570" y="-3996.672212"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Unicorn">
-    <pos x="-3327.793940" y="1084.337351"/>
+    <pos x="-13311.175761" y="4337.349405"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4117,7 +4117,7 @@
  </ssys>
  <ssys name="Provectus Nova">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4133,14 +4133,14 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="-449.195366" y="-3471.055102"/>
+    <pos x="-1796.781465" y="-13884.220409"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Waterhole">
-    <pos x="-1659.349381" y="3081.648850"/>
+    <pos x="-6637.397522" y="12326.595399"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4186,7 +4186,7 @@
  </ssys>
  <ssys name="Pultatis">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4203,7 +4203,7 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="3257.630227" y="1279.783303"/>
+    <pos x="16288.151135" y="6398.916517"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4792,7 +4792,7 @@
  </ssys>
  <ssys name="Sultan">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4807,14 +4807,14 @@
   </assets>
   <jumps>
    <jump target="Amaroq">
-    <pos x="-1278.507205" y="-3258.131263"/>
+    <pos x="-5114.028818" y="-13032.525053"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ksher">
-    <pos x="0.000000" y="3500.000000"/>
+    <pos x="0.000000" y="14000.000000"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5389,7 +5389,7 @@
  </ssys>
  <ssys name="Unicorn">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -5405,21 +5405,21 @@
   </assets>
   <jumps>
    <jump target="Kretogg">
-    <pos x="1270.605535" y="-3261.220872"/>
+    <pos x="6353.027673" y="-16306.104360"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Marat">
-    <pos x="3327.793940" y="-1084.337351"/>
+    <pos x="16638.969701" y="-5421.686757"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Volus">
-    <pos x="-2893.495080" y="1969.184152"/>
+    <pos x="-14467.475399" y="9845.920758"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5614,7 +5614,7 @@
  </ssys>
  <ssys name="Volus">
   <general>
-   <radius>3500.000000</radius>
+   <radius>18900.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -5627,21 +5627,21 @@
   <assets/>
   <jumps>
    <jump target="Gammacron">
-    <pos x="-1095.057512" y="3324.281734"/>
+    <pos x="-5913.310566" y="17951.121362"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pudas">
-    <pos x="3458.193205" y="539.351234"/>
+    <pos x="18674.243310" y="2912.496663"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Unicorn">
-    <pos x="2893.495080" y="-1969.184152"/>
+    <pos x="15624.873431" y="-10633.594418"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
