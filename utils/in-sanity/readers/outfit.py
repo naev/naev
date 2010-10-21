@@ -8,17 +8,28 @@ class outfit(readers):
     def __init__(self, **config):
         outfitXml = os.path.join(config['datpath'], 'outfit.xml')
         readers.__init__(self, outfitXml, config['verbose'])
+        tech = config['tech']
 
         self.outfitsName = list()
+        self.missingTech = list()
         print('Compiling outfit list ...',end='     ')
         for outfit in self.xmlData.findall('outfit'):
             self.outfitsName.append(outfit.attrib['name'])
+            if not tech.findItem(outfit.attrib['name']):
+                self.missingTech.append(outfit.attrib['name'])
         print("DONE")
 
     def find(self, name):
         if name in self.outfitsName:
+            if name in self.missingTech:
+                self.missingTech.remove(name)
             return True
         else:
             return False
 
-
+    def showMissingTech(self):
+        if len(self.missingTech) > 0:
+            print("\noutfit.xml unused content:")
+            for name in self.missingTech:
+                print("Warning: item ''{0}`` is not found in tech.xml nor " \
+                      "lua files.".format(name))

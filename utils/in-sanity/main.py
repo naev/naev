@@ -102,9 +102,9 @@ class sanitizer:
         fleetdata = fleet(datpath=self.config['datpath'],
                           verbose=self.config['verbose'])
         shipdata = ship(datpath=self.config['datpath'],
-                        verbose=self.config['verbose'])
+                        verbose=self.config['verbose'], tech=otech)
         outfitdata = outfit(datpath=self.config['datpath'],
-                            verbose=self.config['verbose'])
+                            verbose=self.config['verbose'], tech=otech)
         rawstr = r"""
         (?P<func>
             pilot\.add\(|
@@ -158,6 +158,8 @@ class sanitizer:
 
             if self.config['verbose']:
                 print("DONE")
+
+        outfitdata.showMissingTech()
 
         if self.config['show_unused']:
             fleetdata.show_unused()

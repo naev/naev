@@ -75,6 +75,17 @@ class tech(items):
         print('techs validation ...')
         self.assets.validateTechs(self.itemNames)
 
+        self.techItems = list()
+        for item in self.xmlData.findall('tech/item'):
+            if item.text not in self.techItems:
+                self.techItems.append(item.text)
+
+    def findItem(self, name):
+        if name in self.techItems:
+            return True
+        else:
+            return False
+
 class assets(items):
     def __init__(self, **config):
         config['xml_file'] = 'asset.xml'
