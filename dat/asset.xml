@@ -180,7 +180,7 @@
   </presence>
   <general>
    <class>M</class>
-   <population>8000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -1715,8 +1715,8 @@
  </asset>
  <asset name="Daravon I">
   <pos>
-   <x>-1960.000000</x>
-   <y>-2190.000000</y>
+   <x>-9800.000000</x>
+   <y>-10950.000000</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>
@@ -1737,8 +1737,8 @@
  </asset>
  <asset name="Daravon III">
   <pos>
-   <x>-4450.000000</x>
-   <y>-1890.000000</y>
+   <x>-22250.000000</x>
+   <y>-9450.000000</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -2518,8 +2518,8 @@
  </asset>
  <asset name="Eclipse Station">
   <pos>
-   <x>-1878.340591</x>
-   <y>-2258.005021</y>
+   <x>-9543.149055</x>
+   <y>-11138.579005</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -6650,6 +6650,43 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 2</item>
   </tech>
  </asset>
+ <asset name="Onyx Shipyard">
+  <pos>
+   <x>-20041.450059</x>
+   <y>-3282.365686</y>
+  </pos>
+  <GFX>
+   <space>station-shipyard.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>The Onyx Shipyard is a modern, high-tech shipyard. At least by Dvaered standards. The place builds both combat and trade vessels, and commissions a portion of the Dvaered fleet. Several warlords also have personal contracts at Onyx, drawing ships for their private fleets from here.</description>
+   <bar>Each table in the spaceport bar is themed around a ship design that is manufactured here. Some are even built out of old or faulty components of the ships in question. Of course it's not very artistic, considering that a Dvaered came up with it, but there's still a certain class to it that gets potential buyers in the mood.</bar>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>Bulk Trade Ships</item>
+  </tech>
+ </asset>
  <asset name="Opa">
   <pos>
    <x>-3548.243133</x>
@@ -6927,8 +6964,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Perhelion Alpha">
   <pos>
-   <x>-210.000000</x>
-   <y>-670.000000</y>
+   <x>-2137.665534</x>
+   <y>-5766.200038</y>
   </pos>
   <GFX>
    <space>moon-M03.png</space>
@@ -6949,8 +6986,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Perhelion Beta">
   <pos>
-   <x>340.000000</x>
-   <y>-50.000000</y>
+   <x>5109.740961</x>
+   <y>585.176343</y>
   </pos>
   <GFX>
    <space>moon-M05.png</space>
@@ -6971,8 +7008,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Perhelion Gamma">
   <pos>
-   <x>-515.890130</x>
-   <y>75.419635</y>
+   <x>-5087.007787</x>
+   <y>3264.979223</y>
   </pos>
   <GFX>
    <space>moon-J02.png</space>
@@ -9647,8 +9684,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Trincea">
   <pos>
-   <x>4320.144653</x>
-   <y>-381.469727</y>
+   <x>25920.867918</x>
+   <y>-2288.818362</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -9934,10 +9971,41 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Missiles 1</item>
   </tech>
  </asset>
+ <asset name="Urbanus Crops">
+  <pos>
+   <x>-6464.109968</x>
+   <y>14128.452439</y>
+  </pos>
+  <GFX>
+   <space>station-agriculture.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>500</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Urbanus Crops is one of House Dvaered's crop growing complexes. Though the idea was largely 'borrowed' from the Empire's INSS series, the efficiency of the actual installation is somewhat lower, because of the Dvaered's inferior technological background. Urbanus Crops gets the job done, though, and in fact most of Trincea's food is grown here.</description>
+   <bar>If you didn't know better, you'd think you were on a Dvaered military base, from the look of the bar. It's utterly utulitarian, though in the owner's defense an attempt has been made at fitting in with the station's purpose, testament the withered plant on the corner of the bar.</bar>
+  </general>
+ </asset>
  <asset name="Urbanus II">
   <pos>
-   <x>400.543213</x>
-   <y>-343.322754</y>
+   <x>2403.259278</x>
+   <y>-2059.936524</y>
   </pos>
   <GFX>
    <space>K04.png</space>
@@ -9958,8 +10026,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Urbanus III">
   <pos>
-   <x>-1583.099365</x>
-   <y>2441.406250</y>
+   <x>9628.507834</x>
+   <y>-13749.470096</y>
   </pos>
   <GFX>
    <space>moon-H00.png</space>
@@ -10462,8 +10530,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vilati Vilata">
   <pos>
-   <x>670.000000</x>
-   <y>650.000000</y>
+   <x>3350.000000</x>
+   <y>3250.000000</y>
   </pos>
   <GFX>
    <space>P00.png</space>

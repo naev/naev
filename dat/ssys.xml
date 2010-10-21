@@ -1195,7 +1195,7 @@
  </ssys>
  <ssys name="Daravon">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1216,21 +1216,21 @@
   </assets>
   <jumps>
    <jump target="Gremlin">
-    <pos x="3271.742532" y="1243.262162"/>
+    <pos x="16358.712660" y="6216.310811"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Perhelion">
-    <pos x="3100.410373" y="-1624.024481"/>
+    <pos x="15502.051867" y="-8120.122407"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pudas">
-    <pos x="-1677.553007" y="-4194.206693"/>
+    <pos x="-8387.765035" y="-20971.033465"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
@@ -3912,7 +3912,7 @@
  </ssys>
  <ssys name="Perhelion">
   <general>
-   <radius>3500.000000</radius>
+   <radius>16450.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3930,14 +3930,14 @@
   </assets>
   <jumps>
    <jump target="Daravon">
-    <pos x="-3100.410373" y="1624.024481"/>
+    <pos x="-14571.928755" y="7632.915062"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Urbanus">
-    <pos x="4636.459616" y="1051.715700"/>
+    <pos x="21791.360195" y="4943.063790"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
@@ -5430,7 +5430,7 @@
  </ssys>
  <ssys name="Urbanus">
   <general>
-   <radius>3500.000000</radius>
+   <radius>21000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -5441,7 +5441,9 @@
    <y>-681.000000</y>
   </pos>
   <assets>
+   <asset>Onyx Shipyard</asset>
    <asset>Trincea</asset>
+   <asset>Urbanus Crops</asset>
    <asset>Urbanus II</asset>
    <asset>Urbanus III</asset>
    <asset>Virtual Civilian Standard</asset>
@@ -5449,21 +5451,21 @@
   </assets>
   <jumps>
    <jump target="Dvaer">
-    <pos x="1794.134711" y="3005.175642"/>
+    <pos x="10764.808269" y="18031.053850"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ksher">
-    <pos x="1282.835814" y="-3256.429375"/>
+    <pos x="7697.014886" y="-19538.576249"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Perhelion">
-    <pos x="-2536.459616" y="-2411.715700"/>
+    <pos x="-15218.757694" y="-14470.294201"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
