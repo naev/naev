@@ -422,7 +422,7 @@ void land_errDialogueBuild( const char *fmt, ... )
    }
 
    if (errorlist_ptr == NULL) { /* Initialize on first run. */
-      errorappend = snprintf( errorlist, sizeof(errorlist), errorreason);
+      errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
       errorlist_ptr = errorlist;
    }
    else { /* Append newest error to the existing list. */
@@ -517,7 +517,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
+      mission_portrait = gl_newImage( "gfx/portraits/news.png", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;

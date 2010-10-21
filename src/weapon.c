@@ -60,7 +60,7 @@ extern int pilot_nstack;
  */
 typedef struct Weapon_ {
    Solid *solid; /**< Actually has its own solid :) */
-   int ID; /**< Only used for beam weapons. */
+   unsigned int ID; /**< Only used for beam weapons. */
 
    int faction; /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
@@ -104,7 +104,7 @@ static int weapon_vboSize      = 0; /**< Size of the VBO. */
 
 
 /* Internal stuff. */
-static int beam_idgen = 0; /**< Beam identifier generator. */
+static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
 
 
 /*
@@ -1399,7 +1399,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
  *
  * @sa beam_end
  */
-int beam_start( const Outfit* outfit,
+unsigned int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target,
       const PilotOutfitSlot *mount )
@@ -1474,7 +1474,7 @@ int beam_start( const Outfit* outfit,
  *    @param parent ID of the parent of the beam.
  *    @param beam ID of the beam to destroy.
  */
-void beam_end( const unsigned int parent, int beam )
+void beam_end( const unsigned int parent, unsigned int beam )
 {
    int i;
    WeaponLayer layer;

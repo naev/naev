@@ -454,8 +454,10 @@ int ai_pinit( Pilot *p, const char *ai )
    L = p->ai->L;
 
    /* Set fuel.  Hack until we do it through AI itself. */
-   p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
-   p->fuel += HYPERSPACE_FUEL;
+   if (!pilot_isPlayer(p)) {
+      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
+      p->fuel += HYPERSPACE_FUEL;
+   }
 
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, "pilotmem"); /* pm */
@@ -900,7 +902,8 @@ static void ai_create( Pilot* pilot, char *param )
    ai_setPilot( pilot );
 
    /* Create equipment first - only if creating for the first time. */
-   if ((aiL_status==AI_STATUS_CREATE) || !pilot_isFlag(pilot, PILOT_EMPTY)) {
+   if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
+            !pilot_isFlag(pilot, PILOT_EMPTY))) {
       L = equip_L;
       lua_getglobal(L, "equip");
       lp.pilot = cur_pilot->id;

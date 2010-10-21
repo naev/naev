@@ -217,10 +217,6 @@ void player_new (void)
 {
    int r;
 
-   /* to not segfault due to lack of environment */
-   memset( &player, 0, sizeof(Player_t) );
-   player_setFlag(PLAYER_CREATING);
-
    /* Set up GUI. */
    gui_setDefaults();
 
@@ -236,6 +232,10 @@ void player_new (void)
    space_clearKnown();
    land_cleanup();
    map_cleanup();
+
+   /* To not segfault due to lack of environment */
+   memset( &player, 0, sizeof(Player_t) );
+   player_setFlag(PLAYER_CREATING);
 
    player.name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
@@ -540,7 +540,7 @@ static void player_newShipMake( char* name )
       vect_cset( &vv, 0., 0. );
 
       /* Create the player. */
-      id = pilot_create( player_ship, name, faction_get("Player"), NULL,
+      id = pilot_create( player_ship, name, faction_get("Player"), "player",
             dir, &vp, &vv, flags, -1 );
       cam_setTargetPilot( id, 0 );
    }
@@ -549,7 +549,7 @@ static void player_newShipMake( char* name )
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
       ship        = &player_stack[player_nstack];
       /* Create the ship. */
-      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), NULL, flags );
+      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
    }
@@ -2848,7 +2848,7 @@ static Planet* player_parse( xmlNodePtr parent )
       pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
       old_ship = player_stack[player_nstack-1].p;
       pilot_create( old_ship->ship, old_ship->name,
-            faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+            faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
       player_rmShip( old_ship->name );
       DEBUG("Giving player ship '%s'.", player.p->name );
    }
@@ -3138,12 +3138,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* player is currently on this ship */
    if (is_player != 0) {
-      pid = pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
       ship = player.p;
       cam_setTargetPilot( pid, 0 );
    }
    else
-      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );
+      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
    /* Clean up. */
    free(name);
    free(model);
