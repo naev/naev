@@ -160,7 +160,7 @@ function board()
     pinnacle:setHealth(100, 100)
     pinnacle:control(false)
     pinnacle:changeAI("flee")
-    pinnacle.setHilight(false)
+    pinnacle:setHilight(false)
     var.pop("baron_active")
     misn.finish(true)
 end
