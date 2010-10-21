@@ -3109,7 +3109,7 @@
  </ssys>
  <ssys name="Kretogg">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3128,7 +3128,7 @@
   </assets>
   <jumps>
    <jump target="Unicorn">
-    <pos x="-1270.605535" y="3261.220872"/>
+    <pos x="-6353.027673" y="16306.104360"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4150,7 +4150,7 @@
  </ssys>
  <ssys name="Pudas">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4161,6 +4161,7 @@
    <y>-767.000000</y>
   </pos>
   <assets>
+   <asset>Ambre</asset>
    <asset>Pudas I</asset>
    <asset>Pudas II</asset>
    <asset>Sudra</asset>
@@ -4169,14 +4170,14 @@
   </assets>
   <jumps>
    <jump target="Daravon">
-    <pos x="-622.446993" y="3444.206693"/>
+    <pos x="-2489.787971" y="13776.826770"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Volus">
-    <pos x="-3458.193205" y="-539.351234"/>
+    <pos x="-13832.772822" y="-2157.404936"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

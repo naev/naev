@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -163,6 +163,44 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Ambre">
+  <pos>
+   <x>6807.927752</x>
+   <y>7498.946100</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>8000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Ambre was one of the planets that played a key role in the worker's revolts that eventually led to the establishment of House Dvaered. In those days, the planet was home to a considerable percentage of the Imperial workforce in this sector of space. Without laborers to work the mines and construction yards, the Empire stood to lose astronomical amounts of money each cycle. This was an important reason for the Emperor to grant House Dvaered its independence.</description>
+   <bar>Ambre's spaceport bar is never quiet. At regular intervals, all other noise in the bar is drowned out by the sound of cargo pods trundling across the railway just below. This is because the bar was built relatively late in the planet's development, as the Imperial government didn't see the need for one when Ambre was still little more than a labor camp. As a result, the bar had to be squeezed into one the only remaining space available, which was right over the freight lines.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+   <item>Low Tech Upgrades</item>
+  </tech>
  </asset>
  <asset name="Ammu">
   <pos>
@@ -4891,8 +4929,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Kretogg I">
   <pos>
-   <x>-450.000000</x>
-   <y>120.000000</y>
+   <x>-7954.714288</x>
+   <y>1876.054512</y>
   </pos>
   <GFX>
    <space>J03.png</space>
@@ -4913,8 +4951,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Kretogg II">
   <pos>
-   <x>3060.000000</x>
-   <y>-1850.000000</y>
+   <x>15300.000000</x>
+   <y>-9250.000000</y>
   </pos>
   <GFX>
    <space>K03.png</space>
@@ -4935,8 +4973,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Kretogg III">
   <pos>
-   <x>3980.000000</x>
-   <y>1640.000000</y>
+   <x>19900.000000</x>
+   <y>8200.000000</y>
   </pos>
   <GFX>
    <space>S00.png</space>
@@ -7234,8 +7272,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pudas I">
   <pos>
-   <x>-90.000000</x>
-   <y>-1230.000000</y>
+   <x>-360.000000</x>
+   <y>-4920.000000</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -7256,8 +7294,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Pudas II">
   <pos>
-   <x>3450.000000</x>
-   <y>-970.000000</y>
+   <x>14793.453035</x>
+   <y>-4561.554989</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -9037,8 +9075,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sudra">
   <pos>
-   <x>3810.000000</x>
-   <y>-1170.000000</y>
+   <x>15240.000000</x>
+   <y>-4680.000000</y>
   </pos>
   <GFX>
    <space>moon-M02.png</space>
@@ -9065,7 +9103,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Located on the fringes of Dvaere dcontrolled territory, Sudra has a relatively high amount of illegal activity going on. Though the Dvaered authorities actively try to stamp out criminal elements and make arrests almost every week, they are fighting a futile battle.</description>
+   <description>Located on the fringes of Dvaered controlled territory, Sudra has a relatively high amount of illegal activity going on. Though the Dvaered authorities actively try to stamp out criminal elements and make arrests almost every week, they are fighting a futile battle.</description>
    <bar>This spaceport bar is unsavory. No other word will describe the place with the same accuracy. A good portion of the bar's clientele are wearing hoods, masks, or other garments to hide their personal features. The lighting is set to quite a dim level, allowing customers to find corners as dark as they please. Despite these obvious signs, the Dvaered officials that sometimes frequent the bar don't seem very keen to investigate.</bar>
   </general>
   <tech>
@@ -10724,8 +10762,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vorca">
   <pos>
-   <x>400.000000</x>
-   <y>-5650.000000</y>
+   <x>1741.299285</x>
+   <y>-26309.744636</y>
   </pos>
   <GFX>
    <space>Y00.png</space>
@@ -10778,8 +10816,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Warden's End">
   <pos>
-   <x>3838.602038</x>
-   <y>1462.336748</y>
+   <x>19417.876493</x>
+   <y>7674.371325</y>
   </pos>
   <GFX>
    <space>000.png</space>
