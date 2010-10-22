@@ -286,9 +286,6 @@ int intro_display( const char *text, const char *mus )
       delta = (double)(tcur - tlast) / 1000.;
       tlast = tcur;
 
-      /* Handle user events. */
-      intro_event_handler(&stop, &vel);
-
       /* Increment position. */
       offset += vel * delta;
       while (! (offset < line_height)) {
@@ -338,6 +335,9 @@ int intro_display( const char *text, const char *mus )
       SDL_GL_SwapBuffers();
 
       SDL_Delay(10); /* No need to burn CPU. */
+
+      /* Handle user events. */
+      intro_event_handler(&stop, &vel);
 
    } /* while (!stop) */
 
