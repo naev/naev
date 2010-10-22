@@ -4,7 +4,6 @@
 
 [fadein gfx/intro/first_steps_into_space.png]
    In time, habitable planets were discovered within several light years of Earth, a definite possibility for the future of humanity. Hulking colony ships were constructed, housing thousands of volunteers, and they were sent into the void to colonize four new worlds.
-[fadeout]
 
    A feat at the time, humanity was nevertheless on an unsustainable course. Overpopulation and pollution were rapidly exhausting Earth's natural resources, and damaging the atmosphere. While many marvelled at the idea, few wished to endure years of sublight travel that would culminate in a quality of life far lower than they had enjoyed on Earth.
 
@@ -12,6 +11,7 @@
 
    With overpopulation and resource depletion reaching critical levels, a tremendous breakthrough occurred. A team of elite microbiologists and nanotechnology researchers had engineered an organism genus capable of processing found materials into those that would support human life.
 
+[fadein gfx/intro/terraforming.png]
    Thus, the age of terraforming dawned. It was now possible to colonize nearby planets that were considered uninhabitable only months prior. No longer were immense colonization ships required to supply colonists for years-long voyages. Mass-produced in-system shuttlecraft became commonplace, ferrying colonists and supplies to and from newly-terraformed planets.
 
    Given the massive distances to the out-of-system colonies, the news of the breakthrough would not reach them for several years. Earth's political factions had grown, and were vying for power as support for the global government dwindled. Upon re-establishing contact with the distant colonies, their response was largely negative: They blamed the government for conducting the terraforming research behind closed doors, and for wasting years of their lives on a potentially unnecessary voyage.
@@ -36,3 +36,8 @@
 
 
    Welcome to the universe of NAEV...
+
+
+
+
+[fadeout]
