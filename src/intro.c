@@ -338,10 +338,19 @@ int intro_display( const char *text, const char *mus )
          }
       } /* while (offset > line_height) */
 
-      /* Fade in the side image. */
+      /* Fade the side image. */
       if (side_image.c.a < 1.0) {
          side_image.c.a += delta * vel * side_image.fade_rate;
-         if (side_image.c.a > 1.0) side_image.c.a = 1.0;
+
+         if (side_image.c.a > 1.0) {
+            /* Faded in... */
+            side_image.c.a = 1.0;
+         } else if (side_image.c.a < 0.0) {
+            /* Faded out... */
+            side_image.c.a = 1.0;
+            gl_freeTexture( side_image.tex );
+            side_image.tex = NULL;
+         }
       }
 
       /* Clear stuff. */
