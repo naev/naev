@@ -67,6 +67,9 @@ static int intro_load( const char *text );
 static void intro_cleanup (void);
 static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n );
 static void intro_event_handler( int *stop, double *vel );
+static inline void initialize_image( intro_img_t *img );
+static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
+                                 const char *img_file );
 static int intro_draw_text( scroll_buf_t *sb_list, double offset,
                             double line_height );
 
@@ -195,6 +198,68 @@ static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
    return sb_list;
 }
 
+/**
+ * @brief Initialize an intro_img_t to default values.
+ *
+ *    @brief img Image to initialize.
+ */
+static inline void initialize_image( intro_img_t *img )
+{
+   img->tex = NULL;
+   img->x   = 100.;
+   img->c.r = 1.0;
+   img->c.g = 1.0;
+   img->c.b = 1.0;
+   img->c.a = 1.0;
+   img->fade_rate = 0.0;
+}
+
+
+/**
+ * @brief Fade an image in.
+ *
+ *    @brief side Present image being displayed.
+ *    @brief transition Image in transition or on deck.
+ *    @brief img_file Path to the PNG on disk.
+ */
+static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
+                                 const char *img_file )
+{
+   if (NULL == side->tex) {
+      /* Simple fade-in. */
+      side->tex = gl_newImage( img_file, 0 );
+      side->y = (double)SCREEN_H / 2.0 - (side->tex->h / 2.0);
+      side->c.a = 0.0;
+      side->fade_rate = 0.1;
+   } else {
+      /* Transition or on-deck.  The difference is whether one image is
+         replacing the other (transition), or whether the first must fade out
+         completely before the second comes in (on-deck).
+
+         We can determine which is the case by seeing whether [fadeout] has been
+         called.  I.e., is side->fade_rate < 0?
+      */
+      if (NULL != transition->tex) {
+         /* Scrolling is happening faster than fading... */
+         fprintf( stderr, "NAEV error: scrolling is too fast!\n" );
+         gl_freeTexture( transition->tex );
+      }
+      transition->tex = gl_newImage( img_file, 0 );
+      transition->y =
+         (double)SCREEN_H / 2.0 - (transition->tex->h / 2.0);
+      transition->c.a = 0.0;
+      if (side->fade_rate < 0.0) {
+         /* put an image on deck. */
+         transition->fade_rate = 0.0;
+      } else {
+         /* transition. */
+         transition->fade_rate = 0.1;
+         side->fade_rate = -0.1; /* begin fading out. */
+         side->c.a = 0.99;
+      }
+   }
+}
+
 
 /**
  * @brief Handle user events (mouse clicks, key presses, etc.).
@@ -277,6 +342,7 @@ int intro_display( const char *text, const char *mus )
    double delta;              /* time diff from last render to this one. */
    int line_index = 0;        /* index into the big list of intro lines. */
    intro_img_t side_image;    /* image to go along with the text. */
+   intro_img_t transition;    /* image for transitioning. */
 
    /* Load the introduction. */
    if (intro_load(text) < 0)
@@ -305,8 +371,8 @@ int intro_display( const char *text, const char *mus )
    sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
 
    /* Unset the side image. */
-   side_image.tex = NULL;
-   side_image.c.a = 1.0;
+   initialize_image( &side_image );
+   initialize_image( &transition );
 
    tlast = SDL_GetTicks();
    while (!stop) {
@@ -327,19 +393,8 @@ int intro_display( const char *text, const char *mus )
                sb_list = sb_list->next;
                break;
             case 'i': /* fade in image. */
-               if (NULL != side_image.tex) {
-                  /* really should have faded out, first. */
-                  gl_freeTexture(side_image.tex);
-               }
-               side_image.tex = gl_newImage( &intro_lines[line_index][1], 0 );
-               side_image.x = 100.;
-               side_image.y =
-                  (double)SCREEN_H / 2.0 - (side_image.tex->h / 2.0);
-               side_image.c.r = 1.;
-               side_image.c.g = 1.;
-               side_image.c.b = 1.;
-               side_image.c.a = 0.;
-               side_image.fade_rate = 0.1;
+               intro_fade_image_in( &side_image, &transition,
+                                    &intro_lines[line_index][1] );
                break;
             case 'o': /* fade out image. */
                if (NULL == side_image.tex) {
@@ -361,17 +416,32 @@ int intro_display( const char *text, const char *mus )
       } /* while (offset > line_height) */
 
       /* Fade the side image. */
-      if (side_image.c.a < 1.0) {
+      if (side_image.tex != NULL && side_image.c.a < 1.0) {
          side_image.c.a += delta * vel * side_image.fade_rate;
+
+         if (transition.tex != NULL && transition.fade_rate > 0.0) {
+            transition.c.a += delta * vel * transition.fade_rate;
+         }
 
          if (side_image.c.a > 1.0) {
             /* Faded in... */
             side_image.c.a = 1.0;
+            side_image.fade_rate = 0.0;
          } else if (side_image.c.a < 0.0) {
             /* Faded out... */
-            side_image.c.a = 1.0;
             gl_freeTexture( side_image.tex );
-            side_image.tex = NULL;
+            if (transition.tex != NULL) {
+               side_image.tex = transition.tex;
+               side_image.c.a = transition.c.a;
+               side_image.y   = transition.y;
+               side_image.fade_rate = 0.1;
+               transition.tex = NULL;
+               transition.c.a = 1.0;
+            } else {
+               side_image.c.a = 1.0;
+               side_image.tex = NULL;
+               side_image.fade_rate = 0.0;
+            }
          }
       }
 
@@ -390,6 +460,12 @@ int intro_display( const char *text, const char *mus )
                        side_image.tex->w, side_image.tex->h, &side_image.c );
       }
 
+      if (NULL != transition.tex && transition.c.a > 0.0) {
+         /* Draw the image in transition. */
+         gl_blitScale( transition.tex, transition.x, transition.y,
+                       transition.tex->w, transition.tex->h, &transition.c );
+      }
+
       /* Display stuff. */
       SDL_GL_SwapBuffers();
 
@@ -404,6 +480,9 @@ int intro_display( const char *text, const char *mus )
    free( sb_arr );
    if (NULL != side_image.tex) {
       gl_freeTexture( side_image.tex );
+   }
+   if (NULL != transition.tex) {
+      gl_freeTexture( transition.tex );
    }
 
    /* Disable intro's key repeat. */
