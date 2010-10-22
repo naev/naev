@@ -2167,8 +2167,8 @@
  </asset>
  <asset name="Draconis Alpha">
   <pos>
-   <x>-305.175781</x>
-   <y>1077.651978</y>
+   <x>-259.396052</x>
+   <y>11636.934797</y>
   </pos>
   <GFX>
    <space>K03.png</space>
@@ -2189,8 +2189,8 @@
  </asset>
  <asset name="Draconis Beta">
   <pos>
-   <x>3030.000000</x>
-   <y>-1730.000000</y>
+   <x>27270.000000</x>
+   <y>-15570.000000</y>
   </pos>
   <GFX>
    <space>J00.png</space>
@@ -2211,8 +2211,8 @@
  </asset>
  <asset name="Draconis Delta">
   <pos>
-   <x>-310.000000</x>
-   <y>4780.000000</y>
+   <x>-2790.000000</x>
+   <y>43020.000000</y>
   </pos>
   <GFX>
    <space>moon-H02.png</space>
@@ -2231,10 +2231,48 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Draconis Epsilon">
+  <pos>
+   <x>34513.237669</x>
+   <y>37489.807313</y>
+  </pos>
+  <GFX>
+   <space>M01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>7000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Draconis Epsilon is a densely populated Imperial world. It grew rich in the days before the Incident, when Draconis was still a core system, not at the outer fringes of Imperial controlled territory. The inhabitants here have suffered from the change, but not as much as you might expect. The world maintains a solid cosumer base.</description>
+   <bar>The spaceport bar on Draconis Epsilon is circular in shape, with exits all around leading to the various spaceport platforms. The place is gigantic, providing seats for up to ten thousand customers at the same time, and more at the bar. Most spacers who have visited Epsilon Draconis agree that few spaceport bars are quite as impressive as this one.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>High Tech Upgrades 1</item>
+  </tech>
+ </asset>
  <asset name="Draconis Gamma">
   <pos>
-   <x>-2770.000000</x>
-   <y>-1080.000000</y>
+   <x>-24930.000000</x>
+   <y>-9720.000000</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -2255,25 +2293,44 @@
  </asset>
  <asset name="Draconis Omega">
   <pos>
-   <x>2240.000000</x>
-   <y>7400.000000</y>
+   <x>20160.000000</x>
+   <y>66600.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
-   <exterior>aquatic2.png</exterior>
+   <exterior>forest2.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>9000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Draconis Omega was one of the old Empire's best colonies. The planet is large compared to Earth, yet its gravity is comparable. This made it ideal as a population base, which it remains today. Draconis Omega remains firmly loyal to the Empire despite its now isolated position. The people here believe that the after effects of the Incident are only temporary, and that the Empire will one day regain its former glory, in which Draconis Omega will feature prominently.</description>
+   <bar>Ever the optimists, the people of Draconis Omega have decorated their spaceport bar with displays of past Imperial power, portraits of former Emperors and charts that show the size of the Empire when it was at its peak. It's clear that the inhabitants truly believe that the good times will one day return.</bar>
   </general>
+  <tech>
+   <item>Bulk Trade Ships</item>
+   <item>Basic Civilian Ships</item>
+   <item>Basic Outfits 1</item>
+   <item>Low Tech Upgrades</item>
+  </tech>
  </asset>
  <asset name="Draygar III">
   <pos>
@@ -11096,8 +11153,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Zabween">
   <pos>
-   <x>31.706055</x>
-   <y>1334.703125</y>
+   <x>285.354495</x>
+   <y>12012.328125</y>
   </pos>
   <GFX>
    <space>000.png</space>
