@@ -138,13 +138,13 @@ static void intro_cleanup (void)
    intro_nlines = 0;
 }
 
-typedef struct scroll_buf_t scroll_buf_t;
-
-struct scroll_buf_t {
+/**
+ * @brief Scroll Buffer: For a linked list of render text.
+ */
+typedef struct scroll_buf_t_ {
    const char *text;
-   scroll_buf_t *next;
-};
-
+   struct scroll_buf_t_ *next;
+} scroll_buf_t;
 
 /**
  * @brief Convert an array of scroll_buf_t into a circularly linked list.
@@ -265,6 +265,8 @@ int intro_display( const char *text, const char *mus )
    /* Enable keyrepeat just for the intro. */
    SDL_EnableKeyRepeat( conf.repeat_delay, conf.repeat_freq );
 
+   /* Do a few calculations to figure out how many lines can be present on the
+      screen at any given time. */
    line_height = (double)intro_font.h * 1.3;
    lines_per_screen = (int)(SCREEN_H / line_height + 1.5); /* round up + 1 */
    sb_arr = (scroll_buf_t*)malloc( sizeof(scroll_buf_t) * lines_per_screen );
