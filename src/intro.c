@@ -102,20 +102,34 @@ static int intro_load( const char *text )
          intro_lines = realloc( intro_lines, sizeof(char*) * mem );
       }
 
-      if ( sscanf( &intro_buf[p], "[fadein %s", img_src ) == 1 ) {
+      if ( intro_buf[p] == '[' /* Don't do sscanf for every line! */
+           && sscanf( &intro_buf[p], "[fadein %s", img_src ) == 1 ) {
          /* an image to appear next to text. */
          /* Get the length. */
          /* FIXME: don't do this.  This is silly.  Just find the newline and set
             i accordingly. */
+         /*
          i = gl_printWidthForText( &intro_font,
                                    &intro_buf[p],
                                    SCREEN_W - 500. );
+         */
+         for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          length = strlen( img_src );
          intro_lines[n] = malloc( length + 2 );
          intro_lines[n][0] = 'i';
          strncpy( &intro_lines[n][1], img_src, length );
          intro_lines[n][length] = '\0';
+
+      } else if ( intro_buf[p] == '[' /* Don't do strncmp for every line! */
+           && strncmp( &intro_buf[p], "[fadeout]", 9 ) == 0 ) {
+
+         for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
+
+         intro_lines[n] = malloc( 2 );
+         intro_lines[n][0] = 'o';
+         intro_lines[n][1] = '\0';   /* not strictly necessary, but safe. */
+
       } else {
          /* plain old text. */
 
@@ -326,6 +340,14 @@ int intro_display( const char *text, const char *mus )
                side_image.c.b = 1.;
                side_image.c.a = 0.;
                side_image.fade_rate = 0.1;
+               break;
+            case 'o': /* fade out image. */
+               if (NULL == side_image.tex) {
+                  fprintf( stderr, "NAEV error: Tried to fade out without an image.\n" );
+                  break;
+               }
+               side_image.fade_rate = -0.1;
+               side_image.c.a = 0.99;
                break;
             default:  /* unknown. */
                break;
