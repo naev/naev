@@ -275,9 +275,21 @@ static void intro_event_handler( int *stop, double *vel )
             break;
          }
 
+         /* Slow down the text. */
+         else if (event.key.keysym.sym == SDLK_UP) {
+            *vel -= 8.0;
+            if (*vel < 0.0) *vel = 0.0;
+         }
+
+         /* Speed up the text. */
+         else if (event.key.keysym.sym == SDLK_DOWN) {
+            *vel += 8.0;
+            if (*vel > 100.0) *vel = 100.0;
+         }
+
          /* User is clearly flailing on keyboard. */
          else {
-            *vel = 30.;
+            *vel = 16.;
          }
 
       default:
@@ -330,7 +342,7 @@ int intro_display( const char *text, const char *mus )
    int lines_per_screen;      /* max appearing lines on the screen. */
    scroll_buf_t *sb_arr;      /* array of lines to render. */
    scroll_buf_t *sb_list;     /* list   "   "    "    "    */
-   double vel = 15.;          /* velocity: speed of text. */
+   double vel = 16.;          /* velocity: speed of text. */
    int stop = 0;              /* stop the intro. */
    unsigned int tcur, tlast;  /* timers. */
    double delta;              /* time diff from last render to this one. */
