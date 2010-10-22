@@ -37,10 +37,19 @@
  * @brief Scroll Buffer: For a linked list of render text.
  */
 typedef struct scroll_buf_t_ {
-   const char *text;
-   struct scroll_buf_t_ *next;
+   const char *text;            /* Text to render. */
+   struct scroll_buf_t_ *next;  /* Next line in the linked list. */
 } scroll_buf_t;
 
+/**
+ * @brief Intro Image: to be displayed to the side of the scrolling.
+ */
+typedef struct intro_img_t_ {
+   glTexture *tex;     /* Image. */
+   double x, y;        /* Position. */
+   glColour c;         /* Alpha channel for fading. */
+   double fade_rate;   /* Positive for fade-in, negative for fade-out. */
+} intro_img_t;
 
 /*
  * Introduction text lines.
@@ -253,8 +262,7 @@ int intro_display( const char *text, const char *mus )
    unsigned int tcur, tlast;  /* timers. */
    double delta;              /* time diff from last render to this one. */
    int line_index = 0;        /* index into the big list of intro lines. */
-   glTexture *image = NULL;   /* image to go along with the text. */
-   double x_img, y_img;       /* offsets for the location of the image. */
+   intro_img_t side_image;    /* image to go along with the text. */
 
    /* Load the introduction. */
    if (intro_load(text) < 0)
@@ -282,8 +290,9 @@ int intro_display( const char *text, const char *mus )
    /* Create a cycle of lines. */
    sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
 
-   x_img = 100.;
-   y_img = 0.;
+   /* Unset the side image. */
+   side_image.tex = NULL;
+   side_image.c.a = 1.0;
 
    tlast = SDL_GetTicks();
    while (!stop) {
@@ -304,12 +313,19 @@ int intro_display( const char *text, const char *mus )
                sb_list = sb_list->next;
                break;
             case 'i': /* fade in image. */
-               if (NULL != image) {
+               if (NULL != side_image.tex) {
                   /* really should have faded out, first. */
-                  gl_freeTexture(image);
+                  gl_freeTexture(side_image.tex);
                }
-               image = gl_newImage( &intro_lines[line_index][1], 0 );
-               y_img = (double)SCREEN_H / 2.0 - (image->h / 2.0);
+               side_image.tex = gl_newImage( &intro_lines[line_index][1], 0 );
+               side_image.x = 100.;
+               side_image.y =
+                  (double)SCREEN_H / 2.0 - (side_image.tex->h / 2.0);
+               side_image.c.r = 1.;
+               side_image.c.g = 1.;
+               side_image.c.b = 1.;
+               side_image.c.a = 0.;
+               side_image.fade_rate = 0.1;
                break;
             default:  /* unknown. */
                break;
@@ -322,6 +338,12 @@ int intro_display( const char *text, const char *mus )
          }
       } /* while (offset > line_height) */
 
+      /* Fade in the side image. */
+      if (side_image.c.a < 1.0) {
+         side_image.c.a += delta * vel * side_image.fade_rate;
+         if (side_image.c.a > 1.0) side_image.c.a = 1.0;
+      }
+
       /* Clear stuff. */
       glClear(GL_COLOR_BUFFER_BIT);
 
@@ -329,11 +351,12 @@ int intro_display( const char *text, const char *mus )
       music_update( 0. );
 
       /* Draw text. */
-      stop = intro_draw_text(sb_list, offset, line_height);
+      stop = intro_draw_text( sb_list, offset, line_height );
 
-      if (NULL != image) {
+      if (NULL != side_image.tex) {
          /* Draw the image next to the text. */
-         gl_blitScale( image, x_img, y_img, image->w, image->h, NULL);
+         gl_blitScale( side_image.tex, side_image.x, side_image.y,
+                       side_image.tex->w, side_image.tex->h, &side_image.c );
       }
 
       /* Display stuff. */
@@ -342,14 +365,14 @@ int intro_display( const char *text, const char *mus )
       SDL_Delay(10); /* No need to burn CPU. */
 
       /* Handle user events. */
-      intro_event_handler(&stop, &vel);
+      intro_event_handler( &stop, &vel );
 
    } /* while (!stop) */
 
    /* free malloc'd memory. */
    free( sb_arr );
-   if ( NULL != image ) {
-      gl_freeTexture(image);
+   if (NULL != side_image.tex) {
+      gl_freeTexture( side_image.tex );
    }
 
    /* Disable intro's key repeat. */
