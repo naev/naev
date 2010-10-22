@@ -267,7 +267,7 @@ static int guiL_targetPilotGFX( lua_State *L )
  *
  * It enables recieving mouse clicks with a callback function like:<br />
  * function mouse_click( button, x, y, state ) <br />
- * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted.
+ * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
  *
  *    @luaparam enable Whether or not to enable the mouse click callback.
  * @luafunc mouseClickEnable()
