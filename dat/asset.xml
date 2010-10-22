@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Aesir IV">
   <pos>
@@ -1986,6 +1986,38 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Marius Station">
+  <pos>
+   <x>-6537.980310</x>
+   <y>8415.469108</y>
+  </pos>
+  <GFX>
+   <space>station-battlestation.png</space>
+   <exterior>station4.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
+   <description>Marius Station used to be a customs station of the old Empire, checking traffic bound for Sol and the core Imperial systems. Now, in the post-Incident era, the station serves as the first line of defense from hostile elements that threaten the isolated colonies at Tau Prime and beyond. But since it is perpetually under-staffed and under-equipped, Marius Station is barely capable of maintaining its own presence in Raelid, let alone protect anything else.</description>
+   <bar>This bar is self-service most of the time. All Empire personnel on board have their hands full with double shifts, repair duties and briefings. Few have the spare time to even visit the spacedock bar, let alone staff it.</bar>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Doeston Prime">
   <pos>
@@ -7648,10 +7680,32 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Raelid II">
+  <pos>
+   <x>-6752.120425</x>
+   <y>8087.623756</y>
+  </pos>
+  <GFX>
+   <space>D00.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Raelid Outpost">
   <pos>
-   <x>405.369951</x>
-   <y>-420.862319</y>
+   <x>3521.076561</x>
+   <y>-4727.509766</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -7683,8 +7737,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Raelid Prime">
   <pos>
-   <x>162.202752</x>
-   <y>171.057567</y>
+   <x>3123.463758</x>
+   <y>-5180.075136</y>
   </pos>
   <GFX>
    <space>X01.png</space>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -4300,7 +4300,7 @@
  </ssys>
  <ssys name="Raelid">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>100.000000</interference>
@@ -4311,6 +4311,8 @@
    <y>-137.000000</y>
   </pos>
   <assets>
+   <asset>Marius Station</asset>
+   <asset>Raelid II</asset>
    <asset>Raelid Outpost</asset>
    <asset>Raelid Prime</asset>
    <asset>Virtual Civilian Standard</asset>
@@ -4319,35 +4321,35 @@
   </assets>
   <jumps>
    <jump target="Arcanis">
-    <pos x="2186.432666" y="2733.040833"/>
+    <pos x="10932.163332" y="13665.204165"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Surano">
-    <pos x="-672.782000" y="3434.729157"/>
+    <pos x="-3363.909999" y="17173.645784"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tau Prime">
-    <pos x="-3277.152121" y="1228.932046"/>
+    <pos x="-16385.760607" y="6144.660228"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Toaxis">
-    <pos x="3455.545111" y="-556.064731"/>
+    <pos x="17277.725556" y="-2780.323653"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zacron">
-    <pos x="-1140.967392" y="-3308.805436"/>
+    <pos x="-5704.836958" y="-16544.027178"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
