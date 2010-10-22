@@ -33,6 +33,15 @@
 #define INTRO_SPEED        30. /**< Speed of text in characters / second. */
 
 
+/**
+ * @brief Scroll Buffer: For a linked list of render text.
+ */
+typedef struct scroll_buf_t_ {
+   const char *text;
+   struct scroll_buf_t_ *next;
+} scroll_buf_t;
+
+
 /*
  * Introduction text lines.
  */
@@ -47,6 +56,10 @@ static glFont intro_font;          /**< Introduction font. */
  */
 static int intro_load( const char *text );
 static void intro_cleanup (void);
+static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n );
+static void intro_event_handler( int *stop, double *vel );
+static int intro_draw_text( scroll_buf_t *sb_list, double offset,
+                            double line_height );
 
 
 /**
@@ -139,14 +152,6 @@ static void intro_cleanup (void)
 }
 
 /**
- * @brief Scroll Buffer: For a linked list of render text.
- */
-typedef struct scroll_buf_t_ {
-   const char *text;
-   struct scroll_buf_t_ *next;
-} scroll_buf_t;
-
-/**
  * @brief Convert an array of scroll_buf_t into a circularly linked list.
  *
  *    @brief arr Input array.
@@ -174,7 +179,7 @@ static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
  *    @brief stop Whether to stop the intro.
  *    @brief vel How fast the text should scroll.
  */
-static void intro_event_handler(int *stop, double *vel)
+static void intro_event_handler( int *stop, double *vel )
 {
    SDL_Event event;           /* user key-press, mouse-push, etc. */
 
@@ -207,8 +212,8 @@ static void intro_event_handler(int *stop, double *vel)
  *    @brief line_height V-space of the font (plus leading).
  *    @return Whether to stop.  1 if no text was rendered, 0 otherwise.
  */
-static int intro_draw_text(scroll_buf_t *sb_list, double offset,
-                           double line_height)
+static int intro_draw_text( scroll_buf_t *sb_list, double offset,
+                            double line_height)
 {
    double x = 400., y = 0.;   /* render position. */
    scroll_buf_t *list_iter;   /* iterator through sb_list. */
@@ -343,6 +348,9 @@ int intro_display( const char *text, const char *mus )
 
    /* free malloc'd memory. */
    free( sb_arr );
+   if ( NULL != image ) {
+      gl_freeTexture(image);
+   }
 
    /* Disable intro's key repeat. */
    SDL_EnableKeyRepeat( 0, 0 );
