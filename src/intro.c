@@ -199,6 +199,13 @@ static void intro_event_handler(int *stop, double *vel)
    } /* while (SDL_PollEvent(&event)) */
 }
 
+/**
+ * @brief Draw intro text onto the screen.
+ *
+ *    @brief sb_list List of text lines.
+ *    @brief offset For smooth scrolling.
+ *    @brief line_height V-space of the font (plus leading).
+ */
 static void intro_draw_text(scroll_buf_t *sb_list, double offset,
                             double line_height)
 {
