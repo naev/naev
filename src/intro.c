@@ -109,13 +109,6 @@ static int intro_load( const char *text )
            && sscanf( &intro_buf[p], "[fadein %s", img_src ) == 1 ) {
          /* an image to appear next to text. */
          /* Get the length. */
-         /* FIXME: don't do this.  This is silly.  Just find the newline and set
-            i accordingly. */
-         /*
-         i = gl_printWidthForText( &intro_font,
-                                   &intro_buf[p],
-                                   SCREEN_W - 500. );
-         */
          for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          length = strlen( img_src );
@@ -126,6 +119,7 @@ static int intro_load( const char *text )
 
       } else if ( intro_buf[p] == '[' /* Don't do strncmp for every line! */
            && strncmp( &intro_buf[p], "[fadeout]", 9 ) == 0 ) {
+         /* fade out the image next to the text. */
 
          for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
@@ -398,7 +392,8 @@ int intro_display( const char *text, const char *mus )
                break;
             case 'o': /* fade out image. */
                if (NULL == side_image.tex) {
-                  fprintf( stderr, "NAEV error: Tried to fade out without an image.\n" );
+                  fprintf( stderr, "NAEV error: %s\n",
+                           "Tried to fade out without an image.\n" );
                   break;
                }
                side_image.fade_rate = -0.1;
