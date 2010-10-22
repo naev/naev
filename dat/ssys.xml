@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -5027,7 +5027,7 @@
  </ssys>
  <ssys name="Tau Prime">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>600</stars>
    <asteroids>0</asteroids>
    <interference>100.000000</interference>
@@ -5038,6 +5038,8 @@
    <y>-110.000000</y>
   </pos>
   <assets>
+   <asset>Anubis</asset>
+   <asset>Europea</asset>
    <asset>Tau Prime</asset>
    <asset>Tau Secundus</asset>
    <asset>Tau Station</asset>
@@ -5047,19 +5049,21 @@
   </assets>
   <jumps>
    <jump target="Draconis">
-    <pos x="-449.939100" y="3470.958773"/>
+    <pos x="-3149.573702" y="24296.711413"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Draygar">
-    <pos x="-320.635325" y="-5341.105449"/>
+    <pos x="1745.552725" y="-24437.738146"/>
     <radius>200.000000</radius>
-    <flags/>
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
    <jump target="Raelid">
-    <pos x="3277.152121" y="-1228.932046"/>
+    <pos x="22940.064850" y="-8602.524319"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

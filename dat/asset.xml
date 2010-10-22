@@ -494,6 +494,48 @@
    <item>Basic Civilian Ships</item>
   </tech>
  </asset>
+ <asset name="Anubis">
+  <pos>
+   <x>-18055.631906</x>
+   <y>49.276734</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>Y</class>
+   <population>1000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Named after the Egyptian god of death, Anubis was established as a mining base by a mining faction even before the Faction Wars. The abundance of radioactive and heavy elements made the planet a good location to produce weapons, a lucrative business given its proximity to Sol. During the Faction Wars, Anubis was annexed by the Empire, but the local population subsequently joined the protest movement that eventually led to the establishment of House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light combat ships to supply Raelid Outpost.</description>
+   <bar>What is beautiful is often dangerous, but sometimes it also works the other way around. The spaceport bar on Anubis has a view over a ravine in the planet's surface, and the radioactive storms that frequently rage through it are quite a sight to behold. It is only offworlders who appreciate it, though, as most locals know how unpleasant it is to have to work in conditions like that.</bar>
+  </general>
+  <tech>
+   <item>Basic Trade Ships</item>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Apez II">
   <pos>
    <x>7491.526812</x>
@@ -1987,38 +2029,6 @@
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Marius Station">
-  <pos>
-   <x>-6537.980310</x>
-   <y>8415.469108</y>
-  </pos>
-  <GFX>
-   <space>station-battlestation.png</space>
-   <exterior>station4.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Empire</faction>
-   <value>100.000000</value>
-   <range>1</range>
-  </presence>
-  <general>
-   <class>0</class>
-   <population>2000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <bar/>
-   </services>
-   <description>Marius Station used to be a customs station of the old Empire, checking traffic bound for Sol and the core Imperial systems. Now, in the post-Incident era, the station serves as the first line of defense from hostile elements that threaten the isolated colonies at Tau Prime and beyond. But since it is perpetually under-staffed and under-equipped, Marius Station is barely capable of maintaining its own presence in Raelid, let alone protect anything else.</description>
-   <bar>This bar is self-service most of the time. All Empire personnel on board have their hands full with double shifts, repair duties and briefings. Few have the spare time to even visit the spacedock bar, let alone staff it.</bar>
-  </general>
-  <tech>
-   <item>Heavy Civilian Combat Ships</item>
-   <item>Basic Outfits 2</item>
-   <item>Missiles 1</item>
-   <item>Missiles 2</item>
-  </tech>
- </asset>
  <asset name="Doeston Prime">
   <pos>
    <x>2763.404821</x>
@@ -3018,6 +3028,45 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Europea">
+  <pos>
+   <x>9066.069227</x>
+   <y>9205.498988</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>oceanic.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>5000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>Europea is almost completely covered in water, which was considered undesirable in the early days of the First Growth. however, it was soon discovered that Europea's biosphere contained many organisms that were useful in the production of high-grade medicine, and an exception was made. This means that Europea is one of the earliest O-class planets that were ever colonized. Today, the world still thrives on its medical exports, though advances in medicinal technology since the days of the First Growth have rendered a considerable portion of it obsolete.</description>
+   <bar>Perhaps uniquely in the galaxy, both the spaceport and its associated facilities are afloat without tethers. This means that the location of the spaceport itself changes over time as the platform is carried on the major currents that span the face of the planet.</bar>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Eye of Night I">
   <pos>
@@ -5570,6 +5619,39 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Goddard Ship</item>
    <item>Basic Outfits 2</item>
    <item>High Tech Upgrades 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
+ <asset name="Marius Station">
+  <pos>
+   <x>-6537.980310</x>
+   <y>8415.469108</y>
+  </pos>
+  <GFX>
+   <space>station-battlestation.png</space>
+   <exterior>station4.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
+   <commodities/>
+   <description>Marius Station used to be a customs station of the old Empire, checking traffic bound for Sol and the core Imperial systems. Now, in the post-Incident era, the station serves as the first line of defense from hostile elements that threaten the isolated colonies at Tau Prime and beyond. But since it is perpetually under-staffed and under-equipped, Marius Station is barely capable of maintaining its own presence in Raelid, let alone protect anything else.</description>
+   <bar>This bar is self-service most of the time. All Empire personnel on board have their hands full with double shifts, repair duties and briefings. Few have the spare time to even visit the spacedock bar, let alone staff it.</bar>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+   <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -9337,8 +9419,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tau Prime">
   <pos>
-   <x>-1969.861111</x>
-   <y>-2639.097222</y>
+   <x>8491.064816</x>
+   <y>-13844.050924</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -9359,8 +9441,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tau Secundus">
   <pos>
-   <x>-30.000000</x>
-   <y>520.000000</y>
+   <x>-6772.829083</x>
+   <y>9757.569064</y>
   </pos>
   <GFX>
    <space>S00.png</space>
@@ -9381,8 +9463,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tau Station">
   <pos>
-   <x>-1703.000000</x>
-   <y>-2306.000000</y>
+   <x>8917.170749</x>
+   <y>-13303.144273</y>
   </pos>
   <GFX>
    <space>000.png</space>
