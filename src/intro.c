@@ -59,6 +59,7 @@ static int intro_nlines = 0;       /**< Number of introduction text lines. */
 static int intro_length = 0;       /**< Length of the text. */
 static glFont intro_font;          /**< Introduction font. */
 
+static int has_side_gfx = 0;       /* Determines how wide to make the text. */
 
 /*
  * Prototypes.
@@ -85,6 +86,8 @@ static int intro_load( const char *text )
    int length;
    int i, p, n;
    int mem;
+
+   has_side_gfx = 0;
 
    /* Load text. */
    intro_buf = ndata_read( text, &intro_size );
@@ -116,6 +119,9 @@ static int intro_load( const char *text )
          intro_lines[n][0] = 'i';
          strncpy( &intro_lines[n][1], img_src, length );
          intro_lines[n][length] = '\0';
+
+         /* Mark that there are graphics. */
+         has_side_gfx = 1;
 
       } else if ( intro_buf[p] == '[' /* Don't do strncmp for every line! */
            && strncmp( &intro_buf[p], "[fadeout]", 9 ) == 0 ) {
@@ -309,9 +315,16 @@ static void intro_event_handler( int *stop, double *vel )
 static int intro_draw_text( scroll_buf_t *sb_list, double offset,
                             double line_height)
 {
-   double x = 400., y = 0.;   /* render position. */
+   double x, y;               /* render position. */
    scroll_buf_t *list_iter;   /* iterator through sb_list. */
    register int stop = 1;
+
+   if (has_side_gfx) {
+      /* leave some space for graphics if they exist. */
+      x = 400.0;
+   } else {
+      x = 100.0;
+   }
 
    list_iter = sb_list;
    y = SCREEN_H + offset - line_height;
