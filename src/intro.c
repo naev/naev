@@ -205,23 +205,28 @@ static void intro_event_handler(int *stop, double *vel)
  *    @brief sb_list List of text lines.
  *    @brief offset For smooth scrolling.
  *    @brief line_height V-space of the font (plus leading).
+ *    @return Whether to stop.  1 if no text was rendered, 0 otherwise.
  */
-static void intro_draw_text(scroll_buf_t *sb_list, double offset,
-                            double line_height)
+static int intro_draw_text(scroll_buf_t *sb_list, double offset,
+                           double line_height)
 {
    double x = 400., y = 0.;   /* render position. */
    scroll_buf_t *list_iter;   /* iterator through sb_list. */
+   register int stop = 1;
 
    list_iter = sb_list;
    y = SCREEN_H + offset - line_height;
    do {
       if (NULL != list_iter->text) {
+         stop = 0;
          gl_print( &intro_font, x, y, &cConsole, list_iter->text );
       }
 
       y -= line_height;
       list_iter = list_iter->next;
    } while (list_iter != sb_list);
+
+   return stop;
 }
 
 /**
@@ -233,7 +238,7 @@ static void intro_draw_text(scroll_buf_t *sb_list, double offset,
  */
 int intro_display( const char *text, const char *mus )
 {
-   double offset = 0.;        /* distance from bottom of the top line. */
+   double offset;             /* distance from bottom of the top line. */
    double line_height;        /* # pixels per line. */
    int lines_per_screen;      /* max appearing lines on the screen. */
    scroll_buf_t *sb_arr;      /* array of lines to render. */
@@ -264,7 +269,10 @@ int intro_display( const char *text, const char *mus )
    lines_per_screen = (int)(SCREEN_H / line_height + 1.5); /* round up + 1 */
    sb_arr = (scroll_buf_t*)malloc( sizeof(scroll_buf_t) * lines_per_screen );
 
-   /* create a cycle of lines. */
+   /* Force the first line to be loaded immediately. */
+   offset = line_height;
+
+   /* Create a cycle of lines. */
    sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
 
    x_img = 100.;
@@ -281,7 +289,7 @@ int intro_display( const char *text, const char *mus )
 
       /* Increment position. */
       offset += vel * delta;
-      while (offset > line_height) {
+      while (! (offset < line_height)) {
          /* One line has scrolled off, and another one on. */
 
          if (line_index < intro_nlines) {
@@ -317,7 +325,7 @@ int intro_display( const char *text, const char *mus )
       music_update( 0. );
 
       /* Draw text. */
-      intro_draw_text(sb_list, offset, line_height);
+      stop = intro_draw_text(sb_list, offset, line_height);
 
       if (NULL != image) {
          /* Draw the image next to the text. */
