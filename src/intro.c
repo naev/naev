@@ -169,6 +169,55 @@ static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
 
 
 /**
+ * @brief Handle user events (mouse clicks, key presses, etc.).
+ *
+ *    @brief stop Whether to stop the intro.
+ *    @brief vel How fast the text should scroll.
+ */
+static void intro_event_handler(int *stop, double *vel)
+{
+   SDL_Event event;           /* user key-press, mouse-push, etc. */
+
+   while (SDL_PollEvent(&event)) {
+      switch (event.type) {
+      case SDL_KEYDOWN:
+
+         /* Escape skips directly. */
+         if (event.key.keysym.sym == SDLK_ESCAPE) {
+            *stop = 1;
+            break;
+         }
+
+         /* User is clearly flailing on keyboard. */
+         else {
+            *vel = 30.;
+         }
+
+      default:
+         break;
+      }
+   } /* while (SDL_PollEvent(&event)) */
+}
+
+static void intro_draw_text(scroll_buf_t *sb_list, double offset,
+                            double line_height)
+{
+   double x = 400., y = 0.;   /* render position. */
+   scroll_buf_t *list_iter;   /* iterator through sb_list. */
+
+   list_iter = sb_list;
+   y = SCREEN_H + offset - line_height;
+   do {
+      if (NULL != list_iter->text) {
+         gl_print( &intro_font, x, y, &cConsole, list_iter->text );
+      }
+
+      y -= line_height;
+      list_iter = list_iter->next;
+   } while (list_iter != sb_list);
+}
+
+/**
  * @brief Displays the introduction sequence.
  *
  *    @brief text Path of text file to use.
@@ -182,14 +231,11 @@ int intro_display( const char *text, const char *mus )
    int lines_per_screen;      /* max appearing lines on the screen. */
    scroll_buf_t *sb_arr;      /* array of lines to render. */
    scroll_buf_t *sb_list;     /* list   "   "    "    "    */
-   scroll_buf_t *list_iter;   /* iterator through sb_list. */
    double vel = 15.;          /* velocity: speed of text. */
    int stop = 0;              /* stop the intro. */
-   double x, y;               /* render position. */
    unsigned int tcur, tlast;  /* timers. */
    double delta;              /* time diff from last render to this one. */
    int line_index = 0;        /* index into the big list of intro lines. */
-   SDL_Event event;           /* user key-press, mouse-push, etc. */
    glTexture *image = NULL;   /* image to go along with the text. */
    double x_img, y_img;       /* offsets for the location of the image. */
 
@@ -214,8 +260,6 @@ int intro_display( const char *text, const char *mus )
    /* create a cycle of lines. */
    sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
 
-   x = 400.;
-   y = 0.;
    x_img = 100.;
    y_img = 0.;
 
@@ -225,26 +269,8 @@ int intro_display( const char *text, const char *mus )
       delta = (double)(tcur - tlast) / 1000.;
       tlast = tcur;
 
-      /* Handle events. */
-      while (SDL_PollEvent(&event)) {
-         switch (event.type) {
-         case SDL_KEYDOWN:
-
-            /* Escape skips directly. */
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-               stop = 1;
-               break;
-            }
-
-            /* User is clearly flailing on keyboard. */
-            else {
-               vel = 30.;
-            }
-
-         default:
-            break;
-         }
-      } /* while (SDL_PollEvent(&event)) */
+      /* Handle user events. */
+      intro_event_handler(&stop, &vel);
 
       /* Increment position. */
       offset += vel * delta;
@@ -284,16 +310,7 @@ int intro_display( const char *text, const char *mus )
       music_update( 0. );
 
       /* Draw text. */
-      list_iter = sb_list;
-      y = SCREEN_H + offset - line_height;
-      do {
-         if (NULL != list_iter->text) {
-            gl_print( &intro_font, x, y, &cConsole, list_iter->text );
-         }
-
-         y -= line_height;
-         list_iter = list_iter->next;
-      } while (list_iter != sb_list);
+      intro_draw_text(sb_list, offset, line_height);
 
       if (NULL != image) {
          /* Draw the image next to the text. */
