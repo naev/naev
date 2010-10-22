@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -1608,7 +1608,7 @@
  </ssys>
  <ssys name="Draygar">
   <general>
-   <radius>3500.000000</radius>
+   <radius>28000.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1621,14 +1621,16 @@
   <assets>
    <asset>Anecu</asset>
    <asset>Draygar III</asset>
+   <asset>Durumdra</asset>
    <asset>Hikatalat</asset>
+   <asset>INSS-3</asset>
    <asset>Varona</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
   <jumps>
    <jump target="Tau Prime">
-    <pos x="-249.364675" y="3491.105449"/>
+    <pos x="-1994.917400" y="27928.843595"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

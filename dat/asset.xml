@@ -395,8 +395,8 @@
  </asset>
  <asset name="Anecu">
   <pos>
-   <x>-3750.000000</x>
-   <y>-1350.000000</y>
+   <x>-30000.000000</x>
+   <y>-10800.000000</y>
   </pos>
   <GFX>
    <space>O00.png</space>
@@ -2247,7 +2247,7 @@
   </presence>
   <general>
    <class>M</class>
-   <population>7000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -2307,7 +2307,7 @@
   </presence>
   <general>
    <class>M</class>
-   <population>9000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -2334,8 +2334,8 @@
  </asset>
  <asset name="Draygar III">
   <pos>
-   <x>-4830.000000</x>
-   <y>4000.000000</y>
+   <x>-33718.559741</x>
+   <y>12605.785267</y>
   </pos>
   <GFX>
    <space>L00.png</space>
@@ -2384,6 +2384,44 @@
    <description>Durea is not a terribly pleasant place to live, as it orbits its star a little too distantly for comfort, which leaves most of the planet covered in snow and ice. Only a small portion of the surface thaws far enough in summer for the mining operations, but despite that the riches underneath the crust compel the hardy population to dig. Indeed, if one day resources in the galaxy grow sparse enough, Durea may well find itself in an economically superior position.</description>
    <bar>This bar is the standard-issue model that can be found on unpopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the amenities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis planets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the planet's harsh environment.</bar>
   </general>
+ </asset>
+ <asset name="Durumdra">
+  <pos>
+   <x>6810.831786</x>
+   <y>-20480.644679</y>
+  </pos>
+  <GFX>
+   <space>P01.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>P</class>
+   <population>1000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>While Durumdra technically classifies as a P class ice world, the place can be quite comfortable to live. Some regions near the equator melt during part of the planet's solar cycle, and during this period there is an outburst of life, ranging from vegetation to small hibernating animals. By Dvaered standards, the planet is not so bad at all.</description>
+   <bar>Durumdra doesn't have much to distinguish itself by in the galaxy, but the spaceport bar comes a long way. It has drinks from all over the galaxy, though Draygar's awkward location means that most of them are rather pricey. Nevertheless, Durumdra has earned itself a footnote in several noted galactic tourist guides.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Dusk">
   <pos>
@@ -4339,23 +4377,31 @@
  </asset>
  <asset name="Hikatalat">
   <pos>
-   <x>2580.000000</x>
-   <y>240.000000</y>
+   <x>20640.000000</x>
+   <y>1920.000000</y>
   </pos>
   <GFX>
    <space>S00.png</space>
-   <exterior>oceanic.png</exterior>
+   <exterior>methane.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Dvaered</faction>
+   <value>50.000000</value>
+   <range>2</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
+   <class>S</class>
+   <population>10000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Hikatalat used to be a resource world, before the rise of the Empire. But over time the colony was deemed to be unprofitable, and operations ceased. The world is still inhabited today, but its only value now lies in territorial control for Dvaered warlords. The population is poor and lives in bad circumstances. There's nothing much to do here for offworlders.</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -4554,6 +4600,36 @@
    </commodities>
    <description>INSS-2, or Imperial Nutrient Supply Station 2, was built in this remote secion of space to compensate for the lack of farming output in the sector. Food is not a very profitable commodity to trade over long distances, and the colonies in Nartur found themselves limited in their growth due to chronic shortages. INSS-2 has allowed them to grow.</description>
    <bar>Trim and functional, the bar here is situated in the central growing dome of ISS-2. The windows look out on vast stretches of multi-layered crop beds, and there's always a harvester to be seen at work somewhere out there.</bar>
+  </general>
+ </asset>
+ <asset name="INSS-3">
+  <pos>
+   <x>-540.665429</x>
+   <y>14054.067443</y>
+  </pos>
+  <GFX>
+   <space>station-agriculture.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Somehwat curiously, Imperial Nutrient Supply Station 3 is actually owned by House Dvaered. Though initially constructed by the Empire, the station was ceded to House Dvaered as part of its official inception. INSS-3 still provides food for the Imperial colonies at Tau Prime and Draconis, though the price of food there has gone up by a fair margin ever since the change in ownership.</description>
+   <bar>The bar is not much to speak of. The Dvaered have shown a greater interest in farming than in public relations, so the spaceport bar has been largely neglected. It's a wonder the basic facilities are even functional at all.</bar>
   </general>
  </asset>
  <asset name="Ian">
@@ -10581,8 +10657,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Varona">
   <pos>
-   <x>-3410.000000</x>
-   <y>-1030.000000</y>
+   <x>-29492.626486</x>
+   <y>-10436.475927</y>
   </pos>
   <GFX>
    <space>moon-M00.png</space>
