@@ -1202,7 +1202,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
-      if (blink_pilot > RADAR_BLINK_PILOT/2.) {
+      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
          for (i=0; i<8; i++) {
             colours[4*i + 0] = cRadar_tPilot.r;
@@ -1258,7 +1258,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
-   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot > RADAR_BLINK_PILOT/2.))
+   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot < RADAR_BLINK_PILOT/2.))
       col = &cRadar_hilight;
    else
       col = gui_getPilotColour(p);
@@ -1342,7 +1342,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
    GLfloat vertex[8*2], colours[8*4];
    int i, curs;
 
-   if (blink_planet > RADAR_BLINK_PLANET/2.) {
+   if (blink_planet < RADAR_BLINK_PLANET/2.) {
       curs = 0;
       vx = cx-vr;
       vy = cy+vr;
