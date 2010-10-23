@@ -1068,6 +1068,10 @@ static void input_clickevent( SDL_Event* event )
    int mx, my;
    double x, y, z, r;
 
+   /* Mouse targetting is left only. */
+   if (event->button.button != SDL_BUTTON_LEFT)
+      return;
+
    /* Translate to coordinates. */
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
    gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
