@@ -15,6 +15,7 @@
 
 #include "log.h"
 #include "player.h"
+#include "pilot.h"
 #include "pause.h"
 #include "toolkit.h"
 #include "menu.h"
@@ -28,6 +29,7 @@
 #include "weapon.h"
 #include "console.h"
 #include "conf.h"
+#include "camera.h"
 #include "map_overlay.h"
 
 
@@ -204,6 +206,7 @@ static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
 static void input_keyConvGen (void);
 static void input_keyConvDestroy (void);
 static void input_key( int keynum, double value, double kabs, int repeat );
+static void input_clickevent( SDL_Event* event );
 
 
 /**
@@ -1056,6 +1059,30 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
 
 
 /**
+ * @brief Handles a click event.
+ */
+static void input_clickevent( SDL_Event* event )
+{
+   unsigned int pid;
+   Pilot *p;
+   int mx, my;
+   double x, y, z, r;
+
+   /* Translate to coordinates. */
+   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
+   z = cam_getZoom();
+
+   /* Get closest pilot. */
+   pid = pilot_getNearestPos( player.p, x, y, 1 );
+   p   = pilot_get(pid);
+   r   = MIN( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 150. ) / z;
+   if (pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y) < pow2(r))
+      player_targetSet( pid );
+}
+
+
+/**
  * @brief Handles global input.
  *
  * Basically seperates the event types
@@ -1103,6 +1130,16 @@ void input_handle( SDL_Event* event )
 
       case SDL_KEYUP:
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
+         break;
+
+
+      /* Mouse stuff. */
+      case SDL_MOUSEBUTTONDOWN:
+         input_clickevent( event );
+         break;
+
+
+      default:
          break;
    }
 }
