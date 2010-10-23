@@ -283,12 +283,26 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  */
 unsigned int pilot_getNearestPilot( const Pilot* p )
 {
+   return pilot_getNearestPos( p, p->solid->pos.x, p->solid->pos.y );
+}
+
+
+/**
+ * @brief Get the nearest pilot to a pilot from a certain position.
+ *
+ *    @param p Pilot to get his nearest pilot.
+ *    @param x X position to calculate from.
+ *    @param y Y position to calculate from.
+ *    @return The nearest pilot.
+ */
+unsigned int pilot_getNearestPos( const Pilot *p, double x, double y )
+{
    unsigned int tp;
    int i;
    double d, td;
 
-   tp=PLAYER_ID;
-   d=0;
+   tp = PLAYER_ID;
+   d  = 0;
    for (i=0; i<pilot_nstack; i++) {
       if (pilot_stack[i] == p)
          continue;
@@ -310,7 +324,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
       if (!pilot_inRangePilot( p, pilot_stack[i] ))
          continue;
 
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
+      td = pow2(x-pilot_stack[i]->solid->pos.x) + pow2(y-pilot_stack[i]->solid->pos.y);
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
          tp = pilot_stack[i]->id;
