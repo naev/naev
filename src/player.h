@@ -180,6 +180,7 @@ void player_hyperspacePreempt( int );
  * keybind actions
  */
 void player_weapSetPress( int id, int type );
+void player_targetSet( unsigned int id );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );

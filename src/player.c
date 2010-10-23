@@ -1623,6 +1623,24 @@ void player_soundResume (void)
 
 
 /**
+ * @brief Sets the player's target.
+ *
+ *    @param id Target to set for the player.
+ */
+void player_targetSet( unsigned int id )
+{
+   unsigned int old;
+   old = player.p->target;
+   player.p->target = id;
+   if ((old != id) && (player.p->target != PLAYER_ID)) {
+      gui_forceBlink();
+      player_playSound( snd_target, 1 );
+   }
+   gui_setTarget();
+}
+
+
+/**
  * @brief Targets the nearest hostile enemy to the player.
  */
 void player_targetHostile (void)
@@ -1652,13 +1670,7 @@ void player_targetHostile (void)
       }
    }
 
-   if ((tp != PLAYER_ID) && (tp != player.p->target)) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   }
-
-   player.p->target = tp;
-   gui_setTarget();
+   player_targetSet( tp );
 }
 
 
@@ -1669,13 +1681,7 @@ void player_targetHostile (void)
  */
 void player_targetNext( int mode )
 {
-   player.p->target = pilot_getNextID(player.p->target, mode);
-
-   if (player.p->target != PLAYER_ID) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   }
-   gui_setTarget();
+   player_targetSet( pilot_getNextID(player.p->target, mode) );
 }
 
 
@@ -1686,13 +1692,7 @@ void player_targetNext( int mode )
  */
 void player_targetPrev( int mode )
 {
-   player.p->target = pilot_getPrevID(player.p->target, mode);
-
-   if (player.p->target != PLAYER_ID) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   };
-   gui_setTarget();
+   player_targetSet( pilot_getPrevID(player.p->target, mode) );
 }
 
 
@@ -1711,8 +1711,7 @@ void player_targetClear (void)
    else if (player.p->target == PLAYER_ID)
       player.p->nav_planet = -1;
    else
-      player.p->target = PLAYER_ID;
-   gui_setTarget();
+      player_targetSet( PLAYER_ID );
    gui_setNav();
 }
 
