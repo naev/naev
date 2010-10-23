@@ -283,7 +283,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  */
 unsigned int pilot_getNearestPilot( const Pilot* p )
 {
-   return pilot_getNearestPos( p, p->solid->pos.x, p->solid->pos.y );
+   return pilot_getNearestPos( p, p->solid->pos.x, p->solid->pos.y, 0 );
 }
 
 
@@ -295,7 +295,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
  *    @param y Y position to calculate from.
  *    @return The nearest pilot.
  */
-unsigned int pilot_getNearestPos( const Pilot *p, double x, double y )
+unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled )
 {
    unsigned int tp;
    int i;
@@ -313,17 +313,23 @@ unsigned int pilot_getNearestPos( const Pilot *p, double x, double y )
          continue;
 
       /* Shouldn't be disabled. */
-      if (pilot_isDisabled(pilot_stack[i]))
+      if (!disabled && pilot_isDisabled(pilot_stack[i]))
          continue;
 
       /* Shouldn't be invisible. */
       if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
          continue;
 
+      /* Shouldn't be dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DEAD) ||
+            pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
+
       /* Must be in range. */
       if (!pilot_inRangePilot( p, pilot_stack[i] ))
          continue;
 
+      /* Minimum distance. */
       td = pow2(x-pilot_stack[i]->solid->pos.x) + pow2(y-pilot_stack[i]->solid->pos.y);
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
