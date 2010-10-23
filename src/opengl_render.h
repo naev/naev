@@ -21,6 +21,7 @@ void gl_exitRender (void);
  * Coordinate translation.
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
+void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
 
 
 /*
