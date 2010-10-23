@@ -1080,7 +1080,7 @@ static void input_clickevent( SDL_Event* event )
    /* Get closest pilot. */
    pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
-   r   = MIN( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 150. ) / z;
+   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 500. ) / z;
    if (pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y) < pow2(r))
       player_targetSet( pid );
 }
