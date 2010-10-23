@@ -31,6 +31,9 @@
 #include "map_overlay.h"
 
 
+#define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
+
+
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
 #define KEY_RELEASE  (-1.) /**< Key is released. */
 
@@ -173,6 +176,7 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 /*
  * Mouse.
  */
+static double input_mouseTimer         = -1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
 
 
@@ -390,7 +394,7 @@ void input_mouseHide (void)
 {
    input_mouseCounter--;
    if (input_mouseCounter <= 0) {
-      SDL_ShowCursor( SDL_DISABLE );
+      input_mouseTimer = MOUSE_HIDE;
       input_mouseCounter = 0;
    }
 }
@@ -620,28 +624,36 @@ SDLMod input_translateMod( SDLMod mod )
 /**
  * @brief Handles key repeating.
  */
-void input_update (void)
+void input_update( double dt )
 {
    unsigned int t;
 
-   /* Must not be disabled. */
-   if (conf.repeat_delay == 0)
-      return;
+   if (input_mouseTimer > 0.) {
+      input_mouseTimer -= dt;
 
-   /* Key must be repeating. */
-   if (repeat_key == -1)
-      return;
+      /* Hide if necessary. */
+      if ((input_mouseTimer < 0.) && (input_mouseCounter <= 0))
+         SDL_ShowCursor( SDL_DISABLE );
+   }
 
-   /* Get time. */
-   t = SDL_GetTicks();
+   /* Key repeat if applicable. */
+   if (conf.repeat_delay != 0) {
 
-   /* Should be repeating. */
-   if (repeat_keyTimer + conf.repeat_delay + repeat_keyCounter*conf.repeat_freq > t)
-      return;
+      /* Key must be repeating. */
+      if (repeat_key == -1)
+         return;
 
-   /* Key repeat. */
-   repeat_keyCounter++;
-   input_key( repeat_key, KEY_PRESS, 0., 1 );
+      /* Get time. */
+      t = SDL_GetTicks();
+
+      /* Should be repeating. */
+      if (repeat_keyTimer + conf.repeat_delay + repeat_keyCounter*conf.repeat_freq > t)
+         return;
+
+      /* Key repeat. */
+      repeat_keyCounter++;
+      input_key( repeat_key, KEY_PRESS, 0., 1 );
+   }
 }
 
 
@@ -1052,6 +1064,14 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
  */
 void input_handle( SDL_Event* event )
 {
+   /* Special case mouse stuff. */
+   if ((event->type == SDL_MOUSEMOTION)  ||
+         (event->type == SDL_MOUSEBUTTONDOWN) ||
+         (event->type == SDL_MOUSEBUTTONUP)) {
+      input_mouseTimer = MOUSE_HIDE;
+      SDL_ShowCursor( SDL_ENABLE );
+   }
+
    if (toolkit_isOpen()) /* toolkit handled seperately completely */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
