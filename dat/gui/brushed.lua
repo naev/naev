@@ -67,8 +67,19 @@ function create()
    icon_beam = tex.open( base .. "beam.png" )
    icon_weapon2 = tex.open( base .. "weapon2.png" )
    icon_weapon1 = tex.open( base .. "weapon1.png" )
-   field_bg = tex.open( base .. "fieldBg.png" )
-   field_frame = tex.open( base .. "fieldFrame.png" )
+   icon_pnt_target = tex.open( base .. "iconPntTarg.png" )
+   icon_nav_target = tex.open( base .. "iconNavTarg.png" )
+   icon_money = tex.open( base .. "iconMoney.png" )
+   icon_cargo = tex.open( base .. "iconCargo.png" )
+   field_bg_left = tex.open( base .. "fieldBgLeft1.png" )
+   field_bg_center1 = tex.open( base .. "fieldBgCenter1.png" )
+   field_bg_center2 = tex.open( base .. "fieldBgCenter2.png" )
+   field_bg_right1 = tex.open( base .. "fieldBgRight1.png" )
+   field_bg_right2 = tex.open( base .. "fieldBgRIght2.png" )
+   field_frame_left = tex.open( base .. "fieldFrameLeft.png" )
+   field_frame_center = tex.open( base .. "fieldFrameCenter.png" )
+   field_frame_right = tex.open( base .. "fieldFrameRight.png" )
+   field_sheen_left = tex.open( base .. "fieldSheenLeft.png" )
    field_sheen = tex.open( base .. "fieldSheen.png" )
    target_bg = tex.open( base .. "targetBg.png" )
    target_frame = tex.open( base .. "targetFrame.png" )
@@ -76,6 +87,7 @@ function create()
    question = tex.open( base .. "question.png" )
    speed_light = tex.open( base .. "speedOn.png" )
    speed_light_off = tex.open( base .. "speedOff.png" )
+   top_bar = tex.open( base .. "topbar.png" )
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
    
@@ -115,7 +127,7 @@ function create()
    x_name = 102
    y_name = 197
    
-   field_w, field_h = field_bg:dim()
+   _, field_h = field_bg_left:dim()
    
    x_dist = 102
    y_dist = 172
@@ -123,8 +135,6 @@ function create()
    x_speed = 189
    y_speed = 173
    
-   
-      
    right_side_x = 406
    left_side_w, left_side_h = main:dim()
    end_right_w, end_right_h = end_right:dim()
@@ -134,7 +144,22 @@ function create()
    popup_right_y = 88
    
    weapbars = math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) --number of weapon bars that can fit on the screen
+
+   tbar_center_x = screen_w/2
+   tbar_center_w = 260
+   _, tbar_h = top_bar:dim()
+   tbar_y = screen_h - tbar_h
    
+   gui.viewport( 0, 0, screen_w, tbar_y + 10 )
+   
+   fields_y = tbar_y + 15
+   if screen_w <=1024 then
+      fields_w = (screen_w-tbar_center_w)/4-8
+      fields_x = 0
+   else
+      fields_w = (1024-tbar_center_w)/4-8
+      fields_x = (screen_w - 1024)/2
+   end
    --Messages
    gui.mesgInit( screen_w - 400, 20, screen_h - 360 )
    
@@ -182,9 +207,12 @@ function update_target()
 end
 
 function update_nav()
+   nav_pnt, nav_hyp = pp:nav()
+   autonav_hyp = player.autonavDest()
 end
 
 function update_cargo()
+   cargo = pp:cargoFree()
 end
 
 function update_ship()
@@ -287,15 +315,46 @@ function renderWeapBar( weapon, x, y )
    gfx.renderTex( bar_sheen, x + offsets[3], y + offsets[4] )
 end
 
-function renderField( text, x, y, col )
-   local offsets = { 3, 9 } --Sheen x and y
+function renderField( text, x, y, w, col, icon )
+   local offsets = { 3, 14, 6 } --Sheen x and y, Icon x
+   local onetwo = 1
    
-   gfx.renderTex( field_bg, x, y ) --Background
-   gfx.print( true, text, x, y + field_h/2 - smallfont_h/2, col, field_w, true )
+   gfx.renderTex( field_bg_left, x, y )
+   drawn_w = 14
+   while drawn_w < w - 14 do
+      gfx.renderTex( _G[ "field_bg_center" .. tostring(onetwo) ], x + drawn_w, y )
+      if onetwo == 1 then
+         onetwo = 2
+      else
+         onetwo = 1
+      end
+      drawn_w = drawn_w + 2
+   end
+   gfx.renderTex( _G[ "field_bg_right" .. tostring(onetwo) ], x + w - 14, y )
    
-   gfx.renderTex( field_frame, x, y ) --Frame
+   if icon ~= nil then
+      local icon_w, icon_h = icon:dim()
+      gfx.renderTex( icon, x + offsets[3], y + 11 - icon_h/2 )
+      gfx.print( true, text, x+offsets[3]+icon_w+2, y+field_h/2-smallfont_h/2, col, w-(offsets[3]+icon_w+2), true )
+   else
+      gfx.print( true, text, x, y + field_h/2 - smallfont_h/2, col, w, true )
+   end
    
-   gfx.renderTex( field_sheen, x + offsets[1], y + offsets[2] ) --Sheen
+   --gfx.renderTex( field_frame, x, y ) --Frame
+   
+   gfx.renderTex( field_frame_left, x, y )
+   if w > 28 then
+      gfx.renderTexRaw( field_frame_center, x+14, y, w-28, field_h, 1, 1, 0, 0, 1, 1 )
+   end
+   if w >= 28 then
+      gfx.renderTex( field_frame_right, x+w-14, y )
+   else
+      gfx.renderTex( field_frame_right, x+14, y )
+   end
+   
+   --gfx.renderTex( field_sheen, x + offsets[1], y + offsets[2] ) --Sheen
+   gfx.renderTex( field_sheen_left, x + offsets[1], y + offsets[2] )
+   gfx.renderTexRaw( field_sheen, x + offsets[1] + 6, y + offsets[2], w - (2*offsets[1]+6), 6, 1, 1, 0, 0, 1, 1 )
 end
 
 function render( dt )
@@ -306,6 +365,7 @@ function render( dt )
    absfuel = player.fuel()
    fuel = absfuel / stats.fuel * 100
    wset_name, wset = pp:weapset( true )
+   credits, credits_h = player.credits(2)
    
    --Main window right
    if #wset > weapbars then
@@ -373,15 +433,15 @@ function render( dt )
             renderBar( "shield", ta_shield, false, false, "target" )
             renderBar( "armour", ta_armour, false, false, "target" )
             renderBar( "energy", ta_energy, false, false, "target" )
-            renderField( ta_name, x_name, y_name, col_text )
-            renderField( tostring( math.floor(ta_dist) ), x_dist, y_dist, col_text )
+            renderField( ta_name, x_name, y_name, 86, col_text )
+            renderField( tostring( math.floor(ta_dist) ), x_dist, y_dist, 86,col_text )
          else
             gfx.renderTex( question, target_image_x + target_image_w/2 - question_w/2, target_image_y + target_image_h/2 - question_h/2 )
             renderBar( "shield", 0, false, true, "target" )
             renderBar( "armour", 0, false, true, "target" )
             renderBar( "energy", 0, false, true, "target" )
-            renderField( "Unknown", x_name, y_name, col_unkn )
-            renderField( tostring( math.floor(ta_dist) ), x_dist, y_dist, col_text )
+            renderField( "Unknown", x_name, y_name, 86, col_unkn )
+            renderField( tostring( math.floor(ta_dist) ), x_dist, y_dist, 86, col_text )
          end
          
          gfx.renderTex( target_frame, target_image_x, target_image_y )
@@ -405,4 +465,20 @@ function render( dt )
       gfx.renderTex( popup_empty, popup_left_x, popup_left_y )
    end   
    gfx.renderTex( popup_bottom, popup_left_x, popup_left_y - 5 )
+   
+   --Top Bar
+   gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
+   
+   if nav_pnt ~= nil then
+      renderField( nav_pnt:name(), fields_x + 4, fields_y, fields_w, col_text, icon_pnt_target )
+   else
+      renderField( "None", fields_x + 4, fields_y, fields_w, col_unkn, icon_pnt_target )
+   end
+   if autonav_hyp ~= nil then
+      renderField( autonav_hyp:name() .. " (" .. tostring(autonav_hyp:jumpDist()) .. ")", fields_x + fields_w + 12, fields_y, fields_w, col_text, icon_nav_target )
+   else
+      renderField( "None", fields_x + fields_w + 12, fields_y, fields_w, col_unkn, icon_nav_target )
+   end
+   renderField( credits_h, tbar_center_x + tbar_center_w/2 + 4, fields_y, fields_w, col_text, icon_money )
+   renderField( tostring(cargo) .. "t", tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
 end
