@@ -92,6 +92,7 @@ class sanitizer:
         from readers.fleet import fleet
         from readers.ship import ship
         from readers.outfit import outfit
+        from readers.unidiff import unidiff
         from readers.preprocessing import tech
 
         # This will do some preprocessing check in the xml files
@@ -100,16 +101,19 @@ class sanitizer:
 
         # TODO: must be called when needed
         fleetdata = fleet(datpath=self.config['datpath'],
-                          verbose=self.config['verbose'])
+                        verbose=self.config['verbose'])
         shipdata = ship(datpath=self.config['datpath'],
                         verbose=self.config['verbose'], tech=otech)
         outfitdata = outfit(datpath=self.config['datpath'],
-                            verbose=self.config['verbose'], tech=otech)
+                        verbose=self.config['verbose'], tech=otech)
+        udata = unidiff(datpath=self.config['datpath'],
+                        verbose=self.config['verbose'])
         rawstr = r"""
         (?P<func>
             pilot\.add\(|
             player\.addShip\(|
-            addOutfit\(
+            addOutfit\(|
+            diff\.apply\(
         )"(?P<content>[^"]+)"""
 
         # XXX not used
@@ -133,6 +137,7 @@ class sanitizer:
 
             try:
                 line = open(file, 'rU').read()
+                this=False
                 for match in search_cobj.finditer(line):
                     lineno, offset = lineNumber(line, match.start())
                     info = dict(
@@ -142,14 +147,22 @@ class sanitizer:
                             content= match.group('content')
                     )
 
-                    # TODO create a object to handle all readers
-                    if (info['func'] == 'pilot.add' and \
-                        not fleetdata.find(info['content'])) or \
-                       (info['func'] == 'addOutfit' and \
-                        not outfitdata.find(info['content'])) or \
-                       (info['func'] == 'player.addShip' and \
-                         not shipdata.find(info['content'])):
-                           errors.append(self._errorstring % info)
+                    if info['func'] == 'pilot.add':
+                        if not fleetdata.find(info['content']):
+                            this = True
+                    if info['func'] == 'addOutfit':
+                        if not outfitdata.find(info['content']):
+                            this = True
+                    if info['func'] == 'player.addShip':
+                        if not fleetdata.find(info['content']):
+                            this = True
+                    if info['func'] == 'diff.apply':
+                        if not udata.find(info['content']):
+                            this = True
+
+                    if this:
+                        errors.append(self._errorstring % info)
+                        this=False
 
             except IOError as error:
                 print("I/O error: {0}".format(error), file=sys.stderr)
@@ -160,9 +173,11 @@ class sanitizer:
                 print("DONE")
 
         outfitdata.showMissingTech()
+        shipdata.showMissingTech()
 
         if self.config['show_unused']:
             fleetdata.show_unused()
+            udata.show_unused()
 
 if __name__ == "__main__":
 
