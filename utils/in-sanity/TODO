@@ -12,6 +12,7 @@ DONE     *) then make sure all the techs in tech.xml are used by asset.xml
                 or used by lua files) -> problem
             This assume that we have a list of outfit and ship from the lua
             files.
+         *) Need to double check the lua files in case of unused content
 
 MINOR:
  *) Check if planets images are :
