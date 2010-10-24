@@ -71,6 +71,11 @@ function create()
    icon_nav_target = tex.open( base .. "iconNavTarg.png" )
    icon_money = tex.open( base .. "iconMoney.png" )
    icon_cargo = tex.open( base .. "iconCargo.png" )
+   icon_missions = tex.open( base .. "iconMissions.png" )
+   icon_ship = tex.open( base .. "iconShip.png" )
+   icon_weapons = tex.open( base .. "iconWeaps.png" )
+   icon_autonav = tex.open( base .. "A.png" )
+   icon_lockon = tex.open( base .. "lockon.png" )
    field_bg_left = tex.open( base .. "fieldBgLeft1.png" )
    field_bg_center1 = tex.open( base .. "fieldBgCenter1.png" )
    field_bg_center2 = tex.open( base .. "fieldBgCenter2.png" )
@@ -88,6 +93,12 @@ function create()
    speed_light = tex.open( base .. "speedOn.png" )
    speed_light_off = tex.open( base .. "speedOff.png" )
    top_bar = tex.open( base .. "topbar.png" )
+   top_bar_center = tex.open( base .. "topbarCenter.png" )
+   button_normal = tex.open( base .. "button.png" )
+   button_hilighted = tex.open( base .. "buttonHil2.png" )
+   button_mouseover = tex.open( base .. "buttonHil.png" )
+   button_pressed = tex.open( base .. "buttonPre.png" )
+   button_disabled = tex.open( base .. "buttonDis.png" )
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
    
@@ -146,7 +157,7 @@ function create()
    weapbars = math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) --number of weapon bars that can fit on the screen
 
    tbar_center_x = screen_w/2
-   tbar_center_w = 260
+   tbar_center_w, tbar_center_h = top_bar_center:dim()
    _, tbar_h = top_bar:dim()
    tbar_y = screen_h - tbar_h
    
@@ -160,6 +171,15 @@ function create()
       fields_w = (1024-tbar_center_w)/4-8
       fields_x = (screen_w - 1024)/2
    end
+   
+   buttons_y = screen_h - 34
+   buttons_w, buttons_h = button_normal:dim()
+   buttontypes = { "missions", "cargo", "ship", "weapons" }
+   buttons = {}
+   for k, v in ipairs(buttontypes) do
+      buttons[v] = { x=tbar_center_x-116+(k-1)*60, y=buttons_y, w=buttons_w, h=buttons_h, state="default", icon=_G[ "icon_" .. v ], action=_G["action_" .. v ] }
+      buttons[v]["icon_w"], buttons[v]["icon_h"] = _G[ "icon_" .. v]:dim()
+   end
    --Messages
    gui.mesgInit( screen_w - 400, 20, screen_h - 360 )
    
@@ -168,6 +188,11 @@ function create()
 
    -- Set OSD
    gui.osdInit( 30, screen_h - 30, 150, 300 )
+   
+   first_time = { true, 2 }
+   
+   gui.mouseClickEnable(true)
+   gui.mouseMoveEnable(true)
    
    update_target()
    update_ship()
@@ -213,10 +238,32 @@ end
 
 function update_cargo()
    cargo = pp:cargoFree()
+   cargolist = pp:cargoList()
+   
+   if not first_time[1] then
+      if #cargolist == 0 then
+         buttons["cargo"].state = "disabled"
+      else
+         if buttons["cargo"].state ~= "mouseover" then buttons["cargo"].state = "hilighted" end
+      end
+   else
+      first_time[1] = false
+   end
 end
 
 function update_ship()
    stats = pp:stats()
+   
+   if not first_time[2] then
+      if buttons["ship"].state ~= "mouseover" then
+         buttons["ship"].state = "hilighted"
+      end
+      if buttons["weapons"].state ~= "mouseover" then
+         buttons["weapons"].state = "hilighted"
+      end
+   else
+      first_time[2] = first_time[2] - 1
+   end
 end
 
 function update_system()
@@ -357,6 +404,24 @@ function renderField( text, x, y, w, col, icon )
    gfx.renderTexRaw( field_sheen, x + offsets[1] + 6, y + offsets[2], w - (2*offsets[1]+6), 6, 1, 1, 0, 0, 1, 1 )
 end
 
+function renderButton( button )
+   local v_button = buttons[button]
+   
+   if v_button.state == "hilighted" then
+      gfx.renderTex( button_hilighted, v_button.x, v_button.y )
+   elseif v_button.state == "mouseover" then
+      gfx.renderTex( button_mouseover, v_button.x, v_button.y )
+   elseif v_button.state == "disabled" then
+      gfx.renderTex( button_disabled, v_button.x, v_button.y )
+   elseif v_button.state == "pressed" then
+      gfx.renderTex( button_pressed, v_button.x, v_button.y )
+   else
+      gfx.renderTex( button_normal, v_button.x, v_button.y )
+   end
+   
+   gfx.renderTex( v_button.icon, v_button.x+v_button.w/2-v_button.icon_w/2, v_button.y+v_button.h/2-v_button.icon_h/2 )
+end
+
 function render( dt )
    
    --Values
@@ -366,6 +431,8 @@ function render( dt )
    fuel = absfuel / stats.fuel * 100
    wset_name, wset = pp:weapset( true )
    credits, credits_h = player.credits(2)
+   autonav = player.autonav()
+   lockons = pp:lockon()
    
    --Main window right
    if #wset > weapbars then
@@ -407,6 +474,14 @@ function render( dt )
    --Main window left
    gfx.renderTex( main, 0, 0 )
    gui.radarRender( radar_x, radar_y )
+   
+   if lockons > 0 then
+      gfx.renderTex( icon_lockons, 378, 50 )
+   end
+   if autonav then
+      gfx.renderTex( icon_autonav, 246, 52 )
+   end
+   
    for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
       renderBar( v, _G[v] )
    end
@@ -481,4 +556,84 @@ function render( dt )
    end
    renderField( credits_h, tbar_center_x + tbar_center_w/2 + 4, fields_y, fields_w, col_text, icon_money )
    renderField( tostring(cargo) .. "t", tbar_center_x + tbar_center_w/2 + fields_w + 12, fields_y, fields_w, col_text, icon_cargo )
+   
+   --Center
+   gfx.renderTex( top_bar_center, tbar_center_x - tbar_center_w/2, screen_h - tbar_center_h )
+   
+   for _,v in ipairs(buttontypes) do
+      renderButton( v )
+   end
+end
+
+function mouse_click( button, x, y, state )
+   if button ~= 2 then
+      return false
+   else
+      pressed = mouseInsideButton( x, y )
+      
+      if pressed == nil then
+         if not state then
+            for _,v in pairs(buttons) do
+               if v.state ~= "disabled" and v.state ~= "hilighted" then
+                  v.state = "default"
+               end
+            end
+         end
+         return false
+      else
+         if state then
+            if pressed.state ~= "disabled" then
+               pressed.state = "pressed"
+            end
+            return true
+         else
+            if pressed.state ~= "disabled" then
+               pressed.state = "mouseover"
+               pressed.action()
+            end
+            return true
+         end
+      end
+   end
+end
+
+function mouse_move( x, y )
+   pressed = mouseInsideButton( x, y )
+   if pressed ~= nil then
+      if pressed.state ~= "pressed" and pressed.state ~= "disabled" then
+         pressed.state = "mouseover"
+      end
+   else
+      for _,v in pairs(buttons) do
+         if v.state ~= "disabled" and v.state ~= "hilighted" then
+            v.state = "default"
+         end
+      end
+   end
+end
+
+function mouseInsideButton( x, y )
+   for _, v in pairs(buttons) do
+      if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
+         print("blala")
+         return v
+      end
+   end
+   return nil
+end
+
+function action_missions()
+   gui.menuInfo( "missions" )
+end
+
+function action_cargo()
+   gui.menuInfo( "cargo" )
+end
+
+function action_ship()
+   gui.menuInfo( "ship" )
+end
+
+function action_weapons()
+   gui.menuInfo( "weapons" )
 end
