@@ -106,6 +106,20 @@ void player_board (void)
    pilot_setFlag(p,PILOT_BOARDED);
    player_message("\epBoarding ship \e%c%s\e0.", c, p->name);
 
+   /* Don't unboard. */
+   board_stopboard = 0;
+
+   /*
+    * run hook if needed
+    */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "board", hparam );
+   pilot_runHook(p, PILOT_HOOK_BOARD);
+
+   if (board_stopboard)
+      return;
 
    /*
     * create the boarding window
@@ -132,22 +146,6 @@ void player_board (void)
          "btnBoardingClose", "Leave", board_exit );
 
    board_update(wdw);
-
-   /* Don't unboard. */
-   board_stopboard = 0;
-
-   /*
-    * run hook if needed
-    */
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = p->id;
-   hparam[1].type       = HOOK_PARAM_SENTINAL;
-   hooks_runParam( "board", hparam );
-   pilot_runHook(p, PILOT_HOOK_BOARD);
-
-   if (board_stopboard) {
-      board_exit( wdw, NULL );
-   }
 }
 
 

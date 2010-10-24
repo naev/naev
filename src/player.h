@@ -177,18 +177,29 @@ void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 
 /*
- * keybind actions
+ * Targetting.
  */
-void player_weapSetPress( int id, int type );
+/* Clearing. */
+void player_targetClear (void);
+/* Planets. */
+void player_targetPlanetSet( int id );
+void player_targetPlanet (void);
+/* Hyperspace. */
+void player_targetHyperspaceSet( int id );
+void player_targetHyperspace (void);
+/* Pilots. */
+void player_targetSet( unsigned int id );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
-void player_targetClear (void);
-void player_targetPlanet (void);
+
+/*
+ * keybind actions
+ */
+void player_weapSetPress( int id, int type );
 void player_land (void);
-void player_targetHyperspace (void);
 void player_jump (void);
 void player_screenshot (void);
 void player_afterburn (void);

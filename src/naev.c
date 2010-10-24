@@ -575,7 +575,7 @@ void main_loop (void)
    /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
    player_updateAutonav( real_dt );
 
-   input_update(); /* handle key repeats. */
+   input_update( real_dt ); /* handle key repeats. */
 
    sound_update( real_dt ); /* Update sounds. */
    if (tk) toolkit_update(); /* to simulate key repetition */
