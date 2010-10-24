@@ -1180,7 +1180,7 @@ void map_jump (void)
       if (map_npath == 0) { /* path is empty */
          free (map_path);
          map_path = NULL;
-         player.p->nav_hyperspace = -1;
+         player_targetHyperspaceSet( -1 );
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
@@ -1189,14 +1189,14 @@ void map_jump (void)
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
-               player.p->nav_hyperspace = j;
+               player_targetHyperspaceSet( j );
                break;
             }
          }
       }
    }
    else {
-      player.p->nav_hyperspace = -1;
+      player_targetHyperspaceSet( -1 );
    }
    gui_setNav();
 }
@@ -1241,7 +1241,7 @@ void map_select( StarSystem *sys, char shifted )
 
          if (map_npath==0) {
             player_hyperspacePreempt(0);
-            player.p->nav_hyperspace = -1;
+            player_targetHyperspaceSet( -1 );
             player_autonavAbort(NULL);
          }
          else  {
@@ -1249,7 +1249,7 @@ void map_select( StarSystem *sys, char shifted )
             for (i=0; i<cur_system->njumps; i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
-                  player.p->nav_hyperspace = i;
+                  player_targetHyperspaceSet( i );
                   player_autonavAbort(NULL);
                   break;
                }
@@ -1257,7 +1257,7 @@ void map_select( StarSystem *sys, char shifted )
          }
       }
       else { /* unreachable. */
-         player.p->nav_hyperspace = -1;
+         player_targetHyperspaceSet( -1 );
          player_autonavAbort(NULL);
       }
    }

@@ -419,6 +419,50 @@ char* space_getRndPlanet (void)
 
 
 /**
+ * @brief Gets the closest feature to a position in the system.
+ *
+ *    @param sys System to get closest feature from a position.
+ *    @param[out] pnt ID of closest planet or -1 if a jump point is closer (or none is close).
+ *    @param[out] jp ID of closest jump point or -1 if a planet is closer (or none is close).
+ *    @param x X position to get closest from.
+ *    @param y Y position to get closest from.
+ */
+void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y )
+{
+   int i;
+   double d, td;
+   Planet *p;
+   JumpPoint *j;
+
+   /* Default output. */
+   *pnt = -1;
+   *jp  = -1;
+   d    = 10e10;
+
+   /* Planets. */
+   for (i=0; i<sys->nplanets; i++) {
+      p  = sys->planets[i];
+      td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
+      if (td < d) {
+         *pnt  = i;
+         d     = td;
+      }
+   }
+
+   /* Jump points. */
+   for (i=0; i<sys->njumps; i++) {
+      j  = &sys->jumps[i];
+      td = pow2(x-j->pos.x) + pow2(y-j->pos.y);
+      if (td < d) {
+         *pnt  = -1; /* We must clear planet target as jump point is closer. */
+         *jp   = i;
+         d     = td;
+      }
+   }
+}
+
+
+/**
  * @brief Sees if a system is reachable.
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
