@@ -1111,6 +1111,10 @@ void input_handle( SDL_Event* event )
       if (ovr_input(event))
          return; /* Don't process if the map overlay wants it. */
 
+   /* GUI gets event. */
+   if (gui_handleEvent(event))
+      return;
+
    switch (event->type) {
 
       /*
