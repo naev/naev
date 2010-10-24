@@ -30,6 +30,7 @@ class fleet(readers):
         for name in self.used:
             tmp.remove(name)
 
-        print('Unused fleets name:')
-        print(''.join(self.tmp))
+        if len(tmp) > 0:
+            print('\nUnused fleets name:')
+            print('\n'.join(tmp))
 

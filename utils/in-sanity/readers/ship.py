@@ -15,7 +15,7 @@ class ship(readers):
         print('Compiling ship list ...',end='       ')
         for ship in self.xmlData.findall('ship'):
             self.shipsName.append(ship.attrib['name'])
-            if ship.attrib['name'] not in self.missingTech:
+            if not tech.findItem(ship.attrib['name']):
                 self.missingTech.append(ship.attrib['name'])
         print("DONE")
 
@@ -33,3 +33,4 @@ class ship(readers):
             for item in self.missingTech:
                 print("Warning: item ''{0}`` is not found in ship.xml nor " \
                       "lua files".format(item))
+
