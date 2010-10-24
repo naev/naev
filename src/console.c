@@ -31,6 +31,7 @@
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
+#include "menu.h"
 
 
 #define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
@@ -412,6 +413,10 @@ void cli_open (void)
    if (cli_state == NULL)
       if (cli_init())
          return;
+
+   /* Make sure main menu isn't open. */
+   if (menu_isOpen(MENU_MAIN))
+      return;
 
    /* Must not be already open. */
    if (window_exists( "Lua Console" ))
