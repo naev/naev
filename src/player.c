@@ -1205,7 +1205,7 @@ void player_targetPlanetSet( int id )
 {
    int old;
 
-   if (id >= cur_system->njumps) {
+   if (id >= cur_system->nplanets) {
       WARN("Trying to set player's planet target to invalid ID '%d'", id);
       return;
    }
@@ -1237,7 +1237,7 @@ void player_targetPlanet (void)
    /* Find next planet target. */
    id = player.p->nav_planet+1;
    player_hyperspacePreempt(0);
-   while (player.p->nav_planet < cur_system->nplanets) {
+   while (id < cur_system->nplanets) {
 
       /* In range, target planet. */
       if ((cur_system->planets[ id ]->real == ASSET_REAL)
