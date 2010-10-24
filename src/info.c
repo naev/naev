@@ -125,7 +125,7 @@ void menu_info( int window )
    menu_Open(MENU_INFO);
 
    /* Set active window. */
-   window_tabWinSetActive( info_wid, "tabInfo", window );
+   window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 5, window ) );
 }
 /**
  * @brief Closes the information menu.
