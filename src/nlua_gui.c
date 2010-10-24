@@ -323,6 +323,8 @@ static int guiL_mouseMoveEnable( lua_State *L )
  *  - "missions" : Mission view window.<br />
  *  - "standings" : Standings view window.<br />
  *
+ * @usage gui.menuInfo( "ship" ) -- Opens ship tab
+ *
  *    @luaparam window Optional window parameter indicating the tab to open at.
  * @luafunc menuInfo( window )
  */
@@ -365,6 +367,8 @@ static int guiL_menuInfo( lua_State *L )
 
 /**
  * @brief Opens the small menu window.
+ *
+ * @usage gui.menuSmall()
  *
  * @luafunc menuSmall()
  */
