@@ -31,6 +31,6 @@ class ship(readers):
         if len(self.missingTech) > 0:
             print('\nship.xml unused items:')
             for item in self.missingTech:
-                print("Warning: item ''{0}`` is not found in ship.xml nor " \
+                print("Warning: item ''{0}`` is not found in tech.xml nor " \
                       "lua files".format(item))
 
