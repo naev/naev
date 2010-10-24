@@ -966,7 +966,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_info();
+      if (value==KEY_PRESS) menu_info( INFO_MAIN );
 
    /* Opens the Lua console. */
    } else if (KEY("console") && NODEAD() && !repeat) {
@@ -1110,6 +1110,10 @@ void input_handle( SDL_Event* event )
    if (ovr_isOpen())
       if (ovr_input(event))
          return; /* Don't process if the map overlay wants it. */
+
+   /* GUI gets event. */
+   if (gui_handleEvent(event))
+      return;
 
    switch (event->type) {
 
