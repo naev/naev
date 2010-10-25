@@ -6787,7 +6787,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>P00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>snow.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -7412,7 +7412,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M01.png</space>
-   <exterior>(null)</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
