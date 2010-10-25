@@ -4272,7 +4272,7 @@
  </ssys>
  <ssys name="Radix">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4283,8 +4283,10 @@
    <y>-671.000000</y>
   </pos>
   <assets>
+   <asset>Myuirr Station</asset>
    <asset>Radix I</asset>
    <asset>Radix II</asset>
+   <asset>Radix III</asset>
    <asset>Stutee</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Sirius Unpresence</asset>
@@ -4292,14 +4294,14 @@
   </assets>
   <jumps>
    <jump target="Dvaer">
-    <pos x="-2613.678216" y="2327.807161"/>
+    <pos x="-18295.747515" y="16294.650130"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Fidelis">
-    <pos x="-1750.291484" y="-4586.059836"/>
+    <pos x="-12252.040388" y="-32102.418852"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>

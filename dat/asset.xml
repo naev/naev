@@ -2806,6 +2806,7 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Eist Shipyard is one of the primary ship construction facilities in Dvaered space. Most of the Dvaered's heavy military vessels are produced here, though production of the lighter ships is taken care of by shipyards outside of Dvaer. Eist Shipyard also supplies civilian models to individuals and organizations.</description>
+   <bar>(null)</bar>
   </general>
   <tech>
    <item>Heavy Civilian Combat Ships</item>
@@ -6166,6 +6167,39 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Myuirr Station">
+  <pos>
+   <x>6203.038328</x>
+   <y>-8375.950143</y>
+  </pos>
+  <GFX>
+   <space>station-cylinder.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>500</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of mallistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to warlords, retailers and civilians for profit.</description>
+  </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Nappi">
   <pos>
    <x>-17112.889013</x>
@@ -7924,8 +7958,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Radix I">
   <pos>
-   <x>-2030.000000</x>
-   <y>-1460.000000</y>
+   <x>-12419.979790</x>
+   <y>-8833.743747</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -7946,12 +7980,34 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Radix II">
   <pos>
-   <x>-4830.000000</x>
-   <y>250.000000</y>
+   <x>-33810.000000</x>
+   <y>1750.000000</y>
   </pos>
   <GFX>
    <space>H02.png</space>
    <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Radix III">
+  <pos>
+   <x>9292.187990</x>
+   <y>5727.672471</y>
+  </pos>
+  <GFX>
+   <space>I00.png</space>
+   <exterior>lava.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -9414,8 +9470,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Stutee">
   <pos>
-   <x>-1710.000000</x>
-   <y>-1200.000000</y>
+   <x>-11970.000000</x>
+   <y>-8400.000000</y>
   </pos>
   <GFX>
    <space>moon-M06.png</space>
