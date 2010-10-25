@@ -347,30 +347,31 @@
          * efficiency_turret.png
          * firerate_turret.png
 
- * Author: Enigmatic, License: CC-by v3.0
-   * gfx
-     * logo
-       * collective_small.png
-       * flf_small.png
-       * frontier_small.png
-       * proteron_small.png
-       * prototype_tiny.png
-       * trader_small.png
-     * ship
-       * divinity.png
-       * dogma.png
-       * fidelity.png
-       * preacher.png
-     * planet
-       * space
-         * station-agriculture.png
-         * station-battlestation.png
-         * station-cylinder.png
-         * station-fleetbase.png
-         * station-powerplant.png
-         * station-shipyard.png
-         * station-sphere.png
+  * Author: Enigmatic, License: CC-by v3.0
+    * gfx
+      * logo
+        * collective_small.png
+        * flf_small.png
+        * frontier_small.png
+        * proteron_small.png
+        * prototype_tiny.png
+        * trader_small.png
+      * ship
+        * divinity.png
+        * dogma.png
+        * fidelity.png
+        * preacher.png
+      * planet
+        * space
+          * station-agriculture.png
+          * station-battlestation.png
+          * station-cylinder.png
+          * station-fleetbase.png
+          * station-powerplant.png
+          * station-shipyard.png
+          * station-sphere.png
 
+<<<<<<< HEAD
  * Author: BTAxis, License: PD
    * gfx
      * gui
@@ -445,6 +446,4 @@
        * space
          * P04.png
          * C01.png
-
-
 

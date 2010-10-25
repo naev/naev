@@ -91,7 +91,7 @@ function land ()
 
       -- Make sure player has room.
       if pilot.cargoFree(player.pilot()) < 3 then
-         tk.msg( errtitle[1], string.format( err[1], 3 - pilot.cargoFree(playerpilot()) ) )
+         tk.msg( errtitle[1], string.format( err[1], 3 - pilot.cargoFree(player.pilot()) ) )
          return
       end
 

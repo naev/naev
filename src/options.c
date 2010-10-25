@@ -754,6 +754,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    int key;
    SDLMod mod, ev_mod;
    const char *str;
+   int pos, off;
 
    /* See how to handle it. */
    switch (event->type) {
@@ -833,8 +834,12 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 
    /* Update parent window. */
    parent = window_getParent( wid );
+   pos = toolkit_getListPos( parent, "lstKeybinds" );
+   off = toolkit_getListOffset( parent, "lstKeybinds" );
    window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
+   toolkit_setListPos( parent, "lstKeybinds", pos );
+   toolkit_setListOffset( parent, "lstKeybinds", off );
 
    return 0;
 }
@@ -877,7 +882,6 @@ static void opt_setKey( unsigned int wid, char *str )
    /* Checkbox to set any modifier. */
    window_addCheckbox( new_wid, -20, 20 + BUTTON_HEIGHT + 20, w-40, 20,
          "chkAny", "Set any modifier", NULL, 0 );
-
 }
 
 

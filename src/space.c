@@ -369,7 +369,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
                 planet->faction == factions[k]) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
-                  mtmp += CHUNK_SIZE;
+                  mtmp *= 2;
                   tmp = realloc(tmp, sizeof(char*) * mtmp);
                }
                tmp[ntmp-1] = planet->name;
@@ -404,7 +404,7 @@ char* space_getRndPlanet (void)
          if(systems_stack[i].planets[j]->real == ASSET_REAL) {
             ntmp++;
             if (ntmp > mtmp) { /* need more space */
-               mtmp += CHUNK_SIZE;
+               mtmp *= 2;
                tmp = realloc(tmp, sizeof(char*) * mtmp);
             }
             tmp[ntmp-1] = systems_stack[i].planets[j]->name;
@@ -442,6 +442,8 @@ void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, doub
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
       p  = sys->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
       if (td < d) {
          *pnt  = i;
@@ -1012,7 +1014,7 @@ Planet *planet_new (void)
    planet_nstack++;
    realloced = 0;
    if (planet_nstack > planet_mstack) {
-      planet_mstack += CHUNK_SIZE;
+      planet_mstack *= 2;
       planet_stack   = realloc( planet_stack, sizeof(Planet) * planet_mstack );
       realloced      = 1;
    }
@@ -1140,6 +1142,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
+   int nbuf;
+   char *buf;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1173,7 +1177,15 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                   npng = npng_open( rw );
                   if (npng != NULL) {
                      npng_dim( npng, &w, &h );
-                     planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     nbuf = npng_metadata( npng, "radius", &buf );
+                     if (nbuf > 0) {
+                        strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
+                        str[ nbuf ] = '\0';
+                        planet->radius = atof( str );
+                     }
+                     else {
+                        planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     }
                      npng_close( npng );
                   }
                   SDL_RWclose( rw );
@@ -1260,7 +1272,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->ncommodities++;
                      /* Memory must grow. */
                      if (planet->ncommodities > mem) {
-                        mem += CHUNK_SIZE_SMALL;
+                        if (mem == 0)
+                           mem = CHUNK_SIZE_SMALL;
+                        else
+                           mem *= 2;
                         planet->commodities = realloc(planet->commodities,
                               mem * sizeof(Commodity*));
                      }
@@ -1353,7 +1368,10 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    /* add planet <-> star system to name stack */
    spacename_nstack++;
    if (spacename_nstack > spacename_mstack) {
-      spacename_mstack += CHUNK_SIZE;
+      if (spacename_mstack == 0)
+         spacename_mstack = CHUNK_SIZE;
+      else
+         spacename_mstack *= 2;
       planetname_stack = realloc(planetname_stack,
             sizeof(char*) * spacename_mstack);
       systemname_stack = realloc(systemname_stack,
@@ -1518,7 +1536,7 @@ StarSystem *system_new (void)
    systems_nstack++;
    realloced = 0;
    if (systems_nstack > systems_mstack) {
-      systems_mstack   += CHUNK_SIZE;
+      systems_mstack   *= 2;
       systems_stack     = realloc( systems_stack, sizeof(StarSystem) * systems_mstack );
       realloced         = 1;
    }
