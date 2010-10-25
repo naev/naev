@@ -3331,8 +3331,8 @@
  </asset>
  <asset name="Fidelis III">
   <pos>
-   <x>1249.313354</x>
-   <y>2641.677856</y>
+   <x>-12133.885661</x>
+   <y>8242.003348</y>
   </pos>
   <GFX>
    <space>A01.png</space>
@@ -3353,8 +3353,8 @@
  </asset>
  <asset name="Fidelis IV">
   <pos>
-   <x>1649.856567</x>
-   <y>-734.329224</y>
+   <x>15115.790698</x>
+   <y>-12230.952288</y>
   </pos>
   <GFX>
    <space>moon-D00.png</space>
@@ -5747,8 +5747,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Mannannan">
   <pos>
-   <x>-1535.415649</x>
-   <y>-820.159912</y>
+   <x>-7152.264249</x>
+   <y>-10820.708001</y>
   </pos>
   <GFX>
    <space>M06.png</space>
@@ -6194,6 +6194,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <commodity>Ore</commodity>
    </commodities>
    <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of mallistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
+   <bar>(null)</bar>
   </general>
   <tech>
    <item>Missiles 1</item>
@@ -7378,6 +7379,39 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Petaat">
+  <pos>
+   <x>9405.612680</x>
+   <y>15098.052006</y>
+  </pos>
+  <GFX>
+   <space>S01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>S</class>
+   <population>50000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>Petaat can be called a civilian Dvaered world, if you're feeling nice. Fact is that people live here, and a Dvaered Warlord controls the local government. But that's about as far as it goes. Petaat is a very unpleasant world, its surface constantly plagued by dust storms and its soil unfit for crop growing. The people living here only do so because they don't have the means to leave.</description>
+   <bar>Amazingly, Petaat does have a spaceport bar, despite the fact that this is, well, Petaat. It's rather a dump, though. If you didn't know better you'd think yourself in a decaying slum. Most people here look like they belong in one, too.</bar>
   </general>
  </asset>
  <asset name="Pilatis I">
