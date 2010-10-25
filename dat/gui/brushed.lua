@@ -184,7 +184,7 @@ function create()
    gui.mesgInit( screen_w - 400, 20, screen_h - 360 )
    
     -- Set FPS
-   gui.fpsPos( 30, screen_h - 30 - deffont_h )
+   gui.fpsPos( 30, screen_h - 50 - deffont_h )
 
    -- Set OSD
    gui.osdInit( 30, screen_h - 30, 150, 300 )
@@ -569,6 +569,7 @@ function mouse_click( button, x, y, state )
    if button ~= 2 then
       return false
    else
+      lmouse = state
       pressed = mouseInsideButton( x, y )
       
       if pressed == nil then
@@ -588,7 +589,7 @@ function mouse_click( button, x, y, state )
             return true
          else
             if pressed.state ~= "disabled" then
-               pressed.state = "mouseover"
+               pressed.state = "default"
                pressed.action()
             end
             return true
@@ -600,8 +601,10 @@ end
 function mouse_move( x, y )
    pressed = mouseInsideButton( x, y )
    if pressed ~= nil then
-      if pressed.state ~= "pressed" and pressed.state ~= "disabled" then
+      if pressed.state ~= "disabled" and not lmouse then
          pressed.state = "mouseover"
+      elseif pressed.state ~= "disabled" and lmouse then
+         pressed.state = "pressed"
       end
    else
       for _,v in pairs(buttons) do
