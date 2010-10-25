@@ -398,7 +398,7 @@ char* toolkit_setList( const unsigned int wid, char* name, char* value )
 {
    int i;
    Widget *wgt = lst_getWgt( wid, name );
-   if (wgt == NULL)
+   if ((wgt == NULL) || (value==NULL))
       return NULL;
 
    for (i=0; i<wgt->dat.lst.noptions; i++) {
