@@ -25,6 +25,7 @@
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 #define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
+#define PLAYER_DOUBLESPEED (1<<19)  /**< player is running at double speed. */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
 #define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
@@ -176,18 +177,29 @@ void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 
 /*
- * keybind actions
+ * Targetting.
  */
-void player_weapSetPress( int id, int type );
+/* Clearing. */
+void player_targetClear (void);
+/* Planets. */
+void player_targetPlanetSet( int id );
+void player_targetPlanet (void);
+/* Hyperspace. */
+void player_targetHyperspaceSet( int id );
+void player_targetHyperspace (void);
+/* Pilots. */
+void player_targetSet( unsigned int id );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
-void player_targetClear (void);
-void player_targetPlanet (void);
+
+/*
+ * keybind actions
+ */
+void player_weapSetPress( int id, int type );
 void player_land (void);
-void player_targetHyperspace (void);
 void player_jump (void);
 void player_screenshot (void);
 void player_afterburn (void);

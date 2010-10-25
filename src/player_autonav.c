@@ -80,8 +80,13 @@ static void player_autonavSetup (void)
 void player_autonavEnd (void)
 {
    player_rmFlag(PLAYER_AUTONAV);
-   tc_mod         = 1.;
-   pause_setSpeed( 1. );
+   if (player_isFlag(PLAYER_DOUBLESPEED)) {
+     tc_mod         = 2.;
+     pause_setSpeed( 2. );
+   } else {
+     tc_mod         = 1.;
+     pause_setSpeed( 1. );
+   }
 }
 
 
