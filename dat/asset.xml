@@ -2469,8 +2469,8 @@
  </asset>
  <asset name="Dvaer II">
   <pos>
-   <x>-740.000000</x>
-   <y>1840.000000</y>
+   <x>-5061.056717</x>
+   <y>12792.357581</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -2491,8 +2491,8 @@
  </asset>
  <asset name="Dvaer III">
   <pos>
-   <x>2790.000000</x>
-   <y>-500.000000</y>
+   <x>18224.324694</x>
+   <y>2810.763980</y>
   </pos>
   <GFX>
    <space>O02.png</space>
@@ -2513,8 +2513,8 @@
  </asset>
  <asset name="Dvaer IIIa">
   <pos>
-   <x>2770.000000</x>
-   <y>-100.000000</y>
+   <x>18099.291283</x>
+   <y>3275.976128</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -2535,8 +2535,8 @@
  </asset>
  <asset name="Dvaer IV">
   <pos>
-   <x>-5050.000000</x>
-   <y>-1760.000000</y>
+   <x>-35250.000000</x>
+   <y>18480.000000</y>
   </pos>
   <GFX>
    <space>J03.png</space>
@@ -2557,8 +2557,8 @@
  </asset>
  <asset name="Dvaer Prime">
   <pos>
-   <x>-1520.000000</x>
-   <y>-1500.000000</y>
+   <x>-16120.928515</x>
+   <y>-12212.790161</y>
   </pos>
   <GFX>
    <space>L00.png</space>
@@ -2597,8 +2597,8 @@
  </asset>
  <asset name="Dvaered High Command">
   <pos>
-   <x>-1540.530693</x>
-   <y>-1057.719443</y>
+   <x>-16173.088338</x>
+   <y>-11736.708576</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -2777,6 +2777,39 @@
    <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Eist Shipyard">
+  <pos>
+   <x>-4735.935159</x>
+   <y>13099.426837</y>
+  </pos>
+  <GFX>
+   <space>station-shipyard.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1500</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Eist Shipyard is one of the primary ship construction facilities in Dvaered space. Most of the Dvaered's heavy military vessels are produced here, though production of the lighter ships is taken care of by shipyards outside of Dvaer. Eist Shipyard also supplies civilian models to individuals and organizations.</description>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+  </tech>
  </asset>
  <asset name="Em 1">
   <pos>
@@ -5272,6 +5305,44 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Laarss">
+  <pos>
+   <x>14354.175136</x>
+   <y>-15731.478785</y>
+  </pos>
+  <GFX>
+   <space>G02.png</space>
+   <exterior>mining6.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>G</class>
+   <population>900000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>Laarss is a resource world. Before the inception of House Dvaered, it used to supply the Imperial economy with raw materials at bottom prices. Nowadays, its chief export market is Eist Shipyard, which is in constant need of ship building resources. Though Laarss is largely the same mining colony it was before, working here is considered something of a privilege among Dvaered citizens, considering its location in Dvaer.</description>
+   <bar>Though technically this place is the spaceport bar, its main function is a place of leisure for the local population. At all times, you can find large groups of Dvaered workers here, spending their off-time and their credits on booze and entertainment.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Lapis I">
   <pos>
