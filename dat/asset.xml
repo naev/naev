@@ -4435,7 +4435,7 @@
    <commodities>
     <commodity>Food</commodity>
    </commodities>
-   <description>Hikatalat used to be a resource world, before the rise of the Empire. But over time the colony was deemed to be unprofitable, and operations ceased. The world is still inhabited today, but its only value now lies in territorial control for Dvaered warlords. The population is poor and lives in bad circumstances. There's nothing much to do here for offworlders.</description>
+   <description>Hikatalat used to be a resource world, before the rise of the Empire. But over time the colony was deemed to be unprofitable, and operations ceased. The world is still inhabited today, but its only value now lies in territorial control for Dvaered Warlords. The population is poor and lives in bad circumstances. There's nothing much to do here for offworlders.</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -6193,7 +6193,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <commodities>
     <commodity>Ore</commodity>
    </commodities>
-   <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of mallistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to warlords, retailers and civilians for profit.</description>
+   <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of mallistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
   </general>
   <tech>
    <item>Missiles 1</item>
@@ -7031,7 +7031,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>The Onyx Shipyard is a modern, high-tech shipyard. At least by Dvaered standards. The place builds both combat and trade vessels, and commissions a portion of the Dvaered fleet. Several warlords also have personal contracts at Onyx, drawing ships for their private fleets from here.</description>
+   <description>The Onyx Shipyard is a modern, high-tech shipyard. At least by Dvaered standards. The place builds both combat and trade vessels, and commissions a portion of the Dvaered fleet. Several Warlords also have personal contracts at Onyx, drawing ships for their private fleets from here.</description>
    <bar>Each table in the spaceport bar is themed around a ship design that is manufactured here. Some are even built out of old or faulty components of the ships in question. Of course it's not very artistic, considering that a Dvaered came up with it, but there's still a certain class to it that gets potential buyers in the mood.</bar>
   </general>
   <tech>
@@ -9357,7 +9357,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The planet that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
+   <description>Sinclair was named after one of the more renowned nobles in House Dvaered, Godfried Sinclair. Like all Dvaered nobles he was a Warlord, and his victories in battle as well as the manner in which he won them earned him the respect in his House as well as the rest of the Empire. The planet that came to bear his name was the last of his conquests, and ultimately became his final resting place. The tomb is a popular destination for Dvaered pilgrims.</description>
    <bar>Sinclair's spaceport bar is run by entrepreneurs, not warriors. But being entrepreneurs, they recognize the value of catering to the locals and to those that pass through, and so it is that this bar has a large holoportrait of Godfried Sinclair hanging over the bar, and his family's weapon can be seen on various decorative fixtures.</bar>
   </general>
   <tech>
@@ -10281,7 +10281,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities>
     <commodity>Ore</commodity>
    </commodities>
-   <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
+   <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor Warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
    <bar>This is a bar. It has to be, because you usually don't have to pay for muddy rainwater. It doesn't seem this place is frequented by its patrons for the purpose of entertainment, because there are no recreational facilities, not even a jukebox. The few appointments are welded to the floor, and everything else is either made out of steel or has steel bars covering it. Clearly, this is a place where fists meet faces. Maybe you shouldn't stay here too long...</bar>
   </general>
  </asset>
