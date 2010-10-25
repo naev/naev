@@ -414,6 +414,22 @@ char* toolkit_setList( const unsigned int wid, char* name, char* value )
 
 
 /**
+ * @brief Sets the list value by position.
+ */
+char* toolkit_setListPos( const unsigned int wid, char* name, int pos )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return NULL;
+
+   /* Set by pos. */
+   wgt->dat.lst.selected = CLAMP( 0, wgt->dat.lst.noptions-1, pos );
+   lst_scroll( wgt, 0 ); /* checks boundries and triggers callback */
+   return wgt->dat.lst.options[ wgt->dat.lst.selected ];
+}
+
+
+/**
  * @brief Get the position of current item in the list.
  *
  *    @param wid Window identifier where the list is.
