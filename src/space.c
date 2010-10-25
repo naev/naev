@@ -442,6 +442,8 @@ void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, doub
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
       p  = sys->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
       if (td < d) {
          *pnt  = i;
