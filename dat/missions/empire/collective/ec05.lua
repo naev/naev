@@ -145,7 +145,7 @@ function enter ( from_sys )
       if from_sys == nil then
          add_escorts( true )
       else -- Just jumped
-         misn.timerStart( "add_escorts", rnd.int(2000, 5000) )
+         hook.timer( rnd.int(2000, 5000), "add_escorts" )
       end
 
       -- Create some havoc
@@ -168,7 +168,7 @@ function enter ( from_sys )
          hook.pilot( trinity, "jump", "trinity_jump" )
 
          final_fight = 0
-         misn.timerStart( "final_talk", rnd.int(6000, 8000) ) -- Escorts should be in system by now
+         hook.timer(rnd.int(6000, 8000) , "final_talk") -- Escorts should be in system by now
       end
 
    -- Player ran away from combat - big disgrace.
@@ -208,13 +208,13 @@ function final_talk ()
       talker:broadcast( talk[1] )
 
       final_fight = 1
-      misn.timerStart( "final_talk", rnd.int( 3000, 4000 ))
+      hook.timer(rnd.int( 3000, 4000 ), "final_talk")
    elseif final_fight == 1 then
       talker = trinity
       talker:broadcast( talk[2] )
 
       final_fight = 2
-      misn.timerStart( "final_talk", rnd.int( 3000, 4000 ))
+      hook.timer(rnd.int( 3000, 4000 ), "final_talk")
    elseif final_fight == 2 then
       -- Talk
       talker = emp_talker()
@@ -225,10 +225,10 @@ function final_talk ()
       trinity:setHostile()
 
       final_fight = 3
-      misn.timerStart( "final_talk", rnd.int( 4000, 5000 ))
+      hook.timer(rnd.int( 4000, 5000 ), "final_talk")
    elseif final_fight == 3 then
       player.msg( talk[4] )
-      misn.timerStart( "call_drones", rnd.int( 3000, 5000 ) )
+      hook.timer(rnd.int( 3000, 5000 ) , "call_drones")
    end
 end
 

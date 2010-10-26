@@ -251,7 +251,7 @@ end
 function refuelBroadcast ()
    if refship:exists() then
       refship:broadcast("Tanker in system, contact if in need of fuel.")
-      misn.timerStart( "refuelBroadcast", 10000 )
+      hook.timer(10000, "refuelBroadcast")
    end
 end
 
@@ -301,7 +301,7 @@ function col_dead ()
       end
 
       -- Refuel ship enters
-      misn.timerStart( "addRefuelShip", 3000 )
+      hook.timer(3000, "addRefuelShip")
    end
 end
 

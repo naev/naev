@@ -1142,6 +1142,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
+   int nbuf;
+   char *buf;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1175,7 +1177,15 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                   npng = npng_open( rw );
                   if (npng != NULL) {
                      npng_dim( npng, &w, &h );
-                     planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     nbuf = npng_metadata( npng, "radius", &buf );
+                     if (nbuf > 0) {
+                        strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
+                        str[ nbuf ] = '\0';
+                        planet->radius = atof( str );
+                     }
+                     else {
+                        planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     }
                      npng_close( npng );
                   }
                   SDL_RWclose( rw );

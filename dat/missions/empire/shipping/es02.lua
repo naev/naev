@@ -157,7 +157,7 @@ function enter ()
 
       -- Add more ships on a timer to make this messy
       enter_vect = player.pos()
-      misn.timerStart( "delay_flf", rnd.rnd( 3000, 5000 ) )
+      hook.timer(rnd.rnd( 3000, 5000 ) , "delay_flf")
 
       -- Pass to next stage
       misn_stage = 1
