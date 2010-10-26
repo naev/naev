@@ -992,8 +992,8 @@
  </asset>
  <asset name="Blunderbuss II">
   <pos>
-   <x>2260.000000</x>
-   <y>220.000000</y>
+   <x>22600.000000</x>
+   <y>2200.000000</y>
   </pos>
   <GFX>
    <space>moon-H00.png</space>
@@ -1191,7 +1191,7 @@
   </presence>
   <general>
    <class>M</class>
-   <population>5000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -1727,6 +1727,31 @@
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="DVNN Central">
+  <pos>
+   <x>11185.917396</x>
+   <y>25623.169472</y>
+  </pos>
+  <GFX>
+   <space>station-powerplant.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>50.000000</value>
+   <range>3</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <bar/>
+   </services>
+   <description>Even before House Dvaered gained its independence, there were unofficial news channels that fueled the discontent among the Imperial labor force. Later, after their work was done, these channels pooled their resources to establish the Dvaered News Network, or DVNN. This station serves as the main nexus for all Dvaered mass media. As such it is coveted by many a Warlord, but Dvaered High Command makes sure that the station remains firmly under its control.</description>
+   <bar>Spaceport bar, waiting lounge, interview room, this facility is everythign at once. It's the only place accessible to non-DVNN personnel, so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
   </general>
  </asset>
  <asset name="Daal">
@@ -4173,6 +4198,44 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Greis">
+  <pos>
+   <x>-6442.157187</x>
+   <y>14944.299442</y>
+  </pos>
+  <GFX>
+   <space>G01.png</space>
+   <exterior>mining5.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>G</class>
+   <population>1000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Greis has a tradition, and that tradition is that whichever Warlord controls the planet renames it after himself. This often causes confusion among spacers everywhere, who will refer to the world by names that have been rendered obsolete. The current warlord is a man named Harmstadt Greis. His rule isn't particularly benevolent, but he at least doesn't seem worse than most Dvaered Warlords.</description>
+   <bar>At the center of this spaceport bar stands a pillar, on which are displayed all the names that the planet has been known by, including the name of one unfortunate Warlord named Clerke, who was in control of this world for a little under four hours.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Gyrios II">
   <pos>
@@ -7091,6 +7154,43 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Heavy Weapons 1</item>
    <item>Low Tech Upgrades</item>
    <item>Basic Outfits 2</item>
+  </tech>
+ </asset>
+ <asset name="Onar">
+  <pos>
+   <x>20081.982211</x>
+   <y>-11605.752853</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>aquatic3.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>700000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Onar serves as one of House Dvaered's foremost weapons development facilities. The planet has a peculiar characteristic that causes its gravity to fluctuate from region to region, which makes for an ideal testing environment to test ballistic weaponry.</description>
+   <bar>Every visitor to Onar is required to check in at the spaceport bar immediately after landing. Nobody is allowed off the premises of the spaceport without a good reason, and even then they will be accompanied by an official Dvaered chaperone. Most visitors therefore find themselves confined to the spaceport bar.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 2</item>
+   <item>Heavy Weapons 1</item>
   </tech>
  </asset>
  <asset name="Onyx Shipyard">
@@ -10699,8 +10799,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Utsuwa">
   <pos>
-   <x>-1300.000000</x>
-   <y>-470.000000</y>
+   <x>-13000.000000</x>
+   <y>-4700.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
