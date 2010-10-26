@@ -182,7 +182,7 @@ function create()
    end
    
    --Messages
-   gui.mesgInit( screen_w - 400, 20, 140 )
+   gui.mesgInit( screen_w - 400, 20, 230 )
    
     -- Set FPS
    gui.fpsPos( screen_w - 50, screen_h - 40 - deffont_h )
@@ -270,7 +270,7 @@ end
 function update_system()
 end
 
-function renderBar( name, value, light, locked, prefix )
+function renderBar( name, value, light, locked, prefix, mod_x )
    local offsets = { 2, 2, 4, 54, 12, -2 } --Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
    
    local vars = { "col", "col_top", "x", "y", "icon" }
@@ -281,6 +281,7 @@ function renderBar( name, value, light, locked, prefix )
          _G[ "l_" .. v ] = _G[ v .. "_" .. name ]
       end
    end
+   l_x = l_x + mod_x
    icon_w, icon_h = l_icon:dim()
    
    if locked == true then
@@ -442,105 +443,108 @@ function render( dt )
       wbars_right = #wset
    end
    right_side_w = (bar_w + 6)*wbars_right - 1
-   gfx.renderTexRaw( ext_right, left_side_w - 10, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
-   gfx.renderTex( end_right, right_side_x + right_side_w, 0 )
+   gui_w = right_side_w + left_side_w - 10
+   if var.peek("gui_brushed_centered") then
+      mod_x = math.floor( (screen_w - gui_w)/2 )
+   else
+      mod_x = 0
+   end
+   gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, 0, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, 0 )
    
    for k=1,wbars_right do
-      renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6), bar_y )
+      renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6) + mod_x, bar_y )
    end
    if wbars_right ~= #wset then
       --Draw a popup of (theoretically) arbitrary size.
       amount = #wset - wbars_right
       height = math.ceil(amount/3. ) * (bar_h+6) - 3
-      gfx.renderTex( popup_bottom2, popup_right_x, popup_right_y )
-      gfx.renderTex( popup_top, popup_right_x, popup_right_y + 6 + height )
-      gfx.renderTexRaw( popup_body, popup_right_x, popup_right_y + 6, 165, height, 1, 1, 0, 0, 1, 1 )
-      gfx.renderTex( popup_bottom_side_left, popup_right_x + 7, popup_right_y )
-      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158, popup_right_y, -3, 19, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTex( popup_bottom2, popup_right_x + mod_x, popup_right_y )
+      gfx.renderTex( popup_top, popup_right_x + mod_x, popup_right_y + 6 + height )
+      gfx.renderTexRaw( popup_body, popup_right_x + mod_x, popup_right_y + 6, 165, height, 1, 1, 0, 0, 1, 1 )
+      gfx.renderTex( popup_bottom_side_left, popup_right_x + 7 + mod_x, popup_right_y )
+      gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y, -3, 19, 1, 1, 0, 0, 1, 1 )
       
       local drawn
       for i=1, (amount+1) do
          local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
          local y = math.floor( (i-1) / 3. ) * (bar_h+6) + 3 + popup_right_y
-         renderWeapBar( wset[ wbars_right + i ], x, y )
+         renderWeapBar( wset[ wbars_right + i ], x + mod_x, y )
       end
       for i=(amount+1), math.ceil( amount/3. )*3 do
          local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
          local y = math.floor( (i-1) / 3. ) * (bar_h+6) + 3 + popup_right_y
-         renderWeapBar( nil, x, y )
+         renderWeapBar( nil, x + mod_x, y )
       end
-      gfx.renderTex( popup_bottom, popup_right_x, popup_right_y - 5 )
+      gfx.renderTex( popup_bottom, popup_right_x + mod_x, popup_right_y - 5 )
    end
    
    --Main window left
-   gfx.renderTex( main, 0, 0 )
-   gui.radarRender( radar_x, radar_y )
+   gfx.renderTex( main, mod_x, 0 )
+   gui.radarRender( radar_x + mod_x, radar_y )
    
    if lockons > 0 then
-      gfx.renderTex( icon_lockons, 378, 50 )
+      gfx.renderTex( icon_lockons, 378 + mod_x, 50 )
    end
    if autonav then
-      gfx.renderTex( icon_autonav, 246, 52 )
+      gfx.renderTex( icon_autonav, 246 + mod_x, 52 )
    end
    
    for k, v in ipairs( bars ) do --bars = { "shield", "armour", "energy", "fuel" }, remember?
-      renderBar( v, _G[v] )
+      renderBar( v, _G[v], nil, nil, nil, mod_x )
    end
    
-   --Popup right
-   --gfx.renderTex( popup_empty, popup_left_x, popup_left_y )
-   --gfx.renderTex( popup_bottom, popup_left_x, popup_left_y - 5 )
    
    --Popup left
    if ptarget ~= nil then
       ta_detect, ta_fuzzy = pp:inrange(ptarget)
       
       if ta_detect then
-         gfx.renderTex( popup_pilot, popup_left_x, popup_left_y ) --Frame
+         gfx.renderTex( popup_pilot, popup_left_x + mod_x, popup_left_y ) --Frame
          
          --Target Image
-         gfx.renderTex( target_bg, target_image_x, target_image_y )
+         gfx.renderTex( target_bg, target_image_x + mod_x, target_image_y )
          ta_dist = pp:pos():dist(ptarget:pos())
          if not ta_fuzzy then
             ta_armour, ta_shield = ptarget:health()
             ta_energy = ptarget:energy()
             ta_name = ptarget:name()
-            gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2, target_image_y + target_image_h/2 - ta_gfx_draw_h/2, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, 1 )
-            renderBar( "shield", ta_shield, false, false, "target" )
-            renderBar( "armour", ta_armour, false, false, "target" )
-            renderBar( "energy", ta_energy, false, false, "target" )
-            renderField( ta_name, x_name, y_name, 86, col_text )
-            renderField( tostring( math.floor(ta_dist) ), x_dist, y_dist, 86,col_text )
+            gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2, ta_gfx_draw_w, ta_gfx_draw_h, 1, 1, 0, 0, 1, 1 )
+            renderBar( "shield", ta_shield, false, false, "target", mod_x )
+            renderBar( "armour", ta_armour, false, false, "target", mod_x )
+            renderBar( "energy", ta_energy, false, false, "target", mod_x )
+            renderField( ta_name, x_name + mod_x, y_name, 86, col_text )
+            renderField( tostring( math.floor(ta_dist) ), x_dist + mod_x, y_dist, 86,col_text )
          else
-            gfx.renderTex( question, target_image_x + target_image_w/2 - question_w/2, target_image_y + target_image_h/2 - question_h/2 )
-            renderBar( "shield", 0, false, true, "target" )
-            renderBar( "armour", 0, false, true, "target" )
-            renderBar( "energy", 0, false, true, "target" )
-            renderField( "Unknown", x_name, y_name, 86, col_unkn )
-            renderField( tostring( math.floor(ta_dist) ), x_dist, y_dist, 86, col_text )
+            gfx.renderTex( question, target_image_x + target_image_w/2 - question_w/2 + mod_x, target_image_y + target_image_h/2 - question_h/2 )
+            renderBar( "shield", 0, false, true, "target", mod_x )
+            renderBar( "armour", 0, false, true, "target", mod_x )
+            renderBar( "energy", 0, false, true, "target", mod_x )
+            renderField( "Unknown", x_name + mod_x, y_name, 86, col_unkn )
+            renderField( tostring( math.floor(ta_dist) ), x_dist + mod_x, y_dist, 86, col_text )
          end
          
-         gfx.renderTex( target_frame, target_image_x, target_image_y )
-         gfx.renderTex( target_sheen, target_image_x + 3, target_image_y + 32 )
+         gfx.renderTex( target_frame, target_image_x + mod_x, target_image_y )
+         gfx.renderTex( target_sheen, target_image_x + 3 + mod_x, target_image_y + 32 )
          
          --Speed Lights
          local value = math.floor( ptarget:vel():mod() * 7 / ta_stats.speed )
          if value > 7 then value=7 end
          for i=1, value do
-            gfx.renderTex( speed_light, x_speed - 5, y_speed - 3 + (i-1)*6 )
+            gfx.renderTex( speed_light, x_speed - 5 + mod_x, y_speed - 3 + (i-1)*6 )
          end
          if value < 7 then
             for i=value+1, 7 do
-            gfx.renderTex( speed_light_off, x_speed, y_speed + (i-1)*6 )
+            gfx.renderTex( speed_light_off, x_speed + mod_x, y_speed + (i-1)*6 )
             end
          end
       else
-         gfx.renderTex( popup_empty, popup_left_x, popup_left_y )
+         gfx.renderTex( popup_empty, popup_left_ + mod_xx, popup_left_y )
       end
    else
-      gfx.renderTex( popup_empty, popup_left_x, popup_left_y )
+      gfx.renderTex( popup_empty, popup_left_x + mod_x, popup_left_y )
    end   
-   gfx.renderTex( popup_bottom, popup_left_x, popup_left_y - 5 )
+   gfx.renderTex( popup_bottom, popup_left_x + mod_x, popup_left_y - 5 )
    
    --Top Bar
    gfx.renderTexRaw( top_bar, 0, tbar_y, screen_w, tbar_h, 1, 1, 0, 0, 1, 1 )
