@@ -569,7 +569,7 @@
   </pos>
   <GFX>
    <space>J04.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -910,7 +910,7 @@
   </pos>
   <GFX>
    <space>P03.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -1762,7 +1762,7 @@
   </pos>
   <GFX>
    <space>moon-M03.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -2286,7 +2286,7 @@
   </pos>
   <GFX>
    <space>J00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -2522,7 +2522,7 @@
   </pos>
   <GFX>
    <space>P01.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -3926,7 +3926,7 @@
   </pos>
   <GFX>
    <space>O00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -4268,7 +4268,7 @@
   </pos>
   <GFX>
    <space>A02.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -4312,7 +4312,7 @@
   </pos>
   <GFX>
    <space>I00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -4458,7 +4458,7 @@
   </pos>
   <GFX>
    <space>J00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -5167,7 +5167,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>O01.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -5593,7 +5593,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>M07.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -6505,7 +6505,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>I00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -6721,7 +6721,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>P01.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -7306,7 +7306,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M02.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -7328,7 +7328,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>J00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -8361,7 +8361,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-A00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -9087,7 +9087,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>J00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -9809,7 +9809,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>A03.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -9941,7 +9941,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M02.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -10150,7 +10150,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-P00.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -10441,7 +10441,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>J02.png</space>
-   <exterior>(null)</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
