@@ -1175,6 +1175,43 @@
    <item>Missiles 2</item>
   </tech>
  </asset>
+ <asset name="Buritt">
+  <pos>
+   <x>-22404.286775</x>
+   <y>-1801.715964</y>
+  </pos>
+  <GFX>
+   <space>M02.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>5000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Not as nice as Varia in the Darkstone system, Buritt is nevertheless a reasonably habitable world. You will find much of the Dvaered middle class here, such as it is. You will also find a large-scale pollution of the natural environment, but the Dvaered being Dvaered, no attempt is being made to address this.</description>
+   <bar>If this spaceport bar didn't play a locally produced, incessant, droning, brain-melting music, it would be quite a comfortable place to be. But it does, so it isn't.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Low Tech Upgrades</item>
+  </tech>
+ </asset>
  <asset name="Caladan">
   <pos>
    <x>-13061.286600</x>
@@ -4029,8 +4066,8 @@
  </asset>
  <asset name="Ginger II">
   <pos>
-   <x>160.000000</x>
-   <y>-1400.000000</y>
+   <x>1440.000000</x>
+   <y>-12600.000000</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -4051,8 +4088,8 @@
  </asset>
  <asset name="Ginger III">
   <pos>
-   <x>3490.000000</x>
-   <y>-710.000000</y>
+   <x>31410.000000</x>
+   <y>-6390.000000</y>
   </pos>
   <GFX>
    <space>moon-D00.png</space>
@@ -9554,7 +9591,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>2091.424297</y>
   </pos>
   <GFX>
-   <space>station-battlestation.png</space>
+   <space>station-fleetbase.png</space>
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
@@ -10373,8 +10410,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ullnorn">
   <pos>
-   <x>400.000000</x>
-   <y>500.000000</y>
+   <x>3600.000000</x>
+   <y>4500.000000</y>
   </pos>
   <GFX>
    <space>A00.png</space>
@@ -10923,8 +10960,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Verex I">
   <pos>
-   <x>-1760.000000</x>
-   <y>-3430.000000</y>
+   <x>-8578.407922</x>
+   <y>-15276.183128</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -10945,8 +10982,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Verex II">
   <pos>
-   <x>3530.000000</x>
-   <y>-370.000000</y>
+   <x>26475.000000</x>
+   <y>-2775.000000</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -10967,8 +11004,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Verex III">
   <pos>
-   <x>-280.000000</x>
-   <y>690.000000</y>
+   <x>-2100.000000</x>
+   <y>5175.000000</y>
   </pos>
   <GFX>
    <space>H01.png</space>
