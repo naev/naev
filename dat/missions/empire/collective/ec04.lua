@@ -75,8 +75,8 @@ function jump ()
       a = rnd.rnd() * 2 * math.pi
       swarm_position = vec2.new( d*math.cos(a), d*math.sin(a) )
       pilot.add("Collective Sml Swarm", nil, swarm_position)
-      misn.timerStart( "reinforcements", 3000 )
-      misn.timerStart( "drone_incoming", 9000 )
+      hook.timer(3000, "reinforcements")
+      hook.timer(9000, "drone_incoming")
    elseif factions[ "Collectvie" ] and factions[ "Collective" ] > 200 then
       pilot.add("Collective Sml Swarm")
       pilot.add("Collective Sml Swarm")
@@ -101,7 +101,7 @@ function drone_incoming ()
    local sys = system.cur()
    if sys == misn_target_sys then -- Not add indefinately
       pilot.add("Collective Sml Swarm")
-      misn.timerStart( "drone_incoming", 9000 )
+      hook.timer(9000, "drone_incoming")
    end
 end
 

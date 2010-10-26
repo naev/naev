@@ -88,7 +88,7 @@ static void mission_menu_update( unsigned int wid, char* str );
 /**
  * @brief Opens the information menu.
  */
-void menu_info (void)
+void menu_info( int window )
 {
    int w, h;
 
@@ -123,6 +123,9 @@ void menu_info (void)
    info_openStandings( info_windows[5] );
 
    menu_Open(MENU_INFO);
+
+   /* Set active window. */
+   window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 5, window ) );
 }
 /**
  * @brief Closes the information menu.

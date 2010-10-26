@@ -160,7 +160,7 @@ function enter_system()
          defend_system()
       elseif victory == true and defender == true then
          pilot.add( "Trader Koala", "def", player.pos(), false)
-         misn.timerStart( "ship_enters", 1000)
+         hook.timer(1000, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
          player.modFaction( "Empire", -3)
@@ -251,7 +251,7 @@ function add_cas_and_check()
          else
             victory = true
             player.msg( comm[6])  -- A few seconds after victory, the system is back under control
-            misn.timerStart( "victorious", 8000)
+            hook.timer(8000, "victorious")
             return
          end
       end
@@ -318,7 +318,7 @@ end
 function ship_enters()
 
       enter_vect = player.pos()
-      misn.timerStart( "congratulations", 1000)
+      hook.timer(1000, "congratulations")
 end
 function congratulations()
       tk.msg( title[4], string.format( text[4], player.ship(), system_name, planet_name))

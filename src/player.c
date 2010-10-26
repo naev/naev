@@ -217,10 +217,6 @@ void player_new (void)
 {
    int r;
 
-   /* to not segfault due to lack of environment */
-   memset( &player, 0, sizeof(Player_t) );
-   player_setFlag(PLAYER_CREATING);
-
    /* Set up GUI. */
    gui_setDefaults();
 
@@ -236,6 +232,10 @@ void player_new (void)
    space_clearKnown();
    land_cleanup();
    map_cleanup();
+
+   /* To not segfault due to lack of environment */
+   memset( &player, 0, sizeof(Player_t) );
+   player_setFlag(PLAYER_CREATING);
 
    player.name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
@@ -1197,10 +1197,34 @@ void player_weapSetPress( int id, int type )
 
 
 /**
+ * @brief Sets the player's target planet.
+ *
+ *    @param id Target planet or -1 if none should be selected.
+ */
+void player_targetPlanetSet( int id )
+{
+   int old;
+
+   if (id >= cur_system->nplanets) {
+      WARN("Trying to set player's planet target to invalid ID '%d'", id);
+      return;
+   }
+
+   old = player.p->nav_planet;
+   player.p->nav_planet = id;
+   if ((old != id) && (id >= 0))
+      player_playSound(snd_nav, 1);
+   gui_setNav();
+}
+
+
+/**
  * @brief Cycle through planet targets.
  */
 void player_targetPlanet (void)
 {
+   int id;
+
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
@@ -1211,24 +1235,22 @@ void player_targetPlanet (void)
    gui_forceBlink();
 
    /* Find next planet target. */
-   player.p->nav_planet++;
+   id = player.p->nav_planet+1;
    player_hyperspacePreempt(0);
-   while (player.p->nav_planet < cur_system->nplanets) {
+   while (id < cur_system->nplanets) {
 
       /* In range, target planet. */
-      if ((cur_system->planets[ player.p->nav_planet ]->real == ASSET_REAL)
-            && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
-         player_playSound(snd_nav, 1);
-         gui_setNav();
+      if ((cur_system->planets[ id ]->real == ASSET_REAL)
+            && pilot_inRangePlanet( player.p, id )) {
+         player_targetPlanetSet( id );
          return;
       }
 
-      player.p->nav_planet++;
+      id++;
    }
 
    /* Untarget if out of range. */
-   player.p->nav_planet = -1;
-   gui_setNav();
+   player_targetPlanetSet( -1 );
 }
 
 
@@ -1350,6 +1372,11 @@ void player_land (void)
 }
 
 
+/**
+ * @brief Sets the no land message.
+ *
+ *    @brief str Message to set when the playre is not allowed to land temporarily.
+ */
 void player_nolandMsg( const char *str )
 {
    if (str != NULL)
@@ -1360,30 +1387,55 @@ void player_nolandMsg( const char *str )
 
 
 /**
+ * @brief Sets the player's hyperspace target.
+ *
+ *    @param id ID of the hyperspace target.
+ */
+void player_targetHyperspaceSet( int id )
+{
+   int old;
+
+   if (id >= cur_system->njumps) {
+      WARN("Trying to set player's hyperspace target to invalid ID '%d'", id);
+      return;
+   }
+
+   old = player.p->nav_hyperspace;
+   player.p->nav_hyperspace = id;
+   if ((old != id) && (id >= 0))
+      player_playSound(snd_nav,1);
+   gui_setNav();
+}
+
+
+/**
  * @brief Gets a hyperspace target.
  */
 void player_targetHyperspace (void)
 {
+   int id;
+
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   player.p->nav_hyperspace++;
+   id = player.p->nav_hyperspace+1;
    map_clear(); /* clear the current map path */
 
-   if (player.p->nav_hyperspace >= cur_system->njumps) {
-      player.p->nav_hyperspace = -1;
+   if (id >= cur_system->njumps) {
+      id = -1;
       player_hyperspacePreempt(0);
    } else {
-      player_playSound(snd_nav,1);
       player_hyperspacePreempt(1);
    }
+
+   player_targetHyperspaceSet( id );
+
    /* Map gets special treatment if open. */
-   if (player.p->nav_hyperspace == -1)
+   if (id == -1)
       map_select( NULL , 0);
    else
-      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
-   gui_setNav();
+      map_select( cur_system->jumps[ id ].target, 0 );
 }
 
 /**
@@ -1623,6 +1675,24 @@ void player_soundResume (void)
 
 
 /**
+ * @brief Sets the player's target.
+ *
+ *    @param id Target to set for the player.
+ */
+void player_targetSet( unsigned int id )
+{
+   unsigned int old;
+   old = player.p->target;
+   player.p->target = id;
+   if ((old != id) && (player.p->target != PLAYER_ID)) {
+      gui_forceBlink();
+      player_playSound( snd_target, 1 );
+   }
+   gui_setTarget();
+}
+
+
+/**
  * @brief Targets the nearest hostile enemy to the player.
  */
 void player_targetHostile (void)
@@ -1652,13 +1722,7 @@ void player_targetHostile (void)
       }
    }
 
-   if ((tp != PLAYER_ID) && (tp != player.p->target)) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   }
-
-   player.p->target = tp;
-   gui_setTarget();
+   player_targetSet( tp );
 }
 
 
@@ -1669,13 +1733,7 @@ void player_targetHostile (void)
  */
 void player_targetNext( int mode )
 {
-   player.p->target = pilot_getNextID(player.p->target, mode);
-
-   if (player.p->target != PLAYER_ID) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   }
-   gui_setTarget();
+   player_targetSet( pilot_getNextID(player.p->target, mode) );
 }
 
 
@@ -1686,13 +1744,7 @@ void player_targetNext( int mode )
  */
 void player_targetPrev( int mode )
 {
-   player.p->target = pilot_getPrevID(player.p->target, mode);
-
-   if (player.p->target != PLAYER_ID) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   };
-   gui_setTarget();
+   player_targetSet( pilot_getPrevID(player.p->target, mode) );
 }
 
 
@@ -1711,8 +1763,7 @@ void player_targetClear (void)
    else if (player.p->target == PLAYER_ID)
       player.p->nav_planet = -1;
    else
-      player.p->target = PLAYER_ID;
-   gui_setTarget();
+      player_targetSet( PLAYER_ID );
    gui_setNav();
 }
 

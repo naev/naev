@@ -21,7 +21,7 @@ static int lst_mclick( Widget* lst, int button, int x, int y );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
-static Widget *lst_getWgt( const unsigned int wid, char* name );
+static Widget *lst_getWgt( const unsigned int wid, const char* name );
 static int lst_focus( Widget* lst, double bx, double by );
 static void lst_scroll( Widget* lst, int direction );
 
@@ -352,7 +352,7 @@ static void lst_scroll( Widget* lst, int direction )
 /**
  * @brief Gets the list widget.
  */
-static Widget *lst_getWgt( const unsigned int wid, char* name )
+static Widget *lst_getWgt( const unsigned int wid, const char* name )
 {
    Widget *wgt = window_getwgt(wid,name);
 
@@ -377,7 +377,7 @@ static Widget *lst_getWgt( const unsigned int wid, char* name )
  *
  * List includes Image Arrays.
  */
-char* toolkit_getList( const unsigned int wid, char* name )
+char* toolkit_getList( const unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -394,11 +394,11 @@ char* toolkit_getList( const unsigned int wid, char* name )
 /**
  * @brief Sets the list value by name.
  */
-char* toolkit_setList( const unsigned int wid, char* name, char* value )
+char* toolkit_setList( const unsigned int wid, const char* name, char* value )
 {
    int i;
    Widget *wgt = lst_getWgt( wid, name );
-   if (wgt == NULL)
+   if ((wgt == NULL) || (value==NULL))
       return NULL;
 
    for (i=0; i<wgt->dat.lst.noptions; i++) {
@@ -414,13 +414,29 @@ char* toolkit_setList( const unsigned int wid, char* name, char* value )
 
 
 /**
+ * @brief Sets the list value by position.
+ */
+char* toolkit_setListPos( const unsigned int wid, const char* name, int pos )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return NULL;
+
+   /* Set by pos. */
+   wgt->dat.lst.selected = CLAMP( 0, wgt->dat.lst.noptions-1, pos );
+   lst_scroll( wgt, 0 ); /* checks boundries and triggers callback */
+   return wgt->dat.lst.options[ wgt->dat.lst.selected ];
+}
+
+
+/**
  * @brief Get the position of current item in the list.
  *
  *    @param wid Window identifier where the list is.
  *    @param name Name of the list.
  *    @return The position in the list or -1 on error.
  */
-int toolkit_getListPos( const unsigned int wid, char* name )
+int toolkit_getListPos( const unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -428,5 +444,33 @@ int toolkit_getListPos( const unsigned int wid, char* name )
 
    return wgt->dat.lst.selected;
 }
+
+
+/**
+ * @brief Gets the offset of a list.
+ */
+int toolkit_getListOffset( const unsigned int wid, const char* name )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return -1;
+   
+   return wgt->dat.lst.pos;
+}
+
+
+/**
+ * @brief Sets the offset of a list.
+ */
+int toolkit_setListOffset( const unsigned int wid, const char* name, int off )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return -1;
+   
+   wgt->dat.lst.pos = off;
+   return 0;
+}
+
 
 

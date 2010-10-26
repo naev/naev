@@ -22,9 +22,9 @@ NAEV	     = naev$(EXEEXT)
 EXTRA_DIST = LICENSE extras naev.desktop
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
-.PHONY: docs help install-ndata VERSION
+.PHONY: docs help install-ndata
 
-all-local: $(NAEV)
+all-local: $(NAEV) VERSION
 
 $(NAEV):
 	@echo "  LN    $(NAEV)"

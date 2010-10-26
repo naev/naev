@@ -20,6 +20,8 @@
 #include "gui.h"
 #include "gui_osd.h"
 #include "nlua_tex.h"
+#include "menu.h"
+#include "info.h"
 
 
 /* GUI methods. */
@@ -31,6 +33,10 @@ static int guiL_radarInit( lua_State *L );
 static int guiL_radarRender( lua_State *L );
 static int guiL_targetPlanetGFX( lua_State *L );
 static int guiL_targetPilotGFX( lua_State *L );
+static int guiL_mouseClickEnable( lua_State *L );
+static int guiL_mouseMoveEnable( lua_State *L );
+static int guiL_menuInfo( lua_State *L );
+static int guiL_menuSmall( lua_State *L );
 static const luaL_reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
@@ -40,6 +46,10 @@ static const luaL_reg guiL_methods[] = {
    { "radarRender", guiL_radarRender },
    { "targetPlanetGFX", guiL_targetPlanetGFX },
    { "targetPilotGFX", guiL_targetPilotGFX },
+   { "mouseClickEnable", guiL_mouseClickEnable },
+   { "mouseMoveEnable", guiL_mouseMoveEnable },
+   { "menuInfo", guiL_menuInfo },
+   { "menuSmall", guiL_menuSmall },
    {0,0}
 }; /**< GUI methods. */
 
@@ -256,4 +266,119 @@ static int guiL_targetPilotGFX( lua_State *L )
    gui_targetPilotGFX( lt->tex );
    return 0;
 }
+
+
+/**
+ * @brief Enables mouse clicking callback.
+ *
+ * It enables recieving mouse clicks with a callback function like:<br />
+ * function mouse_click( button, x, y, state ) <br />
+ * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
+ *
+ *    @luaparam enable Whether or not to enable the mouse click callback.
+ * @luafunc mouseClickEnable()
+ */
+static int guiL_mouseClickEnable( lua_State *L )
+{
+   int b;
+   if (lua_gettop(L) > 0)
+      b = lua_toboolean(L,1);
+   else
+      b = 1;
+   gui_mouseClickEnable( b );
+   return 0;
+}
+
+
+/**
+ * @brief Enables mouse movement callback.
+ *
+ * It enables recieving mouse movements with a callback function like:<br />
+ * function mouse_move( x, y ) <br />
+ * With x/y being the position of the mouse.
+ *
+ *    @luaparam enable Whether or not to enable the mouse movement callback.
+ * @luafunc mouseMoveEnable()
+ */
+static int guiL_mouseMoveEnable( lua_State *L )
+{
+   int b;
+   if (lua_gettop(L) > 0)
+      b = lua_toboolean(L,1);
+   else
+      b = 1;
+   gui_mouseMoveEnable( b );
+   return 0;
+}
+
+
+/**
+ * @brief Opens the info menu window.
+ *
+ * Possible window targets are: <br />
+ *  - "main" : Main window.<br />
+ *  - "ship" : Ship info window.<br />
+ *  - "weapons" : Weapon configuration window.<br />
+ *  - "cargo" : Cargo view window.<br />
+ *  - "missions" : Mission view window.<br />
+ *  - "standings" : Standings view window.<br />
+ *
+ * @usage gui.menuInfo( "ship" ) -- Opens ship tab
+ *
+ *    @luaparam window Optional window parameter indicating the tab to open at.
+ * @luafunc menuInfo( window )
+ */
+static int guiL_menuInfo( lua_State *L )
+{
+   const char *str;
+   int window;
+
+   if (menu_open)
+      return 0;
+
+   if (lua_gettop(L) > 0)
+      str = luaL_checkstring(L,1);
+   else {
+      /* No parameter. */
+      menu_info( INFO_MAIN );
+      return 0;
+   }
+
+   /* Parse string. */
+   if (strcasecmp( str, "main" )==0)
+      window = INFO_MAIN;
+   else if (strcasecmp( str, "ship" )==0)
+      window = INFO_SHIP;
+   else if (strcasecmp( str, "weapons" )==0)
+      window = INFO_WEAPONS;
+   else if (strcasecmp( str, "cargo" )==0)
+      window = INFO_CARGO;
+   else if (strcasecmp( str, "missions" )==0)
+      window = INFO_MISSIONS;
+   else if (strcasecmp( str, "standings" )==0)
+      window = INFO_STANDINGS;
+
+   /* Open window. */
+   menu_info( window );
+
+   return 0;
+}
+
+
+/**
+ * @brief Opens the small menu window.
+ *
+ * @usage gui.menuSmall()
+ *
+ * @luafunc menuSmall()
+ */
+static int guiL_menuSmall( lua_State *L )
+{
+   (void) L;
+   if (menu_open)
+      return 0;
+   menu_small();
+   return 0;
+}
+
 

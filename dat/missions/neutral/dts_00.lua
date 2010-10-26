@@ -150,7 +150,7 @@ function enter_system()
       if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
-         misn.timerStart( "ship_enters", 1000)
+         hook.timer(1000, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
          player.modFaction( "Empire", -3)
@@ -223,7 +223,7 @@ function add_cas_and_check()
          if victory ~= true then   -- A few seconds after the raiders start to flee declare victory
             victory = true
             player.msg( comm[6])
-            misn.timerStart( "victorious", 8000)
+            hook.timer(8000, "victorious")
          end
       end
 
@@ -257,7 +257,7 @@ function ship_enters()
 
       enter_vect = player.pos()
       pilot.add("Trader Mule", "def", enter_vect:add( 10, 10), true)
-      misn.timerStart( "congratulations", 1000)
+      hook.timer(1000, "congratulations")
 end
 function congratulations()
       tk.msg( title[4], string.format( text[4], system_name))

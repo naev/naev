@@ -32,6 +32,7 @@
 #include "ai_extra.h"
 #include "nlua_col.h"
 #include "weapon.h"
+#include "gui.h"
 
 
 /*
@@ -2875,6 +2876,8 @@ static int pilotL_land( lua_State *L )
       p->nav_planet = i;
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &pnt->pos );
+      if (p->id == PLAYER_ID)
+         gui_setNav();
 
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;

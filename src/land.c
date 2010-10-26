@@ -422,7 +422,7 @@ void land_errDialogueBuild( const char *fmt, ... )
    }
 
    if (errorlist_ptr == NULL) { /* Initialize on first run. */
-      errorappend = snprintf( errorlist, sizeof(errorlist), errorreason);
+      errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
       errorlist_ptr = errorlist;
    }
    else { /* Append newest error to the existing list. */

@@ -79,7 +79,6 @@ static void pilot_dead( Pilot* p, unsigned int killer );
 /* misc */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-extern int landtarget; /* From player.c  */
 
 
 /**
@@ -284,12 +283,26 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  */
 unsigned int pilot_getNearestPilot( const Pilot* p )
 {
+   return pilot_getNearestPos( p, p->solid->pos.x, p->solid->pos.y, 0 );
+}
+
+
+/**
+ * @brief Get the nearest pilot to a pilot from a certain position.
+ *
+ *    @param p Pilot to get his nearest pilot.
+ *    @param x X position to calculate from.
+ *    @param y Y position to calculate from.
+ *    @return The nearest pilot.
+ */
+unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled )
+{
    unsigned int tp;
    int i;
    double d, td;
 
-   tp=PLAYER_ID;
-   d=0;
+   tp = PLAYER_ID;
+   d  = 0;
    for (i=0; i<pilot_nstack; i++) {
       if (pilot_stack[i] == p)
          continue;
@@ -300,18 +313,24 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
          continue;
 
       /* Shouldn't be disabled. */
-      if (pilot_isDisabled(pilot_stack[i]))
+      if (!disabled && pilot_isDisabled(pilot_stack[i]))
          continue;
 
       /* Shouldn't be invisible. */
       if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
          continue;
 
+      /* Shouldn't be dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DEAD) ||
+            pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
+
       /* Must be in range. */
       if (!pilot_inRangePilot( p, pilot_stack[i] ))
          continue;
 
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
+      /* Minimum distance. */
+      td = pow2(x-pilot_stack[i]->solid->pos.x) + pow2(y-pilot_stack[i]->solid->pos.y);
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
          tp = pilot_stack[i]->id;
@@ -1155,7 +1174,7 @@ void pilot_update( Pilot* pilot, const double dt )
    else if (pilot_isFlag(pilot,PILOT_LANDING)) {
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
-            land( cur_system->planets[ landtarget ], 0 );
+            land( cur_system->planets[ pilot->nav_planet ], 0 );
             pilot->ptimer = 0.;
          }
          else

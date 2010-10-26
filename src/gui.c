@@ -100,6 +100,8 @@ extern int map_npath; /**< @todo remove. */
  * GUI Lua stuff.
  */
 static lua_State *gui_L; /**< Current GUI lua State. */
+static int gui_L_mclick = 0; /**< Use mouse click callback. */
+static int gui_L_mmove = 0; /**< Use mouse movement callback. */
 
 
 /**
@@ -195,7 +197,7 @@ static void gui_calcBorders (void);
 /* Lua GUI. */
 static int gui_doFunc( const char* func );
 static int gui_prepFunc( const char* func );
-static int gui_runFunc( const char* func, int nargs );
+static int gui_runFunc( const char* func, int nargs, int nret );
 
 
 
@@ -840,7 +842,7 @@ void gui_render( double dt )
    if (gui_L != NULL) {
       gui_prepFunc( "render" );
       lua_pushnumber( gui_L, dt );
-      gui_runFunc( "render", 1 );
+      gui_runFunc( "render", 1, 0 );
    }
 
    /* Messages. */
@@ -1200,7 +1202,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
-      if (blink_pilot > RADAR_BLINK_PILOT/2.) {
+      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
          for (i=0; i<8; i++) {
             colours[4*i + 0] = cRadar_tPilot.r;
@@ -1256,7 +1258,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
-   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot > RADAR_BLINK_PILOT/2.))
+   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot < RADAR_BLINK_PILOT/2.))
       col = &cRadar_hilight;
    else
       col = gui_getPilotColour(p);
@@ -1340,7 +1342,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
    GLfloat vertex[8*2], colours[8*4];
    int i, curs;
 
-   if (blink_planet > RADAR_BLINK_PLANET/2.) {
+   if (blink_planet < RADAR_BLINK_PLANET/2.) {
       curs = 0;
       vx = cx-vr;
       vy = cy+vr;
@@ -1785,7 +1787,7 @@ int gui_init (void)
 static int gui_doFunc( const char* func )
 {
    gui_prepFunc( func );
-   return gui_runFunc( func, 0 );
+   return gui_runFunc( func, 0, 0 );
 }
 
 
@@ -1815,7 +1817,7 @@ static int gui_prepFunc( const char* func )
 /**
  * @brief Runs a function.
  */
-static int gui_runFunc( const char* func, int nargs )
+static int gui_runFunc( const char* func, int nargs, int nret )
 {
    int ret;
    const char* err;
@@ -1825,7 +1827,7 @@ static int gui_runFunc( const char* func, int nargs )
    L = gui_L;
 
    /* Run the function. */
-   ret = lua_pcall( L, nargs, 0, 0 );
+   ret = lua_pcall( L, nargs, nret, 0 );
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
@@ -2052,6 +2054,10 @@ void gui_cleanup (void)
 {
    int i;
 
+   /* Disable mouse voodoo. */
+   gui_mouseClickEnable( 0 );
+   gui_mouseMoveEnable( 0 );
+
    /* Interference. */
    for (i=0; i<INTERFERENCE_LAYERS; i++) {
       if (gui_radar.interference[i] != NULL) {
@@ -2175,4 +2181,70 @@ void gui_targetPilotGFX( glTexture *gfx )
       gl_freeTexture( gui_target_pilot );
    gui_target_pilot = gl_dupTexture( gfx );
 }
+
+
+/**
+ * @brief Handles GUI events.
+ */
+int gui_handleEvent( SDL_Event *evt )
+{
+   int ret;
+   int x, y;
+
+   switch (evt->type) {
+      /* Mouse motion. */
+      case SDL_MOUSEMOTION:
+         if (!gui_L_mmove)
+            break;
+         gui_prepFunc( "mouse_move" );
+         gl_windowToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
+         lua_pushnumber( gui_L, x );
+         lua_pushnumber( gui_L, y );
+         gui_runFunc( "mouse_move", 2, 0 );
+         ret = 0;
+         break;
+
+      /* Mouse click. */
+      case SDL_MOUSEBUTTONDOWN:
+      case SDL_MOUSEBUTTONUP:
+         if (!gui_L_mclick)
+            break;
+         gui_prepFunc( "mouse_click" );
+         lua_pushnumber( gui_L, evt->button.button+1 );
+         gl_windowToScreenPos( &x, &y, evt->button.x, evt->button.y );
+         lua_pushnumber( gui_L, x );
+         lua_pushnumber( gui_L, y );
+         lua_pushboolean( gui_L, (evt->type==SDL_MOUSEBUTTONDOWN) );
+         gui_runFunc( "mouse_click", 4, 1 );
+         ret = lua_toboolean( gui_L, -1 );
+         lua_pop( gui_L, 1 );
+         break;
+
+      /* Not interested in the rest. */
+      default:
+         ret = 0;
+         break;
+   }
+   return ret;
+}
+
+
+/**
+ * @brief Enables the mouse click callback.
+ */
+void gui_mouseClickEnable( int enable )
+{
+   gui_L_mclick = enable;
+}
+
+
+/**
+ * @brief Enables the mouse movement callback.
+ */
+void gui_mouseMoveEnable( int enable )
+{
+   gui_L_mmove = enable;
+}
+
+
 
