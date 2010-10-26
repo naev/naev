@@ -180,14 +180,15 @@ function create()
       buttons[v] = { x=tbar_center_x-116+(k-1)*60, y=buttons_y, w=buttons_w, h=buttons_h, state="default", icon=_G[ "icon_" .. v ], action=_G["action_" .. v ] }
       buttons[v]["icon_w"], buttons[v]["icon_h"] = _G[ "icon_" .. v]:dim()
    end
+   
    --Messages
-   gui.mesgInit( screen_w - 400, 20, screen_h - 360 )
+   gui.mesgInit( screen_w - 400, 20, 140 )
    
     -- Set FPS
-   gui.fpsPos( 30, screen_h - 50 - deffont_h )
+   gui.fpsPos( screen_w - 50, screen_h - 40 - deffont_h )
 
    -- Set OSD
-   gui.osdInit( 30, screen_h - 30, 150, 300 )
+   gui.osdInit( 30, screen_h - 50, 150, 300 )
    
    first_time = { true, 2 }
    
