@@ -582,7 +582,7 @@
  </ssys>
  <ssys name="Beeklo">
   <general>
-   <radius>3500.000000</radius>
+   <radius>23100.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -593,8 +593,10 @@
    <y>-573.000000</y>
   </pos>
   <assets>
+   <asset>Adham</asset>
    <asset>Beeklo II</asset>
-   <asset>Beeklo III</asset>
+   <asset>Diabolos</asset>
+   <asset>Icarus</asset>
    <asset>Totoran</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Civilian Standard</asset>
@@ -602,14 +604,14 @@
   </assets>
   <jumps>
    <jump target="Darkstone">
-    <pos x="-2956.866764" y="1872.682284"/>
+    <pos x="-19515.320645" y="12359.703075"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dvaer">
-    <pos x="-3098.074927" y="-1628.475282"/>
+    <pos x="-20447.294520" y="-10747.936863"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -1238,7 +1240,7 @@
  </ssys>
  <ssys name="Darkstone">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1251,6 +1253,7 @@
   <assets>
    <asset>Darkstone IV</asset>
    <asset>Darkstone V</asset>
+   <asset>Sheik Hall</asset>
    <asset>Stalwart Station</asset>
    <asset>Varia</asset>
    <asset>Virtual Civilian Standard</asset>
@@ -1258,14 +1261,14 @@
   </assets>
   <jumps>
    <jump target="Beeklo">
-    <pos x="2956.866764" y="-1872.682284"/>
+    <pos x="20698.067351" y="-13108.775989"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Verex">
-    <pos x="1095.057512" y="3324.281734"/>
+    <pos x="7665.402586" y="23269.972136"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

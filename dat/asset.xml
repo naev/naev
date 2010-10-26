@@ -1,5 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
+ <asset name="Adham">
+  <pos>
+   <x>27913.769923</x>
+   <y>5174.627773</y>
+  </pos>
+  <GFX>
+   <space>P03.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>P</class>
+   <population>0</population>
+   <services>
+    <land/>
+   </services>
+   <commodities/>
+   <description>Adham is a cold, lifeless planet. The only reason why there is a landing strip here at all is that the planet hosts the three arctic-themed arenas for Totoran's gladiatiorial games. While the landing zone and a small buffer around it is considered neutral territory, most of the planet's surface is subject to the destructive sport that is so popular among Totoran's visitors.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Aesir IV">
   <pos>
    <x>1500.000000</x>
@@ -923,34 +948,12 @@
  </asset>
  <asset name="Beeklo II">
   <pos>
-   <x>-140.000000</x>
-   <y>3270.000000</y>
+   <x>-924.000000</x>
+   <y>21582.000000</y>
   </pos>
   <GFX>
    <space>G00.png</space>
    <exterior>snow.png</exterior>
-  </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
- <asset name="Beeklo III">
-  <pos>
-   <x>600.000000</x>
-   <y>560.000000</y>
-  </pos>
-  <GFX>
-   <space>P03.png</space>
-   <exterior>(null)</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -1845,8 +1848,8 @@
  </asset>
  <asset name="Darkstone IV">
   <pos>
-   <x>2070.000000</x>
-   <y>990.000000</y>
+   <x>14490.000000</x>
+   <y>6930.000000</y>
   </pos>
   <GFX>
    <space>P03.png</space>
@@ -1867,8 +1870,8 @@
  </asset>
  <asset name="Darkstone V">
   <pos>
-   <x>5580.000000</x>
-   <y>1030.000000</y>
+   <x>24733.275403</x>
+   <y>19602.538851</y>
   </pos>
   <GFX>
    <space>moon-J00.png</space>
@@ -1982,6 +1985,31 @@
    <services/>
    <commodities/>
    <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Diabolos">
+  <pos>
+   <x>12182.413409</x>
+   <y>-6354.687071</y>
+  </pos>
+  <GFX>
+   <space>station-sphere.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land/>
+   </services>
+   <commodities/>
+   <description>Diabolos station was constructed especially for the sport that made Totoran famous. The station sports two separate arenas. The first one is a deadly, three dimensional labyrinth filled with dangerous traps and obstacles. It fills most of the station's bulk. The second arena is actually space itself. Gladiators fight in lifesuits on the outer hull of the station, without lifelines.</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -4704,6 +4732,31 @@
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
   </tech>
+ </asset>
+ <asset name="Icarus">
+  <pos>
+   <x>-3624.623724</x>
+   <y>-1715.052669</y>
+  </pos>
+  <GFX>
+   <space>A00.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services>
+    <land/>
+   </services>
+   <commodities/>
+   <description>Named after the figure from Greek mythology, Icarus is a hot world with extreme seismic activity. This makes it the perfect location for some of Totoran's volcanic-themed arenas. Gladiators fighting on Icarus have as much to fear from the environment as they have from each other, and the most spectacular kills made in the arenas here involve the unstable terrain itself.</description>
+   <bar>(null)</bar>
+  </general>
  </asset>
  <asset name="Imk">
   <pos>
@@ -9171,6 +9224,36 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Sheik Hall">
+  <pos>
+   <x>37294.924364</x>
+   <y>5095.314814</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>Y</class>
+   <population>400000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>Since well before the rise of House Dvaered, Sheik Hall has been an important exporter of precious metals and valuable minerals. The people on this planet make their living by mining those resources, and crafting jewellery out of them. Though the planet's raw output isn't very high by any standard, the amount of money involved is on par with a medium-sized mining colony.</description>
+   <bar>The bar is ornately decorated with all that glitters and gleams. Of course, everything you can see here is a replica, as the real valuables are all shipped offworld. Nevertheless, it's attractive to pretend that you're surrounded by riches for a moment.</bar>
+  </general>
+ </asset>
  <asset name="Shiarta">
   <pos>
    <x>3548.820120</x>
@@ -9467,11 +9550,11 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Stalwart Station">
   <pos>
-   <x>-720.000000</x>
-   <y>-130.000000</y>
+   <x>19653.539772</x>
+   <y>2091.424297</y>
   </pos>
   <GFX>
-   <space>003.png</space>
+   <space>station-battlestation.png</space>
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
@@ -10058,8 +10141,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Totoran">
   <pos>
-   <x>3280.000000</x>
-   <y>5020.000000</y>
+   <x>21648.000000</x>
+   <y>33132.000000</y>
   </pos>
   <GFX>
    <space>M06.png</space>
@@ -10779,8 +10862,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Varia">
   <pos>
-   <x>-2350.000000</x>
-   <y>-730.000000</y>
+   <x>-9713.888889</x>
+   <y>-290.555556</y>
   </pos>
   <GFX>
    <space>M04.png</space>
