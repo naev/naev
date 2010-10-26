@@ -1,4 +1,4 @@
-
+--[[
 
    MISSION: Defend the System 3
    DESCRIPTION: A mission to defend the system against swarm of pirate ships.
