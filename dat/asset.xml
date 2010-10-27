@@ -1751,6 +1751,7 @@
     <land/>
     <bar/>
    </services>
+   <commodities/>
    <description>Even before House Dvaered gained its independence, there were unofficial news channels that fueled the discontent among the Imperial labor force. Later, after their work was done, these channels pooled their resources to establish the Dvaered News Network, or DVNN. This station serves as the main nexus for all Dvaered mass media. As such it is coveted by many a Warlord, but Dvaered High Command makes sure that the station remains firmly under its control.</description>
    <bar>Spaceport bar, waiting lounge, interview room, this facility is everythign at once. It's the only place accessible to non-DVNN personnel, so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
   </general>
@@ -4134,6 +4135,43 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Ginni">
+  <pos>
+   <x>4951.946517</x>
+   <y>16999.507498</y>
+  </pos>
+  <GFX>
+   <space>M00.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>1000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Somewhat unusually in Dvaered space, Ginni is primarily a crop growing world. Though most Dvaered worlds trace their lineage to either mining or industrial roots, Ginni was a food producer even in the days when the Empire was still in control. Hoewever, with the change in political influence throughout the region, Ginni's government wisely chose to ally with the Dvaered movement.</description>
+   <bar>A lot of planetside spaceport bars have windows that give visitors a glance of the immediate environment, but the one on Ginni does not. This is because the sunlight on Ginni can get rather intense, and it was cheaper to build a wall than an automatically adjusting viewport. Besides, there's not too much to see anyway.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Goddard III">
   <pos>
@@ -9914,8 +9952,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tarsus II">
   <pos>
-   <x>50.000000</x>
-   <y>-1040.000000</y>
+   <x>7214.700991</x>
+   <y>-6928.427760</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -9932,6 +9970,30 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Tarsus Station">
+  <pos>
+   <x>-8814.746224</x>
+   <y>-7876.111106</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>3000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <description>Tarsus Station is a Dvaered military base. It was constructed shortly after the Incident, when piracy and the FLF began to gain in power. Tarsus Station serves as one of the key fortifications in the defense of the Dvaered core systems.</description>
   </general>
  </asset>
  <asset name="Tau Prime">
@@ -10862,8 +10924,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Valt">
   <pos>
-   <x>-4330.000000</x>
-   <y>1780.000000</y>
+   <x>-15997.361111</x>
+   <y>4217.808642</y>
   </pos>
   <GFX>
    <space>K00.png</space>
