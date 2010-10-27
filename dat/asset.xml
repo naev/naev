@@ -670,24 +670,35 @@
  </asset>
  <asset name="Arck">
   <pos>
-   <x>1960.000000</x>
-   <y>-5210.000000</y>
+   <x>16660.000000</x>
+   <y>-44285.000000</y>
   </pos>
   <GFX>
    <space>M01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>9000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <description>With nine billion inhabitants, Arck is one of the most densely populated worlds in the galaxy. Most of the planet's surface is covered by a gigantic, sprawling city. Naturally, with so much inhabitation comes massive environmental pollution, and many skeptics believe that what the Dvaered are doing here is a form of reverse terraforming - an attempt to turn Arck into an X class planet.</description>
+   <bar>The spaceport on Arck is located right in the middle of a particularly densely populated urban center. The associated spaceport bar has been expanded and turned into a general leisure facility for the local inhabitants, something that often irritates traders who come here to do business, only to find themselves in the middle of a Dvaered Turborave party.</bar>
   </general>
  </asset>
  <asset name="Arcturus Gamma">
@@ -2485,6 +2496,42 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Duran Shipyard">
+  <pos>
+   <x>-18818.062085</x>
+   <y>5049.507873</y>
+  </pos>
+  <GFX>
+   <space>station-shipyard.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1500</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Duran Shipyard produces light support craft used by the Dvaered military machine. It also has a line of civilian and cargo ships which it makes available to retailers and consumers. Since the ships produced here are combat-ready and the facility always has at least one completed squadron standing by, Duran Shipyard is an important contributor to the stability in the region.</description>
+   <bar>The spacedock bar provides visitors with a view over part of the assembly line. It is quite impressive to see a spacecraft being built, even if it is only a relatively small one.</bar>
+  </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Trade Ships</item>
+  </tech>
  </asset>
  <asset name="Durea">
   <pos>
@@ -4382,6 +4429,37 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Haldr">
+  <pos>
+   <x>-37613.741097</x>
+   <y>16722.733181</y>
+  </pos>
+  <GFX>
+   <space>X01.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>X</class>
+   <population>1000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Haldr ranks quite high on the official list of "most unpleasant inhabited planets in the galaxy", which is compiled at regular intervals by the Gilligan Foundation. Indeed, even the most optimistic space traveler would be hard pressed to find a good reason why anyone would want to come to Haldr, let alone stay there. As it turns out, Dvaered High Command has such a reason: Haldr serves as a training grounds for Dvaered military recruits. Though many an upcoming soldier finds death on the radioactive surface of Haldr, those who survive make for tough fighters indeed.</description>
+   <bar>To get into Haldr's bar, you first have to undergo a rigorous decontamination procedure, even when you're coming straight from the spaceport dock. This fact has made more than a few visitors so uneasy that they never want to visit Haldr again.</bar>
+  </general>
+ </asset>
  <asset name="Haleb IV">
   <pos>
    <x>-1467.278204</x>
@@ -6096,8 +6174,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Massia I">
   <pos>
-   <x>1890.000000</x>
-   <y>1410.000000</y>
+   <x>16065.000000</x>
+   <y>11985.000000</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -6118,8 +6196,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Massia IV">
   <pos>
-   <x>-390.000000</x>
-   <y>-1900.000000</y>
+   <x>-1188.509825</x>
+   <y>-19151.312082</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -6140,8 +6218,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Massia IVa">
   <pos>
-   <x>-160.000000</x>
-   <y>-2220.000000</y>
+   <x>-1360.000000</x>
+   <y>-18870.000000</y>
   </pos>
   <GFX>
    <space>moon-G01.png</space>
@@ -9661,8 +9739,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sinclair">
   <pos>
-   <x>-4470.000000</x>
-   <y>-3380.000000</y>
+   <x>-37995.000000</x>
+   <y>-28730.000000</y>
   </pos>
   <GFX>
    <space>M00.png</space>
