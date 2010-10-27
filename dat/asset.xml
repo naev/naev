@@ -2166,6 +2166,45 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Donnar">
+  <pos>
+   <x>23841.859354</x>
+   <y>5606.161715</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>G</class>
+   <population>2000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Despite not officially classifying as habitable, the Dvaered have settled on Donnar in sufficient numbers to give the planet the status of civilian world. Though the soil is barely fertile and the atmosphere is less than pleasant for even the most hardy plant life, Donnar has the major advantage of having almost no seismic activity at all. And as many a colony prospector can tell you, a stable planet is a good planet.</description>
+   <bar>Donnar has something unusual to offer to offworlders. The spaceport bar is constructed like an arena, with the spectator area fulfilling the functions that most other spaceport bars do, and the central area serving as the stage for entertainment of all kinds, ranging from fights to displays of art. The concept is rather ingenious, and many a spacer is as astonished at the display as they are at the fact that the Dvaered came up with this idea.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>High Tech Upgrades 1</item>
+  </tech>
+ </asset>
  <asset name="Doranthex Prime">
   <pos>
    <x>1090.000000</x>
@@ -5261,8 +5300,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Klantar I">
   <pos>
-   <x>-650.000000</x>
-   <y>5660.000000</y>
+   <x>-3510.000000</x>
+   <y>30564.000000</y>
   </pos>
   <GFX>
    <space>O00.png</space>
@@ -5283,8 +5322,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Klantar III">
   <pos>
-   <x>530.000000</x>
-   <y>-1020.000000</y>
+   <x>2862.000000</x>
+   <y>-5508.000000</y>
   </pos>
   <GFX>
    <space>J01.png</space>
@@ -6861,8 +6900,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Nor">
   <pos>
-   <x>990.000000</x>
-   <y>2630.000000</y>
+   <x>7315.200103</x>
+   <y>12594.489712</y>
   </pos>
   <GFX>
    <space>J03.png</space>
@@ -9993,7 +10032,9 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <land/>
     <refuel/>
    </services>
+   <commodities/>
    <description>Tarsus Station is a Dvaered military base. It was constructed shortly after the Incident, when piracy and the FLF began to gain in power. Tarsus Station serves as one of the key fortifications in the defense of the Dvaered core systems.</description>
+   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Tau Prime">
@@ -10476,8 +10517,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tuur">
   <pos>
-   <x>1500.000000</x>
-   <y>2230.000000</y>
+   <x>8100.000000</x>
+   <y>12042.000000</y>
   </pos>
   <GFX>
    <space>moon-O00.png</space>
