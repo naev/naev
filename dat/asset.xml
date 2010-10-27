@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -684,7 +684,7 @@
   </presence>
   <general>
    <class>M</class>
-   <population>9000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -2218,8 +2218,8 @@
  </asset>
  <asset name="Doranthex Prime">
   <pos>
-   <x>1090.000000</x>
-   <y>3610.000000</y>
+   <x>117.333333</x>
+   <y>21686.000000</y>
   </pos>
   <GFX>
    <space>A01.png</space>
@@ -2249,8 +2249,8 @@
  </asset>
  <asset name="Doranthex Secundus">
   <pos>
-   <x>-133.255101</x>
-   <y>-59.953061</y>
+   <x>-6012.936081</x>
+   <y>-8361.449225</y>
   </pos>
   <GFX>
    <space>I01.png</space>
@@ -9317,8 +9317,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Secundus Alpha">
   <pos>
-   <x>25.571416</x>
-   <y>-329.389789</y>
+   <x>-5661.834142</x>
+   <y>-8745.660854</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>
@@ -9339,8 +9339,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Secundus Beta">
   <pos>
-   <x>237.777563</x>
-   <y>-612.863297</y>
+   <x>-5438.015437</x>
+   <y>-8994.293636</y>
   </pos>
   <GFX>
    <space>moon-H01.png</space>

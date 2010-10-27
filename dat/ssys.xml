@@ -1526,7 +1526,7 @@
  </ssys>
  <ssys name="Doranthex">
   <general>
-   <radius>3500.000000</radius>
+   <radius>26600.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1547,33 +1547,33 @@
   </assets>
   <jumps>
    <jump target="Dakron">
-    <pos x="3456.936485" y="-547.348277"/>
+    <pos x="26272.717289" y="-4159.846904"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ogat">
-    <pos x="-3440.297545" y="4056.167688"/>
+    <pos x="-26146.261342" y="30826.874429"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tarsus">
-    <pos x="1792.974054" y="-3005.868267"/>
+    <pos x="13626.602812" y="-22844.598832"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Torg">
-    <pos x="-3047.885082" y="-1720.580288"/>
+    <pos x="-23163.926622" y="-13076.410190"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tuoladis">
-    <pos x="2673.636329" y="6057.359211"/>
+    <pos x="11836.302770" y="31893.263337"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
