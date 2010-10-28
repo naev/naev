@@ -710,6 +710,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel_max      = pilot->ship->fuel;
    pilot->armour_regen  = pilot->ship->armour_regen;
    pilot->shield_regen  = pilot->ship->shield_regen;
+   /* Absorption. */
+   pilot->dmg_absorb    = pilot->ship->dmg_absorb;
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;

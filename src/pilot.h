@@ -272,6 +272,7 @@ typedef struct Pilot_ {
    double fuel_max; /**< Maximum fuel. */
    double armour_regen; /**< Armour regeneration rate (per second). */
    double shield_regen; /**< Shield regeneration rate (per second). */
+   double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
 
    /* Energy is handled a bit differently. */
    double energy; /**< Current energy. */
@@ -394,9 +395,10 @@ int pilot_getJumps( const Pilot* p );
  * Combat.
  */
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage );
+      const DamageType dtype, const double damage, const double penetration );
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, const Pilot *parent );
+      DamageType dtype, double damage, 
+      double penetration, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 
 

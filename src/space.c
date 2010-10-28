@@ -838,7 +838,7 @@ void space_update( const double dt )
             return; /* Invisible pilots (player, during simulation) take no damage. */
          else
             pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
-                     pow2(cur_system->nebu_volatility) / 500. * dt );
+                     pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
       }
    }
 

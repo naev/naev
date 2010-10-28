@@ -176,6 +176,7 @@ typedef struct OutfitBoltData_ {
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
+   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -203,6 +204,7 @@ typedef struct OutfitBeamData_ {
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
+   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
 
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
@@ -243,6 +245,7 @@ typedef struct OutfitAmmoData_ {
    double energy; /**< energy usage */
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
+   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
 
    glTexture* gfx_space; /**< graphic */
    double spin; /**< Graphic spin rate. */
@@ -428,6 +431,7 @@ glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 double outfit_damage( const Outfit* o );
+double outfit_penetration( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
 double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );

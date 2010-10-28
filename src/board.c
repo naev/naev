@@ -301,7 +301,7 @@ static int board_trySteal( Pilot *p )
       /* Don't actually kill. */
       target->armour = 1.;
       /* This will make the boarding ship take the possible faction hit. */
-      pilot_hit( target, NULL, p->id, DAMAGE_TYPE_KINETIC, 100. );
+      pilot_hit( target, NULL, p->id, DAMAGE_TYPE_KINETIC, 100., 1. );
       /* Return ship dead. */
       return -1;
    }

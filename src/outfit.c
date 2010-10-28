@@ -528,6 +528,17 @@ double outfit_damage( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the outfit's penetration.
+ *    @param o Outfit to get information from.
+ */
+double outfit_penetration( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.penetration;
+   else if (outfit_isBeam(o)) return o->u.bem.penetration;
+   else if (outfit_isAmmo(o)) return o->u.amm.penetration;
+   return 0.;
+}
+/**
  * @brief Gets the outfit's damage type.
  *    @param o Outfit to get information from.
  */

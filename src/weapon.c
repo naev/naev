@@ -978,7 +978,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    Pilot *parent;
    int spfx;
-   double damage;
+   double damage, penetration;
    DamageType dtype;
    WeaponLayer spfx_layer;
    int s;
@@ -986,6 +986,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* Get general details. */
    parent = pilot_get(w->parent);
    damage = w->strength * outfit_damage(w->outfit);
+   penetration = outfit_penetration(w->outfit);
    dtype  = outfit_damageType(w->outfit);
 
    /* Play sound if they have it. */
@@ -998,7 +999,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage) );
+   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1034,17 +1035,18 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    (void) layer;
    Pilot *parent;
    int spfx;
-   double damage;
+   double damage, penetration;
    DamageType dtype;
    WeaponLayer spfx_layer;
 
    /* Get general details. */
    parent = pilot_get(w->parent);
    damage = outfit_damage(w->outfit) * dt;
+   penetration = outfit_penetration(w->outfit);
    dtype  = outfit_damageType(w->outfit);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage) );
+   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->lockon == -1.) {

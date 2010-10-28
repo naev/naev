@@ -790,11 +790,11 @@ int pilot_getJumps( const Pilot* p )
  *    @return The real damage done.
  */
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage )
+      const DamageType dtype, const double damage, const double penetration )
 {
    int mod, h;
    double damage_shield, damage_armour, knockback, dam_mod, dmg;
-   double armour_start;
+   double armour_start, absorb;
    Pilot *pshooter;
    HookParam hparam;
 
@@ -804,8 +804,11 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    dmg      = 0.;
    armour_start = p->armour;
 
-   /* calculate the damage */
+   /* Calculate the damage. */
+   absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - penetration );
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
+   damage_shield *= absorb;
+   damage_armour *= absorb;
 
    /* Player breaks autonav. */
    if ((w != NULL) && (p->id == PLAYER_ID) &&
@@ -979,10 +982,12 @@ static void pilot_dead( Pilot* p, unsigned int killer )
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type of the explosion.
  *    @param damage Amount of damage by the explosion.
+ *    @param penetration Damage penetration [0:1].
  *    @param parent The exploding pilot.
  */
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, const Pilot *parent )
+      DamageType dtype, double damage, 
+      double penetration, const Pilot *parent )
 {
    int i;
    double rx, ry;
@@ -1015,7 +1020,7 @@ void pilot_explode( double x, double y, double radius,
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, (parent!=NULL)?parent->id:0, dtype, damage );
+         pilot_hit( p, &s, (parent!=NULL)?parent->id:0, dtype, damage, penetration );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
@@ -1212,7 +1217,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->solid->vel.x, pilot->solid->vel.y,
                pilot->ship->gfx_space->sw/2. + a,
                DAMAGE_TYPE_KINETIC,
-               MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.))),
+               MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.))), 1., /* 100% penetration. */
                NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
