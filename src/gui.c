@@ -2191,6 +2191,7 @@ int gui_handleEvent( SDL_Event *evt )
    int ret;
    int x, y;
 
+   ret = 0;
    switch (evt->type) {
       /* Mouse motion. */
       case SDL_MOUSEMOTION:
@@ -2201,7 +2202,6 @@ int gui_handleEvent( SDL_Event *evt )
          lua_pushnumber( gui_L, x );
          lua_pushnumber( gui_L, y );
          gui_runFunc( "mouse_move", 2, 0 );
-         ret = 0;
          break;
 
       /* Mouse click. */
@@ -2222,7 +2222,6 @@ int gui_handleEvent( SDL_Event *evt )
 
       /* Not interested in the rest. */
       default:
-         ret = 0;
          break;
    }
    return ret;
