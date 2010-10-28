@@ -3531,6 +3531,7 @@
     <bar/>
     <outfits/>
    </services>
+   <commodities/>
    <description>Officially, Fernando Station is a local security nexus, meant to keep the local systems safe from pirates and the FLF. But it is rather heavily equipped for simply maintaining law and order. Some people believe that the Dvaered are gradually reinforcing Ogat, preparing for a military conflict with the Empire. Nothing currently suggests that the Dvaered are on the warpath, but Fernando Station might be a harbinger of things to come.</description>
    <bar>The spacedock bar is mainly frequented by Dvaered military pilots, as can be expected from a bar on a military base. The drinks served here are mostly free of mind-altering substances, a serious detractor to the ordinary visitor, but then Fernando station isn't out to make itself attractive.</bar>
   </general>
@@ -7831,6 +7832,43 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Amazingly, Petaat does have a spaceport bar, despite the fact that this is, well, Petaat. It's rather a dump, though. If you didn't know better you'd think yourself in a decaying slum. Most people here look like they belong in one, too.</bar>
   </general>
  </asset>
+ <asset name="Phee">
+  <pos>
+   <x>6915.504984</x>
+   <y>1693.555901</y>
+  </pos>
+  <GFX>
+   <space>K04.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>K</class>
+   <population>500000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Phee is a tad hot, but it's still habitable. The people who live here have to be healthy and robust to stand the environment, and that's the reason why Dvaered High Command likes to conscript new soldiers from this world. But rather than feel dissatisfied about this, the population takes pride in its history of military service. These people are true Dvaered.</description>
+   <bar>The owner of the bar has served in several Dvaered campaigns in his day, and it shows. The bar is decorated with trophies and other memorabilia from those days, and the man will tell anyone who will listen about what he calls his glory days.</bar>
+  </general>
+  <tech>
+   <item>Basic Civilian Ships</item>
+   <item>Basic Outfits 1</item>
+  </tech>
+ </asset>
  <asset name="Pilatis I">
   <pos>
    <x>3356.933593</x>
@@ -8829,8 +8867,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ruid">
   <pos>
-   <x>-2800.000000</x>
-   <y>0.000000</y>
+   <x>-23737.052713</x>
+   <y>1453.882562</y>
   </pos>
   <GFX>
    <space>moon-D01.png</space>
@@ -11729,8 +11767,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vlexair">
   <pos>
-   <x>-2990.000000</x>
-   <y>230.000000</y>
+   <x>-23920.000000</x>
+   <y>1840.000000</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -11763,8 +11801,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vlexon I">
   <pos>
-   <x>1610.000000</x>
-   <y>-2210.000000</y>
+   <x>12880.000000</x>
+   <y>-17680.000000</y>
   </pos>
   <GFX>
    <space>H02.png</space>
@@ -11785,8 +11823,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vlexon II">
   <pos>
-   <x>320.000000</x>
-   <y>2420.000000</y>
+   <x>2560.000000</x>
+   <y>19360.000000</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
