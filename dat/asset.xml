@@ -1791,8 +1791,8 @@
  </asset>
  <asset name="Dakron III">
   <pos>
-   <x>-920.000000</x>
-   <y>-1640.000000</y>
+   <x>-1867.874422</x>
+   <y>-15603.178986</y>
   </pos>
   <GFX>
    <space>J01.png</space>
@@ -1813,8 +1813,8 @@
  </asset>
  <asset name="Dakron V">
   <pos>
-   <x>-4670.000000</x>
-   <y>-1530.000000</y>
+   <x>-15902.754472</x>
+   <y>-7429.667292</y>
   </pos>
   <GFX>
    <space>G02.png</space>
@@ -9626,6 +9626,30 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Shariff Station">
+  <pos>
+   <x>8176.922812</x>
+   <y>-3831.949938</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Dvaered</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <description>For being a Dvaered military base, Shariff Station has it tough. This close to Frontier space, the station is a popular target for FLF raids, and despite the many extra security measures that have been implemented in the past years, the losses continue to pile up.</description>
+  </general>
+ </asset>
  <asset name="Sheik Hall">
   <pos>
    <x>37294.924364</x>
@@ -10321,8 +10345,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Thar">
   <pos>
-   <x>190.000000</x>
-   <y>1340.000000</y>
+   <x>950.000000</x>
+   <y>6700.000000</y>
   </pos>
   <GFX>
    <space>L00.png</space>

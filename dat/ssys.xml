@@ -1162,7 +1162,7 @@
  </ssys>
  <ssys name="Dakron">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1175,6 +1175,7 @@
   <assets>
    <asset>Dakron III</asset>
    <asset>Dakron V</asset>
+   <asset>Shariff Station</asset>
    <asset>Thar</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual FLF Small</asset>
@@ -1183,14 +1184,14 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-3456.936485" y="547.348277"/>
+    <pos x="-17284.682427" y="2736.741384"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Theras">
-    <pos x="3453.280587" y="-569.958932"/>
+    <pos x="17266.402937" y="-2849.794660"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
