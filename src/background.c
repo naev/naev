@@ -268,7 +268,7 @@ void background_renderStars( const double dt )
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
-      glDrawArrays( GL_POINTS, 0, nstars );
+      glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
       glShadeModel(GL_FLAT);
    }
    else {
