@@ -1066,7 +1066,7 @@ static void input_clickevent( SDL_Event* event )
    unsigned int pid;
    Pilot *p;
    int mx, my;
-   double x, y, z, r;
+   double x, y, z, r, d;
 
    /* Mouse targetting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)
@@ -1081,7 +1081,8 @@ static void input_clickevent( SDL_Event* event )
    pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
    r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 500. ) / z;
-   if (pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y) < pow2(r))
+   d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
+   if (d < pow2(r))
       player_targetSet( pid );
 }
 
