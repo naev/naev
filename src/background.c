@@ -245,7 +245,7 @@ void background_renderStars( const double dt )
          shade_mode = 1;
 
          /* lines will be based on velocity */
-         m = (dt_mod-3.);
+         m = 10.*(dt_mod-3.);
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
@@ -268,6 +268,7 @@ void background_renderStars( const double dt )
    gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
    if (shade_mode) {
       glDrawArrays( GL_LINES, 0, nstars );
+      glDrawArrays( GL_POINTS, 0, nstars );
       glShadeModel(GL_FLAT);
    }
    else {
