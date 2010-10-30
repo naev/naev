@@ -1014,7 +1014,7 @@
  </ssys>
  <ssys name="Chraan">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1030,21 +1030,21 @@
   </assets>
   <jumps>
    <jump target="Karman">
-    <pos x="3361.211794" y="-975.835682"/>
+    <pos x="13444.847175" y="-3903.342728"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Nougat">
-    <pos x="1448.310305" y="-3186.282671"/>
+    <pos x="5793.241220" y="-12745.130684"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Triap">
-    <pos x="-1897.444044" y="2941.038269"/>
+    <pos x="-7589.776178" y="11764.153075"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -2983,7 +2983,7 @@
  </ssys>
  <ssys name="Karman">
   <general>
-   <radius>3500.000000</radius>
+   <radius>22750.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3003,19 +3003,19 @@
   </assets>
   <jumps>
    <jump target="Chraan">
-    <pos x="-3361.211794" y="975.835682"/>
+    <pos x="-21847.876659" y="6342.931933"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gyrios">
-    <pos x="3146.183497" y="3432.493475"/>
+    <pos x="20450.192730" y="22311.207588"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Nougat">
-    <pos x="-2975.928013" y="-1842.241151"/>
+    <pos x="-19343.532087" y="-11974.567483"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3670,7 +3670,7 @@
  </ssys>
  <ssys name="Nougat">
   <general>
-   <radius>3500.000000</radius>
+   <radius>21000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3686,19 +3686,19 @@
   </assets>
   <jumps>
    <jump target="Chraan">
-    <pos x="-3428.310305" y="966.282671"/>
+    <pos x="-20569.861830" y="5797.696026"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Esker">
-    <pos x="3071.068290" y="-1678.850665"/>
+    <pos x="18426.409742" y="-10073.103992"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Karman">
-    <pos x="2975.928013" y="1842.241151"/>
+    <pos x="17855.568080" y="11053.446907"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -824,8 +824,8 @@
  </asset>
  <asset name="Atalanta">
   <pos>
-   <x>3970.000000</x>
-   <y>-780.000000</y>
+   <x>25805.000000</x>
+   <y>-5070.000000</y>
   </pos>
   <GFX>
    <space>P03.png</space>
@@ -5409,8 +5409,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Karman I">
   <pos>
-   <x>520.000000</x>
-   <y>1350.000000</y>
+   <x>3380.000000</x>
+   <y>8775.000000</y>
   </pos>
   <GFX>
    <space>K04.png</space>
@@ -5431,8 +5431,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Karman II">
   <pos>
-   <x>-6550.000000</x>
-   <y>-1370.000000</y>
+   <x>-27075.000000</x>
+   <y>-5655.000000</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -7217,8 +7217,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Nougat I">
   <pos>
-   <x>-80.000000</x>
-   <y>1670.000000</y>
+   <x>-480.000000</x>
+   <y>10020.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
@@ -7239,8 +7239,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Nougat II">
   <pos>
-   <x>-380.000000</x>
-   <y>-960.000000</y>
+   <x>-2280.000000</x>
+   <y>-5760.000000</y>
   </pos>
   <GFX>
    <space>moon-P02.png</space>
