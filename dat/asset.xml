@@ -863,8 +863,8 @@
  </asset>
  <asset name="Avoss">
   <pos>
-   <x>-3850.000000</x>
-   <y>3630.000000</y>
+   <x>-34650.000000</x>
+   <y>32670.000000</y>
   </pos>
   <GFX>
    <space>A03.png</space>
@@ -5580,8 +5580,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Kotori">
   <pos>
-   <x>4070.000000</x>
-   <y>4200.000000</y>
+   <x>36630.000000</x>
+   <y>37800.000000</y>
   </pos>
   <GFX>
    <space>moon-I00.png</space>
@@ -9794,8 +9794,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shickhaw I">
   <pos>
-   <x>585.000000</x>
-   <y>-1500.000000</y>
+   <x>5265.000000</x>
+   <y>-13500.000000</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -9816,8 +9816,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shickhaw II">
   <pos>
-   <x>-108.333333</x>
-   <y>2100.000000</y>
+   <x>-974.999997</x>
+   <y>18900.000000</y>
   </pos>
   <GFX>
    <space>J01.png</space>
@@ -9838,8 +9838,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shickhaw IV">
   <pos>
-   <x>-610.000000</x>
-   <y>5720.000000</y>
+   <x>-5490.000000</x>
+   <y>51480.000000</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -10689,8 +10689,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tori">
   <pos>
-   <x>3740.000000</x>
-   <y>4500.000000</y>
+   <x>36211.788210</x>
+   <y>38190.470165</y>
   </pos>
   <GFX>
    <space>M05.png</space>
