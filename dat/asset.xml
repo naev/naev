@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -4554,8 +4554,8 @@
  </asset>
  <asset name="Haleb IV">
   <pos>
-   <x>-1467.278204</x>
-   <y>-1310.503576</y>
+   <x>-9097.124865</x>
+   <y>-8125.122171</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -5322,8 +5322,8 @@
  </asset>
  <asset name="Jorlan">
   <pos>
-   <x>370.098514</x>
-   <y>1700.948815</y>
+   <x>2166.504922</x>
+   <y>12008.424609</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -8612,8 +8612,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Raglan Outpost">
   <pos>
-   <x>295.190699</x>
-   <y>2011.151346</y>
+   <x>1830.182334</x>
+   <y>12469.138345</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -8634,7 +8634,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <missions/>
    </services>
    <commodities/>
-   <description>Raglan Outpost is the Dvaereds' single most visible presence in Frontier space. Officially, the station is a mixture of a trade station and an embassy for Dvaered citizens, but it is public knowledge that the Dvaered use the base as a stronghold in their fight against the FLF, and many Frontier inhabitants fear that in time it will also be the staging point for the Devaered invasion of the Frontier.</description>
+   <description>Raglan Outpost is the Dvaereds' single most visible presence in Frontier space. Officially, the station is a mixture of a trade station and an embassy for Dvaered citizens, but it is public knowledge that the Dvaered use the base as a stronghold in their fight against the FLF, and many Frontier inhabitants fear that in time it will also be the staging point for the Dvaered invasion of the Frontier.</description>
    <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty. Though Dvaereds do like to drink, all outpost personnel are under standing orders to remain on alert, given the threat of FLF attack.</bar>
   </general>
  </asset>

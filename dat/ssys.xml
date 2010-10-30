@@ -2677,7 +2677,7 @@
  </ssys>
  <ssys name="Haleb">
   <general>
-   <radius>3500.000000</radius>
+   <radius>21700.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2696,21 +2696,21 @@
   </assets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="1540.550260" y="-3142.722530"/>
+    <pos x="9551.411609" y="-19484.879683"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Theras">
-    <pos x="-3442.086160" y="634.068503"/>
+    <pos x="-21340.934192" y="3931.224720"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Triap">
-    <pos x="3492.534219" y="228.483547"/>
+    <pos x="21653.712156" y="1416.597992"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
