@@ -4479,8 +4479,8 @@
  </asset>
  <asset name="Gyrios II">
   <pos>
-   <x>-730.000000</x>
-   <y>1260.000000</y>
+   <x>-6205.000000</x>
+   <y>10710.000000</y>
   </pos>
   <GFX>
    <space>K03.png</space>
@@ -4501,8 +4501,8 @@
  </asset>
  <asset name="Gyrios IV">
   <pos>
-   <x>6840.000000</x>
-   <y>1810.000000</y>
+   <x>63840.000000</x>
+   <y>15485.000000</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -4523,8 +4523,8 @@
  </asset>
  <asset name="Gyrios V">
   <pos>
-   <x>7380.000000</x>
-   <y>-1750.000000</y>
+   <x>62730.000000</x>
+   <y>-14875.000000</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>
@@ -5275,8 +5275,8 @@
  </asset>
  <asset name="Jaegnhild">
   <pos>
-   <x>3180.000000</x>
-   <y>-190.000000</y>
+   <x>27030.000000</x>
+   <y>-1615.000000</y>
   </pos>
   <GFX>
    <space>moon-O00.png</space>
@@ -5816,8 +5816,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lapra">
   <pos>
-   <x>70.000000</x>
-   <y>4650.000000</y>
+   <x>595.000000</x>
+   <y>39525.000000</y>
   </pos>
   <GFX>
    <space>K02.png</space>
@@ -11358,8 +11358,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uuries">
   <pos>
-   <x>2880.000000</x>
-   <y>50.000000</y>
+   <x>26579.572578</x>
+   <y>-1060.851363</y>
   </pos>
   <GFX>
    <space>D00.png</space>
