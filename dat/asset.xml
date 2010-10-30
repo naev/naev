@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -3273,8 +3273,8 @@
  </asset>
  <asset name="Esker I">
   <pos>
-   <x>610.000000</x>
-   <y>1340.000000</y>
+   <x>3965.000000</x>
+   <y>8710.000000</y>
   </pos>
   <GFX>
    <space>moon-O00.png</space>
@@ -3295,8 +3295,8 @@
  </asset>
  <asset name="Esker II">
   <pos>
-   <x>950.000000</x>
-   <y>-2400.000000</y>
+   <x>6175.000000</x>
+   <y>-15600.000000</y>
   </pos>
   <GFX>
    <space>K04.png</space>
@@ -3315,32 +3315,10 @@
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Esker III">
-  <pos>
-   <x>-1310.000000</x>
-   <y>-260.000000</y>
-  </pos>
-  <GFX>
-   <space>M08.png</space>
-   <exterior>aquatic2.png</exterior>
-  </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
  <asset name="Esker IV">
   <pos>
-   <x>3380.000000</x>
-   <y>310.000000</y>
+   <x>22979.409893</x>
+   <y>3080.488220</y>
   </pos>
   <GFX>
    <space>P03.png</space>
@@ -3949,6 +3927,32 @@
    <item>Basic Civilian Ships</item>
    <item>Light Civilian Combat Ships</item>
   </tech>
+ </asset>
+ <asset name="Fyruse Station">
+  <pos>
+   <x>3795.124991</x>
+   <y>8868.896979</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
+   <description>The Sirii have a rather extensive military infrastructure within their borders, and Fyruse Station is part of that infrastructure. There's a regular detachment stationed here, making sure that law and order are maintained as well as can reasonably be expected in Esker and its neighboring systems. Fyruse Station also acts as a border guard for Frontier space, though nobody really believes in the need for such.</description>
+   <bar>As Fyruse Station is a Sirius-only facility, the bar is divided in three sections, one for each echelon. In the rare event that a non-Sirius visitor is allowed on board, they will be catered for in the Shaira section.</bar>
+  </general>
  </asset>
  <asset name="Gamma">
   <pos>
@@ -6109,6 +6113,45 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
+  </tech>
+ </asset>
+ <asset name="Madria">
+  <pos>
+   <x>-8515.000000</x>
+   <y>-1690.000000</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>3000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Madria is one of the few immigration worlds in Sirius space. Colonists from the Frontier constantly trickle into Esker, and they all end up here. The new arrivals are immediately converted and incorporated into the Shaira echelon, which is why that group is over-represented on this world. Only after several cycles of life on Madria do the immigrants get permission to move to other Sirius worlds or serve in the Sirius military.</description>
+   <bar>There are two spaceport bars on Madria, one for regular visitors and one for immigrants. The one for immigrants is more or less a portal into Sirius society - a one way portal. Normal spacers stay away from it.</bar>
+  </general>
+  <tech>
+   <item>Basic Trade Ships</item>
+   <item>Basic Outfits 2</item>
   </tech>
  </asset>
  <asset name="Malebolge">
@@ -10244,8 +10287,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Suoer">
   <pos>
-   <x>3610.000000</x>
-   <y>520.000000</y>
+   <x>23465.000000</x>
+   <y>3380.000000</y>
   </pos>
   <GFX>
    <space>moon-M04.png</space>
