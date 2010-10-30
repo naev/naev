@@ -1967,8 +1967,8 @@
  </asset>
  <asset name="Dawn">
   <pos>
-   <x>160.462301</x>
-   <y>1093.853879</y>
+   <x>-3764.344765</x>
+   <y>9623.930431</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -2604,8 +2604,8 @@
  </asset>
  <asset name="Dusk">
   <pos>
-   <x>667.912251</x>
-   <y>-454.277655</y>
+   <x>4675.385757</x>
+   <y>-3179.943585</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -4152,6 +4152,28 @@
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
+ </asset>
+ <asset name="Gilligan's Light III">
+  <pos>
+   <x>-7036.538612</x>
+   <y>-6116.121552</y>
+  </pos>
+  <GFX>
+   <space>I01.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
  </asset>
  <asset name="Gilligan's Memory">
   <pos>
@@ -10406,8 +10428,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="The Frontier Council">
   <pos>
-   <x>-84.817006</x>
-   <y>1388.081726</y>
+   <x>-4232.400889</x>
+   <y>9914.102486</y>
   </pos>
   <GFX>
    <space>000.png</space>
