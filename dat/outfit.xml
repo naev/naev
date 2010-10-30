@@ -21,7 +21,7 @@
    <falloff>252</falloff>
    <accuracy>18</accuracy>
    <energy>4.25</energy>
-   <damage type="energy">7.5</damage>
+   <damage type="energy" penetrate="0">7.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -46,7 +46,7 @@
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
    <energy>8.87</energy>
-   <damage type="energy">12.5</damage>
+   <damage type="energy" penetrate="15">12.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -70,7 +70,7 @@
    <falloff>252</falloff>
    <accuracy>18</accuracy>
    <energy>6.12</energy>
-   <damage type="energy">8.1</damage>
+   <damage type="energy" penetrate="0">8.1</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
@@ -95,7 +95,7 @@
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
    <energy>12.75</energy>
-   <damage type="energy">13.5</damage>
+   <damage type="energy" penetrate="15">13.5</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster">
@@ -118,7 +118,7 @@
    <falloff>210</falloff>
    <accuracy>25</accuracy>
    <energy>3.75</energy>
-   <damage type="energy">7.5</damage>
+   <damage type="energy" penetrate="8">7.5</damage>
   </specific>
 </outfit>
  <outfit name="Plasma Blaster MK2">
@@ -143,7 +143,7 @@
    <gfx_end>plasma2-end</gfx_end>
    <accuracy>25</accuracy>
    <energy>7.5</energy>
-   <damage type="energy">12</damage>
+   <damage type="energy" penetrate="18">12</damage>
   </specific>
 </outfit>
  <outfit name="Neutron Disruptor">
@@ -168,7 +168,7 @@
    <gfx_end>neutron-end</gfx_end>
    <accuracy>15</accuracy>
    <energy>13.75</energy>
-   <damage type="energy">15</damage>
+   <damage type="energy" penetrate="22">15</damage>
   </specific>
  </outfit>
 <!-- Medium Range Weapons -->
@@ -194,7 +194,7 @@
    <gfx_end>ion-end</gfx_end>
    <accuracy>13</accuracy>
    <energy>15</energy>
-   <damage type="ion">18.8</damage>
+   <damage type="ion" penetrate="20">18.8</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -219,7 +219,7 @@
    <gfx_end>ion-end</gfx_end>
    <accuracy>7</accuracy>
    <energy>25</energy>
-   <damage type="ion">22.5</damage>
+   <damage type="ion" penetrate="40">22.5</damage>
   </specific>
  </outfit>
  <outfit name="40mm Autocannon">
@@ -243,7 +243,7 @@
    <range blowup="armour">450</range>
    <accuracy>12</accuracy>
    <energy>25</energy>
-   <damage type="kinetic">30</damage>
+   <damage type="kinetic" penetrate="12">30</damage>
   </specific>
  </outfit>
 <!-- Long Range Weapons -->
@@ -270,7 +270,7 @@
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>52.5</energy>
-   <damage type="kinetic">43.75</damage>
+   <damage type="kinetic" penetrate="30">43.75</damage>
   </specific>
  </outfit>
   <outfit name="150mm Railgun Turret">
@@ -295,7 +295,7 @@
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>66</energy>
-   <damage type="kinetic">46.25</damage>
+   <damage type="kinetic" penetrate="70">46.25</damage>
   </specific>
  </outfit>
  <outfit name="Ripper MK2">
@@ -320,7 +320,7 @@
    <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>23.75</energy>
-   <damage type="energy">22.5</damage>
+   <damage type="energy" penetrate="30">22.5</damage>
   </specific>
  </outfit>
  <outfit name="Base Ripper MK2">
@@ -345,7 +345,7 @@
    <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>23.75</energy>
-   <damage type="energy">22.5</damage>
+   <damage type="energy" penetrate="50">22.5</damage>
   </specific>
  </outfit>
 <!-- Beam Weapons -->
@@ -364,7 +364,7 @@
    <duration>3</duration>
    <range>300</range>
    <energy>65</energy>
-   <damage type="energy">50</damage>
+   <damage type="energy" penetrate="50">50</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
@@ -388,7 +388,7 @@
    <range>400</range>
    <turn>35</turn>
    <energy>200</energy>
-   <damage type="energy">150</damage>
+   <damage type="energy" penetrate="90">150</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -430,7 +430,7 @@
    <thrust>400</thrust>
    <turn>60</turn>
    <speed>800</speed>
-   <damage type="kinetic">20</damage>
+   <damage type="kinetic" penetrate="10">20</damage>
    <ai>seek</ai>
   </specific>
  </outfit>
@@ -470,7 +470,7 @@
    <thrust>325</thrust>
    <turn>90</turn>
    <speed>550</speed>
-   <damage type="kinetic">20</damage>
+   <damage type="kinetic" penetrate="30">20</damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -508,7 +508,7 @@
    <accuracy>12</accuracy>
    <thrust>0</thrust>
    <speed>600</speed>
-   <damage type="emp">15</damage>
+   <damage type="emp" penetrate="15">15</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -545,7 +545,7 @@
    <duration blowup="armour">3</duration>
    <thrust>300</thrust>
    <speed>1000</speed>
-   <damage type="kinetic">44</damage>
+   <damage type="kinetic" penetrate="40">44</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -584,7 +584,7 @@
    <thrust>125</thrust>
    <turn>20</turn>
    <speed>350</speed>
-   <damage type="kinetic">140</damage>
+   <damage type="kinetic" penetrate="90">140</damage>
    <ai>seek</ai>
   </specific>
  </outfit>
@@ -623,7 +623,7 @@
    <thrust>125</thrust>
    <turn>20</turn>
    <speed>350</speed>
-   <damage type="kinetic">300</damage>
+   <damage type="kinetic" penetrate="90">300</damage>
    <ai>seek</ai>
   </specific>
  </outfit>
@@ -658,7 +658,7 @@
    <duration blowup="shield">1.3</duration>
    <thrust>0</thrust>
    <speed>400</speed>
-   <damage type="emp">50</damage>
+   <damage type="emp" penetrate="50">50</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -1319,7 +1319,7 @@
    <range>400</range>
    <turn>35</turn>
    <energy>20</energy>
-   <damage type="energy">150</damage>
+   <damage type="energy" penetrate="100">150</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -1348,7 +1348,7 @@
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
    <energy>1</energy>
-   <damage type="energy">15</damage>
+   <damage type="energy" penetrate="30">15</damage>
   </specific>
  </outfit>
 </Outfits>

@@ -61,7 +61,7 @@ static DamageType outfit_strToDamageType( char *buf );
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
-static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
+static int outfit_parseDamage( DamageType *dtype, double *dmg, double *penetration, xmlNodePtr node );
 static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
@@ -851,25 +851,47 @@ static OutfitType outfit_strToOutfitType( char *buf )
  *    @param[in] node Node to parse damage from.
  *    @return 0 on success.
  */
-static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
+static int outfit_parseDamage( DamageType *dtype, double *dmg, double *penetration, xmlNodePtr node )
 {
    char *buf;
+   int ret;
 
    if (xml_isNode(node,"damage")) {
+      ret = 0;
+
       /* Get type */
       xmlr_attr(node,"type",buf);
-      (*dtype) = outfit_strToDamageType(buf);
-      if (buf) free(buf);
+      if (buf == NULL) {
+         WARN("Damage node missing 'type' attribute.");
+         ret = -1;
+      }
+      else {
+         (*dtype) = outfit_strToDamageType(buf);
+         if (buf) free(buf);
+      }
+
+      /* Get penetration. */
+      xmlr_attr(node,"penetrate",buf);
+      if (buf == NULL) {
+         WARN("Damage node missing 'penetrate' attribute.");
+         ret = -1;
+      }
+      else {
+         (*penetration) = atof(buf) / 100.;
+         if (buf) free(buf);
+      }
+
       /* Get damage */
       (*dmg) = xml_getFloat(node);
-      return 0;
+      return ret;
    }
 
    /* Unknown type */
-   (*dtype) = DAMAGE_TYPE_NULL;
-   (*dmg) = 0;
+   (*dtype)       = DAMAGE_TYPE_NULL;
+   (*dmg)         = 0.;
+   (*penetration) = 0.;
    WARN("Trying to parse non-damage node as damage node!");
-   return 1;
+   return -1;
 }
 
 
@@ -958,7 +980,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
+         outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, &temp->u.blt.penetration, node );
          continue;
       }
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
@@ -1039,7 +1061,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"duration",temp->u.bem.duration);
 
       if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, node );
+         outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, &temp->u.bem.penetration, node );
          continue;
       }
 
@@ -1244,7 +1266,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, node );
+         outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, &temp->u.amm.penetration, node );
          continue;
       }
       if (xml_isNode(node,"ai")) {
