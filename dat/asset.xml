@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -1064,8 +1064,8 @@
  </asset>
  <asset name="Brimstone I">
   <pos>
-   <x>2312.660217</x>
-   <y>-2090.136210</y>
+   <x>11870.221386</x>
+   <y>-10437.336689</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -1086,8 +1086,8 @@
  </asset>
  <asset name="Brimstone II">
   <pos>
-   <x>-437.100728</x>
-   <y>397.364299</y>
+   <x>-12602.170307</x>
+   <y>3097.932606</y>
   </pos>
   <GFX>
    <space>J04.png</space>
@@ -1106,10 +1106,32 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Brimstone III">
+  <pos>
+   <x>8289.790282</x>
+   <y>5206.549724</y>
+  </pos>
+  <GFX>
+   <space>A01.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Brimstone Ia">
   <pos>
-   <x>2837.181091</x>
-   <y>-2145.767212</y>
+   <x>12677.992672</x>
+   <y>-10635.425534</y>
   </pos>
   <GFX>
    <space>moon-D01.png</space>
@@ -1130,8 +1152,8 @@
  </asset>
  <asset name="Brimstone Ib">
   <pos>
-   <x>3170.967102</x>
-   <y>-2217.292786</y>
+   <x>12985.797915</x>
+   <y>-10726.166185</y>
   </pos>
   <GFX>
    <space>moon-J02.png</space>
@@ -6375,6 +6397,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <bar/>
     <missions/>
    </services>
+   <commodities/>
    <description>The Frontier is relatively poor, and part of the reason for this is that the Frontier is lacking in energy output. In an attempt to reinforce this weak link, the Frontier Council sanctioned the construction of a deep space power generator, whish was to provide energy cells to industries across Frontier space. That generator is Megan Station.</description>
    <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utulitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
   </general>
@@ -7064,8 +7087,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Nonuri">
   <pos>
-   <x>3504.753113</x>
-   <y>-2257.029215</y>
+   <x>13346.980601</x>
+   <y>-10858.126526</y>
   </pos>
   <GFX>
    <space>moon-M03.png</space>
