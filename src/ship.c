@@ -648,6 +648,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          cur = node->children;
          do {
             xml_onlyNodes(cur);
+            xmlr_float(cur,"absorb",temp->dmg_absorb);
             xmlr_float(cur,"armour",temp->armour);
             xmlr_float(cur,"armour_regen",temp->armour_regen);
             xmlr_float(cur,"shield",temp->shield);
