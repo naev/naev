@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -5431,8 +5431,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Khelim">
   <pos>
-   <x>-1305.639038</x>
-   <y>2837.428589</y>
+   <x>-5534.972756</x>
+   <y>11532.092902</y>
   </pos>
   <GFX>
    <space>Y00.png</space>
@@ -6350,6 +6350,33 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Megan Station">
+  <pos>
+   <x>10991.232815</x>
+   <y>-5153.224088</y>
+  </pos>
+  <GFX>
+   <space>station-powerplant.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Frontier</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>300</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+   </services>
+   <description>The Frontier is relatively poor, and part of the reason for this is that the Frontier is lacking in energy output. In an attempt to reinforce this weak link, the Frontier Council sanctioned the construction of a deep space power generator, whish was to provide energy cells to industries across Frontier space. That generator is Megan Station.</description>
+   <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utulitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
   </general>
  </asset>
  <asset name="Merisi I">
@@ -10747,8 +10774,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Triap I">
   <pos>
-   <x>940.000000</x>
-   <y>-770.000000</y>
+   <x>-1201.407009</x>
+   <y>-10042.800067</y>
   </pos>
   <GFX>
    <space>C00.png</space>

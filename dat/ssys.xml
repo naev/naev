@@ -5319,7 +5319,7 @@
  </ssys>
  <ssys name="Triap">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -5331,6 +5331,7 @@
   </pos>
   <assets>
    <asset>Khelim</asset>
+   <asset>Megan Station</asset>
    <asset>Triap I</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Pirate Small</asset>
@@ -5338,21 +5339,21 @@
   </assets>
   <jumps>
    <jump target="Brimstone">
-    <pos x="2699.280588" y="2227.977628"/>
+    <pos x="18894.964113" y="15595.843394"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Chraan">
-    <pos x="1897.444044" y="-2941.038269"/>
+    <pos x="13282.108311" y="-20587.267881"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Haleb">
-    <pos x="-3492.534219" y="-228.483547"/>
+    <pos x="-24447.739531" y="-1599.384829"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
