@@ -5099,7 +5099,7 @@
  </ssys>
  <ssys name="Theras">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>50.000000</interference>
@@ -5111,6 +5111,7 @@
   </pos>
   <assets>
    <asset>Cetrat</asset>
+   <asset>Theras II</asset>
    <asset>Theras III</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Dvaered Small</asset>
@@ -5119,21 +5120,21 @@
   </assets>
   <jumps>
    <jump target="Dakron">
-    <pos x="-3453.280587" y="569.958932"/>
+    <pos x="-17266.402937" y="2849.794660"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gilligan's Light">
-    <pos x="2943.025067" y="1894.360963"/>
+    <pos x="14715.125334" y="9471.804813"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Haleb">
-    <pos x="3442.086160" y="-634.068503"/>
+    <pos x="17210.430800" y="-3170.342516"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -1450,8 +1450,8 @@
  </asset>
  <asset name="Cetrat">
   <pos>
-   <x>-2580.000000</x>
-   <y>-1520.000000</y>
+   <x>-5040.078848</x>
+   <y>-3946.220808</y>
   </pos>
   <GFX>
    <space>O01.png</space>
@@ -9647,7 +9647,9 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <land/>
     <refuel/>
    </services>
+   <commodities/>
    <description>For being a Dvaered military base, Shariff Station has it tough. This close to Frontier space, the station is a popular target for FLF raids, and despite the many extra security measures that have been implemented in the past years, the losses continue to pile up.</description>
+   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sheik Hall">
@@ -10455,10 +10457,32 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The Wringer doesn't have a clear infrastructure, but most people agree that this compartment counts as the spaceport bar. It distinguishes itself by having slightly more drunks lying in the corners than the rest of the station, thanks to the availability of booze at the fenced-off bar on one side.</bar>
   </general>
  </asset>
+ <asset name="Theras II">
+  <pos>
+   <x>8355.533595</x>
+   <y>-4232.622399</y>
+  </pos>
+  <GFX>
+   <space>moon-P02.png</space>
+   <exterior>mining2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Theras III">
   <pos>
-   <x>-360.000000</x>
-   <y>1810.000000</y>
+   <x>-1800.000000</x>
+   <y>9050.000000</y>
   </pos>
   <GFX>
    <space>moon-P00.png</space>
