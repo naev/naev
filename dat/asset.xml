@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -333,8 +333,8 @@
  </asset>
  <asset name="Andee II">
   <pos>
-   <x>-2440.000000</x>
-   <y>90.000000</y>
+   <x>-17080.000000</x>
+   <y>630.000000</y>
   </pos>
   <GFX>
    <space>K00.png</space>
@@ -355,8 +355,8 @@
  </asset>
  <asset name="Andee III">
   <pos>
-   <x>2060.000000</x>
-   <y>-900.000000</y>
+   <x>14420.000000</x>
+   <y>-6300.000000</y>
   </pos>
   <GFX>
    <space>X00.png</space>
@@ -377,8 +377,8 @@
  </asset>
  <asset name="Andee IIIa">
   <pos>
-   <x>1760.000000</x>
-   <y>-1150.000000</y>
+   <x>13929.329926</x>
+   <y>-6969.106766</y>
   </pos>
   <GFX>
    <space>moon-P00.png</space>
@@ -399,8 +399,8 @@
  </asset>
  <asset name="Andee IIa">
   <pos>
-   <x>-2960.000000</x>
-   <y>-10.000000</y>
+   <x>-17730.525819</x>
+   <y>343.637937</y>
   </pos>
   <GFX>
    <space>moon-H02.png</space>
@@ -7552,6 +7552,42 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Opal Station">
+  <pos>
+   <x>-1838.125142</x>
+   <y>11472.033093</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>gas.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Frontier</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1500</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Since Varaati is located in a rather isolated corner of the galaxy, the local government decided to invest in a trade station within the system, to attract more traffic. Though the station is a far cry from commercial powerhouses like Darkshed, Opal Station must be considered a good effort by Frontier standards.</description>
+   <bar>The spacedock bar is geared towards trading. There are private booths, tables with integrated data uplinks, a ship outfitting service and charts on the walls showing nearby trade opportunities. The place is never quite packed with people, but there is enough activity in the bar to indicate that Opal Station is slowly returning on its investment.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+  </tech>
+ </asset>
  <asset name="Overture I">
   <pos>
    <x>-5700.000000</x>
@@ -8666,7 +8702,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>12469.138345</y>
   </pos>
   <GFX>
-   <space>000.png</space>
+   <space>station-battlestation.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
@@ -11443,8 +11479,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Varaati">
   <pos>
-   <x>2900.000000</x>
-   <y>3050.000000</y>
+   <x>20300.000000</x>
+   <y>21350.000000</y>
   </pos>
   <GFX>
    <space>M03.png</space>
