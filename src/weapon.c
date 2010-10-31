@@ -115,6 +115,8 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
+static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
 static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target );
@@ -1240,6 +1242,81 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
 
 /**
+ * @brief Creates the ammo specific properties of a weapon.
+ *
+ *    @param w Weapon to create ammo specific properties of.
+ *    @param outfit Outfit which spawned the weapon.
+ *    @param T temperature of the shooter.
+ *    @param dir Direction the shooter is facing.
+ *    @param pos Position of the shooter.
+ *    @param vel Velocity of the shooter.
+ *    @param parent Shooter.
+ */
+static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
+{
+   (void) T;
+   Vector2d v;
+   double mass, rdir;
+   Pilot *pilot_target;
+   double ew_evasion;
+
+   pilot_target = NULL;
+   if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
+      pilot_target = pilot_get(w->target);
+      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir );
+      /* Evasion. */
+      ew_evasion    = pilot_target->ew_evasion;
+   }
+   else {
+      rdir        = dir;
+      ew_evasion  = 1.;
+   }
+   if (outfit->u.amm.accuracy != 0.) {
+      rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+      if ((rdir > 2.*M_PI) || (rdir < 0.))
+         rdir = fmod(rdir, 2.*M_PI);
+   }
+   if (rdir < 0.)
+      rdir += 2.*M_PI;
+   else if (rdir >= 2.*M_PI)
+      rdir -= 2.*M_PI;
+
+   /* If thrust is 0. we assume it starts out at speed. */
+   vectcpy( &v, vel );
+   if (outfit->u.amm.thrust == 0.)
+      vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
+            sin(rdir) * w->outfit->u.amm.speed );
+
+   /* Set up ammo details. */
+   mass        = w->outfit->mass;
+   w->lockon   = MAX( outfit->u.amm.lockon, outfit->u.amm.lockon * ew_evasion / outfit->u.amm.ew_lockon );
+   w->timer    = outfit->u.amm.duration;
+   w->solid    = solid_create( mass, rdir, pos, &v );
+   if (w->outfit->u.amm.thrust != 0.)
+      weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
+
+   /* Handle seekers. */
+   if (w->outfit->u.amm.ai > 0) {
+      w->think = think_seeker; /* AI is the same atm. */
+
+      /* If they are seeking a pilot, increment lockon counter. */
+      if (pilot_target == NULL)
+         pilot_target = pilot_get(w->target);
+      if (pilot_target != NULL)
+         pilot_target->lockons++;
+   }
+
+   /* Play sound. */
+   w->voice    = sound_playPos(w->outfit->u.amm.sound,
+         w->solid->pos.x,
+         w->solid->pos.y,
+         w->solid->vel.x,
+         w->solid->vel.y);
+}
+
+
+/**
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawned the weapon.
@@ -1255,11 +1332,9 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot* parent, const unsigned int target )
 {
-   Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
    Weapon* w;
-   double ew_evasion;
 
    /* Create basic features */
    w           = malloc( sizeof(Weapon) );
@@ -1309,56 +1384,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Treat seekers together. */
       case OUTFIT_TYPE_AMMO:
       case OUTFIT_TYPE_TURRET_AMMO:
-         if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
-            pilot_target = pilot_get(w->target);
-            rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir );
-            /* Evasion. */
-            ew_evasion    = pilot_target->ew_evasion;
-         }
-         else {
-            rdir        = dir;
-            ew_evasion  = 1.;
-         }
-         if (outfit->u.amm.accuracy != 0.) {
-            rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
-            if ((rdir > 2.*M_PI) || (rdir < 0.))
-               rdir = fmod(rdir, 2.*M_PI);
-         }
-         if (rdir < 0.)
-            rdir += 2.*M_PI;
-         else if (rdir >= 2.*M_PI)
-            rdir -= 2.*M_PI;
-
-         /* If thrust is 0. we assume it starts out at speed. */
-         vectcpy( &v, vel );
-         if (outfit->u.amm.thrust == 0.)
-            vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
-                  sin(rdir) * w->outfit->u.amm.speed );
-
-         /* Set up ammo details. */
-         mass        = w->outfit->mass;
-         w->lockon   = MAX( outfit->u.amm.lockon, outfit->u.amm.lockon * ew_evasion / outfit->u.amm.ew_lockon );
-         w->timer    = outfit->u.amm.duration;
-         w->solid    = solid_create( mass, rdir, pos, &v );
-         if (w->outfit->u.amm.thrust != 0.)
-            weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-
-         /* Handle seekers. */
-         if (w->outfit->u.amm.ai > 0) {
-            w->think = think_seeker; /* AI is the same atm. */
-
-            /* If they are seeking a pilot, increment lockon counter. */
-            pilot_target = pilot_get(target);
-            if (pilot_target != NULL)
-               pilot_target->lockons++;
-         }
-
-         /* Play sound. */
-         w->voice    = sound_playPos(w->outfit->u.amm.sound,
-               w->solid->pos.x,
-               w->solid->pos.y,
-               w->solid->vel.x,
-               w->solid->vel.y);
+         weapon_createAmmo( w, outfit, T, dir, pos, vel, parent );
          break;
 
       /* just dump it where the player is */
