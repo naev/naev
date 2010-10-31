@@ -680,8 +680,8 @@
  </asset>
  <asset name="Arai">
   <pos>
-   <x>1740.000000</x>
-   <y>3490.000000</y>
+   <x>8430.520088</x>
+   <y>16821.213540</y>
   </pos>
   <GFX>
    <space>J01.png</space>
@@ -702,8 +702,8 @@
  </asset>
  <asset name="Arch Arai">
   <pos>
-   <x>2146.885717</x>
-   <y>3391.971451</y>
+   <x>9162.462434</x>
+   <y>16600.550706</y>
   </pos>
   <GFX>
    <space>moon-P01.png</space>
@@ -1890,26 +1890,37 @@
  </asset>
  <asset name="Daal">
   <pos>
-   <x>-1320.000000</x>
-   <y>-5460.000000</y>
+   <x>-10536.743196</x>
+   <y>-36702.958819</y>
   </pos>
   <GFX>
    <space>moon-M03.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
-   <value>0.000000</value>
-   <range>0</range>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>20000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>The small moon orbiting Rhu IV named Daal is easily overlooked, but as it happens it is quite an important piece of real estate for the Sirii. The people who live here are particularly zealous in their beliefs, and most of them end up serving a lifetime in the Sirius army. The Fyrra are especially well represented on this world.</description>
+   <bar>On Daal, people like to be reminded that they are part of a large galactic faction. The tables in this spaceport bar have low-tech displays incorporated in their surfaces, and each table displays one of the Sirian worlds, as well as up-to-date information about that world. Naturally, Mutris is displayed on the largest table, but Daal itself makes a good second.</bar>
   </general>
- </asset>
+</asset>
  <asset name="Dakron III">
   <pos>
    <x>-1867.874422</x>
@@ -4808,8 +4819,8 @@
  </asset>
  <asset name="Hankies">
   <pos>
-   <x>20.000000</x>
-   <y>2190.000000</y>
+   <x>160.000000</x>
+   <y>17520.000000</y>
   </pos>
   <GFX>
    <space>moon-G00.png</space>
@@ -5011,8 +5022,8 @@
  </asset>
  <asset name="Huan'xi">
   <pos>
-   <x>4920.000000</x>
-   <y>1330.000000</y>
+   <x>39360.000000</x>
+   <y>10640.000000</y>
   </pos>
   <GFX>
    <space>M07.png</space>
@@ -6580,6 +6591,36 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Mastodon Station">
+  <pos>
+   <x>22542.588874</x>
+   <y>1758.254694</y>
+  </pos>
+  <GFX>
+   <space>station-powerplant.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>200</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Mastodon Station is a power generator, supplying the local planets with energy cells. It also produces power cores and low power energy weapons for the ships produced at Orville Shipyard.</description>
+   <bar>The spacedock bar is constantly filled with the low hum of heavy machinery. The entire station reverberates with it, which really gives you the impression that the place is active.</bar>
+  </general>
+ </asset>
  <asset name="Maya">
   <pos>
    <x>-6440.000000</x>
@@ -7816,6 +7857,40 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Low Tech Upgrades</item>
   </tech>
  </asset>
+ <asset name="Orville Shipyard">
+  <pos>
+   <x>-8020.974940</x>
+   <y>-6034.193104</y>
+  </pos>
+  <GFX>
+   <space>station-shipyard.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Orville Shipyard is a relatively modest ship building facility, though it is invaluable to Inios Station and Brandt Station, as most of their reinforcements come from here. The station relies on Mastodon Station for the ships' energy cores and weaponry, as Rhu is too far removed from Aesir to send the ships to be outfitted at Sirius Ordinance.</description>
+   <bar>Over the bar in this facility, there is a counter display that keeps track of the amount of ships that have been produced at Orville Shipyard since it was commissioned. Clearly, the people here at Rhu take pride in being able to contribute to the Sirian military effort.</bar>
+  </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
+ </asset>
  <asset name="Overture I">
   <pos>
    <x>-5700.000000</x>
@@ -9034,8 +9109,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rhu II">
   <pos>
-   <x>-160.000000</x>
-   <y>1880.000000</y>
+   <x>-256.700627</x>
+   <y>17156.369158</y>
   </pos>
   <GFX>
    <space>S01.png</space>
@@ -9056,8 +9131,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rhu III">
   <pos>
-   <x>1920.000000</x>
-   <y>-2080.000000</y>
+   <x>15360.000000</x>
+   <y>-16640.000000</y>
   </pos>
   <GFX>
    <space>K04.png</space>
@@ -9078,8 +9153,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rhu IV">
   <pos>
-   <x>-1670.000000</x>
-   <y>-5110.000000</y>
+   <x>-10918.035587</x>
+   <y>-36461.207252</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -9225,8 +9300,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ruttwi I">
   <pos>
-   <x>-3830.000000</x>
-   <y>2420.000000</y>
+   <x>-17533.120530</x>
+   <y>10806.496424</y>
   </pos>
   <GFX>
    <space>H00.png</space>
@@ -9247,8 +9322,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ruttwi II">
   <pos>
-   <x>980.000000</x>
-   <y>-710.000000</y>
+   <x>4900.000000</x>
+   <y>-3550.000000</y>
   </pos>
   <GFX>
    <space>L00.png</space>

@@ -4403,7 +4403,7 @@
  </ssys>
  <ssys name="Rhu">
   <general>
-   <radius>3500.000000</radius>
+   <radius>28000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4417,6 +4417,8 @@
    <asset>Daal</asset>
    <asset>Hankies</asset>
    <asset>Huan'xi</asset>
+   <asset>Mastodon Station</asset>
+   <asset>Orville Shipyard</asset>
    <asset>Rhu II</asset>
    <asset>Rhu III</asset>
    <asset>Rhu IV</asset>
@@ -4427,7 +4429,7 @@
   </assets>
   <jumps>
    <jump target="Ruttwi">
-    <pos x="-3458.334380" y="-538.445274"/>
+    <pos x="-27666.675044" y="-4307.562189"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -4477,7 +4479,7 @@
  </ssys>
  <ssys name="Ruttwi">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -4498,12 +4500,12 @@
   </assets>
   <jumps>
    <jump target="Eye of Night">
-    <pos x="-5374.975385" y="408.244175"/>
+    <pos x="-26874.876925" y="2041.220875"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Rhu">
-    <pos x="3458.334380" y="538.445274"/>
+    <pos x="17291.671902" y="2692.226368"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
