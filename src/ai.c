@@ -193,6 +193,7 @@ static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
+static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
@@ -289,6 +290,7 @@ static const luaL_reg aiL_methods[] = {
    { "accel", aiL_accel },
    { "turn", aiL_turn },
    { "face", aiL_face },
+   { "iface", aiL_iface },
    { "brake", aiL_brake },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
@@ -1873,6 +1875,201 @@ static int aiL_face( lua_State *L )
    return 1;
 }
 
+
+/*
+ * Aims at the pilot, trying to hit it.
+ * This method uses a polar UV decomposition to get a more accurate time-of-flight
+ */
+static int aiL_aim( lua_State *L )
+{
+   unsigned int id;
+   double x,y;
+   double t;
+   Pilot *p;
+   Vector2d tv, approach_vector, relative_location;
+   double dist, diff;
+   double mod;
+   double speed;
+   double radial_speed;
+   NLUA_MIN_ARGS(1);
+
+   /* Only acceptable parameter is pilot id */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+   /* Get the distance */
+   dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
+
+   /* Check if should recalculate weapon speed with secondary weapon. */
+   speed = pilot_weapSetSpeed( cur_pilot, cur_pilot->active_set, -1 );
+
+   /* determine the radial, or approach speed */
+   /*
+    *approach_vector (denote Va) is the relative velocites of the pilot and target
+    *relative_location (denote Vr) is the vector that points from the target to the pilot
+    *
+    *Va dot Vr is the rate of approach between the target and the pilot.
+    *If this is greater than 0, the target is approaching the pilot, if less than 0, the target is fleeing.
+    *
+    *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
+    *
+    *Position prediction logic is the same as the previous function
+    */
+   vect_cset(&approach_vector, VX(cur_pilot->solid->vel) - VX(p->solid->vel), VY(cur_pilot->solid->vel) - VY(p->solid->vel) );
+   vect_cset(&relative_location, VX(p->solid->pos) -  VX(cur_pilot->solid->pos),  VY(p->solid->pos) - VY(cur_pilot->solid->pos) );
+
+   radial_speed = vect_dot(&approach_vector, &relative_location);
+   radial_speed = radial_speed / VMOD(relative_location);
+
+
+   /* Time for shots to reach that distance */
+   /* if the target is not hittable (ie, fleeing faster than our shots can fly), just face the target */
+   if((speed+radial_speed) > 0)
+      t = dist / (speed + radial_speed);
+   else
+      t = 0;
+
+   /* Position is calculated on where it should be */
+   x = p->solid->pos.x + p->solid->vel.x*t
+      - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
+   y = p->solid->pos.y + p->solid->vel.y*t
+      - (cur_pilot->solid->pos.y + cur_pilot->solid->vel.y*t);
+   vect_cset( &tv, x, y );
+
+   /* Calculate what we need to turn */
+   mod = 10.;
+   diff = angle_diff(cur_pilot->solid->dir, VANGLE(tv));
+   pilot_turn = mod * diff;
+
+   /* Return distance to target (in grad) */
+   lua_pushnumber(L, ABS(diff*180./M_PI));
+   return 1;
+}
+
+
+/*
+ * maintains an intercept pursuit course
+ */
+static int aiL_iface( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *lv;
+   Vector2d drift, reference_vector; /* get the position to face */
+   Pilot* p;
+   double d, diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
+   unsigned int id;
+   int n, azimuthal_sign;
+   double speedmap;
+   /*char announcebuffer[255] = " ", announcebuffer2[128];*/
+   int degreecount;
+
+   /* Get first parameter, aka what to face. */
+   n  = -2;
+   lv = NULL;
+   if (lua_isnumber(L,1)) {
+      d = (double)lua_tonumber(L,1);
+      if (d < 0.)
+         n = -1;
+      else {
+         id = (unsigned int)d;
+         p = pilot_get(id);
+         if (p==NULL) { 
+            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+            return 0;
+         }
+      }
+   }
+   else if (lua_isvector(L,1))
+      lv = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER(L);
+
+   /*establish the current pilot velocity and position vectors */
+   vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+
+   /*establish the in-line coordinate reference*/
+   vect_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
+
+   /*break down the the velocity vectors of both craft into uv coordinates */
+   vect_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
+
+   heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
+
+
+   /*now figure out what to do*/
+
+   /* are we pointing anywhere inside the correct UV quadrant? */
+   /* if we're outside the correct UV quadrant, we need to get into it ASAP */
+   /* Otherwise match velocities and approach*/
+   if(fabs(heading_offset_azimuth) < M_PI_2)
+   {
+
+
+      /*This indicates we're in the correct plane*/
+
+      /*1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
+      /* there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
+         number will give a more dramatic 'lead' */
+      speedmap = -1*copysign(1 - 1 / (fabs(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+
+      diff = angle_diff(heading_offset_azimuth, speedmap);
+
+
+
+
+      azimuthal_sign = -1;  
+      if(diff>0)
+      {
+         /*this indicates we're drifting to the right of the target*/
+         /* And we need to turn CCW */
+
+         pilot_turn = azimuthal_sign;
+      }
+      else if (diff < 0)
+      {
+         /*this indicates we're drifting to the left of the target*/
+         /* And we need to turn CW */
+
+         pilot_turn = -1*azimuthal_sign;
+      }
+      else
+      {
+
+         pilot_turn = 0;
+      }
+   }
+   /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
+   /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
+      but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
+   else
+   {
+      /* signal that we're not in a productive direction for thrusting */
+      diff = M_PI;
+      degreecount = heading_offset_azimuth*180/M_PI;
+
+      azimuthal_sign = 1;  
+
+
+      if(heading_offset_azimuth >0)
+      {
+         pilot_turn = azimuthal_sign;
+      }
+      else
+      {
+         pilot_turn = -1*azimuthal_sign;
+      }
+   }
+
+
+   /* Return angle in degrees away from target. */
+   lua_pushnumber(L, ABS(diff*180./M_PI));
+   return 1;
+}
+
+
 /*
  * brakes the pilot
  */
@@ -2272,62 +2469,6 @@ static int aiL_dock( lua_State *L )
    pilot_dock(cur_pilot, p, 1);
 
    return 0;
-}
-
-
-/*
- * Aims at the pilot, trying to hit it.
- */
-static int aiL_aim( lua_State *L )
-{
-   unsigned int id;
-   double x,y;
-   double t;
-   Pilot *p;
-   Vector2d tv;
-   double dist, diff;
-   double mod;
-   double speed;
-
-   /* Only acceptable parameter is pilot id */
-   id = luaL_checklong(L,1);
-   p = pilot_get(id);
-   if (p==NULL) {
-      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-      return 0;
-   }
-
-   /* Get the distance */
-   dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
-
-   /* Check if should recalculate weapon speed with secondary weapon. */
-   speed = pilot_weapSetSpeed( cur_pilot, cur_pilot->active_set, -1 );
-   if (speed > 0.) {
-
-      /* Time for shots to reach that distance */
-      t = dist / speed;
-
-      /* Position is calculated on where it should be */
-      x = p->solid->pos.x + p->solid->vel.x*t
-            - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
-      y = p->solid->pos.y + p->solid->vel.y*t
-         - (cur_pilot->solid->pos.y + cur_pilot->solid->vel.y*t);
-      vect_cset( &tv, x, y );
-   }
-   else {
-      x = p->solid->pos.x - cur_pilot->solid->pos.x;
-      y = p->solid->pos.y - cur_pilot->solid->pos.y;
-      vect_cset( &tv, x, y );
-   }
-
-   /* Calculate what we need to turn */
-   mod = 10.;
-   diff = angle_diff(cur_pilot->solid->dir, VANGLE(tv));
-   pilot_turn = mod * diff;
-
-   /* Return distance to target (in grad) */
-   lua_pushnumber(L, ABS(diff*180./M_PI));
-   return 1;
 }
 
 
