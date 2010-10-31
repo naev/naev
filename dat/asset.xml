@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -698,8 +698,8 @@
  </asset>
  <asset name="Arck">
   <pos>
-   <x>16660.000000</x>
-   <y>-44285.000000</y>
+   <x>13328.000000</x>
+   <y>-35428.000000</y>
   </pos>
   <GFX>
    <space>M01.png</space>
@@ -1239,8 +1239,8 @@
  </asset>
  <asset name="Buritt">
   <pos>
-   <x>-22404.286775</x>
-   <y>-1801.715964</y>
+   <x>-17923.429420</x>
+   <y>-1441.372771</y>
   </pos>
   <GFX>
    <space>M02.png</space>
@@ -2549,8 +2549,8 @@
  </asset>
  <asset name="Duran Shipyard">
   <pos>
-   <x>-18818.062085</x>
-   <y>5049.507873</y>
+   <x>-15054.449668</x>
+   <y>4039.606298</y>
   </pos>
   <GFX>
    <space>station-shipyard.png</space>
@@ -4325,8 +4325,8 @@
  </asset>
  <asset name="Ginger II">
   <pos>
-   <x>1440.000000</x>
-   <y>-12600.000000</y>
+   <x>1152.000000</x>
+   <y>-10080.000000</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -4347,8 +4347,8 @@
  </asset>
  <asset name="Ginger III">
   <pos>
-   <x>31410.000000</x>
-   <y>-6390.000000</y>
+   <x>25128.000000</x>
+   <y>-5112.000000</y>
   </pos>
   <GFX>
    <space>moon-D00.png</space>
@@ -4614,8 +4614,8 @@
  </asset>
  <asset name="Haldr">
   <pos>
-   <x>-37613.741097</x>
-   <y>16722.733181</y>
+   <x>-30090.992878</x>
+   <y>13378.186545</y>
   </pos>
   <GFX>
    <space>X01.png</space>
@@ -6414,8 +6414,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Massia I">
   <pos>
-   <x>16065.000000</x>
-   <y>11985.000000</y>
+   <x>12852.000000</x>
+   <y>9588.000000</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -6436,8 +6436,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Massia IV">
   <pos>
-   <x>-1188.509825</x>
-   <y>-19151.312082</y>
+   <x>-950.807860</x>
+   <y>-15321.049666</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -6458,8 +6458,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Massia IVa">
   <pos>
-   <x>-1360.000000</x>
-   <y>-18870.000000</y>
+   <x>-1088.000000</x>
+   <y>-15096.000000</y>
   </pos>
   <GFX>
    <space>moon-G01.png</space>
@@ -10106,8 +10106,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sinclair">
   <pos>
-   <x>-37995.000000</x>
-   <y>-28730.000000</y>
+   <x>-30396.000000</x>
+   <y>-22984.000000</y>
   </pos>
   <GFX>
    <space>M00.png</space>
@@ -10204,6 +10204,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>As with most of the Sirius fleet, the equipment installed on the ships is produced right here at Aesir. As a general rule, no finished ship leaves the system without being fully equipped first.</description>
+   <bar>(null)</bar>
   </general>
   <tech>
    <item>High Tech Upgrades 2</item>
@@ -10239,6 +10240,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Sirius Shipyards is where most of the Sirius fleet is built, though some of the smaller support ships are actually constructed elsewhere. Though Aesir is not an ideal location for mass producing warships, the Sirii believe that building ships in proximity to Mutris will endow some small portion of Sirichana's power on the ships produced.</description>
+   <bar>(null)</bar>
   </general>
   <tech>
    <item>Heavy Civilian Combat Ships</item>
@@ -11264,8 +11266,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ullnorn">
   <pos>
-   <x>3600.000000</x>
-   <y>4500.000000</y>
+   <x>2880.000000</x>
+   <y>3600.000000</y>
   </pos>
   <GFX>
    <space>A00.png</space>
