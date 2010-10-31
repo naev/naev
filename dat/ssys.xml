@@ -3207,7 +3207,7 @@
  </ssys>
  <ssys name="Lapis">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3224,28 +3224,28 @@
   </assets>
   <jumps>
    <jump target="Anarbalis">
-    <pos x="2723.410904" y="2198.416031"/>
+    <pos x="13617.054522" y="10992.080156"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eye of Night">
-    <pos x="-2753.141132" y="2161.067770"/>
+    <pos x="-13765.705660" y="10805.338851"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Lazuli">
-    <pos x="1675.982457" y="-3072.634505"/>
+    <pos x="8379.912287" y="-15363.172526"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Niger">
-    <pos x="-1876.028478" y="-2954.744853"/>
+    <pos x="-9380.142392" y="-14773.724267"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3255,7 +3255,7 @@
  </ssys>
  <ssys name="Lazuli">
   <general>
-   <radius>3500.000000</radius>
+   <radius>21000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3275,7 +3275,7 @@
   </assets>
   <jumps>
    <jump target="Lapis">
-    <pos x="-1675.982457" y="3072.634505"/>
+    <pos x="-10055.894744" y="18435.807031"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3624,7 +3624,7 @@
  </ssys>
  <ssys name="Niger">
   <general>
-   <radius>3500.000000</radius>
+   <radius>21000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -3635,6 +3635,7 @@
    <y>-868.000000</y>
   </pos>
   <assets>
+   <asset>Brandt Station</asset>
    <asset>Niger I</asset>
    <asset>Niger II</asset>
    <asset>Rionna</asset>
@@ -3643,7 +3644,7 @@
   </assets>
   <jumps>
    <jump target="Lapis">
-    <pos x="1876.028478" y="2954.744853"/>
+    <pos x="11256.170870" y="17728.469120"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

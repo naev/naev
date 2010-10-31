@@ -1134,6 +1134,32 @@
    <item>All Ships</item>
   </tech>
  </asset>
+ <asset name="Brandt Station">
+  <pos>
+   <x>25493.195808</x>
+   <y>13169.297828</y>
+  </pos>
+  <GFX>
+   <space>station-battlestation.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
+   <description>Serving as a local security checkpoint, Brandt Station sports two squadrons of light response ships. The station is responsible mainly for Niger, Lazuli and Anarbalis, as the ships here are not equipped to handle the stress of the border conflicts with the Dvaered at Eye of Night.</description>
+   <bar>Curiously, this spacedock bar seems to make no distinction between the three Sirian echelons in any way. However, the soldiers and sailors stationed on Brandt Station all know their place, and treat each other accordingly.</bar>
+  </general>
+ </asset>
  <asset name="Brimstone I">
   <pos>
    <x>11870.221386</x>
@@ -1603,8 +1629,8 @@
  </asset>
  <asset name="Chriik">
   <pos>
-   <x>2550.000000</x>
-   <y>-1940.000000</y>
+   <x>15300.000000</x>
+   <y>-11640.000000</y>
   </pos>
   <GFX>
    <space>H01.png</space>
@@ -5916,8 +5942,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lapis I">
   <pos>
-   <x>660.000000</x>
-   <y>1210.000000</y>
+   <x>3300.000000</x>
+   <y>6050.000000</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -5938,8 +5964,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lapis II">
   <pos>
-   <x>-840.000000</x>
-   <y>-1540.000000</y>
+   <x>-4200.000000</x>
+   <y>-7700.000000</y>
   </pos>
   <GFX>
    <space>moon-P00.png</space>
@@ -6023,8 +6049,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lazuli I">
   <pos>
-   <x>1250.000000</x>
-   <y>2490.000000</y>
+   <x>8368.055556</x>
+   <y>13445.015432</y>
   </pos>
   <GFX>
    <space>H00.png</space>
@@ -6045,8 +6071,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lazuli III">
   <pos>
-   <x>-2820.000000</x>
-   <y>-760.000000</y>
+   <x>-16920.000000</x>
+   <y>-4560.000000</y>
   </pos>
   <GFX>
    <space>H02.png</space>
@@ -6067,8 +6093,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lazuli Ia">
   <pos>
-   <x>1520.000000</x>
-   <y>2170.000000</y>
+   <x>9120.000000</x>
+   <y>13020.000000</y>
   </pos>
   <GFX>
    <space>moon-H00.png</space>
@@ -7214,8 +7240,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Niger I">
   <pos>
-   <x>-5070.000000</x>
-   <y>-1940.000000</y>
+   <x>-25142.222222</x>
+   <y>-2473.333333</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -7236,8 +7262,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Niger II">
   <pos>
-   <x>2320.000000</x>
-   <y>-2580.000000</y>
+   <x>13920.000000</x>
+   <y>-15480.000000</y>
   </pos>
   <GFX>
    <space>P02.png</space>
@@ -9095,8 +9121,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rionna">
   <pos>
-   <x>-1930.000000</x>
-   <y>1780.000000</y>
+   <x>-11580.000000</x>
+   <y>10680.000000</y>
   </pos>
   <GFX>
    <space>P00.png</space>
