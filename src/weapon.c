@@ -110,22 +110,29 @@ static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
 /*
  * Prototypes
  */
-/* static */
+/* Creation. */
+static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
+      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir );
+static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
 static Weapon* weapon_create( const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target );
+/* Updating. */
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
-static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
-static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
-      Vector2d pos[2], const double dt );
+/* Destruction. */
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
       const Pilot *parent, int mode );
+/* Hitting. */
 static int weapon_checkCanHit( Weapon* w, Pilot *p );
+static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
+static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
+      Vector2d pos[2], const double dt );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
@@ -1073,6 +1080,166 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 
 
 /**
+ * @brief Gets the aim position of a turret weapon.
+ *
+ *    @param w Weapon aiming.
+ *    @param outfit Weapon outfit.
+ *    @param parent Parent of the weapon.
+ *    @param pilot_target Target of the weapon.
+ *    @param pos Position of the turret.
+ *    @param vel Velocity of the turret.
+ *    @param dir Direction facing parent ship and turret.
+ */
+static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
+      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir )
+{
+   Vector2d approach_vector, relative_location;
+   double rdir, lead_angle;
+   double speed, radial_speed;
+   double x, y, t, dist;
+
+   if (pilot_target == NULL) {
+      rdir        = dir;
+   }
+   else {
+      /* Get the distance */
+      dist = vect_dist( pos, &pilot_target->solid->pos );
+      vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
+            VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
+
+      /* Aim. */
+      if (dist > outfit->u.blt.range*1.2) {
+         x = pilot_target->solid->pos.x - pos->x;
+         y = pilot_target->solid->pos.y - pos->y;
+      }
+      else {
+         /* Try to predict where the enemy will be. */
+         /* determine the radial, or approach speed */
+         vect_cset( &approach_vector, VX(parent->solid->vel) - VX(pilot_target->solid->vel),
+               VY(parent->solid->vel) - VY(pilot_target->solid->vel) );
+
+         radial_speed = vect_dot( &approach_vector, &relative_location );
+         radial_speed = radial_speed / VMOD(relative_location);
+
+         speed = w->outfit->u.blt.speed;
+
+         /* Time for shots to reach that distance */
+         /* if the target is not hittable (ie, fleeing faster than our shots can fly), just face the target */
+         if((speed+radial_speed) > 0)
+            t = dist / (speed + radial_speed);
+         else
+            t = 0;
+
+         /* Position is calculated on where it should be */
+         x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+            - (pos->x + vel->x*t);
+         y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+            - (pos->y + vel->y*t);
+      }
+
+      /* Set angle to face. */
+      rdir = ANGLE(x, y);
+
+      lead_angle = M_PI;
+
+      /*uncomment this line if turrets have a leadangle characteristic*/
+      /*lead_angle = outfit->u.blt.leadangle;*/
+
+      /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
+      if( lead_angle > 0) {
+         if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
+
+            /* the target is moving too fast for the turret to keep up */
+            if(ANGLE(x, y) < VANGLE(relative_location))
+               rdir = angle_diff(lead_angle, VANGLE(relative_location));
+            else
+               rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
+
+         }
+         else {
+            /* the turret can aim properly*/
+            rdir = ANGLE(x, y);
+         }
+      }
+      else {
+         /* just to be safe, handles non-leading turrets */
+         rdir = VANGLE(relative_location);
+      } 
+   }
+
+   return rdir;
+}
+
+
+
+/**
+ * @brief Creates the bolt specific properties of a weapon.
+ *
+ *    @param w Weapon to create bolt specific properties of.
+ *    @param outfit Outfit which spawned the weapon.
+ *    @param T temperature of the shooter.
+ *    @param dir Direction the shooter is facing.
+ *    @param pos Position of the shooter.
+ *    @param vel Velocity of the shooter.
+ *    @param parent Shooter.
+ */
+static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
+      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
+{
+   Vector2d v;
+   double mass, rdir;
+   Pilot *pilot_target;
+   double acc;
+   double acc_max;
+
+   /* Only difference is the direction of fire */
+   if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
+         (w->target != 0)) { /* Must have valid target */
+      pilot_target = pilot_get(w->target);
+      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir );
+   }
+   else { /* fire straight */
+      rdir        = dir;
+   }
+
+   /* Calculate accuarcy. */
+   acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
+
+   /* Stat modifiers. */
+   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
+      acc         *= 2. - parent->stats.accuracy_turret; /* Invert. */
+      w->dam_mod  *= parent->stats.damage_turret;
+   }
+   else {
+      acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
+      w->dam_mod  *= parent->stats.damage_forward;
+   }
+   acc_max = acc;
+   acc   = MAX( acc_max, acc ); /* Shouldn't go below maximum accuracy, it can only get worse. */
+   acc   = MAX( 0., acc ); /* Make sure it doesn't become negative. */
+
+   /* Calculate direction. */
+   rdir += RNG_2SIGMA() * acc;
+   if (rdir < 0.)
+      rdir += 2.*M_PI;
+   else if (rdir >= 2.*M_PI)
+      rdir -= 2.*M_PI;
+
+   mass = 1; /* Lasers are presumed to have unitary mass */
+   vectcpy( &v, vel );
+   vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
+   w->timer = outfit->u.blt.range / outfit->u.blt.speed;
+   w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
+   w->solid = solid_create( mass, rdir, pos, &v );
+   w->voice = sound_playPos( w->outfit->u.blt.sound,
+         w->solid->pos.x,
+         w->solid->pos.y,
+         w->solid->vel.x,
+         w->solid->vel.y);
+}
+
+
+/**
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawned the weapon.
@@ -1091,10 +1258,8 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
-   double x,y, acc, t, dist;
    Weapon* w;
    double ew_evasion;
-   double acc_max;
 
    /* Create basic features */
    w           = malloc( sizeof(Weapon) );
@@ -1113,83 +1278,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       /* Bolts treated together */
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
-         /* Only difference is the direction of fire */
-         if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
-               (w->target != 0)) { /* Must have valid target */
-
-            pilot_target = pilot_get(w->target);
-            if (pilot_target == NULL) {
-               rdir        = dir;
-               ew_evasion  = 1.;
-            }
-            else {
-               /* Get the distance */
-               dist = vect_dist( pos, &pilot_target->solid->pos );
-
-               /* Aim. */
-               if (dist > outfit->u.blt.range*1.2) {
-                  x = pilot_target->solid->pos.x - pos->x;
-                  y = pilot_target->solid->pos.y - pos->y;
-               }
-               else {
-                  /* Try to predict where the enemy will be. */
-                  /* Time for shots to reach that distance */
-                  t = dist / (w->outfit->u.blt.speed + VMOD(*vel));
-
-                  /* Position is calculated on where it should be */
-                  x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-                     - (pos->x + vel->x*t);
-                  y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-                     - (pos->y + vel->y*t);
-               }
-
-               /* Set angle to face. */
-               rdir = ANGLE(x, y);
-
-               /* Evasion. */
-               ew_evasion  = pilot_target->ew_evasion;
-            }
-         }
-         else { /* fire straight */
-            rdir        = dir;
-            ew_evasion  = 1.;
-         }
-
-         /* Calculate accuarcy. */
-         acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
-
-         /* Stat modifiers. */
-         if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
-            acc         *= 2. - parent->stats.accuracy_turret; /* Invert. */
-            w->dam_mod  *= parent->stats.damage_turret;
-         }
-         else {
-            acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
-            w->dam_mod  *= parent->stats.damage_forward;
-         }
-         acc_max = acc;
-         acc  *= ew_evasion / outfit->u.blt.ew_lockon;
-         acc   = MAX( acc_max, acc ); /* Shouldn't go below maximum accuracy, it can only get worse. */
-         acc   = MAX( 0., acc ); /* Make sure it doesn't become negative. */
-
-         /* Calculate direction. */
-         rdir += RNG_2SIGMA() * acc;
-         if (rdir < 0.)
-            rdir += 2.*M_PI;
-         else if (rdir >= 2.*M_PI)
-            rdir -= 2.*M_PI;
-
-         mass = 1; /* Lasers are presumed to have unitary mass */
-         vectcpy( &v, vel );
-         vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
-         w->timer = outfit->u.blt.range / outfit->u.blt.speed;
-         w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
-         w->solid = solid_create( mass, rdir, pos, &v );
-         w->voice = sound_playPos( w->outfit->u.blt.sound,
-               w->solid->pos.x,
-               w->solid->pos.y,
-               w->solid->vel.x,
-               w->solid->vel.y);
+         weapon_createBolt( w, outfit, T, dir, pos, vel, parent );
          break;
 
       /* Beam weapons are treated together. */
@@ -1222,34 +1311,9 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       case OUTFIT_TYPE_TURRET_AMMO:
          if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
             pilot_target = pilot_get(w->target);
-            if (pilot_target == NULL) {
-               rdir        = dir;
-               ew_evasion  = 1.;
-            }
-            else {
-               /* Get the distance */
-               dist = vect_dist( pos, &pilot_target->solid->pos );
-
-               /* Aim. */
-               /* Try to predict where the enemy will be. */
-               /* Time for shots to reach that distance */
-               if (outfit->u.amm.thrust == 0.)
-                  t = dist / (w->outfit->u.amm.speed + VMOD(*vel));
-               else
-                  t = dist / w->outfit->u.amm.speed;
-
-               /* Position is calculated on where it should be */
-               x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-                  - (pos->x + vel->x*t);
-               y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-                  - (pos->y + vel->y*t);
-
-               /* Set angle to face. */
-               rdir = ANGLE(x, y);
-
-               /* Evasion. */
-               ew_evasion    = pilot_target->ew_evasion;
-            }
+            rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir );
+            /* Evasion. */
+            ew_evasion    = pilot_target->ew_evasion;
          }
          else {
             rdir        = dir;
