@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -3950,6 +3950,7 @@
     <refuel/>
     <bar/>
    </services>
+   <commodities/>
    <description>The Sirii have a rather extensive military infrastructure within their borders, and Fyruse Station is part of that infrastructure. There's a regular detachment stationed here, making sure that law and order are maintained as well as can reasonably be expected in Esker and its neighboring systems. Fyruse Station also acts as a border guard for Frontier space, though nobody really believes in the need for such.</description>
    <bar>As Fyruse Station is a Sirius-only facility, the bar is divided in three sections, one for each echelon. In the rare event that a non-Sirius visitor is allowed on board, they will be catered for in the Shaira section.</bar>
   </general>
@@ -4884,8 +4885,8 @@
  </asset>
  <asset name="Humdrum I">
   <pos>
-   <x>-980.000000</x>
-   <y>-180.000000</y>
+   <x>-5880.000000</x>
+   <y>-1080.000000</y>
   </pos>
   <GFX>
    <space>moon-K00.png</space>
@@ -4906,8 +4907,8 @@
  </asset>
  <asset name="Humdrum II">
   <pos>
-   <x>1600.000000</x>
-   <y>-1390.000000</y>
+   <x>9600.000000</x>
+   <y>-8340.000000</y>
   </pos>
   <GFX>
    <space>H02.png</space>
@@ -4928,8 +4929,8 @@
  </asset>
  <asset name="Humdrum III">
   <pos>
-   <x>1430.000000</x>
-   <y>1150.000000</y>
+   <x>8580.000000</x>
+   <y>6900.000000</y>
   </pos>
   <GFX>
    <space>moon-J02.png</space>
@@ -6178,8 +6179,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Manis">
   <pos>
-   <x>2670.000000</x>
-   <y>-1250.000000</y>
+   <x>16020.000000</x>
+   <y>-7500.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
@@ -6535,8 +6536,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Modus">
   <pos>
-   <x>-950.000000</x>
-   <y>930.000000</y>
+   <x>-5700.000000</x>
+   <y>5580.000000</y>
   </pos>
   <GFX>
    <space>A00.png</space>
