@@ -50,6 +50,7 @@
     <missions/>
     <commodity/>
    </services>
+   <commodities/>
    <description>A cold and unpleasant world, the Sirius established their colony on Adrian in the days when they were just expanding into Eiderdown. At the time the system was controlled by the Empire, but with a firm beachhead in the system it was a matter of a few cycles before the Sirii came to power. Today, Adrian persists, despite having served its only purpose.</description>
    <bar>Heating on P class worlds is often a costly affair, so the temperature is kept at an acceptable, though uncomfortable low. Most patrons of this spaceport bar are in full winter getups.</bar>
   </general>
@@ -1599,8 +1600,8 @@
  </asset>
  <asset name="Chucrchill II">
   <pos>
-   <x>-3200.000000</x>
-   <y>-1260.000000</y>
+   <x>-22400.000000</x>
+   <y>-8820.000000</y>
   </pos>
   <GFX>
    <space>J02.png</space>
@@ -1621,8 +1622,8 @@
  </asset>
  <asset name="Churchill I">
   <pos>
-   <x>-1980.000000</x>
-   <y>3640.000000</y>
+   <x>-13560.000000</x>
+   <y>17280.000000</y>
   </pos>
   <GFX>
    <space>G00.png</space>
@@ -1643,8 +1644,8 @@
  </asset>
  <asset name="Churchill IIa">
   <pos>
-   <x>-3317.901235</x>
-   <y>-723.379630</y>
+   <x>-23225.308645</x>
+   <y>-7163.657410</y>
   </pos>
   <GFX>
    <space>moon-M01.png</space>
@@ -4303,8 +4304,8 @@
  </asset>
  <asset name="Gilligan's Tomb">
   <pos>
-   <x>2240.000000</x>
-   <y>-2300.000000</y>
+   <x>11200.000000</x>
+   <y>-11500.000000</y>
   </pos>
   <GFX>
    <space>A00.png</space>
@@ -6080,12 +6081,12 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lorelei">
   <pos>
-   <x>-6460.000000</x>
-   <y>1750.000000</y>
+   <x>-38220.000000</x>
+   <y>4150.000000</y>
   </pos>
   <GFX>
    <space>M08.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -6093,13 +6094,31 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <range>2</range>
   </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
+   <class>M</class>
+   <population>5000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Churchill's economic position has turned Lorelei into a well developed world. The constant trade revenues have allowed for large habitation complexes and underground factories that wouldn't look out of place on a Dvaered industrial world. However, unlike the Dvaered, the Sirii have put some thought into their infrastructure, and pollution is kept to a minimum.</description>
+   <bar>Because the Sirii didn't want to waste space on a full-fledged spaceport bar, the bar on Lorelei is a virtual one. Visitors enter a VR booth and are given the illusion of being in a large, luxurious spaceport bar, where they can interact with other visitors and the uplink avatars. It is even possible to consume beverages in the virtual bar, as the VR booth is capable of stimulating the part of the human brain that deals with food and drink.</bar>
   </general>
+  <tech>
+   <item>Basic Trade Ships</item>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Luxsor">
   <pos>
@@ -11432,8 +11451,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Ururis">
   <pos>
-   <x>2440.000000</x>
-   <y>-2640.000000</y>
+   <x>25380.000000</x>
+   <y>-2480.000000</y>
   </pos>
   <GFX>
    <space>M03.png</space>
@@ -11923,6 +11942,30 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 1</item>
    <item>Low Tech Upgrades</item>
   </tech>
+ </asset>
+ <asset name="Violin Station">
+  <pos>
+   <x>8471.615119</x>
+   <y>17666.192451</y>
+  </pos>
+  <GFX>
+   <space>station-battlestation.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <description>Violin Station is one of the more important Sirian military outposts. With so much traffic coming through Churchill, extra security is called for. Violin Station also responds to disturbances in Eiderdown, when the Wringer is causing trouble again.</description>
+  </general>
  </asset>
  <asset name="Virtual Civilian Standard">
   <virtual/>
