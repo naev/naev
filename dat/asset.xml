@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -24,6 +24,34 @@
    <commodities/>
    <description>Adham is a cold, lifeless planet. The only reason why there is a landing strip here at all is that the planet hosts the three arctic-themed arenas for Totoran's gladiatiorial games. While the landing zone and a small buffer around it is considered neutral territory, most of the planet's surface is subject to the destructive sport that is so popular among Totoran's visitors.</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Adrian">
+  <pos>
+   <x>-179.477707</x>
+   <y>5286.959359</y>
+  </pos>
+  <GFX>
+   <space>P04.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>P</class>
+   <population>4000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <description>A cold and unpleasant world, the Sirius established their colony on Adrian in the days when they were just expanding into Eiderdown. At the time the system was controlled by the Empire, but with a firm beachhead in the system it was a matter of a few cycles before the Sirii came to power. Today, Adrian persists, despite having served its only purpose.</description>
+   <bar>Heating on P class worlds is often a costly affair, so the temperature is kept at an acceptable, though uncomfortable low. Most patrons of this spaceport bar are in full winter getups.</bar>
   </general>
  </asset>
  <asset name="Aesir IV">
@@ -2949,8 +2977,8 @@
  </asset>
  <asset name="Eiderdown I">
   <pos>
-   <x>3700.000000</x>
-   <y>-1950.000000</y>
+   <x>18500.000000</x>
+   <y>-9750.000000</y>
   </pos>
   <GFX>
    <space>A01.png</space>
@@ -2971,8 +2999,8 @@
  </asset>
  <asset name="Eiderdown III">
   <pos>
-   <x>-3110.000000</x>
-   <y>-1310.000000</y>
+   <x>-15550.000000</x>
+   <y>-6550.000000</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -3176,8 +3204,8 @@
  </asset>
  <asset name="Ember">
   <pos>
-   <x>573.000000</x>
-   <y>-4190.000000</y>
+   <x>1556.804779</x>
+   <y>-19706.407012</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -3666,8 +3694,8 @@
  </asset>
  <asset name="Forge">
   <pos>
-   <x>220.000000</x>
-   <y>-3790.000000</y>
+   <x>1100.000000</x>
+   <y>-18950.000000</y>
   </pos>
   <GFX>
    <space>A00.png</space>

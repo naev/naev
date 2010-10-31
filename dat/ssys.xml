@@ -1774,7 +1774,7 @@
  </ssys>
  <ssys name="Eiderdown">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1785,6 +1785,7 @@
    <y>-591.000000</y>
   </pos>
   <assets>
+   <asset>Adrian</asset>
    <asset>Eiderdown I</asset>
    <asset>Eiderdown III</asset>
    <asset>Ember</asset>
@@ -1794,26 +1795,26 @@
   </assets>
   <jumps>
    <jump target="Churchill">
-    <pos x="-2542.420288" y="-5886.238300"/>
+    <pos x="-12712.101440" y="-29431.191500"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Esker">
-    <pos x="-3173.921314" y="1475.202864"/>
+    <pos x="-15869.606571" y="7376.014322"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gilligan's Tomb">
-    <pos x="3420.488784" y="741.792748"/>
+    <pos x="17102.443918" y="3708.963741"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Herakin">
-    <pos x="2261.578848" y="-5924.777221"/>
+    <pos x="11307.894240" y="-29623.886105"/>
     <radius>200.000000</radius>
     <flags/>
    </jump>
