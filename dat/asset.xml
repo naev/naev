@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -267,8 +267,8 @@
  </asset>
  <asset name="An'ku I">
   <pos>
-   <x>-1700.000000</x>
-   <y>-50.000000</y>
+   <x>-11900.000000</x>
+   <y>-350.000000</y>
   </pos>
   <GFX>
    <space>G02.png</space>
@@ -289,8 +289,8 @@
  </asset>
  <asset name="An'ku II">
   <pos>
-   <x>510.000000</x>
-   <y>-2920.000000</y>
+   <x>3570.000000</x>
+   <y>-20440.000000</y>
   </pos>
   <GFX>
    <space>L00.png</space>
@@ -311,8 +311,8 @@
  </asset>
  <asset name="An'ku III">
   <pos>
-   <x>-4540.000000</x>
-   <y>-1180.000000</y>
+   <x>-31780.000000</x>
+   <y>-8260.000000</y>
   </pos>
   <GFX>
    <space>C00.png</space>
@@ -2910,6 +2910,42 @@
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Eenerim">
+  <pos>
+   <x>14893.737658</x>
+   <y>2266.770636</y>
+  </pos>
+  <GFX>
+   <space>M00.png</space>
+   <exterior>oceanic.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>1500000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>With over 80% of its surface covered in water, Eenerim teeters on the brink of classes M and O. The population here is spread out over many small or medium sized islands scattered evenly across the globe. The Sirius governemt has divided up the land between the three echelons, with each island predominantly inhabited by either Shaira, Fyrra or Serra.</description>
+   <bar>The spaceport bar here is utterly unremarkable. That's not a bad thing, of course, because bars that distinguish themselves more often than not do so in an unpleasant way.</bar>
+  </general>
+  <tech>
+   <item>Bulk Trade Ships</item>
+  </tech>
  </asset>
  <asset name="Eiderdown I">
   <pos>
@@ -10096,8 +10132,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sroolu">
   <pos>
-   <x>750.000000</x>
-   <y>-3300.000000</y>
+   <x>4159.837315</x>
+   <y>-21174.045924</y>
   </pos>
   <GFX>
    <space>moon-H00.png</space>
@@ -10351,6 +10387,45 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>The colony on Takeru was founded as part of an Imperial colonization program. However, the government at the time deemed the colony to be a failure, and refused to grant it Imperial status. Since then, the colonists have governed themselves.</description>
    <bar>What is a spaceport bar? A miserable pile of drink, noise, data terminals, and of course the occasional fight. Takeru's bar has all of these components, which makes it a comfortable place to be for anyone with more than a few light years under his belt.</bar>
   </general>
+ </asset>
+ <asset name="Tankard Station">
+  <pos>
+   <x>-20551.681519</x>
+   <y>12636.184692</y>
+  </pos>
+  <GFX>
+   <space>station-cylinder.png</space>
+   <exterior>aquatic3.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>3000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Tankard Station is a Sirius economical space facility. It processes a large portion of all trade transactions made within An'ku, and also serves as a terminal for the materials produced by Sroolu. There is also a small security detail stationed here, but this is merely for the purpose of customs, not so much the repulsion of hostile elements.</description>
+  <bar>Serving both as a trading hub and an outlet of consumer end products, the spacedock bar on Tankard Station is always a bustle of activity. In fact, the actual bar seems more like a section of a larger commerce center than the other way around.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Low Tech Upgrades</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Tarsus II">
   <pos>
