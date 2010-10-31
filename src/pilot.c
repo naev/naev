@@ -304,11 +304,13 @@ unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabl
    tp = PLAYER_ID;
    d  = 0;
    for (i=0; i<pilot_nstack; i++) {
+
+      /* Must not be self. */
       if (pilot_stack[i] == p)
          continue;
 
-      /* Player doesn't select escorts. */
-      if ((p->faction == FACTION_PLAYER) &&
+      /* Player doesn't select escorts (unless disabled is active). */
+      if (!disabled && (p->faction == FACTION_PLAYER) &&
             (pilot_stack[i]->faction == FACTION_PLAYER))
          continue;
 

@@ -173,6 +173,8 @@ void background_renderStars( const double dt )
    GLfloat x, y, m, b;
    GLfloat brightness;
    double z;
+   int shade_mode;
+
 
    /*
     * gprof claims it's the slowest thing in the game!
@@ -219,41 +221,58 @@ void background_renderStars( const double dt )
       gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
    }
 
+   /* Decide on shade mode. */
+   shade_mode = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+         !player_isFlag(PLAYER_CREATING)) {
 
-      glShadeModel(GL_SMOOTH);
+      if (pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+            (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
 
-      /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
-      m /= HYPERSPACE_STARS_BLUR;
-      m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player.p->solid->vel));
-      y = m*sin(VANGLE(player.p->solid->vel));
+         glShadeModel(GL_SMOOTH);
+         shade_mode = 1;
 
-      /* Generate lines. */
-      for (i=0; i < nstars; i++) {
-         brightness = star_colour[8*i+3];
-         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
+         /* lines will be based on velocity */
+         m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+         m /= HYPERSPACE_STARS_BLUR;
+         m *= HYPERSPACE_STARS_LENGTH;
+         x = m*cos(VANGLE(player.p->solid->vel));
+         y = m*sin(VANGLE(player.p->solid->vel));
+      }
+      else if (dt_mod > 3.) {
+
+         glShadeModel(GL_SMOOTH);
+         shade_mode = 1;
+
+         /* lines will be based on velocity */
+         m = 10.*(dt_mod-3.);
+         x = m*cos(VANGLE(player.p->solid->vel));
+         y = m*sin(VANGLE(player.p->solid->vel));
       }
 
-      /* Draw the lines. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, nstars );
+      if (shade_mode) {
+         /* Generate lines. */
+         for (i=0; i < nstars; i++) {
+            brightness = star_colour[8*i+3];
+            star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
+            star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
+         }
 
+         /* Upload new data. */
+         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
+      }
+   }
+
+   /* Render. */
+   gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
+   gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   if (shade_mode) {
+      glDrawArrays( GL_LINES, 0, nstars );
+      glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
       glShadeModel(GL_FLAT);
    }
-   else { /* normal rendering */
-      /* Render. */
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   else {
       glDrawArrays( GL_POINTS, 0, nstars );
-      gl_checkErr();
    }
 
    /* Clear star movement. */
@@ -265,6 +284,9 @@ void background_renderStars( const double dt )
 
    /* Pop matrix. */
    gl_matrixPop();
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 
