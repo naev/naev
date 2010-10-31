@@ -1974,7 +1974,7 @@
  </ssys>
  <ssys name="Eye of Night">
   <general>
-   <radius>3500.000000</radius>
+   <radius>24500.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -1988,29 +1988,32 @@
    <asset>Eye of Night I</asset>
    <asset>Eye of Night II</asset>
    <asset>Eye of Night III</asset>
-   <asset>Inios</asset>
+   <asset>Inios Station</asset>
+   <asset>Traal</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
   </assets>
   <jumps>
    <jump target="Fidelis">
-    <pos x="-3436.726884" y="-662.501568"/>
+    <pos x="-24057.088185" y="-4637.510975"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Lapis">
-    <pos x="2753.141132" y="-2161.067770"/>
+    <pos x="19271.987924" y="-15127.474392"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ruttwi">
-    <pos x="3104.975385" y="4841.755825"/>
+    <pos x="15574.827695" y="18912.290773"/>
     <radius>200.000000</radius>
-    <flags/>
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
   </jumps>
  </ssys>

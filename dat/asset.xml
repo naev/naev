@@ -1156,6 +1156,7 @@
     <refuel/>
     <bar/>
    </services>
+   <commodities/>
    <description>Serving as a local security checkpoint, Brandt Station sports two squadrons of light response ships. The station is responsible mainly for Niger, Lazuli and Anarbalis, as the ships here are not equipped to handle the stress of the border conflicts with the Dvaered at Eye of Night.</description>
    <bar>Curiously, this spacedock bar seems to make no distinction between the three Sirian echelons in any way. However, the soldiers and sailors stationed on Brandt Station all know their place, and treat each other accordingly.</bar>
   </general>
@@ -3512,8 +3513,8 @@
  </asset>
  <asset name="Eye of Night I">
   <pos>
-   <x>690.000000</x>
-   <y>2740.000000</y>
+   <x>-239.444444</x>
+   <y>12235.555556</y>
   </pos>
   <GFX>
    <space>K02.png</space>
@@ -3534,8 +3535,8 @@
  </asset>
  <asset name="Eye of Night II">
   <pos>
-   <x>-2490.000000</x>
-   <y>3420.000000</y>
+   <x>-19027.222222</x>
+   <y>13662.222222</y>
   </pos>
   <GFX>
    <space>A00.png</space>
@@ -3556,8 +3557,8 @@
  </asset>
  <asset name="Eye of Night III">
   <pos>
-   <x>4530.000000</x>
-   <y>680.000000</y>
+   <x>15940.324074</x>
+   <y>564.398148</y>
   </pos>
   <GFX>
    <space>P02.png</space>
@@ -5366,10 +5367,10 @@
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Inios">
+ <asset name="Inios Station">
   <pos>
-   <x>4838.765432</x>
-   <y>784.591049</y>
+   <x>16510.246913</x>
+   <y>862.507713</y>
   </pos>
   <GFX>
    <space>003.png</space>
@@ -5397,7 +5398,7 @@
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Inios is something like a border guard between Sirius and Dvaered controlled territories. Though officially not a military complex, Inios does garrison far more combat capable ships that one might expect of a commercial station. Whenever the Dvaered send in skirmish fleets to try the Sirius defenses, it is Inios that sends them on their way home.</description>
+   <description>Inios Station is something like a border guard between Sirius and Dvaered controlled territories. Though officially not a military complex, Inios does garrison far more combat capable ships that one might expect of a commercial station. Whenever the Dvaered send in skirmish fleets to try the Sirius defenses, it is Inios Station that sends them on their way home.</description>
    <bar>The bar is built against an outer wall. Several large windows allow patrons to look out on the frozen wastes of Eye of Night III, the planet around which the station orbits. Not coincidentally, the windows also allow people to see the Sirius armed forces docking and taking off, emphasizing the military capacity of the station.</bar>
   </general>
   <tech>
@@ -11164,6 +11165,45 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <tech>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+  </tech>
+ </asset>
+ <asset name="Traal">
+  <pos>
+   <x>-3800.357180</x>
+   <y>-8212.982546</y>
+  </pos>
+  <GFX>
+   <space>M06.png</space>
+   <exterior>forest02.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>4000000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Traal is a pleasant civilian world. With stable tectonics and a favorable climate on most of its land masses, the world makes for good living. It comes as no surprise that the Dvaered eye it greedily, so close to their borders, but so long as Inios Station guards Eye of Night, Dvaered High Command can't claim Traal.</description>
+   <bar>Traal's spaceport bar is heavy on Sirian propaganda. With foreign territories just a jump away, the Sirii feel the need to spread their beliefs, even if only passively. Though House Sirius has stopped expanding in recent years, the Traalians believe that Sirichana is merely taking a pause to stabilize the existing Sirian worlds. Soon, they say, Fidelis will be Sirius space.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
    <item>Missiles 1</item>
   </tech>
  </asset>
