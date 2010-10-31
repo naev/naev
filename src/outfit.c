@@ -1002,12 +1002,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
+         "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"
          "%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
          temp->u.blt.cpu,
+         temp->u.blt.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.damage, temp->u.blt.damage,
          1./temp->u.blt.delay,
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
@@ -1108,12 +1110,14 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
+         "%.0f%% Penetration\n"
          "%.2f %s DPS\n"
          "%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Range",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.cpu,
+         temp->u.bem.penetration*100.,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
@@ -1291,11 +1295,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
+         "%.0f%% Penetration\n"
          "%.0f Damage [%s]\n"
          "%.0f Energy\n"
          "%.0f Maximum Speed\n"
          "%.1f duration [%.1f Lock-On]",
          outfit_getType(temp),
+         temp->u.amm.penetration*100.,
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
