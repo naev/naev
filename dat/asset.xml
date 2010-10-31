@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -863,8 +863,8 @@
  </asset>
  <asset name="Avoss">
   <pos>
-   <x>-34650.000000</x>
-   <y>32670.000000</y>
+   <x>-26250.000000</x>
+   <y>28770.000000</y>
   </pos>
   <GFX>
    <space>A03.png</space>
@@ -4240,8 +4240,8 @@
  </asset>
  <asset name="Gilligan's Memory">
   <pos>
-   <x>320.000000</x>
-   <y>-830.000000</y>
+   <x>2560.000000</x>
+   <y>-6640.000000</y>
   </pos>
   <GFX>
    <space>M00.png</space>
@@ -4542,8 +4542,8 @@
  </asset>
  <asset name="Gyrios IV">
   <pos>
-   <x>63840.000000</x>
-   <y>15485.000000</y>
+   <x>48540.000000</x>
+   <y>15785.000000</y>
   </pos>
   <GFX>
    <space>A02.png</space>
@@ -4564,8 +4564,8 @@
  </asset>
  <asset name="Gyrios V">
   <pos>
-   <x>62730.000000</x>
-   <y>-14875.000000</y>
+   <x>39730.000000</x>
+   <y>-16475.000000</y>
   </pos>
   <GFX>
    <space>moon-C00.png</space>
@@ -5316,8 +5316,8 @@
  </asset>
  <asset name="Jaegnhild">
   <pos>
-   <x>27030.000000</x>
-   <y>-1615.000000</y>
+   <x>19330.000000</x>
+   <y>-3515.000000</y>
   </pos>
   <GFX>
    <space>moon-O00.png</space>
@@ -5621,8 +5621,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Kotori">
   <pos>
-   <x>36630.000000</x>
-   <y>37800.000000</y>
+   <x>25299.285122</x>
+   <y>31660.203761</y>
   </pos>
   <GFX>
    <space>moon-I00.png</space>
@@ -5857,8 +5857,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Lapra">
   <pos>
-   <x>595.000000</x>
-   <y>39525.000000</y>
+   <x>10995.000000</x>
+   <y>24825.000000</y>
   </pos>
   <GFX>
    <space>K02.png</space>
@@ -9910,8 +9910,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shickhaw I">
   <pos>
-   <x>5265.000000</x>
-   <y>-13500.000000</y>
+   <x>8332.129630</x>
+   <y>-9159.722222</y>
   </pos>
   <GFX>
    <space>D01.png</space>
@@ -9954,8 +9954,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Shickhaw IV">
   <pos>
-   <x>-5490.000000</x>
-   <y>51480.000000</y>
+   <x>-1390.848765</x>
+   <y>43329.922840</y>
   </pos>
   <GFX>
    <space>P01.png</space>
@@ -10419,7 +10419,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Tankard Station is a Sirius economical space facility. It processes a large portion of all trade transactions made within An'ku, and also serves as a terminal for the materials produced by Sroolu. There is also a small security detail stationed here, but this is merely for the purpose of customs, not so much the repulsion of hostile elements.</description>
-  <bar>Serving both as a trading hub and an outlet of consumer end products, the spacedock bar on Tankard Station is always a bustle of activity. In fact, the actual bar seems more like a section of a larger commerce center than the other way around.</bar>
+   <bar>Serving both as a trading hub and an outlet of consumer end products, the spacedock bar on Tankard Station is always a bustle of activity. In fact, the actual bar seems more like a section of a larger commerce center than the other way around.</bar>
   </general>
   <tech>
    <item>Basic Outfits 1</item>
@@ -10844,8 +10844,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Tori">
   <pos>
-   <x>36211.788210</x>
-   <y>38190.470165</y>
+   <x>24881.073332</x>
+   <y>32050.673926</y>
   </pos>
   <GFX>
    <space>M05.png</space>
@@ -11477,8 +11477,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Uuries">
   <pos>
-   <x>26579.572578</x>
-   <y>-1060.851363</y>
+   <x>18879.572578</x>
+   <y>-2960.851363</y>
   </pos>
   <GFX>
    <space>D00.png</space>
@@ -12388,8 +12388,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Zero-Eleven">
   <pos>
-   <x>1640.000000</x>
-   <y>-3240.000000</y>
+   <x>13120.000000</x>
+   <y>-25920.000000</y>
   </pos>
   <GFX>
    <space>moon-A00.png</space>
@@ -12410,8 +12410,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Zero-Five">
   <pos>
-   <x>1880.000000</x>
-   <y>1300.000000</y>
+   <x>15040.000000</x>
+   <y>10400.000000</y>
   </pos>
   <GFX>
    <space>moon-P01.png</space>
@@ -12432,8 +12432,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Zero-One">
   <pos>
-   <x>-2960.000000</x>
-   <y>-550.000000</y>
+   <x>-23680.000000</x>
+   <y>-4400.000000</y>
   </pos>
   <GFX>
    <space>moon-G00.png</space>
