@@ -5,12 +5,11 @@ import os,sys
 from readers import readers
 
 class unidiff(readers):
-    used = list()
-    unknown = list()
 
     def __init__(self, **config):
         uXml = os.path.join(config['datpath'], 'unidiff.xml')
         readers.__init__(self, uXml, config['verbose'])
+        self._componentName = 'unidiff'
 
         self.uName = list()
         print('Compiling unidiff ...',end='      ')
@@ -29,26 +28,4 @@ class unidiff(readers):
             return True
         else:
             return False
-
-    def set_unknown(self, name):
-        """
-        Set the name in an unknown status.
-        Meaning it is probably used by a lua script, but this tool can't be
-        certain (i.e. name used in a variable).
-        """
-        if name in self.uName and not in self.used:
-            self.unknown.append(name)
-            self.used.append(name)
-
-    def get_unused(self):
-        tmp = self.uName
-        for name in self.used:
-            tmp.remove(name)
-        return tmp
-
-    def show_unused(self):
-        tmp = self.get_unused()
-        if len(tmp) > 0:
-            print('\nUnused unidiff:')
-            print(' '.join(tmp))
 

@@ -8,19 +8,20 @@ class ship(readers):
     def __init__(self, **config):
         shipXml = os.path.join(config['datpath'], 'ship.xml')
         readers.__init__(self, shipXml, config['verbose'])
+        self._componentName = 'ship'
         tech=config['tech']
 
-        self.shipsName = list()
+        self.nameList = list()
         self.missingTech = list()
         print('Compiling ship list ...',end='       ')
         for ship in self.xmlData.findall('ship'):
-            self.shipsName.append(ship.attrib['name'])
+            self.nameList.append(ship.attrib['name'])
             if not tech.findItem(ship.attrib['name']):
                 self.missingTech.append(ship.attrib['name'])
         print("DONE")
 
     def find(self, name):
-        if name in self.shipsName:
+        if name in self.nameList:
             if name in self.missingTech:
                 self.missingTech.remove(name)
             return True

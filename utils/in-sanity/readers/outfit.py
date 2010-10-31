@@ -5,22 +5,26 @@ import os,sys
 from readers import readers
 
 class outfit(readers):
+    used = list()
+    unknown = list()
+
     def __init__(self, **config):
         outfitXml = os.path.join(config['datpath'], 'outfit.xml')
         readers.__init__(self, outfitXml, config['verbose'])
+        self._componentName = 'outfit'
         tech = config['tech']
 
-        self.outfitsName = list()
+        self.nameList = list()
         self.missingTech = list()
         print('Compiling outfit list ...',end='     ')
         for outfit in self.xmlData.findall('outfit'):
-            self.outfitsName.append(outfit.attrib['name'])
+            self.nameList.append(outfit.attrib['name'])
             if not tech.findItem(outfit.attrib['name']):
                 self.missingTech.append(outfit.attrib['name'])
         print("DONE")
 
     def find(self, name):
-        if name in self.outfitsName:
+        if name in self.nameList:
             if name in self.missingTech:
                 self.missingTech.remove(name)
             return True
