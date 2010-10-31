@@ -1072,6 +1072,10 @@ static void input_clickevent( SDL_Event* event )
    if (event->button.button != SDL_BUTTON_LEFT)
       return;
 
+   /* Player must not be NULL. */
+   if (player.p == NULL)
+      return;
+
    /* Translate to coordinates. */
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
    gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
