@@ -1876,9 +1876,14 @@ static int aiL_face( lua_State *L )
 }
 
 
-/*
- * Aims at the pilot, trying to hit it.
+/**
+ * @brief Aims at a pilot, trying to hit it rather than move to it.
+ *
  * This method uses a polar UV decomposition to get a more accurate time-of-flight
+ *
+ *    @luaparam id The id of the pilot to aim at
+ *    @luareturn The offset from the target aiming position (in degrees).
+ * @luafunc aim( id )
  */
 static int aiL_aim( lua_State *L )
 {
@@ -1951,8 +1956,12 @@ static int aiL_aim( lua_State *L )
 }
 
 
-/*
- * maintains an intercept pursuit course
+/**
+ * @brief Maintains an intercept pursuit course.
+ *
+ *    @luaparam p Position or id of pilot to intercept.
+ *    @luareturn The offset from the proper intercept course (in degrees).
+ * @luafunc iface( p )
  */
 static int aiL_iface( lua_State *L )
 {
