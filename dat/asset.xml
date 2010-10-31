@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -345,6 +345,50 @@
   <GFX>
    <space>C00.png</space>
    <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Anarbalis II">
+  <pos>
+   <x>-535.769627</x>
+   <y>-8433.275285</y>
+  </pos>
+  <GFX>
+   <space>K04.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Anarbalis III">
+  <pos>
+   <x>10212.291799</x>
+   <y>-1801.492703</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -3816,6 +3860,37 @@
    <commodities/>
    <description>(null)</description>
    <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Freshwater Station">
+  <pos>
+   <x>-13589.830053</x>
+   <y>11789.469068</y>
+  </pos>
+  <GFX>
+   <space>station-agriculture.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>200</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>After the success of the Empire's experimental INNS-1, the Sirii saw potential for off-world crop growing in the Anarbalis system. Aptly named, Freshwater Station produces carefully engineered bumper crops for consumption by Sirian worlds in the immediate vicinity.</description>
+   <bar>The bar is dominated by the likeness of the Touched who officially blessed the station. The local Sirian workers seem to take particular pride in the visit, since the Touched usually operate only in population centers.</bar>
   </general>
  </asset>
  <asset name="Fried I">
@@ -8621,8 +8696,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Racheka">
   <pos>
-   <x>-534.057617</x>
-   <y>619.888306</y>
+   <x>-2670.288085</x>
+   <y>3099.441530</y>
   </pos>
   <GFX>
    <space>M01.png</space>
@@ -8659,8 +8734,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Racheka Secundus">
   <pos>
-   <x>-236.580444</x>
-   <y>340.084388</y>
+   <x>-2069.391983</x>
+   <y>2764.209655</y>
   </pos>
   <GFX>
    <space>moon-D01.png</space>
