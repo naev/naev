@@ -105,13 +105,13 @@ void shipyard_open( unsigned int wid )
          "Crew:\n"
          "\n"
          "CPU:\n"
-         "Slots:\n"
          "Mass:\n"
          "Jump Time:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
          "\n"
+         "Absorption:\n"
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
@@ -181,12 +181,14 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
+            "\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
+            "\n"
             "NA\n"
             "NA\n"
             "NA\n"
@@ -219,13 +221,13 @@ void shipyard_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%.0f Teraflops\n"
-         "%d / %d / %d (Weap/Util/Struct)\n"
          "%.0f Tons\n"
          "%.1f STU Average\n"
          "%.0f KN/Ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
          "\n"
+         "%.0f%% Damage\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
@@ -240,13 +242,13 @@ void shipyard_update( unsigned int wid, char* str )
          ship->crew,
          /* Weapons & Manoeuvrability */
          ship->cpu,
-         ship->outfit_nweapon, ship->outfit_nutility, ship->outfit_nstructure,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5. * (ship->stats.jump_delay/100.+1.), /**< @todo make this more portable. */
          ship->thrust / ship->mass,
          ship->speed,
          ship->turn,
          /* Misc */
+         ship->dmg_absorb*100.,
          ship->shield, ship->shield_regen,
          ship->armour, ship->armour_regen,
          ship->energy, ship->energy_regen,
