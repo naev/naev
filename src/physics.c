@@ -212,6 +212,39 @@ double vect_dot( Vector2d* a, Vector2d* b )
    return a->x * b->x + a->y * b->y;
 }
 
+
+/**
+ * @brief Determines the magnitude of the source vector components.
+ *
+ *    @param[out] u Parallel component to reference vector.
+ *    @param[out] v Perpendicular component to reference vector.
+ *    @param source Source vector.
+ *    @param reference_vector Reference vector.
+ */
+void vect_uv( double* u, double* v, Vector2d* source, Vector2d* reference_vector )
+{
+   Vector2d unit_parallel, unit_perpendicular;
+
+   vect_uv_decomp(&unit_parallel, &unit_perpendicular, reference_vector);
+
+   *u = vect_dot(source, &unit_parallel);
+   *v = vect_dot(source, &unit_perpendicular);
+}
+
+/**
+ * @brief Does UV decomposition of the reference vector.
+ *
+ *    @param[out] u Parallel component of the reference vector.
+ *    @param[out] v Perpendicular component of the reference vector.
+ *    @param reference_vector The reference vector to decompose.
+ */
+void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
+{
+   vect_pset(u, 1, VANGLE(*reference_vector));
+   vect_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
+}
+
+
 /*
  * S O L I D
  */
