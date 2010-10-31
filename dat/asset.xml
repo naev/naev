@@ -48,7 +48,6 @@
     <refuel/>
     <bar/>
     <missions/>
-    <commodity/>
    </services>
    <commodities/>
    <description>A cold and unpleasant world, the Sirius established their colony on Adrian in the days when they were just expanding into Eiderdown. At the time the system was controlled by the Empire, but with a firm beachhead in the system it was a matter of a few cycles before the Sirii came to power. Today, Adrian persists, despite having served its only purpose.</description>
@@ -57,8 +56,8 @@
  </asset>
  <asset name="Aesir IV">
   <pos>
-   <x>1500.000000</x>
-   <y>0.000000</y>
+   <x>10900.000000</x>
+   <y>-13900.000000</y>
   </pos>
   <GFX>
    <space>J04.png</space>
@@ -3718,8 +3717,8 @@
  </asset>
  <asset name="Fort Sirius">
   <pos>
-   <x>2341.481481</x>
-   <y>-984.320988</y>
+   <x>16942.631753</x>
+   <y>-6095.098630</y>
   </pos>
   <GFX>
    <space>000.png</space>
@@ -4154,8 +4153,8 @@
  </asset>
  <asset name="Gayathi">
   <pos>
-   <x>4050.000000</x>
-   <y>-3820.000000</y>
+   <x>29970.000000</x>
+   <y>-28268.000000</y>
   </pos>
   <GFX>
    <space>O02.png</space>
@@ -6687,8 +6686,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Mutris">
   <pos>
-   <x>4480.000000</x>
-   <y>4070.000000</y>
+   <x>33152.000000</x>
+   <y>30118.000000</y>
   </pos>
   <GFX>
    <space>L00.png</space>
@@ -10067,8 +10066,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sinass">
   <pos>
-   <x>-4630.000000</x>
-   <y>-2200.000000</y>
+   <x>-18252.233450</x>
+   <y>-11663.476970</y>
   </pos>
   <GFX>
    <space>M01.png</space>
@@ -10176,6 +10175,74 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>From the outside, FLF station Sindbad looks like a piece of junk. This suits the FLF, as their base isn't meant to stand out. The more travelers believe that the station is just another carcass floating in space, the better. On the inside however, Sindbad looks, well, it still looks like a piece of junk. The FLF have limited resources, and the fact that they have a secret, autonomous outpost at all must be considered an achievement. Still, Sindbad is more than a token resistance. The base has all the facilities and defensive capabilities that befit a structure its size, and while stealth remains the FLF's best protection from their Dvaered oppressors, Sindbad can defend itself if need be.</description>
    <bar>The FLF don't have much use for leisures, so it's debatable whether this place can be called a bar. Still, it provides space to sit and talk, and it serves a liquid that seems different from industrial acid, in that it doesn't burn a hole through your stomach. The people here are mostly hard-faced men, and the topics of conversation are limited to the Dvaered and the FLF's cause.</bar>
   </general>
+ </asset>
+ <asset name="Sirius Ordinance">
+  <pos>
+   <x>5966.666667</x>
+   <y>19366.197274</y>
+  </pos>
+  <GFX>
+   <space>station-sphere.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>As with most of the Sirius fleet, the equipment installed on the ships is produced right here at Aesir. As a general rule, no finished ship leaves the system without being fully equipped first.</description>
+  </general>
+  <tech>
+   <item>High Tech Upgrades 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
+ <asset name="Sirius Shipyards">
+  <pos>
+   <x>30766.666667</x>
+   <y>7166.666667</y>
+  </pos>
+  <GFX>
+   <space>station-shipyard.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>10.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>4000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Sirius Shipyards is where most of the Sirius fleet is built, though some of the smaller support ships are actually constructed elsewhere. Though Aesir is not an ideal location for mass producing warships, the Sirii believe that building ships in proximity to Mutris will endow some small portion of Sirichana's power on the ships produced.</description>
+  </general>
+  <tech>
+   <item>Heavy Civilian Combat Ships</item>
+  </tech>
  </asset>
  <asset name="Sroolu">
   <pos>
@@ -11272,8 +11339,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Urail">
   <pos>
-   <x>-1970.000000</x>
-   <y>3270.000000</y>
+   <x>-14578.000000</x>
+   <y>24198.000000</y>
   </pos>
   <GFX>
    <space>M00.png</space>
@@ -11579,8 +11646,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vanir I">
   <pos>
-   <x>-2120.000000</x>
-   <y>790.000000</y>
+   <x>-12550.400000</x>
+   <y>4676.800000</y>
   </pos>
   <GFX>
    <space>S00.png</space>
@@ -11601,8 +11668,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vanir II">
   <pos>
-   <x>3010.000000</x>
-   <y>-1110.000000</y>
+   <x>17819.200000</x>
+   <y>-6571.200000</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -11623,8 +11690,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Vanir Ia">
   <pos>
-   <x>-1938.451675</x>
-   <y>597.762910</y>
+   <x>-12145.429869</x>
+   <y>4442.980964</y>
   </pos>
   <GFX>
    <space>moon-K00.png</space>
@@ -12319,6 +12386,37 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </commodities>
    <description>In the days of the Old Empire, Waterhole was the farthest outpost of the Empire. To the Imperials, it was the last outpost of civilization, the last bastion of safety before venturing out into the systems beyond. It is because of this that Waterhole, the system and the planet, derive their names. Now, centuries later, Waterhole remains at the border of Empire space. It is still the last stop for traders venturing out, and the first of those coming in.</description>
    <bar>Waterhole's moon wouldn't be Waterhole's moon if its bar wasn't called The Waterhole. Though the place is open to visitors from all origins and walks of life, the majority of the clientele is Imperial in nature. It seems that nothing creates a longing for home like being away from it for prolonged periods of time.</bar>
+  </general>
+ </asset>
+ <asset name="Yrina">
+  <pos>
+   <x>28159.705105</x>
+   <y>8322.145136</y>
+  </pos>
+  <GFX>
+   <space>P03.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Sirius</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>P</class>
+   <population>50000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>Yrina is a resource world that's being strip-mined by the Sirii. The climate is harsh and almost all of the planet's surface is frozen, but in some cases that is actually desirable, as substances that would normally be fluid are now solid, and therefore mined more easily. Yrina supplies mostly Aesir, but some of the more exotic elements are exported to other perts of Sirius space, and beyond.</description>
+   <bar>The bar has various displays that provide the patrons with details about the mining process, and the current state of the operation in various areas. Though to most visitors it is of passing interest at best, you've got to at least hand it to the Sirius that they take an informative approach to their operation here.</bar>
   </general>
  </asset>
  <asset name="Zabween">

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -71,7 +71,7 @@
  </ssys>
  <ssys name="Aesir">
   <general>
-   <radius>3500.000000</radius>
+   <radius>25900.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -85,6 +85,8 @@
    <asset>Aesir IV</asset>
    <asset>Gayathi</asset>
    <asset>Mutris</asset>
+   <asset>Sirius Ordinance</asset>
+   <asset>Sirius Shipyards</asset>
    <asset>Urail</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Civilian Standard</asset>
@@ -95,7 +97,7 @@
   </assets>
   <jumps>
    <jump target="Vanir">
-    <pos x="-2314.532963" y="-2625.440375"/>
+    <pos x="-17127.543923" y="-19428.258778"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5553,7 +5555,7 @@
  </ssys>
  <ssys name="Vanir">
   <general>
-   <radius>3500.000000</radius>
+   <radius>20720.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -5571,17 +5573,18 @@
    <asset>Vanir Ia</asset>
    <asset>Virtual Civilian Standard</asset>
    <asset>Virtual Trader Area</asset>
+   <asset>Yrina</asset>
   </assets>
   <jumps>
    <jump target="Adraia">
-    <pos x="635.972741" y="-3441.734835"/>
+    <pos x="3764.958628" y="-20375.070221"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Aesir">
-    <pos x="2314.532963" y="2625.440375"/>
+    <pos x="13702.035138" y="15542.607023"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
