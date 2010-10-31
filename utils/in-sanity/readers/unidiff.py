@@ -38,7 +38,7 @@ class unidiff(readers):
         """
         if name in self.uName and not in self.used:
             self.unknown.append(name)
-            self.used.remove(name)
+            self.used.append(name)
 
     def get_unused(self):
         tmp = self.uName

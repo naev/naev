@@ -25,11 +25,19 @@ class fleet(readers):
         else:
             return False
 
-    def show_unused(self):
+    def set_unknown(self, name):
+        if name in self.fleetsName and not in self.used:
+            self.unknown.append(name)
+            self.used.append(name)
+
+    def get_unused(self):
         tmp = self.fleetsName
         for name in self.used:
             tmp.remove(name)
+        return tmp
 
+    def show_unused(self):
+        tmp = self.get_unused()
         if len(tmp) > 0:
             print('\nUnused fleets name:')
             print('\n'.join(tmp))
