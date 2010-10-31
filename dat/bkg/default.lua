@@ -71,7 +71,7 @@ function background_nebula ()
    local a     = 2*math.pi*prng.num()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local move  = 0.05 + prng.num()*0.1
+   local move  = 0.01 + prng.num()*0.01
    local scale = 1 + (prng.num()*0.5 + 0.5)*((2000+2000)/(w+h))
    if scale > 1.9 then scale = 1.9 end
    bkg.image( img, x, y, move, scale )
@@ -82,7 +82,7 @@ function background_stars ()
    -- Chose number to generate
    local n
    local r = prng.num()
-   if r < 0.3 then
+   if r < 0.1 then
       return
    elseif r < 0.8 then
       n = 1
@@ -122,8 +122,8 @@ function star_add( added )
    local a     = 2*math.pi*prng.num()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local nmove = prng.num()*0.2
-   local move  = 0.15 + nmove
+   local nmove = prng.num()*0.04
+   local move  = 0.02 + nmove
    local scale = 1.0 - (1. - nmove/0.2)/5
    bkg.image( img, x, y, move, scale, true ) -- On the foreground
    return num
