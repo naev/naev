@@ -769,6 +769,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
+   temp->dmg_absorb   /= 100.;
    temp->armour_regen /= 60.;
    temp->shield_regen /= 60.;
    temp->energy_regen /= 60.;
