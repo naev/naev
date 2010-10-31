@@ -1644,8 +1644,8 @@
  </asset>
  <asset name="Churchill IIa">
   <pos>
-   <x>-23225.308645</x>
-   <y>-7163.657410</y>
+   <x>-22900.414847</x>
+   <y>-8138.338803</y>
   </pos>
   <GFX>
    <space>moon-M01.png</space>
@@ -3205,8 +3205,8 @@
  </asset>
  <asset name="Ember">
   <pos>
-   <x>1556.804779</x>
-   <y>-19706.407012</y>
+   <x>1418.183425</x>
+   <y>-19401.440034</y>
   </pos>
   <GFX>
    <space>moon-A01.png</space>
@@ -6095,7 +6095,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </presence>
   <general>
    <class>M</class>
-   <population>5000000000</population>
+   <population>4294967295</population>
    <services>
     <land/>
     <refuel/>
@@ -11964,7 +11964,9 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <land/>
     <refuel/>
    </services>
+   <commodities/>
    <description>Violin Station is one of the more important Sirian military outposts. With so much traffic coming through Churchill, extra security is called for. Violin Station also responds to disturbances in Eiderdown, when the Wringer is causing trouble again.</description>
+   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Virtual Civilian Standard">

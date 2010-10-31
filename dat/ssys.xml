@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -5564,6 +5564,7 @@
    <y>-418.000000</y>
   </pos>
   <assets>
+   <asset>Fort Sirius</asset>
    <asset>Sinass</asset>
    <asset>Vanir I</asset>
    <asset>Vanir II</asset>
