@@ -124,11 +124,6 @@ class sanitizer:
             diff\.apply\(
         )"(?P<content>[^"]+)"""
 
-        # XXX not used
-        #outfit_rawstr = r"""
-        #    [:\.](?P<func>addOutfit)\(['"](?P<content>[^'"]+)
-        #"""
-        #outfit_cobj = re.compile(outfit_rawstr, re.VERBOSE| re.UNICODE)
         search_cobj = re.compile(rawstr, re.VERBOSE| re.UNICODE)
 
         entry = dict()
