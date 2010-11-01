@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
-<!-- Short Range Weapons -->
+
+ <!-- LASER TREE -->
  <outfit name="Laser Cannon">
   <general>
    <slot>weapon</slot>
@@ -15,13 +16,12 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>550</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
-   <accuracy>18</accuracy>
-   <energy>4.25</energy>
-   <damage type="energy" penetrate="0">7.5</damage>
+   <energy>10</energy>
+   <damage type="energy" penetrate="0">10</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -39,14 +39,61 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>600</delay>
    <speed>550</speed>
-   <range>450</range>
-   <falloff>270</falloff>
+   <range>525</range>
+   <falloff>300</falloff>
    <gfx_end>laser2-end</gfx_end>
-   <accuracy>18</accuracy>
-   <energy>8.87</energy>
-   <damage type="energy" penetrate="15">12.5</damage>
+   <energy>14</energy>
+   <damage type="energy" penetrate="14">15</damage>
+  </specific>
+ </outfit>
+ <outfit name="Laser Cannon MK3">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>4</mass>
+   <price>15000</price>
+   <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+   <gfx_store>laser2</gfx_store>
+   </general>
+  <specific type="bolt">
+   <cpu>12</cpu>
+   <gfx>laser2</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>650</delay>
+   <speed>550</speed>
+   <range>600</range>
+   <falloff>330</falloff>
+   <gfx_end>laser2-end</gfx_end>
+   <energy>15</energy>
+   <damage type="energy" penetrate="22">22.5</damage>
+  </specific>
+ </outfit>
+ <outfit name="Ripper MK2">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>35000</price>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>12</cpu>
+   <gfx>ripper</gfx>
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1460</delay>
+   <speed>700</speed>
+   <range>900</range>
+   <falloff>450</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <energy>17</energy>
+   <damage type="energy" penetrate="30">20</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -64,17 +111,16 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>540</delay>
+   <delay>350</delay>
    <speed>550</speed>
-   <range>420</range>
-   <falloff>252</falloff>
-   <accuracy>18</accuracy>
-   <energy>6.12</energy>
-   <damage type="energy" penetrate="0">8.1</damage>
+   <range>800</range>
+   <falloff>600</falloff>
+   <energy>20</energy>
+   <damage type="energy" penetrate="20">20</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
- <general>
+  <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>18</mass>
@@ -88,90 +134,90 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>540</delay>
+   <delay>400</delay>
    <speed>550</speed>
-   <range>450</range>
-   <falloff>270</falloff>
+   <range>1000</range>
+   <falloff>700</falloff>
    <gfx_end>laser2-end</gfx_end>
-   <accuracy>18</accuracy>
-   <energy>12.75</energy>
-   <damage type="energy" penetrate="15">13.5</damage>
+   <energy>28</energy>
+   <damage type="energy" penetrate="27">30</damage>
   </specific>
  </outfit>
- <outfit name="Plasma Blaster">
-  <general>
-   <slot>weapon</slot>
-   <mass>4</mass>
-   <price>9000</price>
-   <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
-   <gfx_store>plasma</gfx_store>
-  </general>
-  <specific type="bolt">
-   <cpu>5</cpu>
-   <gfx>plasma</gfx>
-   <sound>plasma</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>PlaS</spfx_armour>
-   <delay>675</delay>
-   <speed>450</speed>
-   <range>350</range>
-   <falloff>210</falloff>
-   <accuracy>25</accuracy>
-   <energy>3.75</energy>
-   <damage type="energy" penetrate="8">7.5</damage>
-  </specific>
-</outfit>
- <outfit name="Plasma Blaster MK2">
+ <outfit name="Laser Turret MK3">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>5</mass>
-   <price>18000</price>
-   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
-   <gfx_store>plasma2</gfx_store>
-  </general>
-  <specific type="bolt">
-   <cpu>10</cpu>
-   <gfx>plasma2</gfx>
-   <sound>plasma</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>PlaS2</spfx_armour>
-   <delay>675</delay>
-   <speed>450</speed>
-   <range>375</range>
-   <falloff>225</falloff>
-   <gfx_end>plasma2-end</gfx_end>
-   <accuracy>25</accuracy>
-   <energy>7.5</energy>
-   <damage type="energy" penetrate="18">12</damage>
-  </specific>
-</outfit>
- <outfit name="Neutron Disruptor">
-  <general>
-   <slot>weapon</slot>
-   <mass>7</mass>
+   <mass>20</mass>
    <price>45000</price>
-   <license>Heavy Weapon License</license>
-   <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
-   <gfx_store>neutron</gfx_store>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>laserturret2</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>10</cpu>
-   <gfx>neutron</gfx>
-   <sound>neutron</sound>
+  <specific type="turret bolt">
+   <cpu>34</cpu>
+   <gfx>laser2</gfx>
+   <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
-   <speed>650</speed>
-   <range>420</range>
-   <falloff>252</falloff>
-   <gfx_end>neutron-end</gfx_end>
-   <accuracy>15</accuracy>
-   <energy>13.75</energy>
-   <damage type="energy" penetrate="22">15</damage>
+   <delay>450</delay>
+   <speed>550</speed>
+   <range>1200</range>
+   <falloff>800</falloff>
+   <gfx_end>laser2-end</gfx_end>
+   <energy>30</energy>
+   <damage type="energy" penetrate="35">45</damage>
   </specific>
  </outfit>
-<!-- Medium Range Weapons -->
+ <outfit name="Heavy Laser">
+  <general>
+   <slot>weapon</slot>
+   <license>Heavy Weapon License</license>
+   <mass>53</mass>
+   <price>45000</price>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>laserturret2</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>40</cpu>
+   <gfx>laser2</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1700</delay>
+   <speed>550</speed>
+   <range>2200</range>
+   <falloff>1800</falloff>
+   <gfx_end>laser2-end</gfx_end>
+   <energy>60</energy>
+   <damage type="energy" penetrate="60">70</damage>
+  </specific>
+ </outfit>
+ <outfit name="Turbolaser">
+  <general>
+   <slot>weapon</slot>
+   <license>Heavy Weapon License</license>
+   <mass>57</mass>
+   <price>45000</price>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>laserturret2</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>52</cpu>
+   <gfx>laser2</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1800</delay>
+   <speed>550</speed>
+   <range>2800</range>
+   <falloff>2200</falloff>
+   <gfx_end>laser2-end</gfx_end>
+   <energy>80</energy>
+   <damage type="energy" penetrate="75">90</damage>
+  </specific>
+ </outfit>
+
+
+ <!-- ION TREE -->
  <outfit name="Ion Cannon">
   <general>
    <slot>weapon</slot>
@@ -192,7 +238,6 @@
    <range>560</range>
    <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
-   <accuracy>13</accuracy>
    <energy>15</energy>
    <damage type="ion" penetrate="20">18.8</damage>
   </specific>
@@ -217,11 +262,13 @@
    <range>560</range>
    <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
-   <accuracy>7</accuracy>
    <energy>25</energy>
    <damage type="ion" penetrate="40">22.5</damage>
   </specific>
  </outfit>
+
+
+ <!-- KINETIC TREE -->
  <outfit name="40mm Autocannon">
   <general>
    <slot>weapon</slot>
@@ -241,7 +288,6 @@
    <delay>1440</delay>
    <speed>500</speed>
    <range blowup="armour">450</range>
-   <accuracy>12</accuracy>
    <energy>25</energy>
    <damage type="kinetic" penetrate="12">30</damage>
   </specific>
@@ -268,7 +314,6 @@
    <range>800</range>
    <falloff>600</falloff>
    <gfx_end>mass-end</gfx_end>
-   <accuracy>10</accuracy>
    <energy>52.5</energy>
    <damage type="kinetic" penetrate="30">43.75</damage>
   </specific>
@@ -293,62 +338,62 @@
    <range>720</range>
    <falloff>540</falloff>
    <gfx_end>mass-end</gfx_end>
-   <accuracy>10</accuracy>
    <energy>66</energy>
    <damage type="kinetic" penetrate="70">46.25</damage>
   </specific>
  </outfit>
- <outfit name="Ripper MK2">
+
+
+ <!-- PLASMA TREE -->
+ <outfit name="Plasma Blaster">
   <general>
    <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>10</mass>
-   <price>35000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
-   <gfx_store>ripper</gfx_store>
+   <mass>4</mass>
+   <price>9000</price>
+   <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
+   <gfx_store>plasma</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>12</cpu>
-   <gfx>ripper</gfx>390
-   <sound>ripper</sound>
+   <cpu>5</cpu>
+   <gfx>plasma</gfx>
+   <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>1260</delay>
-   <speed>700</speed>
-   <range>600</range>
-   <falloff>450</falloff>
-   <gfx_end>ripper-end</gfx_end>
-   <accuracy>10</accuracy>
-   <energy>23.75</energy>
-   <damage type="energy" penetrate="30">22.5</damage>
+   <spfx_armour>PlaS</spfx_armour>
+   <delay>675</delay>
+   <speed>450</speed>
+   <range>350</range>
+   <falloff>210</falloff>
+   <energy>3.75</energy>
+   <damage type="energy" penetrate="8">7.5</damage>
   </specific>
- </outfit>
- <outfit name="Base Ripper MK2">
+</outfit>
+ <outfit name="Plasma Blaster MK2">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>12</mass>
-   <price>1</price>
-   <description>Specially modified ripper for bases. Not for sale (I hope).</description>
-   <gfx_store>ripper</gfx_store>
+   <mass>5</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
   </general>
-  <specific type="turret bolt">
-   <cpu>12</cpu>
-   <gfx>ripper</gfx>390
-   <sound>ripper</sound>
+  <specific type="bolt">
+   <cpu>10</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>1260</delay>
-   <speed>700</speed>
-   <range>900</range>
-   <falloff>650</falloff>
-   <gfx_end>ripper-end</gfx_end>
-   <accuracy>10</accuracy>
-   <energy>23.75</energy>
-   <damage type="energy" penetrate="50">22.5</damage>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>675</delay>
+   <speed>450</speed>
+   <range>375</range>
+   <falloff>225</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <energy>7.5</energy>
+   <damage type="energy" penetrate="18">12</damage>
   </specific>
  </outfit>
-<!-- Beam Weapons -->
+
+
+ <!-- BEAM TREE -->
  <outfit name="Orion Beam">
   <general>
    <slot>weapon</slot>
@@ -396,7 +441,63 @@
    <sound_off>beam_off0</sound_off>
   </specific>
  </outfit>
-<!-- Missile Weapons -->
+
+
+ <!-- NEUTRON TREE -->
+ <outfit name="Neutron Disruptor">
+  <general>
+   <slot>weapon</slot>
+   <mass>7</mass>
+   <price>45000</price>
+   <license>Heavy Weapon License</license>
+   <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
+   <gfx_store>neutron</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>10</cpu>
+   <gfx>neutron</gfx>
+   <sound>neutron</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>900</delay>
+   <speed>650</speed>
+   <range>420</range>
+   <falloff>252</falloff>
+   <gfx_end>neutron-end</gfx_end>
+   <energy>13.75</energy>
+   <damage type="energy" penetrate="22">15</damage>
+  </specific>
+ </outfit>
+
+
+ <!-- SPECIAL WEAPS -->
+ <outfit name="Base Ripper MK2">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>12</mass>
+   <price>1</price>
+   <description>Specially modified ripper for bases. Not for sale (I hope).</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>12</cpu>
+   <gfx>ripper</gfx>390
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1260</delay>
+   <speed>700</speed>
+   <range>900</range>
+   <falloff>650</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <energy>23.75</energy>
+   <damage type="energy" penetrate="50">22.5</damage>
+  </specific>
+ </outfit>
+
+
+ <!-- Missile Weapons -->
  <outfit name="Seeker Launcher">
   <general>
    <slot>weapon</slot>
@@ -505,7 +606,6 @@
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpS</spfx_armour>
    <duration blowup="shield">0.8</duration>
-   <accuracy>12</accuracy>
    <thrust>0</thrust>
    <speed>600</speed>
    <damage type="emp" penetrate="15">15</damage>
@@ -662,7 +762,9 @@
    <ai>dumb</ai>
   </specific>
  </outfit>
-<!-- Energy-Related Outfits -->
+
+
+ <!-- Energy-Related Outfits -->
  <outfit name="Battery">
   <general>
    <typename>Power Modifier</typename>
@@ -1346,7 +1448,6 @@
    <range>550</range>
    <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
-   <accuracy>18</accuracy>
    <energy>1</energy>
    <damage type="energy" penetrate="30">15</damage>
   </specific>
