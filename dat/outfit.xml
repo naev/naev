@@ -2,7 +2,7 @@
 <Outfits>
 
  <!-- LASER TREE -->
- <outfit name="Laser Cannon">
+ <outfit name="Laser Cannon MK1">
   <general>
    <slot>weapon</slot>
    <mass>2</mass>
@@ -72,7 +72,7 @@
    <damage type="energy" penetrate="22">22.5</damage>
   </specific>
  </outfit>
- <outfit name="Ripper MK2">
+ <outfit name="Ripper Cannon">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
@@ -90,13 +90,37 @@
    <delay>1460</delay>
    <speed>700</speed>
    <range>900</range>
-   <falloff>450</falloff>
+   <falloff>650</falloff>
    <gfx_end>ripper-end</gfx_end>
    <energy>17</energy>
    <damage type="energy" penetrate="30">20</damage>
   </specific>
  </outfit>
- <outfit name="Laser Turret">
+ <outfit name="Heavy Ripper Cannon">
+  <general>
+   <slot>weapon</slot>
+   <license>Heavy Weapon License</license>
+   <mass>14</mass>
+   <price>35000</price>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>12</cpu>
+   <gfx>ripper</gfx>
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1660</delay>
+   <speed>700</speed>
+   <range>1300</range>
+   <falloff>900</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <energy>25</energy>
+   <damage type="energy" penetrate="40">36</damage>
+  </specific>
+ </outfit>
+ <outfit name="Laser Turret MK1">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>

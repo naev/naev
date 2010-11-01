@@ -3,22 +3,22 @@
  <!-- EXAMPLE showing a tech may contain outfits, ships, commodities and other techs. -->
  <!-- For details, see http://groups.google.com/group/naev/browse_thread/thread/76ece93aa9162ceb -->
  <tech name="Test">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Llama</item>
   <item>Food</item>
   <item>Test2</item>
  </tech>
  <tech name="Test2">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Mule</item>
   <item>Ore</item>
  </tech>
 
  <!-- Templates - add all new outfits, commodities and ships here! -->
  <tech name="All Outfits">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Laser Cannon MK2</item>
-  <item>Laser Turret</item>
+  <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
   <item>Plasma Blaster</item>
   <item>Plasma Blaster MK2</item>
@@ -28,7 +28,7 @@
   <item>40mm Autocannon</item>
   <item>150mm Railgun</item>
   <item>150mm Railgun Turret</item>
-  <item>Ripper MK2</item>
+  <item>Ripper Cannon</item>
   <item>Base Ripper MK2</item>
   <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
@@ -146,7 +146,7 @@
  
  <!-- Outfits -->
  <tech name="Basic Outfits 1">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Plasma Blaster</item>
   <item>Seeker Launcher</item>
   <item>Seeker Missile</item>
@@ -175,11 +175,11 @@
   <item>GUI - Brushed</item>
   </tech>
  <tech name="Heavy Weapons 1">
-  <item>Laser Turret</item>
+  <item>Laser Turret MK1</item>
   <item>Ion Cannon</item>
   <item>40mm Autocannon</item>
   <item>150mm Railgun</item>
-  <item>Ripper MK2</item>
+  <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
   <item>Medium Weapon License</item>

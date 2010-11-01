@@ -17,13 +17,13 @@ end
 
 
 function equip_forwardDvaLow ()
-   return { "Laser Cannon", "Laser Cannon MK2" }
+   return { "Laser Cannon MK1", "Laser Cannon MK2" }
 end
 function equip_forwardDvaMed ()
    return { "Laser Cannon MK2", "40mm Autocannon" }
 end
 function equip_turretDvaLow ()
-   return { "Laser Turret" }
+   return { "Laser Turret MK1" }
 end
 function equip_turretDvaMed ()
    return { "Laser Turret MK2" }
