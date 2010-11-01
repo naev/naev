@@ -85,6 +85,13 @@ class sanitizer:
         print("DONE")
         return True
 
+    def _compute_regex(self, data_list):
+        regex = list()
+        for category, data in data_list:
+            str = '"(?P<'+ category +'>%s)"'
+            regex.append(str % '|'.join(data))
+        return '|'.join(regex)
+
     def dah_doctor(self):
         """
         That's the doctor, it detect wrong stuff but can never heal you.
@@ -94,6 +101,7 @@ class sanitizer:
         from readers.outfit import outfit
         from readers.unidiff import unidiff
         from readers.preprocessing import tech
+        from types import NoneType
 
         # This will do some preprocessing check in the xml files
         print('Preprocess valitation :')
@@ -126,6 +134,10 @@ class sanitizer:
         entry = dict()
         errors = list()
 
+        # XXX This variable will stock all the lua files. This could lead to a
+        # massive memory consumption.
+        line = dict()
+
         print("Checking now ...")
         for file in self.luaScripts:
             if self.config['verbose']:
@@ -136,10 +148,10 @@ class sanitizer:
                 errors = list()
 
             try:
-                line = open(file, 'rU').read()
+                line[file] = open(file, 'rU').read()
                 this=False
-                for match in search_cobj.finditer(line):
-                    lineno, offset = lineNumber(line, match.start())
+                for match in search_cobj.finditer(line[file]):
+                    lineno, offset = lineNumber(line[file], match.start())
                     info = dict(
                             lineno=lineno,
                             offset=offset,
@@ -154,7 +166,7 @@ class sanitizer:
                         if not outfitdata.find(info['content']):
                             this = True
                     if info['func'] == 'player.addShip':
-                        if not fleetdata.find(info['content']):
+                        if not shipdata.find(info['content']):
                             this = True
                     if info['func'] == 'diff.apply':
                         if not udata.find(info['content']):
@@ -171,6 +183,36 @@ class sanitizer:
 
             if self.config['verbose']:
                 print("DONE")
+
+
+        # XXX WARNING: if a same name is present in more than one category, only
+        # the first will match. That could lead to problems in the human part.
+        unused_data = {
+                'fleet': fleetdata.get_unused(),
+                'unidiff': udata.get_unused(),
+                'ship': shipdata.get_unused(),
+                'outfit': outfitdata.get_unused()
+        }
+        missing_cobj = re.compile(self._compute_regex(unused_data),
+                                  re.VERBOSE| re.UNICODE)
+
+        for file, content in line:
+            for match in missing_cobj.finditer(content):
+                gFleet = match.group('fleet')
+                gUnidiff = match.group('unidiff')
+                gShip = match.group('ship')
+                gOutfit = match.group('outfit')
+
+                if type(gFleet) is not NoneType:
+                    fleetdata.set_unknown(gFleet)
+                if type(gShip) is not NoneType:
+                    shipdata.set_unknown(gShip)
+                if type(gOutfit) is not NoneType:
+                    outfitdata.set_unknown(gOutfit)
+                if type(gUnidiff) is not NoneType:
+                    udata.set_unknown(gUnidiff)
+
+
 
         outfitdata.showMissingTech()
         shipdata.showMissingTech()
