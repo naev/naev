@@ -6,9 +6,7 @@
  * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.109.5602&rep=rep1&type=pdf
  */
 
-#ifdef LOG_H
-#include "log.h" /* For debugging in naev */
-#endif
+#include "log.h"
 
 #include "SDL.h"
 #include "SDL_thread.h"

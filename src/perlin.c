@@ -51,6 +51,7 @@
 
 #include "SDL.h"
 #include "SDL_thread.h"
+#include "threadpool.h"
 
 #include "log.h"
 #include "rng.h"
@@ -95,9 +96,6 @@ typedef struct thread_args_ {
    int octaves; /**< Octave parameters. */
    float *max; /**< Maximum value. */
    float *nebula; /**< Nebula loading into. */
-   int *count; /**< Count of threads. */
-   SDL_mutex *nebu_lock; /**< Shared loc k. */
-   SDL_cond *nebu_cond; /**< Shared conditional. */
 } thread_args;
 
 
@@ -522,13 +520,6 @@ static int noise_genNebulaMap_thread( void *data )
    /* Set up output. */
    *args->max = max;
 
-   /* Signal done. */
-   SDL_mutexP(args->nebu_lock);
-   (*args->count) --;
-   if (*args->count <= 0)
-      SDL_CondSignal(args->nebu_cond);
-   SDL_mutexV(args->nebu_lock);
-
    /* Clean up. */
    free( args );
    return 0;
@@ -546,7 +537,7 @@ static int noise_genNebulaMap_thread( void *data )
  */
 float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 {
-   int x, y, z, count;
+   int x, y, z, i;
    int octaves;
    float hurst;
    float lacunarity;
@@ -558,8 +549,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    float max;
    unsigned int s;
    thread_args *args;
-   SDL_mutex *nebu_lock;
-   SDL_cond *nebu_cond;
+   ThreadQueue vpool;
 
    /* pretty default values */
    octaves     = 3;
@@ -581,12 +571,11 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 
    /* Prepare for generation. */
    _max        = malloc( sizeof(float) * n );
-   nebu_lock   = SDL_CreateMutex();
-   nebu_cond   = SDL_CreateCond();
-   count       = n;
+
+   /* Initialize vpool */
+   vpool = vpool_create();
 
    /* Start to create the nebula */
-   SDL_mutexP(nebu_lock);
    for (z=0; z<n; z++) {
       /* Make ze arguments! */
       args     = malloc( sizeof(thread_args) );
@@ -599,22 +588,18 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
       args->octaves = octaves;
       args->max = &_max[z];
       args->nebula = nebula;
-      args->count = &count;
-      args->nebu_lock = nebu_lock;
-      args->nebu_cond = nebu_cond;
 
       /* Launch ze thread. */
-      SDL_CreateThread( noise_genNebulaMap_thread, args );
+      vpool_enqueue( vpool, noise_genNebulaMap_thread, args );
    }
 
    /* Wait for threads to signal completion. */
-   SDL_CondWait( nebu_cond, nebu_lock );
+   vpool_wait( vpool );
    max = 0.;
-   for (count=0; count<n; count++) {
-      if (_max[count]>max)
-         max = _max[count];
+   for (i=0; i<n; i++) {
+      if (_max[i]>max)
+         max = _max[i];
    }
-   SDL_mutexV(nebu_lock);
 
    /* Post filtering */
    value = 1. - max;
@@ -625,8 +610,6 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 
    /* Clean up */
    TCOD_noise_delete( noise );
-   SDL_DestroyMutex(nebu_lock);
-   SDL_DestroyCond(nebu_cond);
    free(_max);
 
    /* Results */
