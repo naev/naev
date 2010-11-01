@@ -62,6 +62,7 @@ class readers:
         certain (i.e. name used in a variable).
         """
         if name in self.nameList and name not in self.used:
+            print("SETTING ''%s`` UNKNOWN" % name)
             self.unknown.append(name)
 
     def v(self, msg):

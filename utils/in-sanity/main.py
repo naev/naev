@@ -90,17 +90,19 @@ class sanitizer:
         """
         Thanks to jaytea from irc.freenode.net/#regex for helping me to find the
         proper regex.
-        template : (?=(?P<a>X)?)(?=(?P<b>Y)?)(?:X|Y)
+        template : (?=(?P<a>X)?)(?=(?P<b>Y)?)(?:X|Y) <- doesn't works
         """
         regex = list()
         uniqList = list()
 
         for (category, data) in data_list.items():
             str = '"(?=(?P<'+ category +'>%s)?)"'
-            regex.append(str % '|'.join(data))
+            rname = ''
             for name in data:
+                rname = rname + name.replace(' ', "\s") + '|'
                 if name not in uniqList:
-                    uniqList.append(name)
+                    uniqList.append(name.replace(' ', "\s"))
+            regex.append(str % rname[:-1])
 
         return '%s(?:%s)' % (''.join(regex), '|'.join(uniqList))
 
@@ -205,7 +207,6 @@ class sanitizer:
         if len(unused_data) > 0:
             missing_cobj = re.compile(self._compute_regex(unused_data),
                                       re.VERBOSE| re.UNICODE)
-
             for (file, content) in line.items():
                 for match in missing_cobj.finditer(content):
                     groups = match.groupdict()
@@ -213,6 +214,9 @@ class sanitizer:
                         for obj, key in tocheck:
                             if key == rkey and type(rcontent) is not NoneType:
                                 obj.set_unknown(content)
+                            else:
+                                print('DEBUG:')
+                                print("=".join([key,rkey]))
 
         outfitdata.showMissingTech()
         shipdata.showMissingTech()
