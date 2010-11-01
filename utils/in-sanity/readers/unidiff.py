@@ -5,13 +5,13 @@ import os,sys
 from readers import readers
 
 class unidiff(readers):
-    used = list()
-    unknown = list()
 
     def __init__(self, **config):
         uXml = os.path.join(config['datpath'], 'unidiff.xml')
         readers.__init__(self, uXml, config['verbose'])
         self._componentName = 'unidiff'
+        self.used = list()
+        self.unknown = list()
 
         self.nameList = list()
         print('Compiling unidiff ...',end='      ')

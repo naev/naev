@@ -211,6 +211,8 @@ class sanitizer:
                 for match in missing_cobj.finditer(content):
                     groups = match.groupdict()
                     for (rkey, rcontent) in groups:
+                        print (rkey)
+                        exit()
                         for obj, key in tocheck:
                             if key == rkey and type(rcontent) is not NoneType:
                                 obj.set_unknown(content)

@@ -5,14 +5,15 @@ import os,sys
 from readers import readers
 
 class outfit(readers):
-    used = list()
-    unknown = list()
 
     def __init__(self, **config):
         outfitXml = os.path.join(config['datpath'], 'outfit.xml')
         readers.__init__(self, outfitXml, config['verbose'])
         self._componentName = 'outfit'
         tech = config['tech']
+
+        self.used = list()
+        self.unknown = list()
 
         self.nameList = list()
         self.missingTech = list()

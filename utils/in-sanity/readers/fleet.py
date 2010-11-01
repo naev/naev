@@ -5,13 +5,13 @@ import os,sys
 from readers import readers
 
 class fleet(readers):
-    used=list()
-    unknown=list()
 
     def __init__(self, **config):
         fleetXml = os.path.join(config['datpath'], 'fleet.xml')
         readers.__init__(self, fleetXml, config['verbose'])
         self._componentName = 'fleet'
+        self.used=list()
+        self.unknown=list()
 
         self.nameList = list()
         print('Compiling fleet list ...',end='      ')
