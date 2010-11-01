@@ -24,9 +24,15 @@ class readers:
             self.xmlData = ET.parse( xmlFile )
 
     def get_unused(self):
+        """
+        this method return a list containing all the unused stuff.
+        use it wisely, it'll regenerate all the list. Could be quite time
+        consuming with a lot of data.
+        """
         tmp = self.nameList
         for name in self.used:
-            tmp.remove(name)
+            if name not in self.unknown:
+                tmp.remove(name)
         return tmp
 
     def show_unused(self):

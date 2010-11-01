@@ -86,11 +86,22 @@ class sanitizer:
         return True
 
     def _compute_regex(self, data_list):
+        """
+        Thanks to jaytea from irc.freenode.net/#regex for helping me to find the
+        proper regex.
+        template : (?=(?P<a>X)?)(?=(?P<b>Y)?)(?:X|Y)
+        """
         regex = list()
+        uniqList = list()
+
         for category, data in data_list:
-            str = '"(?P<'+ category +'>%s)"'
+            str = '"(?=(?P<'+ category +'>%s)?)"'
             regex.append(str % '|'.join(data))
-        return '|'.join(regex)
+            for name in data:
+                if name not in uniqList:
+                    uniqList.append(name)
+
+        return '%s(?:%s)' % (''.join(regex), '|'.join(uniqList))
 
     def dah_doctor(self):
         """
@@ -180,32 +191,42 @@ class sanitizer:
                 print("DONE")
 
 
-        # XXX WARNING: if a same name is present in more than one category, only
-        # the first will match. That could lead to problems in the human part.
-        unused_data = {
-                'fleet': fleetdata.get_unused(),
-                'unidiff': udata.get_unused(),
-                'ship': shipdata.get_unused(),
-                'outfit': outfitdata.get_unused()
-        }
-        missing_cobj = re.compile(self._compute_regex(unused_data),
-                                  re.VERBOSE| re.UNICODE)
+        unused_data = dict()
 
-        for file, content in line:
-            for match in missing_cobj.finditer(content):
-                gFleet = match.group('fleet')
-                gUnidiff = match.group('unidiff')
-                gShip = match.group('ship')
-                gOutfit = match.group('outfit')
+        # makes sure that only category with unused stuff get listed
+        tmp = fleetdata.get_unused()
+        if len(tmp) > 0:
+            unused_data.update({'fleet': tmp})
+        tmp = udata.get_unused()
+        if len(tmp) > 0:
+            unused_data.update({'unidiff': tmp})
+        tmp = shipdata.get_unused()
+        if len(tmp) > 0:
+            unused_data.update({'ship': tmp})
+        tmp = outfitdata.get_unused()
+        if len(tmp) > 0:
+            unused_data.update('outfit': tmp})
+        del(tmp)
 
-                if type(gFleet) is not NoneType:
-                    fleetdata.set_unknown(gFleet)
-                if type(gShip) is not NoneType:
-                    shipdata.set_unknown(gShip)
-                if type(gOutfit) is not NoneType:
-                    outfitdata.set_unknown(gOutfit)
-                if type(gUnidiff) is not NoneType:
-                    udata.set_unknown(gUnidiff)
+        if len(unused_data) > 0:
+            missing_cobj = re.compile(self._compute_regex(unused_data),
+                                      re.VERBOSE| re.UNICODE)
+
+            for file, content in line:
+                for match in missing_cobj.finditer(content):
+                    gFleet = match.group('fleet')
+                    gUnidiff = match.group('unidiff')
+                    gShip = match.group('ship')
+                    gOutfit = match.group('outfit')
+
+                    if type(gFleet) is not NoneType:
+                        fleetdata.set_unknown(gFleet)
+                    if type(gShip) is not NoneType:
+                        shipdata.set_unknown(gShip)
+                    if type(gOutfit) is not NoneType:
+                        outfitdata.set_unknown(gOutfit)
+                    if type(gUnidiff) is not NoneType:
+                        udata.set_unknown(gUnidiff)
 
 
 
@@ -213,6 +234,8 @@ class sanitizer:
         shipdata.showMissingTech()
 
         if self.config['show_unused']:
+            outfitdata.show_unused()
+            shipdata.show_unused()
             fleetdata.show_unused()
             udata.show_unused()
 
