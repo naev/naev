@@ -12,6 +12,7 @@ For licensing information, see the LICENSE file in this directory.
 import os, sys
 from argparse import ArgumentParser
 import re
+from types import *
 
 __version__="0.1.1"
 
@@ -94,7 +95,7 @@ class sanitizer:
         regex = list()
         uniqList = list()
 
-        for category, data in data_list:
+        for (category, data) in data_list.items():
             str = '"(?=(?P<'+ category +'>%s)?)"'
             regex.append(str % '|'.join(data))
             for name in data:
@@ -112,7 +113,6 @@ class sanitizer:
         from readers.outfit import outfit
         from readers.unidiff import unidiff
         from readers.preprocessing import tech
-        from types import NoneType
 
         # This will do some preprocessing check in the xml files
         print('Preprocess valitation :')
@@ -144,7 +144,7 @@ class sanitizer:
         # massive memory consumption.
         line = dict()
 
-        print("Checking now ...")
+        print("Blind check now ...")
         for file in self.luaScripts:
             if self.config['verbose']:
                 print("Processing file {0}...".format(file), end='       ')
@@ -190,7 +190,7 @@ class sanitizer:
             if self.config['verbose']:
                 print("DONE")
 
-
+        print('Verifying ...')
         unused_data = dict()
 
         # makes sure that only category with unused stuff get listed
@@ -206,10 +206,10 @@ class sanitizer:
             missing_cobj = re.compile(self._compute_regex(unused_data),
                                       re.VERBOSE| re.UNICODE)
 
-            for file, content in line:
+            for (file, content) in line.items():
                 for match in missing_cobj.finditer(content):
                     groups = match.groupdict()
-                    for rkey, rcontent in groups:
+                    for (rkey, rcontent) in groups:
                         for obj, key in tocheck:
                             if key == rkey and type(rcontent) is not NoneType:
                                 obj.set_unknown(content)

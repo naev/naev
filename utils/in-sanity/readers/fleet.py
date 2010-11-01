@@ -5,6 +5,8 @@ import os,sys
 from readers import readers
 
 class fleet(readers):
+    used=list()
+    unknown=list()
 
     def __init__(self, **config):
         fleetXml = os.path.join(config['datpath'], 'fleet.xml')

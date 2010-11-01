@@ -10,8 +10,6 @@ class readers:
 
     _verbose=None
     xmlData=None
-    used = list()
-    unknown = list()
 
     def __init__(self, xmlFile, verbose=False):
         """
@@ -20,6 +18,7 @@ class readers:
         """
         self._verbose=verbose
         self.nameList=list()
+
         if self.xmlData is None:
             self.xmlData = ET.parse( xmlFile )
 
@@ -30,8 +29,21 @@ class readers:
         consuming with a lot of data.
         """
         tmp = self.nameList
-        for name in self.used:
-            tmp.remove(name)
+        try:
+            for name in self.used:
+                # XXX TODO WARNING : this is a 'fix'. But I need to understand
+                # why that name could not be in nameList
+                if name in tmp:
+                    tmp.remove(name)
+        except ValueError:
+            print('ValueError: %s not in %s used list' %
+                        (name, self._componentName))
+            print('Debug info:')
+            print("\ntmp: %s" % (tmp))
+            print("\nNameList: %s" % (self.nameList))
+            print("\nUsed list: %s" % (self.used))
+
+            raise
         return tmp
 
     def show_unused(self):
@@ -49,7 +61,7 @@ class readers:
         Meaning it is probably used by a lua script, but this tool can't be
         certain (i.e. name used in a variable).
         """
-        if name in self.nameList and not in self.used:
+        if name in self.nameList and name not in self.used:
             self.unknown.append(name)
 
     def v(self, msg):

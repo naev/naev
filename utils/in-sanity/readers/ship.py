@@ -5,6 +5,8 @@ import os,sys
 from readers import readers
 
 class ship(readers):
+    used = list()
+    unknown = list()
     def __init__(self, **config):
         shipXml = os.path.join(config['datpath'], 'ship.xml')
         readers.__init__(self, shipXml, config['verbose'])
