@@ -72,6 +72,8 @@
    <damage type="energy" penetrate="22">22.5</damage>
   </specific>
  </outfit>
+ <!-- TODO laser pd mk1 -->
+ <!-- TODO laser pd mk2 -->
  <outfit name="Ripper Cannon">
   <general>
    <slot>weapon</slot>
@@ -242,10 +244,147 @@
 
 
  <!-- ION TREE -->
+ <outfit name="Razor MK1">
+  <general>
+   <slot>weapon</slot>
+   <mass>4</mass>
+   <price>20000</price>
+   <description>TODO</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>4</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>600</delay>
+   <speed>800</speed>
+   <range>900</range>
+   <falloff>700</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>9</energy>
+   <damage type="ion" penetrate="0">7</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor MK2">
+  <general>
+   <slot>weapon</slot>
+   <mass>5</mass>
+   <price>20000</price>
+   <description>TODO</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>7</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>600</delay>
+   <speed>800</speed>
+   <range>950</range>
+   <falloff>725</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>15</energy>
+   <damage type="ion" penetrate="5">11</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor MK3">
+  <general>
+   <slot>weapon</slot>
+   <mass>7</mass>
+   <price>20000</price>
+   <description>TODO</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>13</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>600</delay>
+   <speed>800</speed>
+   <range>1000</range>
+   <falloff>750</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>19</energy>
+   <damage type="ion" penetrate="11">22</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor Turret MK1">
+  <general>
+   <slot>weapon</slot>
+   <mass>18</mass>
+   <price>75000</price>
+   <description>TODO</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>18</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>800</speed>
+   <range>1000</range>
+   <falloff>750</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>17</energy>
+   <damage type="ion" penetrate="10">15</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor Turret MK2">
+  <general>
+   <slot>weapon</slot>
+   <mass>23</mass>
+   <price>75000</price>
+   <description>TODO</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>22</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>800</speed>
+   <range>1400</range>
+   <falloff>1100</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>30</energy>
+   <damage type="ion" penetrate="17">30</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor Turret MK3">
+  <general>
+   <slot>weapon</slot>
+   <mass>27</mass>
+   <price>75000</price>
+   <description>TODO</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>28</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>800</speed>
+   <range>1800</range>
+   <falloff>1400</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>40</energy>
+   <damage type="ion" penetrate="17">42</damage>
+  </specific>
+ </outfit>
  <outfit name="Ion Cannon">
   <general>
    <slot>weapon</slot>
-   <license>Medium Weapon License</license>
    <mass>6</mass>
    <price>20000</price>
    <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
@@ -259,11 +398,35 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>1440</delay>
    <speed>500</speed>
-   <range>560</range>
-   <falloff>392</falloff>
+   <range>600</range>
+   <falloff>450</falloff>
    <gfx_end>ion-end</gfx_end>
-   <energy>15</energy>
-   <damage type="ion" penetrate="20">18.8</damage>
+   <energy>16</energy>
+   <damage type="ion" penetrate="11">14</damage>
+  </specific>
+ </outfit>
+ <outfit name="Heavy Ion Cannon">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>20000</price>
+   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>18</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1640</delay>
+   <speed>500</speed>
+   <range>800</range>
+   <falloff>600</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>25</energy>
+   <damage type="ion" penetrate="22">25</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -281,15 +444,19 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>765</delay>
+   <delay>900</delay>
    <speed>500</speed>
-   <range>560</range>
-   <falloff>392</falloff>
+   <range>1300</range>
+   <falloff>1000</falloff>
    <gfx_end>ion-end</gfx_end>
-   <energy>25</energy>
-   <damage type="ion" penetrate="40">22.5</damage>
+   <energy>44</energy>
+   <damage type="ion" penetrate="40">40</damage>
   </specific>
  </outfit>
+ <!-- TODO shock artillery -->
+ <!-- TODO shock turret -->
+ <!-- TODO particle needle -->
+ <!-- TODO purgatory -->
 
 
  <!-- KINETIC TREE -->
