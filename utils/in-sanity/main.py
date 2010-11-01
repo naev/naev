@@ -194,18 +194,12 @@ class sanitizer:
         unused_data = dict()
 
         # makes sure that only category with unused stuff get listed
-        tmp = fleetdata.get_unused()
-        if len(tmp) > 0:
-            unused_data.update({'fleet': tmp})
-        tmp = udata.get_unused()
-        if len(tmp) > 0:
-            unused_data.update({'unidiff': tmp})
-        tmp = shipdata.get_unused()
-        if len(tmp) > 0:
-            unused_data.update({'ship': tmp})
-        tmp = outfitdata.get_unused()
-        if len(tmp) > 0:
-            unused_data.update('outfit': tmp})
+        tocheck = ((fleetdata, 'fleet'), (udata,'unidiff'),
+                   (shipdata, 'ship'), (outfitdata, 'outfit'))
+        for obj, key in tocheck:
+            tmp = obj.get_unused()
+            if len(tmp) > 0:
+                unused_data.update({key: tmp})
         del(tmp)
 
         if len(unused_data) > 0:
@@ -214,21 +208,11 @@ class sanitizer:
 
             for file, content in line:
                 for match in missing_cobj.finditer(content):
-                    gFleet = match.group('fleet')
-                    gUnidiff = match.group('unidiff')
-                    gShip = match.group('ship')
-                    gOutfit = match.group('outfit')
-
-                    if type(gFleet) is not NoneType:
-                        fleetdata.set_unknown(gFleet)
-                    if type(gShip) is not NoneType:
-                        shipdata.set_unknown(gShip)
-                    if type(gOutfit) is not NoneType:
-                        outfitdata.set_unknown(gOutfit)
-                    if type(gUnidiff) is not NoneType:
-                        udata.set_unknown(gUnidiff)
-
-
+                    groups = match.groupdict()
+                    for rkey, rcontent in groups:
+                        for obj, key in tocheck:
+                            if key == rkey and type(rcontent) is not NoneType:
+                                obj.set_unknown(content)
 
         outfitdata.showMissingTech()
         shipdata.showMissingTech()

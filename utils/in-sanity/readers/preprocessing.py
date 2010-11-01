@@ -48,22 +48,26 @@ class items(readers):
         print("DONE")
 
     def find(self, name):
-        if name in self.itemNames:
-            if name not in self.usedItem:
-                self.usedItem.append(name)
-            return True
-        else:
-            return False
+        raise NotImplementedError("'find' from 'items' superobject " \
+                                  "shouldn't be used.")
+#        if name in self.itemNames:
+#            if name not in self.usedItem:
+#                self.usedItem.append(name)
+#            return True
+#        else:
+#            return False
 
     def show_unused(self):
         """
         Do not call this method before find !
         """
-        tmp = self.itemNames
-        for name in self.usedItem:
-            tmp.remove(name)
-        print('Unused {0}:'.format(config['item']))
-        print(''.join(tmp))
+        raise NotImplementedError("'show_unused' from 'items' superobject " \
+                                  "shouldn't be used.")
+#        tmp = self.itemNames
+#        for name in self.usedItem:
+#            tmp.remove(name)
+#        print('Unused {0}:'.format(config['item']))
+#        print(''.join(tmp))
 
 class tech(items):
     def __init__(self, **config):

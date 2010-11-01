@@ -31,11 +31,13 @@ class readers:
         """
         tmp = self.nameList
         for name in self.used:
-            if name not in self.unknown:
-                tmp.remove(name)
+            tmp.remove(name)
         return tmp
 
     def show_unused(self):
+        if len(self.unknown) > 0:
+            print('\nProbably not used %s name:' % self._componentName)
+            print('\n', join(self.unknown))
         tmp = self.get_unused()
         if len(tmp) > 0:
             print('\nUnused %s name:' % self._componentName)
@@ -49,7 +51,6 @@ class readers:
         """
         if name in self.nameList and not in self.used:
             self.unknown.append(name)
-            self.used.append(name)
 
     def v(self, msg):
         if self._verbose:
