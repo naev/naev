@@ -126,6 +126,7 @@ naev_SOURCES = \
 	space.c \
 	spfx.c \
 	tech.c \
+	threadpool.c \
 	toolkit.c \
 	unidiff.c \
 	weapon.c \
@@ -254,6 +255,7 @@ naev_SOURCES = \
 	space.h \
 	spfx.h \
 	tech.h \
+	threadpool.h \
 	toolkit.h \
 	unidiff.h \
 	weapon.h
