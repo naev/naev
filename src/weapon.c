@@ -1272,11 +1272,11 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       rdir        = dir;
       ew_evasion  = 1.;
    }
-   if (outfit->u.amm.accuracy != 0.) {
+   /*if (outfit->u.amm.accuracy != 0.) {
       rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
       if ((rdir > 2.*M_PI) || (rdir < 0.))
          rdir = fmod(rdir, 2.*M_PI);
-   }
+   }*/
    if (rdir < 0.)
       rdir += 2.*M_PI;
    else if (rdir >= 2.*M_PI)

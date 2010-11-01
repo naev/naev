@@ -170,7 +170,6 @@ typedef struct OutfitBoltData_ {
    double speed; /**< how fast it goes (not applicable to beam) */
    double range; /**< how far it goes */
    double falloff; /**< Point at which damage falls off. */
-   double accuracy; /**< desviation accuracy */
    double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy; /**< energy usage */
    double cpu; /**< CPU usage. */
@@ -238,7 +237,6 @@ typedef struct OutfitAmmoData_ {
    double resist; /**< lowers chance of jamming by this amount */
    int ai; /**< Smartness of ammo. */
 
-   double accuracy; /**< desviation accuracy */
    double speed; /**< maximum speed */
    double turn; /**< turn velocity */
    double thrust; /**< acceleration */

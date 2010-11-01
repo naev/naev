@@ -919,7 +919,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
-      xmlr_float(node,"accuracy",temp->u.blt.accuracy);
       xmlr_float(node,"ew_lockon",temp->u.blt.ew_lockon);
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"cpu",temp->u.blt.cpu);
@@ -992,6 +991,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.blt.delay /= 1000.;
+   temp->u.blt.damage *= temp->u.blt.delay;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1025,7 +1025,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.delay==0,"delay");
    MELEMENT(temp->u.blt.speed==0,"speed");
    MELEMENT(temp->u.blt.range==0,"range");
-   MELEMENT(temp->u.blt.accuracy==0,"accuracy");
    MELEMENT(temp->u.blt.damage==0,"damage");
    MELEMENT(temp->u.blt.energy==0.,"energy");
    MELEMENT(temp->u.blt.cpu==0.,"cpu");
@@ -1100,6 +1099,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
+   temp->u.bem.damage *= temp->u.bem.delay;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1239,7 +1239,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"thrust",temp->u.amm.thrust);
       xmlr_float(node,"turn",temp->u.amm.turn);
       xmlr_float(node,"speed",temp->u.amm.speed);
-      xmlr_float(node,"accuracy",temp->u.amm.accuracy);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
