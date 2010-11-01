@@ -41,7 +41,7 @@ class readers:
         Meaning it is probably used by a lua script, but this tool can't be
         certain (i.e. name used in a variable).
         """
-        if name in self.NameList and not in self.used:
+        if name in self.nameList and not in self.used:
             self.unknown.append(name)
             self.used.append(name)
 
