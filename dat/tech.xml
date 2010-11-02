@@ -26,8 +26,8 @@
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>40mm Autocannon</item>
-  <item>150mm Railgun</item>
-  <item>150mm Railgun Turret</item>
+  <item>Railgun</item>
+  <item>Railgun Turret</item>
   <item>Ripper Cannon</item>
   <item>Base Ripper MK2</item>
   <item>Orion Beam</item>
@@ -178,7 +178,7 @@
   <item>Laser Turret MK1</item>
   <item>Ion Cannon</item>
   <item>40mm Autocannon</item>
-  <item>150mm Railgun</item>
+  <item>Railgun</item>
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
@@ -189,7 +189,7 @@
   <item>Laser Turret MK2</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
-  <item>150mm Railgun Turret</item>
+  <item>Railgun Turret</item>
   <item>Orion Beam</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
