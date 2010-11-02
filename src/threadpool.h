@@ -17,7 +17,10 @@
 #ifndef THREADPOOL_H
 #  define THREADPOOL_H
 
+
+struct ThreadQueue_;
 typedef struct ThreadQueue_ *ThreadQueue;
+
 
 /* Initializes the threadpool */
 int threadpool_init( void );

@@ -6,12 +6,16 @@
  * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.109.5602&rep=rep1&type=pdf
  */
 
-#include "log.h"
+
+#include "threadpool.h"
 
 #include "SDL.h"
 #include "SDL_thread.h"
 
 #include <stdlib.h>
+
+#include "log.h"
+
 
 #define THREADPOOL_TIMEOUT (5 * 100)
 #define THREADSIG_STOP (1)
@@ -19,26 +23,25 @@
 
 
 #if SDL_VERSION_ATLEAST(1,3,0)
-const int MAXTHREADS = SDL_GetCPUCount();
+const int MAXTHREADS = SDL_GetCPUCount()+1;
 #else
 const int MAXTHREADS = 8;
 #endif
 
 
-typedef struct Node_ *Node;
-typedef struct Node_ {
+struct Node_ {
    void *data;
-   Node next;
+   struct Node_ *next;
 } Node_;
+typedef struct Node_ *Node;
 
-typedef struct ThreadQueue_ {
+struct ThreadQueue_ {
    Node first;
    Node last;
    SDL_sem *semaphore; 
    SDL_mutex *t_lock;
    SDL_mutex *h_lock;
 } ThreadQueue_;
-typedef ThreadQueue_ *ThreadQueue;
 
 typedef struct ThreadQueue_data_ {
    int (*function)(void *);
@@ -64,9 +67,22 @@ typedef struct vpoolThreadData_ {
 typedef vpoolThreadData_ *vpoolThreadData;
 
 
-static ThreadQueue queue = NULL;
+static ThreadQueue global_queue = NULL;
 
-ThreadQueue tq_create()
+
+/*
+ * Prototypes.
+ */
+static ThreadQueue tq_create (void);
+static void tq_enqueue( ThreadQueue q, void *data );
+static void* tq_dequeue( ThreadQueue q );
+static void tq_destroy( ThreadQueue q );
+static int threadpool_worker( void *data );
+static int threadpool_handler( void *data );
+static int vpool_worker( void *data );
+
+
+static ThreadQueue tq_create (void)
 {
    Node n;
    ThreadQueue q;
@@ -87,7 +103,7 @@ ThreadQueue tq_create()
 }
 
 
-void tq_enqueue( ThreadQueue q, void *data )
+static void tq_enqueue( ThreadQueue q, void *data )
 {
    Node n;
 
@@ -109,7 +125,7 @@ void tq_enqueue( ThreadQueue q, void *data )
 }
 
 /* IMPORTANT! The callee should ALWAYS have called SDL_SemWait() on the semaphore. */
-void* tq_dequeue( ThreadQueue q )
+static void* tq_dequeue( ThreadQueue q )
 {
    void *d;
    Node newhead, node;
@@ -138,7 +154,7 @@ void* tq_dequeue( ThreadQueue q )
 }
 
 /* This does not try to lock or anything */
-void tq_destroy( ThreadQueue q )
+static void tq_destroy( ThreadQueue q )
 {
    SDL_DestroySemaphore(q->semaphore);
    SDL_DestroyMutex(q->h_lock);
@@ -153,22 +169,13 @@ void tq_destroy( ThreadQueue q )
    free(q);
 }
 
-/* Eh, threadsafe? nah */
-int tq_isEmpty( ThreadQueue q )
-{
-   if (q->first->next == NULL)
-      return 1;
-   else
-      return 0;
-}
-
 
 /* Enqueues a new job for the threadpool. Do NOT enqueue a job that has to wait
  * for another job to be done as this could lead to a deadlock. */
 int threadpool_newJob(int (*function)(void *), void *data)
 {
    ThreadQueue_data node;
-   if (queue == NULL) {
+   if (global_queue == NULL) {
       #ifdef LOG_H
       WARN("threadpool.c: Threadpool has not been initialized yet!");
       #endif
@@ -179,12 +186,12 @@ int threadpool_newJob(int (*function)(void *), void *data)
    node->data = data;
    node->function = function;
 
-   tq_enqueue( queue, node );
+   tq_enqueue( global_queue, node );
    
    return 0;
 }
 
-int threadpool_worker( void *data )
+static int threadpool_worker( void *data )
 {
    ThreadData_ *work;
    
@@ -207,8 +214,10 @@ int threadpool_worker( void *data )
    return 0;
 }
 
-int threadpool_handler( void *data )
+
+static int threadpool_handler( void *data )
 {
+   (void) data;
    int i, nrunning;
    ThreadData_ *threadargs, *threadarg;
    /* Queues for idle workers and stopped workers */
@@ -237,7 +246,7 @@ int threadpool_handler( void *data )
    while (1) {
 
       if (nrunning > 0) {
-         if (SDL_SemWaitTimeout( queue->semaphore, THREADPOOL_TIMEOUT ) != 0) {
+         if (SDL_SemWaitTimeout( global_queue->semaphore, THREADPOOL_TIMEOUT ) != 0) {
             /* Start killing threads ;) */
             if ( SDL_SemTryWait(idle->semaphore) == 0 ) {
                threadarg = tq_dequeue( idle );
@@ -248,9 +257,9 @@ int threadpool_handler( void *data )
          }
       } else {
          /* Wait for a new job */
-         SDL_SemWait( queue->semaphore );
+         SDL_SemWait( global_queue->semaphore );
       }
-      node = tq_dequeue( queue );
+      node = tq_dequeue( global_queue );
 
       if( SDL_SemTryWait(idle->semaphore) == 0) {
          /* Idle thread available */
@@ -280,18 +289,19 @@ int threadpool_handler( void *data )
       free(node);
    }
    /* TODO: cleanup and maybe a way to stop the threadpool */
+   return 0;
 }
 
 int threadpool_init()
 {
-   if (queue != NULL) {
+   if (global_queue != NULL) {
       #ifdef LOG_H
       WARN("Threadpool has already been initialized!");
       #endif
       return -1;
    }
 
-   queue = tq_create();
+   global_queue = tq_create();
 
    SDL_CreateThread( threadpool_handler, NULL );
 
@@ -317,7 +327,7 @@ void vpool_enqueue(ThreadQueue queue, int (*function)(void *), void *data)
    tq_enqueue( queue, node );
 }
 
-int vpool_worker(void *data)
+static int vpool_worker( void *data )
 {
    vpoolThreadData work;
    
