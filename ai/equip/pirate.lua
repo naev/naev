@@ -18,7 +18,7 @@ end
 
 
 function equip_forwardPirLow ()
-   return { "Plasma Blaster", "Plasma Blaster", "Laser Cannon MK1" }
+   return { "Plasma Blaster MK1", "Plasma Blaster MK1", "Laser Cannon MK1" }
 end
 function equip_forwardPirMed ()
    return { "Plasma Blaster MK2", "Plasma Blaster MK2", "Laser Cannon MK2" }

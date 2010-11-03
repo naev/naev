@@ -26,7 +26,7 @@ end
 -- Forward mounts
 --]]
 function equip_forwardLow ()
-   return { "Laser Cannon MK1", "Plasma Blaster" }
+   return { "Laser Cannon MK1", "Plasma Blaster MK1" }
 end
 function equip_forwardMed ()
    return { "Laser Cannon MK2", "Plasma Blaster MK2", "Ion Cannon" }
