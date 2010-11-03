@@ -667,7 +667,7 @@ void input_update( double dt )
 !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
-#define NOLAND()  (!landed) /**< Player isn't landed. */
+#define NOLAND()  (!landed && !pilot_isFlag(player.p,PILOT_LANDING)) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
  *
@@ -882,10 +882,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) player_autonavStart();
    /* target planet (cycles like target) */
-   } else if (KEY("target_planet") && INGAME() && NOHYP() && NODEAD()) {
+   } else if (KEY("target_planet") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
-   } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
+   } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
          if (!paused) player_autonavAbort(NULL);
          player_land();
