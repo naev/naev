@@ -340,7 +340,7 @@ void player_thinkAutonav( Pilot *pplayer )
 void player_updateAutonav( double dt )
 {
    /* Must be autonaving. */
-   if (!player_isFlag(PLAYER_AUTONAV))
+   if (!player_isFlag(PLAYER_AUTONAV) || (paused))
       return;
 
    /* Ramping down. */
