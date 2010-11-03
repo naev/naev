@@ -20,12 +20,11 @@
   <item>Laser Cannon MK2</item>
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
-  <item>Plasma Blaster</item>
+  <item>Plasma Blaster MK1</item>
   <item>Plasma Blaster MK2</item>
   <item>Neutron Disruptor</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
-  <item>40mm Autocannon</item>
   <item>Railgun</item>
   <item>Railgun Turret</item>
   <item>Ripper Cannon</item>
@@ -147,7 +146,7 @@
  <!-- Outfits -->
  <tech name="Basic Outfits 1">
   <item>Laser Cannon MK1</item>
-  <item>Plasma Blaster</item>
+  <item>Plasma Blaster MK1</item>
   <item>Seeker Launcher</item>
   <item>Seeker Missile</item>
   <item>Battery</item>
@@ -177,7 +176,6 @@
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
   <item>Ion Cannon</item>
-  <item>40mm Autocannon</item>
   <item>Railgun</item>
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>

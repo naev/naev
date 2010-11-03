@@ -829,7 +829,6 @@
    <speed>450</speed>
    <range>1450</range>
    <falloff>225</falloff>
-   <gfx_end>plasma-end</gfx_end>
    <energy>22</energy>
    <damage type="energy" penetrate="27">28</damage>
   </specific>
