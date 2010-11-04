@@ -947,8 +947,10 @@ static void pilot_dead( Pilot* p, unsigned int killer )
       return; /* he's already dead */
 
    /* basically just set timers */
-   if (p->id==PLAYER_ID)
+   if (p->id==PLAYER_ID) {
+      pilot_setFlag(p, PILOT_DISABLED );
       player_dead();
+   }
    p->timer[0] = 0.; /* no need for AI anymore */
    p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
    p->timer[1] = 0.; /* explosion timer */
