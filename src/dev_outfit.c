@@ -53,7 +53,7 @@ void dout_csvBolt( const char *path )
             "%s,%f\n",
             o->name, outfit_getType(o), outfit_slotName(o), o->license,
             o->mass, o->price,
-            o->u.blt.delay, o->u.blt.speed, o->u.blt.range, o->u.blt.falloff,
+            o->u.blt.delay*1000., o->u.blt.speed, o->u.blt.range, o->u.blt.falloff,
             o->u.blt.ew_lockon, o->u.blt.energy, o->u.blt.cpu,
             outfit_damageTypeToStr(o->u.blt.dtype), o->u.blt.damage
             );
