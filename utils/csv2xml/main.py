@@ -13,7 +13,7 @@ def main(config):
 
     # TODO define appropriate dialect (excel, excel-tab or own)
     # see http://docs.python.org/library/csv.html#csv-fmt-params
-    csvReader = csv.DialectReader(open(config.csvfile,'rU'))
+    csvReader = csv.DictReader(open(config.csvfile,'rU'))
     for cLine in self.csv:
         if config.outfit:
             expr = 'outfit[@name="{1}"]'
