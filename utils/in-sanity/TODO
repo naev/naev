@@ -13,6 +13,9 @@ DONE     *) then make sure all the techs in tech.xml are used by asset.xml
             This assume that we have a list of outfit and ship from the lua
             files.
          *) Need to double check the lua files in case of unused content
+         *) Add items who needs a double check in a shared list (from
+            preprocessing to readers). Then, pop the list until everything
+            is done
 
 MINOR:
  *) Check if planets images are :
