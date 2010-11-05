@@ -33,7 +33,9 @@ ssys:
     Is called by ''asset``.
 """
 import os,sys
-from readers import readers
+#from . import readers
+
+from ._Readers import readers
 
 class items(readers):
     def __init__(self, **config):

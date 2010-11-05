@@ -2,7 +2,8 @@
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
 import os,sys
-from readers import readers
+#from . import readers
+from ._Readers import readers
 
 class fleet(readers):
 

@@ -110,10 +110,10 @@ class sanitizer:
         """
         That's the doctor, it detect wrong stuff but can never heal you.
         """
-        from readers.fleet import fleet
-        from readers.ship import ship
-        from readers.outfit import outfit
-        from readers.unidiff import unidiff
+        from readers import fleet
+        from readers import ship
+        from readers import outfit
+        from readers import unidiff
         from readers.preprocessing import tech
 
         # This will do some preprocessing check in the xml files
