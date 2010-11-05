@@ -48,12 +48,10 @@ class readers:
 
     def show_unused(self):
         if len(self.unknown) > 0:
-            self.v('DEBUG: from object %s' % self.__module__)
             print('\nProbably not used %s name:' % self._componentName)
             print('\n', join(self.unknown))
         tmp = self.get_unused()
         if len(tmp) > 0:
-            self.v('DEBUG: from object %s' % self.__module__)
             print('\nUnused %s name:' % self._componentName)
             print('\n'.join(tmp))
 

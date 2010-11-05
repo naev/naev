@@ -11,7 +11,7 @@ class outfit(readers):
         outfitXml = os.path.join(config['datpath'], 'outfit.xml')
         readers.__init__(self, outfitXml, config['verbose'])
         self._componentName = 'outfit'
-        tech = config['tech']
+        self._tech = config['tech']
 
         self.used = list()
         self.unknown = list()
@@ -21,14 +21,18 @@ class outfit(readers):
         print('Compiling outfit list ...',end='     ')
         for outfit in self.xmlData.findall('outfit'):
             self.nameList.append(outfit.attrib['name'])
-            if not tech.findItem(outfit.attrib['name']):
+            if not self._tech.findItem(outfit.attrib['name']):
                 self.missingTech.append(outfit.attrib['name'])
+            else:
+                self.used.append(outfit.attrib['name'])
         print("DONE")
 
     def find(self, name):
         if name in self.nameList:
             if name in self.missingTech:
                 self.missingTech.remove(name)
+            if name not in self.used:
+                self.used.append(name)
             return True
         else:
             return False
