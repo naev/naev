@@ -14,7 +14,7 @@ def main(config):
     # TODO define appropriate dialect (excel, excel-tab or own)
     # see http://docs.python.org/library/csv.html#csv-fmt-params
     csvReader = csv.DictReader(open(config.csvfile,'rU'))
-    for cLine in self.csv:
+    for cLine in csvReader:
         if config.outfit:
             expr = 'outfit[@name="{1}"]'
             outfit = xmlReader.find('expr'.format(cLine['name']))
