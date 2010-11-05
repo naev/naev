@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
@@ -8,29 +8,32 @@ from lxml import etree
 from argparse import ArgumentParser
 
 
+
 def main(config):
     xmlReader = etree.parse(config.xmlfile)
 
     # TODO define appropriate dialect (excel, excel-tab or own)
     # see http://docs.python.org/library/csv.html#csv-fmt-params
-    csvReader = csv.DialectReader(open(config.csvfile,'rU'))
-    for cLine in self.csv:
-        if config.outfit:
-            expr = 'outfit[@name="{1}"]'
-            outfit = xmlReader.find('expr'.format(cLine['name']))
+    csvReader = csv.DictReader(open(config.csvfile,'rU'))
+    for cLine in csvReader:
+        if True:
+            expr = 'outfit[@name="%s"]'
+            outfit = xmlReader.find( expr % cLine['name'] )
             for element in outfit.iter():
                 if element.tag in cLine.keys():
                     element.text = cLine[element.tag]
                 if len(element.attrib) > 0:
-                    for (k, v) in element.attrib:
+                    for k, v in element.attrib.items():
                         if k in cLine.keys():
-                            element[k] = cLine[k]
+                            element.attrib[k] = cLine[k]
         else:
             print('If no outfit, what to do ?')
-    if config.outfit:
-        newxmlname = 'test_' + config.xmlfile
+    #if config.outfit:
+    if True:
+        newxmlname = 'test.xml'
+        print newxmlname
         print("Since it's beta, please do a diff and validate "+newxmlname)
-        xmlReader.write( 'test_' + config.xmlfile)
+        xmlReader.write( newxmlname )
 
 
 __version__ = '1.0'
