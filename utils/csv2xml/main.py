@@ -6,7 +6,7 @@ import os, sys
 import csv
 from lxml import etree
 from argparse import ArgumentParser
-
+from types import *
 
 def main(config):
     xmlReader = etree.parse(config.xmlfile)
@@ -16,21 +16,28 @@ def main(config):
     csvReader = csv.DictReader(open(config.csvfile,'rU'))
     for cLine in csvReader:
         if config.outfit:
-            expr = 'outfit[@name="{1}"]'
-            outfit = xmlReader.find('expr'.format(cLine['name']))
-            for element in outfit.iter():
-                if element.tag in cLine.keys():
-                    element.text = cLine[element.tag]
-                if len(element.attrib) > 0:
-                    for (k, v) in element.attrib:
-                        if k in cLine.keys():
-                            element[k] = cLine[k]
+            expr = 'outfit[@name="%s"]'
+            outfit = xmlReader.find(expr % cLine['name'])
+            if type(outfit) is NoneType:
+                print('No outfit for ' + cLine['name'])
+                exit()
+            else:
+                for element in outfit.iter():
+                    if element.tag in cLine.keys():
+                        element.text = cLine[element.tag]
+                    if len(element.attrib) > 0:
+                        for (k, v) in element.attrib.items():
+                            if k in cLine.keys():
+                                element.attrib[k] = cLine[k]
         else:
             print('If no outfit, what to do ?')
     if config.outfit:
-        newxmlname = 'test_' + config.xmlfile
-        print("Since it's beta, please do a diff and validate "+newxmlname)
-        xmlReader.write( 'test_' + config.xmlfile)
+        newxmlname = os.path.join(os.path.dirname(config.xmlfile),
+                                'test_' + os.path.basename(config.xmlfile))
+        if not os.path.exists(newxmlname):
+            open(newxmlname,'w').close()
+        print("Since it's beta, please do a diff and validate %s"%newxmlname)
+        xmlReader.write( newxmlname )
 
 
 __version__ = '1.0'
