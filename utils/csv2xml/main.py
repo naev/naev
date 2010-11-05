@@ -16,7 +16,11 @@ def main(config):
     csvReader = csv.DialectReader(open(config.csvfile,'rU'))
     for cLine in self.csv:
         if config.outfit:
-            ename = xmlReader.find('outfit[@name="{1}]"'.format(cLine['name']))
+            expr = 'outfit[@name="{1}"]'
+            outfit = xmlReader.find('expr'.format(cLine['name']))
+            for element in outfit.iter():
+                if element.tag in cLine.keys():
+                    # do stuff
 
 
 __version__ = '1.0'
