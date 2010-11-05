@@ -1,17 +1,16 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
 
  <!-- LASER TREE -->
  <outfit name="Laser Cannon MK1">
   <general>
    <slot>weapon</slot>
-   <mass>2</mass>
+   <mass>4</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
    <gfx_store>laser</gfx_store>
    </general>
   <specific type="bolt">
-   <cpu>4</cpu>
+   <cpu>5</cpu>
    <gfx>laserred</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -19,16 +18,16 @@
    <delay>550</delay>
    <speed>550</speed>
    <range>420</range>
-   <falloff>252</falloff>
-   <energy>10</energy>
-   <damage type="energy" penetrate="0">10</damage>
+   <falloff>250</falloff>
+   <energy>8</energy>
+   <damage type="energy" penetrate="0">5.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>3</mass>
+   <mass>6</mass>
    <price>15000</price>
    <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
@@ -44,21 +43,21 @@
    <range>525</range>
    <falloff>300</falloff>
    <gfx_end>laser2-end</gfx_end>
-   <energy>14</energy>
-   <damage type="energy" penetrate="14">15</damage>
+   <energy>12</energy>
+   <damage type="energy" penetrate="14">9</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK3">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>4</mass>
+   <mass>8</mass>
    <price>15000</price>
    <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
-   <cpu>12</cpu>
+   <cpu>11</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -69,7 +68,7 @@
    <falloff>330</falloff>
    <gfx_end>laser2-end</gfx_end>
    <energy>15</energy>
-   <damage type="energy" penetrate="22">22.5</damage>
+   <damage type="energy" penetrate="22">15</damage>
   </specific>
  </outfit>
  <!-- TODO laser pd mk1 -->
@@ -78,13 +77,13 @@
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>10</mass>
+   <mass>9</mass>
    <price>35000</price>
    <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>ripper</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>12</cpu>
+   <cpu>11</cpu>
    <gfx>ripper</gfx>
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -92,23 +91,23 @@
    <delay>1460</delay>
    <speed>700</speed>
    <range>900</range>
-   <falloff>650</falloff>
+   <falloff>600</falloff>
    <gfx_end>ripper-end</gfx_end>
    <energy>17</energy>
-   <damage type="energy" penetrate="30">20</damage>
+   <damage type="energy" penetrate="30">13</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ripper Cannon">
   <general>
    <slot>weapon</slot>
    <license>Heavy Weapon License</license>
-   <mass>14</mass>
+   <mass>12</mass>
    <price>35000</price>
    <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>ripper</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>12</cpu>
+   <cpu>15</cpu>
    <gfx>ripper</gfx>
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -116,23 +115,23 @@
    <delay>1660</delay>
    <speed>700</speed>
    <range>1300</range>
-   <falloff>900</falloff>
+   <falloff>850</falloff>
    <gfx_end>ripper-end</gfx_end>
-   <energy>25</energy>
-   <damage type="energy" penetrate="40">36</damage>
+   <energy>22</energy>
+   <damage type="energy" penetrate="40">22</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK1">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>16</mass>
+   <mass>23</mass>
    <price>25000</price>
    <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
    <gfx_store>laserturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>16</cpu>
+   <cpu>18</cpu>
    <gfx>laserred</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -140,22 +139,22 @@
    <delay>350</delay>
    <speed>550</speed>
    <range>800</range>
-   <falloff>600</falloff>
-   <energy>20</energy>
-   <damage type="energy" penetrate="20">20</damage>
+   <falloff>500</falloff>
+   <energy>23</energy>
+   <damage type="energy" penetrate="20">18</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>18</mass>
+   <mass>28</mass>
    <price>45000</price>
    <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>28</cpu>
+   <cpu>22</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -163,23 +162,23 @@
    <delay>400</delay>
    <speed>550</speed>
    <range>1000</range>
-   <falloff>700</falloff>
+   <falloff>600</falloff>
    <gfx_end>laser2-end</gfx_end>
    <energy>28</energy>
-   <damage type="energy" penetrate="27">30</damage>
+   <damage type="energy" penetrate="27">24</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK3">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>20</mass>
+   <mass>31</mass>
    <price>45000</price>
    <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>34</cpu>
+   <cpu>25</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -187,10 +186,10 @@
    <delay>450</delay>
    <speed>550</speed>
    <range>1200</range>
-   <falloff>800</falloff>
+   <falloff>700</falloff>
    <gfx_end>laser2-end</gfx_end>
    <energy>30</energy>
-   <damage type="energy" penetrate="35">45</damage>
+   <damage type="energy" penetrate="35">32</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Laser">
@@ -211,10 +210,10 @@
    <delay>1700</delay>
    <speed>550</speed>
    <range>2200</range>
-   <falloff>1800</falloff>
+   <falloff>1600</falloff>
    <gfx_end>laser2-end</gfx_end>
-   <energy>60</energy>
-   <damage type="energy" penetrate="60">70</damage>
+   <energy>40</energy>
+   <damage type="energy" penetrate="60">43</damage>
   </specific>
  </outfit>
  <outfit name="Turbolaser">
@@ -227,7 +226,7 @@
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>52</cpu>
+   <cpu>45</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
@@ -235,10 +234,10 @@
    <delay>1800</delay>
    <speed>550</speed>
    <range>2800</range>
-   <falloff>2200</falloff>
+   <falloff>2000</falloff>
    <gfx_end>laser2-end</gfx_end>
-   <energy>80</energy>
-   <damage type="energy" penetrate="75">90</damage>
+   <energy>43</energy>
+   <damage type="energy" penetrate="75">50</damage>
   </specific>
  </outfit>
 
@@ -1502,7 +1501,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
-   <mass />
+   <mass/>
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
    <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, strong armour that seems to take the best from both plastic and steel, bending easily yet keeping its incredible strength. The Second Growth was only possible with this material. Although it is no longer cutting-edge, its low price point attracts many buyers.</description>
@@ -1516,7 +1515,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
-   <mass />
+   <mass/>
    <price>365000</price>
    <gfx_store>nanobond</gfx_store>
    <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
@@ -1530,7 +1529,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
-   <mass />
+   <mass/>
    <price>1120000</price>
    <gfx_store>biometal</gfx_store>
    <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
@@ -1908,7 +1907,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy freighter-class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Medium Weapon License">
   <general>
@@ -1917,7 +1916,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy and use medium weapons like the ion cannon.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Heavy Weapon License">
   <general>
@@ -1927,7 +1926,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy and use heavy weapons like the heavy ion turret.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Light Combat Vessel License">
   <general>
@@ -1936,7 +1935,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy fighter and bomber class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Medium Combat Vessel License">
   <general>
@@ -1946,7 +1945,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy destroyer and corvette-class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Heavy Combat Vessel License">
   <general>
@@ -1956,7 +1955,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy cruiser and carrier-class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Pirate Landing Pass">
   <!-- this outfit should be considered contraband once it is implimented -->
@@ -1967,7 +1966,7 @@
    <!--this outfit really does absolutly nothing. its effects are implemented in the pirate mission, hitman 3 where you receive it.-->
    <description>This license gives you authorization to land on pirate worlds and gives access to missions in the pirate mission computer.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <!-- Cheats. For missions, honest! -->
  <outfit name="Cheater's Ragnarok Beam">
