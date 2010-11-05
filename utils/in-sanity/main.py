@@ -224,8 +224,10 @@ class sanitizer:
         shipdata.showMissingTech()
 
         if self.config['show_unused']:
-            outfitdata.show_unused()
-            shipdata.show_unused()
+            # XXX there is no real needs to use these two because of
+            # ''showMissingTech`` called earlier
+            #outfitdata.show_unused()
+            #shipdata.show_unused()
             fleetdata.show_unused()
             udata.show_unused()
 

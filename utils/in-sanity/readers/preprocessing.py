@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
-"""
+
+__doc__="""
 This one's got a lot of objects. It intends to create a validation process for
 several xml files. The data could be represented that way:
     Techs validity:
