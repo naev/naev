@@ -58,7 +58,7 @@
    </general>
   <specific type="bolt">
    <cpu>11</cpu>
-   <gfx>laser2</gfx>
+   <gfx>laser3</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -66,7 +66,7 @@
    <speed>550</speed>
    <range>600</range>
    <falloff>330</falloff>
-   <gfx_end>laser2-end</gfx_end>
+   <gfx_end>laser2</gfx_end>
    <energy>15</energy>
    <damage type="energy" penetrate="22">15</damage>
   </specific>
@@ -179,7 +179,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>25</cpu>
-   <gfx>laser2</gfx>
+   <gfx>laser3</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -187,7 +187,7 @@
    <speed>550</speed>
    <range>1200</range>
    <falloff>700</falloff>
-   <gfx_end>laser2-end</gfx_end>
+   <gfx_end>laser2</gfx_end>
    <energy>30</energy>
    <damage type="energy" penetrate="35">32</damage>
   </specific>
