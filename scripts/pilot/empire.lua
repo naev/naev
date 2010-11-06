@@ -89,7 +89,7 @@ function empire_createPeacemaker( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Peacemaker gets some good stuff
-   primary        = { "Heavy Ion Turret", "150mm Railgun Turret" }
+   primary        = { "Heavy Ion Turret", "Railgun Turret" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -130,7 +130,7 @@ function empire_createHawking( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Hawking gets some good stuff
-   primary        = { "Heavy Ion Turret", "150mm Railgun Turret" }
+   primary        = { "Heavy Ion Turret", "Railgun Turret" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -171,7 +171,7 @@ function empire_createPacifier( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Pacifier isn't bad either
-   primary        = { "150mm Railgun", "Ripper MK2", "Heavy Ion Turret" }
+   primary        = { "Railgun", "Ripper Cannon", "Heavy Ion Turret" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -211,7 +211,7 @@ function empire_createShark( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Shark gets some good stuff
-   primary        = { "Ion Cannon", "Ripper MK2" }
+   primary        = { "Ion Cannon", "Ripper Cannon" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh -1
    use_secondary  = 1
@@ -251,7 +251,7 @@ function empire_createLancelot( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Lancelot gets some good stuff
-   primary        = { "Ion Cannon", "Ripper MK2" }
+   primary        = { "Ion Cannon", "Ripper Cannon" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
@@ -291,7 +291,7 @@ function empire_createAdmonisher( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Admonisher gets some good stuff
-   primary        = { "Ripper MK2", "Ion Cannon" }
+   primary        = { "Ripper Cannon", "Ion Cannon" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
