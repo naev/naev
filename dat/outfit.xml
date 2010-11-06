@@ -4,6 +4,7 @@
  <outfit name="Laser Cannon MK1">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>4</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
@@ -26,6 +27,7 @@
  <outfit name="Laser Cannon MK2">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>6</mass>
    <price>15000</price>
@@ -50,6 +52,7 @@
  <outfit name="Laser Cannon MK3">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>8</mass>
    <price>15000</price>
@@ -76,6 +79,7 @@
  <outfit name="Ripper Cannon">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>35000</price>
@@ -100,6 +104,7 @@
  <outfit name="Heavy Ripper Cannon">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>12</mass>
    <price>35000</price>
@@ -124,6 +129,7 @@
  <outfit name="Laser Turret MK1">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>23</mass>
    <price>25000</price>
@@ -147,6 +153,7 @@
  <outfit name="Laser Turret MK2">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>28</mass>
    <price>45000</price>
@@ -171,6 +178,7 @@
  <outfit name="Laser Turret MK3">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>31</mass>
    <price>45000</price>
@@ -195,6 +203,7 @@
  <outfit name="Heavy Laser">
   <general>
    <slot>weapon</slot>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>53</mass>
    <price>45000</price>
@@ -219,6 +228,7 @@
  <outfit name="Turbolaser">
   <general>
    <slot>weapon</slot>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>57</mass>
    <price>45000</price>
@@ -246,6 +256,7 @@
  <outfit name="Razor MK1">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>2.2</mass>
    <price>20000</price>
    <description>TODO</description>
@@ -269,6 +280,7 @@
  <outfit name="Razor MK2">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>4</mass>
    <price>20000</price>
    <description>TODO</description>
@@ -292,6 +304,7 @@
  <outfit name="Razor MK3">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>6.5</mass>
    <price>20000</price>
    <description>TODO</description>
@@ -315,6 +328,7 @@
  <outfit name="Razor Turret MK1">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>10</mass>
    <price>75000</price>
    <description>TODO</description>
@@ -338,6 +352,7 @@
  <outfit name="Razor Turret MK2">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>14</mass>
    <price>75000</price>
    <description>TODO</description>
@@ -361,6 +376,7 @@
  <outfit name="Razor Turret MK3">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>19</mass>
    <price>75000</price>
    <description>TODO</description>
@@ -384,6 +400,7 @@
  <outfit name="Ion Cannon">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>9</mass>
    <price>20000</price>
    <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
@@ -407,6 +424,7 @@
  <outfit name="Heavy Ion Cannon">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>14</mass>
    <price>20000</price>
@@ -431,6 +449,7 @@
  <outfit name="Heavy Ion Turret">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>37</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
@@ -462,6 +481,7 @@
  <outfit name="Gauss Gun">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>3</mass>
    <price>25000</price>
    <description>TODO</description>
@@ -484,6 +504,7 @@
  <outfit name="Vulcan Gun">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>7</mass>
    <price>25000</price>
    <description>TODO</description>
@@ -506,6 +527,7 @@
  <outfit name="Shredder">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>15</mass>
    <price>25000</price>
    <description>TODO</description>
@@ -528,6 +550,7 @@
  <outfit name="Turreted Gauss Gun">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>18</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
@@ -550,6 +573,7 @@
  <outfit name="Turreted Vulcan Gun">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>28</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
@@ -573,6 +597,7 @@
  <outfit name="Mass Driver MK1">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>21</mass>
    <price>25000</price>
@@ -596,6 +621,7 @@
  <outfit name="Mass Driver MK2">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>29</mass>
    <price>25000</price>
@@ -619,6 +645,7 @@
  <outfit name="Mass Driver MK3">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>41</mass>
    <price>25000</price>
@@ -642,6 +669,7 @@
  <outfit name="Railgun">
   <general>
    <slot>weapon</slot>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>63</mass>
    <price>55000</price>
@@ -667,6 +695,7 @@
  <outfit name="Repeating Railgun">
   <general>
    <slot>weapon</slot>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>82</mass>
    <price>55000</price>
@@ -692,6 +721,7 @@
  <outfit name="Railgun Turret">
   <general>
    <slot>weapon</slot>
+   <size>heavy</size>
    <mass>115</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
@@ -719,6 +749,7 @@
  <outfit name="Plasma Blaster MK1">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>4</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
@@ -741,6 +772,7 @@
  <outfit name="Plasma Blaster MK2">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>5</mass>
    <price>18000</price>
@@ -765,6 +797,7 @@
  <outfit name="Plasma Blaster MK3">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>8</mass>
    <price>18000</price>
@@ -789,6 +822,7 @@
  <outfit name="Plasma Turret MK1">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>18</mass>
    <price>18000</price>
@@ -812,6 +846,7 @@
  <outfit name="Plasma Turret MK2">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>24</mass>
    <price>18000</price>
@@ -835,6 +870,7 @@
  <outfit name="BioPlasma Organ Stage 1">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>0</mass>
    <price>18000</price>
@@ -859,6 +895,7 @@
  <outfit name="BioPlasma Organ Stage 2">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>0</mass>
    <price>18000</price>
@@ -883,6 +920,7 @@
  <outfit name="Plasma Cluster Cannon MK1">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>20</mass>
    <price>18000</price>
@@ -907,6 +945,7 @@
  <outfit name="Plasma Cluster Cannon MK2">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>27</mass>
    <price>18000</price>
@@ -931,6 +970,7 @@
  <outfit name="Plasma Cluster Cannon MK3">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>26</mass>
    <price>18000</price>
@@ -957,9 +997,12 @@
 
 
  <!-- BEAM TREE -->
+ <!-- TODO micro-beam -->
+ <!-- TODO heavy micro-beam -->
  <outfit name="Orion Beam">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>30</mass>
    <price>184000</price>
@@ -980,9 +1023,15 @@
    <sound_off>beam_off0</sound_off>
   </specific>
  </outfit>
+ <!-- TODO perseus beam -->
+ <!-- TODO perseus beam turret -->
+ <!-- TODO loki beam turret -->
+ <!-- TODO advanced loki beam turret -->
+ <!-- TODO valkyrie beam turret -->
  <outfit name="Ragnarok Beam">
   <general>
    <slot>weapon</slot>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>140</mass>
    <price>745000</price>
@@ -1010,6 +1059,7 @@
  <outfit name="Neutron Disruptor">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>7</mass>
    <price>45000</price>
    <license>Heavy Weapon License</license>
