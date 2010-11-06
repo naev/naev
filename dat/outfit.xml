@@ -2052,7 +2052,7 @@
    </general>
   <specific type="bolt">
    <cpu>1</cpu>
-   <gfx>laser2</gfx>
+   <gfx>laser2S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
