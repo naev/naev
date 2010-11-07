@@ -615,16 +615,17 @@ static int ai_loadProfile( const char* filename )
    uint32_t bufsize = 0;
    lua_State *L;
    AI_Profile *prof;
+   size_t len;
 
    if (profiles == NULL)
       profiles = array_create( AI_Profile );
 
    prof = &array_grow(&profiles);
 
-   prof->name = malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
-   snprintf( prof->name,
-         strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
-         "%s", filename+strlen(AI_PREFIX) );
+   len = strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX);
+   prof->name = malloc(sizeof(char)*(len+1) );
+   strncpy( prof->name, &filename[strlen(AI_PREFIX)], len );
+   prof->name[len] = '\0';
 
    prof->L = nlua_newState();
 
