@@ -810,8 +810,7 @@ void gui_render( double dt )
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-        ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD))) {
-
+        (player.p == NULL) || ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD))) {
       spfx_cinematic();
       return;
    }
