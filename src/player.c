@@ -234,6 +234,7 @@ void player_new (void)
    player_setFlag(PLAYER_CREATING);
 
    /* For pretty background. */
+   pilots_cleanAll();
    space_init( start_system() );
    start_position( &x, &y );
    cam_setTargetPos( x, y, 0 );
