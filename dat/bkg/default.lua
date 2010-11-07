@@ -98,14 +98,14 @@ function background_stars ()
    local i = 0
    local added = {}
    while i < n do
-      num = star_add( added )
+      num = star_add( added, i )
       added[ num ] = true
       i = i + 1
    end
 end
 
 
-function star_add( added )
+function star_add( added, num_added )
    -- Set up parameters
    local path  = "gfx/bkg/star/"
    -- Avoid repeating stars
@@ -116,9 +116,14 @@ function star_add( added )
       i   = i + 1
    end
    local star  = stars[ num ]
+   -- Load and set stuff
    local img   = tex.open( path .. star )
    local w,h   = img:dim()
+   -- Position should depend on whether there's more than a star in the system
    local r     = prng.num() * cur_sys:radius()/3
+   if num_added > 0 then
+      r        = r + cur_sys:radius()*2/3
+   end
    local a     = 2*math.pi*prng.num()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
