@@ -460,6 +460,11 @@ void hooks_update( double dt )
 {
    int i, j;
    Hook *h;
+
+   /* Don't update without player. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
+      return;
+
    hook_runningstack = 1; /* running hooks */
    for (j=1; j>=0; j--) {
       for (i=0; i<hook_nstack; i++) {
