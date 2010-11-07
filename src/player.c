@@ -2777,20 +2777,25 @@ static Planet* player_parse( xmlNodePtr parent )
 
    /* Handle cases where ship is missing. */
    if (player.p == NULL) {
-      if (player_nstack == 0) {
-         WARN("Player has no ships!");
-         return NULL;
-      }
-
-      /* Just give player.p a random ship in the stack. */
       pilot_clearFlagsRaw( flags );
       pilot_setFlagRaw( flags, PILOT_PLAYER );
       pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
-      old_ship = player_stack[player_nstack-1].p;
-      pilot_create( old_ship->ship, old_ship->name,
-            faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
-      player_rmShip( old_ship->name );
-      DEBUG("Giving player ship '%s'.", player.p->name );
+      WARN("Player ship does not exist!");
+
+      if (player_nstack == 0) {
+         WARN("Player has no other ships, giving starting ship.");
+         pilot_create( ship_get(start_ship()), "MIA",
+               faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
+      }
+      else {
+
+         /* Just give player.p a random ship in the stack. */
+         old_ship = player_stack[player_nstack-1].p;
+         pilot_create( old_ship->ship, old_ship->name,
+               faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
+         player_rmShip( old_ship->name );
+         WARN("Giving player ship '%s'.", player.p->name );
+      }
    }
 
    /* set global thingies */
