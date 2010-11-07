@@ -40,6 +40,8 @@
 #include "conf.h"
 #include "dev_uniedit.h"
 #include "gui.h"
+#include "start.h"
+#include "camera.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -64,7 +66,6 @@ int menu_open = 0; /**< Stores the opened/closed menus. */
 
 
 static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
-static unsigned int menu_main_lasttick = 0;
 
 
 /*
@@ -75,7 +76,6 @@ static void menu_exit( unsigned int wid, char* str );
 /* main menu */
 static void main_menu_promptClose( unsigned int wid, char *unused );
 void menu_main_close (void); /**< Externed in save.c */
-static void menu_main_nebu( double x, double y, double w, double h, void *data );
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
@@ -102,6 +102,7 @@ void menu_main (void)
    unsigned int bwid, wid;
    glTexture *tex;
    int h, y;
+   double cx, cy;
 
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
@@ -112,7 +113,11 @@ void menu_main (void)
    /* Load background and friends. */
    tex = gl_newImage( "gfx/NAEV.png", 0 );
    main_naevLogo = tex;
-   nebu_prep( 300., 0. ); /* Needed for nebula to not spaz out */
+   space_init( start_system() );
+   start_position( &cx, &cy );
+   cam_setTargetPos( cx, cy, 0 );
+   cam_setZoom( conf.zoom_far );
+   unpause_game();
 
    /* Calculate Logo and window offset. */
    freespace = SCREEN_H - tex->sh - MAIN_HEIGHT;
@@ -134,12 +139,10 @@ void menu_main (void)
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
+   window_setBorder( bwid, 0 );
    window_onClose( bwid, menu_main_cleanBG );
-   window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
-   window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
-         menu_main_nebu, NULL, &menu_main_lasttick );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, 0, 0, "imgLogo", tex, 0 );
-   window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
+   window_addText( bwid, 0, 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version(1) );
 
    /* Set dimensions */
@@ -182,9 +185,6 @@ void menu_main (void)
    /* Make the background window a parent of the menu. */
    window_setParent( bwid, wid );
 
-   /* Reset timer. */
-   menu_main_lasttick = SDL_GetTicks();
-
    menu_Open(MENU_MAIN);
 }
 
@@ -200,27 +200,6 @@ static void main_menu_promptClose( unsigned int wid, char *unused )
 
 
 /**
- * @brief Renders the nebula.
- */
-static void menu_main_nebu( double x, double y, double w, double h, void *data )
-{
-   (void) x;
-   (void) y;
-   (void) w;
-   (void) h;
-   unsigned int *t, tick;
-   double dt;
-
-   /* Get time dt. */
-   t     = (unsigned int *)data;
-   tick  = SDL_GetTicks();
-   dt    = (double)(tick - *t) / 1000.;
-   *t    = tick;
-
-   /* Render. */
-   nebu_render( dt );
-}
-/**
  * @brief Closes the main menu.
  */
 void menu_main_close (void)
@@ -229,6 +208,7 @@ void menu_main_close (void)
       window_destroy( window_get("Main Menu") );
 
    menu_Close(MENU_MAIN);
+   pause_game();
 }
 /**
  * @brief Function to active the load game menu.

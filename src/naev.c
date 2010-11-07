@@ -585,11 +585,9 @@ void main_loop (void)
 
    sound_update( real_dt ); /* Update sounds. */
    if (tk) toolkit_update(); /* to simulate key repetition */
-   if (!menu_isOpen(MENU_MAIN)) {
-      if (!paused)
-         update_all(); /* update game */
-      render_all();
-   }
+   if (!paused)
+      update_all(); /* update game */
+   render_all();
    /* Toolkit is rendered on top. */
    if (tk) toolkit_render();
 
