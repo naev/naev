@@ -3,14 +3,8 @@
  <name>Sea of Darkness</name>
  <player>
   <ship>Llama</ship>
-  <credits>
-   <low>25000</low>
-   <high>30000</high>
-  </credits>
-  <date>
-   <low>1333</low>
-   <high>1336</high>
-  </date>
+  <credits>30000</credits>
+  <date>13364832</date>
   <system>
    <name>Hakoi</name>
    <x>150</x>

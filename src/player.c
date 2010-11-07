@@ -54,11 +54,7 @@
 #include "camera.h"
 #include "claim.h"
 #include "player_gui.h"
-
-
-#define XML_START_ID "Start" /**< Module start xml document identifier. */
-
-#define START_DATA   "dat/start.xml" /**< Module start information file. */
+#include "start.h"
 
 
 /*
@@ -67,7 +63,6 @@
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
-static char *player_mission   = NULL; /**< More hack. */
 static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
@@ -216,6 +211,7 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 void player_new (void)
 {
    int r;
+   double x, y;
 
    /* Set up GUI. */
    gui_setDefaults();
@@ -237,6 +233,13 @@ void player_new (void)
    memset( &player, 0, sizeof(Player_t) );
    player_setFlag(PLAYER_CREATING);
 
+   /* For pretty background. */
+   space_init( start_system() );
+   start_position( &x, &y );
+   cam_setTargetPos( x, y, 0 );
+   cam_setZoom( conf.zoom_far );
+
+   /* Get the name. */
    player.name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
 
@@ -265,11 +268,9 @@ void player_new (void)
    music_choose( "ambient" );
 
    /* Add the mission if found. */
-   if (player_mission != NULL) {
-      if (mission_start(player_mission, NULL) < 0)
-         WARN("Failed to run start mission '%s'.", player_mission);
-      free(player_mission);
-      player_mission = NULL;
+   if (start_mission() != NULL) {
+      if (mission_start(start_mission(), NULL) < 0)
+         WARN("Failed to run start mission '%s'.", start_mission());
    }
 
    /* Run the load event trigger. */
@@ -288,145 +289,33 @@ void player_new (void)
 static int player_newMake (void)
 {
    Ship *ship;
-   char *sysname;;
-   uint32_t bufsize;
-   char *buf;
-   int l,h, tl,th;
    double x,y;
-   xmlNodePtr node, cur, tmp;
-   xmlDocPtr doc;
-
-   /* Sane defaults. */
-   ship           = NULL;
-   sysname        = NULL;
-   player_mission = NULL;
-   l              = 0;
-   h              = 0;
-   tl             = 0;
-   th             = 0;
-   x              = 0.;
-   y              = 0.;
-
-   /* Try to read teh file. */
-   buf = ndata_read( START_DATA, &bufsize );
-   if (buf == NULL)
-      return -1;
-
-   /* Load the XML file. */
-   doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_START_ID)) {
-      ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
-      return -1;
-   }
-
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"START_DATA"' file: does not contain elements");
-      return -1;
-   }
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node, "name")) /* Avoid warning. */
-         continue;
-      if (xml_isNode(node, "player")) { /* we are interested in the player */
-         cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"ship")) {
-               ship = ship_get( xml_get(cur) );
-               continue;
-            }
-            else if (xml_isNode(cur,"credits")) { /* monies range */
-               tmp = cur->children;
-               do {
-                  xml_onlyNodes(tmp);
-                  xmlr_int(tmp, "low", l);
-                  xmlr_int(tmp, "high", h);
-                  WARN("'"START_DATA"' has unknown credit node '%s'.", tmp->name);
-               } while (xml_nextNode(tmp));
-               continue;
-            }
-            else if (xml_isNode(cur,"system")) {
-               tmp = cur->children;
-               do {
-                  xml_onlyNodes(tmp);
-                  /** system name, @todo percent chance */
-                  xmlr_strd(tmp, "name", sysname);
-                  /* position */
-                  xmlr_float(tmp,"x",x);
-                  xmlr_float(tmp,"y",y);
-                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
-               } while (xml_nextNode(tmp));
-               continue;
-            }
-            xmlr_float(cur,"player_crating",player.crating);
-            if (xml_isNode(cur,"date")) {
-               tmp = cur->children;
-               do {
-                  xml_onlyNodes(tmp);
-                  xmlr_int(tmp, "low", tl);
-                  xmlr_int(tmp, "high", th);
-                  WARN("'"START_DATA"' has unknown date node '%s'.", tmp->name);
-               } while (xml_nextNode(tmp));
-               continue;
-            }
-            /* Check for mission. */
-            if (xml_isNode(cur,"mission")) {
-               if (player_mission != NULL) {
-                  WARN("'"START_DATA"' already contains a mission node!");
-                  continue;
-               }
-               player_mission = xml_getStrd(cur);
-               continue;
-            }
-            WARN("'"START_DATA"' has unknown player node '%s'.", cur->name);
-         } while (xml_nextNode(cur));
-         continue;
-      }
-      WARN("'"START_DATA"' has unknown node '%s'.", node->name);
-   } while (xml_nextNode(node));
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
-   free(buf);
-   xmlCleanupParser();
 
    /* Time. */
-   if ((tl==0) && (th==0)) {
-      WARN("Time not set by module.");
-      ntime_set(0);
-   }
-   else
-      ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
+   ntime_set( NTIME_UNIT_LENGTH*start_date() );
 
    /* Welcome message - must be before space_init. */
    player_message( "\egWelcome to "APPNAME"!" );
    player_message( "\eg v%s", naev_version(0) );
 
    /* Try to create the pilot, if fails reask for player name. */
+   ship = ship_get( start_ship() );
    if (ship==NULL) {
-      WARN("Ship not set by module.");
+      WARN("Ship not properly set by module.");
       return -1;
    }
    if (player_newShip( ship, NULL, 0 ) != 0) {
       player_new();
       return -1;
    }
+   start_position( &x, &y );
    vect_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
    player.p->solid->dir = RNGF() * 2.*M_PI;
-   space_init(sysname);
-   free(sysname);
+   space_init( start_system() );
 
    /* Monies. */
-   if ((l==0) && (h==0)) {
-      WARN("Credits not set by module.");
-      player.p->credits = 0;
-   }
-   else
-      player.p->credits = RNG(l,h);
+   player.p->credits = start_credits();
 
    /* clear the map */
    map_clear();

@@ -86,6 +86,7 @@
 #include "background.h"
 #include "camera.h"
 #include "map_overlay.h"
+#include "start.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -212,6 +213,10 @@ int main( int argc, char** argv )
    /* Open data. */
    if (ndata_open() != 0)
       ERR("Failed to open ndata.");
+
+   /* Load the start info. */
+   if (start_load())
+      ERR("Failed to load module start data.");
 
    /* Load the data basics. */
    LOG(" %s", ndata_name());
@@ -349,6 +354,7 @@ int main( int argc, char** argv )
 
    /* Close data. */
    ndata_close();
+   start_cleanup();
 
    /* Destroy conf. */
    conf_cleanup(); /* Frees some memory the configuration allocated. */

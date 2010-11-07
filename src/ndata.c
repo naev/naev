@@ -47,15 +47,13 @@
 #include "nfile.h"
 #include "conf.h"
 #include "npng.h"
+#include "start.h"
 
 
 #define NDATA_FILENAME  "ndata" /**< Generic ndata file name. */
 #ifndef NDATA_DEF
 #define NDATA_DEF       NDATA_FILENAME /**< Default ndata to use. */
 #endif /* NDATA_DEF */
-
-#define XML_START_ID    "Start"  /**< XML document tag of module start file. */
-#define START_DATA      "dat/start.xml" /**< Path to module start file. */
 
 
 /*
@@ -416,48 +414,7 @@ void ndata_close (void)
  */
 const char* ndata_name (void)
 {
-   char *buf;
-   uint32_t size;
-   xmlNodePtr node;
-   xmlDocPtr doc;
-
-   /* Already loaded. */
-   if (ndata_packName != NULL)
-      return ndata_packName;
-
-   /* We'll just read it and parse it. */
-   buf = ndata_read( START_DATA, &size );
-   if (buf == NULL) {
-      WARN("Unable to open '%s'.", START_DATA);
-      return NULL;
-   }
-   doc = xmlParseMemory( buf, size );
-
-   /* Make sure it's what we are looking for. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_START_ID)) {
-      ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
-      return NULL;
-   }
-
-   /* Check if node is valid. */
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"START_DATA"' file: does not contain elements");
-      return NULL;
-   }
-   do {
-      xmlr_strd(node, "name", ndata_packName);
-   } while (xml_nextNode(node));
-
-   xmlFreeDoc(doc);
-   free(buf);
-
-   /* Check if data if name is found. */
-   if (ndata_packName == NULL)
-      WARN("No ndata packname found.");
-
-   return ndata_packName;
+   return start_name();
 }
 
 

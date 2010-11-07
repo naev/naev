@@ -900,17 +900,17 @@ void space_init ( const char* sysname )
    /* cleanup some stuff */
    player_clear(); /* clears targets */
    ovr_mrkClear(); /* Clear markers when jumping. */
-   pilot_clearTimers(player.p); /* Clear timers. */
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    background_clear(); /* Get rid of the background. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
-   pilot_heatReset(player.p); /* Resets the player's heat. */
-
-   /* Must clear escorts to keep deployment sane. */
-   player_clearEscorts();
+   if (player.p != NULL) {
+      pilot_clearTimers(player.p); /* Clear timers. */
+      pilot_heatReset(player.p); /* Resets the player's heat. */
+      player_clearEscorts(); /* Must clear escorts to keep deployment sane. */
+   }
 
    if ((sysname==NULL) && (cur_system==NULL))
       ERR("Cannot reinit system if there is no system previously loaded");
@@ -980,7 +980,8 @@ void space_init ( const char* sysname )
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
    /* Simulate system. */
-   pilot_setFlag( player.p, PILOT_INVISIBLE );
+   if (player.p != NULL)
+      pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
    s = sound_disabled;
    sound_disabled = 1;
@@ -989,7 +990,8 @@ void space_init ( const char* sysname )
       update_routine( fps_min );
    sound_disabled = s;
    player_messageToggle( 1 );
-   pilot_rmFlag( player.p, PILOT_INVISIBLE );
+   if (player.p != NULL)
+      pilot_rmFlag( player.p, PILOT_INVISIBLE );
 
    /* Refresh overlay if necessary (player kept it open). */
    ovr_refresh();
