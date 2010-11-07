@@ -1469,6 +1469,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    int x, y;
    int cx, cy, r, rc;
    GLfloat vx, vy, vr;
+   GLfloat a;
    glColour *col;
    Planet *planet;
    GLfloat vertex[5*2], colours[5*4];
@@ -1520,11 +1521,15 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
+   if (overlay)
+      a = 1.;
+   else
+      a   = 1.-interference_alpha;
    for (i=0; i<5; i++) {
       colours[4*i + 0] = col->r;
       colours[4*i + 1] = col->g;
       colours[4*i + 2] = col->b;
-      colours[4*i + 3] = 1.-interference_alpha;
+      colours[4*i + 3] = a;
    }
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
       sizeof(GLfloat) * 5*4, colours );
@@ -1566,6 +1571,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 {
    int i;
    int cx, cy, x, y, r, rc;
+   GLfloat a;
    GLfloat ca, sa;
    GLfloat vx, vy, vr;
    glColour *col;
@@ -1617,13 +1623,17 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    }
    else
       col = &cWhite;
+   if (overlay)
+      a = 1.;
+   else
+      a = 1.-interference_alpha;
 
    /* Get the colour. */
    for (i=0; i<4; i++) {
       colours[4*i + 0] = col->r;
       colours[4*i + 1] = col->g;
       colours[4*i + 2] = col->b;
-      colours[4*i + 3] = 1.-interference_alpha;
+      colours[4*i + 3] = a;
    }
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
       sizeof(GLfloat) * 5*4, colours );
