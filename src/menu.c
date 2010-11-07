@@ -117,7 +117,6 @@ void menu_main (void)
    start_position( &cx, &cy );
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
-   unpause_game();
 
    /* Calculate Logo and window offset. */
    freespace = SCREEN_H - tex->sh - MAIN_HEIGHT;
@@ -185,6 +184,7 @@ void menu_main (void)
    /* Make the background window a parent of the menu. */
    window_setParent( bwid, wid );
 
+   unpause_game();
    menu_Open(MENU_MAIN);
 }
 
