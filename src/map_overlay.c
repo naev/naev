@@ -283,7 +283,7 @@ void ovr_render( double dt )
       else
          gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
    }
-   /* render the targetted pilot */
+   /* Render the targetted pilot */
    if (j!=0)
       gui_renderPilot( pstk[j], RADAR_RECT, w, h, res, 1 );
 

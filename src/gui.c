@@ -398,7 +398,7 @@ static void gui_renderPlanetTarget( double dt )
    /* Make sure targets are still in range. */
 #if 0
    if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
-      player.p->nav_planet = -1;
+      player_targetPlanetSet( -1 );
       return;
    }
 #endif

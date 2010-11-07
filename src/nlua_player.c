@@ -717,8 +717,8 @@ static int playerL_teleport( lua_State *L )
    events_trigger( EVENT_TRIGGER_ENTER );
 
    /* Reset targets when teleporting */
-   player.p->nav_planet = -1;
-   player.p->nav_hyperspace = -1;
+   player_targetPlanetSet( -1 );
+   player_targetHyperspaceSet( -1 );
    gui_setNav();
    return 0;
 }

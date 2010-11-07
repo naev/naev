@@ -1210,10 +1210,14 @@ void player_targetPlanetSet( int id )
       return;
    }
 
+   if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
+      return;
+
    old = player.p->nav_planet;
    player.p->nav_planet = id;
    if ((old != id) && (id >= 0))
       player_playSound(snd_nav, 1);
+   gui_forceBlink();
    gui_setNav();
 }
 
@@ -1231,8 +1235,6 @@ void player_targetPlanet (void)
 
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
-
-   gui_forceBlink();
 
    /* Find next planet target. */
    id = player.p->nav_planet+1;
@@ -1357,9 +1359,7 @@ void player_land (void)
             td = d;
          }
       }
-      gui_forceBlink();
-      player.p->nav_planet       = tp;
-      gui_setNav();
+      player_targetPlanetSet( tp );
       player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
 
@@ -1536,7 +1536,7 @@ void player_brokeHyperspace (void)
    /* Prevent targeted planet # from carrying over. */
    gui_setNav();
    gui_setTarget();
-   player.p->nav_planet = -1;
+   player_targetPlanetSet( -1 );
 
    /* calculates the time it takes, call before space_init */
    d  = pilot_hyperspaceDelay( player.p );
