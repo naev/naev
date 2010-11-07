@@ -666,13 +666,19 @@ void window_destroy( const unsigned int wid )
 
       /* Mark children for death. */
       for (w = windows; w != NULL; w = w->next) {
-         if (w->parent == wid)
+         if (w->parent == wid) {
             window_destroy( w->id );
+         }
       }
 
       /* Mark for death. */
       window_setFlag( wdw, WINDOW_KILL );
       window_dead = 1;
+
+      /* Run the close function first. */
+      if (wdw->close_fptr != NULL)
+         wdw->close_fptr( wdw->id, wdw->name );
+      wdw->close_fptr = NULL;
       break;
    }
 }
@@ -689,7 +695,8 @@ static void window_kill( Window *wdw )
 
    /* Run the close function first. */
    if (wdw->close_fptr != NULL)
-      wdw->close_fptr( wdw->id, wdw->name);
+      wdw->close_fptr( wdw->id, wdw->name );
+   wdw->close_fptr = NULL;
 
    /* Destroy the window. */
    if (wdw->name)
