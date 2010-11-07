@@ -245,7 +245,7 @@ void background_renderStars( const double dt )
          shade_mode = 1;
 
          /* lines will be based on velocity */
-         m = 10.*(dt_mod-3.);
+         m = (dt_mod-3.)*VMOD(player.p->solid->vel)/10.;
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
