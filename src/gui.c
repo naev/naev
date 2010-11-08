@@ -809,8 +809,9 @@ void gui_render( double dt )
    StarSystem *sys;
 
    /* If player is dead just render the cinematic mode. */
-   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-        (player.p == NULL) || ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD))) {
+   if (!menu_isOpen(MENU_MAIN) &&
+         (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
+            ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))) {
       spfx_cinematic();
       return;
    }
