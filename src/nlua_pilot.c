@@ -673,18 +673,24 @@ static int pilotL_toggleSpawn( lua_State *L )
  *
  * @usage p = pilot.get() -- Gets all the pilots
  * @usage p = pilot.get( { faction.get("Empire") } ) -- Only gets empire pilots.
+ * @usage p = pilot.get( nil, true ) -- Gets all pilots including disabled
+ * @usage p = pilot.get( { faction.get("Empire") }, true ) -- Only empire pilots with disabled
  *
- *    @luaparam f If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
+ *    @luaparam factions If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
+ *    @luaparam disabled Whether or not to get disabled ships (default is off if parameter is ommitted).
  *    @luareturn A table containing the pilots.
- * @luafunc get( f )
+ * @luafunc get( factions, disabled )
  */
 static int pilotL_getPilots( lua_State *L )
 {
-   int i, j, k;
+   int i, j, k, d;
    int *factions;
    int nfactions;
    LuaFaction *f;
    LuaPilot p;
+
+   /* Whether or not to get disabled. */
+   d = lua_toboolean(L,2);
 
    /* Check for belonging to faction. */
    if (lua_istable(L,1)) {
@@ -706,7 +712,7 @@ static int pilotL_getPilots( lua_State *L )
       for (i=0; i<pilot_nstack; i++) {
          for (j=0; j<nfactions; j++) {
             if ((pilot_stack[i]->faction == factions[j]) &&
-                  !pilot_isDisabled(pilot_stack[i]) &&
+                  (d || !pilot_isDisabled(pilot_stack[i])) &&
                   !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
                lua_pushnumber(L, k++); /* key */
                p.pilot = pilot_stack[i]->id;
@@ -719,12 +725,12 @@ static int pilotL_getPilots( lua_State *L )
       /* clean up. */
       free(factions);
    }
-   else if (lua_gettop(L) == 0) {
+   else if (lua_isnil(L,1)) {
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
       for (i=0; i<pilot_nstack; i++) {
-         if (!pilot_isDisabled(pilot_stack[i]) &&
+         if ((d || !pilot_isDisabled(pilot_stack[i])) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
             lua_pushnumber(L, k++); /* key */
             p.pilot = pilot_stack[i]->id;
