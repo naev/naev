@@ -170,6 +170,7 @@ static int aiL_shield( lua_State *L ); /* shield() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
+static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_getpos( lua_State *L ); /* getpos(number) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_cargofree( lua_State *L ); /* number cargofree() */
@@ -277,6 +278,7 @@ static const luaL_reg aiL_methods[] = {
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
    { "dist", aiL_getdistance },
+   { "flyby_dist", aiL_getflybydistance },
    { "pos", aiL_getpos },
    { "minbrakedist", aiL_minbrakedist },
    { "cargofree", aiL_cargofree },
@@ -1406,6 +1408,61 @@ static int aiL_getdistance( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, vect_dist(v, &cur_pilot->solid->pos));
+   return 1;
+}
+
+/*
+ * @brief gets the distance from the pointer perpendicular to the current pilot's flight vector
+ *
+ *  @luaparam target
+ *  @luareturn offset_distance
+ *  luafunction flyby_dist(target)
+ */
+static int aiL_getflybydistance( lua_State *L )
+{
+   Vector2d *v;
+   Vector2d perp_motion_unit, offset_vect;
+   LuaVector *lv;
+   Pilot *pilot;
+   unsigned int n;
+   int offset_distance;
+
+   NLUA_MIN_ARGS(1);
+
+   /* vector as a parameter */
+   if (lua_isvector(L,1)) {
+      lv = lua_tovector(L,1);
+      v = &lv->vec;
+   }
+
+   else if (lua_islightuserdata(L,1))
+      v = lua_touserdata(L,1);
+   
+   /* pilot id as parameter */
+   else if (lua_isnumber(L,1)) {
+      n = (unsigned int) lua_tonumber(L,1);
+      pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
+      if (pilot==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+
+      v = &pilot->solid->pos;
+      
+      /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
+   }
+
+      /* wrong parameter */
+   else
+      NLUA_INVALID_PARAMETER();
+
+   vect_cset(&offset_vect, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );
+
+   vect_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid->vel)+M_PI_2);
+
+   offset_distance = vect_dot(&perp_motion_unit, &offset_vect);
+
+   lua_pushnumber(L, offset_distance);
    return 1;
 }
 
