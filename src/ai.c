@@ -196,6 +196,7 @@ static int aiL_aim( lua_State *L ); /* aim(number) */
 static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
 static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
+static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
@@ -295,6 +296,7 @@ static const luaL_reg aiL_methods[] = {
    { "iface", aiL_iface },
    { "dir", aiL_dir },
    { "idir", aiL_idir },
+   { "drift_facing", aiL_drift_facing },
    { "brake", aiL_brake },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
@@ -2233,6 +2235,19 @@ static int aiL_idir( lua_State *L )
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, diff*180./M_PI);
    return 1;
+}
+
+/*
+ *@brief: returns the offset between the pilot's current direction of travel and the pilot's current facing
+ *
+ *@luafunc drift_facing( p )
+ */
+static int aiL_drift_facing( lua_State *L )
+{
+    double drift;
+    drift = angle_diff(VANGLE(cur_pilot->solid->vel), cur_pilot->solid->dir);
+    lua_pushnumber(L, drift*180./M_PI);
+    return 1;
 }
 
 /*
