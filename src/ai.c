@@ -165,6 +165,7 @@ static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 /* consult values */
 static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
+static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
@@ -274,6 +275,7 @@ static const luaL_reg aiL_methods[] = {
    /* get */
    { "getPlayer", aiL_getplayer },
    { "rndpilot", aiL_getrndpilot },
+   { "nearestpilot", aiL_getnearestpilot },
    { "armour", aiL_armour },
    { "shield", aiL_shield },
    { "parmour", aiL_parmour },
@@ -1286,6 +1288,45 @@ static int aiL_getrndpilot( lua_State *L )
    lua_pushnumber(L, pilot_stack[p]->id );
    return 1;
 }
+
+/**
+ * @brief gets the ID of the nearest pilot to the current pilot
+ *  @return the ID of the nearest pilot
+ *
+ *  @luafunc nearestpilot()
+ */
+static int aiL_getnearestpilot( lua_State *L )
+{
+
+   /*dist will be initialized to a number*/
+   /*this will only seek out pilots closer than dist*/
+   int dist=1000;
+   int i;
+   int candidate_id = -1;
+
+   /*cycle through all the pilots and find the closest one that is not the pilot */
+
+   for(i = 0; i<pilot_nstack; i++)
+   {
+       if(pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
+       {
+            dist = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
+            candidate_id = i;
+       }    
+   }
+
+
+   /* Last check. */
+   if (candidate_id == -1)
+      return 0;
+
+
+
+   /* Actually found a pilot. */
+   lua_pushnumber(L, pilot_stack[candidate_id]->id );
+   return 1;
+} 
+
 
 /*
  * gets the pilot's armour
