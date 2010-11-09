@@ -385,6 +385,7 @@ Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB );
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
 unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled );

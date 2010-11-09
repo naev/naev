@@ -226,6 +226,7 @@ static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
+static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
 static int aiL_hostile( lua_State *L ); /* hostile( number ) */
 static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
 static int aiL_canboard( lua_State *L ); /* boolean canboard( number ) */
@@ -320,6 +321,7 @@ static const luaL_reg aiL_methods[] = {
    { "hasturrets", aiL_hasturrets },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
+   { "getenemy_size", aiL_getenemy_size },
    { "hostile", aiL_hostile },
    { "getweaprange", aiL_getweaprange },
    { "canboard", aiL_canboard },
@@ -2805,6 +2807,36 @@ static int aiL_getenemy( lua_State *L )
    return 1;
 }
 
+/*
+ * @brief gets the nearest enemy within specified size bounds
+ *
+ *  @param LB Lower size bound
+ *  @param UB upper size bound
+ *  @luafunc getenemy_size()
+ */
+static int aiL_getenemy_size( lua_State *L )
+{
+   unsigned int p;
+   unsigned int LB, UB;
+
+   NLUA_MIN_ARGS(2);
+
+   LB = luaL_checklong(L,1);
+   UB = luaL_checklong(L,2);
+
+   if LB > UB {
+      NLUA_ERROR(L, "Invalid Bounds");
+      return 0;
+   }
+
+   p = pilot_getNearestEnemy_size(cur_pilot, LB, UB);
+
+   if (p==0) /* No enemy found */
+      return 0;
+
+   lua_pushnumber(L,p);
+   return 1;
+}
 
 /*
  * sets the enemy hostile (basically notifies of an impending attack)

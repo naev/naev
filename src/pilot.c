@@ -274,6 +274,54 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    return tp;
 }
 
+/**
+ * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is between LB and UB.
+ *
+ *    @param p Pilot to get his nearest enemy.
+ *    @param target_mass_LB the lower bound for target mass
+ *    @param target_mass_UB the upper bound for target mass
+ *    @return ID of his nearest enemy.
+ */
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB)
+{
+   unsigned int tp;
+   int i;
+   double d, td;
+
+   tp = 0;
+   d = 0.;
+   for (i=0; i<pilot_nstack; i++) {
+      /* Must not be bribed. */
+      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
+         continue;
+
+      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
+            ((pilot_stack[i]->id == PLAYER_ID) && 
+               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+
+         /*mass is in bounds*/
+         if (pilot_stack[i]->solid->mass >= target_mass_LB && pilot_stack[i]->solid->mass <= target_mass_UB)
+            continue;
+
+         /* Shouldn't be disabled. */
+         if (pilot_isDisabled(pilot_stack[i]))
+            continue;
+
+         /* Must be in range. */
+         if (!pilot_inRangePilot( p, pilot_stack[i] ))
+            continue;
+
+         /* Check distance. */
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+         if (!tp || (td < d)) {
+            d = td;
+            tp = pilot_stack[i]->id;
+         }
+      }
+   }
+   return tp;
+
+}
 
 /**
  * @brief Get the nearest pilot to a pilot.
