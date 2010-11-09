@@ -194,6 +194,7 @@ static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
 static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
+static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
@@ -291,6 +292,7 @@ static const luaL_reg aiL_methods[] = {
    { "turn", aiL_turn },
    { "face", aiL_face },
    { "iface", aiL_iface },
+   { "dir", aiL_dir },
    { "brake", aiL_brake },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
@@ -2079,6 +2081,70 @@ static int aiL_iface( lua_State *L )
    return 1;
 }
 
+/*
+ * @brief calculates the direction that the target is relative to the current pilot facing.
+ *
+ *    @luaparam p Position or id of pilot to compare facing to
+ *    @luareturn The facing offset to the target (in degrees).
+ * @luafunc dir( p )
+ * 
+ */
+static int aiL_dir( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *lv;
+   Vector2d sv, tv; /* get the position to face */
+   Pilot* p;
+   double d, mod, diff;
+   unsigned int id;
+   int n;
+
+   /* Get first parameter, aka what to face. */
+   n  = -2;
+   lv = NULL;
+   if (lua_isnumber(L,1)) {
+      d = (double)lua_tonumber(L,1);
+      if (d < 0.)
+         n = -1;
+      else {
+         id = (unsigned int)d;
+         p = pilot_get(id);
+         if (p==NULL) { 
+            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+            return 0;
+         }
+         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
+      }
+   }
+   else if (lua_isvector(L,1))
+      lv = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   mod = 10;
+
+   /* Check if must invert. */
+   if (lua_gettop(L) > 1) {
+      if (lua_isboolean(L,2) && lua_toboolean(L,2))
+         mod *= -1;
+   }
+
+   vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
+
+   if (lv==NULL) /* target is dynamic */
+      diff = angle_diff(cur_pilot->solid->dir,
+            (n==-1) ? VANGLE(sv) :
+            vect_angle(&sv, &tv));
+   else /* target is static */
+      diff = angle_diff( cur_pilot->solid->dir,   
+            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
+            vect_angle(&cur_pilot->solid->pos, &lv->vec));
+
+
+   /* Return angle in degrees away from target. */
+   lua_pushnumber(L, diff*180./M_PI);
+   return 1;
+}
+
 
 /*
  * brakes the pilot
@@ -2099,6 +2165,8 @@ static int aiL_brake( lua_State *L )
 
    return 0;
 }
+
+
 
 /*
  * returns the nearest friendly planet's position to the pilot
