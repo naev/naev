@@ -2,7 +2,7 @@
 --    Generic attack functions
 --]]
 
-mem.atk_changetarget  = 4 -- Distance at which target changes
+mem.atk_changetarget  = 2 -- Distance at which target changes
 mem.atk_approach      = 1.4 -- Distance that marks approach
 mem.atk_aim           = 1.0 -- Distance that marks aim
 mem.atk_board         = false -- Whether or not to board the target
@@ -309,14 +309,14 @@ function atk_fighter_think ()
       
       -- Shouldn't switch targets if close
       if sizedist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy )
+         ai.pushtask("attack", enemy )
       end
       
    elseif nearest_enemy ~= target and nearest_enemy ~= nil then
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", nearest_enemy )
+         ai.pushtask("attack", nearest_enemy )
       end
    end
 end
@@ -380,28 +380,28 @@ function atk_topdown_think ()
 
       -- Shouldn't switch targets if close
       if cat1dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy_cat1 )
+         ai.pushtask("attack", enemy_cat1 )
       end
    
    elseif enemy_cat2 ~= target and enemy_cat2 ~= nil then  
 
       -- Shouldn't switch targets if close
       if cat2dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy_cat2 )
+         ai.pushtask("attack", enemy_cat2 )
       end
 
    elseif enemy_cat3 ~= target and enemy_cat3 ~= nil then  
 
       -- Shouldn't switch targets if close
       if cat3dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy_cat3 )
+         ai.pushtask("attack", enemy_cat3 )
       end
       
    elseif enemy_cat4 ~= target and enemy_cat4 ~= nil then  
 
       -- Shouldn't switch targets if close
       if cat4dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", enemy_cat4 )
+         ai.pushtask("attack", enemy_cat4 )
       end   
       
    elseif nearest_enemy ~= target and nearest_enemy ~= nil then
@@ -409,7 +409,7 @@ function atk_topdown_think ()
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
-         ai.pushtask( 0, "attack", nearest_enemy )
+         ai.pushtask("attack", nearest_enemy )
       end
    end
 end
@@ -436,7 +436,7 @@ function atk_fighter ()
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask( 0, "board", target );
+      ai.pushtask("board", target );
       return
    end
 
@@ -492,7 +492,7 @@ function atk_bomber ()
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask( 0, "board", target );
+      ai.pushtask("board", target );
       return
    end
 
@@ -545,7 +545,7 @@ function atk_corvette ()
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask( 0, "board", target );
+      ai.pushtask("board", target );
       return
    end
 
@@ -605,7 +605,7 @@ function atk_capital ()
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask( 0, "board", target );
+      ai.pushtask("board", target );
       return
    end
 
@@ -649,13 +649,13 @@ end --end capship attack
 --]]
 function atk_g_flyby_aggressive( target, dist )
 
-   ai.comm(1, "flyby attack")
+   ai.comm(1, "flyby attack!")
    local range = ai.getweaprange(3)
 
    -- Set weapon set
    ai.weapset( 3 )
 
-   local dir = 0;
+   local dir = 0
    
    --if we're far away from the target, then turn and approach 
    if dist > (3 * range) then
@@ -731,7 +731,7 @@ function atk_g_flyby( target, dist )
    ai.comm(1, "flyby attack")
    
    local range = ai.getweaprange(3)
-   local dir = 0;
+   local dir = 0
    
    ai.weapset( 3 )
    
@@ -807,9 +807,9 @@ end
 --As there is no aiming involved this is a turret/capital ship only attack method
 --]]
 function atk_g_capital( target, dist )
-)
+
    local range = ai.getweaprange(3)
-   local dir = 0;
+   local dir = 0
    
    ai.weapset( 3 )
    
@@ -899,8 +899,10 @@ end
 --]]
 function atk_g_space_sup( target, dist )
 
+   ai.comm(1, "space superiority")
+
    local range = ai.getweaprange(3)
-   local dir = 0;
+   local dir = 0
 
    ai.weapset( 3 )
    
