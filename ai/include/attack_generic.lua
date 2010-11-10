@@ -468,3 +468,62 @@ function atk_fighter ()
    end
 end
 
+
+--[[
+-- Main control function for bomber behavior.
+-- Bombers are expected to have heavy weapons and target
+--ships bigger than they are
+--]]
+function atk_bomber ()
+
+   ai.yell("bomber Attack")
+
+   local target = ai.target()
+
+   -- make sure pilot exists
+   if not ai.exists(target) then
+           ai.poptask()
+           return
+   end
+
+   -- Check if is bribed by target
+   if ai.isbribed(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Check if we want to board
+   if mem.atk_board and ai.canboard(target) then
+      ai.pushtask( 0, "board", target );
+      return
+   end
+
+   -- Check to see if target is disabled
+   if not mem.atk_kill and ai.isdisabled(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Targetting stuff
+   ai.hostile(target) -- Mark as hostile
+   ai.settarget(target)
+
+   -- Get stats about enemy
+        local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange(3, 0)
+
+   -- We first bias towards range
+   if dist > range * mem.atk_approach then
+      atk_g_ranged( target, dist )
+
+   -- Now we do an approach
+   elseif dist > 10 * range * mem.atk_aim then
+      atk_spiral_approach( target, dist )
+
+   -- Close enough to melee
+   else
+        atk_g_flyby( target, dist )   
+   end
+end
+
+
