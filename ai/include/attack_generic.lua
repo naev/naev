@@ -526,4 +526,65 @@ function atk_bomber ()
    end
 end
 
+--[[
+-- Main control function for corvette behavior.
+--]]
+function atk_corvette ()
+
+   ai.yell("Corvette Attack")
+
+   local target = ai.target()
+
+   -- make sure pilot exists
+   if not ai.exists(target) then
+           ai.poptask()
+           return
+   end
+
+   -- Check if is bribed by target
+   if ai.isbribed(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Check if we want to board
+   if mem.atk_board and ai.canboard(target) then
+      ai.pushtask( 0, "board", target );
+      return
+   end
+
+   -- Check to see if target is disabled
+   if not mem.atk_kill and ai.isdisabled(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Targetting stuff
+   ai.hostile(target) -- Mark as hostile
+   ai.settarget(target)
+
+   -- Get stats about enemy
+   local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange(3, 0)
+   local range2 = ai.getweaprange(3, 1)
+   
+   if range2 > range then
+    range = range2
+   end
+
+   -- We first bias towards range
+   if dist > range * mem.atk_approach then
+      atk_g_ranged( target, dist )
+
+
+   -- Close enough to melee
+   else
+      if ai.shipmass(target) < 500 then
+        atk_g_space_sup(target, dist)
+      else
+        atk_g_flyby_aggressive( target, dist )
+      end
+   end
+end
+
 
