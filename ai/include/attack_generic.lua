@@ -460,7 +460,7 @@ function atk_fighter ()
 
    -- engage melee
    else
-      if ai.shipmass(target) < 150 then
+      if ai.shipmass(target) < 200 then
         atk_g_space_sup(target, dist)
       else
         atk_g_flyby_aggressive( target, dist )
@@ -515,8 +515,8 @@ function atk_bomber ()
       atk_g_ranged( target, dist )
 
    -- Now we do an approach
-   elseif dist > 10 * range * mem.atk_aim then
-      atk_spiral_approach( target, dist )
+   --elseif dist > 10 * range * mem.atk_aim then
+   --   atk_spiral_approach( target, dist )
 
    -- Close enough to melee
    else
@@ -530,6 +530,8 @@ end
 function atk_corvette ()
 
    local target = ai.target()
+
+   ai.comm(1, "corvette")
 
    -- make sure pilot exists
    if not ai.exists(target) then
@@ -628,8 +630,8 @@ function atk_capital ()
       atk_g_ranged( target, dist )
 
    -- Now we do an approach
-   elseif dist > 10 * range * mem.atk_aim then
-      atk_spiral_approach( target, dist )
+   --elseif dist > 10 * range * mem.atk_aim then
+   --   atk_spiral_approach( target, dist )
 
    -- Close enough to melee
    else   
@@ -678,11 +680,14 @@ function atk_g_flyby_aggressive( target, dist )
        dir = ai.idir(target)
        
        --test if we're facing the target. If we are, keep approaching
-       if(dir < 20 and dir > -20) then
+       if(dir < 30 and dir > -30) then
           ai.iface(target)
-          ai.accel()
+          
+          if dir < 10 and dir > -10 then
+            ai.accel()
+          end
          
-       elseif dir > 20 and dir < 180 then
+       elseif dir >= 30 and dir <= 180 then
           ai.turn(1)
           ai.accel()
           
@@ -756,11 +761,14 @@ function atk_g_flyby( target, dist )
        dir = ai.idir(target)
        
        --test if we're facing the target. If we are, keep approaching
-       if(dir < 20 and dir > -20) then
+       if(dir <= 30 and dir > -30) then
           ai.iface(target)
-          ai.accel()
-         
-       elseif dir > 20 and dir < 180 then
+          
+          if dir < 10 and dir > -10 then
+            ai.accel()
+          end
+          
+       elseif dir > 30 and dir < 180 then
           ai.turn(1)
           ai.accel()
           
@@ -811,6 +819,8 @@ function atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    
+   ai.comm(1, "capship attack")
+   
    ai.weapset( 3 )
    
    --if we're far from the target, then turn and approach 
@@ -847,7 +857,7 @@ function atk_g_capital( target, dist )
        end
     
        if ai.hasturrets() then
-          ai.shoot(false, 1)
+          ai.shoot(true)
        end
    
    elseif dist > 0.3*range then
