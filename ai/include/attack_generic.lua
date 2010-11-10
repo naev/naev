@@ -894,3 +894,109 @@ function atk_g_capital( target, dist )
 --end capital ship attack
 end
 
+
+--[[
+-- Attack Profile for a maneuverable ship engaging a maneuverable target
+--
+--This is designed for fighters engaging other fighters
+--
+--]]
+function atk_g_space_sup( target, dist )
+
+   local secondary, special = ai.secondary("melee")
+   local range = ai.getweaprange(3)
+   local dir = 0;
+
+   ai.weapset( 3 )
+   
+   --if we're far away from the target, then turn and approach 
+   if dist > (range) then
+   
+     dir = ai.idir(target)
+   
+     if dir < 10 and dir > -10 then
+         keep_distance()     
+      
+       if dir < 10 and dir > -10 then
+        ai.accel()
+      end
+         
+     else  
+       dir = ai.iface(target)
+       
+       if dir < 10 and dir > -10 then
+        ai.accel()
+       end    
+         
+     end
+     
+     
+   
+   elseif dist > 0.8* range then
+    
+       --drifting away from target, so emphasize intercept 
+       --course facing and accelerate to close
+    
+       dir = ai.iface(target)
+    
+       if dir < 10 and dir > -10 then
+          ai.accel()
+       end
+    
+       if ai.hasturrets() then
+          ai.shoot(false, 1)
+       end
+   
+   elseif dist > 0.4*range then
+       
+    --within close range; aim and blast away with everything
+    
+       dir = ai.aim(target)
+       local dir2 = ai.idir(target)
+
+       --accelerate and try to close
+       --but only accel if it will be productive
+       if dir2 < 15 and dir2 > -15 then
+          ai.accel()
+       end         
+             
+       -- Shoot if should be shooting.
+       if dir < 10 then
+          range = ai.getweaprange( 3, 0 )
+          if dist < range then
+           ai.shoot()
+        end
+      end
+      if ai.hasturrets() then
+         range  = ai.getweaprange( 3, 1 )
+        if dist < range then
+           ai.shoot(true)
+        end
+     end
+   
+    else
+    --within close range; aim and blast away with everything
+    
+       dir = ai.aim(target)
+             
+       -- Shoot if should be shooting.
+       if dir < 10 then
+          range = ai.getweaprange( 3, 0 )
+          if dist < range then
+           ai.shoot()
+        end
+      end
+      if ai.hasturrets() then
+         range  = ai.getweaprange( 3, 1 )
+        if dist < range then
+           ai.shoot(true)
+        end
+     end
+    
+   --end main decision if
+   end
+
+
+--end space superiority ship attack
+end
+
