@@ -407,3 +407,56 @@ function atk_topdown_think ()
 end
 
 
+--[[
+-- Main control function for fighter behavior.
+--]]
+function atk_fighter ()
+    
+   local target = ai.target()
+
+   -- make sure pilot exists
+   if not ai.exists(target) then
+           ai.poptask()
+           return
+   end
+
+   -- Check if is bribed by target
+   if ai.isbribed(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Check if we want to board
+   if mem.atk_board and ai.canboard(target) then
+      ai.pushtask( 0, "board", target );
+      return
+   end
+
+   -- Check to see if target is disabled
+   if not mem.atk_kill and ai.isdisabled(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Targetting stuff
+   ai.hostile(target) -- Mark as hostile
+   ai.settarget(target)
+
+   -- Get stats about enemy
+   local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange(3, 0)
+
+   -- We first bias towards range
+   if dist > range * mem.atk_approach then
+      atk_g_ranged( target, dist )
+
+   -- engage melee
+   else
+      if ai.shipmass(target) < 150 then
+        atk_g_space_sup(target, dist)
+      else
+        atk_g_flyby_aggressive( target, dist )
+      end
+   end
+end
+
