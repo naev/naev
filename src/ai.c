@@ -1497,7 +1497,7 @@ static int aiL_getflybydistance( lua_State *L )
 
       /* wrong parameter */
    else
-      NLUA_INVALID_PARAMETER();
+      NLUA_INVALID_PARAMETER(L);
 
    vect_cset(&offset_vect, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );
 
@@ -2222,7 +2222,7 @@ static int aiL_dir( lua_State *L )
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    mod = 10;
 
@@ -2287,7 +2287,7 @@ static int aiL_idir( lua_State *L )
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER();
+   else NLUA_INVALID_PARAMETER(L);
 
    /*establish the current pilot velocity and position vectors */
    vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
@@ -2865,7 +2865,7 @@ static int aiL_getenemy_size( lua_State *L )
    LB = luaL_checklong(L,1);
    UB = luaL_checklong(L,2);
 
-   if LB > UB {
+   if (LB > UB) {
       NLUA_ERROR(L, "Invalid Bounds");
       return 0;
    }
