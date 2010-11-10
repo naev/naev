@@ -636,3 +636,88 @@ function atk_capital ()
      atk_g_capital(target, dist)
    end
 end --end capship attack
+
+
+--[[ Detail melee attack profiles follow here
+--These profiles are intended for use by specific ship classes
+--]]
+
+--[[
+-- Execute a sequence of close-in flyby attacks
+-- Uses a combination of facing and distance to determine what action to take
+--This version is slightly more aggressive and follows the target
+--]]
+function atk_g_flyby_aggressive( target, dist )
+
+   ai.yell("flyby attack")
+
+   local secondary, special = ai.secondary("melee")
+   local range = ai.getweaprange(3)
+
+   -- Set weapon set
+   ai.weapset( 3 )
+
+   local dir = 0;
+   
+   --if we're far away from the target, then turn and approach 
+   if dist > (3 * range) then
+    
+     dir = ai.idir(target)
+   
+     if dir < 10 and dir > -10 then
+         keep_distance()     
+         
+     else  
+         dir = ai.iface(target)
+     end
+
+      if dir < 10 and dir > -10 then
+        ai.accel()
+      end
+      
+   elseif dist > (0.75 * range) then
+   
+       dir = ai.idir(target)
+       
+       --test if we're facing the target. If we are, keep approaching
+       if(dir < 20 and dir > -20) then
+          ai.iface(target)
+          ai.accel()
+         
+       elseif dir > 20 and dir < 180 then
+          ai.turn(1)
+          ai.accel()
+          
+       else
+          ai.turn(-1)
+          ai.accel()
+          
+       end
+   
+   else
+
+    --otherwise we're close to the target and should attack until we start to zip away
+
+    dir = ai.paim(target)
+    ai.accel()
+    
+   -- Shoot if should be shooting.
+   if dir < 10 then
+      range = ai.getweaprange( 3, 0 )
+      if dist < range then
+         ai.shoot()
+      end
+   end
+   if ai.hasturrets() then
+      range  = ai.getweaprange( 3, 1 )
+      if dist < range then
+         ai.shoot(true)
+      end
+   end
+
+--end main if decision  
+  end
+
+--end flyby attack
+end
+
