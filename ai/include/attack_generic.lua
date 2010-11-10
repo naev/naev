@@ -2,7 +2,7 @@
 --    Generic attack functions
 --]]
 
-mem.atk_changetarget  = 1.8 -- Distance at which target changes
+mem.atk_changetarget  = 4 -- Distance at which target changes
 mem.atk_approach      = 1.4 -- Distance that marks approach
 mem.atk_aim           = 1.0 -- Distance that marks aim
 mem.atk_board         = false -- Whether or not to board the target
@@ -17,10 +17,10 @@ function atk_g_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-	if not ai.exists(target) then
-		ai.poptask()
-		return
-	end
+        if not ai.exists(target) then
+                ai.poptask()
+                return
+        end
 
    -- Get new target if it's closer
    if enemy ~= target and enemy ~= nil then
@@ -62,13 +62,13 @@ end
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
 function atk_g ()
-	local target = ai.target()
+        local target = ai.target()
 
-	-- make sure pilot exists
-	if not ai.exists(target) then
-		ai.poptask()
-		return
-	end
+        -- make sure pilot exists
+        if not ai.exists(target) then
+                ai.poptask()
+                return
+        end
 
    -- Check if is bribed by target
    if ai.isbribed(target) then
@@ -93,7 +93,7 @@ function atk_g ()
    ai.settarget(target)
 
    -- Get stats about enemy
-	local dist  = ai.dist( target ) -- get distance
+        local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange( 0 )
 
    -- We first bias towards range
@@ -136,7 +136,7 @@ end
 -- Approaches the target
 --]]
 function atk_g_approach( target, dist )
-   local dir = ai.aim(target)
+   local dir = ai.iface(target)
    if dir < 10 then
       ai.accel()
    end
@@ -169,6 +169,239 @@ function atk_g_melee( target, dist )
       local range  = ai.getweaprange( 3, 1 )
       if dist < range then
          ai.shoot(true)
+      end
+   end
+end
+
+
+--[[
+-- Approaches the target evasively, never heading in a straight line
+-- This will tend to approach a target along a loose spiral, good for evading capship guns
+--]]
+function atk_spiral_approach( target, dist )
+
+  local dir = ai.idir(target)
+  
+  --these two detect in-cone approach vectors
+  
+  if dir > 10 then
+    if dir < 30 then
+    
+        ai.accel()
+    
+    end
+  end
+  
+  
+  if dir < -10 then
+    if dir > -30 then
+    
+        ai.accel();
+    
+    end
+  end
+
+--facing away from the target, turn to face
+
+  if dir < -30 then
+    ai.iface(target)
+  end
+  
+  if dir > 30 then
+    ai.iface(target)
+  end
+
+--aiming right at the target; turn away
+
+  if dir > 0 then
+    if dir < 10 then
+    
+      ai.turn(1)
+    
+    end
+  end
+
+  if dir < 0 then
+    if dir > -10 then
+    
+      ai.turn(-1)
+    
+    end
+  end
+
+end -- end spiral approach
+
+--[[
+--Attempts to maintain a constant distance from nearby things
+--This modulates the distance between the current pilot and its nearest neighbor
+--]]
+function keep_distance()
+
+--anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
+--local flight_offset = ai.drift_facing()
+
+
+local perp_distance
+
+
+    --find nearest thing
+  local neighbor = ai.nearestpilot()
+ 
+  if neighbor ~= nil and neighbor ~= 0 then
+ 
+    --find the distance based on the direction I'm travelling
+    perp_distance = ai.flyby_dist(neighbor)
+
+    --adjust my direction of flight to account for this
+
+    --if pilot is too close, turn away
+    
+    if perp_distance < 0 and perp_distance > -50 then
+        ai.turn(1)
+    end
+    
+    if perp_distance > 0 and perp_distance < 50 then
+        ai.turn(-1)
+    end    
+  end
+    
+end -- end keep distance
+
+--[[
+-- Mainly targets small fighters.
+--]]
+function atk_fighter_think ()
+
+   local enemy = ai.getenemy_size(0, 200)
+   local nearest_enemy = ai.getenemy()
+   local dist = 0
+   local sizedist = 0
+
+   if enemy ~= nil then
+      sizedist = ai.dist(enemy)
+   end   
+   
+   if  nearest_enemy ~= nil then   
+      dist = ai.dist(nearest_enemy)
+   end
+
+   local target = ai.target()
+
+   -- Stop attacking if it doesn't exist
+        if not ai.exists(target) then
+                ai.poptask()
+                return
+        end
+
+   local range = ai.getweaprange(3, 0)
+
+   -- Get new target if it's closer
+   --prioritize targets within the size limit
+   if enemy ~= target and enemy ~= nil then
+      
+      -- Shouldn't switch targets if close
+      if sizedist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", enemy )
+      end
+      
+   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
+
+      -- Shouldn't switch targets if close
+      if dist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", nearest_enemy )
+      end
+   end
+end
+
+
+--[[
+-- Mainly targets in biggest-to-smallest priority.
+--]]
+function atk_topdown_think ()
+
+   local enemy_cat1 = ai.getenemy_size(2500, 10000)
+   local enemy_cat2 = ai.getenemy_size(1000, 2500)
+   local enemy_cat3 = ai.getenemy_size(600, 1000)
+   local enemy_cat4 = ai.getenemy_size(250, 600)
+   
+   
+   local nearest_enemy = ai.getenemy()
+   local dist = 0
+   local cat1dist = 0
+   local cat2dist = 0
+   local cat3dist = 0
+   local cat4dist = 0
+
+   if enemy_cat1 ~= nil then
+      cat1dist = ai.dist(enemy_cat1)
+   end   
+
+   if enemy_cat2 ~= nil then
+      cat2dist = ai.dist(enemy_cat2)
+   end
+
+   if enemy_cat3 ~= nil then
+      cat3dist = ai.dist(enemy_cat3)
+   end   
+   
+   if enemy_cat4 ~= nil then
+      cat4dist = ai.dist(enemy_cat4)
+   end
+   
+   if  nearest_enemy ~= nil then   
+      dist = ai.dist(nearest_enemy)
+   end
+
+   local target = ai.target()
+
+   -- Stop attacking if it doesn't exist
+        if not ai.exists(target) then
+                ai.poptask()
+                return
+        end
+
+   local range = ai.getweaprange(3, 1)
+   local range2 = ai.getweaprange(3, 0)
+   
+   if range2 > range then
+    range = range2
+   end
+
+   -- Get new target if it's closer
+   if enemy_cat1 ~= target and enemy_cat1 ~= nil then  
+
+      -- Shouldn't switch targets if close
+      if cat1dist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", enemy_cat1 )
+      end
+   
+   elseif enemy_cat2 ~= target and enemy_cat2 ~= nil then  
+
+      -- Shouldn't switch targets if close
+      if cat2dist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", enemy_cat2 )
+      end
+
+   elseif enemy_cat3 ~= target and enemy_cat3 ~= nil then  
+
+      -- Shouldn't switch targets if close
+      if cat3dist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", enemy_cat3 )
+      end
+      
+   elseif enemy_cat4 ~= target and enemy_cat4 ~= nil then  
+
+      -- Shouldn't switch targets if close
+      if cat4dist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", enemy_cat4 )
+      end   
+      
+   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
+
+
+      -- Shouldn't switch targets if close
+      if dist > range * mem.atk_changetarget then
+         ai.pushtask( 0, "attack", nearest_enemy )
       end
    end
 end
