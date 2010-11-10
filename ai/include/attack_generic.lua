@@ -736,6 +736,8 @@ function atk_g_flyby( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0;
    
+   ai.weapset( 3 )
+   
    --if we're far away from the target, then turn and approach 
    if dist > (3 * range) then
     
@@ -799,3 +801,96 @@ function atk_g_flyby( target, dist )
 
 --end flyby attack
 end
+
+
+--[[
+-- Simplest of all attacks: maintain an intercept course to the target, and shoot when within range
+--
+--This is designed for capital ships with turrets and guided munitions
+--As there is no aiming involved this is a turret/capital ship only attack method
+--]]
+function atk_g_capital( target, dist )
+
+   local secondary, special = ai.secondary("melee")
+   local range = ai.getweaprange(3)
+   local dir = 0;
+   
+   ai.weapset( 3 )
+   
+   --if we're far from the target, then turn and approach 
+   if dist > (range) then
+   
+     dir = ai.idir(target)
+   
+     if dir < 10 and dir > -10 then
+         keep_distance()     
+      
+       if dir < 10 and dir > -10 then
+        ai.accel()
+      end
+         
+     else  
+       dir = ai.iface(target)
+       
+       if dir < 10 and dir > -10 then
+        ai.accel()
+       end    
+         
+     end
+   
+   --at moderate range from the target, prepare to intercept and engage with turrets
+   elseif dist > 0.6* range then
+    
+       --drifting away from target, so emphasize intercept 
+       --course facing and accelerate to close
+    
+       dir = ai.iface(target)
+    
+       if dir < 10 and dir > -10 then
+          ai.accel()
+       end
+    
+       if ai.hasturrets() then
+          ai.shoot(false, 1)
+       end
+   
+   elseif dist > 0.3*range then
+       
+       --capital ship turning is slow
+       --emphasize facing for being able to close quickly
+       dir = ai.iface(target)
+    
+       -- Shoot if should be shooting.
+       if ai.hasturrets() then
+            range  = ai.getweaprange( 3, 1 )
+         if dist < range then
+            ai.shoot(true)
+        end
+       end
+   
+    else
+    --within close range; aim and blast away with everything
+    
+       dir = ai.aim(target)
+             
+       -- Shoot if should be shooting.
+       if dir < 10 then
+          range = ai.getweaprange( 3, 0 )
+          if dist < range then
+           ai.shoot()
+        end
+      end
+      if ai.hasturrets() then
+         range  = ai.getweaprange( 3, 1 )
+        if dist < range then
+           ai.shoot(true)
+        end
+     end
+    
+   --end main decision if
+   end
+
+
+--end capital ship attack
+end
+
