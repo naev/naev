@@ -649,9 +649,7 @@ end --end capship attack
 --]]
 function atk_g_flyby_aggressive( target, dist )
 
-   ai.yell("flyby attack")
-
-   local secondary, special = ai.secondary("melee")
+   ai.comm(1, "flyby attack")
    local range = ai.getweaprange(3)
 
    -- Set weapon set
@@ -730,9 +728,8 @@ end
 --]]
 function atk_g_flyby( target, dist )
 
-   ai.yell("flyby attack")
-
-   local secondary, special = ai.secondary("melee")
+   ai.comm(1, "flyby attack")
+   
    local range = ai.getweaprange(3)
    local dir = 0;
    
@@ -810,8 +807,7 @@ end
 --As there is no aiming involved this is a turret/capital ship only attack method
 --]]
 function atk_g_capital( target, dist )
-
-   local secondary, special = ai.secondary("melee")
+)
    local range = ai.getweaprange(3)
    local dir = 0;
    
@@ -903,7 +899,6 @@ end
 --]]
 function atk_g_space_sup( target, dist )
 
-   local secondary, special = ai.secondary("melee")
    local range = ai.getweaprange(3)
    local dir = 0;
 
