@@ -86,26 +86,6 @@ class sanitizer:
         print("DONE")
         return True
 
-    def _compute_regex(self, data_list):
-        """
-        Thanks to jaytea from irc.freenode.net/#regex for helping me to find the
-        proper regex.
-        template : (?=(?P<a>X)?)(?=(?P<b>Y)?)(?:X|Y) <- doesn't works
-        """
-        regex = list()
-        uniqList = list()
-
-        for (category, data) in data_list.items():
-            str = '"(?=(?P<'+ category +'>%s)?)"'
-            rname = ''
-            for name in data:
-                rname = rname + name.replace(' ', "\s") + '|'
-                if name not in uniqList:
-                    uniqList.append(name.replace(' ', "\s"))
-            regex.append(str % rname[:-1])
-
-        return '%s(?:%s)' % (''.join(regex), '|'.join(uniqList))
-
     def dah_doctor(self):
         """
         That's the doctor, it detect wrong stuff but can never heal you.
@@ -205,27 +185,37 @@ class sanitizer:
         del(tmp)
 
         if len(unused_data) > 0:
-            missing_cobj = re.compile(self._compute_regex(unused_data),
-                                      re.VERBOSE| re.UNICODE)
+            mcobj = dict()
+            for (category, data) in unused_data.items():
+                regex = r"""
+                (?P<{0}>%s)
+                """.format(category)
+                rname = ''
+                uniqList = list()
+                for name in data:
+                    name = name.replace(' ', "\s")
+                    rname = rname + name + '|'
+                    if name not in uniqList:
+                        uniqList.append(name)
+                regex = regex % rname[:-1]
+                print(regex)
+                mcobj.update({category: re.compile(regex, re.VERBOSE| re.UNICODE)})
+
             for (file, content) in line.items():
-                for match in missing_cobj.finditer(content):
-                    groups = match.groupdict()
-                    for (rkey, rcontent) in groups:
-                        print (rkey)
-                        exit()
+                for (category, cobj) in mcobj.items():
+                    for match in cobj.finditer(content):
+                        groups = match.groupdict()
                         for obj, key in tocheck:
-                            if key == rkey and type(rcontent) is not NoneType:
-                                obj.set_unknown(content)
-                            else:
-                                print('DEBUG:')
-                                print("=".join([key,rkey]))
+                            if key == category:
+                                obj.set_unknown(groups[category])
 
         outfitdata.showMissingTech()
         shipdata.showMissingTech()
 
         if self.config['show_unused']:
             # XXX there is no real needs to use these two because of
-            # ''showMissingTech`` called earlier
+            # ''showMissingTech`` called earlier, unless something is tagged as
+            # 'UNKNOWN'
             #outfitdata.show_unused()
             #shipdata.show_unused()
             fleetdata.show_unused()

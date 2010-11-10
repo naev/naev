@@ -35,6 +35,9 @@ class readers:
                 # why that name could not be in nameList
                 if name in tmp:
                     tmp.remove(name)
+            for name in self.unknown:
+                if name in tmp:
+                    tmp.remove(name)
         except ValueError:
             print('ValueError: %s not in %s used list' %
                         (name, self._componentName))
@@ -49,7 +52,7 @@ class readers:
     def show_unused(self):
         if len(self.unknown) > 0:
             print('\nProbably not used %s name:' % self._componentName)
-            print('\n', join(self.unknown))
+            print('\n'.join(self.unknown))
         tmp = self.get_unused()
         if len(tmp) > 0:
             print('\nUnused %s name:' % self._componentName)
@@ -62,8 +65,9 @@ class readers:
         certain (i.e. name used in a variable).
         """
         if name in self.nameList and name not in self.used:
-            print("SETTING ''%s`` UNKNOWN" % name)
-            self.unknown.append(name)
+            if name not in self.unknown:
+                self.v("SET ''%s`` as UNKNOWN" % name)
+                self.unknown.append(name)
 
     def v(self, msg):
         if self._verbose:
