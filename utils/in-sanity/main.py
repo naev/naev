@@ -198,7 +198,6 @@ class sanitizer:
                     if name not in uniqList:
                         uniqList.append(name)
                 regex = regex % rname[:-1]
-                print(regex)
                 mcobj.update({category: re.compile(regex, re.VERBOSE| re.UNICODE)})
 
             for (file, content) in line.items():
