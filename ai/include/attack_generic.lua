@@ -136,7 +136,15 @@ end
 -- Approaches the target
 --]]
 function atk_g_approach( target, dist )
-   local dir = ai.iface(target)
+
+   dir = ai.idir(target)
+   
+   if dir < 10 and dir > -10 then
+        keep_distance()
+   else
+      dir = ai.iface(target)
+   end
+   
    if dir < 10 then
       ai.accel()
    end
