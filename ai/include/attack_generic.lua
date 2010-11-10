@@ -651,7 +651,7 @@ end --end capship attack
 --]]
 function atk_g_flyby_aggressive( target, dist )
 
-   ai.comm(1, "flyby attack!")
+   --ai.comm(1, "flyby attack!")
    local range = ai.getweaprange(3)
 
    -- Set weapon set
@@ -683,7 +683,7 @@ function atk_g_flyby_aggressive( target, dist )
        if(dir < 30 and dir > -30) then
           ai.iface(target)
           
-          if dir < 10 and dir > -10 then
+          if dir < 10 and dir > -10 then 
             ai.accel()
           end
          
@@ -733,7 +733,7 @@ end
 --]]
 function atk_g_flyby( target, dist )
 
-   ai.comm(1, "flyby attack")
+   --ai.comm(1, "flyby attack")
    
    local range = ai.getweaprange(3)
    local dir = 0
@@ -819,7 +819,7 @@ function atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    
-   ai.comm(1, "capship attack")
+   --ai.comm(1, "capship attack")
    
    ai.weapset( 3 )
    
@@ -852,7 +852,7 @@ function atk_g_capital( target, dist )
     
        dir = ai.iface(target)
     
-       if dir < 10 and dir > -10 then
+       if dir < 10 and dir > -10 and ai.relvel(target) > -10 then 
           ai.accel()
        end
     
@@ -909,7 +909,7 @@ end
 --]]
 function atk_g_space_sup( target, dist )
 
-   ai.comm(1, "space superiority")
+  -- ai.comm(1, "space superiority")
 
    local range = ai.getweaprange(3)
    local dir = 0
@@ -946,7 +946,7 @@ function atk_g_space_sup( target, dist )
     
        dir = ai.iface(target)
     
-       if dir < 10 and dir > -10 then
+       if dir < 10 and dir > -10 and ai.relvel(target) > -10 then
           ai.accel()
        end
     
@@ -963,7 +963,7 @@ function atk_g_space_sup( target, dist )
 
        --accelerate and try to close
        --but only accel if it will be productive
-       if dir2 < 15 and dir2 > -15 then
+       if dir2 < 15 and dir2 > -15 and ai.relvel(target) > -10 then
           ai.accel()
        end         
              
