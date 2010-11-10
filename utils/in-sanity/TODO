@@ -7,15 +7,18 @@ MAJOR:
 DONE     *) first off you should make sure all the assets in asset.xml are
 DONE        used by ssys.xml
 DONE     *) then make sure all the techs in tech.xml are used by asset.xml
-         *) then :
+DONE     *) then :
                 If something is in ship.xml or outfit.xml and not (in tech.xml
                 or used by lua files) -> problem
             This assume that we have a list of outfit and ship from the lua
             files.
-         *) Need to double check the lua files in case of unused content
-         *) Add items who needs a double check in a shared list (from
+DONE     *) Need to double check the lua files in case of unused content
+INGOING  *) Add items who needs a double check in a shared list (from
             preprocessing to readers). Then, pop the list until everything
             is done
+               - readers
+               - preprocessing
+         *) ai/spawn/* for ships, ai/equip/* for outfits
 
 MINOR:
  *) Check if planets images are :
