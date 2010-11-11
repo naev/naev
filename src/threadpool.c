@@ -364,7 +364,7 @@ static int threadpool_handler( void *data )
       /* Free the now unused job from the global_queue */
       free(node);
    }
-   /* TODO: cleanup and maybe a way to stop the threadpool */
+   /* TODO: cleanup and a way to stop the threadpool */
    return 0;
 }
 
@@ -428,7 +428,9 @@ void vpool_enqueue(ThreadQueue queue, int (*function)(void *), void *data)
 }
 
 /**
- * @brief A special vpool worker that 
+ * @brief A special vpool worker that signals the waiting thread when all jobs
+ * are done.
+ * It uses a mutex+condition variable+counter
  */
 static int vpool_worker( void *data )
 {
@@ -441,16 +443,18 @@ static int vpool_worker( void *data )
 
    /* Decrement the counter and signal vpool_wait if all threads are done */
    SDL_mutexP( work->mutex );
-   *(work->count) = *(work->count) - 1;
-   if (*(work->count) == 0)
-      SDL_CondSignal( work->cond );
+   *(work->count) = *(work->count) - 1; 
+   if (*(work->count) == 0)             /* All jobs are done */
+      SDL_CondSignal( work->cond );     /* Signal waiting thread */
    SDL_mutexV( work->mutex );
 
    return 0;
 }
 
-/* Run every job in the vpool queue and block untill every job in the queue is
- * done. It destroys the queue when it's done. */
+/* @brief Run every job in the vpool queue and block until every job in the
+ * queue is done.
+ * @note It destroys the queue when it's done.
+ */
 void vpool_wait(ThreadQueue queue)
 {
    int i, cnt;
@@ -461,11 +465,16 @@ void vpool_wait(ThreadQueue queue)
 
    cond = SDL_CreateCond();
    mutex = SDL_CreateMutex();
+   /* This might be a little ugly (and inefficient?) */
    cnt = SDL_SemValue( queue->semaphore );
 
-   SDL_mutexP( mutex );
+   /* Allocate all vpoolThreadData objects */
    arg = malloc( sizeof(vpoolThreadData_) * cnt );
+
+   SDL_mutexP( mutex );
+   /* Initialize the vpoolThreadData */
    for (i=0; i<cnt; i++) {
+      /* This is not necessary as no one else is going to dequeue anyway */
       SDL_SemWait( queue->semaphore );
       node = tq_dequeue( queue );
 
@@ -488,7 +497,8 @@ void vpool_wait(ThreadQueue queue)
    free(arg);
 }
 
-/* Notes
+/**
+ * Notes
  *
  * The algorithm/strategy for killing idle workers should be moved into the
  * threadhandler and it should also be improved (the current strategy is
