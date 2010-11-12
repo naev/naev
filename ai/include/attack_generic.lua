@@ -531,8 +531,6 @@ function atk_corvette ()
 
    local target = ai.target()
 
-   ai.comm(1, "corvette")
-
    -- make sure pilot exists
    if not ai.exists(target) then
            ai.poptask()
