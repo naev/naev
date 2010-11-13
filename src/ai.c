@@ -3257,7 +3257,11 @@ static int aiL_sysradius( lua_State *L )
  */
 double relsize(pilot *p)
 {
-return 0.5;
+    /*double mass_map;
+    
+    mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
+     
+    return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass ) );
     }
 
 /**
@@ -3281,7 +3285,8 @@ return 0.5;
  */
 double relhp(pilot *p)
 {
-return 0.5;
+    return (1 - 1/(1 + ( (double) (cur_pilot -> armour_max + cur_pilot -> shield_max ) / (double) (p -> armour_max + p -> shield_max ) ) );
+
     }
 
 /**
