@@ -176,6 +176,7 @@ typedef struct OutfitBoltData_ {
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
    double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   double heatup; /**< How long it should take for the weapon to heat up (approx). */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -204,6 +205,7 @@ typedef struct OutfitBeamData_ {
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
    double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   double heatup; /**< How long it should take for the weapon to heat up (approx). */
 
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */

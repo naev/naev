@@ -922,6 +922,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"ew_lockon",temp->u.blt.ew_lockon);
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"cpu",temp->u.blt.cpu);
+      xmlr_float(node,"heatup",temp->u.blt.heatup);
       if (xml_isNode(node,"range")) {
          buf = xml_nodeProp(node,"blowup");
          if (buf != NULL) {
@@ -1006,14 +1007,16 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "%.2f DPS [%.0f Damage]\n"
          "%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
-         "%.0f Range",
+         "%.0f Range\n"
+         "%.1f second heat up",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
          temp->u.blt.cpu,
          temp->u.blt.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.damage, temp->u.blt.damage,
          1./temp->u.blt.delay,
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
-         temp->u.blt.range );
+         temp->u.blt.range,
+         temp->u.blt.heatup);
 
 
 #define MELEMENT(o,s) \
@@ -1029,6 +1032,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.energy==0.,"energy");
    MELEMENT(temp->u.blt.cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
+   MELEMENT(temp->u.blt.heatup==0.,"heatup");
 #undef MELEMENT
 }
 
@@ -1060,6 +1064,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"delay",temp->u.bem.delay);
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"duration",temp->u.bem.duration);
+      xmlr_float(node,"heatup",temp->u.bem.heatup);
 
       if (xml_isNode(node,"damage")) {
          outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, &temp->u.bem.penetration, node );
@@ -1114,14 +1119,16 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%.2f %s DPS\n"
          "%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
-         "%.0f Range",
+         "%.0f Range\n"
+         "%.1f second heat up",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.cpu,
          temp->u.bem.penetration*100.,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
-         temp->u.bem.range );
+         temp->u.bem.range,
+         temp->u.bem.heatup);
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1138,6 +1145,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.bem.energy==0.,"energy");
    MELEMENT(temp->u.bem.cpu==0.,"cpu");
    MELEMENT(temp->u.bem.damage==0,"damage");
+   MELEMENT(temp->u.bem.heatup==0.,"heatup");
 #undef MELEMENT
 }
 
