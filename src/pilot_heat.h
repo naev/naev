@@ -39,6 +39,12 @@
 
 
 /*
+ * Outfit core value calculations.
+ */
+double pilot_heatCalcOutfitC( const Outfit *o );
+double pilot_heatCalcOutfitArea( const Outfit *o );
+
+/*
  * Heat initializations.
  */
 void pilot_heatCalc( Pilot *p );
