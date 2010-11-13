@@ -149,9 +149,9 @@ static Task* ai_createTask( lua_State *L, int subtask );
 static int ai_tasktarget( lua_State *L, Task *t );
 
 /*non-lua wrappers*/
-double relsize(int pilot_ID);
-double reldps(int pilot_ID);
-double relhp(int pilot_ID);
+double relsize(pilot *p);
+double reldps(pilot *p);
+double relhp(pilot *p);
 
 /*
  * AI routines for Lua
@@ -2986,14 +2986,29 @@ static int aiL_canboard( lua_State *L )
 }
 
 /**
- * @brief Gets the relative size(shipmass) between the current pilot and the specified target
+ * @brief lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
  *
  * @param pilot_ID the ID of the pilot whose mass we will compare   
  *    @luareturn A number from 0 to 1 mapping the relative masses
- * relsize()
+ * luafunc relsize()
  */
 static int aiL_relsize( lua_State *L )
-{return 1;}
+{
+   unsigned int id;
+   Pilot *p;
+
+   /* Get the pilot. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+    lua_pushnumber(L, relsize(p));
+   
+    return 1;
+}
 
 
 /**
@@ -3001,10 +3016,25 @@ static int aiL_relsize( lua_State *L )
  *
  * @param pilot_ID the ID of the pilot whose DPS we will compare   
  *    @luareturn A number from 0 to 1 mapping the relative DPS's
- * relsize()
+ * luafunc reldps()
  */
 static int aiL_reldps( lua_State *L )
-{return 1;}
+{
+   unsigned int id;
+   Pilot *p;
+
+   /* Get the pilot. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+    lua_pushnumber(L, reldps(p));
+   
+    return 1;
+}
 
 
 /**
@@ -3012,10 +3042,24 @@ static int aiL_reldps( lua_State *L )
  *
  * @param pilot_ID the ID of the pilot whose HP we will compare   
  *    @luareturn A number from 0 to 1 mapping the relative HPs
- * relsize()
+ * relhp()
  */
 static int aiL_relhp( lua_State *L )
-{return 1;}
+{   unsigned int id;
+   Pilot *p;
+
+   /* Get the pilot. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+    lua_pushnumber(L, relhp(p));
+   
+    return 1;
+}
 
 
 
@@ -3207,11 +3251,11 @@ static int aiL_sysradius( lua_State *L )
 /**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose mass we will compare   
+ * @param p the pilot whose mass we will compare   
  *    @luareturn A number from 0 to 1 mapping the relative masses
  * relsize()
  */
-double relsize(int pilot_ID)
+double relsize(pilot *p)
 {
 return 0.5;
     }
@@ -3219,11 +3263,11 @@ return 0.5;
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose dps we will compare   
- *    @luareturn A number from 0 to 1 mapping the relative damage output
- * relsize()
+ * @param p the pilot whose dps we will compare   
+ *    @return A number from 0 to 1 mapping the relative damage output
+ * reldps()
  */
-double reldps(int pilot_ID)
+double reldps(pilot *p)
 {
 return 0.5;
     }
@@ -3231,11 +3275,11 @@ return 0.5;
 /**
  * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose shields/armor we will compare   
- *    @luareturn A number from 0 to 1 mapping the relative HPs
- * relsize()
+ * @param p the pilot whose shields/armor we will compare   
+ *    @return A number from 0 to 1 mapping the relative HPs
+ * reldps()
  */
-double relhp(int pilot_ID)
+double relhp(pilot *p)
 {
 return 0.5;
     }
