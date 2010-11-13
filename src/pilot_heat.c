@@ -62,8 +62,8 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o )
    double mass_kg;
    o->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
    if (o->outfit == NULL) {
-      o->heat_C = 1.;
-      o->heat_area = 0.;
+      o->heat_C      = 1.;
+      o->heat_area   = 0.;
       return;
    }
    mass_kg        = 1000. * o->outfit->mass;
