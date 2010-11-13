@@ -451,7 +451,7 @@
   <ai>empire</ai>
   <faction>Empire</faction>
   <pilots>
-   <pilot name="Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Admonisher">
