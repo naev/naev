@@ -1758,6 +1758,32 @@
    <cargo>15</cargo>
   </specific>
  </outfit>
+ <outfit name="Boarding Androids Mk I">
+   <general>
+    <typename>Crew enhancement</typename>
+    <slot>utility</slot>
+    <mass>1</mass>
+    <price>20000</price>
+    <description>The Asimov Destructicorp Boarding Android is the latest in robotic hostile takeover technology. Equipped with a multifunction plasma blaster/cutting torch/can opener/spatula, the Boarding Android is ready for any situation, be it tactical or culinary.</description>
+    <gfx_store>cargo_pod</gfx_store>
+   </general>
+   <specific type="modification">
+    <crew_rel>20</crew_rel>
+   </specific>
+ </outfit>
+ <outfit name="Boarding Androids Mk II">
+  <general>
+   <typename>Crew enhancement</typename>
+   <slot>utility</slot>
+   <mass>3</mass>
+   <price>50000</price>
+   <description>The Boarding Android Mark II improves upon the wide variety of implements sported by its predecessor, additionally including scissor-hands and a rape whistle. </description>
+   <gfx_store>cargo_pod</gfx_store>
+  </general>
+  <specific type="modification">
+   <crew_rel>35</crew_rel>
+  </specific>
+ </outfit>
  <outfit name="Targeting Array">
   <general>
    <typename>Weapon Modifier (Turret)</typename>

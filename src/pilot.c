@@ -1697,6 +1697,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
    pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
+   pilot->crew   = pilot->ship->crew;
    pilot_calcStats(pilot);
 
    /* Allocate outfit memory. */

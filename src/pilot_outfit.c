@@ -700,6 +700,8 @@ void pilot_calcStats( Pilot* pilot )
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
    pilot->cpu           = pilot->cpu_max;
+   /* crew @author: Arakash*/
+   pilot->crew		= pilot->ship->crew;
    /* health */
    ac = pilot->armour / pilot->armour_max;
    sc = pilot->shield / pilot->shield_max;
@@ -777,6 +779,7 @@ void pilot_calcStats( Pilot* pilot )
          /* misc */
          pilot->cargo_free    += o->u.mod.cargo * q;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass * q;
+	 pilot->crew	      += o->u.mod.crew_rel * pilot->ship->crew * q;
          /*
           * Stats.
           */

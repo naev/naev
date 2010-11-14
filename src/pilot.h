@@ -256,6 +256,7 @@ typedef struct Pilot_ {
    /* Properties. */
    double cpu; /**< Amount of CPU the pilot has left. */
    double cpu_max; /**< Maximum amount of CPU the pilot has. */
+   double crew;
 
    /* Movement */
    double thrust; /**< Pilot's thrust. */
