@@ -177,6 +177,7 @@ typedef struct OutfitBoltData_ {
    double damage; /**< damage */
    double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
    double heatup; /**< How long it should take for the weapon to heat up (approx). */
+   double heat; /**< Heat per shot. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -437,6 +438,7 @@ double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );
 int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
+double outfit_heat( const Outfit* o );
 double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );

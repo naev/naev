@@ -29,6 +29,7 @@
 #include "array.h"
 #include "ship.h"
 #include "conf.h"
+#include "pilot_heat.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -593,6 +594,15 @@ double outfit_energy( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the outfit's heat generation.
+ *    @param o Outfit to get information from.
+ */
+double outfit_heat( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.heat;
+   return -1;
+}
+/**
  * @brief Gets the outfit's cpu usage.
  *    @param o Outfit to get information from.
  */
@@ -905,6 +915,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    char *buf;
+   double C, area;
 
    /* Defaults */
    temp->u.blt.spfx_armour    = -1;
@@ -991,8 +1002,18 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       temp->u.blt.falloff = temp->u.blt.range;
 
    /* Post processing. */
-   temp->u.blt.delay /= 1000.;
-   temp->u.blt.damage *= temp->u.blt.delay;
+   temp->u.blt.delay   /= 1000.;
+   temp->u.blt.damage  *= temp->u.blt.delay;
+   /*
+    *         dT Mthermal - Qweap
+    * Hweap = ----------------------
+    *                tweap
+    */
+   C = pilot_heatCalcOutfitC(temp);
+   area = pilot_heatCalcOutfitArea(temp);
+   temp->u.blt.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+         temp->u.blt.heatup * temp->u.blt.delay;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)

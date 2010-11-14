@@ -33,7 +33,7 @@ void pilot_heatCalc( Pilot *p )
    p->heat_emis   = 0.8; /**< @TODO make it influencable. */
    p->heat_cond   = STEEL_HEAT_CONDUCTIVITY;
    p->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
-   p->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
+   p->heat_T      = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
 
    /* We'll approximate area for a sphere.
     *
@@ -82,7 +82,7 @@ double pilot_heatCalcOutfitArea( const Outfit *o )
  */
 void pilot_heatCalcSlot( PilotOutfitSlot *o )
 {
-   o->heat_T      = CONST_SPACE_TEMP; /* Reset temperature. */
+   o->heat_T      = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
    if (o->outfit == NULL) {
       o->heat_C      = 1.;
       o->heat_area   = 0.;
@@ -121,7 +121,10 @@ void pilot_heatAddSlot( PilotOutfitSlot *o, double energy )
 {
    /* We consider that only 1% of the energy is lost in the form of heat,
     * this keeps numbers sane. */
-   o->heat_T += 0.01 * 1e6 * energy / o->heat_C;
+   //o->heat_T += 0.01 * 1e6 * energy / o->heat_C;
+   o->heat_T += outfit_heat(o->outfit) / o->heat_C;
+   DEBUG("energy: %.3f", 0.01 * 1e6 * energy / o->heat_C );
+   DEBUG("heat: %.3f [%.3f -> %.3f]", outfit_heat(o->outfit), outfit_heat(o->outfit) / o->heat_C, o->heat_T);
 }
 
 
