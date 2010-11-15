@@ -700,7 +700,7 @@ void pilot_calcStats( Pilot* pilot )
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
    pilot->cpu           = pilot->cpu_max;
-   /* crew @author: Arakash*/
+   /* crew */
    pilot->crew          = pilot->ship->crew;
    /* health */
    ac = pilot->armour / pilot->armour_max;
