@@ -1391,6 +1391,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
+      xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
       /* Stats. */
       if (ship_statsParseSingle( &temp->u.mod.stats, node ))
@@ -1436,6 +1437,7 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
    DESC_ADD0( temp->u.mod.cpu, "CPU" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
+   DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
 #undef DESC_ADD1
 #undef DESC_ADD0
@@ -1451,6 +1453,7 @@ if ((x) != 0.) \
    temp->u.mod.shield_rel /= 100.;
    temp->u.mod.energy_rel /= 100.;
    temp->u.mod.mass_rel   /= 100.;
+   temp->u.mod.crew_rel   /= 100.;
    temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
 
