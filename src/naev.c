@@ -166,11 +166,11 @@ int main( int argc, char** argv )
    DEBUG( " git HEAD at " GIT_COMMIT );
 #endif /* GIT_COMMIT */
 
-   /* Initialize the threadpool */
-   threadpool_init();
-
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);
+
+   /* Initialize the threadpool */
+   threadpool_init();
 
    /* Set up debug signal handlers. */
    debug_sigInit();
