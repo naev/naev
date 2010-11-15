@@ -87,7 +87,7 @@ else -- default english
 	cargo_land_p2 = {}
 	cargo_land_p2[1] = "carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
 	cargo_land_p2[2] = "rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
-	cargo_land_p2[3] = "unloaded by an exhasted-looking bunch of dockworkers. Still, they make fairly good time, delievering your pay upon completion of the job."
+	cargo_land_p2[3] = "unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delievering your pay upon completion of the job."
    
 	--Randomize passenger mission dialogue
 
@@ -277,14 +277,15 @@ function create()
             carg_mass * (150+rnd.int(75)) +
             rnd.int(1500)
    elseif misn_type == "Rush" then
+      difficulty = rnd.rnd(time.units(2), time.units(3))
       misn_time = time.get() + time.units(3) +
-            rnd.int(time.units(3), time.units(5)) * misn_dist
+            difficulty * misn_dist +
+            ((misn_dist - misn_dist % 4) / 4) * time.units(3)
       misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )
-      reward = misn_dist * carg_mass * (450+rnd.int(250)) +
-            carg_mass * (250+rnd.int(125)) +
-            rnd.int(2500)
+      reward = (.15 + 2250/difficulty) * misn_dist * carg_mass * (450+rnd.rnd(250)) +
+            carg_mass * (250+rnd.rnd(125)) + rnd.rnd(2500)
    elseif misn_type == "People" then
       misn.setDesc( string.format( misn_desc[21], carg_type, pnt:name(), sys:name() ))
       reward = misn_dist * (1000+rnd.int(500)) + rnd.int(2000)
