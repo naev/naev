@@ -5,7 +5,9 @@
 
 include("ai/include/attack_generic.lua")
 include("ai/include/attack_bomber.lua")
-
+include("ai/include/attack_patterns.lua")
+include("ai/include/decision_patterns.lua")
+include("ai/include/attack_profiles.lua")
 
 --[[
 -- Wrapper for the think functions.
