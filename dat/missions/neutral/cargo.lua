@@ -284,7 +284,7 @@ function create()
       misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )
-      reward = (2 - 2250/difficulty) * misn_dist * carg_mass * (450+rnd.rnd(250)) +
+      reward = (.15 + 2250/difficulty) * misn_dist * carg_mass * (450+rnd.rnd(250)) +
             carg_mass * (250+rnd.rnd(125)) + rnd.rnd(2500)
    elseif misn_type == "People" then
       misn.setDesc( string.format( misn_desc[21], carg_type, pnt:name(), sys:name() ))
