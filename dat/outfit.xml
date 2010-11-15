@@ -1802,7 +1802,7 @@
    <cargo>15</cargo>
   </specific>
  </outfit>
- <outfit name="Boarding Androids Mk I">
+ <outfit name="Boarding Androids MKI">
    <general>
     <typename>Crew enhancement</typename>
     <slot>utility</slot>
@@ -1815,7 +1815,7 @@
     <crew_rel>20</crew_rel>
    </specific>
  </outfit>
- <outfit name="Boarding Androids Mk II">
+ <outfit name="Boarding Androids MKII">
   <general>
    <typename>Crew enhancement</typename>
    <slot>utility</slot>

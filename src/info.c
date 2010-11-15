@@ -297,7 +297,7 @@ static void ship_update( unsigned int wid )
          player.p->name,
          player.p->ship->name,
          ship_class(player.p->ship),
-         (int)player.p->crew,
+         (int)floor(player.p->crew),
          player.p->cpu_max,
          /* Movement. */
          player.p->solid->mass,
