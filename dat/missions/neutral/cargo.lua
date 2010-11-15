@@ -234,7 +234,7 @@ function create()
       cargo_dialog()
       misn_faction = rnd.int(5)
       misn.setTitle( string.format(title[11], pnt:name()) )
-      misn.markerAdd( sys, "computer" )
+      misn.markerAdd( sys, "high" )
    else -- people delivery :)
       misn_type = "People"
       misn_faction = rnd.int(1)
