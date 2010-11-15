@@ -725,7 +725,7 @@ static int pilotL_getPilots( lua_State *L )
       /* clean up. */
       free(factions);
    }
-   else if (lua_isnil(L,1) || (lua_gettop(L)==0)) {
+   else if ((lua_isnil(L,1)) || (lua_gettop(L) == 0)) {
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
