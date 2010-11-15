@@ -87,6 +87,7 @@
 #include "camera.h"
 #include "map_overlay.h"
 #include "start.h"
+#include "threadpool.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -164,6 +165,9 @@ int main( int argc, char** argv )
 #ifdef GIT_COMMIT
    DEBUG( " git HEAD at " GIT_COMMIT );
 #endif /* GIT_COMMIT */
+
+   /* Initialize the threadpool */
+   threadpool_init();
 
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);
