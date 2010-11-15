@@ -149,9 +149,9 @@ static Task* ai_createTask( lua_State *L, int subtask );
 static int ai_tasktarget( lua_State *L, Task *t );
 
 /*non-lua wrappers*/
-double relsize(pilot *p);
-double reldps(pilot *p);
-double relhp(pilot *p);
+static double relsize(Pilot* p);
+static double reldps(Pilot* p);
+static double relhp(Pilot* p);
 
 /*
  * AI routines for Lua
@@ -3255,13 +3255,13 @@ static int aiL_sysradius( lua_State *L )
  *    @luareturn A number from 0 to 1 mapping the relative masses
  * relsize()
  */
-double relsize(pilot *p)
+static double relsize(Pilot* p)
 {
     /*double mass_map;
     
     mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
      
-    return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass ) );
+    return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass) ) );
     }
 
 /**
@@ -3271,21 +3271,36 @@ double relsize(pilot *p)
  *    @return A number from 0 to 1 mapping the relative damage output
  * reldps()
  */
-double reldps(pilot *p)
+static double reldps(Pilot* p)
 {
-return 0.5;
+    int i;
+
+    int DPSaccum_target = 0, DPSaccum_pilot = 0;
+
+    for(i = 0; i < p->outfit_nweapon; i++)
+    {
+       DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );
     }
 
+    for(i = 0; i < cur_pilot->outfit_nweapon; i++)
+    {
+        DPSaccum_pilot += ( outfit_damage(cur_pilot->outfit_weapon[i].outfit)/outfit_delay(cur_pilot->outfit_weapon[i].outfit) );
+    }
+
+    return (1 - 1/(1 + ( (double) DPSaccum_pilot / (double) DPSaccum_target) ) );
+
+}
+    
 /**
  * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
  *
  * @param p the pilot whose shields/armor we will compare   
  *    @return A number from 0 to 1 mapping the relative HPs
- * reldps()
+ * relhp() 
  */
-double relhp(pilot *p)
+static double relhp(Pilot* p)
 {
-    return (1 - 1/(1 + ( (double) (cur_pilot -> armour_max + cur_pilot -> shield_max ) / (double) (p -> armour_max + p -> shield_max ) ) );
+    return (1 - 1/(1 + ( (double) (cur_pilot -> armour_max + cur_pilot -> shield_max ) / (double) (p -> armour_max + p -> shield_max) ) ) );
 
     }
 
