@@ -174,6 +174,7 @@ static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
+static int aiL_pcurenergy( lua_State *L ); /* pcurenergy() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_getpos( lua_State *L ); /* getpos(number) */
@@ -288,6 +289,7 @@ static const luaL_reg aiL_methods[] = {
    { "shield", aiL_shield },
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
+   { "pcurenergy", aiL_pcurenergy },
    { "dist", aiL_getdistance },
    { "flyby_dist", aiL_getflybydistance },
    { "pos", aiL_getpos },
@@ -1426,6 +1428,20 @@ static int aiL_pshield( lua_State *L )
 
    lua_pushnumber(L, d);
    return 1;
+}
+
+
+/*
+ * gets the current pilot's energy in percent
+ * no real need to be able to sense enemy energy
+ */
+static int aiL_pcurenergy( lua_State *L )
+{
+   double d;
+   d = cur_pilot->energy / cur_pilot->energy_max * 100.;
+   lua_pushnumber(L, d);
+   return 1;
+
 }
 
 /*
