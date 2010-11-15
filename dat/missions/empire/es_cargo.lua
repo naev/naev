@@ -75,14 +75,14 @@ function create()
       carg_type = "Medicine"
    end
 
-   misn_time = time.get() + time.units(5) +
-         rnd.rnd(time.units(6), time.units(8)) * misn_dist
+   difficulty = math.abs(rnd.twosigma()) * 1000 + time.units(5)
+   misn_time = time.get() + time.units(3) + difficulty * misn_dist +
+         ((misn_dist - misn_dist % 3) / 3) * time.units(3)
    misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
          pnt:name(), sys:name(),
          time.str(misn_time), time.str(misn_time-time.get())) )
-   reward = misn_dist * carg_mass * (500+rnd.rnd(250)) +
-         carg_mass * (250+rnd.rnd(150)) +
-         rnd.rnd(2500)
+   reward = (.05 + math.sqrt(6000/difficulty)) * misn_dist * carg_mass *
+         (500+rnd.rnd(250)) + carg_mass * (250+rnd.rnd(150)) + rnd.rnd(2500)
    misn.setReward( string.format( misn_reward, reward ) )
 end
 
