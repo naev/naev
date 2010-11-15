@@ -148,10 +148,7 @@ static int ai_loadEquip (void);
 static Task* ai_createTask( lua_State *L, int subtask );
 static int ai_tasktarget( lua_State *L, Task *t );
 
-/*non-lua wrappers*/
-static double relsize(Pilot* p);
-static double reldps(Pilot* p);
-static double relhp(Pilot* p);
+
 
 /*
  * AI routines for Lua
@@ -2919,8 +2916,27 @@ static int aiL_getenemy_size( lua_State *L )
  */
 static int aiL_getenemy_heuristic( lua_State *L )
 {
-    return 1;
-    }
+   unsigned int p;
+   double mass_factor, health_factor, damage_factor, range_factor;
+   NLUA_MIN_ARGS(3);
+
+   mass_factor = luaL_checklong(L,1);
+   health_factor = luaL_checklong(L,2);
+   damage_factor = luaL_checklong(L,3);
+   range_factor = 0;
+   if (lua_isnumber(L,4))
+      range_factor = luaL_checklong(L,4);
+
+
+   p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, range_factor);
+
+   if (p==0) /* No enemy found */
+      return 0;
+
+   lua_pushnumber(L,p);
+    
+   return 1;
+}
 
 
 /*
@@ -3021,7 +3037,7 @@ static int aiL_relsize( lua_State *L )
       return 0;
    }
 
-    lua_pushnumber(L, relsize(p));
+    lua_pushnumber(L, pilot_relsize(cur_pilot, p));
    
     return 1;
 }
@@ -3047,7 +3063,7 @@ static int aiL_reldps( lua_State *L )
       return 0;
    }
 
-    lua_pushnumber(L, reldps(p));
+    lua_pushnumber(L, pilot_reldps(cur_pilot, p));
    
     return 1;
 }
@@ -3072,7 +3088,7 @@ static int aiL_relhp( lua_State *L )
       return 0;
    }
 
-    lua_pushnumber(L, relhp(p));
+    lua_pushnumber(L, pilot_relhp(cur_pilot, p));
    
     return 1;
 }
@@ -3264,61 +3280,7 @@ static int aiL_sysradius( lua_State *L )
 }
 
 
-/**
- * @brief Gets the relative size(shipmass) between the current pilot and the specified target
- *
- * @param p the pilot whose mass we will compare   
- *    @luareturn A number from 0 to 1 mapping the relative masses
- * relsize()
- */
-static double relsize(Pilot* p)
-{
-    /*double mass_map;
-    
-    mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
-     
-    return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass) ) );
-    }
 
-/**
- * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
- *
- * @param p the pilot whose dps we will compare   
- *    @return A number from 0 to 1 mapping the relative damage output
- * reldps()
- */
-static double reldps(Pilot* p)
-{
-    int i;
-
-    int DPSaccum_target = 0, DPSaccum_pilot = 0;
-
-    for(i = 0; i < p->outfit_nweapon; i++)
-    {
-       DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );
-    }
-
-    for(i = 0; i < cur_pilot->outfit_nweapon; i++)
-    {
-        DPSaccum_pilot += ( outfit_damage(cur_pilot->outfit_weapon[i].outfit)/outfit_delay(cur_pilot->outfit_weapon[i].outfit) );
-    }
-
-    return (1 - 1/(1 + ( (double) DPSaccum_pilot / (double) DPSaccum_target) ) );
-
-}
-    
-/**
- * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
- *
- * @param p the pilot whose shields/armor we will compare   
- *    @return A number from 0 to 1 mapping the relative HPs
- * relhp() 
- */
-static double relhp(Pilot* p)
-{
-    return (1 - 1/(1 + ( (double) (cur_pilot -> armour_max + cur_pilot -> shield_max ) / (double) (p -> armour_max + p -> shield_max) ) ) );
-
-    }
 
 /**
  * @}

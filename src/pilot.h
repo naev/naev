@@ -386,11 +386,16 @@ unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
 unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB );
+unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor);
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
 unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled );
 int pilot_getJumps( const Pilot* p );
 
+/*non-lua wrappers*/
+double pilot_relsize(Pilot* cur_pilot, Pilot* p);
+double pilot_reldps(Pilot* cur_pilot, Pilot* p);
+double pilot_relhp(Pilot* cur_pilot, Pilot* p);
 
 /*
  * Combat.
