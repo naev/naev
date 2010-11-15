@@ -32,22 +32,23 @@ const int MAXTHREADS = 8;
 
 
 struct Node_ {
-   void *data;
-   struct Node_ *next;
+   void *data;          /* The element in the list */
+   struct Node_ *next;  /* The next node in the list */
 } Node_;
 typedef struct Node_ *Node;
 
 struct ThreadQueue_ {
-   Node first;
-   Node last;
-   SDL_sem *semaphore; 
-   SDL_mutex *t_lock;
-   SDL_mutex *h_lock;
+   Node first;          /* The first node */
+   Node last;           /* The second node */
+   /* A semaphore to ensure reads only happen when the queue is not empty */
+   SDL_sem *semaphore;  
+   SDL_mutex *t_lock;   /* Tail lock. Lock when reading/updating tail */
+   SDL_mutex *h_lock;   /* Same as tail lock, except it's head lock */
 } ThreadQueue_;
 
 typedef struct ThreadQueue_data_ {
-   int (*function)(void *);
-   void *data;
+   int (*function)(void *);     /* The function to be called */
+   void *data;                  /* And its arguments */
 } ThreadQueue_data_;
 typedef ThreadQueue_data_ *ThreadQueue_data;
 
