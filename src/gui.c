@@ -637,7 +637,7 @@ static void gui_renderBorder( double dt )
             colours[4*j + 0] = col->r;
             colours[4*j + 1] = col->g;
             colours[4*j + 2] = col->b;
-            colours[4*j + 3] = int_a;
+            colours[4*j + 3] = 1;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 5*4, colours );
@@ -697,7 +697,7 @@ static void gui_renderBorder( double dt )
             colours[4*j + 0] = col->r;
             colours[4*j + 1] = col->g;
             colours[4*j + 2] = col->b;
-            colours[4*j + 3] = int_a;
+            colours[4*j + 3] = 1;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 4*4, colours );
