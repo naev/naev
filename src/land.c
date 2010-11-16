@@ -1163,8 +1163,10 @@ void land_genWindows( int load )
 
    /* Go to last open tab. */
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
+#if 0
    if (land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
+#endif
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
