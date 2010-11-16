@@ -211,11 +211,12 @@ function atk_capital ()
    ai.settarget(target)
 
    -- Get stats about enemy
-        local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 1)
+   local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange(3)
 
    -- We first bias towards range
    if dist > range * mem.atk_approach then
+      
       atk_g_ranged( target, dist )
 
    -- Now we do an approach

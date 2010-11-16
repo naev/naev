@@ -5,88 +5,6 @@
 --[[
 -- Execute a sequence of close-in flyby attacks
 -- Uses a combination of facing and distance to determine what action to take
---This version is slightly more aggressive and follows the target
---]]
-function atk_g_flyby_aggressive( target, dist )
-
-   --ai.comm(1, "flyby attack!")
-   local range = ai.getweaprange(3)
-
-   -- Set weapon set
-   ai.weapset( 3 )
-
-   local dir = 0
-   
-   --if we're far away from the target, then turn and approach 
-   if dist > (3 * range) then
-    
-     dir = ai.idir(target)
-   
-     if dir < 10 and dir > -10 then
-         keep_distance()     
-         
-     else  
-         dir = ai.iface(target)
-     end
-
-      if dir < 10 and dir > -10 then
-        ai.accel()
-      end
-      
-   elseif dist > (0.75 * range) then
-   
-       dir = ai.idir(target)
-       
-       --test if we're facing the target. If we are, keep approaching
-       if(dir < 30 and dir > -30) then
-          ai.iface(target)
-          
-          if dir < 10 and dir > -10 then 
-            ai.accel()
-          end
-         
-       elseif dir >= 30 and dir <= 180 then
-          ai.turn(1)
-          ai.accel()
-          
-       else
-          ai.turn(-1)
-          ai.accel()
-          
-       end
-   
-   else
-
-    --otherwise we're close to the target and should attack until we start to zip away
-
-    dir = ai.aim(target)
-    ai.accel()
-    
-   -- Shoot if should be shooting.
-   if dir < 10 then
-      range = ai.getweaprange( 3, 0 )
-      if dist < range then
-         ai.shoot()
-      end
-   end
-   if ai.hasturrets() then
-      range  = ai.getweaprange( 3, 1 )
-      if dist < range then
-         ai.shoot(true)
-      end
-   end
-
---end main if decision  
-  end
-
---end flyby attack
-end
-
-
-
---[[
--- Execute a sequence of close-in flyby attacks
--- Uses a combination of facing and distance to determine what action to take
 --This version is slightly less aggressive and cruises by the target
 --]]
 function atk_g_flyby( target, dist )
@@ -143,7 +61,10 @@ function atk_g_flyby( target, dist )
     dir = ai.aim(target)
     
     --not accellerating here is the only difference between the aggression levels. This can probably be an aggression AI parameter
-    --ai.accel()
+    
+    if mem.aggressive == true then
+        ai.accel()
+    end
     
     -- Shoot if should be shooting.
     if dir < 10 then
@@ -184,9 +105,13 @@ function atk_g_capital( target, dist )
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
    
    if ai.pcurenergy() < 5 then
+    --ai.comm(1, "low energy")
     mem.recharge = true
    elseif ai.pcurenergy() > 35 then
+    --ai.comm(1, "sufficient energy")
     mem.recharge = false
+   else
+    --ai.comm(1, "between bounds")
    end
    
    
@@ -223,7 +148,7 @@ function atk_g_capital( target, dist )
           ai.accel()
        end
     
-       if ~mem.recharge then
+       if mem.recharge == false then
         if ai.hasturrets() then
            ai.shoot(true)
         end
@@ -235,14 +160,14 @@ function atk_g_capital( target, dist )
        --emphasize facing for being able to close quickly
        dir = ai.iface(target)
     
-     if ~mem.recharge then
-       -- Shoot if should be shooting.
-       if ai.hasturrets() then
+    
+    -- Shoot if should be shooting.
+   
+     if mem.recharge == false and ai.hasturrets() then
             range  = ai.getweaprange( 3, 1 )
          if dist < range then
             ai.shoot(true)
         end
-       end
      end
    
     else
@@ -250,7 +175,7 @@ function atk_g_capital( target, dist )
     
        dir = ai.aim(target)
         
-     if ~mem.recharge then        
+     if mem.recharge == false then        
        -- Shoot if should be shooting.
        if dir < 10 then
           range = ai.getweaprange( 3, 0 )
