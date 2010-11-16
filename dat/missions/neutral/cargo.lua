@@ -11,18 +11,25 @@ else -- default english
    misn_desc[1] = "%s in the %s system needs a delivery of %d tons of %s."
    misn_desc[11] = "%s in the %s system needs a rush delivery of %d tons of %s before %s (%s left)."
    misn_desc[21] = "A group of %s needs to travel to %s in the %s system."
+   misn_desc[31] = "%s in the %s system needs a delivery of %d tons of %s."
    misn_reward = "%d credits"
    title = {}
    title[1] = "Cargo delivery to %s"
    title[2] = "Freight delivery to %s"
    title[3] = "Transport to %s"
    title[4] = "Delivery to %s"
-   title[11] = "Rush Delivery to %s"
+   title[11] = "Rush delivery to %s"
    title[21] = "Transport %s to %s"
    title[22] = "Ferry %s to %s"
+   title[31] = "Bulk transport to %s"
    full = {}
-   full[1] = "Ship is full"
+   full[1] = "Ship is Full"
    full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
+   slow = {}
+   slow[1] = "Ship Too Slow"
+   slow[2] = [[Your ship will take at least %s to reach %s, %s past the deadline.
+
+A faster ship is needed. Do you want to accept the mission anyway?]]
    accept_title = "Mission Accepted"
    msg_title = {}
    msg_msg = {}
@@ -222,19 +229,25 @@ function create()
    -- mission generics
    --check cargo mission strings to see if there are the same number for accept and for completion)
    i = rnd.int(6)
-   if i < 4 then -- cargo delivery
+   if i < 3 then -- cargo delivery
       misn_type = "Cargo"
       cargo_dialog()
       misn_faction = rnd.int(2)
       i = rnd.int(3)
       misn.setTitle( string.format(title[i+1], pnt:name()) )
       misn.markerAdd( sys, "computer" )
-   elseif i < 6 then -- rush delivery
+   elseif i < 5 then -- rush delivery
       misn_type = "Rush"
       cargo_dialog()
       misn_faction = rnd.int(5)
       misn.setTitle( string.format(title[11], pnt:name()) )
       misn.markerAdd( sys, "high" )
+   elseif i < 6 and misn_dist > 3 then -- Bulk delivery
+      misn_type = "Bulk"
+      cargo_dialog()
+      misn_faction = rnd.int(4)
+      misn.setTitle( string.format(title[31], pnt:name()) )
+      misn.markerAdd( sys, "computer" )
    else -- people delivery :)
       misn_type = "People"
       misn_faction = rnd.int(1)
@@ -254,8 +267,7 @@ function create()
    end
 
    -- more mission specifics
-   if misn_type == "Cargo" or misn_type == "Rush" then
-      carg_mass = rnd.int( 10, 30 )
+   if misn_type ~= "People" then
       i = rnd.int(12) -- set the goods
       if i < 5 then
          carg_type = "Food"
@@ -267,6 +279,12 @@ function create()
          carg_type = "Luxury Goods"
       else
          carg_type = "Medicine"
+      end
+
+      if misn_type == "Cargo" or misn_type == "Rush" then
+         carg_mass = rnd.rnd( 10, 30 )
+      elseif misn_type == "Bulk" then
+         carg_mass = rnd.rnd( 60, 300 )
       end
    end
 
@@ -289,6 +307,11 @@ function create()
    elseif misn_type == "People" then
       misn.setDesc( string.format( misn_desc[21], carg_type, pnt:name(), sys:name() ))
       reward = misn_dist * (1000+rnd.int(500)) + rnd.int(2000)
+   elseif misn_type == "Bulk" then
+      misn.setDesc( string.format( misn_desc[1], pnt:name(), sys:name(), carg_mass, carg_type ) )
+      reward = misn_dist * math.sqrt(carg_mass) * 2 * (250+rnd.int(150)) +
+            math.sqrt(carg_mass) * 2 * (150+rnd.int(75)) +
+            rnd.int(1500)
    end
    misn.setReward( string.format( misn_reward, reward ) )
 end
@@ -298,8 +321,17 @@ function accept()
    if pilot.cargoFree(player.pilot()) < carg_mass then
       tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
       misn.finish()
+   elseif misn_type == "Rush" then
+      delay = time.get() + time.units(2) + (player.pilot():stats().jump_delay * 1000 * misn_dist)
+      if delay > misn_time then
+         if not tk.yesno( slow[1], string.format( slow[2], time.str(delay - time.get()),
+               pnt:name(), time.str(delay - misn_time) )) then
+            misn.finish()
+         end
+      end
+   end
 
-   elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
+   if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
       carg_id = misn.cargoAdd( carg_type, carg_mass )
       if misn_type == "People" then
          --tk.msg( accept_title, string.format( accept_msg_pass_list[dialog_pick], carg_type ))  -- Replace with even more randomized dialogue

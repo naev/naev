@@ -28,6 +28,11 @@ else -- default english
    miss[1]= "Cargo Missing"
    miss[2] = "You are missing the %d tons of %s!."
    miss[3] = "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
+   slow = {}
+   slow[1] = "Ship Too Slow"
+   slow[2] = [[Your ship will take at least %s to reach %s, %s past the deadline.
+
+A faster ship is needed. Do you want to accept the mission anyway?]]
 end
 
 --[[
@@ -88,10 +93,18 @@ end
 
 -- Mission is accepted
 function accept()
+   delay = time.get() + time.units(2) + (player.pilot():stats().jump_delay * 1000 * misn_dist)
    if pilot.cargoFree(player.pilot()) < carg_mass then
       tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
       misn.finish()
-   elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
+   elseif delay > misn_time then
+      if not tk.yesno( slow[1], string.format( slow[2], time.str(delay - time.get()),
+            pnt:name(), time.str(delay - misn_time) )) then
+         misn.finish()
+      end
+   end
+
+   if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
       carg_id = misn.cargoAdd( carg_type, carg_mass )
       tk.msg( msg_title[1], string.format( msg_msg[1], carg_mass, carg_type ))
       hook.land( "land" ) -- only hook after accepting
