@@ -1415,7 +1415,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s Credits\n"
          "\n"
-         "\e%c%.0f\e0 Tons\n"
+         "%.0f\e0 Tons\n"
          "\e%c%.1f\e0 STU Average\n"
          "\e%c%.0f\e0 KN/Ton\n"
          "\e%c%.0f\e0 M/s\n"
@@ -1435,7 +1435,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       ship_class(ship->ship),
       buf3,
       /* Movement. */
-      EQ_COMP( ship->solid->mass, ship->ship->mass, 1 ),
+      ship->solid->mass,
       '0', pilot_hyperspaceDelay( ship ),
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
