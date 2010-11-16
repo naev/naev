@@ -50,9 +50,12 @@ A faster ship is needed. Do you want to accept the mission anyway?]]
    msg_msg_list = {}
    msg_msg_list[1] = "The workers quickly unload the %s at the docks."
    msg_msg_list[2] = "The workers slowly unload the %s at the docks."
-   
- 
-   
+   msg_bonus = {}
+   msg_bonus[1] = "The group's final straggler makes his way off the ship and hands you %s credits for the quick journey."
+   msg_bonus[2] = "As he departs, a particularly generous passenger thanks you personally for the short travel time and gives you chips totalling %s credits."
+   msg_bonus[3] = "An older passenger expresses her apprecation for the rapid transit, giving you %s credits as she steps off the ship."
+   msg_bonus[4] = "A passenger reboards the ship, looking for his son's toy. Once he finds it, he thanks you for the quick, safe, handing you a pouch containing %s credits."
+
    --Randomize cargo mission dialogue
 
 	--Each cargo_accept_p1 is paired with its corresponding cargo_land_p2 (*not p1*, reverse pairing), and each cargo_accept_p2 is paired with its corresponding cargo_land_p1
@@ -111,10 +114,11 @@ A faster ship is needed. Do you want to accept the mission anyway?]]
 	pass_accept_p1[2] = "A somewhat apprehensive group of %s"
 	pass_accept_p1[3] = "A group of %s"
 	pass_accept_p1[4] = "A confident party of %s"
+	pass_accept_p1[5] = "An impatient handful of %s"
 
 	--closing dialogue for accept
 	pass_accept_p2 = {}
-	pass_accept_p2[1] = "slowly makes its way to their seats aboard"
+	pass_accept_p2[1] = "slowly makes their way to their seats aboard"
 	pass_accept_p2[2] = "files into"
 	pass_accept_p2[3] = "boards"
 	pass_accept_p2[4] = "greets you before taking their seats in"
@@ -128,6 +132,7 @@ A faster ship is needed. Do you want to accept the mission anyway?]]
 	pass_land_p1[2] = "Relieved to have arrived"
 	pass_land_p1[3] = "Somewhat spacesick"
 	pass_land_p1[4] = "In high spirits"
+	pass_land_p1[5] = "Quickly gathering their belongings"
 
 	-- ..."the %s"... (in-between text)
 
@@ -332,6 +337,7 @@ function accept()
    end
 
    if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
+      start_date = time.get()
       carg_id = misn.cargoAdd( carg_type, carg_mass )
       if misn_type == "People" then
          --tk.msg( accept_title, string.format( accept_msg_pass_list[dialog_pick], carg_type ))  -- Replace with even more randomized dialogue
@@ -360,6 +366,13 @@ function land()
          if misn_type == "People" then
            -- tk.msg( msg_title[2], string.format( msg_msg_pass_list[dialog_pick], carg_type ))   -- Replace with even more randomized dialogue
            tk.msg( msg_title[2], string.format( msg_msg_pass, carg_type ))
+            -- 40% chance of a bonus if you're quick.
+            if rnd.rnd() >= 0.6 and time.get() < start_date + time.units(3) + time.units(5) *
+                   misn_dist + time.units(3) * ((misn_dist - misn_dist % 3 ) / 3) then
+               bonus = rnd.rnd(10,60) * 100
+               tk.msg( msg_title[2], string.format( msg_bonus[1], bonus ))
+               player.pay(bonus)
+            end
          else
             tk.msg( msg_title[2], string.format( msg_msg_cargo, carg_type ))
          end
