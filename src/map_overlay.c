@@ -73,7 +73,7 @@ int ovr_input( SDL_Event *event )
    double d;
    Planet *pnt;
    JumpPoint *jp;
-   int pntid, jpid;
+   int pntid, jpid, ret;
 
    /* We only want mouse events. */
    if (event->type != SDL_MOUSEBUTTONDOWN)
@@ -103,26 +103,30 @@ int ovr_input( SDL_Event *event )
          return 1;
       }
 
-      /* Get clossest planet and/or jump point. */
+      /* Get closest planet and/or jump point. */
       system_getClosest( cur_system, &pntid, &jpid, x, y );
+      ret = 0;
       /* Planet is closest. */
       if (pntid >= 0) {
          pnt = cur_system->planets[ pntid ];
          d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
          r  = MAX( 1.5 * pnt->radius, 100. * ovr_res );
-         if (d < pow2(r))
+         if (d < pow2(r)) {
             player_targetPlanetSet( pntid );
+            ret = 1;
+         }
       }
       /* Jump point is closest. */
       else if (jpid >= 0) {
          jp = &cur_system->jumps[ jpid ];
          d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
          r  = MAX( 1.5 * jp->radius, 100. * ovr_res );
-         if (d < pow2(r))
+         if (d < pow2(r)) {
             player_targetHyperspaceSet( jpid );
+            ret = 1;
+         }
       }
-
-      return 1;
+      return ret;
    }
    /* Autogo. */
    else if (event->button.button == SDL_BUTTON_RIGHT) {
