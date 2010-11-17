@@ -1250,7 +1250,8 @@ void map_select( StarSystem *sys, char shifted )
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player_targetHyperspaceSet( i );
-                  player_autonavAbort(NULL);
+                  if (!shifted)
+                     player_autonavAbort(NULL);
                   break;
                }
             }
