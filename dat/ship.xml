@@ -223,7 +223,7 @@
    <cpu>30</cpu>
    <crew>3</crew>
    <mass>150</mass>
-   <fuel>400</fuel>
+   <fuel>500</fuel>
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>

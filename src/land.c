@@ -695,7 +695,7 @@ static void misn_open( unsigned int wid )
          "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
-         "Accept", misn_accept );
+         "Accept Mission", misn_accept );
 
    /* text */
    y = -60;

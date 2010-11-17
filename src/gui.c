@@ -586,7 +586,7 @@ static void gui_renderBorder( double dt )
    int cw, ch;
    double rx,ry, crx,cry;
    double cx,cy;
-   glColour *col;
+   glColour *col, bcol;
    double int_a;
    GLfloat vertex[5*2], colours[5*4];
 
@@ -599,6 +599,14 @@ static void gui_renderBorder( double dt )
 
    /* Interference. */
    int_a = 1. - interference_alpha;
+
+   /* Render borders to enhance contrast. */
+   bcol = cBlack;
+   bcol.a = .5;
+   gl_renderRect( 0., 0., 15., SCREEN_H, &bcol );
+   gl_renderRect( SCREEN_W - 15., 0., 15., SCREEN_H, &bcol );
+   gl_renderRect( 15., 0., SCREEN_W - 30., 15., &bcol );
+   gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &bcol );
 
    /* Draw planets. */
    for (i=0; i<cur_system->nplanets; i++) {
