@@ -997,7 +997,7 @@ void player_think( Pilot* pplayer, const double dt )
          pilot_setThrust( pplayer, 1. + afb->u.afb.thrust );
       }
       else /* Ran out of energy */
-         player_afterburnOver();
+         player_afterburnOver(1);
    }
    else
       pilot_setThrust( pplayer, player_acc );
@@ -1216,7 +1216,7 @@ void player_land (void)
       }
 
       /* Stop afterburning. */
-      player_afterburnOver();
+      player_afterburnOver(1);
       /* Stop accelerating. */
       player_accelOver();
 
@@ -1510,12 +1510,15 @@ void player_afterburn (void)
 /**
  * @brief Deactivates the afterburner.
  */
-void player_afterburnOver (void)
+void player_afterburnOver (int type)
 {
    if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
       player_rmFlag(PLAYER_AFTERBURNER);
       pilot_rmFlag(player.p,PILOT_AFTERBURNER);
    }
+
+   if (type)
+      player_accel(1.);
 }
 
 

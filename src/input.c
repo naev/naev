@@ -165,6 +165,7 @@ const char *keybindDescription[] = {
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
 static int input_afterburnerButton  = 0; /**< Used to see if afterburner button is pressed. */
+static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
 
 
 /*
@@ -701,15 +702,19 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (kabs >= 0.) {
          if (!paused) player_autonavAbort(NULL);
          player_accel(kabs);
+         input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
             if (!paused) player_autonavAbort(NULL);
             player_accel(1.);
+            input_accelButton = 1;
          }
 
-         else if (value==KEY_RELEASE)
+         else if (value==KEY_RELEASE) {
             player_accelOver();
+            input_accelButton = 0;
+         }
 
          /* double tap accel = afterburn! */
          t = SDL_GetTicks();
@@ -718,7 +723,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
          else if ((value==KEY_RELEASE) && !input_afterburnerButton)
-            player_afterburnOver();
+            player_afterburnOver(0);
 
          if (value==KEY_PRESS)
             input_accelLast = t;
@@ -730,8 +735,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          input_afterburnerButton = 1;
       }
       else if (value==KEY_RELEASE) {
-         player_afterburnOver();
+         player_afterburnOver(0);
          input_afterburnerButton = 0;
+         if (!input_accelButton)
+            player_accelOver();
       }
 
    /* turning left */
