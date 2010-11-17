@@ -5384,7 +5384,7 @@
  </ssys>
  <ssys name="Tuoladis">
   <general>
-   <radius>3500.000000</radius>
+   <radius>14000.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -5399,14 +5399,14 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-1173.636329" y="-3297.359211"/>
+    <pos x="-4694.545317" y="-13189.436844"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zacron">
-    <pos x="276.907053" y="3489.028874"/>
+    <pos x="1107.628214" y="13956.115496"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -5755,7 +5755,7 @@
  </ssys>
  <ssys name="Zacron">
   <general>
-   <radius>3500.000000</radius>
+   <radius>17500.000000</radius>
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>50.000000</interference>
@@ -5770,21 +5770,21 @@
   </assets>
   <jumps>
    <jump target="Ogat">
-    <pos x="-3359.576909" y="-981.449434"/>
+    <pos x="-16797.884546" y="-4907.247171"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Raelid">
-    <pos x="1140.967392" y="3308.805436"/>
+    <pos x="5704.836958" y="16544.027178"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tuoladis">
-    <pos x="-276.907053" y="-3489.028874"/>
+    <pos x="-1384.535267" y="-17445.144370"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
