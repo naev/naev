@@ -132,6 +132,7 @@ function enter ()
          v:setPos( enter_vect )
          v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
          v:disable()
+         v:setHilight(true)
          v:setFaction( "Empire" )
          hook.pilot( v, "board", "board" )
          hook.pilot( v, "death", "death" )
