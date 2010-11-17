@@ -203,7 +203,7 @@ void player_land (void);
 void player_jump (void);
 void player_screenshot (void);
 void player_afterburn (void);
-void player_afterburnOver (void);
+void player_afterburnOver (int type);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);
