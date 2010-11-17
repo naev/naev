@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -1920,7 +1920,7 @@
    <description>The small moon orbiting Rhu IV named Daal is easily overlooked, but as it happens it is quite an important piece of real estate for the Sirii. The people who live here are particularly zealous in their beliefs, and most of them end up serving a lifetime in the Sirius army. The Fyrra are especially well represented on this world.</description>
    <bar>On Daal, people like to be reminded that they are part of a large galactic faction. The tables in this spaceport bar have low-tech displays incorporated in their surfaces, and each table displays one of the Sirian worlds, as well as up-to-date information about that world. Naturally, Mutris is displayed on the largest table, but Daal itself makes a good second.</bar>
   </general>
-</asset>
+ </asset>
  <asset name="Dakron III">
   <pos>
    <x>-1867.874422</x>
