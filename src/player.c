@@ -994,7 +994,7 @@ void player_think( Pilot* pplayer, const double dt )
    if (player_isFlag(PLAYER_AFTERBURNER)) {
       if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
          afb = pplayer->afterburner->outfit;
-         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust );
+         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
       }
       else /* Ran out of energy */
          player_afterburnOver(1);

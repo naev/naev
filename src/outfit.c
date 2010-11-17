@@ -1484,6 +1484,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
+      xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1496,12 +1497,14 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Requires %.0f CPU\n"
+         "%.0f Maximum Effective Mass\n"
          "%.0f%% Thrust\n"
          "%.0f%% Maximum Speed\n"
          "%.1f EPS\n"
          "%.1f Rumble",
          outfit_getType(temp),
          temp->u.afb.cpu,
+         temp->u.afb.mass_limit,
          temp->u.afb.thrust,
          temp->u.afb.speed,
          temp->u.afb.energy,
@@ -1514,6 +1517,15 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
+
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   MELEMENT(temp->u.afb.thrust==0.,"thrust");
+   MELEMENT(temp->u.afb.speed==0.,"speed");
+   MELEMENT(temp->u.afb.energy==0.,"energy");
+   MELEMENT(temp->u.afb.cpu==0.,"cpu");
+   MELEMENT(temp->u.afb.mass_limit==0.,"mass_limit");
+#undef MELEMENT
 }
 
 /**

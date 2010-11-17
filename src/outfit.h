@@ -302,6 +302,7 @@ typedef struct OutfitAfterburnerData_ {
    double speed; /**< % of speed to increase based on ship base. */
    double energy; /**< Energy usage while active */
    double cpu; /**< CPU usage. */
+   double mass_limit; /**< Limit at which effectivity starts to drop. */
 } OutfitAfterburnerData;
 
 /**
