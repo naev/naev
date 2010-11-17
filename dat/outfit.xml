@@ -1714,6 +1714,7 @@
    <thrust>100</thrust>
    <speed>50</speed>
    <energy>60</energy>
+   <mass_limit>250</mass_limit>
   </specific>
  </outfit>
  <outfit name="Hellburner">
@@ -1731,6 +1732,7 @@
    <thrust>185</thrust>
    <speed>85</speed>
    <energy>65</energy>
+   <mass_limit>400</mass_limit>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit I">
