@@ -60,7 +60,6 @@ static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
-static int pilotL_navTarget( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
@@ -129,7 +128,6 @@ static const luaL_reg pilotL_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
-   { "navTarget", pilotL_navTarget },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
@@ -208,7 +206,6 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
-   { "navTarget", pilotL_navTarget },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
@@ -879,46 +876,6 @@ static int pilotL_target( lua_State *L )
 
 
 /**
- * @brief Gets the navigation targets of the pilot.
- *
- * @usage nav_planet, nav_hyp = p:target()
- *
- *    @luaparam p Pilot to get nav target of.
- *    @luareturn The planet target and the hyperspace target of the player or nil if not applicable.
- * @luafunc navTarget( p )
- */
-static int pilotL_navTarget( lua_State *L )
-{
-   LuaPlanet lp;
-   LuaSystem ls;
-   Pilot *p;
-
-   /* Get pilot. */
-   p = luaL_validpilot(L,1);
-   if (p->target == 0)
-      return 0;
-
-   /* Get planet target. */
-   if (p->nav_planet < 0)
-      lua_pushnil(L);
-   else {
-      lp.id = cur_system->planets[ p->nav_planet ]->id;
-      lua_pushplanet( L, lp  );
-   }
-
-   /* Get hyperspace target. */
-   if (p->nav_hyperspace < 0)
-      lua_pushnil(L);
-   else {
-      ls.id = cur_system->jumps[ p->nav_hyperspace ].targetid;
-      lua_pushsystem( L, ls );
-   }
-
-   return 2;
-}
-
-
-/**
  * @brief Checks to see if pilot is in range of pilot.
  *
  * @usage detected, fuzzy = p:inrange( target )
@@ -965,24 +922,31 @@ static int pilotL_inrange( lua_State *L )
  */
 static int pilotL_nav( lua_State *L )
 {
+   LuaPlanet lp;
+   LuaSystem ls;
    Pilot *p;
-   LuaPlanet lplanet;
-   LuaSystem lsystem;
+
+   /* Get pilot. */
    p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
-   if (p->nav_planet >= 0) {
-      lplanet.id   = planet_index( cur_system->planets[ p->nav_planet ] );
-      lua_pushplanet( L, lplanet );
-   }
-   else
+
+   /* Get planet target. */
+   if (p->nav_planet < 0)
       lua_pushnil(L);
-   if (p->nav_hyperspace >= 0) {
-      lsystem.id   = system_index(cur_system->jumps[ p->nav_hyperspace ].target);
-      lua_pushsystem( L, lsystem );
+   else {
+      lp.id = cur_system->planets[ p->nav_planet ]->id;
+      lua_pushplanet( L, lp  );
    }
-   else
+
+   /* Get hyperspace target. */
+   if (p->nav_hyperspace < 0)
       lua_pushnil(L);
+   else {
+      ls.id = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      lua_pushsystem( L, ls );
+   }
+
    return 2;
 }
 
