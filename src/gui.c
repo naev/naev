@@ -1977,7 +1977,7 @@ int gui_load( const char* name )
 
    /* Recreate land window if landed. */
    if (landed)
-      land_genWindows( 0 );
+      land_genWindows( 0, 1 );
 
    return 0;
 }

@@ -1023,8 +1023,11 @@ unsigned int land_getWid( int window )
 
 /**
  * @brief Recreates the land windows.
+ *
+ *    @param load Is loading game?
+ *    @param changetab Should it change to the last open tab?
  */
-void land_genWindows( int load )
+void land_genWindows( int load, int changetab )
 {
    int i, j;
    const char *names[LAND_NUMWINDOWS];
@@ -1163,10 +1166,8 @@ void land_genWindows( int load )
 
    /* Go to last open tab. */
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-#if 0
-   if (land_windowsMap[ last_window ] != -1)
+   if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
-#endif
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
@@ -1202,7 +1203,7 @@ void land( Planet* p, int load )
    npc_clear();
 
    /* Create all the windows. */
-   land_genWindows( load );
+   land_genWindows( load, 0 );
 
    /* Mission forced take off. */
    if (landed == 0) {
