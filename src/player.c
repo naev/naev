@@ -1808,6 +1808,22 @@ void player_hail (void)
 
 
 /**
+ * @brief Opens communication with the player's planet target.
+ */
+void player_hailPlanet (void)
+{
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
+   if(player.p->nav_planet != -1)
+      comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+   else
+      player_message("\erNo target selected to hail.");
+}
+
+
+/**
  * @brief Automatically tries to hail a pilot that hailed the player.
  */
 void player_autohail (void)
