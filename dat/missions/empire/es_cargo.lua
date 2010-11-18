@@ -57,7 +57,7 @@ function create()
    if i > 10 then
       misn.finish(false)
    end
-   misn.markerAdd( sys, "computer" )
+   misn.markerAdd( sys, "low" )
    misn_dist = sys:jumpDist()
 
    -- mission generics
