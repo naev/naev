@@ -793,7 +793,7 @@ void pilot_calcStats( Pilot* pilot )
             ew_ndetect++;
          }
          /* Fighter. */
-         s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
+         s->heat_forward      += o->u.mod.stats.heat_forward * q;
          s->damage_forward    += o->u.mod.stats.damage_forward * q;
          s->energy_forward    += o->u.mod.stats.energy_forward * q;
          if (o->u.mod.stats.firerate_forward != 0.) {
@@ -801,7 +801,7 @@ void pilot_calcStats( Pilot* pilot )
             nfirerate_forward    += q;
          }
          /* Cruiser. */
-         s->accuracy_turret   += o->u.mod.stats.accuracy_turret * q;
+         s->heat_turret       += o->u.mod.stats.heat_turret * q;
          s->damage_turret     += o->u.mod.stats.damage_turret * q;
          s->energy_turret     += o->u.mod.stats.energy_turret * q;
          if (o->u.mod.stats.firerate_turret != 0.) {
@@ -859,7 +859,7 @@ void pilot_calcStats( Pilot* pilot )
     * Normalize stats.
     */
    /* Fighter. */
-   s->accuracy_forward  = s->accuracy_forward/100. + 1.;
+   s->heat_forward      = s->heat_forward/100. + 1.;
    s->damage_forward    = s->damage_forward/100. + 1.;
    s->energy_forward    = s->energy_forward/100. + 1.;
    /* Fire rate:
@@ -874,7 +874,7 @@ void pilot_calcStats( Pilot* pilot )
       s->firerate_forward *= exp( -0.15 * (double)(nfirerate_forward-1) );
    s->firerate_forward += 1.;
    /* Cruiser. */
-   s->accuracy_turret   = s->accuracy_turret/100. + 1.;
+   s->heat_turret       = s->heat_turret/100. + 1.;
    s->damage_turret     = s->damage_turret/100. + 1.;
    s->energy_turret     = s->energy_turret/100. + 1.;
    s->firerate_turret   = s->firerate_turret/100.;

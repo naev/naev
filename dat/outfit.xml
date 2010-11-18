@@ -1853,7 +1853,7 @@
    <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
-   <accuracy_turret>25</accuracy_turret>
+   <heat_turret>-25</heat_turret>
    <firerate_turret>-10</firerate_turret>
   </specific>
  </outfit>
@@ -1867,7 +1867,7 @@
    <gfx_store>accuracy_forward</gfx_store>
   </general>
   <specific type="modification">
-   <accuracy_forward>15</accuracy_forward>
+   <heat_forward>-15</heat_forward>
   </specific>
  </outfit>
  <outfit name="Power Regulation Override">
@@ -1876,12 +1876,12 @@
    <slot>structure</slot>
    <mass>0</mass>
    <price>55000</price>
-   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in decreased accuracy.</description>
+   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in increased heat production.</description>
    <gfx_store>damage_forward</gfx_store>
   </general>
   <specific type="modification">
    <damage_forward>15</damage_forward>
-   <accuracy_forward>-5</accuracy_forward>
+   <heat_forward>5</heat_forward>
    <energy_forward>5</energy_forward>
   </specific>
  </outfit>
@@ -1910,7 +1910,7 @@
   </general>
   <specific type="modification">
    <firerate_turret>15</firerate_turret>
-   <accuracy_turret>-5</accuracy_turret>
+   <heat_turret>5</heat_turret>
    <damage_turret>-5</damage_turret>
   </specific>
  </outfit>

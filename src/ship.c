@@ -293,12 +293,12 @@ int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
    xmlr_floatR(node,"ew_hide",s->ew_hide);
    xmlr_floatR(node,"ew_detect",s->ew_detect);
    /* Fighter. */
-   xmlr_floatR(node,"accuracy_forward",s->accuracy_forward);
+   xmlr_floatR(node,"heat_forward",s->heat_forward);
    xmlr_floatR(node,"damage_forward",s->damage_forward);
    xmlr_floatR(node,"firerate_forward",s->firerate_forward);
    xmlr_floatR(node,"energy_forward",s->energy_forward);
    /* Cruiser. */
-   xmlr_floatR(node,"accuracy_turret",s->accuracy_turret);
+   xmlr_floatR(node,"heat_turret",s->heat_turret);
    xmlr_floatR(node,"damage_turret",s->damage_turret);
    xmlr_floatR(node,"firerate_turret",s->firerate_turret);
    xmlr_floatR(node,"energy_turret",s->energy_turret);
@@ -333,12 +333,12 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    DESC_ADD(s->ew_detect,"Detection");
    DESC_ADD(s->ew_hide,"Cloaking");
    /* Fighter Stuff. */
-   DESC_ADD(s->accuracy_forward,"Accuracy (Cannon)");
+   DESC_ADD(s->heat_forward,"Heat (Cannon)");
    DESC_ADD(s->damage_forward,"Damage (Cannon)");
    DESC_ADD(s->firerate_forward,"Fire Rate (Cannon)");
    DESC_ADD(s->energy_forward,"Energy Usage (Cannon)");
    /* Cruiser Stuff. */
-   DESC_ADD(s->accuracy_turret,"Accuracy (Turret)");
+   DESC_ADD(s->heat_turret,"Heat (Turret)");
    DESC_ADD(s->damage_turret,"Damage (Turret)");
    DESC_ADD(s->firerate_turret,"Fire Rate (Turret)");
    DESC_ADD(s->energy_turret,"Energy Usage (Turret)");

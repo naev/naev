@@ -67,13 +67,13 @@ typedef struct ShipStats_ {
    double ew_detect; /**< Electronic warfare detection modifier. */
 
    /* Fighter type. */
-   double accuracy_forward; /**< Accuracy of forward mounts. */
+   double heat_forward; /**< Heat of forward mounts. */
    double damage_forward; /**< Damage of forward mounts. */
    double firerate_forward; /**< Rate of fire of forward mounts. */
    double energy_forward; /**< Consumption rate of forward mounts. */
 
    /* Cruiser type. */
-   double accuracy_turret; /**< Accuracy of turrets. */
+   double heat_turret; /**< Heat of turrets. */
    double damage_turret; /**< Damage of turrets. */
    double firerate_turret; /**< Rate of fire of turrets. */
    double energy_turret; /**< Consumption rate of turrets. */

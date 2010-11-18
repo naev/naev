@@ -1190,7 +1190,6 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    double acc;
-   double acc_max;
 
    /* Only difference is the direction of fire */
    if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
@@ -1207,16 +1206,11 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    /* Stat modifiers. */
    if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
-      acc         *= 2. - parent->stats.accuracy_turret; /* Invert. */
       w->dam_mod  *= parent->stats.damage_turret;
    }
    else {
-      acc         *= 2. - parent->stats.accuracy_forward; /* Invert. */
       w->dam_mod  *= parent->stats.damage_forward;
    }
-   acc_max = acc;
-   acc   = MAX( acc_max, acc ); /* Shouldn't go below maximum accuracy, it can only get worse. */
-   acc   = MAX( 0., acc ); /* Make sure it doesn't become negative. */
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;
