@@ -1099,7 +1099,7 @@ static void input_clickevent( SDL_Event* event )
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
    if (d < pow2(r)) {
       player_targetSet( pid );
-      if (pid == opid) {
+      if (pid == opid && pid != PLAYER_ID) {
          if (! pilot_isDisabled(p))
             player_hail();
          else
