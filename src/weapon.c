@@ -1142,13 +1142,11 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       /* Set angle to face. */
       rdir = ANGLE(x, y);
 
-      lead_angle = M_PI;
-
       /*uncomment this line if turrets have a leadangle characteristic*/
-      /*lead_angle = outfit->u.blt.leadangle;*/
+      lead_angle = outfit->u.blt.leadangle;
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if( lead_angle > 0) {
+      if (lead_angle > 0.) {
          if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
 
             /* the target is moving too fast for the turret to keep up */

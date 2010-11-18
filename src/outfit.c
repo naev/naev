@@ -934,6 +934,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"cpu",temp->u.blt.cpu);
       xmlr_float(node,"heatup",temp->u.blt.heatup);
+      xmlr_float(node,"leadangle",temp->u.blt.leadangle);
       if (xml_isNode(node,"range")) {
          buf = xml_nodeProp(node,"blowup");
          if (buf != NULL) {
@@ -1002,6 +1003,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       temp->u.blt.falloff = temp->u.blt.range;
 
    /* Post processing. */
+   temp->u.blt.leadangle /= 180. * M_PI;
    temp->u.blt.delay   /= 1000.;
    temp->u.blt.damage  *= temp->u.blt.delay;
    /*
@@ -1054,6 +1056,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
    MELEMENT(temp->u.blt.heatup==0.,"heatup");
+   MELEMENT(outfit_isTurret(temp) && (temp->u.blt.leadangle==0.),"leadangle");
 #undef MELEMENT
 }
 
