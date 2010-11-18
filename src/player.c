@@ -468,44 +468,46 @@ void player_swapShip( char* shipname )
    Vector2d v;
 
    for (i=0; i<player_nstack; i++) {
-      if (strcmp(shipname,player_stack[i].p->name)==0) { /* swap player and ship */
-         ship = player_stack[i].p;
+      if (strcmp(shipname,player_stack[i].p->name)!=0)
+         continue;
+         
+      /* swap player and ship */
+      ship = player_stack[i].p;
 
-         /* move credits over */
-         ship->credits = player.p->credits;
+      /* move credits over */
+      ship->credits = player.p->credits;
 
-         /* move cargo over */
-         pilot_cargoMove( ship, player.p );
+      /* move cargo over */
+      pilot_cargoMove( ship, player.p );
 
-         /* Store position. */
-         vectcpy( &v, &player.p->solid->pos );
+      /* Store position. */
+      vectcpy( &v, &player.p->solid->pos );
 
-         /* extra pass to calculate stats */
-         pilot_calcStats( ship );
-         pilot_calcStats( player.p );
+      /* extra pass to calculate stats */
+      pilot_calcStats( ship );
+      pilot_calcStats( player.p );
 
-         /* now swap the players */
-         player_stack[i].p = player.p;
-         for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
-            if (pilot_stack[j] == player.p) {
-               player.p         = ship;
-               pilot_stack[j] = ship;
-               break;
-            }
+      /* now swap the players */
+      player_stack[i].p = player.p;
+      for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
+         if (pilot_stack[j] == player.p) {
+            player.p         = ship;
+            pilot_stack[j] = ship;
+            break;
+         }
 
-         /* Copy position back. */
-         vectcpy( &player.p->solid->pos, &v );
+      /* Copy position back. */
+      vectcpy( &player.p->solid->pos, &v );
 
-         /* Fill the tank. */
-         land_checkAddRefuel();
+      /* Fill the tank. */
+      land_checkAddRefuel();
 
-         /* Set some gui stuff. */
-         gui_load( gui_pick() );
+      /* Set some gui stuff. */
+      gui_load( gui_pick() );
 
-         /* Bind camera. */
-         cam_setTargetPilot( player.p->id, 0 );
-         return;
-      }
+      /* Bind camera. */
+      cam_setTargetPilot( player.p->id, 0 );
+      return;
    }
    WARN( "Unable to swap player.p with ship '%s': ship does not exist!", shipname );
 }
