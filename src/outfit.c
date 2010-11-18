@@ -1488,10 +1488,6 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
-   /* Post processing. */
-   temp->u.afb.thrust += 100.;
-   temp->u.afb.speed  += 100.;
-
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
@@ -1505,8 +1501,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          outfit_getType(temp),
          temp->u.afb.cpu,
          temp->u.afb.mass_limit,
-         temp->u.afb.thrust,
-         temp->u.afb.speed,
+         temp->u.afb.thrust + 100.,
+         temp->u.afb.speed + 100.,
          temp->u.afb.energy,
          temp->u.afb.rumble );
 
