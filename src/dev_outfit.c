@@ -60,7 +60,7 @@ void dout_csvBolt( const char *path )
             o->mass, o->price,
             o->u.blt.delay*1000., o->u.blt.speed, o->u.blt.range, o->u.blt.falloff,
             o->u.blt.ew_lockon, o->u.blt.energy, o->u.blt.heatup, o->u.blt.cpu,
-            o->u.blt.leadangle,
+            o->u.blt.leadangle*180./M_PI,
             outfit_damageTypeToStr(o->u.blt.dtype), o->u.blt.damage
             );
       SDL_RWwrite( rw, buf, l, 1 );
