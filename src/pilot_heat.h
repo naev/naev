@@ -54,7 +54,7 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o );
  * Heat management.
  */
 void pilot_heatReset( Pilot *p );
-void pilot_heatAddSlot( PilotOutfitSlot *o, double energy );
+void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o );
 double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt );
 void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt );
 

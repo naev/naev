@@ -117,14 +117,12 @@ void pilot_heatReset( Pilot *p )
  *    @param o Outfit to heat.
  *    @param energy Energy recieved by outfit (in MJ).
  */
-void pilot_heatAddSlot( PilotOutfitSlot *o, double energy )
+void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
 {
+   (void) p;
    /* We consider that only 1% of the energy is lost in the form of heat,
     * this keeps numbers sane. */
-   //o->heat_T += 0.01 * 1e6 * energy / o->heat_C;
    o->heat_T += outfit_heat(o->outfit) / o->heat_C;
-   DEBUG("energy: %.3f", 0.01 * 1e6 * energy / o->heat_C );
-   DEBUG("heat: %.3f [%.3f -> %.3f]", outfit_heat(o->outfit), outfit_heat(o->outfit) / o->heat_C, o->heat_T);
 }
 
 
