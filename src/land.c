@@ -1404,6 +1404,7 @@ void takeoff( int delay )
    player.p->armour = player.p->armour_max;
    player.p->shield = player.p->shield_max;
    player.p->energy = player.p->energy_max;
+   player.p->stimer = 0.;
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;

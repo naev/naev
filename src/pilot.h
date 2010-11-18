@@ -361,6 +361,7 @@ typedef struct Pilot_ {
    PilotFlags flags; /**< used for AI and others */
    double ptimer; /**< generic timer for internal pilot use */
    double htimer; /**< Hail animation timer. */
+   double stimer; /**< Shield regeneration timer. */
    int hail_pos; /**< Hail animation position. */
    int lockons; /**< Stores how many seeking weapons are targeting pilot */
    int *mounted; /**< Number of mounted outfits on the mount. */
