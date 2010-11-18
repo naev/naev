@@ -841,6 +841,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       p->shield  = 0.;
       dam_mod    = (damage_shield+damage_armour) /
                    ((p->shield_max+p->armour_max) / 2.);
+      p->stimer  = 5.;
    }
    /*
     * Armour takes the entire blow.
@@ -848,6 +849,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    else if (p->armour > 0.) {
       dmg        = damage_armour;
       p->armour -= damage_armour;
+      p->stimer  = 5.;
    }
 
    /* EMP does not kill. */
@@ -1149,8 +1151,9 @@ void pilot_update( Pilot* pilot, const double dt )
    /*
     * Update timers.
     */
-   pilot->ptimer -= dt;
+   pilot->ptimer   -= dt;
    pilot->tcontrol -= dt;
+   pilot->stimer   -= dt;
    Q = 0.;
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
@@ -1283,9 +1286,11 @@ void pilot_update( Pilot* pilot, const double dt )
       pilot->armour = pilot->armour_max;
 
    /* regen shield */
-   pilot->shield += pilot->shield_regen * dt;
-   if (pilot->shield > pilot->shield_max)
-      pilot->shield = pilot->shield_max;
+   if (pilot->stimer <= 0.) {
+      pilot->shield += pilot->shield_regen * dt;
+      if (pilot->shield > pilot->shield_max)
+         pilot->shield = pilot->shield_max;
+   }
 
    /* Update energy */
    if ((pilot->energy < 1.) && pilot_isFlag(pilot, PILOT_AFTERBURNER))
