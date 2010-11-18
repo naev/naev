@@ -841,7 +841,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       p->shield  = 0.;
       dam_mod    = (damage_shield+damage_armour) /
                    ((p->shield_max+p->armour_max) / 2.);
-      p->stimer  = 5.;
+      p->stimer  = 3.;
    }
    /*
     * Armour takes the entire blow.
@@ -849,7 +849,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    else if (p->armour > 0.) {
       dmg        = damage_armour;
       p->armour -= damage_armour;
-      p->stimer  = 5.;
+      p->stimer  = 3.;
    }
 
    /* EMP does not kill. */
