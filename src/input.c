@@ -1070,13 +1070,13 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
  */
 static void input_clickevent( SDL_Event* event )
 {
-   unsigned int pid;
+   unsigned int pid, opid;
    Pilot *p;
    int mx, my;
    double x, y, z, r, d;
    Planet *pnt;
    JumpPoint *jp;
-   int pntid, jpid;
+   int pntid, opntid, jpid, ojpid;
 
    /* Mouse targetting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)
@@ -1092,12 +1092,19 @@ static void input_clickevent( SDL_Event* event )
    z = cam_getZoom();
 
    /* Get closest pilot. */
+   opid = player.p->target;
    pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
    r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 100. ) / z;
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
    if (d < pow2(r)) {
       player_targetSet( pid );
+      if (pid == opid) {
+         if (! pilot_isDisabled(p))
+            player_hail();
+         else
+            player_board();
+      }
       return;
    }
 
@@ -1105,19 +1112,37 @@ static void input_clickevent( SDL_Event* event )
    system_getClosest( cur_system, &pntid, &jpid, x, y );
    /* Planet is closest. */
    if (pntid >= 0) {
+      opntid = player.p->nav_planet;
       pnt = cur_system->planets[ pntid ];
       d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
       r  = MAX( 1.5 * pnt->radius, 100. );
-      if (d < pow2(r))
+      if (d < pow2(r)) {
          player_targetPlanetSet( pntid );
+         if (pntid == opntid) {
+            if (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )
+               player_land();
+            else
+               player_hailPlanet();
+         }
+      }
    }
    /* Jump point is closest. */
    else if (jpid >= 0) {
+      ojpid = player.p->nav_hyperspace;
       jp = &cur_system->jumps[ jpid ];
       d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
       r  = MAX( 1.5 * jp->radius, 100. );
-      if (d < pow2(r))
+      if (d < pow2(r)) {
          player_targetHyperspaceSet( jpid );
+         if (jpid == ojpid) {
+            if (space_canHyperspace(player.p)) {
+               if (!paused) player_autonavAbort(NULL);
+               player_jump();
+            }
+            else
+               player_autonavStart();
+         }
+      }
    }
 }
 

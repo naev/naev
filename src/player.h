@@ -207,6 +207,7 @@ void player_afterburnOver (int type);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);
+void player_hailPlanet (void);
 void player_autohail (void);
 
 
