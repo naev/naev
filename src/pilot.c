@@ -842,6 +842,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dam_mod    = (damage_shield+damage_armour) /
                    ((p->shield_max+p->armour_max) / 2.);
       p->stimer  = 3.;
+      p->sbonus  = 3.;
    }
    /*
     * Armour takes the entire blow.
@@ -850,6 +851,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dmg        = damage_armour;
       p->armour -= damage_armour;
       p->stimer  = 3.;
+      p->sbonus  = 3.;
    }
 
    /* EMP does not kill. */
@@ -1154,6 +1156,8 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->ptimer   -= dt;
    pilot->tcontrol -= dt;
    pilot->stimer   -= dt;
+   if (pilot->stimer <= 0.)
+      pilot->sbonus   -= dt;
    Q = 0.;
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
@@ -1288,6 +1292,8 @@ void pilot_update( Pilot* pilot, const double dt )
    /* regen shield */
    if (pilot->stimer <= 0.) {
       pilot->shield += pilot->shield_regen * dt;
+      if (pilot->sbonus > 0.)
+         pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
       if (pilot->shield > pilot->shield_max)
          pilot->shield = pilot->shield_max;
    }
