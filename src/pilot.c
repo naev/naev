@@ -1427,6 +1427,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       /* has jump happened? */
       if (p->ptimer < 0.) {
          pilot_setFlag( p, PILOT_HYP_END );
+         pilot_setThrust( p, 0. );
          if (p->id == PLAYER_ID) { /* player.p just broke hyperspace */
             player_brokeHyperspace();
          }
@@ -2182,7 +2183,7 @@ void pilots_update( double dt )
             pilot_hyperspace(p, dt);
          /* Entering hyperspace. */
          else if (pilot_isFlag(p, PILOT_HYP_END)) {
-            if (VMOD(p->solid->vel) < 2*p->speed)
+            if (VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) )
                pilot_rmFlag(p, PILOT_HYP_END);
          }
          /* Must not be boarding to think. */

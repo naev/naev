@@ -336,11 +336,8 @@ static void rk4_update (Solid *obj, const double dt)
    double h, px,py, vx,vy; /* pass, and position/velocity values */
    double ix,iy, tx,ty, ax,ay, th; /* initial and temporary cartesian vector values */
    double vmod, vang;
+   int vint;
    int limit; /* limit speed? */
-
-   /* Initial RK parameters. */
-   N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
-   h = dt / (double)N; /* step */
 
    /* Initial positions and velocity. */
    px = obj->pos.x;
@@ -348,6 +345,17 @@ static void rk4_update (Solid *obj, const double dt)
    vx = obj->vel.x;
    vy = obj->vel.y;
    limit = (obj->speed_max > 0.);
+
+   /* Initial RK parameters. */
+   if (dt > RK4_MIN_H)
+      N = (int)(dt / RK4_MIN_H);
+   else
+      N = 1;
+   vmod = MOD( vx, vy );
+   vint = (int) vmod/100.;
+   if (N < vint)
+      N = vint;
+   h = dt / (double)N; /* step */
 
    /* Movement Quantity Theorem:  m*a = \sum f */
    th = obj->thrust  / obj->mass;
@@ -364,7 +372,7 @@ static void rk4_update (Solid *obj, const double dt)
          if (vmod > obj->speed_max) {
             /* We limit by applying a force against it. */
             vang = ANGLE( vx, vy ) + M_PI;
-            vmod = 0.25 * pow2(vmod - obj->speed_max);
+            vmod = 0.25 * pow(vmod - obj->speed_max, 1.4);
 
             /* Update accel. */
             ax += vmod * cos(vang);
@@ -405,6 +413,15 @@ static void rk4_update (Solid *obj, const double dt)
       obj->dir += 2.*M_PI;
 }
 #endif /* !HAS_FREEBSD */
+
+
+/**
+ * @brief Gets the maximum speed of any object with speed and thrust.
+ */
+double solid_maxspeed( Solid *s, double speed, double thrust )
+{
+   return speed + pow( 4.*thrust/s->mass, 1./1.4);
+}
 
 
 /**

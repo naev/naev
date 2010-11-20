@@ -76,6 +76,7 @@ typedef struct Solid_ {
 /*
  * solid manipulation
  */
+double solid_maxspeed( Solid *s, double speed, double thrust );
 void solid_init( Solid* dest, const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel );
 Solid* solid_create( const double mass, const double dir,
