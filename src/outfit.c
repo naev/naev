@@ -1452,6 +1452,7 @@ if ((x) != 0.) \
 
    /* More processing. */
    temp->u.mod.thrust_rel /= 100.;
+   temp->u.mod.turn       *= M_PI / 180.;
    temp->u.mod.turn_rel   /= 100.;
    temp->u.mod.speed_rel  /= 100.;
    temp->u.mod.armour_rel /= 100.;
