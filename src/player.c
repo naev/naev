@@ -1016,7 +1016,6 @@ void player_update( Pilot *pplayer, const double dt )
 {
    /* Update normally. */
    pilot_update( pplayer, dt );
-   DEBUG("Player: %.3e velocity (%.3f deg)", VMOD(pplayer->solid->vel), VANGLE(pplayer->solid->vel));
 
    /* Update player.p specific stuff. */
    if (!player_isFlag(PLAYER_DESTROYED))
@@ -1423,7 +1422,6 @@ void player_brokeHyperspace (void)
    StarSystem *sys;
    JumpPoint *jp;
 
-   DEBUG("BROKE HYPER");
    /* First run jump hook. */
    hooks_run( "jumpout" );
 
