@@ -1366,7 +1366,7 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot_weapSetUpdate( pilot );
 
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
-
+      
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
                (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
@@ -1428,6 +1428,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
       /* has jump happened? */
       if (p->ptimer < 0.) {
+         pilot_setFlag( p, PILOT_HYP_END );
          if (p->id == PLAYER_ID) { /* player.p just broke hyperspace */
             player_brokeHyperspace();
          }
