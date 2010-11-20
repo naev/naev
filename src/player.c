@@ -1016,6 +1016,7 @@ void player_update( Pilot *pplayer, const double dt )
 {
    /* Update normally. */
    pilot_update( pplayer, dt );
+   DEBUG("Player: %.3e velocity (%.3f deg)", VMOD(pplayer->solid->vel), VANGLE(pplayer->solid->vel));
 
    /* Update player.p specific stuff. */
    if (!player_isFlag(PLAYER_DESTROYED))
@@ -1036,7 +1037,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if (pplayer->solid->force_x > 0.) {
+   else if (pplayer->solid->thrust > 0.) {
       /* See if is in hyperspace. */
       if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
          engsound = snd_hypEng;
@@ -1422,6 +1423,7 @@ void player_brokeHyperspace (void)
    StarSystem *sys;
    JumpPoint *jp;
 
+   DEBUG("BROKE HYPER");
    /* First run jump hook. */
    hooks_run( "jumpout" );
 

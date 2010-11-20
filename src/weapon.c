@@ -277,7 +277,7 @@ void weapon_minimap( const double res, const double w,
  */
 static void weapon_setThrust( Weapon *w, double thrust )
 {
-   w->solid->force_x = thrust;
+   w->solid->thrust = thrust;
 }
 
 
@@ -501,6 +501,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    i = 0;
    while (i < *nlayer) {
       w = wlayer[i];
+
+      solid_prep( w->solid );
       switch (w->outfit->type) {
 
          /* most missiles behave the same */
@@ -509,7 +511,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             if (w->lockon > 0.) /* decrement lockon */
                w->lockon -= dt;
 
-            limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
+            /* Limit must be run before physics update. */
+            limit_speed( w->solid, w->outfit->u.amm.speed );
             w->timer -= dt;
             if (w->timer < 0.) {
                spfx = -1;

@@ -373,7 +373,7 @@ Pilot* pilot_get( const unsigned int id )
  */
 void pilot_setThrust( Pilot *p, double thrust )
 {
-   p->solid->force_x = p->thrust * thrust;
+   p->solid->thrust = p->thrust * thrust;
 }
 
 
@@ -1173,6 +1173,9 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
 
+   /* Prepares the solid. */
+   solid_prep( pilot->solid );
+
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
 
@@ -1263,9 +1266,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
       /* Do the slow brake thing */
-      vect_pset( &pilot->solid->vel, /* slowly brake */
-         VMOD(pilot->solid->vel) * (1. - dt*0.10),
-         VANGLE(pilot->solid->vel) );
+      limit_speed( pilot->solid, 0. );
       pilot_setThrust( pilot, 0. );
       pilot_setTurn( pilot, 0. );
 
@@ -1349,7 +1350,7 @@ void pilot_update( Pilot* pilot, const double dt )
 
 
    /* Set engine glow. */
-   if (pilot->solid->force_x > 0) {
+   if (pilot->solid->thrust > 0.) {
       /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
       pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid->mass;
       if (pilot->engine_glow > 1.)
@@ -1364,20 +1365,15 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update weapons. */
    pilot_weapSetUpdate( pilot );
 
-   /* update the solid */
-   pilot->solid->update( pilot->solid, dt );
-   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-         pilot->ship->gfx_space, pilot->solid->dir );
-
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
 
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
                (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
-         limit_speed( &pilot->solid->vel, /* limit is higher */
+         limit_speed( pilot->solid, /* limit is higher */
                pilot->speed +
                pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass), dt );
+               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass) );
 
          if (pilot->id == PLAYER_ID)
             spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
@@ -1385,8 +1381,13 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
       }
       else /* normal limit */
-         limit_speed( &pilot->solid->vel, pilot->speed, dt );
+         limit_speed( pilot->solid, pilot->speed );
    }
+
+   /* Update the solid, must be run after limit_speed. */
+   pilot->solid->update( pilot->solid, dt );
+   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
+         pilot->ship->gfx_space, pilot->solid->dir );
 }
 
 

@@ -50,21 +50,6 @@ double angle_diff( const double ref, double a )
    d  = (d > -M_PI) ? d : d + 2.*M_PI;
    return d;
 }
-/**
- * @brief Limits the speed of an object.
- *
- *    @param vel Velocity vector to limit.
- *    @param speed Maximum speed.
- *    @param dt Current delta tick.
- */
-void limit_speed( Vector2d* vel, const double speed, const double dt )
-{
-   double vmod;
-
-   vmod = VMOD(*vel);
-   if (vmod > speed) /* shouldn't go faster */
-      vect_pset( vel, (vmod-speed)*(1. - dt*3.) +  speed, VANGLE(*vel) );
-}
 
 
 /*
@@ -182,6 +167,22 @@ void vect_cadd( Vector2d* v, const double x, const double y )
 
 
 /**
+ * @brief Adds a polar 2d vector to the current vector.
+ *
+ *    @param v Vector to add x and y to.
+ *    @param m Module of vector to add.
+ *    @param a Angle of vector to add.
+ */
+void vect_padd( Vector2d* v, const double m, const double a )
+{
+   v->x    += m*cos(a);
+   v->y    += m*sin(a);
+   v->mod   = MOD(v->x,v->y);
+   v->angle = ANGLE(v->x,v->y);
+}
+
+
+/**
  * @brief Mirrors a vector off another, stores results in vector.
  *
  *    @param r Resulting vector of the reflection.
@@ -266,7 +267,8 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
  */
 static void simple_update (Solid *obj, const double dt)
 {
-   double px,py, vx,vy, ax;
+   double px,py, vx,vy, ax,ay, th;
+   double cdir, sdir;
 
    /* make sure angle doesn't flip */
    obj->dir += M_PI/180.*obj->dir_vel*dt;
@@ -280,24 +282,19 @@ static void simple_update (Solid *obj, const double dt)
    py = obj->pos.y;
    vx = obj->vel.x;
    vy = obj->vel.y;
+   th = obj->thrust;
 
-   if (obj->force_x != 0.) { /* force applied on object */
-      ax = obj->force_x / obj->mass;
-      /*ay = obj->force_x / obj->mass;*/
+   /* Save direction. */
+   sdir = sin(obj->dir);
+   cdir = cos(obj->dir);
 
-      vx += ax*cos(obj->dir) * dt;
-      vy += ax*sin(obj->dir) * dt;
+   /* Get acceleration. */
+   ax = (obj->force_x + th*cdir) / obj->mass;
+   ay = (obj->force_y + th*sdir) / obj->mass;
 
-      px += vx*dt + 0.5*ax * dt*dt;
-      py += vy*dt; /* + 0.5*ay * dt*dt; */
-
-      obj->vel.mod = MOD(vx,vy);
-      obj->vel.angle = ANGLE(vx,vy);
-   }
-   else {
-      px += vx*dt;
-      py += vy*dt;
-   }
+   /* p = v*dt + 0.5*a*dt^2 */
+   px += vx*dt + 0.5*ax * dt*dt;
+   py += vy*dt + 0.5*ay * dt*dt;
 
    /* Update position and velocity. */
    vect_cset( &obj->vel, vx, vy );
@@ -337,7 +334,8 @@ static void rk4_update (Solid *obj, const double dt)
 {
    int i, N; /* for iteration, and pass calcualtion */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
-   double ix,iy, tx,ty, ax; /* initial and temporary cartesian vector values */
+   double ix,iy, tx,ty, ax,ay, th; /* initial and temporary cartesian vector values */
+   double cdir, sdir; /* cos and sin of dir. */
 
    /* Initial RK parameters. */
    N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
@@ -349,44 +347,41 @@ static void rk4_update (Solid *obj, const double dt)
    vx = obj->vel.x;
    vy = obj->vel.y;
 
-   if (obj->force_x > 0.) { /* force applied on object */
+   /* Movement Quantity Theorem:  m*a = \sum f */
+   th = obj->thrust  / obj->mass;
+   ax = obj->force_x / obj->mass;
+   ay = obj->force_y / obj->mass;
 
-      /* Movement Quantity Theorem:  m*a = \sum f */
-      ax = obj->force_x / obj->mass;
-      /*ay = obj->force.x / obj->mass;*/
+   for (i=0; i < N; i++) { /* iterations */
 
-      for (i=0; i < N; i++) { /* iterations */
+      /* Save direction. */
+      sdir = sin(obj->dir);
+      cdir = cos(obj->dir);
 
-         /* x component */
-         tx = ix = vx;
-         tx += 2.*ix + h*tx;
-         tx += 2.*ix + h*tx;
-         tx += ix + h*tx;
-         tx *= h/6.;
+      /* x component */
+      tx = ix = vx;
+      tx += 2.*ix + h*tx;
+      tx += 2.*ix + h*tx;
+      tx += ix + h*tx;
+      tx *= h/6.;
 
-         px += tx;
-         vx += ax*cos(obj->dir) * h;
+      px += tx;
+      vx += (ax + th*cdir) * h;
 
-         /* y component */
-         ty = iy = vy;
-         ty += 2.*(iy + h/2.*ty);
-         ty += 2.*(iy + h/2.*ty);
-         ty += iy + h*ty;
-         ty *= h/6.;
+      /* y component */
+      ty = iy = vy;
+      ty += 2.*(iy + h/2.*ty);
+      ty += 2.*(iy + h/2.*ty);
+      ty += iy + h*ty;
+      ty *= h/6.;
 
-         py += ty;
-         vy += ax*sin(obj->dir) * h;
+      py += ty;
+      vy += (ay + th*sdir) * h;
 
-         /* rotation. */
-         obj->dir += M_PI/180.*obj->dir_vel*h;
-      }
-      vect_cset( &obj->vel, vx, vy );
+      /* rotation. */
+      obj->dir += M_PI/180.*obj->dir_vel*h;
    }
-   else { /* euler method -> p = v*t + 0.5*a*t^2 (no accel, so no error) */
-      px += dt*vx;
-      py += dt*vy;
-      obj->dir += M_PI/180.*obj->dir_vel*dt;
-   }
+   vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
 
    /* Sanity check. */
@@ -396,6 +391,43 @@ static void rk4_update (Solid *obj, const double dt)
       obj->dir += 2.*M_PI;
 }
 #endif /* !HAS_FREEBSD */
+
+
+/**
+ * @brief Limits the speed of an object.
+ *
+ *    @param vel Velocity vector to limit.
+ *    @param speed Maximum speed.
+ *    @param dt Current delta tick.
+ */
+void limit_speed( Solid *s, const double speed )
+{
+   double vmod;
+   double ang, mod;
+
+   /* Check if we need to limit. */
+   vmod = VMOD(s->vel);
+   if (vmod < speed)
+      return;
+
+   /* We limit by applying a force against it. */
+   ang = VANGLE(s->vel) + M_PI;
+   mod = 0.25 * pow2(vmod - speed) * s->mass;
+
+   /* Update force. */
+   s->force_x += mod * cos(ang);
+   s->force_y += mod * sin(ang);
+}
+
+
+/**
+ * @brief Prepares a solid, should be run every frame before solid_update if using limit_speed.
+ */
+void solid_prep( Solid *s )
+{
+   s->force_x = 0.;
+   s->force_y = 0.;
+}
 
 
 /**
@@ -418,8 +450,9 @@ void solid_init( Solid* dest, const double mass, const double dir,
    dest->dir_vel = 0.;
 
    /* Set force. */
+   dest->thrust  = 0.;
    dest->force_x = 0.;
-   /*dest->force_y = 0.;*/
+   dest->force_y = 0.;
 
    /* Set direction. */
    dest->dir = dir;
@@ -463,7 +496,8 @@ Solid* solid_create( const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel )
 {
    Solid* dyn = malloc(sizeof(Solid));
-   if (dyn==NULL) ERR("Out of Memory");
+   if (dyn==NULL)
+      ERR("Out of Memory");
    solid_init( dyn, mass, dir, pos, vel );
    return dyn;
 }

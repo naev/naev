@@ -39,7 +39,6 @@ typedef struct Vector2d_ {
  * misc
  */
 double angle_diff( const double ref, double a );
-void limit_speed( Vector2d* vel, const double speed, const double dt );
 
 
 /*
@@ -52,6 +51,7 @@ void vectcpy( Vector2d* dest, const Vector2d* src );
 void vectnull( Vector2d* v );
 double vect_angle( const Vector2d* ref, const Vector2d* v );
 void vect_cadd( Vector2d* v, const double x, const double y );
+void vect_padd( Vector2d* v, const double m, const double a );
 void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n );
 double vect_dot( Vector2d* a, Vector2d* b );
 void vect_uv(double* u, double *v, Vector2d* source, Vector2d* reference);
@@ -67,8 +67,9 @@ typedef struct Solid_ {
    double dir_vel; /**< Velocity at which solid is rotating. */
    Vector2d vel; /**< Velocity of the solid. */
    Vector2d pos; /**< Position of the solid. */
-   double force_x; /**< X force in RELATIVE to solid position. */
-   /*double force_y;*/ /**< Y force in RELATIVE to solid position. */
+   double thrust; /**< Relative X force, basically simplified for our thrust model. */
+   double force_x; /**< Absolute X force. */
+   double force_y; /**< Absolute Y force. */
    void (*update)( struct Solid_*, const double ); /**< Update method. */
 } Solid;
 
@@ -76,6 +77,8 @@ typedef struct Solid_ {
 /*
  * solid manipulation
  */
+void limit_speed( Solid *s, const double speed );
+void solid_prep( Solid *s );
 void solid_init( Solid* dest, const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel );
 Solid* solid_create( const double mass, const double dir,
