@@ -68,8 +68,6 @@ typedef struct Solid_ {
    Vector2d vel; /**< Velocity of the solid. */
    Vector2d pos; /**< Position of the solid. */
    double thrust; /**< Relative X force, basically simplified for our thrust model. */
-   double force_x; /**< Absolute X force. */
-   double force_y; /**< Absolute Y force. */
    double speed_max; /**< Maximum speed. */
    void (*update)( struct Solid_*, const double ); /**< Update method. */
 } Solid;
@@ -78,8 +76,6 @@ typedef struct Solid_ {
 /*
  * solid manipulation
  */
-void limit_speed( Solid *s, const double speed );
-void solid_prep( Solid *s );
 void solid_init( Solid* dest, const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel );
 Solid* solid_create( const double mass, const double dir,

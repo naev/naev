@@ -256,7 +256,7 @@ static int player_autonavApproach( Vector2d *pos, double *dist2, int count_targe
    vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
 
    /* Get distance. */
-   dist  = vel*(time+1.1*180./player.p->turn) -
+   dist  = vel*(time+1.1*M_PI/player.p->turn) -
       0.5*(player.p->thrust/player.p->solid->mass)*time*time;
 
    /* Output distance^2 */

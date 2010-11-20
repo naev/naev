@@ -1173,9 +1173,6 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
 
-   /* Prepares the solid. */
-   solid_prep( pilot->solid );
-
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
 
@@ -1266,7 +1263,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
       /* Do the slow brake thing */
-      limit_speed( pilot->solid, 0. );
+      pilot->solid->speed_max = 1.;
       pilot_setThrust( pilot, 0. );
       pilot_setTurn( pilot, 0. );
 
@@ -1370,10 +1367,9 @@ void pilot_update( Pilot* pilot, const double dt )
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
                (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
-         limit_speed( pilot->solid, /* limit is higher */
-               pilot->speed +
+         pilot->solid->speed_max = pilot->speed +
                pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass) );
+               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
 
          if (pilot->id == PLAYER_ID)
             spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
@@ -1381,8 +1377,10 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
       }
       else /* normal limit */
-         limit_speed( pilot->solid, pilot->speed );
+         pilot->solid->speed_max = pilot->speed;
    }
+   else
+      pilot->solid->speed_max = 0.;
 
    /* Update the solid, must be run after limit_speed. */
    pilot->solid->update( pilot->solid, dt );

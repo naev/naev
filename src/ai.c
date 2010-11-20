@@ -1465,7 +1465,7 @@ static int aiL_minbrakedist( lua_State *L )
          vel = 0.;
 
       /* Get distance to brake. */
-      dist = vel*(time+1.1*180./cur_pilot->turn) -
+      dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
             0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
    }
 
@@ -1479,7 +1479,7 @@ static int aiL_minbrakedist( lua_State *L )
       vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid->vel));
 
       /* Get distance. */
-      dist = vel*(time+1.1*180./cur_pilot->turn) -
+      dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
             0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
    }
 

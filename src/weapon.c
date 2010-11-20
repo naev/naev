@@ -502,7 +502,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    while (i < *nlayer) {
       w = wlayer[i];
 
-      solid_prep( w->solid );
       switch (w->outfit->type) {
 
          /* most missiles behave the same */
@@ -511,8 +510,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             if (w->lockon > 0.) /* decrement lockon */
                w->lockon -= dt;
 
-            /* Limit must be run before physics update. */
-            limit_speed( w->solid, w->outfit->u.amm.speed );
             w->timer -= dt;
             if (w->timer < 0.) {
                spfx = -1;
@@ -1290,6 +1287,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    w->solid    = solid_create( mass, rdir, pos, &v );
    if (w->outfit->u.amm.thrust != 0.)
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
+   w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed. */
 
    /* Handle seekers. */
    if (w->outfit->u.amm.ai > 0) {

@@ -289,8 +289,8 @@ static void simple_update (Solid *obj, const double dt)
    cdir = cos(obj->dir);
 
    /* Get acceleration. */
-   ax = (obj->force_x + th*cdir) / obj->mass;
-   ay = (obj->force_y + th*sdir) / obj->mass;
+   ax = th*cdir / obj->mass;
+   ay = th*sdir / obj->mass;
 
    /* p = v*dt + 0.5*a*dt^2 */
    px += vx*dt + 0.5*ax * dt*dt;
@@ -335,7 +335,8 @@ static void rk4_update (Solid *obj, const double dt)
    int i, N; /* for iteration, and pass calcualtion */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
    double ix,iy, tx,ty, ax,ay, th; /* initial and temporary cartesian vector values */
-   double cdir, sdir; /* cos and sin of dir. */
+   double vmod, vang;
+   int limit; /* limit speed? */
 
    /* Initial RK parameters. */
    N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
@@ -346,17 +347,30 @@ static void rk4_update (Solid *obj, const double dt)
    py = obj->pos.y;
    vx = obj->vel.x;
    vy = obj->vel.y;
+   limit = (obj->speed_max > 0.);
 
    /* Movement Quantity Theorem:  m*a = \sum f */
    th = obj->thrust  / obj->mass;
-   ax = obj->force_x / obj->mass;
-   ay = obj->force_y / obj->mass;
 
    for (i=0; i < N; i++) { /* iterations */
 
-      /* Save direction. */
-      sdir = sin(obj->dir);
-      cdir = cos(obj->dir);
+      /* Calculate acceleration for the frame. */
+      ax = th*cos(obj->dir);
+      ay = th*sin(obj->dir);
+
+      /* Limit the speed. */
+      if (limit) {
+         vmod = MOD( vx, vy );
+         if (vmod > obj->speed_max) {
+            /* We limit by applying a force against it. */
+            vang = ANGLE( vx, vy ) + M_PI;
+            vmod = 0.25 * pow2(vmod - obj->speed_max);
+
+            /* Update accel. */
+            ax += vmod * cos(vang);
+            ay += vmod * sin(vang);
+         }
+      }
 
       /* x component */
       tx = ix = vx;
@@ -366,7 +380,7 @@ static void rk4_update (Solid *obj, const double dt)
       tx *= h/6.;
 
       px += tx;
-      vx += (ax + th*cdir) * h;
+      vx += ax * h;
 
       /* y component */
       ty = iy = vy;
@@ -376,7 +390,7 @@ static void rk4_update (Solid *obj, const double dt)
       ty *= h/6.;
 
       py += ty;
-      vy += (ay + th*sdir) * h;
+      vy += ay * h;
 
       /* rotation. */
       obj->dir += obj->dir_vel*h;
@@ -391,43 +405,6 @@ static void rk4_update (Solid *obj, const double dt)
       obj->dir += 2.*M_PI;
 }
 #endif /* !HAS_FREEBSD */
-
-
-/**
- * @brief Limits the speed of an object.
- *
- *    @param vel Velocity vector to limit.
- *    @param speed Maximum speed.
- *    @param dt Current delta tick.
- */
-void limit_speed( Solid *s, const double speed )
-{
-   double vmod;
-   double ang, mod;
-
-   /* Check if we need to limit. */
-   vmod = VMOD(s->vel);
-   if (vmod < speed)
-      return;
-
-   /* We limit by applying a force against it. */
-   ang = VANGLE(s->vel) + M_PI;
-   mod = 0.25 * pow2(vmod - speed) * s->mass;
-
-   /* Update force. */
-   s->force_x += mod * cos(ang);
-   s->force_y += mod * sin(ang);
-}
-
-
-/**
- * @brief Prepares a solid, should be run every frame before solid_update if using limit_speed.
- */
-void solid_prep( Solid *s )
-{
-   s->force_x = 0.;
-   s->force_y = 0.;
-}
 
 
 /**
@@ -451,8 +428,6 @@ void solid_init( Solid* dest, const double mass, const double dir,
 
    /* Set force. */
    dest->thrust  = 0.;
-   dest->force_x = 0.;
-   dest->force_y = 0.;
 
    /* Set direction. */
    dest->dir = dir;
@@ -470,6 +445,9 @@ void solid_init( Solid* dest, const double mass, const double dir,
       vectnull( &dest->pos );
    else
       vectcpy( &dest->pos, pos);
+
+   /* Misc. */
+   dest->speed_max = 0.;
 
 /*
  * FreeBSD seems to have a bug with optimizations in rk4_update causing it to
