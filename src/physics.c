@@ -249,7 +249,6 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
 /*
  * S O L I D
  */
-#if HAS_FREEBSD
 /**
  * @brief Updates the solid's position using an euler integration.
  *
@@ -265,7 +264,7 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
  *   so watch out with big values for dt
  *
  */
-static void simple_update (Solid *obj, const double dt)
+static void solid_update_euler (Solid *obj, const double dt)
 {
    double px,py, vx,vy, ax,ay, th;
    double cdir, sdir;
@@ -300,12 +299,9 @@ static void simple_update (Solid *obj, const double dt)
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
 }
-#endif /* HAS_FREEBSD */
 
 
 /**
- * @fn static void rk4_update (Solid *obj, const double dt)
- *
  * @brief Runge-Kutta method of updating a solid based on it's acceleration.
  *
  * Runge-Kutta 4 method
@@ -328,9 +324,8 @@ static void simple_update (Solid *obj, const double dt)
  *  Therefore RK chops it up in chunks and actually creates a tiny curve
  *  instead of aproximating the curve for a tiny straight line.
  */
-#if !HAS_FREEBSD
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
-static void rk4_update (Solid *obj, const double dt)
+static void solid_update_rk4 (Solid *obj, const double dt)
 {
    int i, N; /* for iteration, and pass calcualtion */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
@@ -412,7 +407,6 @@ static void rk4_update (Solid *obj, const double dt)
    else if (obj->dir < 0.)
       obj->dir += 2.*M_PI;
 }
-#endif /* !HAS_FREEBSD */
 
 
 /**
@@ -434,7 +428,7 @@ double solid_maxspeed( Solid *s, double speed, double thrust )
  *    @param vel Initial solid velocity.
  */
 void solid_init( Solid* dest, const double mass, const double dir,
-      const Vector2d* pos, const Vector2d* vel )
+      const Vector2d* pos, const Vector2d* vel, int update )
 {
    memset(dest, 0, sizeof(Solid));
 
@@ -466,15 +460,21 @@ void solid_init( Solid* dest, const double mass, const double dir,
    /* Misc. */
    dest->speed_max = 0.;
 
-/*
- * FreeBSD seems to have a bug with optimizations in rk4_update causing it to
- * eventually become NaN.
- */
-#if HAS_FREEBSD
-   dest->update = simple_update;
-#else /* HAS_FREEBSD */
-   dest->update = rk4_update;
-#endif /* HAS_FREEBSD */
+   /* Handle update. */
+   switch (update) {
+      case SOLID_UPDATE_RK4:
+         dest->update = solid_update_rk4;
+         break;
+
+      case SOLID_UPDATE_EULER:
+         dest->update = solid_update_euler;
+         break;
+   
+      default:
+         WARN("Solid initialization did not specify correct update function!");
+         dest->update = solid_update_rk4;
+         break;
+   }
 }
 
 
@@ -488,12 +488,12 @@ void solid_init( Solid* dest, const double mass, const double dir,
  *    @return A newly created solid.
  */
 Solid* solid_create( const double mass, const double dir,
-      const Vector2d* pos, const Vector2d* vel )
+      const Vector2d* pos, const Vector2d* vel, int update )
 {
    Solid* dyn = malloc(sizeof(Solid));
    if (dyn==NULL)
       ERR("Out of Memory");
-   solid_init( dyn, mass, dir, pos, vel );
+   solid_init( dyn, mass, dir, pos, vel, update );
    return dyn;
 }
 

@@ -1704,7 +1704,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->systemFleet = systemFleet;
 
    /* solid */
-   pilot->solid = solid_create(ship->mass, dir, pos, vel);
+   pilot->solid = solid_create(ship->mass, dir, pos, vel, SOLID_UPDATE_RK4);
 
    /* First pass to make sure requirements make sense. */
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */

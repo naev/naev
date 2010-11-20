@@ -1224,7 +1224,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
-   w->solid = solid_create( mass, rdir, pos, &v );
+   w->solid = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    w->voice = sound_playPos( w->outfit->u.blt.sound,
          w->solid->pos.x,
          w->solid->pos.y,
@@ -1284,7 +1284,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    mass        = w->outfit->mass;
    w->lockon   = MAX( outfit->u.amm.lockon, outfit->u.amm.lockon * ew_evasion / outfit->u.amm.ew_lockon );
    w->timer    = outfit->u.amm.duration;
-   w->solid    = solid_create( mass, rdir, pos, &v );
+   w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
    if (w->outfit->u.amm.thrust != 0.)
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
    w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed. */
@@ -1364,7 +1364,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
          mass = 1.; /**< Needs a mass. */
-         w->solid = solid_create( mass, rdir, pos, NULL );
+         w->solid = solid_create( mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
          w->voice = sound_playPos( w->outfit->u.bem.sound,
@@ -1384,7 +1384,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
       default:
          WARN("Weapon of type '%s' has no create implemented yet!",
                w->outfit->name);
-         w->solid = solid_create( 1., dir, pos, vel );
+         w->solid = solid_create( 1., dir, pos, vel, SOLID_UPDATE_EULER );
          break;
    }
 

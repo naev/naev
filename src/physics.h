@@ -23,6 +23,12 @@
 #define vect_dist2(v,u) (((v)->x-(u)->x)*((v)->x-(u)->x)+((v)->y-(u)->y)*((v)->y-(u)->y))
 #define vect_odist(v)   MOD((v)->x,(v)->y) /**< Gets the distance of a vector from the origin. */
 
+/*
+ * Update options.
+ */
+#define SOLID_UPDATE_RK4      0 /**< Default Runge-Kutta 3-4 update. */
+#define SOLID_UPDATE_EULER    1 /**< Simple Euler update. */
+
 
 /**
  * @brief Represents a 2d vector.
@@ -78,9 +84,9 @@ typedef struct Solid_ {
  */
 double solid_maxspeed( Solid *s, double speed, double thrust );
 void solid_init( Solid* dest, const double mass, const double dir,
-      const Vector2d* pos, const Vector2d* vel );
+      const Vector2d* pos, const Vector2d* vel, int update );
 Solid* solid_create( const double mass, const double dir,
-      const Vector2d* pos, const Vector2d* vel );
+      const Vector2d* pos, const Vector2d* vel, int update );
 void solid_free( Solid* src );
 
 
