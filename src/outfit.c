@@ -1129,6 +1129,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
    temp->u.bem.damage *= temp->u.bem.delay;
+   temp->u.bem.turn   *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1321,6 +1322,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Post-processing */
    temp->u.amm.resist /= 100.; /* Set it in per one */
+   temp->u.amm.turn   *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );

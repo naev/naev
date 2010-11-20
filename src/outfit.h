@@ -201,7 +201,7 @@ typedef struct OutfitBeamData_ {
 
    /* Beam properties. */
    double range; /**< how far it goes */
-   double turn; /**< How fast it can turn. Only for turrets. */
+   double turn; /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy; /**< Amount of energy it drains (per second). */
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
@@ -242,7 +242,7 @@ typedef struct OutfitAmmoData_ {
    int ai; /**< Smartness of ammo. */
 
    double speed; /**< maximum speed */
-   double turn; /**< turn velocity */
+   double turn; /**< turn velocity in rad/s. */
    double thrust; /**< acceleration */
    double energy; /**< energy usage */
    DamageType dtype; /**< damage type */
