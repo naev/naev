@@ -430,15 +430,9 @@ function render( dt )
    render_bar( "energy", energy, txt, col )
    
    --Speed
-   local hspeed 
-   local realspeed = speed / stats.speed_max * 100
+   local hspeed = math.floor( speed / stats.speed_max * 100 + 0.5 )
    -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
    -- Any speed between 99% and 101% will be treated as 100%.
-   if realspeed >= 99 and realspeed <= 101 then
-      hspeed = 100
-   else
-      hspeed = math.floor(realspeed)
-   end
    --local hspeed = math.ceil( speed / stats.speed_max * 100 )
    txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
    if hspeed <= 100. then
@@ -544,15 +538,9 @@ function render( dt )
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
 
          --Text, warning light & other texts
-         local htspeed 
-         local realspeed = ta_speed / ta_stats.speed_max * 100
+         local htspeed = math.floor( ta_speed / ta_stats.speed_max * 100 + 0.5 )
          -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
          -- Any speed between 99% and 101% will be treated as 100%.
-         if realspeed >= 99 and realspeed <= 101 then
-            htspeed = 100
-         else
-            htspeed = math.floor(realspeed)
-         end
          if not ta_fuzzy then
             --Bar Texts
             shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
