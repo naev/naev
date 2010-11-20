@@ -66,7 +66,7 @@ static void player_autonavSetup (void)
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_mod         = 1.;
-      tc_max         = TIME_COMPRESSION_MAX / player.p->speed;
+      tc_max         = TIME_COMPRESSION_MAX / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
    }
    tc_rampdown    = 0;
    tc_down        = 0.;
