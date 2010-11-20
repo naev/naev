@@ -271,7 +271,7 @@ static void simple_update (Solid *obj, const double dt)
    double cdir, sdir;
 
    /* make sure angle doesn't flip */
-   obj->dir += M_PI/180.*obj->dir_vel*dt;
+   obj->dir += obj->dir_vel*dt;
    if (obj->dir >= 2*M_PI)
       obj->dir -= 2*M_PI;
    if (obj->dir < 0.)
@@ -379,7 +379,7 @@ static void rk4_update (Solid *obj, const double dt)
       vy += (ay + th*sdir) * h;
 
       /* rotation. */
-      obj->dir += M_PI/180.*obj->dir_vel*h;
+      obj->dir += obj->dir_vel*h;
    }
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );

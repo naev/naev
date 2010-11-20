@@ -775,7 +775,7 @@ static void equipment_renderShip( double bx, double by,
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
    equipment_lastick = tick;
-   equipment_dir += p->turn * M_PI/180. * dt;
+   equipment_dir += p->turn * dt;
    if (equipment_dir > 2*M_PI)
       equipment_dir = fmod( equipment_dir, 2*M_PI );
    gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
@@ -1419,7 +1419,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\e%c%.1f\e0 STU Average\n"
          "\e%c%.0f\e0 KN/Ton\n"
          "\e%c%.0f\e0 M/s\n"
-         "\e%c%.0f\e0 Grad/s\n"
+         "\e%c%.0f\e0 deg/s\n"
          "\n"
          "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
          "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
@@ -1439,7 +1439,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       '0', pilot_hyperspaceDelay( ship ),
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
-      EQ_COMP( ship->turn, ship->ship->turn, 0 ),
+      EQ_COMP( ship->turn*M_PI/180., ship->ship->turn*M_PI/180., 0 ),
       /* Health. */
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
       EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ),

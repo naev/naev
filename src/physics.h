@@ -63,13 +63,14 @@ void vect_uv_decomp(Vector2d* u, Vector2d* v, Vector2d* reference);
  */
 typedef struct Solid_ {
    double mass; /**< Solid's mass. */
-   double dir; /**< Direction solid is facing. */
-   double dir_vel; /**< Velocity at which solid is rotating. */
+   double dir; /**< Direction solid is facing in rad. */
+   double dir_vel; /**< Velocity at which solid is rotating in rad/s. */
    Vector2d vel; /**< Velocity of the solid. */
    Vector2d pos; /**< Position of the solid. */
    double thrust; /**< Relative X force, basically simplified for our thrust model. */
    double force_x; /**< Absolute X force. */
    double force_y; /**< Absolute Y force. */
+   double speed_max; /**< Maximum speed. */
    void (*update)( struct Solid_*, const double ); /**< Update method. */
 } Solid;
 
