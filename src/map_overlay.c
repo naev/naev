@@ -130,6 +130,12 @@ int ovr_input( SDL_Event *event )
    }
    /* Autogo. */
    else if (event->button.button == SDL_BUTTON_RIGHT) {
+      if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+            pilot_isFlag( player.p, PILOT_HYP_PREP ) ||
+            pilot_isFlag( player.p, PILOT_HYP_BEGIN ) ||
+            pilot_isFlag( player.p, PILOT_HYPERSPACE ))
+         return 1;
+
       /* Translate from window to screen. */
       mx = event->button.x;
       my = event->button.y;
