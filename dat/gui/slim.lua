@@ -14,7 +14,7 @@ function create()
    screen_w, screen_h = gfx.dim()
    deffont_h = gfx.fontSize()
    smallfont_h = gfx.fontSize(true)
-   gui.viewport( 0, 30, screen_w, screen_h - 30 )
+   gui.viewport( 0, 28, screen_w, screen_h - 28 )
 
    --Colors
    col_txt_bar = colour.new( 192/255, 198/255, 217/255 )
@@ -343,14 +343,19 @@ end
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
    offsets = { 2, 20, 3, 13, 22, 6 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text
    l_bg = _G["bg_" .. name]
-   if name == "heat" and value[1] > 1 then
-      l_col = col_heat2
+   if name == "heat" then
+      value[1] = value[1] / 2.
+      if value[1] > .5 then
+         l_col = col_heat2
+      else
+         l_col = _G["col_" .. name]
+      end
    else   
       l_col = _G["col_" .. name]
    end      
    gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
    gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w / 2, bar_weapon_h, l_col)
+   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
    if value[3] == 2 then
       gfx.renderTex( bg_bar_weapon_sec, x, y )
@@ -430,10 +435,7 @@ function render( dt )
    render_bar( "energy", energy, txt, col )
    
    --Speed
-   local hspeed = math.floor( speed / stats.speed_max * 100 + 0.5 )
-   -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
-   -- Any speed between 99% and 101% will be treated as 100%.
-   --local hspeed = math.ceil( speed / stats.speed_max * 100 )
+   local hspeed = round(speed / stats.speed_max * 100,0)
    txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
@@ -456,8 +458,16 @@ function render( dt )
    --Weapon bars
    local num = 0
    for k, weapon in ipairs(wset) do
+      txt = weapon.name
+      if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
+            txt = string.gsub(txt,"Cannon", "C.")
+      elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
+            txt = string.gsub(txt,"Turret", "T.")
+      elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
+         txt = string.gsub(txt,"Launcher", "L.")
+      end
       if weapon.left ~= nil then
-         txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
+         txt = txt .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
          else
@@ -466,7 +476,6 @@ function render( dt )
          values = {weapon.left_p, weapon.cooldown, weapon.level}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
-         txt = weapon.name
          col = col_txt_bar
          values = {weapon.temp, weapon.cooldown, weapon.level}
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
@@ -538,9 +547,7 @@ function render( dt )
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
 
          --Text, warning light & other texts
-         local htspeed = math.floor( ta_speed / ta_stats.speed_max * 100 + 0.5 )
-         -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
-         -- Any speed between 99% and 101% will be treated as 100%.
+         local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
          if not ta_fuzzy then
             --Bar Texts
             shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
@@ -822,7 +829,7 @@ function largeNumber( number )
 end
 
 function round(num, idp)
-   return string.format("%.0" .. (idp or 0) .. "f", num)
+   return tonumber( string.format("%.0" .. (idp or 0) .. "f", num) )
 end
 
 function destroy()
