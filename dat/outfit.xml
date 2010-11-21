@@ -1264,7 +1264,7 @@
  <outfit name="Banshee Rocket">
   <general>
    <license>Medium Weapon License</license>
-   <mass>0</mass>
+   <mass>0.1</mass>
    <price>70</price>
    <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
    <gfx_store>banshee</gfx_store>
