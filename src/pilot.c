@@ -798,6 +798,11 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    Pilot *pshooter;
    HookParam hparam;
 
+   /* Invincible means no damage. */
+   if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
+         pilot_isFlag( p, PILOT_INVISIBLE))
+      return 0.;
+
    /* Defaults. */
    pshooter = NULL;
    dam_mod  = 0.;

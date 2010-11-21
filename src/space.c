@@ -834,11 +834,8 @@ void space_update( const double dt )
    if (cur_system->nebu_volatility > 0.) {
       /* Damage pilots in volatile systems. */
       for (i=0; i<pilot_nstack; i++) {
-         if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
-            return; /* Invisible pilots (player, during simulation) take no damage. */
-         else
-            pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
-                     pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
+         pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
+                  pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
       }
    }
 
