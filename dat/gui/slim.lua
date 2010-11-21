@@ -366,12 +366,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
-   if gfx.printDim( false, txt ) > bar_weapon_w then
-      small = true
-   else
-      small = false
-   end
-   gfx.print( small, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
+   gfx.print( true, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
 end   
    
 
@@ -459,12 +454,14 @@ function render( dt )
    local num = 0
    for k, weapon in ipairs(wset) do
       txt = weapon.name
-      if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
-            txt = string.gsub(txt,"Cannon", "C.")
-      elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
-            txt = string.gsub(txt,"Turret", "T.")
-      elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
-         txt = string.gsub(txt,"Launcher", "L.")
+      if weapon.left ~= nil then -- Truncate names for readability.
+         if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
+               txt = string.gsub(txt,"Cannon", "C.")
+         elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
+               txt = string.gsub(txt,"Turret", "T.")
+         elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
+            txt = string.gsub(txt,"Launcher", "L.")
+         end
       end
       if weapon.left ~= nil then
          txt = txt .. " (" .. tostring( weapon.left) .. ")"
