@@ -909,7 +909,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!paused) player_autonavAbort(NULL);
          player_jump();
       }
-   } else if (KEY("overlay") && NOHYP() && NODEAD() && INGAME() && !repeat) {
+   } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
       ovr_key( value );
 
 
