@@ -957,7 +957,7 @@ static int pilotL_nav( lua_State *L )
  * The weapon sets have the following structure: <br />
  * <ul>
  *  <li> name: name of the set <br />
- *  <li> cooldwon: [0:1] value indicating if ready to shoot (1 is ready) <br />
+ *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready) <br />
  *  <li> ammo: Name of the ammo or nil if not applicable <br />
  *  <li> left: Absolute ammo left or nil if not applicable <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
@@ -973,7 +973,7 @@ static int pilotL_nav( lua_State *L )
  * print( "Weapnset Name: " .. ws_name )
  * for _,w in ipairs(ws) do
  *    print( "Name: " .. w.name )
- *    print( "Cooldown: " .. tostring(cooldon) )
+ *    print( "Cooldown: " .. tostring(cooldown) )
  *    print( "Level: " .. tostring(level) )
  * end
  * </code></pre>
