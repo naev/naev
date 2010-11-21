@@ -1342,6 +1342,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   MELEMENT(temp->mass==0.,"mass");
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
