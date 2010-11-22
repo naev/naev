@@ -1439,7 +1439,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       '0', pilot_hyperspaceDelay( ship ),
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
-      EQ_COMP( ship->turn*M_PI/180., ship->ship->turn*M_PI/180., 0 ),
+      EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
       /* Health. */
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
       EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ),

@@ -304,7 +304,7 @@ static void ship_update( unsigned int wid )
          pilot_hyperspaceDelay( player.p ),
          player.p->thrust / player.p->solid->mass,
          player.p->speed,
-         player.p->turn,
+         player.p->turn*180./M_PI,
          /* Health. */
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,
