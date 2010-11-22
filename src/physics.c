@@ -366,8 +366,8 @@ static void solid_update_rk4 (Solid *obj, const double dt)
          vmod = MOD( vx, vy );
          if (vmod > obj->speed_max) {
             /* We limit by applying a force against it. */
-            vang = ANGLE( vx, vy ) + M_PI;
-            vmod = 0.25 * pow(vmod - obj->speed_max, 1.4);
+            vang  = ANGLE( vx, vy ) + M_PI;
+            vmod  = 3. * (vmod - obj->speed_max);
 
             /* Update accel. */
             ax += vmod * cos(vang);
@@ -414,7 +414,7 @@ static void solid_update_rk4 (Solid *obj, const double dt)
  */
 double solid_maxspeed( Solid *s, double speed, double thrust )
 {
-   return speed + pow( 4.*thrust/s->mass, 1./1.4);
+   return speed + thrust / (s->mass * 3.);
 }
 
 
