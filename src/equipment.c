@@ -1418,7 +1418,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%.0f\e0 tonnes\n"
          "\e%c%.1f\e0 STU average\n"
          "\e%c%.0f\e0 kN/tonne\n"
-         "\e%c%.0f\e0 m/s\n"
+         "\e%c%.0f\e0 m/s (max \e%c%.0f\e0 m/s)\n"
          "\e%c%.0f\e0 deg/s\n"
          "\n"
          "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
@@ -1439,6 +1439,8 @@ void equipment_updateShips( unsigned int wid, char* str )
       '0', pilot_hyperspaceDelay( ship ),
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
+      EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
+            solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
       /* Health. */
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),

@@ -285,7 +285,7 @@ static void ship_update( unsigned int wid )
          "%.0f tonnes\n"
          "%.1f STU average\n"
          "%.0f kN/tonne\n"
-         "%.0f m/s\n"
+         "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
          "\n"
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
@@ -303,7 +303,7 @@ static void ship_update( unsigned int wid )
          player.p->solid->mass,
          pilot_hyperspaceDelay( player.p ),
          player.p->thrust / player.p->solid->mass,
-         player.p->speed,
+         player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
          /* Health. */
          player.p->shield, player.p->shield_max, player.p->shield_regen,
