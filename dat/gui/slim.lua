@@ -406,7 +406,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( math.floor(shield)) .. "% (" .. tostring(math.floor(stats.shield * shield / 100)) .. ")"
+   txt = tostring( round(shield)) .. "% (" .. tostring(round(stats.shield * shield / 100)) .. ")"
    render_bar( "shield", shield, txt, col )
 
    --Armour
@@ -415,7 +415,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( math.floor(armour)) .. "% (" .. tostring(math.floor(stats.armour * armour / 100)) .. ")"
+   txt = tostring( round(armour)) .. "% (" .. tostring(round(stats.armour * armour / 100)) .. ")"
    render_bar( "armour", armour, txt, col )
    
    --Energy
@@ -426,12 +426,12 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( math.floor(energy)) .. "% (" .. tostring(math.floor(stats.energy  * energy / 100)) .. ")"
+   txt = tostring( round(energy)) .. "% (" .. tostring(round(stats.energy  * energy / 100)) .. ")"
    render_bar( "energy", energy, txt, col )
    
    --Speed
    local hspeed = round(speed / stats.speed_max * 100,0)
-   txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
+   txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
    elseif hspeed <= 200. then
@@ -547,10 +547,10 @@ function render( dt )
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
          if not ta_fuzzy then
             --Bar Texts
-            shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
-            arm = tostring( math.floor(ta_armour) ) .. "% (" .. tostring(math.floor(ta_stats.armour  * ta_armour / 100)) .. ")"
-            ene = tostring( math.floor(ta_energy) ) .. "%"
-            spe = tostring( htspeed ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
+            shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
+            arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
+            ene = tostring( round(ta_energy) ) .. "%"
+            spe = tostring( htspeed ) .. "% (" .. tostring(round(ta_speed)) .. ")"
 
             if htspeed <= 100. then
                spetxtcol = col_txt_bar
@@ -599,7 +599,7 @@ function render( dt )
             ta_shield, ta_armour, ta_energy = nil
 
             --Bar Texts
-            spe = math.floor(ta_speed)
+            spe = round(ta_speed)
             colspe, colspe2 = nil
             spetxtcol = col_txt_bar
             htspeed = 0.
@@ -818,15 +818,19 @@ function largeNumber( number )
       formatted = math.floor(number)
    elseif number < 1e18 then
       len = math.floor(math.log10(number))
-      formatted = round( number / 10^math.floor(len-len%3), 2) .. units[(math.floor(len/3))]
+      formatted = roundto( number / 10^math.floor(len-len%3), 2) .. units[(math.floor(len/3))]
    else
       formatted = "Too big!"
    end
    return formatted
 end
 
-function round(num, idp)
+function roundto(num, idp)
    return tonumber( string.format("%.0" .. (idp or 0) .. "f", num) )
+end
+
+function round(num)
+   return math.floor( num + 0.5 )
 end
 
 function destroy()
