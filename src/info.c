@@ -281,18 +281,18 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f Teraflops\n"
-         "%.0f Tons\n"
-         "%.1f STU Average\n"
-         "%.0f KN/Ton\n"
-         "%.0f M/s\n"
-         "%.0f Grad/s\n"
+         "%.0f teraflops\n"
+         "%.0f tonnes\n"
+         "%.1f STU average\n"
+         "%.0f kN/tonne\n"
+         "%.0f m/s\n"
+         "%.0f deg/s\n"
          "\n"
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
-         "%d / %d Tons\n"
-         "%.0f / %.0f Units (%d Jumps)",
+         "%d / %d tonnes\n"
+         "%.0f / %.0f units (%d jumps)",
          /* Generic */
          player.p->name,
          player.p->ship->name,
