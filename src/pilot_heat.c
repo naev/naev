@@ -106,7 +106,7 @@ void pilot_heatReset( Pilot *p )
    for (i=0; i<p->noutfits; i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
-      p->heat_T = CONST_SPACE_TEMP;
+      p->outfits[i]->heat_T = CONST_SPACE_TEMP;
    }
 }
 
