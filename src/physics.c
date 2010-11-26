@@ -339,7 +339,7 @@ static void solid_update_rk4 (Solid *obj, const double dt)
    py = obj->pos.y;
    vx = obj->vel.x;
    vy = obj->vel.y;
-   limit = (obj->speed_max > 0.);
+   limit = (obj->speed_max >= 0.);
 
    /* Initial RK parameters. */
    if (dt > RK4_MIN_H)
@@ -458,7 +458,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
       vectcpy( &dest->pos, pos);
 
    /* Misc. */
-   dest->speed_max = 0.;
+   dest->speed_max = -1.; /* Negative is invalid. */
 
    /* Handle update. */
    switch (update) {

@@ -284,6 +284,7 @@ typedef struct Pilot_ {
    /* Electronic warfare. */
    double ew_base_hide; /**< Base static hide factor. */
    double ew_mass; /**< Mass factor. */
+   double ew_heat; /**< Heat factor, affects hide. */
    double ew_hide; /**< Static hide factor. */
    double ew_movement; /**< Movement factor. */
    double ew_evasion; /**< Dynamic evasion factor. */

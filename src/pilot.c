@@ -1268,7 +1268,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
       /* Do the slow brake thing */
-      pilot->solid->speed_max = 1.;
+      pilot->solid->speed_max = 0.;
       pilot_setThrust( pilot, 0. );
       pilot_setTurn( pilot, 0. );
 
@@ -1385,7 +1385,7 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->solid->speed_max = pilot->speed;
    }
    else
-      pilot->solid->speed_max = 0.;
+      pilot->solid->speed_max = -1.; /* Disables max speed. */
 
    /* Update the solid, must be run after limit_speed. */
    pilot->solid->update( pilot->solid, dt );
