@@ -95,7 +95,7 @@ end
 
 function targetDeath()
     fine = max(-20000, -player.credits()) -- Fine 20K, or take the player for all he has
-    tk.msg(title[3], text[3]:format(fine))
+    tk.msg(title[3], text[3]:format(-fine))
     player.pay(fine) -- I love this statement.
     misn.finish(true)
 end
