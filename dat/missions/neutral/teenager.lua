@@ -94,7 +94,7 @@ function targetIdle()
 end
 
 function targetDeath()
-    fine = max(-10000, -player.credits()) -- Fine 10K, or take the player for all he has
+    fine = max(-20000, -player.credits()) -- Fine 20K, or take the player for all he has
     tk.msg(title[3], text[3]:format(fine))
     player.pay(fine) -- I love this statement.
     misn.finish(true)
@@ -111,7 +111,7 @@ end
 function land()
     if planet.cur() == curplanet then
         tk.msg(title[5], text[5])
-        player.pay(10000)
+        player.pay(30000) -- 30K
         misn.finish(true)
     end
 end
