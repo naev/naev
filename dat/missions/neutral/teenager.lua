@@ -56,6 +56,7 @@ end
 
 function accept ()
     if tk.yesno(title[1], text[1]) then
+        misn.accept()
         misn.setDesc(misndesc:format(cursys:name()))
         misn.setReward(misnreward)
         misn.osdCreate(OSDtitle, OSD)
@@ -69,13 +70,14 @@ end
 
 function enter()
     if system.cur() == cursys and targetlive then
-        dist = system.radius()
+        dist = rnd.rnd() * system.cur():radius()
         angle = rnd.rnd() * 2 * math.pi
-        location = rnd.rnd() * dist * vec2.new(math.cos(angle), math.sin(angle)) -- Randomly spawn the Gawain in the system
+        location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Gawain in the system
         target = pilot.add("Civilian Gawain", nil, location)[1]
         target:control()
         target:rename("Credence")
         target:setHilight(true)
+        target:setVisible(true)
         hook.pilot(target, "idle", "targetIdle")
         hook.pilot(target, "death", "targetDeath")
         hook.pilot(target, "board", "targetBoard")
@@ -87,7 +89,7 @@ function targetIdle()
     location = target:pos()
     dist = 500
     angle = rnd.rnd() * 2 * math.pi
-    newlocation = dist * vec2.new(math.cos(angle), math.sin(angle)) -- New location is 500px away in a random direction
+    newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 500px away in a random direction
     target:goto(newlocation, false)
 end
 

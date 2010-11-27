@@ -528,7 +528,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>16</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():faction() == faction.get("Empire") and planet.cur():class() ~= "0"</cond>
   </avail>
