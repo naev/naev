@@ -293,7 +293,7 @@ static int player_newMake (void)
    double x,y;
 
    /* Time. */
-   ntime_set( NTIME_UNIT_LENGTH*start_date() );
+   ntime_set( start_date() );
 
    /* Welcome message - must be before space_init. */
    player_message( "\egWelcome to "APPNAME"!" );
@@ -1418,7 +1418,7 @@ void player_jump (void)
  */
 void player_brokeHyperspace (void)
 {
-   double d;
+   ntime_t t;
    StarSystem *sys;
    JumpPoint *jp;
 
@@ -1431,9 +1431,8 @@ void player_brokeHyperspace (void)
    player_targetPlanetSet( -1 );
 
    /* calculates the time it takes, call before space_init */
-   d  = pilot_hyperspaceDelay( player.p );
-   d += RNG_1SIGMA() * 0.2 * d;
-   ntime_inc( (unsigned int)(d*NTIME_UNIT_LENGTH) );
+   t  = pilot_hyperspaceDelay( player.p );
+   ntime_inc( t );
 
    /* Save old system. */
    sys = cur_system;
@@ -2460,7 +2459,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
-   xmlw_elem(writer,"time","%u",ntime_get());
+   xmlw_elem(writer,"time","%"PRIi64,ntime_get());
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);

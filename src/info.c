@@ -167,7 +167,7 @@ static void info_openMain( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* pilot generics */
-   nt = ntime_pretty( ntime_get() );
+   nt = ntime_pretty( ntime_get(), 4 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, &cDConsole,
          "Pilot:\n"
@@ -283,7 +283,7 @@ static void ship_update( unsigned int wid )
          "\n"
          "%.0f teraflops\n"
          "%.0f tonnes\n"
-         "%.1f STU average\n"
+         "%04d.%04d STU average\n"
          "%.0f kN/tonne\n"
          "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
@@ -301,7 +301,7 @@ static void ship_update( unsigned int wid )
          player.p->cpu_max,
          /* Movement. */
          player.p->solid->mass,
-         pilot_hyperspaceDelay( player.p ),
+         ntime_getSTP( pilot_hyperspaceDelay( player.p ) ), ntime_getSTU( pilot_hyperspaceDelay( player.p ) ),
          player.p->thrust / player.p->solid->mass,
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,

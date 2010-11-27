@@ -32,7 +32,7 @@ typedef struct ndata_start_s {
    char *name; /**< Name of ndata. */
    char *ship; /**< Default starting ship name. */
    unsigned int credits; /**< Starting credits. */
-   int date; /**< Starting date. */
+   ntime_t date; /**< Starting date. */
    char *system; /**< Starting system. */
    double x; /**< Starting X position. */
    double y; /**< Starting Y position. */
@@ -52,6 +52,12 @@ int start_load (void)
    char *buf;
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc;
+   int scu, stp, stu;
+
+   /* Defaults. */
+   scu = -1;
+   stp = -1;
+   stu = -1;
 
    /* Try to read teh file. */
    buf = ndata_read( START_DATA, &bufsize );
@@ -84,7 +90,6 @@ int start_load (void)
 
             xmlr_strd( cur, "ship", start_data.ship );
             xmlr_uint( cur, "credits", start_data.credits );
-            xmlr_int( cur, "date", start_data.date );
             xmlr_strd( cur, "mission", start_data.mission );
             
             if (xml_isNode(cur,"system")) {
@@ -104,6 +109,18 @@ int start_load (void)
          } while (xml_nextNode(cur));
          continue;
       }
+
+      if (xml_isNode(node,"date")) {
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+
+            xmlr_int( cur, "scu", scu );
+            xmlr_int( cur, "stp", stp );
+            xmlr_int( cur, "stu", stu );
+         } while (xml_nextNode(cur));
+         continue;
+      }
       WARN("'"START_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
@@ -117,12 +134,16 @@ int start_load (void)
    if (o) WARN("Module start data missing/invalid '"s"' element") /**< Define to help check for data errors. */
    MELEMENT( start_data.name==NULL, "name" );
    MELEMENT( start_data.credits==0, "credits" );
-   MELEMENT( start_data.date==0, "date" );
    MELEMENT( start_data.ship==NULL, "ship" );
    MELEMENT( start_data.mission==NULL, "mission" );
    MELEMENT( start_data.system==NULL, "system" );
+   MELEMENT( scu<0, "scu" );
+   MELEMENT( stp<0, "stp" );
+   MELEMENT( stu<0, "stu" );
 #undef MELEMENT
 
+   /* Post process. */
+   start_data.date = ntime_create( scu, stp, stu );
 
    return 0;
 }
@@ -179,7 +200,7 @@ unsigned int start_credits (void)
  * @brief Gets the starting date.
  *    @return The starting date of the player.
  */
-int start_date (void)
+ntime_t start_date (void)
 {
    return start_data.date;
 }

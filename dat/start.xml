@@ -4,7 +4,6 @@
  <player>
   <ship>Llama</ship>
   <credits>30000</credits>
-  <date>13364832</date>
   <system>
    <name>Hakoi</name>
    <x>-8000</x>
@@ -12,4 +11,9 @@
   </system>
   <mission>Tutorial</mission>
  </player>
+ <date>
+  <scu>603</scu>
+  <stp>3726</stp>
+  <stu>2871</stu>
+ </date>
 </Start>

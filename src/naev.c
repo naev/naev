@@ -675,6 +675,9 @@ static void update_all (void)
  */
 void update_routine( double dt )
 {
+   /* Update time. */
+   ntime_update( dt );
+
    /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);

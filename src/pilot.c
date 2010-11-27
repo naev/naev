@@ -1606,19 +1606,12 @@ static void pilot_refuel( Pilot *p, double dt )
  * @brief Calculates the hyperspace delay for a pilot.
  *
  *    @param p Pilot to calculate hyperspace delay for.
- *    @return Average hyperspace delay (in STU).
+ *    @return The hyperspace delay.
  */
-double pilot_hyperspaceDelay( Pilot *p )
+ntime_t pilot_hyperspaceDelay( Pilot *p )
 {
-   double val;
-
-   /* Calculate jump delay. */
-   val  = pow( p->solid->mass, 1./2.5 ) / 5.;
-
-   /* Modulate by stats. */
-   val *= p->stats.jump_delay;
-
-   return val;
+   (void) p;
+   return ntime_create( 0, 1, 0 );
 }
 
 

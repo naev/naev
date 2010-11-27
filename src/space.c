@@ -920,7 +920,7 @@ void space_init ( const char* sysname )
          ERR("System %s not found in stack", sysname);
       cur_system = &systems_stack[i];
 
-      nt = ntime_pretty(0);
+      nt = ntime_pretty(0, 4);
       player_message("\epEntering System %s on %s.", sysname, nt);
       free(nt);
 

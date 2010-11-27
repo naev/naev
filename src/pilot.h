@@ -14,6 +14,7 @@
 #include "faction.h"
 #include "sound.h"
 #include "economy.h"
+#include "ntime.h"
 
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
@@ -414,7 +415,7 @@ void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
 int pilot_hasDeployed( Pilot *p );
 int pilot_dock( Pilot *p, Pilot *target, int deployed );
-double pilot_hyperspaceDelay( Pilot *p );
+ntime_t pilot_hyperspaceDelay( Pilot *p );
 
 
 /*

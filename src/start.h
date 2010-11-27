@@ -7,6 +7,9 @@
 #  define START_H
 
 
+#include "ntime.h"
+
+
 /*
  * Initialization/clean up.
  */
@@ -19,7 +22,7 @@ void start_cleanup (void);
 const char* start_name (void);
 const char* start_ship (void);
 unsigned int start_credits (void);
-int start_date (void);
+ntime_t start_date (void);
 const char* start_system (void);
 void start_position( double *x, double *y );
 const char* start_mission (void);
