@@ -753,6 +753,12 @@ static int misn_osdCreate( lua_State *L )
    const char **items;
    int i;
 
+   /* Must be accepted. */
+   if (!cur_mission->accepted) {
+      WARN("Can't create an OSD on an unaccepted mission!");
+      return 0;
+   }
+
    /* Check parameters. */
    title  = luaL_checkstring(L,1);
    luaL_checktype(L,2,LUA_TTABLE);
