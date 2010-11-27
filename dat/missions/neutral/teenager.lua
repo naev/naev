@@ -101,6 +101,7 @@ function targetDeath()
 end
 
 function targetBoard()
+    player.unboard()
     tk.msg(title[4], text[4])
     target:setHilight(false)
     -- TODO: Add teenagers mission cargo here.
