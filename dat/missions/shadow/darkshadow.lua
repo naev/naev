@@ -386,7 +386,8 @@ end
 function spawnGenbu(sys)
     genbu = pilot.add("Genbu", nil, sys)[1]
     genbu:rmOutfit("all")
-    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
+    genbu:addOutfit("Turbolaser", 3)
+    genbu:addOutfit("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
     genbu:control()
     genbu:setHilight()
     genbu:setVisplayer()
@@ -484,6 +485,7 @@ end
 -- Also saves the player's velocity.
 function playerControl(status)
     player.pilot():control(status)
+    player.cinematics(status)
     if status then
         pvel = player.pilot():vel()
         player.pilot():setVel(vec2.new(0, 0))
