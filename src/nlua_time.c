@@ -26,6 +26,9 @@
 static int time_create( lua_State *L );
 static int time_add( lua_State *L );
 static int time_sub( lua_State *L );
+static int time_eq( lua_State *L );
+static int time_lt( lua_State *L );
+static int time_le( lua_State *L );
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
 static int time_inc( lua_State *L );
@@ -35,6 +38,9 @@ static const luaL_reg time_methods[] = {
    { "__add", time_add },
    { "sub", time_sub },
    { "__sub", time_sub },
+   { "__eq", time_eq },
+   { "__lt", time_lt },
+   { "__le", time_le },
    { "get", time_get },
    { "str", time_str },
    { "inc", time_inc },
@@ -226,6 +232,62 @@ static int time_sub( lua_State *L )
    /* Sub them. */
    res.t = t1 - t2;
    lua_pushtime( L, res );
+   return 1;
+}
+/**
+ * @brief Checks to see if two time are equal.
+ *
+ * It is recommended to check with < and <= instead of ==.
+ *
+ * @usage if time.create( 630, 5, 78) == time.get() then -- do something if they match
+ *
+ *    @luaparam t1 Time to compare for equality.
+ *    @luaparam t2 Time to compare for equality.
+ *    @luareturn true if they're equal.
+ * @luafunc __eq( t1, t2 )
+ */
+static int time_eq( lua_State *L )
+{
+   ntime_t t1, t2;
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+   lua_pushboolean( L, t1==t2 );
+   return 1;
+}
+/**
+ * @brief Checks to see if a time is strictly larger than another.
+ *
+ * @usage if time.create( 630, 5, 78) < time.get() then -- do something if time is past UST 630:0005.78
+ *
+ *    @luaparam t1 Time to see if is is smaller than t2.
+ *    @luaparam t2 Time see if is larger than t1.
+ *    @luareturn true if t1 < t2
+ * @luafunc __lt( t1, t2 )
+ */
+static int time_lt( lua_State *L )
+{
+   ntime_t t1, t2;
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+   lua_pushboolean( L, t1<t2 );
+   return 1;
+}
+/**
+ * @brief Checks to see if a time is larger or equal to another.
+ *
+ * @usage if time.create( 630, 5, 78) <= time.get() then -- do something if time is past UST 630:0005.78
+ *
+ *    @luaparam t1 Time to see if is is smaller or equal to than t2.
+ *    @luaparam t2 Time see if is larger or equal to than t1.
+ *    @luareturn true if t1 <= t2
+ * @luafunc __le( t1, t2 )
+ */
+static int time_le( lua_State *L )
+{
+   ntime_t t1, t2;
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+   lua_pushboolean( L, t1<=t2 );
    return 1;
 }
 /**
