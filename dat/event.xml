@@ -65,6 +65,15 @@
    <unique />
   </flags>
  </event>
+ <event name="Animal trouble">
+  <lua>neutral/animaltrouble</lua>
+  <trigger>enter</trigger>
+  <chance>40</chance>
+  <cond>var.peek("shipinfested") == true</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
  <event name="Spaceport Bar NPC">
   <lua>neutral/npc</lua>
   <trigger>land</trigger>
