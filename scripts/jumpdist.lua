@@ -12,8 +12,8 @@
 -- while i < 10 do
 --    t = getsysatdistance( target, i, i,
 --          function(s)
---             for k,v in s:planets() do
---                if v:hasShipyard()
+--             for _,p in ipairs(s:planets()) do
+--                if p:hasShipyard()
 --                   return true
 --                end
 --             end
