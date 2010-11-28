@@ -59,8 +59,8 @@ function _getsysatdistance( target, min, max, sys, n, t, filter, data )
 
       -- Add to table
       local seen = false
-      for i, j in ipairs(t) do -- Check if the system is already in our array
-         if j == sys then
+      for _,i in ipairs(t) do -- Check if the system is already in our array
+         if i == sys then
             seen = true
             break
          end
