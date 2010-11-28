@@ -7,6 +7,7 @@
 -- A following example to get closest system with shipyard (to max of 10):
 --
 -- @code
+-- target = system.get( "Alteris" ) -- We'll target alteris in the example
 -- local i, t
 -- while i < 10 do
 --    t = getsysatdistance( target, i, i,
@@ -18,6 +19,7 @@
 --             end
 --             return false
 --          end )
+--    i = i+1
 -- end
 -- local target_system = t[ rnd.rnd(1,#t) ]
 -- @endcode
