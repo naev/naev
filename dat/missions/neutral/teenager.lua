@@ -90,7 +90,8 @@ function targetIdle()
     dist = 500
     angle = rnd.rnd() * 2 * math.pi
     newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 500px away in a random direction
-    target:goto(newlocation, false)
+    target:taskClear()
+    target:goto(location + newlocation, false)
 end
 
 function targetDeath()
