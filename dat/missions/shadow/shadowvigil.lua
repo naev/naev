@@ -469,9 +469,10 @@ end
 
 -- This is the final cutscene.
 function diplomatCutscene()
-    player:pilot():control()
-    player:pilot():brake()
-    player:pilot():setInvincible(true)
+    player.pilot():control()
+    player.pilot():brake()
+    player.pilot():setInvincible(true)
+    player.cinematics(true)
     
     camera.set(dvaerplomat, true, 500)
     
@@ -515,8 +516,9 @@ end
 function escortFlee()
     camera.set(player.pilot, true)
 
-    player:pilot():setInvincible(false)
+    player.pilot():setInvincible(false)
     player.pilot():control(false)
+    player.conematics(false)
 
     for i, j in ipairs(escorts) do
         if j:exists() then
