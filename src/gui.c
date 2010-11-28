@@ -828,6 +828,10 @@ void gui_render( double dt )
    if (player.p == NULL)
       return;
 
+   /* Cinematics mode. */
+   if (player_isFlag( PLAYER_CINEMATICS_GUI ))
+      return;
+
    /*
     * Countdown timers.
     */

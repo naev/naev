@@ -57,6 +57,8 @@ static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
+/* Cinematics. */
+static int playerL_cinematics( lua_State *L );
 /* Board stuff. */
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
@@ -86,6 +88,7 @@ static const luaL_reg playerL_methods[] = {
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "cinematics", playerL_cinematics },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
    { "allowLand", playerL_allowLand },
@@ -424,6 +427,73 @@ static int playerL_autonavDest( lua_State *L )
    ls.id = system_index( dest );
    lua_pushsystem( L, ls );
    return 1;
+}
+
+
+/**
+ * @brief Puts the game in cinematics mode or back to regular mode.
+ *
+ * Possible options are:<br/>
+ * <ul>
+ *  <li>abort : (string) autonav abort message
+ *  <li>2x : (boolean) allows the player to enable doublespeed to "skip", default disabled
+ *  <li>gui : (boolean) enables the player's gui, default disabled
+ * </ul>
+ *
+ * @usage player.cinematics( true, { gui = true } ) -- Enables cinematics without hiding gui.
+ *
+ *    @luaparam enable If true sets cinematics mode, if false disables. Defaults to disable.
+ *    @luaparam options Table of options.
+ * @luafunc cinematics( enable, options )
+ */
+static int playerL_cinematics( lua_State *L )
+{
+   int b;
+   const char *abort_msg;
+   int f_gui, f_2x;
+
+   /* Defaults. */
+   abort_msg = NULL;
+
+   /* Parse parameters. */
+   b = lua_toboolean( L, 1 );
+   if (lua_gettop(L) > 1) {
+      if (!lua_istable(L,2)) {
+         NLUA_ERROR( L, "Second parameter to cinematics should be a table of options or ommitted!" );
+         return 0;
+      }
+
+      lua_getfield( L, 2, "abort" );
+      if (!lua_isnil( L, -1 ))
+         abort_msg = luaL_checkstring( L, -1 );
+      lua_pop( L, 1 );
+
+      lua_getfield( L, 2, "gui" );
+      f_gui = lua_toboolean(L, -1);
+      lua_pop( L, 1 );
+
+      lua_getfield( L, 2, "2x" );
+      f_2x = lua_toboolean(L, -1);
+      lua_pop( L, 1 );
+   }
+
+   if (b) {
+      /* Do stuff. */
+      player_autonavAbort( abort_msg );
+      player_rmFlag( PLAYER_DOUBLESPEED );
+
+      if (f_gui)
+         player_setFlag( PLAYER_CINEMATICS_GUI );
+   
+      if (f_2x)
+         player_setFlag( PLAYER_CINEMATICS_2X );
+   }
+   else {
+      player_rmFlag( PLAYER_CINEMATICS_GUI );
+      player_rmFlag( PLAYER_CINEMATICS_2X );
+   }
+
+   return 0;
 }
 
 

@@ -115,7 +115,7 @@ void player_autonavPos( double x, double y )
 /**
  * @brief Aborts autonav.
  */
-void player_autonavAbort( char *reason )
+void player_autonavAbort( const char *reason )
 {
    /* No point if player is beyond aborting. */
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))

@@ -26,6 +26,8 @@
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 #define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
 #define PLAYER_DOUBLESPEED (1<<19)  /**< player is running at double speed. */
+#define PLAYER_CINEMATICS_GUI (1<<20) /**< Disable rendering the GUI when in cinematics mode. */
+#define PLAYER_CINEMATICS_2X (1<<21) /**< Disables usage of the 2x button when in cinematics mode. */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
 #define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
