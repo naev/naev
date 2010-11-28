@@ -848,7 +848,8 @@ void player_render( double dt )
    /*
     * Render the player.
     */
-   if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING)) {
+   if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
+         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
       pilot_render(player.p, dt);
    }
 }
