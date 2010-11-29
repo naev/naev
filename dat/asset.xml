@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Adham">
   <pos>
@@ -6499,7 +6499,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>station-battlestation.png</space>
-   <exterior>station4.png</exterior>
+   <exterior>station04.png</exterior>
   </GFX>
   <presence>
    <faction>Empire</faction>
