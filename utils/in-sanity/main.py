@@ -96,9 +96,12 @@ class sanitizer:
         from readers import unidiff
         from readers.preprocessing import tech
 
+        udata = unidiff(datpath=self.config['datpath'],
+                        verbose=self.config['verbose'])
+
         # This will do some preprocessing check in the xml files
         print('Preprocess valitation :')
-        otech = tech(**self.config)
+        otech = tech(unidiffobj=udata,**self.config)
 
         # TODO: must be called when needed
         fleetdata = fleet(datpath=self.config['datpath'],
@@ -108,8 +111,7 @@ class sanitizer:
                         tech=otech, fleetobj=fleetdata)
         outfitdata = outfit(datpath=self.config['datpath'],
                         verbose=self.config['verbose'], tech=otech)
-        udata = unidiff(datpath=self.config['datpath'],
-                        verbose=self.config['verbose'])
+
         rawstr = r"""
         (?P<func>
             pilot\.add\(|

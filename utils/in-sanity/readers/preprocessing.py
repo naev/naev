@@ -42,6 +42,7 @@ class items(readers):
     def __init__(self, **config):
         xmlFile = os.path.join(config['datpath'], config['xml_file'])
         readers.__init__(self, xmlFile, config['verbose'])
+        self._unidiff = config['unidiffobj']
         self.usedItem = list()
 
         self.itemNames = list()
@@ -88,7 +89,7 @@ class tech(items):
                 self.techItems.append(item.text)
 
     def findItem(self, name):
-        if name in self.techItems:
+        if name in self.techItems or self._unidiff.findTech(name):
             return True
         else:
             return False
@@ -111,13 +112,14 @@ class assets(items):
         del(techs)
 
         for tech in techNames:
-            if tech not in techList:
+            if tech not in techList and not self._unidiff.findTech(tech):
                 print("Warning: tech ''{0}`` not present in asset.xml".format(tech))
 
 class ssys(readers):
     def __init__(self, **config):
         xmlFile = os.path.join(config['datpath'], 'ssys.xml')
         readers.__init__(self, xmlFile, config['verbose'])
+        self._unidiff = config['unidiffobj']
 
     def validateAssets(self, assetNames):
         assets = self.xmlData.findall('ssys/assets/asset')
@@ -127,5 +129,5 @@ class ssys(readers):
         del(assets)
 
         for asset in assetNames:
-            if asset not in assetList:
+            if asset not in assetList and not self._unidiff.findTech(asset):
                 print("Warning: asset ''{0}`` not present in ssys.xml".format(asset))

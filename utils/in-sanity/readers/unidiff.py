@@ -17,6 +17,9 @@ class unidiff(readers):
         print('Compiling unidiff ...',end='      ')
         for diff in self.xmlData.findall('unidiff'):
             self.nameList.append(diff.attrib['name'])
+        self.techList = list()
+        for diff in self.xmlData.findall('unidiff/tech/add'):
+            self.techList.append(diff.text)
         print("DONE")
 
     def find(self, name):
@@ -31,3 +34,8 @@ class unidiff(readers):
         else:
             return False
 
+    def findTech(self, name):
+        if name in self.techList:
+            return True
+        else:
+            return False
