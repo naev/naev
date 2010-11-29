@@ -104,7 +104,8 @@ class sanitizer:
         fleetdata = fleet(datpath=self.config['datpath'],
                         verbose=self.config['verbose'])
         shipdata = ship(datpath=self.config['datpath'],
-                        verbose=self.config['verbose'], tech=otech)
+                        verbose=self.config['verbose'],
+                        tech=otech, fleetobj=fleetdata)
         outfitdata = outfit(datpath=self.config['datpath'],
                         verbose=self.config['verbose'], tech=otech)
         udata = unidiff(datpath=self.config['datpath'],
@@ -215,8 +216,8 @@ class sanitizer:
             # XXX there is no real needs to use these two because of
             # ''showMissingTech`` called earlier, unless something is tagged as
             # 'UNKNOWN'
-            #outfitdata.show_unused()
-            #shipdata.show_unused()
+            outfitdata.show_unused()
+            shipdata.show_unused()
             fleetdata.show_unused()
             udata.show_unused()
 

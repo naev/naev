@@ -27,4 +27,10 @@ class fleet(readers):
         else:
             return False
 
+    def findPilots(self, **args):
+        expr = 'fleet/pilots/pilot'
+        for pilot in self.xmlData.findall(expr):
+            if pilot.attrib['ship'] == args['ship']:
+                return True
 
+        return False

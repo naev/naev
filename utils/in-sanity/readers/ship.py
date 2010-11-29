@@ -10,6 +10,7 @@ class ship(readers):
         readers.__init__(self, shipXml, config['verbose'])
         self._componentName = 'ship'
         self._tech = config['tech']
+        self._fleet = config['fleetobj']
         self.used = list()
         self.unknown = list()
 
@@ -24,6 +25,12 @@ class ship(readers):
                 self.used.append(ship.attrib['name'])
         print("DONE")
 
+        for ship in list(self.missingTech):
+            if self._fleet.findPilots(ship=ship):
+                self.missingTech.remove(ship)
+                if ship not in self.used:
+                    self.used.append(ship)
+
     def find(self, name):
         if name in self.nameList:
             if name in self.missingTech:
@@ -31,6 +38,12 @@ class ship(readers):
             return True
         else:
             return False
+
+    def computeMissingTech(self):
+        if len(self.missingTech) > 0:
+            for item in self.missingTech:
+                if item in self.unknown or item not in self.missing:
+                    pass
 
     def showMissingTech(self):
         if len(self.missingTech) > 0:

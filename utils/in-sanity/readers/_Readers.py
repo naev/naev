@@ -1,7 +1,29 @@
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
-import xml.etree.ElementTree as ET
+# Trying to get an etree.
+try:
+    from lxml import etree as ET
+    print('Running with lxml.etree')
+except ImportError:
+    try:
+        import xml.etree.cElementTree as ET
+        print("running with cElementTree on Python 2.5+")
+    except ImportError:
+        try:
+            import xml.etree.ElementTree as ET
+            print("running with ElementTree on Python 2.5+")
+        except ImportError:
+            try:
+                import cElementTree as ET
+                print("running with cElementTree")
+            except ImportError:
+                try:
+                    import elementtree.ElementTree as ET
+                    print("running with ElementTree")
+                except ImportError:
+                    print("Failed to import ElementTree from any known place")
+
 
 class readers:
     """

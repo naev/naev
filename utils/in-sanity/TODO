@@ -21,7 +21,8 @@ INGOING  *) Add items who needs a double check in a shared list (from
          *) ai/spawn/* for ships, ai/equip/* for outfits
 
 MINOR:
- *) Check if planets images are :
-    - used and too used (eg. >10)
-    - not used
-    > Idea: can list planet names by 'space' category filenames
+         *) 
+         *) Check if planets images are :
+            - used and too used (eg. >10)
+            - not used
+            > Idea: can list planet names by 'space' category filenames
