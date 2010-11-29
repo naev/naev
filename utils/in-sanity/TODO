@@ -21,7 +21,7 @@ INGOING  *) Add items who needs a double check in a shared list (from
          *) ai/spawn/* for ships, ai/equip/* for outfits
 
 MINOR:
-         *) 
+         *) Verify that fleets with ships are used (ship.py@28): 
          *) Check if planets images are :
             - used and too used (eg. >10)
             - not used

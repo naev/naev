@@ -39,12 +39,6 @@ class ship(readers):
         else:
             return False
 
-    def computeMissingTech(self):
-        if len(self.missingTech) > 0:
-            for item in self.missingTech:
-                if item in self.unknown or item not in self.missing:
-                    pass
-
     def showMissingTech(self):
         if len(self.missingTech) > 0:
             print('\nship.xml unused items:')
