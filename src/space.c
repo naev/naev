@@ -1389,7 +1389,8 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
 
    /* Reload graphics if necessary. */
-   space_gfxLoad( cur_system );
+   if (cur_system != NULL)
+      space_gfxLoad( cur_system );
 
    return 0;
 }
