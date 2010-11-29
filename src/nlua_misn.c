@@ -750,7 +750,7 @@ static int misn_osdCreate( lua_State *L )
 {
    const char *title;
    int nitems;
-   const char **items;
+   char **items;
    int i;
 
    /* Must be accepted. */
@@ -782,7 +782,7 @@ static int misn_osdCreate( lua_State *L )
          luaL_typerror(L, -1, "string");
          return 0;
       }
-      items[i] = lua_tostring(L, -1);
+      items[i] = strdup( lua_tostring(L, -1) );
       lua_pop(L,1);
       i++;
       if (i >= nitems)
@@ -790,10 +790,12 @@ static int misn_osdCreate( lua_State *L )
    }
 
    /* Create OSD. */
-   cur_mission->osd = osd_create( title, nitems, items );
+   cur_mission->osd = osd_create( title, nitems, (const char**) items );
    cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */
+   for (i=0; i<nitems; i++)
+      free(items[i]);
    free(items);
 
    return 0;
