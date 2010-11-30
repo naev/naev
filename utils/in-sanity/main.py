@@ -27,8 +27,9 @@ def lineNumber(string, start):
 
 class sanitizer:
 
-    _errorstring = "Can not found element ``%(content)s'' for function "\
-                   "%(func)s at line %(lineno)d offset %(offset)d"
+    _errorstring = "Can not found element ``%(content)s'' for function "    \
+                   "%(func)s at line %(lineno)d offset %(offset)d of file " \
+                   "%(file)s"
 
     def __init__(self, **args):
         """
@@ -162,7 +163,8 @@ class sanitizer:
                             lineno=lineno,
                             offset=offset,
                             func=match.group('func')[:-1],
-                            content= match.group('content')
+                            content= match.group('content'),
+                            file=file
                     )
 
                     if info['func'] == 'pilot.add':
