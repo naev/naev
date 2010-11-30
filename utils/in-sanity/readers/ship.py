@@ -30,6 +30,7 @@ class ship(readers):
                 self.missingTech.remove(ship)
                 if ship not in self.used:
                     self.used.append(ship)
+        self.missingTech.sort()
 
     def find(self, name):
         if name in self.nameList:

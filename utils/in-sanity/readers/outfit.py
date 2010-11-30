@@ -24,6 +24,7 @@ class outfit(readers):
                 self.missingTech.append(outfit.attrib['name'])
             else:
                 self.used.append(outfit.attrib['name'])
+        self.missingTech.sort()
         print("DONE")
 
     def find(self, name):
