@@ -27,7 +27,7 @@ def lineNumber(string, start):
 
 class sanitizer:
 
-    _errorstring = "Can not found element ``%(content)s'' for function "    \
+    _errorstring = "Can not find element ``%(content)s'' for function "    \
                    "%(func)s at line %(lineno)d offset %(offset)d of file " \
                    "%(file)s"
 
