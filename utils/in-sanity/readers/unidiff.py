@@ -20,6 +20,9 @@ class unidiff(readers):
         self.techList = list()
         for diff in self.xmlData.findall('unidiff/tech/add'):
             self.techList.append(diff.text)
+        self.assetList = list()
+        for diff in self.xmlData.findall('unidiff/system/asset'):
+            self.assetList.append(diff.attrib['name'])
         print("DONE")
 
     def find(self, name):
@@ -36,6 +39,12 @@ class unidiff(readers):
 
     def findTech(self, name):
         if name in self.techList:
+            return True
+        else:
+            return False
+
+    def findAsset(self, name):
+        if name in self.assetList:
             return True
         else:
             return False

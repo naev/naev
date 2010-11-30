@@ -129,5 +129,5 @@ class ssys(readers):
         del(assets)
 
         for asset in assetNames:
-            if asset not in assetList and not self._unidiff.findTech(asset):
+            if asset not in assetList and not self._unidiff.findAsset(asset):
                 print("Warning: asset ''{0}`` not present in ssys.xml".format(asset))
