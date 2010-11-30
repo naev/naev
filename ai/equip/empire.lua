@@ -16,24 +16,28 @@ function equip_empire( p )
 end
 
 
+-- CANNONS
 function equip_forwardEmpLow ()
-   return { "Laser Cannon MK2", "Ion Cannon" }
+   return { "Laser Cannon MK2", "Laser Cannon MK3" }
 end
 function equip_forwardEmpMed ()
-   return { "Ripper MK2", "Ion Cannon" }
+   return { "Laser Cannon MK3", "Ripper Cannon", "Heavy Ripper Cannon" }
 end
+-- TURRETS
 function equip_turretEmpLow ()
    return { "Laser Turret MK2" }
 end
 function equip_turretEmpMed ()
-   return { "Heavy Ion Turret" }
-end
-function equip_mixedEmpMed ()
-   return { "Heavy Ion Turret", "Ion Cannon", "Ion Cannon" }
+   return { "Laser Turret MK2", "Laser Turret MK3" }
 end
 function equip_turretEmpHig ()
-   return { "Heavy Ion Turret" }
+   return { "Heavy Laser", "Turbolaser" }
 end
+-- MIXED
+function equip_mixedEmpMed ()
+   return { "Laser Turret MK2", "Laser Turret MK3", "Ripper Cannon", "Heavy Ripper Cannon", "Laser Cannon MK3" }
+end
+-- RANGED
 function equip_rangedEmp ()
    return { "Headhunter Launcher" }
 end

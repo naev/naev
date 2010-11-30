@@ -83,6 +83,14 @@ void gui_targetPilotGFX( glTexture *gfx );
 
 
 /*
+ * Mouse.
+ */
+int gui_handleEvent( SDL_Event *evt );
+void gui_mouseClickEnable( int enabel );
+void gui_mouseMoveEnable( int enabel );
+
+
+/*
  * misc
  */
 void gui_setViewport( double x, double y, double w, double h );

@@ -529,6 +529,29 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 
 
 /**
+ * @brief Converts screen coordinates to ingame coordinates.
+ *
+ *    @param[out] nx New ingame X coord.
+ *    @param[out] ny New ingame Y coord.
+ *    @param bx Screen X coord to translate.
+ *    @param by Screen Y coord to translate.
+ */
+void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
+{
+   double cx,cy, gx,gy, z;
+
+   /* Get parameters. */
+   cam_getPos( &cx, &cy );
+   z = cam_getZoom();
+   gui_getOffset( &gx, &gy );
+
+   /* calculate position - we'll use relative coords to player */
+   *nx = (bx - SCREEN_W/2. - gx) / z + cx;
+   *ny = (by - SCREEN_H/2. - gy) / z + cy;
+}
+
+
+/**
  * @brief Blits a sprite, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all

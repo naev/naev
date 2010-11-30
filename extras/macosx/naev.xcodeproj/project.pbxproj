@@ -231,6 +231,13 @@
 		07D131C91055EC54005A8EDC /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 07D131711055EC54005A8EDC /* print.c */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		D78C374F125B468A0026102A /* map_overlay.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C374D125B468A0026102A /* map_overlay.c */; };
+		D78C375A125B46A00026102A /* pilot_cargo.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3750125B46A00026102A /* pilot_cargo.c */; };
+		D78C375B125B46A00026102A /* pilot_heat.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3752125B46A00026102A /* pilot_heat.c */; };
+		D78C375C125B46A00026102A /* pilot_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3754125B46A00026102A /* pilot_hook.c */; };
+		D78C375D125B46A00026102A /* pilot_outfit.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3756125B46A00026102A /* pilot_outfit.c */; };
+		D78C375E125B46A00026102A /* pilot_weapon.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3758125B46A00026102A /* pilot_weapon.c */; };
+		D78C3762125B47260026102A /* player_gui.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3760125B47260026102A /* player_gui.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -988,6 +995,20 @@
 		32CA4F630368D1EE00C91783 /* naev_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = naev_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* naev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D78C374D125B468A0026102A /* map_overlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = map_overlay.c; sourceTree = "<group>"; };
+		D78C374E125B468A0026102A /* map_overlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map_overlay.h; sourceTree = "<group>"; };
+		D78C3750125B46A00026102A /* pilot_cargo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_cargo.c; sourceTree = "<group>"; };
+		D78C3751125B46A00026102A /* pilot_cargo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pilot_cargo.h; sourceTree = "<group>"; };
+		D78C3752125B46A00026102A /* pilot_heat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_heat.c; sourceTree = "<group>"; };
+		D78C3753125B46A00026102A /* pilot_heat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pilot_heat.h; sourceTree = "<group>"; };
+		D78C3754125B46A00026102A /* pilot_hook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_hook.c; sourceTree = "<group>"; };
+		D78C3755125B46A00026102A /* pilot_hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pilot_hook.h; sourceTree = "<group>"; };
+		D78C3756125B46A00026102A /* pilot_outfit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_outfit.c; sourceTree = "<group>"; };
+		D78C3757125B46A00026102A /* pilot_outfit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pilot_outfit.h; sourceTree = "<group>"; };
+		D78C3758125B46A00026102A /* pilot_weapon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_weapon.c; sourceTree = "<group>"; };
+		D78C3759125B46A00026102A /* pilot_weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pilot_weapon.h; sourceTree = "<group>"; };
+		D78C3760125B47260026102A /* player_gui.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = player_gui.c; sourceTree = "<group>"; };
+		D78C3761125B47260026102A /* player_gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player_gui.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1651,6 +1672,20 @@
 		078552B91223D4D300BA253A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D78C3760125B47260026102A /* player_gui.c */,
+				D78C3761125B47260026102A /* player_gui.h */,
+				D78C3750125B46A00026102A /* pilot_cargo.c */,
+				D78C3751125B46A00026102A /* pilot_cargo.h */,
+				D78C3752125B46A00026102A /* pilot_heat.c */,
+				D78C3753125B46A00026102A /* pilot_heat.h */,
+				D78C3754125B46A00026102A /* pilot_hook.c */,
+				D78C3755125B46A00026102A /* pilot_hook.h */,
+				D78C3756125B46A00026102A /* pilot_outfit.c */,
+				D78C3757125B46A00026102A /* pilot_outfit.h */,
+				D78C3758125B46A00026102A /* pilot_weapon.c */,
+				D78C3759125B46A00026102A /* pilot_weapon.h */,
+				D78C374D125B468A0026102A /* map_overlay.c */,
+				D78C374E125B468A0026102A /* map_overlay.h */,
 				078552BA1223D4D300BA253A /* ai.c */,
 				078552BB1223D4D300BA253A /* ai.h */,
 				078552BC1223D4D300BA253A /* ai_extra.h */,
@@ -2421,6 +2456,13 @@
 				0785543D1223D4D400BA253A /* toolkit.c in Sources */,
 				0785543E1223D4D400BA253A /* unidiff.c in Sources */,
 				0785543F1223D4D400BA253A /* weapon.c in Sources */,
+				D78C374F125B468A0026102A /* map_overlay.c in Sources */,
+				D78C375A125B46A00026102A /* pilot_cargo.c in Sources */,
+				D78C375B125B46A00026102A /* pilot_heat.c in Sources */,
+				D78C375C125B46A00026102A /* pilot_hook.c in Sources */,
+				D78C375D125B46A00026102A /* pilot_outfit.c in Sources */,
+				D78C375E125B46A00026102A /* pilot_weapon.c in Sources */,
+				D78C3762125B47260026102A /* player_gui.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

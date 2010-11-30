@@ -230,7 +230,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
          if (player_missions[i].id == running_mission->id)
             break;
       if (i>=MISSION_MAX) {
-         WARN("Mission not in stack trying to hook");
+         WARN("Mission not in stack trying to hook, forgot to run misn.accept()?");
          return 0;
       }
 

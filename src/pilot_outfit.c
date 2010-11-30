@@ -700,6 +700,8 @@ void pilot_calcStats( Pilot* pilot )
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
    pilot->cpu           = pilot->cpu_max;
+   /* crew */
+   pilot->crew          = pilot->ship->crew;
    /* health */
    ac = pilot->armour / pilot->armour_max;
    sc = pilot->shield / pilot->shield_max;
@@ -710,6 +712,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel_max      = pilot->ship->fuel;
    pilot->armour_regen  = pilot->ship->armour_regen;
    pilot->shield_regen  = pilot->ship->shield_regen;
+   /* Absorption. */
+   pilot->dmg_absorb    = pilot->ship->dmg_absorb;
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
@@ -775,6 +779,7 @@ void pilot_calcStats( Pilot* pilot )
          /* misc */
          pilot->cargo_free    += o->u.mod.cargo * q;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass * q;
+         pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew * q;
          /*
           * Stats.
           */
@@ -788,7 +793,7 @@ void pilot_calcStats( Pilot* pilot )
             ew_ndetect++;
          }
          /* Fighter. */
-         s->accuracy_forward  += o->u.mod.stats.accuracy_forward * q;
+         s->heat_forward      += o->u.mod.stats.heat_forward * q;
          s->damage_forward    += o->u.mod.stats.damage_forward * q;
          s->energy_forward    += o->u.mod.stats.energy_forward * q;
          if (o->u.mod.stats.firerate_forward != 0.) {
@@ -796,7 +801,7 @@ void pilot_calcStats( Pilot* pilot )
             nfirerate_forward    += q;
          }
          /* Cruiser. */
-         s->accuracy_turret   += o->u.mod.stats.accuracy_turret * q;
+         s->heat_turret       += o->u.mod.stats.heat_turret * q;
          s->damage_turret     += o->u.mod.stats.damage_turret * q;
          s->energy_turret     += o->u.mod.stats.energy_turret * q;
          if (o->u.mod.stats.firerate_turret != 0.) {
@@ -854,7 +859,7 @@ void pilot_calcStats( Pilot* pilot )
     * Normalize stats.
     */
    /* Fighter. */
-   s->accuracy_forward  = s->accuracy_forward/100. + 1.;
+   s->heat_forward      = s->heat_forward/100. + 1.;
    s->damage_forward    = s->damage_forward/100. + 1.;
    s->energy_forward    = s->energy_forward/100. + 1.;
    /* Fire rate:
@@ -869,7 +874,7 @@ void pilot_calcStats( Pilot* pilot )
       s->firerate_forward *= exp( -0.15 * (double)(nfirerate_forward-1) );
    s->firerate_forward += 1.;
    /* Cruiser. */
-   s->accuracy_turret   = s->accuracy_turret/100. + 1.;
+   s->heat_turret       = s->heat_turret/100. + 1.;
    s->damage_turret     = s->damage_turret/100. + 1.;
    s->energy_turret     = s->energy_turret/100. + 1.;
    s->firerate_turret   = s->firerate_turret/100.;

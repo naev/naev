@@ -67,13 +67,13 @@ typedef struct ShipStats_ {
    double ew_detect; /**< Electronic warfare detection modifier. */
 
    /* Fighter type. */
-   double accuracy_forward; /**< Accuracy of forward mounts. */
+   double heat_forward; /**< Heat of forward mounts. */
    double damage_forward; /**< Damage of forward mounts. */
    double firerate_forward; /**< Rate of fire of forward mounts. */
    double energy_forward; /**< Consumption rate of forward mounts. */
 
    /* Cruiser type. */
-   double accuracy_turret; /**< Accuracy of turrets. */
+   double heat_turret; /**< Heat of turrets. */
    double damage_turret; /**< Damage of turrets. */
    double firerate_turret; /**< Rate of fire of turrets. */
    double energy_turret; /**< Consumption rate of turrets. */
@@ -170,12 +170,15 @@ typedef struct OutfitBoltData_ {
    double speed; /**< how fast it goes (not applicable to beam) */
    double range; /**< how far it goes */
    double falloff; /**< Point at which damage falls off. */
-   double accuracy; /**< desviation accuracy */
    double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy; /**< energy usage */
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
+   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   double heatup; /**< How long it should take for the weapon to heat up (approx). */
+   double heat; /**< Heat per shot. */
+   double leadangle; /**< Lead angle of weapon. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -198,11 +201,13 @@ typedef struct OutfitBeamData_ {
 
    /* Beam properties. */
    double range; /**< how far it goes */
-   double turn; /**< How fast it can turn. Only for turrets. */
+   double turn; /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy; /**< Amount of energy it drains (per second). */
    double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
+   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   double heatup; /**< How long it should take for the weapon to heat up (approx). */
 
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
@@ -236,13 +241,13 @@ typedef struct OutfitAmmoData_ {
    double resist; /**< lowers chance of jamming by this amount */
    int ai; /**< Smartness of ammo. */
 
-   double accuracy; /**< desviation accuracy */
    double speed; /**< maximum speed */
-   double turn; /**< turn velocity */
+   double turn; /**< turn velocity in rad/s. */
    double thrust; /**< acceleration */
    double energy; /**< energy usage */
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
+   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
 
    glTexture* gfx_space; /**< graphic */
    double spin; /**< Graphic spin rate. */
@@ -280,6 +285,7 @@ typedef struct OutfitModificationData_ {
 
    /* misc */
    double cargo; /**< Cargo space modifier. */
+   double crew_rel; /**< Relative crew modification. */
    double mass_rel; /**< Relative mass modification. */
    double fuel; /**< Maximum fuel modifier. */
 
@@ -297,6 +303,7 @@ typedef struct OutfitAfterburnerData_ {
    double speed; /**< % of speed to increase based on ship base. */
    double energy; /**< Energy usage while active */
    double cpu; /**< CPU usage. */
+   double mass_limit; /**< Limit at which effectivity starts to drop. */
 } OutfitAfterburnerData;
 
 /**
@@ -428,11 +435,13 @@ glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 double outfit_damage( const Outfit* o );
+double outfit_penetration( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
 double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );
 int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
+double outfit_heat( const Outfit* o );
 double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );

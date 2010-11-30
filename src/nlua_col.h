@@ -19,7 +19,7 @@
  * @brief Lua texture wrapper.
  */
 typedef struct LuaColour_s {
-   glColour col;
+   glColour col; /**< Colour wrapped around. */
 } LuaColour; /**< Wrapper for a texture. */
 
 

@@ -86,6 +86,8 @@
 #include "background.h"
 #include "camera.h"
 #include "map_overlay.h"
+#include "start.h"
+#include "threadpool.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -167,6 +169,9 @@ int main( int argc, char** argv )
    /* Initializes SDL for possible warnings. */
    SDL_Init(0);
 
+   /* Initialize the threadpool */
+   threadpool_init();
+
    /* Set up debug signal handlers. */
    debug_sigInit();
 
@@ -212,6 +217,10 @@ int main( int argc, char** argv )
    /* Open data. */
    if (ndata_open() != 0)
       ERR("Failed to open ndata.");
+
+   /* Load the start info. */
+   if (start_load())
+      ERR("Failed to load module start data.");
 
    /* Load the data basics. */
    LOG(" %s", ndata_name());
@@ -288,6 +297,7 @@ int main( int argc, char** argv )
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
    cond_init(); /* Initialize conditional subsystem. */
+   cli_init(); /* Initialize console. */
 
    /* Data loading */
    load_all();
@@ -348,6 +358,7 @@ int main( int argc, char** argv )
 
    /* Close data. */
    ndata_close();
+   start_cleanup();
 
    /* Destroy conf. */
    conf_cleanup(); /* Frees some memory the configuration allocated. */
@@ -571,15 +582,16 @@ void main_loop (void)
 
    fps_control(); /* everyone loves fps control */
 
-   input_update(); /* handle key repeats. */
+   /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
+   player_updateAutonav( real_dt );
+
+   input_update( real_dt ); /* handle key repeats. */
 
    sound_update( real_dt ); /* Update sounds. */
    if (tk) toolkit_update(); /* to simulate key repetition */
-   if (!menu_isOpen(MENU_MAIN)) {
-      if (!paused)
-         update_all(); /* update game */
-      render_all();
-   }
+   if (!paused)
+      update_all(); /* update game */
+   render_all();
    /* Toolkit is rendered on top. */
    if (tk) toolkit_render();
 
@@ -663,6 +675,9 @@ static void update_all (void)
  */
 void update_routine( double dt )
 {
+   /* Update time. */
+   ntime_update( dt );
+
    /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);

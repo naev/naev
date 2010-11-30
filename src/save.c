@@ -366,7 +366,7 @@ static int load_game( const char* file )
 
    /* Welcome message - must be before space_init. */
    player_message( "\egWelcome to "APPNAME"!" );
-   player_message( "\eg v%d.%d.%d", VMAJOR, VMINOR, VREV );
+   player_message( "\eg v%s", naev_version(0) );
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */

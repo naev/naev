@@ -113,6 +113,7 @@ function create()
     end
 
     tk.msg(title[1], text[1]:format(player.name(), seirplanet:name(), seirsys:name()))
+    firstmarker = misn.markerAdd(seirsys, "low")
     accept() -- The player automatically accepts this mission.
 end
 
@@ -150,12 +151,16 @@ function seiryuuBoard()
         player.unboard()
         seiryuu:setHilight(false)
         accept2()
+        misn.markerRm(firstmarker)
         stage = 2
     elseif stage == 6 then -- Debriefing
         tk.msg(title[7], text[11]:format(player.name(), player.name()))
         player.pay(500000) -- 500K
         player.unboard()
         seiryuu:setHilight(false)
+        seiryuu:setHealth(100, 100)
+        seiryuu:control()
+        seiryuu:hyperspace()
         var.pop("darkshadow_active")
         misn.finish(true)
     end
@@ -381,7 +386,8 @@ end
 function spawnGenbu(sys)
     genbu = pilot.add("Genbu", nil, sys)[1]
     genbu:rmOutfit("all")
-    genbu:addOutfit("Cheater's Ragnarok Beam", 4) -- You can't win. Seriously.
+    genbu:addOutfit("Turbolaser", 3)
+    genbu:addOutfit("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
     genbu:control()
     genbu:setHilight()
     genbu:setVisplayer()
@@ -479,6 +485,7 @@ end
 -- Also saves the player's velocity.
 function playerControl(status)
     player.pilot():control(status)
+    player.cinematics(status)
     if status then
         pvel = player.pilot():vel()
         player.pilot():setVel(vec2.new(0, 0))

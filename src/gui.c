@@ -82,34 +82,35 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static gl_vbo *gui_vbo = NULL; /**< GUI VBO. */
 static GLsizei gui_vboColourOffset = 0; /**< Offset of colour pixels. */
 
-/* Whether or not should recieve messages. */
-static int gui_getMessage     = 1;
+static int gui_getMessage     = 1; /**< Whether or not the palyer should recieve messages. */
 
 /*
  * pilot stuff for GUI
  */
-extern Pilot** pilot_stack;
-extern int pilot_nstack;
+extern Pilot** pilot_stack; /**< @todo remove */
+extern int pilot_nstack; /**< @todo remove */
 
 /*
  * map stuff for autonav
  */
-extern int map_npath;
+extern int map_npath; /**< @todo remove. */
 
 
 /**
  * GUI Lua stuff.
  */
 static lua_State *gui_L; /**< Current GUI lua State. */
+static int gui_L_mclick = 0; /**< Use mouse click callback. */
+static int gui_L_mmove = 0; /**< Use mouse movement callback. */
 
 
 /**
  * Cropping.
  */
-static double gui_viewport_x = 0.;
-static double gui_viewport_y = 0.;
-static double gui_viewport_w = 0.;
-static double gui_viewport_h = 0.;
+static double gui_viewport_x = 0.; /**< GUI Viewport X offset. */
+static double gui_viewport_y = 0.; /**< GUI Viewport Y offset. */
+static double gui_viewport_w = 0.; /**< GUI Viewport width. */
+static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
 
 /**
@@ -196,7 +197,7 @@ static void gui_calcBorders (void);
 /* Lua GUI. */
 static int gui_doFunc( const char* func );
 static int gui_prepFunc( const char* func );
-static int gui_runFunc( const char* func, int nargs );
+static int gui_runFunc( const char* func, int nargs, int nret );
 
 
 
@@ -212,6 +213,9 @@ void gui_setDefaults (void)
 
 /**
  * @brief Initializes the message system.
+ *
+ *    @param x X position to set at.
+ *    @param y Y position to set at.
  */
 void gui_messageInit( int width, int x, int y )
 {
@@ -394,7 +398,7 @@ static void gui_renderPlanetTarget( double dt )
    /* Make sure targets are still in range. */
 #if 0
    if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
-      player.p->nav_planet = -1;
+      player_targetPlanetSet( -1 );
       return;
    }
 #endif
@@ -582,7 +586,7 @@ static void gui_renderBorder( double dt )
    int cw, ch;
    double rx,ry, crx,cry;
    double cx,cy;
-   glColour *col;
+   glColour *col, bcol;
    double int_a;
    GLfloat vertex[5*2], colours[5*4];
 
@@ -595,6 +599,14 @@ static void gui_renderBorder( double dt )
 
    /* Interference. */
    int_a = 1. - interference_alpha;
+
+   /* Render borders to enhance contrast. */
+   bcol = cBlack;
+   bcol.a = .5;
+   gl_renderRect( 0., 0., 15., SCREEN_H, &bcol );
+   gl_renderRect( SCREEN_W - 15., 0., 15., SCREEN_H, &bcol );
+   gl_renderRect( 15., 0., SCREEN_W - 30., 15., &bcol );
+   gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &bcol );
 
    /* Draw planets. */
    for (i=0; i<cur_system->nplanets; i++) {
@@ -633,7 +645,7 @@ static void gui_renderBorder( double dt )
             colours[4*j + 0] = col->r;
             colours[4*j + 1] = col->g;
             colours[4*j + 2] = col->b;
-            colours[4*j + 3] = int_a;
+            colours[4*j + 3] = 1;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 5*4, colours );
@@ -693,7 +705,7 @@ static void gui_renderBorder( double dt )
             colours[4*j + 0] = col->r;
             colours[4*j + 1] = col->g;
             colours[4*j + 2] = col->b;
-            colours[4*j + 3] = int_a;
+            colours[4*j + 3] = 1;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 4*4, colours );
@@ -805,15 +817,19 @@ void gui_render( double dt )
    StarSystem *sys;
 
    /* If player is dead just render the cinematic mode. */
-   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-        ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD))) {
-
+   if (!menu_isOpen(MENU_MAIN) &&
+         (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
+            ((player.p != NULL) && pilot_isFlag(player.p,PILOT_DEAD)))) {
       spfx_cinematic();
       return;
    }
 
    /* Make sure player is valid. */
    if (player.p == NULL)
+      return;
+
+   /* Cinematics mode. */
+   if (player_isFlag( PLAYER_CINEMATICS_GUI ))
       return;
 
    /*
@@ -838,7 +854,7 @@ void gui_render( double dt )
    if (gui_L != NULL) {
       gui_prepFunc( "render" );
       lua_pushnumber( gui_L, dt );
-      gui_runFunc( "render", 1 );
+      gui_runFunc( "render", 1, 0 );
    }
 
    /* Messages. */
@@ -1198,7 +1214,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Draw selection if targetted. */
    if (p->id == player.p->target) {
-      if (blink_pilot > RADAR_BLINK_PILOT/2.) {
+      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
          for (i=0; i<8; i++) {
             colours[4*i + 0] = cRadar_tPilot.r;
@@ -1254,7 +1270,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw square. */
    px     = MAX(x-sx,-w);
    py     = MAX(y-sy, -h);
-   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot > RADAR_BLINK_PILOT/2.))
+   if (pilot_isFlag(p, PILOT_HILIGHT) && (blink_pilot < RADAR_BLINK_PILOT/2.))
       col = &cRadar_hilight;
    else
       col = gui_getPilotColour(p);
@@ -1338,7 +1354,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
    GLfloat vertex[8*2], colours[8*4];
    int i, curs;
 
-   if (blink_planet > RADAR_BLINK_PLANET/2.) {
+   if (blink_planet < RADAR_BLINK_PLANET/2.) {
       curs = 0;
       vx = cx-vr;
       vy = cy+vr;
@@ -1465,6 +1481,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    int x, y;
    int cx, cy, r, rc;
    GLfloat vx, vy, vr;
+   GLfloat a;
    glColour *col;
    Planet *planet;
    GLfloat vertex[5*2], colours[5*4];
@@ -1516,11 +1533,15 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
+   if (overlay)
+      a = 1.;
+   else
+      a   = 1.-interference_alpha;
    for (i=0; i<5; i++) {
       colours[4*i + 0] = col->r;
       colours[4*i + 1] = col->g;
       colours[4*i + 2] = col->b;
-      colours[4*i + 3] = 1.-interference_alpha;
+      colours[4*i + 3] = a;
    }
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
       sizeof(GLfloat) * 5*4, colours );
@@ -1562,6 +1583,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 {
    int i;
    int cx, cy, x, y, r, rc;
+   GLfloat a;
    GLfloat ca, sa;
    GLfloat vx, vy, vr;
    glColour *col;
@@ -1613,13 +1635,17 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    }
    else
       col = &cWhite;
+   if (overlay)
+      a = 1.;
+   else
+      a = 1.-interference_alpha;
 
    /* Get the colour. */
    for (i=0; i<4; i++) {
       colours[4*i + 0] = col->r;
       colours[4*i + 1] = col->g;
       colours[4*i + 2] = col->b;
-      colours[4*i + 3] = 1.-interference_alpha;
+      colours[4*i + 3] = a;
    }
    gl_vboSubData( gui_vbo, gui_vboColourOffset,
       sizeof(GLfloat) * 5*4, colours );
@@ -1783,7 +1809,7 @@ int gui_init (void)
 static int gui_doFunc( const char* func )
 {
    gui_prepFunc( func );
-   return gui_runFunc( func, 0 );
+   return gui_runFunc( func, 0, 0 );
 }
 
 
@@ -1813,7 +1839,7 @@ static int gui_prepFunc( const char* func )
 /**
  * @brief Runs a function.
  */
-static int gui_runFunc( const char* func, int nargs )
+static int gui_runFunc( const char* func, int nargs, int nret )
 {
    int ret;
    const char* err;
@@ -1823,7 +1849,7 @@ static int gui_runFunc( const char* func, int nargs )
    L = gui_L;
 
    /* Run the function. */
-   ret = lua_pcall( L, nargs, 0, 0 );
+   ret = lua_pcall( L, nargs, nret, 0 );
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
@@ -1955,7 +1981,7 @@ int gui_load( const char* name )
 
    /* Recreate land window if landed. */
    if (landed)
-      land_genWindows( 0 );
+      land_genWindows( 0, 1 );
 
    return 0;
 }
@@ -2049,6 +2075,10 @@ static void gui_createInterference( Radar *radar )
 void gui_cleanup (void)
 {
    int i;
+
+   /* Disable mouse voodoo. */
+   gui_mouseClickEnable( 0 );
+   gui_mouseMoveEnable( 0 );
 
    /* Interference. */
    for (i=0; i<INTERFERENCE_LAYERS; i++) {
@@ -2173,4 +2203,69 @@ void gui_targetPilotGFX( glTexture *gfx )
       gl_freeTexture( gui_target_pilot );
    gui_target_pilot = gl_dupTexture( gfx );
 }
+
+
+/**
+ * @brief Handles GUI events.
+ */
+int gui_handleEvent( SDL_Event *evt )
+{
+   int ret;
+   int x, y;
+
+   ret = 0;
+   switch (evt->type) {
+      /* Mouse motion. */
+      case SDL_MOUSEMOTION:
+         if (!gui_L_mmove)
+            break;
+         gui_prepFunc( "mouse_move" );
+         gl_windowToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
+         lua_pushnumber( gui_L, x );
+         lua_pushnumber( gui_L, y );
+         gui_runFunc( "mouse_move", 2, 0 );
+         break;
+
+      /* Mouse click. */
+      case SDL_MOUSEBUTTONDOWN:
+      case SDL_MOUSEBUTTONUP:
+         if (!gui_L_mclick)
+            break;
+         gui_prepFunc( "mouse_click" );
+         lua_pushnumber( gui_L, evt->button.button+1 );
+         gl_windowToScreenPos( &x, &y, evt->button.x, evt->button.y );
+         lua_pushnumber( gui_L, x );
+         lua_pushnumber( gui_L, y );
+         lua_pushboolean( gui_L, (evt->type==SDL_MOUSEBUTTONDOWN) );
+         gui_runFunc( "mouse_click", 4, 1 );
+         ret = lua_toboolean( gui_L, -1 );
+         lua_pop( gui_L, 1 );
+         break;
+
+      /* Not interested in the rest. */
+      default:
+         break;
+   }
+   return ret;
+}
+
+
+/**
+ * @brief Enables the mouse click callback.
+ */
+void gui_mouseClickEnable( int enable )
+{
+   gui_L_mclick = enable;
+}
+
+
+/**
+ * @brief Enables the mouse movement callback.
+ */
+void gui_mouseMoveEnable( int enable )
+{
+   gui_L_mmove = enable;
+}
+
+
 

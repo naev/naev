@@ -27,6 +27,7 @@
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
 #include "nlua_diff.h"
+#include "nlua_cli.h"
 
 
 /*
@@ -104,6 +105,9 @@ int nlua_loadBasic( lua_State* L )
       lua_pushnil(L);
       lua_setglobal(L, override[i]);
    }
+
+   /* Override print to print in the console. */
+   lua_register(L, "print", cli_print);
 
    nlua_load(L,luaopen_math); /* open math. */
    nlua_load(L,luaopen_table); /* open table. */

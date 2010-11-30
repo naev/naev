@@ -59,7 +59,7 @@ void input_exit (void);
 /*
  * Updating.
  */
-void input_update (void);
+void input_update( double dt );
 
 
 /*

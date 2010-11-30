@@ -88,7 +88,7 @@ static void mission_menu_update( unsigned int wid, char* str );
 /**
  * @brief Opens the information menu.
  */
-void menu_info (void)
+void menu_info( int window )
 {
    int w, h;
 
@@ -123,6 +123,9 @@ void menu_info (void)
    info_openStandings( info_windows[5] );
 
    menu_Open(MENU_INFO);
+
+   /* Set active window. */
+   window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 5, window ) );
 }
 /**
  * @brief Closes the information menu.
@@ -164,7 +167,7 @@ static void info_openMain( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* pilot generics */
-   nt = ntime_pretty( ntime_get() );
+   nt = ntime_pretty( ntime_get(), 4 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, &cDConsole,
          "Pilot:\n"
@@ -278,30 +281,30 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f Teraflops\n"
-         "%.0f Tons\n"
-         "%.1f STU Average\n"
-         "%.0f KN/Ton\n"
-         "%.0f M/s\n"
-         "%.0f Grad/s\n"
+         "%.0f teraflops\n"
+         "%.0f tonnes\n"
+         "%04d.%04d STU average\n"
+         "%.0f kN/tonne\n"
+         "%.0f m/s (max %.0f m/s)\n"
+         "%.0f deg/s\n"
          "\n"
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
-         "%d / %d Tons\n"
-         "%.0f / %.0f Units (%d Jumps)",
+         "%d / %d tonnes\n"
+         "%.0f / %.0f units (%d jumps)",
          /* Generic */
          player.p->name,
          player.p->ship->name,
          ship_class(player.p->ship),
-         player.p->ship->crew,
+         (int)floor(player.p->crew),
          player.p->cpu_max,
          /* Movement. */
          player.p->solid->mass,
-         pilot_hyperspaceDelay( player.p ),
+         ntime_getSTP( pilot_hyperspaceDelay( player.p ) ), ntime_getSTU( pilot_hyperspaceDelay( player.p ) ),
          player.p->thrust / player.p->solid->mass,
-         player.p->speed,
-         player.p->turn,
+         player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
+         player.p->turn*180./M_PI,
          /* Health. */
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,

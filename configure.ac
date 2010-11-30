@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.4.2], [bobbens@gmail.com])
+AC_INIT([naev], [0.5.-1], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -375,8 +375,8 @@ esac
 
 AC_SUBST([LIBLUA_CFLAGS])
 
-# utils/pack
-PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS"
+
+PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS -DNOLOGPRINTFCONSOLE"
 PACK_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS"
 
 AC_SUBST([PACK_CFLAGS])

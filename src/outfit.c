@@ -29,6 +29,7 @@
 #include "array.h"
 #include "ship.h"
 #include "conf.h"
+#include "pilot_heat.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -61,7 +62,7 @@ static DamageType outfit_strToDamageType( char *buf );
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
-static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
+static int outfit_parseDamage( DamageType *dtype, double *dmg, double *penetration, xmlNodePtr node );
 static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
@@ -528,6 +529,17 @@ double outfit_damage( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the outfit's penetration.
+ *    @param o Outfit to get information from.
+ */
+double outfit_penetration( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.penetration;
+   else if (outfit_isBeam(o)) return o->u.bem.penetration;
+   else if (outfit_isAmmo(o)) return o->u.amm.penetration;
+   return 0.;
+}
+/**
  * @brief Gets the outfit's damage type.
  *    @param o Outfit to get information from.
  */
@@ -580,6 +592,15 @@ double outfit_energy( const Outfit* o )
    else if (outfit_isBeam(o)) return o->u.bem.energy;
    else if (outfit_isAmmo(o)) return o->u.amm.energy;
    return -1.;
+}
+/**
+ * @brief Gets the outfit's heat generation.
+ *    @param o Outfit to get information from.
+ */
+double outfit_heat( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.heat;
+   return -1;
 }
 /**
  * @brief Gets the outfit's cpu usage.
@@ -819,6 +840,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("jammer",         OUTFIT_TYPE_JAMMER);
    O_CMP("map",            OUTFIT_TYPE_MAP);
    O_CMP("license",        OUTFIT_TYPE_LICENSE);
+   O_CMP("gui",            OUTFIT_TYPE_GUI);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;
@@ -839,25 +861,47 @@ static OutfitType outfit_strToOutfitType( char *buf )
  *    @param[in] node Node to parse damage from.
  *    @return 0 on success.
  */
-static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
+static int outfit_parseDamage( DamageType *dtype, double *dmg, double *penetration, xmlNodePtr node )
 {
    char *buf;
+   int ret;
 
    if (xml_isNode(node,"damage")) {
+      ret = 0;
+
       /* Get type */
       xmlr_attr(node,"type",buf);
-      (*dtype) = outfit_strToDamageType(buf);
-      if (buf) free(buf);
+      if (buf == NULL) {
+         WARN("Damage node missing 'type' attribute.");
+         ret = -1;
+      }
+      else {
+         (*dtype) = outfit_strToDamageType(buf);
+         if (buf) free(buf);
+      }
+
+      /* Get penetration. */
+      xmlr_attr(node,"penetrate",buf);
+      if (buf == NULL) {
+         WARN("Damage node missing 'penetrate' attribute.");
+         ret = -1;
+      }
+      else {
+         (*penetration) = atof(buf) / 100.;
+         if (buf) free(buf);
+      }
+
       /* Get damage */
       (*dmg) = xml_getFloat(node);
-      return 0;
+      return ret;
    }
 
    /* Unknown type */
-   (*dtype) = DAMAGE_TYPE_NULL;
-   (*dmg) = 0;
+   (*dtype)       = DAMAGE_TYPE_NULL;
+   (*dmg)         = 0.;
+   (*penetration) = 0.;
    WARN("Trying to parse non-damage node as damage node!");
-   return 1;
+   return -1;
 }
 
 
@@ -871,6 +915,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    char *buf;
+   double C, area;
 
    /* Defaults */
    temp->u.blt.spfx_armour    = -1;
@@ -885,10 +930,11 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
-      xmlr_float(node,"accuracy",temp->u.blt.accuracy);
       xmlr_float(node,"ew_lockon",temp->u.blt.ew_lockon);
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"cpu",temp->u.blt.cpu);
+      xmlr_float(node,"heatup",temp->u.blt.heatup);
+      xmlr_float(node,"leadangle",temp->u.blt.leadangle);
       if (xml_isNode(node,"range")) {
          buf = xml_nodeProp(node,"blowup");
          if (buf != NULL) {
@@ -946,7 +992,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
+         outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, &temp->u.blt.penetration, node );
          continue;
       }
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
@@ -957,7 +1003,19 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       temp->u.blt.falloff = temp->u.blt.range;
 
    /* Post processing. */
-   temp->u.blt.delay /= 1000.;
+   temp->u.blt.leadangle /= 180. * M_PI;
+   temp->u.blt.delay   /= 1000.;
+   temp->u.blt.damage  *= temp->u.blt.delay;
+   /*
+    *         dT Mthermal - Qweap
+    * Hweap = ----------------------
+    *                tweap
+    */
+   C = pilot_heatCalcOutfitC(temp);
+   area = pilot_heatCalcOutfitArea(temp);
+   temp->u.blt.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+         temp->u.blt.heatup * temp->u.blt.delay;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -968,16 +1026,20 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
+         "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"
          "%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
-         "%.0f Range",
+         "%.0f Range\n"
+         "%.1f second heat up",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
          temp->u.blt.cpu,
+         temp->u.blt.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.damage, temp->u.blt.damage,
          1./temp->u.blt.delay,
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
-         temp->u.blt.range );
+         temp->u.blt.range,
+         temp->u.blt.heatup);
 
 
 #define MELEMENT(o,s) \
@@ -989,11 +1051,12 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.delay==0,"delay");
    MELEMENT(temp->u.blt.speed==0,"speed");
    MELEMENT(temp->u.blt.range==0,"range");
-   MELEMENT(temp->u.blt.accuracy==0,"accuracy");
    MELEMENT(temp->u.blt.damage==0,"damage");
    MELEMENT(temp->u.blt.energy==0.,"energy");
    MELEMENT(temp->u.blt.cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
+   MELEMENT(temp->u.blt.heatup==0.,"heatup");
+   MELEMENT(outfit_isTurret(temp) && (temp->u.blt.leadangle==0.),"leadangle");
 #undef MELEMENT
 }
 
@@ -1025,9 +1088,10 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"delay",temp->u.bem.delay);
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"duration",temp->u.bem.duration);
+      xmlr_float(node,"heatup",temp->u.bem.heatup);
 
       if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, node );
+         outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, &temp->u.bem.penetration, node );
          continue;
       }
 
@@ -1064,6 +1128,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
+   temp->u.bem.damage *= temp->u.bem.delay;
+   temp->u.bem.turn   *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1074,16 +1140,20 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
+         "%.0f%% Penetration\n"
          "%.2f %s DPS\n"
          "%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
-         "%.0f Range",
-         outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
+         "%.0f Range\n"
+         "%.1f second heat up",
+         outfit_getType(temp), outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.cpu,
+         temp->u.bem.penetration*100.,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
-         temp->u.bem.range );
+         temp->u.bem.range,
+         temp->u.bem.heatup);
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1100,6 +1170,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.bem.energy==0.,"energy");
    MELEMENT(temp->u.bem.cpu==0.,"cpu");
    MELEMENT(temp->u.bem.damage==0,"damage");
+   MELEMENT(temp->u.bem.heatup==0.,"heatup");
 #undef MELEMENT
 }
 
@@ -1201,7 +1272,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"thrust",temp->u.amm.thrust);
       xmlr_float(node,"turn",temp->u.amm.turn);
       xmlr_float(node,"speed",temp->u.amm.speed);
-      xmlr_float(node,"accuracy",temp->u.amm.accuracy);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
@@ -1232,7 +1302,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"damage")) {
-         outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, node );
+         outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, &temp->u.amm.penetration, node );
          continue;
       }
       if (xml_isNode(node,"ai")) {
@@ -1252,16 +1322,19 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Post-processing */
    temp->u.amm.resist /= 100.; /* Set it in per one */
+   temp->u.amm.turn   *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
+         "%.0f%% Penetration\n"
          "%.0f Damage [%s]\n"
          "%.0f Energy\n"
          "%.0f Maximum Speed\n"
          "%.1f duration [%.1f Lock-On]",
          outfit_getType(temp),
+         temp->u.amm.penetration*100.,
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
@@ -1269,6 +1342,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   MELEMENT(temp->mass==0.,"mass");
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
@@ -1323,6 +1397,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
+      xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
       /* Stats. */
       if (ship_statsParseSingle( &temp->u.mod.stats, node ))
@@ -1368,6 +1443,7 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
    DESC_ADD0( temp->u.mod.cpu, "CPU" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
+   DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
 #undef DESC_ADD1
 #undef DESC_ADD0
@@ -1377,12 +1453,14 @@ if ((x) != 0.) \
 
    /* More processing. */
    temp->u.mod.thrust_rel /= 100.;
+   temp->u.mod.turn       *= M_PI / 180.;
    temp->u.mod.turn_rel   /= 100.;
    temp->u.mod.speed_rel  /= 100.;
    temp->u.mod.armour_rel /= 100.;
    temp->u.mod.shield_rel /= 100.;
    temp->u.mod.energy_rel /= 100.;
    temp->u.mod.mass_rel   /= 100.;
+   temp->u.mod.crew_rel   /= 100.;
    temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
 
@@ -1413,26 +1491,25 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
+      xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
-
-   /* Post processing. */
-   temp->u.afb.thrust += 100.;
-   temp->u.afb.speed  += 100.;
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Requires %.0f CPU\n"
+         "%.0f Maximum Effective Mass\n"
          "%.0f%% Thrust\n"
          "%.0f%% Maximum Speed\n"
          "%.1f EPS\n"
          "%.1f Rumble",
          outfit_getType(temp),
          temp->u.afb.cpu,
-         temp->u.afb.thrust,
-         temp->u.afb.speed,
+         temp->u.afb.mass_limit,
+         temp->u.afb.thrust + 100.,
+         temp->u.afb.speed + 100.,
          temp->u.afb.energy,
          temp->u.afb.rumble );
 
@@ -1443,6 +1520,15 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
+
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   MELEMENT(temp->u.afb.thrust==0.,"thrust");
+   MELEMENT(temp->u.afb.speed==0.,"speed");
+   MELEMENT(temp->u.afb.energy==0.,"energy");
+   MELEMENT(temp->u.afb.cpu==0.,"cpu");
+   MELEMENT(temp->u.afb.mass_limit==0.,"mass_limit");
+#undef MELEMENT
 }
 
 /**

@@ -67,8 +67,8 @@ typedef struct UniHunkTarget_ {
 typedef enum UniHunkType_ {
    HUNK_TYPE_NONE,
    /* Target should be system. */
-   HUNK_TYPE_PLANET_ADD,
-   HUNK_TYPE_PLANET_REMOVE,
+   HUNK_TYPE_ASSET_ADD,
+   HUNK_TYPE_ASSET_REMOVE,
    HUNK_TYPE_FLEET_ADD,
    HUNK_TYPE_FLEET_REMOVE,
    HUNK_TYPE_FLEETGROUP_ADD,
@@ -260,11 +260,11 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    cur = node->xmlChildrenNode;
    do {
       xml_onlyNodes(cur);
-      if (xml_isNode(cur,"planet")) {
+      if (xml_isNode(cur,"asset")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
 
-         /* Get the planet to modify. */
+         /* Get the asset to modify. */
          xmlr_attr(cur,"name",hunk.u.name);
 
          /* Get the type. */
@@ -274,9 +274,9 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             continue;
          }
          if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_PLANET_ADD;
+            hunk.type = HUNK_TYPE_ASSET_ADD;
          else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_PLANET_REMOVE;
+            hunk.type = HUNK_TYPE_ASSET_REMOVE;
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -436,11 +436,11 @@ static int diff_patch( xmlNodePtr parent )
          fail = &diff->failed[i];
          target = fail->target.u.name;
          switch (fail->type) {
-            case HUNK_TYPE_PLANET_ADD:
-               WARN("   [%s] planet add: '%s'", target, fail->u.name);
+            case HUNK_TYPE_ASSET_ADD:
+               WARN("   [%s] asset add: '%s'", target, fail->u.name);
                break;
-            case HUNK_TYPE_PLANET_REMOVE:
-               WARN("   [%s] planet remove: '%s'", target, fail->u.name);
+            case HUNK_TYPE_ASSET_REMOVE:
+               WARN("   [%s] asset remove: '%s'", target, fail->u.name);
                break;
 #if 0
             case HUNK_TYPE_FLEET_ADD:
@@ -492,11 +492,11 @@ static int diff_patchHunk( UniHunk_t *hunk )
 {
    switch (hunk->type) {
 
-      /* Adding a planet. */
-      case HUNK_TYPE_PLANET_ADD:
+      /* Adding a asset. */
+      case HUNK_TYPE_ASSET_ADD:
          return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
-      /* Removing a planet. */
-      case HUNK_TYPE_PLANET_REMOVE:
+      /* Removing a asset. */
+      case HUNK_TYPE_ASSET_REMOVE:
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
 
       /* Adding a fleet. */
@@ -632,11 +632,11 @@ static int diff_removeDiff( UniDiff_t *diff )
       memcpy( &hunk, &diff->applied[i], sizeof(UniHunk_t) );
       /* Invert the type for reverting. */
       switch (hunk.type) {
-         case HUNK_TYPE_PLANET_ADD:
-            hunk.type = HUNK_TYPE_PLANET_REMOVE;
+         case HUNK_TYPE_ASSET_ADD:
+            hunk.type = HUNK_TYPE_ASSET_REMOVE;
             break;
-         case HUNK_TYPE_PLANET_REMOVE:
-            hunk.type = HUNK_TYPE_PLANET_ADD;
+         case HUNK_TYPE_ASSET_REMOVE:
+            hunk.type = HUNK_TYPE_ASSET_ADD;
             break;
 
          case HUNK_TYPE_FLEET_ADD:
@@ -704,8 +704,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       free(hunk->target.u.name);
 
    switch (hunk->type) {
-      case HUNK_TYPE_PLANET_ADD:
-      case HUNK_TYPE_PLANET_REMOVE:
+      case HUNK_TYPE_ASSET_ADD:
+      case HUNK_TYPE_ASSET_REMOVE:
       case HUNK_TYPE_TECH_ADD:
       case HUNK_TYPE_TECH_REMOVE:
          if (hunk->u.name != NULL)

@@ -102,8 +102,15 @@ int comm_openPilot( unsigned int pilot )
    comm_pilot  = p;
    c = pilot_getFactionColourChar( p );
 
+   /* Make sure pilot exists. */
    if (comm_pilot == NULL)
       return -1;
+   
+   /* Make sure pilot in range. */
+   if (pilot_inRangePilot( player.p, comm_pilot ) <= 0) {
+      comm_pilot = NULL;
+      return -1;
+   }
 
    /* Destroy the window if it's already present. */
    wid = window_get(COMM_WDWNAME);
@@ -252,6 +259,7 @@ int comm_openPlanet( Planet *planet )
  *    @param gfx Graphic to use for the comm window (is freed).
  *    @param faction Faction of what you're communicating with.
  *    @param override If positive sets to ally, if negative sets to hostile.
+ *    @param bribed Whether or not the target is bribed.
  *    @param name Name of object talking to.
  *    @return The comm window id.
  */

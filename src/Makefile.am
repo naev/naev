@@ -47,6 +47,7 @@ naev_SOURCES = \
 	land.c \
 	land_outfits.c \
 	land_shipyard.c \
+	log.c \
 	map.c \
 	map_overlay.c \
 	md5.c \
@@ -113,6 +114,7 @@ naev_SOURCES = \
 	pilot_weapon.c \
 	plasmaf.c \
 	player.c \
+	player_autonav.c \
 	player_gui.c \
 	queue.c \
 	rng.c \
@@ -123,7 +125,9 @@ naev_SOURCES = \
 	sound_sdlmix.c \
 	space.c \
 	spfx.c \
+	start.c \
 	tech.c \
+	threadpool.c \
 	toolkit.c \
 	unidiff.c \
 	weapon.c \
@@ -239,6 +243,7 @@ naev_SOURCES = \
 	pilot_weapon.h \
 	plasmaf.h \
 	player.h \
+	player_autonav.h \
 	player_gui.h \
 	queue.h \
 	rng.h \
@@ -250,7 +255,9 @@ naev_SOURCES = \
 	sound_sdlmix.h \
 	space.h \
 	spfx.h \
+	start.h \
 	tech.h \
+	threadpool.h \
 	toolkit.h \
 	unidiff.h \
 	weapon.h

@@ -1,106 +1,797 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
-<!-- Short Range Weapons -->
- <outfit name="Laser Cannon">
+
+ <!-- LASER TREE -->
+ <outfit name="Laser Cannon MK1">
   <general>
    <slot>weapon</slot>
-   <mass>2</mass>
+   <size>light</size>
+   <mass>4</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
    <gfx_store>laser</gfx_store>
    </general>
   <specific type="bolt">
-   <cpu>4</cpu>
-   <gfx>laserred</gfx>
+   <cpu>5</cpu>
+   <gfx>laser1S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>550</delay>
    <speed>550</speed>
    <range>420</range>
-   <falloff>252</falloff>
-   <accuracy>18</accuracy>
-   <energy>4.25</energy>
-   <damage type="energy">7.5</damage>
+   <falloff>250</falloff>
+   <energy>8</energy>
+   <heatup>15</heatup>
+   <damage type="energy" penetrate="0">5.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>3</mass>
+   <mass>6</mass>
    <price>15000</price>
    <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
    <cpu>8</cpu>
-   <gfx>laser2</gfx>
+   <gfx>laser2S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>600</delay>
    <speed>550</speed>
-   <range>450</range>
-   <falloff>270</falloff>
-   <gfx_end>laser2-end</gfx_end>
-   <accuracy>18</accuracy>
-   <energy>8.87</energy>
-   <damage type="energy">12.5</damage>
+   <range>525</range>
+   <falloff>300</falloff>
+   <gfx_end>laser1S</gfx_end>
+   <energy>12</energy>
+   <heatup>20</heatup>
+   <damage type="energy" penetrate="14">9</damage>
   </specific>
  </outfit>
- <outfit name="Laser Turret">
+ <outfit name="Laser Cannon MK3">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>16</mass>
+   <mass>8</mass>
+   <price>15000</price>
+   <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+   <gfx_store>laser2</gfx_store>
+   </general>
+  <specific type="bolt">
+   <cpu>11</cpu>
+   <gfx>laser3S</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>650</delay>
+   <speed>550</speed>
+   <range>600</range>
+   <falloff>330</falloff>
+   <gfx_end>laser2S</gfx_end>
+   <energy>15</energy>
+   <heatup>25</heatup>
+   <damage type="energy" penetrate="22">15</damage>
+  </specific>
+ </outfit>
+ <!-- TODO laser pd mk1 -->
+ <!-- TODO laser pd mk2 -->
+ <outfit name="Ripper Cannon">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <license>Medium Weapon License</license>
+   <mass>9</mass>
+   <price>35000</price>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>11</cpu>
+   <gfx>ripper</gfx>
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1460</delay>
+   <speed>700</speed>
+   <range>900</range>
+   <falloff>600</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <energy>17</energy>
+   <heatup>30</heatup>
+   <damage type="energy" penetrate="30">13</damage>
+  </specific>
+ </outfit>
+ <outfit name="Heavy Ripper Cannon">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Heavy Weapon License</license>
+   <mass>12</mass>
+   <price>35000</price>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>15</cpu>
+   <gfx>ripper</gfx>
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1660</delay>
+   <speed>700</speed>
+   <range>1300</range>
+   <falloff>850</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <energy>22</energy>
+   <heatup>30</heatup>
+   <damage type="energy" penetrate="40">22</damage>
+  </specific>
+ </outfit>
+ <outfit name="Laser Turret MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>23</mass>
    <price>25000</price>
    <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
    <gfx_store>laserturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>16</cpu>
-   <gfx>laserred</gfx>
+   <cpu>18</cpu>
+   <gfx>laser1S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>540</delay>
+   <delay>350</delay>
    <speed>550</speed>
-   <range>420</range>
-   <falloff>252</falloff>
-   <accuracy>18</accuracy>
-   <energy>6.12</energy>
-   <damage type="energy">8.1</damage>
+   <range>800</range>
+   <falloff>500</falloff>
+   <energy>23</energy>
+   <heatup>25</heatup>
+   <leadangle>150</leadangle>
+   <damage type="energy" penetrate="20">18</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
- <general>
+  <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
-   <mass>18</mass>
+   <mass>28</mass>
    <price>45000</price>
    <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>28</cpu>
-   <gfx>laser2</gfx>
+   <cpu>22</cpu>
+   <gfx>laser2M</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>540</delay>
+   <delay>400</delay>
    <speed>550</speed>
-   <range>450</range>
-   <falloff>270</falloff>
-   <gfx_end>laser2-end</gfx_end>
-   <accuracy>18</accuracy>
-   <energy>12.75</energy>
-   <damage type="energy">13.5</damage>
+   <range>1000</range>
+   <falloff>600</falloff>
+   <gfx_end>laser1M</gfx_end>
+   <energy>28</energy>
+   <heatup>30</heatup>
+   <leadangle>140</leadangle>
+   <damage type="energy" penetrate="27">24</damage>
   </specific>
  </outfit>
- <outfit name="Plasma Blaster">
+ <outfit name="Laser Turret MK3">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>31</mass>
+   <price>45000</price>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>laserturret2</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>25</cpu>
+   <gfx>laser3M</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>450</delay>
+   <speed>550</speed>
+   <range>1200</range>
+   <falloff>700</falloff>
+   <gfx_end>laser2M</gfx_end>
+   <energy>30</energy>
+   <heatup>35</heatup>
+   <leadangle>130</leadangle>
+   <damage type="energy" penetrate="35">32</damage>
+  </specific>
+ </outfit>
+ <outfit name="Heavy Laser">
+  <general>
+   <slot>weapon</slot>
+   <size>heavy</size>
+   <license>Heavy Weapon License</license>
+   <mass>53</mass>
+   <price>45000</price>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>laserturret2</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>40</cpu>
+   <gfx>laser3L</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1700</delay>
+   <speed>550</speed>
+   <range>2200</range>
+   <falloff>1600</falloff>
+   <gfx_end>laser2L</gfx_end>
+   <energy>40</energy>
+   <heatup>50</heatup>
+   <leadangle>50</leadangle>
+   <damage type="energy" penetrate="60">43</damage>
+  </specific>
+ </outfit>
+ <outfit name="Turbolaser">
+  <general>
+   <slot>weapon</slot>
+   <size>heavy</size>
+   <license>Heavy Weapon License</license>
+   <mass>57</mass>
+   <price>45000</price>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>laserturret2</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>45</cpu>
+   <gfx>laser4L</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1800</delay>
+   <speed>550</speed>
+   <range>2800</range>
+   <falloff>2000</falloff>
+   <gfx_end>laser3L</gfx_end>
+   <energy>43</energy>
+   <heatup>60</heatup>
+   <leadangle>70</leadangle>
+   <damage type="energy" penetrate="75">50</damage>
+  </specific>
+ </outfit>
+
+
+ <!-- ION TREE -->
+ <outfit name="Razor MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>2.2</mass>
+   <price>20000</price>
+   <description>TODO</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>5</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>600</delay>
+   <speed>800</speed>
+   <range>900</range>
+   <falloff>700</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>5.25</energy>
+   <heatup>20</heatup>
+   <damage type="ion" penetrate="0">4</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor MK2">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>4</mass>
+   <price>20000</price>
+   <description>TODO</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>9</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>600</delay>
+   <speed>800</speed>
+   <range>950</range>
+   <falloff>725</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>9.5</energy>
+   <heatup>25</heatup>
+   <damage type="ion" penetrate="5">8</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor MK3">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>6.5</mass>
+   <price>20000</price>
+   <description>TODO</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>11</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>600</delay>
+   <speed>800</speed>
+   <range>1000</range>
+   <falloff>750</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>15</energy>
+   <heatup>30</heatup>
+   <damage type="ion" penetrate="11">14</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor Turret MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>10</mass>
+   <price>75000</price>
+   <description>TODO</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>18</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>800</speed>
+   <range>1000</range>
+   <falloff>750</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>17</energy>
+   <heatup>30</heatup>
+   <leadangle>160</leadangle>
+   <damage type="ion" penetrate="10">12</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor Turret MK2">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <mass>14</mass>
+   <price>75000</price>
+   <description>TODO</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>22</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>800</speed>
+   <range>1400</range>
+   <falloff>1100</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>22</energy>
+   <heatup>35</heatup>
+   <leadangle>145</leadangle>
+   <damage type="ion" penetrate="17">17</damage>
+  </specific>
+ </outfit>
+ <outfit name="Razor Turret MK3">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <mass>19</mass>
+   <price>75000</price>
+   <description>TODO</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>25</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>800</speed>
+   <range>1800</range>
+   <falloff>1400</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>26</energy>
+   <heatup>40</heatup>
+   <leadangle>130</leadangle>
+   <damage type="ion" penetrate="17">23</damage>
+  </specific>
+ </outfit>
+ <outfit name="Ion Cannon">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>20000</price>
+   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>14</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1440</delay>
+   <speed>500</speed>
+   <range>700</range>
+   <falloff>500</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>16</energy>
+   <heatup>50</heatup>
+   <damage type="ion" penetrate="11">15</damage>
+  </specific>
+ </outfit>
+ <outfit name="Heavy Ion Cannon">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>14</mass>
+   <price>20000</price>
+   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
+   <gfx_store>ioncannon</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>21</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1640</delay>
+   <speed>500</speed>
+   <range>1100</range>
+   <falloff>800</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>24</energy>
+   <heatup>60</heatup>
+   <damage type="ion" penetrate="22">25</damage>
+  </specific>
+ </outfit>
+ <outfit name="Heavy Ion Turret">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <mass>37</mass>
+   <license>Heavy Weapon License</license>
+   <price>75000</price>
+   <description>The heavy ion turret uses a more powerful generator for each of its two ion cannons, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption is eclipsed by the firepower they provide.</description>
+   <gfx_store>ionturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>34</cpu>
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>900</delay>
+   <speed>500</speed>
+   <range>1300</range>
+   <falloff>1000</falloff>
+   <gfx_end>ion-end</gfx_end>
+   <energy>38</energy>
+   <heatup>60</heatup>
+   <leadangle>100</leadangle>
+   <damage type="ion" penetrate="40">34</damage>
+  </specific>
+ </outfit>
+ <!-- TODO shock artillery -->
+ <!-- TODO shock turret -->
+ <!-- TODO particle needle -->
+ <!-- TODO purgatory -->
+
+
+ <!-- KINETIC TREE -->
+ <outfit name="Gauss Gun">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>3</mass>
+   <price>25000</price>
+   <description>TODO</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>2</cpu>
+   <gfx>autocannon</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>300</delay>
+   <speed>400</speed>
+   <range blowup="armour">700</range>
+   <energy>5</energy>
+   <heatup>40</heatup>
+   <damage type="kinetic" penetrate="3">7</damage>
+  </specific>
+ </outfit>
+ <outfit name="Vulcan Gun">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>7</mass>
+   <price>25000</price>
+   <description>TODO</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>5</cpu>
+   <gfx>autocannon</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>350</delay>
+   <speed>400</speed>
+   <range blowup="armour">800</range>
+   <energy>11</energy>
+   <heatup>50</heatup>
+   <damage type="kinetic" penetrate="12">15</damage>
+  </specific>
+ </outfit>
+ <outfit name="Shredder">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>15</mass>
+   <price>25000</price>
+   <description>TODO</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>9</cpu>
+   <gfx>autocannon</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>350</delay>
+   <speed>400</speed>
+   <range blowup="armour">900</range>
+   <energy>19</energy>
+   <heatup>60</heatup>
+   <damage type="kinetic" penetrate="25">25</damage>
+  </specific>
+ </outfit>
+ <outfit name="Turreted Gauss Gun">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <mass>18</mass>
+   <license>Heavy Weapon License</license>
+   <price>190000</price>
+   <description>TODO</description>
+   <gfx_store>railgunturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>11</cpu>
+   <gfx>mass</gfx>
+   <sound>mass</sound>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>200</delay>
+   <speed>400</speed>
+   <range blowup="armour">900</range>
+   <energy>10</energy>
+   <heatup>60</heatup>
+   <leadangle>140</leadangle>
+   <damage type="kinetic" penetrate="11">15</damage>
+  </specific>
+ </outfit>
+ <outfit name="Turreted Vulcan Gun">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <mass>28</mass>
+   <license>Heavy Weapon License</license>
+   <price>190000</price>
+   <description>TODO</description>
+   <gfx_store>railgunturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>18</cpu>
+   <gfx>mass</gfx>
+   <sound>mass</sound>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>225</delay>
+   <speed>400</speed>
+   <range blowup="armour">1300</range>
+   <energy>25</energy>
+   <heatup>70</heatup>
+   <leadangle>120</leadangle>
+   <damage type="kinetic" penetrate="29">34</damage>
+  </specific>
+ </outfit>
+ <!-- TODO flak -->
+ <outfit name="Mass Driver MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>21</mass>
+   <price>25000</price>
+   <description>TODO</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>21</cpu>
+   <gfx>autocannon</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1440</delay>
+   <speed>400</speed>
+   <range blowup="armour">1200</range>
+   <energy>25</energy>
+   <heatup>50</heatup>
+   <damage type="kinetic" penetrate="29">30</damage>
+  </specific>
+ </outfit>
+ <outfit name="Mass Driver MK2">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>29</mass>
+   <price>25000</price>
+   <description>TODO</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>25</cpu>
+   <gfx>autocannon</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1400</delay>
+   <speed>400</speed>
+   <range blowup="armour">1500</range>
+   <energy>33</energy>
+   <heatup>60</heatup>
+   <damage type="kinetic" penetrate="43">38</damage>
+  </specific>
+ </outfit>
+ <outfit name="Mass Driver MK3">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>41</mass>
+   <price>25000</price>
+   <description>TODO</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>28</cpu>
+   <gfx>autocannon</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1500</delay>
+   <speed>400</speed>
+   <range blowup="armour">1750</range>
+   <energy>38</energy>
+   <heatup>70</heatup>
+   <damage type="kinetic" penetrate="50">45</damage>
+  </specific>
+ </outfit>
+ <outfit name="Railgun">
+  <general>
+   <slot>weapon</slot>
+   <size>heavy</size>
+   <license>Heavy Weapon License</license>
+   <mass>63</mass>
+   <price>55000</price>
+   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+   <gfx_store>railgun</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>37</cpu>
+   <gfx>mass</gfx>
+   <sound>mass</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1980</delay>
+   <speed>650</speed>
+   <range>2200</range>
+   <falloff>1600</falloff>
+   <gfx_end>mass-end</gfx_end>
+   <energy>43</energy>
+   <heatup>90</heatup>
+   <damage type="kinetic" penetrate="60">49</damage>
+  </specific>
+ </outfit>
+ <outfit name="Repeating Railgun">
+  <general>
+   <slot>weapon</slot>
+   <size>heavy</size>
+   <license>Heavy Weapon License</license>
+   <mass>82</mass>
+   <price>55000</price>
+   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+   <gfx_store>railgun</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>48</cpu>
+   <gfx>mass</gfx>
+   <sound>mass</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1200</delay>
+   <speed>650</speed>
+   <range>2200</range>
+   <falloff>1600</falloff>
+   <gfx_end>mass-end</gfx_end>
+   <energy>57</energy>
+   <heatup>100</heatup>
+   <damage type="kinetic" penetrate="80">56</damage>
+  </specific>
+ </outfit>
+ <outfit name="Railgun Turret">
+  <general>
+   <slot>weapon</slot>
+   <size>heavy</size>
+   <mass>115</mass>
+   <license>Heavy Weapon License</license>
+   <price>190000</price>
+   <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns, at a slight velocity cost.</description>
+   <gfx_store>railgunturret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>50</cpu>
+   <gfx>mass</gfx>
+   <sound>mass</sound>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <delay>1102</delay>
+   <speed>625</speed>
+   <range>720</range>
+   <falloff>540</falloff>
+   <gfx_end>mass-end</gfx_end>
+   <energy>68</energy>
+   <heatup>90</heatup>
+   <leadangle>60</leadangle>
+   <damage type="kinetic" penetrate="70">63</damage>
+  </specific>
+ </outfit>
+
+
+ <!-- PLASMA TREE -->
+ <outfit name="Plasma Blaster MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
    <mass>4</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
@@ -114,16 +805,17 @@
    <spfx_armour>PlaS</spfx_armour>
    <delay>675</delay>
    <speed>450</speed>
-   <range>350</range>
+   <range>450</range>
    <falloff>210</falloff>
-   <accuracy>25</accuracy>
    <energy>3.75</energy>
-   <damage type="energy">7.5</damage>
+   <heatup>20</heatup>
+   <damage type="energy" penetrate="8">7.5</damage>
   </specific>
-</outfit>
+ </outfit>
  <outfit name="Plasma Blaster MK2">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <license>Medium Weapon License</license>
    <mass>5</mass>
    <price>18000</price>
@@ -138,17 +830,290 @@
    <spfx_armour>PlaS2</spfx_armour>
    <delay>675</delay>
    <speed>450</speed>
-   <range>375</range>
+   <range>650</range>
    <falloff>225</falloff>
    <gfx_end>plasma2-end</gfx_end>
-   <accuracy>25</accuracy>
    <energy>7.5</energy>
-   <damage type="energy">12</damage>
+   <heatup>25</heatup>
+   <damage type="energy" penetrate="18">12</damage>
   </specific>
-</outfit>
+ </outfit>
+ <outfit name="Plasma Blaster MK3">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <license>Medium Weapon License</license>
+   <mass>8</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>14</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>675</delay>
+   <speed>450</speed>
+   <range>725</range>
+   <falloff>225</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <energy>15</energy>
+   <heatup>30</heatup>
+   <damage type="energy" penetrate="25">19</damage>
+  </specific>
+ </outfit>
+ <outfit name="Plasma Turret MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <license>Medium Weapon License</license>
+   <mass>18</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>17</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>425</delay>
+   <speed>450</speed>
+   <range>950</range>
+   <falloff>210</falloff>
+   <energy>14</energy>
+   <heatup>25</heatup>
+   <damage type="energy" penetrate="12">18</damage>
+  </specific>
+ </outfit>
+ <outfit name="Plasma Turret MK2">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>24</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>24</cpu>
+   <gfx>plasma</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS</spfx_armour>
+   <delay>675</delay>
+   <speed>450</speed>
+   <range>1450</range>
+   <falloff>225</falloff>
+   <energy>22</energy>
+   <heatup>30</heatup>
+   <damage type="energy" penetrate="27">28</damage>
+  </specific>
+ </outfit>
+ <outfit name="BioPlasma Organ Stage 1">
+  <general>
+   <slot>weapon</slot>
+   <size>light</size>
+   <license>Medium Weapon License</license>
+   <mass>0</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>1</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>750</delay>
+   <speed>550</speed>
+   <range>1125</range>
+   <falloff>225</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <energy>20</energy>
+   <heatup>40</heatup>
+   <damage type="energy" penetrate="30">25</damage>
+  </specific>
+ </outfit>
+ <outfit name="BioPlasma Organ Stage 2">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>0</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>1</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>750</delay>
+   <speed>550</speed>
+   <range>1525</range>
+   <falloff>900</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <energy>32</energy>
+   <heatup>50</heatup>
+   <damage type="energy" penetrate="40">38</damage>
+  </specific>
+ </outfit>
+ <outfit name="Plasma Cluster Cannon MK1">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>20</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>24</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>875</delay>
+   <speed>650</speed>
+   <range>1025</range>
+   <falloff>225</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <energy>28</energy>
+   <heatup>40</heatup>
+   <damage type="energy" penetrate="25">30</damage>
+  </specific>
+ </outfit>
+ <outfit name="Plasma Cluster Cannon MK2">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>27</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>28</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>1000</delay>
+   <speed>650</speed>
+   <range>1325</range>
+   <falloff>225</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <energy>35</energy>
+   <heatup>45</heatup>
+   <damage type="energy" penetrate="35">39</damage>
+  </specific>
+ </outfit>
+ <outfit name="Plasma Cluster Cannon MK3">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>26</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>plasma2</gfx_store>
+  </general>
+  <specific type="bolt">
+   <cpu>34</cpu>
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>1100</delay>
+   <speed>650</speed>
+   <range>1700</range>
+   <falloff>1300</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <heatup>50</heatup>
+   <energy>45</energy>
+   <damage type="energy" penetrate="42">46</damage>
+  </specific>
+ </outfit>
+ <!-- TODO plasma lance -->
+ <!-- TODO bioplasma lance -->
+
+
+ <!-- BEAM TREE -->
+ <!-- TODO micro-beam -->
+ <!-- TODO heavy micro-beam -->
+ <outfit name="Orion Beam">
+  <general>
+   <slot>weapon</slot>
+   <size>medium</size>
+   <license>Medium Weapon License</license>
+   <mass>30</mass>
+   <price>184000</price>
+   <description>The Orion Beam is a fixed-mount weapon designed to be mounted on heavy fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
+   <gfx_store>orion</gfx_store>
+  </general>
+  <specific type="beam" secondary="1">
+   <cpu>15</cpu>
+   <delay>6000</delay>
+   <duration>3</duration>
+   <range>300</range>
+   <energy>65</energy>
+   <heatup>60</heatup>
+   <damage type="energy" penetrate="50">50</damage>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <gfx>beam_orion</gfx>
+   <sound>beam0</sound>
+   <sound_off>beam_off0</sound_off>
+  </specific>
+ </outfit>
+ <!-- TODO perseus beam -->
+ <!-- TODO perseus beam turret -->
+ <!-- TODO loki beam turret -->
+ <!-- TODO advanced loki beam turret -->
+ <!-- TODO valkyrie beam turret -->
+ <outfit name="Ragnarok Beam">
+  <general>
+   <slot>weapon</slot>
+   <size>heavy</size>
+   <license>Heavy Weapon License</license>
+   <mass>140</mass>
+   <price>745000</price>
+   <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
+   <gfx_store>ragnarok</gfx_store>
+  </general>
+  <specific type="turret beam" secondary="1">
+   <cpu>80</cpu>
+   <delay>10000</delay>
+   <duration>5</duration>
+   <range>400</range>
+   <turn>35</turn>
+   <energy>200</energy>
+   <heatup>60</heatup>
+   <damage type="energy" penetrate="90">150</damage>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <gfx>beam_ragnarok</gfx>
+   <sound>beam0</sound>
+   <sound_off>beam_off0</sound_off>
+  </specific>
+ </outfit>
+
+
+ <!-- NEUTRON TREE -->
  <outfit name="Neutron Disruptor">
   <general>
    <slot>weapon</slot>
+   <size>light</size>
    <mass>7</mass>
    <price>45000</price>
    <license>Heavy Weapon License</license>
@@ -166,163 +1131,14 @@
    <range>420</range>
    <falloff>252</falloff>
    <gfx_end>neutron-end</gfx_end>
-   <accuracy>15</accuracy>
    <energy>13.75</energy>
-   <damage type="energy">15</damage>
+   <heatup>40</heatup>
+   <damage type="energy" penetrate="22">15</damage>
   </specific>
  </outfit>
-<!-- Medium Range Weapons -->
- <outfit name="Ion Cannon">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>6</mass>
-   <price>20000</price>
-   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
-   <gfx_store>ioncannon</gfx_store>
-  </general>
-  <specific type="bolt">
-   <cpu>7</cpu>
-   <gfx>ion</gfx>
-   <sound>ion</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>1440</delay>
-   <speed>500</speed>
-   <range>560</range>
-   <falloff>392</falloff>
-   <gfx_end>ion-end</gfx_end>
-   <accuracy>13</accuracy>
-   <energy>15</energy>
-   <damage type="ion">18.8</damage>
-  </specific>
- </outfit>
- <outfit name="Heavy Ion Turret">
-  <general>
-   <slot>weapon</slot>
-   <mass>42</mass>
-   <license>Heavy Weapon License</license>
-   <price>75000</price>
-   <description>The heavy ion turret uses a more powerful generator for each of its two ion cannons, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption is eclipsed by the firepower they provide.</description>
-   <gfx_store>ionturret</gfx_store>
-  </general>
-  <specific type="turret bolt">
-   <cpu>34</cpu>
-   <gfx>ion</gfx>
-   <sound>ion</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>765</delay>
-   <speed>500</speed>
-   <range>560</range>
-   <falloff>392</falloff>
-   <gfx_end>ion-end</gfx_end>
-   <accuracy>7</accuracy>
-   <energy>25</energy>
-   <damage type="ion">22.5</damage>
-  </specific>
- </outfit>
- <outfit name="40mm Autocannon">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>15</mass>
-   <price>25000</price>
-   <description>Though the autocannon's design originated many centuries ago, it has remained in service as an effective, if somewhat primitive design. The hail of high-explosive shells it unleashes decimates armour while remaining useful against modern shields.</description>
-   <gfx_store>gatling</gfx_store>
-  </general>
-  <specific type="bolt">
-   <cpu>8</cpu>
-   <gfx>autocannon</gfx>
-   <sound>autocannon</sound>
-   <sound_hit>medexp0</sound_hit>
-   <spfx_shield>ExpS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>1440</delay>
-   <speed>500</speed>
-   <range blowup="armour">450</range>
-   <accuracy>12</accuracy>
-   <energy>25</energy>
-   <damage type="kinetic">30</damage>
-  </specific>
- </outfit>
-<!-- Long Range Weapons -->
- <outfit name="150mm Railgun">
-  <general>
-   <slot>weapon</slot>
-   <license>Heavy Weapon License</license>
-   <mass>20</mass>
-   <price>55000</price>
-   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
-   <gfx_store>railgun</gfx_store>
-  </general>
-  <specific type="bolt">
-   <cpu>16</cpu>
-   <gfx>mass</gfx>
-   <sound>mass</sound>
-   <sound_hit>medexp0</sound_hit>
-   <spfx_shield>ShiM</spfx_shield>
-   <spfx_armour>ExpM</spfx_armour>
-   <delay>1980</delay>
-   <speed>650</speed>
-   <range>800</range>
-   <falloff>600</falloff>
-   <gfx_end>mass-end</gfx_end>
-   <accuracy>10</accuracy>
-   <energy>52.5</energy>
-   <damage type="kinetic">43.75</damage>
-  </specific>
- </outfit>
-  <outfit name="150mm Railgun Turret">
-  <general>
-   <slot>weapon</slot>
-   <mass>60</mass>
-   <license>Heavy Weapon License</license>
-   <price>190000</price>
-   <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns, at a slight velocity cost.</description>
-   <gfx_store>railgunturret</gfx_store>
-  </general>
-  <specific type="turret bolt">
-   <cpu>50</cpu>
-   <gfx>mass</gfx>
-   <sound>mass</sound>
-   <spfx_shield>ShiM</spfx_shield>
-   <spfx_armour>ExpM</spfx_armour>
-   <delay>1102</delay>
-   <speed>625</speed>
-   <range>720</range>
-   <falloff>540</falloff>
-   <gfx_end>mass-end</gfx_end>
-   <accuracy>10</accuracy>
-   <energy>66</energy>
-   <damage type="kinetic">46.25</damage>
-  </specific>
- </outfit>
- <outfit name="Ripper MK2">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>10</mass>
-   <price>35000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
-   <gfx_store>ripper</gfx_store>
-  </general>
-  <specific type="bolt">
-   <cpu>12</cpu>
-   <gfx>ripper</gfx>390
-   <sound>ripper</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>1260</delay>
-   <speed>700</speed>
-   <range>600</range>
-   <falloff>450</falloff>
-   <gfx_end>ripper-end</gfx_end>
-   <accuracy>10</accuracy>
-   <energy>23.75</energy>
-   <damage type="energy">22.5</damage>
-  </specific>
- </outfit>
+
+
+ <!-- SPECIAL WEAPS -->
  <outfit name="Base Ripper MK2">
   <general>
    <slot>weapon</slot>
@@ -343,60 +1159,15 @@
    <range>900</range>
    <falloff>650</falloff>
    <gfx_end>ripper-end</gfx_end>
-   <accuracy>10</accuracy>
    <energy>23.75</energy>
-   <damage type="energy">22.5</damage>
+   <heatup>600</heatup>
+   <leadangle>150</leadangle>
+   <damage type="energy" penetrate="50">22.5</damage>
   </specific>
  </outfit>
-<!-- Beam Weapons -->
- <outfit name="Orion Beam">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>30</mass>
-   <price>184000</price>
-   <description>The Orion Beam is a fixed-mount weapon designed to be mounted on heavy fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
-   <gfx_store>orion</gfx_store>
-  </general>
-  <specific type="beam" secondary="1">
-   <cpu>15</cpu>
-   <delay>6000</delay>
-   <duration>3</duration>
-   <range>300</range>
-   <energy>65</energy>
-   <damage type="energy">50</damage>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <gfx>beam_orion</gfx>
-   <sound>beam0</sound>
-   <sound_off>beam_off0</sound_off>
-  </specific>
- </outfit>
- <outfit name="Ragnarok Beam">
-  <general>
-   <slot>weapon</slot>
-   <license>Heavy Weapon License</license>
-   <mass>140</mass>
-   <price>745000</price>
-   <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
-   <gfx_store>ragnarok</gfx_store>
-  </general>
-  <specific type="turret beam" secondary="1">
-   <cpu>80</cpu>
-   <delay>10000</delay>
-   <duration>5</duration>
-   <range>400</range>
-   <turn>35</turn>
-   <energy>200</energy>
-   <damage type="energy">150</damage>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <gfx>beam_ragnarok</gfx>
-   <sound>beam0</sound>
-   <sound_off>beam_off0</sound_off>
-  </specific>
- </outfit>
-<!-- Missile Weapons -->
+
+
+ <!-- Missile Weapons -->
  <outfit name="Seeker Launcher">
   <general>
    <slot>weapon</slot>
@@ -430,7 +1201,7 @@
    <thrust>400</thrust>
    <turn>60</turn>
    <speed>800</speed>
-   <damage type="kinetic">20</damage>
+   <damage type="kinetic" penetrate="10">20</damage>
    <ai>seek</ai>
   </specific>
  </outfit>
@@ -470,7 +1241,7 @@
    <thrust>325</thrust>
    <turn>90</turn>
    <speed>550</speed>
-   <damage type="kinetic">20</damage>
+   <damage type="kinetic" penetrate="30">20</damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -493,7 +1264,7 @@
  <outfit name="Banshee Rocket">
   <general>
    <license>Medium Weapon License</license>
-   <mass>0</mass>
+   <mass>0.1</mass>
    <price>70</price>
    <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
    <gfx_store>banshee</gfx_store>
@@ -505,10 +1276,9 @@
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpS</spfx_armour>
    <duration blowup="shield">0.8</duration>
-   <accuracy>12</accuracy>
    <thrust>0</thrust>
    <speed>600</speed>
-   <damage type="emp">15</damage>
+   <damage type="emp" penetrate="15">15</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -545,7 +1315,7 @@
    <duration blowup="armour">3</duration>
    <thrust>300</thrust>
    <speed>1000</speed>
-   <damage type="kinetic">44</damage>
+   <damage type="kinetic" penetrate="40">44</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -584,7 +1354,7 @@
    <thrust>125</thrust>
    <turn>20</turn>
    <speed>350</speed>
-   <damage type="kinetic">140</damage>
+   <damage type="kinetic" penetrate="90">140</damage>
    <ai>seek</ai>
   </specific>
  </outfit>
@@ -623,7 +1393,7 @@
    <thrust>125</thrust>
    <turn>20</turn>
    <speed>350</speed>
-   <damage type="kinetic">300</damage>
+   <damage type="kinetic" penetrate="90">300</damage>
    <ai>seek</ai>
   </specific>
  </outfit>
@@ -658,11 +1428,13 @@
    <duration blowup="shield">1.3</duration>
    <thrust>0</thrust>
    <speed>400</speed>
-   <damage type="emp">50</damage>
+   <damage type="emp" penetrate="50">50</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
-<!-- Energy-Related Outfits -->
+
+
+ <!-- Energy-Related Outfits -->
  <outfit name="Battery">
   <general>
    <typename>Power Modifier</typename>
@@ -836,7 +1608,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
-   <mass />
+   <mass/>
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
    <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, strong armour that seems to take the best from both plastic and steel, bending easily yet keeping its incredible strength. The Second Growth was only possible with this material. Although it is no longer cutting-edge, its low price point attracts many buyers.</description>
@@ -850,7 +1622,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
-   <mass />
+   <mass/>
    <price>365000</price>
    <gfx_store>nanobond</gfx_store>
    <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
@@ -864,7 +1636,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
-   <mass />
+   <mass/>
    <price>1120000</price>
    <gfx_store>biometal</gfx_store>
    <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
@@ -955,6 +1727,7 @@
    <thrust>100</thrust>
    <speed>50</speed>
    <energy>60</energy>
+   <mass_limit>250</mass_limit>
   </specific>
  </outfit>
  <outfit name="Hellburner">
@@ -972,6 +1745,7 @@
    <thrust>185</thrust>
    <speed>85</speed>
    <energy>65</energy>
+   <mass_limit>400</mass_limit>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit I">
@@ -1043,6 +1817,32 @@
    <cargo>15</cargo>
   </specific>
  </outfit>
+ <outfit name="Boarding Androids MKI">
+   <general>
+    <typename>Crew enhancement</typename>
+    <slot>utility</slot>
+    <mass>1</mass>
+    <price>20000</price>
+    <description>The Asimov Destructicorp Boarding Android is the latest in robotic hostile takeover technology. Equipped with a multifunction plasma blaster/cutting torch/can opener/spatula, the Boarding Android is ready for any situation, be it tactical or culinary.</description>
+    <gfx_store>cargo_pod</gfx_store>
+   </general>
+   <specific type="modification">
+    <crew_rel>20</crew_rel>
+   </specific>
+ </outfit>
+ <outfit name="Boarding Androids MKII">
+  <general>
+   <typename>Crew enhancement</typename>
+   <slot>utility</slot>
+   <mass>3</mass>
+   <price>50000</price>
+   <description>The Boarding Android Mark II improves upon the wide variety of implements sported by its predecessor, additionally including scissor-hands and a rape whistle. </description>
+   <gfx_store>cargo_pod</gfx_store>
+  </general>
+  <specific type="modification">
+   <crew_rel>35</crew_rel>
+  </specific>
+ </outfit>
  <outfit name="Targeting Array">
   <general>
    <typename>Weapon Modifier (Turret)</typename>
@@ -1053,7 +1853,7 @@
    <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
-   <accuracy_turret>25</accuracy_turret>
+   <heat_turret>-25</heat_turret>
    <firerate_turret>-10</firerate_turret>
   </specific>
  </outfit>
@@ -1067,7 +1867,7 @@
    <gfx_store>accuracy_forward</gfx_store>
   </general>
   <specific type="modification">
-   <accuracy_forward>15</accuracy_forward>
+   <heat_forward>-15</heat_forward>
   </specific>
  </outfit>
  <outfit name="Power Regulation Override">
@@ -1076,12 +1876,12 @@
    <slot>structure</slot>
    <mass>0</mass>
    <price>55000</price>
-   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in decreased accuracy.</description>
+   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in increased heat production.</description>
    <gfx_store>damage_forward</gfx_store>
   </general>
   <specific type="modification">
    <damage_forward>15</damage_forward>
-   <accuracy_forward>-5</accuracy_forward>
+   <heat_forward>5</heat_forward>
    <energy_forward>5</energy_forward>
   </specific>
  </outfit>
@@ -1110,7 +1910,7 @@
   </general>
   <specific type="modification">
    <firerate_turret>15</firerate_turret>
-   <accuracy_turret>-5</accuracy_turret>
+   <heat_turret>5</heat_turret>
    <damage_turret>-5</damage_turret>
   </specific>
  </outfit>
@@ -1164,6 +1964,17 @@
    <range>600</range>
    <chance>40</chance>
    <energy>30</energy>
+  </specific>
+ </outfit>
+ <outfit name="GUI - Brushed">
+  <general>
+   <mass>0</mass>
+   <price>75000</price>
+   <description>This is a new GUI which will become available to you by purchase. It has a brushed steel look.</description>
+   <gfx_store>brushedGUI</gfx_store>
+  </general>
+  <specific type="gui">
+   <gui>brushed</gui>
   </specific>
  </outfit>
 <!-- Escort Outfits -->
@@ -1231,7 +2042,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy freighter-class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Medium Weapon License">
   <general>
@@ -1240,7 +2051,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy and use medium weapons like the ion cannon.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Heavy Weapon License">
   <general>
@@ -1250,7 +2061,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy and use heavy weapons like the heavy ion turret.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Light Combat Vessel License">
   <general>
@@ -1259,7 +2070,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy fighter and bomber class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Medium Combat Vessel License">
   <general>
@@ -1269,7 +2080,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy destroyer and corvette-class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Heavy Combat Vessel License">
   <general>
@@ -1279,7 +2090,7 @@
    <gfx_store>license</gfx_store>
    <description>This license will authorize you to buy cruiser and carrier-class ships.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <outfit name="Pirate Landing Pass">
   <!-- this outfit should be considered contraband once it is implimented -->
@@ -1290,7 +2101,7 @@
    <!--this outfit really does absolutly nothing. its effects are implemented in the pirate mission, hitman 3 where you receive it.-->
    <description>This license gives you authorization to land on pirate worlds and gives access to missions in the pirate mission computer.</description>
   </general>
-  <specific type="license" />
+  <specific type="license"/>
  </outfit>
  <!-- Cheats. For missions, honest! -->
  <outfit name="Cheater's Ragnarok Beam">
@@ -1308,10 +2119,11 @@
    <range>400</range>
    <turn>35</turn>
    <energy>20</energy>
-   <damage type="energy">150</damage>
+   <damage type="energy" penetrate="100">150</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
+   <heatup>60</heatup>
    <sound>beam0</sound>
    <sound_off>beam_off0</sound_off>
   </specific>
@@ -1326,7 +2138,7 @@
    </general>
   <specific type="bolt">
    <cpu>1</cpu>
-   <gfx>laser2</gfx>
+   <gfx>laser2S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -1334,10 +2146,10 @@
    <speed>600</speed>
    <range>550</range>
    <falloff>270</falloff>
-   <gfx_end>laser2-end</gfx_end>
-   <accuracy>18</accuracy>
+   <gfx_end>laser1S</gfx_end>
    <energy>1</energy>
-   <damage type="energy">15</damage>
+   <heatup>60</heatup>
+   <damage type="energy" penetrate="30">15</damage>
   </specific>
  </outfit>
 </Outfits>

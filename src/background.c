@@ -34,6 +34,7 @@
  * @brief Represents a background image like say a Nebula.
  */
 typedef struct background_image_s {
+   unsigned int id; /**< Background id. */
    glTexture *image; /**< Image to display. */
    double x; /**< X center of the image. */
    double y; /**< Y center of the image. */
@@ -41,7 +42,11 @@ typedef struct background_image_s {
    double scale; /**< How the image should be scaled. */
    glColour col; /**< Colour to use. */
 } background_image_t;
-static background_image_t *bkg_image_arr = NULL; /**< Background image array to display. */
+static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind stars). */
+static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (infront of stars). */
+
+
+static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 
 
 /**
@@ -68,9 +73,13 @@ static GLfloat star_y = 0.; /**< Star Y movement. */
 /*
  * Prototypes.
  */
-static void background_renderImages (void);
+static void background_renderImages( background_image_t *bkg_arr );
 static lua_State* background_create( const char *path );
 static void background_clearCurrent (void);
+static void background_clearImgArr( background_image_t **arr );
+/* Sorting. */
+static int bkg_compare( const void *p1, const void *p2 );
+static void bkg_sort( background_image_t *arr );
 
 
 /**
@@ -164,6 +173,10 @@ void background_renderStars( const double dt )
    GLfloat x, y, m, b;
    GLfloat brightness;
    double z;
+   double sx, sy;
+   int shade_mode;
+   int j, n;
+
 
    /*
     * gprof claims it's the slowest thing in the game!
@@ -187,64 +200,93 @@ void background_renderStars( const double dt )
       hw = w/2.;
       hh = h/2.;
 
+      if ((star_x > SCREEN_W) || (star_y > SCREEN_H)) {
+         sx = ceil( star_x / SCREEN_W );
+         sy = ceil( star_y / SCREEN_H );
+         n  = MAX( sx, sy );
+         star_x /= (double)n;
+         star_y /= (double)n;
+      }
+      else
+         n = 1;
+
       /* Calculate new star positions. */
-      for (i=0; i < nstars; i++) {
+      for (j=0; j < n; j++) {
+         for (i=0; i < nstars; i++) {
 
-         /* calculate new position */
-         b = 1./(9. - 10.*star_colour[8*i+3]);
-         star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
-         star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
+            /* calculate new position */
+            b = 1./(9. - 10.*star_colour[8*i+3]);
+            star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
+            star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
 
-         /* check boundries */
-         if (star_vertex[4*i+0] > hw)
-            star_vertex[4*i+0] -= w;
-         else if (star_vertex[4*i+0] < -hw)
-            star_vertex[4*i+0] += w;
-         if (star_vertex[4*i+1] > hh)
-            star_vertex[4*i+1] -= h;
-         else if (star_vertex[4*i+1] < -hh)
-            star_vertex[4*i+1] += h;
+            /* check boundries */
+            if (star_vertex[4*i+0] > hw)
+               star_vertex[4*i+0] -= w;
+            else if (star_vertex[4*i+0] < -hw)
+               star_vertex[4*i+0] += w;
+            if (star_vertex[4*i+1] > hh)
+               star_vertex[4*i+1] -= h;
+            else if (star_vertex[4*i+1] < -hh)
+               star_vertex[4*i+1] += h;
+         }
       }
 
       /* Upload the data. */
       gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
    }
 
+   /* Decide on shade mode. */
+   shade_mode = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING) &&
-         pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+         !player_isFlag(PLAYER_CREATING)) {
 
-      glShadeModel(GL_SMOOTH);
+      if (pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+            (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
 
-      /* lines will be based on velocity */
-      m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
-      m /= HYPERSPACE_STARS_BLUR;
-      m *= HYPERSPACE_STARS_LENGTH;
-      x = m*cos(VANGLE(player.p->solid->vel));
-      y = m*sin(VANGLE(player.p->solid->vel));
+         glShadeModel(GL_SMOOTH);
+         shade_mode = 1;
 
-      /* Generate lines. */
-      for (i=0; i < nstars; i++) {
-         brightness = star_colour[8*i+3];
-         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
+         /* lines will be based on velocity */
+         m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+         m /= HYPERSPACE_STARS_BLUR;
+         m *= HYPERSPACE_STARS_LENGTH;
+         x = m*cos(VANGLE(player.p->solid->vel));
+         y = m*sin(VANGLE(player.p->solid->vel));
+      }
+      else if (dt_mod > 3.) {
+
+         glShadeModel(GL_SMOOTH);
+         shade_mode = 1;
+
+         /* lines will be based on velocity */
+         m = (dt_mod-3.)*VMOD(player.p->solid->vel)/10.;
+         x = m*cos(VANGLE(player.p->solid->vel));
+         y = m*sin(VANGLE(player.p->solid->vel));
       }
 
-      /* Draw the lines. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
-      glDrawArrays( GL_LINES, 0, nstars );
+      if (shade_mode) {
+         /* Generate lines. */
+         for (i=0; i < nstars; i++) {
+            brightness = star_colour[8*i+3];
+            star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
+            star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
+         }
 
+         /* Upload new data. */
+         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
+      }
+   }
+
+   /* Render. */
+   gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
+   gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   if (shade_mode) {
+      glDrawArrays( GL_LINES, 0, nstars );
+      glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
       glShadeModel(GL_FLAT);
    }
-   else { /* normal rendering */
-      /* Render. */
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
+   else {
       glDrawArrays( GL_POINTS, 0, nstars );
-      gl_checkErr();
    }
 
    /* Clear star movement. */
@@ -256,6 +298,9 @@ void background_renderStars( const double dt )
 
    /* Pop matrix. */
    gl_matrixPop();
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 
@@ -264,25 +309,59 @@ void background_renderStars( const double dt )
  */
 void background_render( double dt )
 {
-   background_renderImages();
+   background_renderImages( bkg_image_arr_bk );
    background_renderStars(dt);
+   background_renderImages( bkg_image_arr_ft );
+}
+
+
+/**
+ * @brief Compares two different backgrounds and sorts them.
+ */
+static int bkg_compare( const void *p1, const void *p2 )
+{
+   background_image_t *bkg1, *bkg2;
+
+   bkg1 = (background_image_t*) p1;
+   bkg2 = (background_image_t*) p2;
+
+   if (bkg1->move < bkg2->move)
+      return -1;
+   else if (bkg1->move > bkg2->move)
+      return +1;
+   return  0;
+}
+
+
+/**
+ * @brief Sorts the backgrounds by movement.
+ */
+static void bkg_sort( background_image_t *arr )
+{
+   qsort( arr, array_size(arr), sizeof(background_image_t), bkg_compare );
 }
 
 
 /**
  * @brief Adds a new background image.
  */
-int background_addImage( glTexture *image, double x, double y,
-      double move, double scale, glColour *col )
+unsigned int background_addImage( glTexture *image, double x, double y,
+      double move, double scale, glColour *col, int foreground )
 {
-   background_image_t *bkg;
+   background_image_t *bkg, **arr;
+
+   if (foreground)
+      arr = &bkg_image_arr_ft;
+   else
+      arr = &bkg_image_arr_bk;
 
    /* See if must create. */
-   if (bkg_image_arr == NULL)
-      bkg_image_arr = array_create( background_image_t );
+   if (*arr == NULL)
+      *arr = array_create( background_image_t );
 
    /* Create image. */
-   bkg         = &array_grow( &bkg_image_arr );
+   bkg         = &array_grow( arr );
+   bkg->id     = ++bkg_idgen;
    bkg->image  = gl_dupTexture(image);
    bkg->x      = x;
    bkg->y      = y;
@@ -290,27 +369,29 @@ int background_addImage( glTexture *image, double x, double y,
    bkg->scale  = scale;
    memcpy( &bkg->col, (col!=NULL) ? col : &cWhite, sizeof(glColour) );
 
+   /* Sort if necessary. */
+   bkg_sort( *arr );
 
-   return array_size(bkg_image_arr)-1;
+   return bkg_idgen;
 }
 
 
 /**
  * @brief Renders the background images.
  */
-static void background_renderImages (void)
+static void background_renderImages( background_image_t *bkg_arr )
 {
    int i;
    background_image_t *bkg;
    double px,py, x,y, xs,ys, z;
 
    /* Must have an image array created. */
-   if (bkg_image_arr == NULL)
+   if (bkg_arr == NULL)
       return;
 
    /* Render images in order. */
-   for (i=0; i<array_size(bkg_image_arr); i++) {
-      bkg = &bkg_image_arr[i];
+   for (i=0; i<array_size(bkg_arr); i++) {
+      bkg = &bkg_arr[i];
 
       cam_getPos( &px, &py );
       x  = px + (bkg->x - px) * bkg->move - bkg->scale*bkg->image->sw/2.;
@@ -436,23 +517,36 @@ static void background_clearCurrent (void)
  */
 void background_clear (void)
 {
-   int i;
-   background_image_t *bkg;
-
    /* Destroy current background script. */
    background_clearCurrent();
 
+   /* Clear the backgrounds. */
+   background_clearImgArr( &bkg_image_arr_bk );
+   background_clearImgArr( &bkg_image_arr_ft );
+}
+
+
+/**
+ * @brief Clears a background image array.
+ *
+ *    @param arr Array to clear.
+ */
+static void background_clearImgArr( background_image_t **arr )
+{
+   int i;
+   background_image_t *bkg;
+
    /* Must have an image array created. */
-   if (bkg_image_arr == NULL)
+   if (*arr == NULL)
       return;
 
-   for (i=0; i<array_size(bkg_image_arr); i++) {
-      bkg = &bkg_image_arr[i];
+   for (i=0; i<array_size(*arr); i++) {
+      bkg = &((*arr)[i]);
       gl_freeTexture( bkg->image );
    }
 
    /* Erase it all. */
-   array_erase( &bkg_image_arr, &bkg_image_arr[0], &bkg_image_arr[ array_size(bkg_image_arr) ] );
+   array_erase( arr, &(*arr)[0], &(*arr)[ array_size(*arr) ] );
 }
 
 
@@ -468,9 +562,13 @@ void background_free (void)
    bkg_def_L = NULL;
 
    /* Free the images. */
-   if (bkg_image_arr != NULL) {
-      array_free( bkg_image_arr );
-      bkg_image_arr = NULL;
+   if (bkg_image_arr_ft != NULL) {
+      array_free( bkg_image_arr_ft );
+      bkg_image_arr_ft = NULL;
+   }
+   if (bkg_image_arr_bk != NULL) {
+      array_free( bkg_image_arr_bk );
+      bkg_image_arr_bk = NULL;
    }
 
    /* Free the Lua. */

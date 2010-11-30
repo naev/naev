@@ -11,16 +11,45 @@
 
 #include "log.h"
 #include "opengl.h"
+#include "font.h"
 #include "gui.h"
 #include "pilot.h"
 #include "player.h"
 #include "space.h"
 #include "input.h"
+#include "array.h"
+
+
+/**
+ * @brief Ano verlay map marker.
+ */
+typedef struct ovr_marker_s {
+   unsigned int id; /**< ID of the marker. */
+   char *text; /**< Marker dispaly text. */
+   int type; /**< Marker type. */
+   union {
+      struct {
+         double x; /**< X center of point marker. */
+         double y; /**< Y center of point marker. */
+      } pt; /**< Point marker. */
+   } u; /**< Type data. */
+} ovr_marker_t;
+static unsigned int mrk_idgen = 0; /**< ID generator for markers. */
+static ovr_marker_t *ovr_markers = NULL; /**< Overlay markers. */
 
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
 static int ovr_open = 0; /**< Is the overlay open? */
 static double ovr_res = 10.; /**< Resolution. */
+
+
+/*
+ * Prototypes
+ */
+/* Markers. */
+static void ovr_mrkRenderAll( double res );
+static void ovr_mrkCleanup(  ovr_marker_t *mrk );
+static ovr_marker_t *ovr_mrkNew (void);
 
 
 /**
@@ -37,15 +66,76 @@ int ovr_isOpen (void)
  */
 int ovr_input( SDL_Event *event )
 {
+   unsigned int pid;
+   Pilot *p;
    int mx, my;
-   double x, y;
+   double x, y, r;
+   double d;
+   Planet *pnt;
+   JumpPoint *jp;
+   int pntid, jpid, ret;
 
    /* We only want mouse events. */
    if (event->type != SDL_MOUSEBUTTONDOWN)
       return 0;
-  
+ 
+   /* Selection. */
+   if (event->button.button == SDL_BUTTON_LEFT) {
+      /* Translate from window to screen. */
+      mx = event->button.x;
+      my = event->button.y;
+      gl_windowToScreenPos( &mx, &my, mx, my );
+
+      /* Translate to space coords. */
+      x  = ((double)mx - SCREEN_W/2.) * ovr_res;
+      y  = ((double)my - SCREEN_H/2.) * ovr_res;
+
+      /* Get closest pilot. */
+      pid = pilot_getNearestPos( player.p, x, y, 1 );
+      p   = pilot_get(pid);
+      r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 100.*ovr_res );
+
+      /* Here we want the closest pilot, only if he isn't targetted. If he is we'll then
+       * focus on targetting features like planets or jump points. */
+      if ((player.p->target != pid) &&
+            (pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y) < pow2(r))) {
+         player_targetSet( pid );
+         return 1;
+      }
+
+      /* Get closest planet and/or jump point. */
+      system_getClosest( cur_system, &pntid, &jpid, x, y );
+      ret = 0;
+      /* Planet is closest. */
+      if (pntid >= 0) {
+         pnt = cur_system->planets[ pntid ];
+         d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
+         r  = MAX( 1.5 * pnt->radius, 100. * ovr_res );
+         if (d < pow2(r)) {
+            player_targetPlanetSet( pntid );
+            ret = 1;
+         }
+      }
+      /* Jump point is closest. */
+      else if (jpid >= 0) {
+         jp = &cur_system->jumps[ jpid ];
+         d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
+         r  = MAX( 1.5 * jp->radius, 100. * ovr_res );
+         if (d < pow2(r)) {
+            player_targetHyperspaceSet( jpid );
+            ret = 1;
+         }
+      }
+      return ret;
+   }
    /* Autogo. */
-   if (event->button.button == SDL_BUTTON_RIGHT) {
+   else if (event->button.button == SDL_BUTTON_RIGHT) {
+      if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+            pilot_isFlag( player.p, PILOT_HYP_PREP ) ||
+            pilot_isFlag( player.p, PILOT_HYP_BEGIN ) ||
+            pilot_isFlag( player.p, PILOT_HYPERSPACE ))
+         return 1;
+
       /* Translate from window to screen. */
       mx = event->button.x;
       my = event->button.y;
@@ -96,6 +186,11 @@ void ovr_refresh (void)
 }
 
 
+/**
+ * @brief Properly opens or closes the overlay map.
+ *
+ *    @param open Whether or not to open it.
+ */
 static void ovr_setOpen( int open )
 {
    if (open && !ovr_open) {
@@ -111,6 +206,8 @@ static void ovr_setOpen( int open )
 
 /**
  * @brief Handles a keypress event.
+ *
+ *    @param type Type of event.
  */
 void ovr_key( int type )
 {
@@ -138,6 +235,8 @@ void ovr_key( int type )
 
 /**
  * @brief Renders the overlay map.
+ *
+ *    @param dt Current delta tick.
  */
 void ovr_render( double dt )
 {
@@ -146,10 +245,15 @@ void ovr_render( double dt )
    Pilot **pstk;
    int n;
    double w, h, res;
+   double x,y;
    glColour c = { .r=0., .g=0., .b=0., .a=0.5 };
 
    /* Must be open. */
    if (!ovr_open)
+      return;
+
+   /* Player must be alive. */
+   if (player_isFlag( PLAYER_DESTROYED ) || (player.p == NULL))
       return;
 
    /* Default values. */
@@ -189,15 +293,157 @@ void ovr_render( double dt )
       else
          gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
    }
-   /* render the targetted pilot */
+   /* Render the targetted pilot */
    if (j!=0)
       gui_renderPilot( pstk[j], RADAR_RECT, w, h, res, 1 );
+
+   /* Check if player has goto target. */
+   if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
+      x = player.autonav_pos.x / res;
+      y = player.autonav_pos.y / res;
+      gl_renderCross( x, y, 5., &cRadar_hilight );
+      gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, "GOTO" );
+   }
    
    /* Render the player. */
    gui_renderPlayer( res, 1 );
 
+   /* Render markers. */
+   ovr_mrkRenderAll( res );
+
    /* Pop the matrix. */
    gl_matrixPop();
+}
+
+
+/**
+ * @brief Renders all the markers.
+ *
+ *    @param res Resolution to render at.
+ */
+static void ovr_mrkRenderAll( double res )
+{
+   int i;
+   ovr_marker_t *mrk;
+   double x, y;
+
+   if (ovr_markers == NULL)
+      return;
+
+   for (i=0; i<array_size(ovr_markers); i++) {
+      mrk = &ovr_markers[i];
+
+      x = mrk->u.pt.x / res;
+      y = mrk->u.pt.y / res;
+      gl_renderCross( x, y, 5., &cRadar_hilight );
+
+      if (mrk->text != NULL)
+         gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+   }
+}
+
+
+/**
+ * @brief Frees up and clears all marker related stuff.
+ */
+void ovr_mrkFree (void)
+{
+   /* Clear markers. */
+   ovr_mrkClear();
+
+   /* Free arary. */
+   if (ovr_markers != NULL)
+      array_free( &ovr_markers );
+   ovr_markers = NULL;
+}
+
+
+/**
+ * @brief Clears the curent markers.
+ */
+void ovr_mrkClear (void)
+{
+   int i;
+   if (ovr_markers == NULL)
+      return;
+   for (i=0; i<array_size(ovr_markers); i++)
+      ovr_mrkCleanup( &ovr_markers[i] );
+   array_erase( &ovr_markers, ovr_markers, &ovr_markers[ array_size(ovr_markers) ] );
+}
+
+
+/**
+ * @brief Clears up after an individual marker.
+ *
+ *    @param mrk Marker to clean up after.
+ */
+static void ovr_mrkCleanup(  ovr_marker_t *mrk )
+{
+   if (mrk->text != NULL)
+      free( mrk->text );
+   mrk->text = NULL;
+}
+
+
+/**
+ * @brief Creates a new marker.
+ *
+ *    @return The newly created marker.
+ */
+static ovr_marker_t *ovr_mrkNew (void)
+{
+   ovr_marker_t *mrk;
+
+   if (ovr_markers == NULL)
+      ovr_markers = array_create(  ovr_marker_t );
+
+   mrk = &array_grow( &ovr_markers );
+   memset( mrk, 0, sizeof( ovr_marker_t ) );
+   mrk->id = ++mrk_idgen;
+   return mrk;
+}
+
+
+/**
+ * @brief Creates a new point marker.
+ *
+ *    @param text Text to display with the marker.
+ *    @param x X position of the marker.
+ *    @param y Y position of the marker.
+ *    @return The id of the newly created marker.
+ */
+unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
+{
+   ovr_marker_t *mrk;
+
+   mrk = ovr_mrkNew();
+   mrk->type = 0;
+   if (text != NULL)
+      mrk->text = strdup( text );
+   mrk->u.pt.x = x;
+   mrk->u.pt.y = y;
+
+   return mrk->id;
+}
+
+
+/**
+ * @brief Removes a marker by id.
+ *
+ *    @param id ID of the marker to remove.
+ */
+void ovr_mrkRm( unsigned int id )
+{
+   int i;
+   if (ovr_markers == NULL)
+      return;
+   for (i=0; i<array_size(ovr_markers); i++) {
+      if (id!=ovr_markers[i].id)
+         continue;
+      ovr_mrkCleanup( &ovr_markers[i] );
+      array_erase( &ovr_markers, &ovr_markers[i], &ovr_markers[i+1] );
+      break;
+   }
 }
 
 

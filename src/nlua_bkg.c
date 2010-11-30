@@ -80,7 +80,12 @@ static int bkgL_clear( lua_State *L )
 /**
  * @brief Adds a background image.
  *
+ * If the colour parameter is a boolean it's treated as the foreground parameter instead.
+ *
  * @usage bkg.image( img, 0, 0, 0.1, 1. ) -- Adds the image without scaling that moves at 0.1 the player speed
+ * @usage bkg.image( img, 0, 0, 0.1, 1., true ) -- Now on the foreground
+ * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0) ) -- Now with colour
+ * @usage bkg.image( img, 0, 0, 0.1, 1., col.new(1,0,0), true ) -- Now with colour and on the foreground
  *
  *    @luaparam image Image to use.
  *    @luaparam x X position.
@@ -88,13 +93,17 @@ static int bkgL_clear( lua_State *L )
  *    @luaparam move Fraction of a pixel to move when the player moves one pixel.
  *    @luaparam scale How much to scale the image.
  *    @luaparam col Colour to tint image (optional parameter).
- * @luafunc image( image, x, y, move, scale, col )
+ *    @luaparam foreground Whether or not it should be rendered above the stars (optional parameter ). Defaults to false.
+ *    @luareturn ID of the background.
+ * @luafunc image( image, x, y, move, scale, col, foreground )
  */
 static int bkgL_image( lua_State *L )
 {
    LuaTex *lt;
    double x,y, move, scale;
    LuaColour *lc;
+   unsigned int id;
+   int foreground;
 
    /* Parse parameters. */
    lt    = luaL_checktex(L,1);
@@ -102,14 +111,19 @@ static int bkgL_image( lua_State *L )
    y     = luaL_checknumber(L,3);
    move  = luaL_checknumber(L,4);
    scale = luaL_checknumber(L,5);
-   if (lua_iscolour(L,6))
+   if (lua_iscolour(L,6)) {
       lc    = lua_tocolour(L,6);
-   else
+      foreground = lua_toboolean(L,7);
+   }
+   else {
       lc    = NULL;
+      foreground = lua_toboolean(L,6);
+   }
    
    /* Create image. */
-   background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite );
-   return 0;
+   id = background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite, foreground );
+   lua_pushnumber(L,id);
+   return 1;
 }
 
 

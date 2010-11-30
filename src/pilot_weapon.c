@@ -674,7 +674,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
-      pilot_heatAddSlot( w, energy );
+      pilot_heatAddSlot( p, w );
       weapon_add( w->outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
    }
@@ -715,7 +715,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
       p->energy  -= energy;
-      pilot_heatAddSlot( w, energy );
+      pilot_heatAddSlot( p, w );
       weapon_add( w->u.ammo.outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
 

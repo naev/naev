@@ -28,6 +28,10 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p );
 
 /**
  * @brief Compare function for planet qsort.
+ *
+ *    @param planet1 First planet to compare.
+ *    @param planet2 Second planet to compare.
+ *    @return Order in which they should be shifted.
  */
 static int dpl_compPlanet( const void *planet1, const void *planet2 )
 {
@@ -43,7 +47,7 @@ static int dpl_compPlanet( const void *planet1, const void *planet2 )
 /**
  * @brief Saves a planet.
  *
- *    @param write Write to use for saving the star planet.
+ *    @param writer Write to use for saving the star planet.
  *    @param p Planet to save.
  *    @return 0 on success.
  */
@@ -124,7 +128,7 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
 
 
 /**
- * @saves All the star planets.
+ * @brief Saves all the star planets.
  *
  *    @return 0 on success.
  */

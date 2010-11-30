@@ -35,6 +35,8 @@ void debris_cleanup (void)
 
 /**
  * @brief Loads the debris spfx into an array.
+ *
+ *    @return 0 on success.
  */
 static int debris_load (void)
 {
@@ -72,8 +74,11 @@ static int debris_load (void)
  * @brief Creates a cloud of debris.
  *
  *    @param mass Mass of the debris cloud.
- *    @param x X position to center cloud.
- *    @param y Y position to center cloud.
+ *    @param r Radius of the cloud.
+ *    @param px X position to center cloud.
+ *    @param py Y position to center cloud.
+ *    @param vx X velocity of the cloud center.
+ *    @param vy Y velocity of the cloud center.
  */
 void debris_add( double mass, double r, double px, double py,
       double vx, double vy )

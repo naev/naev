@@ -32,11 +32,11 @@ void weapon_add( const Outfit* outfit, const double T,
 /*
  * Beam weapons.
  */
-int beam_start( const Outfit* outfit,
+unsigned int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const Pilot *parent, const unsigned int target,
       const PilotOutfitSlot *mount );
-void beam_end( const unsigned int parent, int beam );
+void beam_end( const unsigned int parent, unsigned int beam );
 
 
 /*
