@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
-"""
+
+__doc__ = """
 A sanity check tool to know where the crap is.
 
 For usage information, run ``main.py --usage``
@@ -14,7 +15,7 @@ from argparse import ArgumentParser
 import re
 from types import *
 
-__version__="0.1.1"
+__version__="0.2"
 
 def lineNumber(string, start):
     """
@@ -31,7 +32,7 @@ class sanitizer:
 
     def __init__(self, **args):
         """
-        needs to be coded when I know how this class will be called
+        Initialize the whole parser : create a list of lua files.
         """
         self.config = args
         self.luaScripts = list()
@@ -50,12 +51,21 @@ class sanitizer:
             self.addLuaFile(files, root)
         print('DONE')
 
-        print('Compiling events files...',end='     ')
+        print('Compiling events files...',end='      ')
         for root, dir, files in os.walk(self.config['basepath']+'/dat/events/'):
             self.addLuaFile(files, root)
         print('DONE')
 
+        print('Compiling AI Spawn files...', end='      ')
+        for root, dir, files in os.walk(self.config['basepath']+'/ai/spawn/'):
+            self.addLuaFile(files, root)
+        print('DONE')
+
     def addLuaFile(self, files, root):
+        """
+        Add a lua file in the bucket. Do nothing if the given file do not end
+        with 'lua'
+        """
         for filename in files:
             if filename[-3:] == "lua":
                 realname = os.path.join(root, filename)
@@ -89,6 +99,11 @@ class sanitizer:
     def dah_doctor(self):
         """
         That's the doctor, it detect wrong stuff but can never heal you.
+
+        Pretty big function indeed :
+        1/ Will do a call to undiff, then initialize the preprocessing stuff.
+        2/ Then, initialize each reader with the appropriate config
+        3/ Then, parse each lua file searching for function and content
         """
         from readers import fleet
         from readers import ship
@@ -140,7 +155,7 @@ class sanitizer:
 
             try:
                 line[file] = open(file, 'rU').read()
-                this=False
+                haserror=False
                 for match in search_cobj.finditer(line[file]):
                     lineno, offset = lineNumber(line[file], match.start())
                     info = dict(
@@ -152,20 +167,19 @@ class sanitizer:
 
                     if info['func'] == 'pilot.add':
                         if not fleetdata.find(info['content']):
-                            this = True
+                            haserror=True
                     if info['func'] == 'addOutfit':
                         if not outfitdata.find(info['content']):
-                            this = True
+                            haserror=True
                     if info['func'] == 'player.addShip':
                         if not shipdata.find(info['content']):
-                            this = True
+                            haserror=True
                     if info['func'] == 'diff.apply':
                         if not udata.find(info['content']):
-                            this = True
+                            haserror=True
 
-                    if this:
+                    if haserror:
                         errors.append(self._errorstring % info)
-                        this=False
 
             except IOError as error:
                 print("I/O error: {0}".format(error), file=sys.stderr)
@@ -188,6 +202,7 @@ class sanitizer:
         del(tmp)
 
         if len(unused_data) > 0:
+           # Create the regex
             mcobj = dict()
             for (category, data) in unused_data.items():
                 regex = r"""
@@ -203,11 +218,13 @@ class sanitizer:
                 regex = regex % rname[:-1]
                 mcobj.update({category: re.compile(regex, re.VERBOSE| re.UNICODE)})
 
+            # For each file, run each regex
+            # If an item is found, that item is set to the unknown status
             for (file, content) in line.items():
                 for (category, cobj) in mcobj.items():
                     for match in cobj.finditer(content):
                         groups = match.groupdict()
-                        for obj, key in tocheck:
+                        for (obj, key) in tocheck:
                             if key == category:
                                 obj.set_unknown(groups[category])
 
