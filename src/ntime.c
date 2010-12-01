@@ -41,6 +41,7 @@
 
 #include "hook.h"
 #include "economy.h"
+#include "hook.h"
 
 
 #define NT_SCU_STP   (5000)      /* STP in an SCU */
@@ -73,14 +74,19 @@ static double naev_remainder = 0.; /**< Remainder when updating, to try to keep 
 void ntime_update( double dt )
 {
    double dtt, tu;
+   ntime_t inc;
 
    /* Calculate the effective time. */
    dtt = naev_remainder + dt*NT_STU_DT;
 
    /* Time to update. */
    tu             = floor( dtt * (double)NT_STU_DIV );
-   naev_time     += (ntime_t) tu;
+   inc            = (ntime_t) tu;
    naev_remainder = dtt - tu; /* Leave remainder. */
+
+   /* Increment. */
+   naev_time     += inc;
+   hooks_updateDate( inc );
 }
 
 

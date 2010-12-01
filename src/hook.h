@@ -78,6 +78,11 @@ void hooks_update( double dt );
 unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms );
 unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms );
 
+/* Date hooks. */
+void hooks_updateDate( ntime_t change );
+unsigned int hook_addDateMisn( unsigned int parent, const char *func, ntime_t resolution );
+unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t resolution );
+
 
 #endif /* HOOK_H */
 

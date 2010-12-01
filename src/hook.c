@@ -58,6 +58,11 @@ typedef struct Hook_ {
    int is_timer; /**< Whether or not is actually a timer. */
    double ms; /**< Miliseconds left. */
 
+   /* Date information. */
+   int is_date; /**< Whether or not it is a date hook. */
+   ntime_t res; /**< Resolution to display. */
+   ntime_t acc; /**< Accumulated resolution. */
+
    HookType_t type; /**< Type of hook. */
    union {
       struct {
@@ -448,6 +453,91 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
    /* Timer information. */
    new_hook->is_timer      = 1;
    new_hook->ms            = ms;
+
+   return new_hook->id;
+}
+
+
+
+void hooks_updateDate( ntime_t change )
+{
+   int i, j;
+   Hook *h;
+
+   /* Don't update without player. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
+      return;
+
+   hook_runningstack = 1; /* running hooks */
+   for (j=1; j>=0; j--) {
+      for (i=0; i<hook_nstack; i++) {
+         /* Find valid timer hooks. */
+         h = &hook_stack[i];
+         if (h->is_date == 0)
+            continue;
+
+         /* Decrement timer and check to see if should run. */
+         if (j==0)
+            h->acc += change;
+         if (h->acc < h->res)
+            continue;
+
+         /* Run the timer hook. */
+         hook_run( h, NULL, j );
+         h->delete = 1; /* Mark for deletion. */
+
+         if (j==1)
+            h->acc -= h->res;
+      }
+   }
+   hook_runningstack = 0; /* not running hooks anymore */
+
+   /* Second pass to delete. */
+   for (i=0; i<hook_nstack; i++) {
+      /* Find valid timer hooks. */
+      h = &hook_stack[i];
+      if (h->delete)
+         if (hook_rm(h->id)==1)
+            i--;
+   }
+}
+
+
+unsigned int hook_addDateMisn( unsigned int parent, const char *func, ntime_t resolution )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_MISN, "date" );
+
+   /* Put mission specific details. */
+   new_hook->u.misn.parent = parent;
+   new_hook->u.misn.func   = strdup(func);
+
+   /* Timer information. */
+   new_hook->is_date       = 1;
+   new_hook->res           = resolution;
+   new_hook->acc           = 0;
+
+   return new_hook->id;
+}
+
+
+unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t resolution )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_EVENT, "date" );
+
+   /* Put event specific details. */
+   new_hook->u.event.parent = parent;
+   new_hook->u.event.func   = strdup(func);
+
+   /* Timer information. */
+   new_hook->is_date       = 1;
+   new_hook->res           = resolution;
+   new_hook->acc           = 0;
 
    return new_hook->id;
 }

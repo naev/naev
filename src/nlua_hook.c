@@ -24,6 +24,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
+#include "nlua_time.h"
 #include "hook.h"
 #include "log.h"
 #include "mission.h"
@@ -46,6 +47,7 @@ static int hook_enter( lua_State *L );
 static int hook_hail( lua_State *L );
 static int hook_board( lua_State *L );
 static int hook_timer( lua_State *L );
+static int hook_date( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -57,6 +59,7 @@ static const luaL_reg hook_methods[] = {
    { "hail", hook_hail },
    { "board", hook_board },
    { "timer", hook_timer },
+   { "date", hook_date },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -66,7 +69,7 @@ static const luaL_reg hook_methods[] = {
  * Prototypes.
  */
 static int hookL_setarg( lua_State *L, unsigned int hook, int ind );
-static unsigned int hook_generic( lua_State *L, const char* stack, double ms, int pos );
+static unsigned int hook_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date );
 
 
 /**
@@ -214,7 +217,7 @@ int hookL_getarg( lua_State *L, unsigned int hook )
  *    @param pos Position in the stack of the function name.
  *    @return The hook ID or 0 on error.
  */
-static unsigned int hook_generic( lua_State *L, const char* stack, double ms, int pos )
+static unsigned int hook_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date )
 {
    int i;
    const char *func;
@@ -236,12 +239,16 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
 
       if (stack != NULL)
          h = hook_addMisn( running_mission->id, func, stack );
+      else if (date != 0)
+         h = hook_addDateMisn( running_mission->id, func, date );
       else
          h = hook_addTimerMisn( running_mission->id, func, ms );
    }
    else if (running_event != NULL) {
       if (stack != NULL)
          h = hook_addEvent( running_event->id, func, stack );
+      else if (date != 0)
+         h = hook_addDateEvt( running_event->id, func, date );
       else
          h = hook_addTimerEvt( running_event->id, func, ms );
    }
@@ -285,10 +292,10 @@ static int hook_land( lua_State *L )
    unsigned int h;
 
    if (lua_gettop(L) < 2)
-      h = hook_generic( L, "land", 0., 1 );
+      h = hook_generic( L, "land", 0., 1, 0 );
    else {
       where = luaL_checkstring(L, 2);
-      h = hook_generic( L, where, 0., 1 );
+      h = hook_generic( L, where, 0., 1, 0 );
    }
 
    lua_pushnumber( L, h );
@@ -305,7 +312,7 @@ static int hook_land( lua_State *L )
 static int hook_takeoff( lua_State *L )
 {
    unsigned int h;
-   h = hook_generic( L, "takeoff", 0., 1 );
+   h = hook_generic( L, "takeoff", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -320,7 +327,7 @@ static int hook_takeoff( lua_State *L )
 static int hook_jumpout( lua_State *L )
 {
    unsigned int h;
-   h = hook_generic( L, "jumpout", 0., 1 );
+   h = hook_generic( L, "jumpout", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -335,7 +342,7 @@ static int hook_jumpout( lua_State *L )
 static int hook_jumpin( lua_State *L )
 {
    unsigned int h;
-   h = hook_generic( L, "jumpin", 0., 1 );
+   h = hook_generic( L, "jumpin", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -351,7 +358,7 @@ static int hook_jumpin( lua_State *L )
 static int hook_enter( lua_State *L )
 {
    unsigned int h;
-   h = hook_generic( L, "enter", 0., 1 );
+   h = hook_generic( L, "enter", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -368,7 +375,7 @@ static int hook_enter( lua_State *L )
 static int hook_hail( lua_State *L )
 {
    unsigned int h;
-   h = hook_generic( L, "hail", 0., 1 );
+   h = hook_generic( L, "hail", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -385,7 +392,7 @@ static int hook_hail( lua_State *L )
 static int hook_board( lua_State *L )
 {
    unsigned int h;
-   h = hook_generic( L, "board", 0., 1 );
+   h = hook_generic( L, "board", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -405,7 +412,29 @@ static int hook_timer( lua_State *L )
    unsigned int h;
    double ms;
    ms = luaL_checknumber( L, 1 );
-   h  = hook_generic( L, NULL, ms/1000., 2 );
+   h  = hook_generic( L, NULL, ms/1000., 2, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks a date change with custom resolution.
+ *
+ * The hook recieves only the optional argument.
+ *
+ * @usage hook.date( time.create( 0, 0, 1000 ), "some_func", nil ) -- Hooks with a 1000 STU resolution
+ *
+ *    @luaparam resolution Resolution of the timer (should be a time structure).
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc date( resolution, funcname, arg )
+ */
+static int hook_date( lua_State *L )
+{
+   unsigned int h;
+   ntime_t t;
+   t  = luaL_validtime( L, 1 );
+   h  = hook_generic( L, NULL, 0., 2, 1 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -484,7 +513,7 @@ static int hook_pilot( lua_State *L )
 
    /* actually add the hook */
    snprintf( buf, sizeof(buf), "p_%s", hook_type );
-   h = hook_generic( L, buf, 0., 3 );
+   h = hook_generic( L, buf, 0., 3, 0 );
    if (p==NULL)
       pilots_addGlobalHook( type, h );
    else
