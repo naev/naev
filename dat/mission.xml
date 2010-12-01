@@ -522,6 +522,28 @@
         end)()</cond>
   </avail>
  </mission>
+ <mission name="The macho teenager">
+  <lua>neutral/teenager</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>16</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Empire") and planet.cur():class() ~= "0"</cond>
+  </avail>
+ </mission>
+ <mission name="Animal transport">
+  <lua>neutral/animaltransport</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Sirius") and planet.cur():class() ~= "0"</cond>
+  </avail>
+ </mission>
  <mission name="Empire Patrol Bounty">
   <lua>pirate/pir_empbounty</lua>
   <avail>

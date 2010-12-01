@@ -39,6 +39,7 @@
 static double sound_curVolume = 0.; /**< Current sound volume. */
 static unsigned char sound_mixVolume = 0; /**< Actual in-game used volume. */
 static double sound_pos[3]; /**< Position of listener. */
+static double sound_speed = 1.; /**< Speed of the sound. */
 
 
 /*
@@ -152,6 +153,8 @@ void sound_mix_exit (void)
  */
 int sound_mix_play( alVoice *v, alSound *s )
 {
+   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
+      return 0;
 
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
    if (v->u.mix.channel >= 0)
@@ -235,6 +238,9 @@ int sound_mix_playPos( alVoice *v, alSound *s,
 {
    (void) vx;
    (void) vy;
+
+   if (sound_speed > SOUND_SPEED_PLAY_LIMIT)
+      return 0;
 
    /* Get the channel. */
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
@@ -550,7 +556,7 @@ void sound_mix_resumeGroup( int group )
  */
 void sound_mix_setSpeed( double s )
 {
-   (void) s;
+   sound_speed = s;
 }
 
 

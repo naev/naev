@@ -54,11 +54,7 @@
 #include "camera.h"
 #include "claim.h"
 #include "player_gui.h"
-
-
-#define XML_START_ID "Start" /**< Module start xml document identifier. */
-
-#define START_DATA   "dat/start.xml" /**< Module start information file. */
+#include "start.h"
 
 
 /*
@@ -67,7 +63,6 @@
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
-static char *player_mission   = NULL; /**< More hack. */
 static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
@@ -134,7 +129,7 @@ static int player_moutfits             = 0; /**< Current allocated memory. */
 /* used in input.c */
 double player_left         = 0.; /**< Player left turn velocity from input. */
 double player_right        = 0.; /**< Player right turn velocity from input. */
-static double player_acc   = 0.; /**< Accel velocity from input. */
+double player_acc          = 0.; /**< Accel velocity from input. */
 /* for death and such */
 static double player_timer = 0.; /**< For death and such. */
 
@@ -194,9 +189,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
-static void player_autonav (void);
-static int player_autonavApproach( Vector2d *pos );
-static int player_autonavBrake (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
@@ -219,10 +211,7 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 void player_new (void)
 {
    int r;
-
-   /* to not segfault due to lack of environment */
-   memset( &player, 0, sizeof(Player_t) );
-   player_setFlag(PLAYER_CREATING);
+   double x, y;
 
    /* Set up GUI. */
    gui_setDefaults();
@@ -240,6 +229,18 @@ void player_new (void)
    land_cleanup();
    map_cleanup();
 
+   /* To not segfault due to lack of environment */
+   memset( &player, 0, sizeof(Player_t) );
+   player_setFlag(PLAYER_CREATING);
+
+   /* For pretty background. */
+   pilots_cleanAll();
+   space_init( start_system() );
+   start_position( &x, &y );
+   cam_setTargetPos( x, y, 0 );
+   cam_setZoom( conf.zoom_far );
+
+   /* Get the name. */
    player.name = dialogue_input( "Player Name", 2, 20,
          "Please write your name:" );
 
@@ -268,11 +269,9 @@ void player_new (void)
    music_choose( "ambient" );
 
    /* Add the mission if found. */
-   if (player_mission != NULL) {
-      if (mission_start(player_mission, NULL))
-         WARN("Failed to run start mission '%s'.", player_mission);
-      free(player_mission);
-      player_mission = NULL;
+   if (start_mission() != NULL) {
+      if (mission_start(start_mission(), NULL) < 0)
+         WARN("Failed to run start mission '%s'.", start_mission());
    }
 
    /* Run the load event trigger. */
@@ -291,145 +290,33 @@ void player_new (void)
 static int player_newMake (void)
 {
    Ship *ship;
-   char *sysname;;
-   uint32_t bufsize;
-   char *buf;
-   int l,h, tl,th;
    double x,y;
-   xmlNodePtr node, cur, tmp;
-   xmlDocPtr doc;
-
-   /* Sane defaults. */
-   ship           = NULL;
-   sysname        = NULL;
-   player_mission = NULL;
-   l              = 0;
-   h              = 0;
-   tl             = 0;
-   th             = 0;
-   x              = 0.;
-   y              = 0.;
-
-   /* Try to read teh file. */
-   buf = ndata_read( START_DATA, &bufsize );
-   if (buf == NULL)
-      return -1;
-
-   /* Load the XML file. */
-   doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_START_ID)) {
-      ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
-      return -1;
-   }
-
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"START_DATA"' file: does not contain elements");
-      return -1;
-   }
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node, "name")) /* Avoid warning. */
-         continue;
-      if (xml_isNode(node, "player")) { /* we are interested in the player */
-         cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"ship")) {
-               ship = ship_get( xml_get(cur) );
-               continue;
-            }
-            else if (xml_isNode(cur,"credits")) { /* monies range */
-               tmp = cur->children;
-               do {
-                  xml_onlyNodes(tmp);
-                  xmlr_int(tmp, "low", l);
-                  xmlr_int(tmp, "high", h);
-                  WARN("'"START_DATA"' has unknown credit node '%s'.", tmp->name);
-               } while (xml_nextNode(tmp));
-               continue;
-            }
-            else if (xml_isNode(cur,"system")) {
-               tmp = cur->children;
-               do {
-                  xml_onlyNodes(tmp);
-                  /** system name, @todo percent chance */
-                  xmlr_strd(tmp, "name", sysname);
-                  /* position */
-                  xmlr_float(tmp,"x",x);
-                  xmlr_float(tmp,"y",y);
-                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
-               } while (xml_nextNode(tmp));
-               continue;
-            }
-            xmlr_float(cur,"player_crating",player.crating);
-            if (xml_isNode(cur,"date")) {
-               tmp = cur->children;
-               do {
-                  xml_onlyNodes(tmp);
-                  xmlr_int(tmp, "low", tl);
-                  xmlr_int(tmp, "high", th);
-                  WARN("'"START_DATA"' has unknown date node '%s'.", tmp->name);
-               } while (xml_nextNode(tmp));
-               continue;
-            }
-            /* Check for mission. */
-            if (xml_isNode(cur,"mission")) {
-               if (player_mission != NULL) {
-                  WARN("'"START_DATA"' already contains a mission node!");
-                  continue;
-               }
-               player_mission = xml_getStrd(cur);
-               continue;
-            }
-            WARN("'"START_DATA"' has unknown player node '%s'.", cur->name);
-         } while (xml_nextNode(cur));
-         continue;
-      }
-      WARN("'"START_DATA"' has unknown node '%s'.", node->name);
-   } while (xml_nextNode(node));
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
-   free(buf);
-   xmlCleanupParser();
 
    /* Time. */
-   if ((tl==0) && (th==0)) {
-      WARN("Time not set by module.");
-      ntime_set(0);
-   }
-   else
-      ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
+   ntime_set( start_date() );
 
    /* Welcome message - must be before space_init. */
    player_message( "\egWelcome to "APPNAME"!" );
-   player_message( "\eg v%d.%d.%d", VMAJOR, VMINOR, VREV );
+   player_message( "\eg v%s", naev_version(0) );
 
    /* Try to create the pilot, if fails reask for player name. */
+   ship = ship_get( start_ship() );
    if (ship==NULL) {
-      WARN("Ship not set by module.");
+      WARN("Ship not properly set by module.");
       return -1;
    }
    if (player_newShip( ship, NULL, 0 ) != 0) {
       player_new();
       return -1;
    }
+   start_position( &x, &y );
    vect_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
    player.p->solid->dir = RNGF() * 2.*M_PI;
-   space_init(sysname);
-   free(sysname);
+   space_init( start_system() );
 
    /* Monies. */
-   if ((l==0) && (h==0)) {
-      WARN("Credits not set by module.");
-      player.p->credits = 0;
-   }
-   else
-      player.p->credits = RNG(l,h);
+   player.p->credits = start_credits();
 
    /* clear the map */
    map_clear();
@@ -543,7 +430,7 @@ static void player_newShipMake( char* name )
       vect_cset( &vv, 0., 0. );
 
       /* Create the player. */
-      id = pilot_create( player_ship, name, faction_get("Player"), NULL,
+      id = pilot_create( player_ship, name, faction_get("Player"), "player",
             dir, &vp, &vv, flags, -1 );
       cam_setTargetPilot( id, 0 );
    }
@@ -552,7 +439,7 @@ static void player_newShipMake( char* name )
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
       ship        = &player_stack[player_nstack];
       /* Create the ship. */
-      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), NULL, flags );
+      ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
    }
@@ -581,44 +468,46 @@ void player_swapShip( char* shipname )
    Vector2d v;
 
    for (i=0; i<player_nstack; i++) {
-      if (strcmp(shipname,player_stack[i].p->name)==0) { /* swap player and ship */
-         ship = player_stack[i].p;
+      if (strcmp(shipname,player_stack[i].p->name)!=0)
+         continue;
+         
+      /* swap player and ship */
+      ship = player_stack[i].p;
 
-         /* move credits over */
-         ship->credits = player.p->credits;
+      /* move credits over */
+      ship->credits = player.p->credits;
 
-         /* move cargo over */
-         pilot_cargoMove( ship, player.p );
+      /* move cargo over */
+      pilot_cargoMove( ship, player.p );
 
-         /* Store position. */
-         vectcpy( &v, &player.p->solid->pos );
+      /* Store position. */
+      vectcpy( &v, &player.p->solid->pos );
 
-         /* extra pass to calculate stats */
-         pilot_calcStats( ship );
-         pilot_calcStats( player.p );
+      /* extra pass to calculate stats */
+      pilot_calcStats( ship );
+      pilot_calcStats( player.p );
 
-         /* now swap the players */
-         player_stack[i].p = player.p;
-         for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
-            if (pilot_stack[j] == player.p) {
-               player.p         = ship;
-               pilot_stack[j] = ship;
-               break;
-            }
+      /* now swap the players */
+      player_stack[i].p = player.p;
+      for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
+         if (pilot_stack[j] == player.p) {
+            player.p         = ship;
+            pilot_stack[j] = ship;
+            break;
+         }
 
-         /* Copy position back. */
-         vectcpy( &player.p->solid->pos, &v );
+      /* Copy position back. */
+      vectcpy( &player.p->solid->pos, &v );
 
-         /* Fill the tank. */
-         land_checkAddRefuel();
+      /* Fill the tank. */
+      land_checkAddRefuel();
 
-         /* Set some gui stuff. */
-         gui_load( gui_pick() );
+      /* Set some gui stuff. */
+      gui_load( gui_pick() );
 
-         /* Bind camera. */
-         cam_setTargetPilot( player.p->id, 0 );
-         return;
-      }
+      /* Bind camera. */
+      cam_setTargetPilot( player.p->id, 0 );
+      return;
    }
    WARN( "Unable to swap player.p with ship '%s': ship does not exist!", shipname );
 }
@@ -959,94 +848,9 @@ void player_render( double dt )
    /*
     * Render the player.
     */
-   if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING)) {
+   if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
+         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
       pilot_render(player.p, dt);
-   }
-}
-
-
-/**
- * @brief Starts autonav.
- */
-void player_autonavStart (void)
-{
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   if (player.p->nav_hyperspace == -1)
-      return;
-
-   if (player.p->fuel < HYPERSPACE_FUEL) {
-      player_message("\erNot enough fuel to jump for autonav.");
-      return;
-   }
-
-   player_message("\epAutonav initialized.");
-   player_setFlag(PLAYER_AUTONAV);
-   player.autonav = AUTONAV_JUMP_APPROACH;
-}
-
-/**
- * @brief Starts autonav and closes the window.
- */
-void player_autonavStartWindow( unsigned int wid, char *str)
-{
-   (void) str;
-
-   if (player.p->nav_hyperspace == -1)
-      return;
-
-   if (player.p->fuel < HYPERSPACE_FUEL) {
-      player_message("\erNot enough fuel to jump for autonav.");
-      return;
-   }
-
-   player_message("\epAutonav initialized.");
-   player_setFlag(PLAYER_AUTONAV);
-
-   window_destroy( wid );
-}
-
-/**
- * @brief Starts autonav with a local position destination.
- */
-void player_autonavPos( double x, double y )
-{
-   player.autonav    = AUTONAV_POS_APPROACH;
-   vect_cset( &player.autonav_pos, x, y );
-   player_message("\epAutonav initialized.");
-   player_setFlag(PLAYER_AUTONAV);
-}
-
-/**
- * @brief Aborts autonav.
- */
-void player_autonavAbort( char *reason )
-{
-   /* No point if player is beyond aborting. */
-   if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
-      return;
-
-   if (player_isFlag(PLAYER_AUTONAV)) {
-      if (reason != NULL)
-         player_message("\erAutonav aborted: %s!", reason);
-      else
-         player_message("\erAutonav aborted!");
-      player_rmFlag(PLAYER_AUTONAV);
-
-      /* Get rid of acceleration. */
-      player_accelOver();
-
-      /* Drop out of possible different speed modes. */
-      if (dt_mod != 1.)
-         pause_setSpeed(1.);
-
-      /* Break possible hyperspacing. */
-      if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
-         pilot_hyperspaceAbort(player.p);
-         player_message("\epAborting hyperspace sequence.");
-      }
    }
 }
 
@@ -1084,26 +888,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* Autonav takes over normal controls. */
    if (player_isFlag(PLAYER_AUTONAV)) {
-      /* Abort if lockons detected. */
-      if (pplayer->lockons > 0)
-         player_autonavAbort("Missile Lockon Detected");
-      else if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
-               (player.autonav == AUTONAV_JUMP_BRAKE)) {
-         /* If we're already at the target. */
-         if (player.p->nav_hyperspace == -1)
-            player_autonavAbort("Target changed to current system");
-
-         /* Need fuel. */
-         else if (pplayer->fuel < HYPERSPACE_FUEL)
-            player_autonavAbort("Not enough fuel for autonav to continue");
-
-         else
-            player_autonav();
-      }
-
-      /* Keep on moving. */
-      else
-         player_autonav();
+      player_thinkAutonav(pplayer);
 
       /* Disable turning. */
       facing = 1;
@@ -1212,119 +997,13 @@ void player_think( Pilot* pplayer, const double dt )
    if (player_isFlag(PLAYER_AFTERBURNER)) {
       if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
          afb = pplayer->afterburner->outfit;
-         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust );
+         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
       }
       else /* Ran out of energy */
-         player_afterburnOver();
+         player_afterburnOver(1);
    }
    else
       pilot_setThrust( pplayer, player_acc );
-}
-
-
-/**
- * @brief Handles the autonavigation process for the player.
- */
-static void player_autonav (void)
-{
-   JumpPoint *jp;
-   int ret;
-
-   switch (player.autonav) {
-      case AUTONAV_JUMP_APPROACH:
-         /* Target jump. */
-         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret   = player_autonavApproach( &jp->pos );
-         if (ret)
-            player.autonav = AUTONAV_JUMP_BRAKE;
-         break;
-
-      case AUTONAV_JUMP_BRAKE:
-         /* Target jump. */
-         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret   = player_autonavBrake();
-         /* Try to jump or see if braked. */
-         if (space_canHyperspace(player.p)) {
-            player.autonav = AUTONAV_JUMP_APPROACH;
-            player_accelOver();
-            player_jump();
-         }
-         else if (ret)
-            player.autonav = AUTONAV_JUMP_APPROACH;
-         break;
-   
-      case AUTONAV_POS_APPROACH:
-         ret = player_autonavApproach( &player.autonav_pos );
-         if (ret) {
-            player_rmFlag( PLAYER_AUTONAV );
-            player_message( "\epAutonav arrived at position." );
-         }
-         break;
-   }
-}
-
-
-/**
- * @brief Handles approaching a position with autonav.
- *
- *    @param pos Position to go to.
- *    @return 1 on completion.
- */
-static int player_autonavApproach( Vector2d *pos )
-{
-   double d, time, vel, dist;
-
-   /* Only accelerate if facing move dir. */
-   d = pilot_face( player.p, vect_angle( &player.p->solid->pos, pos ) );
-   if (FABS(d) < MIN_DIR_ERR) {
-      if (player_acc < 1.)
-         player_accel( 1. );
-   }
-   else if (player_acc > 0.)
-      player_accelOver();
-
-   /* Get current time to reach target. */
-   time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
-      (player.p->thrust / player.p->solid->mass);
-
-   /* Get velocity. */
-   vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
-
-   /* Get distance. */
-   dist  = vel*(time+1.1*180./player.p->turn) -
-      0.5*(player.p->thrust/player.p->solid->mass)*time*time;
-
-   /* See if should start braking. */
-   if (dist*dist > vect_dist2( pos, &player.p->solid->pos )) {
-      player_accelOver();
-      return 1;
-   }
-   return 0;
-}
-
-/**
- * @brief Handles the autonav braking.
- *
- *    @return 1 on completion.
- */
-static int player_autonavBrake (void)
-{
-   double d;
-
-   /* Braking procedure. */
-   d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
-   if (FABS(d) < MIN_DIR_ERR) {
-      if (player_acc < 1.)
-         player_accel( 1. );
-   }
-   else if (player_acc > 0.)
-      player_accelOver();
-
-   if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
-      player_accelOver();
-      return 1;
-   }
-   return 0;
 }
 
 
@@ -1358,7 +1037,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if (pplayer->solid->force_x > 0.) {
+   else if (pplayer->solid->thrust > 0.) {
       /* See if is in hyperspace. */
       if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
          engsound = snd_hypEng;
@@ -1411,10 +1090,38 @@ void player_weapSetPress( int id, int type )
 
 
 /**
+ * @brief Sets the player's target planet.
+ *
+ *    @param id Target planet or -1 if none should be selected.
+ */
+void player_targetPlanetSet( int id )
+{
+   int old;
+
+   if (id >= cur_system->nplanets) {
+      WARN("Trying to set player's planet target to invalid ID '%d'", id);
+      return;
+   }
+
+   if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
+      return;
+
+   old = player.p->nav_planet;
+   player.p->nav_planet = id;
+   if ((old != id) && (id >= 0))
+      player_playSound(snd_nav, 1);
+   gui_forceBlink();
+   gui_setNav();
+}
+
+
+/**
  * @brief Cycle through planet targets.
  */
 void player_targetPlanet (void)
 {
+   int id;
+
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
@@ -1422,27 +1129,23 @@ void player_targetPlanet (void)
    /* Clean up some stuff. */
    player_rmFlag(PLAYER_LANDACK);
 
-   gui_forceBlink();
-
    /* Find next planet target. */
-   player.p->nav_planet++;
+   id = player.p->nav_planet+1;
    player_hyperspacePreempt(0);
-   while (player.p->nav_planet < cur_system->nplanets) {
+   while (id < cur_system->nplanets) {
 
       /* In range, target planet. */
-      if ((cur_system->planets[ player.p->nav_planet ]->real == ASSET_REAL)
-            && pilot_inRangePlanet( player.p, player.p->nav_planet )) {
-         player_playSound(snd_nav, 1);
-         gui_setNav();
+      if ((cur_system->planets[ id ]->real == ASSET_REAL)
+            && pilot_inRangePlanet( player.p, id )) {
+         player_targetPlanetSet( id );
          return;
       }
 
-      player.p->nav_planet++;
+      id++;
    }
 
    /* Untarget if out of range. */
-   player.p->nav_planet = -1;
-   gui_setNav();
+   player_targetPlanetSet( -1 );
 }
 
 
@@ -1516,7 +1219,7 @@ void player_land (void)
       }
 
       /* Stop afterburning. */
-      player_afterburnOver();
+      player_afterburnOver(1);
       /* Stop accelerating. */
       player_accelOver();
 
@@ -1549,9 +1252,7 @@ void player_land (void)
             td = d;
          }
       }
-      gui_forceBlink();
-      player.p->nav_planet       = tp;
-      gui_setNav();
+      player_targetPlanetSet( tp );
       player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
 
@@ -1564,6 +1265,11 @@ void player_land (void)
 }
 
 
+/**
+ * @brief Sets the no land message.
+ *
+ *    @brief str Message to set when the playre is not allowed to land temporarily.
+ */
 void player_nolandMsg( const char *str )
 {
    if (str != NULL)
@@ -1574,30 +1280,55 @@ void player_nolandMsg( const char *str )
 
 
 /**
+ * @brief Sets the player's hyperspace target.
+ *
+ *    @param id ID of the hyperspace target.
+ */
+void player_targetHyperspaceSet( int id )
+{
+   int old;
+
+   if (id >= cur_system->njumps) {
+      WARN("Trying to set player's hyperspace target to invalid ID '%d'", id);
+      return;
+   }
+
+   old = player.p->nav_hyperspace;
+   player.p->nav_hyperspace = id;
+   if ((old != id) && (id >= 0))
+      player_playSound(snd_nav,1);
+   gui_setNav();
+}
+
+
+/**
  * @brief Gets a hyperspace target.
  */
 void player_targetHyperspace (void)
 {
+   int id;
+
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   player.p->nav_hyperspace++;
+   id = player.p->nav_hyperspace+1;
    map_clear(); /* clear the current map path */
 
-   if (player.p->nav_hyperspace >= cur_system->njumps) {
-      player.p->nav_hyperspace = -1;
+   if (id >= cur_system->njumps) {
+      id = -1;
       player_hyperspacePreempt(0);
    } else {
-      player_playSound(snd_nav,1);
       player_hyperspacePreempt(1);
    }
+
+   player_targetHyperspaceSet( id );
+
    /* Map gets special treatment if open. */
-   if (player.p->nav_hyperspace == -1)
+   if (id == -1)
       map_select( NULL , 0);
    else
-      map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
-   gui_setNav();
+      map_select( cur_system->jumps[ id ].target, 0 );
 }
 
 /**
@@ -1688,7 +1419,7 @@ void player_jump (void)
  */
 void player_brokeHyperspace (void)
 {
-   double d;
+   ntime_t t;
    StarSystem *sys;
    JumpPoint *jp;
 
@@ -1698,12 +1429,11 @@ void player_brokeHyperspace (void)
    /* Prevent targeted planet # from carrying over. */
    gui_setNav();
    gui_setTarget();
-   player.p->nav_planet = -1;
+   player_targetPlanetSet( -1 );
 
    /* calculates the time it takes, call before space_init */
-   d  = pilot_hyperspaceDelay( player.p );
-   d += RNG_1SIGMA() * 0.2 * d;
-   ntime_inc( (unsigned int)(d*NTIME_UNIT_LENGTH) );
+   t  = pilot_hyperspaceDelay( player.p );
+   ntime_inc( t );
 
    /* Save old system. */
    sys = cur_system;
@@ -1737,7 +1467,7 @@ void player_brokeHyperspace (void)
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
          player_message( "\epAutonav arrived at destination.");
-         player_rmFlag(PLAYER_AUTONAV);
+         player_autonavEnd();
       }
       else {
          player_message( "\epAutonav continuing until destination (%d jump%s left).",
@@ -1782,12 +1512,15 @@ void player_afterburn (void)
 /**
  * @brief Deactivates the afterburner.
  */
-void player_afterburnOver (void)
+void player_afterburnOver (int type)
 {
    if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
       player_rmFlag(PLAYER_AFTERBURNER);
       pilot_rmFlag(player.p,PILOT_AFTERBURNER);
    }
+
+   if (type)
+      player_accel(1.);
 }
 
 
@@ -1837,6 +1570,24 @@ void player_soundResume (void)
 
 
 /**
+ * @brief Sets the player's target.
+ *
+ *    @param id Target to set for the player.
+ */
+void player_targetSet( unsigned int id )
+{
+   unsigned int old;
+   old = player.p->target;
+   player.p->target = id;
+   if ((old != id) && (player.p->target != PLAYER_ID)) {
+      gui_forceBlink();
+      player_playSound( snd_target, 1 );
+   }
+   gui_setTarget();
+}
+
+
+/**
  * @brief Targets the nearest hostile enemy to the player.
  */
 void player_targetHostile (void)
@@ -1866,13 +1617,7 @@ void player_targetHostile (void)
       }
    }
 
-   if ((tp != PLAYER_ID) && (tp != player.p->target)) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   }
-
-   player.p->target = tp;
-   gui_setTarget();
+   player_targetSet( tp );
 }
 
 
@@ -1883,13 +1628,7 @@ void player_targetHostile (void)
  */
 void player_targetNext( int mode )
 {
-   player.p->target = pilot_getNextID(player.p->target, mode);
-
-   if (player.p->target != PLAYER_ID) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   }
-   gui_setTarget();
+   player_targetSet( pilot_getNextID(player.p->target, mode) );
 }
 
 
@@ -1900,13 +1639,7 @@ void player_targetNext( int mode )
  */
 void player_targetPrev( int mode )
 {
-   player.p->target = pilot_getPrevID(player.p->target, mode);
-
-   if (player.p->target != PLAYER_ID) {
-      gui_forceBlink();
-      player_playSound( snd_target, 1 );
-   };
-   gui_setTarget();
+   player_targetSet( pilot_getPrevID(player.p->target, mode) );
 }
 
 
@@ -1925,8 +1658,7 @@ void player_targetClear (void)
    else if (player.p->target == PLAYER_ID)
       player.p->nav_planet = -1;
    else
-      player.p->target = PLAYER_ID;
-   gui_setTarget();
+      player_targetSet( PLAYER_ID );
    gui_setNav();
 }
 
@@ -2074,6 +1806,22 @@ void player_hail (void)
 
    /* Clear hails if none found. */
    player_checkHail();
+}
+
+
+/**
+ * @brief Opens communication with the player's planet target.
+ */
+void player_hailPlanet (void)
+{
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
+   if(player.p->nav_planet != -1)
+      comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+   else
+      player_message("\erNo target selected to hail.");
 }
 
 
@@ -2712,7 +2460,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
-   xmlw_elem(writer,"time","%u",ntime_get());
+   xmlw_elem(writer,"time","%"PRIi64,ntime_get());
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
@@ -3051,20 +2799,25 @@ static Planet* player_parse( xmlNodePtr parent )
 
    /* Handle cases where ship is missing. */
    if (player.p == NULL) {
-      if (player_nstack == 0) {
-         WARN("Player has no ships!");
-         return NULL;
-      }
-
-      /* Just give player.p a random ship in the stack. */
       pilot_clearFlagsRaw( flags );
       pilot_setFlagRaw( flags, PILOT_PLAYER );
       pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
-      old_ship = player_stack[player_nstack-1].p;
-      pilot_create( old_ship->ship, old_ship->name,
-            faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
-      player_rmShip( old_ship->name );
-      DEBUG("Giving player ship '%s'.", player.p->name );
+      WARN("Player ship does not exist!");
+
+      if (player_nstack == 0) {
+         WARN("Player has no other ships, giving starting ship.");
+         pilot_create( ship_get(start_ship()), "MIA",
+               faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
+      }
+      else {
+
+         /* Just give player.p a random ship in the stack. */
+         old_ship = player_stack[player_nstack-1].p;
+         pilot_create( old_ship->ship, old_ship->name,
+               faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
+         player_rmShip( old_ship->name );
+         WARN("Giving player ship '%s'.", player.p->name );
+      }
    }
 
    /* set global thingies */
@@ -3352,12 +3105,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* player is currently on this ship */
    if (is_player != 0) {
-      pid = pilot_create( ship_parsed, name, faction_get("Player"), NULL, 0., NULL, NULL, flags, -1 );
+      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, -1 );
       ship = player.p;
       cam_setTargetPilot( pid, 0 );
    }
    else
-      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), NULL, flags );
+      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
    /* Clean up. */
    free(name);
    free(model);

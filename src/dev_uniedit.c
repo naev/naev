@@ -626,7 +626,7 @@ static void uniedit_newSys( double x, double y )
    sys->pos.x  = x;
    sys->pos.y  = y;
    sys->stars  = 400;
-   sys->radius = 2500.;
+   sys->radius = 10000.;
 
    /* Select new system. */
    uniedit_deselect();

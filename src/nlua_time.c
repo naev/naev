@@ -23,14 +23,26 @@
 
 
 /* Time methods. */
+static int time_create( lua_State *L );
+static int time_add( lua_State *L );
+static int time_sub( lua_State *L );
+static int time_eq( lua_State *L );
+static int time_lt( lua_State *L );
+static int time_le( lua_State *L );
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
-static int time_units( lua_State *L );
 static int time_inc( lua_State *L );
 static const luaL_reg time_methods[] = {
+   { "create", time_create },
+   { "add", time_add },
+   { "__add", time_add },
+   { "sub", time_sub },
+   { "__sub", time_sub },
+   { "__eq", time_eq },
+   { "__lt", time_lt },
+   { "__le", time_le },
    { "get", time_get },
    { "str", time_str },
-   { "units", time_units },
    { "inc", time_inc },
    {0,0}
 }; /**< Time Lua methods. */
@@ -69,6 +81,216 @@ int nlua_loadTime( lua_State *L, int readonly )
  * @luamod time
  */
 /**
+ * @brief Gets time at index.
+ *
+ *    @param L Lua state to get time from.
+ *    @param ind Index position to find the time.
+ *    @return Time found at the index in the state.
+ */
+LuaTime* lua_totime( lua_State *L, int ind )
+{
+   return (LuaTime*) lua_touserdata(L,ind);
+}
+/**
+ * @brief Gets time at index raising an error if isn't a time.
+ *
+ *    @param L Lua state to get time from.
+ *    @param ind Index position to find the time.
+ *    @return Time found at the index in the state.
+ */
+LuaTime* luaL_checktime( lua_State *L, int ind )
+{
+   if (lua_istime(L,ind))
+      return lua_totime(L,ind);
+   luaL_typerror(L, ind, TIME_METATABLE);
+   return NULL;
+}
+/**
+ * @brief Gets a time directly.
+ *
+ *    @param L Lua state to get time from.
+ *    @param ind Index position to find the time.
+ *    @return Time found at the index in the state.
+ */
+ntime_t luaL_validtime( lua_State *L, int ind )
+{
+   LuaTime *lt;
+   lt = luaL_checktime( L, ind );
+   return lt->t;
+}
+/**
+ * @brief Pushes a time on the stack.
+ *
+ *    @param L Lua state to push time into.
+ *    @param time Time to push.
+ *    @return Newly pushed time.
+ */
+LuaTime* lua_pushtime( lua_State *L, LuaTime time )
+{
+   LuaTime *p;
+   p = (LuaTime*) lua_newuserdata(L, sizeof(LuaTime));
+   *p = time;
+   luaL_getmetatable(L, TIME_METATABLE);
+   lua_setmetatable(L, -2);
+   return p;
+}
+/**
+ * @brief Checks to see if ind is a time.
+ *
+ *    @param L Lua state to check.
+ *    @param ind Index position to check.
+ *    @return 1 if ind is a time.
+ */
+int lua_istime( lua_State *L, int ind )
+{
+   int ret;
+
+   if (lua_getmetatable(L,ind)==0)
+      return 0;
+   lua_getfield(L, LUA_REGISTRYINDEX, TIME_METATABLE);
+
+   ret = 0;
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
+      ret = 1;
+
+   lua_pop(L, 2);  /* remove both metatables */
+   return ret;
+}
+
+
+/**
+ * @brief Creates a time. This can be absolute or relative.
+ *
+ * @usage t = time.create( 591, 3271, 12801 ) -- Gets a time near when the incident happened.
+ *
+ *    @luaparam scu SCU for the new time.
+ *    @luaparam stp STP for the new time.
+ *    @luaparam stu STU for the new time.
+ *    @luareturn A newly created time metatable.
+ * @luafunc create( scu, stp, stu )
+ */
+static int time_create( lua_State *L )
+{
+   int scu, stp, stu;
+   LuaTime lt;
+
+   /* Parameters. */
+   scu = luaL_checkint(L,1);
+   stp = luaL_checkint(L,2);
+   stu = luaL_checkint(L,3);
+
+   /* Create the time. */
+   lt.t = ntime_create( scu, stp, stu );
+   lua_pushtime( L, lt );
+   return 1;
+}
+/**
+ * @brief Adds two time metatables.
+ *
+ * Overrides the addition operator.
+ *
+ * @usage new_time = time.get() + time.create( 0, 5, 0 ) -- Adds 5 STP to the current date
+ *
+ *    @luaparam t1 Time metatable to add to.
+ *    @luaparam t2 Time metatable added.
+ * @luafunc add( t1, t2)
+ */
+static int time_add( lua_State *L )
+{
+   ntime_t t1, t2;
+   LuaTime res;
+
+   /* Parameters. */
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+
+   /* Add them. */
+   res.t = t1 + t2;
+   lua_pushtime( L, res );
+   return 1;
+}
+/**
+ * @brief Subtracts two time metatables.
+ *
+ * Overrides the subtraction operator.
+ *
+ * @usage new_time = time.get() - time.create( 0, 3, 0 ) -- Subtracts 3 STP to the current date
+ *
+ *    @luaparam t1 Time metatable to subtract from.
+ *    @luaparam t2 Time metatable subtracted.
+ * @luafunc sub( t1, t2)
+ */
+static int time_sub( lua_State *L )
+{
+   ntime_t t1, t2;
+   LuaTime res;
+
+   /* Parameters. */
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+
+   /* Sub them. */
+   res.t = t1 - t2;
+   lua_pushtime( L, res );
+   return 1;
+}
+/**
+ * @brief Checks to see if two time are equal.
+ *
+ * It is recommended to check with < and <= instead of ==.
+ *
+ * @usage if time.create( 630, 5, 78) == time.get() then -- do something if they match
+ *
+ *    @luaparam t1 Time to compare for equality.
+ *    @luaparam t2 Time to compare for equality.
+ *    @luareturn true if they're equal.
+ * @luafunc __eq( t1, t2 )
+ */
+static int time_eq( lua_State *L )
+{
+   ntime_t t1, t2;
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+   lua_pushboolean( L, t1==t2 );
+   return 1;
+}
+/**
+ * @brief Checks to see if a time is strictly larger than another.
+ *
+ * @usage if time.create( 630, 5, 78) < time.get() then -- do something if time is past UST 630:0005.78
+ *
+ *    @luaparam t1 Time to see if is is smaller than t2.
+ *    @luaparam t2 Time see if is larger than t1.
+ *    @luareturn true if t1 < t2
+ * @luafunc __lt( t1, t2 )
+ */
+static int time_lt( lua_State *L )
+{
+   ntime_t t1, t2;
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+   lua_pushboolean( L, t1<t2 );
+   return 1;
+}
+/**
+ * @brief Checks to see if a time is larger or equal to another.
+ *
+ * @usage if time.create( 630, 5, 78) <= time.get() then -- do something if time is past UST 630:0005.78
+ *
+ *    @luaparam t1 Time to see if is is smaller or equal to than t2.
+ *    @luaparam t2 Time see if is larger or equal to than t1.
+ *    @luareturn true if t1 <= t2
+ * @luafunc __le( t1, t2 )
+ */
+static int time_le( lua_State *L )
+{
+   ntime_t t1, t2;
+   t1 = luaL_validtime( L, 1 );
+   t2 = luaL_validtime( L, 2 );
+   lua_pushboolean( L, t1<=t2 );
+   return 1;
+}
+/**
  * @brief Gets the current time in internal representation time.
  *
  * @usage t = time.get()
@@ -78,47 +300,46 @@ int nlua_loadTime( lua_State *L, int readonly )
  */
 static int time_get( lua_State *L )
 {
-   lua_pushnumber( L, ntime_get() );
+   LuaTime lt;
+   lt.t = ntime_get();
+   lua_pushtime( L, lt );
    return 1;
 }
 /**
  * @brief Converts the time to a pretty human readable format.
  *
- * @usage strt = time.str()
- * @usage strt = time.str( time.get() + time.units(5) )
+ * @usage strt = time.str() -- Gets current time
+ * @uasge strt = time.str( nil, 5 ) -- Gets current time with full decimals
+ * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 STP
  *
- *    @luaparam t Time to convert to pretty format.  If ommitted, current time is
- *              used.
+ *    @luaparam t Time to convert to pretty format.  If ommitted, current time is used.
+ *    @luaparam d Decimals to use for displaying STU (should be between 0 and 5).
  *    @luareturn The time in human readable format.
- * @luafunc str( t )
+ * @luafunc str( t, d )
  */
 static int time_str( lua_State *L )
 {
-   char *nt;
-   if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
-      nt = ntime_pretty( (unsigned int) lua_tonumber(L,1) );
+   int top;
+   ntime_t t;
+   char nt[64];
+   int d;
+
+   /* Defaults. */
+   d = 3;
+
+   /* Parse parameters. */
+   top = lua_gettop(L);
+   if ((top > 0) && !lua_isnil(L,1)) {
+      t = luaL_validtime(L,1);
+   }
    else
-      nt = ntime_pretty( ntime_get() );
+      t = ntime_get();
+   if (top > 1)
+      d = luaL_checkint(L,2);
+
+   /* Push string. */
+   ntime_prettyBuf( nt, sizeof(nt), luaL_validtime(L,1), d );
    lua_pushstring(L, nt);
-   free(nt);
-   return 1;
-}
-/**
- * @brief Converts stu to internal representation time.
- *
- * @usage time_limit = time.get() + time.units(5)
- *
- *    @luaparam stu Time in stu to convert to internal representation time.  If
- *                ommitted, 1 stu is used.
- *    @luareturn The value of stu in internal representation time.
- * @luafunc units( stu )
- */
-static int time_units( lua_State *L )
-{
-   if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
-      lua_pushnumber( L, (unsigned int)lua_tonumber(L,1) * NTIME_UNIT_LENGTH );
-   else
-      lua_pushnumber( L, NTIME_UNIT_LENGTH );
    return 1;
 }
 
@@ -126,14 +347,15 @@ static int time_units( lua_State *L )
 /**
  * @brief Increases or decreases the time.
  *
- * @usage time.inc( time.units(100) ) -- Increments the time by 100 STU.
+ * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 STU.
  *
  *    @luaparam t Amount to increment or decrement the time by.
  * @luafunc inc( t )
  */
 static int time_inc( lua_State *L )
 {
-   if (lua_isnumber(L,1))
-      ntime_inc( lua_tonumber(L, 1));
+   ntime_inc( luaL_validtime(L,1) );
    return 0;
 }
+
+

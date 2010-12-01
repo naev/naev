@@ -14,7 +14,7 @@ function create()
    screen_w, screen_h = gfx.dim()
    deffont_h = gfx.fontSize()
    smallfont_h = gfx.fontSize(true)
-   gui.viewport( 0, 30, screen_w, screen_h - 30 )
+   gui.viewport( 0, 28, screen_w, screen_h - 28 )
 
    --Colors
    col_txt_bar = colour.new( 192/255, 198/255, 217/255 )
@@ -343,14 +343,19 @@ end
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
    offsets = { 2, 20, 3, 13, 22, 6 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text
    l_bg = _G["bg_" .. name]
-   if name == "heat" and value[1] > 1 then
-      l_col = col_heat2
+   if name == "heat" then
+      value[1] = value[1] / 2.
+      if value[1] > .5 then
+         l_col = col_heat2
+      else
+         l_col = _G["col_" .. name]
+      end
    else   
       l_col = _G["col_" .. name]
    end      
    gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
    gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w / 2, bar_weapon_h, l_col)
+   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
    if value[3] == 2 then
       gfx.renderTex( bg_bar_weapon_sec, x, y )
@@ -361,12 +366,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
-   if gfx.printDim( false, txt ) > bar_weapon_w then
-      small = true
-   else
-      small = false
-   end
-   gfx.print( small, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
+   gfx.print( true, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
 end   
    
 
@@ -406,7 +406,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( math.floor(shield)) .. "% (" .. tostring(math.floor(stats.shield * shield / 100)) .. ")"
+   txt = tostring( round(shield)) .. "% (" .. tostring(round(stats.shield * shield / 100)) .. ")"
    render_bar( "shield", shield, txt, col )
 
    --Armour
@@ -415,7 +415,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( math.floor(armour)) .. "% (" .. tostring(math.floor(stats.armour * armour / 100)) .. ")"
+   txt = tostring( round(armour)) .. "% (" .. tostring(round(stats.armour * armour / 100)) .. ")"
    render_bar( "armour", armour, txt, col )
    
    --Energy
@@ -426,21 +426,12 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( math.floor(energy)) .. "% (" .. tostring(math.floor(stats.energy  * energy / 100)) .. ")"
+   txt = tostring( round(energy)) .. "% (" .. tostring(round(stats.energy  * energy / 100)) .. ")"
    render_bar( "energy", energy, txt, col )
    
    --Speed
-   local hspeed 
-   local realspeed = speed / stats.speed_max * 100
-   -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
-   -- Any speed between 99% and 101% will be treated as 100%.
-   if realspeed >= 99 and realspeed <= 101 then
-      hspeed = 100
-   else
-      hspeed = math.floor(realspeed)
-   end
-   --local hspeed = math.ceil( speed / stats.speed_max * 100 )
-   txt = tostring( hspeed ) .. "% (" .. tostring( math.floor(speed)) .. ")"
+   local hspeed = round(speed / stats.speed_max * 100,0)
+   txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
    elseif hspeed <= 200. then
@@ -462,8 +453,18 @@ function render( dt )
    --Weapon bars
    local num = 0
    for k, weapon in ipairs(wset) do
+      txt = weapon.name
+      if weapon.left ~= nil then -- Truncate names for readability.
+         if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
+               txt = string.gsub(txt,"Cannon", "C.")
+         elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
+               txt = string.gsub(txt,"Turret", "T.")
+         elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
+            txt = string.gsub(txt,"Launcher", "L.")
+         end
+      end
       if weapon.left ~= nil then
-         txt = weapon.name .. " (" .. tostring( weapon.left) .. ")"
+         txt = txt .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
          else
@@ -472,7 +473,6 @@ function render( dt )
          values = {weapon.left_p, weapon.cooldown, weapon.level}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
-         txt = weapon.name
          col = col_txt_bar
          values = {weapon.temp, weapon.cooldown, weapon.level}
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
@@ -544,21 +544,13 @@ function render( dt )
          gfx.print( false, "TARGETED", ta_pane_x + 14, ta_pane_y + 180, col_txt_top )
 
          --Text, warning light & other texts
-         local htspeed 
-         local realspeed = ta_speed / ta_stats.speed_max * 100
-         -- This is a hack to show ships cruising at max speed as flying at 100% speed, to compensate for the error in approximating the speed.
-         -- Any speed between 99% and 101% will be treated as 100%.
-         if realspeed >= 99 and realspeed <= 101 then
-            htspeed = 100
-         else
-            htspeed = math.floor(realspeed)
-         end
+         local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
          if not ta_fuzzy then
             --Bar Texts
-            shi = tostring( math.floor(ta_shield) ) .. "% (" .. tostring(math.floor(ta_stats.shield  * ta_shield / 100)) .. ")"
-            arm = tostring( math.floor(ta_armour) ) .. "% (" .. tostring(math.floor(ta_stats.armour  * ta_armour / 100)) .. ")"
-            ene = tostring( math.floor(ta_energy) ) .. "%"
-            spe = tostring( htspeed ) .. "% (" .. tostring(math.floor(ta_speed)) .. ")"
+            shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
+            arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
+            ene = tostring( round(ta_energy) ) .. "%"
+            spe = tostring( htspeed ) .. "% (" .. tostring(round(ta_speed)) .. ")"
 
             if htspeed <= 100. then
                spetxtcol = col_txt_bar
@@ -607,7 +599,7 @@ function render( dt )
             ta_shield, ta_armour, ta_energy = nil
 
             --Bar Texts
-            spe = math.floor(ta_speed)
+            spe = round(ta_speed)
             colspe, colspe2 = nil
             spetxtcol = col_txt_bar
             htspeed = 0.
@@ -810,6 +802,7 @@ function render( dt )
          end
       end
       gfx.print( true, cargstring, length, 6, col_txt_std )
+
       length = length + gfx.printDim( true, cargstring )
    else
       gfx.print( true, "none", length, 6, col_txt_una )
@@ -825,15 +818,19 @@ function largeNumber( number )
       formatted = math.floor(number)
    elseif number < 1e18 then
       len = math.floor(math.log10(number))
-      formatted = round( number / 10^math.floor(len-len%3), 2) .. units[(math.floor(len/3))]
+      formatted = roundto( number / 10^math.floor(len-len%3), 2) .. units[(math.floor(len/3))]
    else
       formatted = "Too big!"
    end
    return formatted
 end
 
-function round(num, idp)
-   return string.format("%.0" .. (idp or 0) .. "f", num)
+function roundto(num, idp)
+   return tonumber( string.format("%.0" .. (idp or 0) .. "f", num) )
+end
+
+function round(num)
+   return math.floor( num + 0.5 )
 end
 
 function destroy()

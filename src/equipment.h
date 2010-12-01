@@ -36,8 +36,8 @@ void equipment_updateOutfits( unsigned int wid, char* str );
 void equipment_setGui( unsigned int wid, char* str );
 
 
-/*
- * Slot widget.
+/**
+ * Custom slot widget.
  */
 typedef struct CstSlotWidget_ {
    Pilot *selected; /**< Selected pilot ship. */

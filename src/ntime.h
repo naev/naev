@@ -7,17 +7,29 @@
 #  define NTIME_H
 
 
-/* how long a "unit" of time is */
-#define NTIME_UNIT_LENGTH      1000 /**< Length of a MTU (Major Time Unit) */
+#include <stdint.h>
+
+
+typedef int64_t ntime_t;
+
+/* Create. */
+ntime_t ntime_create( int scu, int stp, int stu );
+
+/* update */
+void ntime_update( double dt );
 
 /* get */
-unsigned int ntime_get (void);
-char* ntime_pretty( unsigned int t );
+ntime_t ntime_get (void);
+int ntime_getSCU( ntime_t t );
+int ntime_getSTP( ntime_t t );
+int ntime_getSTU( ntime_t t );
+char* ntime_pretty( ntime_t t, int d );
+void ntime_prettyBuf( char *str, int max, ntime_t t, int d );
 
 /* set */
-void ntime_set( unsigned int t );
-void ntime_inc( unsigned int t );
-void ntime_incLagged( unsigned int t );
+void ntime_set( ntime_t t );
+void ntime_inc( ntime_t t );
+void ntime_incLagged( ntime_t t );
 
 /* misc */
 void ntime_refresh (void);

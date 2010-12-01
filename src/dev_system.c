@@ -30,6 +30,10 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 
 /**
  * @brief Compare function for planet qsort.
+ *
+ *    @param planet1 Planet 1 to sort.
+ *    @param planet2 Planet 2 to sort.
+ *    @return Order to sort.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 )
 {
@@ -43,7 +47,11 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
 
 
 /**
- * @brief Function for qsorting sysetms.
+ * @brief Function for qsorting systems.
+ *
+ *    @param sys1 System 1 to sort.
+ *    @param sys2 System 2 to sort.
+ *    @return Order to sort.
  */
 static int dsys_compSys( const void *sys1, const void *sys2 )
 {
@@ -58,6 +66,10 @@ static int dsys_compSys( const void *sys1, const void *sys2 )
 
 /**
  * @brief Function for qsorting jumppoints.
+ *
+ *    @param jmp1 Jump Point 1 to sort.
+ *    @param jmp2 Jump Point 2 to sort.
+ *    @return Order to sort.
  */
 static int dsys_compJump( const void *jmp1, const void *jmp2 )
 {
@@ -74,7 +86,7 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
 /**
  * @brief Saves a star system.
  *
- *    @param write Write to use for saving the star system.
+ *    @param writer Write to use for saving the star system.
  *    @param sys Star system to save.
  *    @return 0 on success.
  */
@@ -150,7 +162,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 
 
 /**
- * @saves All the star systems.
+ * @brief Saves all the star systems.
  *
  *    @return 0 on success.
  */

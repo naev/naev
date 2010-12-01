@@ -551,6 +551,30 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
 
 
 /**
+ * @brief Sets or removes the border of a window.
+ *
+ * Default is enabled.
+ *
+ *    @param wid ID of the window to enable/disable border.
+ *    @param enable Whether or not to enable rendering of the border.
+ */
+void window_setBorder( unsigned int wid, int enable )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL)
+      return;
+
+   if (enable)
+      window_rmFlag( wdw, WINDOW_NOBORDER );
+   else
+      window_setFlag( wdw, WINDOW_NOBORDER );
+}
+
+
+/**
  * @brief Sets the key handler for the window.
  *
  * This function is only called if neither the active widget nor the window
@@ -642,13 +666,19 @@ void window_destroy( const unsigned int wid )
 
       /* Mark children for death. */
       for (w = windows; w != NULL; w = w->next) {
-         if (w->parent == wid)
+         if (w->parent == wid) {
             window_destroy( w->id );
+         }
       }
 
       /* Mark for death. */
       window_setFlag( wdw, WINDOW_KILL );
       window_dead = 1;
+
+      /* Run the close function first. */
+      if (wdw->close_fptr != NULL)
+         wdw->close_fptr( wdw->id, wdw->name );
+      wdw->close_fptr = NULL;
       break;
    }
 }
@@ -665,7 +695,8 @@ static void window_kill( Window *wdw )
 
    /* Run the close function first. */
    if (wdw->close_fptr != NULL)
-      wdw->close_fptr( wdw->id, wdw->name);
+      wdw->close_fptr( wdw->id, wdw->name );
+   wdw->close_fptr = NULL;
 
    /* Destroy the window. */
    if (wdw->name)

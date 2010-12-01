@@ -14,6 +14,7 @@
 #include "faction.h"
 #include "sound.h"
 #include "economy.h"
+#include "ntime.h"
 
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
@@ -160,7 +161,7 @@ typedef struct PilotOutfitSlot_ {
 
    /* Type-specific data. */
    union {
-      int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+      unsigned int beamid; /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo; /**< Ammo for launchers. */
    } u; /**< Stores type specific data. */
 } PilotOutfitSlot;
@@ -256,12 +257,13 @@ typedef struct Pilot_ {
    /* Properties. */
    double cpu; /**< Amount of CPU the pilot has left. */
    double cpu_max; /**< Maximum amount of CPU the pilot has. */
+   double crew; /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
 
    /* Movement */
    double thrust; /**< Pilot's thrust. */
    double speed; /**< Pilot's speed. */
-   double turn; /**< Pilot's turn. */
-   double turn_base; /**< Pilot's base turn. */
+   double turn; /**< Pilot's turn in rad/s. */
+   double turn_base; /**< Pilot's base turn in rad/s. */
 
    /* Current health */
    double armour; /**< Current armour. */
@@ -272,6 +274,7 @@ typedef struct Pilot_ {
    double fuel_max; /**< Maximum fuel. */
    double armour_regen; /**< Armour regeneration rate (per second). */
    double shield_regen; /**< Shield regeneration rate (per second). */
+   double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
 
    /* Energy is handled a bit differently. */
    double energy; /**< Current energy. */
@@ -282,6 +285,7 @@ typedef struct Pilot_ {
    /* Electronic warfare. */
    double ew_base_hide; /**< Base static hide factor. */
    double ew_mass; /**< Mass factor. */
+   double ew_heat; /**< Heat factor, affects hide. */
    double ew_hide; /**< Static hide factor. */
    double ew_movement; /**< Movement factor. */
    double ew_evasion; /**< Dynamic evasion factor. */
@@ -359,6 +363,8 @@ typedef struct Pilot_ {
    PilotFlags flags; /**< used for AI and others */
    double ptimer; /**< generic timer for internal pilot use */
    double htimer; /**< Hail animation timer. */
+   double stimer; /**< Shield regeneration timer. */
+   double sbonus; /**< Shield regeneration bonus. */
    int hail_pos; /**< Hail animation position. */
    int lockons; /**< Stores how many seeking weapons are targeting pilot */
    int *mounted; /**< Number of mounted outfits on the mount. */
@@ -386,6 +392,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
+unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled );
 int pilot_getJumps( const Pilot* p );
 
 
@@ -393,9 +400,10 @@ int pilot_getJumps( const Pilot* p );
  * Combat.
  */
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage );
+      const DamageType dtype, const double damage, const double penetration );
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, const Pilot *parent );
+      DamageType dtype, double damage, 
+      double penetration, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 
 
@@ -407,7 +415,7 @@ void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
 int pilot_hasDeployed( Pilot *p );
 int pilot_dock( Pilot *p, Pilot *target, int deployed );
-double pilot_hyperspaceDelay( Pilot *p );
+ntime_t pilot_hyperspaceDelay( Pilot *p );
 
 
 /*

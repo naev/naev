@@ -16,26 +16,24 @@
 #include "log.h"
 
 
-/*
- * Node struct.
+/**
+ * @brief Node struct.
  */
 typedef struct Node_ *Node;
 typedef struct Node_ {
-   void *data;
-   Node next;
+   void *data; /**< Assosciated data. */
+   Node next; /**< Next node. */
 } Node_;
 
-/*
- * @struct Queue
- *
+/**
  * @brief Queue struct.
  */
 typedef struct Queue_ {
-   Node first;
-   Node last;
+   Node first; /**< First node in the queue. */
+   Node last; /**< Last node in the queue. */
 } Queue_;
 
-/*
+/**
  * @brief Creates a queue.
  *
  *    @return A pointer to a queue.
@@ -61,7 +59,7 @@ Queue q_create (void)
    return q;
 }
 
-/*
+/**
  * @brief Destroys a queue.
  *
  *    @param q Queue to destroy.
@@ -85,7 +83,7 @@ void q_destroy( Queue q )
    return;
 }
 
-/*
+/**
  * @brief Enqueues an item.
  *
  *    @param q Queue to use.
@@ -116,7 +114,7 @@ void q_enqueue( Queue q, void *data )
    return;
 }
 
-/*
+/**
  * @brief Dequeues an item.
  *
  *    @param q Queue to use.
@@ -149,7 +147,7 @@ void* q_dequeue( Queue q )
    return d;
 }
 
-/*
+/**
  * @brief Checks if the queue is empty.
  *
  *    @param q Queue to use.

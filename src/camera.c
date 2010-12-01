@@ -357,6 +357,10 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
       tz = znear; /* Aim at in. */
    }
 
+   /* We'll increment based on current time compression. */
+   if (dt_mod > 2.)
+      tz /= (dt_mod/2.);
+
    /* Gradually zoom in/out. */
    d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);
    d *= dt / dt_mod; /* Remove dt dependence. */

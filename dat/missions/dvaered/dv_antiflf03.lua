@@ -363,7 +363,7 @@ function nextStage()
     time = 0 -- Immediately recall the Dvaered escorts
     stage = stage + 1
     deathsFLF = 0
-    misn.timerStop( tim_sec ) -- Stop security timer
+    hook.rm( tim_sec ) -- Stop security timer
     if stage == 1 then
         hook.timer(9000, "spawnFLFbombers")
         hook.timer(13000, "spawnFLFfighters")

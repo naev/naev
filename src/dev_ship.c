@@ -55,7 +55,7 @@ void dship_csv( const char *path )
             "%f,%f,"
             "%d,%d,%d\n",
             s->name, s->base_type, s->price, s->license, s->fabricator,
-            s->thrust/s->mass, s->turn, s->speed,
+            s->thrust/s->mass, s->turn*180./M_PI, s->speed,
             s->crew, s->mass, s->cpu, s->fuel, s->cap_cargo,
             s->armour, s->armour_regen*60,
             s->shield, s->shield_regen*60,

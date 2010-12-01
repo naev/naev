@@ -12,8 +12,6 @@
 
 
 /**
- * @struct glColour
- *
  * @brief reperesents a colour via it's RGBA values.
  */
 typedef struct glColour_ {

@@ -43,7 +43,7 @@
 #define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  : atoi(xml_raw(n)))
 #define xml_getUInt(n)        ((xml_get(n) == NULL) ? 0  : strtoul(xml_raw(n), (char**)NULL, 10))
 #define xml_getLong(n)        ((xml_get(n) == NULL) ? 0  : atol(xml_raw(n)))
-#define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoul(xml_raw(n), (char**)NULL, 10))
+#define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoull(xml_raw(n), (char**)NULL, 10))
 #define xml_getFloat(n)       ((xml_get(n) == NULL) ? 0. : atof(xml_raw(n)))
 #define xml_getStrd(n)        ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n)))
 

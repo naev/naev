@@ -31,6 +31,7 @@
 #include "land_outfits.h"
 #include "player_gui.h"
 #include "info.h"
+#include "ntime.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -77,6 +78,7 @@ static int equipment_mouseInColumn( double y, double h, int n, double my );
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
+static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
@@ -406,6 +408,19 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       y -= h+20;
    }
 }
+
+
+/**
+ * @brief Calculates the size the slots need to be for a given window.
+ *
+ *    @param p Pilot to calculate the slots of.
+ *    @param bw Base widget width.
+ *    @param bh Base window height.
+ *    @param w Width to use.
+ *    @param h Height to use.
+ *    @param n Number of columns.
+ *    @param m Number of rows.
+ */
 static void equipment_calculateSlots( Pilot *p, double bw, double bh,
       double *w, double *h, int *n, int *m )
 {
@@ -428,6 +443,12 @@ static void equipment_calculateSlots( Pilot *p, double bw, double bh,
 }
 /**
  * @brief Renders the equipment slots.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param data Custom widget data.
  */
 static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
@@ -478,6 +499,12 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
 }
 /**
  * @brief Renders the custom equipment widget.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param data Custom widget data.
  */
 static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data )
 {
@@ -521,7 +548,15 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
 /**
  * @brief Renders an outfit column.
- * @param mover Slot for which mouseover is active
+ *
+ *    @param x X position to render at.
+ *    @param y Y position to render at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param n Number of elements.
+ *    @param lst List of elements.
+ *    @param mover Slot for which mouseover is active
+ *    @param wgt Widget rendering.
  */
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
@@ -617,6 +652,12 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 }
 /**
  * @brief Renders the equipment overlay.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param data Custom widget data.
  */
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data )
@@ -710,6 +751,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
 /**
  * @brief Renders the ship in the equipment window.
+ *
+ *    @param bx Base X position of the widget.
+ *    @param by Base Y position of the widget.
+ *    @param bw Width of the widget.
+ *    @param bh Height of the widget.
+ *    @param x X position to render at.
+ *    @param y Y positon to render at.
+ *    @param p Pilot to render.
  */
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
@@ -727,7 +776,7 @@ static void equipment_renderShip( double bx, double by,
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
    equipment_lastick = tick;
-   equipment_dir += p->turn * M_PI/180. * dt;
+   equipment_dir += p->turn * dt;
    if (equipment_dir > 2*M_PI)
       equipment_dir = fmod( equipment_dir, 2*M_PI );
    gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
@@ -784,6 +833,12 @@ static void equipment_renderShip( double bx, double by,
 }
 /**
  * @brief Handles a mouse press in column.
+ *
+ *    @param y Y position of the column.
+ *    @param h Height of column.
+ *    @param n Number of elements in column.
+ *    @param my Mouse press position.
+ *    @return Number pressed (or -1 if none).
  */
 static int equipment_mouseInColumn( double y, double h, int n, double my )
 {
@@ -799,6 +854,18 @@ static int equipment_mouseInColumn( double y, double h, int n, double my )
 }
 /**
  * @brief Handles a mouse press in a column.
+ *
+ *    @param wid Parent window id.
+ *    @param event Mouse input event.
+ *    @param mx Mouse X event position.
+ *    @param my Mouse Y event position.
+ *    @param y Y position of the column.
+ *    @param h Heighto f the column.
+ *    @param n Number of elements in the column.
+ *    @param os Pointer to elements in the column.
+ *    @param p Pilot to which the elements belong.
+ *    @param selected Currently selected element.
+ *    @param wgt Slot widget.
  */
 static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
       double mx, double my, double y, double h, int n, PilotOutfitSlot* os,
@@ -849,6 +916,14 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
 }
 /**
  * @brief Does mouse input for the custom equipment widget.
+ *
+ *    @param wid Parent window id.
+ *    @param event Mouse input event.
+ *    @param mx Mouse X event position.
+ *    @param my Mouse Y event position.
+ *    @param bw Base window width.
+ *    @param bh Base window height.
+ *    @param data Custom widget data.
  */
 static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double mx, double my, double bw, double bh, void *data )
@@ -914,6 +989,10 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 
 /**
  * @brief Swaps an equipment slot.
+ *
+ *    @param wid Parent window id.
+ *    @param p Pilot swapping slots.
+ *    @param slot Slot to swap.
  */
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
@@ -1002,6 +1081,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
 /**
  * @brief Regenerates the equipment window lists.
+ *
+ *    @param wid Window to regenrate lists.
+ *    @param outfits Whether or not should regenerate outfits list.
+ *    @param ships Whether or not to regenerate ships list.
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
@@ -1098,6 +1181,8 @@ void equipment_addAmmo (void)
 
 /**
  * @brief Generates a new ship/outfit lists if needed.
+ *
+ *    @param wid Parent window id.
  */
 static void equipment_genLists( unsigned int wid )
 {
@@ -1264,6 +1349,23 @@ static void equipment_genLists( unsigned int wid )
    equipment_updateOutfits(wid, NULL);
    equipment_updateShips(wid, NULL);
 }
+
+
+/**
+ * @brief Gets the colour for comparing a current value vs a ship base value.
+ */
+static char eq_qCol( double cur, double base, int inv )
+{
+   if (cur > 1.2*base)
+      return (inv) ? 'r' : 'D';
+   else if (cur < 0.8*base)
+      return (inv) ? 'D' : 'r';
+   return '0';
+}
+
+
+#define EQ_COMP( cur, base, inv ) \
+eq_qCol( cur, base, inv ), cur
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
@@ -1312,21 +1414,21 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "%s\n"
-         "%s Credits\n"
+         "%s credits\n"
          "\n"
-         "%.0f Tons\n"
-         "%.1f STU Average\n"
-         "%.0f KN/Ton\n"
-         "%.0f M/s\n"
-         "%.0f Grad/s\n"
+         "%.0f\e0 tonnes\n"
+         "\e%c%04d.%04d\e0 STP average\n"
+         "\e%c%.0f\e0 kN/tonne\n"
+         "\e%c%.0f\e0 m/s (max \e%c%.0f\e0 m/s)\n"
+         "\e%c%.0f\e0 deg/s\n"
          "\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%d / %d Tons\n"
-         "%.0f / %.0f Units (%d Jumps)\n"
+         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
+         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
+         "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
+         "%d / \e%c%d\e0 tonnes\n"
+         "%.0f / \e%c%.0f\e0 units (%d jumps)\n"
          "\n"
-         "%s Credits\n"
+         "%s credits\n"
          "%s%s",
          /* Generic. */
       ship->name,
@@ -1335,17 +1437,22 @@ void equipment_updateShips( unsigned int wid, char* str )
       buf3,
       /* Movement. */
       ship->solid->mass,
-      pilot_hyperspaceDelay( ship ),
-      ship->thrust/ship->solid->mass,
-      ship->speed,
-      ship->turn,
+      '0', ntime_getSTP( pilot_hyperspaceDelay( ship ) ), ntime_getSTU( pilot_hyperspaceDelay( ship ) ),
+      EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
+      EQ_COMP( ship->speed, ship->ship->speed, 0 ),
+      EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
+            solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
+      EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
       /* Health. */
-      ship->shield_max, ship->shield_regen,
-      ship->armour_max, ship->armour_regen,
-      ship->energy_max, ship->energy_regen,
+      EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
+      EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ),
+      EQ_COMP( ship->armour_max, ship->ship->armour, 0 ),
+      EQ_COMP( ship->armour_regen, ship->ship->armour_regen, 0 ),
+      EQ_COMP( ship->energy_max, ship->ship->energy, 0 ),
+      EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
-      pilot_cargoUsed(ship), cargo,
-      ship->fuel, ship->fuel_max, pilot_getJumps(ship),
+      pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
+      ship->fuel, EQ_COMP( ship->fuel_max, ship->ship->fuel, 0 ), pilot_getJumps(ship),
       /* Transportation. */
       buf2,
       loc, sysname );
@@ -1372,6 +1479,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       window_enableButton( wid, "btnSellShip" );
    }
 }
+#undef EQ_COMP
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
@@ -1443,6 +1551,7 @@ static void equipment_changeShip( unsigned int wid )
 }
 /**
  * @brief Player attempts to transport his ship to the planet he is at.
+ *
  *    @param wid Window player is trying to transport his ship from.
  */
 static void equipment_transportShip( unsigned int wid )
@@ -1480,6 +1589,7 @@ static void equipment_transportShip( unsigned int wid )
 
 /**
  * @brief Closes the GUI selection menu.
+ *
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
@@ -1492,6 +1602,9 @@ static void setgui_close( unsigned int wdw, char *str )
 
 /**
  * @brief Allows the player to set a different GUI.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
  */
 void equipment_setGui( unsigned int wid, char* str )
 {
@@ -1545,6 +1658,7 @@ void equipment_setGui( unsigned int wid, char* str )
 
 /**
  * @brief Loads a GUI.
+ *
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
@@ -1574,6 +1688,9 @@ static void setgui_load( unsigned int wdw, char *str )
 
 /**
  * @brief GUI override was toggled.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
  */
 static void equipment_toggleGuiOverride( unsigned int wid, char *name )
 {
@@ -1583,6 +1700,9 @@ static void equipment_toggleGuiOverride( unsigned int wid, char *name )
 
 /**
  * @brief Unequips the player's ship.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {

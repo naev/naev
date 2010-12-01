@@ -271,35 +271,6 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
 
 
 /**
- * @brief Sets the mission OSD if applicable.
- */
-static void setOSD (void)
-{
-   const char *buf[1];
-
-   /* OSD set explicitly. */
-   if (cur_mission->osd_set)
-      return;
-
-   /* Needs title and description. */
-   if ((cur_mission->desc==NULL) || (strcmp(cur_mission->desc,"No description.")==0))
-      return;
-
-   /* Mission must be accepted. */
-   if (!cur_mission->accepted)
-      return;
-
-   /* Destroy existing OSD. */
-   if (cur_mission->osd > 0)
-      osd_destroy(cur_mission->osd);
-
-   /* Set the OSD. */
-   buf[0] = cur_mission->desc;
-   cur_mission->osd = osd_create( cur_mission->title, 1, buf );
-}
-
-
-/**
  * @brief Sets the current mission title.
  *
  *    @luaparam title Title to use for mission.
@@ -314,9 +285,6 @@ static int misn_setTitle( lua_State *L )
    if (cur_mission->title) /* cleanup old title */
       free(cur_mission->title);
    cur_mission->title = strdup(str);
-
-   /* Set the OSD if needed. */
-   setOSD();
 
    return 0;
 }
@@ -338,9 +306,6 @@ static int misn_setDesc( lua_State *L )
    if (cur_mission->desc) /* cleanup old description */
       free(cur_mission->desc);
    cur_mission->desc = strdup(str);
-
-   /* Set the OSD if needed. */
-   setOSD();
 
    return 0;
 }
@@ -606,7 +571,6 @@ static int misn_accept( lua_State *L )
       memset( cur_mission, 0, sizeof(Mission) );
       cur_mission = &player_missions[i];
       cur_mission->accepted = 1; /* Mark as accepted. */
-      setOSD(); /* Set OSD if applicable. */
       /* Needed to make sure hooks work. */
       nlua_hookTarget( cur_mission, NULL );
    }
@@ -750,8 +714,14 @@ static int misn_osdCreate( lua_State *L )
 {
    const char *title;
    int nitems;
-   const char **items;
+   char **items;
    int i;
+
+   /* Must be accepted. */
+   if (!cur_mission->accepted) {
+      WARN("Can't create an OSD on an unaccepted mission!");
+      return 0;
+   }
 
    /* Check parameters. */
    title  = luaL_checkstring(L,1);
@@ -776,7 +746,7 @@ static int misn_osdCreate( lua_State *L )
          luaL_typerror(L, -1, "string");
          return 0;
       }
-      items[i] = lua_tostring(L, -1);
+      items[i] = strdup( lua_tostring(L, -1) );
       lua_pop(L,1);
       i++;
       if (i >= nitems)
@@ -784,10 +754,12 @@ static int misn_osdCreate( lua_State *L )
    }
 
    /* Create OSD. */
-   cur_mission->osd = osd_create( title, nitems, items );
+   cur_mission->osd = osd_create( title, nitems, (const char**) items );
    cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */
+   for (i=0; i<nitems; i++)
+      free(items[i]);
    free(items);
 
    return 0;

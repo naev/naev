@@ -15,6 +15,7 @@
 
 #include "log.h"
 #include "player.h"
+#include "pilot.h"
 #include "pause.h"
 #include "toolkit.h"
 #include "menu.h"
@@ -28,7 +29,11 @@
 #include "weapon.h"
 #include "console.h"
 #include "conf.h"
+#include "camera.h"
 #include "map_overlay.h"
+
+
+#define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -160,6 +165,7 @@ const char *keybindDescription[] = {
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
 static int input_afterburnerButton  = 0; /**< Used to see if afterburner button is pressed. */
+static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
 
 
 /*
@@ -173,6 +179,7 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
 /*
  * Mouse.
  */
+static double input_mouseTimer         = -1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
 
 
@@ -200,6 +207,7 @@ static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
 static void input_keyConvGen (void);
 static void input_keyConvDestroy (void);
 static void input_key( int keynum, double value, double kabs, int repeat );
+static void input_clickevent( SDL_Event* event );
 
 
 /**
@@ -390,7 +398,7 @@ void input_mouseHide (void)
 {
    input_mouseCounter--;
    if (input_mouseCounter <= 0) {
-      SDL_ShowCursor( SDL_DISABLE );
+      input_mouseTimer = MOUSE_HIDE;
       input_mouseCounter = 0;
    }
 }
@@ -620,28 +628,36 @@ SDLMod input_translateMod( SDLMod mod )
 /**
  * @brief Handles key repeating.
  */
-void input_update (void)
+void input_update( double dt )
 {
    unsigned int t;
 
-   /* Must not be disabled. */
-   if (conf.repeat_delay == 0)
-      return;
+   if (input_mouseTimer > 0.) {
+      input_mouseTimer -= dt;
 
-   /* Key must be repeating. */
-   if (repeat_key == -1)
-      return;
+      /* Hide if necessary. */
+      if ((input_mouseTimer < 0.) && (input_mouseCounter <= 0))
+         SDL_ShowCursor( SDL_DISABLE );
+   }
 
-   /* Get time. */
-   t = SDL_GetTicks();
+   /* Key repeat if applicable. */
+   if (conf.repeat_delay != 0) {
 
-   /* Should be repeating. */
-   if (repeat_keyTimer + conf.repeat_delay + repeat_keyCounter*conf.repeat_freq > t)
-      return;
+      /* Key must be repeating. */
+      if (repeat_key == -1)
+         return;
 
-   /* Key repeat. */
-   repeat_keyCounter++;
-   input_key( repeat_key, KEY_PRESS, 0., 1 );
+      /* Get time. */
+      t = SDL_GetTicks();
+
+      /* Should be repeating. */
+      if (repeat_keyTimer + conf.repeat_delay + repeat_keyCounter*conf.repeat_freq > t)
+         return;
+
+      /* Key repeat. */
+      repeat_keyCounter++;
+      input_key( repeat_key, KEY_PRESS, 0., 1 );
+   }
 }
 
 
@@ -652,7 +668,7 @@ void input_update (void)
 !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
-#define NOLAND()  (!landed) /**< Player isn't landed. */
+#define NOLAND()  (!landed && !pilot_isFlag(player.p,PILOT_LANDING)) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
  *
@@ -686,15 +702,19 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (kabs >= 0.) {
          if (!paused) player_autonavAbort(NULL);
          player_accel(kabs);
+         input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
             if (!paused) player_autonavAbort(NULL);
             player_accel(1.);
+            input_accelButton = 1;
          }
 
-         else if (value==KEY_RELEASE)
+         else if (value==KEY_RELEASE) {
             player_accelOver();
+            input_accelButton = 0;
+         }
 
          /* double tap accel = afterburn! */
          t = SDL_GetTicks();
@@ -703,7 +723,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
          else if ((value==KEY_RELEASE) && !input_afterburnerButton)
-            player_afterburnOver();
+            player_afterburnOver(0);
 
          if (value==KEY_PRESS)
             input_accelLast = t;
@@ -715,8 +735,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          input_afterburnerButton = 1;
       }
       else if (value==KEY_RELEASE) {
-         player_afterburnOver();
+         player_afterburnOver(0);
          input_afterburnerButton = 0;
+         if (!input_accelButton)
+            player_accelOver();
       }
 
    /* turning left */
@@ -867,10 +889,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) player_autonavStart();
    /* target planet (cycles like target) */
-   } else if (KEY("target_planet") && INGAME() && NOHYP() && NODEAD()) {
+   } else if (KEY("target_planet") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
-   } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
+   } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
          if (!paused) player_autonavAbort(NULL);
          player_land();
@@ -887,7 +909,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!paused) player_autonavAbort(NULL);
          player_jump();
       }
-   } else if (KEY("overlay") && NOHYP() && NODEAD() && INGAME() && !repeat) {
+   } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
       ovr_key( value );
 
 
@@ -936,9 +958,16 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
-      if (value==KEY_PRESS) {
-         if (dt_mod == 1.) pause_setSpeed(2.);
-         else pause_setSpeed(1.);
+      if ((value==KEY_PRESS) && !player_isFlag(PLAYER_AUTONAV)) {
+         if (!player_isFlag( PLAYER_CINEMATICS_2X )) {
+            if (player_isFlag(PLAYER_DOUBLESPEED)) {
+               pause_setSpeed(1.);
+               player_rmFlag(PLAYER_DOUBLESPEED);
+            } else {
+               pause_setSpeed(2.);
+               player_setFlag(PLAYER_DOUBLESPEED);
+            }
+         }
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
@@ -946,7 +975,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_info();
+      if (value==KEY_PRESS) menu_info( INFO_MAIN );
 
    /* Opens the Lua console. */
    } else if (KEY("console") && NODEAD() && !repeat) {
@@ -1039,6 +1068,88 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
 
 
 /**
+ * @brief Handles a click event.
+ */
+static void input_clickevent( SDL_Event* event )
+{
+   unsigned int pid, opid;
+   Pilot *p;
+   int mx, my;
+   double x, y, z, r, d;
+   Planet *pnt;
+   JumpPoint *jp;
+   int pntid, opntid, jpid, ojpid;
+
+   /* Mouse targetting is left only. */
+   if (event->button.button != SDL_BUTTON_LEFT)
+      return;
+
+   /* Player must not be NULL. */
+   if (player.p == NULL)
+      return;
+
+   /* Translate to coordinates. */
+   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
+   z = cam_getZoom();
+
+   /* Get closest pilot. */
+   opid = player.p->target;
+   pid = pilot_getNearestPos( player.p, x, y, 1 );
+   p   = pilot_get(pid);
+   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 100. ) / z;
+   d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
+   if (d < pow2(r)) {
+      player_targetSet( pid );
+      if (pid == opid && pid != PLAYER_ID) {
+         if (! pilot_isDisabled(p))
+            player_hail();
+         else
+            player_board();
+      }
+      return;
+   }
+
+   /* Get closest planet and/or jump point. */
+   system_getClosest( cur_system, &pntid, &jpid, x, y );
+   /* Planet is closest. */
+   if (pntid >= 0) {
+      opntid = player.p->nav_planet;
+      pnt = cur_system->planets[ pntid ];
+      d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
+      r  = MAX( 1.5 * pnt->radius, 100. );
+      if (d < pow2(r)) {
+         player_targetPlanetSet( pntid );
+         if (pntid == opntid) {
+            if (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )
+               player_land();
+            else
+               player_hailPlanet();
+         }
+      }
+   }
+   /* Jump point is closest. */
+   else if (jpid >= 0) {
+      ojpid = player.p->nav_hyperspace;
+      jp = &cur_system->jumps[ jpid ];
+      d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
+      r  = MAX( 1.5 * jp->radius, 100. );
+      if (d < pow2(r)) {
+         player_targetHyperspaceSet( jpid );
+         if (jpid == ojpid) {
+            if (space_canHyperspace(player.p)) {
+               if (!paused) player_autonavAbort(NULL);
+               player_jump();
+            }
+            else
+               player_autonavStart();
+         }
+      }
+   }
+}
+
+
+/**
  * @brief Handles global input.
  *
  * Basically seperates the event types
@@ -1047,6 +1158,14 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
  */
 void input_handle( SDL_Event* event )
 {
+   /* Special case mouse stuff. */
+   if ((event->type == SDL_MOUSEMOTION)  ||
+         (event->type == SDL_MOUSEBUTTONDOWN) ||
+         (event->type == SDL_MOUSEBUTTONUP)) {
+      input_mouseTimer = MOUSE_HIDE;
+      SDL_ShowCursor( SDL_ENABLE );
+   }
+
    if (toolkit_isOpen()) /* toolkit handled seperately completely */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
@@ -1054,6 +1173,10 @@ void input_handle( SDL_Event* event )
    if (ovr_isOpen())
       if (ovr_input(event))
          return; /* Don't process if the map overlay wants it. */
+
+   /* GUI gets event. */
+   if (gui_handleEvent(event))
+      return;
 
    switch (event->type) {
 
@@ -1078,6 +1201,16 @@ void input_handle( SDL_Event* event )
 
       case SDL_KEYUP:
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
+         break;
+
+
+      /* Mouse stuff. */
+      case SDL_MOUSEBUTTONDOWN:
+         input_clickevent( event );
+         break;
+
+
+      default:
          break;
    }
 }

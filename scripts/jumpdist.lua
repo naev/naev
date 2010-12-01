@@ -7,17 +7,19 @@
 -- A following example to get closest system with shipyard (to max of 10):
 --
 -- @code
+-- target = system.get( "Alteris" ) -- We'll target alteris in the example
 -- local i, t
 -- while i < 10 do
 --    t = getsysatdistance( target, i, i,
 --          function(s)
---             for k,v in s:planets() do
---                if v:hasShipyard()
+--             for _,p in ipairs(s:planets()) do
+--                if p:hasShipyard()
 --                   return true
 --                end
 --             end
 --             return false
 --          end )
+--    i = i+1
 -- end
 -- local target_system = t[ rnd.rnd(1,#t) ]
 -- @endcode
@@ -59,8 +61,8 @@ function _getsysatdistance( target, min, max, sys, n, t, filter, data )
 
       -- Add to table
       local seen = false
-      for i, j in ipairs(t) do -- Check if the system is already in our array
-         if j == sys then
+      for _,i in ipairs(t) do -- Check if the system is already in our array
+         if i == sys then
             seen = true
             break
          end

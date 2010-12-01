@@ -369,7 +369,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
                 planet->faction == factions[k]) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
-                  mtmp += CHUNK_SIZE;
+                  mtmp *= 2;
                   tmp = realloc(tmp, sizeof(char*) * mtmp);
                }
                tmp[ntmp-1] = planet->name;
@@ -404,7 +404,7 @@ char* space_getRndPlanet (void)
          if(systems_stack[i].planets[j]->real == ASSET_REAL) {
             ntmp++;
             if (ntmp > mtmp) { /* need more space */
-               mtmp += CHUNK_SIZE;
+               mtmp *= 2;
                tmp = realloc(tmp, sizeof(char*) * mtmp);
             }
             tmp[ntmp-1] = systems_stack[i].planets[j]->name;
@@ -415,6 +415,52 @@ char* space_getRndPlanet (void)
    free(tmp);
 
    return res;
+}
+
+
+/**
+ * @brief Gets the closest feature to a position in the system.
+ *
+ *    @param sys System to get closest feature from a position.
+ *    @param[out] pnt ID of closest planet or -1 if a jump point is closer (or none is close).
+ *    @param[out] jp ID of closest jump point or -1 if a planet is closer (or none is close).
+ *    @param x X position to get closest from.
+ *    @param y Y position to get closest from.
+ */
+void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y )
+{
+   int i;
+   double d, td;
+   Planet *p;
+   JumpPoint *j;
+
+   /* Default output. */
+   *pnt = -1;
+   *jp  = -1;
+   d    = 10e10;
+
+   /* Planets. */
+   for (i=0; i<sys->nplanets; i++) {
+      p  = sys->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
+      if (td < d) {
+         *pnt  = i;
+         d     = td;
+      }
+   }
+
+   /* Jump points. */
+   for (i=0; i<sys->njumps; i++) {
+      j  = &sys->jumps[i];
+      td = pow2(x-j->pos.x) + pow2(y-j->pos.y);
+      if (td < d) {
+         *pnt  = -1; /* We must clear planet target as jump point is closer. */
+         *jp   = i;
+         d     = td;
+      }
+   }
 }
 
 
@@ -788,11 +834,8 @@ void space_update( const double dt )
    if (cur_system->nebu_volatility > 0.) {
       /* Damage pilots in volatile systems. */
       for (i=0; i<pilot_nstack; i++) {
-         if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
-            return; /* Invisible pilots (player, during simulation) take no damage. */
-         else
-            pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
-                     pow2(cur_system->nebu_volatility) / 500. * dt );
+         pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
+                  pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
       }
    }
 
@@ -853,17 +896,18 @@ void space_init ( const char* sysname )
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
-   pilot_clearTimers(player.p); /* Clear timers. */
+   ovr_mrkClear(); /* Clear markers when jumping. */
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    background_clear(); /* Get rid of the background. */
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
-   pilot_heatReset(player.p); /* Resets the player's heat. */
-
-   /* Must clear escorts to keep deployment sane. */
-   player_clearEscorts();
+   if (player.p != NULL) {
+      pilot_clearTimers(player.p); /* Clear timers. */
+      pilot_heatReset(player.p); /* Resets the player's heat. */
+      player_clearEscorts(); /* Must clear escorts to keep deployment sane. */
+   }
 
    if ((sysname==NULL) && (cur_system==NULL))
       ERR("Cannot reinit system if there is no system previously loaded");
@@ -876,7 +920,7 @@ void space_init ( const char* sysname )
          ERR("System %s not found in stack", sysname);
       cur_system = &systems_stack[i];
 
-      nt = ntime_pretty(0);
+      nt = ntime_pretty(0, 4);
       player_message("\epEntering System %s on %s.", sysname, nt);
       free(nt);
 
@@ -933,7 +977,8 @@ void space_init ( const char* sysname )
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
    /* Simulate system. */
-   pilot_setFlag( player.p, PILOT_INVISIBLE );
+   if (player.p != NULL)
+      pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
    s = sound_disabled;
    sound_disabled = 1;
@@ -942,7 +987,8 @@ void space_init ( const char* sysname )
       update_routine( fps_min );
    sound_disabled = s;
    player_messageToggle( 1 );
-   pilot_rmFlag( player.p, PILOT_INVISIBLE );
+   if (player.p != NULL)
+      pilot_rmFlag( player.p, PILOT_INVISIBLE );
 
    /* Refresh overlay if necessary (player kept it open). */
    ovr_refresh();
@@ -967,7 +1013,7 @@ Planet *planet_new (void)
    planet_nstack++;
    realloced = 0;
    if (planet_nstack > planet_mstack) {
-      planet_mstack += CHUNK_SIZE;
+      planet_mstack *= 2;
       planet_stack   = realloc( planet_stack, sizeof(Planet) * planet_mstack );
       realloced      = 1;
    }
@@ -1095,6 +1141,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    SDL_RWops *rw;
    npng_t *npng;
    png_uint_32 w, h;
+   int nbuf;
+   char *buf;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1128,7 +1176,15 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                   npng = npng_open( rw );
                   if (npng != NULL) {
                      npng_dim( npng, &w, &h );
-                     planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     nbuf = npng_metadata( npng, "radius", &buf );
+                     if (nbuf > 0) {
+                        strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
+                        str[ nbuf ] = '\0';
+                        planet->radius = atof( str );
+                     }
+                     else {
+                        planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+                     }
                      npng_close( npng );
                   }
                   SDL_RWclose( rw );
@@ -1215,7 +1271,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->ncommodities++;
                      /* Memory must grow. */
                      if (planet->ncommodities > mem) {
-                        mem += CHUNK_SIZE_SMALL;
+                        if (mem == 0)
+                           mem = CHUNK_SIZE_SMALL;
+                        else
+                           mem *= 2;
                         planet->commodities = realloc(planet->commodities,
                               mem * sizeof(Commodity*));
                      }
@@ -1308,7 +1367,10 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    /* add planet <-> star system to name stack */
    spacename_nstack++;
    if (spacename_nstack > spacename_mstack) {
-      spacename_mstack += CHUNK_SIZE;
+      if (spacename_mstack == 0)
+         spacename_mstack = CHUNK_SIZE;
+      else
+         spacename_mstack *= 2;
       planetname_stack = realloc(planetname_stack,
             sizeof(char*) * spacename_mstack);
       systemname_stack = realloc(systemname_stack,
@@ -1325,6 +1387,10 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    /* Add the presence. */
    if (!systems_loading)
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
+
+   /* Reload graphics if necessary. */
+   if (cur_system != NULL)
+      space_gfxLoad( cur_system );
 
    return 0;
 }
@@ -1473,7 +1539,7 @@ StarSystem *system_new (void)
    systems_nstack++;
    realloced = 0;
    if (systems_nstack > systems_mstack) {
-      systems_mstack   += CHUNK_SIZE;
+      systems_mstack   *= 2;
       systems_stack     = realloc( systems_stack, sizeof(StarSystem) * systems_mstack );
       realloced         = 1;
    }

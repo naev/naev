@@ -106,6 +106,20 @@ void player_board (void)
    pilot_setFlag(p,PILOT_BOARDED);
    player_message("\epBoarding ship \e%c%s\e0.", c, p->name);
 
+   /* Don't unboard. */
+   board_stopboard = 0;
+
+   /*
+    * run hook if needed
+    */
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp.pilot = p->id;
+   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "board", hparam );
+   pilot_runHook(p, PILOT_HOOK_BOARD);
+
+   if (board_stopboard)
+      return;
 
    /*
     * create the boarding window
@@ -132,22 +146,6 @@ void player_board (void)
          "btnBoardingClose", "Leave", board_exit );
 
    board_update(wdw);
-
-   /* Don't unboard. */
-   board_stopboard = 0;
-
-   /*
-    * run hook if needed
-    */
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp.pilot = p->id;
-   hparam[1].type       = HOOK_PARAM_SENTINAL;
-   hooks_runParam( "board", hparam );
-   pilot_runHook(p, PILOT_HOOK_BOARD);
-
-   if (board_stopboard) {
-      board_exit( wdw, NULL );
-   }
 }
 
 
@@ -294,8 +292,7 @@ static int board_trySteal( Pilot *p )
       return 1;
 
    /* See if was successful. */
-   if (RNGF() > (0.5 *
-            (10. + (double)target->ship->crew)/(10. + (double)p->ship->crew)))
+   if (RNGF() > (0.5 * (10. + target->crew)/(10. + p->crew)))
       return 0;
 
    /* Triggered self destruct. */
@@ -303,7 +300,7 @@ static int board_trySteal( Pilot *p )
       /* Don't actually kill. */
       target->armour = 1.;
       /* This will make the boarding ship take the possible faction hit. */
-      pilot_hit( target, NULL, p->id, DAMAGE_TYPE_KINETIC, 100. );
+      pilot_hit( target, NULL, p->id, DAMAGE_TYPE_KINETIC, 100., 1. );
       /* Return ship dead. */
       return -1;
    }

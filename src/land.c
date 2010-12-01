@@ -422,7 +422,7 @@ void land_errDialogueBuild( const char *fmt, ... )
    }
 
    if (errorlist_ptr == NULL) { /* Initialize on first run. */
-      errorappend = snprintf( errorlist, sizeof(errorlist), errorreason);
+      errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
       errorlist_ptr = errorlist;
    }
    else { /* Append newest error to the existing list. */
@@ -517,7 +517,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
+      mission_portrait = gl_newImage( "gfx/portraits/news.png", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
@@ -695,7 +695,7 @@ static void misn_open( unsigned int wid )
          "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
-         "Accept", misn_accept );
+         "Accept Mission", misn_accept );
 
    /* text */
    y = -60;
@@ -842,7 +842,7 @@ static void misn_update( unsigned int wid, char* str )
    space_clearComputerMarkers();
 
    /* Update date stuff. */
-   buf = ntime_pretty(0);
+   buf = ntime_pretty( 0, 4 );
    snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
@@ -1023,8 +1023,11 @@ unsigned int land_getWid( int window )
 
 /**
  * @brief Recreates the land windows.
+ *
+ *    @param load Is loading game?
+ *    @param changetab Should it change to the last open tab?
  */
-void land_genWindows( int load )
+void land_genWindows( int load, int changetab )
 {
    int i, j;
    const char *names[LAND_NUMWINDOWS];
@@ -1163,7 +1166,7 @@ void land_genWindows( int load )
 
    /* Go to last open tab. */
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-   if (land_windowsMap[ last_window ] != -1)
+   if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Add fuel button if needed - AFTER missions pay :). */
@@ -1200,7 +1203,7 @@ void land( Planet* p, int load )
    npc_clear();
 
    /* Create all the windows. */
-   land_genWindows( load );
+   land_genWindows( load, 0 );
 
    /* Mission forced take off. */
    if (landed == 0) {
@@ -1402,6 +1405,7 @@ void takeoff( int delay )
    player.p->armour = player.p->armour_max;
    player.p->shield = player.p->shield_max;
    player.p->energy = player.p->energy_max;
+   player.p->stimer = 0.;
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;
@@ -1415,8 +1419,8 @@ void takeoff( int delay )
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
-      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
-   nt = ntime_pretty(0);
+      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
+   nt = ntime_pretty( 0, 4 );
    player_message("\epTaking off from %s on %s.", land_planet->name, nt);
    free(nt);
 

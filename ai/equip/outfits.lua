@@ -26,13 +26,13 @@ end
 -- Forward mounts
 --]]
 function equip_forwardLow ()
-   return { "Laser Cannon", "Plasma Blaster", "40mm Autocannon" }
+   return { "Laser Cannon MK1", "Plasma Blaster MK1" }
 end
 function equip_forwardMed ()
    return { "Laser Cannon MK2", "Plasma Blaster MK2", "Ion Cannon" }
 end
 function equip_forwardHig ()
-   return { "150mm Railgun", "Ripper MK2" }
+   return { "Railgun", "Ripper Cannon" }
 end
 function equip_forwardMedLow ()
    return table_merge( equip_forwardLow(), equip_forwardMed() )
@@ -46,13 +46,13 @@ end
 -- Turret mounts
 --]]
 function equip_turretLow ()
-   return { "Laser Turret" }
+   return { "Laser Turret MK1" }
 end
 function equip_turretMed ()
    return { "Laser Turret MK2", "Heavy Ion Turret" }
 end
 function equip_turretHig ()
-   return { "150mm Railgun Turret" }
+   return { "Railgun Turret" }
 end
 function equip_turretMedLow ()
    return table_merge( equip_turretLow(), equip_turretMed() )

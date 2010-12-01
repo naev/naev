@@ -39,7 +39,7 @@ static int exp_l = -1; /**< Large explosion spfx. */
  *    @param mode Defines the explosion behaviour.
  */
 void expl_explode( double x, double y, double vx, double vy,
-      double radius, DamageType dtype, double damage,
+      double radius, DamageType dtype, double damage, double penetration,
       const Pilot *parent, int mode )
 {
    int i, n;
@@ -79,7 +79,7 @@ void expl_explode( double x, double y, double vx, double vy,
 
    /* Run the damage. */
    if (damage > 0.)
-      expl_explodeDamage( x, y, radius, dtype, damage, parent, mode );
+      expl_explodeDamage( x, y, radius, dtype, damage, penetration, parent, mode );
 }
 
 
@@ -92,16 +92,17 @@ void expl_explode( double x, double y, double vx, double vy,
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type.
  *    @param damage Damage amount.
+ *    @param penetration Damage penetratior [0:1].
  *    @param parent Parent of the explosion, 0 is none.
  *    @param mode Defines the explosion behaviour.
  */
 void expl_explodeDamage( double x, double y, double radius,
-      DamageType dtype, double damage,
+      DamageType dtype, double damage, double penetration,
       const Pilot *parent, int mode )
 {
    /* Explosion affects ships. */
    if (mode & EXPL_MODE_SHIP)
-      pilot_explode( x, y, radius, dtype, damage, parent );
+      pilot_explode( x, y, radius, dtype, damage, penetration, parent );
 
    /* Explosion affects missiles and bolts. */
    if ((mode & EXPL_MODE_MISSILE) && (mode & EXPL_MODE_BOLT))

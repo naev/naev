@@ -114,6 +114,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
 /**
  * @brief Gets the size needed for the dialogue.
  *
+ *    @param title Title of the dialogue.
  *    @param msg Message of the dialogue.
  *    @param[out] width Gets the width needed.
  *    @param[out] height Gets the height needed.
@@ -184,7 +185,7 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
  * @brief Opens a dialogue window with an ok button and a fixed message.
  *
  *    @param caption Window title.
- *    @param text Message to display.
+ *    @param msg Message to display.
  */
 void dialogue_msgRaw( const char* caption, const char *msg )
 {
@@ -338,7 +339,7 @@ char* dialogue_input( const char* title, int min, int max, const char *fmt, ... 
  *    @param title Title of the dialogue window.
  *    @param min Minimum length of the message (must be non-zero).
  *    @param max Maximum length of the message (must be non-zero).
- *    @param fmt Printf style message to display on the dialogue.
+ *    @param msg Message to be displayed.
  *    @return The message the player typed or NULL if it was cancelled.
  */
 char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )

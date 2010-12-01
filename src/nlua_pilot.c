@@ -32,6 +32,7 @@
 #include "ai_extra.h"
 #include "nlua_col.h"
 #include "weapon.h"
+#include "gui.h"
 
 
 /*
@@ -672,18 +673,24 @@ static int pilotL_toggleSpawn( lua_State *L )
  *
  * @usage p = pilot.get() -- Gets all the pilots
  * @usage p = pilot.get( { faction.get("Empire") } ) -- Only gets empire pilots.
+ * @usage p = pilot.get( nil, true ) -- Gets all pilots including disabled
+ * @usage p = pilot.get( { faction.get("Empire") }, true ) -- Only empire pilots with disabled
  *
- *    @luaparam f If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
+ *    @luaparam factions If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
+ *    @luaparam disabled Whether or not to get disabled ships (default is off if parameter is ommitted).
  *    @luareturn A table containing the pilots.
- * @luafunc get( f )
+ * @luafunc get( factions, disabled )
  */
 static int pilotL_getPilots( lua_State *L )
 {
-   int i, j, k;
+   int i, j, k, d;
    int *factions;
    int nfactions;
    LuaFaction *f;
    LuaPilot p;
+
+   /* Whether or not to get disabled. */
+   d = lua_toboolean(L,2);
 
    /* Check for belonging to faction. */
    if (lua_istable(L,1)) {
@@ -705,7 +712,7 @@ static int pilotL_getPilots( lua_State *L )
       for (i=0; i<pilot_nstack; i++) {
          for (j=0; j<nfactions; j++) {
             if ((pilot_stack[i]->faction == factions[j]) &&
-                  !pilot_isDisabled(pilot_stack[i]) &&
+                  (d || !pilot_isDisabled(pilot_stack[i])) &&
                   !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
                lua_pushnumber(L, k++); /* key */
                p.pilot = pilot_stack[i]->id;
@@ -718,12 +725,12 @@ static int pilotL_getPilots( lua_State *L )
       /* clean up. */
       free(factions);
    }
-   else if (lua_gettop(L) == 0) {
+   else if ((lua_isnil(L,1)) || (lua_gettop(L) == 0)) {
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
       for (i=0; i<pilot_nstack; i++) {
-         if (!pilot_isDisabled(pilot_stack[i]) &&
+         if ((d || !pilot_isDisabled(pilot_stack[i])) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
             lua_pushnumber(L, k++); /* key */
             p.pilot = pilot_stack[i]->id;
@@ -915,24 +922,31 @@ static int pilotL_inrange( lua_State *L )
  */
 static int pilotL_nav( lua_State *L )
 {
+   LuaPlanet lp;
+   LuaSystem ls;
    Pilot *p;
-   LuaPlanet lplanet;
-   LuaSystem lsystem;
+
+   /* Get pilot. */
    p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
-   if (p->nav_planet >= 0) {
-      lplanet.id   = planet_index( cur_system->planets[ p->nav_planet ] );
-      lua_pushplanet( L, lplanet );
-   }
-   else
+
+   /* Get planet target. */
+   if (p->nav_planet < 0)
       lua_pushnil(L);
-   if (p->nav_hyperspace >= 0) {
-      lsystem.id   = system_index(cur_system->jumps[ p->nav_hyperspace ].target);
-      lua_pushsystem( L, lsystem );
+   else {
+      lp.id = cur_system->planets[ p->nav_planet ]->id;
+      lua_pushplanet( L, lp  );
    }
-   else
+
+   /* Get hyperspace target. */
+   if (p->nav_hyperspace < 0)
       lua_pushnil(L);
+   else {
+      ls.id = cur_system->jumps[ p->nav_hyperspace ].targetid;
+      lua_pushsystem( L, ls );
+   }
+
    return 2;
 }
 
@@ -943,12 +957,14 @@ static int pilotL_nav( lua_State *L )
  * The weapon sets have the following structure: <br />
  * <ul>
  *  <li> name: name of the set <br />
- *  <li> cooldwon: [0:1] value indicating if ready to shoot (1 is ready) <br />
+ *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready) <br />
  *  <li> ammo: Name of the ammo or nil if not applicable <br />
  *  <li> left: Absolute ammo left or nil if not applicable <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  *  <li> temp: Temperature of the weapon. <br />
+ *  <li> type: Type of the weapon. <br />
+ *  <li> type: Damage type of the weapon. <br />
  * </ul>
  *
  * An example would be:
@@ -957,7 +973,7 @@ static int pilotL_nav( lua_State *L )
  * print( "Weapnset Name: " .. ws_name )
  * for _,w in ipairs(ws) do
  *    print( "Name: " .. w.name )
- *    print( "Cooldown: " .. tostring(cooldon) )
+ *    print( "Cooldown: " .. tostring(cooldown) )
  *    print( "Level: " .. tostring(level) )
  * end
  * </code></pre>
@@ -1092,6 +1108,19 @@ static int pilotL_weapset( lua_State *L )
          /* Temperature. */
          lua_pushstring(L,"temp");
          lua_pushnumber(L, pilot_heatFirePercent(slot->heat_T));
+         lua_rawset(L,-3);
+
+         /* Type. */
+         lua_pushstring(L, "type");
+         lua_pushstring(L, outfit_getType(slot->outfit));
+         lua_rawset(L,-3);
+
+         /* Damage type. */
+         lua_pushstring(L, "dtype");
+         if (outfit_isLauncher(slot->outfit) && (slot->u.ammo.outfit != NULL))
+            lua_pushstring(L, outfit_damageTypeToStr( outfit_damageType(slot->u.ammo.outfit) ));
+         else
+            lua_pushstring(L, outfit_damageTypeToStr( outfit_damageType(slot->outfit) ));
          lua_rawset(L,-3);
 
          /* Set table in table. */
@@ -2103,7 +2132,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "thrust", p->thrust );
    PUSH_DOUBLE( L, "speed", p->speed );
    PUSH_DOUBLE( L, "turn", p->turn );
-   PUSH_DOUBLE( L, "speed_max", p->speed + p->thrust/(3.*p->solid->mass) );
+   PUSH_DOUBLE( L, "speed_max", solid_maxspeed(p->solid, p->speed, p->thrust) );
    /* Health. */
    PUSH_DOUBLE( L, "armour", p->armour_max );
    PUSH_DOUBLE( L, "shield", p->shield_max );
@@ -2860,6 +2889,8 @@ static int pilotL_land( lua_State *L )
       p->nav_planet = i;
       t->dtype = TASKDATA_VEC2;
       vectcpy( &t->dat.vec, &pnt->pos );
+      if (p->id == PLAYER_ID)
+         gui_setNav();
 
       /* Introduce some error. */
       a = RNGF() * 2. * M_PI;

@@ -108,6 +108,7 @@ typedef struct Ship_ {
    double shield_regen; /**< Maximum shield regeneration in MJ/s. */
    double energy; /**< Maximum base energy in MJ. */
    double energy_regen; /**< Maximum energy regeneration in MJ/s. */
+   double dmg_absorb; /**< Damage absorption in per one [0:1] with 1 being 100% absoprtion. */
 
    /* graphics */
    glTexture *gfx_space; /**< Space sprite sheet. */

@@ -38,6 +38,10 @@
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
 
+#define SYSEDIT_ZOOM_MAX         1.    /**< Maximum zoom (close). */
+#define SYSEDIT_ZOOM_MIN         0.01  /**< Minimum zoom (far). */
+
+
 #define PLANET_GFX_PATH    "gfx/planet/space" /**< Path to planet space graphics. */
 
 
@@ -109,6 +113,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
 static void sysedit_btnReset( unsigned int wid_unused, char *unused );
+static void sysedit_btnScale( unsigned int wid_unused, char *unused );
 static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
 /* Property editor. */
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -131,6 +136,7 @@ void sysedit_open( StarSystem *sys )
 {
    unsigned int wid;
    char buf[PATH_MAX];
+   int i;
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -154,33 +160,45 @@ void sysedit_open( StarSystem *sys )
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_close );
+   i = 1;
 
    /* Save button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save", sysedit_save );
+   i += 2;
+
+   /* Scale. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnScale", "Scale", sysedit_btnScale );
+   i += 1;
 
    /* Reset. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnReset", "Reset", sysedit_btnReset );
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnReset", "Reset Jumps", sysedit_btnReset );
+   i += 1;
 
    /* Editing. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnEdit", "Edit", sysedit_btnEdit );
+   i += 1;
 
    /* Remove. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*5, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnRemove", "Remove", sysedit_btnRemove );
+   i += 1;
 
    /* Rename. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnRename", "Rename", sysedit_btnRename );
+   i += 1;
 
    /* New system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*7, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Planet", sysedit_btnNew );
+   i += 2;
 
    /* Toggle Grid. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*9, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnGrid", "Grid", sysedit_btnGrid );
 
    /* Zoom buttons */
@@ -188,8 +206,9 @@ void sysedit_open( StarSystem *sys )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", sysedit_buttonZoom );
 
    /* Selected text. */
+   snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
-         "txtSelected", &gl_smallFont, &cBlack, NULL );
+         "txtSelected", &gl_smallFont, &cBlack, buf );
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
@@ -280,6 +299,8 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
    p->gfx_exterior      = strdup( b->gfx_exterior );
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
+   p->pos.x             = sysedit_xpos / sysedit_zoom;
+   p->pos.y             = sysedit_ypos / sysedit_zoom;
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
@@ -354,6 +375,58 @@ static void sysedit_btnReset( unsigned int wid_unused, char *unused )
       sel = &sysedit_select[i];
       if (sel->type == SELECT_JUMPPOINT)
          sysedit_sys[i].jumps[ sel->u.jump ].flags |= JP_AUTOPOS;
+   }
+
+   /* Must reconstruct jumps. */
+   systems_reconstructJumps();
+}
+
+
+/**
+ * @brief Scales a system.
+ */
+static void sysedit_btnScale( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   char *str, buf[PATH_MAX];
+   double s;
+   Planet *p;
+   JumpPoint *jp;
+   int i;
+   StarSystem *sys;
+
+   /* Prompt scale amount. */
+   str = dialogue_inputRaw( "Scale Star System", 1, 32, "By how much do you want to scale the star system?" );
+   if (str == NULL)
+      return;
+
+   sys   = sysedit_sys; /* Comfort. */
+   s     = atof(str);
+
+   /* In case screwed up. */
+   if ((s < 0.1) || (s > 10.)) {
+      i = dialogue_YesNo( "Scale Star System", "Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?",
+            s, sys->radius, sys->radius*s );
+      if (i==0)
+         return;
+   }
+
+   /* Scale radius. */
+   sys->radius *= s;
+   snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
+   window_modifyText( sysedit_wid, "txtSelected", buf );
+
+   /* Scale planets. */
+   for (i=0; i<sys->nplanets; i++) {
+      p     = sys->planets[i];
+      vect_cset( &p->pos, p->pos.x*s, p->pos.y*s );
+   }
+
+   /* Scale jumps. */
+   for (i=0; i<sys->njumps; i++) {
+      jp    = &sys->jumps[i];
+      vect_cset( &jp->pos, jp->pos.x*s, jp->pos.y*s );
    }
 
    /* Must reconstruct jumps. */
@@ -790,11 +863,11 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
       sysedit_zoom *= 1.2;
-      sysedit_zoom = MIN(1., sysedit_zoom);
+      sysedit_zoom = MIN( SYSEDIT_ZOOM_MAX, sysedit_zoom );
    }
    else if (strcmp(str,"btnZoomOut")==0) {
       sysedit_zoom *= 0.8;
-      sysedit_zoom = MAX(0.10, sysedit_zoom);
+      sysedit_zoom = MAX( SYSEDIT_ZOOM_MIN, sysedit_zoom );
    }
 
    /* Transform coords back. */

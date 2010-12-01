@@ -3,32 +3,31 @@
  <!-- EXAMPLE showing a tech may contain outfits, ships, commodities and other techs. -->
  <!-- For details, see http://groups.google.com/group/naev/browse_thread/thread/76ece93aa9162ceb -->
  <tech name="Test">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Llama</item>
   <item>Food</item>
   <item>Test2</item>
  </tech>
  <tech name="Test2">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Mule</item>
   <item>Ore</item>
  </tech>
 
  <!-- Templates - add all new outfits, commodities and ships here! -->
  <tech name="All Outfits">
-  <item>Laser Cannon</item>
+  <item>Laser Cannon MK1</item>
   <item>Laser Cannon MK2</item>
-  <item>Laser Turret</item>
+  <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
-  <item>Plasma Blaster</item>
+  <item>Plasma Blaster MK1</item>
   <item>Plasma Blaster MK2</item>
   <item>Neutron Disruptor</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
-  <item>40mm Autocannon</item>
-  <item>150mm Railgun</item>
-  <item>150mm Railgun Turret</item>
-  <item>Ripper MK2</item>
+  <item>Railgun</item>
+  <item>Railgun Turret</item>
+  <item>Ripper Cannon</item>
   <item>Base Ripper MK2</item>
   <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
@@ -72,6 +71,8 @@
   <item>Auxiliary Processing Unit III</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
+  <item>Boarding Androids MKI</item>
+  <item>Boarding Androids MKII</item>
   <item>Targeting Array</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
@@ -90,6 +91,7 @@
   <item>Light Combat Vessel License</item>
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
+  <item>GUI - Brushed</item>
  </tech>
  <tech name="All Ships">
   <item>Admonisher</item>
@@ -145,8 +147,8 @@
  
  <!-- Outfits -->
  <tech name="Basic Outfits 1">
-  <item>Laser Cannon</item>
-  <item>Plasma Blaster</item>
+  <item>Laser Cannon MK1</item>
+  <item>Plasma Blaster MK1</item>
   <item>Seeker Launcher</item>
   <item>Seeker Missile</item>
   <item>Battery</item>
@@ -154,6 +156,7 @@
   <item>Fuel Pod</item>
   <item>Star Map</item>
   <item>Large Civilian Vessel License</item>
+  <item>GUI - Brushed</item>
   </tech>
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
@@ -167,16 +170,17 @@
   <item>Generic Afterburner</item>
   <item>Auxiliary Processing Unit I</item>
   <item>Cargo Pod</item>
+  <item>Boarding Androids MKI</item>
   <item>Star Map</item>
   <item>Civilian Jammer</item>
   <item>Large Civilian Vessel License</item>
+  <item>GUI - Brushed</item>
   </tech>
  <tech name="Heavy Weapons 1">
-  <item>Laser Turret</item>
+  <item>Laser Turret MK1</item>
   <item>Ion Cannon</item>
-  <item>40mm Autocannon</item>
-  <item>150mm Railgun</item>
-  <item>Ripper MK2</item>
+  <item>Railgun</item>
+  <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
   <item>Medium Weapon License</item>
@@ -186,7 +190,7 @@
   <item>Laser Turret MK2</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
-  <item>150mm Railgun Turret</item>
+  <item>Railgun Turret</item>
   <item>Orion Beam</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
@@ -202,6 +206,8 @@
   <item>Auxiliary Processing Unit I</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
+  <item>Boarding Androids MKI</item>
+  <item>Boarding Androids MKII</item>
   <item>Star Map</item>
   <item>Civilian Jammer</item>
   <item>Light Combat Vessel License</item>
@@ -224,6 +230,8 @@
   <item>Auxiliary Processing Unit II</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
+  <item>Boarding Androids MKI</item>
+  <item>Boarding Androids MKII</item>
   <item>Targeting Array</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>

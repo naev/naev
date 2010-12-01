@@ -132,6 +132,7 @@ function enter ()
          v:setPos( enter_vect )
          v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
          v:disable()
+         v:setHilight(true)
          v:setFaction( "Empire" )
          hook.pilot( v, "board", "board" )
          hook.pilot( v, "death", "death" )
@@ -157,7 +158,7 @@ function enter ()
 
       -- Add more ships on a timer to make this messy
       enter_vect = player.pos()
-      misn.timerStart( "delay_flf", rnd.rnd( 3000, 5000 ) )
+      hook.timer(rnd.rnd( 3000, 5000 ) , "delay_flf")
 
       -- Pass to next stage
       misn_stage = 1

@@ -25,16 +25,16 @@
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 #define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
+#define PLAYER_DOUBLESPEED (1<<19)  /**< player is running at double speed. */
+#define PLAYER_CINEMATICS_GUI (1<<20) /**< Disable rendering the GUI when in cinematics mode. */
+#define PLAYER_CINEMATICS_2X (1<<21) /**< Disables usage of the 2x button when in cinematics mode. */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
 #define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
 #define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
 
 
-/* Autonav states. */
-#define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
-#define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
-#define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
+#include "player_autonav.h"
 
 
 /**
@@ -45,7 +45,7 @@ typedef struct Player_s {
    Pilot *p; /**< Player's pilot. */
    char *name; /**< Player's name. */
    char *gui; /**< Player's GUI. */
-   int guiOverride;
+   int guiOverride; /**< GUI is overriden (not default). */
 
    /* Player data. */
    unsigned int flags; /**< Player's flags. */
@@ -179,29 +179,37 @@ void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 
 /*
- * keybind actions
+ * Targetting.
  */
-void player_weapSetPress( int id, int type );
+/* Clearing. */
+void player_targetClear (void);
+/* Planets. */
+void player_targetPlanetSet( int id );
+void player_targetPlanet (void);
+/* Hyperspace. */
+void player_targetHyperspaceSet( int id );
+void player_targetHyperspace (void);
+/* Pilots. */
+void player_targetSet( unsigned int id );
 void player_targetHostile (void);
 void player_targetNext( int mode );
 void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
-void player_targetClear (void);
-void player_targetPlanet (void);
+
+/*
+ * keybind actions
+ */
+void player_weapSetPress( int id, int type );
 void player_land (void);
-void player_targetHyperspace (void);
 void player_jump (void);
 void player_screenshot (void);
 void player_afterburn (void);
-void player_afterburnOver (void);
+void player_afterburnOver (int type);
 void player_accel( double acc );
 void player_accelOver (void);
-void player_autonavStart (void);
-void player_autonavAbort( char *reason );
-void player_autonavStartWindow( unsigned int wid, char *str);
-void player_autonavPos( double x, double y );
 void player_hail (void);
+void player_hailPlanet (void);
 void player_autohail (void);
 
 
