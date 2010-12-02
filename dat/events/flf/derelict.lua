@@ -23,8 +23,8 @@ function create()
     pilot.toggleSpawn(false)
     pilot.clear()
     
-    posDV = vec2.new(-1000, 0)
-    posFLF = vec2.new(1000, 0)
+    posDV = vec2.new(7400, 3000)
+    posFLF = vec2.new(-10500, -8500)
     
     fleetDV = pilot.add("Dvaered Vendetta", "dummy", posDV)
     shipDV = fleetDV[1]
@@ -44,7 +44,7 @@ function create()
     shipFLF:rename(shipnameFLF)
     
     timerDV = hook.timer(3000, "broadcastDV")
-    timerFLF = hook.timer(5000, "broadcastFLF")
+    timerFLF = hook.timer(12000, "broadcastFLF")
     
     boarded = false
     destroyed = false
@@ -62,13 +62,13 @@ end
 function broadcastDV()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     shipDV:broadcast(string.format(broadcastmsgDV, shipnameDV), true)
-    timerDV = hook.timer(10000, "broadcastDV")
+    timerDV = hook.timer(20000, "broadcastDV")
 end
 
 function broadcastFLF()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     shipFLF:broadcast(string.format(broadcastmsgFLF, shipnameFLF), true)
-    timerFLF = hook.timer(10000, "broadcastFLF")
+    timerFLF = hook.timer(20000, "broadcastFLF")
 end
 
 function boardFLF()
@@ -76,6 +76,7 @@ function boardFLF()
     shipFLF:setHilight(false)
     shipDV:setNoboard(true)
     hook.rm(timerFLF)
+    hook.rm(timerDV)
     player.unboard()
     evt.misnStart("Deal with the FLF agent") 
     boarded = true
@@ -94,6 +95,7 @@ function boardDV()
     shipFLF:setHilight(false)
     shipFLF:setNoboard(true)
     hook.rm(timerDV)
+    hook.rm(timerFLF)
     player.unboard()
     evt.misnStart("Take the Dvaered crew home") 
     boarded = true

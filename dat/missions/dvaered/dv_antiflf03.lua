@@ -6,6 +6,8 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
+include "scripts/proximity.lua"
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -107,15 +109,16 @@ function accept()
     end
     
     if tk.yesno(title[1], txt) then
-        misn.accept()
         tk.msg(title[2], string.format(text[2], destsysname))
         tk.msg(title[2], string.format(text[3], destsysname, player.name()))
         tk.msg(title[2], string.format(text[4], destsysname))
 
+        misn.accept()
         osd_desc[1] = string.format(osd_desc[1], destsysname)
         osd_desc[4] = string.format(osd_desc[4], DVplanet, DVsys)
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
+        misn.setReward("Wealth, glory")
         misn.setTitle(misn_title)
         mission_marker = misn.markerAdd( system.get(destsysname), "high" )
         
@@ -134,52 +137,56 @@ function enter()
     if system.cur():name() == destsysname and not victorious then
         pilot.clear()
         pilot.toggleSpawn(false)
+
         fleetFLF = {}
         fleetDV = {}
         bombers = {}
         fleetpos = {}
         fightersDV = {}
         fighterpos = {}
-        
-        player.pilot():setPos(player.pilot():pos() + vec2.new(0,-2000)) -- Translate to jump out near the Obstinate, not Sindbad.
-        player.pilot():setPos(player.pilot():pos() + player.pilot():vel() / 8) -- Compensate for hyperjump
-        
-        misn.osdActive(2)
-        var.pop("flfbase_sysname")
-        missionstarted = true
-        wavefirst = true
-        wavestarted = false
-        baseattack = false
-        
+        basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
         DVbombers = 5 -- Amount of initial Dvaered bombers
         DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
         time = 0
         stage = 0
+        standoff = 5000 -- The distance between the DV fleet and the base
+        safestandoff = 2000 -- This is the distance from the base where DV ships will turn back
         stepsize = math.pi / 10 -- The amount of points on the circle for the circular patrol
         angle = math.pi * 1.5 - stepsize
-        
+    
         spawnbase()
         spawnDV()
+        -- Wait for the player to fly to the Obstinate before commencing the mission
 
-        idle()
-        hook.timer(10000, "spawnFLFfighters")
-        hook.timer(15000, "spawnFLFfighters")
-        tim_sec = hook.timer(45000, "security_timer")
-        controller = hook.timer(1000, "control")
-        
+        hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerRaw(-10)
         abort()
     end
+    
+end
+
+function operationStart()
+    misn.osdActive(2)
+    missionstarted = true
+    wavefirst = true
+    wavestarted = false
+    baseattack = false
+    
+    idle()
+    hook.timer(10000, "spawnFLFfighters")
+    hook.timer(15000, "spawnFLFfighters")
+    tim_sec = hook.timer(100000, "nextStage")
+    controller = hook.timer(1000, "control")
 end
 
 function land()
     if victorious and planet.cur() == planet.get("Darkstone") then
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
-        faction.get("Dvaered"):modPlayerRaw(5)
+        faction.get("Dvaered"):modPlayerRaw(10)
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
@@ -189,14 +196,13 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("FLF Base", "flf_nojump", vec2.new(0,0))
-    base = base[1]
+    base = pilot.add("FLF Base", "flf_nojump", basepos)[1]
     base:rmOutfit("all")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
     base:setNodisable(true)
     base:setHilight(true)
-    base:setPlayervis()
+    base:setVisplayer()
     hook.pilot(base, "death", "deathBase")
 end
 
@@ -230,6 +236,9 @@ function deathBase()
     obstinate:control()
     obstinate:hyperspace()
     obstinate:setHilight(false)
+    
+    hook.timer(12000, "zoomTo")
+    hook.timer(12000, "playerControl", false)
 
     missionstarted = false
     victorious = true
@@ -246,7 +255,7 @@ function spawnDV()
     obstinate:setNodisable(true)
     obstinate:control()
     obstinate:setHilight(true)
-    obstinate:setPlayervis()
+    obstinate:setVisible()
     obstinate:rmOutfit("all")
     obstinate:addOutfit("Engine Reroute")
     obstinate:addOutfit("Shield Booster")
@@ -261,6 +270,7 @@ function spawnDV()
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
+        vigilance:setVisible(true)
         hook.pilot(vigilance, "attacked", "attacked")
         hook.pilot(vigilance, "death", "deathDV")
         fleetDV[#fleetDV + 1] = vigilance
@@ -272,6 +282,7 @@ function spawnDV()
         vendetta = pilot.add("Dvaered Vendetta", "dvaered_nojump", fighterpos[i])[1]
         vendetta:setDir(90)
         vendetta:setFriendly()
+        vendetta:setVisible(true)
         vendetta:control()
         hook.pilot(vendetta, "attacked", "attacked")
         hook.pilot(vendetta, "death", "deathDV")
@@ -310,7 +321,7 @@ function spawnFLFfighters()
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         j:setNodisable(true)
-
+        j:setVisible(true)
         j:control()
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
@@ -324,15 +335,10 @@ function spawnFLFbombers()
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         j:setNodisable(true)
-
+        j:setVisible(true)
         j:control()
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
-end
-
-function security_timer()
-   -- Go to next stage
-   nextStage()
 end
 
 -- An FLF ship just died
@@ -365,30 +371,62 @@ function nextStage()
     deathsFLF = 0
     hook.rm( tim_sec ) -- Stop security timer
     if stage == 1 then
-        hook.timer(9000, "spawnFLFbombers")
-        hook.timer(13000, "spawnFLFfighters")
-        tim_sec = hook.timer(60000, "security_timer")
+        player.msg("Starting stage 2.")
+        hook.timer(1000, "spawnFLFbombers")
+        hook.timer(5000, "spawnFLFfighters")
+        tim_sec = hook.timer(90000, "nextStage")
     elseif stage == 2 then
-        hook.timer(9000, "spawnFLFfighters")
-        hook.timer(11000, "spawnFLFbombers")
-        hook.timer(13000, "spawnFLFbombers")
-        tim_sec = hook.timer(75000, "security_timer")
+        player.msg("Starting stage 3.")
+        hook.timer(1000, "spawnFLFfighters")
+        hook.timer(3000, "spawnFLFbombers")
+        hook.timer(5000, "spawnFLFbombers")
+        tim_sec = hook.timer(90000, "nextStage")
     else
-        pilot.broadcast(obstinate, phasetwo, true)
+        player.msg("Starting stage 4.")
+        local delay = 0
+        hook.timer(delay, "playerControl", true)
+        hook.timer(delay, "zoomTo", obstinate)
+        delay = delay + 3000
+        hook.timer(delay, "broadcast", {caster = obstinate, text = phasetwo})
+        hook.timer(delay, "spawnDVbomber")
+        delay = delay + 7000
+        hook.timer(delay, "zoomTo", base)
+        delay = delay + 50000
+        hook.timer(delay, "engagebase")
         misn.osdActive(3)
-        spawnDVbomber()
-        hook.timer(60000, "engageBase")
     end
 end
 
+-- Capsule function for camera.set, for timer use
+function zoomTo(target)
+    camera.set(target, true, zoomspeed)
+end
+
+-- Capsule function for pilot.broadcast, for timer use
+function broadcast(args)
+    args.caster:broadcast(args.text, true)
+end
+
+-- Capsule function for player.pilot():control(), for timer use
+-- Also saves the player's velocity.
+function playerControl(status)
+    player.pilot():control(status)
+    player.cinematics(status)
+    if status then
+        pvel = player.pilot():vel()
+        player.pilot():setVel(vec2.new(0, 0))
+    else
+        player.pilot():setVel(pvel)
+    end
+end 
+ 
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
     bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos())[1]
     bomber:rmOutfit("all")
     bomber:addOutfit("Imperator Launcher", 1)
-    bomber:addOutfit("Imperator Launcher", 1)
     bomber:addOutfit("Engine Reroute", 1)
-    bomber:addOutfit("Laser Cannon", 3)
+    bomber:addOutfit("Laser Cannon MK1", 3)
     bomber:setNodisable(true)
     bomber:setFriendly()
     bomber:control()
@@ -430,25 +468,27 @@ function controlFleet( fleetCur, pos, off )
 
             -- Kill nearby hostiles
             if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
-                local distance = 1000
+                local distance = 1500
                 local nearest = nil
                 local distanceCur
                 for k, v in ipairs(fleetFLF) do
-                    distanceCur = vec2.dist(j:pos(), v:pos())
-                    if distanceCur < distance then
-                        nearest = v
-                        distance  = distanceCur
+                    if v:exists() then
+                        distanceCur = vec2.dist(j:pos(), v:pos())
+                        if distanceCur < distance then
+                            nearest = v
+                            distance = distanceCur
+                        end
                     end
                 end
                 if nearest ~= nil then
                     j:control()
-                    j:attack( fleetFLF[ rnd.rnd(1, #fleetFLF) ] )
+                    j:attack(nearest)
                     attacking = true
                 end
             end
 
             -- Fly back to fleet
-            if ((not attacking or vec2.dist(j:pos(), base:pos()) < 1000 or time <= 0 or j:idle()) and not baseattack) then
+            if ((not attacking or vec2.dist(j:pos(), base:pos()) < safestandoff or time <= 0 or j:idle()) and not baseattack) then
                 j:control()
                 j:goto( pos[i + off] )
             end
@@ -460,14 +500,14 @@ end
 function control()
     -- Timer to have them return
     if time > 0 then
-        time = time - 1000
+        time = time - 500
     end
    
     -- Control the fleets
     controlFleet( fleetDV, fleetpos, 1 )
     controlFleet( fightersDV, fighterpos, 0 )
     
-    controller = hook.timer(1000, "control")
+    controller = hook.timer(500, "control")
 end
 
 -- Replaces lost bombers. The supply is limited, though.
@@ -479,9 +519,8 @@ function deathDVbomber()
                 bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos())[1]
                 bomber:rmOutfit("all")
                 bomber:addOutfit("Imperator Launcher", 1)
-                bomber:addOutfit("Imperator Launcher", 1)
                 bomber:addOutfit("Engine Reroute", 1)
-                bomber:addOutfit("Laser Cannon", 3)
+                bomber:addOutfit("Laser Cannon MK1", 3)
                 bomber:setNodisable(true)
                 bomber:setFriendly()
                 bomber:control()
@@ -529,13 +568,13 @@ function attacked()
     time = 3000
     
     for i, j in ipairs(fleetDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > 1000 and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
     
     for i, j in ipairs(fightersDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > 1000 and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
@@ -559,7 +598,7 @@ end
 
 function updatepos()
     angle = (angle + stepsize) % (2 * math.pi)
-    fleetpos[1] = vec2.new(math.cos(angle) * 2000, math.sin(angle) * 2000)
+    fleetpos[1] = basepos + vec2.new(math.cos(angle) * standoff, math.sin(angle) * standoff)
     fleetpos[2] = fleetpos[1] + vec2.new(110, 0)
     fleetpos[3] = fleetpos[1] + vec2.new(-110, 0)
     fleetpos[4] = fleetpos[1] + vec2.new(0, -120)
@@ -573,7 +612,5 @@ function updatepos()
 end
 
 function abort()
-    var.pop("flfbase_intro")
-    var.pop("flfbase_sysname")
     misn.finish(false)
 end

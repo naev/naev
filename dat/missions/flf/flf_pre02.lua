@@ -6,6 +6,8 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
+include "scripts/proximity.lua"
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -85,14 +87,15 @@ else -- default english
     failtitle = "All your wingmen are dead!"
     failtext = [[You receive a coded transmission from FLF command. It reads, "It seems your wing has been wiped out. It's too dangerous to let you continue the mission alone. Abort the operation and return to base."]]
     
-    flfcomm = "%s has sold us out! Break and attack!"
+    flfcomm = {}
+    flfcomm[1] = "Enemy patrol on scanners. Let's have at them!"
+    flfcomm[2] = "%s has sold us out! Break and attack!"
     
     misn_title = "Disrupt the Dvaered Patrols"
     misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out their security patrols. Note that you must do this mission in a Fighter, Scout or Yacht class ship."
     misn_rwrd = "A chance to make friends out of the FLF."
-    osd_desc[1] = ""
+    osd_desc[1] = "Fly to a designated system"
     osd_desc[2] = "Wait for the Dvaered patrol to arrive and engage"
-    FLFosd[1] = "Fly to the %s system"
     FLFosd[2] = "Return to the FLF base"
     DVosd[1] = "Destroy your wingmen!"
     DVosd[2] = "Fly to the %s system and land on %s"
@@ -114,30 +117,40 @@ end
 function accept()
     -- Check if this is the first time talking to the mission NPC
     if var.peek("flfoffer") then
-        txt = string.format(introrepeat, player.name()) .. text[1]
+        txt = introrepeat:format(player.name()) .. text[1]
     else
-        txt = string.format(introfirst, player.name()) .. text[1]
+        txt = introfirst:format(player.name()) .. text[1]
     end
 
     pclass = player.pilot():ship():class()
     if tk.yesno(title[1], txt) then
         if pclass == "Yacht" or pclass == "Fighter" or pclass == "Scout" or pclass == "Bomber" then
-            misn.accept()
-
             var.pop("flfoffer")
             encounters = 1
 
-            sysname = {"Zacron", "Torg", "Klantar"}
+            sysname = {}
+            sysname["Zacron"] = true
+            sysname["Torg"] = true
+            sysname["Klantar"] = true
             sysname["__save"] = true
 
             tk.msg(title[2], text[2])
-            tk.msg(title[2], string.format(text[4], player.name()))
+            tk.msg(title[2], text[4]:format(player.name()))
 
-            osd_desc[1] = string.format(FLFosd[1], sysname[encounters])
+            misn.accept()
+
             misn.osdCreate(misn_title, osd_desc)
             misn.setDesc(misn_desc)
             misn.setTitle(misn_title)
-            misn_marker = misn.markerAdd( system.get( sysname[encounters] ), "low" )
+
+            misn_markers = {}
+            for j, _ in pairs(sysname) do
+                if j ~= "__save" then
+                    misn_markers[j] = misn.markerAdd(system.get(j), "low")
+                end
+            end
+            misn_markers["__save"] = true
+
             misn.setReward(misn_rwrd)
             
             escarmor = {100, 100, 100, 100}
@@ -181,7 +194,7 @@ function land()
     end
     
     if planet.cur():name() == "Sindbad" and encounters == 4 then
-        tk.msg(title[5], string.format(text[5], player.name()))
+        tk.msg(title[5], text[5]:format(player.name()))
         tk.msg(title[5], text[6])
         player.pay(100000) -- 100K
         var.pop("flfbase_sysname")
@@ -216,6 +229,8 @@ function takeoff()
             j:rename("FLF Wingman")
             j:setFriendly()
             j:setNodisable(true)
+            j:setVisible(true)
+            j:setHilight(true)
             hook.pilot(j, "death", "FLFdeath")
             if not loyalFLF then
                 j:setFaction("FLF")
@@ -260,8 +275,8 @@ end
 
 -- Handles the conditionals prior to Dvaered patrol spawn
 function checkPatrol()
-    -- In the designated systems, encounter the FLF. Third encounter is special.
-    if encounters < 4 and system.cur():name() == sysname[encounters] then
+    -- In the designated systems, encounter the Dvaered. Third encounter is special.
+    if encounters < 4 and sysname[system.cur():name()] == true then
         misn.osdActive(2)
         pilot.clear()
         pilot.toggleSpawn(false)
@@ -270,12 +285,6 @@ function checkPatrol()
             spawnie = hook.timer(12000, "spawnSmallDV")
         else
             spawnie = hook.timer(12000, "spawnBigDV")
-            dv_patrol = var.peek("dv_patrol")
-            if dv_patrol ~= nil then
-                if var.peek("dv_patrol") >= 3 then
-                    hailie = hook.timer(20000, "hailEvent")
-                end
-            end
         end
     end
 end
@@ -283,12 +292,8 @@ end
 -- Handles the hailing event
 function hailEvent()
     if not hailed then
-        for i, j in ipairs(fleetDV) do
-            if j:ship():class() == "Destroyer" then
-                j:hailPlayer()
-                hook.pilot(j, "hail", "hail")
-            end
-        end
+        boss:hailPlayer() -- exists() check happens in proximity trigger, not needed here
+        hook.pilot(boss, "hail", "hail")
     end
 end
 
@@ -297,9 +302,10 @@ function hail()
     local winAlive = false
     
     if not hailed then
+        player.commClose()
         choice = tk.choice(DVtitle[1], DVtext[1], DVchoice1, DVchoice2)
         if choice == 1 then
-            tk.msg(DVtitle[2], string.format(DVtext[2], player.pilot():ship():class(), player.ship(), DVplanet, DVsys))
+            tk.msg(DVtitle[2], DVtext[2]:format(player.pilot():ship():class(), player.ship(), DVplanet, DVsys))
             
             -- Set the FLF to super hostile, set Dvaered opinion to 0 if it was negative
             faction.get("FLF"):modPlayerRaw(-200)
@@ -329,7 +335,7 @@ function hail()
             end
             
             if wingAlive then
-                hook.timer(3000, "commFLF")
+                hook.timer(3000, "commFLF", flfcomm[2]:format(player.name()))
                 
                 osd_desc[1] = DVosd[1]
                 osd_desc[2] = nil
@@ -350,12 +356,14 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", last_sys))
+    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", player.pilot():id()), last_sys)
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])
             j:rename("FLF Wingman")
             j:setNodisable(true) -- So it doesn't look weird when disabled wingmen show up later
+            j:setVisible(true)
+            j:setHilight(true)
             hook.pilot(j, "death", "FLFdeath")
             if not loyalFLF then
                 j:setFaction("FLF")
@@ -370,10 +378,10 @@ function spawnFLF()
     end
 end
 
-function commFLF()
+function commFLF(commmsg)
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
-            j:broadcast(string.format(flfcomm, player.name()), true)
+            j:broadcast(commmsg, true)
             break
         end
     end
@@ -381,11 +389,14 @@ end
 
 -- Spawns a small Dvaered patrol
 function spawnSmallDV()
-    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", last_sys)
+    player.allowLand(false, "FLF scum isn't welcome here!")
+    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
     for i, j in ipairs(fleetDV) do
         j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         hook.pilot(j, "death", "DVdeath")
         j:setHostile()
+        j:setVisible(true)
+        j:setHilight(true)
     end
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
@@ -393,26 +404,31 @@ function spawnSmallDV()
             j:changeAI("flf_nojump")
         end
     end
+    hook.timer(3000, "commFLF", flfcomm[1])
 end
 
 -- Spawns a big Dvaered patrol
 function spawnBigDV()
-    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", last_sys)
+    player.allowLand(false, "FLF scum isn't welcome here!")
+    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then -- It's a mini-boss of sorts, but it should still be dumbed down.
-            j:rmOutfit("all")
-            j:addOutfit("Plasma Blaster MK2", 2)
-            j:addOutfit("Shield Booster", 1)
-            j:addOutfit("Steering Thrusters", 1)
-            j:addOutfit("Shield Capacitor III", 1)
-            j:addOutfit("Forward Shock Absorbers", 1)
-            j:addOutfit("Reactor Class I", 1)
-            j:rename("Dvaered Patrol Leader")
-            j:setNodisable(true) -- Avoid trouble
+            boss = j
+            boss:rmOutfit("all")
+            boss:addOutfit("Plasma Blaster MK2", 2)
+            boss:addOutfit("Shield Booster", 1)
+            boss:addOutfit("Steering Thrusters", 1)
+            boss:addOutfit("Shield Capacitor III", 1)
+            boss:addOutfit("Forward Shock Absorbers", 1)
+            boss:addOutfit("Reactor Class I", 1)
+            boss:rename("Dvaered Patrol Leader")
+            boss:setNodisable(true) -- Avoid trouble
         else
             j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         end
         j:setHostile()
+        j:setVisible(true)
+        j:setHilight(true)
         hook.pilot(j, "death", "DVdeath")
     end
     for i, j in ipairs (fleetFLF) do
@@ -420,6 +436,11 @@ function spawnBigDV()
             j:setFaction("FLF")
             j:changeAI("flf_nojump")
         end
+    end
+    
+    -- Check for defection possibility
+    if var.peek("dv_patrol") ~= nil and var.peek("dv_patrol") >= 3 then
+        hailie = hook.timer(500, "proximity", {anchor = boss, radius = 1000, funcname = "hailEvent"}) 
     end
 end
 
@@ -438,24 +459,28 @@ function DVdeath()
             osd_desc[2] = nil
             misn.osdActive(1)
             misn.osdCreate(misn_title, osd_desc)
-            misn.markerMove( misn_marker, system.get(var.peek("flfbase_sysname")) )
+            misn.markerAdd(system.get(var.peek("flfbase_sysname")), "high")
             retreat = false
         else
-            osd_desc[1] = string.format(FLFosd[1], sysname[encounters])
             misn.osdCreate(misn_title, osd_desc)
             misn.osdActive(1)
-            misn.markerMove( misn_marker, system.get(sysname[encounters]) )
+            misn.markerRm(misn_markers[system.cur():name()])
             retreat = true
         end
         -- Patrol clear.
+        for _, j in ipairs(fleetFLF) do
+            if j:exists() then
+                j:changeAI(string.format("escort*%u", player.pilot():id()))
+            end
+        end
     end
 end
 
 -- Hook for wingman death. If the wing is wiped out, either the player is recalled to the FLF base, or he wins the mission if he betrayed the FLF.
-function FLFdeath()
+function FLFdeath(pielot)
     alldead = true
     for i, j in ipairs(fleetFLF) do
-        if j:exists() then
+        if j ~= pielot and j:exists() then -- pielot is definitely dead. It triggered the hook!
             alldead = false
         else
             escarmor[i] = 0
@@ -472,11 +497,11 @@ end
 
 function winDV()
     DVwin = true
-    osd_desc[1] = string.format(DVosd[2], DVsys, DVplanet)
+    osd_desc[1] = DVosd[2]:format(DVsys, DVplanet)
     osd_desc[2] = nil
     misn.osdActive(1)
     misn.osdCreate(misn_title, osd_desc)
-    misn.markerMove( misn_marker, system.get(DVsys) )
+    misn.markerAdd(system.get(DVsys), "high")
     
     for i, j in ipairs(fleetDV) do
         if j:exists() then
@@ -486,7 +511,5 @@ function winDV()
 end
 
 function abort()
-    var.pop("flfbase_sysname")
-    var.pop("flfbase_intro")
     misn.finish(false)
 end

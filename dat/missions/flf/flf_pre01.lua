@@ -63,6 +63,8 @@ You have failed to reach the FLF's hidden base.]]
     osd_desc[1] = "Take Gregar, the FLF agent to the %s system and make contact with the FLF"
     osd_desc[2] = "Alternatively, turn Gregar in to the nearest Dvaered base"
     
+    osd_adddesc = "Follow the FLF ships to their secret base. Do not lose them!"
+    
     misn_desc = "You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered."
 end
 
@@ -80,12 +82,12 @@ function create()
     destsysname = var.peek("flfbase_sysname")
     destsys = system.get(destsysname)
     
-    tk.msg(title[1], string.format(text[1], destsysname))
+    tk.msg(title[1], text[1]:format(destsysname))
     
-    misn.osdCreate(misn_title, {string.format(osd_desc[1], destsysname), osd_desc[2]})
+    misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_desc[2]})
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
-    misn.markerAdd( syste.get(destsysname), "low" )
+    misn.markerAdd(system.get(destsysname), "low")
     
     gregar = misn.cargoAdd("Gregar", 0)
     
@@ -96,34 +98,38 @@ end
 -- Handle the FLF encounter, Gregar's intervention, and ultimately the search for the base.
 function enter()
     if system.cur() == destsys and not flfdead and not basefound then
-        dist = 15000 -- distance of the FLF base from the player jump-in point
-        spread = 45 -- max degrees off-course for waypoints
-
-        angle = rnd.rnd() * 2 * math.pi
-        angle2 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
-        angle3 = angle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
+        -- Collect information needed for course calculations
+        local spread = 45 -- max degrees off-course for waypoints
+        local basepos = vec2.new(-8700,-3000) -- NOTE: Should be identical to the location in asset.xml!
+        local jumppos = system.cur():jumpPos(system.get("Behar"))
+        
+        -- Calculate course
+        local dist = vec2.dist(basepos, jumppos) -- The distance from the jump point to the base
+        local course = basepos - jumppos -- The vector from the jump point to the base
+        local cx, cy = course:get() -- Cartesian coordinates of the course
+        local courseangle = math.atan2(cy, cx) -- Angle of the course in polar coordinates
+        
+        -- Generate new angles deviating off the courseangle
+        local angle2 = courseangle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
+        local angle1 = courseangle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
         
         -- Set FLF base waypoints
-        -- Base is at 0,0
-        -- Waypoints are 1/3 and 2/3 of the way away, at an angle plus or minus spread degrees from the actual base
-        waypoint0 = vec2.new(0,0) -- The base will be spawned in the origin, but not until the player is close to this waypoint.
-        waypoint1 = vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2))
-        waypoint2 = vec2.new(2 * dist / 3 * math.cos(angle3), 2 * dist / 3 * math.sin(angle3))
+        -- Base is at -8700,-3000
+        -- Waypoints deviate off the course by at most spread degrees
+        waypoint2 = jumppos + vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2))
+        waypoint1 = jumppos + course * 1 / 3 + vec2.new(dist / 3 * math.cos(angle1), dist / 3 * math.sin(angle1))
+        waypoint0 = basepos -- The base will not be spawned until the player is close to this waypoint.
 
         pilot.toggleSpawn(false)
         pilot.clear()
 
-        -- Pilot is to hyper in somewhere far away from the base.
-        player.pilot():setPos(vec2.new(dist * math.cos(angle), dist * math.sin(angle)))
-
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", player.pilot():pos())
-        player.pilot():setPos(player.pilot():pos() - player.pilot():vel() / 2.2) -- Compensate for hyperjump
-
+        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", jumppos)
+        
         faction.get("FLF"):modPlayerRaw(-200)
         
         hook.timer(2000, "commFLF")
-        hook.timer(20000, "wakeUpGregarYouLazyBugger")
+        hook.timer(25000, "wakeUpGregarYouLazyBugger")
     end
 end
 
@@ -131,7 +137,7 @@ end
 function land()
     -- Case FLF base
     if planet.cur():name() == "Sindbad" then
-        tk.msg(title[4], string.format(text[4], player.name()))
+        tk.msg(title[4], text[4]:format(player.name()))
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
@@ -164,6 +170,7 @@ function wakeUpGregarYouLazyBugger()
             j:setFriendly()
             j:setHealth(100,100)
             j:changeAI("flf_nojump")
+            j:setHilight(true)
             flfdead = false
         end
     end
@@ -171,6 +178,8 @@ function wakeUpGregarYouLazyBugger()
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
         faction.get("FLF"):modPlayerRaw(100)
+        misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
+        misn.osdActive(2)
         hook.timer(2000, "annai")
         OORT = hook.timer(4000, "outOfRange")
     end
@@ -187,7 +196,7 @@ function annai()
             j:control()
             j:goto(waypoint2, false)
             j:goto(waypoint1, false)
-            j:goto(poss[i])
+            j:goto(waypoint0 + poss[i])
         end
     end
     spawner = hook.timer(1000, "spawnbase")
