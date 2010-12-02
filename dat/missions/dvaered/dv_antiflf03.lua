@@ -593,7 +593,7 @@ end
 
 function idle()
     updatepos()
-    obstinate:goto(fleetpos[1], false)
+    obstinate:goto(fleetpos[1], false, false)
 end
 
 function updatepos()
