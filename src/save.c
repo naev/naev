@@ -142,7 +142,7 @@ int save_all (void)
 
    /* Write to file. */
    if (nfile_dirMakeExist("%ssaves", nfile_basePath()) < 0) {
-      WARN("Aborting save...");
+      WARN("Failed to create save directory '%ssaves'.", nfile_basePath());
       goto err_writer;
    }
    snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
