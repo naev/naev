@@ -1293,6 +1293,7 @@
  <outfit name="Caesar IV Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
@@ -1332,6 +1333,7 @@
  <outfit name="Imperator Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>34</mass>
    <price>160000</price>
