@@ -300,10 +300,10 @@ function create()
             carg_mass * (150+rnd.int(75)) +
             rnd.int(1500)
    elseif misn_type == "Rush" then
-      difficulty = rnd.rnd(time.units(2), time.units(3))
-      misn_time = time.get() + time.units(3) +
-            difficulty * misn_dist +
-            ((misn_dist - misn_dist % 4) / 4) * time.units(3)
+      difficulty = rnd.rnd( 2, 3 )
+      misn_time = time.get() + time.create( 0, 0, 10000*
+               (3 + difficulty * misn_dist +
+               ((misn_dist - misn_dist % 4) / 4) * 3) )
       misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )
@@ -327,7 +327,7 @@ function accept()
       tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
       misn.finish()
    elseif misn_type == "Rush" then
-      delay = time.get() + time.units(2) + (player.pilot():stats().jump_delay * 1000 * misn_dist)
+      delay = time.get() + time.create( 0, 0, 10000*(2 + (player.pilot():stats().jump_delay * 1000 * misn_dist)))
       if delay > misn_time then
          if not tk.yesno( slow[1], string.format( slow[2], time.str(delay - time.get()),
                pnt:name(), time.str(delay - misn_time) )) then
@@ -349,7 +349,7 @@ function accept()
       -- set the hooks
       hook.land( "land" ) -- only hook after accepting
       if misn_type == "Rush" then -- rush needs additional time hook
-         hook.enter( "timeup" )
+         hook.date( "timeup", time.create( 0, 0, 1000 ) )
       end
    else
       tk.msg( msg_title[1], msg_msg[1] )
@@ -367,8 +367,8 @@ function land()
            -- tk.msg( msg_title[2], string.format( msg_msg_pass_list[dialog_pick], carg_type ))   -- Replace with even more randomized dialogue
            tk.msg( msg_title[2], string.format( msg_msg_pass, carg_type ))
             -- 40% chance of a bonus if you're quick.
-            if rnd.rnd() >= 0.6 and time.get() < start_date + time.units(3) + time.units(5) *
-                   misn_dist + time.units(3) * ((misn_dist - misn_dist % 3 ) / 3) then
+            if rnd.rnd() >= 0.6 and time.get() < start_date +
+                  time.create( 0, 3, 10000*(5*misn_disttime + 3*(misn_dist - misn_dist % 3) / 3) ) then
                bonus = rnd.rnd(10,60) * 100
                tk.msg( msg_title[2], string.format( msg_bonus[1], bonus ))
                player.pay(bonus)
