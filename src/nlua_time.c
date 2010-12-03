@@ -43,6 +43,7 @@ static const luaL_reg time_methods[] = {
    { "__le", time_le },
    { "get", time_get },
    { "str", time_str },
+   { "__tostring", time_str },
    { "inc", time_inc },
    {0,0}
 }; /**< Time Lua methods. */
@@ -57,6 +58,7 @@ static const luaL_reg time_cond_methods[] = {
    { "__le", time_le },
    { "get", time_get },
    { "str", time_str },
+   { "__tostring", time_str },
    {0,0}
 }; /**< Time Lua conditional methods. */
 
@@ -339,6 +341,7 @@ static int time_get( lua_State *L )
  * @usage strt = time.str() -- Gets current time
  * @uasge strt = time.str( nil, 5 ) -- Gets current time with full decimals
  * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 STP
+ * @usage strt = t:str() -- Gets the string of t
  *
  *    @luaparam t Time to convert to pretty format.  If ommitted, current time is used.
  *    @luaparam d Decimals to use for displaying STU (should be between 0 and 5).
