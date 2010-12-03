@@ -46,6 +46,19 @@ static const luaL_reg time_methods[] = {
    { "inc", time_inc },
    {0,0}
 }; /**< Time Lua methods. */
+static const luaL_reg time_cond_methods[] = {
+   { "create", time_create },
+   { "add", time_add },
+   { "__add", time_add },
+   { "sub", time_sub },
+   { "__sub", time_sub },
+   { "__eq", time_eq },
+   { "__lt", time_lt },
+   { "__le", time_le },
+   { "get", time_get },
+   { "str", time_str },
+   {0,0}
+}; /**< Time Lua conditional methods. */
 
 
 /**
@@ -57,9 +70,24 @@ static const luaL_reg time_methods[] = {
  */
 int nlua_loadTime( lua_State *L, int readonly )
 {
-   (void)readonly;
-   luaL_register(L, "time", time_methods);
-   return 0;
+   (void) readonly;
+   /* Create the metatable */
+   luaL_newmetatable(L, TIME_METATABLE);
+
+   /* Create the access table */
+   lua_pushvalue(L,-1);
+   lua_setfield(L,-2,"__index");
+
+   /* Register the values */
+   if (readonly)
+      luaL_register(L, NULL, time_cond_methods);
+   else
+      luaL_register(L, NULL, time_methods);
+
+   /* Clean up. */
+   lua_setfield(L, LUA_GLOBALSINDEX, TIME_METATABLE);
+
+   return 0; /* No error */
 }
 
 
@@ -68,7 +96,7 @@ int nlua_loadTime( lua_State *L, int readonly )
  *
  * Usage is generally something as follows:
  * @code
- * time_limit = time.get() + time.units(15)
+ * time_limit = time.get() + time.create( 0, 5, 0 )
  * player.msg( string.format("You only have %s left!", time.str(time.get() - time_limit)) )
  *
  * -- Do stuff here
