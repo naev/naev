@@ -13,7 +13,6 @@ if lang == 'es' then --not translated atm
 else --default english
     civ_name = "Civilian"
     civ_portraits = {
-        "jorek",
         "thief1",
         "thief2"
     }

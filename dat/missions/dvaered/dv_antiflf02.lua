@@ -55,7 +55,7 @@ else -- default english
     refusetext = [[    "I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]
     
     failtitle[1] = "You ran away!"
-    failtext[1] = "You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!"
+    failtext[1] = "You have left the system without first completing your mission. The operation ended in failure."
     
     failtitle[2] = "You fought too hard!"
     failtext[2] = "You have disabled a Dvaered ship, thereby violating your orders. The operation is canceled thanks to you. The Dvaered are less than pleased."
@@ -89,12 +89,12 @@ end
 
 function accept()
     if tk.yesno(title[1], text[1]) then
-        misn.accept()
         destsysname = var.peek("flfbase_sysname")
         tk.msg(title[2], text[2])
         tk.msg(title[2], string.format(text[3], destsysname, destsysname, destsysname))
         tk.msg(title[2], text[4])
 
+        misn.accept()
         osd_desc[1] = string.format(osd_desc[1], destsysname)
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
@@ -127,7 +127,7 @@ function enter()
         pilot.toggleSpawn(false)
         misn.osdActive(2)
         hook.timer(15000, "spawnDV")
-    elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
+    elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerRaw(-10)
         abort()
@@ -153,7 +153,7 @@ function spawnDV()
     for i, j in ipairs(fleetDV) do
         j:setHostile()
         j:setHilight(true)
-        j:setPlayervis()
+        j:setVisplayer(true)
         j:rmOutfit("all")
         j:addOutfit("Plasma Blaster MK2", 2)
         j:addOutfit("Shield Booster", 1)
@@ -197,7 +197,7 @@ function spawnFLF()
     
     for i, j in ipairs(fleetFLF) do
         j:setHilight(true)
-        j:setPlayervis()
+        j:setVisplayer()
         hook.pilot(j, "disable", "disableFLF")
         hook.pilot(j, "death", "deathFLF")
         hook.pilot(j, "board", "boardFLF")
@@ -243,14 +243,12 @@ function boardFLF()
     for _, j in ipairs(fleetFLF) do
         if j:exists() then
             j:setHilight(false)
-            j:setPlayervis(false)
+            j:setVisplayer(false)
             j:setNoboard(true)
         end
     end
 end
 
 function abort()
-    var.pop("flfbase_intro")
-    var.pop("flfbase_sysname")
     misn.finish(false)
 end

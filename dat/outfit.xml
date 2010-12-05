@@ -1138,35 +1138,6 @@
  </outfit>
 
 
- <!-- SPECIAL WEAPS -->
- <outfit name="Base Ripper MK2">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>12</mass>
-   <price>1</price>
-   <description>Specially modified ripper for bases. Not for sale (I hope).</description>
-   <gfx_store>ripper</gfx_store>
-  </general>
-  <specific type="turret bolt">
-   <cpu>12</cpu>
-   <gfx>ripper</gfx>390
-   <sound>ripper</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>1260</delay>
-   <speed>700</speed>
-   <range>900</range>
-   <falloff>650</falloff>
-   <gfx_end>ripper-end</gfx_end>
-   <energy>23.75</energy>
-   <heatup>600</heatup>
-   <leadangle>150</leadangle>
-   <damage type="energy" penetrate="50">22.5</damage>
-  </specific>
- </outfit>
-
-
  <!-- Missile Weapons -->
  <outfit name="Seeker Launcher">
   <general>
@@ -1322,6 +1293,7 @@
  <outfit name="Caesar IV Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
@@ -1361,6 +1333,7 @@
  <outfit name="Imperator Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>34</mass>
    <price>160000</price>
@@ -2103,7 +2076,35 @@
   </general>
   <specific type="license"/>
  </outfit>
+
+
  <!-- Cheats. For missions, honest! -->
+ <outfit name="Base Ripper MK2">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>12</mass>
+   <price>1</price>
+   <description>This weapon is a cheat. It is not meant to be used by players.</description>
+   <gfx_store>ripper</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <cpu>12</cpu>
+   <gfx>ripper</gfx>
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>1260</delay>
+   <speed>700</speed>
+   <range>1900</range>
+   <falloff>1500</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <energy>1</energy>
+   <heatup>10000</heatup>
+   <leadangle>150</leadangle>
+   <damage type="energy" penetrate="50">22.5</damage>
+  </specific>
+ </outfit>
  <outfit name="Cheater's Ragnarok Beam">
   <general>
    <slot>weapon</slot>

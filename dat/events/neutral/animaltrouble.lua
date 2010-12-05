@@ -41,7 +41,7 @@ function continueProblems()
     angle = (rnd.rnd() - 0.5) * math.pi + ps:dir() -- In theory, never deviate more than 90 degrees from the current course.
     newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is in a random direction
     ps:taskClear()
-    ps:goto(ps:pos() + newlocation, false)
+    ps:goto(ps:pos() + newlocation, false, false)
 end
 
 function buck()
