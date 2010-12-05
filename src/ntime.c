@@ -77,10 +77,10 @@ void ntime_update( double dt )
    ntime_t inc;
 
    /* Calculate the effective time. */
-   dtt = naev_remainder + dt*NT_STU_DT;
+   dtt = naev_remainder + dt*NT_STU_DT*NT_STU_DIV;
 
    /* Time to update. */
-   tu             = floor( dtt * (double)NT_STU_DIV );
+   tu             = floor( dtt );
    inc            = (ntime_t) tu;
    naev_remainder = dtt - tu; /* Leave remainder. */
 
