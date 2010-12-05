@@ -28,6 +28,7 @@ static int vectorL_sub( lua_State *L );
 static int vectorL_mul( lua_State *L );
 static int vectorL_div( lua_State *L );
 static int vectorL_get( lua_State *L );
+static int vectorL_polar( lua_State *L );
 static int vectorL_set( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static int vectorL_mod( lua_State *L );
@@ -42,6 +43,7 @@ static const luaL_reg vector_methods[] = {
    { "__div", vectorL_div },
    { "div", vectorL_div },
    { "get", vectorL_get },
+   { "polar", vectorL_polar },
    { "set", vectorL_set },
    { "dist", vectorL_distance },
    { "mod", vectorL_mod },
@@ -75,8 +77,6 @@ int nlua_loadVector( lua_State *L )
 
 
 /**
- * @defgroup META_VECTOR Vector Metatable
- *
  * @brief Represents a 2D vector in Lua.
  *
  * This module allows you to manipulate 2D vectors.  Usage is generally as follows:
@@ -163,8 +163,6 @@ int lua_isvector( lua_State *L, int ind )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Creates a new vector.
  *
  * @usage vec2.new( 5, 3 ) -- creates a vector at (5,3)
@@ -195,8 +193,6 @@ static int vectorL_new( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Adds two vectors or a vector and some cartesian coordinates.
  *
  * If x is a vector it adds both vectors, otherwise it adds cartesian coordinates
@@ -244,8 +240,6 @@ static int vectorL_add( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Subtracts two vectors or a vector and some cartesian coordinates.
  *
  * If x is a vector it subtracts both vectors, otherwise it subtracts cartesian
@@ -289,8 +283,6 @@ static int vectorL_sub( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Multiplies a vector by a number.
  *
  * @usage my_vec = my_vec * 3
@@ -317,8 +309,6 @@ static int vectorL_mul( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Divides a vector by a number.
  *
  * @usage my_vec = my_vec / 3
@@ -346,8 +336,6 @@ static int vectorL_div( lua_State *L )
 
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Gets the cartesian positions of the vector.
  *
  * @usage x,y = my_vec:get()
@@ -370,8 +358,29 @@ static int vectorL_get( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
+ * @brief Gets polar coordinates of a vector.
  *
+ * The angle is in degrees, not radians.
+ *
+ * @usage modulus, angle = my_vec:polar()
+ *
+ *    @luaparam v Vector to get polar coordinates of.
+ *    @luareturn The modulus and angle of the vector.
+ * @luafunc polar(v)
+ */
+static int vectorL_polar( lua_State *L )
+{
+   LuaVector *v1;
+
+   /* Get self. */
+   v1 = luaL_checkvector(L,1);
+
+   lua_pushnumber(L, VMOD(v1->vec));
+   lua_pushnumber(L, VANGLE(v1->vec)*180./M_PI);
+   return 2;
+}
+
+/**
  * @brief Sets the vector by cartesian coordinates.
  *
  * @usage my_vec:set(5, 3) -- my_vec is now (5,3)
@@ -397,8 +406,6 @@ static int vectorL_set( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Gets the distance from the Vec2.
  *
  * @usage my_vec:dist() -- Gets length of the vector (distance from origin).
@@ -435,8 +442,6 @@ static int vectorL_distance( lua_State *L )
 }
 
 /**
- * @ingroup META_VECTOR
- *
  * @brief Gets the modulus of the vector.
  *    @luaparam v Vector to get modulus of.
  *    @luareturn The modulus of the vector.
