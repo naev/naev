@@ -349,7 +349,7 @@ function accept()
       -- set the hooks
       hook.land( "land" ) -- only hook after accepting
       if misn_type == "Rush" then -- rush needs additional time hook
-         hook.date( "timeup", time.create( 0, 0, 1000 ) )
+         hook.date( time.create( 0, 0, 1000 ), "timeup" )
       end
    else
       tk.msg( msg_title[1], msg_msg[1] )

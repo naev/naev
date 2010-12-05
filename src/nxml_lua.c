@@ -19,6 +19,7 @@
 #include "nlua_space.h"
 #include "nlua_faction.h"
 #include "nlua_ship.h"
+#include "nlua_time.h"
 
 
 /*
@@ -69,6 +70,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    LuaSystem *s;
    LuaFaction *f;
    LuaShip *sh;
+   LuaTime *lt;
    Planet *pnt;
    StarSystem *ss;
    char buf[PATH_MAX];
@@ -202,6 +204,13 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             /* key, value */
             break;
          }
+         else if (lua_istime(L,-1)) {
+            lt = lua_totime(L,-1);
+            snprintf( buf, sizeof(buf), "%"PRId64, lt->t );
+            nxml_saveData( writer, "time",
+                  name, buf, keynum );
+            break;
+         }
 
       /* Rest gets ignored, like functions, etc... */
       default:
@@ -256,6 +265,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    LuaSystem s;
    LuaFaction f;
    LuaShip sh;
+   LuaTime lt;
    Planet *pnt;
    StarSystem *ss;
    xmlNodePtr node;
@@ -320,6 +330,10 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"ship")==0) {
             sh.ship = ship_get(xml_get(node));
             lua_pushship(L,sh);
+         }
+         else if (strcmp(type,"time")==0) {
+            lt.t = xml_getLong(node);
+            lua_pushtime(L,lt);
          }
          else {
             WARN("Unknown lua data type!");

@@ -484,7 +484,7 @@ void hooks_updateDate( ntime_t change )
 
          /* Run the timer hook. */
          hook_run( h, NULL, j );
-         h->delete = 1; /* Mark for deletion. */
+         /* Date hooks are not deleted. */
 
          if (j==1)
             h->acc -= h->res;
@@ -973,6 +973,10 @@ int hook_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"id","%u",h->id);
       xmlw_elem(writer,"stack","%s",h->stack);
 
+      /* Store additional date information. */
+      if (h->is_date)
+         xmlw_elem(writer,"resolution","%"PRId64,h->res);
+
       xmlw_endElem(writer); /* "hook" */
    }
    xmlw_endElem(writer); /* "hooks" */
@@ -1027,6 +1031,11 @@ static int hook_parse( xmlNodePtr base )
    unsigned int parent, id, new_id;
    HookType_t type;
    Hook *h;
+   int is_date;
+   ntime_t res;
+
+   /* Defaults. */
+   is_date = 0;
 
    node = base->xmlChildrenNode;
    do {
@@ -1062,6 +1071,8 @@ static int hook_parse( xmlNodePtr base )
          /* Handle the data. */
          cur = node->xmlChildrenNode;
          do {
+            xml_onlyNodes(cur);
+
             /* ID. */
             xmlr_long(cur,"id",id);
 
@@ -1073,6 +1084,14 @@ static int hook_parse( xmlNodePtr base )
                xmlr_uint(cur,"parent",parent);
                xmlr_str(cur,"func",func);
             }
+
+            /* Check for date hook. */
+            if (xml_isNode( cur, "resolution" )) {
+               is_date = 1;
+               res = xml_getLong( cur );
+            }
+
+            WARN("Save has unknown hook node '%s'.", xml_get(cur));
          } while (xml_nextNode(cur));
 
          /* Check for validity. */
@@ -1093,6 +1112,12 @@ static int hook_parse( xmlNodePtr base )
          if (id != 0) {
             h = hook_get( new_id );
             h->id = id;
+         }
+
+         /* Additional info. */
+         if (is_date) {
+            h->is_date = 1;
+            h->res = res;
          }
       }
    } while (xml_nextNode(node));
