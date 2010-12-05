@@ -1089,9 +1089,10 @@ static int hook_parse( xmlNodePtr base )
             if (xml_isNode( cur, "resolution" )) {
                is_date = 1;
                res = xml_getLong( cur );
+               continue;
             }
 
-            WARN("Save has unknown hook node '%s'.", xml_get(cur));
+            WARN("Save has unknown hook node '%s'.", cur->name);
          } while (xml_nextNode(cur));
 
          /* Check for validity. */
