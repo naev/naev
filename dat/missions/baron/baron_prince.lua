@@ -361,7 +361,7 @@ function hail()
     pinnacle:taskClear()
     pinnacle:brake()
     stopping = true
-    boardhook = hook.board("board")
+    boardhook = hook.pilot(pinnacle, "board")
 end
 
 -- Function that tries to misspell whatever string is passed to it.
