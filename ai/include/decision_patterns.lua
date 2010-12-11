@@ -144,3 +144,50 @@ function atk_topdown_think ()
 end
 
 
+--[[
+-- big game hunter attack pattern using heuristic target identification.
+--]]
+function atk_heuristic_big_game_think ()
+
+   local enemy = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
+   local nearest_enemy = ai.getenemy()
+   local dist = 0
+   local sizedist = 0
+
+--   if enemy ~= nil and enemy ~= 0 then
+   if enemy ~= nil then
+      sizedist = ai.dist(enemy)
+   end   
+   
+--   if  nearest_enemy ~= nil and nearest_enemy ~= 0 then   
+   if  nearest_enemy ~= nil then
+      dist = ai.dist(nearest_enemy)
+   end
+
+   local target = ai.target()
+
+   -- Stop attacking if it doesn't exist
+        if not ai.exists(target) then
+                ai.poptask()
+                return
+        end
+
+   local range = ai.getweaprange(3, 0)
+
+   -- Get new target if it's closer
+   --prioritize targets within the size limit
+   if enemy ~= target and enemy ~= nil then
+      
+      -- Shouldn't switch targets if close
+      if sizedist > range * mem.atk_changetarget then
+         ai.pushtask("attack", enemy )
+      end
+      
+   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
+
+      -- Shouldn't switch targets if close
+      if dist > range * mem.atk_changetarget then
+         ai.pushtask("attack", nearest_enemy )
+      end
+   end
+end

@@ -393,9 +393,9 @@ unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabl
 int pilot_getJumps( const Pilot* p );
 
 /*non-lua wrappers*/
-double pilot_relsize(Pilot* cur_pilot, Pilot* p);
-double pilot_reldps(Pilot* cur_pilot, Pilot* p);
-double pilot_relhp(Pilot* cur_pilot, Pilot* p);
+double pilot_relsize(const Pilot* cur_pilot, const Pilot* p);
+double pilot_reldps(const Pilot* cur_pilot, const Pilot* p);
+double pilot_relhp(const Pilot* cur_pilot, const Pilot* p);
 
 /*
  * Combat.

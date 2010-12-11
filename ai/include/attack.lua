@@ -55,19 +55,23 @@ function attack_choose ()
    if class == "Bomber" then
 --      ai.comm(1, "Bomber")
       mem.atk_think = atk_topdown_think
+      --mem.atk_think = atk_heuristic_big_game_think
       mem.atk = atk_bomber
       --mem.atk_think = atk_b_think
       --mem.atk = atk_b
     elseif class == "Fighter" or class == "Drone" then
-      mem.atk_think = atk_fighter_think
+    mem.atk_think = atk_heuristic_big_game_think
+      --mem.atk_think = atk_fighter_think
       mem.atk = atk_fighter
     elseif class == "Corvette" then
 --      ai.comm(1, "Corvette")
-      mem.atk_think = atk_topdown_think
+--      mem.atk_think = atk_topdown_think
+      mem.atk_think = atk_heuristic_big_game_think
       mem.atk = atk_corvette
     elseif class == "Destroyer" or class == "Cruiser" then
 --      ai.comm(1, "Capship")
-      mem.atk_think = atk_topdown_think
+--      mem.atk_think = atk_topdown_think
+      mem.atk_think = atk_heuristic_big_game_think
       mem.atk = atk_capital
     else 
 --      ai.comm(1, "Other")

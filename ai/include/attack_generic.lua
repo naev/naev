@@ -256,7 +256,7 @@ local perp_distance
     --find nearest thing
   local neighbor = ai.nearestpilot()
  
-  if neighbor ~= nil and neighbor ~= 0 then
+  if ai.exists(neighbor) then
  
     --find the distance based on the direction I'm travelling
     perp_distance = ai.flyby_dist(neighbor)

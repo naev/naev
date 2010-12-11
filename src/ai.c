@@ -1435,7 +1435,7 @@ static int aiL_pshield( lua_State *L )
 static int aiL_pcurenergy( lua_State *L )
 {
    double d;
-   d = cur_pilot->energy / cur_pilot->energy_max * 100.;
+   d = (cur_pilot->energy / cur_pilot->energy_max) * 100.;
    lua_pushnumber(L, d);
    return 1;
 
@@ -2916,24 +2916,32 @@ static int aiL_getenemy_size( lua_State *L )
  */
 static int aiL_getenemy_heuristic( lua_State *L )
 {
+/*   NLUA_ERROR(L, "heuristic entry");*/
+
+/*   printf("heuristic entry/n");*/   
+
    unsigned int p;
-   double mass_factor, health_factor, damage_factor, range_factor;
-   NLUA_MIN_ARGS(3);
+   double mass_factor = 0, health_factor = 0, damage_factor = 0, range_factor = 0;
+   NLUA_MIN_ARGS(4);
 
    mass_factor = luaL_checklong(L,1);
    health_factor = luaL_checklong(L,2);
    damage_factor = luaL_checklong(L,3);
-   range_factor = 0;
-   if (lua_isnumber(L,4))
+/*   if (lua_isnumber(L,4))*/
       range_factor = luaL_checklong(L,4);
 
 
-   p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, range_factor);
+   p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, (double) (1/range_factor));
 
    if (p==0) /* No enemy found */
+   {
       return 0;
+      NLUA_ERROR(L, "heuristic Void");
+   }
 
    lua_pushnumber(L,p);
+
+   NLUA_ERROR(L, "heuristic exit");
     
    return 1;
 }
