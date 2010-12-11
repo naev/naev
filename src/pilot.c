@@ -362,7 +362,7 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 
          /* Check distance. */
          td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos)* range_factor;
-         temp = td+fabs( pilot_relsize(p, pilot_stack[i]) /*0.5*/-mass_factor) + fabs(pilot_relhp(p, pilot_stack[i]) /*0.5*/- health_factor) + fabs(/*pilot_reldps(p, pilot_stack[i])*/ 0.5-damage_factor);
+         temp = td+fabs( pilot_relsize(p, pilot_stack[i]) /*0.5*/-mass_factor) + fabs(pilot_relhp(p, pilot_stack[i]) /*0.5*/- health_factor) + fabs(pilot_reldps(p, pilot_stack[i]) /*0.5*/-damage_factor);
          
          if ((tp == 0) || (temp< current_heuristic_value)) {
             current_heuristic_value = temp;
@@ -2395,7 +2395,12 @@ double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
 
     for(i = 0; i < p->outfit_nweapon; i++)
     {
-       DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );
+       /*DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );*/
+        damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
+        delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
+        if(damage_cache > 0 && delay_cache > 0)
+           DPSaccum_target += ( damage_cache/delay_cache );
+
     }
 
     for(i = 0; i < cur_pilot->outfit_nweapon; i++)
