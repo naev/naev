@@ -2375,7 +2375,7 @@ double pilot_relsize(const Pilot* cur_pilot, const Pilot* p)
     /*double mass_map;
     
     mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
-     
+    
     return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass) ) );
     }
 
@@ -2396,10 +2396,11 @@ double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
     for(i = 0; i < p->outfit_nweapon; i++)
     {
        /*DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );*/
-        damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
+       if(p->outfit_weapon[i].outfit){
+       damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
         delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
         if(damage_cache > 0 && delay_cache > 0)
-           DPSaccum_target += ( damage_cache/delay_cache );
+           DPSaccum_target += ( damage_cache/delay_cache );}
 
     }
 
@@ -2407,10 +2408,12 @@ double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
     {
       
         /*DPSaccum_pilot += ( outfit_damage(cur_pilot->outfit_weapon[i].outfit)/outfit_delay(cur_pilot->outfit_weapon[i].outfit) );*/
+
+        if(cur_pilot->outfit_weapon[i].outfit) {
         damage_cache = outfit_damage(cur_pilot->outfit_weapon[i].outfit);
         delay_cache = outfit_delay(cur_pilot->outfit_weapon[i].outfit);
         if(damage_cache > 0 && delay_cache > 0)
-           DPSaccum_pilot += ( damage_cache/delay_cache );
+           DPSaccum_pilot += ( damage_cache/delay_cache );}
 
     }
 

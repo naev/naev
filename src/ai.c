@@ -2916,9 +2916,6 @@ static int aiL_getenemy_size( lua_State *L )
  */
 static int aiL_getenemy_heuristic( lua_State *L )
 {
-/*   NLUA_ERROR(L, "heuristic entry");*/
-
-/*   printf("heuristic entry/n");*/   
 
    unsigned int p;
    double mass_factor = 0, health_factor = 0, damage_factor = 0, range_factor = 0;
