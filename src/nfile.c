@@ -209,6 +209,10 @@ int nfile_backupIfExists( const char* path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
+   char backup[PATH_MAX];
+   FILE *f_in, *f_out;
+   char buf[ 8*1024 ];
+   size_t lr, lw;
 
    if (path == NULL)
       return -1;
@@ -219,18 +223,37 @@ int nfile_backupIfExists( const char* path, ... )
    }
 
    if (nfile_fileExists(file)) {
-      char backup[PATH_MAX];
       snprintf(backup, PATH_MAX, "%s.backup", file);
 
-      /* To be "portable" */
-      if (nfile_fileExists(backup))
-         remove(backup);
-      if (rename(file, backup) < 0) {
-         WARN("Unable to create back up of '%s': %s", file, strerror(errno));
+      /* Open files. */
+      f_in  = fopen( file, "r" );
+      f_out = fopen( backup, "w" );
+      if ((f_in==NULL) || (f_out==NULL)) {
+         WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
+         if (f_in!=NULL)
+            fclose(f_in);
          return -1;
       }
+
+      /* Copy data over. */
+      do {
+         lr = fread( buf, 1, sizeof(buf), f_in );
+         lw = fwrite( buf, 1, lr, f_out );
+         if (lr != lw) {
+            WARN( "Failure to create back up of '%s': %s", file, strerror(errno) );
+            fclose( f_in );
+            fclose( f_out );
+            return -1;
+         }
+      } while (lr > 0);
+
+      /* Close files. */
+      fclose( f_in );
+      fclose( f_out );
+
+      return 0;
    }
-   return 0;
+   return -1;
 }
 
 
