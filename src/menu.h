@@ -28,5 +28,10 @@ void menu_small (void);
 void menu_death (void);
 void menu_options (void);
 
+/*
+ * Closing.
+ */
+void menu_main_close (void);
+
 
 #endif /* MENU_H */

@@ -88,6 +88,7 @@
 #include "map_overlay.h"
 #include "start.h"
 #include "threadpool.h"
+#include "load.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -362,6 +363,9 @@ int main( int argc, char** argv )
 
    /* Destroy conf. */
    conf_cleanup(); /* Frees some memory the configuration allocated. */
+
+   /* Clean up loading game stuff stuff. */
+   load_free();
 
    /* exit subsystems */
    cli_exit(); /* CLean up the console. */

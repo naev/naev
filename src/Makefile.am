@@ -47,6 +47,7 @@ naev_SOURCES = \
 	land.c \
 	land_outfits.c \
 	land_shipyard.c \
+	load.c \
 	log.c \
 	map.c \
 	map_overlay.c \
@@ -173,6 +174,7 @@ naev_SOURCES = \
 	land.h \
 	land_outfits.h \
 	land_shipyard.h \
+	load.h \
 	log.h \
 	map.h \
 	map_overlay.h \

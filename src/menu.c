@@ -26,6 +26,7 @@
 #include "mission.h"
 #include "ntime.h"
 #include "save.h"
+#include "load.h"
 #include "land.h"
 #include "rng.h"
 #include "nebula.h"
@@ -75,7 +76,6 @@ static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
 static void menu_exit( unsigned int wid, char* str );
 /* main menu */
 static void main_menu_promptClose( unsigned int wid, char *unused );
-void menu_main_close (void); /**< Externed in save.c */
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
@@ -219,7 +219,7 @@ static void menu_main_load( unsigned int wid, char* str )
 {
    (void) str;
    (void) wid;
-   save_loadGameMenu();
+   load_loadGameMenu();
 }
 /**
  * @brief Function to active the new game menu.
