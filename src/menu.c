@@ -43,6 +43,7 @@
 #include "gui.h"
 #include "start.h"
 #include "camera.h"
+#include "load.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -75,6 +76,7 @@ static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
 /* Generic. */
 static void menu_exit( unsigned int wid, char* str );
 /* main menu */
+static int menu_main_bkg_system (void);
 static void main_menu_promptClose( unsigned int wid, char *unused );
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
@@ -93,6 +95,51 @@ static void menu_death_close( unsigned int wid, char* str );
 static void menu_options_button( unsigned int wid, char *str );
 
 
+static int menu_main_bkg_system (void)
+{
+   nsave_t *ns;
+   int n;
+   const char *sys;
+   Planet *pnt;
+   double cx, cy;
+
+   /* CLean pilots. */
+   pilots_cleanAll();
+   sys = NULL;
+
+   /* Refresh saves. */
+   load_refresh();
+
+   /* Get start position. */
+   ns = load_getList( &n );
+   if (n > 0) {
+      pnt = planet_get( ns[0].planet );
+      if (pnt != NULL) {
+         sys = planet_getSystem( ns[0].planet );
+         if (sys != NULL) {
+            cx = pnt->pos.x;
+            cy = pnt->pos.y;
+            cx += 300;
+            cy += 200;
+         }
+      }
+   }
+
+   /* Fallback if necessary. */
+   if (sys == NULL) {
+      sys = start_system();
+      start_position( &cx, &cy );
+   }
+
+   /* Initialize. */
+   space_init( sys );
+   cam_setTargetPos( cx, cy, 0 );
+   cam_setZoom( conf.zoom_far );
+
+   return 0;
+}
+
+
 /**
  * @brief Opens the main menu (titlescreen).
  */
@@ -102,7 +149,6 @@ void menu_main (void)
    unsigned int bwid, wid;
    glTexture *tex;
    int h, y;
-   double cx, cy;
 
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
@@ -113,11 +159,7 @@ void menu_main (void)
    /* Load background and friends. */
    tex = gl_newImage( "gfx/NAEV.png", 0 );
    main_naevLogo = tex;
-   pilots_cleanAll();
-   space_init( start_system() );
-   start_position( &cx, &cy );
-   cam_setTargetPos( cx, cy, 0 );
-   cam_setZoom( conf.zoom_far );
+   menu_main_bkg_system();
 
    /* Calculate Logo and window offset. */
    freespace = SCREEN_H - tex->sh - MAIN_HEIGHT;
