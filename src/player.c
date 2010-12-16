@@ -2740,7 +2740,7 @@ static Planet* player_parse( xmlNodePtr parent )
       /* global stuff */
       xmlr_float(node,"rating",player.crating);
       xmlr_ulong(node,"credits",player_creds);
-      xmlr_uint(node,"time",player_time);
+      xmlr_ulong(node,"time",player_time);
       xmlr_strd(node,"gui",player.gui);
       xmlr_int(node,"guiOverride",player.guiOverride);
 
