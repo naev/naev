@@ -170,19 +170,24 @@ int nfile_fileExists( const char* path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
+   struct stat buf;
 
    if (path == NULL)
       return -1;
-   else { /* get the message */
-      va_start(ap, path);
-      vsnprintf(file, PATH_MAX, path, ap);
-      va_end(ap);
-   }
-
-   struct stat buf;
+   va_start(ap, path);
+   vsnprintf(file, PATH_MAX, path, ap);
+   va_end(ap);
 
    if (stat(file,&buf)==0) /* stat worked, file must exist */
       return 1;
+
+   /* ANSI C89 compliant method here for reference. Not as precise as stat.
+   FILE *f = fopen(file, "rb");
+   if (f != NULL) {
+      fclose(f);
+      return 1;
+   }
+   */
    
    return 0;
 }
