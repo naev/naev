@@ -7,6 +7,12 @@
 #  define PILOT_EW_H
 
 
+#include "pilot.h"
+
+
+void pilot_ewUpdateStatic( Pilot *p );
+void pilot_ewUpdateDynamic( Pilot *p );
+
 double pilot_ewMovement( double vmod );
 double pilot_ewMass( double mass );
 
