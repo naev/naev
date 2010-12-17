@@ -29,8 +29,9 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
  */
 void pilot_ewUpdateStatic( Pilot *p )
 {
-   p->ew_mass = pilot_ewMass( p->solid->mass );
-   p->ew_hide = p->ew_mass * p->ew_base_hide;
+   p->ew_mass     = pilot_ewMass( p->solid->mass );
+   p->ew_heat     = pilot_ewHeat( p->heat_T );
+   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
 }
 
 
@@ -41,6 +42,11 @@ void pilot_ewUpdateStatic( Pilot *p )
  */
 void pilot_ewUpdateDynamic( Pilot *p )
 {
+   /* Update hide. */
+   p->ew_heat     = pilot_ewHeat( p->heat_T );
+   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+
+   /* Update evasion. */
    p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
    p->ew_evasion  = p->ew_hide * p->ew_movement;
 }
@@ -55,6 +61,18 @@ void pilot_ewUpdateDynamic( Pilot *p )
 double pilot_ewMovement( double vmod )
 {
    return 1. + sqrt( vmod ) / 15.;
+}
+
+
+/**
+ * @brief Gets the electronic warfare heat modifier for a given temperature.
+ *
+ *    @param T Temperature of the ship.
+ *    @return The electronic warfare heat modifier.
+ */
+double pilot_ewHeat( double T )
+{
+   return 1. - 0.00075 * pow( T, 1.05 );
 }
 
 
