@@ -28,6 +28,7 @@
 #include <libgen.h>
 #endif /* HAS_POSIX */
 #if HAS_WIN32
+#include <sys/stat.h>
 #include <windows.h>
 #endif /* HAS_WIN32 */
 
@@ -281,7 +282,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-#if HAS_POSIX
+#if HAS_POSIX || HAS_WIN32
    int i,j,k, n;
    DIR *d;
    struct dirent *dir;
@@ -369,44 +370,6 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    /* Free temporary stuff */
    free(tfiles);
    free(tt);
-#elif HAS_WIN32
-   DIR *d;
-   struct dirent *dir;
-   char *name;
-   int mfiles;
-
-   mfiles      = 128;
-   files       = malloc(sizeof(char*)*mfiles);
-
-   d = opendir(base);
-   if (d == NULL) {
-      free(files);
-      return NULL;
-   }
-
-   /* Get the file list */
-   while ((dir = readdir(d)) != NULL) {
-      name = dir->d_name;
-
-      /* Skip hidden directories */
-      if (name[0] == '.')
-         continue;
-
-      /* Stat the file */
-      snprintf( file, PATH_MAX, "%s/%s", base, name );
-
-      /* Enough memory? */
-      if ((*nfiles)+1 > mfiles) {
-         mfiles += 128;
-         files = realloc( files, sizeof(char*) * mfiles );
-      }
-
-      /* Write the information */
-      files[(*nfiles)] = strdup(name);
-      (*nfiles)++;
-   }
-
-   closedir(d);
 #else
 #error "Feature needs implementation on this Operating System for NAEV to work."
 #endif /* HAS_POSIX */
