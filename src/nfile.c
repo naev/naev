@@ -20,15 +20,14 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <sys/stat.h>
 #if HAS_POSIX
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
 #if HAS_WIN32
-#include <sys/stat.h>
 #include <windows.h>
 #endif /* HAS_WIN32 */
 
@@ -180,22 +179,11 @@ int nfile_fileExists( const char* path, ... )
       va_end(ap);
    }
 
-#if HAS_POSIX
    struct stat buf;
 
    if (stat(file,&buf)==0) /* stat worked, file must exist */
       return 1;
-
-#else /* HAS_POSIX */
-   FILE *f;
-
-   /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen(file, "rb");
-   if (f != NULL) {
-      fclose(f);
-      return 1;
-   }
-#endif /* HAS_POSIX */
+   
    return 0;
 }
 
@@ -282,7 +270,6 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-#if HAS_POSIX || HAS_WIN32
    int i,j,k, n;
    DIR *d;
    struct dirent *dir;
@@ -370,9 +357,6 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    /* Free temporary stuff */
    free(tfiles);
    free(tt);
-#else
-#error "Feature needs implementation on this Operating System for NAEV to work."
-#endif /* HAS_POSIX */
 
    /* found nothing */
    if ((*nfiles) == 0) {
