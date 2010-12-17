@@ -61,8 +61,6 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 
 /* misc */
-static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
-                                         what is in range and what isn't. */
 static double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
 static double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
 
@@ -471,93 +469,6 @@ void pilot_setHostile( Pilot* p )
       player.enemies++;
       pilot_setFlag(p, PILOT_HOSTILE);
    }
-}
-
-
-/**
- * @brief Check to see if a position is in range of the pilot.
- *
- *    @param p Pilot to check to see if position is in his sensor range.
- *    @param x X position to check.
- *    @param y Y position to check.
- *    @return 1 if the position is in range, 0 if it isn't.
- */
-int pilot_inRange( const Pilot *p, double x, double y )
-{
-   double d;
-
-   /* Get distance. */
-   d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
-
-   if (d < sensor_curRange)
-      return 1;
-
-   return 0;
-}
-
-
-/**
- * @brief Check to see if a pilot is in sensor range of another.
- *
- *    @param p Pilot who is trying to check to see if other is in sensor range.
- *    @param target Target of p to check to see if is in sensor range.
- *    @return 1 if they are in range, 0 if they aren't and -1 if they are detected fuzzily.
- */
-int pilot_inRangePilot( const Pilot *p, const Pilot *target )
-{
-   double d, sense;
-
-   /* Special case player or omni-visible. */
-   if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
-         pilot_isFlag(target, PILOT_VISIBLE))
-      return 1;
-
-   /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &target->solid->pos );
-
-   sense = sensor_curRange * p->ew_detect;
-   if (d * target->ew_evasion < sense)
-      return 1;
-   else if  (d * target->ew_hide < sense)
-      return -1;
-
-   return 0;
-}
-
-
-/**
- * @brief Check to see if a planet is in sensor range of the pilot.
- *
- *    @param p Pilot who is trying to check to see if the planet is in sensor range.
- *    @param target Planet to see if is in sensor range.
- *    @return 1 if they are in range, 0 if they aren't.
- */
-int pilot_inRangePlanet( const Pilot *p, int target )
-{
-   (void)p;
-   (void)target;
-
-   /* Always consider planets in range. */
-   return 1;
-
-#if 0
-   double d;
-   Planet *pnt;
-
-   if (cur_system->interference == 0.)
-      return 1;
-
-   /* Get the planet. */
-   pnt = cur_system->planets[target];
-
-   /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &pnt->pos );
-
-   if (d < sensor_curRange)
-      return 1;
-
-   return 0;
-#endif
 }
 
 
@@ -2126,25 +2037,6 @@ void pilots_cleanAll (void)
       player.p = NULL;
    }
    pilot_nstack = 0;
-}
-
-
-/**
- * @brief Updates the system's base sensor range.
- */
-void pilot_updateSensorRange (void)
-{
-   /* Calculate the sensor sensor_curRange. */
-   /* 0    ->   5000.0
-    * 250  ->   2222.22222222
-    * 500  ->   1428.57142857
-    * 750  ->   1052.63157895
-    * 1000 ->    833.333333333 */
-   sensor_curRange  = 10000;
-   sensor_curRange /= ((cur_system->interference + 200) / 100.);
-
-   /* Speeds up calculations. */
-   sensor_curRange = pow2(sensor_curRange);
 }
 
 
