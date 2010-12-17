@@ -109,6 +109,7 @@ naev_SOURCES = \
 	physics.c \
 	pilot.c \
 	pilot_cargo.c \
+	pilot_ew.c \
 	pilot_heat.c \
 	pilot_hook.c \
 	pilot_outfit.c \
@@ -239,6 +240,7 @@ naev_SOURCES = \
 	physics.h \
 	pilot.h \
 	pilot_cargo.h \
+	pilot_ew.h \
 	pilot_heat.h \
 	pilot_hook.h \
 	pilot_outfit.h \

@@ -380,6 +380,7 @@ typedef struct Pilot_ {
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
 #include "pilot_cargo.h"
+#include "pilot_ew.h"
 
 
 /*

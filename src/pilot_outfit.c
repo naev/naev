@@ -911,7 +911,7 @@ void pilot_updateMass( Pilot *pilot )
    pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
 
    /* Need to recalculate electronic warfare mass change. */
-   pilot->ew_mass = 1. / (1. + sqrt( pilot->solid->mass ) / 20.); /* Smaller the more mass you have. */
+   pilot->ew_mass = pilot_ewMass( pilot->solid->mass );
    pilot->ew_hide = pilot->ew_mass * pilot->ew_base_hide;
 }
 

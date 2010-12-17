@@ -1182,7 +1182,7 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot_heatUpdateShip( pilot, Q, dt );
 
    /* Update electronic warfare. */
-   pilot->ew_movement = 1. + sqrt( VMOD(pilot->solid->vel) ) / 10.;
+   pilot->ew_movement = pilot_ewMovement( VMOD(pilot->solid->vel) );
    pilot->ew_evasion  = pilot->ew_hide * pilot->ew_movement;
 
    /* Handle takeoff/landing. */
