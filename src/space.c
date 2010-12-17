@@ -41,6 +41,7 @@
 #include "npng.h"
 #include "background.h"
 #include "map_overlay.h"
+#include "menu.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -2034,7 +2035,8 @@ void space_renderOverlay( const double dt )
    if (cur_system == NULL)
       return;
 
-   if (cur_system->nebu_density > 0.)
+   if ((cur_system->nebu_density > 0.) &&
+         !menu_isOpen( MENU_MAIN ))
       nebu_renderOverlay(dt);
 }
 
