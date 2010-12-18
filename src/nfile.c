@@ -245,9 +245,8 @@ int nfile_backupIfExists( const char* path, ... )
       fclose( f_in );
       fclose( f_out );
 
-      return 0;
    }
-   return -1;
+   return 0;
 }
 
 
