@@ -72,10 +72,7 @@ double pilot_ewMovement( double vmod )
  */
 double pilot_ewHeat( double T )
 {
-   T -= CONST_SPACE_STAR_TEMP;
-   if (T < 946.5)
-      return 1. - 0.00075 * pow( T, 1.05 );
-   return 0.;
+   return 1. - 0.001 * (T - CONST_SPACE_STAR_TEMP);
 }
 
 
