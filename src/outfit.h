@@ -178,7 +178,7 @@ typedef struct OutfitBoltData_ {
    double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
    double heatup; /**< How long it should take for the weapon to heat up (approx). */
    double heat; /**< Heat per shot. */
-   double leadangle; /**< Lead angle of weapon. */
+   double track; /**< Ewarfare to track. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */

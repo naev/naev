@@ -1142,29 +1142,23 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       /* Set angle to face. */
       rdir = ANGLE(x, y);
 
-      /*uncomment this line if turrets have a leadangle characteristic*/
-      lead_angle = outfit->u.blt.leadangle;
+      /* Lead angle is determined from ewarfare. */
+      lead_angle = pilot_ewWeaponLead( parent, pilot_target, outfit->u.blt.track );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if (lead_angle > 0.) {
-         if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
+      if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
 
-            /* the target is moving too fast for the turret to keep up */
-            if(ANGLE(x, y) < VANGLE(relative_location))
-               rdir = angle_diff(lead_angle, VANGLE(relative_location));
-            else
-               rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
+         /* the target is moving too fast for the turret to keep up */
+         if(ANGLE(x, y) < VANGLE(relative_location))
+            rdir = angle_diff(lead_angle, VANGLE(relative_location));
+         else
+            rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
 
-         }
-         else {
-            /* the turret can aim properly*/
-            rdir = ANGLE(x, y);
-         }
       }
       else {
-         /* just to be safe, handles non-leading turrets */
-         rdir = VANGLE(relative_location);
-      } 
+         /* the turret can aim properly*/
+         rdir = ANGLE(x, y);
+      }
    }
 
    return rdir;

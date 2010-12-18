@@ -153,7 +153,7 @@
    <falloff>500</falloff>
    <energy>23</energy>
    <heatup>25</heatup>
-   <leadangle>150</leadangle>
+   <track>2</track>
    <damage type="energy" penetrate="20">18</damage>
   </specific>
  </outfit>
@@ -180,7 +180,7 @@
    <gfx_end>laser1M</gfx_end>
    <energy>28</energy>
    <heatup>30</heatup>
-   <leadangle>140</leadangle>
+   <track>1.75</track>
    <damage type="energy" penetrate="27">24</damage>
   </specific>
  </outfit>
@@ -207,7 +207,7 @@
    <gfx_end>laser2M</gfx_end>
    <energy>30</energy>
    <heatup>35</heatup>
-   <leadangle>130</leadangle>
+   <track>1.5</track>
    <damage type="energy" penetrate="35">32</damage>
   </specific>
  </outfit>
@@ -234,7 +234,7 @@
    <gfx_end>laser2L</gfx_end>
    <energy>40</energy>
    <heatup>50</heatup>
-   <leadangle>50</leadangle>
+   <track>0.5</track>
    <damage type="energy" penetrate="60">43</damage>
   </specific>
  </outfit>
@@ -261,7 +261,7 @@
    <gfx_end>laser3L</gfx_end>
    <energy>43</energy>
    <heatup>60</heatup>
-   <leadangle>70</leadangle>
+   <track>0.3</track>
    <damage type="energy" penetrate="75">50</damage>
   </specific>
  </outfit>
@@ -365,7 +365,7 @@
    <gfx_end>ion-end</gfx_end>
    <energy>17</energy>
    <heatup>30</heatup>
-   <leadangle>160</leadangle>
+   <track>2</track>
    <damage type="ion" penetrate="10">12</damage>
   </specific>
  </outfit>
@@ -391,7 +391,7 @@
    <gfx_end>ion-end</gfx_end>
    <energy>22</energy>
    <heatup>35</heatup>
-   <leadangle>145</leadangle>
+   <track>1.8</track>
    <damage type="ion" penetrate="17">17</damage>
   </specific>
  </outfit>
@@ -417,7 +417,7 @@
    <gfx_end>ion-end</gfx_end>
    <energy>26</energy>
    <heatup>40</heatup>
-   <leadangle>130</leadangle>
+   <track>1.6</track>
    <damage type="ion" penetrate="17">23</damage>
   </specific>
  </outfit>
@@ -495,7 +495,7 @@
    <gfx_end>ion-end</gfx_end>
    <energy>38</energy>
    <heatup>60</heatup>
-   <leadangle>100</leadangle>
+   <track>0.9</track>
    <damage type="ion" penetrate="40">34</damage>
   </specific>
  </outfit>
@@ -599,7 +599,7 @@
    <range blowup="armour">900</range>
    <energy>10</energy>
    <heatup>60</heatup>
-   <leadangle>140</leadangle>
+   <track>2.2</track>
    <damage type="kinetic" penetrate="11">15</damage>
   </specific>
  </outfit>
@@ -624,7 +624,7 @@
    <range blowup="armour">1300</range>
    <energy>25</energy>
    <heatup>70</heatup>
-   <leadangle>120</leadangle>
+   <track>2.05</track>
    <damage type="kinetic" penetrate="29">34</damage>
   </specific>
  </outfit>
@@ -781,7 +781,7 @@
    <gfx_end>mass-end</gfx_end>
    <energy>68</energy>
    <heatup>90</heatup>
-   <leadangle>60</leadangle>
+   <track>0.25</track>
    <damage type="kinetic" penetrate="70">63</damage>
   </specific>
  </outfit>
@@ -2101,7 +2101,7 @@
    <gfx_end>ripper-end</gfx_end>
    <energy>1</energy>
    <heatup>10000</heatup>
-   <leadangle>150</leadangle>
+   <track>2</track>
    <damage type="energy" penetrate="50">22.5</damage>
   </specific>
  </outfit>

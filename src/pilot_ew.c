@@ -14,6 +14,8 @@
 
 #include "naev.h"
 
+#include <math.h>
+
 #include "log.h"
 #include "space.h"
 
@@ -191,6 +193,27 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 
    return 0;
 #endif
+}
+
+
+/**
+ * @brief Calculates the weapon lead.
+ *
+ *    @param p Pilot tracking.
+ *    @param t Pilot being tracked.
+ *    @param track Track limit of the weapon.
+ *    @return The lead angle of the weapon.
+ */
+double pilot_ewWeaponLead( const Pilot *p, const Pilot *t, double track )
+{
+   double limit, lead;
+
+   limit = track * p->ew_detect;
+   if (t->ew_evasion < limit)
+      lead = M_PI;
+   else
+      lead = MAX( 0., M_PI*(2. - t->ew_evasion / limit) );
+   return lead;
 }
 
 

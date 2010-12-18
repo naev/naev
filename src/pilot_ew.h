@@ -20,6 +20,11 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target );
 int pilot_inRangePlanet( const Pilot *p, int target );
 
 /*
+ * Weapon tracking.
+ */
+double pilot_ewWeaponLead( const Pilot *p, const Pilot *t, double track );
+
+/*
  * Electronic warfare updating.
  */
 void pilot_ewUpdateStatic( Pilot *p );
