@@ -1143,7 +1143,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       rdir = ANGLE(x, y);
 
       /* Lead angle is determined from ewarfare. */
-      lead_angle = pilot_ewWeaponLead( parent, pilot_target, outfit->u.blt.track );
+      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
       if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {

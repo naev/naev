@@ -22,7 +22,7 @@ int pilot_inRangePlanet( const Pilot *p, int target );
 /*
  * Weapon tracking.
  */
-double pilot_ewWeaponLead( const Pilot *p, const Pilot *t, double track );
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track );
 
 /*
  * Electronic warfare updating.

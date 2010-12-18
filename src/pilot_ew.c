@@ -204,15 +204,15 @@ int pilot_inRangePlanet( const Pilot *p, int target )
  *    @param track Track limit of the weapon.
  *    @return The lead angle of the weapon.
  */
-double pilot_ewWeaponLead( const Pilot *p, const Pilot *t, double track )
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
 {
    double limit, lead;
 
    limit = track * p->ew_detect;
    if (t->ew_evasion < limit)
-      lead = M_PI;
+      lead = 1.;
    else
-      lead = MAX( 0., M_PI*(2. - t->ew_evasion / limit) );
+      lead = MAX( 0., 1. - 0.5*(t->ew_evasion/limit - 1.));
    return lead;
 }
 
