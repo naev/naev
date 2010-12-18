@@ -1070,35 +1070,30 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Ammo name. */
-         lua_pushstring(L,"ammo");
          ammo = outfit_ammo(slot->outfit);
-         if (ammo != NULL)
+         if (ammo != NULL) {
+            lua_pushstring(L,"ammo");
             lua_pushstring(L,ammo->name);
-         else
-            lua_pushnil(L);
-         lua_rawset(L,-3);
+            lua_rawset(L,-3);
+         }
 
          /* Ammo quantity absolute. */
-         lua_pushstring(L,"left");
          if ((outfit_isLauncher(slot->outfit) ||
                   outfit_isFighterBay(slot->outfit)) &&
                (slot->u.ammo.outfit != NULL)) {
+            lua_pushstring(L,"left");
             lua_pushnumber( L, slot->u.ammo.quantity );
+            lua_rawset(L,-3);
          }
-         else
-            lua_pushnil( L );
-         lua_rawset(L,-3);
 
          /* Ammo quantity relative. */
-         lua_pushstring(L,"left_p");
          if ((outfit_isLauncher(slot->outfit) ||
                   outfit_isFighterBay(slot->outfit)) &&
                (slot->u.ammo.outfit != NULL)) {
+            lua_pushstring(L,"left_p");
             lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)outfit_amount(slot->outfit) );
+            lua_rawset(L,-3);
          }
-         else
-            lua_pushnil( L );
-         lua_rawset(L,-3);
 
          /* Level. */
          lua_pushstring(L,"level");
