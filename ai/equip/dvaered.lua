@@ -16,18 +16,6 @@ function equip_dvaered( p )
 end
 
 
-function icmb( t1, t2 )
-   t = {}
-   for _,v in ipairs(t1) do
-      t[ #t+1 ] = v
-   end
-   for _,v in ipairs(t2) do
-      t[ #t+1 ] = v
-   end
-   return t
-end
-
-
 function equip_forwardDvaLow ()
    return { "Vulcan Gun", "Shredder" }
 end

@@ -223,3 +223,15 @@ function equip_ship( p, scramble, primary, secondary, medium, low, apu,
    end
 end
 
+
+function icmb( t1, t2 )
+   t = {}
+   for _,v in ipairs(t1) do
+      t[ #t+1 ] = v
+   end
+   for _,v in ipairs(t2) do
+      t[ #t+1 ] = v
+   end
+   return t
+end
+
