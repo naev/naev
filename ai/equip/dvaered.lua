@@ -16,17 +16,35 @@ function equip_dvaered( p )
 end
 
 
+function icmb( t1, t2 )
+   t = {}
+   for _,v in ipairs(t1) do
+      t[ #t+1 ] = v
+   end
+   for _,v in ipairs(t2) do
+      t[ #t+1 ] = v
+   end
+   return t
+end
+
+
 function equip_forwardDvaLow ()
-   return { "Laser Cannon MK1", "Laser Cannon MK2" }
+   return { "Vulcan Gun", "Shredder" }
 end
 function equip_forwardDvaMed ()
-   return { "Laser Cannon MK2" }
+   return { "Shredder", "Mass Driver MK2", "Mass Driver MK3" }
+end
+function equip_forwardDvaHig ()
+   return { "Railgun", "Repeating Railgun" }
 end
 function equip_turretDvaLow ()
-   return { "Laser Turret MK1" }
+   return { "Turreted Gauss Gun", "Turreted Vulcan Gun" }
 end
 function equip_turretDvaMed ()
-   return { "Laser Turret MK2" }
+   return { "Turreted Vulcan Gun" }
+end
+function equip_turretDvaHig ()
+   return { "Railgun Turret" }
 end
 function equip_rangedDva ()
    return { "Mace Launcher" }
@@ -84,11 +102,7 @@ function equip_dvaeredMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      if rnd.rnd() < 0.6 then
-         primary = equip_forwardDvaMed()
-      else
-         primary = equip_turretDvaLow()
-      end
+      primary        = icmb( equip_forwardDvaMed(), equip_turretDvaMed() )
       secondary      = equip_secondaryDva()
       use_secondary  = rnd.rnd(1,2)
       use_primary    = nhigh - use_secondary
@@ -96,8 +110,8 @@ function equip_dvaeredMilitary( p, shipsize )
       low            = equip_lowMed()
       apu            = equip_apuMed()
 
-   else
-      primary        = equip_turretDvaMed()
+   else -- "large"
+      primary        = icmb( equip_turretDvaHig(), equip_forwardDvaHig() )
       secondary      = equip_secondaryDva()
       use_primary    = nhigh-2
       use_secondary  = 2
