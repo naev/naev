@@ -70,6 +70,7 @@ typedef struct PlayerConf_s {
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
 
    /* Misc. */
+   double compression_velocity; /**< Velocity to compress to. */
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int nosave; /**< Disables conf saving. */

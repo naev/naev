@@ -12,7 +12,7 @@
 #endif /* PLAYER_H */
 
 
-#define TIME_COMPRESSION_MAX     2500. /**< Maximum level of time compression (target speed to match). */
+#define TIME_COMPRESSION_DEFAULT_MAX     5000. /**< Maximum default level of time compression (target speed to match). */
 
 
 /* Autonav states. */
