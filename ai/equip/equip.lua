@@ -10,6 +10,7 @@ include("ai/equip/generic.lua")
 include("ai/equip/pirate.lua")
 include("ai/equip/empire.lua")
 include("ai/equip/dvaered.lua")
+include("ai/equip/sirius.lua")
 
 
 --[[
@@ -30,10 +31,12 @@ _eq_sir = faction.get("Sirius")
 --    @param f Faction to which pilot belongs
 --]]
 function equip ( p, f )
-   if f == _eq_emp or f == _eq_god or f == _eq_pro or f == _eq_sir then
+   if f == _eq_emp or f == _eq_god or f == _eq_pro then
       equip_empire( p )
    elseif f == _eq_dva then
       equip_dvaered( p )
+   elseif f == _eq_sir then
+      equip_sirius( p )
    elseif f == _eq_pir then
       equip_pirate( p )
    else
