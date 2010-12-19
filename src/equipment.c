@@ -111,6 +111,10 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    if (clicked_outfit == NULL)
       return;
 
+   /* Can't do anything with None. */
+   if (strcmp(clicked_outfit,"None")==0)
+      return;
+
    o = outfit_get(clicked_outfit);
    if (o == NULL)
       return;
