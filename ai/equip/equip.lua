@@ -11,6 +11,7 @@ include("ai/equip/pirate.lua")
 include("ai/equip/empire.lua")
 include("ai/equip/dvaered.lua")
 include("ai/equip/sirius.lua")
+include("ai/equip/collective.lua")
 
 
 --[[
