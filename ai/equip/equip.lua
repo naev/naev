@@ -16,12 +16,17 @@ include("ai/equip/sirius.lua")
 --[[
 -- Some faction definitions for faster lookups.
 --]]
+-- Great Houses
 _eq_emp = faction.get("Empire")
-_eq_god = faction.get("Goddard")
 _eq_pro = faction.get("Proteron")
 _eq_dva = faction.get("Dvaered")
-_eq_pir = faction.get("Pirate")
 _eq_sir = faction.get("Sirius")
+-- Houses
+_eq_god = faction.get("Goddard")
+-- Misc
+_eq_pir = faction.get("Pirate")
+_eq_pir = faction.get("FLF")
+_eq_pir = faction.get("Collective")
 
 
 --[[
@@ -37,8 +42,10 @@ function equip ( p, f )
       equip_dvaered( p )
    elseif f == _eq_sir then
       equip_sirius( p )
-   elseif f == _eq_pir then
+   elseif f == _eq_pir or f == _eq_flf then
       equip_pirate( p )
+   elseif f == _eq_col then
+      equip_collective( p )
    else
       equip_generic( p )
    end
