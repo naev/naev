@@ -18,19 +18,22 @@ end
 
 
 function equip_forwardPirLow ()
-   return { "Plasma Blaster MK1", "Plasma Blaster MK1", "Laser Cannon MK1" }
+   return { "Laser Cannon MK1", "Ion Cannon", "Razor MK1", "Gauss Gun" }
 end
 function equip_forwardPirMed ()
-   return { "Plasma Blaster MK2", "Plasma Blaster MK2", "Laser Cannon MK2" }
+   return { "Mass Driver MK1" }
+end
+function equip_turretPirLow ()
+   return { "Razor Turret MK1", "Turreted Gauss Gun" }
+end
+function equip_turretPirMed ()
+   return { "Laser Turret MK1" }
 end
 function equip_secondaryPirLow ()
    return { "Seeker Launcher" }
 end
 function equip_secondaryPirMedLow ()
    return { "Seeker Launcher", "Banshee Launcher" }
-end
-function equip_turretPir ()
-   return { "Laser Turret MK2", "Heavy Ion Turret" }
 end
 
 
@@ -85,7 +88,7 @@ function equip_pirateMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      primary        = equip_forwardPirMed()
+      primary        = icmb( equip_forwardPirMed(), equip_turretPirLow() )
       secondary      = equip_secondaryPirMedLow()
       use_secondary  = rnd.rnd(1,2)
       use_primary    = nhigh - use_secondary
@@ -94,7 +97,7 @@ function equip_pirateMilitary( p, shipsize )
       apu            = equip_apuMed()
 
    else
-      primary        = equip_turretPir()
+      primary        = icmb( equip_turretPirLow(), equip_turretPirMed() )
       secondary      = equip_secondaryPirMedLow()
       use_primary    = nhigh-2
       use_secondary  = 2
