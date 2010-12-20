@@ -17,17 +17,29 @@ function equip_pirate( p )
 end
 
 
+--[[
+   The idea is they get the basic stuff + the middle stuff a tier lower. For example:
+      low = low basic weapons
+      med = low licensed weapons + medium basic weapons
+      hig = medium licensed weapons + high basic weapons
+--]]
 function equip_forwardPirLow ()
    return { "Laser Cannon MK1", "Ion Cannon", "Razor MK1", "Gauss Gun" }
 end
 function equip_forwardPirMed ()
-   return { "Mass Driver MK1" }
+   return { "Laser Cannon MK2", "Ripper Cannon", "Razor MK2", "Vulcan Gun", "Mass Driver MK1" }
+end
+function equip_forwardPirHig ()
+   return { "Heavy Ion Cannon", "Mass Driver MK2" }
 end
 function equip_turretPirLow ()
    return { "Razor Turret MK1", "Turreted Gauss Gun" }
 end
 function equip_turretPirMed ()
    return { "Laser Turret MK1" }
+end
+function equip_turretPirMed ()
+   return { "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun" }
 end
 function equip_secondaryPirLow ()
    return { "Seeker Launcher" }
@@ -88,7 +100,14 @@ function equip_pirateMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      primary        = icmb( equip_forwardPirMed(), equip_turretPirLow() )
+      local class = p:ship():class()
+      
+      -- Corvette
+      if class == "Corvette" then
+         primary        = icmb( equip_forwardPirMed(), equip_turretPirLow() )
+      else
+         primary        = icmb( equip_forwardPirMed(), equip_turretPirMed() )
+      end
       secondary      = equip_secondaryPirMedLow()
       use_secondary  = rnd.rnd(1,2)
       use_primary    = nhigh - use_secondary
@@ -97,7 +116,7 @@ function equip_pirateMilitary( p, shipsize )
       apu            = equip_apuMed()
 
    else
-      primary        = icmb( equip_turretPirLow(), equip_turretPirMed() )
+      primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
       secondary      = equip_secondaryPirMedLow()
       use_primary    = nhigh-2
       use_secondary  = 2
