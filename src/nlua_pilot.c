@@ -964,7 +964,8 @@ static int pilotL_nav( lua_State *L )
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  *  <li> temp: Temperature of the weapon. <br />
  *  <li> type: Type of the weapon. <br />
- *  <li> type: Damage type of the weapon. <br />
+ *  <li> dtype: Damage type of the weapon. <br />
+ *  <li> track: Tracking level of the weapon. <br />
  * </ul>
  *
  * An example would be:
@@ -989,7 +990,7 @@ static int pilotL_nav( lua_State *L )
  */
 static int pilotL_weapset( lua_State *L )
 {
-   Pilot *p;
+   Pilot *p, *target;
    int i, j, k, n;
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
@@ -1013,6 +1014,12 @@ static int pilotL_weapset( lua_State *L )
    else
       id = p->active_set;
    id = CLAMP( 0, PILOT_WEAPON_SETS, id );
+
+   /* Get target. */
+   if (p->target != p->id)
+      target = pilot_get( p->target );
+   else
+      target = NULL;
 
    /* Push name. */
    lua_pushstring( L, pilot_weapSetName( p, id ) );
@@ -1117,6 +1124,13 @@ static int pilotL_weapset( lua_State *L )
          else
             lua_pushstring(L, outfit_damageTypeToStr( outfit_damageType(slot->outfit) ));
          lua_rawset(L,-3);
+
+         /* Track. */
+         if ((target != NULL) && (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT)) {
+            lua_pushstring(L, "track");
+            lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+            lua_rawset(L,-3);
+         }
 
          /* Set table in table. */
          lua_rawset(L,-3);
