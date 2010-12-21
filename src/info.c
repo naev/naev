@@ -426,7 +426,7 @@ static void weapons_rename( unsigned int wid, char *str )
          pilot_weapSetName( player.p, info_eq_weaps.weapons ) );
 
    /* Cancelled. */
-   if (str == NULL)
+   if (name == NULL)
       return;
 
    /* Change name. */
