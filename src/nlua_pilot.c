@@ -2165,7 +2165,7 @@ static int pilotL_getStats( lua_State *L )
  *
  *    @luaparam p The pilot to get the free cargo space of.
  *    @luareturn The free cargo space in tons of the player.
- * @luafunc cargoFree()
+ * @luafunc cargoFree( p )
  */
 static int pilotL_cargoFree( lua_State *L )
 {
@@ -2183,7 +2183,7 @@ static int pilotL_cargoFree( lua_State *L )
  *    @luaparam p The pilot to get the cargo count of.
  *    @luaparam type Type of cargo to count.
  *    @luareturn The amount of cargo the player has.
- * @luafunc cargoHas( type )
+ * @luafunc cargoHas( p, type )
  */
 static int pilotL_cargoHas( lua_State *L )
 {
@@ -2208,7 +2208,7 @@ static int pilotL_cargoHas( lua_State *L )
  *    @luaparam type Name of the cargo to add.
  *    @luaparam quantity Quantity of cargo to add.
  *    @luareturn The quantity of cargo added.
- * @luafunc cargoAdd( type, quantity )
+ * @luafunc cargoAdd( p, type, quantity )
  */
 static int pilotL_cargoAdd( lua_State *L )
 {
@@ -2245,7 +2245,7 @@ static int pilotL_cargoAdd( lua_State *L )
  *    @luaparam type Name of the cargo to remove.
  *    @luaparam quantity Quantity of the cargo to remove.
  *    @luareturn The number of cargo removed.
- * @luafunc cargoRm( type, quantity )
+ * @luafunc cargoRm( p, type, quantity )
  */
 static int pilotL_cargoRm( lua_State *L )
 {
@@ -2285,8 +2285,9 @@ static int pilotL_cargoRm( lua_State *L )
  *
  * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
  *
+ *    @luaparam p Pilot to list cargo of.
  *    @luareturn An ordered list with the names of the cargo the pilot has.
- * @luafunc cargoList()
+ * @luafunc cargoList( p )
  */
 static int pilotL_cargoList( lua_State *L )
 {
