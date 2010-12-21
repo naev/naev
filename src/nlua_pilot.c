@@ -2229,6 +2229,11 @@ static int pilotL_cargoAdd( lua_State *L )
       return 0;
    }
 
+   if (quantity < 0) {
+      NLUA_ERROR( L, "Quantity must be positive for pilot.cargoAdd otherwise use pilot.cargoRm" );;
+      return 0;
+   }
+
    /* Try to add the cargo. */
    quantity = pilot_cargoAdd( player.p, cargo, quantity );
    lua_pushnumber( L, quantity );
@@ -2263,6 +2268,11 @@ static int pilotL_cargoRm( lua_State *L )
    cargo    = commodity_get( str );
    if (cargo == NULL) {
       NLUA_ERROR( L, "Cargo '%s' does not exist!", str );
+      return 0;
+   }
+
+   if (quantity > 0) {
+      NLUA_ERROR( L, "Quantity must be positive for pilot.cargoRm otherwise use pilot.cargoAdd" );;
       return 0;
    }
 
