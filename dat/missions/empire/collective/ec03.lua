@@ -93,7 +93,7 @@ end
 
 -- Handles arrival back to base
 function land()
-   pnt = planet.get()
+   pnt = planet.cur()
 
    if misn_stage == 1 and pnt == misn_base then
       tk.msg( title[2], text[4] )

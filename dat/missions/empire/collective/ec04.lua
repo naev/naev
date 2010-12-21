@@ -107,7 +107,7 @@ end
 
 -- Handles arrival back to base
 function land ()
-   local pnt = planet.get()
+   local pnt = planet.cur()
 
    -- Just landing
    if misn_stage == 0 and pnt == misn_target then

@@ -89,7 +89,7 @@ end
 
 
 function land ()
-   landed = planet.get()
+   landed = planet.cur()
    -- Mission success
    if misn_stage == 1 and landed == homeworld then
       tk.msg( title[3], text[4] )

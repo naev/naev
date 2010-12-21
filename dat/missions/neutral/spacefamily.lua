@@ -122,7 +122,7 @@ function getlandable(sys)
 end
 
 function land()
-   if planet.get() == destplanet then -- We've arrived!
+   if planet.cur() == destplanet then -- We've arrived!
       if nextstop == 3 then -- This is the last stop
          tk.msg(title[4], string.format(text[3], destsysname)) -- Final message
          player.pay(20000)

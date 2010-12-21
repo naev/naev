@@ -85,7 +85,7 @@ end
 
 
 function land ()
-   landed = planet.get()
+   landed = planet.cur()
 
    if landed == pickup and misn_stage == 0 then
 

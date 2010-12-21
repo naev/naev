@@ -98,7 +98,7 @@ function enter()
 end
 
 function land()
-   pnt = planet.get()
+   pnt = planet.cur()
 
    if misn_stage == 1 and  pnt == misn_base then
       tk.msg( title[3], string.format(text[4],misn_target:name()) )

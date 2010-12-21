@@ -1,423 +1,175 @@
 --[[
+-- These are regular cargo delivery missions. Pay is low, but so is difficulty.
+-- Most of these missions require BULK ships. Not for small ships!
+--]]
 
-   Handles the randomly created cargo delivery missions.
+include "scripts/jumpdist.lua"
 
-]]--
 lang = naev.lang()
 if lang == "es" then
-   -- not translated atm
 else -- default english
-   misn_desc = {}
-   misn_desc[1] = "%s in the %s system needs a delivery of %d tons of %s."
-   misn_desc[11] = "%s in the %s system needs a rush delivery of %d tons of %s before %s (%s left)."
-   misn_desc[21] = "A group of %s needs to travel to %s in the %s system."
-   misn_desc[31] = "%s in the %s system needs a delivery of %d tons of %s."
-   misn_reward = "%d credits"
-   title = {}
-   title[1] = "Cargo delivery to %s"
-   title[2] = "Freight delivery to %s"
-   title[3] = "Transport to %s"
-   title[4] = "Delivery to %s"
-   title[11] = "Rush delivery to %s"
-   title[21] = "Transport %s to %s"
-   title[22] = "Ferry %s to %s"
-   title[31] = "Bulk transport to %s"
-   full = {}
-   full[1] = "Ship is Full"
-   full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
-   slow = {}
-   slow[1] = "Ship Too Slow"
-   slow[2] = [[Your ship will take at least %s to reach %s, %s past the deadline.
+    misn_desc = "%s in the %s system needs a delivery of %d tons of %s."
+    misn_reward = "%d credits"
+    
+    cargosize = {}
+    cargosize[0] = "Small" -- Note: indexed from 0, to match mission tiers.
+    cargosize[1] = "Medium"
+    cargosize[2] = "Sizeable"
+    cargosize[3] = "Large"
+    cargosize[4] = "Bulk"
+    
+    title_p1 = {}
+    title_p1[1] = " cargo delivery to %s in the %s system"
+    title_p1[2] = " freight delivery to %s in the %s system"
+    title_p1[3] = " transport to %s in the %s system"
+    title_p1[4] = " delivery to %s in the %s system"
+    
+    -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
+    title_p2 = [[ 
+Cargo: %s (%d tons)
+Jumps: %d
+Travel distance: %d]]
 
-A faster ship is needed. Do you want to accept the mission anyway?]]
-   accept_title = "Mission Accepted"
-   msg_title = {}
-   msg_msg = {}
-   msg_title[1] = "Too many missions"
-   msg_msg[1] = "You have too many active missions."
-   msg_title[2] = "Successful Delivery"
- 	--msg_msg[2] = "The workers unload the %s at the docks."
- 	--msg_msg[5] = "The %s leave your ship."
- 	--replaced with randomized dialoge below
-   msg_title[3] = "Cargo Missing"
-   msg_msg[3] = "You are missing the %d tons of %s!."
-   msg_msg[4] = "MISSION FAILED: You have failed to delivery the goods on time!"
-	--make sure these are in matched pairs. Script will fall back to array with fewer strings if not, and will print a warning in stdout.txt
-  	--For cargo missions
-   accept_msg_list = {}
-   accept_msg_list[1] = "The workers quickly load the %d tons of %s onto your ship."
-   accept_msg_list[2] = "The workers slowly load the %d tons of %s onto your ship."
-   msg_msg_list = {}
-   msg_msg_list[1] = "The workers quickly unload the %s at the docks."
-   msg_msg_list[2] = "The workers slowly unload the %s at the docks."
-   msg_bonus = {}
-   msg_bonus[1] = "The group's final straggler makes his way off the ship and hands you %s credits for the quick journey."
-   msg_bonus[2] = "As he departs, a particularly generous passenger thanks you personally for the short travel time and gives you chips totalling %s credits."
-   msg_bonus[3] = "An older passenger expresses her apprecation for the rapid transit, giving you %s credits as she steps off the ship."
-   msg_bonus[4] = "A passenger reboards the ship, looking for his son's toy. Once he finds it, he thanks you for the quick, safe, handing you a pouch containing %s credits."
-
-   --Randomize cargo mission dialogue
-
-	--Each cargo_accept_p1 is paired with its corresponding cargo_land_p2 (*not p1*, reverse pairing), and each cargo_accept_p2 is paired with its corresponding cargo_land_p1
-	--The number of strings must be the same in each pair member, but the number of strings in p1 can be different than in p2.
-	--If this is violated, it will fall back to the size of the smaller area and print an error in stdout.txt
-
-  	accept_msg_cargo = ""
-   msg_msg_cargo = ""
-	
-	--=Accept=--
-	
-	--opening dialogue for accept
-	cargo_accept_p1 = {}
-	cargo_accept_p1[1] = "A mob of somewhat unruly dock workers load"
-	cargo_accept_p1[2] = "An army of workers rapidly stack"
-	cargo_accept_p1[3] = "A small team frantically wheels"
-
-	--closing dialogue for accept
-	cargo_accept_p2 = {}
-	cargo_accept_p2[1] = "beat-up crates containing"
-	cargo_accept_p2[2] = "steel drums loaded with"
-	cargo_accept_p2[3] = "dingy plastic cartons filled with"
-	
-	-- "%d tons of %s aboard your ship" -- end string
-
+    full = {}
+    full[1] = "No room in ship"
+    full[2] = "You don't have enough cargo space to accept this mission. You need %d tons of free space (you need %d more)."
 
 	--=Landing=--
-
-	--opening dialogue for landing
+	
+	cargo_land_title = "Delivery success!"
 
 	cargo_land_p1 = {}
-	cargo_land_p1[1] = "The crates of"  --<<-- paired with cargo_accept_p2, don't mix this up!!
-	cargo_land_p1[2] = "The drums of"
-	cargo_land_p1[3] = "The containers of"
+	cargo_land_p1[1] = "The crates of "  --<<-- paired with cargo_accept_p2, don't mix this up!!
+	cargo_land_p1[2] = "The drums of "
+	cargo_land_p1[3] = "The containers of "
 
-	-- ..."%s are"... (in-between text)
-
-	--closing dialog for landing
 	cargo_land_p2 = {}
-	cargo_land_p2[1] = "carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
-	cargo_land_p2[2] = "rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
-	cargo_land_p2[3] = "unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delievering your pay upon completion of the job."
-   
-	--Randomize passenger mission dialogue
+	cargo_land_p2[1] = " are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
+	cargo_land_p2[2] = " are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
+	cargo_land_p2[3] = " are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delievering your pay upon completion of the job."
 
-	--Each pass_accept_p1 is paired with its corresponding pass_land_p1, and each pass_accept_p2 is paired with its corresponding pass_land_p2
-	--The number of strings must be the same in each pair member, but the number of strings in p1 can be different than in p2. 
-	--If this is violated, it will fall back to the size of the smaller area and print an error in stdout.txt
-	
-	accept_msg_pass = ""
-   msg_msg_pass = ""
-   
-	--opening dialogue for accept
-	pass_accept_p1 = {}
-	pass_accept_p1[1] = "A talkative crowd of %s"
-	pass_accept_p1[2] = "A somewhat apprehensive group of %s"
-	pass_accept_p1[3] = "A group of %s"
-	pass_accept_p1[4] = "A confident party of %s"
-	pass_accept_p1[5] = "An impatient handful of %s"
-
-	--closing dialogue for accept
-	pass_accept_p2 = {}
-	pass_accept_p2[1] = "slowly makes their way to their seats aboard"
-	pass_accept_p2[2] = "files into"
-	pass_accept_p2[3] = "boards"
-	pass_accept_p2[4] = "greets you before taking their seats in"
-	
-	-- "your vessel" -- end string
-	
-
-	--opening dialogue for landing
-	pass_land_p1 = {}
-	pass_land_p1[1] = "Chatting noisily"
-	pass_land_p1[2] = "Relieved to have arrived"
-	pass_land_p1[3] = "Somewhat spacesick"
-	pass_land_p1[4] = "In high spirits"
-	pass_land_p1[5] = "Quickly gathering their belongings"
-
-	-- ..."the %s"... (in-between text)
-
-	--closing dialog for landing
-	pass_land_p2 = {}
-	pass_land_p2[1] = "stroll down the boarding ramp of"
-	pass_land_p2[2] = "march out of"
-	pass_land_p2[3] = "disembark from"
-	pass_land_p2[4] = "thank you for the ride before departing"
-
+    accept_title = "Mission Accepted"
+    
+    osd_title = "Cargo mission"
+    osd_msg = "Fly to %s in the %s system."
 end
-
---Dialog generator/picker for cargo missions
-function cargo_dialog()
-	if #cargo_accept_p1 ~= #cargo_land_p2 then
-		--print error to stdout.txt
-		print("Number of p1/p2 cargo dialogue strings is not the same: " .. #cargo_accept_p1 .. " strings in cargo_accept_p1 and " .. #cargo_land_p2 ..  " strings in cargo_land_p2. Using the lower of the two sizes.")
-		--use smaller array size
-		if #cargo_accept_p1 > #cargo_land_p2 then
-			j = rnd.int(1, #cargo_land_p2)
-		else
-			j = rnd.int(1, #cargo_accept_p1)
-		end
-	else
-		j = rnd.int(1, #cargo_accept_p1)
-	end
-	if #cargo_accept_p2 ~= #cargo_land_p1 then
-		--print error to stdout.txt
-		print("Number of p1/p2 cargo dialogue strings is not the same: " .. #cargo_accept_p2 .. " strings in cargo_accept_p2 and " .. #cargo_land_p1 ..  " strings in cargo_land_p1. Using the lower of the two sizes.")
-		--use smaller array size
-		if #cargo_accept_p2 > #cargo_land_p1 then
-			k = rnd.int(1, #cargo_land_p1)
-		else
-			k = rnd.int(1, #cargo_accept_p2)
-		end
-	else
-		k = rnd.int(1, #cargo_accept_p2)  -- Pick a pair of dialogue for p1 and p2
-	end
-	msg_accept_cargo = cargo_accept_p1[j] .. " " .. cargo_accept_p2[k] .. " %d tons of %s aboard your vessel."
-	msg_msg_cargo = cargo_land_p1[j] .. " %s are " .. cargo_land_p2[k]
-end
-
---Dialog generator/picker for passenger missions
-function passenger_dialog()
-	if #pass_accept_p1 ~= #pass_land_p1 then
-		--print error to stdout.txt
-		print("Number of p1 passenger dialogue strings is not the same for both pairs: " .. #pass_accept_p1 .. " strings in pass_accept_p1 and " .. #pass_land_p1 ..  " strings in pass_land_p1. Using the lower of the two sizes.")
-		--use smaller array size
-		if #pass_accept_p1 > #pass_land_p1 then
-			j = rnd.int(1, #pass_land_p1)	
-		else
-			j = rnd.int(1, #pass_accept_p1)
-		end
-	else
-		j = rnd.int(1, #pass_accept_p1)
-	end
-	if #pass_accept_p2 ~= #pass_land_p2 then
-		--print error to stdout.txt
-		print("Number of p2 passenger dialogue strings is not the same for both pairs: " .. #pass_accept_p2 .. " strings in pass_accept_p2 and " .. #pass_land_p2 ..  " strings in pass_land_p2. Using the lower of the two sizes.")
-		--use smaller array size
-		if #pass_accept_p2 > #pass_land_p2 then
-			k = rnd.int(1, #pass_land_p2)	
-		else
-			k = rnd.int(1, #pass_accept_p2)
-		end
-	else
-		k = rnd.int(1, #pass_accept_p2)  -- Pick a pair of dialogue for p1 and p2
-	end
-	msg_accept_pass = pass_accept_p1[j] .. " " .. pass_accept_p2[k] .. " your vessel."
-	msg_msg_pass = pass_land_p1[j] .. ", the %s " .. pass_land_p2[k] .. " your ship."
-end
-
 
 -- Create the mission
 function create()
-   -- Note: this mission does not make any system claims.
-   landed, landed_sys = planet.get() -- Get landed planet
+    -- Note: this mission does not make any system claims. 
+    origin_p, origin_s = planet.cur()
+    
+    -- Select mission tier.
+    local tier = rnd.rnd(0, 4)
+    
+    -- Find an inhabited planet 0-3 jumps away.
+    -- Farther distances have a lower chance of appearing.
+    
+    local seed = rnd.rnd()
+    if     seed < 0.40 then missdist = 0
+    elseif seed < 0.68 then missdist = 1
+    elseif seed < 0.85 then missdist = 2
+    else                    missdist = 3
+    end
+    
+    local planets = {}
+    syss = getsysatdistance(system.cur(), missdist, missdist,
+        function(s)
+            for i, v in ipairs(s:planets()) do
+                if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 then
+                    planets[#planets + 1] = {v, s}
+                end
+           end
+           return false
+        end)
 
-   -- Only 50% chance of appearing on Dvaered systems
-   dv = faction.get("Dvaered")
-   if landed:faction() == dv and rnd.int(1) == 0 then
-      misn.finish(false)
-   end
-
-   -- target destination
-   i = 0
-   local s
-   repeat
-      pnt,sys = planet.get( misn.factions() )
-      s = pnt:services()
-      i = i + 1
-   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
-   -- infinite loop protection
-   if i > 10 then
-      misn.finish(false)
-   end
-   misn_dist = sys:jumpDist()
-
-   -- mission generics
-   --check cargo mission strings to see if there are the same number for accept and for completion)
-   i = rnd.int(6)
-   if i < 3 then -- cargo delivery
-      misn_type = "Cargo"
-      cargo_dialog()
-      misn_faction = rnd.int(2)
-      i = rnd.int(3)
-      misn.setTitle( string.format(title[i+1], pnt:name()) )
-      misn.markerAdd( sys, "computer" )
-   elseif i < 5 then -- rush delivery
-      misn_type = "Rush"
-      cargo_dialog()
-      misn_faction = rnd.int(5)
-      misn.setTitle( string.format(title[11], pnt:name()) )
-      misn.markerAdd( sys, "high" )
-   elseif i < 6 and misn_dist > 3 then -- Bulk delivery
-      misn_type = "Bulk"
-      cargo_dialog()
-      misn_faction = rnd.int(4)
-      misn.setTitle( string.format(title[31], pnt:name()) )
-      misn.markerAdd( sys, "computer" )
-   else -- people delivery :)
-      misn_type = "People"
-      misn_faction = rnd.int(1)
-      passenger_dialog()
-      carg_mass = 0
-      i = rnd.int(5)
-      if i < 2 then
-         carg_type = "Colonists"
-      elseif i < 4 then
-         carg_type = "Tourists"
-      else
-         carg_type = "Pilgrims"
-      end
-      i = rnd.int(1)
-      misn.setTitle( string.format(title[i+21], carg_type, pnt:name()) )
-      misn.markerAdd( sys, "computer" )
-   end
-
-   -- more mission specifics
-   if misn_type ~= "People" then
-      i = rnd.int(12) -- set the goods
-      if i < 5 then
-         carg_type = "Food"
-      elseif i < 8 then
-         carg_type = "Ore"
-      elseif i < 10 then
-         carg_type = "Industrial Goods"
-      elseif i < 12 then
-         carg_type = "Luxury Goods"
-      else
-         carg_type = "Medicine"
-      end
-
-      if misn_type == "Cargo" or misn_type == "Rush" then
-         carg_mass = rnd.rnd( 10, 30 )
-      elseif misn_type == "Bulk" then
-         carg_mass = rnd.rnd( 60, 300 )
-      end
-   end
-
-   -- Set reward and description
-   if misn_type == "Cargo" then
-      misn.setDesc( string.format( misn_desc[1], pnt:name(), sys:name(), carg_mass, carg_type ) )
-      reward = misn_dist * carg_mass * (250+rnd.int(150)) +
-            carg_mass * (150+rnd.int(75)) +
-            rnd.int(1500)
-   elseif misn_type == "Rush" then
-      difficulty = rnd.rnd( 2, 3 )
-      misn_time = time.get() + time.create( 0, 0, 10000*
-               (3 + difficulty * misn_dist +
-               ((misn_dist - misn_dist % 4) / 4) * 3) )
-      misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
-            carg_mass, carg_type,
-            time.str(misn_time), time.str(misn_time-time.get()) ) )
-      reward = (.15 + 2250/difficulty) * misn_dist * carg_mass * (450+rnd.rnd(250)) +
-            carg_mass * (250+rnd.rnd(125)) + rnd.rnd(2500)
-   elseif misn_type == "People" then
-      misn.setDesc( string.format( misn_desc[21], carg_type, pnt:name(), sys:name() ))
-      reward = misn_dist * (1000+rnd.int(500)) + rnd.int(2000)
-   elseif misn_type == "Bulk" then
-      misn.setDesc( string.format( misn_desc[1], pnt:name(), sys:name(), carg_mass, carg_type ) )
-      reward = misn_dist * math.sqrt(carg_mass) * 2 * (250+rnd.int(150)) +
-            math.sqrt(carg_mass) * 2 * (150+rnd.int(75)) +
-            rnd.int(1500)
-   end
-   misn.setReward( string.format( misn_reward, reward ) )
+    if #planets == 0 then
+        abort()
+    end
+    
+    index = rnd.rnd(1, #planets)
+    destplanet = planets[index][1]
+    destsys = planets[index][2]
+    
+    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
+    -- Assume shortest route with no interruptions.
+    -- This is used to calculate the reward.
+    local routesys = origin_s
+    local routepos = origin_p:pos()
+    traveldist = 0
+    numjumps = origin_s:jumpDist(destsys)
+    
+    while routesys ~= destsys do
+        -- We're not in the destination system yet.
+        -- So, get the next system on the route, and the distance between our entry point and the jump point to the next system.
+        -- Then, set the exit jump point as the next entry point.
+        local tempsys = getNextSystem(routesys, destsys)
+        traveldist = traveldist + vec2.dist(routepos, routesys:jumpPos(tempsys))
+        routepos = tempsys:jumpPos(routesys)
+        routesys = tempsys
+    end
+    -- We ARE in the destination system now, so route from the entry point to the destination planet.
+    traveldist = traveldist + vec2.dist(routepos, destplanet:pos())
+    
+    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
+    -- TODO: I'm using the standard cargo types for now, but this should be changed to custom cargo once local-defined commodities are implemented.
+    local cargoes = {"Food", "Industrial Goods", "Medicine", "Luxury Goods", "Ore"}
+    cargo = cargoes[rnd.rnd(1, #cargoes)]
+    
+    
+    -- Choose amount of cargo and mission reward. This depends on the mission tier.
+    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
+    amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
+    reward = rnd.rnd(400 + 1300 * tier + 0.03 * traveldist + 200 * numjumps, 800 + 3000 * tier + 0.05 * traveldist + 500 * numjumps)
+    
+    misn.setTitle("Cargo transport (" .. amount .. " tons of " .. cargo .. ")")
+    misn.markerAdd(destsys, "computer")
+    misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist))
+    misn.setReward(misn_reward:format(reward))
+    
 end
 
 -- Mission is accepted
 function accept()
-   if pilot.cargoFree(player.pilot()) < carg_mass then
-      tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
-      misn.finish()
-   elseif misn_type == "Rush" then
-      delay = time.get() + time.create( 0, 0, 10000*(2 + (player.pilot():stats().jump_delay * 1000 * misn_dist)))
-      if delay > misn_time then
-         if not tk.yesno( slow[1], string.format( slow[2], time.str(delay - time.get()),
-               pnt:name(), time.str(delay - misn_time) )) then
-            misn.finish()
-         end
-      end
-   end
-
-   if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-      start_date = time.get()
-      carg_id = misn.cargoAdd( carg_type, carg_mass )
-      if misn_type == "People" then
-         --tk.msg( accept_title, string.format( accept_msg_pass_list[dialog_pick], carg_type ))  -- Replace with even more randomized dialogue
-         tk.msg( accept_title, string.format( msg_accept_pass, carg_type ))
-      else
-         tk.msg( accept_title, string.format( msg_accept_cargo, carg_mass, carg_type ))
-      end
-
-      -- set the hooks
-      hook.land( "land" ) -- only hook after accepting
-      if misn_type == "Rush" then -- rush needs additional time hook
-         hook.date( time.create( 0, 0, 1000 ), "timeup" )
-      end
-   else
-      tk.msg( msg_title[1], msg_msg[1] )
-      misn.finish()
-   end
+    if player.pilot():cargoFree() < amount then
+        tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
+        misn.finish()
+    end
+    misn.accept()
+    misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
+    misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
+    hook.land("land")
 end
+
+-- Choose the next system to jump to on the route from system nowsys to system finalsys.
+function getNextSystem(nowsys, finalsys)
+    if nowsys == finalsys then
+        return nowsys
+    else
+        local neighs = nowsys:adjacentSystems()
+        local nearest = -1
+        local mynextsys = finalsys
+        for _, j in pairs(neighs) do
+            if nearest == -1 or j:jumpDist(finalsys) < nearest then
+                nearest = j:jumpDist(finalsys)
+                mynextsys = j
+            end
+        end
+        return mynextsys
+    end
+end 
 
 -- Land hook
 function land()
-   landed = planet.get()
-   if landed == pnt then
-      if misn.cargoRm( carg_id ) then
-         player.pay( reward )
-         if misn_type == "People" then
-           -- tk.msg( msg_title[2], string.format( msg_msg_pass_list[dialog_pick], carg_type ))   -- Replace with even more randomized dialogue
-           tk.msg( msg_title[2], string.format( msg_msg_pass, carg_type ))
-            -- 40% chance of a bonus if you're quick.
-            if rnd.rnd() >= 0.6 and time.get() < start_date +
-                  time.create( 0, 3, 10000*(5*misn_disttime + 3*(misn_dist - misn_dist % 3) / 3) ) then
-               bonus = rnd.rnd(10,60) * 100
-               tk.msg( msg_title[2], string.format( msg_bonus[1], bonus ))
-               player.pay(bonus)
-            end
-         else
-            tk.msg( msg_title[2], string.format( msg_msg_cargo, carg_type ))
-         end
-
-         -- modify the faction standing
-         if player.getFaction("Trader") < 70 then
-            player.modFactionRaw("Trader",misn_faction);
-         end
-         if player.getFaction("Independent") < 30 then
-            player.modFactionRaw("Independent", misn_faction/2)
-         end
-         if player.getFaction("Empire") < 10 then
-            player.modFaction("Empire", misn_faction/3)
-         end
-
-         misn.finish(true)
-      else
-         tk.msg( msg_title[3], string.format( msg_msg[3], carg_mass, carg_type ))
-      end
-   end
-end
-
--- Time hook
-function timeup ()
-   if time.get() > misn_time then
-      hook.timer(2000, "failed")
-   else
-      misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
-            carg_mass, carg_type,
-            time.str(misn_time), time.str(misn_time-time.get()) ) )
-   end
-end
-
-
-function failed ()
-   player.msg( msg_msg[4] )
-   if misn_type ~= "People" then
-      misn.cargoJet( carg_id )
-   end
-   misn.finish(false)
+    if planet.cur() == destplanet then
+        -- Semi-random message.
+        tk.msg(cargo_land_title, cargo_land_p1[rnd.rnd(1, #cargo_land_p1)] .. cargo .. cargo_land_p2[rnd.rnd(1, #cargo_land_p2)])
+        player.pay(reward)
+        misn.finish(true)
+    end
 end
 
 function abort ()
-   if misn_type ~= "People" then
-      misn.cargoJet( carg_id )
-   end
+    misn.finish(false)
 end
 

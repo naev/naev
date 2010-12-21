@@ -71,7 +71,7 @@ function accept ()
 end
 
 function land()
-   pnt = planet.get()
+   pnt = planet.cur()
 
    -- First mission part is landing on the planet
    if misn_stage == 0 and pnt == misn_target then

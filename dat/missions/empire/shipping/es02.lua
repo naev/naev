@@ -87,7 +87,7 @@ end
 
 
 function land ()
-   landed = planet.get()
+   landed = planet.cur()
 
    if landed == ret then
       -- Successfully rescued the VIP

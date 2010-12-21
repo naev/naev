@@ -282,7 +282,7 @@ function lance2_dead () esc_lancelot2 = false end
 
 -- Handles arrival back to base
 function land ()
-   local pnt = planet.get()
+   local pnt = planet.cur()
 
    -- Just landing
    if (misn_stage == 2 or misn_stage == 3) and pnt == misn_base then

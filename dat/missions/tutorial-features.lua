@@ -124,7 +124,7 @@ function osdCreation()
 end
 
 function tutLand0()
-   if planet.get() == planet.get( "Zhiru" ) then
+   if planet.cur() == planet.get( "Zhiru" ) then
       hook.land("tutLand")
       hook.land("tutBar", "bar")
       hook.land("tutMission", "mission")

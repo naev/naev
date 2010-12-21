@@ -32,7 +32,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed, landed_sys = planet.get()
+   local landed, landed_sys = planet.cur()
 
    -- target destination
    local i = 0
@@ -80,7 +80,7 @@ end
 
 function land()
 
-   local landed = planet.get()
+   local landed = planet.cur()
    if landed == dest then
       if misn.cargoRm(parcels) then
          player.pay(reward)

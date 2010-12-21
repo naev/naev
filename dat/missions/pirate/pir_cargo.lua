@@ -42,7 +42,7 @@ function create()
 
    -- target destination
    local i = 0
-   local landed, landed_sys = planet.get()
+   local landed, landed_sys = planet.cur()
    local s
    repeat
       pnt,sys = planet.get( misn.factions() )

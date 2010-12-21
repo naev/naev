@@ -84,7 +84,7 @@ end
 
 
 function land ()
-   landed = planet.get()
+   landed = planet.cur()
    if landed == dest and misn_stage == 0 then
       if misn.cargoRm(prisoners) then
          -- Go on to next stage

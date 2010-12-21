@@ -90,7 +90,7 @@ end
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
 
-      this_planet, this_system = planet.get()
+      this_planet, this_system = planet.cur()
       if ( this_system:hasPresence( "Pirate") or 
            this_system:hasPresence( "Collective") or 
            this_system:hasPresence( "FLF") ) 

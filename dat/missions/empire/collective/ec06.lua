@@ -308,7 +308,7 @@ end
 
 -- Handles arrival back to base
 function land ()
-   pnt = planet.get()
+   pnt = planet.cur()
 
    -- Final landing stage
    if misn_stage == 4 and pnt == misn_base then

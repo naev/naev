@@ -112,7 +112,7 @@ end
 
 -- landed
 function landed()
-   if planet.get() == misn_base then
+   if planet.cur() == misn_base then
       tk.msg(title[3], text[3])
       player.pay(25000)
       player.modFaction("Pirate",5)
