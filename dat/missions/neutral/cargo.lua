@@ -73,14 +73,14 @@ function create()
     end
     
     local planets = {}
-    syss = getsysatdistance(system.cur(), missdist, missdist,
+    getsysatdistance(system.cur(), missdist, missdist,
         function(s)
             for i, v in ipairs(s:planets()) do
                 if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 then
                     planets[#planets + 1] = {v, s}
                 end
            end
-           return false
+           return true
         end)
 
     if #planets == 0 then
