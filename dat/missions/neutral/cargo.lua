@@ -66,9 +66,9 @@ function create()
     -- Farther distances have a lower chance of appearing.
     
     local seed = rnd.rnd()
-    if     seed < 0.40 then missdist = 0
-    elseif seed < 0.68 then missdist = 1
-    elseif seed < 0.85 then missdist = 2
+    if     seed < 0.30 then missdist = 0
+    elseif seed < 0.60 then missdist = 1
+    elseif seed < 0.80 then missdist = 2
     else                    missdist = 3
     end
     
@@ -120,7 +120,9 @@ function create()
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
     amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
-    reward = rnd.rnd(400 + 1300 * tier + 0.03 * traveldist + 200 * numjumps, 800 + 3000 * tier + 0.05 * traveldist + 500 * numjumps)
+    jumpreward = 200
+    distreward = 0.09
+    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward)
     
     misn.setTitle("Cargo transport (" .. amount .. " tons of " .. cargo .. ")")
     misn.markerAdd(destsys, "computer")
