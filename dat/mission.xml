@@ -58,6 +58,19 @@
    <faction>Sirius</faction>
   </avail>
  </mission>
+ <mission name="Cargo Rush">
+  <lua>neutral/cargo_rush</lua>
+  <avail>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Independent</faction>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Empire Recruitment">
   <lua>empire/emp_cargo00</lua>
   <flags>
