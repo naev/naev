@@ -459,6 +459,9 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
 
 
 
+/**
+ * @brief Updates date hooks and runs them if necessary.
+ */
 void hooks_updateDate( ntime_t change )
 {
    int i, j;

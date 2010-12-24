@@ -434,7 +434,7 @@ static int hook_date( lua_State *L )
    unsigned int h;
    ntime_t t;
    t  = luaL_validtime( L, 1 );
-   h  = hook_generic( L, NULL, 0., 2, 1 );
+   h  = hook_generic( L, NULL, 0., 2, t );
    lua_pushnumber( L, h );
    return 1;
 }
