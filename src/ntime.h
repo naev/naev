@@ -33,6 +33,7 @@ void ntime_incLagged( ntime_t t );
 
 /* misc */
 void ntime_refresh (void);
+void ntime_allowUpdate( int enable );
 
 
 #endif /* NTIME_H */

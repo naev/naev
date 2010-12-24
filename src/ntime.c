@@ -66,6 +66,7 @@ static NTimeUpdate_t *ntime_inclist = NULL; /**< Time increment list. */
 
 static ntime_t naev_time = 0; /**< Contains the current time in mSTU. */
 static double naev_remainder = 0.; /**< Remainder when updating, to try to keep in perfect sync. */
+static int ntime_enable = 1; /** Allow updates? */
 
 
 /**
@@ -75,6 +76,10 @@ void ntime_update( double dt )
 {
    double dtt, tu;
    ntime_t inc;
+
+   /* Only if we need to update. */
+   if (!ntime_enable)
+      return;
 
    /* Calculate the effective time. */
    dtt = naev_remainder + dt*NT_STU_DT*NT_STU_DIV;
@@ -210,6 +215,17 @@ void ntime_inc( ntime_t t )
    naev_time += t;
    hooks_run("time");
    economy_update( t );
+}
+
+
+/**
+ * @brief Allows the time to update when the game is updating.
+ *
+ *    @param enable Whether or not to enable time updating.
+ */
+void ntime_allowUpdate( int enable )
+{
+   ntime_enable = enable;
 }
 
 
