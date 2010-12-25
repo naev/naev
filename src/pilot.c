@@ -995,8 +995,9 @@ void pilot_renderOverlay( Pilot* p, const double dt )
 {
    glTexture *ico_hail;
    double x, y;
+   double dx, dy;
    int sx, sy;
-   glColour c;
+   glColour c, cb = { .r=0., .g=0., .b=0., .a=0.5 };
 
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {
@@ -1041,10 +1042,16 @@ void pilot_renderOverlay( Pilot* p, const double dt )
          else
             c.a = 1.;
 
+         /* Position to render at. */
+         dx = x - p->comm_msgWidth/2.;
+         dy = y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.;
+   
+
+         /* Background. */
+         gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cb );
+
          /* Display text. */
-         gl_printRaw( NULL, x - p->comm_msgWidth/2.,
-               y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.,
-               &c, p->comm_msg );
+         gl_printRaw( NULL, dx, dy, &c, p->comm_msg );
       }
    }
 }
