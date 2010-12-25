@@ -247,7 +247,7 @@
     <commodity>Food</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Ambre was one of the planets that played a key role in the worker's revolts that eventually led to the establishment of House Dvaered. In those days, the planet was home to a considerable percentage of the Imperial workforce in this sector of space. Without laborers to work the mines and construction yards, the Empire stood to lose astronomical amounts of money each cycle. This was an important reason for the Emperor to grant House Dvaered its independence.</description>
+   <description>Ambre was one of the planets that played a key role in the workers' revolts that eventually led to the establishment of House Dvaered. In those days, the planet was home to a considerable percentage of the Imperial workforce in this sector of space. Without laborers to work the mines and construction yards, the Empire stood to lose astronomical amounts of money each cycle. This was an important reason for the Emperor to grant House Dvaered its independence.</description>
    <bar>Ambre's spaceport bar is never quiet. At regular intervals, all other noise in the bar is drowned out by the sound of cargo pods trundling across the railway just below. This is because the bar was built relatively late in the planet's development, as the Imperial government didn't see the need for one when Ambre was still little more than a labor camp. As a result, the bar had to be squeezed into one the only remaining space available, which was right over the freight lines.</bar>
   </general>
   <tech>
@@ -6916,7 +6916,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <commodities>
     <commodity>Ore</commodity>
    </commodities>
-   <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of mallistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
+   <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of ballistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
    <bar>(null)</bar>
   </general>
   <tech>
@@ -7158,8 +7158,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>New Haven is a planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated.The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
-   <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
+   <description>New Haven is a planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated. The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
+   <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed. The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
   </general>
   <tech>
    <item>Pirate Ships</item>
@@ -7384,7 +7384,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Nonuri is a world with an under-developed economy, even by Frontier standards. It barely manages to keep itself from going bankrupt. The people who live here stay mainly out of a sense of belonging, a feeling that Nonuri is their birthright. In fact, Nonuri was colonized by the colony ship Petrovosk, which makes Nonuri one of the oldest extrasolar human settlements. Unfortunatel for the locals, most of the galaxy doesn't care quite as much as they do.</description>
+   <description>Nonuri is a world with an under-developed economy, even by Frontier standards. It barely manages to keep itself from going bankrupt. The people who live here stay mainly out of a sense of belonging, a feeling that Nonuri is their birthright. In fact, Nonuri was colonized by the colony ship Petrovosk, which makes Nonuri one of the oldest extrasolar human settlements. Unfortunately for the locals, most of the galaxy doesn't care quite as much as they do.</description>
    <bar>The spaceport bar is humble, yet tidy and functional. The Nonurians may not enjoy a rich life, but they make the most of what they've got. Though the equipment is outdated, in some cases by several generations, this bar has most of the things an intergalactic traveler needs to keep abreast of events.</bar>
   </general>
  </asset>
@@ -11622,7 +11622,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Food</commodity>
    </commodities>
    <description>Urbanus Crops is one of House Dvaered's crop growing complexes. Though the idea was largely 'borrowed' from the Empire's INSS series, the efficiency of the actual installation is somewhat lower, because of the Dvaered's inferior technological background. Urbanus Crops gets the job done, though, and in fact most of Trincea's food is grown here.</description>
-   <bar>If you didn't know better, you'd think you were on a Dvaered military base, from the look of the bar. It's utterly utulitarian, though in the owner's defense an attempt has been made at fitting in with the station's purpose, testament the withered plant on the corner of the bar.</bar>
+   <bar>If you didn't know better, you'd think you were on a Dvaered military base, from the look of the bar. It's utterly utilitarian, though in the owner's defense an attempt has been made at fitting in with the station's purpose, testament the withered plant on the corner of the bar.</bar>
   </general>
  </asset>
  <asset name="Urbanus II">
@@ -12147,8 +12147,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Food</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Vertigo is the second moon orbiting Nartur IV. While the rock itself is utterly uninteresting, it's Nartur's first moon that is. It is a semi-fluid sphere of valuable mineral that often get used in hyperdrives. Vertigo is the closest place where a harvesting base can be set up, short of building a whole new starbase.</description>
-   <bar>Vertig's spaceport bar has an excellent view of Nartur IV and IVa. Depending on the phase of the various orbital cycles, it can be quite a fetching sight. Of course, some of the time there's very little to see at all.</bar>
+   <description>Vertigo is the second moon orbiting Nartur IV. While the rock itself is utterly uninteresting, it's Nartur's first moon that is. It is a semi-fluid sphere of valuable mineral that often gets used in hyperdrives. Vertigo is the closest place where a harvesting base can be set up, short of building a whole new starbase.</description>
+   <bar>Vertigo's spaceport bar has an excellent view of Nartur IV and IVa. Depending on the phase of the various orbital cycles, it can be quite a fetching sight. Of course, some of the time there's very little to see at all.</bar>
   </general>
  </asset>
  <asset name="Vilati Vilata">
@@ -12181,7 +12181,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Frozen worlds are usually not colonized unless there is very good reason. Vilati Vilata is no exception. The world offers a wealth of valuable natural resources, as well as expansive sibglacial cavern systems that lend themselves quite well to human habitation. The Dvaered have based what would become one of their most successful industrial franchises on this planet, so although nobody likes living here, the place is home to a sizeable amount of workers.</description>
+   <description>Frozen worlds are usually not colonized unless there is very good reason. Vilati Vilata is no exception. The world offers a wealth of valuable natural resources, as well as expansive subglacial cavern systems that lend themselves quite well to human habitation. The Dvaered have based what would become one of their most successful industrial franchises on this planet, so although nobody likes living here, the place is home to a sizeable amount of workers.</description>
    <bar>The bar is cold. It must be mentioned. Every effort has been made to minimize loss of heat from the building, but given the bar's close proximity to the spaceport, which is exposed to the elements, and the constant flow of customers, it has proven impossible to keep out the cold. This situation has given rise to a number of unkind jokes about the Vilati bar, which are told throughout the galaxy.</bar>
   </general>
   <tech>
@@ -12527,7 +12527,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities>
     <commodity>Food</commodity>
    </commodities>
-   <description>The Emperor's Fist project needs labor. A lot of labor. And while the world itself remains unfit for habitation, the workforce needs someplace else to live. The inhabitants of Halir refused to privide them shelter, invoking various complicated rights and regulations, so rather than persuade the local government, the Imperial Council decided to deploy prefab survival units on Vuere. As such, Vuere should be considered a temporary camp rather than a colony. However, with a population this size and a projected duration of stay this long, it is doubtful if Vuere will ever truly be abandoned.</description>
+   <description>The Emperor's Fist project needs labor. A lot of labor. And while the world itself remains unfit for habitation, the workforce needs someplace else to live. The inhabitants of Halir refused to provide them shelter, invoking various complicated rights and regulations, so rather than persuade the local government, the Imperial Council decided to deploy prefab survival units on Vuere. As such, Vuere should be considered a temporary camp rather than a colony. However, with a population this size and a projected duration of stay this long, it is doubtful if Vuere will ever truly be abandoned.</description>
    <bar>The bar is surprisingly hospitable for such a makeshift settlement. The inhabitants apparently feel the need to make up for the harsh environment of their C-class planet by making their indoor areas as comfortable and appeasing as they can. The bar is a prime example of this.</bar>
   </general>
  </asset>
