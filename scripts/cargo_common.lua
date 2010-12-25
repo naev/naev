@@ -62,7 +62,8 @@ function cargo_calculateRoute ()
     local cargoes = {"Food", "Industrial Goods", "Medicine", "Luxury Goods", "Ore"}
     cargo = cargoes[rnd.rnd(1, #cargoes)]
 
-   return destplanet, destsys, numdist, traveldist, cargo, tier
+    -- Return lots of stuff
+    return destplanet, destsys, numdist, traveldist, cargo, tier
 end
 
 
@@ -83,4 +84,5 @@ function getNextSystem(nowsys, finalsys)
         return mynextsys
     end
 end 
+
 
