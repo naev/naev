@@ -61,6 +61,7 @@ extern glColour cAqua;
 /*
  * game specific
  */
+extern glColour cBlackHilight;
 extern glColour cConsole;
 extern glColour cDConsole;
 /* toolkit */

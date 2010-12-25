@@ -586,7 +586,7 @@ static void gui_renderBorder( double dt )
    int cw, ch;
    double rx,ry, crx,cry;
    double cx,cy;
-   glColour *col, bcol;
+   glColour *col;
    double int_a;
    GLfloat vertex[5*2], colours[5*4];
 
@@ -601,12 +601,10 @@ static void gui_renderBorder( double dt )
    int_a = 1. - interference_alpha;
 
    /* Render borders to enhance contrast. */
-   bcol = cBlack;
-   bcol.a = .5;
-   gl_renderRect( 0., 0., 15., SCREEN_H, &bcol );
-   gl_renderRect( SCREEN_W - 15., 0., 15., SCREEN_H, &bcol );
-   gl_renderRect( 15., 0., SCREEN_W - 30., 15., &bcol );
-   gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &bcol );
+   gl_renderRect( 0., 0., 15., SCREEN_H, &cBlackHilight );
+   gl_renderRect( SCREEN_W - 15., 0., 15., SCREEN_H, &cBlackHilight );
+   gl_renderRect( 15., 0., SCREEN_W - 30., 15., &cBlackHilight );
+   gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
    /* Draw planets. */
    for (i=0; i<cur_system->nplanets; i++) {
@@ -1011,7 +1009,7 @@ static void gui_renderMessages( double dt )
 {
    double x, y, h, hs, vx, vy;
    int v, i, m, o;
-   glColour c, cb;
+   glColour c;
 
    /* Coordinate translation. */
    x = gui_mesg_x;
@@ -1028,12 +1026,6 @@ static void gui_renderMessages( double dt )
    c.b = 1.;
 
    if (mesg_viewpoint != -1) {
-      /* Colour. */
-      cb.r = 0.;
-      cb.g = 0.;
-      cb.b = 0.;
-      cb.a = 0.4;
-
       /* Set up position. */
       vx = x;
       vy = y;
@@ -1046,7 +1038,7 @@ static void gui_renderMessages( double dt )
          o += mesg_max;
 
       /* Render background. */
-      gl_renderRect( vx-2., vy-2., gui_mesg_w-13., h+4., &cb );
+      gl_renderRect( vx-2., vy-2., gui_mesg_w-13., h+4., &cBlackHilight );
    }
 
    /* Render text. */

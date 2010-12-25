@@ -55,6 +55,7 @@ static int osd_x = 0;
 static int osd_y = 0;
 static int osd_w = 0;
 static int osd_h = 0;
+static int osd_rh = 0;
 static int osd_tabLen = 0;
 static int osd_hyphenLen = 0;
 
@@ -64,6 +65,7 @@ static int osd_hyphenLen = 0;
  */
 static OSD_t *osd_get( unsigned int osd );
 static int osd_free( OSD_t *osd );
+static void osd_calcDimensions (void);
 
 
 /**
@@ -160,6 +162,9 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
       ll->next = osd;
    }
 
+   /* Recalculate dimensions. */
+   osd_calcDimensions();
+
    return osd->id;
 }
 
@@ -232,6 +237,9 @@ int osd_destroy( unsigned int osd )
 
          /* Free. */
          osd_free( ll );
+
+         /* Recalculate dimensions. */
+         osd_calcDimensions();
 
          return 0;
       }
@@ -336,6 +344,9 @@ void osd_render (void)
    if (osd_list == NULL)
       return;
 
+   /* Background. */
+   gl_renderRect( osd_x-5., osd_y-osd_rh+5., osd_w+10., osd_rh+10, &cBlackHilight );
+
    /* Render each thingy. */
    p = osd_y;
    for (ll = osd_list; ll != NULL; ll = ll->next) {
@@ -366,6 +377,35 @@ void osd_render (void)
          }
       }
    }
+}
+
+
+/**
+ * @brief Calculates and sets the length of the OSD.
+ */
+static void osd_calcDimensions (void)
+{
+   OSD_t *ll;
+   int i, j;
+   double len;
+
+   /* Nothing to render. */
+   if (osd_list == NULL)
+      return;
+
+   /* Render each thingy. */
+   len = 0;
+   for (ll = osd_list; ll != NULL; ll = ll->next) {
+
+      /* Print title. */
+      len += gl_smallFont.h + 5.;
+
+      /* Print items. */
+      for (i=0; i<ll->nitems; i++)
+         for (j=0; j<ll->items[i].nchunks; j++)
+            len += gl_smallFont.h + 5.;
+   }
+   osd_rh = MIN( len, osd_h );
 }
 
 
