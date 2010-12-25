@@ -1,8 +1,6 @@
 
 
 function cargo_calculateRoute ()
-    
-    -- Note: this mission does not make any system claims. 
     origin_p, origin_s = planet.cur()
     local routesys = origin_s
     local routepos = origin_p:pos()

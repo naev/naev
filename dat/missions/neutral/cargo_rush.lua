@@ -70,6 +70,8 @@ end
 
 -- Create the mission
 function create()
+    -- Note: this mission does not make any system claims. 
+
     -- Calculate the route, distance, jumps and cargo to take
     destplanet, destsys, njumps, traveldist, cargo, tier = cargo_calculateRoute()
     
