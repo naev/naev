@@ -2536,7 +2536,7 @@
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>
    </commodities>
-   <description>Draconis Epsilon is a densely populated Imperial world. It grew rich in the days before the Incident, when Draconis was still a core system, not at the outer fringes of Imperial controlled territory. The inhabitants here have suffered from the change, but not as much as you might expect. The world maintains a solid cosumer base.</description>
+   <description>Draconis Epsilon is a densely populated Imperial world. It grew rich in the days before the Incident, when Draconis was still a core system, not at the outer fringes of Imperial controlled territory. The inhabitants here have suffered from the change, but not as much as you might expect. The world maintains a solid consumer base.</description>
    <bar>The spaceport bar on Draconis Epsilon is circular in shape, with exits all around leading to the various spaceport platforms. The place is gigantic, providing seats for up to ten thousand customers at the same time, and more at the bar. Most spacers who have visited Epsilon Draconis agree that few spaceport bars are quite as impressive as this one.</bar>
   </general>
   <tech>
@@ -6480,7 +6480,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <commodity>Ore</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Manuel Station is named after Eduard Manual Goddard, the man to which House Goddard owes its existence. The station is primarily a shipyard, and thus contributes a great deal to House Goddard's local economy. Its position around Goddard III is no coincidence, as the lifeless planet provides many of the raw materials needed to produce space ships.</description>
+   <description>Manuel Station is named after Eduard Manuel Goddard, the man to which House Goddard owes its existence. The station is primarily a shipyard, and thus contributes a great deal to House Goddard's local economy. Its position around Goddard III is no coincidence, as the lifeless planet provides many of the raw materials needed to produce space ships.</description>
    <bar>The station's bar is more businesslike than recreative. The people who come here are either traders who came to load or unload goods, or potential customers looking for a Goddard-made ship. Nobody is really interested in just passing the time, because time is money on Manuel Station.</bar>
   </general>
   <tech>
@@ -6669,7 +6669,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    </services>
    <commodities/>
    <description>The Frontier is relatively poor, and part of the reason for this is that the Frontier is lacking in energy output. In an attempt to reinforce this weak link, the Frontier Council sanctioned the construction of a deep space power generator, whish was to provide energy cells to industries across Frontier space. That generator is Megan Station.</description>
-   <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utulitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
+   <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utilitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
   </general>
  </asset>
  <asset name="Merisi I">

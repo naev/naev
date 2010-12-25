@@ -11,7 +11,7 @@ if lang == "es" then
 elseif lang == "de" then
 else --I guess you know this stuff...
     NPC_name = "A detective" --NPC params
-    bar_desc = "A private detective is signalling you to come speak with him"
+    bar_desc = "A private detective is signalling you to come speak with him."
     title = {}
     title[0] = "Crimelord" --Mission title
     title[1] = "Good luck" --dialogue title
@@ -19,8 +19,8 @@ else --I guess you know this stuff...
     title[3] = "He told you so..." --failed title
     text = {}
     text[0] = [[    The private detective greets you and gets right down to business.
-    "I have tracked down and collected evidence against a local crimelord", he says. "The Evidence is on this datadisk. He would love nothing more than to get his hands on this.
-    I want you to bring this to my associates in the %s system, they'll see to it that this man is put into Jail. Though I should warn you: There is a reason I'm giving this job to you and no one else:
+    "I have tracked down and collected evidence against a local crimelord", he says. "The evidence is on this datadisk. He would love nothing more than to get his hands on this.
+    I want you to bring this to my associates in the %s system, they'll see to it that this man is put into jail. Though I should warn you: There is a reason I'm giving this job to you and no one else:
     They will come after you and you need a fast ship to shake them off. You will be paid when you arrive in the %s system. My associates will compensate you generously.
     Oh, before I forget: There is another catch: You can NOT land until you get to the system. They will get you and take the evidence, so I repeat, do NOT land!"
     You are unsure whether that sounds appealing to you, do you accept?]] --dialogue 1
