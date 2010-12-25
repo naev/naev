@@ -62,10 +62,11 @@ function create()
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
+    finished_mod = 2.5 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
     jumpreward = 200
     distreward = 0.09
-    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward)
+    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod
     
     misn.setTitle("Cargo transport (" .. amount .. " tons of " .. cargo .. ")")
     misn.markerAdd(destsys, "computer")
