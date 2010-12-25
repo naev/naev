@@ -4,6 +4,8 @@ function cargo_calculateRoute ()
     
     -- Note: this mission does not make any system claims. 
     origin_p, origin_s = planet.cur()
+    local routesys = origin_s
+    local routepos = origin_p:pos()
     
     -- Select mission tier.
     local tier = rnd.rnd(0, 4)
@@ -22,7 +24,8 @@ function cargo_calculateRoute ()
     getsysatdistance(system.cur(), missdist, missdist,
         function(s)
             for i, v in ipairs(s:planets()) do
-                if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 then
+                if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 and
+                        not (s==system.cur() and ( vec2.dist( v:pos(), routepos ) < 2500 ) ) then
                     planets[#planets + 1] = {v, s}
                 end
            end
@@ -40,8 +43,6 @@ function cargo_calculateRoute ()
     -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
     -- Assume shortest route with no interruptions.
     -- This is used to calculate the reward.
-    local routesys = origin_s
-    local routepos = origin_p:pos()
     traveldist = 0
     numjumps = origin_s:jumpDist(destsys)
     
