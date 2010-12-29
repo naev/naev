@@ -67,7 +67,7 @@ static int has_side_gfx = 0;       /* Determines how wide to make the text. */
 static int intro_load( const char *text );
 static void intro_cleanup (void);
 static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n );
-static void intro_event_handler( int *stop, double *vel );
+static void intro_event_handler( int *stop, double *offset, double *vel );
 static inline void initialize_image( intro_img_t *img );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file );
@@ -267,41 +267,45 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
  *    @brief stop Whether to stop the intro.
  *    @brief vel How fast the text should scroll.
  */
-static void intro_event_handler( int *stop, double *vel )
+static void intro_event_handler( int *stop, double *offset, double *vel )
 {
    SDL_Event event;           /* user key-press, mouse-push, etc. */
 
    while (SDL_PollEvent(&event)) {
-      switch (event.type) {
-      case SDL_KEYDOWN:
+      if (event.type != SDL_KEYDOWN)
+         continue;
 
-         /* Escape skips directly. */
-         if (event.key.keysym.sym == SDLK_ESCAPE) {
-            *stop = 1;
-            break;
-         }
-
-         /* Slow down the text. */
-         else if (event.key.keysym.sym == SDLK_UP) {
-            *vel -= 8.0;
-            if (*vel < 0.0) *vel = 0.0;
-         }
-
-         /* Speed up the text. */
-         else if (event.key.keysym.sym == SDLK_DOWN) {
-            *vel += 8.0;
-            if (*vel > 100.0) *vel = 100.0;
-         }
-
-         /* User is clearly flailing on keyboard. */
-         else {
-            *vel = 16.;
-         }
-
-      default:
+      /* Escape skips directly. */
+      if (event.key.keysym.sym == SDLK_ESCAPE) {
+         *stop = 1;
          break;
       }
-   } /* while (SDL_PollEvent(&event)) */
+
+      /* Slow down the text. */
+      else if (event.key.keysym.sym == SDLK_UP) {
+         *vel -= 8.0;
+         if (*vel < 0.0)
+            *vel = 0.0;
+      }
+
+      /* Speed up the text. */
+      else if (event.key.keysym.sym == SDLK_DOWN) {
+         *vel += 8.0;
+         if (*vel > 100.0) 
+            *vel = 100.0;
+      }
+
+      /* Jump down. */
+      else if ((event.key.keysym.sym == SDLK_SPACE) ||
+            (event.key.keysym.sym == SDLK_RETURN)) {
+         *offset += 100;
+      }
+
+      /* User is clearly flailing on keyboard. */
+      else {
+         *vel = 16.;
+      }
+   }
 }
 
 /**
@@ -492,7 +496,7 @@ int intro_display( const char *text, const char *mus )
       SDL_Delay(10); /* No need to burn CPU. */
 
       /* Handle user events. */
-      intro_event_handler( &stop, &vel );
+      intro_event_handler( &stop, &offset, &vel );
 
    } /* while (!stop) */
 
