@@ -2824,8 +2824,11 @@ static int aiL_weapSet( lua_State *L )
 }
 
 
-/*
- * returns true if the pilot has turrets
+/**
+ * @brief Does the pilot have turrets.?
+ *
+ *    @luareturn true if the pilot has turrets
+ * @luafunc hasturrets()
  */
 static int aiL_hasturrets( lua_State *L )
 {
@@ -2834,8 +2837,10 @@ static int aiL_hasturrets( lua_State *L )
 }
 
 
-/*
- * makes the pilot shoot
+/**
+ * @brief Makes the pilot shoot
+ *
+ * @luafunc shoot( secondary, firemode )
  */
 static int aiL_shoot( lua_State *L )
 {
@@ -2876,9 +2881,9 @@ static int aiL_getenemy( lua_State *L )
 /*
  * @brief gets the nearest enemy within specified size bounds
  *
- *  @param LB Lower size bound
- *  @param UB upper size bound
- *  @luafunc getenemy_size()
+ *  @luaparam LB Lower size bound
+ *  @luaparam UB upper size bound
+ *  @luafunc getenemy_size( LB, UP)
  */
 static int aiL_getenemy_size( lua_State *L )
 {
@@ -2908,11 +2913,12 @@ static int aiL_getenemy_size( lua_State *L )
 /*
  * @brief gets the nearest enemy within specified heuristic
  *
- *  @param Mass goal mass map (0-1)
- *  @param DPS goal DPS map (0-1)
- *  @param HP goal HP map (0-1)
+ *  @luaparam Mass goal mass map (0-1)
+ *  @luaparam DPS goal DPS map (0-1)
+ *  @luaparam HP goal HP map (0-1)
+ *  @luapa
  *  @luareturn the best fitting target
- *  @luafunc getenemy_heuristic()
+ *  @luafunc getenemy_heuristic( Mass, DPS, HP, range )
  */
 static int aiL_getenemy_heuristic( lua_State *L )
 {
@@ -2933,13 +2939,9 @@ static int aiL_getenemy_heuristic( lua_State *L )
    if (p==0) /* No enemy found */
    {
       return 0;
-      NLUA_ERROR(L, "heuristic Void");
    }
 
    lua_pushnumber(L,p);
-
-   NLUA_ERROR(L, "heuristic exit");
-    
    return 1;
 }
 
