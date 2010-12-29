@@ -1025,20 +1025,20 @@ static void gui_renderMessages( double dt )
    c.g = 1.;
    c.b = 1.;
 
+   /* Render background. */
+   h  = conf.mesg_visible*gl_defFont.h*1.2;
+   gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
+
    if (mesg_viewpoint != -1) {
       /* Set up position. */
       vx = x;
       vy = y;
 
       /* Data. */
-      h  = conf.mesg_visible*gl_defFont.h*1.2;
       hs = h*(double)conf.mesg_visible/(double)mesg_max;
       o  = mesg_pointer - mesg_viewpoint;
       if (o < 0)
          o += mesg_max;
-
-      /* Render background. */
-      gl_renderRect( vx-2., vy-2., gui_mesg_w-13., h+4., &cBlackHilight );
    }
 
    /* Render text. */
