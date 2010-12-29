@@ -94,7 +94,7 @@ static int intro_load( const char *text )
    intro_length = intro_size; /* Length aproximation. */
 
    /* Create intro font. */
-   gl_fontInit( &intro_font, NULL, INTRO_FONT_SIZE );
+   gl_fontInit( &intro_font, "dat/mono.ttf", INTRO_FONT_SIZE );
 
    /* Load lines. */
    p = 0;
