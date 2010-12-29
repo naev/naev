@@ -497,11 +497,11 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
 
    y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Left click toggles)" );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Right click toggles)" );
 
    y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
-   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Primary Weapon (Right click toggles)" );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Primary Weapon (Left click toggles)" );
 }
 
 
