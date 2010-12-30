@@ -112,7 +112,8 @@ static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
  */
 /* Creation. */
 static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
-      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir );
+      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
+      double swivel );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
@@ -1093,12 +1094,14 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param dir Direction facing parent ship and turret.
  */
 static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *parent,
-      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir )
+      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
+      double swivel )
 {
    Vector2d approach_vector, relative_location;
    double rdir, lead_angle;
    double speed, radial_speed;
    double x, y, t, dist;
+   double off;
 
    if (pilot_target == NULL) {
       rdir        = dir;
@@ -1149,15 +1152,23 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
 
          /* the target is moving too fast for the turret to keep up */
-         if(ANGLE(x, y) < VANGLE(relative_location))
+         if (ANGLE(x, y) < VANGLE(relative_location))
             rdir = angle_diff(lead_angle, VANGLE(relative_location));
          else
             rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
-
+     
+         /* Clean up angle. */
+         if (rdir < 0.)
+            rdir += 2.*M_PI;
       }
-      else {
-         /* the turret can aim properly*/
-         rdir = ANGLE(x, y);
+
+      /* Calculate bounds. */
+      off = angle_diff( dir, rdir );
+      if (fabs(off) > swivel) {
+         if (off > 0.)
+            rdir = dir - swivel;
+         else
+            rdir = dir + swivel;
       }
    }
 
@@ -1186,13 +1197,12 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    double acc;
 
    /* Only difference is the direction of fire */
-   if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
-         (w->target != 0)) { /* Must have valid target */
+   if ((w->parent!=w->target) && (w->target != 0)) { /* Must have valid target */
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir );
+      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel );
    }
    else { /* fire straight */
-      rdir        = dir;
+      rdir = dir;
    }
 
    /* Calculate accuarcy. */
@@ -1250,7 +1260,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    pilot_target = NULL;
    if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir );
+      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
       /* Evasion. */
       ew_evasion    = pilot_target->ew_evasion;
    }

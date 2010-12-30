@@ -22,6 +22,9 @@
    <falloff>250</falloff>
    <energy>8</energy>
    <heatup>15</heatup>
+   <swivel>1</swivel>
+   <track>3</track>
+   <swivel>1</swivel>
    <damage type="energy" penetrate="0">5.5</damage>
   </specific>
  </outfit>
@@ -48,6 +51,8 @@
    <gfx_end>laser1S</gfx_end>
    <energy>12</energy>
    <heatup>20</heatup>
+   <track>3</track>
+   <swivel>1.25</swivel>
    <damage type="energy" penetrate="14">9</damage>
   </specific>
  </outfit>
@@ -74,6 +79,8 @@
    <gfx_end>laser2S</gfx_end>
    <energy>15</energy>
    <heatup>25</heatup>
+   <track>3</track>
+   <swivel>1.5</swivel>
    <damage type="energy" penetrate="22">15</damage>
   </specific>
  </outfit>
@@ -102,6 +109,8 @@
    <gfx_end>ripper-end</gfx_end>
    <energy>17</energy>
    <heatup>30</heatup>
+   <track>2</track>
+   <swivel>1.25</swivel>
    <damage type="energy" penetrate="30">13</damage>
   </specific>
  </outfit>
@@ -128,6 +137,8 @@
    <gfx_end>ripper-end</gfx_end>
    <energy>22</energy>
    <heatup>30</heatup>
+   <track>2</track>
+   <swivel>1.75</swivel>
    <damage type="energy" penetrate="40">22</damage>
   </specific>
  </outfit>
@@ -290,6 +301,8 @@
    <gfx_end>ion-end</gfx_end>
    <energy>5.25</energy>
    <heatup>20</heatup>
+   <track>2.25</track>
+   <swivel>1.25</swivel>
    <damage type="ion" penetrate="0">4</damage>
   </specific>
  </outfit>
@@ -315,6 +328,8 @@
    <gfx_end>ion-end</gfx_end>
    <energy>9.5</energy>
    <heatup>25</heatup>
+   <track>2.25</track>
+   <swivel>1.6</swivel>
    <damage type="ion" penetrate="5">8</damage>
   </specific>
  </outfit>
@@ -340,6 +355,8 @@
    <gfx_end>ion-end</gfx_end>
    <energy>15</energy>
    <heatup>30</heatup>
+   <track>2.25</track>
+   <swivel>1.8</swivel>
    <damage type="ion" penetrate="11">14</damage>
   </specific>
  </outfit>
@@ -443,6 +460,8 @@
    <gfx_end>ion-end</gfx_end>
    <energy>16</energy>
    <heatup>50</heatup>
+   <track>2</track>
+   <swivel>1.4</swivel>
    <damage type="ion" penetrate="11">15</damage>
   </specific>
  </outfit>
@@ -469,6 +488,8 @@
    <gfx_end>ion-end</gfx_end>
    <energy>24</energy>
    <heatup>60</heatup>
+   <track>2</track>
+   <swivel>1.8</swivel>
    <damage type="ion" penetrate="22">25</damage>
   </specific>
  </outfit>
@@ -527,6 +548,8 @@
    <range blowup="armour">700</range>
    <energy>5</energy>
    <heatup>40</heatup>
+   <track>2</track>
+   <swivel>0.5</swivel>
    <damage type="kinetic" penetrate="3">7</damage>
   </specific>
  </outfit>
@@ -551,6 +574,8 @@
    <range blowup="armour">800</range>
    <energy>11</energy>
    <heatup>50</heatup>
+   <track>2</track>
+   <swivel>1</swivel>
    <damage type="kinetic" penetrate="12">15</damage>
   </specific>
  </outfit>
@@ -575,6 +600,8 @@
    <range blowup="armour">900</range>
    <energy>19</energy>
    <heatup>60</heatup>
+   <track>1.5</track>
+   <swivel>1.5</swivel>
    <damage type="kinetic" penetrate="25">25</damage>
   </specific>
  </outfit>
@@ -651,6 +678,8 @@
    <range blowup="armour">1200</range>
    <energy>25</energy>
    <heatup>50</heatup>
+   <track>1.5</track>
+   <swivel>2</swivel>
    <damage type="kinetic" penetrate="29">30</damage>
   </specific>
  </outfit>
@@ -676,6 +705,8 @@
    <range blowup="armour">1500</range>
    <energy>33</energy>
    <heatup>60</heatup>
+   <track>1.4</track>
+   <swivel>2.2</swivel>
    <damage type="kinetic" penetrate="43">38</damage>
   </specific>
  </outfit>
@@ -701,6 +732,8 @@
    <range blowup="armour">1750</range>
    <energy>38</energy>
    <heatup>70</heatup>
+   <track>1.2</track>
+   <swivel>2.6</swivel>
    <damage type="kinetic" penetrate="50">45</damage>
   </specific>
  </outfit>
@@ -728,6 +761,8 @@
    <gfx_end>mass-end</gfx_end>
    <energy>43</energy>
    <heatup>90</heatup>
+   <track>0.8</track>
+   <swivel>5</swivel>
    <damage type="kinetic" penetrate="60">49</damage>
   </specific>
  </outfit>
@@ -755,6 +790,8 @@
    <gfx_end>mass-end</gfx_end>
    <energy>57</energy>
    <heatup>100</heatup>
+   <track>0.6</track>
+   <swivel>6</swivel>
    <damage type="kinetic" penetrate="80">56</damage>
   </specific>
  </outfit>
@@ -809,6 +846,8 @@
    <falloff>210</falloff>
    <energy>3.75</energy>
    <heatup>20</heatup>
+   <track>2</track>
+   <swivel>1</swivel>
    <damage type="energy" penetrate="8">7.5</damage>
   </specific>
  </outfit>
@@ -835,6 +874,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <energy>7.5</energy>
    <heatup>25</heatup>
+   <track>2</track>
+   <swivel>1.1</swivel>
    <damage type="energy" penetrate="18">12</damage>
   </specific>
  </outfit>
@@ -861,6 +902,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <energy>15</energy>
    <heatup>30</heatup>
+   <track>2</track>
+   <swivel>1.2</swivel>
    <damage type="energy" penetrate="25">19</damage>
   </specific>
  </outfit>
@@ -937,6 +980,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <energy>20</energy>
    <heatup>40</heatup>
+   <track>2</track>
+   <swivel>2.5</swivel>
    <damage type="energy" penetrate="30">25</damage>
   </specific>
  </outfit>
@@ -963,6 +1008,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <energy>32</energy>
    <heatup>50</heatup>
+   <track>2</track>
+   <swivel>4.5</swivel>
    <damage type="energy" penetrate="40">38</damage>
   </specific>
  </outfit>
@@ -989,6 +1036,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <energy>28</energy>
    <heatup>40</heatup>
+   <track>1.5</track>
+   <swivel>3.5</swivel>
    <damage type="energy" penetrate="25">30</damage>
   </specific>
  </outfit>
@@ -1015,6 +1064,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <energy>35</energy>
    <heatup>45</heatup>
+   <track>1.5</track>
+   <swivel>4</swivel>
    <damage type="energy" penetrate="35">39</damage>
   </specific>
  </outfit>
@@ -1041,6 +1092,8 @@
    <gfx_end>plasma2-end</gfx_end>
    <heatup>50</heatup>
    <energy>45</energy>
+   <track>1.2</track>
+   <swivel>6</swivel>
    <damage type="energy" penetrate="42">46</damage>
   </specific>
  </outfit>
@@ -1133,6 +1186,8 @@
    <gfx_end>neutron-end</gfx_end>
    <energy>13.75</energy>
    <heatup>40</heatup>
+   <track>3</track>
+   <swivel>0.6</swivel>
    <damage type="energy" penetrate="22">15</damage>
   </specific>
  </outfit>
