@@ -272,6 +272,105 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    return tp;
 }
 
+/**
+ * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is between LB and UB.
+ *
+ *    @param p Pilot to get his nearest enemy.
+ *    @param target_mass_LB the lower bound for target mass
+ *    @param target_mass_UB the upper bound for target mass
+ *    @return ID of his nearest enemy.
+ */
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB)
+{
+   unsigned int tp;
+   int i;
+   double d, td;
+
+   tp = 0;
+   d = 0.;
+   for (i=0; i<pilot_nstack; i++) {
+      /* Must not be bribed. */
+      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
+         continue;
+
+      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
+            ((pilot_stack[i]->id == PLAYER_ID) && 
+               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+
+         /*mass is in bounds*/
+         if (pilot_stack[i]->solid->mass >= target_mass_LB && pilot_stack[i]->solid->mass <= target_mass_UB)
+            continue;
+
+         /* Shouldn't be disabled. */
+         if (pilot_isDisabled(pilot_stack[i]))
+            continue;
+
+         /* Must be in range. */
+         if (!pilot_inRangePilot( p, pilot_stack[i] ))
+            continue;
+
+         /* Check distance. */
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+         if (!tp || (td < d)) {
+            d = td;
+            tp = pilot_stack[i]->id;
+         }
+      }
+   }
+   return tp;
+
+}
+
+/**
+ * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is between LB and UB.
+ *
+ *    @param p Pilot to get his nearest enemy.
+ *    @param mass_factor parameter for target mass (0-1, 0.5 = current mass)
+ *    @param health_factor parameter for target shields/armor (0-1, 0.5 = current health)
+ *    @param dps_factor parameter for target dps (0-1, 0.5 = current dps)
+ *    @param range_factor weighting for range (typically >> 1)
+ *    @return ID of his nearest enemy.
+ */
+unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor)
+{
+   unsigned int tp;
+   int i;
+   double d, td, current_heuristic_value=10000, temp;
+
+   tp = 0;
+   d = 0.;
+   for (i=0; i<pilot_nstack; i++) {
+      /* Must not be bribed. */
+      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
+         continue;
+
+      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
+            ((pilot_stack[i]->id == PLAYER_ID) && 
+               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+
+         
+
+         /* Shouldn't be disabled. */
+         if (pilot_isDisabled(pilot_stack[i]))
+            continue;
+
+         /* Must be in range. */ 
+         if (!pilot_inRangePilot( p, pilot_stack[i] ))
+            continue;
+
+         /* Check distance. */
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos)* range_factor;
+         temp = td+fabs( pilot_relsize(p, pilot_stack[i]) /*0.5*/-mass_factor) + fabs(pilot_relhp(p, pilot_stack[i]) /*0.5*/- health_factor) + fabs(pilot_reldps(p, pilot_stack[i]) /*0.5*/-damage_factor);
+         
+         if ((tp == 0) || (temp< current_heuristic_value)) {
+            current_heuristic_value = temp;
+            tp = pilot_stack[i]->id;
+         }
+      }
+   }
+   return tp;
+
+}
 
 /**
  * @brief Get the nearest pilot to a pilot.
@@ -2173,3 +2272,79 @@ void pilots_updateSystemFleet( const int deletedIndex ) {
 
    return;
 }
+
+/**
+ * @brief Gets the relative size(shipmass) between the current pilot and the specified target
+ *
+ * @param p the pilot whose mass we will compare   
+ *    @luareturn A number from 0 to 1 mapping the relative masses
+ * relsize()
+ */
+double pilot_relsize(const Pilot* cur_pilot, const Pilot* p)
+{
+    /*double mass_map;
+    
+    mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
+    
+    return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass) ) );
+    }
+
+/**
+ * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
+ *
+ * @param p the pilot whose dps we will compare   
+ *    @return A number from 0 to 1 mapping the relative damage output
+ * reldps()
+ */
+double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
+{
+    int i;
+
+    int DPSaccum_target = 0, DPSaccum_pilot = 0;
+    double delay_cache, damage_cache;
+
+    for(i = 0; i < p->outfit_nweapon; i++)
+    {
+       /*DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );*/
+       if(p->outfit_weapon[i].outfit){
+       damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
+        delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
+        if(damage_cache > 0 && delay_cache > 0)
+           DPSaccum_target += ( damage_cache/delay_cache );}
+
+    }
+
+    for(i = 0; i < cur_pilot->outfit_nweapon; i++)
+    {
+      
+        /*DPSaccum_pilot += ( outfit_damage(cur_pilot->outfit_weapon[i].outfit)/outfit_delay(cur_pilot->outfit_weapon[i].outfit) );*/
+
+        if(cur_pilot->outfit_weapon[i].outfit) {
+        damage_cache = outfit_damage(cur_pilot->outfit_weapon[i].outfit);
+        delay_cache = outfit_delay(cur_pilot->outfit_weapon[i].outfit);
+        if(damage_cache > 0 && delay_cache > 0)
+           DPSaccum_pilot += ( damage_cache/delay_cache );}
+
+    }
+
+    if(DPSaccum_target > 0 && DPSaccum_pilot > 0)
+        return (1 - 1/(1 + ( (double) DPSaccum_pilot / (double) DPSaccum_target) ) );
+    else if (DPSaccum_pilot > 0)
+        return 1;
+    else
+        return 0;
+
+}
+    
+/**
+ * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
+ *
+ * @param p the pilot whose shields/armor we will compare   
+ *    @return A number from 0 to 1 mapping the relative HPs
+ * relhp() 
+ */
+double pilot_relhp(const Pilot* cur_pilot, const Pilot* p)
+{
+    return (1 - 1/(1 + ( (double) (cur_pilot -> armour_max + cur_pilot -> shield_max ) / (double) (p -> armour_max + p -> shield_max) ) ) );
+
+    }

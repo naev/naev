@@ -179,6 +179,7 @@ typedef struct OutfitBoltData_ {
    double heatup; /**< How long it should take for the weapon to heat up (approx). */
    double heat; /**< Heat per shot. */
    double track; /**< Ewarfare to track. */
+   double swivel; /**< Amount of swivel (semiarc in radians of deviation the weapon can correct. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */

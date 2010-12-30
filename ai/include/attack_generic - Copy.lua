@@ -7,8 +7,7 @@ mem.atk_approach      = 1.4 -- Distance that marks approach
 mem.atk_aim           = 1.0 -- Distance that marks aim
 mem.atk_board         = false -- Whether or not to board the target
 mem.atk_kill          = true -- Whether or not to finish off the target
-mem.aggressive        = true --whether to take the more aggressive or more evasive option when given
-mem.recharge          = false --whether to hold off shooting to avoid running dry of energy
+
 
 --[[
 -- Mainly manages targetting nearest enemy.
@@ -256,7 +255,7 @@ local perp_distance
     --find nearest thing
   local neighbor = ai.nearestpilot()
  
-  if ai.exists(neighbor) then
+  if neighbor ~= nil and neighbor ~= 0 then
  
     --find the distance based on the direction I'm travelling
     perp_distance = ai.flyby_dist(neighbor)

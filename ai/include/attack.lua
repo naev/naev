@@ -5,7 +5,9 @@
 
 include("ai/include/attack_generic.lua")
 include("ai/include/attack_bomber.lua")
-
+include("ai/include/attack_patterns.lua")
+include("ai/include/decision_patterns.lua")
+include("ai/include/attack_profiles.lua")
 
 --[[
 -- Wrapper for the think functions.
@@ -49,11 +51,28 @@ end
 function attack_choose ()
    class = ai.shipclass()
 
-   --[[
+   --[[]]
    if class == "Bomber" then
-      mem.atk_think = atk_b_think
-      mem.atk = atk_b
+      --mem.atk_think = atk_topdown_think
+      mem.atk_think = atk_heuristic_big_game_think
+      mem.atk = atk_bomber
+      --mem.atk_think = atk_b_think
+      --mem.atk = atk_b
+    elseif class == "Fighter" or class == "Drone" then
+      mem.atk_think = atk_fighter_think
+      mem.atk = atk_fighter
+    elseif class == "Corvette" then
+--      mem.atk_think = atk_topdown_think
+      mem.atk_think = atk_heuristic_big_game_think
+      mem.atk = atk_corvette
+    elseif class == "Destroyer" or class == "Cruiser" then
+--      mem.atk_think = atk_topdown_think
+      mem.atk_think = atk_heuristic_big_game_think
+      mem.atk = atk_capital
+    else 
+      mem.atk_think = atk_g_think
+      mem.atk = atk_g
    end
-   ]]
+   
 end
 

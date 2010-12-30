@@ -149,6 +149,7 @@ static Task* ai_createTask( lua_State *L, int subtask );
 static int ai_tasktarget( lua_State *L, Task *t );
 
 
+
 /*
  * AI routines for Lua
  */
@@ -165,11 +166,14 @@ static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 /* consult values */
 static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
+static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
+static int aiL_pcurenergy( lua_State *L ); /* pcurenergy() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
+static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_getpos( lua_State *L ); /* getpos(number) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_cargofree( lua_State *L ); /* number cargofree() */
@@ -194,6 +198,9 @@ static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int aiL_face( lua_State *L ); /* face( number/pointer, bool) */
 static int aiL_aim( lua_State *L ); /* aim(number) */
 static int aiL_iface( lua_State *L ); /* iface(number/pointer) */
+static int aiL_dir( lua_State *L ); /* dir(number/pointer) */
+static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
+static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
@@ -222,9 +229,14 @@ static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
+static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
+static int aiL_getenemy_heuristic( lua_State *L ); /* number getenemy_heuristic() */
 static int aiL_hostile( lua_State *L ); /* hostile( number ) */
 static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
 static int aiL_canboard( lua_State *L ); /* boolean canboard( number ) */
+static int aiL_relsize( lua_State *L ); /* boolean relsize( number ) */
+static int aiL_reldps( lua_State *L ); /* boolean reldps( number ) */
+static int aiL_relhp( lua_State *L ); /* boolean relhp( number ) */
 
 /* timers */
 static int aiL_settimer( lua_State *L ); /* settimer( number, number ) */
@@ -269,11 +281,14 @@ static const luaL_reg aiL_methods[] = {
    /* get */
    { "getPlayer", aiL_getplayer },
    { "rndpilot", aiL_getrndpilot },
+   { "nearestpilot", aiL_getnearestpilot },
    { "armour", aiL_armour },
    { "shield", aiL_shield },
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
+   { "pcurenergy", aiL_pcurenergy },
    { "dist", aiL_getdistance },
+   { "flyby_dist", aiL_getflybydistance },
    { "pos", aiL_getpos },
    { "minbrakedist", aiL_minbrakedist },
    { "cargofree", aiL_cargofree },
@@ -291,6 +306,9 @@ static const luaL_reg aiL_methods[] = {
    { "turn", aiL_turn },
    { "face", aiL_face },
    { "iface", aiL_iface },
+   { "dir", aiL_dir },
+   { "idir", aiL_idir },
+   { "drift_facing", aiL_drift_facing },
    { "brake", aiL_brake },
    { "stop", aiL_stop },
    { "relvel", aiL_relvel },
@@ -312,9 +330,14 @@ static const luaL_reg aiL_methods[] = {
    { "hasturrets", aiL_hasturrets },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
+   { "getenemy_size", aiL_getenemy_size },
+   { "getenemy_heuristic", aiL_getenemy_heuristic },
    { "hostile", aiL_hostile },
    { "getweaprange", aiL_getweaprange },
    { "canboard", aiL_canboard },
+   { "relsize", aiL_relsize },
+   { "reldps", aiL_reldps },
+   { "relhp", aiL_relhp },
    /* timers */
    { "settimer", aiL_settimer },
    { "timeup", aiL_timeup },
@@ -1277,6 +1300,45 @@ static int aiL_getrndpilot( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief gets the ID of the nearest pilot to the current pilot
+ *  @return the ID of the nearest pilot
+ *
+ *  @luafunc nearestpilot()
+ */
+static int aiL_getnearestpilot( lua_State *L )
+{
+
+   /*dist will be initialized to a number*/
+   /*this will only seek out pilots closer than dist*/
+   int dist=1000;
+   int i;
+   int candidate_id = -1;
+
+   /*cycle through all the pilots and find the closest one that is not the pilot */
+
+   for(i = 0; i<pilot_nstack; i++)
+   {
+       if(pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
+       {
+            dist = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
+            candidate_id = i;
+       }    
+   }
+
+
+   /* Last check. */
+   if (candidate_id == -1)
+      return 0;
+
+
+
+   /* Actually found a pilot. */
+   lua_pushnumber(L, pilot_stack[candidate_id]->id );
+   return 1;
+} 
+
+
 /*
  * gets the pilot's armour
  */
@@ -1365,6 +1427,20 @@ static int aiL_pshield( lua_State *L )
    return 1;
 }
 
+
+/*
+ * gets the current pilot's energy in percent
+ * no real need to be able to sense enemy energy
+ */
+static int aiL_pcurenergy( lua_State *L )
+{
+   double d;
+   d = (cur_pilot->energy / cur_pilot->energy_max) * 100.;
+   lua_pushnumber(L, d);
+   return 1;
+
+}
+
 /*
  * gets the distance from the pointer
  */
@@ -1400,6 +1476,61 @@ static int aiL_getdistance( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, vect_dist(v, &cur_pilot->solid->pos));
+   return 1;
+}
+
+/*
+ * @brief gets the distance from the pointer perpendicular to the current pilot's flight vector
+ *
+ *  @luaparam target
+ *  @luareturn offset_distance
+ *  luafunction flyby_dist(target)
+ */
+static int aiL_getflybydistance( lua_State *L )
+{
+   Vector2d *v;
+   Vector2d perp_motion_unit, offset_vect;
+   LuaVector *lv;
+   Pilot *pilot;
+   unsigned int n;
+   int offset_distance;
+
+   NLUA_MIN_ARGS(1);
+
+   /* vector as a parameter */
+   if (lua_isvector(L,1)) {
+      lv = lua_tovector(L,1);
+      v = &lv->vec;
+   }
+
+   else if (lua_islightuserdata(L,1))
+      v = lua_touserdata(L,1);
+   
+   /* pilot id as parameter */
+   else if (lua_isnumber(L,1)) {
+      n = (unsigned int) lua_tonumber(L,1);
+      pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
+      if (pilot==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+
+      v = &pilot->solid->pos;
+      
+      /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
+   }
+
+      /* wrong parameter */
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   vect_cset(&offset_vect, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );
+
+   vect_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid->vel)+M_PI_2);
+
+   offset_distance = vect_dot(&perp_motion_unit, &offset_vect);
+
+   lua_pushnumber(L, offset_distance);
    return 1;
 }
 
@@ -2079,6 +2210,170 @@ static int aiL_iface( lua_State *L )
    return 1;
 }
 
+/*
+ * @brief calculates the direction that the target is relative to the current pilot facing.
+ *
+ *    @luaparam p Position or id of pilot to compare facing to
+ *    @luareturn The facing offset to the target (in degrees).
+ * @luafunc dir( p )
+ * 
+ */
+static int aiL_dir( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *lv;
+   Vector2d sv, tv; /* get the position to face */
+   Pilot* p;
+   double d, mod, diff;
+   unsigned int id;
+   int n;
+
+   /* Get first parameter, aka what to face. */
+   n  = -2;
+   lv = NULL;
+   if (lua_isnumber(L,1)) {
+      d = (double)lua_tonumber(L,1);
+      if (d < 0.)
+         n = -1;
+      else {
+         id = (unsigned int)d;
+         p = pilot_get(id);
+         if (p==NULL) { 
+            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+            return 0;
+         }
+         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
+      }
+   }
+   else if (lua_isvector(L,1))
+      lv = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER(L);
+
+   mod = 10;
+
+   /* Check if must invert. */
+   if (lua_gettop(L) > 1) {
+      if (lua_isboolean(L,2) && lua_toboolean(L,2))
+         mod *= -1;
+   }
+
+   vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
+
+   if (lv==NULL) /* target is dynamic */
+      diff = angle_diff(cur_pilot->solid->dir,
+            (n==-1) ? VANGLE(sv) :
+            vect_angle(&sv, &tv));
+   else /* target is static */
+      diff = angle_diff( cur_pilot->solid->dir,   
+            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
+            vect_angle(&cur_pilot->solid->pos, &lv->vec));
+
+
+   /* Return angle in degrees away from target. */
+   lua_pushnumber(L, diff*180./M_PI);
+   return 1;
+}
+
+/*
+ * @brief calculates angle between pilot facing and intercept-course to target.
+ *
+ *    @luaparam p Position or id of pilot to compare facing to
+ *    @luareturn The facing offset to intercept-course to the target (in degrees).
+ * @luafunc dir( p )
+ */
+static int aiL_idir( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *lv;
+   Vector2d drift, reference_vector; /* get the position to face */
+   Pilot* p;
+   double d, diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
+   unsigned int id;
+   int n;
+   double speedmap;
+   /*char announcebuffer[255] = " ", announcebuffer2[128];*/
+   int degreecount;
+
+   /* Get first parameter, aka what to face. */
+   n  = -2;
+   lv = NULL;
+   if (lua_isnumber(L,1)) {
+      d = (double)lua_tonumber(L,1);
+      if (d < 0.)
+         n = -1;
+      else {
+         id = (unsigned int)d;
+         p = pilot_get(id);
+         if (p==NULL) { 
+            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+            return 0;
+         }
+      }
+   }
+   else if (lua_isvector(L,1))
+      lv = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER(L);
+
+   /*establish the current pilot velocity and position vectors */
+   vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+
+   /*establish the in-line coordinate reference*/
+   vect_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
+
+   /*break down the the velocity vectors of both craft into uv coordinates */
+   vect_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
+
+   heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
+   
+   
+   /*now figure out what to do*/
+
+    /* are we pointing anywhere inside the correct UV quadrant? */
+    /* if we're outside the correct UV quadrant, we need to get into it ASAP */
+    /* Otherwise match velocities and approach*/
+    if(fabs(heading_offset_azimuth) < M_PI_2)
+    {
+
+
+        /*This indicates we're in the correct plane*/
+
+        /*1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
+        /* there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
+        number will give a more dramatic 'lead' */
+        speedmap = -1*copysign(1 - 1 / (fabs(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+
+        diff = angle_diff(heading_offset_azimuth, speedmap);
+   
+     }
+    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
+    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
+        but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
+    else
+    {
+      /* signal that we're not in a productive direction for thrusting */
+      diff = M_PI;
+      degreecount = heading_offset_azimuth*180/M_PI;
+      
+    }
+
+
+   /* Return angle in degrees away from target. */
+   lua_pushnumber(L, diff*180./M_PI);
+   return 1;
+}
+
+/*
+ *@brief: returns the offset between the pilot's current direction of travel and the pilot's current facing
+ *
+ *@luafunc drift_facing( p )
+ */
+static int aiL_drift_facing( lua_State *L )
+{
+    double drift;
+    drift = angle_diff(VANGLE(cur_pilot->solid->vel), cur_pilot->solid->dir);
+    lua_pushnumber(L, drift*180./M_PI);
+    return 1;
+}
 
 /*
  * brakes the pilot
@@ -2099,6 +2394,8 @@ static int aiL_brake( lua_State *L )
 
    return 0;
 }
+
+
 
 /*
  * returns the nearest friendly planet's position to the pilot
@@ -2527,8 +2824,11 @@ static int aiL_weapSet( lua_State *L )
 }
 
 
-/*
- * returns true if the pilot has turrets
+/**
+ * @brief Does the pilot have turrets.?
+ *
+ *    @luareturn true if the pilot has turrets
+ * @luafunc hasturrets()
  */
 static int aiL_hasturrets( lua_State *L )
 {
@@ -2537,8 +2837,10 @@ static int aiL_hasturrets( lua_State *L )
 }
 
 
-/*
- * makes the pilot shoot
+/**
+ * @brief Makes the pilot shoot
+ *
+ * @luafunc shoot( secondary, firemode )
  */
 static int aiL_shoot( lua_State *L )
 {
@@ -2571,6 +2873,73 @@ static int aiL_getenemy( lua_State *L )
 
    if (p==0) /* No enemy found */
       return 0;
+
+   lua_pushnumber(L,p);
+   return 1;
+}
+
+/*
+ * @brief gets the nearest enemy within specified size bounds
+ *
+ *  @luaparam LB Lower size bound
+ *  @luaparam UB upper size bound
+ *  @luafunc getenemy_size( LB, UP)
+ */
+static int aiL_getenemy_size( lua_State *L )
+{
+   unsigned int p;
+   unsigned int LB, UB;
+
+   NLUA_MIN_ARGS(2);
+
+   LB = luaL_checklong(L,1);
+   UB = luaL_checklong(L,2);
+
+   if (LB > UB) {
+      NLUA_ERROR(L, "Invalid Bounds");
+      return 0;
+   }
+
+   p = pilot_getNearestEnemy_size(cur_pilot, LB, UB);
+
+   if (p==0) /* No enemy found */
+      return 0;
+
+   lua_pushnumber(L,p);
+   return 1;
+}
+
+
+/*
+ * @brief gets the nearest enemy within specified heuristic
+ *
+ *  @luaparam Mass goal mass map (0-1)
+ *  @luaparam DPS goal DPS map (0-1)
+ *  @luaparam HP goal HP map (0-1)
+ *  @luapa
+ *  @luareturn the best fitting target
+ *  @luafunc getenemy_heuristic( Mass, DPS, HP, range )
+ */
+static int aiL_getenemy_heuristic( lua_State *L )
+{
+
+   unsigned int p;
+   double mass_factor = 0, health_factor = 0, damage_factor = 0, range_factor = 0;
+   NLUA_MIN_ARGS(4);
+
+   mass_factor = luaL_checklong(L,1);
+   health_factor = luaL_checklong(L,2);
+   damage_factor = luaL_checklong(L,3);
+/*   if (lua_isnumber(L,4))*/
+      range_factor = luaL_checklong(L,4);
+
+
+   p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, (double) (1/range_factor));
+
+   if (p==0) /* No enemy found */
+   {
+      return 0;
+   }
 
    lua_pushnumber(L,p);
    return 1;
@@ -2654,6 +3023,83 @@ static int aiL_canboard( lua_State *L )
    lua_pushboolean(L, !pilot_isFlag(p, PILOT_BOARDED));
    return 1;
 }
+
+/**
+ * @brief lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
+ *
+ * @param pilot_ID the ID of the pilot whose mass we will compare   
+ *    @luareturn A number from 0 to 1 mapping the relative masses
+ * luafunc relsize()
+ */
+static int aiL_relsize( lua_State *L )
+{
+   unsigned int id;
+   Pilot *p;
+
+   /* Get the pilot. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+    lua_pushnumber(L, pilot_relsize(cur_pilot, p));
+   
+    return 1;
+}
+
+
+/**
+ * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
+ *
+ * @param pilot_ID the ID of the pilot whose DPS we will compare   
+ *    @luareturn A number from 0 to 1 mapping the relative DPS's
+ * luafunc reldps()
+ */
+static int aiL_reldps( lua_State *L )
+{
+   unsigned int id;
+   Pilot *p;
+
+   /* Get the pilot. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+    lua_pushnumber(L, pilot_reldps(cur_pilot, p));
+   
+    return 1;
+}
+
+
+/**
+ * @brief Gets the relative HP(total shields and armor) between the current pilot and the specified target
+ *
+ * @param pilot_ID the ID of the pilot whose HP we will compare   
+ *    @luareturn A number from 0 to 1 mapping the relative HPs
+ * relhp()
+ */
+static int aiL_relhp( lua_State *L )
+{   unsigned int id;
+   Pilot *p;
+
+   /* Get the pilot. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+    lua_pushnumber(L, pilot_relhp(cur_pilot, p));
+   
+    return 1;
+}
+
 
 
 /**
@@ -2839,6 +3285,8 @@ static int aiL_sysradius( lua_State *L )
    lua_pushnumber( L, cur_system->radius );
    return 1;
 }
+
+
 
 
 /**

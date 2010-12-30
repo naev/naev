@@ -916,6 +916,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    xmlNodePtr node;
    char *buf;
    double C, area;
+   int l;
 
    /* Defaults */
    temp->u.blt.spfx_armour    = -1;
@@ -935,6 +936,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.blt.cpu);
       xmlr_float(node,"heatup",temp->u.blt.heatup);
       xmlr_float(node,"track",temp->u.blt.track);
+      xmlr_float(node,"swivel",temp->u.blt.swivel);
       if (xml_isNode(node,"range")) {
          buf = xml_nodeProp(node,"blowup");
          if (buf != NULL) {
@@ -1007,6 +1009,9 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.blt.delay   /= 1000.;
    temp->u.blt.damage  *= temp->u.blt.delay;
+   temp->u.blt.swivel  *= M_PI/180.;
+   if (outfit_isTurret(temp))
+      temp->u.blt.swivel = M_PI;
    /*
     *         dT Mthermal - Qweap
     * Hweap = ----------------------
@@ -1024,7 +1029,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1041,6 +1046,11 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
          temp->u.blt.range,
          temp->u.blt.heatup);
+   if (!outfit_isTurret(temp)) {
+      snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "\n%.1f degree swivel",
+         temp->u.blt.swivel*180./M_PI );
+   }
 
 
 #define MELEMENT(o,s) \
@@ -1057,7 +1067,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
    MELEMENT(temp->u.blt.heatup==0.,"heatup");
-   MELEMENT(outfit_isTurret(temp) && (temp->u.blt.track==0.),"track");
+   MELEMENT(((temp->u.blt.swivel > 0.) || outfit_isTurret(temp)) && (temp->u.blt.track==0.),"track");
 #undef MELEMENT
 }
 
