@@ -1101,11 +1101,14 @@ static void input_clickevent( SDL_Event* event )
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
    if (d < pow2(r)) {
       player_targetSet( pid );
-      if (pid == opid && pid != PLAYER_ID) {
-         if (! pilot_isDisabled(p))
-            player_hail();
-         else
+
+      /* Apply an action if already selected. */
+      if (!pilot_isFlag(player.p, PILOT_DEAD) &&
+            (pid == opid) && (pid != PLAYER_ID)) {
+         if (pilot_isDisabled(p))
             player_board();
+         else
+            player_hail();
       }
       return;
    }
