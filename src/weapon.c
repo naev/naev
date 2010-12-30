@@ -1156,14 +1156,10 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
             rdir = angle_diff(lead_angle, VANGLE(relative_location));
          else
             rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
-     
-         /* Clean up angle. */
-         if (rdir < 0.)
-            rdir += 2.*M_PI;
       }
 
       /* Calculate bounds. */
-      off = angle_diff( dir, rdir );
+      off = angle_diff( rdir, dir );
       if (fabs(off) > swivel) {
          if (off > 0.)
             rdir = dir - swivel;
