@@ -468,7 +468,7 @@ void spfx_begin( const double dt )
       inc = dt*100000.;
 
       /* the shake decays over time */
-      shake_rad -= (shake_rad / SHAKE_MAX) * SHAKE_DECAY*dt;
+      shake_rad -= SHAKE_DECAY*dt;
       if (shake_rad < 0.) {
          shake_rad = 0.;
          shake_off = 1;
@@ -496,8 +496,7 @@ void spfx_begin( const double dt )
    }
 
    /* set the new viewport */
-   glLoadIdentity();
-   glOrtho( x, SCREEN_W+x, y, SCREEN_H+y, -1., 1. );
+   gl_viewport( x, y, SCREEN_W, SCREEN_H );
    shake_set = 1;
 }
 
