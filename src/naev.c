@@ -29,7 +29,6 @@
 
 #if HAS_POSIX
 #include <time.h>
-#include <unistd.h>
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING)
@@ -669,6 +668,9 @@ static void fps_control (void)
 {
    double delay;
    double fps_max;
+#if HAS_POSIX
+   struct timespec ts;
+#endif /* HAS_POSIX */
 
    /* dt in s */
    real_dt  = fps_elapsed();
@@ -680,7 +682,9 @@ static void fps_control (void)
       if (real_dt < fps_max) {
          delay    = fps_max - real_dt;
 #if HAS_POSIX
-         usleep( delay * 1000000 );
+         ts.tv_sec  = floor( delay );
+         ts.tv_nsec = fmod( delay, 1. ) * 1e9;
+         nanosleep( &ts, NULL );
 #else /* HAS_POSIX */
          SDL_Delay( (unsigned int)(delay * 1000) );
 #endif /* HAS_POSIX */
