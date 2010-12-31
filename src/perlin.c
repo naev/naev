@@ -59,9 +59,6 @@
 
 
 #define SIMPLEX_SCALE 0.5f
-#define TCOD_NOISE_MAX_OCTAVES            4 /**< Default octaves for noise. */
-#define TCOD_NOISE_DEFAULT_HURST          0.5 /**< Default hurst for noise. */
-#define TCOD_NOISE_DEFAULT_LACUNARITY     2. /**< Default lacunarity for noise. */
 
 
 /**
@@ -80,7 +77,7 @@ struct perlin_data_s {
    /* fractal stuff */
    float H; /**< Not sure. */
    float lacunarity; /**< Not sure. */
-   float exponent[TCOD_NOISE_MAX_OCTAVES]; /**< Not sure. */
+   float exponent[NOISE_MAX_OCTAVES]; /**< Not sure. */
 };
 
 
@@ -260,7 +257,7 @@ perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
    f = 1.;
    pdata->H = hurst;
    pdata->lacunarity = lacunarity;
-   for(i=0; i<TCOD_NOISE_MAX_OCTAVES; i++) {
+   for(i=0; i<NOISE_MAX_OCTAVES; i++) {
       /*exponent[i] = powf(f, -H); */
       pdata->exponent[i] = 1. / f;
       f *= lacunarity;
@@ -488,7 +485,7 @@ float noise_turbulence1( perlin_data_t* pdata, float f[1], int octaves )
 
 
 
-#define TCOD_NOISE_SIMPLEX_GRADIENT_1D(n,h,x) { float grad; h &= 0xF; grad=1.0f+(h & 7); if ( h & 8 ) grad = -grad; n = grad * x; }
+#define NOISE_SIMPLEX_GRADIENT_1D(n,h,x) { float grad; h &= 0xF; grad=1.0f+(h & 7); if ( h & 8 ) grad = -grad; n = grad * x; }
 
 
 /**
@@ -510,10 +507,10 @@ float noise_simplex1( perlin_data_t* pdata, float f[1] )
    t0    = t0*t0;
    t1    = t1*t1;
    i0    = pdata->map[i0&0xFF];
-   TCOD_NOISE_SIMPLEX_GRADIENT_1D( n0, i0, x0 );
+   NOISE_SIMPLEX_GRADIENT_1D( n0, i0, x0 );
    n0   *= t0*t0;
    i1    = pdata->map[i1&0xFF];
-   TCOD_NOISE_SIMPLEX_GRADIENT_1D( n1, i1, x1 );
+   NOISE_SIMPLEX_GRADIENT_1D( n1, i1, x1 );
    n1   *= t1*t1;
 
    return 0.25f * (n0+n1);
@@ -553,8 +550,8 @@ float* noise_genRadarInt( const int w, const int h, float rug )
 
    /* pretty default values */
    octaves     = 3;
-   hurst       = TCOD_NOISE_DEFAULT_HURST;
-   lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
+   hurst       = NOISE_DEFAULT_HURST;
+   lacunarity  = NOISE_DEFAULT_LACUNARITY;
 
    /* create noise and data */
    noise       = noise_new( 2, hurst, lacunarity );
@@ -656,8 +653,8 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 
    /* pretty default values */
    octaves     = 3;
-   hurst       = TCOD_NOISE_DEFAULT_HURST;
-   lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
+   hurst       = NOISE_DEFAULT_HURST;
+   lacunarity  = NOISE_DEFAULT_LACUNARITY;
    zoom        = rug * ((float)h/768.)*((float)w/1024.);
 
    /* create noise and data */
@@ -745,8 +742,8 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
 
    /* pretty default values */
    octaves     = 3;
-   hurst       = TCOD_NOISE_DEFAULT_HURST;
-   lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
+   hurst       = NOISE_DEFAULT_HURST;
+   lacunarity  = NOISE_DEFAULT_LACUNARITY;
    zoom        = rug;
 
    /* create noise and data */

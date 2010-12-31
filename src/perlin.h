@@ -2,6 +2,11 @@
 #define _TCOD_PERLIN_H
 
 
+#define NOISE_MAX_OCTAVES            4 /**< Default octaves for noise. */
+#define NOISE_DEFAULT_HURST          0.5 /**< Default hurst for noise. */
+#define NOISE_DEFAULT_LACUNARITY     2. /**< Default lacunarity for noise. */
+
+
 struct perlin_data_s;
 typedef struct perlin_data_s perlin_data_t;
 
