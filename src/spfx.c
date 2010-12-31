@@ -464,35 +464,29 @@ void spfx_begin( const double dt )
       haptic_lastUpdate -= dt;
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   if (!paused) {
-      inc = dt*100000.;
+   inc = dt*100000.;
 
-      /* the shake decays over time */
-      shake_rad -= SHAKE_DECAY*dt;
-      if (shake_rad < 0.) {
-         shake_rad = 0.;
-         shake_off = 1;
-         x = 0.;
-         y = 0.;
-      }
-      else {
-         /* calculate new position */
-         vect_cadd( &shake_pos, shake_vel.x * inc, shake_vel.y * inc );
-
-         if (VMOD(shake_pos) > shake_rad) { /* change direction */
-            vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
-            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad,
-                  -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
-         }
-
-         /* Set position. */
-         x = shake_pos.x;
-         y = shake_pos.y;
-      }
-   }
-   else {
+   /* the shake decays over time */
+   shake_rad -= SHAKE_DECAY*dt;
+   if (shake_rad < 0.) {
+      shake_rad = 0.;
+      shake_off = 1;
       x = 0.;
       y = 0.;
+   }
+   else {
+      /* calculate new position */
+      vect_cadd( &shake_pos, shake_vel.x * inc, shake_vel.y * inc );
+
+      if (VMOD(shake_pos) > shake_rad) { /* change direction */
+         vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
+         vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad,
+               -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
+      }
+
+      /* Set position. */
+      x = shake_pos.x;
+      y = shake_pos.y;
    }
 
    /* set the new viewport */
@@ -548,7 +542,7 @@ void spfx_shake( double mod )
  */
 void spfx_getShake( double *x, double *y )
 {
-   if (shake_off || paused) {
+   if (shake_off) {
       *x = 0.;
       *y = 0.;
    }
