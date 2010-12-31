@@ -29,6 +29,7 @@
 
 #if HAS_POSIX
 #include <time.h>
+#include <unistd.h>
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING)
@@ -678,7 +679,11 @@ static void fps_control (void)
       fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
          delay    = fps_max - real_dt;
+#if HAS_POSIX
+         usleep( delay * 1000000 );
+#else /* HAS_POSIX */
          SDL_Delay( (unsigned int)(delay * 1000) );
+#endif /* HAS_POSIX */
          fps_dt  += delay; /* makes sure it displays the proper fps */
       }
    }
