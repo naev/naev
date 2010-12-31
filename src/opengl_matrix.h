@@ -33,6 +33,9 @@ void gl_matrixPop (void);
 /*
  * Matrix manipulation.
  */
+void gl_matrixIdentity (void);
+void gl_matrixOrtho( double left, double right,
+      double bottom, double top, double nearVal, double farVal );
 void gl_matrixTranslate( double x, double y );
 void gl_matrixScale( double x, double y );
 void gl_matrixRotate( double a );

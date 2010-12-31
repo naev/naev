@@ -67,6 +67,33 @@ void gl_matrixPush (void)
 
 
 /**
+ * @brief Loads the identity matrix.
+ */
+void gl_matrixIdentity (void)
+{
+   if (has_glsl) {
+   }
+   else {
+      glLoadIdentity();
+   }
+}
+
+
+/**
+ * @brief Sets the matrix as orthogonal.
+ */
+void gl_matrixOrtho( double left, double right,
+      double bottom, double top, double nearVal, double farVal )
+{
+   if (has_glsl) {
+   }
+   else {
+      glOrtho( left, right, bottom, top, nearVal, farVal );
+   }
+}
+
+
+/**
  * @brief Translates the matrix.
  *
  *    @param x X to translate by.
@@ -93,7 +120,7 @@ void gl_matrixScale( double x, double y )
    if (has_glsl) {
    }
    else {
-      glScaled( x, y, 0. );
+      glScaled( x, y, 1. );
    }
 }
 

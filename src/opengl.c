@@ -712,9 +712,9 @@ double gl_setScale( double scalefactor )
  */
 void gl_viewport( int x, int y, int w, int h )
 {
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho( 0., /* Left edge. */
+   gl_matrixMode(GL_PROJECTION);
+   gl_matrixIdentity();
+   gl_matrixOrtho( 0., /* Left edge. */
             gl_screen.nw, /* Right edge. */
             0., /* Bottom edge. */
             gl_screen.nh, /* Top edge. */
@@ -732,7 +732,7 @@ void gl_viewport( int x, int y, int w, int h )
 
    /* Take into account posible scaling. */
    if (gl_screen.scale != 1.)
-      glScaled( gl_screen.wscale, gl_screen.hscale, 1. );
+      gl_matrixScale( gl_screen.wscale, gl_screen.hscale );
 }
 
 
