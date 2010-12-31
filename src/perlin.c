@@ -58,6 +58,7 @@
 #include "nfile.h"
 
 
+#define SIMPLEX_SCALE 0.5f
 #define TCOD_NOISE_MAX_OCTAVES            4 /**< Default octaves for noise. */
 #define TCOD_NOISE_DEFAULT_HURST          0.5 /**< Default hurst for noise. */
 #define TCOD_NOISE_DEFAULT_LACUNARITY     2. /**< Default lacunarity for noise. */
@@ -72,7 +73,7 @@
 /**
  * @brief Structure used for generating noise.
  */
-typedef struct perlin_data_s {
+struct perlin_data_s {
    int ndim; /**< Dimension of the noise. */
    unsigned char map[256]; /**< Randomized map of indexes into buffer */
    float buffer[256][3];   /**< Random 256 x 3 buffer */
@@ -80,7 +81,7 @@ typedef struct perlin_data_s {
    float H; /**< Not sure. */
    float lacunarity; /**< Not sure. */
    float exponent[TCOD_NOISE_MAX_OCTAVES]; /**< Not sure. */
-} perlin_data_t; /**< Internal perlin noise data. */
+};
 
 
 /**
@@ -102,9 +103,6 @@ typedef struct thread_args_ {
 /*
  * prototypes
  */
-/* perlin data handling. */
-static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity );
-static void TCOD_noise_delete( perlin_data_t* noise );
 /* normalizing. */
 static void normalize3( float f[3] );
 static void normalize2( float f[2] );
@@ -112,12 +110,7 @@ static void normalize2( float f[2] );
 static float lattice3( perlin_data_t *pdata, int ix, float fx,
       int iy, float fy, int iz, float fz );
 static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy );
-/* basic perlin noise */
-static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] );
-static float TCOD_noise_get2( perlin_data_t* pdata, float f[2] );
-/* turbulence */
-static float TCOD_noise_turbulence3( perlin_data_t* noise, float f[3], int octaves );
-static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octaves );
+static float lattice1( perlin_data_t *pdata, int ix, float fx );
 /*Threading */
 static int noise_genNebulaMap_thread( void *data );
 
@@ -125,7 +118,7 @@ static int noise_genNebulaMap_thread( void *data );
 /**
  * @brief Not sure what it does.
  */
-static __inline float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy,
+static float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy,
 int iz, float fz )
 {
    int nIndex;
@@ -158,6 +151,23 @@ static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy 
 
    value  = pdata->buffer[nIndex][0] * fx;
    value += pdata->buffer[nIndex][1] * fy;
+
+   return value;
+}
+
+
+/**
+ * @brief Not sure what it does.
+ */
+static float lattice1( perlin_data_t *pdata, int ix, float fx )
+{
+   int nIndex;
+   float value;
+
+   nIndex = 0;
+   nIndex = pdata->map[(nIndex + ix) & 0xFF];
+
+   value  = pdata->buffer[nIndex][0] * fx;
 
    return value;
 }
@@ -206,7 +216,7 @@ static void normalize2( float f[2] )
  *    @param hurst
  *    @param lacunarity
  */
-static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity )
+perlin_data_t* noise_new( int dim, float hurst, float lacunarity )
 {
    perlin_data_t *pdata;
    int i, j;
@@ -236,10 +246,13 @@ static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity )
       }
    }
    else {
-      i = 0;
+      for (i=0; i<256; i++) {
+         pdata->map[i] = (unsigned char)i;
+         pdata->buffer[i][0] = 1.;
+      }
    }
 
-   while(--i) {
+   while (--i) {
       j = RNG(0, 255);
       SWAP(pdata->map[i], pdata->map[j], tmp);
    }
@@ -265,7 +278,7 @@ static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity )
  *    @param pdata Perlin data to use.
  *    @param f Position of the noise to get.
  */
-static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
+float noise_get3( perlin_data_t* pdata, float f[3] )
 {
    int n[3] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
    float r[3] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
@@ -322,7 +335,7 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
  *    @param pdata Perlin data to use.
  *    @param f Position of the noise to get.
  */
-static float TCOD_noise_get2( perlin_data_t* pdata, float f[2] )
+float noise_get2( perlin_data_t* pdata, float f[2] )
 {
    int n[2] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
    float r[2] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
@@ -355,17 +368,46 @@ static float TCOD_noise_get2( perlin_data_t* pdata, float f[2] )
 
 
 /**
+ * @brief Gets some 1D Perlin noise from the data.
+ *
+ * Somewhat optimized for speed, probably can't get optimized much more.
+ *
+ *    @param pdata Perlin data to use.
+ *    @param f Position of the noise to get.
+ */
+float noise_get1( perlin_data_t* pdata, float f[1] )
+{
+   int n[1] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
+   float r[1] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
+   float w[1] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
+   float value __attribute__ ((aligned (32)));
+   float v[2] __attribute__ ((aligned (32)));
+
+   n[0] = FLOOR(f[0]);
+
+   r[0] = f[0] - n[0];
+
+   w[0] = CUBIC(r[0]);
+
+   v[0] = lattice1(pdata,n[0],   r[0]   );
+   v[1] = lattice1(pdata,n[0]+1, r[0]-1 );
+   value = LERP( v[0], v[1], w[1] );
+
+   return CLAMP(-0.99999f, 0.99999f, value);
+}
+
+
+/**
  * @brief Gets 3d Turbulence noise for a position.
  *
- *    @param noise Perlin data to generate noise from.
+ *    @param pdata Perlin data to generate noise from.
  *    @param f Position of the noise.
  *    @param octaves Octaves to use.
  *    @return The noise level at the position.
  */
-static float TCOD_noise_turbulence3( perlin_data_t* noise, float f[3], int octaves )
+float noise_turbulence3( perlin_data_t* pdata, float f[3], int octaves )
 {
    float tf[3];
-   perlin_data_t *pdata=(perlin_data_t *)noise;
    /* Initialize locals */
    float value = 0;
    int i;
@@ -377,7 +419,7 @@ static float TCOD_noise_turbulence3( perlin_data_t* noise, float f[3], int octav
    /* Inner loop of spectral construction, where the fractal is built */
    for(i=0; i<octaves; i++)
    {
-      value += ABS(TCOD_noise_get3(noise,tf)) * pdata->exponent[i];
+      value += ABS(noise_get3(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
       tf[1] *= pdata->lacunarity;
       tf[2] *= pdata->lacunarity;
@@ -390,15 +432,14 @@ static float TCOD_noise_turbulence3( perlin_data_t* noise, float f[3], int octav
 /**
  * @brief Gets 2d Turbulence noise for a position.
  *
- *    @param noise Perlin data to generate noise from.
+ *    @param pdata Perlin data to generate noise from.
  *    @param f Position of the noise.
  *    @param octaves Octaves to use.
  *    @return The noise level at the position.
  */
-static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octaves )
+float noise_turbulence2( perlin_data_t* pdata, float f[2], int octaves )
 {
    float tf[2];
-   perlin_data_t *pdata=(perlin_data_t *)noise;
    /* Initialize locals */
    float value = 0;
    int i;
@@ -409,7 +450,7 @@ static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octav
    /* Inner loop of spectral construction, where the fractal is built */
    for(i=0; i<octaves; i++)
    {
-      value += ABS(TCOD_noise_get2(noise,tf)) * pdata->exponent[i];
+      value += ABS(noise_get2(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
       tf[1] *= pdata->lacunarity;
    }
@@ -419,13 +460,75 @@ static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octav
 
 
 /**
+ * @brief Gets 1d Turbulence noise for a position.
+ *
+ *    @param pdata Perlin data to generate noise from.
+ *    @param f Position of the noise.
+ *    @param octaves Octaves to use.
+ *    @return The noise level at the position.
+ */
+float noise_turbulence1( perlin_data_t* pdata, float f[1], int octaves )
+{
+   float tf[1];
+   /* Initialize locals */
+   float value = 0;
+   int i;
+
+   tf[0] = f[0];
+
+   /* Inner loop of spectral construction, where the fractal is built */
+   for(i=0; i<octaves; i++)
+   {
+      value += ABS(noise_get2(pdata,tf)) * pdata->exponent[i];
+      tf[0] *= pdata->lacunarity;
+   }
+
+   return CLAMP(-0.99999f, 0.99999f, value);
+}
+
+
+
+#define TCOD_NOISE_SIMPLEX_GRADIENT_1D(n,h,x) { float grad; h &= 0xF; grad=1.0f+(h & 7); if ( h & 8 ) grad = -grad; n = grad * x; }
+
+
+/**
+ * @brief Gets 1D simplex noise for a position.
+ *
+ *    @param pdata Perlin data to generate noise from.
+ *    @param f Position of the noise.
+ */
+float noise_simplex1( perlin_data_t* pdata, float f[1] )
+{
+   int i0   = (int)FLOOR( f[0]*SIMPLEX_SCALE );
+   int i1   = i0+1;
+   float x0 = f[0]*SIMPLEX_SCALE - i0;
+   float x1 = x0 - 1.0f;
+   float t0 = 1.0f - x0*x0;
+   float t1 = 1.0f - x1*x1;
+   float n0,n1;
+
+   t0    = t0*t0;
+   t1    = t1*t1;
+   i0    = pdata->map[i0&0xFF];
+   TCOD_NOISE_SIMPLEX_GRADIENT_1D( n0, i0, x0 );
+   n0   *= t0*t0;
+   i1    = pdata->map[i1&0xFF];
+   TCOD_NOISE_SIMPLEX_GRADIENT_1D( n1, i1, x1 );
+   n1   *= t1*t1;
+
+   return 0.25f * (n0+n1);
+
+}
+
+
+/**
  * @brief Frees some noise data.
  *
  *    @param noise Noise data to free.
  */
-void TCOD_noise_delete( perlin_data_t* noise )
+void noise_delete( perlin_data_t* pdata )
 {
-   free(noise);
+   free(pdata);
 }
 
 
@@ -454,10 +557,10 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
 
    /* create noise and data */
-   noise       = TCOD_noise_new( 2, hurst, lacunarity );
+   noise       = noise_new( 2, hurst, lacunarity );
    map         = malloc(sizeof(float)*w*h);
    if (map == NULL) {
-      TCOD_noise_delete( noise );
+      noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }
@@ -471,7 +574,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
          f[0] = rug * (float)x / (float)w;
 
          /* Get the 2d noise. */
-         value = TCOD_noise_get2( noise, f );
+         value = noise_get2( noise, f );
 
          /* Set the value to [0,1]. */
          map[y*w + x] = (value + 1.) / 2.;
@@ -479,7 +582,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    }
 
    /* Clean up */
-   TCOD_noise_delete( noise );
+   noise_delete( noise );
 
    /* Results */
    return map;
@@ -509,7 +612,7 @@ static int noise_genNebulaMap_thread( void *data )
       for (x=0; x<args->w; x++) {
          f[0] = args->zoom * (float)x / (float)args->w;
 
-         value = TCOD_noise_turbulence3( args->noise, f, args->octaves );
+         value = noise_turbulence3( args->noise, f, args->octaves );
          if (max < value)
             max = value;
 
@@ -558,7 +661,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    zoom        = rug * ((float)h/768.)*((float)w/1024.);
 
    /* create noise and data */
-   noise       = TCOD_noise_new( 3, hurst, lacunarity );
+   noise       = noise_new( 3, hurst, lacunarity );
    nebula     = malloc(sizeof(float)*w*h*n);
    if (nebula == NULL) {
       WARN("Out of memory!");
@@ -609,7 +712,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
             nebula[z*w*h + y*w + x] += value;
 
    /* Clean up */
-   TCOD_noise_delete( noise );
+   noise_delete( noise );
    free(_max);
 
    /* Results */
@@ -647,7 +750,7 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
    zoom        = rug;
 
    /* create noise and data */
-   noise       = TCOD_noise_new( 2, hurst, lacunarity );
+   noise       = noise_new( 2, hurst, lacunarity );
    nebula     = malloc(sizeof(float)*w*h);
    if (nebula == NULL) {
       WARN("Out of memory!");
@@ -667,7 +770,7 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
          f[0] = zoom * (float)x / (float)w;
 
          /* Get the 2d noise. */
-         value = TCOD_noise_turbulence2( noise, f, octaves );
+         value = noise_turbulence2( noise, f, octaves );
 
          /* Make value also depend on distance from center */
          value *= (d - 1. - sqrtf( (float)((x-hw)*(x-hw) + (y-hh)*(y-hh)) )) / d;
@@ -684,7 +787,7 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
    }
 
    /* Clean up */
-   TCOD_noise_delete( noise );
+   noise_delete( noise );
 
    /* Results */
    return nebula;
