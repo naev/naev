@@ -27,6 +27,10 @@
 /* global */
 #include <string.h> /* strdup */
 
+#if HAS_POSIX
+#include <time.h>
+#endif /* HAS_POSIX */
+
 #if defined(HAVE_FENV_H) && defined(DEBUGGING)
 #include <fenv.h>
 #endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
@@ -138,6 +142,7 @@ static void window_caption (void);
 static void debug_sigInit (void);
 static void debug_sigClose (void);
 /* update */
+static void fps_init (void);
 static double fps_elapsed (void);
 static void fps_control (void);
 static void update_all (void);
@@ -315,7 +320,7 @@ int main( int argc, char** argv )
    /* Force a minimum delay with loading screen */
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
-   time_ms = SDL_GetTicks(); /* initializes the time_ms */
+   fps_init(); /* initializes the time_ms */
    /*
     * main loop
     */
@@ -605,6 +610,24 @@ void main_loop (void)
 }
 
 
+#if HAS_POSIX
+static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
+static int use_posix_time; /**< Whether or not to use posix time. */
+#endif /* HAS_POSIX */
+/**
+ * @brief Initializes the fps engine.
+ */
+static void fps_init (void)
+{
+#if HAS_POSIX
+   use_posix_time = 1;
+   if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
+      return;
+   WARN("clock_gettime failed, disabling posix time.");
+   use_posix_time = 0;
+#endif /* HAS_POSIX */
+   time_ms  = SDL_GetTicks();
+}
 /**
  * @brief Gets the elapsed time.
  *
@@ -612,8 +635,22 @@ void main_loop (void)
  */
 static double fps_elapsed (void)
 {
-   unsigned int t;
    double dt;
+   unsigned int t;
+
+#if HAS_POSIX
+   struct timespec ts;
+
+   if (use_posix_time) {
+      if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
+         dt  = ts.tv_sec - global_time.tv_sec;
+         dt += (ts.tv_nsec - global_time.tv_nsec) / 1000000000.0;
+         memcpy( &global_time, &ts, sizeof(struct timespec) );
+         return dt;
+      }
+      WARN( "clock_gettime failed!" );
+   }
+#endif /* HAS_POSIX */
 
    t        = SDL_GetTicks();
    dt       = (double)(t - time_ms); /* Get the elapsed ms. */
