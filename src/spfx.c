@@ -43,7 +43,7 @@
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
 #define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
-#define SHAKE_VEL_MOD   0.0008 /**< Shake modifier. */
+#define SHAKE_VEL_MOD   0.00004 /**< Shake modifier. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
