@@ -138,6 +138,7 @@ static void window_caption (void);
 static void debug_sigInit (void);
 static void debug_sigClose (void);
 /* update */
+static double fps_elapsed (void);
 static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
@@ -283,10 +284,8 @@ int main( int argc, char** argv )
    if (sound_init()) WARN("Problem setting up sound!");
    music_choose("load");
 
-
    /* FPS stuff. */
    fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
-
 
    /* Misc graphics init */
    if (nebu_init() != 0) { /* Initializes the nebula */
@@ -607,20 +606,35 @@ void main_loop (void)
 
 
 /**
+ * @brief Gets the elapsed time.
+ *
+ *    @return The elapsed time from the last frame.
+ */
+static double fps_elapsed (void)
+{
+   unsigned int t;
+   double dt;
+
+   t        = SDL_GetTicks();
+   dt       = (double)(t - time_ms); /* Get the elapsed ms. */
+   dt      /= 1000.; /* Convert to seconds. */
+   time_ms  = t;
+
+   return dt;
+}
+
+
+/**
  * @brief Controls the FPS.
  */
 static void fps_control (void)
 {
-   unsigned int t;
    double delay;
    double fps_max;
 
    /* dt in s */
-   t        = SDL_GetTicks();
-   real_dt  = (double)(t - time_ms); /* Get the elapsed ms. */
-   real_dt /= 1000.; /* Convert to seconds. */
+   real_dt  = fps_elapsed();
    game_dt  = real_dt * dt_mod; /* Apply the modifier. */
-   time_ms  = t;
 
    /* if fps is limited */
    if (!conf.vsync && conf.fps_max != 0) {
