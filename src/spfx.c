@@ -450,7 +450,7 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
  */
 void spfx_begin( const double dt )
 {
-   GLdouble bx, by, x, y;
+   GLdouble x, y;
    double inc;
 
    /* Save cycles. */
@@ -464,15 +464,11 @@ void spfx_begin( const double dt )
       haptic_lastUpdate -= dt;
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   /* set defaults */
-   bx = SCREEN_W/2;
-   by = SCREEN_H/2;
-
    if (!paused) {
       inc = dt*100000.;
 
       /* the shake decays over time */
-      shake_rad -= SHAKE_DECAY*dt;
+      shake_rad -= (shake_rad / SHAKE_MAX) * SHAKE_DECAY*dt;
       if (shake_rad < 0.) {
          shake_rad = 0.;
          shake_off = 1;
@@ -489,6 +485,7 @@ void spfx_begin( const double dt )
                   -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
          }
 
+         /* Set position. */
          x = shake_pos.x;
          y = shake_pos.y;
       }
