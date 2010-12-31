@@ -1490,6 +1490,8 @@ void player_brokeHyperspace (void)
  */
 void player_afterburn (void)
 {
+   double afb_mod;
+
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
@@ -1500,9 +1502,11 @@ void player_afterburn (void)
 
    /** @todo fancy effect? */
    if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
+      afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player.p,PILOT_AFTERBURNER);
-      spfx_shake(player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX);
+      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
       if (toolkit_isOpen() || paused)
          player_soundPause();
    }
