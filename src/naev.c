@@ -99,25 +99,25 @@
 #define NAEV_INIT_DELAY 3000 /**< Minimum amount of time_ms to wait with loading screen */
 
 
-static int quit = 0; /**< For primary loop */
-static unsigned int time_ms = 0; /**< used to calculate FPS and movement. */
+static int quit               = 0; /**< For primary loop */
+static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static char short_version[64]; /**< Contains version. */
 static char human_version[256]; /**< Human readable version. */
-static glTexture *loading; /**< Loading screen. */
-static char *binary_path = NULL; /**< argv[0] */
+static glTexture *loading     = NULL; /**< Loading screen. */
+static char *binary_path      = NULL; /**< argv[0] */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
-static int fps_skipped = 0; /**< Skipped last frame? */
+static int fps_skipped        = 0; /**< Skipped last frame? */
 
 
 /*
  * FPS stuff.
  */
-static double fps_dt  = 1.; /**< Display fps accumulator. */
-static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
-static double real_dt = 0.; /**< Real deltatick. */
-const double fps_min = 1./50.; /**< Minimum fps to run at. */
-static double fps_x = 15.; /**< FPS X position. */
-static double fps_y = -15.; /**< FPS Y position. */
+static double fps_dt    = 1.; /**< Display fps accumulator. */
+static double game_dt   = 0.; /**< Current game deltatick (uses dt_mod). */
+static double real_dt   = 0.; /**< Real deltatick. */
+const double fps_min    = 1./50.; /**< Minimum fps to run at. */
+static double fps_x     =  15.; /**< FPS X position. */
+static double fps_y     = -15.; /**< FPS Y position. */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 static bfd *abfd      = NULL;
@@ -616,19 +616,19 @@ static void fps_control (void)
    double fps_max;
 
    /* dt in s */
-   t = SDL_GetTicks();
+   t        = SDL_GetTicks();
    real_dt  = (double)(t - time_ms); /* Get the elapsed ms. */
    real_dt /= 1000.; /* Convert to seconds. */
    game_dt  = real_dt * dt_mod; /* Apply the modifier. */
-   time_ms = t;
+   time_ms  = t;
 
    /* if fps is limited */
    if (!conf.vsync && conf.fps_max != 0) {
       fps_max = 1./(double)conf.fps_max;
       if (real_dt < fps_max) {
-         delay = fps_max - real_dt;
+         delay    = fps_max - real_dt;
          SDL_Delay( (unsigned int)(delay * 1000) );
-         fps_dt += delay; /* makes sure it displays the proper fps */
+         fps_dt  += delay; /* makes sure it displays the proper fps */
       }
    }
 }
