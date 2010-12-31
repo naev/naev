@@ -52,6 +52,7 @@
  * special hardcoded special effects
  */
 /* shake aka rumble */
+static int shake_set = 0; /**< Is shake set? */
 static double shake_rad = 0.; /**< Current shake radius (0 = no shake). */
 static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
@@ -453,6 +454,7 @@ void spfx_begin( const double dt )
    double inc;
 
    /* Save cycles. */
+   shake_set = 0;
    if (shake_off == 1)
       return;
 
@@ -469,8 +471,16 @@ void spfx_begin( const double dt )
    if (!paused) {
       inc = dt*100000.;
 
-      /* calculate new position */
-      if (shake_rad > 0.01) {
+      /* the shake decays over time */
+      shake_rad -= SHAKE_DECAY*dt;
+      if (shake_rad < 0.) {
+         shake_rad = 0.;
+         shake_off = 1;
+         x = 0.;
+         y = 0.;
+      }
+      else {
+         /* calculate new position */
          vect_cadd( &shake_pos, shake_vel.x * inc, shake_vel.y * inc );
 
          if (VMOD(shake_pos) > shake_rad) { /* change direction */
@@ -479,19 +489,8 @@ void spfx_begin( const double dt )
                   -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
          }
 
-         /* the shake decays over time */
-         shake_rad -= SHAKE_DECAY*dt;
-         if (shake_rad < 0.)
-            shake_rad = 0.;
-
          x = shake_pos.x;
          y = shake_pos.y;
-      }
-      else {
-         shake_rad = 0.;
-         shake_off = 1;
-         x = 0.;
-         y = 0.;
       }
    }
    else {
@@ -502,6 +501,7 @@ void spfx_begin( const double dt )
    /* set the new viewport */
    glLoadIdentity();
    glOrtho( x, SCREEN_W+x, y, SCREEN_H+y, -1., 1. );
+   shake_set = 1;
 }
 
 
@@ -513,7 +513,7 @@ void spfx_begin( const double dt )
 void spfx_end (void)
 {
    /* Save cycles. */
-   if (shake_off == 1)
+   if (shake_set == 0)
       return;
 
    /* set the new viewport */
