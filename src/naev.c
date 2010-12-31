@@ -621,6 +621,9 @@ static void fps_init (void)
 {
 #if HAS_POSIX
    use_posix_time = 1;
+   /* We must use clock_gettime here instead of gettimeofday mainly because this
+    * way we are not influenced by changes to the time source like say ntp which
+    * could skew up the dt calculations. */
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
    WARN("clock_gettime failed, disabling posix time.");
