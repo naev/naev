@@ -15,9 +15,8 @@
 #define SPFX_LAYER_FRONT   0 /**< Front spfx layer. */
 #define SPFX_LAYER_BACK    1 /**< Back spfx layer. */
 
-#define SHAKE_DECAY  70. /**< Rumble decay parameter */
-#define SHAKE_MAX    90. /** Rumblemax parameter */
-
+#define SHAKE_DECAY        0.7 /**< Rumble decay parameter */
+#define SHAKE_MAX          1.0 /**< Rumblemax parameter */
 
 /*
  * stack manipulation
