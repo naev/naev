@@ -544,8 +544,8 @@ void nebu_renderOverlay( const double dt )
       oy += sy;
    }
    gl_matrixPush();
-   gl_matrixTranslate( SCREEN_W/2.+ox, SCREEN_H/2.+oy );
-   gl_matrixScale( z, z );
+      gl_matrixTranslate( SCREEN_W/2.+ox, SCREEN_H/2.+oy );
+      gl_matrixScale( z, z );
 
    /*
     * Mask for area player can still see (partially)
