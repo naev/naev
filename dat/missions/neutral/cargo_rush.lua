@@ -89,7 +89,7 @@ function create()
     amount = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
     jumpreward = 1000
     distreward = 0.12
-    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod
+    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
     misn.setTitle(cargosize[tier] .. " cargo transport (" .. amount .. " tons of " .. cargo .. ")")
     misn.markerAdd(destsys, "computer")
