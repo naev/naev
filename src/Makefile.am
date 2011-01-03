@@ -50,6 +50,7 @@ naev_SOURCES = \
 	load.c \
 	log.c \
 	map.c \
+	map_find.c \
 	map_overlay.c \
 	md5.c \
 	menu.c \
@@ -178,6 +179,7 @@ naev_SOURCES = \
 	load.h \
 	log.h \
 	map.h \
+	map_find.h \
 	map_overlay.h \
 	md5.h \
 	menu.h \

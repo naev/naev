@@ -22,6 +22,7 @@
 #include "faction.h"
 #include "dialogue.h"
 #include "gui.h"
+#include "map_find.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -71,7 +72,6 @@ static void map_drawMarker( double x, double y, double r,
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
-static void map_inputFind( unsigned int wid, char* str );
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
@@ -100,48 +100,6 @@ void map_exit (void)
       gl_vboDestroy(map_vbo);
       map_vbo = NULL;
    }
-}
-
-
-/**
- * @brief Opens a search input box to find a system or planet.
- */
-static void map_inputFind( unsigned int wid, char* str )
-{
-   (void) wid;
-   (void) str;
-   char *name;
-   const char *sysname;
-   const char *realname;
-   StarSystem *sys;
-
-   name = dialogue_inputRaw( "Find...", 0, 32, "What do you want to find? (systems, planets)" );
-   if (name == NULL || !strcmp("",name))
-      return;
-
-   /* Match system first. */
-   sysname  = NULL;
-   realname = system_existsCase( name );
-   if (realname != NULL)
-      sysname = realname;
-   else {
-      realname = planet_existsCase( name );
-      if (realname != NULL)
-         sysname = planet_getSystem( realname );
-   }
-   if (sysname != NULL) {
-      sys = system_get(sysname);
-      if (sys_isKnown(sys)) {
-         map_select( sys, 0 );
-         map_center( sysname );
-         free(name);
-         return;
-      }
-   }
-
-   dialogue_alert( "System/Planet matching '%s' not found!", name );
-   free(name);
-   return;
 }
 
 
