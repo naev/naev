@@ -928,16 +928,23 @@ static void print_SDLversion (void)
 {
    const SDL_version *linked;
    SDL_version compiled;
+   unsigned int version_linked, version_compiled;
+
+   /* Extract information. */
    SDL_VERSION(&compiled);
    linked = SDL_Linked_Version();
    DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
 
+   /* Get version as number. */
+   version_linked    = linked->major*100 + linked->minor;
+   version_compiled  = compiled.major*100 + compiled.minor;
+
    /* Check if major/minor version differ. */
-   if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
+   if (version_linked > version_compiled)
       WARN("SDL is newer than compiled version");
-   if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
+   if (version_linked < version_compiled)
       WARN("SDL is older than compiled version.");
 }
 
