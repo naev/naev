@@ -19,11 +19,31 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
+/* Stored checkbox values. */
+static int map_find_systems = 1; /**< Systems checkbox value. */
+static int map_find_planets = 1; /**< Planets checkbox value. */
+static int map_find_outfits = 1; /**< Outfits checkbox value. */
+static int map_find_ships   = 1; /**< Ships checkbox value. */
+
+
 /*
  * Prototypes.
  */
+static void map_find_check_update( unsigned int wid );
 static void map_findClose( unsigned int wid, char* str );
 static void map_findSearch( unsigned int wid, char* str );
+
+
+/**
+ * @brief Updates the checkboxes.
+ */
+static void map_find_check_update( unsigned int wid )
+{
+   map_find_systems = window_checkboxState( wid, "chkSystem" );
+   map_find_planets = window_checkboxState( wid, "chkPlanet" );
+   map_find_outfits = window_checkboxState( wid, "chkOutfit" );
+   map_find_ships  = window_checkboxState( wid, "chkShip" );
+}
 
 
 /**
@@ -31,6 +51,7 @@ static void map_findSearch( unsigned int wid, char* str );
  */
 static void map_findClose( unsigned int wid, char* str )
 {
+   map_find_check_update( wid );
    window_close( wid, str );
 }
 
@@ -45,6 +66,9 @@ static void map_findSearch( unsigned int wid, char* str )
    const char *sysname;
    const char *realname;
    StarSystem *sys;
+
+   /* Updatae checkboxes. */
+   map_find_check_update( wid );
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );
@@ -111,16 +135,16 @@ void map_inputFind( unsigned int parent, char* str )
    /* Create check boxes. */
    x = 40;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkSystem", "Systems", NULL, 1 );
+         "chkSystem", "Systems", NULL, map_find_systems );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkPlanet", "Planets", NULL, 1 );
+         "chkPlanet", "Planets", NULL, map_find_planets );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkOutfit", "Outfits", NULL, 1 );
+         "chkOutfit", "Outfits", NULL, map_find_outfits );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkShip", "Ships", NULL, 1 );
+         "chkShip", "Ships", NULL, map_find_ships );
    y -= 20;
 }
 
