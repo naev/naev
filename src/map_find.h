@@ -8,7 +8,7 @@
 #  define MAP_FIND_H
 
 
-void map_inputFind( unsigned int wid, char* str );
+void map_inputFind( unsigned int parent, char* str );
 
 
 #endif /* MAP_FIND_H */
