@@ -56,7 +56,7 @@ static void map_find_check_update( unsigned int wid, char* str )
    window_checkboxSet( wid, "chkSystem", map_find_systems );
    window_checkboxSet( wid, "chkPlanet", map_find_planets );
    window_checkboxSet( wid, "chkOutfit", map_find_outfits );
-   window_checkboxSet( wid, "chkShip", map_find_ships );
+   window_checkboxSet( wid, "chkShip",   map_find_ships );
 }
 
 
