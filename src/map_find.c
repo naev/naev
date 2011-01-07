@@ -23,8 +23,10 @@
  * @brief Represents a found target.
  */
 typedef struct map_find_s {
-   Planet *pnt;
-   StarSystem *sys;
+   Planet *pnt; /**< Planet available at. */
+   StarSystem *sys; /**< System available at. */
+   int jumps; /**< Jumps to system. */
+   double distance; /**< Distance to system. */
 } map_find_t;
 
 
@@ -40,6 +42,10 @@ static int map_find_ships   = 0; /**< Ships checkbox value. */
  */
 static void map_find_check_update( unsigned int wid, char *str );
 static void map_findClose( unsigned int wid, char* str );
+static int map_findSearchSystems( const char *name );
+static int map_findSearchPlanets( const char *name );
+static int map_findSearchOutfits( const char *name );
+static int map_findSearchShips( const char *name );
 static void map_findSearch( unsigned int wid, char* str );
 
 
@@ -70,42 +76,128 @@ static void map_findClose( unsigned int wid, char* str )
 
 
 /**
+ * @brief Searches for a system.
+ *
+ *    @param name Name to match.
+ *    @return 0 on success.
+ */
+static int map_findSearchSystems( const char *name )
+{
+   const char *sysname;
+   StarSystem *sys;
+
+   /* Match system first. */
+   sysname = system_existsCase( name );
+   if (sysname == NULL)
+      return -1;
+
+   /* Select and show. */
+   sys = system_get(sysname);
+   if (sys_isKnown(sys)) {
+      map_select( sys, 0 );
+      map_center( sysname );
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Searches for a planet.
+ *
+ *    @param name Name to match.
+ *    @return 0 on success.
+ */
+static int map_findSearchPlanets( const char *name )
+{
+   const char *sysname;
+   const char *pntname;
+   StarSystem *sys;
+
+   /* Match planet first. */
+   pntname = planet_existsCase( name );
+   if (pntname == NULL)
+      return -1;
+
+   /* Get system. */
+   sysname = planet_getSystem( pntname );
+   if (sysname == NULL)
+      return -1;
+
+   /* Select and show. */
+   sys = system_get(sysname);
+   if (sys_isKnown(sys)) {
+      map_select( sys, 0 );
+      map_center( sysname );
+   }
+   return 1;
+}
+
+
+/**
+ * @brief Searches for a outfit.
+ *
+ *    @param name Name to match.
+ *    @return 0 on success.
+ */
+static int map_findSearchOutfits( const char *name )
+{
+   return 0;
+}
+
+
+/**
+ * @brief Searches for a ship.
+ *
+ *    @param name Name to match.
+ *    @return 0 on success.
+ */
+static int map_findSearchShips( const char *name )
+{
+   return 0;
+}
+
+
+/**
  * @brief Does a search.
  */
 static void map_findSearch( unsigned int wid, char* str )
 {
-   (void) str;
+   int ret;
    char *name;
-   const char *sysname;
-   const char *realname;
-   StarSystem *sys;
+   char *searchname;
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );
    if (name == NULL || !strcmp("",name))
       return;
 
-   /* Match system first. */
-   sysname  = NULL;
-   realname = system_existsCase( name );
-   if (realname != NULL)
-      sysname = realname;
-   else {
-      realname = planet_existsCase( name );
-      if (realname != NULL)
-         sysname = planet_getSystem( realname );
+   /* Handle different search cases. */
+   if (map_find_systems) {
+      ret = map_findSearchSystems( name );
+      searchname = "System";
    }
-   if (sysname != NULL) {
-      sys = system_get(sysname);
-      if (sys_isKnown(sys)) {
-         map_select( sys, 0 );
-         map_center( sysname );
-         return;
-      }
+   else if (map_find_planets) {
+      ret = map_findSearchPlanets( name );
+      searchname = "Planet";
+   }
+   else if (map_find_outfits) {
+      ret = map_findSearchOutfits( name );
+      searchname = "Outfit";
+   }
+   else if (map_find_ships) {
+      ret = map_findSearchShips( name );
+      searchname = "Ship";
+   }
+   else {
+      ret = 1;
    }
 
-   dialogue_alert( "System/Planet matching '%s' not found!", name );
-   return;
+   if (ret < 0)
+      dialogue_alert( "%s matching '%s' not found!", searchname, name );
+
+   if (ret > 0)
+      map_findClose( wid, str );
 }
 
 
