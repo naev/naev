@@ -93,6 +93,7 @@ naev_SOURCES = \
 	nondata.c \
 	npng.c \
 	npc.c \
+	nstring.c \
 	ntime.c \
 	nxml.c \
 	nxml_lua.c \
@@ -225,6 +226,7 @@ naev_SOURCES = \
 	npng.h \
 	npc.h \
 	nstd.h \
+	nstring.h \
 	ntime.h \
 	nxml.h \
 	nxml_lua.h \
