@@ -531,6 +531,39 @@ const char *system_existsCase( const char* sysname )
 
 
 /**
+ * @brief Does a fuzzy case matching.
+ */
+char **system_searchFuzzyCase( const char* sysname, int *n )
+{
+   int i, len;
+   char **names;
+
+   /* Overallocate to maximum. */
+   names = malloc( sizeof(char*) * systems_nstack );
+
+   /* Do fuzzy search. */
+   len = 0;
+   for (i=0; i<systems_nstack; i++) {
+      if (strcasestr( systems_stack[i].name, sysname ) != NULL) {
+         names[len] = systems_stack[i].name;
+         len++;
+      }
+   }
+
+   /* Free if empty. */
+   if (len == 0) {
+      free(names);
+      names = NULL;
+   }
+
+   *n = len;
+   return names;
+}
+
+
+
+
+/**
  * @brief Get the system from it's name.
  *
  *    @param sysname Name to match.
@@ -699,6 +732,37 @@ const char* planet_existsCase( const char* planetname )
       if (strcasecmp(planet_stack[i].name,planetname)==0)
          return planet_stack[i].name;
    return NULL;
+}
+
+
+/**
+ * @brief Does a fuzzy case matching.
+ */
+char **planet_searchFuzzyCase( const char* planetname, int *n )
+{
+   int i, len;
+   char **names;
+
+   /* Overallocate to maximum. */
+   names = malloc( sizeof(char*) * planet_nstack );
+
+   /* Do fuzzy search. */
+   len = 0;
+   for (i=0; i<planet_nstack; i++) {
+      if (strcasestr( planet_stack[i].name, planetname ) != NULL) {
+         names[len] = planet_stack[i].name;
+         len++;
+      }
+   }
+
+   /* Free if empty. */
+   if (len == 0) {
+      free(names);
+      names = NULL;
+   }
+
+   *n = len;
+   return names;
 }
 
 

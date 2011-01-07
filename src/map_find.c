@@ -25,6 +25,7 @@
 typedef struct map_find_s {
    Planet *pnt; /**< Planet available at. */
    StarSystem *sys; /**< System available at. */
+   char display[128]; /**< Name to display. */
    int jumps; /**< Jumps to system. */
    double distance; /**< Distance to system. */
 } map_find_t;
@@ -42,6 +43,8 @@ static int map_find_ships   = 0; /**< Ships checkbox value. */
  */
 static void map_find_check_update( unsigned int wid, char *str );
 static void map_findClose( unsigned int wid, char* str );
+static int map_sortCompare( const void *p1, const void *p2 );
+static void map_sortFound( map_find_t *found, int n );
 static int map_findSearchSystems( const char *name );
 static int map_findSearchPlanets( const char *name );
 static int map_findSearchOutfits( const char *name );
@@ -76,6 +79,70 @@ static void map_findClose( unsigned int wid, char* str )
 
 
 /**
+ * @brief qsort compare function for map finds.
+ */
+static int map_sortCompare( const void *p1, const void *p2 )
+{
+   map_find_t *f1, *f2;
+
+   /* Convert pointer. */
+   f1 = (map_find_t*) p1;
+   f2 = (map_find_t*) p2;
+
+   /* Compare jumps. */
+   if (f1->jumps > f2->jumps)
+      return +1;
+   else if (f1->jumps < f2->jumps)
+      return -1;
+
+   /* Compare distance. */
+   if (f1->distance > f2->distance)
+      return +1;
+   else if (f1->distance < f2->distance)
+      return -1;
+
+   /* If they're the same it doesn't matter. */
+   return 0;
+}
+
+
+/**
+ * @brief Sorts the map findings.
+ */
+static void map_sortFound( map_find_t *found, int n )
+{
+   qsort( found, n, sizeof(map_find_t), map_sortCompare );
+}
+
+
+/**
+ * @brief Gets the distance.
+ */
+static int map_findDistance( StarSystem *sys, int *jumps, double *distance )
+{
+   int i;
+   StarSystem **s;
+   double d;
+
+   /* Calculate jump path. */
+   s = map_getJumpPath( jumps, cur_system->name, sys->name, 1, NULL );
+   if (s==NULL)
+      return -1;
+
+   /* Calculate distance. */
+   d = 0.;
+   for (i=0; i<*jumps; i++) {
+   }
+
+   /* Cleanup. */
+   free(s);
+
+   *distance = d;
+   return 0;
+}
+
+
+/**
  * @brief Searches for a system.
  *
  *    @param name Name to match.
@@ -83,8 +150,12 @@ static void map_findClose( unsigned int wid, char* str )
  */
 static int map_findSearchSystems( const char *name )
 {
+   int i;
    const char *sysname;
    StarSystem *sys;
+   char **names;
+   int len, n, ret;
+   map_find_t *found;
 
    /* Check exact match. */
    sysname = system_existsCase( name );
@@ -99,7 +170,44 @@ static int map_findSearchSystems( const char *name )
    }
 
    /* Do fuzzy match. */
-   return 0;
+   names = system_searchFuzzyCase( name, &len );
+   if (len > 0) {
+
+      /* Construct found table. */
+      found = malloc( sizeof(map_find_t) * len );
+      n = 0;
+      for (i=0; i<len; i++) {
+
+         /* System must be known. */
+         sys = system_get( names[i] );
+         if (!sys_isKnown(sys))
+            continue;
+
+         /* Set more values. */
+         ret = map_findDistance( sys, &found[n].jumps, &found[n].distance );
+         if (ret)
+            continue;
+
+         /* Set some values. */
+         found[n].pnt      = NULL;
+         found[n].sys      = sys;
+
+         /* Set fancy name. */
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%d jumps, %.3f distance)",
+               sys->name, found[n].jumps, found[n].distance );
+         n++;
+      }
+      free(names);
+
+      /* Sort the found by distance. */
+      map_sortFound( found, n );
+      for (i=0; i<n; i++)
+         DEBUG( "%s", found[i].display );
+
+      free(found);
+      return 0;
+   }
 
    /* No match. */
    return -1;

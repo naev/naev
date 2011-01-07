@@ -263,6 +263,7 @@ int planet_index( const Planet *p );
 int planet_getNum (void);
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
+char **planet_searchFuzzyCase( const char* planetname, int *n );
 char planet_getClass( const Planet *p );
 
 /*
@@ -309,6 +310,7 @@ void space_gfxUnload( StarSystem *sys );
 StarSystem* system_getAll( int *nsys );
 int system_exists( const char* sysname );
 const char *system_existsCase( const char* sysname );
+char **system_searchFuzzyCase( const char* sysname, int *n );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
