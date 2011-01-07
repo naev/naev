@@ -86,19 +86,23 @@ static int map_findSearchSystems( const char *name )
    const char *sysname;
    StarSystem *sys;
 
-   /* Match system first. */
+   /* Check exact match. */
    sysname = system_existsCase( name );
-   if (sysname == NULL)
-      return -1;
-
-   /* Select and show. */
-   sys = system_get(sysname);
-   if (sys_isKnown(sys)) {
-      map_select( sys, 0 );
-      map_center( sysname );
+   if (sysname != NULL) {
+      /* Select and show. */
+      sys = system_get(sysname);
+      if (sys_isKnown(sys)) {
+         map_select( sys, 0 );
+         map_center( sysname );
+         return 1;
+      }
    }
 
-   return 1;
+   /* Do fuzzy match. */
+   return 0;
+
+   /* No match. */
+   return -1;
 }
 
 
@@ -119,18 +123,23 @@ static int map_findSearchPlanets( const char *name )
    if (pntname == NULL)
       return -1;
 
-   /* Get system. */
+   /* Check exact match. */
    sysname = planet_getSystem( pntname );
-   if (sysname == NULL)
-      return -1;
-
-   /* Select and show. */
-   sys = system_get(sysname);
-   if (sys_isKnown(sys)) {
-      map_select( sys, 0 );
-      map_center( sysname );
+   if (sysname != NULL) {
+      /* Select and show. */
+      sys = system_get(sysname);
+      if (sys_isKnown(sys)) {
+         map_select( sys, 0 );
+         map_center( sysname );
+         return 1;
+      }
    }
-   return 1;
+
+   /* Do fuzzy match. */
+   return 0;
+
+   /* No match. */
+   return -1;
 }
 
 
