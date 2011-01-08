@@ -23,11 +23,11 @@
  * @brief Represents a found target.
  */
 typedef struct map_find_s {
-   Planet *pnt; /**< Planet available at. */
-   StarSystem *sys; /**< System available at. */
-   char display[128]; /**< Name to display. */
-   int jumps; /**< Jumps to system. */
-   double distance; /**< Distance to system. */
+   Planet *pnt;         /**< Planet available at. */
+   StarSystem *sys;     /**< System available at. */
+   char display[128];   /**< Name to display. */
+   int jumps;           /**< Jumps to system. */
+   double distance;     /**< Distance to system. */
 } map_find_t;
 
 
@@ -37,6 +37,10 @@ static int map_find_planets = 0; /**< Planets checkbox value. */
 static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
 
+/* Misc ugly globals. */
+static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
+static int map_found_ncur           = 0;     /**< Number of found stuff. */
+
 
 /*
  * Prototypes.
@@ -45,10 +49,10 @@ static void map_find_check_update( unsigned int wid, char *str );
 static void map_findClose( unsigned int wid, char* str );
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
-static int map_findSearchSystems( const char *name );
-static int map_findSearchPlanets( const char *name );
-static int map_findSearchOutfits( const char *name );
-static int map_findSearchShips( const char *name );
+static int map_findSearchSystems( unsigned int parent, const char *name );
+static int map_findSearchPlanets( unsigned int parent, const char *name );
+static int map_findSearchOutfits( unsigned int parent, const char *name );
+static int map_findSearchShips( unsigned int parent, const char *name );
 static void map_findSearch( unsigned int wid, char* str );
 
 
@@ -75,6 +79,66 @@ static void map_find_check_update( unsigned int wid, char* str )
 static void map_findClose( unsigned int wid, char* str )
 {
    window_close( wid, str );
+
+   /* Clean up if necessary. */
+   if (map_found_cur != NULL)
+      free( map_found_cur );
+   map_found_cur = NULL;
+}
+
+
+/**
+ * @brief Goes to a found system to display it.
+ */
+static void map_findDisplayMark( unsigned int wid, char* str )
+{
+   int pos;
+   StarSystem *sys;
+
+   /* Get system. */
+   pos = toolkit_getListPos( wid, "lstResult" );
+   sys = map_found_cur[ pos ].sys;
+
+   /* Select. */
+   map_select( sys, 0 );
+   map_center( sys->name );
+
+   /* Close parent. */
+   window_close( window_getParent(wid), str );
+}
+
+
+/**
+ * @brief Displays the results of the find.
+ */
+static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n )
+{
+   int i;
+   unsigned int wid;
+   char **ll;
+
+   /* Globals. */
+   map_found_cur  = found;
+   map_found_ncur = n;
+
+   /* Create window. */
+   wid = window_create( "Search Results", -1, -1, 300, 220 );
+   window_setParent( wid, parent );
+   window_setAccept( wid, map_findDisplayMark );
+   window_setCancel( wid, window_close );
+
+   /* The list. */
+   ll = malloc( sizeof(char*) * n );
+   for (i=0; i<n; i++)
+      ll[i] = strdup( found[i].display );
+   window_addList( wid, 20, -40, 260, 110,
+         "lstResult", ll, n, 0, NULL );
+
+   /* Buttons. */
+   window_addButton( wid, 20, 20, 110, BUTTON_HEIGHT,
+         "btnSelect", "Select", map_findDisplayMark );
+   window_addButton( wid, -20, 20, 110, BUTTON_HEIGHT,
+         "btnClose", "Cancel", window_close );
 }
 
 
@@ -148,7 +212,7 @@ static int map_findDistance( StarSystem *sys, int *jumps, double *distance )
  *    @param name Name to match.
  *    @return 0 on success.
  */
-static int map_findSearchSystems( const char *name )
+static int map_findSearchSystems( unsigned int parent, const char *name )
 {
    int i;
    const char *sysname;
@@ -200,12 +264,15 @@ static int map_findSearchSystems( const char *name )
       }
       free(names);
 
+      /* No visible match. */
+      if (n==0)
+         return -1;
+
       /* Sort the found by distance. */
       map_sortFound( found, n );
-      for (i=0; i<n; i++)
-         DEBUG( "%s", found[i].display );
 
-      free(found);
+      /* Display results. */
+      map_findDisplayResult( parent, found, n );
       return 0;
    }
 
@@ -220,7 +287,7 @@ static int map_findSearchSystems( const char *name )
  *    @param name Name to match.
  *    @return 0 on success.
  */
-static int map_findSearchPlanets( const char *name )
+static int map_findSearchPlanets( unsigned int parent, const char *name )
 {
    const char *sysname;
    const char *pntname;
@@ -257,7 +324,7 @@ static int map_findSearchPlanets( const char *name )
  *    @param name Name to match.
  *    @return 0 on success.
  */
-static int map_findSearchOutfits( const char *name )
+static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
    return 0;
 }
@@ -269,7 +336,7 @@ static int map_findSearchOutfits( const char *name )
  *    @param name Name to match.
  *    @return 0 on success.
  */
-static int map_findSearchShips( const char *name )
+static int map_findSearchShips( unsigned int parent, const char *name )
 {
    return 0;
 }
@@ -289,21 +356,26 @@ static void map_findSearch( unsigned int wid, char* str )
    if (name == NULL || !strcmp("",name))
       return;
 
+   /* Clean up if necessary. */
+   if (map_found_cur != NULL)
+      free( map_found_cur );
+   map_found_cur = NULL;
+
    /* Handle different search cases. */
    if (map_find_systems) {
-      ret = map_findSearchSystems( name );
+      ret = map_findSearchSystems( wid, name );
       searchname = "System";
    }
    else if (map_find_planets) {
-      ret = map_findSearchPlanets( name );
+      ret = map_findSearchPlanets( wid, name );
       searchname = "Planet";
    }
    else if (map_find_outfits) {
-      ret = map_findSearchOutfits( name );
+      ret = map_findSearchOutfits( wid, name );
       searchname = "Outfit";
    }
    else if (map_find_ships) {
-      ret = map_findSearchShips( name );
+      ret = map_findSearchShips( wid, name );
       searchname = "Ship";
    }
    else {
