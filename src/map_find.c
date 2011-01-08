@@ -122,7 +122,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( "Search Results", -1, -1, 300, 220 );
+   wid = window_create( "Search Results", -1, -1, 400, 320 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -131,13 +131,13 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    ll = malloc( sizeof(char*) * n );
    for (i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
-   window_addList( wid, 20, -40, 260, 110,
+   window_addList( wid, 20, -40, 360, 220,
          "lstResult", ll, n, 0, NULL );
 
    /* Buttons. */
-   window_addButton( wid, 20, 20, 110, BUTTON_HEIGHT,
+   window_addButton( wid, 60, 20, 100, BUTTON_HEIGHT,
          "btnSelect", "Select", map_findDisplayMark );
-   window_addButton( wid, -20, 20, 110, BUTTON_HEIGHT,
+   window_addButton( wid, -60, 20, 100, BUTTON_HEIGHT,
          "btnClose", "Cancel", window_close );
 }
 
