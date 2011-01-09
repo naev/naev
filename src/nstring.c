@@ -58,8 +58,18 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size )
 }
 
 
+/**
+ * @brief Finds a string inside another string case insensitively.
+ *
+ *    @param haystack String to look into.
+ *    @param needle String to find.
+ *    @return Pointer in haystack where needle was found or NULL if not found.
+ */
 const char *nstrcasestr( const char *haystack, const char *needle )
 {
+#if HAS_POSIX
+   return strcasestr( haystack, needle );
+#else /* HAS_POSIX */
    size_t hay_len, needle_len;
   
    /* Get lengths. */
@@ -76,7 +86,7 @@ const char *nstrcasestr( const char *haystack, const char *needle )
    }
 
    return NULL;
-
+#endif /* HAS_POSIX */
 }
 
 
