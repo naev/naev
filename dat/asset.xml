@@ -16,7 +16,7 @@
   </presence>
   <general>
    <class>P</class>
-   <population>0</population>
+   <population>100</population>
    <services>
     <land/>
     <refuel/>
@@ -2211,7 +2211,7 @@
   </presence>
   <general>
    <class>0</class>
-   <population>0</population>
+   <population>2000</population>
    <services>
     <land/>
     <refuel/>
@@ -5303,7 +5303,7 @@
   </presence>
   <general>
    <class>A</class>
-   <population>0</population>
+   <population>1000</population>
    <services>
     <land/>
     <refuel/>
