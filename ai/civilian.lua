@@ -27,7 +27,27 @@ end
 
 
 function create ()
-   -- TODO: Civilian specific comm replies etc. here
+
+   -- Credits.
+   ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
+
+   -- No bribe
+   local bribe_msg = {
+      "\"Just leave me alone!\"",
+      "\"What do you want from me!?\"",
+      "\"Get away from me!\""
+   }
+   mem.bribe_no = bribe_msg[ rnd.int(1,#bribe_msg) ]
+
+   -- Refuel
+   mem.refuel = rnd.rnd( 1000, 3000 )
+   p = ai.getPlayer()
+   if ai.exists(p) then
+      standing = ai.getstanding( p ) or -1
+      mem.refuel_msg = string.format("\"I'll supply your ship with fuel for %d credits.\"",
+            mem.refuel);
+   end
+
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()
 end
