@@ -11,6 +11,7 @@
 #include "toolkit.h"
 #include "map.h"
 #include "dialogue.h"
+#include "player.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -182,11 +183,20 @@ static void map_sortFound( map_find_t *found, int n )
 /**
  * @brief Gets the distance.
  */
-static int map_findDistance( StarSystem *sys, int *jumps, double *distance )
+static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *distance )
 {
-   int i;
+   int i, j;
    StarSystem **slist, *ss;
    double d;
+   Vector2d *vs, *ve;
+
+   /* Special case it's the current system. */
+   if (sys == cur_system) {
+      *jumps = 0;
+      if (pnt != NULL)
+         *distance = vect_dist( &player.p->solid->pos, &pnt->pos );
+      return 0;
+   }
 
    /* Calculate jump path. */
    slist = map_getJumpPath( jumps, cur_system->name, sys->name, 0, NULL );
@@ -194,10 +204,63 @@ static int map_findDistance( StarSystem *sys, int *jumps, double *distance )
       /* Unknown. */
       return -1;
 
+   /* Distance to first jump point. */
+   vs = &player.p->solid->pos;
+   for (j=0; j < cur_system->njumps; j++) {
+      if (cur_system->jumps[j].target == slist[0])
+         ve = &cur_system->jumps[j].pos;
+   }
+   d = vect_dist( vs, ve );
+
    /* Calculate distance. */
-   d = 0.;
-   for (i=0; i<*jumps; i++) {
+   for (i=0; i<(*jumps-1); i++) {
       ss = slist[i];
+
+      /* Search jump points. */
+      for (j=0; j < ss->njumps; j++) {
+
+         /* Get previous jump. */
+         if (i == 0) {
+            if (ss->jumps[j].target == cur_system)
+               vs = &ss->jumps[j].pos;
+         }
+         else {
+            if (ss->jumps[j].target == slist[i-1])
+               vs = &ss->jumps[j].pos;
+         }
+
+         /* Get next jump. */
+         if (ss->jumps[j].target == slist[i+1]) {
+            ve = &ss->jumps[j].pos;
+            break;
+         }
+      }
+
+      /* Use current position. */
+      if (i==0)
+         vs = &player.p->solid->pos;
+
+#ifdef DEBUGGING
+      if ((vs==NULL) || (ve==NULL)) {
+         WARN( "Matching jumps not found, something is up..." );
+         continue;
+      }
+#endif /* DEBUGGING */
+
+      /* Calculate. */
+      d += vect_dist( vs, ve );
+   }
+
+   /* Account final travel to planet for planet targets. */
+   if (pnt != NULL) {
+      ss = slist[ i ];
+      for (j=0; j < ss->njumps; j++) {
+         if (ss->jumps[j].target == slist[i-1]) {
+            vs = &ss->jumps[j].pos;
+         }
+      }
+      ve = &pnt->pos;
+      d += vect_dist( vs, ve );
    }
 
    /* Cleanup. */
@@ -250,7 +313,7 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
             continue;
 
          /* Set more values. */
-         ret = map_findDistance( sys, &found[n].jumps, &found[n].distance );
+         ret = map_findDistance( sys, NULL, &found[n].jumps, &found[n].distance );
          if (ret) {
             found[n].jumps    = 10000;
             found[n].distance = 1e6;
@@ -266,8 +329,8 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
                   "%s (unknown route)", sys->name );
          else
             snprintf( found[n].display, sizeof(found[n].display),
-                  "%s (%d jumps, %.3f distance)",
-                  sys->name, found[n].jumps, found[n].distance );
+                  "%s (%d jumps, %.0fk distance)",
+                  sys->name, found[n].jumps, found[n].distance/1000. );
          n++;
       }
       free(names);
@@ -348,7 +411,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
             continue;
 
          /* Set more values. */
-         ret = map_findDistance( sys, &found[n].jumps, &found[n].distance );
+         ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
          if (ret) {
             found[n].jumps    = 10000;
             found[n].distance = 1e6;
@@ -365,8 +428,8 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
                   names[i], sys->name );
          else
             snprintf( found[n].display, sizeof(found[n].display),
-                  "%s (%s, %d jumps, %.3f distance)",
-                  names[i], sys->name, found[n].jumps, found[n].distance );
+                  "%s (%s, %d jumps, %.0fk distance)",
+                  names[i], sys->name, found[n].jumps, found[n].distance/1000. );
          n++;
       }
       free(names);
