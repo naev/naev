@@ -165,8 +165,8 @@ static int map_sortCompare( const void *p1, const void *p2 )
    else if (f1->distance < f2->distance)
       return -1;
 
-   /* If they're the same it doesn't matter. */
-   return 0;
+   /* If they're the same it doesn't matter, so we'll sort by name. */
+   return strcasecmp( f1->sys->name, f2->sys->name );
 }
 
 
@@ -185,21 +185,23 @@ static void map_sortFound( map_find_t *found, int n )
 static int map_findDistance( StarSystem *sys, int *jumps, double *distance )
 {
    int i;
-   StarSystem **s;
+   StarSystem **slist, *ss;
    double d;
 
    /* Calculate jump path. */
-   s = map_getJumpPath( jumps, cur_system->name, sys->name, 1, NULL );
-   if (s==NULL)
+   slist = map_getJumpPath( jumps, cur_system->name, sys->name, 0, NULL );
+   if (slist==NULL)
+      /* Unknown. */
       return -1;
 
    /* Calculate distance. */
    d = 0.;
    for (i=0; i<*jumps; i++) {
+      ss = slist[i];
    }
 
    /* Cleanup. */
-   free(s);
+   free(slist);
 
    *distance = d;
    return 0;
@@ -249,17 +251,23 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
 
          /* Set more values. */
          ret = map_findDistance( sys, &found[n].jumps, &found[n].distance );
-         if (ret)
-            continue;
+         if (ret) {
+            found[n].jumps    = 10000;
+            found[n].distance = 1e6;
+         }
 
          /* Set some values. */
          found[n].pnt      = NULL;
          found[n].sys      = sys;
 
          /* Set fancy name. */
-         snprintf( found[n].display, sizeof(found[n].display),
-               "%s (%d jumps, %.3f distance)",
-               sys->name, found[n].jumps, found[n].distance );
+         if (ret)
+            snprintf( found[n].display, sizeof(found[n].display),
+                  "%s (unknown route)", sys->name );
+         else
+            snprintf( found[n].display, sizeof(found[n].display),
+                  "%s (%d jumps, %.3f distance)",
+                  sys->name, found[n].jumps, found[n].distance );
          n++;
       }
       free(names);
@@ -341,17 +349,24 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 
          /* Set more values. */
          ret = map_findDistance( sys, &found[n].jumps, &found[n].distance );
-         if (ret)
-            continue;
+         if (ret) {
+            found[n].jumps    = 10000;
+            found[n].distance = 1e6;
+         }
 
          /* Set some values. */
          found[n].pnt      = pnt;
          found[n].sys      = sys;
 
          /* Set fancy name. */
-         snprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, %d jumps, %.3f distance)",
-               names[i], sys->name, found[n].jumps, found[n].distance );
+         if (ret)
+            snprintf( found[n].display, sizeof(found[n].display),
+                  "%s (%s, unknown route)",
+                  names[i], sys->name );
+         else
+            snprintf( found[n].display, sizeof(found[n].display),
+                  "%s (%s, %d jumps, %.3f distance)",
+                  names[i], sys->name, found[n].jumps, found[n].distance );
          n++;
       }
       free(names);
