@@ -504,8 +504,8 @@ void spfx_begin( const double dt )
    if (forced) {
       shake_force_ang  += dt;
       angle             = noise_simplex1( shake_noise, &shake_force_ang ) * 5.*M_PI;
-      force_x += SHAKE_MASS*shake_force_mod * cos(angle);
-      force_y += SHAKE_MASS*shake_force_mod * sin(angle);
+      force_x          += SHAKE_MASS*shake_force_mod * cos(angle);
+      force_y          += SHAKE_MASS*shake_force_mod * sin(angle);
    }
 
    /* Update velocity. */
