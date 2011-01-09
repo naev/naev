@@ -44,9 +44,9 @@
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
 #define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
-#define SHAKE_MASS      (1./500.) /** Shake mass. */
+#define SHAKE_MASS      (1./400.) /** Shake mass. */
 #define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
-#define SHAKE_B         2.*sqrt(SHAKE_K*SHAKE_MASS) /**< Constant for virtual dampener. */
+#define SHAKE_B         (3.*sqrt(SHAKE_K*SHAKE_MASS)) /**< Constant for virtual dampener. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
