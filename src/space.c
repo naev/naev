@@ -42,6 +42,7 @@
 #include "background.h"
 #include "map_overlay.h"
 #include "menu.h"
+#include "nstring.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -544,7 +545,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<systems_nstack; i++) {
-      if (strcasestr( systems_stack[i].name, sysname ) != NULL) {
+      if (nstrcasestr( systems_stack[i].name, sysname ) != NULL) {
          names[len] = systems_stack[i].name;
          len++;
       }
@@ -749,7 +750,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<planet_nstack; i++) {
-      if (strcasestr( planet_stack[i].name, planetname ) != NULL) {
+      if (nstrcasestr( planet_stack[i].name, planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
       }

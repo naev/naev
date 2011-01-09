@@ -11,6 +11,7 @@
 
 
 const char *nstrnstr( const char *haystack, const char *needle, size_t size );
+const char *nstrcasestr( const char *haystack, const char *needle );
 
 
 #endif /* NSTRING_H */
