@@ -44,9 +44,9 @@
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
 #define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
-#define SHAKE_MASS      500. /** Shake mass. */
-#define SHAKE_K         10. /**< Constant for virtual spring. */
-#define SHAKE_B         1. /**< Constant for virtual dampener. */
+#define SHAKE_MASS      (1./500.) /** Shake mass. */
+#define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
+#define SHAKE_B         2.*sqrt(SHAKE_K*SHAKE_MASS) /**< Constant for virtual dampener. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
@@ -504,12 +504,13 @@ void spfx_begin( const double dt )
    if (forced) {
       shake_force_ang  += dt;
       angle             = noise_simplex1( shake_noise, &shake_force_ang ) * 5.*M_PI;
-      force_x          += SHAKE_MASS*shake_force_mod * cos(angle);
-      force_y          += SHAKE_MASS*shake_force_mod * sin(angle);
+      force_x          += shake_force_mod * cos(angle);
+      force_y          += shake_force_mod * sin(angle);
    }
 
+
    /* Update velocity. */
-   vect_cadd( &shake_vel, force_x * dt, force_y * dt );
+   vect_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
 
    /* Update position. */
    vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
