@@ -122,7 +122,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( "Search Results", -1, -1, 400, 320 );
+   wid = window_create( "Search Results", -1, -1, 500, 400 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -131,13 +131,13 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    ll = malloc( sizeof(char*) * n );
    for (i=0; i<n; i++)
       ll[i] = strdup( found[i].display );
-   window_addList( wid, 20, -40, 360, 220,
+   window_addList( wid, 20, -40, 460, 300,
          "lstResult", ll, n, 0, NULL );
 
    /* Buttons. */
-   window_addButton( wid, 60, 20, 100, BUTTON_HEIGHT,
+   window_addButton( wid, 100, 20, 100, BUTTON_HEIGHT,
          "btnSelect", "Select", map_findDisplayMark );
-   window_addButton( wid, -60, 20, 100, BUTTON_HEIGHT,
+   window_addButton( wid, -100, 20, 100, BUTTON_HEIGHT,
          "btnClose", "Cancel", window_close );
 }
 
@@ -289,29 +289,84 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
  */
 static int map_findSearchPlanets( unsigned int parent, const char *name )
 {
+   int i;
+   char **names;
+   int len, n, ret;
+   map_find_t *found;
    const char *sysname;
    const char *pntname;
    StarSystem *sys;
+   Planet *pnt;
 
    /* Match planet first. */
    pntname = planet_existsCase( name );
-   if (pntname == NULL)
-      return -1;
+   if (pntname != NULL) {
 
-   /* Check exact match. */
-   sysname = planet_getSystem( pntname );
-   if (sysname != NULL) {
-      /* Select and show. */
-      sys = system_get(sysname);
-      if (sys_isKnown(sys)) {
-         map_select( sys, 0 );
-         map_center( sysname );
-         return 1;
+      /* Check exact match. */
+      sysname = planet_getSystem( pntname );
+      if (sysname != NULL) {
+         /* Select and show. */
+         sys = system_get(sysname);
+         if (sys_isKnown(sys)) {
+            map_select( sys, 0 );
+            map_center( sysname );
+            return 1;
+         }
       }
    }
 
    /* Do fuzzy match. */
-   return 0;
+   names = planet_searchFuzzyCase( name, &len );
+   if (len > 0) {
+
+      /* Construct found table. */
+      found = malloc( sizeof(map_find_t) * len );
+      n = 0;
+      for (i=0; i<len; i++) {
+
+         /* Planet must be real. */
+         pnt = planet_get( names[i] );
+         if (pnt == NULL)
+            continue;
+         if (pnt->real != ASSET_REAL)
+            continue;
+
+         /* System must be known. */
+         sysname = planet_getSystem( names[i] );
+         if (sysname == NULL)
+            continue;
+         sys = system_get( sysname );
+         if (!sys_isKnown(sys))
+            continue;
+
+         /* Set more values. */
+         ret = map_findDistance( sys, &found[n].jumps, &found[n].distance );
+         if (ret)
+            continue;
+
+         /* Set some values. */
+         found[n].pnt      = pnt;
+         found[n].sys      = sys;
+
+         /* Set fancy name. */
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, %d jumps, %.3f distance)",
+               names[i], sys->name, found[n].jumps, found[n].distance );
+         n++;
+      }
+      free(names);
+
+      /* No visible match. */
+      if (n==0)
+         return -1;
+
+      /* Sort the found by distance. */
+      map_sortFound( found, n );
+
+      /* Display results. */
+      map_findDisplayResult( parent, found, n );
+      return 0;
+   }
 
    /* No match. */
    return -1;
