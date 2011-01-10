@@ -30,6 +30,7 @@
 #include "ship.h"
 #include "conf.h"
 #include "pilot_heat.h"
+#include "nstring.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -119,6 +120,51 @@ Outfit* outfit_getAll( int *n )
 {
    *n = array_size(outfit_stack);
    return outfit_stack;
+}
+
+
+/**
+ * @brief Checks to see if an outfit exists matching name (case insensitive).
+ */
+const char *outfit_existsCase( const char* name )
+{
+   int i;
+   for (i=0; i<array_size(outfit_stack); i++)
+      if (strcasecmp(name,outfit_stack[i].name)==0)
+         return outfit_stack[i].name;
+   return NULL;
+}
+
+
+/**
+ * @brief Does a fuzzy search of all the outfits.
+ */
+char **outfit_searchFuzzyCase( const char* name, int *n )
+{
+   int i, len, nstack;
+   char **names;
+
+   /* Overallocate to maximum. */
+   nstack = array_size(outfit_stack);
+   names = malloc( sizeof(char*) * nstack );
+
+   /* Do fuzzy search. */
+   len = 0;
+   for (i=0; i<nstack; i++) {
+      if (nstrcasestr( outfit_stack[i].name, name ) != NULL) {
+         names[len] = outfit_stack[i].name;
+         len++;
+      }
+   }
+
+   /* Free if empty. */
+   if (len == 0) {
+      free(names);
+      names = NULL;
+   }
+
+   *n = len;
+   return names;
 }
 
 

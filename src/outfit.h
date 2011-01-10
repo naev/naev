@@ -426,6 +426,12 @@ const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 
 /*
+ * Search.
+ */
+const char *outfit_existsCase( const char* name );
+char **outfit_searchFuzzyCase( const char* name, int *n );
+
+/*
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
