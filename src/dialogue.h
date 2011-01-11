@@ -21,6 +21,8 @@ void dialogue_addChoice( const char *caption, const char *msg, const char *opt )
 char *dialogue_runChoice (void);
 char* dialogue_input( const char* title, int min, int max, const char *fmt, ... );
 char* dialogue_inputRaw( const char* title, int min, int max, const char *msg  );
+int dialogue_list( const char* title, char **items, int nitems, const char *fmt, ... );
+int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg );
 
 /*
  * misc

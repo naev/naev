@@ -44,17 +44,20 @@ int dialogue_open; /**< Number of dialogues open. */
  */
 /* extern */
 extern void main_loop (void); /* from naev.c */
+/* generic */
+static void dialogue_close( unsigned int wid, char* str );
+static void dialogue_cancel( unsigned int wid, char* str );
 /* dialogues */
 static glFont* dialogue_getSize( const char* title,
       const char* msg, int* width, int* height );
-static void dialogue_alertClose( unsigned int wid, char* str );
-static void dialogue_msgClose( unsigned int wid, char* str );
 static void dialogue_YesNoClose( unsigned int wid, char* str );
 static void dialogue_inputClose( unsigned int wid, char* str );
-static void dialogue_inputCancel( unsigned int wid, char* str );
 static void dialogue_choiceClose( unsigned int wid, char* str );
+static void dialogue_listClose( unsigned int wid, char* str );
+static void dialogue_listCancel( unsigned int wid, char* str );
 /* secondary loop hack */
-static int loop_done; /**< Used to indicate the secondary loop is finished. */
+static int loop_cancelled  = 0; /**< Stores whether or not the loop was cancelled. */
+static int loop_done       = 0; /**< Used to indicate the secondary loop is finished. */
 static int toolkit_loop (void);
 
 
@@ -65,6 +68,29 @@ int dialogue_isOpen (void)
 {
    return !!dialogue_open;
 }
+
+
+/**
+ * @brief Generic window close.
+ */
+static void dialogue_close( unsigned int wid, char* str )
+{
+   (void) str;
+   window_destroy( wid );
+   loop_done = 1;
+   dialogue_open--;
+}
+
+
+/**
+ * @brief Generic window cancel.
+ */
+static void dialogue_cancel( unsigned int wid, char* str )
+{
+   loop_cancelled = 1;
+   dialogue_close( wid, str );
+}
+
 
 /**
  * @brief Displays an alert popup with only an ok button and a message.
@@ -92,22 +118,10 @@ void dialogue_alert( const char *fmt, ... )
    window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
          &gl_smallFont, &cBlack, msg );
    window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
-         dialogue_alertClose );
+         dialogue_close );
 
    dialogue_open++;
    toolkit_loop();
-}
-/**
- * @brief Closes the alert dialogue.
- *    @param wid Window being closed.
- *    @param str Unused.
- */
-static void dialogue_alertClose( unsigned int wid, char* str )
-{
-   (void)str;
-   window_destroy( wid );
-   loop_done = 1;
-   dialogue_open--;
 }
 
 
@@ -200,23 +214,10 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
          font, &cBlack, msg );
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", "OK",
-         dialogue_msgClose );
+         dialogue_close );
 
    dialogue_open++;
    toolkit_loop();
-}
-
-/**
- * @brief Closes a message dialogue.
- *    @param wid Window being closed.
- *    @param str Unused.
- */
-static void dialogue_msgClose( unsigned int wid, char* str )
-{
-   (void)str;
-   window_destroy( wid );
-   loop_done = 1;
-   dialogue_open--;
 }
 
 
@@ -293,16 +294,12 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
       yesno_result = 0;
 
    /* destroy the window */
-   window_destroy( wid );
+   dialogue_close( wid, str );
    yesno_wid = 0;
-
-   loop_done = 1;
-   dialogue_open--;
 }
 
 
 static unsigned int input_wid = 0; /**< Stores the input window id. */
-static int input_cancelled = 0; /**< Stores whether or not the input was cancelled. */
 /**
  * @brief Creates a dialogue that allows the player to write a message.
  *
@@ -348,7 +345,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    int h;
 
    /* Start out not cancelled. */
-   input_cancelled = 0;
+   loop_cancelled = 0;
 
    /* get text height */
    h = gl_printHeightRaw( &gl_smallFont, 200, msg );
@@ -356,7 +353,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    /* create window */
    input_wid = window_create( title, -1, -1, 240, h+140 );
    window_setAccept( input_wid, dialogue_inputClose );
-   window_setCancel( input_wid, dialogue_inputCancel );
+   window_setCancel( input_wid, dialogue_cancel );
    /* text */
    window_addText( input_wid, 30, -30, 200, h,  0, "txtInput",
          &gl_smallFont, &cDConsole, msg );
@@ -370,7 +367,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    /* tricky secondary loop */
    dialogue_open++;
    input = NULL;
-   while (!input_cancelled && (!input ||
+   while (!loop_cancelled && (!input ||
          ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
@@ -384,7 +381,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          return NULL;
 
       /* save the input */
-      if (input_cancelled != 0)
+      if (loop_cancelled != 0)
          input = NULL;
       else
          input = strdup( window_getInput( input_wid, "inpInput" ) );
@@ -411,15 +408,100 @@ static void dialogue_inputClose( unsigned int wid, char* str )
    /* break the loop */
    loop_done = 1;
 }
-/**
- * @brief Cancels an input dialogue.
- *    @param wid Window being closed.
- *    @param str Unused.
- */
-static void dialogue_inputCancel( unsigned int wid, char* str )
+
+
+static int dialogue_listSelected = -1;
+static void dialogue_listCancel( unsigned int wid, char* str )
 {
-   input_cancelled = 1;
-   dialogue_inputClose(wid,str);
+   dialogue_listSelected = -1;
+   dialogue_cancel( wid, str );
+}
+static void dialogue_listClose( unsigned int wid, char* str )
+{
+   dialogue_listSelected = toolkit_getListPos( wid, "lstDialogue" );
+   dialogue_close( wid, str );
+}
+/**
+ * @brief Creates a list dialogue with OK and Cancel button with a fixed message.
+ *
+ *    @param title Title of the dialogue.
+ *    @param items Items in the list (should be all malloced, automatically freed).
+ *    @param nitems Number of items.
+ *    @param fmt printf formatted string with text to display.
+ */
+int dialogue_list( const char* title, char **items, int nitems, const char *fmt, ... )
+{
+   char msg[512];
+   va_list ap;
+
+   if (input_wid) return -1;
+
+   if (fmt == NULL) return -1;
+   else { /* get the message */
+      va_start(ap, fmt);
+      vsnprintf(msg, 512, fmt, ap);
+      va_end(ap);
+   }
+
+   return dialogue_listRaw( title, items, nitems, msg );
+}
+/**
+ * @brief Creates a list dialogue with OK and Cancel button.
+ *
+ *    @param title Title of the dialogue.
+ *    @param items Items in the list (should be all malloced, automatically freed).
+ *    @param nitems Number of items.
+ *    @param fmt printf formatted string with text to display.
+ */
+int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg )
+{
+   int i;
+   int w, h;
+   glFont* font;
+   unsigned int wid;
+   int list_width, list_height;
+   int text_height, text_width;
+
+   font = dialogue_getSize( title, msg, &text_width, &text_height );
+
+   /* Calculate size stuff. */
+   loop_cancelled = 0;
+   list_width  = 0;
+   list_height = 0;
+   for (i=0; i<nitems; i++) {
+      list_width = MAX( list_width, gl_printWidthRaw( &gl_defFont, items[i] ) );
+      list_height += gl_defFont.h + 5;
+   }
+   list_height += 100;
+   w = MAX( list_width + 60, 160 );
+   if (list_height > 500)
+      h = (list_height*8)/10;
+   else
+      h = MAX( 40, list_height );
+   h = MIN( (SCREEN_H*2)/3, h );
+
+   /* Create the window. */
+   wid = window_create( title, -1, -1, w, h );
+   window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
+         font, &cBlack, msg );
+   window_setAccept( wid, dialogue_listClose );
+   window_setCancel( wid, dialogue_listCancel );
+
+   /* Create the list. */
+   window_addList( wid, 20, -40-text_height-20,
+         w-40, h - (40+text_height+20) - (20+30+20),
+         "lstDialogue", items, nitems, 0, NULL );
+
+   /* Create the buttons. */
+   window_addButton( wid, -20, 20, 60, 30,
+         "btnOK", "OK", dialogue_listClose );
+   window_addButton( wid, -20-60-20, 20, 60, 30,
+         "btnCancel", "Cancel", dialogue_listCancel );
+
+   dialogue_open++;
+   toolkit_loop();
+
+   return dialogue_listSelected;
 }
 
 
