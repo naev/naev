@@ -459,7 +459,35 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
  */
 static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
-   return 0;
+   int i;
+   char **names;
+   int len, n, ret;
+   map_find_t *found;
+   const char *oname;
+   char **list;
+   Outfit *o;
+
+   /* Match planet first. */
+   oname = outfit_existsCase( name );
+   if (oname != NULL) {
+      o = outfit_get( oname );
+   }
+   else {
+      /* Do fuzzy match. */
+      names = outfit_searchFuzzyCase( name, &len );
+      list = malloc( len*sizeof(char*) );
+      for (i=0; i<len; i++)
+         list[i] = strdup( names[i] );
+      i = dialogue_list( "Search Results", list, len,
+            "Search results for outfits matching '%s':", name );
+      if (i < 0)
+         return 0;
+      o = outfit_get( names[i] );
+      free(names);
+   }
+
+   /* No match. */
+   return -1;
 }
 
 
