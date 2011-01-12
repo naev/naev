@@ -75,6 +75,12 @@ typedef enum PlanetClass_ {
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
 
 
+/*
+ * Planet flags.
+ */
+#define planet_isKnown(p)           (1) /**< Is a planet known (always true for now). */
+
+
 /**
  * @struct Planet
  *
