@@ -42,22 +42,92 @@ static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
 
 /* Misc ugly globals. */
+/* Current found stuff. */
 static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
 static int map_found_ncur           = 0;     /**< Number of found stuff. */
+/* Tech hack. */
+static tech_group_t **map_known_techs = NULL; /**< Known techs. */
+static Planet **map_known_planets   = NULL;  /**< Known planets with techs. */
+static int map_nknown               = 0;     /**< Number of known. */
 
 
 /*
  * Prototypes.
  */
+/* Init/cleanup. */
+static int map_knownInit (void);
+static void map_knownClean (void);
+/* Toolkit-related. */
 static void map_find_check_update( unsigned int wid, char *str );
 static void map_findClose( unsigned int wid, char* str );
-static int map_sortCompare( const void *p1, const void *p2 );
-static void map_sortFound( map_find_t *found, int n );
 static int map_findSearchSystems( unsigned int parent, const char *name );
 static int map_findSearchPlanets( unsigned int parent, const char *name );
 static int map_findSearchOutfits( unsigned int parent, const char *name );
 static int map_findSearchShips( unsigned int parent, const char *name );
 static void map_findSearch( unsigned int wid, char* str );
+/* Misc. */
+static int map_sortCompare( const void *p1, const void *p2 );
+static void map_sortFound( map_find_t *found, int n );
+
+
+/**
+ * @brief Initializes stuff the pilot knows.
+ */
+static int map_knownInit (void)
+{
+   int i, j;
+   int ntech, nsys, npnt;
+   Planet *pnt, **planets;
+   StarSystem *sys;
+   tech_group_t **t;
+
+   /* Allocate techs. */
+   planet_getAll( &npnt );
+   t        = malloc( sizeof(tech_group_t*) * npnt );
+   planets  = malloc( sizeof(Planet*) * npnt );
+   sys      = system_getAll( &nsys );
+
+   /* Get techs. */
+   ntech = 0;
+   for (i=0; i<nsys; i++) {
+      if (!sys_isKnown( &sys[i] ))
+         continue;
+
+      for (j=0; j<sys[i].nplanets; j++) {
+         pnt = sys[i].planets[j];
+         if (!planet_isKnown( pnt ))
+            continue;
+
+         if (pnt->tech != NULL) {
+            planets[ntech] = pnt;
+            t[ntech]       = pnt->tech;
+            ntech++;
+         }
+      }
+   }
+
+   /* Pointer voodoo. */
+   map_known_techs   = t;
+   map_known_planets = planets;
+   map_nknown        = ntech;
+
+   return 0;
+}
+
+
+/**
+ * @brief Cleans up stuff the pilot knows.
+ */
+static void map_knownClean (void)
+{
+   if (map_known_techs != NULL)
+      free( map_known_techs );
+   map_known_techs = NULL;
+   if (map_known_planets != NULL)
+      free( map_known_planets );
+   map_known_planets = NULL;
+   map_nknown = 0;
+}
 
 
 /**
@@ -88,6 +158,9 @@ static void map_findClose( unsigned int wid, char* str )
    if (map_found_cur != NULL)
       free( map_found_cur );
    map_found_cur = NULL;
+
+   /* Clean up. */
+   map_knownClean();
 }
 
 
@@ -454,6 +527,9 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 }
 
 
+/**
+ * @brief Does fuzzy name matching for outfits.
+ */
 static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
 {
    int i, l;
@@ -480,43 +556,24 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    *len = l;
    return names;
 }
+/**
+ * @brief Gets the possible names the outfit name matches.
+ */
 static char **map_outfitsMatch( const char *name, int *len )
 {
-   int i, j, n;
+   int n;
    Outfit **o;
-   int ntech, nsys, npnt;
-   Planet *pnt;
-   StarSystem *sys;
+   int ntech;
    tech_group_t **t;
    char **names;
 
-   /* Allocate techs. */
-   planet_getAll( &npnt );
-   t = malloc( sizeof(tech_group_t*) * npnt );
-   sys = system_getAll( &nsys );
-
-   /* Get techs. */
-   ntech = 0;
-   for (i=0; i<nsys; i++) {
-      if (!sys_isKnown( &sys[i] ))
-         continue;
-
-      for (j=0; j<sys[i].nplanets; j++) {
-         pnt = sys[i].planets[j];
-         if (!planet_isKnown( pnt ))
-            continue;
-
-         if (pnt->tech != NULL)
-            t[ntech++] = pnt->tech;
-      }
-   }
+   /* Comfort. */
+   t     = map_known_techs;
+   ntech = map_nknown;
 
    /* Get outfits and names. */
    o     = tech_getOutfitArray( t, ntech, &n );
    names = map_fuzzyOutfits( o, n, name, len );
-
-   /* Clean up. */
-   free( t );
 
    return names;
 }
@@ -546,6 +603,8 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       names = map_outfitsMatch( name, &len );
       if (len <= 0)
          return -1;
+
+      /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
@@ -630,6 +689,9 @@ void map_inputFind( unsigned int parent, char* str )
    (void) str;
    unsigned int wid;
    int x, y;
+
+   /* initialize known. */
+   map_knownInit();
 
    /* Create the window. */
    wid = window_create( "Find...", -1, -1, 300, 220 );
