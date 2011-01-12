@@ -473,17 +473,17 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
       list_height += gl_defFont.h + 5;
    }
    list_height += 100;
-   w = MAX( list_width + 60, 160 );
+   w = MAX( list_width + 60, 200 );
    if (list_height > 500)
       h = (list_height*8)/10;
    else
-      h = MAX( 40, list_height );
+      h = MAX( 300, list_height );
    h = MIN( (SCREEN_H*2)/3, h );
 
    /* Create the window. */
    wid = window_create( title, -1, -1, w, h );
    window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
-         font, &cBlack, msg );
+         font, &cDConsole, msg );
    window_setAccept( wid, dialogue_listClose );
    window_setCancel( wid, dialogue_listCancel );
 
