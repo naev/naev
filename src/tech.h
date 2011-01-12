@@ -47,6 +47,7 @@ int tech_rmItem( const char *name, const char *value );
  * Get.
  */
 Outfit** tech_getOutfit( tech_group_t *tech, int *n );
+Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n );
 Ship** tech_getShip( tech_group_t *tech, int *n );
 
 

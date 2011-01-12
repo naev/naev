@@ -37,6 +37,7 @@ typedef enum tech_item_type_e {
    TECH_TYPE_COMMODITY,    /**< Tech contains a commodity. */
    /*TECH_TYPE_CONTRABAND,*/   /**< Tech contains contraband. */
    TECH_TYPE_GROUP,        /**< Tech contains another tech group. */
+   TECH_TYPE_GROUP_POINTER /**< Tech contains a tech group pointer. */
 } tech_item_type_t;
 
 
@@ -50,6 +51,7 @@ typedef struct tech_item_s {
       Ship *ship;          /**< Ship pointer. */
       Commodity *comm;     /**< Commodity pointer. */
       int grp;             /**< Identifier of another tech group. */
+      tech_group_t *grpptr; /**< Pointer to another tech group. */
    } u;                    /**< Data union. */
 } tech_item_t;
 
@@ -82,6 +84,7 @@ static int tech_addItemOutfit( tech_group_t *grp, const char* name );
 static int tech_addItemShip( tech_group_t *grp, const char* name );
 static int tech_addItemCommodity( tech_group_t *grp, const char* name );
 static int tech_getID( const char *name );
+static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr );
 static int tech_addItemGroup( tech_group_t *grp, const char* name );
 /* Getting by tech. */
 static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m );
@@ -152,7 +155,7 @@ int tech_load (void)
       if (!xml_isNode(node, XML_TECH_TAG))
          continue;
 
-      /* Must aviod warning by checking explicit NULL. */
+      /* Must avood warning by checking explicit NULL. */
       xmlr_attr( node, "name", buf );
       if (buf == NULL)
          continue;
@@ -249,6 +252,8 @@ static char* tech_getItemName( tech_item_t *item )
          return item->u.comm->name;
       case TECH_TYPE_GROUP:
          return tech_groups[ item->u.grp ].name;
+      case TECH_TYPE_GROUP_POINTER: 
+         return item->u.grpptr->name;
    }
 
    return NULL;
@@ -546,6 +551,21 @@ static int tech_getID( const char *name )
 
 
 /**
+ * @brief Adds a group pointer to a group.
+ */
+static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr )
+{
+   tech_item_t *item;
+
+   /* Load the new item. */
+   item           = tech_itemGrow( grp );
+   item->type     = TECH_TYPE_GROUP_POINTER;
+   item->u.grpptr = ptr;
+   return 0;
+}
+
+
+/**
  * @brief Loads a group item pertaining to a group.
  *
  *    @return 0 on success.
@@ -620,11 +640,10 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
       item = &tech->items[i];
 
       /* Only handle outfits for now. */
-      if (item->type != TECH_TYPE_GROUP)
-         continue;
-
-      /* Recursive */
-      o  = tech_addGroupOutfit( o, &tech_groups[ item->u.grp ], n, m );
+      if (item->type == TECH_TYPE_GROUP)
+         o  = tech_addGroupOutfit( o, &tech_groups[ item->u.grp ], n, m );
+      else if (item->type == TECH_TYPE_GROUP_POINTER)
+         o  = tech_addGroupOutfit( o, item->u.grpptr, n, m );
    }
 
    return o;
@@ -652,6 +671,34 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
 
    /* Sort. */
    qsort( o, *n, sizeof(Outfit*), outfit_compareTech );
+   return o;
+}
+
+
+/**
+ * @brief Gets the outfits from an array of techs.
+ */
+Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
+{
+   int i;
+   tech_group_t grp;
+   Outfit **o;
+
+   /* Create meta group. */
+   grp.name = strdup("meta-group");
+   grp.items = NULL;
+
+   /* Create a meta-group. */
+   for (i=0; i<num; i++)
+      tech_addItemGroupPointer( &grp, tech[i] );
+
+   /* Get the techs. */
+   o = tech_getOutfit( &grp, n );
+
+   /* Clean up. */
+   tech_freeGroup( &grp );
+
+   /* Results. */
    return o;
 }
 
@@ -708,11 +755,10 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
       item = &tech->items[i];
 
       /* Only handle outfits for now. */
-      if (item->type != TECH_TYPE_GROUP)
-         continue;
-
-      /* Recursive */
-      s  = tech_addGroupShip( s, &tech_groups[ item->u.grp ], n, m );
+      if (item->type == TECH_TYPE_GROUP)
+         s  = tech_addGroupShip( s, &tech_groups[ item->u.grp ], n, m );
+      else if (item->type == TECH_TYPE_GROUP_POINTER)
+         s  = tech_addGroupShip( s, item->u.grpptr, n, m );
    }
 
    return s;
