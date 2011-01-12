@@ -12,6 +12,9 @@
 #include "map.h"
 #include "dialogue.h"
 #include "player.h"
+#include "tech.h"
+#include "space.h"
+#include "nstring.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -451,6 +454,72 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 }
 
 
+static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
+{
+   int i, l;
+   char **names;
+
+   /* Overallocate to maximum. */
+   names = malloc( sizeof(char*) * n );
+
+   /* Do fuzzy search. */
+   l = 0;
+   for (i=0; i<n; i++) {
+      if (nstrcasestr( o[i]->name, name ) != NULL) {
+         names[l] = o[i]->name;
+         l++;
+      }
+   }
+
+   /* Free if empty. */
+   if (l == 0) {
+      free(names);
+      names = NULL;
+   }
+
+   *len = l;
+   return names;
+}
+static char **map_outfitsMatch( const char *name, int *len )
+{
+   int i, j, n;
+   Outfit **o;
+   int ntech, nsys, npnt;
+   Planet *pnt;
+   StarSystem *sys;
+   tech_group_t **t;
+   char **names;
+
+   /* Allocate techs. */
+   planet_getAll( &npnt );
+   t = malloc( sizeof(tech_group_t*) * npnt );
+   sys = system_getAll( &nsys );
+
+   /* Get techs. */
+   ntech = 0;
+   for (i=0; i<nsys; i++) {
+      if (!sys_isKnown( &sys[i] ))
+         continue;
+
+      for (j=0; j<sys[i].nplanets; j++) {
+         pnt = sys[i].planets[j];
+         if (!planet_isKnown( pnt ))
+            continue;
+
+         if (pnt->tech != NULL)
+            t[ntech++] = pnt->tech;
+      }
+   }
+
+   /* Get outfits and names. */
+   o     = tech_getOutfitArray( t, ntech, &n );
+   names = map_fuzzyOutfits( o, n, name, len );
+
+   /* Clean up. */
+   free( t );
+
+   return names;
+}
 /**
  * @brief Searches for a outfit.
  *
@@ -474,8 +543,10 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    }
    else {
       /* Do fuzzy match. */
-      names = outfit_searchFuzzyCase( name, &len );
-      list = malloc( len*sizeof(char*) );
+      names = map_outfitsMatch( name, &len );
+      if (len <= 0)
+         return -1;
+      list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
       i = dialogue_list( "Search Results", list, len,
