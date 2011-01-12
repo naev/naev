@@ -563,17 +563,12 @@ static char **map_outfitsMatch( const char *name, int *len )
 {
    int n;
    Outfit **o;
-   int ntech;
-   tech_group_t **t;
    char **names;
 
-   /* Comfort. */
-   t     = map_known_techs;
-   ntech = map_nknown;
-
    /* Get outfits and names. */
-   o     = tech_getOutfitArray( t, ntech, &n );
+   o     = tech_getOutfitArray( map_known_techs, map_nknown, &n );
    names = map_fuzzyOutfits( o, n, name, len );
+   free(o);
 
    return names;
 }
