@@ -100,6 +100,21 @@ Ship* ship_getW( const char* name )
 
 
 /**
+ * @brief Checks to see if an ship exists matching name (case insensitive).
+ */
+const char *ship_existsCase( const char* name )
+{
+   int i;
+   for (i=0; i<array_size(ship_stack); i++)
+      if (strcasecmp(name,ship_stack[i].name)==0)
+         return ship_stack[i].name;
+   return NULL;
+}
+
+
+
+
+/**
  * @brief Gets all the ships.
  */
 Ship* ship_getAll( int *n )
