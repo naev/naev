@@ -68,6 +68,11 @@ static void map_findSearch( unsigned int wid, char* str );
 /* Misc. */
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
+/* Fuzzy outfit/ship stuff. */
+static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len );
+static char **map_outfitsMatch( const char *name, int *len );
+static char **map_fuzzyShips( Ship **o, int n, const char *name, int *len );
+static char **map_shipsMatch( const char *name, int *len );
 
 
 /**
@@ -685,6 +690,51 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
 
 /**
+ * @brief Does fuzzy name matching for ships;
+ */
+static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
+{
+   int i, l;
+   char **names;
+
+   /* Overallocate to maximum. */
+   names = malloc( sizeof(char*) * n );
+
+   /* Do fuzzy search. */
+   l = 0;
+   for (i=0; i<n; i++) {
+      if (nstrcasestr( s[i]->name, name ) != NULL) {
+         names[l] = s[i]->name;
+         l++;
+      }
+   }
+
+   /* Free if empty. */
+   if (l == 0) {
+      free(names);
+      names = NULL;
+   }
+
+   *len = l;
+   return names;
+}
+/**
+ * @brief Gets the possible names the ship name matches.
+ */
+static char **map_shipsMatch( const char *name, int *len )
+{
+   int n;
+   Ship **s;
+   char **names;
+
+   /* Get ships and names. */
+   s     = tech_getShipArray( map_known_techs, map_nknown, &n );
+   names = map_fuzzyShips( s, n, name, len );
+   free(s);
+
+   return names;
+}
+/**
  * @brief Searches for a ship.
  *
  *    @param name Name to match.
@@ -692,6 +742,99 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
  */
 static int map_findSearchShips( unsigned int parent, const char *name )
 {
+   int i, j;
+   char **names;
+   int len, n, ret;
+   map_find_t *found;
+   Planet *pnt;
+   StarSystem *sys;
+   const char *sname, *sysname;
+   char **list;
+   Ship *s, **slist;
+   int nslist;
+
+   /* Match planet first. */
+   s     = NULL;
+   sname = ship_existsCase( name );
+   if (sname != NULL) {
+      s = ship_get( sname );
+   }
+   else {
+      /* Do fuzzy match. */
+      names = map_shipsMatch( name, &len );
+      if (len <= 0)
+         return -1;
+
+      /* Ask which one player wants. */
+      list  = malloc( len*sizeof(char*) );
+      for (i=0; i<len; i++)
+         list[i] = strdup( names[i] );
+      i = dialogue_list( "Search Results", list, len,
+            "Search results for ships matching '%s':", name );
+      if (i < 0)
+         return 0;
+      s = ship_get( names[i] );
+      free(names);
+   }
+   if (s == NULL)
+      return -1;
+
+   /* Construct found table. */
+   found = malloc( sizeof(map_find_t) * map_nknown );
+   n = 0;
+   for (i=0; i<map_nknown; i++) {
+
+      /* Try to find the ship in the planet. */
+      slist = tech_getShip( map_known_techs[i], &nslist );
+      for (j=0; j<nslist; j++)
+         if (slist[j] == s)
+            break;
+      if (slist != NULL)
+         free(slist);
+      if (j >= nslist)
+         continue;
+      pnt = map_known_planets[i];
+
+      /* System must be known. */
+      sysname = planet_getSystem( pnt->name );
+      if (sysname == NULL)
+         continue;
+      sys = system_get( sysname );
+      if (!sys_isKnown(sys))
+         continue;
+
+      /* Set more values. */
+      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
+      if (ret) {
+         found[n].jumps    = 10000;
+         found[n].distance = 1e6;
+      }
+
+      /* Set some values. */
+      found[n].pnt      = pnt;
+      found[n].sys      = sys;
+
+      /* Set fancy name. */
+      if (ret)
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, unknown route)",
+               pnt->name, sys->name );
+      else
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, %d jumps, %.0fk distance)",
+               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+      n++;
+   }
+
+   /* No visible match. */
+   if (n==0)
+      return -1;
+
+   /* Sort the found by distance. */
+   map_sortFound( found, n );
+
+   /* Display results. */
+   map_findDisplayResult( parent, found, n );
    return 0;
 }
 
