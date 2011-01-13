@@ -186,6 +186,11 @@ int load_refresh (void)
    /* Clean up parser. */
    xmlCleanupParser();
 
+   /* CLean up memory. */
+   for (i=0; i<nfiles; i++)
+      free(files[i]);
+   free(files);
+
    return 0;
 }
 
