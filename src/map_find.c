@@ -95,9 +95,16 @@ static int map_knownInit (void)
 
       for (j=0; j<sys[i].nplanets; j++) {
          pnt = sys[i].planets[j];
+
+         /* Must be real. */
+         if (pnt->real != ASSET_REAL)
+            continue;
+
+         /* Must be known. */
          if (!planet_isKnown( pnt ))
             continue;
 
+         /* Must have techs. */
          if (pnt->tech != NULL) {
             planets[ntech] = pnt;
             t[ntech]       = pnt->tech;
@@ -580,15 +587,19 @@ static char **map_outfitsMatch( const char *name, int *len )
  */
 static int map_findSearchOutfits( unsigned int parent, const char *name )
 {
-   int i;
+   int i, j;
    char **names;
    int len, n, ret;
    map_find_t *found;
-   const char *oname;
+   Planet *pnt;
+   StarSystem *sys;
+   const char *oname, *sysname;
    char **list;
-   Outfit *o;
+   Outfit *o, **olist;
+   int nolist;
 
    /* Match planet first. */
+   o     = NULL;
    oname = outfit_existsCase( name );
    if (oname != NULL) {
       o = outfit_get( oname );
@@ -610,9 +621,66 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       o = outfit_get( names[i] );
       free(names);
    }
+   if (o == NULL)
+      return -1;
 
-   /* No match. */
-   return -1;
+   /* Construct found table. */
+   found = malloc( sizeof(map_find_t) * map_nknown );
+   n = 0;
+   for (i=0; i<map_nknown; i++) {
+
+      /* Try to find the outfit in the planet. */
+      olist = tech_getOutfit( map_known_techs[i], &nolist );
+      for (j=0; j<nolist; j++)
+         if (olist[j] == o)
+            break;
+      if (olist != NULL)
+         free(olist);
+      if (j >= nolist)
+         continue;
+      pnt = map_known_planets[i];
+
+      /* System must be known. */
+      sysname = planet_getSystem( pnt->name );
+      if (sysname == NULL)
+         continue;
+      sys = system_get( sysname );
+      if (!sys_isKnown(sys))
+         continue;
+
+      /* Set more values. */
+      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
+      if (ret) {
+         found[n].jumps    = 10000;
+         found[n].distance = 1e6;
+      }
+
+      /* Set some values. */
+      found[n].pnt      = pnt;
+      found[n].sys      = sys;
+
+      /* Set fancy name. */
+      if (ret)
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, unknown route)",
+               pnt->name, sys->name );
+      else
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, %d jumps, %.0fk distance)",
+               pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
+      n++;
+   }
+
+   /* No visible match. */
+   if (n==0)
+      return -1;
+
+   /* Sort the found by distance. */
+   map_sortFound( found, n );
+
+   /* Display results. */
+   map_findDisplayResult( parent, found, n );
+   return 0;
 }
 
 
