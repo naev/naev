@@ -621,8 +621,10 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
          list[i] = strdup( names[i] );
       i = dialogue_list( "Search Results", list, len,
             "Search results for outfits matching '%s':", name );
-      if (i < 0)
+      if (i < 0) {
+         free(names);
          return 0;
+      }
       o = outfit_get( names[i] );
       free(names);
    }
@@ -771,8 +773,10 @@ static int map_findSearchShips( unsigned int parent, const char *name )
          list[i] = strdup( names[i] );
       i = dialogue_list( "Search Results", list, len,
             "Search results for ships matching '%s':", name );
-      if (i < 0)
+      if (i < 0) {
+         free(names);
          return 0;
+      }
       s = ship_get( names[i] );
       free(names);
    }
