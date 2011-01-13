@@ -74,6 +74,7 @@ static tech_group_t *tech_groups = NULL;
 /*
  * Prototypes.
  */
+static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech, int num );
 static void tech_freeGroup( tech_group_t *grp );
 static char* tech_getItemName( tech_item_t *item );
 /* Loading. */
@@ -589,6 +590,26 @@ static int tech_addItemGroup( tech_group_t *grp, const char *name )
 
 
 /**
+ * @brief Creates a meta-tech group pointing only to other groups.
+ *
+ *    @param grp Group to initialize.
+ *    @param tech List of tech groups to attach.
+ *    @param num Number of tech groups.
+ */
+static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech, int num )
+{
+   int i;
+
+   /* Create meta group. */
+   grp->items = NULL;
+
+   /* Create a meta-group. */
+   for (i=0; i<num; i++)
+      tech_addItemGroupPointer( grp, tech[i] );
+}
+
+
+/**
  * @brief Recursive function for creating an array of outfits from a tech group.
  */
 static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int *m )
@@ -652,6 +673,12 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
 
 /**
  * @brief Gets all of the outfits assosciated to a tech group.
+ *
+ * @note The returned list must be freed (but not the pointers).
+ *
+ *    @param tech Tech to get outfits from.
+ *    @param[out] n The number of outfits found.
+ *    @return Outfits found.
  */
 Outfit** tech_getOutfit( tech_group_t *tech, int *n )
 {
@@ -677,28 +704,23 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
 
 /**
  * @brief Gets the outfits from an array of techs.
+ *
+ * @note The returned list must be freed (but not the pointers).
+ *
+ *    @param tech Array of techs to get from.
+ *    @param num Number of elements in the array.
+ *    @param[out] n The number of outfits found.
+ *    @return Outfits found.
  */
 Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
 {
-   int i;
    tech_group_t grp;
    Outfit **o;
 
-   /* Create meta group. */
-   grp.name = strdup("meta-group");
-   grp.items = NULL;
-
-   /* Create a meta-group. */
-   for (i=0; i<num; i++)
-      tech_addItemGroupPointer( &grp, tech[i] );
-
-   /* Get the techs. */
+   tech_createMetaGroup( &grp, tech, num );
    o = tech_getOutfit( &grp, n );
-
-   /* Clean up. */
    tech_freeGroup( &grp );
 
-   /* Results. */
    return o;
 }
 
@@ -766,7 +788,36 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
 
 
 /**
+ * @brief Gets the ships from an array of techs.
+ *
+ * @note The returned list must be freed (but not the pointers).
+ *
+ *    @param tech Array of techs to get from.
+ *    @param num Number of elements in the array.
+ *    @param[out] n The number of ships found.
+ *    @return Ships found.
+ */
+Ship** tech_getShipArray( tech_group_t **tech, int num, int *n )
+{
+   tech_group_t grp;
+   Ship **s;
+
+   tech_createMetaGroup( &grp, tech, num );
+   s = tech_getShip( &grp, n );
+   tech_freeGroup( &grp );
+
+   return s;
+}
+
+
+/**
  * @brief Gets all of the ships assosciated to a tech group.
+ *
+ * @note The returned array must be freed (but not the pointers).
+ *
+ *    @param tech Tech group to get list of ships from.
+ *    @param[out] n The number of ships found.
+ *    @return The ships found.
  */
 Ship** tech_getShip( tech_group_t *tech, int *n )
 {
