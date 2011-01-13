@@ -601,7 +601,7 @@ static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech, int nu
    int i;
 
    /* Create meta group. */
-   grp->items = NULL;
+   memset( grp, 0, sizeof(tech_group_t) );
 
    /* Create a meta-group. */
    for (i=0; i<num; i++)
