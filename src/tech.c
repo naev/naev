@@ -626,7 +626,7 @@ static Outfit** tech_addGroupOutfit( Outfit **o, tech_group_t *tech, int *n, int
       (*n)++;
       if ((*n) > (*m)) {
          if ((*m) == 0)
-            (*m)  = 1;
+            (*m)  = 16;
          (*m) *= 2;
          o = realloc( o, sizeof(Outfit*) * (*m) );
       }
@@ -741,7 +741,7 @@ static Ship** tech_addGroupShip( Ship **s, tech_group_t *tech, int *n, int *m )
       (*n)++;
       if ((*n) > (*m)) {
          if ((*m) == 0)
-            (*m)  = 1;
+            (*m)  = 16;
          (*m) *= 2;
          s = realloc( s, sizeof(Ship*) * (*m) );
       }
