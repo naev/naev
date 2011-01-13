@@ -374,69 +374,67 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
    int len, n, ret;
    map_find_t *found;
 
-   /* Check exact match. */
+   /* Search for names. */
    sysname = system_existsCase( name );
-   if (sysname != NULL) {
+   names   = system_searchFuzzyCase( name, &len );
+   if (names == NULL)
+      return -1;
+
+   /* Exact match. */
+   if ((sysname != NULL) && (len == 1)) {
       /* Select and show. */
       sys = system_get(sysname);
       if (sys_isKnown(sys)) {
          map_select( sys, 0 );
          map_center( sysname );
+         free(names);
          return 1;
       }
    }
 
-   /* Do fuzzy match. */
-   names = system_searchFuzzyCase( name, &len );
-   if (len > 0) {
+   /* Construct found table. */
+   found = malloc( sizeof(map_find_t) * len );
+   n = 0;
+   for (i=0; i<len; i++) {
 
-      /* Construct found table. */
-      found = malloc( sizeof(map_find_t) * len );
-      n = 0;
-      for (i=0; i<len; i++) {
+      /* System must be known. */
+      sys = system_get( names[i] );
+      if (!sys_isKnown(sys))
+         continue;
 
-         /* System must be known. */
-         sys = system_get( names[i] );
-         if (!sys_isKnown(sys))
-            continue;
-
-         /* Set more values. */
-         ret = map_findDistance( sys, NULL, &found[n].jumps, &found[n].distance );
-         if (ret) {
-            found[n].jumps    = 10000;
-            found[n].distance = 1e6;
-         }
-
-         /* Set some values. */
-         found[n].pnt      = NULL;
-         found[n].sys      = sys;
-
-         /* Set fancy name. */
-         if (ret)
-            snprintf( found[n].display, sizeof(found[n].display),
-                  "%s (unknown route)", sys->name );
-         else
-            snprintf( found[n].display, sizeof(found[n].display),
-                  "%s (%d jumps, %.0fk distance)",
-                  sys->name, found[n].jumps, found[n].distance/1000. );
-         n++;
+      /* Set more values. */
+      ret = map_findDistance( sys, NULL, &found[n].jumps, &found[n].distance );
+      if (ret) {
+         found[n].jumps    = 10000;
+         found[n].distance = 1e6;
       }
-      free(names);
 
-      /* No visible match. */
-      if (n==0)
-         return -1;
+      /* Set some values. */
+      found[n].pnt      = NULL;
+      found[n].sys      = sys;
 
-      /* Sort the found by distance. */
-      map_sortFound( found, n );
-
-      /* Display results. */
-      map_findDisplayResult( parent, found, n );
-      return 0;
+      /* Set fancy name. */
+      if (ret)
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (unknown route)", sys->name );
+      else
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%d jumps, %.0fk distance)",
+               sys->name, found[n].jumps, found[n].distance/1000. );
+      n++;
    }
+   free(names);
 
-   /* No match. */
-   return -1;
+   /* No visible match. */
+   if (n==0)
+      return -1;
+
+   /* Sort the found by distance. */
+   map_sortFound( found, n );
+
+   /* Display results. */
+   map_findDisplayResult( parent, found, n );
+   return 0;
 }
 
 
@@ -459,7 +457,12 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 
    /* Match planet first. */
    pntname = planet_existsCase( name );
-   if (pntname != NULL) {
+   names   = planet_searchFuzzyCase( name, &len );
+   if (names == NULL)
+      return -1;
+
+   /* Exact match. */
+   if ((pntname != NULL) && (len == 1)) {
 
       /* Check exact match. */
       sysname = planet_getSystem( pntname );
@@ -469,73 +472,66 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
          if (sys_isKnown(sys)) {
             map_select( sys, 0 );
             map_center( sysname );
+            free(names);
             return 1;
          }
       }
    }
 
-   /* Do fuzzy match. */
-   names = planet_searchFuzzyCase( name, &len );
-   if (len > 0) {
+   /* Construct found table. */
+   found = malloc( sizeof(map_find_t) * len );
+   n = 0;
+   for (i=0; i<len; i++) {
 
-      /* Construct found table. */
-      found = malloc( sizeof(map_find_t) * len );
-      n = 0;
-      for (i=0; i<len; i++) {
+      /* Planet must be real. */
+      pnt = planet_get( names[i] );
+      if (pnt == NULL)
+         continue;
+      if (pnt->real != ASSET_REAL)
+         continue;
 
-         /* Planet must be real. */
-         pnt = planet_get( names[i] );
-         if (pnt == NULL)
-            continue;
-         if (pnt->real != ASSET_REAL)
-            continue;
+      /* System must be known. */
+      sysname = planet_getSystem( names[i] );
+      if (sysname == NULL)
+         continue;
+      sys = system_get( sysname );
+      if (!sys_isKnown(sys))
+         continue;
 
-         /* System must be known. */
-         sysname = planet_getSystem( names[i] );
-         if (sysname == NULL)
-            continue;
-         sys = system_get( sysname );
-         if (!sys_isKnown(sys))
-            continue;
-
-         /* Set more values. */
-         ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
-         if (ret) {
-            found[n].jumps    = 10000;
-            found[n].distance = 1e6;
-         }
-
-         /* Set some values. */
-         found[n].pnt      = pnt;
-         found[n].sys      = sys;
-
-         /* Set fancy name. */
-         if (ret)
-            snprintf( found[n].display, sizeof(found[n].display),
-                  "%s (%s, unknown route)",
-                  names[i], sys->name );
-         else
-            snprintf( found[n].display, sizeof(found[n].display),
-                  "%s (%s, %d jumps, %.0fk distance)",
-                  names[i], sys->name, found[n].jumps, found[n].distance/1000. );
-         n++;
+      /* Set more values. */
+      ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
+      if (ret) {
+         found[n].jumps    = 10000;
+         found[n].distance = 1e6;
       }
-      free(names);
 
-      /* No visible match. */
-      if (n==0)
-         return -1;
+      /* Set some values. */
+      found[n].pnt      = pnt;
+      found[n].sys      = sys;
 
-      /* Sort the found by distance. */
-      map_sortFound( found, n );
-
-      /* Display results. */
-      map_findDisplayResult( parent, found, n );
-      return 0;
+      /* Set fancy name. */
+      if (ret)
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, unknown route)",
+               names[i], sys->name );
+      else
+         snprintf( found[n].display, sizeof(found[n].display),
+               "%s (%s, %d jumps, %.0fk distance)",
+               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+      n++;
    }
+   free(names);
 
-   /* No match. */
-   return -1;
+   /* No visible match. */
+   if (n==0)
+      return -1;
+
+   /* Sort the found by distance. */
+   map_sortFound( found, n );
+
+   /* Display results. */
+   map_findDisplayResult( parent, found, n );
+   return 0;
 }
 
 
@@ -606,15 +602,13 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    /* Match planet first. */
    o     = NULL;
    oname = outfit_existsCase( name );
-   if (oname != NULL) {
+   names = map_outfitsMatch( name, &len );
+   if (len <= 0)
+      return -1;
+   else if ((oname != NULL) && (len == 1))
       o = outfit_get( oname );
-   }
+   /* Do fuzzy match. */
    else {
-      /* Do fuzzy match. */
-      names = map_outfitsMatch( name, &len );
-      if (len <= 0)
-         return -1;
-
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
@@ -626,8 +620,9 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
          return 0;
       }
       o = outfit_get( names[i] );
-      free(names);
    }
+   if (names != NULL)
+      free(names);
    if (o == NULL)
       return -1;
 
@@ -758,15 +753,13 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    /* Match planet first. */
    s     = NULL;
    sname = ship_existsCase( name );
-   if (sname != NULL) {
+   names = map_shipsMatch( name, &len );
+   if (len <= 0)
+      return -1;
+   else if ((sname != NULL) && (len == 1))
       s = ship_get( sname );
-   }
+   /* Handle fuzzy matching. */
    else {
-      /* Do fuzzy match. */
-      names = map_shipsMatch( name, &len );
-      if (len <= 0)
-         return -1;
-
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
@@ -778,8 +771,9 @@ static int map_findSearchShips( unsigned int parent, const char *name )
          return 0;
       }
       s = ship_get( names[i] );
-      free(names);
    }
+   if (names != NULL)
+      free(names);
    if (s == NULL)
       return -1;
 
