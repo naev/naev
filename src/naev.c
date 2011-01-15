@@ -782,7 +782,7 @@ static void render_all (void)
    dt = (paused) ? 0. : game_dt;
 
    /* setup */
-   spfx_begin(dt);
+   spfx_begin(dt, real_dt);
    /* BG */
    space_render(dt);
    planets_render();

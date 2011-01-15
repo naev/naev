@@ -62,6 +62,7 @@ static double shake_force_mod = 0.; /**< Shake force modifier. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
 static int shake_off = 1; /**< 1 if shake is not active. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
+static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
 
 
 #if SDL_VERSION_ATLEAST(1,3,0)
@@ -453,28 +454,17 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
 
 
 /**
- * @brief Prepares the rendering for the special effects.
- *
- * Should be called at the beginning of the rendering loop.
- *
- *    @param dt Current delta tick.
+ * @brief Updates the shake position.
  */
-void spfx_begin( const double dt )
+static void spfx_updateShake( double dt )
 {
    double mod, vmod, angle;
    double force_x, force_y;
    int forced;
 
-   /* Defaults. */
-   shake_set = 0;
+   /* Must still be on. */
    if (shake_off)
       return;
-
-#if SDL_VERSION_ATLEAST(1,3,0)
-   /* Decrement the haptic timer. */
-   if (haptic_lastUpdate > 0.)
-      haptic_lastUpdate -= dt;
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* The shake decays over time */
    forced = 0;
@@ -514,6 +504,45 @@ void spfx_begin( const double dt )
 
    /* Update position. */
    vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+}
+
+
+/**
+ * @brief Prepares the rendering for the special effects.
+ *
+ * Should be called at the beginning of the rendering loop.
+ *
+ *    @param dt Current delta tick.
+ *    @param real_dt Real delta tick.
+ */
+void spfx_begin( const double dt, const double real_dt )
+{
+   double ddt;
+
+   /* Defaults. */
+   shake_set = 0;
+   if (shake_off)
+      return;
+
+#if SDL_VERSION_ATLEAST(1,3,0)
+   /* Decrement the haptic timer. */
+   if (haptic_lastUpdate > 0.)
+      haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   (void) real_dt; /* Avoid warning. */
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Micro basic simple control loop. */
+   if (dt > shake_fps_min) {
+      ddt = dt;
+      while (ddt > shake_fps_min) {
+         spfx_updateShake( shake_fps_min );
+         ddt -= shake_fps_min;
+      }
+      spfx_updateShake( ddt ); /* Leftover. */
+   }
+   else
+      spfx_updateShake( dt );
 
    /* set the new viewport */
    gl_matrixTranslate( shake_pos.x, shake_pos.y );

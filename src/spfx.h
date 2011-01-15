@@ -39,7 +39,7 @@ void spfx_clear (void);
 /*
  * get ready to rumble
  */
-void spfx_begin( const double dt );
+void spfx_begin( const double dt, const double real_dt );
 void spfx_end (void);
 void spfx_shake( double mod );
 void spfx_getShake( double *x, double *y );
