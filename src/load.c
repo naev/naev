@@ -127,8 +127,8 @@ static int load_load( nsave_t *save, const char *path )
 
             /* Ship info. */
             if (xml_isNode(node,"ship")) {
-               xmlr_attr(parent,"name",save->shipname);
-               xmlr_attr(parent,"model",save->shipmodel);
+               xmlr_attr(node,"name",save->shipname);
+               xmlr_attr(node,"model",save->shipmodel);
                continue;
             }
          } while (xml_nextNode(node));
@@ -278,11 +278,11 @@ void load_loadGameMenu (void)
       n     = 1;
    }
    window_addList( wid, 20, -50,
-         LOAD_WIDTH-150-60, LOAD_HEIGHT-110,
+         LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
          "lstSaves", names, n, 0, load_menu_update );
 
    /* Player text. */
-   window_addText( wid, -20, -40, 150, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+   window_addText( wid, -20, -40, 200, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
          0, "txtPilot", NULL, &cBlack, NULL );
 
    /* Buttons */
