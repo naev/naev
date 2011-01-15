@@ -31,10 +31,10 @@
 #include "land.h"
 
 
-#define LOAD_WIDTH      400 /**< Load window width. */
-#define LOAD_HEIGHT     300 /**< Load window height. */
+#define LOAD_WIDTH      600 /**< Load window width. */
+#define LOAD_HEIGHT     500 /**< Load window height. */
 
-#define BUTTON_WIDTH    50 /**< Button width. */
+#define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
 
@@ -62,6 +62,7 @@ extern int space_sysLoad( xmlNodePtr parent ); /**< Loads the space stuff. */
 /* unidiff.c */
 extern int diff_load( xmlNodePtr parent ); /**< Loads the universe diffs. */
 /* static */
+static void load_menu_update( unsigned int wid, char *str );
 static void load_menu_close( unsigned int wdw, char *str );
 static void load_menu_load( unsigned int wdw, char *str );
 static void load_menu_delete( unsigned int wdw, char *str );
@@ -255,6 +256,7 @@ void load_loadGameMenu (void)
 
    /* window */
    wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   window_setAccept( wid, load_menu_load );
    window_setCancel( wid, load_menu_close );
 
    /* Load loads. */
@@ -276,19 +278,23 @@ void load_loadGameMenu (void)
       n     = 1;
    }
    window_addList( wid, 20, -50,
-         LOAD_WIDTH-BUTTON_WIDTH-50, LOAD_HEIGHT-110,
-         "lstSaves", names, n, 0, NULL );
+         LOAD_WIDTH-150-60, LOAD_HEIGHT-110,
+         "lstSaves", names, n, 0, load_menu_update );
 
-   /* buttons */
+   /* Player text. */
+   window_addText( wid, -20, -40, 150, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+         0, "txtPilot", NULL, &cBlack, NULL );
+
+   /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBack", "Back", load_menu_close );
-   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load", load_menu_load );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", "Del", load_menu_delete );
 
-   /* default action */
-   window_setAccept( wid, load_menu_load );
+   /* Update. */
+   load_menu_update( wid, NULL );
 }
 /**
  * @brief Closes the load game menu.
@@ -299,6 +305,52 @@ static void load_menu_close( unsigned int wdw, char *str )
 {
    (void)str;
    window_destroy( wdw );
+}
+/**
+ * @brief Updates the load menu.
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void load_menu_update( unsigned int wid, char *str )
+{
+   (void) str;
+   int pos;
+   nsave_t *ns;
+   int n;
+   char *save;
+   char buf[256], credits[ECON_CRED_STRLEN], date[64];
+
+   /* Make sure list is ok. */
+   save = toolkit_getList( wid, "lstSaves" );
+   if (strcmp(save,"None") == 0)
+      return;
+
+   /* Get position. */
+   pos = toolkit_getListPos( wid, "lstSaves" );
+   ns  = load_getList( &n );
+   ns  = &ns[pos];
+
+   /* Display text. */
+   credits2str( credits, ns->credits, 2 );
+   ntime_prettyBuf( date, sizeof(date), ns->date, 4 );
+   snprintf( buf, sizeof(buf),
+         "\eDName:\n"
+         "\e0   %s\n"
+         "\eDVersion:\n"
+         "\e0   %s\n"
+         "\eDDate:\n"
+         "\e0   %s\n"
+         "\eDPlanet:\n"
+         "\e0   %s\n"
+         "\eDCredits:\n"
+         "\e0   %s\n"
+         "\eDShip Name:\n"
+         "\e0   %s\n"
+         "\eDShip Model:\n"
+         "\e0   %s",
+         ns->name, ns->version, date, ns->planet,
+         credits, ns->shipname, ns->shipmodel );
+   window_modifyText( wid, "txtPilot", buf );
 }
 /**
  * @brief Loads a new game.
