@@ -1016,7 +1016,8 @@ void space_init ( const char* sysname )
       interference_alpha = 0.;
 
    /* See if we should get a new music song. */
-   music_choose(NULL);
+   if (player.p != NULL)
+      music_choose(NULL);
 
    /* Reset player enemies. */
    player.enemies = 0;
