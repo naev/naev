@@ -5,7 +5,7 @@ if [ "$1" == "-h" ]; then
 fi
 
 for FILE in *.ogg; do
-   if [ -z "$(vorbiscomment -l $FILE | grep REPLAYGAIN_TRACK)" ]; then
+   if [[ -z $(vorbiscomment -l "$FILE" | grep REPLAYGAIN_TRACK) ]]; then
       echo $FILE;
    fi;
 done

@@ -155,7 +155,8 @@ last_sysNebuDens = nil
 last_sysNebuVol  = nil
 ambient_neutral  = { "ambient2", "mission",
       "peace1", "peace2", "peace4", "peace6",
-      "void_sensor", "ambiphonic" }
+      "void_sensor", "ambiphonic",
+      "Askyel - Classic" }
 --[[
 -- @brief Chooses ambient songs.
 --]]
@@ -220,7 +221,7 @@ function choose_ambient ()
                "empire1", "empire1", "empire1" }
          add_neutral = true
       elseif factions["Sirius"] then
-         ambient = { "sirius1" }
+         ambient = { "sirius1", "Askyel - Sirius Remix" }
          add_neutral = true
       elseif nebu then
          ambient = { "ambient1", "ambient1", "ambient1",
@@ -271,9 +272,11 @@ function choose_combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1", "battlesomething2" }
+      combat = { "nebu_battle1", "nebu_battle2", "battlesomething1", "battlesomething2",
+            "Askyel - Revenger 34", "Askyel - Bells (short version)" }
    else
-      combat = { "galacticbattle", "flf_battle1", "battlesomething1", "battlesomething2" }
+      combat = { "galacticbattle", "flf_battle1", "battlesomething1", "battlesomething2",
+            "Askyel - Eridani's Rock", "Askyel - Revenger 34", "Askyel - Bells (short version)" }
    end
 
    -- Make sure it's not already in the list or that we have to stop the
