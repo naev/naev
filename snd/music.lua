@@ -65,17 +65,23 @@ end
 
 
 --[[
+-- @brief Play a song if it's not currently playing.
+--]]
+function playIfNotPlaying( song )
+   if checkIfPlayingOrStop( song ) then
+      return true
+   end
+   music.load( song )
+   music.play()
+   return true
+end
+
+
+--[[
 -- @brief Chooses Loading songs.
 --]]
 function choose_load ()
-   load_song = "machina"
-   -- Don't play again if needed
-   if checkIfPlayingOrStop( load_song ) then
-      return true
-   end
-   music.load( load_song )
-   music.play()
-   return true
+   return playIfNotPlaying( "machina" )
 end
 
 
@@ -83,14 +89,7 @@ end
 -- @brief Chooses Intro songs.
 --]]
 function choose_intro ()
-   intro_song = "intro"
-   -- Don't play again if needed
-   if checkIfPlayingOrStop( intro_song ) then
-      return true
-   end
-   music.load( intro_song )
-   music.play()
-   return true
+   return playIfNotPlaying( "intro" )
 end
 
 
@@ -98,14 +97,7 @@ end
 -- @brief Chooses Credit songs.
 --]]
 function choose_credits ()
-   credits_song = "empire1"
-   -- Don't play again if needed
-   if checkIfPlayingOrStop( credits_song ) then
-      return true
-   end
-   music.load( credits_song )
-   music.play()
-   return true
+   return playIfNotPlaying( "empire1" )
 end
 
 
