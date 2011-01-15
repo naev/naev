@@ -70,8 +70,9 @@ static int cli_firstline   = 1; /**< Is this the first line? */
  * CLI stuff.
  */
 static int cli_script( lua_State *L );
+static int cli_printOnly( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "print", cli_print },
+   { "print", cli_printOnly },
    { "script", cli_script },
    {NULL, NULL}
 }; /**< Console only functions. */
@@ -83,12 +84,13 @@ static const luaL_Reg cli_methods[] = {
  */
 static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
+static int cli_printCore( lua_State *L, int cli_only );
 
 
 /**
- * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ * @brief Back end for the Lua print functionality.
  */
-int cli_print( lua_State *L )
+static int cli_printCore( lua_State *L, int cli_only )
 {
    int n = lua_gettop(L);  /* number of arguments */
    int i;
@@ -105,6 +107,8 @@ int cli_print( lua_State *L )
       if (s == NULL)
          return luaL_error(L, LUA_QL("tostring") " must return a string to "
                LUA_QL("print"));
+      if (!cli_only)
+         LOG( "%s", s );
 
       /* Add to console. */
       p += snprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
@@ -119,6 +123,24 @@ int cli_print( lua_State *L )
    cli_addMessage(buf);
 
    return 0;
+}
+
+
+/**
+ * @brief Replacement for the internal Lua print to print to both the console and the terminal.
+ */
+int cli_print( lua_State *L )
+{
+   return cli_printCore( L, 0 );
+}
+
+
+/**
+ * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ */
+static int cli_printOnly( lua_State *L )
+{
+   return cli_printCore( L, 1 );
 }
 
 
