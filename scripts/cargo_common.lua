@@ -1,23 +1,18 @@
 
-
-function cargo_calculateRoute ()
-    origin_p, origin_s = planet.cur()
-    local routesys = origin_s
-    local routepos = origin_p:pos()
-    
-    -- Select mission tier.
-    local tier = rnd.rnd(0, 4)
-    
-    -- Find an inhabited planet 0-3 jumps away.
-    -- Farther distances have a lower chance of appearing.
-    
+-- Find an inhabited planet 0-3 jumps away.
+function cargo_selectMissionDistance ()
     local seed = rnd.rnd()
     if     seed < 0.30 then missdist = 0
     elseif seed < 0.60 then missdist = 1
     elseif seed < 0.80 then missdist = 2
     else                    missdist = 3
     end
-    
+
+    return missdist
+end
+
+-- Build a set of target planets
+function cargo_selectPlanets(missdist, routepos)
     local planets = {}
     getsysatdistance(system.cur(), missdist, missdist,
         function(s)
@@ -30,20 +25,15 @@ function cargo_calculateRoute ()
            return true
         end)
 
-    if #planets == 0 then
-        abort()
-    end
-    
-    index = rnd.rnd(1, #planets)
-    destplanet = planets[index][1]
-    destsys = planets[index][2]
-    
-    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
-    -- Assume shortest route with no interruptions.
-    -- This is used to calculate the reward.
-    traveldist = 0
-    numjumps = origin_s:jumpDist(destsys)
-    
+    return planets    
+end
+
+-- We have a destination, now we need to calculate how far away it is by simulating the journey there.
+-- Assume shortest route with no interruptions.
+-- This is used to calculate the reward.
+function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
+    local traveldist = 0
+
     while routesys ~= destsys do
         -- We're not in the destination system yet.
         -- So, get the next system on the route, and the distance between our entry point and the jump point to the next system.
@@ -53,13 +43,43 @@ function cargo_calculateRoute ()
         routepos = tempsys:jumpPos(routesys)
         routesys = tempsys
     end
+
     -- We ARE in the destination system now, so route from the entry point to the destination planet.
     traveldist = traveldist + vec2.dist(routepos, destplanet:pos())
+
+    return traveldist
+end
+
+function cargo_calculateRoute ()
+    origin_p, origin_s = planet.cur()
+    local routesys = origin_s
+    local routepos = origin_p:pos()
+    
+    -- Select mission tier.
+    local tier = rnd.rnd(0, 4)
+    
+    -- Farther distances have a lower chance of appearing.
+    local missdist = cargo_selectMissionDistance()
+    local planets = cargo_selectPlanets(missdist, routepos)
+    if #planets == 0 then
+       return
+    end
+
+    local index      = rnd.rnd(1, #planets)
+    local destplanet = planets[index][1]
+    local destsys    = planets[index][2]
+    
+    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
+    -- Assume shortest route with no interruptions.
+    -- This is used to calculate the reward.
+
+    local numjumps   = origin_s:jumpDist(destsys)
+    local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
     
     -- We now know where. But we don't know what yet. Randomly choose a commodity type.
     -- TODO: I'm using the standard cargo types for now, but this should be changed to custom cargo once local-defined commodities are implemented.
     local cargoes = {"Food", "Industrial Goods", "Medicine", "Luxury Goods", "Ore"}
-    cargo = cargoes[rnd.rnd(1, #cargoes)]
+    local cargo = cargoes[rnd.rnd(1, #cargoes)]
 
     -- Return lots of stuff
     return destplanet, destsys, numjumps, traveldist, cargo, tier

@@ -74,22 +74,25 @@ function create()
 
     -- Calculate the route, distance, jumps and cargo to take
     destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+    if destplanet == nil then
+       misn.finish(false)
+    end
     
     -- Calculate time limit. Depends on tier and distance.
     -- The second time limit is for the reduced reward.
-    stuperpx = 0.15 - 0.015 * tier
+    stuperpx   = 0.15 - 0.015 * tier
     stuperjump = 11000 - 1100 * tier
     stupertakeoff = 10000
-    timelimit = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
+    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
     timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff) * 1.2)
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
-    amount = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
+    amount     = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
     jumpreward = 1000
     distreward = 0.12
-    reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
     misn.setTitle(cargosize[tier] .. " cargo transport (" .. amount .. " tons of " .. cargo .. ")")
     misn.markerAdd(destsys, "computer")

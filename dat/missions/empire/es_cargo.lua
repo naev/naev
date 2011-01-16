@@ -3,6 +3,8 @@
    Handles the randomly generated Empire cargo missions.
 
 ]]--
+include "scripts/jumpdist.lua"
+include "scripts/cargo_common.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -10,9 +12,15 @@ if lang == "es" then
 else -- default english
    misn_desc = "The Empire needs to ship %d tons of %s to %s in the %s system by %s (%s left)."
    misn_reward = "%d credits"
-   title = {}
-   title[1] = "ES: Ship to %s"
-   title[2] = "ES: Delivery to %s"
+
+   title_p1 = "ES: Cargo transport to %s in the %s system"
+   title_p2 = [[ 
+Cargo: %s (%d tons)
+Jumps: %d
+Travel distance: %d
+Time limit: %s]]
+
+
    full = {}
    full[1] = "Ship is full"
    full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
@@ -44,51 +52,37 @@ end
 function create()
    -- Note: this mission does not make any system claims.
 
-   -- target destination
-   local i = 0
-   local landed, landed_sys = planet.cur()
-   local s
-   repeat
-      pnt,sys = planet.get( misn.factions() )
-      s = pnt:services()
-      i = i + 1
-   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
-   -- infinite loop protection
-   if i > 10 then
-      misn.finish(false)
-   end
-   misn.markerAdd( sys, "low" )
-   misn_dist = sys:jumpDist()
+    origin_p, origin_s = planet.cur()
+    local routesys = origin_s
+    local routepos = origin_p:pos()
+
+    -- target destination
+    -- Todo: Ensure selected planet is aligned to player faction    
+    destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+    if destplanet == nil then
+       misn.finish(false)
+    end
 
    -- mission generics
-   misn_type = "Cargo"
-   i = rnd.rnd(1)
-   misn.setTitle( string.format(title[i+1], pnt:name()) )
+    stuperpx   = 0.15 - 0.015 * tier
+    stuperjump = 11000 - 1000 * tier
+    stupertakeoff = 15000
+    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
+    timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff) * 1.2)
 
-   -- more mission specifics
-   carg_mass = rnd.rnd( 10, 30 )
-   i = rnd.rnd(12)
-   if i < 5 then
-      carg_type = "Food"
-   elseif i < 8 then
-      carg_type = "Ore"
-   elseif i < 10 then
-      carg_type = "Industrial Goods"
-   elseif i < 12 then
-      carg_type = "Luxury Goods"
-   else
-      carg_type = "Medicine"
-   end
+    
+    -- Choose amount of cargo and mission reward. This depends on the mission tier.
+    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+    amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
+    jumpreward = 1000
+    distreward = 0.15
+    reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+    
+    misn.setTitle("ES: Cargo transport (" .. amount .. " tons of " .. cargo .. ")")
+    misn.markerAdd(destsys, "computer")
+    misn.setDesc(title_p1:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setReward(misn_reward:format(reward))
 
-   difficulty = math.abs(rnd.twosigma()) * 1000 + time.units(5)
-   misn_time = time.get() + time.units(3) + difficulty * misn_dist +
-         ((misn_dist - misn_dist % 3) / 3) * time.units(3)
-   misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
-         pnt:name(), sys:name(),
-         time.str(misn_time), time.str(misn_time-time.get())) )
-   reward = (.05 + math.sqrt(6000/difficulty)) * misn_dist * carg_mass *
-         (500+rnd.rnd(250)) + carg_mass * (250+rnd.rnd(150)) + rnd.rnd(2500)
-   misn.setReward( string.format( misn_reward, reward ) )
 end
 
 -- Mission is accepted
@@ -164,7 +158,7 @@ function failed ()
 end   
 
 function abort ()
-   if misn_type ~= "People" then
+   if misn_type ~= "People" and carg_id ~= nil then
       misn.cargoJet( carg_id )
    end
 end

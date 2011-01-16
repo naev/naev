@@ -61,6 +61,9 @@ function create()
 
     -- Calculate the route, distance, jumps and cargo to take
     destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
+    if destplanet == nil then
+       misn.finish(false)
+    end
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
