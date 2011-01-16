@@ -66,8 +66,8 @@ else -- default english
     misn_desc[1] = "Fly to planet %s in the %s system and talk to Jorek. Once Jorek has boarded your ship, proceed to system %s and board the %s."
     
     credits = 100000 -- 100K
-    timelimit1 = 30
-    timelimit2 = 70
+    timelimit1 = 40
+    timelimit2 = 90
     
     -- Aborted mission
     
@@ -123,7 +123,6 @@ end
 
 function create ()
     if not misn.claim( {sys, sys2} ) then
-        abort()
     end
 
     misn.setNPC( "A dark-haired woman", "rebina" )
@@ -142,8 +141,8 @@ function accept()
         tk.msg(title[3], string.format(text[5], planetname, timelimit1, timelimit2, shipname, shipname))
 
         -- Set deadlines
-        deadline1 = time.get() + time.units(timelimit1)
-        deadline2 = time.get() + time.units(timelimit2)
+        deadline1 = time.get() + time.create(0, timelimit1, 0)
+        deadline2 = time.get() + time.create(0, timelimit2, 0)
         
         misn.setTitle(misn_title)
         misn.setReward(misn_reward)
