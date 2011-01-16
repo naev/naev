@@ -32,6 +32,8 @@ static int time_le( lua_State *L );
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
 static int time_inc( lua_State *L );
+static int time_tonumber( lua_State *L );
+static int time_fromnumber( lua_State *L );
 static const luaL_reg time_methods[] = {
    { "create", time_create },
    { "add", time_add },
@@ -45,6 +47,8 @@ static const luaL_reg time_methods[] = {
    { "str", time_str },
    { "__tostring", time_str },
    { "inc", time_inc },
+   { "tonumber", time_tonumber },
+   { "fromnumber", time_fromnumber },
    {0,0}
 }; /**< Time Lua methods. */
 static const luaL_reg time_cond_methods[] = {
@@ -59,6 +63,8 @@ static const luaL_reg time_cond_methods[] = {
    { "get", time_get },
    { "str", time_str },
    { "__tostring", time_str },
+   { "tonumber", time_tonumber },
+   { "fromnumber", time_fromnumber },
    {0,0}
 }; /**< Time Lua conditional methods. */
 
@@ -388,5 +394,45 @@ static int time_inc( lua_State *L )
    ntime_inc( luaL_validtime(L,1) );
    return 0;
 }
+
+
+/**
+ * @brief Gets a number representing this time.
+ *
+ * The best usage for this currently is mission variables.
+ *
+ * @usage num = t:tonumber() -- Getting the number from a time t
+ *
+ *    @luaparam t Time to get number of.
+ *    @luareturn Number representing time.
+ * @luafunc tonumber( t )
+ */
+static int time_tonumber( lua_State *L )
+{
+   ntime_t t = luaL_validtime(L,1);
+   lua_pushnumber( L, t );
+   return 1;
+}
+
+
+/**
+ * @brief Creates a time from a number representing it.
+ *
+ * The best usage for this currently is mission variables.
+ *
+ * @usage t = time.fromnumber( t:tonumber() ) -- Should get the time t again
+ *
+ *    @luaparam num Number to get time from.
+ *    @luareturn Time representing number.
+ * @luafunc tonumber( num )
+ */
+static int time_fromnumber( lua_State *L )
+{
+   LuaTime lt;
+   lt.t = luaL_checklong(L,1);
+   lua_pushtime( L, lt );
+   return 1;
+}
+
 
 
