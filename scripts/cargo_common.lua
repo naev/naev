@@ -62,7 +62,7 @@ function cargo_calculateRoute ()
     cargo = cargoes[rnd.rnd(1, #cargoes)]
 
     -- Return lots of stuff
-    return destplanet, destsys, numdist, traveldist, cargo, tier
+    return destplanet, destsys, numjumps, traveldist, cargo, tier
 end
 
 

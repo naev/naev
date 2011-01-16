@@ -73,7 +73,7 @@ function create()
     -- Note: this mission does not make any system claims. 
 
     -- Calculate the route, distance, jumps and cargo to take
-    destplanet, destsys, njumps, traveldist, cargo, tier = cargo_calculateRoute()
+    destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
     
     -- Calculate time limit. Depends on tier and distance.
     -- The second time limit is for the reduced reward.
@@ -85,7 +85,7 @@ function create()
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-    finished_mod = 3.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
+    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
     amount = rnd.rnd(10 + 5 * tier, 20 + 6 * tier) -- 45 max (quicksilver)
     jumpreward = 1000
     distreward = 0.12
