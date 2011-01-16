@@ -158,7 +158,7 @@ function failed ()
 end   
 
 function abort ()
-   if misn_type ~= "People" and carg_id ~= nil then
+   if misn_type ~= "People" then
       misn.cargoJet( carg_id )
    end
 end
