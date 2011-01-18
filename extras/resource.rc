@@ -9,7 +9,7 @@ FILEFLAGSMASK 0x17L
 #else
 	FILEFLAGS 0x2L
 #endif
-FILEVERSION 0,4,2,0
+FILEVERSION 0,5,0,0
 FILEOS 0x4L
 FILETYPE 0x1L
 FILESUBTYPE 0x0L
@@ -18,14 +18,14 @@ BEGIN
 	BEGIN
 		BLOCK "040004b0"
 		BEGIN
-			VALUE "Comments", "http://code.google.com/p/naev/"
+			VALUE "Comments", "http://www.naev.org/"
 			VALUE "CompanyName", "Naev Team"
 			VALUE "FileDescription", "Naev: Sea of Darkness"
 			VALUE "InternalName", "naev"
-			VALUE "LegalCopyright", "Copyright (C) 2006-2010"
+			VALUE "LegalCopyright", "Copyright (C) 2006-2011"
 			VALUE "OriginalFilename", "naev.exe"
 			VALUE "ProductName", "Naev: Sea of Darkness"
-			VALUE "ProductVersion", "Release"
+			VALUE "ProductVersion", "0.5.0-beta"
 		END
 	END
 	BLOCK "VarFileInfo"
