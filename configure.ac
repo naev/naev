@@ -447,6 +447,7 @@ AS_IF([test "$have_sdlmixer" = "yes"], [
 ])
 
 # Operating system
+AM_CONDITIONAL([HAVE_WIN32], 0)
 case "$host" in
   *-linux*)
     AC_DEFINE([LINUX], 1, [Define to 1 if running on Linux])
@@ -455,6 +456,7 @@ case "$host" in
     AC_DEFINE([FREEBSD], 1, [Define to 1 if running on FreeBSD])
     ;;
   *-mingw*)
+    AM_CONDITIONAL([HAVE_WIN32], 1)
     AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
     ;;
   *-darwin*)

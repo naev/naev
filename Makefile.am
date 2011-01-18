@@ -26,9 +26,17 @@ CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 all-local: $(NAEV) VERSION
 
+if HAVE_WIN32
+$(NAEV):
+	@echo "  RES   extras/resource.o"
+	windres extras/naev.rc -O coff -o extras/resource.o
+	@echo "  LN    $(NAEV)"
+	$(LN_S) extras/resource.o "src/$(NAEV)" "$(NAEV)"
+else
 $(NAEV):
 	@echo "  LN    $(NAEV)"
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
+endif
 
 $(PACK):
 	$(MAKE) -C utils/pack
