@@ -704,7 +704,8 @@ static void fps_control (void)
  */
 static void update_all (void)
 {
-   double tempdt;
+   int i, n;
+   double nf, microdt;
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)game_dt*1000);
@@ -713,19 +714,17 @@ static void update_all (void)
    }
    else if (game_dt > fps_min) { /* we'll force a minimum of 50 FPS */
 
-      /* First iteration. */
-      tempdt = game_dt - fps_min;
-      pause_delay( (unsigned int)(tempdt*1000));
-      update_routine(fps_min);
+      /* Number of frames. */
+      nf = ceil( game_dt / fps_min );
+      microdt = game_dt / nf;
+      n  = (int) nf;
 
-      /* run as many cycles of dt=fps_min as needed */
-      while (tempdt > fps_min) {
-         pause_delay((unsigned int)(-fps_min*1000)); /* increment counters */
-         update_routine(fps_min);
-         tempdt -= fps_min;
+      /* Update as much as needed, evenly. */
+      for (i=0; i<n; i++) {
+         pause_delay( (unsigned int)(microdt*1000));
+         update_routine(microdt);
       }
 
-      update_routine(tempdt); /* leftovers */
       /* Note we don't touch game_dt so that fps_display works well */
    }
    else /* Standard, just update with the last dt */
