@@ -93,6 +93,7 @@ function create ()
    destplanetname = destplanet:name()
    tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
    misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
+   misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
    misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Force unboard
@@ -139,6 +140,7 @@ function land()
          destplanetname = destplanet:name()
          tk.msg(title[2], string.format(directions[nextstop], destplanetname, destsysname)) -- NPC telling you where to go
          misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
+         misn.osdCreate(misn_title, {misn_desc[2]:format(destplanetname, destsysname)})
          misn.markerMove( misn_marker, destsys )
       end
    end

@@ -54,6 +54,7 @@ else -- Default to English
    talk[1] = ""
 
 -- Other text for the mission -- ??
+   osd_msg[1] = "Fly around in the system, preferably near %s."
    msg_abortTitle = "" 
    msg_abort = [[]]
 end
@@ -91,6 +92,7 @@ function accept ()
       hook.land( "landed" )
 
       tk.msg( title[1], string.format(text[3], misn_base:name()) )
+      misn.osdCreate(misn_title, {osd_msg[1]:format(misn_base:name())})
       cargoID = misn.cargoAdd( "Civilians", 0 )
    end
 

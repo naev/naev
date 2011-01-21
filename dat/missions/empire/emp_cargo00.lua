@@ -71,6 +71,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], dest:name() ))
+   misn.osdCreate(title[2], {misn_desc:format(dest:name(),sys:name())})
 
    -- Set up the goal
    parcels = misn.cargoAdd("Parcels", 0)
