@@ -376,8 +376,7 @@ unsigned int window_create( const char* name,
    Window *wcur, *wlast, *wdw;
 
    /* Allocate memory. */
-   wdw = malloc( sizeof(Window) );
-   memset( wdw, 0, sizeof(Window) );
+   wdw = calloc( 1, sizeof(Window) );
 
    const int wid = (++genwid); /* unique id */
 
