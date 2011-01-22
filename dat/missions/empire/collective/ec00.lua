@@ -70,6 +70,7 @@ function accept ()
    tk.msg( title[2], string.format( text[3], misn_nearby:name(),
          misn_base:name(), misn_base_sys:name() ))
 
+   misn.osdCreate(misn_title, {misn_desc[1]:format(misn_nearby:name())})
    hook.enter("enter")
    hook.land("land")
 end
@@ -94,6 +95,7 @@ function enter()
       misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
       misn_stage = 1
       misn.markerMove( misn_marker, misn_base_sys )
+      misn.osdCreate(misn_title, {misn_desc[2]:format(misn_base:name(),misn_base_sys:name())})
    end
 end
 
