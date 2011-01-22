@@ -6,7 +6,7 @@ AM_CFLAGS = $(NAEV_CFLAGS)
 naev_LDADD = $(NAEV_LIBS)
 naev_DEPENDENCIES = $(NAEV_DEPENDENCIES)
 
-SOURCE_FILES = \
+CODE_SOURCE = \
 	ai.c \
 	array.c \
 	background.c \
@@ -270,15 +270,13 @@ SOURCE_FILES = \
 	unidiff.h \
 	weapon.h
 
-if HAVE_WIN32
-naev_SOURCES = $(SOURCE_FILES) ../extras/naev.rc
+if HAVE_WINDRES
+WINDOWS_RESOURCE = ../extras/resource.rc
+naev_SOURCES = $(CODE_SOURCE) $(WINDOWS_RESOURCE)
+
 .rc.o:
-	@echo "  RES    $@"
-	windres $^ -o $@
-%.o : %.rc
-	@echo "  RES    $@"
-	windres $^ -o $@
+	@WINDRES@ $< -O coff $@
 else
-naev_SOURCES = $(SOURCE_FILES)
+naev_SOURCES = $(CODE_SOURCE)
 endif
 
