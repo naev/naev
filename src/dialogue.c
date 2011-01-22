@@ -221,8 +221,6 @@ void dialogue_msgRaw( const char* caption, const char *msg )
 }
 
 
-static int yesno_result; /**< Stores the yesno dialogue result. */
-static unsigned int yesno_wid = 0; /**< Stores the yesno window id. */
 /**
  * @brief Runs a dialogue with both yes and no options.
  *
@@ -234,8 +232,6 @@ int dialogue_YesNo( const char* caption, const char *fmt, ... )
 {
    char msg[4096];
    va_list ap;
-
-   if (yesno_wid) return -1;
 
    if (fmt == NULL) return -1;
    else { /* get the message */
@@ -257,28 +253,42 @@ int dialogue_YesNo( const char* caption, const char *fmt, ... )
  */
 int dialogue_YesNoRaw( const char* caption, const char *msg )
 {
+   unsigned int wid;
    int w,h;
    glFont* font;
+   int *result_ptr, result;
 
    font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
-   yesno_wid = window_create( caption, -1, -1, w, h+110 );
+   wid = window_create( caption, -1, -1, w, h+110 );
    /* text */
-   window_addText( yesno_wid, 20, -40, w-40, h,  0, "txtYesNo",
+   window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
          font, &cBlack, msg );
    /* buttons */
-   window_addButton( yesno_wid, w/2-50-10, 20, 50, 30, "btnYes", "Yes",
+   window_addButton( wid, w/2-50-10, 20, 50, 30, "btnYes", "Yes",
          dialogue_YesNoClose );
-   window_addButton( yesno_wid, w/2+10, 20, 50, 30, "btnNo", "No",
+   window_addButton( wid, w/2+10, 20, 50, 30, "btnNo", "No",
          dialogue_YesNoClose );
 
    /* tricky secondary loop */
    dialogue_open++;
    toolkit_loop();
 
+   /* Get result. */
+   result_ptr = window_getData( wid );
+   if (result_ptr != NULL) {
+      result     = *result_ptr;
+      free( result_ptr );
+   }
+   else
+      result = 1;
+
+   /* Close the dialogue. */
+   dialogue_close( wid, NULL );
+
    /* return the result */
-   return yesno_result;
+   return result;
 }
 /**
  * @brief Closes a yesno dialogue.
@@ -287,15 +297,19 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
  */
 static void dialogue_YesNoClose( unsigned int wid, char* str )
 {
+   int *result = malloc( sizeof(int) );;
+
    /* store the result */
    if (strcmp(str,"btnYes")==0)
-      yesno_result = 1;
+      *result = 1;
    else if (strcmp(str,"btnNo")==0)
-      yesno_result = 0;
+      *result = 0;
 
-   /* destroy the window */
-   dialogue_close( wid, str );
-   yesno_wid = 0;
+   /* set data. */
+   window_setData( wid, result );
+
+   /* End the loop. */
+   loop_done = 1;
 }
 
 
