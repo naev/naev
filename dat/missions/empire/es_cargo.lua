@@ -36,11 +36,13 @@ Time limit: %s]]
    miss[1]= "Cargo Missing"
    miss[2] = "You are missing the %d tons of %s!."
    miss[3] = "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
-   slow = {}
-   slow[1] = "Ship Too Slow"
-   slow[2] = [[Your ship will take at least %s to reach %s, %s past the deadline.
 
-A faster ship is needed. Do you want to accept the mission anyway?]]
+    osd_title = "Empire Shipping"
+    osd_msg = {}
+    osd_msg[1] = "Fly to %s in the %s system before %s."
+    osd_msg[2] = "You have %s remaining."
+    osd_msg1 = "Fly to %s in the %s system before %s."
+    osd_msg2 = "You have %s remaining." -- Need to reuse.
 end
 
 --[[
@@ -57,18 +59,19 @@ function create()
     local routepos = origin_p:pos()
 
     -- target destination
-    -- Todo: Ensure selected planet is aligned to player faction    
     destplanet, destsys, numjumps, traveldist, cargo, tier = cargo_calculateRoute()
     if destplanet == nil then
        misn.finish(false)
     end
+	if destplanet:faction() ~= faction.get( "Empire" ) then
+       misn.finish(false)
+	end
 
    -- mission generics
     stuperpx   = 0.15 - 0.015 * tier
     stuperjump = 11000 - 1000 * tier
     stupertakeoff = 15000
     timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
-    timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff) * 1.2)
 
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
@@ -87,22 +90,19 @@ end
 
 -- Mission is accepted
 function accept()
-   delay = time.get() + time.units(2) + (player.pilot():stats().jump_delay * 1000 * misn_dist)
-   if pilot.cargoFree(player.pilot()) < carg_mass then
-      tk.msg( full[1], string.format( full[2], carg_mass-pilot.cargoFree(player.pilot()) ))
+   if pilot.cargoFree(player.pilot()) < amount then
+      tk.msg( full[1], string.format( full[2], amount-pilot.cargoFree(player.pilot()) ))
       misn.finish()
-   elseif delay > misn_time then
-      if not tk.yesno( slow[1], string.format( slow[2], time.str(delay - time.get()),
-            pnt:name(), time.str(delay - misn_time) )) then
-         misn.finish()
-      end
    end
 
    if misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-      carg_id = misn.cargoAdd( carg_type, carg_mass )
-      tk.msg( msg_title[1], string.format( msg_msg[1], carg_mass, carg_type ))
+      carg_id = misn.cargoAdd( cargo, amount )
+      tk.msg( msg_title[1], string.format( msg_msg[1], amount, cargo ))
+      osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+      osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
+      misn.osdCreate(osd_title, osd_msg)
       hook.land( "land" ) -- only hook after accepting
-      hook.enter( "timeup" )
+      hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
    else
       tk.msg( msg_title[2], msg_msg [2] )
       misn.finish()
@@ -111,54 +111,38 @@ end
 
 -- Land hook
 function land()
-
-   local landed = pnt.get()
-   if landed == pnt then
-      if misn.cargoRm( carg_id ) then
-         player.pay( reward )
-         tk.msg( msg_title[3], string.format( msg_msg[3], carg_type ))
-
-         -- increase empire shipping mission counter
-         n = var.peek("es_misn")
-         if n ~= nil then
+    if planet.cur() == destplanet then
+       	tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
+        player.pay(reward)
+        n = var.peek("es_misn")
+        if n ~= nil then
             var.push("es_misn", n+1)
-         else
+        else
             var.push("es_misn", 1)
-         end
+        end
 
-         -- increase faction
-         if player.getFaction("Empire") < 50 then
+        -- increase faction
+        if player.getFaction("Empire") < 50 then
             player.modFaction("Empire", rnd.rnd(5))
-         end
-
-         misn.finish(true)
-      else
-         tk.msg( miss[1], string.format( miss[2], carg_mass, carg_type ))
-      end
-   end
+        end
+        misn.finish(true)
+    end
 end
 
--- Time hook
-function timeup()
-   if time.get() > misn_time then
-      hook.timer(2000, "failed")
-   else
-      misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
-            pnt:name(), sys:name(),
-            time.str(misn_time), time.str(misn_time-time.get())) )
-   end
+-- Date hook
+function tick()
+    if timelimit >= time.get() then
+        -- Case still in time
+        osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+        osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
+        misn.osdCreate(osd_title, osd_msg)
+    elseif timelimit <= time.get() then
+        -- Case missed deadline
+        player.msg(miss[3])
+        abort()
+    end
 end
-
-function failed ()
-   player.msg( miss[3] )
-   if misn_type ~= "People" then
-      misn.cargoJet( carg_id )
-   end
-   misn.finish(false)
-end   
 
 function abort ()
-   if misn_type ~= "People" then
-      misn.cargoJet( carg_id )
-   end
+    misn.finish(false)
 end
