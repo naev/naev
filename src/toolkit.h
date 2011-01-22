@@ -64,6 +64,13 @@ void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) );
 
 
 /*
+ * data
+ */
+void window_setData( unsigned int wid, void *data );
+void* window_getData( unsigned int wid );
+
+
+/*
  * render
  */
 void toolkit_render (void);

@@ -164,6 +164,7 @@ typedef struct Window_ {
 
    int focus; /**< Current focused widget. */
    Widget *widgets; /**< Widget storage. */
+   void *udata; /**< Custom data of the window. */
 } Window;
 
 

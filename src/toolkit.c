@@ -551,6 +551,46 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
 
 
 /**
+ * @brief Sets custom data for a window.
+ *
+ *    @param wid Window to set custom data of.
+ *    @param data Data to set.
+ */
+void window_setData( unsigned int wid, void *data )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL)
+      return;
+
+   /* Set data. */
+   wdw->udata = data;
+}
+
+
+/**
+ * @brief Gets the custom data of a window.
+ *
+ *    @param wid Window to get custom data of.
+ *    @return The custom data or NULL if not applicable.
+ */
+void* window_getData( unsigned int wid )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL)
+      return NULL;
+
+   /* Get data. */
+   return wdw->udata;
+}
+
+
+/**
  * @brief Sets or removes the border of a window.
  *
  * Default is enabled.
