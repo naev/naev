@@ -271,7 +271,9 @@ static void menu_main_new( unsigned int wid, char* str )
 {
    (void) str;
    (void) wid;
-   menu_main_close();
+   window_destroy( wid );
+   menu_Close(MENU_MAIN);
+   pause_game();
    player_new();
 }
 /**
