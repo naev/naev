@@ -22,7 +22,7 @@ if lang == "es" then
 else -- default english
    -- Mission details
    bar_desc = "Commander Soldner is waiting for you."
-   misn_title = "Empire Shipping Delivery"
+   misn_title = "Empire VIP Rescue"
    misn_reward = "%d credits"
    misn_desc = {}
    misn_desc[1] = "Rescue the VIP from a transport ship in the %s system."
@@ -79,7 +79,7 @@ function accept ()
    -- Flavour text and mini-briefing
    tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
    tk.msg( title[1], string.format( text[3], reward ) )
-
+   misn.osdCreate(misn_title, {misn_desc[1]:format(destsys:name())})
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
@@ -193,7 +193,7 @@ function board ()
    misn_stage = 2
    misn.markerMove( misn_marker, retsys )
    misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-
+   misn.osdCreate(misn_title, {misn_desc[2]:format(ret:name(),retsys:name())})
    -- Force unboard
    player.unboard()
 end

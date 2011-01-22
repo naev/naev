@@ -74,6 +74,7 @@ function accept ()
    -- Flavour text and mini-briefing
    tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
          dest:name(), destsys:name(), reward ))
+   misn.osdCreate(misn_title, {misn_desc[1]:format(pickup:name(),pickupsys:name())})
 
    -- Set up the goal
    tk.msg( title[1], text[3] )
@@ -101,6 +102,7 @@ function land ()
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
       misn.markerMove( misn_marker, destsys )
+      misn.osdCreate(misn_title, {misn_desc[2]:format(dest:name(),destsys:name())})
 
       -- Load message
       tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
@@ -112,6 +114,7 @@ function land ()
          misn_stage = 2
          misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
          misn.markerMove( misn_marker, retsys )
+         misn.osdCreate(misn_title, {misn_desc[3]:format(ret:name(),retsys:name())})
 
          -- Some text
          tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )

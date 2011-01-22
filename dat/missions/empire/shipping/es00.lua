@@ -72,7 +72,7 @@ function accept ()
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], dest:name(), destsys:name(),
          dest:name(), ret:name(), retsys:name() ))
-
+   misn.osdCreate(title[2], {misn_desc[1]:format(dest:name(),destsys:name())})
    -- Set up the goal
    prisoners = misn.cargoAdd("Prisoners", 0)
    tk.msg( title[2], text[3] )
@@ -95,7 +95,7 @@ function land ()
          tk.msg(title[2], text[5] )
          misn.markerMove( misn_marker, retsys )
          misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
-
+         misn.osdCreate(title[2], {misn_desc[2]:format(ret:name(),retsys:name())})
          -- We'll take off right away again
          player.takeoff()
       end
