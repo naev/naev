@@ -1437,6 +1437,10 @@ void window_render( Window *w )
    double x, y, wid, hei;
    Widget *wgt;
 
+   /* Do not render dead windows. */
+   if (window_isFlag( w, WINDOW_KILL ))
+      return;
+
    /* position */
    x = w->x;
    y = w->y;
@@ -1477,6 +1481,10 @@ void window_renderOverlay( Window *w )
 {
    double x, y;
    Widget *wgt;
+
+   /* Do not render dead windows. */
+   if (window_isFlag( w, WINDOW_KILL ))
+      return;
 
    /* position */
    x = w->x;
