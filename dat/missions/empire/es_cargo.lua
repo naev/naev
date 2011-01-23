@@ -37,12 +37,12 @@ Time limit: %s]]
    miss[2] = "You are missing the %d tons of %s!."
    miss[3] = "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 
-    osd_title = "Empire Shipping"
-    osd_msg = {}
-    osd_msg[1] = "Fly to %s in the %s system before %s."
-    osd_msg[2] = "You have %s remaining."
-    osd_msg1 = "Fly to %s in the %s system before %s."
-    osd_msg2 = "You have %s remaining." -- Need to reuse.
+   osd_title = "Empire Shipping"
+   osd_msg = {}
+   osd_msg[1] = "Fly to %s in the %s system before %s."
+   osd_msg[2] = "You have %s remaining."
+   osd_msg1 = "Fly to %s in the %s system before %s."
+   osd_msg2 = "You have %s remaining." -- Need to reuse.
 end
 
 --[[
@@ -63,9 +63,9 @@ function create()
     if destplanet == nil then
        misn.finish(false)
     end
-	if destplanet:faction() ~= faction.get( "Empire" ) then
-       misn.finish(false)
-	end
+    if destplanet:faction() ~= faction.get( "Empire" ) then
+        misn.finish(false)
+    end
 
    -- mission generics
     stuperpx   = 0.15 - 0.015 * tier
@@ -112,7 +112,7 @@ end
 -- Land hook
 function land()
     if planet.cur() == destplanet then
-       	tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
+         tk.msg( msg_title[3], string.format( msg_msg[3], cargo ))
         player.pay(reward)
         n = var.peek("es_misn")
         if n ~= nil then
