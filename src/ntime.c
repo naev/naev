@@ -44,8 +44,6 @@
 #include "hook.h"
 
 
-#define NT_SCU_STP   (5000)      /* STP in an SCU */
-#define NT_STP_STU   (10000)     /* STU in an STP */
 #define NT_STU_DIV   (1000)      /* Divider for extracting STU. */
 #define NT_STU_DT    (30)        /* Update rate, how many STU are in a real second. */
 #define NT_SCU_STU   ((ntime_t)NT_SCU_STP*(ntime_t)NT_STP_STU) /* STU in an SCU */

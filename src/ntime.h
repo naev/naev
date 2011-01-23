@@ -10,7 +10,11 @@
 #include <stdint.h>
 
 
-typedef int64_t ntime_t;
+#define NT_SCU_STP   (5000)      /**< STP in an SCU */
+#define NT_STP_STU   (10000)     /**< STU in an STP */
+
+
+typedef int64_t ntime_t;         /**< Core time type. */
 
 /* Create. */
 ntime_t ntime_create( int scu, int stp, int stu );
