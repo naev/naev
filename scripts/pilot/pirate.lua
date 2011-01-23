@@ -158,7 +158,7 @@ function pirate_createAncestor( pirate_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Ancestor specializes in ranged combat.
-   primary        = { "Laser Cannon", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2" }
+   primary        = { "Laser Cannon MK1", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2" }
    secondary      = { "Seeker Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -199,7 +199,7 @@ function pirate_createVendetta( pirate_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Vendettas are all about close-range firepower.
-   primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon" }
+   primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon MK1" }
    secondary      = { "Seeker Launcher", "Banshee Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1

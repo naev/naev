@@ -51,7 +51,8 @@ function accept ()
     misn.setReward( reward_desc )
     misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
     misn.markerAdd( targetsystem, "low" )
-    
+    misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})
+
     startsystem = system.cur() --needed to make thugs appear random in the first system
     last_system = system.cur() --ignore this one, it's just the intitiation of the variable
     
@@ -87,7 +88,7 @@ function spawnBaddies ()
     if last_system == startsystem then
         thugs = pilot.add( "crimelord Thugs")
     else
-        thugs = pilot.add( "crimelord Thugs", nil, last_system)
+        thugs = pilot.add( "crimelord Thugs", "baddie_norun", last_system)
     end
     thugs_alive = 0
     for pilot_number, pilot_object in pairs(thugs) do

@@ -82,6 +82,7 @@ function accept ()
    tk.msg( title[2], string.format(text[3], satellite_sys:name(),
          homeworld:name(), homeworld_sys:name(), credits ) )
 
+   misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks
    hook.land("land")
    hook.enter("jump")
@@ -113,6 +114,7 @@ end
 --]]
 function beginLaunch ()
    player.msg( launch[1] )
+   misn.osdDestroy()
    hook.timer( 3000, "beginCountdown" )
 end
 function beginCountdown ()
@@ -134,5 +136,6 @@ function launchSatellite ()
    player.msg( launch[3] )
    misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
+   misn.osdCreate(mtitle[1], {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})
    misn.markerMove( misn_marker, homeworld_sys )
 end

@@ -44,7 +44,7 @@ else -- Default to English
    text[4] = [[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]]
    text[5] = [["Thank you so much! Here's %s tons of hot dogs!"]]
    text[7] = [[Reynir doesn't look happy when you meet him outside the ship.
-   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's 1 ton of hot dogs..."]]
+   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's %s ton of hot dogs..."]]
    
 
    text[6] = [[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]]
@@ -54,7 +54,9 @@ else -- Default to English
    talk[1] = ""
 
 -- Other text for the mission -- ??
+   osd_msg = {}
    osd_msg[1] = "Fly around in the system, preferably near %s."
+   osd_msg[2] = "Take Reynir home to %s."
    msg_abortTitle = "" 
    msg_abort = [[]]
 end
@@ -91,7 +93,7 @@ function accept ()
       misn.setDesc( misn_desc )
       hook.land( "landed" )
 
-      tk.msg( title[1], string.format(text[3], misn_base:name()) )
+      tk.msg( title[4], string.format(text[3], misn_base:name()) )
       misn.osdCreate(misn_title, {osd_msg[1]:format(misn_base:name())})
       cargoID = misn.cargoAdd( "Civilians", 0 )
    end
@@ -105,19 +107,22 @@ function landed()
       misn.cargoRm( cargoID )
       if misn_bleeding then
          reward = math.min(1, pilot.cargoFree(player.pilot()))
+         reward_text = text[7]
       else
          reward = pilot.cargoFree(player.pilot())
          reward_text = text[5]
       end
       tk.msg( title[4], string.format(reward_text, reward) )
-     pilot.cargoAdd( player.pilot(), cargoname, reward )
+      pilot.cargoAdd( player.pilot(), cargoname, reward )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then
       tk.msg( title[4], string.format(text[6], planet.cur():name(), misn_base:name()) )
+      misn.osdCreate(misn_title, {osd_msg[2]:format(misn_base:name())})
    -- If we're in another system then make Reynir bleed out his ears ;)
    else
       tk.msg( title[4], string.format(text[4], misn_base:name()) )
+      misn.osdCreate(misn_title, {osd_msg[2]:format(misn_base:name())})
       misn_bleeding = true
    end
 end
