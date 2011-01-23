@@ -57,9 +57,7 @@ static void dialogue_choiceClose( unsigned int wid, char* str );
 static void dialogue_listClose( unsigned int wid, char* str );
 static void dialogue_listCancel( unsigned int wid, char* str );
 /* secondary loop hack */
-static int loop_cancelled  = 0; /**< Stores whether or not the loop was cancelled. */
-static int loop_done       = 0; /**< Used to indicate the secondary loop is finished. */
-static int toolkit_loop (void);
+static int toolkit_loop( int *loop_done );
 
 
 /**
@@ -77,8 +75,10 @@ int dialogue_isOpen (void)
 static void dialogue_close( unsigned int wid, char* str )
 {
    (void) str;
+   int *loop_done;
+   loop_done = window_getData( wid );
    window_destroy( wid );
-   loop_done = 1;
+   *loop_done = 1;
    dialogue_open--;
 }
 
@@ -88,8 +88,12 @@ static void dialogue_close( unsigned int wid, char* str )
  */
 static void dialogue_cancel( unsigned int wid, char* str )
 {
-   loop_cancelled = 1;
-   dialogue_close( wid, str );
+   (void) str;
+   int *loop_done;
+   loop_done = window_getData( wid );
+   window_destroy( wid );
+   *loop_done = -1;
+   dialogue_open--;
 }
 
 
@@ -103,7 +107,7 @@ void dialogue_alert( const char *fmt, ... )
    char msg[512];
    va_list ap;
    unsigned int wdw;
-   int h;
+   int h, done;
 
    if (fmt == NULL) return;
    else { /* get the message */
@@ -116,13 +120,14 @@ void dialogue_alert( const char *fmt, ... )
 
    /* create the window */
    wdw = window_create( "Warning", -1, -1, 300, 90 + h );
+   window_setData( wdw, &done );
    window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
          &gl_smallFont, &cBlack, msg );
    window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop();
+   toolkit_loop( &done );
 }
 
 
@@ -207,18 +212,20 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    int w,h;
    glFont* font;
    unsigned int msg_wid;
+   int done;
 
    font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window */
    msg_wid = window_create( caption, -1, -1, w, 110 + h );
+   window_setData( msg_wid, &done );
    window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
          font, &cBlack, msg );
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", "OK",
          dialogue_close );
 
    dialogue_open++;
-   toolkit_loop();
+   toolkit_loop( &done );
 }
 
 
@@ -258,11 +265,13 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    int w,h;
    glFont* font;
    int *result_ptr, result;
+   int done;
 
    font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
    wid = window_create( caption, -1, -1, w, h+110 );
+   window_setData( wid, &done );
    /* text */
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
          font, &cBlack, msg );
@@ -274,7 +283,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
 
    /* tricky secondary loop */
    dialogue_open++;
-   toolkit_loop();
+   toolkit_loop( &done );
 
    /* Get result. */
    result_ptr = window_getData( wid );
@@ -284,6 +293,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    }
    else
       result = 1;
+   window_setData( wid, &done ); /* Hack so dialogue_close works again. */
 
    /* Close the dialogue. */
    dialogue_close( wid, NULL );
@@ -298,7 +308,9 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
  */
 static void dialogue_YesNoClose( unsigned int wid, char* str )
 {
-   int *result = malloc( sizeof(int) );;
+   int *loop_done, *result;
+   
+   result = malloc( sizeof(int) );
 
    /* store the result */
    if (strcmp(str,"btnYes")==0)
@@ -307,10 +319,11 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
       *result = 0;
 
    /* set data. */
+   loop_done = window_getData( wid );
    window_setData( wid, result );
 
    /* End the loop. */
-   loop_done = 1;
+   *loop_done = 1;
 }
 
 
@@ -357,16 +370,14 @@ char* dialogue_input( const char* title, int min, int max, const char *fmt, ... 
 char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
 {
    char *input;
-   int h;
-
-   /* Start out not cancelled. */
-   loop_cancelled = 0;
+   int h, done;
 
    /* get text height */
    h = gl_printHeightRaw( &gl_smallFont, 200, msg );
 
    /* create window */
    input_wid = window_create( title, -1, -1, 240, h+140 );
+   window_setData( input_wid, &done );
    window_setAccept( input_wid, dialogue_inputClose );
    window_setCancel( input_wid, dialogue_cancel );
    /* text */
@@ -381,8 +392,9 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
 
    /* tricky secondary loop */
    dialogue_open++;
+   done  = 0;
    input = NULL;
-   while (!loop_cancelled && (!input ||
+   while ((done >= 0) && (!input ||
          ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
@@ -392,11 +404,11 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          input = NULL;
       }
 
-      if (toolkit_loop() != 0) /* error in loop -> quit */
+      if (toolkit_loop( &done ) != 0) /* error in loop -> quit */
          return NULL;
 
       /* save the input */
-      if (loop_cancelled != 0)
+      if (done < 0)
          input = NULL;
       else
          input = strdup( window_getInput( input_wid, "inpInput" ) );
@@ -418,10 +430,11 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
 static void dialogue_inputClose( unsigned int wid, char* str )
 {
    (void) str;
-   (void) wid;
+   int *loop_done;
 
    /* break the loop */
-   loop_done = 1;
+   loop_done = window_getData( wid );
+   *loop_done = 1;
 }
 
 
@@ -476,11 +489,11 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
    unsigned int wid;
    int list_width, list_height;
    int text_height, text_width;
+   int done;
 
    font = dialogue_getSize( title, msg, &text_width, &text_height );
 
    /* Calculate size stuff. */
-   loop_cancelled = 0;
    list_width  = 0;
    list_height = 0;
    for (i=0; i<nitems; i++) {
@@ -497,6 +510,7 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
 
    /* Create the window. */
    wid = window_create( title, -1, -1, w, h );
+   window_setData( wid, &done );
    window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
          font, &cDConsole, msg );
    window_setAccept( wid, dialogue_listClose );
@@ -514,7 +528,7 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
          "btnCancel", "Cancel", dialogue_listCancel );
 
    dialogue_open++;
-   toolkit_loop();
+   toolkit_loop( &done );
 
    return dialogue_listSelected;
 }
@@ -576,9 +590,11 @@ void dialogue_addChoice( const char *caption, const char *msg, const char *opt)
  */
 char *dialogue_runChoice (void)
 {
+   int done;
+
    /* tricky secondary loop */
    dialogue_open++;
-   toolkit_loop();
+   toolkit_loop( &done );
 
    return choice_result;
 }
@@ -589,13 +605,17 @@ char *dialogue_runChoice (void)
  */
 static void dialogue_choiceClose( unsigned int wid, char* str )
 {
+   int *loop_done;
    choice_result = str;
 
    /* destroy the window */
    window_destroy( wid );
    choice_wid = 0;
 
-   loop_done = 1;
+   /* Finish loop. */
+   loop_done = window_getData( wid );
+   window_destroy( wid );
+   *loop_done = 1;
    dialogue_open--;
 }
 
@@ -607,15 +627,15 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
  *
  *    @return 0 on success.
  */
-static int toolkit_loop (void)
+static int toolkit_loop( int *loop_done )
 {
    SDL_Event event;
 
    /* Delay a toolkit iteration. */
    toolkit_delay();
 
-   loop_done = 0;
-   while (!loop_done && toolkit_isOpen()) {
+   *loop_done = 0;
+   while (!(*loop_done) && toolkit_isOpen()) {
       /* Loop first so exit condition is checked before next iteration. */
       main_loop();
 
@@ -623,7 +643,7 @@ static int toolkit_loop (void)
          if (event.type == SDL_QUIT) { /* pass quit event to main engine */
             if (menu_askQuit()) {
                naev_quit();
-               loop_done = 1;
+               *loop_done = 1;
                SDL_PushEvent(&event);
                return -1;
             }
