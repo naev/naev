@@ -1,6 +1,6 @@
 #include <winresrc.h>
 
-101 ICON DISCARDABLE "extras/logos/logo.ico"
+101 ICON DISCARDABLE "../extras/logos/logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
@@ -18,7 +18,7 @@ BEGIN
 	BEGIN
 		BLOCK "040004b0"
 		BEGIN
-			VALUE "Comments", "http://www.naev.org/"
+			VALUE "Comments", "http://naev.org/"
 			VALUE "CompanyName", "Naev Team"
 			VALUE "FileDescription", "Naev: Sea of Darkness"
 			VALUE "InternalName", "naev"
