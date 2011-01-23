@@ -44,7 +44,7 @@ else -- Default to English
    text[4] = [[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]]
    text[5] = [["Thank you so much! Here's %s tons of hot dogs!"]]
    text[7] = [[Reynir doesn't look happy when you meet him outside the ship.
-   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's %s ton of hot dogs..."]]
+   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's %d ton of hot dogs..."]]
    
 
    text[6] = [[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]]
