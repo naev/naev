@@ -264,8 +264,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    unsigned int wid;
    int w,h;
    glFont* font;
-   int *result_ptr, result;
-   int done;
+   int done[2];
 
    font = dialogue_getSize( caption, msg, &w, &h );
 
@@ -283,23 +282,14 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
 
    /* tricky secondary loop */
    dialogue_open++;
-   toolkit_loop( &done );
-
-   /* Get result. */
-   result_ptr = window_getData( wid );
-   if (result_ptr != NULL) {
-      result     = *result_ptr;
-      free( result_ptr );
-   }
-   else
-      result = 1;
-   window_setData( wid, &done ); /* Hack so dialogue_close works again. */
+   done[1] = -1; /* Default to negative. */
+   toolkit_loop( done );
 
    /* Close the dialogue. */
    dialogue_close( wid, NULL );
 
    /* return the result */
-   return result;
+   return done[1];
 }
 /**
  * @brief Closes a yesno dialogue.
@@ -308,22 +298,18 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
  */
 static void dialogue_YesNoClose( unsigned int wid, char* str )
 {
-   int *loop_done, *result;
+   int *loop_done, result;
    
-   result = malloc( sizeof(int) );
-
    /* store the result */
    if (strcmp(str,"btnYes")==0)
-      *result = 1;
+      result = 1;
    else if (strcmp(str,"btnNo")==0)
-      *result = 0;
+      result = 0;
 
    /* set data. */
    loop_done = window_getData( wid );
-   window_setData( wid, result );
-
-   /* End the loop. */
-   *loop_done = 1;
+   loop_done[0] = 1;
+   loop_done[1] = result;
 }
 
 
