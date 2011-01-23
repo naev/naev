@@ -297,7 +297,7 @@ static void menu_exit( unsigned int wid, char* str )
    (void) str;
    (void) wid;
 
-   exit_game();
+   naev_quit();
 }
 /**
  * @brief Function to clean up the background window.
