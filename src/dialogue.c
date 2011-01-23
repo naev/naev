@@ -34,6 +34,7 @@
 #include "pause.h"
 #include "opengl.h"
 #include "input.h"
+#include "menu.h"
 
 
 int dialogue_open; /**< Number of dialogues open. */
@@ -620,9 +621,12 @@ static int toolkit_loop (void)
 
       while (SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) { /* pass quit event to main engine */
-            loop_done = 1;
-            SDL_PushEvent(&event);
-            return -1;
+            if (menu_askQuit()) {
+               naev_quit();
+               loop_done = 1;
+               SDL_PushEvent(&event);
+               return -1;
+            }
          }
 
          input_handle(&event); /* handles all the events and player keybinds */

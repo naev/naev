@@ -76,6 +76,7 @@ void fps_setPos( double x, double y );
 void update_routine( double dt );
 char *naev_version( int long_version );
 char *naev_binary (void);
+void naev_quit (void);
 
 
 #endif /* NAEV_H */

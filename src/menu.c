@@ -509,3 +509,26 @@ static void menu_options_button( unsigned int wid, char *str )
    opt_menu();
 }
 
+
+/**
+ * @brief Menu to ask if player really wants to quit.
+ */
+int menu_askQuit (void)
+{
+   /* Asked twice, quit. */
+   if (menu_isOpen( MENU_ASKQUIT )) {
+      exit_game();
+      return 1;
+   }
+
+   /* Ask if should quit. */
+   menu_Open( MENU_ASKQUIT );
+   if (dialogue_YesNoRaw( "Quit Naev", "Are you sure you want to quit Naev?" )) {
+      exit_game();
+      return 1;
+   }
+   menu_Close( MENU_ASKQUIT );
+
+   return 0;
+}
+

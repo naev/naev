@@ -152,6 +152,14 @@ void loadscreen_render( double done, const char *msg ); /* nebula.c */
 void main_loop (void); /* dialogue.c */
 
 
+/**
+ * @brief Flags naev to quit.
+ */
+void naev_quit (void)
+{
+   quit = 1;
+}
+
 
 /**
  * @brief The entry point of NAEV.
@@ -332,7 +340,10 @@ int main( int argc, char** argv )
    while (!quit) {
       while (SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT)
-            quit = 1; /* quit is handled here */
+            if (menu_askQuit()) {
+               quit = 1; /* quit is handled here */
+               break;
+            }
 
          input_handle(&event); /* handles all the events and player keybinds */
       }
