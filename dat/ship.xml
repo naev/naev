@@ -425,6 +425,7 @@
   <class>Fighter</class>
   <price>290000</price>
   <fabricator>Krain Industries</fabricator>
+  <license>Light Combat Vessel License</license>
   <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
   <movement>
    <thrust>280</thrust>
@@ -464,6 +465,7 @@
   <sound>engine</sound>
   <class>Fighter</class>
   <price>350000</price>
+  <license>Light Combat Vessel License</license>
   <fabricator>Sirius Systems</fabricator>
   <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
   <movement>
