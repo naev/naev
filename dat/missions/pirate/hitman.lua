@@ -69,7 +69,7 @@ function accept ()
    misn.setReward( string.format( misn_reward, credits) )
    misn.setDesc( string.format( misn_desc[1], targetsystem:name() ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
-
+   misn.osdCreate(misn_title, {misn_desc[1]:format(targetsystem:name())})
    -- Some flavour text
    tk.msg( title[1], string.format( text[2], targetsystem:name()) )
 
@@ -126,6 +126,7 @@ function attack_finished()
    misn.setDesc( string.format( misn_desc[2], misn_base:name(), misn_base_sys:name() ) )
    misn.markerRm( misn_marker )
    misn_marker = misn.markerAdd( misn_base_sys, "low" )
+   misn.osdCreate(misn_title, {misn_desc[2]:format(misn_base:name(), misn_base_sys:name())})
    hook.land("landed")
 end
 
