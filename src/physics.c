@@ -320,7 +320,7 @@ static void solid_update_euler (Solid *obj, const double dt)
  *   x_{n+1} = x_n + h/6*(6x'_n + 3*h*a, 4*a)
  *
  *
- * Main advantage comes thanks to the fact that NAEV is on a 2d plane.
+ * Main advantage comes thanks to the fact that Naev is on a 2d plane.
  *  Therefore RK chops it up in chunks and actually creates a tiny curve
  *  instead of aproximating the curve for a tiny straight line.
  */

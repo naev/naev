@@ -75,6 +75,7 @@ static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList.
 /*
  * Prototypes.
  */
+static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
 static int ndata_openPackfile (void);
 static int ndata_isndata( const char *path, ... );
@@ -346,7 +347,49 @@ static int ndata_openPackfile (void)
    /* Close lock. */
    SDL_mutexV(ndata_lock);
 
+   /* Test version. */
+   ndata_testVersion();
+
    return 0;
+}
+
+
+/**
+ * @brief Test version to see if it matches.
+ */
+static void ndata_testVersion (void)
+{
+   int i, j, s;
+   uint32_t size;
+   int version[3];
+   char *buf, cbuf[8];
+
+   buf = ndata_read( "VERSION", &size );
+   s = 0;
+   j = 0;
+   for (i=0; i <= (int)size; i++) {
+      cbuf[j++] = buf[i];
+      if (buf[i] == '.') {
+         cbuf[j] = '\0';
+         version[s++] = atoi(cbuf);
+         if (s >= 3)
+            break;
+         j = 0;
+      }
+   }
+
+   if ((VMAJOR != version[0]) ||
+         (VMINOR != version[1]) ||
+         (VREV != version[2])) {
+      WARN( "ndata version inconsistancy with this version of Naev!" );
+      WARN( "Expected ndata version %d.%d.%d got %d.%d.%d." );
+      if (VMAJOR != version[2])
+         ERR( "Please get a newer ndata version!" );
+      if (VMINOR != version[1])
+         WARN( "Naev will probably crash now as the versions are probably not compatible." );
+   }
+
+   free(buf);
 }
 
 
