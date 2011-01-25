@@ -32,7 +32,7 @@
 #include <math.h>
 
 
-#define APPNAME            "NAEV" /**< Application name. */
+#define APPNAME            "Naev" /**< Application name. */
 
 #define ABS(x)             (((x)<0)?-(x):(x)) /**< Returns absolute value. */
 #define FABS(x)            (((x)<0.)?-(x):(x)) /**< Returns float absolute value. */
