@@ -680,7 +680,7 @@ void pilot_calcStats( Pilot* pilot )
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
    double arel, srel, erel; /* relative health bonuses. */
-   ShipStats *s;
+   ShipStats *s, *os;
    int nfirerate_turret, nfirerate_forward;
    int njammers;
    int ew_ndetect, ew_nhide;
@@ -783,34 +783,45 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
+         os = &o->u.mod.stats;
+         /* Freighter. */
+         s->jump_delay        += os->jump_delay * q;
+         s->jump_range        += os->jump_range * q;
+         s->cargo_inertia     += os->cargo_inertia * q;
          /* Scout. */
-         if (o->u.mod.stats.ew_hide != 0.) {
-            s->ew_hide           += o->u.mod.stats.ew_hide * q;
+         if (os->ew_hide != 0.) {
+            s->ew_hide           += os->ew_hide * q;
             ew_nhide++;
          }
-         if (o->u.mod.stats.ew_detect != 0.) {
-            s->ew_detect         += o->u.mod.stats.ew_detect * q;
+         if (os->ew_detect != 0.) {
+            s->ew_detect         += os->ew_detect * q;
             ew_ndetect++;
          }
+         s->jam_range         += os->jam_range * q;
+         /* Military. */
+         s->heat_dissipation  += os->heat_dissipation * q;
+         /* Bomber. */
+         s->launch_rate       += os->launch_rate * q;
+         s->launch_range      += os->launch_range * q;
+         s->jam_counter       += os->jam_counter * q;
+         s->ammo_capacity     += os->ammo_capacity * q;
          /* Fighter. */
-         s->heat_forward      += o->u.mod.stats.heat_forward * q;
-         s->damage_forward    += o->u.mod.stats.damage_forward * q;
-         s->energy_forward    += o->u.mod.stats.energy_forward * q;
-         if (o->u.mod.stats.firerate_forward != 0.) {
-            s->firerate_forward  += o->u.mod.stats.firerate_forward * q;
+         s->heat_forward      += os->heat_forward * q;
+         s->damage_forward    += os->damage_forward * q;
+         s->energy_forward    += os->energy_forward * q;
+         if (os->firerate_forward != 0.) {
+            s->firerate_forward  += os->firerate_forward * q;
             nfirerate_forward    += q;
          }
          /* Cruiser. */
-         s->heat_turret       += o->u.mod.stats.heat_turret * q;
-         s->damage_turret     += o->u.mod.stats.damage_turret * q;
-         s->energy_turret     += o->u.mod.stats.energy_turret * q;
-         if (o->u.mod.stats.firerate_turret != 0.) {
-            s->firerate_turret   += o->u.mod.stats.firerate_turret * q;
-            if (o->u.mod.stats.firerate_turret > 0.) /* Only modulate bonuses. */
+         s->heat_turret       += os->heat_turret * q;
+         s->damage_turret     += os->damage_turret * q;
+         s->energy_turret     += os->energy_turret * q;
+         if (os->firerate_turret != 0.) {
+            s->firerate_turret   += os->firerate_turret * q;
+            if (os->firerate_turret > 0.) /* Only modulate bonuses. */
                nfirerate_turret     += q;
          }
-         /* Freighter. */
-         s->jump_delay        += o->u.mod.stats.jump_delay * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
@@ -832,22 +843,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /*
-    * Calculate jammers.
-    *
-    * Range is averaged.
-    * Diminishing return on chance.
-    *  chance = p * exp( -0.2 * (n-1) )
-    *  1x 20% -> 20%
-    *  2x 20% -> 32%
-    *  2x 40% -> 65%
-    *  6x 40% -> 88%
-    */
-   if (njammers > 1) {
-      pilot->jam_range  /= (double)njammers;
-      pilot->jam_chance *= exp( -0.2 * (double)(njammers-1) );
-   }
-
-   /*
     * Electronic warfare setting base parameters.
     */
    s->ew_hide           = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
@@ -858,6 +853,18 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Normalize stats.
     */
+   /* Freighter. */
+   s->jump_range        = s->jump_range/100. + 1.;
+   s->jump_delay        = s->jump_delay/100. + 1.;
+   /* Scout. */
+   s->jam_range         = s->jam_range/100. + 1.;
+   /* Military. */
+   s->heat_dissipation  = s->heat_dissipation/100. + 1.;
+   /* Bomber. */
+   s->launch_rate       = s->launch_rate/100. + 1.;
+   s->launch_range      = s->launch_rate/100. + 1.;
+   s->jam_counter       = s->jam_counter/100. + 1.;
+   s->ammo_capacity     = s->ammo_capacity/100. + 1.;
    /* Fighter. */
    s->heat_forward      = s->heat_forward/100. + 1.;
    s->damage_forward    = s->damage_forward/100. + 1.;
@@ -881,8 +888,23 @@ void pilot_calcStats( Pilot* pilot )
    if (nfirerate_turret > 0)
       s->firerate_turret  *= exp( -0.15 * (double)(nfirerate_turret-1) );
    s->firerate_turret  += 1.;
-   /* Freighter. */
-   s->jump_delay        = s->jump_delay/100. + 1.;
+
+   /*
+    * Calculate jammers.
+    *
+    * Range is averaged.
+    * Diminishing return on chance.
+    *  chance = p * exp( -0.2 * (n-1) )
+    *  1x 20% -> 20%
+    *  2x 20% -> 32%
+    *  2x 40% -> 65%
+    *  6x 40% -> 88%
+    */
+   if (njammers > 1) {
+      pilot->jam_range  /= (double)njammers;
+      pilot->jam_range  *= s->jam_range;
+      pilot->jam_chance *= exp( -0.2 * (double)(njammers-1) );
+   }
 
    /* Increase health by relative bonuses. */
    pilot->armour_max += arel * pilot->ship->armour;
@@ -896,7 +918,10 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel   = fc * pilot->fuel_max;
 
    /* Calculate mass. */
-   pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = pilot->ship->mass + s->cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+
+   /* Calculate the heat. */
+   pilot_heatCalc( pilot );
 
    /* Modulate by mass. */
    pilot_updateMass( pilot );
