@@ -48,6 +48,8 @@ static int hook_hail( lua_State *L );
 static int hook_board( lua_State *L );
 static int hook_timer( lua_State *L );
 static int hook_date( lua_State *L );
+static int hook_commbuy( lua_State *L );
+static int hook_commsell( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -60,6 +62,8 @@ static const luaL_reg hook_methods[] = {
    { "board", hook_board },
    { "timer", hook_timer },
    { "date", hook_date },
+   { "comm_buy", hook_commbuy },
+   { "comm_sell", hook_commsell },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -435,6 +439,40 @@ static int hook_date( lua_State *L )
    ntime_t t;
    t  = luaL_validtime( L, 1 );
    h  = hook_generic( L, NULL, 0., 2, t );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player buying any sort of commodity.
+ *
+ * The hook recieves the name of the commodity and the quantity being bought.
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc board( funcname, arg )
+ */
+static int hook_commbuy( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "comm_buy", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player selling any sort of commodity.
+ *
+ * The hook recieves the name of the commodity and the quantity being bought.
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc board( funcname, arg )
+ */
+static int hook_commsell( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "comm_sell", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
