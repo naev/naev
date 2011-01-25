@@ -17,7 +17,9 @@
  */
 typedef enum HookParamType_e {
    HOOK_PARAM_NIL, /**< No hook parameter. */
-   HOOK_PARAM_PILOT, /**< Pilolt hook parameter. */
+   HOOK_PARAM_NUMBER, /**< Number parameter. */
+   HOOK_PARAM_STRING, /**< String parameter. */
+   HOOK_PARAM_PILOT, /**< Pilot hook parameter. */
    HOOK_PARAM_SENTINAL /**< Enum sentinal. */
 } HookParamType;
 
@@ -27,6 +29,8 @@ typedef enum HookParamType_e {
 typedef struct HookParam_s {
    HookParamType type; /**< Type of parameter. */
    union {
+      double num; /**< Number parameter. */
+      char *str; /**< String parameter. */
       LuaPilot lp; /**< Hook parameter pilot data. */
    } u; /**< Hook parameter data. */
 } HookParam;
