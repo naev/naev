@@ -197,7 +197,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 
 
 /**
- * @brief Calculates the weapon lead.
+ * @brief Calculates the weapon lead (1. is 100%, 0. is 0%)..
  *
  *    @param p Pilot tracking.
  *    @param t Pilot being tracked.
