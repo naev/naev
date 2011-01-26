@@ -1772,9 +1772,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats( pilot );
 
-   /* Calculate the heat. */
-   pilot_heatCalc( pilot );
-
    /* Sanity check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSanity( pilot );

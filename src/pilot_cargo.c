@@ -131,7 +131,7 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
             pilot->commodities[i].quantity += q;
             pilot->cargo_free              -= q;
             pilot->mass_cargo              += q;
-            pilot->solid->mass             += q;
+            pilot->solid->mass             += pilot->stats.cargo_inertia * q;
             pilot_updateMass( pilot );
             if (pilot_isPlayer(pilot))
                gui_setCargo();
@@ -156,7 +156,7 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
    /* Tweak pilot. */
    pilot->cargo_free    -= q;
    pilot->mass_cargo    += q;
-   pilot->solid->mass   += q;
+   pilot->solid->mass   += pilot->stats.cargo_inertia * q;
    pilot->ncommodities++;
    pilot_updateMass( pilot );
    if (pilot_isPlayer(pilot))
@@ -207,7 +207,7 @@ void pilot_cargoCalc( Pilot* pilot )
 {
    pilot->mass_cargo  = pilot_cargoUsed( pilot );
    pilot->cargo_free  = pilot->ship->cap_cargo - pilot->mass_cargo;
-   pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia * pilot->mass_cargo + pilot->mass_outfit;
    pilot_updateMass( pilot );
 }
 
@@ -273,7 +273,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    /* remove cargo */
    pilot->cargo_free    += pilot->commodities[i].quantity;
    pilot->mass_cargo    -= pilot->commodities[i].quantity;
-   pilot->solid->mass   -= pilot->commodities[i].quantity;
+   pilot->solid->mass   -= pilot->stats.cargo_inertia * pilot->commodities[i].quantity;
    pilot->ncommodities--;
    if (pilot->ncommodities <= 0) {
       if (pilot->commodities != NULL) {
@@ -343,7 +343,7 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
             pilot->commodities[i].quantity -= q;
          pilot->cargo_free    += q;
          pilot->mass_cargo    -= q;
-         pilot->solid->mass   -= q;
+         pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
          pilot_updateMass( pilot );
          if (pilot_isPlayer(pilot))
             gui_setCargo();

@@ -434,7 +434,7 @@ static int systemL_jumpdistance( lua_State *L )
 
 
 /**
- * @brief Gets all the adjacent systems to a system and the jump point positions.
+ * @brief Gets all the adjacent systems to a system.
  *
  * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *

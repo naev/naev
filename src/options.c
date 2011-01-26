@@ -1037,7 +1037,7 @@ static void opt_needRestart (void)
 
    /* Values. */
    opt_restart = 1;
-   s           = "Restart NAEV for changes to take effect";
+   s           = "Restart Naev for changes to take effect";
 
    /* Modify widgets. */
    window_modifyText( opt_windows[0], "txtRestart", s );

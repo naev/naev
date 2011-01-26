@@ -304,9 +304,21 @@ glTexture* ship_loadCommGFX( Ship* s )
  */
 int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
 {
+   /* Freighter. */
+   xmlr_floatR(node,"jump_delay",s->jump_delay);
+   xmlr_floatR(node,"jump_range",s->jump_range);
+   xmlr_floatR(node,"cargo_inertia",s->cargo_inertia);
    /* Scout. */
+   xmlr_floatR(node,"jam_range",s->jam_range);
    xmlr_floatR(node,"ew_hide",s->ew_hide);
    xmlr_floatR(node,"ew_detect",s->ew_detect);
+   /* Military. */
+   xmlr_floatR(node,"heat_dissipation",s->heat_dissipation);
+   /* Bomber. */
+   xmlr_floatR(node,"launch_rate",s->launch_rate);
+   xmlr_floatR(node,"launch_range",s->launch_range);
+   xmlr_floatR(node,"jam_counter",s->jam_counter);
+   xmlr_floatR(node,"ammo_capacity",s->ammo_capacity);
    /* Fighter. */
    xmlr_floatR(node,"heat_forward",s->heat_forward);
    xmlr_floatR(node,"damage_forward",s->damage_forward);
@@ -317,8 +329,6 @@ int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
    xmlr_floatR(node,"damage_turret",s->damage_turret);
    xmlr_floatR(node,"firerate_turret",s->firerate_turret);
    xmlr_floatR(node,"energy_turret",s->energy_turret);
-   /* Freighter. */
-   xmlr_floatR(node,"jump_delay",s->jump_delay);
    return 1;
 }
 
@@ -344,9 +354,21 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
             (pilot) ? (x-1.)*100. : x );
-   /* Scout stuff. */
+   /* Freighter Stuff. */
+   DESC_ADD(s->jump_delay,"Jump Time");
+   DESC_ADD(s->jump_range,"Jump Range");
+   DESC_ADD(s->cargo_inertia,"Cargo Inertia");
+   /* Scout Stuff. */
+   DESC_ADD(s->jam_range,"Jam Range");
    DESC_ADD(s->ew_detect,"Detection");
    DESC_ADD(s->ew_hide,"Cloaking");
+   /* Military Stuff. */
+   DESC_ADD(s->heat_dissipation,"Heat Dissipation");
+   /* Bomber STuff. */
+   DESC_ADD(s->launch_rate,"Launch Rate");
+   DESC_ADD(s->launch_range,"Launch Range");
+   DESC_ADD(s->jam_counter,"Jam Countermeasures");
+   DESC_ADD(s->ammo_capacity,"Ammo Capacity");
    /* Fighter Stuff. */
    DESC_ADD(s->heat_forward,"Heat (Cannon)");
    DESC_ADD(s->damage_forward,"Damage (Cannon)");
@@ -357,8 +379,6 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    DESC_ADD(s->damage_turret,"Damage (Turret)");
    DESC_ADD(s->firerate_turret,"Fire Rate (Turret)");
    DESC_ADD(s->energy_turret,"Energy Usage (Turret)");
-   /* Freighter Stuff. */
-   DESC_ADD(s->jump_delay,"Jump time");
 #undef DESC_ADD
 
    return i;

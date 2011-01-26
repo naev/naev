@@ -267,12 +267,15 @@ static void commodity_buy( unsigned int wid, char* str )
    char *comname;
    Commodity *com;
    unsigned int q, price;
+   HookParam hparam[3];
 
+   /* Get selected. */
    q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
+   /* Check stuff. */
    if (!player_hasCredits( q * price )) {
       dialogue_alert( "Insufficient credits!" );
       return;
@@ -282,10 +285,19 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
    }
 
+   /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
    player_modCredits( -q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
+
+   /* Run hooks. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = comname;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = q;
+   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "comm_buy", hparam );
 }
 /**
  * @brief Attempts to sell a commodity.
@@ -298,16 +310,27 @@ static void commodity_sell( unsigned int wid, char* str )
    char *comname;
    Commodity *com;
    unsigned int q, price;
+   HookParam hparam[3];
 
+   /* Get parameters. */
    q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
    price = economy_getPrice(com, cur_system, land_planet);
 
+   /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
    player_modCredits( q * price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
+
+   /* Run hooks. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = comname;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = q;
+   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "comm_sell", hparam );
 }
 
 /**

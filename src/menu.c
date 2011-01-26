@@ -67,7 +67,7 @@
 int menu_open = 0; /**< Stores the opened/closed menus. */
 
 
-static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
+static glTexture *main_naevLogo = NULL; /**< Naev Logo texture. */
 
 
 /*
@@ -157,7 +157,7 @@ void menu_main (void)
    music_choose("load");
 
    /* Load background and friends. */
-   tex = gl_newImage( "gfx/NAEV.png", 0 );
+   tex = gl_newImage( "gfx/Naev.png", 0 );
    main_naevLogo = tex;
    menu_main_bkg_system();
 

@@ -3,9 +3,9 @@
  */
 
 /**
- * @mainpage NAEV
+ * @mainpage Naev
  *
- * Doxygen documentation for the NAEV project.
+ * Doxygen documentation for the Naev project.
  */
 /**
  * @file naev.c
@@ -162,7 +162,7 @@ void naev_quit (void)
 
 
 /**
- * @brief The entry point of NAEV.
+ * @brief The entry point of Naev.
  *
  *    @param[in] argc Number of arguments.
  *    @param[in] argv Array of argc arguments.
@@ -1054,7 +1054,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
 
-   DEBUG("NAEV recieved %s!",
+   DEBUG("Naev recieved %s!",
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++) {
       if (abfd != NULL)

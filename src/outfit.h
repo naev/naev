@@ -41,45 +41,44 @@
  */
 typedef struct ShipStats_ {
 #if 0
-   /* Scout type. */
-   double jam_range; /**< Range of jammer effect. */
-   double jam_chance; /**< Possibility of jamming missile. */
-
-   /* Bomber type. */
-   double launch_rate; /**< Fire rate of launchers. */
-   double launch_range; /**< Range of launchers. */
-   double seeker_unjam; /**< Ability to avoid jamming. */
-   double ammo_capacity; /**< Capacity of launchers. */
-
    /* Corvette type. */
    double afterburner_energy; /**< Energy used by afterburner. */
 
    /* Carrier type. */
    double fighterbay_cpu; /**< CPU usage by fighter bays. */
    double fighterbay_rate; /**< Launch rate of fighter bay. */
-
-   /* Freighter-type. */
-   double cargo_inertia; /**< Lowers the effect of cargo mass. */
 #endif
 
+   /* Freighter-type. */
+   double jump_delay; /**< Modulates the jump delay. */
+   double jump_range; /**< Distance from a jump point it can initiate jump from. */
+   double cargo_inertia; /**< Lowers the effect of cargo mass. */
+
    /* Scout type. */
+   double jam_range; /**< Range of jammer effect. */
    double ew_hide;   /**< Electronic warfare hide modifier. */
    double ew_detect; /**< Electronic warfare detection modifier. */
 
-   /* Fighter type. */
+   /* Military type. */
+   double heat_dissipation; /**< Global ship dissipation. */
+
+   /* Bomber type. */
+   double launch_rate; /**< Fire rate of launchers. */ /* TODO */
+   double launch_range; /**< Range of launchers. */ /* TODO */
+   double jam_counter; /**< Ability to avoid jamming. */ /* TODO */
+   double ammo_capacity; /**< Capacity of launchers. */ /* TODO */
+
+   /* Fighter/Corvette type. */
    double heat_forward; /**< Heat of forward mounts. */
    double damage_forward; /**< Damage of forward mounts. */
    double firerate_forward; /**< Rate of fire of forward mounts. */
    double energy_forward; /**< Consumption rate of forward mounts. */
 
-   /* Cruiser type. */
+   /* Destroyer/Cruiser type. */
    double heat_turret; /**< Heat of turrets. */
    double damage_turret; /**< Damage of turrets. */
    double firerate_turret; /**< Rate of fire of turrets. */
    double energy_turret; /**< Consumption rate of turrets. */
-
-   /* Freighter-type. */
-   double jump_delay; /**< Modulates the jump delay. */
 } ShipStats;
 
 

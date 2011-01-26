@@ -50,7 +50,7 @@ void pilot_heatCalc( Pilot *p )
     * Substituting r in A we get:
     *  A = 4*pi*((3*mass)/(4*pi*density))^(2/3)
     * */
-   p->heat_area = 4.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. );
+   p->heat_area = 4.*M_PI*pow( 3./4.*mass_kg/STEEL_DENSITY/M_PI, 2./3. ) * p->stats.heat_dissipation;
 }
 
 

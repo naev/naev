@@ -106,7 +106,7 @@ static uint32_t rng_timeEntropy (void)
    _ftime( &tb );
    i = tb.time * 1000 + tb.millitm;
 #else
-#error "Feature needs implementation on this Operating System for NAEV to work."
+#error "Feature needs implementation on this Operating System for Naev to work."
 #endif
    return i;
 }

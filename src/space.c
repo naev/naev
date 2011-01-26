@@ -243,7 +243,7 @@ char planet_getClass( const Planet *p )
  */
 int space_canHyperspace( Pilot* p )
 {
-   double d;
+   double d, r;
    JumpPoint *jp;
 
    /* Must have fuel. */
@@ -258,8 +258,9 @@ int space_canHyperspace( Pilot* p )
    jp = &cur_system->jumps[ p->nav_hyperspace ];
 
    /* Check distance. */
+   r = jp->radius * p->stats.jump_range;
    d = vect_dist2( &p->solid->pos, &jp->pos );
-   if (d > jp->radius*jp->radius)
+   if (d > r*r)
       return 0;
    return 1;
 }
