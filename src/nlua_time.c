@@ -366,16 +366,15 @@ static int time_str( lua_State *L )
 
    /* Parse parameters. */
    top = lua_gettop(L);
-   if ((top > 0) && !lua_isnil(L,1)) {
+   if ((top > 0) && !lua_isnil(L,1))
       t = luaL_validtime(L,1);
-   }
    else
       t = ntime_get();
    if (top > 1)
       d = luaL_checkint(L,2);
 
    /* Push string. */
-   ntime_prettyBuf( nt, sizeof(nt), luaL_validtime(L,1), d );
+   ntime_prettyBuf( nt, sizeof(nt), t, d );
    lua_pushstring(L, nt);
    return 1;
 }
