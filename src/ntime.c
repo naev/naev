@@ -118,6 +118,18 @@ ntime_t ntime_get (void)
 
 
 /**
+ * @brief Gets the current time broken into individual components.
+ */
+void ntime_getR( int *scu, int *stp, int *stu, double *rem )
+{
+   *scu = ntime_getSCU( naev_time );
+   *stp = ntime_getSTP( naev_time );
+   *stu = ntime_getSTU( naev_time );
+   *rem = ntime_getRemainder( naev_time ) + naev_remainder;
+}
+
+
+/**
  * @brief Gets the SCU of a time.
  */
 int ntime_getSCU( ntime_t t )
@@ -141,6 +153,15 @@ int ntime_getSTP( ntime_t t )
 int ntime_getSTU( ntime_t t )
 {
    return (t / NT_STU_DIV) % NT_STP_STU;
+}
+
+
+/**
+ * @brief Gets the remainder.
+ */
+double ntime_getRemainder( ntime_t t )
+{
+   return (double)(t % NT_STU_DIV);
 }
 
 
@@ -200,6 +221,17 @@ void ntime_set( ntime_t t )
 {
    naev_time      = t;
    naev_remainder = 0.;
+}
+
+
+/**
+ * @brief Loads time including remainder.
+ */
+void ntime_setR( int scu, int stp, int stu, double rem )
+{
+   naev_time   = ntime_create( scu, stp, stu );
+   naev_time  += floor(rem);
+   naev_remainder = fmod( rem, 1. );
 }
 
 
