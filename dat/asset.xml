@@ -8514,7 +8514,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Low Tech Upgrades</item>
    <item>High Tech Upgrades 1</item>
    <item>Missiles 2</item>
-   <item>Basic Civilian Ships</item>
+   <item>Proteron Military Ships</item>
   </tech>
  </asset>
  <asset name="Provectus Nova I">
@@ -10422,7 +10422,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
   <tech>
-   <item>Heavy Civilian Combat Ships</item>
+   <item>Sirius Military Ships</item>
   </tech>
  </asset>
  <asset name="Sroolu">
