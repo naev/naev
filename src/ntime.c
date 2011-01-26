@@ -208,7 +208,7 @@ void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
    else if ((scu==0) || (d==0))
       snprintf( str, max, "%04d.%0*d STP", stp, d, stu );
    else /* UST format */
-      snprintf( str, max, "UST %d:%04d.%0*d", scu, stp, d, stu );
+      snprintf( str, max, "UST %d:%0.*f", scu, d, stp + 0.0001 * stu );
 }
 
 
