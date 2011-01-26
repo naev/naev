@@ -2761,6 +2761,7 @@ static Planet* player_parse( xmlNodePtr parent )
       /* Time. */
       if (xml_isNode(node,"time")) {
          cur = node->xmlChildrenNode;
+         scu = stp = stu = 0;
          do {
             xmlr_int(cur,"SCU",scu);
             xmlr_int(cur,"STP",stp);
@@ -2768,7 +2769,8 @@ static Planet* player_parse( xmlNodePtr parent )
             xmlr_float(cur,"Remainder",rem);
          } while (xml_nextNode(cur));
          ntime_setR( scu, stp, stu, rem );
-         time_set = 1;
+         if ((scu != 0) || (stp != 0) || (stu != 0))
+            time_set = 1;
       }
 
       if (xml_isNode(node,"ship"))
@@ -2850,8 +2852,8 @@ static Planet* player_parse( xmlNodePtr parent )
    /* set global thingies */
    player.p->credits = player_creds;
    if (!time_set) {
-      WARN("Save has no time information, setting to 0.");
-      ntime_set( ntime_create( 0, 0, 0 ) );
+      WARN("Save has no time information, setting to start information.");
+      ntime_set( start_date() );
    }
 
    /* set player in system */
