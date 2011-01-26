@@ -738,7 +738,7 @@
    <crew>4</crew>
    <mass>170</mass>
    <fuel>300</fuel>
-   <cap_cargo>5</cap_cargo>
+   <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="16" y="-9"  h="0" />
@@ -779,7 +779,7 @@
    <crew>4</crew>
    <mass>190</mass>
    <fuel>300</fuel>
-   <cap_cargo>5</cap_cargo>
+   <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="16" y="-9"  h="0" />
@@ -1742,7 +1742,7 @@
    <crew>52</crew>
    <mass>4750</mass>
    <fuel>500</fuel>
-   <cap_cargo>60</cap_cargo>
+   <cap_cargo>90</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="-10" y="-13" h="2" />
@@ -1794,7 +1794,7 @@
    <crew>52</crew>
    <mass>4950</mass>
    <fuel>500</fuel>
-   <cap_cargo>60</cap_cargo>
+   <cap_cargo>90</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="-10" y="-13" h="2" />
@@ -1846,7 +1846,7 @@
    <crew>65</crew>
    <mass>6200</mass>
    <fuel>500</fuel>
-   <cap_cargo>80</cap_cargo>
+   <cap_cargo>130</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="40"  y="0"  h="2" />
@@ -1900,7 +1900,7 @@
    <crew>500</crew>
    <mass>100000</mass>
    <fuel>1</fuel>
-   <cap_cargo>100</cap_cargo>
+   <cap_cargo>5000</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="1" y="0" h="0" />
