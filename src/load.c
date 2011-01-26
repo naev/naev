@@ -75,7 +75,8 @@ static int load_load( nsave_t *save, const char *path );
 static int load_load( nsave_t *save, const char *path )
 {
    xmlDocPtr doc;
-   xmlNodePtr root, parent, node;
+   xmlNodePtr root, parent, node, cur;
+   int scu, stp, stu;
 
    memset( save, 0, sizeof(nsave_t) );
 
@@ -123,7 +124,18 @@ static int load_load( nsave_t *save, const char *path )
             /* Player info. */
             xmlr_strd(node,"location",save->planet);
             xmlr_ulong(node,"credits",save->credits);
-            xmlr_ulong(node,"time",save->date);
+
+            /* Time. */
+            if (xml_isNode(node,"time")) {
+               cur = node->xmlChildrenNode;
+               do {
+                  xmlr_int(cur,"SCU",scu);
+                  xmlr_int(cur,"STP",stp);
+                  xmlr_int(cur,"STU",stu);
+               } while (xml_nextNode(cur));
+               save->date = ntime_create( scu, stp, stu );
+               continue;
+            }
 
             /* Ship info. */
             if (xml_isNode(node,"ship")) {

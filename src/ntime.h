@@ -24,14 +24,17 @@ void ntime_update( double dt );
 
 /* get */
 ntime_t ntime_get (void);
+void ntime_getR( int *scu, int *stp, int *stu, double *rem );
 int ntime_getSCU( ntime_t t );
 int ntime_getSTP( ntime_t t );
 int ntime_getSTU( ntime_t t );
+double ntime_getRemainder( ntime_t t );
 char* ntime_pretty( ntime_t t, int d );
 void ntime_prettyBuf( char *str, int max, ntime_t t, int d );
 
 /* set */
 void ntime_set( ntime_t t );
+void ntime_setR( int scu, int stp, int stu, double rem );
 void ntime_inc( ntime_t t );
 void ntime_incLagged( ntime_t t );
 

@@ -327,7 +327,7 @@ static int factionL_modplayer( lua_State *L )
  *
  *    @luaparam f Faction to modify player's standing with.
  *    @luaparam mod The modifier to modify faction by.
- * @luafunc modPlayerRaw( mod )
+ * @luafunc modPlayerRaw( f, mod )
  */
 static int factionL_modplayerraw( lua_State *L )
 {
