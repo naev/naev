@@ -16,10 +16,10 @@ else -- Default to English
    bar_desc = "A well-dressed young businessman. He looks out of place, contrasting sharply with most of the bar's clientele"
 
    -- Mission details
-   misn_title  = "Kill %s"
+   misn_title  = "Pirate Hitman 3"
    misn_reward = "Pirate landing permision"
    misn_desc   = "The Empire patrol vessel known as %s must be terminated. It was last seen near the %s system."
-   misn_desc2  = "Return to get your rewards."
+   misn_desc2  = "Return to %s to get your rewards."
 
    -- Text
    title    = {}
@@ -30,9 +30,6 @@ else -- Default to English
    text[2]  = [["Excellent. If you're successful in removing him, I have a token that will grant you landing access to all pirate worlds." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]]
    text[3] = [[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's the landing pass, you're now free to land at any pirate colony. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]]
 
-   -- Messages
-   msg      = {}
-   msg[1]   = "MISSION SUCCESS! Return for payment."
 end
 
 
@@ -56,9 +53,6 @@ function create ()
    -- Spaceport bar stuff
    misn.setNPC( "Young Businessman",  "none")
    misn.setDesc( bar_desc )
-   
-   -- hooks to let busninessman approach you
-   hook.land( "businessman_timer", "bar" )
 
    --some other stuff
    misn_base, misn_base_sys = planet.cur()
@@ -84,7 +78,7 @@ function accept ()
    misn.setReward( string.format( misn_reward, credits) )
    misn.setDesc( string.format( misn_desc, emp_name, near_sys:name() ) )
    misn_marker = misn.markerAdd( near_sys, "low" )
-
+   misn.osdCreate(misn_title, {misn_desc:format(emp_name, near_sys:name())})
    -- Some flavour text
    tk.msg( title[1], text[2] )
 
@@ -131,6 +125,8 @@ function misn_finished()
    misn.setDesc( string.format( misn_desc2, misn_base, misn_base_sys ) )
    misn.markerRm( misn_marker )
    misn_marker = misn.markerAdd( misn_base_sys, "low" )
+   misn.osdCreate(misn_title, {misn_desc2:format(misn_base:name())})
+
    hook.land("landed")
 end
 
