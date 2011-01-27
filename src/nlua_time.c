@@ -362,7 +362,7 @@ static int time_str( lua_State *L )
    int d;
 
    /* Defaults. */
-   d = 3;
+   d = 2;
 
    /* Parse parameters. */
    top = lua_gettop(L);

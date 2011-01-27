@@ -1421,7 +1421,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s credits\n"
          "\n"
          "%.0f\e0 tonnes\n"
-         "\e%c%04d.%04d\e0 STP average\n"
+         "\e%c%s\e0 average\n"
          "\e%c%.0f\e0 kN/tonne\n"
          "\e%c%.0f\e0 m/s (max \e%c%.0f\e0 m/s)\n"
          "\e%c%.0f\e0 deg/s\n"
@@ -1441,7 +1441,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       buf3,
       /* Movement. */
       ship->solid->mass,
-      '0', ntime_getSTP( pilot_hyperspaceDelay( ship ) ), ntime_getSTU( pilot_hyperspaceDelay( ship ) ),
+      '0', ntime_pretty( pilot_hyperspaceDelay( ship ), 2 ),
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),

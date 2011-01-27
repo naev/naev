@@ -768,7 +768,7 @@ function render( dt )
       secstr = secstr .. " (" .. tostring(amm) .. ")"
    end]]--
 
-   local bartext = { "Player: ", pname, "System: ", sys:name(), "Credits: ",
+   local bartext = { "Player: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
          largeNumber( credits ), "Nav: ", navstring, "Fuel: ", fuelstring,
          "Planet: ", pntstring, "Weapon Set: ", wsetstr, "Cargo: " }
    for k,v in ipairs(bartext) do

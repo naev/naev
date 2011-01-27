@@ -865,7 +865,7 @@ static void misn_update( unsigned int wid, char* str )
    space_clearComputerMarkers();
 
    /* Update date stuff. */
-   buf = ntime_pretty( 0, 4 );
+   buf = ntime_pretty( 0, 2 );
    snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
@@ -1443,7 +1443,7 @@ void takeoff( int delay )
    /* time goes by, triggers hook before takeoff */
    if (delay)
       ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
-   nt = ntime_pretty( 0, 4 );
+   nt = ntime_pretty( 0, 2 );
    player_message("\epTaking off from %s on %s.", land_planet->name, nt);
    free(nt);
 

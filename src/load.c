@@ -344,7 +344,7 @@ static void load_menu_update( unsigned int wid, char *str )
 
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
-   ntime_prettyBuf( date, sizeof(date), ns->date, 4 );
+   ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    snprintf( buf, sizeof(buf),
          "\eDName:\n"
          "\e0   %s\n"
