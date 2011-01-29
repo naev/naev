@@ -69,7 +69,9 @@ static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
 static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
+static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
+static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_teleport( lua_State *L );
 static const luaL_reg playerL_methods[] = {
@@ -95,7 +97,9 @@ static const luaL_reg playerL_methods[] = {
    { "commClose", playerL_commclose },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
+   { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
+   { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    { "teleport", playerL_teleport },
    {0,0}
@@ -111,7 +115,9 @@ static const luaL_reg playerL_cond_methods[] = {
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
+   { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    {0,0}
 }; /**< Conditional player lua methods. */
@@ -672,6 +678,31 @@ static int playerL_addShip( lua_State *L )
 
 
 /**
+ * @brief Checks to see if the player has a mission active.
+ *
+ * @usage if player.misnActive( "The Space Family" ) then -- Player is doing space family mission
+ *
+ *    @luaparam name Name of the mission to check.
+ *    @luareturn true if the mission is active, false if it isn't.
+ * @luafunc misnActive( name )
+ */
+static int playerL_misnActive( lua_State *L )
+{
+   MissionData *misn;
+   const char *str;
+
+   str  = luaL_checkstring(L,1);
+   misn = mission_getFromName( str );
+   if (misn == NULL) {
+      NLUA_ERROR(L, "Mission '%s' not found in stack", str);
+      return 0;
+   }
+
+   lua_pushboolean( L, mission_alreadyRunning( misn ) );
+   return 1;
+}
+
+/**
  * @brief Checks to see if player has done a mission.
  *
  * @usage if player.misnDone( "The Space Family" ) then -- Player finished mission
@@ -696,6 +727,32 @@ static int playerL_misnDone( lua_State *L )
    }
 
    lua_pushboolean( L, player_missionAlreadyDone( id ) );
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if the player has an event active.
+ *
+ * @usage if player.evtActive( "Shipwreck" ) then -- The shipwreck event is active
+ *
+ *    @luaparam name Name of the mission to check.
+ *    @luareturn true if the mission is active, false if it isn't.
+ * @luafunc evtActive( name )
+ */
+static int playerL_evtActive( lua_State *L )
+{
+   int evtid;
+   const char *str;
+
+   str  = luaL_checkstring(L,1);
+   evtid = event_dataID( str );
+   if (evtid < 0) {
+      NLUA_ERROR(L, "Event '%s' not found in stack", str);
+      return 0;
+   }
+
+   lua_pushboolean( L, event_alreadyRunning( evtid ) );
    return 1;
 }
 

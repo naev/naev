@@ -75,6 +75,12 @@ void event_activateClaims (void);
 int event_testClaims( unsigned int eventid, int sys );
 
 
+/*
+ * Misc.
+ */
+int event_alreadyRunning( int data );
+
+
 #endif /* EVENT_H */
 
 

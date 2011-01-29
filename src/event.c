@@ -87,7 +87,6 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
  */
 static unsigned int event_genID (void);
 static Event_t *event_get( unsigned int eventid );
-static int event_alreadyRunning( int data );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
 static int event_create( int dataid, unsigned int id );
@@ -349,7 +348,7 @@ int event_save( unsigned int eventid )
  *
  *    @param data ID of data event to check if is already running.
  */
-static int event_alreadyRunning( int data )
+int event_alreadyRunning( int data )
 {
    int i;
    Event_t *ev;
