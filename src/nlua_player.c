@@ -114,10 +114,10 @@ static const luaL_reg playerL_cond_methods[] = {
    { "pilot", playerL_getPilot },
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
+   { "autonavDest", playerL_autonavDest },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "evtActive", playerL_evtActive },
-   { "evtDone", playerL_evtDone },
    { "evtDone", playerL_evtDone },
    {0,0}
 }; /**< Conditional player lua methods. */
