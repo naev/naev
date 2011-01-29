@@ -365,9 +365,11 @@ static void ndata_testVersion (void)
    char *buf, cbuf[8];
 
    buf = ndata_read( "VERSION", &size );
+   if (size >= 8)
+      ERR( "Invalid VERSION file.");
    s = 0;
    j = 0;
-   for (i=0; i <= (int)size; i++) {
+   for (i=0; i < (int)size; i++) {
       cbuf[j++] = buf[i];
       if (buf[i] == '.') {
          cbuf[j] = '\0';
@@ -377,12 +379,17 @@ static void ndata_testVersion (void)
          j = 0;
       }
    }
+   if (s<3) {
+      cbuf[j++] = '\0';
+      version[s++] = atoi(cbuf);
+   }
 
    if ((VMAJOR != version[0]) ||
          (VMINOR != version[1]) ||
          (VREV != version[2])) {
       WARN( "ndata version inconsistancy with this version of Naev!" );
-      WARN( "Expected ndata version %d.%d.%d got %d.%d.%d." );
+      WARN( "Expected ndata version %d.%d.%d got %d.%d.%d.",
+            VMAJOR, VMINOR, VREV, version[0], version[1], version[2] );
       if (VMAJOR != version[2])
          ERR( "Please get a newer ndata version!" );
       if (VMINOR != version[1])
