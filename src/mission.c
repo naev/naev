@@ -71,7 +71,6 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
-static int mission_alreadyRunning( MissionData* misn );
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
@@ -131,6 +130,21 @@ MissionData* mission_get( int id )
 {
    if ((id < 0) || (id >= mission_nstack)) return NULL;
    return &mission_stack[id];
+}
+
+
+/**
+ * @brief Gets mission data frm name.
+ */
+MissionData* mission_getFromName( const char* name )
+{
+   int id;
+
+   id = mission_getID( name );
+   if (id < 0)
+      return NULL;
+
+   return mission_get( id );
 }
 
 
@@ -223,7 +237,7 @@ int mission_accept( Mission* mission )
  *    @param misn Mission to check if is already running.
  *    @return 1 if already running, 0 if isn't.
  */
-static int mission_alreadyRunning( MissionData* misn )
+int mission_alreadyRunning( MissionData* misn )
 {
    int i;
    for (i=0; i<MISSION_MAX; i++)

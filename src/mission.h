@@ -142,8 +142,10 @@ int mission_start( const char *name, unsigned int *id );
 /*
  * misc
  */
+int mission_alreadyRunning( MissionData* misn );
 int mission_getID( const char* name );
 MissionData* mission_get( int id );
+MissionData* mission_getFromName( const char* name );
 int mission_addMarker( Mission *misn, int id, int sys, SysMarker type );
 void mission_sysMark (void);
 void mission_sysComputerMark( Mission* misn );
