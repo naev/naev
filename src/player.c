@@ -1347,8 +1347,9 @@ void player_hyperspacePreempt( int preempt )
 void player_hailStart (void)
 {
    player_hailCounter = 5;
-   if (player_isFlag(PLAYER_AUTONAV))
-      player_autonavAbort("Hail received.");
+
+   /* Abort autonav. */
+   player_autonavAbort("Recieving hail.");
 }
 
 
