@@ -16,7 +16,7 @@ else -- Default to English
    bar_desc = "You see a pirate lord raving about something. A significant crowd has gathered around."
 
    -- Mission details
-   misn_title  = "Empire Patrol bounty near %s"
+   misn_title  = "Empire Patrol bounty"
    misn_reward = "%d credits"
    misn_desc   = "There is a bounty on the head of the Empire Patrol known as %s who was last seen near the %s system."
 
@@ -76,7 +76,7 @@ function accept ()
    misn.setReward( string.format( misn_reward, credits) )
    misn.setDesc( string.format( misn_desc, emp_name, near_sys:name() ) )
    misn.markerAdd( near_sys, "low" )
-
+   misn.osdCreate(misn_title, {misn_desc:format(emp_name, near_sys:name())})
    -- Some flavour text
    tk.msg( title[1], text[2] )
 
