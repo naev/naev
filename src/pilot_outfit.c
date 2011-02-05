@@ -845,8 +845,8 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Electronic warfare setting base parameters.
     */
-   s->ew_hide           = 1. + s->ew_hide/100. * exp( -0.2 * (double)(ew_nhide-1) );
-   s->ew_detect         = 1. + s->ew_detect/100. * exp( -0.2 * (double)(ew_ndetect-1) );
+   s->ew_hide           = 1. + s->ew_hide/100. * exp( -0.2 * (double)(MAX(ew_nhide-1,0)) );
+   s->ew_detect         = 1. + s->ew_detect/100. * exp( -0.2 * (double)(MAX(ew_ndetect-1,0)) );
    pilot->ew_base_hide  = s->ew_hide;
    pilot->ew_detect     = s->ew_detect;
 
@@ -856,13 +856,14 @@ void pilot_calcStats( Pilot* pilot )
    /* Freighter. */
    s->jump_range        = s->jump_range/100. + 1.;
    s->jump_delay        = s->jump_delay/100. + 1.;
+   s->cargo_inertia     = s->cargo_inertia/100. + 1.;
    /* Scout. */
    s->jam_range         = s->jam_range/100. + 1.;
    /* Military. */
    s->heat_dissipation  = s->heat_dissipation/100. + 1.;
    /* Bomber. */
    s->launch_rate       = s->launch_rate/100. + 1.;
-   s->launch_range      = s->launch_rate/100. + 1.;
+   s->launch_range      = s->launch_range/100. + 1.;
    s->jam_counter       = s->jam_counter/100. + 1.;
    s->ammo_capacity     = s->ammo_capacity/100. + 1.;
    /* Fighter. */
@@ -878,7 +879,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    s->firerate_forward  = s->firerate_forward/100.;
    if (nfirerate_forward > 0)
-      s->firerate_forward *= exp( -0.15 * (double)(nfirerate_forward-1) );
+      s->firerate_forward *= exp( -0.15 * (double)(MAX(nfirerate_forward-1,0)) );
    s->firerate_forward += 1.;
    /* Cruiser. */
    s->heat_turret       = s->heat_turret/100. + 1.;
@@ -886,7 +887,7 @@ void pilot_calcStats( Pilot* pilot )
    s->energy_turret     = s->energy_turret/100. + 1.;
    s->firerate_turret   = s->firerate_turret/100.;
    if (nfirerate_turret > 0)
-      s->firerate_turret  *= exp( -0.15 * (double)(nfirerate_turret-1) );
+      s->firerate_turret  *= exp( -0.15 * (double)(MAX(nfirerate_turret-1,0)) );
    s->firerate_turret  += 1.;
 
    /*
@@ -903,7 +904,7 @@ void pilot_calcStats( Pilot* pilot )
    if (njammers > 1) {
       pilot->jam_range  /= (double)njammers;
       pilot->jam_range  *= s->jam_range;
-      pilot->jam_chance *= exp( -0.2 * (double)(njammers-1) );
+      pilot->jam_chance *= exp( -0.2 * (double)(MAX(njammers-1,0)) );
    }
 
    /* Increase health by relative bonuses. */

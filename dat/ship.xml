@@ -116,6 +116,10 @@
    <utility/>
    <structure/>
   </slots>
+  <stats>
+   <ew_detect>25</ew_detect>
+   <ew_hide>10</ew_hide>
+  </stats>
  </ship>
  <ship name="Gawain">
   <base_type>Gawain</base_type>
@@ -236,6 +240,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <cargo_inertia>-10</cargo_inertia>
+  </stats>
  </ship>
  <ship name="Quicksilver">
   <base_type>Quicksilver</base_type>
@@ -325,6 +332,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <cargo_inertia>10</cargo_inertia>
+  </stats>
  </ship>
  <ship name="Pirate Rhino">
   <base_type>Rhino</base_type>
@@ -369,6 +379,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <cargo_inertia>10</cargo_inertia>
+  </stats>
  </ship>
  <ship name="Mule">
   <base_type>Mule</base_type>
@@ -415,6 +428,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <cargo_inertia>-20</cargo_inertia>
+  </stats>
  </ship>
  <!-- Fighters -->
  <ship name="Proteron Derivative">
@@ -457,6 +473,9 @@
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <damage_forward>5</damage_forward>
+  </stats>
  </ship>
  <ship name="Sirius Fidelity">
   <base_type>Fidelity</base_type>
@@ -499,6 +518,9 @@
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <ew_detect>10</ew_detect>
+  </stats>
  </ship>
  <ship name="Shark">
   <base_type>Shark</base_type>
@@ -665,6 +687,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <firerate_forward>3</firerate_forward>
+  </stats>
  </ship>
  <ship name="Empire Lancelot">
   <base_type>Lancelot</base_type>
@@ -708,6 +733,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <firerate_forward>4</firerate_forward>
+  </stats>
  </ship>
  <ship name="Vendetta">
   <base_type>Vendetta</base_type>
@@ -750,6 +778,11 @@
    <utility />
    <structure />
   </slots>
+  <stats>
+   <energy_forward>-10</energy_forward>
+   <heat_forward>-10</heat_forward>
+   <firerate_forward>-5</firerate_forward>
+  </stats>
  </ship>
  <ship name="Dvaered Vendetta">
   <base_type>Vendetta</base_type>
@@ -791,6 +824,11 @@
    <utility />
    <structure />
   </slots>
+  <stats>
+   <energy_forward>-5</energy_forward>
+   <heat_forward>-10</heat_forward>
+   <firerate_forward>-3</firerate_forward>
+  </stats>
  </ship>
  <ship name="Pirate Vendetta">
   <base_type>Vendetta</base_type>
@@ -832,6 +870,11 @@
    <utility />
    <structure />
   </slots>
+  <stats>
+   <energy_forward>-10</energy_forward>
+   <heat_forward>-10</heat_forward>
+   <firerate_forward>-5</firerate_forward>
+  </stats>
  </ship>
  <ship name="Ancestor">
   <base_type>Ancestor</base_type>
@@ -873,6 +916,10 @@
    <utility />
    <structure />
   </slots>
+  <stats>
+   <launch_rate>5</launch_rate>
+   <launch_range>10</launch_range>
+  </stats>
  </ship>
  <ship name="Dvaered Ancestor">
   <base_type>Ancestor</base_type>
@@ -914,6 +961,10 @@
    <utility />
    <structure />
   </slots>
+  <stats>
+   <launch_rate>5</launch_rate>
+   <launch_range>10</launch_range>
+  </stats>
  </ship>
  <ship name="Pirate Ancestor">
   <base_type>Ancestor</base_type>
@@ -954,6 +1005,11 @@
    <utility />
    <structure />
   </slots>
+  <stats>
+   <launch_rate>5</launch_rate>
+   <launch_range>10</launch_range>
+   <jam_counter>3</jam_counter>
+  </stats>
  </ship>
  <!-- Corvettes -->
  <ship name="Sirius Preacher">
@@ -1000,6 +1056,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <damage_forward>5</damage_forward>
+  </stats>
  </ship>
  <ship name="Admonisher">
   <base_type>Admonisher</base_type>
@@ -1045,6 +1104,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <energy_forward>-3</energy_forward>
+  </stats>
  </ship>
  <ship name="Pirate Admonisher">
   <base_type>Admonisher</base_type>
@@ -1089,6 +1151,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <energy_forward>-3</energy_forward>
+  </stats>
  </ship>
  <ship name="Empire Admonisher">
   <base_type>Admonisher</base_type>
@@ -1134,6 +1199,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <energy_forward>-3</energy_forward>
+   <damage_forward>5</damage_forward>
+  </stats>
  </ship>
  <ship name="Vigilance">
   <base_type>Vigilance</base_type>
@@ -1181,6 +1250,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <heat_forward>-5</heat_forward>
+  </stats>
  </ship>
  <ship name="Dvaered Vigilance">
   <base_type>Vigilance</base_type>
@@ -1228,6 +1300,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <heat_forward>-5</heat_forward>
+   <damage_forward>5</damage_forward>
+  </stats>
  </ship>
  <ship name="Sirius Divinity">
   <base_type>Divinity</base_type>
@@ -1272,6 +1348,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <damage_turret>-5</damage_turret>
+   <ew_detect>5</ew_detect>
+  </stats>
  </ship>
  <ship name="Proteron Kahan">
   <base_type>Kahan</base_type>
@@ -1318,6 +1398,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <ew_detect>5</ew_detect>
+   <energy_turret>-5</energy_turret>
+  </stats>
  </ship>
  <ship name="Pacifier">
   <base_type>Pacifier</base_type>
@@ -1364,6 +1448,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <jump_range>15</jump_range>
+   <energy_turret>-5</energy_turret>
+  </stats>
  </ship>
  <ship name="Empire Pacifier">
   <base_type>Pacifier</base_type>
@@ -1410,6 +1498,11 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <jump_range>25</jump_range>
+   <launch_range>10</launch_range>
+   <energy_turret>-5</energy_turret>
+  </stats>
  </ship>
  <!-- Cruisers -->
  <ship name="Kestrel">
@@ -1460,6 +1553,10 @@
    <structure />
    <structure>medium</structure>
   </slots>
+  <stats>
+   <heat_dissipation>10</heat_dissipation>
+   <jump_range>10</jump_range>
+  </stats>
  </ship>
  <ship name="Pirate Kestrel">
   <base_type>Kestrel</base_type>
@@ -1508,6 +1605,10 @@
    <structure />
    <structure>medium</structure>
   </slots>
+  <stats>
+   <heat_dissipation>10</heat_dissipation>
+   <jump_range>20</jump_range>
+  </stats>
  </ship>
  <ship name="Proteron Archimedes">
   <base_type>Archimedes</base_type>
@@ -1560,6 +1661,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <ew_detect>-5</ew_detect>
+   <firerate_turret>5</firerate_turret>
+  </stats>
  </ship>
  <ship name="Hawking">
   <base_type>Hawking</base_type>
@@ -1611,6 +1716,10 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <heat_dissipation>15</heat_dissipation>
+   <energy_turret>-5</energy_turret>
+  </stats>
  </ship>
  <ship name="Empire Hawking">
   <base_type>Hawking</base_type>
@@ -1662,6 +1771,11 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <heat_dissipation>15</heat_dissipation>
+   <energy_turret>-5</energy_turret>
+   <damage_turret>5</damage_turret>
+  </stats>
  </ship>
  <ship name="Sirius Dogma">
   <base_type>Dogma</base_type>
@@ -1712,6 +1826,9 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <ew_detect>10</ew_detect>
+  </stats>
  </ship>
  <ship name="Goddard">
   <base_type>Goddard</base_type>
@@ -1764,6 +1881,11 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <launch_rate>10</launch_rate>
+   <launch_range>10</launch_range>
+   <heat_dissipation>-10</heat_dissipation>
+  </stats>
  </ship>
  <ship name="Dvaered Goddard">
   <base_type>Goddard</base_type>
@@ -1816,6 +1938,12 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <launch_rate>10</launch_rate>
+   <launch_range>10</launch_range>
+   <heat_dissipation>-10</heat_dissipation>
+   <damage_turret>10</damage_turret>
+  </stats>
  </ship>
  <ship name="Empire Peacemaker">
   <base_type>Peacemaker</base_type>
@@ -1870,6 +1998,12 @@
    <structure />
    <structure />
   </slots>
+  <stats>
+   <energy_turret>-10</energy_turret>
+   <jump_range>10</jump_range>
+   <firerate_turret>-5</firerate_turret>
+   <ammo_capacity>25</ammo_capacity>
+  </stats>
  </ship>
  <!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->
  <ship name="Base">

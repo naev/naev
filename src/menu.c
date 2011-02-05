@@ -112,7 +112,7 @@ static int menu_main_bkg_system (void)
 
    /* Get start position. */
    ns = load_getList( &n );
-   if (n > 0) {
+   if ((n > 0) && (planet_exists( ns[0].planet ))) {
       pnt = planet_get( ns[0].planet );
       if (pnt != NULL) {
          sys = planet_getSystem( ns[0].planet );

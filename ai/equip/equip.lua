@@ -26,8 +26,8 @@ _eq_sir = faction.get("Sirius")
 _eq_god = faction.get("Goddard")
 -- Misc
 _eq_pir = faction.get("Pirate")
-_eq_pir = faction.get("FLF")
-_eq_pir = faction.get("Collective")
+_eq_flf = faction.get("FLF")
+_eq_col = faction.get("Collective")
 
 
 --[[
