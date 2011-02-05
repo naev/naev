@@ -923,6 +923,48 @@ char *naev_version( int long_version )
 
 
 /**
+ * @brief Parses the naev version.
+ *
+ *    @param[out] version Version parsed.
+ *    @param buf Buffer to parse.
+ *    @param nbuf Length of the buffer to parse.
+ *    @return 0 on success.
+ */
+int naev_versionParse( int version[3], char *buf, int nbuf )
+{
+   int i, j, s;
+   char cbuf[8];
+
+   /* Check length. */
+   if (nbuf > (int)sizeof(cbuf)) {
+      WARN("Version format is too long!");
+      return -1;
+   }
+
+   s = 0;
+   j = 0;
+   for (i=0; i < nbuf; i++) {
+      cbuf[j++] = buf[i];
+      if (buf[i] == '.') {
+         cbuf[j] = '\0';
+         version[s++] = atoi(cbuf);
+         if (s >= 3) {
+            WARN("Version has too many '.'.");
+            return -1;
+         }
+         j = 0;
+      }
+   }
+   if (s<3) {
+      cbuf[j++] = '\0';
+      version[s++] = atoi(cbuf);
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Returns the naev binary path.
  */
 char *naev_binary (void)
