@@ -965,6 +965,32 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
 
 
 /**
+ * @brief Comparse the version against the current naev version.
+ *
+ *    @return positive if version is newer or negative if version is older.
+ */
+int naev_versionCompare( int version[3] )
+{
+   if (VMAJOR > version[0])
+      return -3;
+   else if (VMAJOR < version[0])
+      return +3;
+
+   if (VMINOR > version[1])
+      return -2;
+   else if (VMINOR < version[1])
+      return +2;
+
+   if (VREV > version[2])
+      return -1;
+   else if (VREV < version[2])
+      return +2;
+
+   return 0;
+}
+
+
+/**
  * @brief Returns the naev binary path.
  */
 char *naev_binary (void)
