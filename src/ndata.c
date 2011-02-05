@@ -363,6 +363,7 @@ static void ndata_testVersion (void)
    uint32_t size;
    int version[3];
    char *buf;
+   int diff;
 
    /* Parse version. */
    buf = ndata_read( "VERSION", &size );
@@ -373,15 +374,16 @@ static void ndata_testVersion (void)
       return;
    }
 
-   if ((VMAJOR != version[0]) ||
-         (VMINOR != version[1]) ||
-         (VREV != version[2])) {
+   diff = naev_versionCompare( version );
+   if (diff != 0) {
       WARN( "ndata version inconsistancy with this version of Naev!" );
       WARN( "Expected ndata version %d.%d.%d got %d.%d.%d.",
             VMAJOR, VMINOR, VREV, version[0], version[1], version[2] );
-      if (VMAJOR != version[2])
-         ERR( "Please get a newer ndata version!" );
-      if (VMINOR != version[1])
+
+      if (ABS(diff) > 2)
+         ERR( "Please get a compatible ndata version!" );
+
+      if (ABS(diff) > 1)
          WARN( "Naev will probably crash now as the versions are probably not compatible." );
    }
 }
