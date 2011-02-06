@@ -3,9 +3,9 @@
  */
 
 /**
- * @file nlua_space.c
+ * @file nlua_ship.c
  *
- * @brief Handles the Lua space bindings.
+ * @brief Handles the Lua ship bindings.
  */
 
 #include "nlua_ship.h"
@@ -51,9 +51,9 @@ static const luaL_reg shipL_methods[] = {
 
 
 /**
- * @brief Loads the space library.
+ * @brief Loads the ship library.
  *
- *    @param L State to load space library into.
+ *    @param L State to load ship library into.
  *    @return 0 on success.
  */
 int nlua_loadShip( lua_State *L, int readonly )
