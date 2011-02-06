@@ -144,6 +144,11 @@ static void space_renderPlanet( Planet *p );
  */
 int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
+/*
+ * External prototypes.
+ */
+extern unsigned int economy_getPrice( const Commodity *com,
+      const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
 /**
@@ -232,6 +237,24 @@ char planet_getClass( const Planet *p )
          WARN("Invalid planet class.");
          return 0;
    };
+}
+
+
+/**
+ * @brief Gets the price of a commodity at a planet.
+ *
+ *    @param p Planet to get price at.
+ *    @param c Commodity to get price of.
+ */
+unsigned int planet_commodityPrice( const Planet *p, const Commodity *c )
+{
+   char *sysname;
+   StarSystem *sys;
+
+   sysname = planet_getSystem( p->name );
+   sys = system_get( sysname );
+
+   return economy_getPrice( c, sys, p );
 }
 
 

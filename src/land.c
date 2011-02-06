@@ -145,9 +145,6 @@ static void misn_update( unsigned int wid, char* str );
 static unsigned int refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
 static void land_toggleRefuel( unsigned int wid, char *name );
-/* external */
-extern unsigned int economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
 /**
@@ -251,7 +248,7 @@ static void commodity_update( unsigned int wid, char* str )
          "\n"
          "%d Tons\n",
          pilot_cargoOwned( player.p, comname ),
-         economy_getPrice(com, cur_system, land_planet),
+         planet_commodityPrice( land_planet, com ),
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
@@ -273,7 +270,7 @@ static void commodity_buy( unsigned int wid, char* str )
    q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
-   price = economy_getPrice(com, cur_system, land_planet);
+   price = planet_commodityPrice( land_planet, com );
 
    /* Check stuff. */
    if (!player_hasCredits( q * price )) {
@@ -316,7 +313,7 @@ static void commodity_sell( unsigned int wid, char* str )
    q = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
-   price = economy_getPrice(com, cur_system, land_planet);
+   price = planet_commodityPrice( land_planet, com );
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
