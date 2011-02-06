@@ -77,6 +77,7 @@ CODE_SOURCE = \
 	nlua_misn.c \
 	nlua_music.c \
 	nlua_naev.c \
+	nlua_outfit.c \
 	nlua_pilot.c \
 	nlua_planet.c \
 	nlua_player.c \
@@ -208,6 +209,7 @@ CODE_SOURCE = \
 	nlua_misn.h \
 	nlua_music.h \
 	nlua_naev.h \
+	nlua_outfit.h \
 	nlua_pilot.h \
 	nlua_planet.h \
 	nlua_player.h \
