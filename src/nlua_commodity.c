@@ -266,8 +266,9 @@ static int commodityL_price( lua_State *L )
  * @usage if o:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of an outfit at polaris prime
  *
  *    @luaparam o Commodity to get information of.
- *    @luareturn The price of the commodity.
- * @luafunc price( o )
+ *    @luaparam p Planet to get price at.
+ *    @luareturn The price of the commodity at the planet.
+ * @luafunc priceAt( o, p )
  */
 static int commodityL_priceAt( lua_State *L )
 {
