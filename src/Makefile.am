@@ -68,6 +68,7 @@ CODE_SOURCE = \
 	nlua_camera.c \
 	nlua_cli.c \
 	nlua_col.c \
+	nlua_commodity.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
@@ -200,6 +201,7 @@ CODE_SOURCE = \
 	nlua_camera.h \
 	nlua_cli.h \
 	nlua_col.h \
+	nlua_commodity.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
