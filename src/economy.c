@@ -159,6 +159,32 @@ static void commodity_freeOne( Commodity* com )
 
 
 /**
+ * @brief Function meant for use with C89, C99 algorithm qsort().
+ *
+ *    @param commodity1 First argument to compare.
+ *    @param commodity2 Second argument to compare.
+ *    @return -1 if first argument is inferior, +1 if it's superior, 0 if ties.
+ */
+int commodity_compareTech( const void *commodity1, const void *commodity2 )
+{
+   const Commodity *c1, *c2;
+
+   /* Get commodities. */
+   c1 = * (const Commodity**) commodity1;
+   c2 = * (const Commodity**) commodity2;
+
+   /* Compare price. */
+   if (c1->price < c2->price)
+      return +1;
+   else if (c1->price > c2->price)
+      return -1;
+
+   /* It turns out they're the same. */
+   return strcmp( c1->name, c2->name );
+}
+
+
+/**
  * @brief Loads a commodity.
  *
  *    @param temp Commodity to load data into.
