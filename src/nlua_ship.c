@@ -22,6 +22,7 @@
 
 
 /* Ship metatable methods. */
+static int shipL_eq( lua_State *L );
 static int shipL_get( lua_State *L );
 static int shipL_name( lua_State *L );
 static int shipL_baseType( lua_State *L );
@@ -32,9 +33,10 @@ static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static const luaL_reg shipL_methods[] = {
+   { "__tostring", shipL_name },
+   { "__eq", shipL_eq },
    { "get", shipL_get },
    { "name", shipL_name },
-   { "__tostring", shipL_name },
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "slots", shipL_slots },
@@ -172,6 +174,29 @@ int lua_isship( lua_State *L, int ind )
 
    lua_pop(L, 2);  /* remove both metatables */
    return ret;
+}
+
+
+/**
+ * @brief Checks to see if two ships are the same.
+ *
+ * @usage if s1 == s2 then -- Checks to see if ship s1 and s2 are the same
+ *
+ *    @luaparam s1 First ship to compare.
+ *    @luaparam s2 Second ship to compare.
+ *    @luareturn true if both ships are the same.
+ * @luafunc __eq( s1, s2 )
+ */
+static int shipL_eq( lua_State *L )
+{
+   LuaShip *a, *b;
+   a = luaL_checkship(L,1);
+   b = luaL_checkship(L,2);
+   if (a->ship == b->ship)
+      lua_pushboolean(L,1);
+   else
+      lua_pushboolean(L,0);
+   return 1;
 }
 
 
