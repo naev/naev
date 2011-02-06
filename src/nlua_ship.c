@@ -34,6 +34,7 @@ static int shipL_gfx( lua_State *L );
 static const luaL_reg shipL_methods[] = {
    { "get", shipL_get },
    { "name", shipL_name },
+   { "__tostring", shipL_name },
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "slots", shipL_slots },
