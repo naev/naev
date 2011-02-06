@@ -20,6 +20,9 @@
 #include "nlua_vec2.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
+#include "nlua_ship.h"
+#include "nlua_outfit.h"
+#include "nlua_commodity.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -37,6 +40,9 @@ static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
 static int planetL_gfxSpace( lua_State *L );
 static int planetL_gfxExterior( lua_State *L );
+static int planetL_shipsSold( lua_State *L );
+static int planetL_outfitsSold( lua_State *L );
+static int planetL_commoditiesSold( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
@@ -49,6 +55,9 @@ static const luaL_reg planet_methods[] = {
    { "services", planetL_services },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
+   { "shipsSold", planetL_shipsSold },
+   { "outfitsSold", planetL_outfitsSold },
+   { "commoditiesSold", planetL_commoditiesSold },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -526,6 +535,99 @@ static int planetL_gfxExterior( lua_State *L )
    p        = luaL_validplanet(L,1);
    lt.tex   = gl_newImage( p->gfx_exterior, 0 );
    lua_pushtex( L, lt );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ships sold at a planet.
+ *
+ *    @luaparam p Planet to get ships sold at.
+ *    @luareturn An ordered table containing all the ships sold (empty if none sold).
+ * @luafunc shipsSold( p )
+ */
+static int planetL_shipsSold( lua_State *L )
+{
+   Planet *p;
+   int i, n;
+   LuaShip ls;
+   Ship **s;
+
+   /* Get result and tech. */
+   p = luaL_validplanet(L,1);
+   s = tech_getShip( p->tech, &n );
+
+   /* Push results in a table. */
+   lua_newtable(L);
+   for (i=0; i<n; i++) {
+      lua_pushnumber(L,i+1); /* index, starts with 1 */
+      ls.ship = s[i];
+      lua_pushship(L,ls); /* value = LuaShip */
+      lua_rawset(L,-3); /* store the value in the table */
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets the outfits sold at a planet.
+ *
+ *    @luaparam p Planet to get outfits sold at.
+ *    @luareturn An ordered table containing all the outfits sold (empty if none sold).
+ * @luafunc outfitsSold( p )
+ */
+static int planetL_outfitsSold( lua_State *L )
+{
+   Planet *p;
+   int i, n;
+   LuaOutfit lo;
+   Outfit **o;
+
+   /* Get result and tech. */
+   p = luaL_validplanet(L,1);
+   o = tech_getOutfit( p->tech, &n );
+
+   /* Push results in a table. */
+   lua_newtable(L);
+   for (i=0; i<n; i++) {
+      lua_pushnumber(L,i+1); /* index, starts with 1 */
+      lo.outfit = o[i];
+      lua_pushoutfit(L,lo); /* value = LuaOutfit */
+      lua_rawset(L,-3); /* store the value in the table */
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets the commodities sold at a planet.
+ *
+ *    @luaparam p Planet to get commodities sold at.
+ *    @luareturn An ordered table containing all the commodities sold (empty if none sold).
+ * @luafunc commoditiesSold( p )
+ */
+static int planetL_commoditiesSold( lua_State *L )
+{
+   Planet *p;
+   int i, n;
+   LuaCommodity lc;
+   Commodity **c;
+
+   /* Get result and tech. */
+   p = luaL_validplanet(L,1);
+   c = tech_getCommodity( p->tech, &n );
+
+   /* Push results in a table. */
+   lua_newtable(L);
+   for (i=0; i<n; i++) {
+      lua_pushnumber(L,i+1); /* index, starts with 1 */
+      lc.commodity = c[i];
+      lua_pushcommodity(L,lc); /* value = LuaCommodity */
+      lua_rawset(L,-3); /* store the value in the table */
+   }
+
    return 1;
 }
 
