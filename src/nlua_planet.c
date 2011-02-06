@@ -231,9 +231,11 @@ static int planetL_get( lua_State *L )
    int nplanets;
    const char *rndplanet;
    LuaPlanet planet;
-   LuaSystem sys;
+   LuaSystem luasys;
    LuaFaction *f;
    Planet *pnt;
+   StarSystem *sys;
+   char *sysname;
 
    rndplanet = NULL;
    planets   = NULL;
@@ -244,8 +246,8 @@ static int planetL_get( lua_State *L )
       if (land_planet != NULL) {
          planet.id = planet_index( land_planet );
          lua_pushplanet(L,planet);
-         sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
-         lua_pushsystem(L,sys);
+         luasys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
+         lua_pushsystem(L,luasys);
          return 2;
       }
       NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
@@ -257,8 +259,8 @@ static int planetL_get( lua_State *L )
       pnt = planet_get( space_getRndPlanet() );
       planet.id    = planet_index( pnt );
       lua_pushplanet(L,planet);
-      sys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
-      lua_pushsystem(L,sys);
+      luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
+      lua_pushsystem(L,luasys);
       return 2;
    }
 
@@ -307,13 +309,23 @@ static int planetL_get( lua_State *L )
    /* Push the planet */
    pnt = planet_get(rndplanet); /* The real planet */
    if (pnt == NULL) {
-      NLUA_ERROR(L, "Planet '%s' not found in stack");
+      NLUA_ERROR(L, "Planet '%s' not found in stack", rndplanet);
+      return 0;
+   }
+   sysname = planet_getSystem(rndplanet);
+   if (sysname == NULL) {
+      NLUA_ERROR(L, "Planet '%s' is not placed in a system", rndplanet);
+      return 0;
+   }
+   sys = system_get( sysname );
+   if (sys == NULL) {
+      NLUA_ERROR(L, "Planet '%s' can't find system '%s'", rndplanet, sysname); 
       return 0;
    }
    planet.id = planet_index( pnt );
    lua_pushplanet(L,planet);
-   sys.id = system_index( system_get( planet_getSystem(rndplanet) ) );
-   lua_pushsystem(L,sys);
+   luasys.id = system_index( sys );
+   lua_pushsystem(L,luasys);
    return 2;
 }
 
