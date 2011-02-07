@@ -631,6 +631,7 @@ static int use_posix_time; /**< Whether or not to use posix time. */
 static void fps_init (void)
 {
 #if HAS_POSIX
+#ifdef CLOCK_MONOTONIC
    use_posix_time = 1;
    /* We must use clock_gettime here instead of gettimeofday mainly because this
     * way we are not influenced by changes to the time source like say ntp which
@@ -638,6 +639,7 @@ static void fps_init (void)
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
    WARN("clock_gettime failed, disabling posix time.");
+#endif /* CLOCK_MONOTONIC */
    use_posix_time = 0;
 #endif /* HAS_POSIX */
    time_ms  = SDL_GetTicks();
