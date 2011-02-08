@@ -373,10 +373,11 @@ static void load_menu_load( unsigned int wdw, char *str )
 {
    (void)str;
    char *save;
-   int wid;
-   int pos;
+   int wid, pos;
    nsave_t *ns;
    int n;
+   int version[3];
+   int diff;
 
    wid = window_get( "Load Game" );
    save = toolkit_getList( wid, "lstSaves" );
@@ -386,6 +387,21 @@ static void load_menu_load( unsigned int wdw, char *str )
 
    pos = toolkit_getListPos( wid, "lstSaves" );
    ns  = load_getList( &n );
+
+   /* Check version. */
+   if (ns->version != NULL) {
+      naev_versionParse( version, ns->version, strlen(ns->version) );
+      diff = naev_versionCompare( version );
+      if (ABS(diff) >= 2) {
+         if (!dialogue_YesNo( "Save game version mismatch",
+                  "Save game '%s' version does not match Naev version:\n"
+                  "   Save version: \er%s\e0\n"
+                  "   Naev version: \eD%s\e0\n"
+                  "Are you sure you want to load the game? It may have loss of data.",
+                  save, ns->version, naev_version(0) ))
+            return;
+      }
+   }
 
    /* Close menus before loading for proper rendering. */
    load_menu_close(wdw, NULL);

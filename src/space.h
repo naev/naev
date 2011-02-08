@@ -271,6 +271,7 @@ int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 char planet_getClass( const Planet *p );
+unsigned int planet_commodityPrice( const Planet *p, const Commodity *c );
 
 /*
  * system adding/removing stuff.

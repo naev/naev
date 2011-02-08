@@ -631,6 +631,7 @@ static int use_posix_time; /**< Whether or not to use posix time. */
 static void fps_init (void)
 {
 #if HAS_POSIX
+#ifdef CLOCK_MONOTONIC
    use_posix_time = 1;
    /* We must use clock_gettime here instead of gettimeofday mainly because this
     * way we are not influenced by changes to the time source like say ntp which
@@ -638,6 +639,7 @@ static void fps_init (void)
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
    WARN("clock_gettime failed, disabling posix time.");
+#endif /* CLOCK_MONOTONIC */
    use_posix_time = 0;
 #endif /* HAS_POSIX */
    time_ms  = SDL_GetTicks();
@@ -919,6 +921,74 @@ char *naev_version( int long_version )
    }
 
    return short_version;
+}
+
+
+/**
+ * @brief Parses the naev version.
+ *
+ *    @param[out] version Version parsed.
+ *    @param buf Buffer to parse.
+ *    @param nbuf Length of the buffer to parse.
+ *    @return 0 on success.
+ */
+int naev_versionParse( int version[3], char *buf, int nbuf )
+{
+   int i, j, s;
+   char cbuf[8];
+
+   /* Check length. */
+   if (nbuf > (int)sizeof(cbuf)) {
+      WARN("Version format is too long!");
+      return -1;
+   }
+
+   s = 0;
+   j = 0;
+   for (i=0; i < nbuf; i++) {
+      cbuf[j++] = buf[i];
+      if (buf[i] == '.') {
+         cbuf[j] = '\0';
+         version[s++] = atoi(cbuf);
+         if (s >= 3) {
+            WARN("Version has too many '.'.");
+            return -1;
+         }
+         j = 0;
+      }
+   }
+   if (s<3) {
+      cbuf[j++] = '\0';
+      version[s++] = atoi(cbuf);
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Comparse the version against the current naev version.
+ *
+ *    @return positive if version is newer or negative if version is older.
+ */
+int naev_versionCompare( int version[3] )
+{
+   if (VMAJOR > version[0])
+      return -3;
+   else if (VMAJOR < version[0])
+      return +3;
+
+   if (VMINOR > version[1])
+      return -2;
+   else if (VMINOR < version[1])
+      return +2;
+
+   if (VREV > version[2])
+      return -1;
+   else if (VREV < version[2])
+      return +2;
+
+   return 0;
 }
 
 

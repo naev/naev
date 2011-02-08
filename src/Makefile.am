@@ -68,6 +68,7 @@ CODE_SOURCE = \
 	nlua_camera.c \
 	nlua_cli.c \
 	nlua_col.c \
+	nlua_commodity.c \
 	nlua_diff.c \
 	nlua_evt.c \
 	nlua_faction.c \
@@ -77,6 +78,7 @@ CODE_SOURCE = \
 	nlua_misn.c \
 	nlua_music.c \
 	nlua_naev.c \
+	nlua_outfit.c \
 	nlua_pilot.c \
 	nlua_planet.c \
 	nlua_player.c \
@@ -199,6 +201,7 @@ CODE_SOURCE = \
 	nlua_camera.h \
 	nlua_cli.h \
 	nlua_col.h \
+	nlua_commodity.h \
 	nlua_diff.h \
 	nlua_evt.h \
 	nlua_faction.h \
@@ -208,6 +211,7 @@ CODE_SOURCE = \
 	nlua_misn.h \
 	nlua_music.h \
 	nlua_naev.h \
+	nlua_outfit.h \
 	nlua_pilot.h \
 	nlua_planet.h \
 	nlua_player.h \

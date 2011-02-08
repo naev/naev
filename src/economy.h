@@ -52,6 +52,7 @@ void economy_destroy (void);
  */
 void credits2str( char *str, uint64_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
+int commodity_compareTech( const void *commodity1, const void *commodity2 );
 
 
 #endif /* ECONOMY_H */

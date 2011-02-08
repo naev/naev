@@ -359,44 +359,33 @@ static int ndata_openPackfile (void)
  */
 static void ndata_testVersion (void)
 {
-   int i, j, s;
+   int ret;
    uint32_t size;
    int version[3];
-   char *buf, cbuf[8];
+   char *buf;
+   int diff;
 
+   /* Parse version. */
    buf = ndata_read( "VERSION", &size );
-   if (size >= 8)
-      ERR( "Invalid VERSION file.");
-   s = 0;
-   j = 0;
-   for (i=0; i < (int)size; i++) {
-      cbuf[j++] = buf[i];
-      if (buf[i] == '.') {
-         cbuf[j] = '\0';
-         version[s++] = atoi(cbuf);
-         if (s >= 3)
-            break;
-         j = 0;
-      }
-   }
-   if (s<3) {
-      cbuf[j++] = '\0';
-      version[s++] = atoi(cbuf);
+   ret = naev_versionParse( version, buf, (int)size );
+   free(buf);
+   if (ret != 0) {
+      WARN("Problem reading VERSION file from ndata!");
+      return;
    }
 
-   if ((VMAJOR != version[0]) ||
-         (VMINOR != version[1]) ||
-         (VREV != version[2])) {
+   diff = naev_versionCompare( version );
+   if (diff != 0) {
       WARN( "ndata version inconsistancy with this version of Naev!" );
       WARN( "Expected ndata version %d.%d.%d got %d.%d.%d.",
             VMAJOR, VMINOR, VREV, version[0], version[1], version[2] );
-      if (VMAJOR != version[2])
-         ERR( "Please get a newer ndata version!" );
-      if (VMINOR != version[1])
+
+      if (ABS(diff) > 2)
+         ERR( "Please get a compatible ndata version!" );
+
+      if (ABS(diff) > 1)
          WARN( "Naev will probably crash now as the versions are probably not compatible." );
    }
-
-   free(buf);
 }
 
 

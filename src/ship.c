@@ -148,7 +148,7 @@ int ship_compareTech( const void *arg1, const void *arg2 )
       return +1;
 
    /* Same. */
-   return 0;
+   return strcmp( s1->name, s2->name );
 }
 
 

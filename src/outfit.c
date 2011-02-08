@@ -220,7 +220,7 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
       return -1;
 
    /* It turns out they're the same. */
-   return 0;
+   return strcmp( o1->name, o2->name );
 }
 
 

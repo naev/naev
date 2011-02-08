@@ -1059,7 +1059,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          pplayer->solid->pos.x, pplayer->solid->pos.y,
          pplayer->solid->vel.x, pplayer->solid->vel.y );
 
-   /* See if must playe hail sound. */
+   /* See if must play hail sound. */
    if (player_hailCounter > 0) {
       player_hailTimer -= dt;
       if (player_hailTimer < 0.) {
@@ -1342,11 +1342,14 @@ void player_hyperspacePreempt( int preempt )
 }
 
 /**
- * @brief Starts the hail sounds.
+ * @brief Starts the hail sounds and aborts autoNav
  */
 void player_hailStart (void)
 {
    player_hailCounter = 5;
+
+   /* Abort autonav. */
+   player_autonavAbort("Recieving hail.");
 }
 
 
@@ -3360,5 +3363,3 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    return 0;
 }
-
-
