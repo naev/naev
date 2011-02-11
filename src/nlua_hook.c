@@ -450,7 +450,7 @@ static int hook_date( lua_State *L )
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc board( funcname, arg )
+ * @luafunc comm_buy( funcname, arg )
  */
 static int hook_commbuy( lua_State *L )
 {
@@ -467,7 +467,7 @@ static int hook_commbuy( lua_State *L )
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc board( funcname, arg )
+ * @luafunc comm_sell( funcname, arg )
  */
 static int hook_commsell( lua_State *L )
 {
