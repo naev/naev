@@ -245,6 +245,10 @@ void ntime_inc( ntime_t t )
    naev_time += t;
    hooks_run("time");
    economy_update( t );
+
+   /* Run hooks. */
+   if (t > 0)
+      hooks_updateDate( t );
 }
 
 
