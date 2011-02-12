@@ -1085,7 +1085,7 @@ static void input_clickevent( SDL_Event* event )
       return;
 
    /* Player must not be NULL. */
-   if (player.p == NULL)
+   if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return;
 
    /* Translate to coordinates. */
