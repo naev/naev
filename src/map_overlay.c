@@ -78,7 +78,11 @@ int ovr_input( SDL_Event *event )
    /* We only want mouse events. */
    if (event->type != SDL_MOUSEBUTTONDOWN)
       return 0;
- 
+
+   /* Player must not be NULL. */
+   if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
+      return 0;
+
    /* Selection. */
    if (event->button.button == SDL_BUTTON_LEFT) {
       /* Translate from window to screen. */
