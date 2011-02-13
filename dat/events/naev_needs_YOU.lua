@@ -62,7 +62,7 @@ end
 function create()
 
       -- Event should only occur if player has played a bit.
-      if player.credits() < 1 then --237451 then
+      if player.credits() < 237451 then
          evt.finish( false)
       end
 
@@ -96,7 +96,7 @@ function create()
       music.play() --
       
 
-      evt.finish( false)
+      evt.finish( true)
 
 end
 
@@ -105,6 +105,6 @@ end
 function enter_system()
 
       player.msg( "Well, that was weird")
-      evt.finish( false)
+      evt.finish( true)
 
 end]]--
