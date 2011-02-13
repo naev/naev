@@ -30,6 +30,7 @@
 #include "nlua_camera.h"
 #include "nlua_bkg.h"
 #include "nlua_tex.h"
+#include "nlua_music.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
