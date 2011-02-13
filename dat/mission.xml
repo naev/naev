@@ -456,21 +456,6 @@
    <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
   </avail>
  </mission>
- <mission name="NAEV Needs You!">
-  <lua>naev_needs_YOU</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>10</chance>
-   <location>Land</location>
-   <faction>Independent</faction>
-   <faction>Empire</faction>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-  </avail>
- </mission>
  <mission name="Crimelord">
   <lua>neutral/crimelord</lua>
   <flags>
