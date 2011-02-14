@@ -68,7 +68,7 @@ extern int max_fps;
 extern int indjoystick;
 extern char* namjoystick;
 /* from player.c */
-extern const char *keybindNames[]; /* keybindings */
+extern const char *keybind_info[][3]; /* keybindings */
 /* from input.c */
 extern unsigned int input_afterburnSensitivity;
 
@@ -372,13 +372,13 @@ int conf_loadConfig ( const char* file )
       /*
        * Keybindings.
        */
-      for (i=0; strcmp(keybindNames[i],"end"); i++) {
-         lua_getglobal(L, keybindNames[i]);
+      for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
+         lua_getglobal(L, keybind_info[i][0]);
          /* Handle "none". */
          if (lua_isstring(L,-1)) {
             str = lua_tostring(L,-1);
             if (strcmp(str,"none")==0) {
-               input_setKeybind( keybindNames[i],
+               input_setKeybind( keybind_info[i][0],
                      KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
             }
          }
@@ -463,10 +463,10 @@ int conf_loadConfig ( const char* file )
                   m = NMOD_NONE;
 
                /* set the keybind */
-               input_setKeybind( keybindNames[i], type, key, m );
+               input_setKeybind( keybind_info[i][0], type, key, m );
             }
             else {
-               WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
+               WARN("Malformed keybind for '%s' in '%s'.", keybind_info[i][0], file);
             }
          }
          /* clean up after table stuff */
@@ -716,12 +716,12 @@ if (sizeof(buf) != pos) \
  */
 int conf_saveConfig ( const char* file )
 {
+   int i;
    char *old;
    const char *oldfooter;
    int oldsize;
    char buf[32*1024];
    size_t pos;
-   const char **keybind;
    SDLKey key;
    char keyname[17];
    KeybindType type;
@@ -954,12 +954,12 @@ int conf_saveConfig ( const char* file )
    keyname[sizeof(keyname)-1] = '\0';
 
    /* Iterate over the keybinding names */
-   for (keybind = keybindNames; strcmp(*keybind,"end"); keybind++) {
+   for (i=0; strcmp(keybind_info[i][0], "end"); i++) {
       /* Save a comment line containing the description */
-      conf_saveComment(input_getKeybindDescription(*keybind));
+      conf_saveComment(input_getKeybindDescription( keybind_info[i][0] ));
 
       /* Get the keybind */
-      key = input_getKeybind(*keybind, &type, &mod);
+      key = input_getKeybind( keybind_info[i][0], &type, &mod );
 
       /* Determine the textual name for the keybind type */
       switch (type) {
@@ -971,7 +971,7 @@ int conf_saveConfig ( const char* file )
       }
       /* Write a nil if an unknown type */
       if ((typename == NULL) || (key == SDLK_UNKNOWN)) {
-         conf_saveString(*keybind,"none");
+         conf_saveString( keybind_info[i][0],"none");
          continue;
       }
 
@@ -993,7 +993,8 @@ int conf_saveConfig ( const char* file )
          snprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n", *keybind, typename, modname, keyname);
+      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+            keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();
 

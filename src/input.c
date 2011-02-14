@@ -45,7 +45,7 @@
  * @brief NAEV Keybinding.
  */
 typedef struct Keybind_ {
-   const char *name; /**< keybinding name, taken from keybindNames */
+   const char *name; /**< keybinding name, taken from keybind_info */
    KeybindType type; /**< type, defined in player.h */
    SDLKey key; /**< key/axis/button event number */
    SDLMod mod; /**< Key modifiers (where applicable). */
@@ -55,109 +55,79 @@ typedef struct Keybind_ {
 static Keybind** input_keybinds; /**< contains the players keybindings */
 
 /* name of each keybinding */
-const char *keybindNames[] = {
+const char *keybind_info[][3] = {
    /* Movement. */
-   "accel", "left", "right", "reverse", "afterburn",
+   { "accel", "Accelerate", "Makes your ship accelerate forward." },
+   { "left", "Turn Left", "Makes your ship turn left." },
+   { "right", "Turn Right", "Makes your ship turn right." },
+   { "reverse", "Reverse", "Makes your ship turn around and face the direction you're moving from. Useful for braking." },
+   { "afterburn", "Afterburner", "Makes your ship afterburn if you have an afterburner installed." },
    /* Targetting. */
-   "target_next", "target_prev", "target_nearest",
-   "target_nextHostile", "target_prevHostile", "target_hostile",
-   "target_clear",
+   { "target_next", "Target Next", "Cycles through ship targets." },
+   { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
+   {"target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
+   { "target_nextHostile", "Target Next Hostile", "Cycles through hostile ship targets." },
+   { "target_prevHostile", "Target Previous Hostile", "Cycles backwards through hostile ship targets." },
+   { "target_hostile", "Target Nearest Hostile", "Targets the nearest hostile ship." },
+   { "target_clear", "Clear Target", "Clears the currently-targeted ship, planet or jump point." },
    /* Fighting. */
-   "primary", "face", "board",
+   { "primary", "Fire Primary Weapon", "Fires your primary weapons." },
+   { "face", "Face Target", "Faces your target (ship target if you have one, otherwise your planet target)." },
+   { "board", "Board Target", "Attempts to board your target ship." },
    /* Secondary weapons. */
-   "secondary",
-   "weapset1", "weapset2", "weapset3", "weapset4", "weapset5",
-   "weapset6", "weapset7", "weapset8", "weapset9", "weapset0",
+   { "secondary", "Fire Secondary Weapon", "Fires your secondary weapon." },
+   { "weapset1", "Weapon Set 1", "Activate Weapon Set 1" },
+   { "weapset2", "Weapon Set 2", "Activate Weapon Set 2" },
+   { "weapset3", "Weapon Set 3", "Activate Weapon Set 3" },
+   { "weapset4", "Weapon Set 4", "Activate Weapon Set 4" },
+   { "weapset5", "Weapon Set 5", "Activate Weapon Set 5" },
+   { "weapset6", "Weapon Set 6", "Activate Weapon Set 6" },
+   { "weapset7", "Weapon Set 7", "Activate Weapon Set 7" },
+   { "weapset8", "Weapon Set 8", "Activate Weapon Set 8" },
+   { "weapset9", "Weapon Set 9", "Activate Weapon Set 9" },
+   { "weapset0", "Weapon Set 0", "Activate Weapon Set 0" },
    /* Escorts. */
-   "e_targetNext", "e_targetPrev", "e_attack", "e_hold", "e_return", "e_clear",
+   { "e_targetNext", "Target Next Escort", "Cycles through your escorts." },
+   { "e_targetPrev", "Target Previous Escort", "Cycles backwards through your escorts." },
+   { "e_attack", "Escort Attack Command", "Tells your escorts to attack your target." },
+   { "e_hold", "Escort Hold Command", "Tells your escorts to hold their positions." },
+   { "e_return", "Escort Return Command", "Tells your escorts to return to your ship hangars." },
+   { "e_clear", "Escort Clear Commands", "Clears your escorts of commands." },
    /* Space navigation. */
-   "autonav", "target_planet", "land", "thyperspace", "starmap", "jump", "overlay",
+   { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
+   { "target_planet", "Target Planet", "Cycles through planet targets" },
+   { "land", "Land", "Attempts to land on your targetted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
+   { "thyperspace", "Target Jumpgate", "Cycles through jump gates." },
+   { "starmap", "Star Map", "Opens the Star Map." },
+   { "jump", "Initiate Jump", "Attempts to jump through a jump gate." },
+   { "overlay", "Overlay Map", "Opens the System Overlay map." },
    /* Communication. */
-   "log_up", "log_down", "hail", "autohail",
+   { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
+   { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
+   { "hail", "Hail Target", "Attempts to initialize communication with your targetted ship." },
+   { "autohail", "Autohail", "Automatically initialize communication with a ship that hailed you." },
    /* Misc. */
-   "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
-   "console", "switchtab1", "switchtab2", "switchtab3", "switchtab4",
-   "switchtab5", "switchtab6", "switchtab7", "switchtab8", "switchtab9",
-   "switchtab0",
+   { "mapzoomin", "Radar Zoom In", "Zooms in on your radar." },
+   { "mapzoomout", "Radar Zoom Out", "Zooms out on your radar." },
+   { "screenshot", "Screenshot", "Takes a screenshot." },
+   { "pause", "Pause", "Pauses the game." },
+   { "speed", "Toggle 2x Speed", "Toggles 2x speed modifier." },
+   { "menu", "Small Menu", "Opens the small ingame menu." },
+   { "info", "Information Menu", "Opens the information menu." },
+   { "console", "Lua Console", "Opens the Lua console." },
+   { "switchtab1", "Switch Tab 1", "Switches to tab 1." },
+   { "switchtab2", "Switch Tab 2", "Switches to tab 2." },
+   { "switchtab3", "Switch Tab 3", "Switches to tab 3." },
+   { "switchtab4", "Switch Tab 4", "Switches to tab 4." },
+   { "switchtab5", "Switch Tab 5", "Switches to tab 5." },
+   { "switchtab6", "Switch Tab 6", "Switches to tab 6." },
+   { "switchtab7", "Switch Tab 7", "Switches to tab 7." },
+   { "switchtab8", "Switch Tab 8", "Switches to tab 8." },
+   { "switchtab9", "Switch Tab 9", "Switches to tab 9." },
+   { "switchtab0", "Switch Tab 0", "Switches to tab 0." },
    /* Must terminate in "end". */
-   "end"
+   { "end", "end", "end" }
 }; /**< Names of possible keybindings. */
-/*
- * Keybinding descriptions. Should match in position the names.
- */
-const char *keybindDescription[] = {
-   /* Movement. */
-   "Makes your ship accelerate forward.",
-   "Makes your ship turn left.",
-   "Makes your ship turn right.",
-   "Makes your ship turn around and face the direction you're moving from. Useful for braking.",
-   "Makes your ship afterburn if you have an afterburner installed.",
-   /* Targeting. */
-   "Cycles through ship targets.",
-   "Cycles backwards through ship targets.",
-   "Targets the nearest non-disabled ship.",
-   "Cycles through hostile ship targets.",
-   "Cycles backwards through hostile ship targets.",
-   "Targets the nearest hostile ship.",
-   "Clears the currently-targeted ship, planet or jump point.",
-   /* Fighting. */
-   "Fires your primary weapons.",
-   "Faces your target (ship target if you have one, otherwise your planet target).",
-   "Attempts to board your target ship.",
-   /* Secondary weapons. */
-   "Fires your secondary weapon.",
-   "Activate Weapon Set 1",
-   "Activate Weapon Set 2",
-   "Activate Weapon Set 3",
-   "Activate Weapon Set 4",
-   "Activate Weapon Set 5",
-   "Activate Weapon Set 6",
-   "Activate Weapon Set 7",
-   "Activate Weapon Set 8",
-   "Activate Weapon Set 9",
-   "Activate Weapon Set 0",
-   /* Escorts. */
-   "Cycles through your escorts.",
-   "Cycles backwards through your escorts.",
-   "Tells your escorts to attack your target.",
-   "Tells your escorts to hold their positions.",
-   "Tells your escorts to return to your ship hangars.",
-   "Clears your escorts of commands.",
-   /* Space navigation. */
-   "Initializes the autonavigation system.",
-   "Cycles through planet targets",
-   "Attempts to land on your targetted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet.",
-   "Cycles through hyperspace targets.",
-   "Opens the Star Map.",
-   "Attempts to jump to your hyperspace target.",
-   "Opens the System Overlay map.",
-   /* Communication. */
-   "Scrolls the log upwards.",
-   "Scrolls the log downwards.",
-   "Attempts to initialize communication with your targetted ship.",
-   "Automatically initialize communication with a ship that hailed you.",
-   /* Misc. */
-   "Zooms in on your radar.",
-   "Zooms out on your radar.",
-   "Takes a screenshot.",
-   "Pauses the game.",
-   "Toggles 2x speed modifier.",
-   "Opens the small ingame menu.",
-   "Opens the information menu.",
-   "Opens the Lua console.",
-   "Switches to tab 1.",
-   "Switches to tab 2.",
-   "Switches to tab 3.",
-   "Switches to tab 4.",
-   "Switches to tab 5.",
-   "Switches to tab 6.",
-   "Switches to tab 7.",
-   "Switches to tab 8.",
-   "Switches to tab 9.",
-   "Switches to tab 10.",
-   NULL /* To match sentinel. */
-}; /**< Descriptions of the keybindings. Should be in the same position as the
-        matching keybinding name. */
 
 
 /*
@@ -302,16 +272,6 @@ void input_init (void)
    /* Key repeat fscks up stuff like double tap. */
    SDL_EnableKeyRepeat( 0, 0 );
 
-#ifdef DEBUGGING
-   /* To avoid stupid segfaults like in the 0.3.6 release. */
-   if (sizeof(keybindNames) != sizeof(keybindDescription)) {
-      WARN("Keybind names and descriptions aren't of the same size!");
-      WARN("   %u descriptions for %u names",
-            (unsigned int) (sizeof(keybindNames) / sizeof(char*)),
-            (unsigned int) (sizeof(keybindDescription) / sizeof(char*)));
-   }
-#endif /* DEBUGGING */
-
    /* Window. */
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
 
@@ -349,14 +309,14 @@ void input_init (void)
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
-   for (i=0; strcmp(keybindNames[i],"end"); i++);
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++);
       input_keybinds = malloc(i*sizeof(Keybind*));
 
    /* Create sane null keybinding for each. */
-   for (i=0; strcmp(keybindNames[i],"end"); i++) {
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
       temp = malloc(sizeof(Keybind));
       memset( temp, 0, sizeof(Keybind) );
-      temp->name        = keybindNames[i];
+      temp->name        = keybind_info[i][0];
       temp->type        = KEYBIND_NULL;
       temp->key         = SDLK_UNKNOWN;
       temp->mod         = NMOD_NONE;
@@ -374,7 +334,7 @@ void input_init (void)
 void input_exit (void)
 {
    int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
       free(input_keybinds[i]);
    free(input_keybinds);
 
@@ -486,7 +446,7 @@ SDLKey input_keyConv( const char *name )
 void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod )
 {
    int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
          input_keybinds[i]->type = type;
          input_keybinds[i]->key = key;
@@ -509,7 +469,7 @@ void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mo
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 {
    int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
          if (type != NULL)
             (*type) = input_keybinds[i]->type;
@@ -554,7 +514,7 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
 {
    int i;
    Keybind *k;
-   for (i=0; strcmp(keybindNames[i],"end"); i++) {
+   for (i=0; strcmp(keybind_info[0][i],"end"); i++) {
       k = input_keybinds[i];
 
       /* Type must match. */
@@ -570,13 +530,13 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
          case KEYBIND_KEYBOARD:
             if ((k->mod == NMOD_ALL) || (mod == NMOD_ALL) ||
                   (k->mod == mod))
-               return keybindNames[i];
+               return keybind_info[i][0];
             break;
 
          case KEYBIND_JAXISPOS:
          case KEYBIND_JAXISNEG:
          case KEYBIND_JBUTTON:
-            return keybindNames[i];
+            return keybind_info[i][0];
 
          default:
             break;
@@ -597,9 +557,9 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
 const char* input_getKeybindDescription( const char *keybind )
 {
    int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0)
-         return keybindDescription[i];
+         return keybind_info[i][2];
    WARN("Unable to get keybinding description '%s', that command doesn't exist", keybind);
    return NULL;
 }
@@ -1005,7 +965,7 @@ static void input_keyevent( const int event, const SDLKey key, const SDLMod mod,
 static void input_joyaxis( const SDLKey axis, const int value )
 {
    int i, k;
-   for (i=0; strcmp(keybindNames[i],"end"); i++) {
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
       if (input_keybinds[i]->key == axis) {
          /* Positive axis keybinding. */
          if ((input_keybinds[i]->type == KEYBIND_JAXISPOS)
@@ -1031,7 +991,7 @@ static void input_joyaxis( const SDLKey axis, const int value )
 static void input_joyevent( const int event, const SDLKey button )
 {
    int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
       if ((input_keybinds[i]->type == KEYBIND_JBUTTON) &&
             (input_keybinds[i]->key == button))
          input_key(i, event, -1., 0);
@@ -1055,7 +1015,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
    /* Filter to "NAEV" modifiers. */
    mod_filtered = input_translateMod(mod);
 
-   for (i=0; strcmp(keybindNames[i],"end"); i++) {
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
       if ((input_keybinds[i]->type == KEYBIND_KEYBOARD) &&
             (input_keybinds[i]->key == key)) {
          if ((input_keybinds[i]->mod == mod_filtered) ||

@@ -53,7 +53,7 @@ static int opt_restart = 0;
 /*
  * External stuff.
  */
-extern const char *keybindNames[]; /**< from input.c */
+extern const char *keybind_info[][3]; /**< from input.c */
 
 
 static char opt_selectedKeybind[32]; /**< Selected keybinding. */
@@ -386,12 +386,12 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   for (i=0; strcmp(keybindNames[i],"end"); i++);
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++);
    str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
       l = 64;
       str[j] = malloc(sizeof(char) * l);
-      key = input_getKeybind( keybindNames[j], &type, &mod );
+      key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
@@ -412,21 +412,21 @@ static void menuKeybinds_genList( unsigned int wid )
 
             /* SDL_GetKeyName returns lowercase which is ugly. */
             if (nstd_isalpha(key))
-               snprintf(str[j], l, "%s <%s%c>", keybindNames[j], mod_text, nstd_toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s%s>", keybindNames[j], mod_text, SDL_GetKeyName(key) );
+               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
             break;
          case KEYBIND_JAXISPOS:
-            snprintf(str[j], l, "%s <ja+%d>", keybindNames[j], key);
+            snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JAXISNEG:
-            snprintf(str[j], l, "%s <ja-%d>", keybindNames[j], key);
+            snprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JBUTTON:
-            snprintf(str[j], l, "%s <jb%d>", keybindNames[j], key);
+            snprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
             break;
          default:
-            snprintf(str[j], l, "%s", keybindNames[j]);
+            snprintf(str[j], l, "%s", keybind_info[j][1]);
             break;
       }
    }
@@ -447,8 +447,8 @@ static void menuKeybinds_genList( unsigned int wid )
 static void menuKeybinds_update( unsigned int wid, char *name )
 {
    (void) name;
-   int i;
-   char *selected, *keybind;
+   int selected;
+   const char *keybind;
    const char *desc;
    SDLKey key;
    KeybindType type;
@@ -457,13 +457,10 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    char binding[64];
 
    /* Get the keybind. */
-   selected = toolkit_getList( wid, "lstKeybinds" );
+   selected = toolkit_getListPos( wid, "lstKeybinds" );
 
    /* Remove the excess. */
-   for (i=0; (selected[i] != '\0') && (selected[i] != ' '); i++)
-      opt_selectedKeybind[i] = selected[i];
-   opt_selectedKeybind[i] = '\0';
-   keybind                = opt_selectedKeybind;
+   keybind = keybind_info[selected][0];
    window_modifyText( wid, "txtName", keybind );
 
    /* Get information. */
