@@ -207,6 +207,7 @@ static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
 static void input_keyConvGen (void);
 static void input_keyConvDestroy (void);
 static void input_key( int keynum, double value, double kabs, int repeat );
+static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
 
 
@@ -1068,6 +1069,16 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
 
 
 /**
+ * @brief Handles zoom.
+ */
+static void input_clickZoom( double modifier )
+{
+   if (player.p != NULL)
+      cam_setZoomTarget( cam_getZoomTarget() * modifier );
+}
+
+
+/**
  * @brief Handles a click event.
  */
 static void input_clickevent( SDL_Event* event )
@@ -1079,6 +1090,16 @@ static void input_clickevent( SDL_Event* event )
    Planet *pnt;
    JumpPoint *jp;
    int pntid, opntid, jpid, ojpid;
+
+   /* Handle zoom. */
+   if (event->button.button == SDL_BUTTON_WHEELUP) {
+      input_clickZoom( 1.1 );
+      return;
+   }
+   else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+      input_clickZoom( 0.9 );
+      return;
+   }
 
    /* Mouse targetting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)

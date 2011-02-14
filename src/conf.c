@@ -137,6 +137,7 @@ void conf_setDefaults (void)
    conf.repeat_freq  = 30;
 
    /* Dynamic zoom. */
+   conf.zoom_manual  = 0;
    conf.zoom_far     = 0.5;
    conf.zoom_near    = 1.;
    conf.zoom_speed   = 0.25;
@@ -352,6 +353,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("repeat_freq",conf.repeat_freq);
 
       /* Zoom. */
+      conf_loadBool("zoom_manual",conf.zoom_manual);
       conf_loadFloat("zoom_far",conf.zoom_far);
       conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
@@ -906,6 +908,7 @@ int conf_saveConfig ( const char* file )
    conf_saveComment("Minimum and maximum zoom factor to use in-game");
    conf_saveComment("At 1.0, no sprites are scaled");
    conf_saveComment("zoom_far should be less then zoom_near");
+   conf_saveBool("zoom_manual",conf.zoom_manual);
    conf_saveFloat("zoom_far",conf.zoom_far);
    conf_saveFloat("zoom_near",conf.zoom_near);
    conf_saveEmptyLine();
