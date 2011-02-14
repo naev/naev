@@ -31,7 +31,11 @@
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
-#define OPT_WINDOWS     4
+#define OPT_WIN_GAMEPLAY   0
+#define OPT_WIN_VIDEO      1
+#define OPT_WIN_AUDIO      2
+#define OPT_WIN_INPUT      3
+#define OPT_WINDOWS        4
 
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
@@ -113,10 +117,10 @@ void opt_menu (void)
          OPT_WINDOWS, opt_names );
 
    /* Load tabs. */
-   opt_gameplay(  opt_windows[0] );
-   opt_video(     opt_windows[1] );
-   opt_audio(     opt_windows[2] );
-   opt_keybinds(  opt_windows[3] );
+   opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
+   opt_video(     opt_windows[ OPT_WIN_VIDEO ] );
+   opt_audio(     opt_windows[ OPT_WIN_AUDIO ] );
+   opt_keybinds(  opt_windows[ OPT_WIN_INPUT ] );
 
    /* Set as need restart if needed. */
    if (opt_restart)
@@ -226,8 +230,11 @@ static void opt_gameplay( unsigned int wid )
          NULL, &cDConsole, "Settings" );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
+         "chkZoomManual", "Enable manual zoom control", NULL, conf.zoom_manual );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
          "chkAfterburn", "Enable doubletap afterburn", NULL, conf.afterburn_sens );
-   y -= 20;
+   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
    y -= 50;
@@ -260,6 +267,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    if (!!conf.afterburn_sens != f) {
       conf.afterburn_sens = (!!f)*250;
    }
+   conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
 
    /* Input boxes. */
@@ -297,6 +305,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    char buf[16];
 
    /* Checkboxes. */
+   window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
    window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
@@ -1040,9 +1049,9 @@ static void opt_needRestart (void)
    s           = "Restart Naev for changes to take effect";
 
    /* Modify widgets. */
-   window_modifyText( opt_windows[0], "txtRestart", s );
-   window_modifyText( opt_windows[1], "txtRestart", s );
-   window_modifyText( opt_windows[2], "txtRestart", s );
+   window_modifyText( opt_windows[ OPT_WIN_GAMEPLAY ], "txtRestart", s );
+   window_modifyText( opt_windows[ OPT_WIN_VIDEO ], "txtRestart", s );
+   window_modifyText( opt_windows[ OPT_WIN_AUDIO ], "txtRestart", s );
 }
 
 
