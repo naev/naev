@@ -38,12 +38,13 @@ amounts of lore accompanying everything from planets to equipment.
 
 %package -n %{dataname}
 Group: Games/Arcade
-License: GPLv3+ AND GPLv3 AND GPLv2+ AND PD AND CC-by 3.0 AND CC-by-sa 3.0
+License: GPLv3+ AND GPLv3 AND GPLv2+ AND Public Domain AND CC-by 3.0 AND CC-by-sa 3.0
 Summary: Data files for %{name}
 Requires: naev
 
 %description -n %{dataname}
-%summary
+NAEV is a 2D space trading and combat game, taking inspiration from the
+Escape Velocity series.
 
 This is the data file.
 
@@ -51,7 +52,7 @@ This is the data file.
 %setup -q
 
 %build
-./configure --prefix=/usr --with-ndata-path=/usr/share/naev/ndata-%{version}
+%configure2_5x --with-ndata-path=/usr/share/naev/ndata-%{version}
 # the bfd debugging tool is bugged under mandriva <= 2010.2 and need to be
 # called by hand.
 %make LIBS=-liberty
