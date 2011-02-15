@@ -60,7 +60,7 @@ This is the data file.
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-install -m644 %{SOURCE1} -D %{buildroot}/usr/share/icons/naev32.png
+install -m644 %{SOURCE1} -D %{buildroot}%{_iconsdir}/naev32.png
 install -m644 %{SOURCE2} -D %{buildroot}%{_datadir}/naev/ndata-%{version}
 mkdir -p %{buildroot}/usr/share/applications/
 %__cat << EOF > %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -68,8 +68,8 @@ mkdir -p %{buildroot}/usr/share/applications/
 Name=Naev
 GenericName=Naev
 Comment=2D space trading and combat game
-Icon=/usr/share/icons/naev32.png
-Exec=/usr/bin/naev
+Icon=%{_iconsdir}/naev32.png
+Exec=%{_bindir}/%{name}
 Type=Application
 Categories=Game;StrategyGame;
 StartupNotify=true
@@ -77,12 +77,6 @@ EOF
 
 %clean
 rm -rf %{buildroot}
-
-%post
-%{update_menus}
-
-%postun
-%{clean_menus}
 
 %files
 %defattr(-,root,root)
