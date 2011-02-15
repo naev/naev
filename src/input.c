@@ -514,7 +514,7 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
 {
    int i;
    Keybind *k;
-   for (i=0; strcmp(keybind_info[0][i],"end"); i++) {
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
       k = input_keybinds[i];
 
       /* Type must match. */
