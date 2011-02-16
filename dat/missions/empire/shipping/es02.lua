@@ -4,6 +4,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
+		- Mission fixed to suit big systems (Anatolis, 11/02/2011)
 
    Rescue a VIP stranded on a disabled ship in a system while FLF and Dvaered
     are fighting.
@@ -13,7 +14,7 @@
       0) Go to sector.
       1) Board ship and rescue VIP.
       2) Rescued VIP, returning to base.
-      3) VIP died, mission failure.
+      3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
 lang = naev.lang()
@@ -37,7 +38,7 @@ else -- default english
    text[1] = [[You meet up once more with Commander Soldner at the bar.
 "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]]
    text[2] = [[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you."
-"You're going to have to fly to the %s system, board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship get destroyed before you rescue the VIP. His survival is vital."]]
+"You're going to have to fly to the %s system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship get destroyed before you rescue the VIP. His survival is vital."]]
    text[3] = [["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %d credits when you return with the VIP. Good luck, pilot."]]
    text[4] = [[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]
    text[5] = [[You land at the starport. It looks like the VIP has already recovered. He thanks you profusely before heading off. You proceed to pay Commander Soldner a visit. He seems to be happy, for once.
@@ -83,6 +84,10 @@ function accept ()
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
+   hook.jumpout("jumpout")
+
+	-- Initiate mission variables (A.)
+	prevsys = system.cur()
 end
 
 
@@ -123,9 +128,10 @@ function enter ()
    if misn_stage == 0 and sys == destsys then
 
       -- Put the VIP at the far end of the player
-      enter_vect = player.pos()
+      enter_vect = system.jumpPos(sys,prevsys)
       x,y = enter_vect:get()
       d = 1200
+		-- With the new big systems this would be somewhere in the middle of the system (A.)
       enter_vect:set( d * -x / math.abs(x), d * -y / math.abs(y) )
       p = pilot.add( "Trader Gawain", "dummy", enter_vect )
       for k,v in ipairs(p) do
@@ -141,17 +147,17 @@ function enter ()
       -- We'll toss all other ships in the middle
       -- FLF first
       a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 0, 700 )
-      enter_vect:set( math.cos(a) * d, math.sin(a) * d )
+      d = rnd.rnd( 0, 500 )
+		-- Added the x and y coordinate of the jumppoint so the pilots will spawn in the area of the jumppoint (A.)
+      enter_vect:set( x+(math.cos(a) * d), y+( math.sin(a) * d) )
       p = pilot.add( "FLF Med Force", nil, enter_vect )
       for k,v in ipairs(p) do
          v:setHostile()
       end
-      -- Now Dvaered
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 0, 700 )
-      enter_vect:set( math.cos(a) * d, math.sin(a) * d )
-      p = pilot.add( "Dvaered Med Force", nil, enter_vect )
+      
+	  -- Now Dvaered
+      -- They will jump together with you in the system at the jumppoint. (A.)
+      p = pilot.add( "Dvaered Med Force", nil, prevsys )
       for k,v in ipairs(p) do
          v:setFriendly()
       end
@@ -171,6 +177,11 @@ function enter ()
       misn.finish(false)
 
    end
+end
+
+function jumpout ()
+	-- Storing the system the player jumped from. 
+	prevsys = system.cur()
 end
 
 
@@ -208,4 +219,11 @@ function death ()
       misn_stage = 3
       misn.finish(false)
    end
+end
+
+function abort ()
+	-- If aborted you'll also leave the VIP to fait. (A.)
+	player.msg( msg[2] )
+    misn.finish(false)
+	
 end

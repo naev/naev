@@ -30,6 +30,7 @@
 #include "nlua_camera.h"
 #include "nlua_bkg.h"
 #include "nlua_tex.h"
+#include "nlua_music.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -254,6 +255,7 @@ static int event_create( int dataid, unsigned int id )
    nlua_loadBackground(L,0);
    nlua_loadCamera(L,0);
    nlua_loadTex(L,0);
+   nlua_loadMusic(L,0);
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );

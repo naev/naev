@@ -38,6 +38,12 @@
 
 #define INFO_WINDOWS      6 /**< Amount of windows in the tab. */
 
+#define INFO_WIN_MAIN      0
+#define INFO_WIN_SHIP      1
+#define INFO_WIN_WEAP      2
+#define INFO_WIN_CARGO     3
+#define INFO_WIN_MISN      4
+#define INFO_WIN_STAND     5
 static const char *info_names[INFO_WINDOWS] = {
    "Main",
    "Ship",
@@ -115,12 +121,12 @@ void menu_info( int window )
          INFO_WINDOWS, info_names );
 
    /* Open the subwindows. */
-   info_openMain( info_windows[0] );
-   info_openShip( info_windows[1] );
-   info_openWeapons( info_windows[2] );
-   info_openCargo( info_windows[3] );
-   info_openMissions( info_windows[4] );
-   info_openStandings( info_windows[5] );
+   info_openMain(       info_windows[ INFO_WIN_MAIN ] );
+   info_openShip(       info_windows[ INFO_WIN_SHIP ] );
+   info_openWeapons(    info_windows[ INFO_WIN_WEAP ] );
+   info_openCargo(      info_windows[ INFO_WIN_CARGO ] );
+   info_openMissions(   info_windows[ INFO_WIN_MISN ] );
+   info_openStandings(  info_windows[ INFO_WIN_STAND ] );
 
    menu_Open(MENU_INFO);
 
@@ -147,7 +153,7 @@ static void info_close( unsigned int wid, char* str )
  */
 void info_update (void)
 {
-   weapons_update( info_windows[2], NULL );
+   weapons_update( info_windows[ INFO_WIN_WEAP ], NULL );
 }
 
 
@@ -645,7 +651,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       mission_sysMark();
 
       /* Regenerate list. */
-      mission_menu_genList( info_windows[3] ,0);
+      mission_menu_genList( info_windows[ INFO_WIN_MISN ] ,0);
    }
    else {
       /* Remove the cargo */
@@ -656,7 +662,7 @@ static void cargo_jettison( unsigned int wid, char* str )
    }
 
    /* We reopen the menu to recreate the list now. */
-   ship_update( info_windows[1] );
+   ship_update( info_windows[ INFO_WIN_SHIP ] );
    cargo_genList( wid );
 }
 

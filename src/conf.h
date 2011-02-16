@@ -64,6 +64,7 @@ typedef struct PlayerConf_s {
    unsigned int repeat_freq; /**< Time in ms between each repeat once started repeating. */
 
    /* Zoom. */
+   int zoom_manual; /**< Zoom is under manual control. */
    double zoom_far; /**< Maximum ingame zoom to use should be less then zoom_near. */
    double zoom_near; /**< Minimum ingame zoom to use. */
    double zoom_speed; /**< Maximum zoom speed change. */

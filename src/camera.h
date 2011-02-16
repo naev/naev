@@ -14,6 +14,7 @@
  * Get values.
  */
 double cam_getZoom (void);
+double cam_getZoomTarget (void);
 void cam_getPos( double *x, double *y );
 
 
@@ -21,6 +22,7 @@ void cam_getPos( double *x, double *y );
  * Set targets.
  */
 void cam_setZoom( double zoom );
+void cam_setZoomTarget( double zoom );
 void cam_setTargetPilot( unsigned int follow, int soft_over );
 void cam_setTargetPos( double x, double y, int soft_over );
 

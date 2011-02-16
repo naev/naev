@@ -42,7 +42,7 @@ function equip_turretPirMed ()
    return { "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun" }
 end
 function equip_turretPirHig ()
-   return { "Railgun Turret", "Heavy laser" }
+   return { "Railgun Turret", "Heavy Laser" }
 end
 function equip_secondaryPirLow ()
    return { "Seeker Launcher" }

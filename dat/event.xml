@@ -106,4 +106,12 @@
    <unique />
   </flags>
  </event>
+ <event name="NAEV Needs You!">
+  <lua>naev_needs_YOU</lua>
+  <trigger>land</trigger>
+  <chance>8</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
 </Events>

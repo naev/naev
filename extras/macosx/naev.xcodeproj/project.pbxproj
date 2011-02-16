@@ -229,6 +229,16 @@
 		07D131C61055EC54005A8EDC /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 07D1316C1055EC54005A8EDC /* lvm.c */; };
 		07D131C71055EC54005A8EDC /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 07D1316E1055EC54005A8EDC /* lzio.c */; };
 		07D131C91055EC54005A8EDC /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 07D131711055EC54005A8EDC /* print.c */; };
+		41C0B84613007D6F00D79CD3 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B84413007D6F00D79CD3 /* load.c */; };
+		41C0B84F13007DEB00D79CD3 /* map_find.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B84B13007DEB00D79CD3 /* map_find.c */; };
+		41C0B87613007EA300D79CD3 /* pilot_ew.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B87413007EA300D79CD3 /* pilot_ew.c */; };
+		41C0B87B13007ED600D79CD3 /* player_autonav.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B87913007ED600D79CD3 /* player_autonav.c */; };
+		41C0B88013007F0900D79CD3 /* start.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B87E13007F0900D79CD3 /* start.c */; };
+		41C0B88513007F3700D79CD3 /* nlua_commodity.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B88313007F3700D79CD3 /* nlua_commodity.c */; };
+		41C0B88A13007F6700D79CD3 /* nlua_outfit.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B88813007F6700D79CD3 /* nlua_outfit.c */; };
+		41C0B88F13007F9900D79CD3 /* threadpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B88D13007F9900D79CD3 /* threadpool.c */; };
+		41C0B89413007FB900D79CD3 /* nstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B89213007FB900D79CD3 /* nstring.c */; };
+		41C0B89913007FD900D79CD3 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B89713007FD900D79CD3 /* log.c */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D78C374F125B468A0026102A /* map_overlay.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C374D125B468A0026102A /* map_overlay.c */; };
@@ -993,6 +1003,26 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* naev_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = naev_Prefix.pch; sourceTree = "<group>"; };
+		41C0B84413007D6F00D79CD3 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = load.c; sourceTree = "<group>"; };
+		41C0B84513007D6F00D79CD3 /* load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = load.h; sourceTree = "<group>"; };
+		41C0B84B13007DEB00D79CD3 /* map_find.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = map_find.c; sourceTree = "<group>"; };
+		41C0B84C13007DEB00D79CD3 /* map_find.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map_find.h; sourceTree = "<group>"; };
+		41C0B87413007EA300D79CD3 /* pilot_ew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_ew.c; sourceTree = "<group>"; };
+		41C0B87513007EA300D79CD3 /* pilot_ew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pilot_ew.h; sourceTree = "<group>"; };
+		41C0B87913007ED600D79CD3 /* player_autonav.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = player_autonav.c; sourceTree = "<group>"; };
+		41C0B87A13007ED600D79CD3 /* player_autonav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player_autonav.h; sourceTree = "<group>"; };
+		41C0B87E13007F0900D79CD3 /* start.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = start.c; sourceTree = "<group>"; };
+		41C0B87F13007F0900D79CD3 /* start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = start.h; sourceTree = "<group>"; };
+		41C0B88313007F3700D79CD3 /* nlua_commodity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nlua_commodity.c; sourceTree = "<group>"; };
+		41C0B88413007F3700D79CD3 /* nlua_commodity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nlua_commodity.h; sourceTree = "<group>"; };
+		41C0B88813007F6700D79CD3 /* nlua_outfit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nlua_outfit.c; sourceTree = "<group>"; };
+		41C0B88913007F6700D79CD3 /* nlua_outfit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nlua_outfit.h; sourceTree = "<group>"; };
+		41C0B88D13007F9900D79CD3 /* threadpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = threadpool.c; sourceTree = "<group>"; };
+		41C0B88E13007F9900D79CD3 /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
+		41C0B89213007FB900D79CD3 /* nstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nstring.c; sourceTree = "<group>"; };
+		41C0B89313007FB900D79CD3 /* nstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nstring.h; sourceTree = "<group>"; };
+		41C0B89713007FD900D79CD3 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
+		41C0B89813007FD900D79CD3 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* naev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78C374D125B468A0026102A /* map_overlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = map_overlay.c; sourceTree = "<group>"; };
@@ -1672,6 +1702,10 @@
 		078552B91223D4D300BA253A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				41C0B87413007EA300D79CD3 /* pilot_ew.c */,
+				41C0B87513007EA300D79CD3 /* pilot_ew.h */,
+				41C0B84413007D6F00D79CD3 /* load.c */,
+				41C0B84513007D6F00D79CD3 /* load.h */,
 				D78C3760125B47260026102A /* player_gui.c */,
 				D78C3761125B47260026102A /* player_gui.h */,
 				D78C3750125B46A00026102A /* pilot_cargo.c */,
@@ -1711,6 +1745,8 @@
 				078552D01223D4D400BA253A /* cond.h */,
 				078552D11223D4D400BA253A /* conf.c */,
 				078552D21223D4D400BA253A /* conf.h */,
+				41C0B89713007FD900D79CD3 /* log.c */,
+				41C0B89813007FD900D79CD3 /* log.h */,
 				078552D31223D4D400BA253A /* console.c */,
 				078552D41223D4D400BA253A /* console.h */,
 				078552D51223D4D400BA253A /* debris.c */,
@@ -1770,6 +1806,8 @@
 				0785530B1223D4D400BA253A /* land_shipyard.h */,
 				0785530C1223D4D400BA253A /* log.h */,
 				0785530D1223D4D400BA253A /* Makefile.am */,
+				41C0B84B13007DEB00D79CD3 /* map_find.c */,
+				41C0B84C13007DEB00D79CD3 /* map_find.h */,
 				0785530E1223D4D400BA253A /* map.c */,
 				0785530F1223D4D400BA253A /* map.h */,
 				078553101223D4D400BA253A /* md5.c */,
@@ -1815,6 +1853,10 @@
 				078553381223D4D400BA253A /* nlua_gfx.h */,
 				078553391223D4D400BA253A /* nlua_gui.c */,
 				0785533A1223D4D400BA253A /* nlua_gui.h */,
+				41C0B88313007F3700D79CD3 /* nlua_commodity.c */,
+				41C0B88413007F3700D79CD3 /* nlua_commodity.h */,
+				41C0B88813007F6700D79CD3 /* nlua_outfit.c */,
+				41C0B88913007F6700D79CD3 /* nlua_outfit.h */,
 				0785533B1223D4D400BA253A /* nlua_hook.c */,
 				0785533C1223D4D400BA253A /* nlua_hook.h */,
 				0785533D1223D4D400BA253A /* nlua_misn.c */,
@@ -1854,6 +1896,8 @@
 				0785535F1223D4D400BA253A /* nopenal.h */,
 				078553601223D4D400BA253A /* npc.c */,
 				078553611223D4D400BA253A /* npc.h */,
+				41C0B89213007FB900D79CD3 /* nstring.c */,
+				41C0B89313007FB900D79CD3 /* nstring.h */,
 				078553621223D4D400BA253A /* npng.c */,
 				078553631223D4D400BA253A /* npng.h */,
 				078553641223D4D400BA253A /* nstd.h */,
@@ -1893,6 +1937,8 @@
 				078553861223D4D400BA253A /* plasmaf.h */,
 				078553871223D4D400BA253A /* player.c */,
 				078553881223D4D400BA253A /* player.h */,
+				41C0B87913007ED600D79CD3 /* player_autonav.c */,
+				41C0B87A13007ED600D79CD3 /* player_autonav.h */,
 				078553891223D4D400BA253A /* queue.c */,
 				0785538A1223D4D400BA253A /* queue.h */,
 				0785538B1223D4D400BA253A /* rng.c */,
@@ -1906,6 +1952,8 @@
 				078553931223D4D400BA253A /* sound_openal.c */,
 				078553941223D4D400BA253A /* sound_openal.h */,
 				078553951223D4D400BA253A /* sound_priv.h */,
+				41C0B87E13007F0900D79CD3 /* start.c */,
+				41C0B87F13007F0900D79CD3 /* start.h */,
 				078553961223D4D400BA253A /* sound_sdlmix.c */,
 				078553971223D4D400BA253A /* sound_sdlmix.h */,
 				078553981223D4D400BA253A /* space.c */,
@@ -1916,6 +1964,8 @@
 				0785539D1223D4D400BA253A /* tech.h */,
 				0785539E1223D4D400BA253A /* tk */,
 				078553BA1223D4D400BA253A /* toolkit.c */,
+				41C0B88D13007F9900D79CD3 /* threadpool.c */,
+				41C0B88E13007F9900D79CD3 /* threadpool.h */,
 				078553BB1223D4D400BA253A /* toolkit.h */,
 				078553BC1223D4D400BA253A /* unidiff.c */,
 				078553BD1223D4D400BA253A /* unidiff.h */,
@@ -2372,6 +2422,7 @@
 				078553E61223D4D400BA253A /* land.c in Sources */,
 				078553E71223D4D400BA253A /* land_outfits.c in Sources */,
 				078553E81223D4D400BA253A /* land_shipyard.c in Sources */,
+				41C0B84613007D6F00D79CD3 /* load.c in Sources */,
 				078553EA1223D4D400BA253A /* map.c in Sources */,
 				078553EB1223D4D400BA253A /* md5.c in Sources */,
 				078553EC1223D4D400BA253A /* menu.c in Sources */,
@@ -2457,12 +2508,21 @@
 				0785543E1223D4D400BA253A /* unidiff.c in Sources */,
 				0785543F1223D4D400BA253A /* weapon.c in Sources */,
 				D78C374F125B468A0026102A /* map_overlay.c in Sources */,
+				41C0B84F13007DEB00D79CD3 /* map_find.c in Sources */,
 				D78C375A125B46A00026102A /* pilot_cargo.c in Sources */,
 				D78C375B125B46A00026102A /* pilot_heat.c in Sources */,
 				D78C375C125B46A00026102A /* pilot_hook.c in Sources */,
 				D78C375D125B46A00026102A /* pilot_outfit.c in Sources */,
 				D78C375E125B46A00026102A /* pilot_weapon.c in Sources */,
 				D78C3762125B47260026102A /* player_gui.c in Sources */,
+				41C0B87613007EA300D79CD3 /* pilot_ew.c in Sources */,
+				41C0B87B13007ED600D79CD3 /* player_autonav.c in Sources */,
+				41C0B88013007F0900D79CD3 /* start.c in Sources */,
+				41C0B88513007F3700D79CD3 /* nlua_commodity.c in Sources */,
+				41C0B88A13007F6700D79CD3 /* nlua_outfit.c in Sources */,
+				41C0B88F13007F9900D79CD3 /* threadpool.c in Sources */,
+				41C0B89413007FB900D79CD3 /* nstring.c in Sources */,
+				41C0B89913007FD900D79CD3 /* log.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2567,6 +2627,7 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				VALID_ARCHS = "i386 x86_64";
 				VMAJOR = 0;
 				VMINOR = 5;
 				VREV = 0;
