@@ -220,6 +220,9 @@ static void opt_gameplay( unsigned int wid )
 #ifdef NDATA_DEF
          "ndata: "NDATA_DEF"\n"
 #endif /* NDATA_DEF */
+#ifdef PREFSDIR_DEF
+         "preference directory: "PREFSDIR_DEF"\n"
+#endif /* PREFSDIR_DEF */
          );
 
 

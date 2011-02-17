@@ -56,7 +56,11 @@ char* nfile_basePath (void)
          WARN("$HOME isn't set, using current directory.");
          home = ".";
       }
+#ifdef PREFSDIR_DEF
+      snprintf( naev_base, PATH_MAX, "%s/%s/", home, PREFSDIR_DEF );
+#else
       snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
+#endif
 #elif HAS_WIN32
       home = getenv("APPDATA");
       if (home == NULL) {
