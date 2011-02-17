@@ -30,6 +30,8 @@ else -- Default to English
    text[2]  = [["Excellent. If you're successful in removing him, I have a token that will grant you landing access to all pirate worlds." His demeanour shifts slightly before he continues, "Of course, we are not the forgiving type. If you rat us out, we will find you. If you fail, well, I suppose you'll be sent to one of the Empire's penal colonies. That said, you've performed admirably for my associate, so I trust I'll see you again soon."]]
    text[3] = [[The businessman is waiting for you. "Ah, you've returned. I've already received the good news from my associates who monitor the Empire communications band. Here's the landing pass, you're now free to land at any pirate colony. There's always work for a competent pilot; I look forward to working with you again." With that, the man walks away, disappearing into a crowd. You wonder how much "business" this supposed businessman is involved in.]]
 
+   msg = {}
+   msg[1] = "Target destroyed. Mission objective updated"
 end
 
 
@@ -122,7 +124,7 @@ end
 
 function misn_finished()
    player.msg( msg[1] )
-   misn.setDesc( string.format( misn_desc2, misn_base, misn_base_sys ) )
+   misn.setDesc( string.format( misn_desc2, misn_base:name(), misn_base_sys:name() ) )
    misn.markerRm( misn_marker )
    misn_marker = misn.markerAdd( misn_base_sys, "low" )
    misn.osdCreate(misn_title, {misn_desc2:format(misn_base:name())})
