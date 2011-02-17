@@ -175,7 +175,6 @@ void shipyard_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      window_disableButton( wid, "btnInfoShip");
       snprintf( buf, PATH_MAX,
             "None\n"
             "NA\n"
