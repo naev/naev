@@ -31,7 +31,11 @@
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
-#define OPT_WINDOWS     4
+#define OPT_WIN_GAMEPLAY   0
+#define OPT_WIN_VIDEO      1
+#define OPT_WIN_AUDIO      2
+#define OPT_WIN_INPUT      3
+#define OPT_WINDOWS        4
 
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
@@ -49,7 +53,7 @@ static int opt_restart = 0;
 /*
  * External stuff.
  */
-extern const char *keybindNames[]; /**< from input.c */
+extern const char *keybind_info[][3]; /**< from input.c */
 
 
 static char opt_selectedKeybind[32]; /**< Selected keybinding. */
@@ -113,10 +117,10 @@ void opt_menu (void)
          OPT_WINDOWS, opt_names );
 
    /* Load tabs. */
-   opt_gameplay(  opt_windows[0] );
-   opt_video(     opt_windows[1] );
-   opt_audio(     opt_windows[2] );
-   opt_keybinds(  opt_windows[3] );
+   opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );
+   opt_video(     opt_windows[ OPT_WIN_VIDEO ] );
+   opt_audio(     opt_windows[ OPT_WIN_AUDIO ] );
+   opt_keybinds(  opt_windows[ OPT_WIN_INPUT ] );
 
    /* Set as need restart if needed. */
    if (opt_restart)
@@ -226,8 +230,11 @@ static void opt_gameplay( unsigned int wid )
          NULL, &cDConsole, "Settings" );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
+         "chkZoomManual", "Enable manual zoom control", NULL, conf.zoom_manual );
+   y -= 30;
+   window_addCheckbox( wid, x, y, cw, 20,
          "chkAfterburn", "Enable doubletap afterburn", NULL, conf.afterburn_sens );
-   y -= 20;
+   y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
    y -= 50;
@@ -260,6 +267,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    if (!!conf.afterburn_sens != f) {
       conf.afterburn_sens = (!!f)*250;
    }
+   conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
 
    /* Input boxes. */
@@ -297,6 +305,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    char buf[16];
 
    /* Checkboxes. */
+   window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
    window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
@@ -377,12 +386,12 @@ static void menuKeybinds_genList( unsigned int wid )
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
-   for (i=0; strcmp(keybindNames[i],"end"); i++);
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++);
    str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
       l = 64;
       str[j] = malloc(sizeof(char) * l);
-      key = input_getKeybind( keybindNames[j], &type, &mod );
+      key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
@@ -403,21 +412,21 @@ static void menuKeybinds_genList( unsigned int wid )
 
             /* SDL_GetKeyName returns lowercase which is ugly. */
             if (nstd_isalpha(key))
-               snprintf(str[j], l, "%s <%s%c>", keybindNames[j], mod_text, nstd_toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s%s>", keybindNames[j], mod_text, SDL_GetKeyName(key) );
+               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
             break;
          case KEYBIND_JAXISPOS:
-            snprintf(str[j], l, "%s <ja+%d>", keybindNames[j], key);
+            snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JAXISNEG:
-            snprintf(str[j], l, "%s <ja-%d>", keybindNames[j], key);
+            snprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JBUTTON:
-            snprintf(str[j], l, "%s <jb%d>", keybindNames[j], key);
+            snprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
             break;
          default:
-            snprintf(str[j], l, "%s", keybindNames[j]);
+            snprintf(str[j], l, "%s", keybind_info[j][1]);
             break;
       }
    }
@@ -438,8 +447,8 @@ static void menuKeybinds_genList( unsigned int wid )
 static void menuKeybinds_update( unsigned int wid, char *name )
 {
    (void) name;
-   int i;
-   char *selected, *keybind;
+   int selected;
+   const char *keybind;
    const char *desc;
    SDLKey key;
    KeybindType type;
@@ -448,13 +457,10 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    char binding[64];
 
    /* Get the keybind. */
-   selected = toolkit_getList( wid, "lstKeybinds" );
+   selected = toolkit_getListPos( wid, "lstKeybinds" );
 
    /* Remove the excess. */
-   for (i=0; (selected[i] != '\0') && (selected[i] != ' '); i++)
-      opt_selectedKeybind[i] = selected[i];
-   opt_selectedKeybind[i] = '\0';
-   keybind                = opt_selectedKeybind;
+   keybind = keybind_info[selected][0];
    window_modifyText( wid, "txtName", keybind );
 
    /* Get information. */
@@ -1040,9 +1046,9 @@ static void opt_needRestart (void)
    s           = "Restart Naev for changes to take effect";
 
    /* Modify widgets. */
-   window_modifyText( opt_windows[0], "txtRestart", s );
-   window_modifyText( opt_windows[1], "txtRestart", s );
-   window_modifyText( opt_windows[2], "txtRestart", s );
+   window_modifyText( opt_windows[ OPT_WIN_GAMEPLAY ], "txtRestart", s );
+   window_modifyText( opt_windows[ OPT_WIN_VIDEO ], "txtRestart", s );
+   window_modifyText( opt_windows[ OPT_WIN_AUDIO ], "txtRestart", s );
 }
 
 

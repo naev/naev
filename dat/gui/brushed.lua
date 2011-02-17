@@ -485,7 +485,7 @@ function render( dt )
    gui.radarRender( radar_x + mod_x, radar_y )
    
    if lockons > 0 then
-      gfx.renderTex( icon_lockons, 378 + mod_x, 50 )
+      gfx.renderTex( icon_lockon, 378 + mod_x, 50 )
    end
    if autonav then
       gfx.renderTex( icon_autonav, 246 + mod_x, 52 )

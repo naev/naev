@@ -175,7 +175,6 @@ void shipyard_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      window_disableButton( wid, "btnInfoShip");
       snprintf( buf, PATH_MAX,
             "None\n"
             "NA\n"
@@ -220,21 +219,21 @@ void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f Teraflops\n"
-         "%.0f Tons\n"
-         "%.1f STU Average\n"
-         "%.0f KN/Ton\n"
-         "%.0f M/s\n"
-         "%.0f Grad/s\n"
+         "%.0f teraflops\n"
+         "%.0f tons\n"
+         "%.1f STU average\n"
+         "%.0f kN/ton\n"
+         "%.0f m/s\n"
+         "%.0f deg/s\n"
          "\n"
-         "%.0f%% Damage\n"
+         "%.0f%% damage\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
-         "%.0f Tons\n"
-         "%d Units\n"
-         "%s Credits\n"
-         "%s Credits\n"
+         "%.0f tons\n"
+         "%d units\n"
+         "%s credits\n"
+         "%s credits\n"
          "%s\n",
          ship->name,
          ship_class(ship),
@@ -246,7 +245,7 @@ void shipyard_update( unsigned int wid, char* str )
          pow( ship->mass, 1./2.5 ) / 5. * (ship->stats.jump_delay/100.+1.), /**< @todo make this more portable. */
          ship->thrust / ship->mass,
          ship->speed,
-         ship->turn,
+         ship->turn*180/M_PI,
          /* Misc */
          ship->dmg_absorb*100.,
          ship->shield, ship->shield_regen,

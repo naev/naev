@@ -20,6 +20,7 @@
 #include "nebula.h"
 #include "pause.h"
 #include "background.h"
+#include "player.h"
 
 
 static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
@@ -31,6 +32,7 @@ static double camera_Y     = 0.; /**< Y position of camera. */
 static double old_X        = 0.; /**< Old X positiion. */
 static double old_Y        = 0.; /**< Old Y position. */
 /* Target is used why flying over with a target set. */
+static double target_Z     = 0.; /**< Target zoom. */
 static double target_X     = 0.; /**< Target X position. */
 static double target_Y     = 0.; /**< Target Y position. */
 static int camera_fly      = 0; /**< Camera is flying to target. */
@@ -43,6 +45,7 @@ static double camera_flyspeed = 0.; /**< Speed when flying. */
 static void cam_updateFly( double x, double y, double dt );
 static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
+static void cam_updateManualZoom( double dt );
 
 
 /**
@@ -54,7 +57,20 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
  */
 void cam_setZoom( double zoom )
 {
-   camera_Z = zoom;
+   camera_Z = CLAMP( conf.zoom_far, conf.zoom_near, zoom );
+}
+
+
+/**
+ * @brief Sets the camera zoom target.
+ *
+ * This should be used in conjunction with manual zoom.
+ *
+ *    @param zoom Zoom to try to set camera to.
+ */
+void cam_setZoomTarget( double zoom )
+{
+   target_Z = CLAMP( conf.zoom_far, conf.zoom_near, zoom );
 }
 
 
@@ -66,6 +82,17 @@ void cam_setZoom( double zoom )
 double cam_getZoom (void)
 {
    return camera_Z;
+}
+
+
+/**
+ * @brief Gets the camera zoom.
+ *
+ *    @return The camera's zoom.
+ */
+double cam_getZoomTarget (void)
+{
+   return target_Z;
 }
 
 
@@ -179,6 +206,10 @@ void cam_update( double dt )
             cam_updatePilot( p, dt );
       }
    }
+
+   /* Update manual zoom. */
+   if (conf.zoom_manual)
+      cam_updateManualZoom( dt );
 }
 
 
@@ -303,6 +334,24 @@ static void cam_updatePilot( Pilot *follow, double dt )
    cam_updatePilotZoom( follow, target, dt );
 }
 
+/**
+ * @brief Updates the manual zoom target.
+ */
+static void cam_updateManualZoom( double dt )
+{
+   double d;
+
+   if (player.p == NULL)
+      return;
+
+   /* Gradually zoom in/out. */
+   d  = CLAMP( -conf.zoom_speed, conf.zoom_speed, target_Z - camera_Z);
+   d *= dt / dt_mod; /* Remove dt dependence. */
+   if (d < 0) /** Speed up if needed. */
+      d *= 2.;
+   camera_Z =  CLAMP( conf.zoom_far, conf.zoom_near, camera_Z + d );
+}
+
 
 /**
  * @brief Updates the camera zoom.
@@ -312,6 +361,10 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
    double d, x,y, z,tz, dx, dy;
    double zfar, znear;
    double c;
+
+   /* Must have auto zoom enabled. */
+   if (conf.zoom_manual)
+      return;
 
    /* Minimum depends on velocity normally.
     *
