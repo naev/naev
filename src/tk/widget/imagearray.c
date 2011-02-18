@@ -493,26 +493,29 @@ static void iar_cleanup( Widget* iar )
          if (iar->dat.iar.quantity && iar->dat.iar.quantity[i])
             free(iar->dat.iar.quantity[i]);
       }
-
-      /* Clean up slottypes. */
-      if (iar->dat.iar.slottype != NULL) {
-         for (i=0; i<iar->dat.iar.nelements; i++) {
-            if (iar->dat.iar.slottype[i] != NULL)
-               free( iar->dat.iar.slottype[i] );
-         }
-         free(iar->dat.iar.slottype);
-      }
-
-      /* Free the arrays */
-      free( iar->dat.iar.captions );
-      free( iar->dat.iar.images );
-      if (iar->dat.iar.alts)
-         free(iar->dat.iar.alts);
-      if (iar->dat.iar.quantity)
-         free(iar->dat.iar.quantity);
-      if (iar->dat.iar.background != NULL)
-         free(iar->dat.iar.background);
    }
+
+   /* Clean up slottypes. */
+   if (iar->dat.iar.slottype != NULL) {
+      for (i=0; i<iar->dat.iar.nelements; i++) {
+         if (iar->dat.iar.slottype[i] != NULL)
+            free( iar->dat.iar.slottype[i] );
+      }
+      free(iar->dat.iar.slottype);
+   }
+
+
+   /* Free the arrays */
+   if (iar->dat.iar.captions != NULL)
+      free( iar->dat.iar.captions );
+   if (iar->dat.iar.images != NULL)
+      free( iar->dat.iar.images );
+   if (iar->dat.iar.alts != NULL)
+      free(iar->dat.iar.alts);
+   if (iar->dat.iar.quantity != NULL)
+      free(iar->dat.iar.quantity);
+   if (iar->dat.iar.background != NULL)
+      free(iar->dat.iar.background);
 }
 
 
