@@ -419,6 +419,13 @@ VAR_SAVE([LIBS], ["-lm"])
 AC_CHECK_FUNCS([feenableexcept])
 VAR_RESTORE([LIBS])
 
+AC_CHECK_FUNCS([clock_gettime])
+# if it is not available directly, check it in librt (glibc does this).
+if test $ac_cv_func_clock_gettime = no; then
+AC_CHECK_LIB(rt, clock_gettime,
+      [LIBS="-lrt $LIBS"])
+fi
+
 VAR_SAVE([CFLAGS], ["$VORBISFILE_CFLAGS"])
 VAR_SAVE([LIBS],   ["$VORBISFILE_LIBS"])
 AC_CHECK_FUNCS([ov_read_filter])
