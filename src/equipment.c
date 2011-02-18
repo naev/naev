@@ -1381,7 +1381,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    char buf[512], sysname[128], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    char *shipname;
    Pilot *ship;
-   char* loc;
+   char *loc, *nt;
    unsigned int price;
    int onboard;
    int cargo;
@@ -1414,6 +1414,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    credits2str( buf2, price , 2 ); /* transport */
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
+   nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
    snprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
@@ -1441,7 +1442,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       buf3,
       /* Movement. */
       ship->solid->mass,
-      '0', ntime_pretty( pilot_hyperspaceDelay( ship ), 2 ),
+      '0', nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
@@ -1461,6 +1462,9 @@ void equipment_updateShips( unsigned int wid, char* str )
       buf2,
       loc, sysname );
    window_modifyText( wid, "txtDDesc", buf );
+
+   /* Clean up. */
+   free( nt );
 
    /* button disabling */
    if (onboard) {
