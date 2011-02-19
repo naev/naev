@@ -164,6 +164,13 @@ function __runaway ()
    runaway()
 end
 
+--[[
+-- Runaway without jumping
+--]]
+function __runaway_nojump ()
+   runaway_nojump()
+end
+
 
 --[[
 -- Tries to hyperspace asap.
@@ -233,12 +240,20 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway ()
+   if __run_target() then return end
+   ai.pushsubtask( "__run_hyp", ai.nearhyptarget() )
+end
+function runaway_nojump ()
+   if __run_target() then return end
+   __run_turret()
+end
+function __run_target ()
    local target = ai.target()
 
    -- Target must exist
    if not ai.exists(target) then
       ai.poptask()
-      return
+      return true
    end
 
    -- Good to set the target for distress calls
@@ -253,26 +268,26 @@ function runaway ()
       ai.afterburn(true)
    end
    ]]--
-
-   ai.pushsubtask( "__run_hyp", ai.nearhyptarget() )
+   return false
 end
-function __run_turret( dist )
-   -- See if we have some turret to use
-   if ai.hasturrets() then
-      if dist < ai.getweaprange(true) then
-         ai.weapset( 3 )
-         ai.shoot( true )
+function __run_turret ()
+   -- Shoot the target
+   local target   = ai.target()
+   if ai.exists(target) then
+      ai.settarget( target )
+      local dist    = ai.dist(target)
+      -- See if we have some turret to use
+      if ai.hasturrets() then
+         if dist < ai.getweaprange(true) then
+            ai.weapset( 3 )
+            ai.shoot( true )
+         end
       end
    end
 end
 function __run_hyp ()
    -- Shoot the target
-   local target   = ai.target()
-   if ai.exists(target) then
-      ai.settarget( target )
-      local tdist    = ai.dist(target)
-      __run_turret( tdist )
-   end
+   __run_turret()
 
    -- Go towards jump
    local jump     = ai.subtarget()
@@ -286,13 +301,6 @@ function __run_hyp ()
    end
 end
 function __run_hypbrake ()
-   -- Shoot the target
-   local target   = ai.target()
-   if ai.exists(target) then
-      ai.settarget( target )
-      local tdist    = ai.dist(target)
-      __run_turret( tdist )
-   end
 
    -- The braking
    ai.brake()

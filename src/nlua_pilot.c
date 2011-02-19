@@ -2782,22 +2782,29 @@ static int pilotL_attack( lua_State *L )
 /**
  * @brief Makes the pilot runaway from another pilot.
  *
+ * By default the pilot tries to jump when running away.
+ *
+ * @usage p:runaway( p_enemy ) -- Run away from p_enemy
+ * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
  *    @luaparam p Pilot to tell to runaway from another pilot.
  *    @luaparam tp Target pilot to runaway from.
+ *    @luaparam nojump Whether or not the pilot should try to jump when running away.
  * @luasee control
- * @luafunc runaway( p, tp )
+ * @luafunc runaway( p, tp, nojump )
  */
 static int pilotL_runaway( lua_State *L )
 {
    Pilot *p, *pt;
    Task *t;
+   int nojump;
 
    /* Get parameters. */
-   p  = luaL_validpilot(L,1);
-   pt = luaL_validpilot(L,2);
+   p      = luaL_validpilot(L,1);
+   pt     = luaL_validpilot(L,2);
+   nojump = lua_toboolean(L,3);
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "__runaway" );
+   t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
    t->dtype = TASKDATA_INT;
    t->dat.num = pt->id;
 
