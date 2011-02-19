@@ -19,6 +19,7 @@
 #include "log.h"
 #include "gui.h"
 #include "gui_osd.h"
+#include "gui_omsg.h"
 #include "nlua_tex.h"
 #include "menu.h"
 #include "info.h"
@@ -29,6 +30,7 @@ static int guiL_viewport( lua_State *L );
 static int guiL_fpsPos( lua_State *L );
 static int guiL_osdInit( lua_State *L );
 static int guiL_mesgInit( lua_State *L );
+static int guiL_omsgInit( lua_State *L );
 static int guiL_radarInit( lua_State *L );
 static int guiL_radarRender( lua_State *L );
 static int guiL_targetPlanetGFX( lua_State *L );
@@ -42,6 +44,7 @@ static const luaL_reg guiL_methods[] = {
    { "fpsPos", guiL_fpsPos },
    { "osdInit", guiL_osdInit },
    { "mesgInit", guiL_mesgInit },
+   { "omsgInit", guiL_omsgInit },
    { "radarInit", guiL_radarInit },
    { "radarRender", guiL_radarRender },
    { "targetPlanetGFX", guiL_targetPlanetGFX },
@@ -182,6 +185,29 @@ static int guiL_mesgInit( lua_State *L )
 
    /* Initialize. */
    gui_messageInit( w, x, y );
+   return 0;
+}
+
+
+/**
+ * @brief Sets the center of the omsg messages and width.
+ *
+ *    @luaparam width Width of the omsg messages.
+ *    @luaparam x X center of the omsg messages.
+ *    @luaparam y Y center of the omsg messages.
+ * @luafunc omsgInit( width, x, y )
+ */
+static int guiL_omsgInit( lua_State *L )
+{
+   double w, x, y;
+
+   /* Parse parameters. */
+   w = luaL_checkinteger( L, 1 );
+   x = luaL_checkinteger( L, 2 );
+   y = luaL_checkinteger( L, 3 );
+
+   /* Initialize. */
+   omsg_position( x, y, w );
    return 0;
 }
 
