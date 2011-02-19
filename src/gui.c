@@ -1792,6 +1792,11 @@ int gui_init (void)
     */
    gui_ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
 
+   /*
+    * OMSG
+    */
+   omsg_position( SCREEN_W/2., SCREEN_H/2., SCREEN_W/5. );
+
    return 0;
 }
 

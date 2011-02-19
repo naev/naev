@@ -32,7 +32,7 @@ static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */
 
 static double omsg_center_x         = 0.;    /**< X center of the overlay messages. */
 static double omsg_center_y         = 0.;    /**< Y center of the overlay messages. */
-static double omsg_center_w         = 0.;    /**< Widtho f the overlay messages. */
+static double omsg_center_w         = 100.;    /**< Widtho f the overlay messages. */
 
 
 /*
@@ -95,6 +95,7 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    m  = 0;
    while (n < l) {
       s  = gl_printWidthForText( omsg->font, &msg[n], omsg_center_w );
+      n += s+1;
       m++;
    }
    /* Second pass allocate. */
@@ -106,6 +107,7 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
       s  = gl_printWidthForText( omsg->font, &msg[n], omsg_center_w );
       omsg->msg[m] = malloc( s+1 );
       snprintf( omsg->msg[m], s+1, "%s", &msg[n] );
+      m++;
       n += s+1;
    }
 }
@@ -137,7 +139,8 @@ void omsg_cleanup (void)
       omsg_free( &omsg_array[i] );
 
    /* Destroy. */
-   array_free( &omsg_array );
+   if (omsg_array != NULL)
+      array_free( omsg_array );
    omsg_array = NULL;
 }
 
@@ -177,7 +180,7 @@ void omsg_render( double dt )
          continue;
 
       /* Render. */
-      for (j=0; j<omsg->nlines; i++) {
+      for (j=0; j<omsg->nlines; j++) {
          gl_printMidRaw( omsg->font, omsg_center_w, x, y, omsg->col, omsg->msg[j] );
          y -= omsg->font->h * 1.5;
       }
