@@ -8,10 +8,15 @@
 #  define GUI_OMSG_H
 
 
+
+#define OMSG_FONT_DEFAULT_SIZE      16
+#define OMSG_FONT_DEFAULT_PATH      "dat/mono.ttf"
+
+
 /*
  * Creation and management.
  */
-unsigned int omsg_add( const char *msg, double duration );
+unsigned int omsg_add( const char *msg, double duration, int fontsize );
 int omsg_change( unsigned int id, const char *msg, double duration );
 int omsg_exists( unsigned int id );
 void omsg_rm( unsigned int id );

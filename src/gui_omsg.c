@@ -17,6 +17,16 @@
 
 
 /**
+ * @brief Fonts.
+ */
+typedef struct omsg_font_s {
+   int size;      /**< Font size. */
+   glFont font;   /**< Font itself. */
+} omsg_font_t;
+static omsg_font_t *omsg_font_array = NULL; /**< Array of fonts. */
+
+
+/**
  * @brief Message struct.
  */
 typedef struct omsg_s {
@@ -24,10 +34,10 @@ typedef struct omsg_s {
    char **msg;       /**< Message to display. */
    int nlines;       /**< Message lines. */
    double duration;  /**< Time left. */
-   glFont *font;     /**< Font to use. */
+   int font;         /**< Font to use. */
    glColour *col;    /**< Colour to use. */
 } omsg_t;
-static omsg_t *omsg_array    = NULL;  /**< Array of messages. */
+static omsg_t *omsg_array           = NULL;  /**< Array of messages. */
 static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */
 
 static double omsg_center_x         = 0.;    /**< X center of the overlay messages. */
@@ -41,6 +51,8 @@ static double omsg_center_w         = 100.;    /**< Widtho f the overlay message
 static omsg_t* omsg_get( unsigned int id );
 static void omsg_free( omsg_t *omsg );
 static void omsg_setMsg( omsg_t *omsg, const char *msg );
+static int omsg_getFontID( int size );
+static glFont* omsg_getFont( int font );
 
 
 /**
@@ -77,6 +89,7 @@ static void omsg_free( omsg_t *omsg )
 static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
    int i, l, n, s, m;
+   glFont *font;
 
    /* Clean up after old stuff. */
    if (omsg->msg != NULL) {
@@ -90,11 +103,12 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
 
    /* Create data. */
    l  = strlen( msg );
+   font = omsg_getFont( omsg->font );
    /* First pass size. */
    n  = 0;
    m  = 0;
    while (n < l) {
-      s  = gl_printWidthForText( omsg->font, &msg[n], omsg_center_w );
+      s  = gl_printWidthForText( font, &msg[n], omsg_center_w );
       n += s+1;
       m++;
    }
@@ -104,12 +118,46 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    n  = 0;
    m  = 0;
    while (n < l) {
-      s  = gl_printWidthForText( omsg->font, &msg[n], omsg_center_w );
+      s  = gl_printWidthForText( font, &msg[n], omsg_center_w );
       omsg->msg[m] = malloc( s+1 );
       snprintf( omsg->msg[m], s+1, "%s", &msg[n] );
       m++;
       n += s+1;
    }
+}
+
+
+/**
+ * @brief Gets a font by size.
+ */
+static int omsg_getFontID( int size )
+{
+   int i;
+   omsg_font_t *font;
+
+   /* Create array if not done so yet. */
+   if (omsg_font_array == NULL)
+      omsg_font_array = array_create( omsg_font_t );
+
+   /* Try to match. */
+   for (i=0; i<array_size( omsg_font_array ); i++)
+      if (size == omsg_font_array[i].size)
+         return i;
+
+   /* Create font. */
+   font = &array_grow( &omsg_font_array );
+   gl_fontInit( &font->font, OMSG_FONT_DEFAULT_PATH, size );
+   font->size = size;
+   return array_size(omsg_font_array) - 1;
+}
+
+
+/**
+ * @brief Gets a font by id.
+ */
+static glFont* omsg_getFont( int font )
+{
+   return &omsg_font_array[ font ].font;
 }
 
 
@@ -134,14 +182,21 @@ void omsg_cleanup (void)
 {
    int i;
 
-   /* Free memory. */
-   for (i=0; i<array_size(omsg_array); i++)
-      omsg_free( &omsg_array[i] );
+   /* Free fonts. */
+   if (omsg_font_array != NULL) {
+      for (i=0; i<array_size( omsg_font_array ); i++)
+         gl_freeFont( &omsg_font_array[i].font );
+      array_free( omsg_font_array );
+      omsg_font_array = NULL;
+   }
 
-   /* Destroy. */
-   if (omsg_array != NULL)
+   /* Destroy messages. */
+   if (omsg_array != NULL) {
+      for (i=0; i<array_size(omsg_array); i++)
+         omsg_free( &omsg_array[i] );
       array_free( omsg_array );
-   omsg_array = NULL;
+      omsg_array = NULL;
+   }
 }
 
 
@@ -153,6 +208,7 @@ void omsg_render( double dt )
    int i, j;
    double x, y;
    omsg_t *omsg;
+   glFont *font;
 
    /* Case nothing to do. */
    if (omsg_array == NULL)
@@ -180,9 +236,10 @@ void omsg_render( double dt )
          continue;
 
       /* Render. */
+      font = omsg_getFont( omsg->font );
       for (j=0; j<omsg->nlines; j++) {
-         gl_printMidRaw( omsg->font, omsg_center_w, x, y, omsg->col, omsg->msg[j] );
-         y -= omsg->font->h * 1.5;
+         gl_printMidRaw( font, omsg_center_w, x, y, omsg->col, omsg->msg[j] );
+         y -= font->h * 1.5;
       }
    }
 }
@@ -193,22 +250,27 @@ void omsg_render( double dt )
  *
  *    @param msg Message to add.
  *    @param duration Duration of message on screen (in seconds).
+ *    @param fontsize Size of the font to use.
  *    @return Unique ID to the message.
  */
-unsigned int omsg_add( const char *msg, double duration )
+unsigned int omsg_add( const char *msg, double duration, int fontsize )
 {
    omsg_t *omsg;
+   int font;
 
    /* Create if necessary. */
    if (omsg_array == NULL)
       omsg_array = array_create( omsg_t );
+
+   /* Get font size. */
+   font = omsg_getFontID( fontsize );
 
    /* Create the message. */
    omsg           = &array_grow( &omsg_array );
    memset( omsg, 0, sizeof(omsg_t) );
    omsg->id       = ++omsg_idgen;
    omsg->duration = duration;
-   omsg->font     = &gl_defFont;
+   omsg->font     = font;
    omsg->col      = &cWhite;
    omsg_setMsg( omsg, msg );
 
