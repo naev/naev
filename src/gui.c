@@ -904,7 +904,7 @@ void gui_render( double dt )
    gl_defViewport();
 
    /* Render messages. */
-   omsg_render();
+   omsg_render( dt );
 }
 
 

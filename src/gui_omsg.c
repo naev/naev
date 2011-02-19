@@ -143,36 +143,9 @@ void omsg_cleanup (void)
 
 
 /**
- * @brief Updates the overlay messages.
- *
- *    @param dt Current delta tick.
- */
-void omsg_update( double dt )
-{
-   int i;
-   omsg_t *omsg;
-
-   /* Case nothing to do. */
-   if (omsg_array == NULL)
-      return;
-
-   /* Free memory. */
-   for (i=0; i<array_size(omsg_array); i++) {
-      omsg = &omsg_array[i];
-      omsg->duration -= dt;
-      if (omsg->duration < 0.) {
-         omsg_free( omsg );
-         array_erase( &omsg_array, &omsg[0], &omsg[1] );
-         i--;
-      }
-   }
-}
-
-
-/**
  * @brief Renders the overlays.
  */
-void omsg_render (void)
+void omsg_render( double dt )
 {
    int i, j;
    double x, y;
@@ -189,6 +162,17 @@ void omsg_render (void)
    /* Render. */
    for (i=0; i<array_size(omsg_array); i++) {
       omsg  = &omsg_array[i];
+
+      /* Check if time to erase. */
+      omsg->duration -= dt;
+      if (omsg->duration < 0.) {
+         omsg_free( omsg );
+         array_erase( &omsg_array, &omsg[0], &omsg[1] );
+         i--;
+         continue;
+      }
+
+      /* Must have a message. */
       if (omsg->msg == NULL)
          continue;
 

@@ -21,8 +21,7 @@ void omsg_rm( unsigned int id );
  */
 void omsg_position( double center_x, double center_y, double width );
 void omsg_cleanup (void);
-void omsg_update( double dt );
-void omsg_render (void);
+void omsg_render( double dt );
 
 
 #endif /* GUI_OMSG_H */
