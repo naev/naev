@@ -242,8 +242,8 @@ void omsg_render( double dt )
       if (omsg->duration < 1.)
          col.a = omsg->duration;
       for (j=0; j<omsg->nlines; j++) {
-         gl_printMidRaw( font, omsg_center_w, x, y, &col, omsg->msg[j] );
          y -= font->h * 1.5;
+         gl_printMidRaw( font, omsg_center_w, x, y, &col, omsg->msg[j] );
       }
    }
 }
