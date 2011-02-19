@@ -263,7 +263,7 @@ static int playerL_omsgAdd( lua_State *L )
    /* Input. */
    str      = luaL_checkstring(L,1);
    duration = luaL_checknumber(L,2);
-   if (lua_gettop(L) > 3)
+   if (lua_gettop(L) > 2)
       fontsize = luaL_checkint(L,3);
    else
       fontsize = OMSG_FONT_DEFAULT_SIZE;
