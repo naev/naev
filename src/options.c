@@ -745,7 +745,7 @@ static void opt_audioUpdate( unsigned int wid, char *str )
 
    /* Checkboxkes. */
    window_checkboxSet( wid, "chkNosound", conf.nosound );
-   window_checkboxSet( wid, "chkEngineGlow", conf.al_efx );
+   window_checkboxSet( wid, "chkEFX", conf.al_efx );
 
    /* List. */
    toolkit_setList( wid, "lstSound",
