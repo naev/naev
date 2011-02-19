@@ -152,6 +152,10 @@ void omsg_update( double dt )
    int i;
    omsg_t *omsg;
 
+   /* Case nothing to do. */
+   if (omsg_array == NULL)
+      return;
+
    /* Free memory. */
    for (i=0; i<array_size(omsg_array); i++) {
       omsg = &omsg_array[i];
@@ -173,6 +177,10 @@ void omsg_render (void)
    int i, j;
    double x, y;
    omsg_t *omsg;
+
+   /* Case nothing to do. */
+   if (omsg_array == NULL)
+      return;
 
    /* Center. */
    x  = omsg_center_x - omsg_center_w/2.;
