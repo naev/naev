@@ -209,6 +209,7 @@ void omsg_render( double dt )
    double x, y;
    omsg_t *omsg;
    glFont *font;
+   glColour col;
 
    /* Case nothing to do. */
    if (omsg_array == NULL)
@@ -237,8 +238,11 @@ void omsg_render( double dt )
 
       /* Render. */
       font = omsg_getFont( omsg->font );
+      memcpy( &col, omsg->col, sizeof(glColour) );
+      if (omsg->duration < 1.)
+         col.a = omsg->duration;
       for (j=0; j<omsg->nlines; j++) {
-         gl_printMidRaw( font, omsg_center_w, x, y, omsg->col, omsg->msg[j] );
+         gl_printMidRaw( font, omsg_center_w, x, y, &col, omsg->msg[j] );
          y -= font->h * 1.5;
       }
    }
