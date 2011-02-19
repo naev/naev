@@ -37,6 +37,7 @@
 #include "comm.h"
 #include "land_outfits.h"
 #include "gui.h"
+#include "gui_omsg.h"
 
 
 /* Player methods. */
@@ -45,6 +46,9 @@ static int playerL_shipname( lua_State *L );
 static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
 static int playerL_msg( lua_State *L );
+static int playerL_omsgAdd( lua_State *L );
+static int playerL_omsgChange( lua_State *L );
+static int playerL_omsgRm( lua_State *L );
 /* Faction stuff. */
 static int playerL_modFaction( lua_State *L );
 static int playerL_modFactionRaw( lua_State *L );
@@ -80,6 +84,9 @@ static const luaL_reg playerL_methods[] = {
    { "pay", playerL_pay },
    { "credits", playerL_credits },
    { "msg", playerL_msg },
+   { "omsgAdd", playerL_omsgAdd },
+   { "omsgChange", playerL_omsgChange },
+   { "omsgRm", playerL_omsgRm },
    { "modFaction", playerL_modFaction },
    { "modFactionRaw", playerL_modFactionRaw },
    { "getFaction", playerL_getFaction },
@@ -234,6 +241,71 @@ static int playerL_msg( lua_State *L )
    str = luaL_checkstring(L,1);
    player_messageRaw(str);
 
+   return 0;
+}
+/**
+ * @brief Adds an overlay message.
+ *
+ * @usage player.omsgAdd( "some_message", 5 )
+ *    @luaparam msg Message to add.
+ *    @luaparam duration Duration to add message.
+ *    @luareturn ID of the created overlay message.
+ * @luafunc omsgAdd( msg, duration )
+ */
+static int playerL_omsgAdd( lua_State *L )
+{
+   const char *str;
+   double duration;
+   unsigned int id;
+
+   /* Input. */
+   str      = luaL_checkstring(L,1);
+   duration = luaL_checknumber(L,2);
+
+   /* Output. */
+   id       = omsg_add( str, duration );
+   lua_pushnumber( L, id );
+   return 1;
+}
+/**
+ * @brief Changes an overlay message.
+ *
+ * @usage player.omsgChange( omsg_id, "new message", 3 )
+ *    @luaparam id ID of the overlay message to change.
+ *    @luaparam msg Message to change to.
+ *    @luaparam duration New duration to set.
+ *    @luareturn true if all went well, false otherwise.
+ * @luafunc omsgChange( id, msg, duration )
+ */
+static int playerL_omsgChange( lua_State *L )
+{
+   const char *str;
+   double duration;
+   unsigned int id;
+   int ret;
+
+   /* Input. */
+   id       = luaL_checklong(L,1);
+   str      = luaL_checkstring(L,2);
+   duration = luaL_checknumber(L,3);
+
+   /* Output. */
+   ret      = omsg_change( id, str, duration );
+   lua_pushboolean(L,!ret);
+   return 1;
+}
+/**
+ * @brief Removes an overlay message.
+ *
+ * @usage player.omsgRm( msg_id )
+ *    @luaparam id ID of the overlay message to remove.
+ * @luafunc omsgRm( id )
+ */
+static int playerL_omsgRm( lua_State *L )
+{
+   unsigned int id;
+   id       = luaL_checklong(L,1);
+   omsg_rm( id );
    return 0;
 }
 /**

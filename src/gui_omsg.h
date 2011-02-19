@@ -11,8 +11,8 @@
 /*
  * Creation and management.
  */
-unsigned int omsg_add( char *msg, double duration );
-int omsg_change( unsigned int id, char *msg, double duration );
+unsigned int omsg_add( const char *msg, double duration );
+int omsg_change( unsigned int id, const char *msg, double duration );
 int omsg_exists( unsigned int id );
 void omsg_rm( unsigned int id );
 

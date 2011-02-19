@@ -40,7 +40,7 @@ static double omsg_center_w         = 0.;    /**< Widtho f the overlay messages.
  */
 static omsg_t* omsg_get( unsigned int id );
 static void omsg_free( omsg_t *omsg );
-static void omsg_setMsg( omsg_t *omsg, char *msg );
+static void omsg_setMsg( omsg_t *omsg, const char *msg );
 
 
 /**
@@ -74,7 +74,7 @@ static void omsg_free( omsg_t *omsg )
 /**
  * @brief Sets the message for an omsg.
  */
-static void omsg_setMsg( omsg_t *omsg, char *msg )
+static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
    int i, l, n, s, m;
 
@@ -192,7 +192,7 @@ void omsg_render( double dt )
  *    @param duration Duration of message on screen (in seconds).
  *    @return Unique ID to the message.
  */
-unsigned int omsg_add( char *msg, double duration )
+unsigned int omsg_add( const char *msg, double duration )
 {
    omsg_t *omsg;
 
@@ -221,7 +221,7 @@ unsigned int omsg_add( char *msg, double duration )
  *    @param duration New duration for the overlay.
  *    @return 0 on success.
  */
-int omsg_change( unsigned int id, char *msg, double duration )
+int omsg_change( unsigned int id, const char *msg, double duration )
 {
    omsg_t *omsg;
 
