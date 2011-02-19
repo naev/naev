@@ -55,6 +55,7 @@
 #include "nlua_gfx.h"
 #include "nlua_gui.h"
 #include "nlua_tex.h"
+#include "gui_omsg.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -901,6 +902,9 @@ void gui_render( double dt )
 
    /* Reset vieport. */
    gl_defViewport();
+
+   /* Render messages. */
+   omsg_render();
 }
 
 
@@ -2136,6 +2140,9 @@ void gui_free (void)
    if (gui_target_pilot != NULL)
       gl_freeTexture( gui_target_pilot );
    gui_target_pilot = NULL;
+
+   /* Free overlay messages. */
+   omsg_cleanup();
 }
 
 

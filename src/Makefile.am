@@ -38,6 +38,7 @@ CODE_SOURCE = \
 	fleet.c \
 	font.c \
 	gui.c \
+	gui_omsg.c \
 	gui_osd.c \
 	hook.c \
 	info.c \
@@ -170,6 +171,7 @@ CODE_SOURCE = \
 	fleet.h \
 	font.h \
 	gui.h \
+	gui_omsg.h \
 	gui_osd.h \
 	hook.h \
 	info.h \
