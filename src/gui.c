@@ -2106,7 +2106,7 @@ void gui_cleanup (void)
    }
 
    /* OMSG */
-   omsg_position( SCREEN_W/2., SCREEN_H/2., SCREEN_W*2./3. );
+   omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );
 }
 
 
