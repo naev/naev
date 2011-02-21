@@ -27,6 +27,7 @@
 
 
 static PilotHook *pilot_globalHooks = NULL; /**< Global hooks that affect all pilots. */
+static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
 
 
 /**
@@ -191,6 +192,10 @@ void pilots_rmHook( unsigned int hook )
    Pilot *p, **plist;
    int n;
 
+   /* Cleaning up a pilot's hooks. */
+   if (pilot_hookCleanup)
+      return;
+
    /* Remove global hook first. */
    pilots_rmGlobalHook( hook );
 
@@ -225,12 +230,15 @@ void pilot_clearHooks( Pilot *p )
 {
    int i;
 
+   /* No hooks to remove. */
    if (p->nhooks <= 0)
       return;
 
-   /* Remove the hooks. */
+   /* Remove the hookss. */
+   pilot_hookCleanup = 1;
    for (i=0; i<p->nhooks; i++)
       hook_rm( p->hooks[i].id );
+   pilot_hookCleanup = 0;
 
    /* Clear the hooks. */
    free(p->hooks);
