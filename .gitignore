@@ -37,3 +37,7 @@ asset.xml
 ssys.xml
 stderr.txt
 stdout.txt
+.DS_Store
+*.pbxuser
+*.mode1v3
+extras/macosx/build/

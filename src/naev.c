@@ -655,6 +655,7 @@ static double fps_elapsed (void)
    unsigned int t;
 
 #if HAS_POSIX
+#ifdef CLOCK_MONOTONIC
    struct timespec ts;
 
    if (use_posix_time) {
@@ -666,6 +667,7 @@ static double fps_elapsed (void)
       }
       WARN( "clock_gettime failed!" );
    }
+#endif /* CLOCK_MONOTONIC */
 #endif /* HAS_POSIX */
 
    t        = SDL_GetTicks();

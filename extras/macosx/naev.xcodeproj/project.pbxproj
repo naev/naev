@@ -241,6 +241,7 @@
 		41C0B89913007FD900D79CD3 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 41C0B89713007FD900D79CD3 /* log.c */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		D24306761317171C00835A30 /* gui_omsg.c in Sources */ = {isa = PBXBuildFile; fileRef = D24306741317171C00835A30 /* gui_omsg.c */; };
 		D78C374F125B468A0026102A /* map_overlay.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C374D125B468A0026102A /* map_overlay.c */; };
 		D78C375A125B46A00026102A /* pilot_cargo.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3750125B46A00026102A /* pilot_cargo.c */; };
 		D78C375B125B46A00026102A /* pilot_heat.c in Sources */ = {isa = PBXBuildFile; fileRef = D78C3752125B46A00026102A /* pilot_heat.c */; };
@@ -1025,6 +1026,8 @@
 		41C0B89813007FD900D79CD3 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* naev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D24306741317171C00835A30 /* gui_omsg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gui_omsg.c; sourceTree = "<group>"; };
+		D24306751317171C00835A30 /* gui_omsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gui_omsg.h; sourceTree = "<group>"; };
 		D78C374D125B468A0026102A /* map_overlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = map_overlay.c; sourceTree = "<group>"; };
 		D78C374E125B468A0026102A /* map_overlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map_overlay.h; sourceTree = "<group>"; };
 		D78C3750125B46A00026102A /* pilot_cargo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pilot_cargo.c; sourceTree = "<group>"; };
@@ -1788,6 +1791,8 @@
 				078552F91223D4D400BA253A /* gui.h */,
 				078552FA1223D4D400BA253A /* gui_osd.c */,
 				078552FB1223D4D400BA253A /* gui_osd.h */,
+				D24306741317171C00835A30 /* gui_omsg.c */,
+				D24306751317171C00835A30 /* gui_omsg.h */,
 				078552FC1223D4D400BA253A /* hook.c */,
 				078552FD1223D4D400BA253A /* hook.h */,
 				078552FE1223D4D400BA253A /* info.c */,
@@ -2523,6 +2528,7 @@
 				41C0B88F13007F9900D79CD3 /* threadpool.c in Sources */,
 				41C0B89413007FB900D79CD3 /* nstring.c in Sources */,
 				41C0B89913007FD900D79CD3 /* log.c in Sources */,
+				D24306761317171C00835A30 /* gui_omsg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2563,6 +2569,18 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = naev_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"${SDKROOT}/usr/X11R6/include/**",
+					"../../src/**",
+					"/Library/Frameworks/Lua.framework//**",
+					"/Library/Frameworks/SDL_image.framework/**",
+					"/Library/Frameworks/SDL_mixer.framework/**",
+					"/Library/Frameworks/SDL.framework/**",
+					"/Library/Frameworks/libpng.framework/**",
+					"/Library/Frameworks/FreeType.framework//**",
+					"${SDKROOT}/System/Library/Frameworks/OpenAL.framework/**",
+					"${SDKROOT}/System/Library/Frameworks/OpenGL.framework/**",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -2586,6 +2604,18 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = naev_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"${SDKROOT}/usr/X11R6/include/**",
+					"../../src/**",
+					"/Library/Frameworks/Lua.framework//**",
+					"/Library/Frameworks/SDL_image.framework/**",
+					"/Library/Frameworks/SDL_mixer.framework/**",
+					"/Library/Frameworks/SDL.framework/**",
+					"/Library/Frameworks/libpng.framework/**",
+					"/Library/Frameworks/FreeType.framework//**",
+					"${SDKROOT}/System/Library/Frameworks/OpenAL.framework/**",
+					"${SDKROOT}/System/Library/Frameworks/OpenGL.framework/**",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
