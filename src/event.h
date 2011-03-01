@@ -46,6 +46,7 @@ void event_checkSanity (void);
 /*
  * Triggering.
  */
+int event_start( const char *name, unsigned int *id );
 lua_State *event_runStart( unsigned int eventid, const char *func );
 int event_runFunc( unsigned int eventid, const char *func, int nargs );
 int event_run( unsigned int eventid, const char *func );

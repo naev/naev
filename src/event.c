@@ -117,6 +117,31 @@ static Event_t *event_get( unsigned int eventid )
 
 
 /**
+ * @brief Starts an event.
+ *
+ *    @param name Name of the event to start.
+ *    @param[out] id ID of the newly created event.
+ *    @return 0 on success, <0 on error.
+ */
+int event_start( const char *name, unsigned int *id )
+{
+   int ret, edat;
+   unsigned int eid;
+
+   edat = event_dataID( name );
+   if (edat < 0)
+      return -1;
+   eid  = event_genID();
+   ret  = event_create( edat, eid );
+
+   if ((ret == 0) && (id != NULL))
+      *id = eid;
+   return ret;
+}
+
+
+
+/**
  * @brief Starts running a function, allows programmer to set up arguments.
  */
 lua_State *event_runStart( unsigned int eventid, const char *func )
@@ -219,6 +244,7 @@ static unsigned int event_genID (void)
  *
  *    @param data Data to base event off of.
  *    @param id ID to use (0 to generate).
+ *    @return 0 on success.
  */
 static int event_create( int dataid, unsigned int id )
 {
