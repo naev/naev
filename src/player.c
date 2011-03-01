@@ -274,6 +274,10 @@ void player_new (void)
          WARN("Failed to run start mission '%s'.", start_mission());
    }
 
+   /* Add the event if found. */
+   if (start_event() != NULL)
+      event_start( start_event(), NULL );
+
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
 

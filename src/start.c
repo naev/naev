@@ -37,6 +37,9 @@ typedef struct ndata_start_s {
    double x; /**< Starting X position. */
    double y; /**< Starting Y position. */
    char *mission; /**< Starting mission. */
+   char *event; /**< Starting event. */
+   char *tutmisn; /**< Tutorial mission. */
+   char *tutevt; /**< Tutorial event. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -91,6 +94,7 @@ int start_load (void)
             xmlr_strd( cur, "ship", start_data.ship );
             xmlr_uint( cur, "credits", start_data.credits );
             xmlr_strd( cur, "mission", start_data.mission );
+            xmlr_strd( cur, "event", start_data.event );
             
             if (xml_isNode(cur,"system")) {
                tmp = cur->children;
@@ -118,9 +122,23 @@ int start_load (void)
             xmlr_int( cur, "scu", scu );
             xmlr_int( cur, "stp", stp );
             xmlr_int( cur, "stu", stu );
+            WARN("'"START_DATA"' has unknown date node '%s'.", cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
+
+      if (xml_isNode(node,"tutorial")) {
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+
+            xmlr_strd( cur, "mission", start_data.tutmisn );
+            xmlr_strd( cur, "event", start_data.tutevt );
+            WARN("'"START_DATA"' has unknown tutorial node '%s'.", cur->name);
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
       WARN("'"START_DATA"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
@@ -135,7 +153,6 @@ int start_load (void)
    MELEMENT( start_data.name==NULL, "name" );
    MELEMENT( start_data.credits==0, "credits" );
    MELEMENT( start_data.ship==NULL, "ship" );
-   MELEMENT( start_data.mission==NULL, "mission" );
    MELEMENT( start_data.system==NULL, "system" );
    MELEMENT( scu<0, "scu" );
    MELEMENT( stp<0, "stp" );
@@ -162,6 +179,12 @@ void start_cleanup (void)
       free(start_data.system);
    if (start_data.mission != NULL)
       free(start_data.mission);
+   if (start_data.event != NULL)
+      free(start_data.event);
+   if (start_data.tutmisn != NULL)
+      free(start_data.tutmisn);
+   if (start_data.tutevt != NULL)
+      free(start_data.tutevt);
    memset( &start_data, 0, sizeof(start_data) );
 }
 
@@ -237,4 +260,33 @@ const char* start_mission (void)
    return start_data.mission;
 }
 
+
+/**
+ * @brief Gets the starting event of the player.
+ *    @return The starting event of the player (or NULL if inapplicable).
+ */
+const char* start_event (void)
+{
+   return start_data.event;
+}
+
+
+/**
+ * @brief Gets the starting tutorial mission of the player.
+ *    @return The starting tutorial mission of the player (or NULL if inapplicable).
+ */
+const char* start_tutMission (void)
+{
+   return start_data.tutmisn;
+}
+
+
+/**
+ * @brief Gets the starting tutorial event of the player.
+ *    @return The starting tutorial event of the player (or NULL if inapplicable).
+ */
+const char* start_tutEvent (void)
+{
+   return start_data.tutevt;
+}
 
