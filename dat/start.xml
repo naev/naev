@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Start>
  <name>Sea of Darkness</name>
  <player>
@@ -9,7 +9,7 @@
    <x>-8000</x>
    <y>-17000</y>
   </system>
-  <mission>Tutorial</mission>
+  <event>Tutorial</event>
  </player>
  <date>
   <scu>603</scu>

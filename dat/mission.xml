@@ -1,50 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
- <mission name="Tutorial">
-  <lua>tutorial</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>100</chance>
-   <location>None</location>
-  </avail>
- </mission>
-  <mission name="Tutorial Landing">
-  <lua>tutorial-landing</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>100</chance>
-   <cond>var.peek("tutorial_aborted") ~= true and player.evtDone( "Tutorial Features" ) ~= true</cond>
-   <location>Land</location>
-   <done>Tutorial</done>
-  </avail>
- </mission>
- <mission name="Tutorial Navigation">
-  <lua>tutorial-navigation</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>100</chance>
-   <cond>var.peek("tutorial_aborted") ~= true</cond>
-   <location>None</location>
-   <done>Tutorial Landing</done>
-  </avail>
- </mission>
- <mission name="Tutorial Features">
-  <lua>tutorial-features</lua>
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <chance>100</chance>
-   <location>None</location>
-   <done>Tutorial Features</done>
-  </avail>
- </mission>
  <mission name="Cargo">
   <lua>neutral/cargo</lua>
   <avail>

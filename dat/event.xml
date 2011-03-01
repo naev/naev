@@ -1,4 +1,9 @@
 <Events>
+ <event name="Tutorial">
+  <lua>../tutorial/tutorial</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+ </event>
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
@@ -78,24 +83,6 @@
   <lua>neutral/npc</lua>
   <trigger>land</trigger>
   <chance>100</chance>
- </event>
- <event name="Tutorial Navigation">
-  <lua>neutral/tutorial</lua>
-  <trigger>enter</trigger>
-  <chance>100</chance>
-  <cond>var.peek("tutorial_done") == 2</cond>
-  <flags>
-   <unique />
-  </flags>
- </event>
- <event name="Tutorial Features">
-  <lua>neutral/tutorial-features</lua>
-  <trigger>load</trigger>
-  <chance>100</chance>
-  <cond>var.peek("version") == nil</cond>
-  <flags>
-   <unique />
-  </flags>
  </event>
  <event name="Cinematic Dvaered/FLF battle">
   <lua>cinematic/DvdFLFbattle</lua>
