@@ -28,6 +28,7 @@ typedef struct Event_s {
  */
 typedef enum EventTrigger_s {
    EVENT_TRIGGER_NULL,  /**< Invalid trigger. */
+   EVENT_TRIGGER_NONE,  /**< No enter trigger. */
    EVENT_TRIGGER_ENTER, /**< Entering a system (jump/takeoff). */
    EVENT_TRIGGER_LAND,  /**< Landing on a system. */
    EVENT_TRIGGER_LOAD,  /**< Loading or starting a new save game. */

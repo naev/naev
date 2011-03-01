@@ -1,6 +1,7 @@
 <Events>
  <event name="Tutorial">
   <lua>../tutorial/tutorial</lua>
+  <trigger>none</trigger>
  </event>
  <event name="Derelict">
   <lua>neutral/derelict</lua>

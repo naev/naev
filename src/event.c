@@ -508,6 +508,8 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
             temp->trigger = EVENT_TRIGGER_LAND;
          else if (strcmp(buf,"load")==0)
             temp->trigger = EVENT_TRIGGER_LOAD;
+         else if (strcmp(buf,"none")==0)
+            temp->trigger = EVENT_TRIGGER_NONE;
          else
             WARN("Event '%s' has invalid 'trigger' parameter: %s", temp->name, buf);
 
@@ -543,7 +545,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
    if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->lua==NULL,"lua");
-   MELEMENT(temp->chance==0.,"chance");
+   MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
 #undef MELEMENT
 
