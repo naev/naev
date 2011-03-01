@@ -90,7 +90,7 @@ static unsigned int event_genID (void);
 static Event_t *event_get( unsigned int eventid );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
-static int event_create( int dataid, unsigned int id );
+static int event_create( int dataid, unsigned int *id );
 int events_saveActive( xmlTextWriterPtr writer );
 int events_loadActive( xmlNodePtr parent );;
 static int events_parseActive( xmlNodePtr parent );
@@ -131,8 +131,8 @@ int event_start( const char *name, unsigned int *id )
    edat = event_dataID( name );
    if (edat < 0)
       return -1;
-   eid  = event_genID();
-   ret  = event_create( edat, eid );
+   eid  = 0;
+   ret  = event_create( edat, &eid );
 
    if ((ret == 0) && (id != NULL))
       *id = eid;
@@ -246,7 +246,7 @@ static unsigned int event_genID (void)
  *    @param id ID to use (0 to generate).
  *    @return 0 on success.
  */
-static int event_create( int dataid, unsigned int id )
+static int event_create( int dataid, unsigned int *id )
 {
    lua_State *L;
    uint32_t bufsize;
@@ -262,8 +262,8 @@ static int event_create( int dataid, unsigned int id )
    }
    ev = &event_active[ event_nactive-1 ];
    memset( ev, 0, sizeof(Event_t) );
-   if (id > 0)
-      ev->id = id;
+   if ((id != NULL) && (*id != 0))
+      ev->id = *id;
    else
       ev->id = event_genID();
 
@@ -300,8 +300,10 @@ static int event_create( int dataid, unsigned int id )
    free(buf);
 
    /* Run Lua. */
-   if (id==0)
+   if ((id==NULL) || (*id==0))
       event_runLua( ev, "create" );
+   if (id != NULL)
+      *id = ev->id;
 
    return 0;
 }
@@ -430,7 +432,7 @@ void events_trigger( EventTrigger_t trigger )
       }
 
       /* Create the event. */
-      event_create( i, 0 );
+      event_create( i, NULL );
       created++;
    }
 
@@ -870,7 +872,7 @@ static int events_parseActive( xmlNodePtr parent )
       }
 
       /* Create the event. */
-      event_create( data, id );
+      event_create( data, &id );
       ev = event_get( id );
       if (ev == NULL) {
          WARN("Event with data '%s' was not created, skipping.", event_dataName(data));

@@ -91,10 +91,10 @@ int start_load (void)
          do {
             xml_onlyNodes(cur);
 
-            xmlr_strd( cur, "ship", start_data.ship );
+            xmlr_strd( cur, "ship",    start_data.ship );
             xmlr_uint( cur, "credits", start_data.credits );
             xmlr_strd( cur, "mission", start_data.mission );
-            xmlr_strd( cur, "event", start_data.event );
+            xmlr_strd( cur, "event",   start_data.event );
             
             if (xml_isNode(cur,"system")) {
                tmp = cur->children;

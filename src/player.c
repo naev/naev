@@ -275,8 +275,10 @@ void player_new (void)
    }
 
    /* Add the event if found. */
-   if (start_event() != NULL)
-      event_start( start_event(), NULL );
+   if (start_event() != NULL) {
+      if (event_start( start_event(), NULL ))
+         WARN("Failed to run start event '%s'.", start_event());
+   }
 
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
