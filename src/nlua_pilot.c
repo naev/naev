@@ -33,6 +33,7 @@
 #include "nlua_col.h"
 #include "weapon.h"
 #include "gui.h"
+#include "camera.h"
 
 
 /*
@@ -1276,6 +1277,11 @@ static int pilotL_setPosition( lua_State *L )
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
+
+   /* Update if necessary. */
+   if (pilot_isPlayer(p))
+      cam_update( 0. );
+
    return 0;
 }
 
