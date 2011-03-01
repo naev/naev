@@ -1,5 +1,27 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
+ <asset name="Abandoned Station">
+  <pos>
+   <x>4165.379150</x>
+   <y>1484.788722</y>
+  </pos>
+  <GFX>
+   <space>002.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Adham">
   <pos>
    <x>27913.769923</x>
@@ -8113,6 +8135,44 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Paul 2">
+  <pos>
+   <x>-648.122242</x>
+   <y>-933.812520</y>
+  </pos>
+  <GFX>
+   <space>M06.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Independent</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Paul 2 is a planet of merchants and entrepreneurs. Though the planet doesn't have a global government as such, the population has agreed on a number of general rules that count as law of some sort. It works surprisingly well.</description>
+   <bar>Like many planets in the galaxy nowadays, Paul 2's economy relies heavily on interplanetary trade. The spaceport bar doubles as a trade center, allowing traders to buy and sell wares without ever leaving the spaceport.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+  </tech>
+ </asset>
  <asset name="Paxsor">
   <pos>
    <x>-1290.185819</x>
@@ -9196,6 +9256,44 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>(null)</description>
    <bar>(null)</bar>
   </general>
+ </asset>
+ <asset name="Rin">
+  <pos>
+   <x>-2376.374264</x>
+   <y>-3339.282623</y>
+  </pos>
+  <GFX>
+   <space>M00.png</space>
+   <exterior>forest1.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Independent</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Rin is a quiet world, far away from the turmoil that plagues most of the galaxy. The inhabitants are friendly, always happy to help a beginning captain get his space legs.</description>
+   <bar>If space is just getting a bit too much for you, the spaceport bar on Rin is the place to take a load off. It's a tidy place, and the clientele is well behaved. You will find no unsavory figures here.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+  </tech>
  </asset>
  <asset name="Rionna">
   <pos>
