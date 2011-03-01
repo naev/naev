@@ -570,19 +570,25 @@ void dialogue_addChoice( const char *caption, const char *msg, const char *opt)
 /**
  * @brief Run the dialog and return the clicked string.
  *
- * @note The returned string is _ONLY_ valid for _ONE_ frame. Copy it if you want it to last more then a frame.
+ * @note You must free the return value.
  *
  *    @return The string chosen.
  */
 char *dialogue_runChoice (void)
 {
    int done;
+   char *res;
 
    /* tricky secondary loop */
+   window_setData( choice_wid, &done );
    dialogue_open++;
    toolkit_loop( &done );
 
-   return choice_result;
+   /* Save value. */
+   res = choice_result;
+   choice_result = NULL;
+
+   return res;
 }
 /**
  * @brief Closes a choice dialogue.
@@ -592,17 +598,19 @@ char *dialogue_runChoice (void)
 static void dialogue_choiceClose( unsigned int wid, char* str )
 {
    int *loop_done;
-   choice_result = str;
 
-   /* destroy the window */
-   window_destroy( wid );
-   choice_wid = 0;
+   /* Save result. */
+   choice_result = strdup(str);
 
    /* Finish loop. */
    loop_done = window_getData( wid );
-   window_destroy( wid );
    *loop_done = 1;
+
+   /* destroy the window */
+   choice_wid = 0;
+   window_destroy( wid );
    dialogue_open--;
+
 }
 
 

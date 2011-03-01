@@ -158,7 +158,8 @@ static int tk_input( lua_State *L )
 static int tk_choice( lua_State *L )
 {
    int ret, opts, i;
-   const char *title, *str, *result;
+   const char *title, *str;
+   char *result;
    NLUA_MIN_ARGS(3);
 
    /* Handle parameters. */
@@ -179,8 +180,13 @@ static int tk_choice( lua_State *L )
          ret = i+1; /* Lua uses 1 as first index. */
    }
 
+   /* Push parameters. */
    lua_pushnumber(L,ret);
    lua_pushstring(L,result);
+
+   /* Clean up. */
+   free(result);
+
    return 2;
 }
 
