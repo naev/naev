@@ -279,13 +279,12 @@ VAR_SAVE([LIBS])
 AC_SEARCH_LIBS([IMG_Load], [SDL_image], [
   SDLIMAGE_CFLAGS=
   SDLIMAGE_LIBS="$LIBS"
-  have_sdlimage=yes
-], [
+  have_mkspr=yes
 ], [
   SDLIMAGE_CFLAGS=
   SDLIMAGE_LIBS=
-  have_sdlimage=no
-])
+  have_mkspr=no
+], [])
 VAR_RESTORE([LIBS])
 
 # OpenGL
@@ -396,10 +395,10 @@ PACK_LIBS="$GLOBAL_LIBS"
 AC_SUBST([PACK_CFLAGS])
 AC_SUBST([PACK_LIBS])
 
-PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS $PNG_CFLAGS -DNOLOGPRINTFCONSOLE"
-PACK_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS $PNG_LIBS"
-AC_SUBST([PACK_CFLAGS])
-AC_SUBST([PACK_LIBS])
+MKSPR_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS $PNG_CFLAGS -DNOLOGPRINTFCONSOLE"
+MKSPR_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS $PNG_LIBS"
+AC_SUBST([MKSPR_CFLAGS])
+AC_SUBST([MKSPR_LIBS])
 
 #
 # Checks for headers
@@ -463,12 +462,12 @@ AC_DEFINE_UNQUOTED([VMINOR], [$VMINOR], [Define to the minor version component])
 AC_DEFINE_UNQUOTED([VREV], [$VREV], [Define to the revision version component])
 
 # USE_OPENAL
-AS_IF([test "$have_openal" = "yes"], [
+AS_IF([test "x$have_openal" = "xyes"], [
   AC_DEFINE([USE_OPENAL], 1, [Define to 1 if using OpenAL])
 ])
 
 # USE_SDLMIX
-AS_IF([test "$have_sdlmixer" = "yes"], [
+AS_IF([test "x$have_sdlmixer" = "xyes"], [
   AC_DEFINE([USE_SDLMIX], 1, [Define to 1 if using SDL_mixer])
 ])
 
@@ -510,9 +509,9 @@ AS_IF([test -n "$GIT_COMMIT"], [
 AM_CONDITIONAL([HAVE_WINDRES], [test -n "$WINDRES"])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
-AM_CONDITIONAL([HAVE_UTILS], [test "$have_utils" = "yes"])
-AM_CONDITIONAL([HAVE_DOCS], [test "$have_docs" = "yes"])
-AM_CONDITIONAL([HAVE_SDLIMAGE], [test "$have_sdlimage" = "yes"])
+AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
+AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
+AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
 
 #
 # Output
@@ -526,11 +525,11 @@ AC_CONFIG_FILES([Makefile
       src/tk/Makefile
       src/tk/widget/Makefile
       build/shave])
-AS_IF([test "$have_utils" = "yes"], [
+AS_IF([test "x$have_utils" = "xyes"], [
   AC_CONFIG_FILES([utils/Makefile
      utils/pack/Makefile])
 ])
-AS_IF([test "$have_docs" = "yes"], [
+AS_IF([test "x$have_docs" = "xyes"], [
   AC_CONFIG_FILES([docs/Makefile])
 ])
 
@@ -545,8 +544,11 @@ AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
 echo
+AC_MSG_NOTICE([utils:       $have_utils])
+AC_MSG_NOTICE([  mkspr:     $have_mkspr])
+echo
 AC_MSG_NOTICE([debug mode:  $enable_debug])
-AS_IF([test "$enable_debug" != "no"], [
+AS_IF([test "x$enable_debug" != "xno"], [
    case "$host" in
      *-linux*)
        AC_MSG_NOTICE([  bfd:       $have_bfd])
