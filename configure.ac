@@ -426,10 +426,10 @@ VAR_RESTORE([LIBS])
 
 AC_CHECK_FUNCS([clock_gettime])
 # if it is not available directly, check it in librt (glibc does this).
-if test $ac_cv_func_clock_gettime = no; then
-AC_CHECK_LIB(rt, clock_gettime,
-      [LIBS="-lrt $LIBS"])
-fi
+AS_IF([test $ac_cv_func_clock_gettime = no], [
+   AC_CHECK_LIB(rt, clock_gettime,
+         [LIBS="-lrt $LIBS"])
+], [])
 
 VAR_SAVE([CFLAGS], ["$VORBISFILE_CFLAGS"])
 VAR_SAVE([LIBS],   ["$VORBISFILE_LIBS"])
