@@ -4,8 +4,8 @@ LOCALDIR := utils/mksprite/
 
 COBJS    := main.o
 
-CFLAGS   := $(shell sdl-config --cflags) $(shell libpng-config --cflags) -O2 -Wall
-LDFLAGS  := $(shell libpng-config --libs) $(shell sdl-config --libs) -lSDL_image
+CFLAGS   := $(shell pkg-config --cflags sdl libpng) -O2 -W -Wall -Wextra
+LDFLAGS  := $(shell pkg-config --libs sdl libpng) -lSDL_image
 
 APPNAME  := mkspr
 
