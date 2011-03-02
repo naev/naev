@@ -10,6 +10,8 @@ else -- default english
 end
 
 function create()
+    misn.accept()
+    
     -- Set up the player here.
     player.teleport("Mohawk")
 end
