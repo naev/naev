@@ -1,4 +1,4 @@
 SUBDIRS = pack
-if HAVE_SDLIMAGE
+if HAVE_MKSPR
    SUBDIRS += mkspr
 endif

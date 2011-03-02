@@ -17,7 +17,9 @@ dist_doc_DATA = AUTHORS README TODO LICENSE
 
 DATA_ARCHIVE = ndata
 PACK	     = utils/pack/pack$(EXEEXT)
+if HAVE_UTILS
 MKSPR      = utils/mkspr/mkspr$(EXEEXT)
+endif
 NAEV	     = naev$(EXEEXT)
 
 EXTRA_DIST = LICENSE extras naev.desktop
@@ -55,6 +57,8 @@ $(DATA_ARCHIVE): $(PACK) VERSION
 	     find scripts -type f -name '*.lua'; \
 	     find dat     -type f);
 else
+utils:
+
 $(DATA_ARCHIVE):
 	@echo "***"
 	@echo "*** You must clone the full git repo to create $(DATA_ARCHIVE)"
