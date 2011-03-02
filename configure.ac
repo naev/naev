@@ -527,7 +527,8 @@ AC_CONFIG_FILES([Makefile
       build/shave])
 AS_IF([test "x$have_utils" = "xyes"], [
   AC_CONFIG_FILES([utils/Makefile
-     utils/pack/Makefile])
+     utils/pack/Makefile
+     utils/mkspr/Makefile])
 ])
 AS_IF([test "x$have_docs" = "xyes"], [
   AC_CONFIG_FILES([docs/Makefile])
