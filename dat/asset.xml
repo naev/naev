@@ -8137,11 +8137,11 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Paul 2">
   <pos>
-   <x>-648.122242</x>
-   <y>-933.812520</y>
+   <x>-3610.361825</x>
+   <y>-4237.848978</y>
   </pos>
   <GFX>
-   <space>M06.png</space>
+   <space>M00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
@@ -9259,11 +9259,11 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rin">
   <pos>
-   <x>-2376.374264</x>
-   <y>-3339.282623</y>
+   <x>6553.591163</x>
+   <y>-4814.834850</y>
   </pos>
   <GFX>
-   <space>M00.png</space>
+   <space>M02.png</space>
    <exterior>forest1.png</exterior>
   </GFX>
   <presence>

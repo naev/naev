@@ -27,7 +27,7 @@ function create()
     selection = tk.choice(menutitle, menutext, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menux)
     
     if selection == 1 then
-        placeholder()
+        startModule(menu1)
     elseif selection == 2 then
         placeholder()
     elseif selection == 3 then
@@ -41,11 +41,11 @@ function create()
     elseif selection == 7 then
         placeholder()
     elseif selection == 8 then -- Quit to main menu
-        cleanup()
+        toMenu()
     else
         -- This point should never be reached!
-        print("Tutorial: Error - Invalid menu selected!\n")
-        cleanup()
+        tk.msg("Error", "You've apparently selected an invalid menu option. This shouldn't happen. Please report.")
+        create()
     end
 end
 
@@ -55,9 +55,16 @@ function placeholder()
     create()
 end
 
--- Cleanup function. Should be the exit point for the script.
-function cleanup()
+-- Helper function for starting the tutorial modules
+function startModule(module)
+    evt.misnStart(module)
+    evt.finish(true) -- While the module is running, the event should not.
+end
+
+-- Return to the main menu
+function toMenu()
     -- Function to return to the main menu here
     tk.msg("TODO", "I can't return you to the main menu yet in Lua, so I'm going to kill you now.")
     player.pilot():setHealth(0, 0)
+    evt.finish(true)
 end
