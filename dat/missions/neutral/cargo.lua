@@ -40,7 +40,7 @@ Travel distance: %d]]
 	cargo_land_title = "Delivery success!"
 
 	cargo_land_p1 = {}
-	cargo_land_p1[1] = "The crates of "  --<<-- paired with cargo_land_p2, don't mix this up!!
+	cargo_land_p1[1] = "The crates of "
 	cargo_land_p1[2] = "The drums of "
 	cargo_land_p1[3] = "The containers of "
 
