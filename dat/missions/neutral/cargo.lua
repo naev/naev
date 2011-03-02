@@ -40,7 +40,7 @@ Travel distance: %d]]
 	cargo_land_title = "Delivery success!"
 
 	cargo_land_p1 = {}
-	cargo_land_p1[1] = "The crates of "  --<<-- paired with cargo_accept_p2, don't mix this up!!
+	cargo_land_p1[1] = "The crates of "
 	cargo_land_p1[2] = "The drums of "
 	cargo_land_p1[3] = "The containers of "
 
@@ -48,6 +48,7 @@ Travel distance: %d]]
 	cargo_land_p2[1] = " are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
 	cargo_land_p2[2] = " are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
 	cargo_land_p2[3] = " are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job."
+	cargo_land_p2[4] = " are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay when they finish."
 
     accept_title = "Mission Accepted"
     
