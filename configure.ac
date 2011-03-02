@@ -100,13 +100,13 @@ AC_MSG_RESULT([$have_docs])
 AC_CANONICAL_HOST
 
 AC_MSG_CHECKING([[if we need a __unix__ define]])
-AC_COMPILE_IFELSE([
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
   #ifndef __unix__
   # if defined __APPLE__ /* add other known platforms here */
   #   error should have __unix__ but don't
   # endif
   #endif
-], [AC_MSG_RESULT([no])],
+])], [AC_MSG_RESULT([no])],
 [
   AC_MSG_RESULT([yes])
   AC_DEFINE([__unix__], 1,
