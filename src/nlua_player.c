@@ -248,7 +248,7 @@ static int playerL_msg( lua_State *L )
  *
  * @usage player.omsgAdd( "some_message", 5 )
  *    @luaparam msg Message to add.
- *    @luaparam duration Duration to add message.
+ *    @luaparam duration Duration to add message (if 0. is infinite).
  *    @luaparam fontsize Size of the font to use, optional parameter.
  *    @luareturn ID of the created overlay message.
  * @luafunc omsgAdd( msg, duration, fontsize )
@@ -267,6 +267,10 @@ static int playerL_omsgAdd( lua_State *L )
       fontsize = luaL_checkint(L,3);
    else
       fontsize = OMSG_FONT_DEFAULT_SIZE;
+
+   /* Infinity. */
+   if (duration < 1e-10)
+      duration = INFINITY;
 
    /* Output. */
    id       = omsg_add( str, duration, fontsize );
