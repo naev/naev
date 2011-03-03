@@ -427,13 +427,14 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    }
 
    /* Allocate buffer. */
-   buf = malloc( len );
+   buf = malloc( len+1 );
    if (buf == NULL) {
       WARN("Out of Memory!");
       fclose(file);
       *filesize = 0;
       return NULL;
    }
+   buf[len] = '\0';
 
    /* Read the file. */
    n = 0;

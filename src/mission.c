@@ -842,7 +842,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
    if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->lua==NULL,"lua");
    MELEMENT(temp->avail.loc==-1,"location");
-   MELEMENT(temp->avail.chance==0,"chance");
+   MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
 #undef MELEMENT
 
    return 0;
