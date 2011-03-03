@@ -283,7 +283,7 @@ static int playerL_omsgAdd( lua_State *L )
  * @usage player.omsgChange( omsg_id, "new message", 3 )
  *    @luaparam id ID of the overlay message to change.
  *    @luaparam msg Message to change to.
- *    @luaparam duration New duration to set.
+ *    @luaparam duration New duration to set (0. for infinity).
  *    @luareturn true if all went well, false otherwise.
  * @luafunc omsgChange( id, msg, duration )
  */
@@ -298,6 +298,10 @@ static int playerL_omsgChange( lua_State *L )
    id       = luaL_checklong(L,1);
    str      = luaL_checkstring(L,2);
    duration = luaL_checknumber(L,3);
+
+   /* Infinity. */
+   if (duration < 1e-10)
+      duration = INFINITY;
 
    /* Output. */
    ret      = omsg_change( id, str, duration );

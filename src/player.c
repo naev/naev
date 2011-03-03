@@ -45,6 +45,7 @@
 #include "ai_extra.h"
 #include "music.h"
 #include "gui.h"
+#include "gui_omsg.h"
 #include "nlua_var.h"
 #include "escort.h"
 #include "event.h"
@@ -693,6 +694,9 @@ void player_cleanup (void)
    if (player.gui != NULL)
       free( player.gui );
    player.gui = NULL;
+
+   /* Clear omsg. */
+   omsg_cleanup();
 
    /* Stop the sounds. */
    sound_stopAll();
