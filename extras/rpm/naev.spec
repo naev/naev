@@ -15,15 +15,17 @@ Source0: http://naev.googlecode.com/files/%{name}-%{version}.tar.bz2
 Source1: naev.png
 Source2: http://naev.googlecode.com/files/ndata-%{version}
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: SDL >= 1.2
+Requires: SDL 
 Requires: openal
 BuildRequires: SDL-devel
 BuildRequires: libxml2-devel
 BuildRequires: freetype2-devel
 BuildRequires: libpng-devel
 BuildRequires: libopenal-devel
-BuildRequires: libvorbis-devel >= 1.2.1
-BuildRequires: binutils
+BuildRequires: libvorbis-devel 
+BuildRequires: binutils-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libSDL_image-devel
 
 %description
 NAEV is a 2D space trading and combat game, taking inspiration from the
@@ -41,6 +43,7 @@ Group: Games/Arcade
 License: GPLv3+ AND GPLv3 AND GPLv2+ AND Public Domain AND CC-by 3.0 AND CC-by-sa 3.0
 Summary: Data files for %{name}
 Requires: naev
+BuildArch: noarch
 
 %description -n %{dataname}
 NAEV is a 2D space trading and combat game, taking inspiration from the
@@ -90,9 +93,4 @@ rm -rf %{buildroot}
 %files -n %{dataname}
 %defattr(-,root,root)
 %{_datadir}/naev/ndata-%{version}
-
-%changelog
-* Mon Feb 14 2011 Ludovic Bellière <xrogaan@gmail.com> 0.4.2-1
-- Cleanup spec.
-- Created with base on spec from blogdrake.net
 
