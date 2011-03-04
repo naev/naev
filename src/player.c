@@ -220,11 +220,7 @@ static void player_newSetup( int tutorial )
 
    /* For pretty background. */
    pilots_cleanAll();
-   if (tutorial) {
-      space_init( start_tutSystem() );
-      start_tutPosition( &x, &y );
-   }
-   else {
+   if (!tutorial) {
       space_init( start_system() );
       start_position( &x, &y );
    }
@@ -264,11 +260,11 @@ void player_newTutorial (void)
    }
    player_creds   = 0;
    player_newShipMake( "Star Voyager" );
-   start_position( &x, &y );
+   start_tutPosition( &x, &y );
    vect_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
    player.p->solid->dir = RNGF() * 2.*M_PI;
-   space_init( start_system() );
+   space_init( start_tutSystem() );
 
    /* Monies. */
    player.p->credits = start_credits();
