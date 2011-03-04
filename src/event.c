@@ -405,6 +405,10 @@ void events_trigger( EventTrigger_t trigger )
    int i, c;
    int created;
 
+   /* Events can't be triggered by tutorial. */
+   if (player_isTut())
+      return;
+
    created = 0;
    for (i=0; i<event_ndata; i++) {
       /* Make sure trigger matches. */

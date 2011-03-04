@@ -474,10 +474,6 @@ int load_game( const char* file )
 
    /* Clean up possible stuff that should be cleaned. */
    player_cleanup();
-   diff_clear();
-   var_cleanup();
-   missions_cleanup();
-   events_cleanup();
 
    /* Welcome message - must be before space_init. */
    player_message( "\egWelcome to "APPNAME"!" );

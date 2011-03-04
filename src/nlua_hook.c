@@ -25,16 +25,12 @@
 #include "nluadef.h"
 #include "nlua_pilot.h"
 #include "nlua_time.h"
+#include "nlua_misn.h"
+#include "nlua_evt.h"
 #include "hook.h"
 #include "log.h"
+#include "event.h"
 #include "mission.h"
-
-
-/*
- * Needed.
- */
-static Mission *running_mission = NULL; /**< Current running mission. */
-static Event_t *running_event = NULL; /**< Current running event. */
 
 
 /* Hook methods. */
@@ -85,21 +81,6 @@ int nlua_loadHook( lua_State *L )
 {
    luaL_register(L, "hook", hook_methods);
    return 0;
-}
-
-
-/**
- * @brief Sets the hook target.
- *
- * The hooks will attach to these targets. Set one to NULL always.
- *
- *    @param m Mission target.
- *    @param ev Event target.
- */
-void nlua_hookTarget( Mission *m, Event_t *ev )
-{
-   running_mission = m;
-   running_event   = ev;
 }
 
 
@@ -226,9 +207,15 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
    int i;
    const char *func;
    unsigned int h;
+   Event_t *running_event;
+   Mission *running_mission;
 
    /* Last parameter must be function to hook */
    func = luaL_checkstring(L,pos);
+
+   /* Get stuff. */
+   running_event = event_getFromLua(L);
+   running_mission = misn_getFromLua(L);
 
    h = 0;
    if (running_mission != NULL) {
