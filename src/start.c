@@ -38,8 +38,13 @@ typedef struct ndata_start_s {
    double y; /**< Starting Y position. */
    char *mission; /**< Starting mission. */
    char *event; /**< Starting event. */
+
+   /* Tutorial stuff. */
    char *tutmisn; /**< Tutorial mission. */
    char *tutevt; /**< Tutorial event. */
+   char *tutsys; /**< Tutorial system. */
+   double tutx; /**< Tutorial x position. */
+   double tuty; /**< Tutorial y position. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -134,6 +139,21 @@ int start_load (void)
 
             xmlr_strd( cur, "mission", start_data.tutmisn );
             xmlr_strd( cur, "event", start_data.tutevt );
+
+            if (xml_isNode(cur,"system")) {
+               tmp = cur->children;
+               do {
+                  xml_onlyNodes(tmp);
+                  /** system name, @todo percent chance */
+                  xmlr_strd( tmp, "name", start_data.tutsys );
+                  /* position */
+                  xmlr_float( tmp, "x", start_data.tutx );
+                  xmlr_float( tmp, "y", start_data.tuty );
+                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
+               } while (xml_nextNode(tmp));
+               continue;
+            }
+
             WARN("'"START_DATA"' has unknown tutorial node '%s'.", cur->name);
          } while (xml_nextNode(cur));
          continue;
@@ -153,7 +173,8 @@ int start_load (void)
    MELEMENT( start_data.name==NULL, "name" );
    MELEMENT( start_data.credits==0, "credits" );
    MELEMENT( start_data.ship==NULL, "ship" );
-   MELEMENT( start_data.system==NULL, "system" );
+   MELEMENT( start_data.system==NULL, "player system" );
+   MELEMENT( start_data.tutsys==NULL, "tutorial system" );
    MELEMENT( scu<0, "scu" );
    MELEMENT( stp<0, "stp" );
    MELEMENT( stu<0, "stu" );
@@ -288,5 +309,24 @@ const char* start_tutMission (void)
 const char* start_tutEvent (void)
 {
    return start_data.tutevt;
+}
+
+
+/**
+ * @brief Gets the tutorial system.
+ */
+const char* start_tutSystem (void)
+{
+   return start_data.tutsys;
+}
+
+
+/**
+ * @brief Gets the starting position of the tutorial.
+ */
+void start_tutPosition( double *x, double *y )
+{
+   *x = start_data.tutx;
+   *y = start_data.tuty;
 }
 

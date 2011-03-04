@@ -16,6 +16,11 @@
   <stu>2871</stu>
  </date>
  <tutorial>
+  <system>
+   <name>Hakoi</name>
+   <x>8000</x>
+   <y>17000</y>
+  </system>
   <event>Tutorial</event>
  </tutorial>
 </Start>
