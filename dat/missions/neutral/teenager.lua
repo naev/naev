@@ -81,7 +81,8 @@ function enter()
         hook.pilot(target, "idle", "targetIdle")
         hook.pilot(target, "death", "targetDeath")
         hook.pilot(target, "board", "targetBoard")
-		hook.timer(1000, "antiSatelite") -- Timer & counter for anti-satelite behaviour (-Ana.)
+		-- Timer & counter for anti-satelite behaviour of pilot (-Ana.)
+		hook.timer(1000, "antiSatelite") 
 		satelite = 0 
 		
         targetIdle()
