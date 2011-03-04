@@ -45,10 +45,4 @@
    <asset name="Sindbad">add</asset>
   </system>
  </unidiff>
- <unidiff name="Tutorial jumps">
-  <system name="Mohawk">
-   <jump name="Iroquois">remove</jump>
-   <jump name="Cherokee">remove</jump>
-  </system>
- </unidiff>
 </unidiffs>
