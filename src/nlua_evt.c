@@ -44,15 +44,6 @@
  */
 
 
-
-
-/*
- * current event
- */
-static Event_t *cur_event = NULL; /**< Contains the current event for a running script. */
-static int evt_delete = 0; /**< if 1 delete current event */
-
-
 /*
  * libraries
  */
@@ -97,9 +88,10 @@ lua_State *event_setupLua( Event_t *ev, const char *func )
 
    /* Load event. */
    L = ev->L;
-   cur_event = ev;
-   evt_delete = 0;
-   nlua_hookTarget( NULL, cur_event );
+
+   /* Set up event pointer. */
+   lua_pushlightuserdata( L, ev );
+   lua_setglobal( L, "__evt" );
 
    /* Get function. */
    lua_getglobal(L, func );
@@ -119,6 +111,20 @@ int event_runLua( Event_t *ev, const char *func )
 
 
 /**
+ * @brief Gets the current running event from user data.
+ */
+Event_t *event_getFromLua( lua_State *L )
+{
+   Event_t *ev;
+
+   lua_getglobal( L, "__evt" );
+   ev = (Event_t*) lua_touserdata( L, -1 );
+   lua_pop( L, 1 );
+   return ev;
+}
+
+
+/**
  * @brief Runs a Lua func with nargs.
  *
  *    @return -1 on error, 1 on misn.finish() call, 2 if event got deleted
@@ -129,6 +135,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    int ret;
    const char* err;
    lua_State *L;
+   int evt_delete;
 
    /* Comfortability. */
    L = ev->L;
@@ -147,14 +154,13 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    }
 
    /* Time to remove the event. */
+   lua_getglobal( L, "__evt_delete" );
+   evt_delete = lua_toboolean(L,-1);
+   lua_pop(L,1);
    if (evt_delete) {
       ret = 2;
-      event_remove( cur_event->id );
+      event_remove( ev->id );
    }
-
-   /* Unload event. */
-   cur_event = NULL;
-   nlua_hookTarget( NULL, NULL );
 
    return ret;
 }
@@ -173,22 +179,18 @@ static int evt_misnStart( lua_State *L )
    const char *str;
    unsigned int id;
    int ret, i;
+   Event_t *cur_event;
 
    str = luaL_checkstring(L, 1);
    ret = mission_start( str, &id );
    if (ret < 0) {
-      /* Reset hook on event. */
-      nlua_hookTarget( NULL, cur_event );
-
       /* Reset the hook. */
       NLUA_ERROR(L,"Failed to start mission.");
       return 0;
    }
 
-   /* Reset hook on event. */
-   nlua_hookTarget( NULL, cur_event );
-
    /* Pass on claims if necessary. */
+   cur_event = event_getFromLua(L);
    if (cur_event->claims != NULL) {
       for (i=0; i<MISSION_MAX; i++) {
          if (player_missions[i].id == id) {
@@ -201,9 +203,6 @@ static int evt_misnStart( lua_State *L )
          }
       }
    }
-
-   /* Has to reset the hook target since mission overrides. */
-   nlua_hookTarget( NULL, cur_event );
 
    return 0;
 }
@@ -228,6 +227,7 @@ static int evt_npcAdd( lua_State *L )
    int priority;
    const char *func, *name, *gfx, *desc;
    char portrait[PATH_MAX];
+   Event_t *cur_event;
 
    /* Handle parameters. */
    func = luaL_checkstring(L, 1);
@@ -243,6 +243,8 @@ static int evt_npcAdd( lua_State *L )
 
    /* Set path. */
    snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+
+   cur_event = event_getFromLua(L);
 
    /* Add npc. */
    id = npc_add_event( cur_event->id, func, name, priority, portrait, desc );
@@ -268,8 +270,11 @@ static int evt_npcRm( lua_State *L )
 {
    unsigned int id;
    int ret;
+   Event_t *cur_event;
 
    id = luaL_checklong(L, 1);
+
+   cur_event = event_getFromLua(L);
    ret = npc_rm_event( id, cur_event->id );
 
    if (ret != 0)
@@ -289,10 +294,13 @@ static int evt_npcRm( lua_State *L )
 static int evt_finish( lua_State *L )
 {
    int b;
+   Event_t *cur_event;
 
    b = lua_toboolean(L,1);
-   evt_delete = 1;
+   lua_pushboolean( L, b );
+   lua_setglobal( L, "__evt_delete" );
 
+   cur_event = event_getFromLua(L);
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );
 
@@ -314,10 +322,12 @@ static int evt_finish( lua_State *L )
 static int evt_save( lua_State *L )
 {
    int b;
+   Event_t *cur_event;
    if (lua_gettop(L)==0)
       b = 1;
    else
       b = lua_toboolean(L,1);
+   cur_event = event_getFromLua(L);
    cur_event->save = b;
    return 0;
 }
@@ -341,10 +351,13 @@ static int evt_claim( lua_State *L )
 {
    LuaSystem *ls;
    SysClaim_t *claim;
+   Event_t *cur_event;
 
    /* Check parameter. */
    if (!lua_istable(L,1))
       NLUA_INVALID_PARAMETER(L);
+
+   cur_event = event_getFromLua(L);
 
    /* Check to see if already claimed. */
    if (cur_event->claims != NULL) {

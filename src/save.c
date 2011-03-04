@@ -88,6 +88,10 @@ int save_all (void)
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
+   /* Do not save during tutorial. */
+   if (player_isTut())
+      return 0;
+
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, conf.save_compress);
    if (writer == NULL) {

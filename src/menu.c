@@ -47,7 +47,6 @@
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
-#define MAIN_HEIGHT     300 /**< Main menu height. */
 
 #define MENU_WIDTH      130 /**< Escape menu width. */
 #define MENU_HEIGHT     200 /**< Escape menu height. */
@@ -80,6 +79,7 @@ static int menu_main_bkg_system (void);
 static void main_menu_promptClose( unsigned int wid, char *unused );
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
+static void menu_main_tutorial( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
@@ -161,8 +161,16 @@ void menu_main (void)
    main_naevLogo = tex;
    menu_main_bkg_system();
 
+   /* Set dimensions */
+   y  = 20 + (BUTTON_HEIGHT+20)*5;
+   h  = y + 80;
+   if (conf.devmode) {
+      h += BUTTON_HEIGHT + 20;
+      y += BUTTON_HEIGHT + 20;
+   }
+
    /* Calculate Logo and window offset. */
-   freespace = SCREEN_H - tex->sh - MAIN_HEIGHT;
+   freespace = SCREEN_H - tex->sh - h;
    if (freespace < 0) { /* Not enough freespace, this can get ugly. */
       offset_logo = SCREEN_W - tex->sh;
       offset_wdw  = 0;
@@ -187,14 +195,6 @@ void menu_main (void)
    window_addText( bwid, 0, 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version(1) );
 
-   /* Set dimensions */
-   h  = MAIN_HEIGHT;
-   y  = 20 + (BUTTON_HEIGHT+20)*4;
-   if (conf.devmode) {
-      h += BUTTON_HEIGHT + 20;
-      y += BUTTON_HEIGHT+20;
-   }
-
    /* create menu window */
    wid = window_create( "Main Menu", -1, offset_wdw, MAIN_WIDTH, h );
    window_setCancel( wid, main_menu_promptClose );
@@ -205,6 +205,9 @@ void menu_main (void)
    y -= BUTTON_HEIGHT+20;
    window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Game", menu_main_new );
+   y -= BUTTON_HEIGHT+20;
+   window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnTutorial", "Tutorial", menu_main_tutorial );
    y -= BUTTON_HEIGHT+20;
    if (conf.devmode) {
       window_addButton( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -276,6 +279,19 @@ static void menu_main_new( unsigned int wid, char* str )
    menu_Close(MENU_MAIN);
    pause_game();
    player_new();
+}
+/**
+ * @brief Function to active the new game menu.
+ *    @param str Unused.
+ */
+static void menu_main_tutorial( unsigned int wid, char* str )
+{
+   (void) str;
+   (void) wid;
+   window_destroy( wid );
+   menu_Close(MENU_MAIN);
+   pause_game();
+   player_newTutorial();
 }
 /**
  * @brief Function to exit the main menu and game.
@@ -442,7 +458,10 @@ static void menu_death_restart( unsigned int wid, char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
-   player_new();
+   if (player_isTut())
+      player_newTutorial();
+   else
+      player_new();
 }
 
 /**
@@ -451,14 +470,14 @@ static void menu_death_restart( unsigned int wid, char* str )
 void menu_death (void)
 {
    unsigned int wid;
+   char path[PATH_MAX];
 
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
    /* Propose the player to continue if the samegame exist, if not, propose to restart */
-   char path[PATH_MAX];
    snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
-   if (nfile_fileExists(path))
+   if (!player_isTut() && nfile_fileExists(path))
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", "Continue", menu_death_continue );
    else

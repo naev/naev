@@ -172,6 +172,7 @@ extern int map_npath;
  */
 static void player_checkHail (void);
 /* creation */
+static void player_newSetup (void);
 static int player_newMake (void);
 static void player_newShipMake( char *name );
 /* sound */
@@ -202,6 +203,100 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
+ * @brief Sets up a new player.
+ */
+static void player_newSetup (void)
+{
+   double x, y;
+
+   /* Set up GUI. */
+   gui_setDefaults();
+
+   /* Setup sound */
+   player_initSound();
+
+   /* Clean up player stuff if we'll be recreating. */
+   player_cleanup();
+
+   /* For pretty background. */
+   pilots_cleanAll();
+   space_init( start_system() );
+   start_position( &x, &y );
+   cam_setTargetPos( x, y, 0 );
+   cam_setZoom( conf.zoom_far );
+}
+
+
+/**
+ * @brief Creates a new tutorial player.
+ *
+ *   - Cleans up after old players.
+ *   - Prompts for name.
+ */
+void player_newTutorial (void)
+{
+   double x, y;
+
+   /* Set up new player. */
+   player_newSetup();
+
+   /* New name. */
+   player.name = strdup( "John Doe" );
+
+   /* Time. */
+   ntime_set( start_date() );
+
+   /* Welcome message - must be before space_init. */
+   player_message( "\egWelcome to "APPNAME" Tutorial!" );
+   player_message( "\eg v%s", naev_version(0) );
+
+   /* Try to create the pilot, if fails reask for player name. */
+   player_ship = ship_get( start_ship() );
+   if (player_ship==NULL) {
+      WARN("Ship not properly set by module.");
+      return;
+   }
+   player_creds   = 0;
+   player_newShipMake( "Star Voyager" );
+   start_position( &x, &y );
+   vect_cset( &player.p->solid->pos, x, y );
+   vectnull( &player.p->solid->vel );
+   player.p->solid->dir = RNGF() * 2.*M_PI;
+   space_init( start_system() );
+
+   /* Monies. */
+   player.p->credits = start_credits();
+
+   /* clear the map */
+   map_clear();
+
+   /* Start the economy. */
+   economy_init();
+
+   /* Play music. */
+   music_choose( "ambient" );
+
+   /* Add the mission if found. */
+   if (start_tutMission() != NULL) {
+      if (mission_start(start_tutMission(), NULL) < 0)
+         WARN("Failed to run start tutorial mission '%s'.", start_tutMission());
+   }
+
+   /* Add the event if found. */
+   if (start_tutEvent() != NULL) {
+      if (event_start( start_tutEvent(), NULL ))
+         WARN("Failed to run start event '%s'.", start_tutEvent());
+   }
+
+   /* Load the GUI. */
+   gui_load( gui_pick() );
+
+   /* It's the tutorial. */
+   player_setFlag( PLAYER_TUTORIAL );
+}
+
+
+/**
  * @brief Creates a new player.
  *
  *   - Cleans up after old players.
@@ -212,34 +307,9 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 void player_new (void)
 {
    int r;
-   double x, y;
 
-   /* Set up GUI. */
-   gui_setDefaults();
-
-   /* Setup sound */
-   player_initSound();
-
-   /* Clean up player stuff if we'll be recreating. */
-   diff_clear();
-   player_cleanup();
-   var_cleanup();
-   missions_cleanup();
-   events_cleanup();
-   space_clearKnown();
-   land_cleanup();
-   map_cleanup();
-
-   /* To not segfault due to lack of environment */
-   memset( &player, 0, sizeof(Player_t) );
-   player_setFlag(PLAYER_CREATING);
-
-   /* For pretty background. */
-   pilots_cleanAll();
-   space_init( start_system() );
-   start_position( &x, &y );
-   cam_setTargetPos( x, y, 0 );
-   cam_setZoom( conf.zoom_far );
+   /* Set up new player. */
+   player_newSetup();
 
    /* Get the name. */
    player.name = dialogue_input( "Player Name", 2, 20,
@@ -613,6 +683,15 @@ void player_cleanup (void)
 {
    int i;
 
+   /* Clean up other stuff. */
+   diff_clear();
+   var_cleanup();
+   missions_cleanup();
+   events_cleanup();
+   space_clearKnown();
+   land_cleanup();
+   map_cleanup();
+
    /* Reset controls. */
    player_accelOver();
    player_left  = 0.;
@@ -700,6 +779,10 @@ void player_cleanup (void)
 
    /* Stop the sounds. */
    sound_stopAll();
+
+   /* Clean up. */
+   memset( &player, 0, sizeof(Player_t) );
+   player_setFlag(PLAYER_CREATING);
 }
 
 
