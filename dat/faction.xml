@@ -10,6 +10,7 @@
  <faction name="Independent">
   <player>3</player>
   <colour>blue</colour>
+  <spawn>independent</spawn>
   <allies>
   </allies>
   <enemies>

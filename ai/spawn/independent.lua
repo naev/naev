@@ -7,14 +7,14 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Independent Schroedinger", 5 );
+       scom.addPilot( pilots, "Independent Schroedinger", 12 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Independent Schroedinger", 5 );
-       scom.addPilot( pilots, "Independent Gawain", 5 );
+       scom.addPilot( pilots, "Independent Schroedinger", 12 );
+       scom.addPilot( pilots, "Independent Gawain", 7 );
     else
-       scom.addPilot( pilots, "Independent Schroedinger", 5 );
-       scom.addPilot( pilots, "Independent Schroedinger", 5 );
-       scom.addPilot( pilots, "Independent Gawain", 5 );
+       scom.addPilot( pilots, "Independent Schroedinger", 12 );
+       scom.addPilot( pilots, "Independent Schroedinger", 12 );
+       scom.addPilot( pilots, "Independent Gawain", 7 );
     end
 
     return pilots

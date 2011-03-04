@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Assets>
  <asset name="Abandoned Station">
   <pos>
@@ -8146,8 +8146,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Independent</faction>
-   <value>100.000000</value>
-   <range>0</range>
+   <value>80.000000</value>
+   <range>1</range>
   </presence>
   <general>
    <class>M</class>
@@ -9268,8 +9268,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </GFX>
   <presence>
    <faction>Independent</faction>
-   <value>100.000000</value>
-   <range>0</range>
+   <value>80.000000</value>
+   <range>1</range>
   </presence>
   <general>
    <class>M</class>

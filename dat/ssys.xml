@@ -3041,7 +3041,9 @@
    <x>-425.666667</x>
    <y>-114.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Trader Local</asset>
+  </assets>
   <jumps>
    <jump target="Cherokee">
     <pos x="5455.425782" y="-2497.664816"/>
@@ -3585,6 +3587,7 @@
   </pos>
   <assets>
    <asset>Paul 2</asset>
+   <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Cherokee">
@@ -3707,6 +3710,7 @@
   </pos>
   <assets>
    <asset>Rin</asset>
+   <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Iroquois">
