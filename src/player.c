@@ -172,7 +172,7 @@ extern int map_npath;
  */
 static void player_checkHail (void);
 /* creation */
-static void player_newSetup (void);
+static void player_newSetup( int tutorial );
 static int player_newMake (void);
 static void player_newShipMake( char *name );
 /* sound */
@@ -205,7 +205,7 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 /**
  * @brief Sets up a new player.
  */
-static void player_newSetup (void)
+static void player_newSetup( int tutorial )
 {
    double x, y;
 
@@ -220,8 +220,14 @@ static void player_newSetup (void)
 
    /* For pretty background. */
    pilots_cleanAll();
-   space_init( start_system() );
-   start_position( &x, &y );
+   if (tutorial) {
+      space_init( start_tutSystem() );
+      start_tutPosition( &x, &y );
+   }
+   else {
+      space_init( start_system() );
+      start_position( &x, &y );
+   }
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
 }
@@ -238,7 +244,7 @@ void player_newTutorial (void)
    double x, y;
 
    /* Set up new player. */
-   player_newSetup();
+   player_newSetup( 1 );
 
    /* New name. */
    player.name = strdup( "John Doe" );
@@ -309,7 +315,7 @@ void player_new (void)
    int r;
 
    /* Set up new player. */
-   player_newSetup();
+   player_newSetup( 0 );
 
    /* Get the name. */
    player.name = dialogue_input( "Player Name", 2, 20,
