@@ -29,7 +29,9 @@ As you can see, there is another ship here. We're going to board it. For this, y
     
 The final step in this tutorial is landing. Landing works the same way as boarding, but it with planets and stations. Target a planet with %s or the mouse, then use %s to request landing permission. If permission is granted, slow to a stop over the planet or station, then press %s again to land.
 Land on Paul 2 now. Remember, you can use the overlay map to get there quicker!]]
-    message8 = [[Congratulations! This concludes tutorial: Basic operation.]]
+    message8 = [[Good job, you have landed on Paul 2. As a final tip, you can press %s even if you haven't targeted a planet or station - you will automatically target the nearest landable one.
+
+Congratulations! This concludes tutorial: Basic operation.]]
     
     flyomsg = "Fly around (%ds remaining)"
     stopomsg = "Press and hold %s until you stop turning, then thrust until you come to a (near) stop"
@@ -40,15 +42,11 @@ end
 
 function create()
     misn.accept()
-    pilot.clear()
-    pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
-
-    boardee = pilot.add("Civilian Gawain", nil, targetpos)[1]
-    boardee:disable()
-    hook.pilot(boardee, "board", "board")
-
     -- Set up the player here.
     player.teleport("Mohawk")
+
+    pilot.clear()
+    pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
 
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
     -- TODO: Disable all player input save for basic maneuvering (not turnaround).
@@ -109,6 +107,11 @@ function input(inputname, inputpress)
         targetpos = vec2.new(-3500, 3500) -- May need an alternative?
         marker = system.mrkAdd("Fly here", targetpos)
         waitmap = false
+
+        boardee = pilot.add("Civilian Gawain", nil, targetpos)[1]
+        boardee:disable()
+        hook.pilot(boardee, "board", "board")
+
         proximity({location = targetpos, radius = 350, funcname = "proxytrigger"})
     end
 end
