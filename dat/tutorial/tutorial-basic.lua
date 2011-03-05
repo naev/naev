@@ -43,9 +43,9 @@ function create()
     pilot.clear()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
 
+    boardee = pilot.add("Civilian Gawain", nil, targetpos)[1]
     boardee:disable()
     hook.pilot(boardee, "board", "board")
-    proximity({location = targetpos, radius = 350, funcname = "proxytrigger"})
 
     -- Set up the player here.
     player.teleport("Mohawk")
@@ -109,7 +109,7 @@ function input(inputname, inputpress)
         targetpos = vec2.new(-3500, 3500) -- May need an alternative?
         marker = system.mrkAdd("Fly here", targetpos)
         waitmap = false
-        boardee = pilot.add("Civilian Gawain", nil, targetpos)[1]
+        proximity({location = targetpos, radius = 350, funcname = "proxytrigger"})
     end
 end
 
