@@ -197,8 +197,10 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n" );
+      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
+      window_modifyText( wid, "txtStats", NULL );
+      window_modifyText( wid, "txtDescription", NULL );
       window_modifyText( wid, "txtDDesc", buf );
-      window_modifyImage( wid, "txtStats", NULL, 0, 0 );
       return;
    }
 
