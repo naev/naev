@@ -47,6 +47,7 @@ static int hook_date( lua_State *L );
 static int hook_commbuy( lua_State *L );
 static int hook_commsell( lua_State *L );
 static int hook_input( lua_State *L );
+static int hook_mouse( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -62,6 +63,7 @@ static const luaL_reg hook_methods[] = {
    { "comm_buy", hook_commbuy },
    { "comm_sell", hook_commsell },
    { "input", hook_input },
+   { "mouse", hook_mouse },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -482,6 +484,23 @@ static int hook_input( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "input", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player clicking the mouse.
+ *
+ * The parameter passed to the function is the button pressed (1==left,2==right).
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc input( funcname, arg )
+ */
+static int hook_mouse( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "mouse", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

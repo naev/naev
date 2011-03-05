@@ -1065,6 +1065,13 @@ static void input_clickevent( SDL_Event* event )
    Planet *pnt;
    JumpPoint *jp;
    int pntid, opntid, jpid, ojpid;
+   HookParam hparam[2];
+
+   /* Generato hook. */
+   hparam[0].type    = HOOK_PARAM_NUMBER;
+   hparam[0].u.num   = event->button.button;
+   hparam[1].type    = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "mouse", hparam );
 
    /* Handle zoom. */
    if (event->button.button == SDL_BUTTON_WHEELUP) {
