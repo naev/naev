@@ -155,7 +155,7 @@ int nlua_loadMisn( lua_State *L )
 int misn_tryRun( Mission *misn, const char *func )
 {
    /* Get the function to run. */
-   lua_getglobal( misn->L, func );
+   misn_runStart( misn, func );
    if (lua_isnil( misn->L, -1 )) {
       lua_pop(misn->L,1);
       return 0;
@@ -214,6 +214,9 @@ lua_State *misn_runStart( Mission *misn, const char *func )
    /* Set the Lua state. */
    lua_getglobal( L, func );
 
+   /* Set environment. */
+   misn_setEnv( L, misn );
+
    return L;
 }
 
@@ -236,9 +239,6 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
 
    /* For comfort. */
    L = misn->L;
-
-   /* Set environment. */
-   misn_setEnv( L, misn );
 
    ret = lua_pcall(L, nargs, 0, 0);
    cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
