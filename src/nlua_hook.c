@@ -46,6 +46,7 @@ static int hook_timer( lua_State *L );
 static int hook_date( lua_State *L );
 static int hook_commbuy( lua_State *L );
 static int hook_commsell( lua_State *L );
+static int hook_input( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -60,6 +61,7 @@ static const luaL_reg hook_methods[] = {
    { "date", hook_date },
    { "comm_buy", hook_commbuy },
    { "comm_sell", hook_commsell },
+   { "input", hook_input },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -460,6 +462,26 @@ static int hook_commsell( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "comm_sell", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player pressing any input.
+ *
+ * It returns the name of the key being pressed like "accel" and whether or not it's a press.<br/>
+ * <br/>
+ * Functions should be in format:<br/>
+ *   function f( inputname, inputpress, args )
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc input( funcname, arg )
+ */
+static int hook_input( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "input", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

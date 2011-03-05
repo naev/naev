@@ -19,6 +19,7 @@ typedef enum HookParamType_e {
    HOOK_PARAM_NIL, /**< No hook parameter. */
    HOOK_PARAM_NUMBER, /**< Number parameter. */
    HOOK_PARAM_STRING, /**< String parameter. */
+   HOOK_PARAM_BOOL, /**< Boolean parameter. */
    HOOK_PARAM_PILOT, /**< Pilot hook parameter. */
    HOOK_PARAM_SENTINAL /**< Enum sentinal. */
 } HookParamType;
@@ -30,7 +31,8 @@ typedef struct HookParam_s {
    HookParamType type; /**< Type of parameter. */
    union {
       double num; /**< Number parameter. */
-      char *str; /**< String parameter. */
+      const char *str; /**< String parameter. */
+      int b; /**< Boolean parameter. */
       LuaPilot lp; /**< Hook parameter pilot data. */
    } u; /**< Hook parameter data. */
 } HookParam;
@@ -59,7 +61,8 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
  *    - "jumpout" - When player jumps (before changing system)
  *    - "time" - When time is increment drastically (hyperspace and taking off)
  *    - "hail" - When any pilot is hailed
- *    - "board" - WHen any pilot is boarded
+ *    - "board" - When any pilot is boarded
+ *    - "input" - When an input command is pressed
  *  - Landing
  *    - "land" - When landed
  *    - "outfits" - When visited outfitter
