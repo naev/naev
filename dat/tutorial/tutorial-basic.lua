@@ -135,7 +135,6 @@ end
 
 -- Land hook.
 function land()
-    player.takeoff()
     tk.msg(title1, message8)
     cleanup()
 end

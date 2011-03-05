@@ -29,7 +29,7 @@ function create()
     if selection == 1 then
         startModule(menu1)
     elseif selection == 2 then
-        placeholder()
+        startModule(menu2)
     elseif selection == 3 then
         placeholder()
     elseif selection == 4 then

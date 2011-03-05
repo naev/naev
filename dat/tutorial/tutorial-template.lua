@@ -21,6 +21,11 @@ function abort()
     cleanup()
 end
 
+-- Capsule function for naev.getKey() that adds a color code to the return string.
+function tutGetKey(command)
+    return "\027b" .. naev.getKey(command) .. "\0270"
+end
+
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     -- Function to return to the tutorial menu here

@@ -3,6 +3,9 @@
  <mission name="Tutorial: Basic operation">
   <lua>../tutorial/tutorial-basic</lua>
  </mission>
+ <mission name="Tutorial: Interstellar flight">
+  <lua>../tutorial/tutorial-interstellar</lua>
+ </mission>
  <mission name="Cargo">
   <lua>neutral/cargo</lua>
   <avail>
