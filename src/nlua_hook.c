@@ -495,7 +495,7 @@ static int hook_input( lua_State *L )
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc input( funcname, arg )
+ * @luafunc mouse( funcname, arg )
  */
 static int hook_mouse( lua_State *L )
 {
