@@ -160,7 +160,6 @@ int misn_tryRun( Mission *misn, const char *func )
       lua_pop(misn->L,1);
       return 0;
    }
-   misn_setEnv( misn->L, misn );
    return misn_runFunc( misn, func, 0 );
 }
 
@@ -212,9 +211,6 @@ lua_State *misn_runStart( Mission *misn, const char *func )
 
    L = misn->L;
 
-   /* Set environment. */
-   misn_setEnv( L, misn );
-
    /* Set the Lua state. */
    lua_getglobal( L, func );
 
@@ -236,16 +232,21 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    const char* err;
    lua_State *L;
    int misn_delete;
+   Mission *cur_mission;
 
    /* For comfort. */
    L = misn->L;
 
+   /* Set environment. */
+   misn_setEnv( L, misn );
+
    ret = lua_pcall(L, nargs, 0, 0);
+   cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if ((err==NULL) || (strcmp(err,"Mission Done")!=0)) {
          WARN("Mission '%s' -> '%s': %s",
-               misn->data->name, func, (err) ? err : "unknown error");
+               cur_mission->data->name, func, (err) ? err : "unknown error");
          ret = -1;
       }
       else
@@ -261,9 +262,9 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    /* mission is finished */
    if (misn_delete) {
       ret = 2;
-      mission_cleanup( misn );
+      mission_cleanup( cur_mission );
       for (i=0; i<MISSION_MAX; i++)
-         if (misn == &player_missions[i]) {
+         if (cur_mission == &player_missions[i]) {
             memmove( &player_missions[i], &player_missions[i+1],
                   sizeof(Mission) * (MISSION_MAX-i-1) );
             memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
