@@ -31,6 +31,7 @@
 #include "conf.h"
 #include "camera.h"
 #include "map_overlay.h"
+#include "hook.h"
 
 
 #define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
@@ -640,6 +641,7 @@ void input_update( double dt )
 static void input_key( int keynum, double value, double kabs, int repeat )
 {
    unsigned int t;
+   HookParam hparam[3];
 
    /* Repetition stuff. */
    if (conf.repeat_delay != 0) {
@@ -942,6 +944,19 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("console") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) cli_open();
    }
+
+   /* Key press not used. */
+   else {
+      return;
+   }
+
+   /* Run the hook. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = input_keybinds[keynum]->name;
+   hparam[1].type    = HOOK_PARAM_BOOL;
+   hparam[1].u.b     = (value > 0.);
+   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hooks_runParam( "input", hparam );
 }
 #undef KEY
 

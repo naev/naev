@@ -138,6 +138,9 @@ static int hook_parseParam( lua_State *L, HookParam *param )
          case HOOK_PARAM_STRING:
             lua_pushstring( L, param[n].u.str );
             break;
+         case HOOK_PARAM_BOOL:
+            lua_pushboolean( L, param[n].u.b );
+            break;
          case HOOK_PARAM_PILOT:
             lua_pushpilot( L, param[n].u.lp );
             break;
