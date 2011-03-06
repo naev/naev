@@ -31,9 +31,9 @@ For the remainder of this tutorial, you will have unlimited fuel. Continue to ma
 
 Congratulations! This concludes tutorial: Interstellar flight.]]
     
-    omsgthyper = "Press %s to target a jump point"
-    omsggalmap = "Press %s to open the galaxy map"
-    omsghyper = "Select a hyperspace target with %s or by using the galaxy map, then press %s to engage the autonav (or jump manually with %s)"
+    thyperomsg = "Press %s to target a jump point"
+    starmapomsg = "Press %s to open the galaxy map"
+    hyperomsg = "Select a hyperspace target with %s or by using the galaxy map, then press %s to engage the autonav (or jump manually with %s)"
 end
 
 function create()
@@ -46,7 +46,7 @@ function create()
 
     tk.msg(title1, message1)
     tk.msg(title1, message2:format(tutGetKey"thyperspace"))
-    omsg = player.omsgAdd(omsgthyper:format(tutGetKey"thyperspace"), 0)
+    omsg = player.omsgAdd(thyperomsg:format(tutGetKey"thyperspace"), 0)
     
     waitthyper = 0
     hook.input("input")
@@ -63,13 +63,13 @@ function input(inputname, inputpress)
         elseif waitthyper == 3 then
             player.omsgRm(omsg)
             tk.msg(title1, message4:format(tutGetKey("starmap")))
-            omsg = player.omsgAdd(omsggalmap:format(tutGetKey("starmap")), 0)
+            omsg = player.omsgAdd(starmapomsg:format(tutGetKey("starmap")), 0)
             waitmap = true
         end
     elseif inputname == "starmap" and waitmap then
         waitmap = false
         tk.msg(title1, message5:format(tutGetKey("autonav")))
-        player.omsgChange(omsg, omsghyper:format(tutGetKey("thyperspace"), tutGetKey("autonav"), tutGetKey("jump")), 0)
+        player.omsgChange(omsg, hyperomsg:format(tutGetKey("thyperspace"), tutGetKey("autonav"), tutGetKey("jump")), 0)
         firstjump = true
         -- TODO: enable starmap, autonav, navigation
     end
