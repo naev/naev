@@ -361,7 +361,7 @@ void input_toggleEnable( const char *key, int enable )
    int i;
    for (i=0; i<input_numbinds; i++) {
       if (strcmp(key, input_keybinds[i].name)==0) {
-         input_keybinds[i].disabled = enable;
+         input_keybinds[i].disabled = !enable;
          break;
       }
    }
