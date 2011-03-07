@@ -1019,13 +1019,13 @@ static void input_joyaxis( const SDLKey axis, const int value )
 {
    int i, k;
    for (i=0; i<input_numbinds; i++) {
-      if (input_keybinds[i].disabled)
-         continue;
       if (input_keybinds[i].key == axis) {
          /* Positive axis keybinding. */
          if ((input_keybinds[i].type == KEYBIND_JAXISPOS)
                && (value >= 0)) {
             k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
+            if ((k == KEY_PRESS) && input_keybinds[i].disabled)
+               continue;
             input_key( i, k, fabs(((double)value)/32767.), 0 );
          }
 
@@ -1033,6 +1033,8 @@ static void input_joyaxis( const SDLKey axis, const int value )
          if ((input_keybinds[i].type == KEYBIND_JAXISNEG)
                && (value <= 0)) {
             k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
+            if ((k == KEY_PRESS) && input_keybinds[i].disabled)
+               continue;
             input_key( i, k, fabs(((double)value)/32767.), 0 );
          }
       }
@@ -1047,7 +1049,7 @@ static void input_joyevent( const int event, const SDLKey button )
 {
    int i;
    for (i=0; i<input_numbinds; i++) {
-      if (input_keybinds[i].disabled)
+      if ((event == KEY_PRESS) && input_keybinds[i].disabled)
          continue;
       if ((input_keybinds[i].type == KEYBIND_JBUTTON) &&
             (input_keybinds[i].key == button))
@@ -1074,7 +1076,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
    mod_filtered = input_translateMod(mod);
 
    for (i=0; i<input_numbinds; i++) {
-      if (input_keybinds[i].disabled)
+      if ((event == KEY_PRESS) && input_keybinds[i].disabled)
          continue;
       if ((input_keybinds[i].type == KEYBIND_KEYBOARD) &&
             (input_keybinds[i].key == key)) {
