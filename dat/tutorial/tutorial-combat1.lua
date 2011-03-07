@@ -26,10 +26,12 @@ function create()
     
     player.pilot():setPos(vec2.new(0, 0))
     -- TODO: switch to Lancelot. Equip with two Laser MK2s.
-    -- TODO: Disable all but normal navigation, overlay, combat, info menu, small menu.
 
-    tk.msg(title1, message1)
-    tk.msg(title1, message2:format(tutGetKey("primary")))
+    enable = {"menu", "left", "right", "accel", "reverse", "primary"}
+    enableKeys(enable)
+
+    tkMsg(title1, message1, enable)
+    tkMsg(title1, message2:format(tutGetKey("primary")), enable)
     omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
 
     waitenergy = true
@@ -45,7 +47,7 @@ function flyUpdate()
         if flytime == 0 then
             waitenergy = false
             player.omsgRm(omsg)
-            tk.msg(title1, message3:format(tutGetKey("primary")))
+            tkMsg(title1, message3:format(tutGetKey("primary")), enable)
             waitammo = true
             flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
@@ -66,11 +68,6 @@ end
 
 -- Input hook.
 function input(inputname, inputpress)
-end
-
--- Capsule function for naev.getKey() that adds a color code to the return string.
-function tutGetKey(command)
-    return "\027b" .. naev.getKey(command) .. "\0270"
 end
 
 -- Abort hook.

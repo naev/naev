@@ -1,6 +1,7 @@
 -- This is the first tutorial: basic operation.
 
 include("scripts/proximity.lua")
+include("dat/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -48,12 +49,13 @@ function create()
 
     pilot.clear()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
-
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
-    -- TODO: Disable all player input save for basic maneuvering (not turnaround).
-
-    tk.msg(title1, message1)
-    tk.msg(title1, message2:format(tutGetKey("left"), tutGetKey("right"), tutGetKey("accel")))
+    
+    enable = {"menu", "accel", "left", "right"}
+    enableKeys(enable)
+    
+    tkMsg(title1, message1, enable)
+    tkMsg(title1, message2:format(tutGetKey("left"), tutGetKey("right"), tutGetKey("accel")), enable)
     
     flytime = 10 -- seconds of fly time
     
@@ -67,8 +69,11 @@ function flyUpdate()
     
     if flytime == 0 then
         player.omsgRm(omsg)
-        tk.msg(title1, message3:format(tutGetKey("reverse")))
-        -- TODO: Enable turnaround
+        tkMsg(title1, message3:format(tutGetKey("reverse")), enable)
+
+        enable = {"menu", "accel", "reverse"}
+        enableKeys(enable)
+    
         omsg = player.omsgAdd(stopomsg:format(tutGetKey("reverse")), 0)
         braketime = 0 -- ticks for brake check.
         hook.timer(500, "checkBrake")
@@ -89,12 +94,14 @@ function checkBrake()
     if braketime > 4 then
         -- Have been stationary (or close enough) for long enough
         player.omsgRm(omsg)
-        tk.msg(title1, message4:format(tutGetKey("overlay")))
+        tkMsg(title1, message4:format(tutGetKey("overlay")), enable)
         omsg = player.omsgAdd(mapomsg:format(tutGetKey("overlay")), 0)
         player.pilot():setVel(vec2.new()) -- Stop the player completely
         waitmap = true
         hook.input("input")
-        -- TODO: Enable overlay map, disable regular navigation
+
+        enable = {"menu", "overlay"}
+        enableKeys(enable)
     else
         hook.timer(500, "checkBrake")
     end
@@ -104,7 +111,7 @@ end
 function input(inputname, inputpress)
     if waitmap and inputname == "overlay" then
         player.omsgRm(omsg)
-        tk.msg(title1, message5)
+        tkMsg(title1, message5, enable)
         targetpos = vec2.new(-3500, 3500) -- May need an alternative?
         marker = system.mrkAdd("Fly here", targetpos)
         waitmap = false
@@ -120,29 +127,29 @@ end
 -- Function that runs when the player approaches the indicated coordinates.
 function proxytrigger()
     system.mrkClear()
-    tk.msg(title1, message6:format(tutGetKey("target_next"), tutGetKey("board")))
+    tkMsg(title1, message6:format(tutGetKey("target_next"), tutGetKey("board")), enable)
     omsg = player.omsgAdd(boardomsg:format(tutGetKey("target_next"), tutGetKey("board")), 0)
-    -- TODO: Enable regular navigation, left click, board
+
+    enable = {"menu", "accel", "left", "right", "target_next", "board"}
+    enableKeys(enable)
 end
 
 -- Board hook for the board practice ship.
 function board()
     player.unboard()
-    tk.msg(title1, message7:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")))
+    tkMsg(title1, message7:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), enable)
     player.omsgChange(omsg, landomsg:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), 0)
     hook.land("land")
     -- TODO: Enable target planet, land
+
+    enable = {"menu", "accel", "left", "right", "target_planet", "land"}
+    enableKeys(enable)
 end
 
 -- Land hook.
 function land()
-    tk.msg(title1, message8)
+    tkMsg(title1, message8)
     cleanup()
-end
-
--- Capsule function for naev.getKey() that adds a color code to the return string.
-function tutGetKey(command)
-    return "\027b" .. naev.getKey(command) .. "\0270"
 end
 
 -- Abort hook.
@@ -152,5 +159,6 @@ end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
+    naev.keyEnableAll()
     -- Function to return to the tutorial menu here
 end

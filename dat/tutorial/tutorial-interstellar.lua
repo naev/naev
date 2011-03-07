@@ -44,14 +44,16 @@ function create()
     
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
 
-    tk.msg(title1, message1)
-    tk.msg(title1, message2:format(tutGetKey"thyperspace"))
+    tkMsg(title1, message1, enable)
+    tkMsg(title1, message2:format(tutGetKey"thyperspace"), enable)
     omsg = player.omsgAdd(thyperomsg:format(tutGetKey"thyperspace"), 0)
     
     waitthyper = 0
     hook.input("input")
     hook.jumpin("jumpin")
-    -- TODO: Disable everything except thyperspace and the overlay map.
+
+    enable = {"menu", "thyperspace"}
+    enableKeys(enable)
 end
 
 -- Input hook.
@@ -59,19 +61,21 @@ function input(inputname, inputpress)
     if inputname == "thyperspace" and inputpress and waitthyper < 3 then
         waitthyper = waitthyper + 1
         if waitthyper == 1 then
-            tk.msg(title1, message3:format(tutGetKey("jump"), tutGetKey("thyperspace")))
+            tkMsg(title1, message3:format(tutGetKey("jump"), tutGetKey("thyperspace")), enable)
         elseif waitthyper == 3 then
             player.omsgRm(omsg)
-            tk.msg(title1, message4:format(tutGetKey("starmap")))
+            tkMsg(title1, message4:format(tutGetKey("starmap")), enable)
             omsg = player.omsgAdd(starmapomsg:format(tutGetKey("starmap")), 0)
             waitmap = true
         end
     elseif inputname == "starmap" and waitmap then
         waitmap = false
-        tk.msg(title1, message5:format(tutGetKey("autonav")))
+        tkMsg(title1, message5:format(tutGetKey("autonav")), enable)
         player.omsgChange(omsg, hyperomsg:format(tutGetKey("thyperspace"), tutGetKey("autonav"), tutGetKey("jump")), 0)
         firstjump = true
-        -- TODO: enable starmap, autonav, navigation
+
+        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse"}
+        enableKeys(enable)
     end
 end
 
@@ -82,6 +86,9 @@ function jumpin()
         hook.land("cleanup")
         hook.timer(2000, "jumpmsg", message7)
         player.omsgRm(omsg)
+
+        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse", "land"}
+        enableKeys(enable)
     elseif firstjump then
         hook.timer(2000, "jumpmsg", message6)
         firstjump = false
@@ -90,12 +97,7 @@ end
 
 -- Delay this tk.msg by a bit to make the jump less jarring.
 function jumpmsg(message)
-    tk.msg(title1, message)
-end
-
--- Capsule function for naev.getKey() that adds a color code to the return string.
-function tutGetKey(command)
-    return "\027b" .. naev.getKey(command) .. "\0270"
+    tkMsg(title1, message, enable)
 end
 
 -- Abort hook.
