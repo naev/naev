@@ -41,7 +41,7 @@ function create()
     elseif selection == 7 then
         placeholder()
     elseif selection == 8 then -- Quit to main menu
-        toMenu()
+        tut.main_menu();
     else
         -- This point should never be reached!
         tk.msg("Error", "You've apparently selected an invalid menu option. This shouldn't happen. Please report.")
@@ -59,10 +59,4 @@ end
 function startModule(module)
     evt.misnStart(module)
     evt.finish(true) -- While the module is running, the event should not.
-end
-
--- Return to the main menu
-function toMenu()
-    -- Function to return to the main menu here
-    tut.main_menu();
 end
