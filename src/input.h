@@ -45,6 +45,7 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod );
  */
 SDLMod input_translateMod( SDLMod mod );
 void input_enableAll (void);
+void input_disableAll (void);
 void input_toggleEnable( const char *key, int enable );
 
 /*

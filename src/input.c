@@ -354,6 +354,17 @@ void input_enableAll (void)
 
 
 /**
+ * @brief Disables all the keybinds.
+ */
+void input_disableAll (void)
+{
+   int i;
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+      input_keybinds[i].disabled = 1;
+}
+
+
+/**
  * @brief Enables or disables a keybind.
  */
 void input_toggleEnable( const char *key, int enable )
