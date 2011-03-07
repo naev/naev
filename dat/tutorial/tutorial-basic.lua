@@ -130,7 +130,7 @@ function proxytrigger()
     tkMsg(title1, message6:format(tutGetKey("target_next"), tutGetKey("board")), enable)
     omsg = player.omsgAdd(boardomsg:format(tutGetKey("target_next"), tutGetKey("board")), 0)
 
-    enable = {"menu", "accel", "left", "right", "target_next", "board"}
+    enable = {"menu", "accel", "left", "right", "reverse", "target_next", "board"}
     enableKeys(enable)
 end
 
@@ -142,7 +142,7 @@ function board()
     hook.land("land")
     -- TODO: Enable target planet, land
 
-    enable = {"menu", "accel", "left", "right", "target_planet", "land"}
+    enable = {"menu", "accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
     enableKeys(enable)
 end
 

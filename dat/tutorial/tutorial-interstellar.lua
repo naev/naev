@@ -1,5 +1,7 @@
 -- This is the tutorial: interstallar flight.
 
+include("dat/tutorial/tutorial-common.lua")
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -44,6 +46,9 @@ function create()
     
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
 
+    enable = {"menu", "thyperspace"}
+    enableKeys(enable)
+
     tkMsg(title1, message1, enable)
     tkMsg(title1, message2:format(tutGetKey"thyperspace"), enable)
     omsg = player.omsgAdd(thyperomsg:format(tutGetKey"thyperspace"), 0)
@@ -52,8 +57,6 @@ function create()
     hook.input("input")
     hook.jumpin("jumpin")
 
-    enable = {"menu", "thyperspace"}
-    enableKeys(enable)
 end
 
 -- Input hook.
@@ -67,6 +70,9 @@ function input(inputname, inputpress)
             tkMsg(title1, message4:format(tutGetKey("starmap")), enable)
             omsg = player.omsgAdd(starmapomsg:format(tutGetKey("starmap")), 0)
             waitmap = true
+
+            enable = {"menu", "thyperspace", "starmap"}
+            enableKeys(enable)
         end
     elseif inputname == "starmap" and waitmap then
         waitmap = false
@@ -74,7 +80,7 @@ function input(inputname, inputpress)
         player.omsgChange(omsg, hyperomsg:format(tutGetKey("thyperspace"), tutGetKey("autonav"), tutGetKey("jump")), 0)
         firstjump = true
 
-        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse"}
+        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse", "overlay"}
         enableKeys(enable)
     end
 end
@@ -87,7 +93,7 @@ function jumpin()
         hook.timer(2000, "jumpmsg", message7)
         player.omsgRm(omsg)
 
-        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse", "land"}
+        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse", "land", "overlay"}
         enableKeys(enable)
     elseif firstjump then
         hook.timer(2000, "jumpmsg", message6)

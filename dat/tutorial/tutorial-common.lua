@@ -9,7 +9,6 @@ end
 function enableKeys(keys)
     naev.keyDisableAll()
     for _, key in ipairs(keys) do
-        print("Enabling: " .. key)
         naev.keyEnable(key, true)
     end
 end
