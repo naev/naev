@@ -56,6 +56,7 @@
 #include "claim.h"
 #include "player_gui.h"
 #include "start.h"
+#include "input.h"
 
 
 /*
@@ -686,6 +687,9 @@ void player_rmShip( char* shipname )
 void player_cleanup (void)
 {
    int i;
+
+   /* Enable all input. */
+   input_enableAll();
 
    /* Clean up other stuff. */
    diff_clear();

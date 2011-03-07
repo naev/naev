@@ -46,6 +46,7 @@
  * @brief NAEV Keybinding.
  */
 typedef struct Keybind_ {
+   int disabled; /**< Whether or not it's disabled. */
    const char *name; /**< keybinding name, taken from keybind_info */
    KeybindType type; /**< type, defined in player.h */
    SDLKey key; /**< key/axis/button event number */
@@ -53,7 +54,8 @@ typedef struct Keybind_ {
 } Keybind;
 
 
-static Keybind** input_keybinds; /**< contains the players keybindings */
+static Keybind* input_keybinds; /**< contains the players keybindings */
+static int input_numbinds; /**< Number of keybindings. */
 
 /* name of each keybinding */
 const char *keybind_info[][3] = {
@@ -311,17 +313,17 @@ void input_init (void)
 
    /* Get the number of keybindings. */
    for (i=0; strcmp(keybind_info[i][0],"end"); i++);
-      input_keybinds = malloc(i*sizeof(Keybind*));
+   input_numbinds = i;
+   input_keybinds = malloc(input_numbinds*sizeof(Keybind));
 
    /* Create sane null keybinding for each. */
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
-      temp = malloc(sizeof(Keybind));
+   for (i=0; i<input_numbinds; i++) {
+      temp = &input_keybinds[i];
       memset( temp, 0, sizeof(Keybind) );
       temp->name        = keybind_info[i][0];
       temp->type        = KEYBIND_NULL;
       temp->key         = SDLK_UNKNOWN;
       temp->mod         = NMOD_NONE;
-      input_keybinds[i] = temp;
    }
 
    /* Generate Key translation table. */
@@ -334,12 +336,35 @@ void input_init (void)
  */
 void input_exit (void)
 {
-   int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
-      free(input_keybinds[i]);
    free(input_keybinds);
 
    input_keyConvDestroy();
+}
+
+
+/**
+ * @brief Enables all the keybinds.
+ */
+void input_enableAll (void)
+{
+   int i;
+   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
+      input_keybinds[i].disabled = 0;
+}
+
+
+/**
+ * @brief Enables or disables a keybind.
+ */
+void input_toggleEnable( const char *key, int enable )
+{
+   int i;
+   for (i=0; i<input_numbinds; i++) {
+      if (strcmp(key, input_keybinds[i].name)==0) {
+         input_keybinds[i].disabled = enable;
+         break;
+      }
+   }
 }
 
 
@@ -447,14 +472,15 @@ SDLKey input_keyConv( const char *name )
 void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod )
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
-      if (strcmp(keybind, input_keybinds[i]->name)==0) {
-         input_keybinds[i]->type = type;
-         input_keybinds[i]->key = key;
+   for (i=0; i<input_numbinds; i++) {
+      if (strcmp(keybind, input_keybinds[i].name)==0) {
+         input_keybinds[i].type = type;
+         input_keybinds[i].key = key;
          /* Non-keyboards get mod NMOD_ALL to always match. */
-         input_keybinds[i]->mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ALL;
+         input_keybinds[i].mod = (type==KEYBIND_KEYBOARD) ? mod : NMOD_ALL;
          return;
       }
+   }
    WARN("Unable to set keybinding '%s', that command doesn't exist", keybind);
 }
 
@@ -470,14 +496,15 @@ void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mo
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
-      if (strcmp(keybind, input_keybinds[i]->name)==0) {
+   for (i=0; i<input_numbinds; i++) {
+      if (strcmp(keybind, input_keybinds[i].name)==0) {
          if (type != NULL)
-            (*type) = input_keybinds[i]->type;
+            (*type) = input_keybinds[i].type;
          if (mod != NULL)
-            (*mod) = input_keybinds[i]->mod;
-         return input_keybinds[i]->key;
+            (*mod) = input_keybinds[i].mod;
+         return input_keybinds[i].key;
       }
+   }
    WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
    return (SDLKey)-1;
 }
@@ -515,8 +542,8 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
 {
    int i;
    Keybind *k;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
-      k = input_keybinds[i];
+   for (i=0; i<input_numbinds; i++) {
+      k = &input_keybinds[i];
 
       /* Type must match. */
       if (k->type != type)
@@ -559,7 +586,7 @@ const char* input_getKeybindDescription( const char *keybind )
 {
    int i;
    for (i=0; strcmp(keybind_info[i][0],"end"); i++)
-      if (strcmp(keybind, input_keybinds[i]->name)==0)
+      if (strcmp(keybind, input_keybinds[i].name)==0)
          return keybind_info[i][2];
    WARN("Unable to get keybinding description '%s', that command doesn't exist", keybind);
    return NULL;
@@ -623,7 +650,7 @@ void input_update( double dt )
 }
 
 
-#define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
+#define KEY(s)    (strcmp(input_keybinds[keynum].name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
 ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
@@ -952,7 +979,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Run the hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
-   hparam[0].u.str   = input_keybinds[keynum]->name;
+   hparam[0].u.str   = input_keybinds[keynum].name;
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
    hparam[2].type    = HOOK_PARAM_SENTINAL;
@@ -980,17 +1007,19 @@ static void input_keyevent( const int event, const SDLKey key, const SDLMod mod,
 static void input_joyaxis( const SDLKey axis, const int value )
 {
    int i, k;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
-      if (input_keybinds[i]->key == axis) {
+   for (i=0; i<input_numbinds; i++) {
+      if (input_keybinds[i].disabled)
+         continue;
+      if (input_keybinds[i].key == axis) {
          /* Positive axis keybinding. */
-         if ((input_keybinds[i]->type == KEYBIND_JAXISPOS)
+         if ((input_keybinds[i].type == KEYBIND_JAXISPOS)
                && (value >= 0)) {
             k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
             input_key( i, k, fabs(((double)value)/32767.), 0 );
          }
 
          /* Negative axis keybinding. */
-         if ((input_keybinds[i]->type == KEYBIND_JAXISNEG)
+         if ((input_keybinds[i].type == KEYBIND_JAXISNEG)
                && (value <= 0)) {
             k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
             input_key( i, k, fabs(((double)value)/32767.), 0 );
@@ -1006,10 +1035,13 @@ static void input_joyaxis( const SDLKey axis, const int value )
 static void input_joyevent( const int event, const SDLKey button )
 {
    int i;
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++)
-      if ((input_keybinds[i]->type == KEYBIND_JBUTTON) &&
-            (input_keybinds[i]->key == button))
+   for (i=0; i<input_numbinds; i++) {
+      if (input_keybinds[i].disabled)
+         continue;
+      if ((input_keybinds[i].type == KEYBIND_JBUTTON) &&
+            (input_keybinds[i].key == button))
          input_key(i, event, -1., 0);
+   }
 }
 
 
@@ -1030,11 +1062,13 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
    /* Filter to "NAEV" modifiers. */
    mod_filtered = input_translateMod(mod);
 
-   for (i=0; strcmp(keybind_info[i][0],"end"); i++) {
-      if ((input_keybinds[i]->type == KEYBIND_KEYBOARD) &&
-            (input_keybinds[i]->key == key)) {
-         if ((input_keybinds[i]->mod == mod_filtered) ||
-               (input_keybinds[i]->mod == NMOD_ALL) ||
+   for (i=0; i<input_numbinds; i++) {
+      if (input_keybinds[i].disabled)
+         continue;
+      if ((input_keybinds[i].type == KEYBIND_KEYBOARD) &&
+            (input_keybinds[i].key == key)) {
+         if ((input_keybinds[i].mod == mod_filtered) ||
+               (input_keybinds[i].mod == NMOD_ALL) ||
                (event == KEY_RELEASE)) /**< Release always gets through. */
             input_key(i, event, -1., repeat);
             /* No break so all keys get pressed if needed. */
