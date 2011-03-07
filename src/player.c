@@ -237,6 +237,7 @@ static void player_newSetup( int tutorial )
  */
 void player_newTutorial (void)
 {
+   int ret;
    double x, y;
 
    /* Set up new player. */
@@ -286,12 +287,13 @@ void player_newTutorial (void)
 
    /* Add the mission if found. */
    if (start_tutMission() != NULL) {
-      if (mission_start(start_tutMission(), NULL) < 0)
+      ret = mission_start(start_tutMission(), NULL);
+      if (ret < 0)
          WARN("Failed to run start tutorial mission '%s'.", start_tutMission());
    }
 
    /* Add the event if found. */
-   if (start_tutEvent() != NULL) {
+   if (!menu_isOpen(MENU_MAIN) && (start_tutEvent() != NULL)) {
       if (event_start( start_tutEvent(), NULL ))
          WARN("Failed to run start event '%s'.", start_tutEvent());
    }
