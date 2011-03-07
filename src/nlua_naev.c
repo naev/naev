@@ -23,10 +23,16 @@
 
 /* NAEV methods. */
 static int naev_lang( lua_State *L );
-static int naev_getKey( lua_State *L );
+static int naev_keyGet( lua_State *L );
+static int naev_keyEnable( lua_State *L );
+static int naev_keyEnableAll( lua_State *L );
+static int naev_keyDisableAll( lua_State *L );
 static const luaL_reg naev_methods[] = {
    { "lang", naev_lang },
-   { "getKey", naev_getKey },
+   { "keyGet", naev_keyGet },
+   { "keyEnable", naev_keyEnable },
+   { "keyEnableAll", naev_keyEnableAll },
+   { "keyDisableAll", naev_keyDisableAll },
    {0,0}
 }; /**< NAEV Lua methods. */
 
@@ -74,12 +80,12 @@ static int naev_lang( lua_State *L )
 /**
  * @brief Gets the keybinding value by name.
  *
- * @usage bindname = naev.getKey( "accel" )
+ * @usage bindname = naev.keyGet( "accel" )
  *
  *    @luaparam keyname Name of the keybinding to get value of.
- * @luafunc getKey( keyname )
+ * @luafunc keyGet( keyname )
  */
-static int naev_getKey( lua_State *L )
+static int naev_keyGet( lua_State *L )
 {
    int p;
    const char *keyname;
@@ -131,4 +137,58 @@ static int naev_getKey( lua_State *L )
 
    return 1;
 }
+
+
+/**
+ * @brief Disables or enables a specific keybinding.
+ *
+ * Use with caution, this can make the player get stuck.
+ *
+ * @usage naev.keyEnable( "accel", false ) -- Disables the acceleration key
+ *    @luaparam keyname Name of the key to disable (for example "accel").
+ *    @luaparam enable Whether to enable or disable (if ommitted disables).
+ * @luafunc keyEnable( keyname, enable )
+ */
+static int naev_keyEnable( lua_State *L )
+{
+   const char *key;
+   int enable;
+
+   /* Parameters. */
+   key = luaL_checkstring(L,1);
+   enable = lua_toboolean(L,2);
+
+   input_toggleEnable( key, enable );
+   return 0;
+}
+
+
+/**
+ * @brief Enables all inputs.
+ *
+ * @usage naev.keyEnableAll() -- Enables all inputs
+ * @luafunc keyEnableAll()
+ */
+static int naev_keyEnableAll( lua_State *L )
+{
+   (void) L;
+   input_enableAll();
+   return 0;
+}
+
+
+/**
+ * @brief Disables all inputs.
+ *
+ * @usage naev.keyDisableAll() -- Disables all inputs
+ * @luafunc keyDisableAll()
+ */
+static int naev_keyDisableAll( lua_State *L )
+{
+   (void) L;
+   input_disableAll();
+   return 0;
+}
+
+
 
