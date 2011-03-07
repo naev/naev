@@ -90,6 +90,7 @@ CODE_SOURCE = \
 	nlua_tex.c \
 	nlua_time.c \
 	nlua_tk.c \
+	nlua_tut.c \
 	nlua_var.c \
 	nlua_vec2.c \
 	nmath.c \
@@ -224,6 +225,7 @@ CODE_SOURCE = \
 	nlua_tex.h \
 	nlua_time.h \
 	nlua_tk.h \
+	nlua_tut.h \
 	nlua_var.h \
 	nlua_vec2.h \
 	nluadef.h \
