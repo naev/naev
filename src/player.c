@@ -278,6 +278,12 @@ void player_newTutorial (void)
    /* Play music. */
    music_choose( "ambient" );
 
+   /* Load the GUI. */
+   gui_load( gui_pick() );
+
+   /* It's the tutorial. */
+   player_setFlag( PLAYER_TUTORIAL );
+
    /* Add the mission if found. */
    if (start_tutMission() != NULL) {
       if (mission_start(start_tutMission(), NULL) < 0)
@@ -289,12 +295,6 @@ void player_newTutorial (void)
       if (event_start( start_tutEvent(), NULL ))
          WARN("Failed to run start event '%s'.", start_tutEvent());
    }
-
-   /* Load the GUI. */
-   gui_load( gui_pick() );
-
-   /* It's the tutorial. */
-   player_setFlag( PLAYER_TUTORIAL );
 }
 
 

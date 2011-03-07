@@ -64,7 +64,5 @@ end
 -- Return to the main menu
 function toMenu()
     -- Function to return to the main menu here
-    tk.msg("TODO", "I can't return you to the main menu yet in Lua, so I'm going to kill you now.")
-    player.pilot():setHealth(0, 0)
-    evt.finish(true)
+    tut.main_menu();
 end

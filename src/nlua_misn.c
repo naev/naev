@@ -31,6 +31,7 @@
 #include "nlua_camera.h"
 #include "nlua_music.h"
 #include "nlua_bkg.h"
+#include "nlua_tut.h"
 #include "player.h"
 #include "mission.h"
 #include "log.h"
@@ -128,6 +129,8 @@ int misn_loadLibs( lua_State *L )
    nlua_loadTex(L,0);
    nlua_loadBackground(L,0);
    nlua_loadCamera(L,0);
+   if (player_isTut())
+      nlua_loadTut(L);
    return 0;
 }
 /*
@@ -244,7 +247,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if ((err==NULL) || (strcmp(err,"Mission Done")!=0)) {
+      if ((err==NULL) || (strcmp(err,"__done__")!=0)) {
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
          ret = -1;
@@ -632,7 +635,7 @@ static int misn_finish( lua_State *L )
    if (lua_isboolean(L,1))
       b = lua_toboolean(L,1);
    else {
-      lua_pushstring(L, "Mission Done");
+      lua_pushstring(L, "__done__");
       lua_error(L); /* THERE IS NO RETURN */
       return 0;
    }
@@ -644,7 +647,7 @@ static int misn_finish( lua_State *L )
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
       player_missionFinished( mission_getID( cur_mission->data->name ) );
 
-   lua_pushstring(L, "Mission Done");
+   lua_pushstring(L, "__done__");
    lua_error(L); /* shouldn't return */
 
    return 0;
