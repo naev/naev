@@ -342,7 +342,7 @@ void player_messageRaw( const char *str )
       p += i;
       if ((str[p] == '\n') || (str[p] == ' '))
          p++; /* Skip "empty char". */
-      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45. ); /* Theyr'e tabbed so it's shorter. */
+      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45. ); /* They're tabbed so it's shorter. */
    }
 }
 
@@ -1069,8 +1069,10 @@ static void gui_renderMessages( double dt )
 
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str[0] != '\0') {
-            if (mesg_stack[m].str[0] == '\t')
+            if (mesg_stack[m].str[0] == '\t') {
+               gl_printRestoreLast();
                gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
+            }
             else
                gl_printMaxRaw( NULL, gui_mesg_w - 15., x, y, &c, mesg_stack[m].str );
          }
