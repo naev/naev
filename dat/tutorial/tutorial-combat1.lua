@@ -39,7 +39,7 @@ function create()
     hook.timer(1000, "flyUpdate")
 end
 
--- Allow the player to fly around as he likes for 10s.
+-- Make the player fire his weapons.
 function flyUpdate()
     flytime = flytime - 1
     

@@ -140,7 +140,6 @@ function board()
     tkMsg(title1, message7:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), enable)
     player.omsgChange(omsg, landomsg:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), 0)
     hook.land("land")
-    -- TODO: Enable target planet, land
 
     enable = {"menu", "accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
     enableKeys(enable)
@@ -148,7 +147,7 @@ end
 
 -- Land hook.
 function land()
-    tkMsg(title1, message8)
+    tkMsg(title1, message8, enable)
     cleanup()
 end
 
