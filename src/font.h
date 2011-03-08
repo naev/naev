@@ -93,6 +93,9 @@ int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text 
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
 
+/* Misc stuff. */
+void gl_printRestoreLast (void);
+
 
 #endif /* FONT_H */
 

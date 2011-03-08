@@ -57,6 +57,11 @@ glFont gl_defFont; /**< Default font. */
 glFont gl_smallFont; /**< Small font. */
 
 
+/* Last used colour. */
+static glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\e'). */
+static int font_restoreLast      = 0; /**< Restore last colour. */
+
+
 /*
  * prototypes
  */
@@ -66,6 +71,16 @@ static int font_limitSize( const glFont *ft_font, int *width,
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
+
+
+/**
+ * @brief Restores last colour.
+ */
+void gl_printRestoreLast (void)
+{
+   if (font_lastCol != NULL)
+      font_restoreLast = 1;
+}
 
 
 /**
@@ -817,6 +832,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
  */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c )
 {
+   double a;
+
    /* Enable textures. */
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, font->texture);
@@ -827,10 +844,18 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
       gl_matrixTranslate( round(x), round(y) );
 
    /* Handle colour. */
-   if (c==NULL)
-      glColor4d( 1., 1., 1., 1. );
-   else
-      COLOUR(*c);
+   if (font_restoreLast) {
+      a   = (c==NULL) ? 1. : c->a;
+      ACOLOUR(*font_lastCol,a);
+   }
+   else {
+      if (c==NULL)
+         glColor4d( 1., 1., 1., 1. );
+      else
+         COLOUR(*c);
+   }
+   font_restoreLast = 0;
+   font_lastCol = NULL; /* Clear so it doesn't appear later. */
 
    /* Activate the appropriate VBOs. */
    gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
@@ -845,12 +870,14 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
 {
    GLushort ind[6];
    double a;
+   glColour *col;
 
    /* Handle escape sequences. */
    if (ch == '\e') /* Start sequence. */
       return 1;
    if (state == 1) {
-      a = (c==NULL) ? 1. : c->a;
+      col = NULL;
+      a   = (c==NULL) ? 1. : c->a;
       switch (ch) {
          /* TOP SECRET COLOUR CONVENTION
           * FOR YOUR EYES ONLY
@@ -860,29 +887,34 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
           * Digits represent states.
           */
          /* Colours. */
-         case 'r': ACOLOUR(cFontRed,a); break;
-         case 'g': ACOLOUR(cFontGreen,a); break;
-         case 'b': ACOLOUR(cFontBlue,a); break;
-         case 'y': ACOLOUR(cFontYellow,a); break;
-         case 'w': ACOLOUR(cFontWhite,a); break;
-         case 'p': ACOLOUR(cFontPurple,a); break;
-         case 'n': ACOLOUR(cBlack,a); break;
+         case 'r': col = &cFontRed; break;
+         case 'g': col = &cFontGreen; break;
+         case 'b': col = &cFontBlue; break;
+         case 'y': col = &cFontYellow; break;
+         case 'w': col = &cFontWhite; break;
+         case 'p': col = &cFontPurple; break;
+         case 'n': col = &cBlack; break;
          /* Fancy states. */
-         case 'F': ACOLOUR(cFriend,a); break;
-         case 'H': ACOLOUR(cHostile,a); break;
-         case 'N': ACOLOUR(cNeutral,a); break;
-         case 'I': ACOLOUR(cInert,a); break;
-         case 'M': ACOLOUR(cMapNeutral,a); break;
-         case 'C': ACOLOUR(cConsole,a); break;
-         case 'D': ACOLOUR(cDConsole,a); break;
+         case 'F': col = &cFriend; break;
+         case 'H': col = &cHostile; break;
+         case 'N': col = &cNeutral; break;
+         case 'I': col = &cInert; break;
+         case 'M': col = &cMapNeutral; break;
+         case 'C': col = &cConsole; break;
+         case 'D': col = &cDConsole; break;
          /* Reset state. */
          case '0':
-             if (c==NULL)
+             if (c==NULL) {
                 glColor4d( 1., 1., 1., 1. );
-             else
+             }
+             else {
                 COLOUR(*c);
+             }
              break;
       }
+      if (col != NULL)
+         ACOLOUR(*col,a);
+      font_lastCol = col;
       return 0;
    }
 
