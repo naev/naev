@@ -19,19 +19,19 @@ During the game, however, you will often need to travel great distances within a
     message5 = [[This is the system overlay map. It displays an overview of the star system you're currently in, displaying planets, jump points and any ships your scanners are currently detecting.
 You can use the overlay map to navigate around the system. Right click on a location to make your ship automatically fly there. Time will speed up during the journey, so you'll be there shortly.
 
-There is a marker on the map. Order your ship to fly to it.]]
+There is a marker on the map. Order your ship to fly to it. You can close the overlay map once you're underway if you wish.]]
     message6 = [[Excellent. Autopilot navigation in time compression is the most convenient way to get around in a system. Not that the autopilot will NOT stop you, you need to do that yourself.
 
 As you can see, there is another ship here. We're going to board it. For this, you must do three things.
 - First, target the ship. You can do this with %s, or by clicking on the ship.
 - Then, come to a (near) stop right on top of the ship. You learned how to do this earlier.
 - Finally, use %s to board the ship.]]
-    message7 = [[You have successfully boarded the ship. Boarding is useful in a number of situations, for example when you want to steal cargo or credits from a ship you've disabled in combat, or if a ship is asking for help.
-    
-The final step in this tutorial is landing. Landing works the same way as boarding, but with planets and stations. Target a planet with %s or the mouse, then use %s to request landing permission. If permission is granted, slow to a stop over the planet or station, then press %s again to land.
+    message7 = [[You have successfully boarded the ship. Boarding is useful in a number of situations, for example when you want to steal cargo or credits from a ship you've disabled in combat, or if a ship is asking for help.]]
+
+    message8 = [[The final step in this tutorial is landing. Landing works the same way as boarding, but with planets and stations. Target a planet with %s or the mouse, then use %s to request landing permission. If permission is granted, slow to a stop over the planet or station, then press %s again to land.
 
 Land on Paul 2 now. Remember, you can use the overlay map to get there quicker!]]
-    message8 = [[Good job, you have landed on Paul 2. Your game will automatically be saved whenever you land. As a final tip, you can press %s even if you haven't targeted a planet or station - you will automatically target the nearest landable one.
+    message9 = [[Good job, you have landed on Paul 2. Your game will automatically be saved whenever you land. As a final tip, you can press %s even if you haven't targeted a planet or station - you will automatically target the nearest landable one.
 
 Congratulations! This concludes tutorial: Basic operation.]]
     
@@ -39,7 +39,7 @@ Congratulations! This concludes tutorial: Basic operation.]]
     stopomsg = "Press and hold %s until you stop turning, then thrust until you come to a (near) stop"
     mapomsg = "Press %s to open the overlay map"
     boardomsg = "Target the ship with %s, then approach it and press %s to board"
-    landomsg = "Target Paul 2 with %s, then request landing permission with %s. Once granted, prsee %s again to land"
+    landomsg = "Target Paul 2 with %s, then request landing permission with %s. Once granted, press %s again to land"
 end
 
 function create()
@@ -130,14 +130,15 @@ function proxytrigger()
     tkMsg(title1, message6:format(tutGetKey("target_next"), tutGetKey("board")), enable)
     omsg = player.omsgAdd(boardomsg:format(tutGetKey("target_next"), tutGetKey("board")), 0)
 
-    enable = {"menu", "accel", "left", "right", "reverse", "target_next", "board"}
+    enable = {"menu", "accel", "left", "right", "reverse", "target_next", "board", "overlay"}
     enableKeys(enable)
 end
 
 -- Board hook for the board practice ship.
 function board()
     player.unboard()
-    tkMsg(title1, message7:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), enable)
+    tkMsg(title1, message7, enable)
+    tkMsg(title1, message8:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), enable)
     player.omsgChange(omsg, landomsg:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), 0)
     hook.land("land")
 
@@ -147,7 +148,7 @@ end
 
 -- Land hook.
 function land()
-    tkMsg(title1, message8, enable)
+    tkMsg(title1, message9, enable)
     cleanup()
 end
 

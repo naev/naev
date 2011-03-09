@@ -27,7 +27,7 @@ function create()
     player.pilot():setPos(vec2.new(0, 0))
     -- TODO: switch to Lancelot. Equip with two Laser MK2s.
 
-    enable = {"menu", "left", "right", "accel", "reverse", "primary"}
+    enable = {"menu", "left", "right", "primary"}
     enableKeys(enable)
 
     tkMsg(title1, message1, enable)
