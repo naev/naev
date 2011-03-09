@@ -20,7 +20,7 @@ During the game, however, you will often need to travel great distances within a
 You can use the overlay map to navigate around the system. Right click on a location to make your ship automatically fly there. Time will speed up during the journey, so you'll be there shortly.
 
 There is a marker on the map. Order your ship to fly to it. You can close the overlay map once you're underway if you wish.]]
-    message6 = [[Excellent. Autopilot navigation in time compression is the most convenient way to get around in a system. Not that the autopilot will NOT stop you, you need to do that yourself.]]
+    message6 = [[Excellent. Autopilot navigation in time compression is the most convenient way to get around in a system. Note that the autopilot will NOT stop you, you need to do that yourself.]]
     message7 = [[As you can see, there is another ship here. We're going to board it. For this, you must do three things.
 - First, target the ship. You can do this with %s, or by clicking on the ship.
 - Then, come to a (near) stop right on top of the ship. You learned how to do this earlier.
