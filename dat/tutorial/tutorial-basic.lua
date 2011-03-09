@@ -148,7 +148,7 @@ end
 
 -- Land hook.
 function land()
-    tkMsg(title1, message9, enable)
+    tkMsg(title1, message9:format(tutGetKey("land")), enable)
     cleanup()
 end
 
