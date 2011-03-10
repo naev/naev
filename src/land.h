@@ -47,6 +47,7 @@ void land_genWindows( int load, int changetab );
 void takeoff( int delay );
 void land_cleanup (void);
 void land_exit (void);
+int land_setWindow( int window );
 
 
 /*

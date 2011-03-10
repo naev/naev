@@ -41,6 +41,7 @@ static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
+static int systemL_setknown( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
@@ -60,6 +61,7 @@ static const luaL_reg system_methods[] = {
    { "presence", systemL_presence },
    { "radius", systemL_radius },
    { "isKnown", systemL_isknown },
+   { "setKnown", systemL_setknown },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
    { "mrkRm", systemL_mrkRm },
@@ -687,6 +689,30 @@ static int systemL_isknown( lua_State *L )
    StarSystem *sys = luaL_validsystem(L, 1);
    lua_pushboolean(L, sys_isKnown(sys));
    return 1;
+}
+
+
+/**
+ * @brief Sets a system's known state.
+ *
+ * @usage s:setKnown( false ) -- Makes system unknown.
+ *    @luaparam s System to set known.
+ *    @luaparam b Whether or not to set as known (defaults to false).
+ * @luafunc setKnown( s, b )
+ */
+static int systemL_setknown( lua_State *L )
+{
+   int b;
+   StarSystem *sys;
+   
+   sys = luaL_validsystem(L, 1);
+   b   = lua_toboolean(L, 2);
+
+   if (b)
+      sys_setFlag( sys, SYSTEM_KNOWN );
+   else
+      sys_rmFlag( sys, SYSTEM_KNOWN );
+   return 0;
 }
 
 

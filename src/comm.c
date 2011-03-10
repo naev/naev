@@ -147,9 +147,6 @@ int comm_openPilot( unsigned int pilot )
    /* Create the pilot window. */
    wid = comm_openPilotWindow();
 
-   /* Don't close automatically. */
-   comm_commClose = 0;
-
    /* Run generic hail hooks. */
    hparam[0].type       = HOOK_PARAM_PILOT;
    hparam[0].u.lp.pilot = p->id;
@@ -161,12 +158,15 @@ int comm_openPilot( unsigned int pilot )
    if (run > 0) {
       comm_close( wid, NULL );
       comm_pilot = p;
-      comm_openPilotWindow();
+      wid = comm_openPilotWindow();
    }
 
    /* Close window if necessary. */
    if (comm_commClose)
-      window_close( wid, NULL );
+      comm_close( wid, NULL );
+
+   /* Don't close automatically. */
+   comm_commClose = 0;
 
    return 0;
 }

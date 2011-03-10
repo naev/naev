@@ -353,11 +353,11 @@ static int gl_setupAttributes (void)
 #if SDL_VERSION_ATLEAST(1,3,0)
       SDL_GL_SetSwapInterval(1);
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
-#ifdef SDL_GL_SWAP_CONTROL
+#if SDL_VERSION_ATLEAST(1,2,10)
       SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
-#else /* SDL_GL_SWAP_CONTROL */
+#else /* SDL_VERSION_ATLEAST(1,2,10) */
       DEBUG("VSync unsupported on old SDL versions (before 1.2.10).");
-#endif /* SDL_GL_SWAP_CONTROL */
+#endif /* SDL_VERSION_ATLEAST(1,2,10) */
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    return 0;
