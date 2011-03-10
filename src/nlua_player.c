@@ -69,6 +69,7 @@ static int playerL_unboard( lua_State *L );
 /* Land stuff. */
 static int playerL_takeoff( lua_State *L );
 static int playerL_allowLand( lua_State *L );
+static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
@@ -103,6 +104,7 @@ static const luaL_reg playerL_methods[] = {
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
    { "allowLand", playerL_allowLand },
+   { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
@@ -673,6 +675,54 @@ static int playerL_allowLand( lua_State *L )
       player_nolandMsg( str );
    }
    return 0;
+}
+
+
+/**
+ * @brief Sets the active land window.
+ *
+ * Valid windows are:<br/>
+ *  - main<br/>
+ *  - bar<br/>
+ *  - missions<br/>
+ *  - outfits<br/>
+ *  - shipyard<br/>
+ *  - equipment<br/>
+ *  - commodity<br/>
+ *
+ * @usage player.landWindow( "outfits" )
+ *    @luaparam winname Name of the window.
+ *    @luareturn True on success.
+ */
+static int playerL_landWindow( lua_State *L )
+{
+   int ret;
+   const char *str;
+   int win;
+
+   str = luaL_checkstring(L,1);
+   if (strcasecmp(str,"main")==0)
+      win = LAND_WINDOW_MAIN;
+   else if (strcasecmp(str,"bar")==0)
+      win = LAND_WINDOW_BAR;
+   else if (strcasecmp(str,"missions")==0)
+      win = LAND_WINDOW_MISSION;
+   else if (strcasecmp(str,"outfits")==0)
+      win = LAND_WINDOW_OUTFITS;
+   else if (strcasecmp(str,"shipyard")==0)
+      win = LAND_WINDOW_SHIPYARD;
+   else if (strcasecmp(str,"equipment")==0)
+      win = LAND_WINDOW_EQUIPMENT;
+   else if (strcasecmp(str,"commodity")==0)
+      win = LAND_WINDOW_COMMODITY;
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Sets the window. */
+   ret = land_setWindow( win );
+
+   lua_pushboolean( L, !ret );
+   return 1;
 }
 
 

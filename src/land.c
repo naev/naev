@@ -1198,6 +1198,21 @@ void land_genWindows( int load, int changetab )
 
 
 /**
+ * @brief Sets the land window tab.
+ *
+ *    @param Tab to set like LAND_WINDOW_COMMODITY.
+ *    @return 0 on success.
+ */
+int land_setWindow( int window )
+{
+   if (land_windowsMap[ window ] < 0)
+      return -1;
+   window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[window] );
+   return 0;
+}
+
+
+/**
  * @brief Opens up all the land dialogue stuff.
  *    @param p Planet to open stuff for.
  *    @param load Whether or not loading the game.
