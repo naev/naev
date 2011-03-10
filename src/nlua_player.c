@@ -46,6 +46,7 @@ static int playerL_shipname( lua_State *L );
 static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
 static int playerL_msg( lua_State *L );
+static int playerL_msgClear( lua_State *L );
 static int playerL_omsgAdd( lua_State *L );
 static int playerL_omsgChange( lua_State *L );
 static int playerL_omsgRm( lua_State *L );
@@ -84,6 +85,7 @@ static const luaL_reg playerL_methods[] = {
    { "pay", playerL_pay },
    { "credits", playerL_credits },
    { "msg", playerL_msg },
+   { "msgClear", playerL_msgClear },
    { "omsgAdd", playerL_omsgAdd },
    { "omsgChange", playerL_omsgChange },
    { "omsgRm", playerL_omsgRm },
@@ -241,6 +243,17 @@ static int playerL_msg( lua_State *L )
    str = luaL_checkstring(L,1);
    player_messageRaw(str);
 
+   return 0;
+}
+/**
+ * @brief Clears the player's message buffer.
+ *
+ * @luafunc msgClear()
+ */
+static int playerL_msgClear( lua_State *L )
+{
+   (void) L;
+   gui_clearMessages();
    return 0;
 }
 /**
