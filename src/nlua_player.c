@@ -693,6 +693,7 @@ static int playerL_allowLand( lua_State *L )
  * @usage player.landWindow( "outfits" )
  *    @luaparam winname Name of the window.
  *    @luareturn True on success.
+ * @luafunc landwindow( winname )
  */
 static int playerL_landWindow( lua_State *L )
 {
