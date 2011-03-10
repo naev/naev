@@ -701,6 +701,11 @@ static int playerL_landWindow( lua_State *L )
    const char *str;
    int win;
 
+   if (!landed) {
+      NLUA_ERROR(L, "Must be landed to set the active land window.");
+      return 0;
+   }
+
    str = luaL_checkstring(L,1);
    if (strcasecmp(str,"main")==0)
       win = LAND_WINDOW_MAIN;
