@@ -1387,8 +1387,9 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
       }
    }
 
-   /* Check land missions. */
-   if ((to_visit != 0) && !has_visited(to_visit)) {
+   /* Check land missions - aways run hooks. */
+   /*if ((to_visit != 0) && !has_visited(to_visit)) {*/
+   {
       /* Run hooks, run after music in case hook wants to change music. */
       if (torun_hook != NULL)
          if (hooks_run( torun_hook ) > 0)
