@@ -206,7 +206,7 @@ function choose_ambient ()
    if force then
       -- Choose the music, bias by faction first
       local add_neutral = false
-      local neutral_prob = 0.5
+      local neutral_prob = 0.6
       if factions["Collective"] then
          ambient = { "collective1", "collective2", "automat" }
       elseif factions["Empire"] then
@@ -219,8 +219,7 @@ function choose_ambient ()
          ambient = { "dvaered1", "dvaered2" }
          add_neutral = true
       elseif nebu then
-         ambient = { "ambient1", "ambient1", "ambient1",
-               "ambient3", "ambient3", "ambient3" }
+         ambient = { "ambient1", "ambient3" }
          add_neutral = true
       else
          ambient = ambient_neutral
