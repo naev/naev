@@ -215,6 +215,9 @@ function choose_ambient ()
       elseif factions["Sirius"] then
          ambient = { "sirius1", "sirius2" }
          add_neutral = true
+      elseif factions["Dvaered"] then
+         ambient = { "dvaered1", "dvaered2" }
+         add_neutral = true
       elseif nebu then
          ambient = { "ambient1", "ambient1", "ambient1",
                "ambient3", "ambient3", "ambient3" }
