@@ -1,5 +1,7 @@
 -- This is the tutorial: basic combat.
 
+include("dat/tutorial/tutorial-common.lua")
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -13,16 +15,16 @@ Combat is an important aspect of Naev, and you will have to fight off enemies so
 
 Now we will examine another type of weapon that uses ammunition instead of energy. Ammunition does not automatically recharge, you will have to buy it on planets or stations.
 
-You have been equipped with a Mace rocket launcher. Fire it now using %s and watch its ammunition deplete.]]
+You have been equipped with a Mace rocket launcher, which is treated as a secondary weapon by default. Fire it now using %s and watch its ammunition deplete.]]
 
-    wepsomsg = [[Use %s to test your weapons (%ds remaining)]]
+    wepomsg = [[Use %s to test your weapons (%ds remaining)]]
 end
 
 function create()
     misn.accept()
     
     -- Set up the player here.
-    player.teleport("Iroquois")
+    player.teleport("Cherokee")
     pp = player.pilot()
     pp:setPos(vec2.new(0, 0))
     pp:rmOutfit("all")
@@ -35,10 +37,11 @@ function create()
 
     tkMsg(title1, message1, enable)
     tkMsg(title1, message2:format(tutGetKey("primary")), enable)
-    omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
 
     waitenergy = true
     flytime = 10 -- seconds of fly time
+
+    omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
     hook.timer(1000, "flyUpdate")
 end
 
@@ -49,23 +52,31 @@ function flyUpdate()
     if waitenergy then 
         if flytime == 0 then
             waitenergy = false
+            waitammo = true
+
             player.omsgRm(omsg)
             tkMsg(title1, message3:format(tutGetKey("primary")), enable)
             pp:rmOutfit("all")
-            pp:addOutfit("Mace Launcher", 1) -- Needs ammo?
-            waitammo = true
+            pp:addOutfit("Mace Launcher", 1)
+
+            enable = {"menu", "left", "right", "primary", "secondary"}
+            enableKeys(enable)
+
             flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
+            hook.timer(1000, "flyUpdate")
         else
-            player.omsgChange(omsg, wepsomsg:format(tutGetKey("primary"), flytime), 0)
+            player.omsgChange(omsg, wepomsg:format(tutGetKey("secondary"), flytime), 0)
             hook.timer(1000, "flyUpdate")
         end
     elseif waitammo then
         if flytime == 0 then
             player.omsgRm(omsg)
             waitammo = false
+            
+            
         else
-            player.omsgChange(omsg, wepsomsg:format(tutGetKey("primary"), flytime), 0)
+            player.omsgChange(omsg, wepomsg:format(tutGetKey("secondary"), flytime), 0)
             hook.timer(1000, "flyUpdate")
         end
     end
