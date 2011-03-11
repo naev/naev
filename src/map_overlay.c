@@ -381,7 +381,7 @@ void ovr_mrkClear (void)
  *
  *    @param mrk Marker to clean up after.
  */
-static void ovr_mrkCleanup(  ovr_marker_t *mrk )
+static void ovr_mrkCleanup( ovr_marker_t *mrk )
 {
    if (mrk->text != NULL)
       free( mrk->text );

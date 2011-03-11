@@ -385,6 +385,7 @@ int main( int argc, char** argv )
    /* exit subsystems */
    cli_exit(); /* CLean up the console. */
    map_exit(); /* destroys the map. */
+   ovr_mrkFree(); /* Clear markers. */
    toolkit_exit(); /* kills the toolkit */
    ai_exit(); /* stops the Lua AI magic */
    joystick_exit(); /* releases joystick */
