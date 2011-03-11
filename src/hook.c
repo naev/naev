@@ -670,7 +670,6 @@ void hook_rmMisnParent( unsigned int parent )
          h->delete = 1;
       }
    }
-   hooks_purgeList();
 }
 
 
@@ -689,7 +688,6 @@ void hook_rmEventParent( unsigned int parent )
          h->delete = 1;
       }
    }
-   hooks_purgeList();
 }
 
 

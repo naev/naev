@@ -278,11 +278,6 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
          }
    }
 
-#if DEBUGGING
-   lua_pushnil(L);
-   lua_setglobal(L, "__misn");
-#endif
-
    return ret;
 }
 
