@@ -474,22 +474,29 @@ static void hooks_purgeList (void)
 
    /* Second pass to delete. */
    hl = NULL;
-   for (h=hook_list; h!=NULL; h=h->next) {
+   h  = hook_list;
+   while (h != NULL) {
       /* Find valid timer hooks. */
       if (h->delete) {
+
          if (hl == NULL)
             hook_list = h->next;
          else
-            hl = h->next;
+            hl->next  = h->next;
 
          /* Free. */
+         h->next = NULL;
          hook_free( h );
 
-         h = (hl != NULL) ? hl : hook_list;
-         if (h == NULL)
-            break;
+         /* Last. */
+         h = hl;
       }
+
       hl = h;
+      if (h == NULL)
+         h = hook_list;
+      else
+         h = h->next;
    }
 }
 
@@ -639,46 +646,13 @@ unsigned hook_addFunc( int (*func)(void*), void* data, const char *stack )
  * @brief Removes a hook.
  *
  *    @param id Identifier of the hook to remove.
- *    @return 1 if hook was removed, 2 if hook was scheduled for removal and
- *            0 if it wasn't removed.
  */
-int hook_rm( unsigned int id )
+void hook_rm( unsigned int id )
 {
-   int f;
-   Hook *h, *hl;
+   Hook *h;
 
-   hl = NULL;
-   f  = 0;
-   for (h=hook_list; h!=NULL; h=h->next) {
-      if (h->id == id) {
-         f = 1;
-         break;
-      }
-      hl = h;
-   }
-
-   /* Check if hook was found. */
-   if (f == 0)
-      return 0;
-
-   /* Mark to delete, but do not delete yet, hooks are running. */
-   if (hook_runningstack) {
-      h->delete = 1;
-      return 2;
-   }
-
-   /* Handle next. */
-   if (hl == NULL)
-      hook_list = h->next;
-   else
-      hl = h->next;
-
-   /* Free. */
-   hook_free( h );
-
-   h = (hl != NULL) ? hl : hook_list;
-
-   return 1;
+   h = hook_get( id );
+   h->delete = 1;
 }
 
 
@@ -912,10 +886,14 @@ static void hook_free( Hook *h )
  */
 void hook_cleanup (void)
 {
-   Hook *h;
+   Hook *h, *hn;
 
-   for (h=hook_list; h!=NULL; h=h->next)
+   h = hook_list;
+   while (h != NULL) {
+      hn = h->next;
       hook_free( h );
+      h = hn;
+   }
    /* sane defaults just in case */
    hook_list  = NULL;
 }

@@ -116,31 +116,26 @@ int nlua_loadHook( lua_State *L )
  * @usage hook.rm( h ) -- Hook is removed
  *
  *    @luaparam h Identifier of the hook to remove.
- *    @luareturn true if the hook was removed.
  * @luafunc rm( h )
  */
 static int hookL_rm( lua_State *L )
 {
    unsigned int h;
-   int ret;
 
    /* Remove the hook. */
    h = luaL_checklong( L, 1 );
-   ret = hook_rm( h );
+   hook_rm( h );
 
    /* Clean up hook data. */
-   if (ret) {
-      lua_getglobal( L, "__hook_arg" );
-      if (!lua_isnil(L,-1)) {
-         lua_pushnumber( L, h ); /* t, n */
-         lua_pushnil( L );       /* t, n, nil */
-         lua_settable( L, -3 );  /* t */
-      }
-      lua_pop( L, 1 );        /* */
+   lua_getglobal( L, "__hook_arg" );
+   if (!lua_isnil(L,-1)) {
+      lua_pushnumber( L, h ); /* t, n */
+      lua_pushnil( L );       /* t, n, nil */
+      lua_settable( L, -3 );  /* t */
    }
+   lua_pop( L, 1 );        /* */
 
-   lua_pushboolean( L, ret );
-   return 1;
+   return 0;
 }
 
 
