@@ -193,6 +193,9 @@ static void misn_setEnv( lua_State *L, Mission *misn )
 }
 
 
+/**
+ * @brief Gets the mission that's being currently run in Lua.
+ */
 Mission* misn_getFromLua( lua_State *L )
 {
    Mission *misn;
@@ -214,11 +217,11 @@ lua_State *misn_runStart( Mission *misn, const char *func )
 
    L = misn->L;
 
-   /* Set the Lua state. */
-   lua_getglobal( L, func );
-
    /* Set environment. */
    misn_setEnv( L, misn );
+
+   /* Set the Lua state. */
+   lua_getglobal( L, func );
 
    return L;
 }
@@ -274,11 +277,6 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
             break;
          }
    }
-
-#if DEBUGGING
-   lua_pushnil(L);
-   lua_setglobal(L, "__misn");
-#endif
 
    return ret;
 }
