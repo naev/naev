@@ -2899,7 +2899,7 @@ static int pilotL_land( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_gettop(L) > 0)
+   if ((lua_gettop(L) > 0) && (!lua_isnil(L,2)))
       pnt = luaL_validplanet( L, 2 );
    else
       pnt = NULL;

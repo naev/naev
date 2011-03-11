@@ -231,6 +231,8 @@ function __landstop ()
       ai.stop() -- Will stop the pilot if below err vel
       if not ai.land() then
          ai.popsubtask()
+      else
+         ai.poptask() -- Done, pop task
       end
    end
 end

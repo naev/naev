@@ -693,12 +693,18 @@ static int playerL_allowLand( lua_State *L )
  * @usage player.landWindow( "outfits" )
  *    @luaparam winname Name of the window.
  *    @luareturn True on success.
+ * @luafunc landwindow( winname )
  */
 static int playerL_landWindow( lua_State *L )
 {
    int ret;
    const char *str;
    int win;
+
+   if (!landed) {
+      NLUA_ERROR(L, "Must be landed to set the active land window.");
+      return 0;
+   }
 
    str = luaL_checkstring(L,1);
    if (strcasecmp(str,"main")==0)
