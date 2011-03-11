@@ -43,6 +43,7 @@ function create()
     
     -- Set up the player here.
     player.teleport("Mohawk")
+    player.msgClear()
     
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
 

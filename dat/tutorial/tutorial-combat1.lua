@@ -23,9 +23,12 @@ function create()
     
     -- Set up the player here.
     player.teleport("Iroquois")
-    
-    player.pilot():setPos(vec2.new(0, 0))
-    -- TODO: switch to Lancelot. Equip with two Laser MK2s.
+    pp = player.pilot()
+    pp:setPos(vec2.new(0, 0))
+    pp:rmOutfit("all")
+    pp:addOutfit("Laser Cannon MK2", 2)
+    -- TODO: switch to Lancelot.
+    player.msgClear()
 
     enable = {"menu", "left", "right", "primary"}
     enableKeys(enable)
@@ -48,6 +51,8 @@ function flyUpdate()
             waitenergy = false
             player.omsgRm(omsg)
             tkMsg(title1, message3:format(tutGetKey("primary")), enable)
+            pp:rmOutfit("all")
+            pp:addOutfit("Mace Launcher", 1) -- Needs ammo?
             waitammo = true
             flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)

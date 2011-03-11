@@ -45,6 +45,7 @@ function create()
     misn.accept()
     -- Set up the player here.
     player.teleport("Mohawk")
+    player.msgClear()
 
     pilot.clear()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
