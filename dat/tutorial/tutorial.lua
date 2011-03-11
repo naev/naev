@@ -22,6 +22,7 @@ function create()
     -- Set defaults just in case.
     player.teleport("Mohawk")
     player.pilot():setPos(vec2.new(0, 0))
+    player.msgClear()
     
     -- Create menu.
     selection = tk.choice(menutitle, menutext, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menux)
@@ -31,15 +32,15 @@ function create()
     elseif selection == 2 then
         startModule(menu2)
     elseif selection == 3 then
-        placeholder()
+        startModule(menu3)
     elseif selection == 4 then
         placeholder()
     elseif selection == 5 then
-        placeholder()
+        startModule(menu5)
     elseif selection == 6 then
         placeholder()
     elseif selection == 7 then
-        placeholder()
+        startModule(menu7)
     elseif selection == 8 then -- Quit to main menu
         tut.main_menu();
     else
@@ -51,7 +52,7 @@ end
 
 -- Placeholder not-implemented function
 function placeholder()
-    tk.msg("Placeholder", "Not implemented yet!")
+    tk.msg("Not implemented", "This tutorial has not been implemented yet because the subject matter is still in development.")
     create()
 end
 
