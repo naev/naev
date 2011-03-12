@@ -24,6 +24,11 @@ function create()
     player.pilot():setPos(vec2.new(0, 0))
     player.msgClear()
     
+    system.get("Mohawk"):setKnown(false)
+    system.get("Cherokee"):setKnown(false)
+    system.get("Iroquois"):setKnown(false)
+    system.get("Navajo"):setKnown(false)
+    
     -- Create menu.
     selection = tk.choice(menutitle, menutext, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menux)
     
