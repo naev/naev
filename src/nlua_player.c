@@ -878,13 +878,27 @@ static int playerL_addShip( lua_State *L )
 
 
 /**
- * @luafunc swapShip( ship, name, loc, noname )
+ * @brief Swaps the player's current ship with a new ship given to him.
+ *    @luaparam ship Name of the ship to add.
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
+ *    @luaparam loc Location to add to, if nil or ommitted it adds it to local planet (must be landed).
+ *    @luaparam noname If true does not let the player name the ship (defaults to false).
+ *    @luaparam remove If true removes the player's current ship (so it replaces and doesn't swap).
+ * @luafunc swapShip( ship, name, loc, noname, remove )
  */
 static int playerL_swapShip( lua_State *L )
 {
    Pilot *p;
+   char *cur;
+   int remship;
+
+   remship = lua_toboolean(L,5);
    p = playerL_newShip( L );
+   cur = player.p->name;
    player_swapShip( p->name );
+   if (remship)
+      player_rmShip( cur );
+
    return 0;
 }
 
