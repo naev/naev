@@ -81,17 +81,33 @@ function enter()
         hook.pilot(target, "idle", "targetIdle")
         hook.pilot(target, "death", "targetDeath")
         hook.pilot(target, "board", "targetBoard")
+		-- Timer & counter for anti-satelite behaviour of pilot (-Ana.)
+		hook.timer(1000, "antiSatelite") 
+		satelite = 0 
+		
         targetIdle()
     end
 end
 
 function targetIdle()
     location = target:pos()
-    dist = 500
+    dist = 750
     angle = rnd.rnd() * 2 * math.pi
-    newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 500px away in a random direction
+    newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
     target:taskClear()
     target:goto(location + newlocation, false, false)
+	
+	-- New position so reset satelite counter (-Ana.)
+	satelite = 0 
+end
+
+function antiSatelite()
+	satelite = satelite +1
+	if satelite >5 then
+		-- Just make sure that every 5seconds a new position is taken to prevent the pilot from circling (-Ana.)
+		targetIdle()
+	end
+	hook.timer(1000, "antiSatelite")
 end
 
 function targetDeath()

@@ -206,28 +206,28 @@ function choose_ambient ()
    if force then
       -- Choose the music, bias by faction first
       local add_neutral = false
+      local neutral_prob = 0.6
       if factions["Collective"] then
          ambient = { "collective1", "collective2", "automat" }
       elseif factions["Empire"] then
-         ambient = { "empire2", "empire2", "empire2",
-               "empire1", "empire1", "empire1" }
+         ambient = { "empire1", "empire2" }
          add_neutral = true
       elseif factions["Sirius"] then
          ambient = { "sirius1", "sirius2" }
          add_neutral = true
+      elseif factions["Dvaered"] then
+         ambient = { "dvaered1", "dvaered2" }
+         add_neutral = true
       elseif nebu then
-         ambient = { "ambient1", "ambient1", "ambient1",
-               "ambient3", "ambient3", "ambient3" }
+         ambient = { "ambient1", "ambient3" }
          add_neutral = true
       else
          ambient = ambient_neutral
       end
 
-      -- Check if needs to append neutral ambient songs
-      if add_neutral then
-         for k,v in pairs(ambient_neutral) do
-            table.insert(ambient, v)
-         end
+      -- Clobber array with generic songs if allowed.
+      if add_neutral and rnd.rnd() < neutral_prob then
+         ambient = ambient_neutral
       end
 
       -- Make sure it's not already in the list or that we have to stop the
