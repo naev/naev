@@ -66,7 +66,7 @@ end
 function board()
     player.unboard()
     seiryuu:setHealth(100,100)
-    evt.misnStart("Shadow Vigil")
+    naev.missionStart("Shadow Vigil")
     finish()
 end
 

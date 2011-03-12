@@ -48,14 +48,12 @@
  * libraries
  */
 /* evt */
-static int evt_misnStart( lua_State *L );
 static int evt_npcAdd( lua_State *L );
 static int evt_npcRm( lua_State *L );
 static int evt_finish( lua_State *L );
 static int evt_save( lua_State *L );
 static int evt_claim( lua_State *L );
 static const luaL_reg evt_methods[] = {
-   { "misnStart", evt_misnStart },
    { "npcAdd", evt_npcAdd },
    { "npcRm", evt_npcRm },
    { "save", evt_save },
@@ -163,48 +161,6 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    }
 
    return ret;
-}
-
-
-/**
- * @brief Starts a mission.
- *
- * @usage evt.misnStart( "Tutorial" ) -- Starts the tutorial
- *
- *    @luaparam misn Name of the mission to start, should match a mission in dat/mission.xml.
- * @luafunc misnStart( misn )
- */
-static int evt_misnStart( lua_State *L )
-{
-   const char *str;
-   unsigned int id;
-   int ret, i;
-   Event_t *cur_event;
-
-   str = luaL_checkstring(L, 1);
-   ret = mission_start( str, &id );
-   if (ret < 0) {
-      /* Reset the hook. */
-      NLUA_ERROR(L,"Failed to start mission.");
-      return 0;
-   }
-
-   /* Pass on claims if necessary. */
-   cur_event = event_getFromLua(L);
-   if (cur_event->claims != NULL) {
-      for (i=0; i<MISSION_MAX; i++) {
-         if (player_missions[i].id == id) {
-            /* Must not have claimed something by itself. */
-            if (player_missions[i].claims == NULL) {
-               player_missions[i].claims  = cur_event->claims;
-               cur_event->claims          = NULL;
-            }
-            break;
-         }
-      }
-   }
-
-   return 0;
 }
 
 

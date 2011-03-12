@@ -180,7 +180,7 @@ function missionevent()
     else
         -- Roll a random mission and start it.
         local select = rnd.rnd(1, #mymissions)
-        evt.misnStart(mymissions[select])
+        naev.missionStart(mymissions[select])
     
         destroyevent()
     end
