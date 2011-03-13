@@ -27,6 +27,7 @@
 #include "nlua_hook.h"
 #include "mission.h"
 #include "space.h"
+#include "menu.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */
@@ -293,6 +294,10 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
 {
    if (hook->delete)
       return 0; /* hook should be deleted not run */
+
+   /* Don't run anything when main menu is open. */
+   if (menu_isOpen(MENU_MAIN))
+      return 0;
 
    switch (hook->type) {
       case HOOK_TYPE_MISN:

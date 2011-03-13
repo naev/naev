@@ -639,10 +639,12 @@ static int playerL_unboard( lua_State *L )
  */
 static int playerL_takeoff( lua_State *L )
 {
-   (void) L;
+   if (!landed) {
+      NLUA_ERROR(L,"Player must be landed to force takeoff.");
+      return 0;
+   }
 
-   if (landed)
-      landed = 0;
+   land_queueTakeoff();
 
    return 0;
 }

@@ -357,7 +357,7 @@ void ovr_mrkFree (void)
 
    /* Free arary. */
    if (ovr_markers != NULL)
-      array_free( &ovr_markers );
+      array_free( ovr_markers );
    ovr_markers = NULL;
 }
 
