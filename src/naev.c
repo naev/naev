@@ -93,6 +93,7 @@
 #include "start.h"
 #include "threadpool.h"
 #include "load.h"
+#include "dialogue.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -149,7 +150,7 @@ static void update_all (void);
 static void render_all (void);
 /* Misc. */
 void loadscreen_render( double done, const char *msg ); /* nebula.c */
-void main_loop (void); /* dialogue.c */
+void main_loop( int update ); /* dialogue.c */
 
 
 /**
@@ -348,7 +349,7 @@ int main( int argc, char** argv )
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
-      main_loop();
+      main_loop( 1 );
    }
 
 
@@ -590,33 +591,36 @@ void unload_all (void)
 /**
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
-void main_loop (void)
+void main_loop( int update )
 {
-   int tk;
-
-   /* Check to see if toolkit is open. */
-   tk = toolkit_isOpen();
-
-   /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+   /*
+    * Control FPS.
+    */
    fps_control(); /* everyone loves fps control */
 
-   /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
-   player_updateAutonav( real_dt );
-
+   /*
+    * Handle update.
+    */
    input_update( real_dt ); /* handle key repeats. */
-
    sound_update( real_dt ); /* Update sounds. */
-   if (tk) toolkit_update(); /* to simulate key repetition */
-   if (!paused)
+   if (toolkit_isOpen())
+      toolkit_update(); /* to simulate key repetition */
+   if (!paused && update) {
+      /* Important that we pass real_dt here otherwise we get a dt feedback loop which isn't pretty. */
+      player_updateAutonav( real_dt );
       update_all(); /* update game */
+   }
+
+   /*
+    * Handle render.
+    */
+   /* Clear buffer. */
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    render_all();
    /* Toolkit is rendered on top. */
-   if (tk) toolkit_render();
-
+   if (toolkit_isOpen())
+      toolkit_render();
    gl_checkErr(); /* check error every loop */
-
    /* Draw buffer. */
    SDL_GL_SwapBuffers();
 }

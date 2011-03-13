@@ -44,7 +44,7 @@ int dialogue_open; /**< Number of dialogues open. */
  * Prototypes.
  */
 /* extern */
-extern void main_loop (void); /* from naev.c */
+extern void main_loop( int update ); /* from naev.c */
 /* generic */
 static void dialogue_close( unsigned int wid, char* str );
 static void dialogue_cancel( unsigned int wid, char* str );
@@ -637,7 +637,7 @@ static int toolkit_loop( int *loop_done )
    *loop_done = 0;
    while (!(*loop_done) && toolkit_isOpen()) {
       /* Loop first so exit condition is checked before next iteration. */
-      main_loop();
+      main_loop( 0 );
 
       while (SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) { /* pass quit event to main engine */
