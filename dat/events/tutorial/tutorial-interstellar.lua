@@ -105,11 +105,6 @@ function jumpmsg(message)
     tkMsg(title1, message, enable)
 end
 
--- Abort hook.
-function abort()
-    cleanup()
-end
-
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()

@@ -272,11 +272,6 @@ function taunt()
     taunthook = hook.timer(4000, "taunt")
 end
  
--- Abort hook.
-function abort()
-    cleanup()
-end
-
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()
