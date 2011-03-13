@@ -1,6 +1,6 @@
 -- This is the tutorial: basic combat.
 
-include("dat/tutorial/tutorial-common.lua")
+include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -19,16 +19,23 @@ You have been equipped with a Mace rocket launcher, which is treated as a second
     message4 = [[Let's take a closer look at the difference between primary and secondary weapons.
 
 Open the info menu by pressing %s.]]
-    message5 = [[The info menu allows you to manage your weapons. You have ten weapon groups available to you. Each weapon may be assigned to any or all of these weapon groups, as either a primary or a secondary weapon. As you have just seen, primary weapons are fired with %s while secondary weapons are fired with %s. During flight, you may switch between weapon groups at any time by using the appropriate buttons (%s, %s, %s, %s, %s, %s, %s, %s, %s and %s).
+    message5 = [[The weapons tab on the info menu allows you to manage your weapons. You have ten weapon groups available to you. Each weapon may be assigned to any or all of these weapon groups, as either a primary or a secondary weapon. As you have just seen, primary weapons are fired with %s while secondary weapons are fired with %s. During flight, you may switch between weapon groups at any time by using the appropriate buttons (%s, %s, %s, %s, %s, %s, %s, %s, %s and %s).
 
 Additionally, you may set weapon groups to fire when activated. If you do this, then you may fire the weapons in that weapon group simply by holding down the key for that weapon group. Your current weapon group will remain selected in this case.
 
 Configure your weapons as you like now, or simply leave them as they are. Then close the info menu.]]
-    message6 = [[A target practice drone has been placed in space close to you. This drone won't move or fight back. Your task is to fire your weapons at it until you disable it. To disable any ship, you must reduce its armor below 30% of maximum.
+    message6 = [[A target practice drone has been placed in space close to you. This drone won't move or fight back. Your task is to fire your weapons at it until you disable it. To disable any ship, you must reduce its armor below 30 per cent of maximum.
 
-Before you attack the drone, you should target it. To do so, you can use %s, which will target the nearest hostile enemy. You can also click on it with the mouse.
+Before you attack the drone, you should target it. To do so, you can use %s, which will target the nearest hostile enemy. You can also click on it with the mouse. It's a good idea to always use targeting in combat, because some weapons only work when you have a target, and you can tell your ship to face a targeted enemy by pressing %s.
 
 Target the drone, then shoot at it until it becomes disabled.]]
+    message7 = [[Good job, you have disabled the drone. Remember that once you disable a ship you may board it to attempt stealing cargo, credits or fuel.]]
+    message8 = [[You now know the basics of ship to ship combat. As the final part of this tutorial, you're going to fight against a live opponent. We've hired the best fighter pilot in the sector to test your mettle, he will jump into the system any moment now. Good luck, you're going to need it!]]
+    message9 = [[Oh. Well, good job, you've defeated your opponent. You'll notice he didn't become disabled before being destroyed. Some enemies are like that, especially if they're important for a mission, so keep that in mind.]]
+    message10 = [[Another thing you might have noticed is that your weapons started lose accuracy during the battle. This is because of heat. Weapons heat up when fired, and when they become too hot they will first lose accuracy, and then firing rate, to the point where they won't fire at all anymore. If you find your weapons are overheating a lot, consider switching them out for a while using weapon groups.]]
+    message11 = [[You now know the basic principles of combat. As a final tip, you can target specific enemies at long range by clicking on them on the overlay map.
+    
+Congratulations! This concludes tutorial: Basic combat.]]
 
     wepomsg = [[Use %s to test your weapons (%ds remaining)]]
     infoomsg = [[Use %s to to open the info menu]]
@@ -78,10 +85,6 @@ Target the drone, then shoot at it until it becomes disabled.]]
         "Shoot me!",
         "Okay, listen. I'm doing this for attention.",
         "But if you don't shoot me, I'll tell the galaxy your terrible secret.",
-        "...",
-        "...",
-        "...",
-        "Go away! There are no Easter Eggs here.",
     }
     armour31 = {
         "Okay, that's about enough.",
@@ -109,18 +112,19 @@ Target the drone, then shoot at it until it becomes disabled.]]
 end
 
 function create()
-    misn.accept()
-    
     -- Set up the player here.
     player.teleport("Cherokee")
     pilot.clear()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
+    system.get("Mohawk"):setKnown(false)
+    system.get("Iroquois"):setKnown(false)
+    system.get("Navajo"):setKnown(false)
 
     pp = player.pilot()
     pp:setPos(vec2.new(0, 0))
+    player.swapShip("Lancelot", "Lancelot", "Paul 2", true, true)
     pp:rmOutfit("all")
     pp:addOutfit("Laser Cannon MK2", 2)
-    -- TODO: switch to Lancelot.
     player.msgClear()
 
     enable = {"menu", "left", "right", "primary"}
@@ -186,7 +190,7 @@ function input(inputname, inputpress)
     if inputname == "info" and inputpress and waitinfo then
         waitinfo = false
         pp:rmOutfit("all")
-        pp:addOutfit("Mace Launcher", 1)
+        pp:addOutfit("Mace Launcher", 2)
         pp:addOutfit("Laser Cannon MK2", 2)
         
         player.omsgRm(omsg)
@@ -198,40 +202,74 @@ end
 
 -- Hooked function, initiates drone target practice.
 function dummypractice()
-    drone = pilot.add("Civilian Llama", "dummy", player.pilot():pos() + vec2.new(200, 0))[1]
+    drone = pilot.add("FLF Lancelot", "dummy", player.pilot():pos() + vec2.new(200, 0))[1]
+    drone:rename("Target drone")
     drone:setHostile()
     hook.pilot(drone, "disable", "dronedisable")
-    tkMsg(title1, message6:format(tutGetKey("target_hostile")), enable)
+    hook.pilot(drone, "attacked", "dronedamage")
+    tkMsg(title1, message6:format(tutGetKey("target_hostile"), tutGetKey("face")), enable)
     
-    enable = {"menu", "left", "right", "primary", "secondary", "info", "target_hostile"}
+    enable = {"menu", "left", "right", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
     enableKeys(enable)
 end
 
 -- Drone disable hook.
 function dronedisable()
     drone:setInvincible(true)
+    hook.timer(3000, "captainpractice")
+end
+
+-- Drone attack hook. To make sure it doesn't drift off.
+function dronedamage()
+    drone:setVel(vec2.new())
+end
+
+function captainpractice()
+    tkMsg(title1, message7, enable)
+    tkMsg(title1, message8, enable)
+
+    enable = {"menu", "left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
+    enableKeys(enable)
+    
+    pp:rmOutfit("all")
+    pp:addOutfit("Mace Launcher", 2)
+    pp:addOutfit("Laser Cannon MK2", 2)
+
+    captainTP = pilot.add("Civilian Llama", "baddie_norun")[1]
+    captainTP:rename("Captain T. Practice")
+    captainTP:setHostile()
+    captainTP:rmOutfit("all")
+    captainTP:addOutfit("Laser Cannon MK0", 1)
+    captainTP:setNodisable(true)
+    captainTP:setVisplayer(true)
+    captainTP:setHilight(true)
+    hook.pilot(captainTP, "death", "captainTPdeath")
+    taunthook = hook.timer(7000, "taunt")
+end
+
+-- Hook for Captain T. Practice's death.
+function captainTPdeath()
+    hook.rm(taunthook)
+    hook.timer(4000, "captainTPrip")
+end
+
+-- Captain T. Practice is dead. Long live captain T. Practice.
+function captainTPrip()
+    tkMsg(title1, message9, enable)
+    tkMsg(title1, message10, enable)
+    tkMsg(title1, message11, enable)
+    cleanup()
 end
 
 -- Taunt function.
 function taunt()
-	armour, shield = captaintTP:health()
+	armour, shield = captainTP:health()
     if shield >= 40 then
-        if #shield30 > shieldtaunt then
-            shieldtaunt = shieldtaunt + 1
-        else
-            shieldtaunt = 1
-        end
-        captainTP:comm(shield30[shieldtaunt])
-        hook.timer(4000, "taunt")
+        captainTP:comm(shield30[rnd.rnd(1, #shield30)])
     elseif armour >= 31 then
-        if #armour31 > armourtaunt then
-            armourtaunt = armourtaunt + 1
-        else
-            armourtaunt = 1
-        end
-        captainTP:comm(armour31[armourtaunt])
-        hook.timer(4000, "taunt")
+        captainTP:comm(armour31[rnd.rnd(1, #armour31)])
     end
+    taunthook = hook.timer(4000, "taunt")
 end
  
 -- Abort hook.
@@ -241,5 +279,7 @@ end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
-    -- Function to return to the tutorial menu here
+    naev.keyEnableAll()
+    naev.eventStart("Tutorial")
+    evt.finish(true)
 end

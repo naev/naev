@@ -1,7 +1,7 @@
 -- This is the first tutorial: basic operation.
 
 include("scripts/proximity.lua")
-include("dat/tutorial/tutorial-common.lua")
+include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -42,7 +42,6 @@ Congratulations! This concludes tutorial: Basic operation.]]
 end
 
 function create()
-    misn.accept()
     -- Set up the player here.
     player.teleport("Mohawk")
     player.msgClear()
@@ -150,6 +149,7 @@ end
 -- Land hook.
 function land()
     tkMsg(title1, message10:format(tutGetKey("land")), enable)
+    player.takeoff()
     cleanup()
 end
 
@@ -161,5 +161,6 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()
-    -- Function to return to the tutorial menu here
+    naev.eventStart("Tutorial")
+    evt.finish(true)
 end

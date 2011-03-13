@@ -1,6 +1,6 @@
 -- This is tutorial: the planetary screen.
 
-include("dat/tutorial/tutorial-common.lua")
+include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -44,8 +44,6 @@ The trade system is currently in an early stage of development. Once the system 
 end
 
 function create()
-    misn.accept()
-    
     -- Set up the player here.
     player.teleport("Mohawk")
     player.pilot():setPos(planet.get("Paul 2"):pos())
@@ -124,5 +122,6 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()
-    -- Function to return to the tutorial menu here
+    naev.eventStart("Tutorial")
+    evt.finish(true)
 end

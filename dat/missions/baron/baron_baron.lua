@@ -183,8 +183,8 @@ end
 
 function takeoff()
     if talked and system.cur() == system.get(sysname1) then
-        vendetta1 = pilot.add("Dvaered Vendetta", "dvaered_nojump", vec2.new(500,0))[1]
-        vendetta2 = pilot.add("Dvaered Vendetta", "dvaered_nojump", vec2.new(-500,0))[1]
+        vendetta1 = pilot.add("Dvaered Vendetta", "norun", vec2.new(500,0))[1]
+        vendetta2 = pilot.add("Dvaered Vendetta", "norun", vec2.new(-500,0))[1]
         vendetta1:rename("Dvaered Police Vendetta")
         vendetta2:rename("Dvaered Police Vendetta")
         vendetta1:control()

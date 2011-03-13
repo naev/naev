@@ -196,7 +196,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add("FLF Base", "flf_nojump", basepos)[1]
+    base = pilot.add("FLF Base", "flf_norun", basepos)[1]
     base:rmOutfit("all")
     base:addOutfit("Base Ripper MK2", 8)
     base:setHostile()
@@ -248,7 +248,7 @@ end
 function spawnDV()
     updatepos()
 
-    obstinate = pilot.add("Dvaered Goddard", "dvaered_nojump", fleetpos[1])[1]
+    obstinate = pilot.add("Dvaered Goddard", "dvaered_norun", fleetpos[1])[1]
     obstinate:rename("Obstinate")
     obstinate:setDir(90)
     obstinate:setFriendly()
@@ -266,7 +266,7 @@ function spawnDV()
     
     local i = 1
     while i <= 4 do
-        vigilance = pilot.add("Dvaered Vigilance", "dvaered_nojump", fleetpos[i + 1])[1]
+        vigilance = pilot.add("Dvaered Vigilance", "dvaered_norun", fleetpos[i + 1])[1]
         vigilance:setDir(90)
         vigilance:setFriendly()
         vigilance:control()
@@ -279,7 +279,7 @@ function spawnDV()
     
     local i = 1
     while i <= 6 do
-        vendetta = pilot.add("Dvaered Vendetta", "dvaered_nojump", fighterpos[i])[1]
+        vendetta = pilot.add("Dvaered Vendetta", "dvaered_norun", fighterpos[i])[1]
         vendetta:setDir(90)
         vendetta:setFriendly()
         vendetta:setVisible(true)
@@ -316,7 +316,7 @@ function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
     local targets = possibleDVtargets()
-    wingFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", base:pos())
+    wingFLF = pilot.add("FLF Vendetta Trio", "flf_norun", base:pos())
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -330,7 +330,7 @@ end
 -- Spawns FLF bombers
 function spawnFLFbombers()
     local targets = possibleDVtargets()
-    wingFLF = pilot.add("FLF Ancestor Trio", "flf_nojump", base:pos())
+    wingFLF = pilot.add("FLF Ancestor Trio", "flf_norun", base:pos())
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -422,7 +422,7 @@ end
  
 -- Spawns the initial Dvaered bombers.
 function spawnDVbomber()
-    bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos())[1]
+    bomber = pilot.add("Dvaered Ancestor", "dvaered_norun", obstinate:pos())[1]
     bomber:rmOutfit("all")
     bomber:addOutfit("Imperator Launcher", 1)
     bomber:addOutfit("Engine Reroute", 1)
@@ -516,7 +516,7 @@ function deathDVbomber()
         DVreinforcements = DVreinforcements - 1
         for i, j in ipairs(bombers) do
             if not j:exists() then
-                bomber = pilot.add("Dvaered Ancestor", "dvaered_nojump", obstinate:pos())[1]
+                bomber = pilot.add("Dvaered Ancestor", "dvaered_norun", obstinate:pos())[1]
                 bomber:rmOutfit("all")
                 bomber:addOutfit("Imperator Launcher", 1)
                 bomber:addOutfit("Engine Reroute", 1)
