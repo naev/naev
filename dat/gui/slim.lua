@@ -658,6 +658,9 @@ function render( dt )
          if sflags.commodity then
             services_h = services_h + 14
          end
+         if sflags.missions then
+            services_h = services_h + 14
+         end
       end
 
       -- Render background images.
@@ -708,8 +711,8 @@ function render( dt )
       services_h = 60
       local sflags = nav_pnt:services()
       if sflags.land then
-         services = { "land", "outfits", "shipyard", "commodity" }
-         servicesp = { "Spaceport", "Outfits", "Shipyard", "Commodity" }
+         services = { "land", "missions", "outfits", "shipyard", "commodity" }
+         servicesp = { "Spaceport", "Missions", "Outfits", "Shipyard", "Commodity" }
          for k,v in ipairs(services) do
             if sflags[tostring(v)] then
                gfx.print(true, servicesp[k], ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
