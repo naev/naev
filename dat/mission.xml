@@ -2,6 +2,9 @@
 <Missions>
  <mission name="Tutorial Mission">
   <lua>tutorial/tutmis</lua>
+  <flags>
+   <unique />
+  </flags>
   <avail>
    <location>None</location>
   </avail>

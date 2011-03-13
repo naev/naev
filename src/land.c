@@ -1237,7 +1237,7 @@ void land( Planet* p, int load )
       return;
 
    /* Stop player sounds. */
-   player_stopSound();
+   player_soundStop();
 
    /* Load stuff */
    land_planet = p;
