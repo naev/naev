@@ -25,6 +25,9 @@ Let's respond to the ship. You could do this in the same way you just learned, b
     message7 = [[You now know how to talk to ships and planets, and you know what to do when ships want to talk to you. As a final tip, remember that auto-responding to a ship will automatically target it, so be sure not to accidentally attack it!
 
 Congratulations! This concludes tutorial: Communications.]]
+
+    hailomsg = "Target the drone and use %s to contact it"
+    autohailomsg = "Use %s to respond to the hail "
 end
 
 
@@ -46,12 +49,14 @@ function create()
     tkMsg(title1, message2:format(tutGetKey("hail"), tutGetKey("target_clear")), enable)
     
     dronehook = hook.pilot(commdrone, "hail", "haildrone")
+    omsg = player.omsgAdd(hailomsg:format(tutGetKey("hail")), 0)
 end
 
 -- Hail hook.
 function haildrone()
     hook.rm(dronehook)
     player.commClose()
+    player.omsgRm(omsg)
 
     tkMsg(title1, message3, enable)
     tkMsg(title1, message4, enable)
@@ -66,6 +71,7 @@ end
 -- Timer hook to allow the ship to take off fully.
 function shiptakeoff()
     tkMsg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")))
+    omsg = player.omsgAdd(hailomsg:format(tutGetKey("autohail")), 0)
     shiphook = hook.pilot(commship, "hail", "hailship")
 
     enable = {"autohail", "target_next", "target_planet", "target_clear"}
