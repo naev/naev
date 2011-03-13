@@ -49,7 +49,7 @@ function create()
     player.pilot():setPos(planet.get("Paul 2"):pos())
     player.msgClear()
     
-    enable = {"menu"}
+    enable = {}
     
     tkMsg(title1, message1, enable)
     

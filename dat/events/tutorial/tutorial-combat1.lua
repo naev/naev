@@ -127,7 +127,7 @@ function create()
     pp:addOutfit("Laser Cannon MK2", 2)
     player.msgClear()
 
-    enable = {"menu", "left", "right", "primary"}
+    enable = {"left", "right", "primary"}
     enableKeys(enable)
 
     tkMsg(title1, message1, enable)
@@ -155,7 +155,7 @@ function flyUpdate()
             pp:rmOutfit("all")
             pp:addOutfit("Mace Launcher", 1)
 
-            enable = {"menu", "left", "right", "primary", "secondary"}
+            enable = {"left", "right", "primary", "secondary"}
             enableKeys(enable)
 
             flytime = 10
@@ -174,7 +174,7 @@ function flyUpdate()
             tkMsg(title1, message4:format(tutGetKey("info")), enable)
             omsg = player.omsgAdd(infoomsg:format(tutGetKey("info")), 0)
 
-            enable = {"menu", "left", "right", "info"}
+            enable = {"left", "right", "info"}
             enableKeys(enable)
 
             hook.input("input")
@@ -209,7 +209,7 @@ function dummypractice()
     hook.pilot(drone, "attacked", "dronedamage")
     tkMsg(title1, message6:format(tutGetKey("target_hostile"), tutGetKey("face")), enable)
     
-    enable = {"menu", "left", "right", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
+    enable = {"left", "right", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
     enableKeys(enable)
 end
 
@@ -228,7 +228,7 @@ function captainpractice()
     tkMsg(title1, message7, enable)
     tkMsg(title1, message8, enable)
 
-    enable = {"menu", "left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
+    enable = {"left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
     enableKeys(enable)
     
     pp:rmOutfit("all")
