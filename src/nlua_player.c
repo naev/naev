@@ -933,8 +933,9 @@ static int playerL_misnActive( lua_State *L )
 /**
  * @brief Checks to see if player has done a mission.
  *
- * @usage if player.misnDone( "The Space Family" ) then -- Player finished mission
+ * This only works with missions that have the unique flag.
  *
+ * @usage if player.misnDone( "The Space Family" ) then -- Player finished mission
  *    @luaparam name Name of the mission to check.
  *    @luareturn true if mission was finished, false if it wasn't.
  * @luafunc misnDone( name )
@@ -988,8 +989,9 @@ static int playerL_evtActive( lua_State *L )
 /**
  * @brief Checks to see if player has done an event.
  *
- * @usage if player.evtDone( "Shipwreck" ) then -- Player finished event
+ * This only works with events that have the unique flag.
  *
+ * @usage if player.evtDone( "Shipwreck" ) then -- Player finished event
  *    @luaparam name Name of the event to check.
  *    @luareturn true if event was finished, false if it wasn't.
  * @luafunc evtDone( name )
