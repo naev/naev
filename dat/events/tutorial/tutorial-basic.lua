@@ -150,7 +150,7 @@ end
 function land()
     tkMsg(title1, message10:format(tutGetKey("land")), enable)
     player.takeoff()
-    hook.timer(1000, "landTakeoff")
+    hook.takeoff("landTakeoff")
 end
 
 -- WHen takes off.
