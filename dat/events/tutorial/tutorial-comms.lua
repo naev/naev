@@ -31,7 +31,7 @@ end
 function create()
     -- Set up the player here.
     player.teleport("Mohawk")
-    pp = player,pilot()
+    pp = player.pilot()
     pp:setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
     player.msgClear()
     
@@ -43,7 +43,7 @@ function create()
     enableKeys(enable)
     
     tkMsg(title1, message1, enable)
-    tkMsg(title1, message2:format(tutGetKey("target_next"), tutGetKey("target_clear")), enable)
+    tkMsg(title1, message2:format(tutGetKey("hail"), tutGetKey("target_clear")), enable)
     
     dronehook = hook.pilot(commdrone, "hail", "haildrone")
 end

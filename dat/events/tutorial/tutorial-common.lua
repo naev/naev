@@ -7,7 +7,7 @@ end
 
 -- Capsule function for enabling the keys passed to it in a table, and ONLY those keys.
 function enableKeys(keys)
-    local alwaysEnable = { "speed", "menu", "screenshot" }
+    local alwaysEnable = { "speed", "menu", "screenshot", "console" }
     naev.keyDisableAll()
     for _, key in ipairs(keys) do
         naev.keyEnable(key, true)
