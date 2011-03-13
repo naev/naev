@@ -8,13 +8,14 @@ else -- default english
     menutitle = "Tutorial menu"
     menutext = "Welcome to the Naev tutorial menu. Please select a tutorial module from the list below."
 
-    menu1 = "Tutorial: Basic operation"
-    menu2 = "Tutorial: Interstellar flight"
-    menu3 = "Tutorial: Basic combat"
-    menu4 = "Tutorial: Advanced combat"
-    menu5 = "Tutorial: The planetary screen"
-    menu6 = "Tutorial: Trade"
-    menu7 = "Tutorial: Missions and events"
+    menubasic = "Tutorial: Basic operation"
+    menuinterstellar = "Tutorial: Interstellar flight"
+    menubasiccombat = "Tutorial: Basic combat"
+    menuadvcombat = "Tutorial: Advanced combat"
+    menuplanet = "Tutorial: The planetary screen"
+    menutrade = "Tutorial: Trade"
+    menumissions = "Tutorial: Missions and events"
+    menucomms = "Tutorial: Communications"
     menux = "Quit to main menu"
 end
 
@@ -30,23 +31,25 @@ function create()
     system.get("Navajo"):setKnown(false)
     
     -- Create menu.
-    selection = tk.choice(menutitle, menutext, menu1, menu2, menu3, menu4, menu5, menu6, menu7, menux)
+    _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menuadvcombat, menuplanet, menutrade, menumissions, menux)
     
-    if selection == 1 then
-        startModule(menu1)
-    elseif selection == 2 then
-        startModule(menu2)
-    elseif selection == 3 then
-        startModule(menu3)
-    elseif selection == 4 then
+    if selection == menubasic then
+        startModule(menubasic)
+    elseif selection == menuinterstellar then
+        startModule(menuinterstellar)
+    elseif selection == menucomms then
+        startModule(menucomms)
+    elseif selection == menubasiccombat then
+        startModule(menubasiccombat)
+    elseif selection == menuadvcombat then
         placeholder()
-    elseif selection == 5 then
-        startModule(menu5)
-    elseif selection == 6 then
+    elseif selection == menuplanet then
+        startModule(menuplanet)
+    elseif selection == menutrade then
         placeholder()
-    elseif selection == 7 then
-        startModule(menu7)
-    elseif selection == 8 then -- Quit to main menu
+    elseif selection == menumissions then
+        startModule(menumissions)
+    elseif selection == menux then -- Quit to main menu
         tut.main_menu();
     else
         -- This point should never be reached!
