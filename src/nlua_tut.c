@@ -19,6 +19,7 @@
 #include "log.h"
 #include "nstd.h"
 #include "menu.h"
+#include "land.h"
 
 
 /* Tutorial methods. */
@@ -56,11 +57,17 @@ int nlua_loadTut( lua_State *L )
 /**
  * @brief Opens the main menu.
  *
+ * @note You can not exit while landed.
+ *
  * @usage tut.main_menu() -- Won't return, will kill the Lua
  * @luafunc main_menu()
  */
 static int tut_mainMenu( lua_State *L )
 {
+   if (landed) {
+      NLUA_ERROR(L,"Can not go to main menu while landed.");
+      return 0;
+   }
    menu_main();
    lua_pushstring(L, "__done__");
    lua_error(L); /* shouldn't return */

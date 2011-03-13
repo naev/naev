@@ -103,7 +103,7 @@ static int menu_main_bkg_system (void)
    Planet *pnt;
    double cx, cy;
 
-   /* CLean pilots. */
+   /* Clean pilots. */
    pilots_cleanAll();
    sys = NULL;
 
@@ -152,6 +152,7 @@ void menu_main (void)
 
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
+   player_stopSound(); /* Stop sound. */
 
    /* Play load music. */
    music_choose("load");

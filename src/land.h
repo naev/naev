@@ -41,6 +41,7 @@ extern Planet* land_planet;
 /*
  * Main interface.
  */
+void land_queueTakeoff (void);
 int land_doneLoading (void);
 void land( Planet* p, int load );
 void land_genWindows( int load, int changetab );

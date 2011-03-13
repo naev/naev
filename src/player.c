@@ -1690,6 +1690,15 @@ void player_soundResume (void)
 
 
 /**
+ * @brief Stops the player's sounds.
+ */
+void player_soundStop (void)
+{
+   sound_stopGroup( player_engine_group );
+}
+
+
+/**
  * @brief Sets the player's target.
  *
  *    @param id Target to set for the player.
