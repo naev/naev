@@ -1694,7 +1694,8 @@ void player_soundResume (void)
  */
 void player_soundStop (void)
 {
-   sound_stopGroup( player_engine_group );
+   if (player_engine_group != 0)
+      sound_stopGroup( player_engine_group );
 }
 
 
