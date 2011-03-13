@@ -152,7 +152,7 @@ void menu_main (void)
 
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
-   player_stopSound(); /* Stop sound. */
+   player_soundStop(); /* Stop sound. */
 
    /* Play load music. */
    music_choose("load");
@@ -411,7 +411,7 @@ static void menu_small_exit( unsigned int wid, char* str )
 
    /* Stop player sounds because sometimes they hang. */
    player_autonavAbort( "Exited game." );
-   player_stopSound();
+   player_soundStop();
 
    /* Clean up. */
    window_destroy( wid );

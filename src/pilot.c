@@ -1441,7 +1441,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
             (p->ptimer < sound_length(snd_hypPowUpJump)) &&
             (p->timer[0] == -1.)) {
          p->timer[0] = -2.;
-         player_playSound( snd_hypPowUpJump, 1 );
+         player_soundPlay( snd_hypPowUpJump, 1 );
       }
 
       /* has jump happened? */
@@ -1512,7 +1512,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
                pilot_setFlag(p, PILOT_HYP_BEGIN);
                /* Player plays sound. */
                if (p->id == PLAYER_ID) {
-                  player_playSound( snd_hypPowUp, 1 );
+                  player_soundPlay( snd_hypPowUp, 1 );
                }
             }
          }
@@ -1537,8 +1537,8 @@ void pilot_hyperspaceAbort( Pilot* p )
       if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
          /* Player plays sound. */
          if (p->id == PLAYER_ID) {
-            player_stopSound();
-            player_playSound( snd_hypPowDown, 1 );
+            player_soundStop();
+            player_soundPlay( snd_hypPowDown, 1 );
          }
       }
       pilot_rmFlag(p, PILOT_HYP_BEGIN);

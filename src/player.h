@@ -113,11 +113,10 @@ int player_hasCredits( int amount );
 unsigned long player_modCredits( int amount );
 void player_hailStart (void);
 /* Sounds. */
-void player_playSound( int sound, int once );
-void player_stopSound (void);
+void player_soundPlay( int sound, int once );
+void player_soundStop (void);
 void player_soundPause (void);
 void player_soundResume (void);
-void player_soundStop (void);
 
 
 /*
