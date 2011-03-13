@@ -18,6 +18,10 @@ NPC missions are given to you by game characters. This most often happens in the
     message4 = [[As you can see, there's someone here in the bar. He will give you a mission if you approach him. To do so, click on his portrait first, then click on the approach button.
 
 It's worth noting here that not all NPCs you encounter in the spaceport bars will give you missions. Those that do tend to look slightly different though, and they tend to be grouped near the beginning of the NPC list.]]
+    message5 = [[Now that you know how missions work, it's easy to explain what events are. Events work much the same as missions, but they happen by themselves. You don't get to search them out, you don't get to accept or decline them, nor can you abort them. If an event happens to you, you're just going to have to ride it out, for better or for worse. In fact, one is happening to you right now, since this tutorial itself is an event as well!]]
+    message6 = [[You now know how to play missions. Missions are where most of the action in the game happens, and your career will depend greatly on which missions you choose to accept. As a final tip, some missions only appear in certain areas of space, so be sure to travel around a lot and check the spaceport bars wherever you go.
+
+Congratulations! This concludes tutorial: Missions and events.]]
     
     landomsg = "Land on Rin and visit the spaceport bar"
 end
@@ -42,6 +46,7 @@ function create()
     hook.land("land")
     hook.land("bar", "bar")
     hook.takeoff("takeoff")
+    hook.enter("enter")
 end
 
 -- Land hook.
@@ -66,19 +71,27 @@ end
 function NPC()
     player.omsgRm(omsg)
     naev.missionStart("Tutorial Mission")
-    evt.npcRm(tutNPC)
+    if player.misnActive("Tutorial Mission") then -- He COULD have declined.
+        evt.npcRm(tutNPC)
+    end
+end
+
+-- Enter hook, for fuel cheat.
+function enter()
+    player.pilot():setFuel(true)
 end
 
 -- Takeoff hook.
 function takeoff()
     if player.misnDone("Tutorial Mission") then
+        tk.msg(title1, message5)
+        tk.msg(title1, message6)
         cleanup()
     end
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
-    naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)
 end
