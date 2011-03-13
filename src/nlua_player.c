@@ -1017,7 +1017,7 @@ static int playerL_evtDone( lua_State *L )
 
 
 /**
- * @brief Teleports the player to a new system.
+ * @brief Teleports the player to a new system (only if not landed).
  *
  * Does not change the position nor velocity of the player.p, which will probably be wrong in the new system.
  *
@@ -1031,6 +1031,12 @@ static int playerL_teleport( lua_State *L )
 {
    LuaSystem *sys;
    const char *name;
+
+   /* Must not be landed. */
+   if (landed) {
+      NLUA_ERROR(L,"Can not teleport the player while landed!");
+      return 0;
+   }
 
    /* Get a system. */
    if (lua_issystem(L,1)) {
