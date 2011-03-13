@@ -16,6 +16,8 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_evt.h"
+#include "nlua_misn.h"
 #include "log.h"
 #include "nstd.h"
 #include "input.h"
@@ -27,12 +29,16 @@ static int naev_keyGet( lua_State *L );
 static int naev_keyEnable( lua_State *L );
 static int naev_keyEnableAll( lua_State *L );
 static int naev_keyDisableAll( lua_State *L );
+static int naev_eventStart( lua_State *L );
+static int naev_missionStart( lua_State *L );
 static const luaL_reg naev_methods[] = {
    { "lang", naev_lang },
    { "keyGet", naev_keyGet },
    { "keyEnable", naev_keyEnable },
    { "keyEnableAll", naev_keyEnableAll },
    { "keyDisableAll", naev_keyDisableAll },
+   { "eventStart", naev_eventStart },
+   { "missionStart", naev_missionStart },
    {0,0}
 }; /**< NAEV Lua methods. */
 
@@ -189,6 +195,50 @@ static int naev_keyDisableAll( lua_State *L )
    input_disableAll();
    return 0;
 }
+
+
+/**
+ * @brief Starts an event, does not start check conditions.
+ *
+ * @usage naev.eventStart( "Some Event" )
+ *    @luaparam evtname Name of the event to start.
+ *    @luareturn true on success.
+ * @luafunc eventStart( evtname )
+ */
+static int naev_eventStart( lua_State *L )
+{
+   int ret;
+   const char *str;
+
+   str = luaL_checkstring(L, 1);
+   ret = event_start( str, NULL );
+
+   lua_pushboolean( L, !ret );
+   return 1;
+}
+
+
+/**
+ * @brief Starts a mission, does no check start conditions.
+ *
+ * @usage naev.missionStart( "Some Event" )
+ *    @luaparam misnname Name of the mission to start.
+ *    @luareturn true on success.
+ * @luafunc missionStart( misnname )
+ */
+static int naev_missionStart( lua_State *L )
+{
+   int ret;
+   const char *str;
+
+   str = luaL_checkstring(L, 1);
+   ret = mission_start( str, NULL );
+
+   lua_pushboolean( L, !ret );
+   return 1;
+}
+
+
 
 
 

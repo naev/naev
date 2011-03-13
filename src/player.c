@@ -175,7 +175,7 @@ static void player_checkHail (void);
 /* creation */
 static void player_newSetup( int tutorial );
 static int player_newMake (void);
-static void player_newShipMake( char *name );
+static Pilot* player_newShipMake( const char* name );
 /* sound */
 static void player_initSound (void);
 /* save/load */
@@ -387,7 +387,7 @@ static int player_newMake (void)
       WARN("Ship not properly set by module.");
       return -1;
    }
-   if (player_newShip( ship, NULL, 0 ) != 0) {
+   if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
       player_new();
       return -1;
    }
@@ -415,27 +415,33 @@ static int player_newMake (void)
  *
  *    @param ship New ship to get.
  *    @param def_name Default name to give it if canceled.
- *    @param trade Whether or not to t/ade player's current ship with the new ship.
- *    @return 0 indicates success, -1 means dialogue was cancelled.
+ *    @param trade Whether or not to trade player's current ship with the new ship.
+ *    @param noname Whether or not to let the player name it.
+ *    @return Newly created pilot on success or NULL if dialogue was cancelled.
  *
  * @sa player_newShipMake
  */
-int player_newShip( Ship* ship, const char *def_name, int trade )
+Pilot* player_newShip( Ship* ship, const char *def_name,
+      int trade, int noname )
 {
    char *ship_name, *old_name;
    int i, len, w;
+   Pilot *new_ship;
 
    /* temporary values while player doesn't exist */
    player_creds = (player.p != NULL) ? player.p->credits : 0;
    player_ship    = ship;
-   ship_name      = dialogue_input( "Ship Name", 3, 20,
-         "Please name your new ship:" );
+   if (!noname)
+      ship_name      = dialogue_input( "Ship Name", 3, 20,
+            "Please name your new ship:" );
+   else
+      ship_name      = NULL;
 
    /* Dialogue cancelled. */
    if (ship_name == NULL) {
       /* No default name, fail. */
       if (def_name == NULL)
-         return -1;
+         return NULL;
 
       /* Add default name. */
       i = 2;
@@ -452,10 +458,10 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
    if (player_hasShip(ship_name)) {
       dialogue_msg( "Name collision",
             "Please do not give the ship the same name as another of your ships.");
-      return -1;
+      return NULL;
    }
 
-   player_newShipMake(ship_name);
+   new_ship = player_newShipMake( ship_name );
 
    /* Player is trading ship in. */
    if (trade) {
@@ -474,17 +480,18 @@ int player_newShip( Ship* ship, const char *def_name, int trade )
       equipment_regenLists( w, 0, 1 );
    }
 
-   return 0;
+   return new_ship;
 }
 
 /**
  * @brief Actually creates the new ship.
  */
-static void player_newShipMake( char* name )
+static Pilot* player_newShipMake( const char* name )
 {
    Vector2d vp, vv;
    PilotFlags flags;
    PlayerShip_t *ship;
+   Pilot *new_pilot;
    double px, py, dir;
    unsigned int id;
 
@@ -515,6 +522,7 @@ static void player_newShipMake( char* name )
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
             dir, &vp, &vv, flags, -1 );
       cam_setTargetPilot( id, 0 );
+      new_pilot = pilot_get( id );
    }
    else {
       /* Grow memory. */
@@ -524,6 +532,7 @@ static void player_newShipMake( char* name )
       ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
+      new_pilot = ship->p;
    }
 
    if (player.p == NULL)
@@ -535,6 +544,8 @@ static void player_newShipMake( char* name )
    /* money. */
    player.p->credits = player_creds;
    player_creds = 0;
+
+   return new_pilot;
 }
 
 
@@ -582,7 +593,8 @@ void player_swapShip( char* shipname )
       vectcpy( &player.p->solid->pos, &v );
 
       /* Fill the tank. */
-      land_checkAddRefuel();
+      if (landed)
+         land_checkAddRefuel();
 
       /* Set some gui stuff. */
       gui_load( gui_pick() );

@@ -56,7 +56,7 @@ static int opt_restart = 0;
 extern const char *keybind_info[][3]; /**< from input.c */
 
 
-static char opt_selectedKeybind[32]; /**< Selected keybinding. */
+static const char *opt_selectedKeybind; /**< Selected keybinding. */
 static int opt_lastKeyPress = 0; /**< Last keypress. */
 
 
@@ -464,6 +464,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 
    /* Remove the excess. */
    keybind = keybind_info[selected][0];
+   opt_selectedKeybind = keybind;
    window_modifyText( wid, "txtName", keybind );
 
    /* Get information. */

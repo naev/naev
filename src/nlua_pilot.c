@@ -1778,9 +1778,10 @@ static int pilotL_addOutfit( lua_State *L )
  * @usage p:rmOutfit( "Neutron Disruptor" ) -- Removes a neutron disruptor.
  * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
- *    @luparam p Pilot to remove outfit from.
+ *    @luaparam p Pilot to remove outfit from.
  *    @luaparam outfit Name of the outfit to remove.
- * @luafunc rmOutfit( p, outfit )
+ *    @luaparam q Quantity of the outfit to remove.
+ * @luafunc rmOutfit( p, outfit, q )
  */
 static int pilotL_rmOutfit( lua_State *L )
 {

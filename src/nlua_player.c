@@ -75,6 +75,7 @@ static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
 static int playerL_addOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
+static int playerL_swapShip( lua_State *L );
 static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_evtActive( lua_State *L );
@@ -108,6 +109,7 @@ static const luaL_reg playerL_methods[] = {
    { "commClose", playerL_commclose },
    { "addOutfit", playerL_addOutfit },
    { "addShip", playerL_addShip },
+   { "swapShip", playerL_swapShip },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "evtActive", playerL_evtActive },
@@ -132,6 +134,12 @@ static const luaL_reg playerL_cond_methods[] = {
    { "evtDone", playerL_evtDone },
    {0,0}
 }; /**< Conditional player lua methods. */
+
+
+/*
+ * Prototypes.
+ */
+static Pilot* playerL_newShip( lua_State *L );
 
 
 /**
@@ -787,34 +795,47 @@ static int playerL_addOutfit( lua_State *L  )
 
 
 /**
- * @brief Gives the player a new ship.
- *
- * @note Should be given when landed, ideally on a planet with a shipyard.
- *
- * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
- *
- *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
- * @luafunc addShip( ship, name )
+ * @brief Helper function for playerL_addShip.
  */
-static int playerL_addShip( lua_State *L )
+static Pilot* playerL_newShip( lua_State *L )
 {
-   const char *str, *name;
+   const char *str, *name, *pntname;
    Ship *s;
-   int ret;
-
-   /* Must be landed. */
-   if (land_planet==NULL) {
-      NLUA_ERROR(L, "Player must be landed to add a ship.");
-      return 0;
-   }
+   Pilot *new_ship;
+   Planet *pnt, *t;
+   int noname;
 
    /* Handle parameters. */
    str  = luaL_checkstring(L, 1);
-   if (lua_isstring(L, 2))
-      name = lua_tostring(L, 2);
+   if (lua_gettop(L) > 1)
+      name = luaL_checkstring(L,2);
    else
       name = str;
+   if (lua_gettop(L) > 2)
+      pntname = luaL_checkstring (L,3);
+   else
+      pntname = NULL;
+   noname = lua_toboolean(L,4);
+
+   /* Get planet. */
+   if (pntname != NULL) {
+      pnt = planet_get( pntname );
+      if (pnt == NULL) {
+         NLUA_ERROR(L, "Planet '%s' not found!", pntname);
+         return 0;
+      }
+      /* Horrible hack to swap variables. */
+      t = land_planet;
+      land_planet = pnt;
+   }
+   else
+      pnt = NULL;
+
+   /* Must be landed if pnt is NULL. */
+   if ((pnt == NULL) && (land_planet==NULL)) {
+      NLUA_ERROR(L, "Player must be landed to add a ship without location parameter.");
+      return 0;
+   }
 
    /* Get ship. */
    s = ship_get(str);
@@ -823,10 +844,60 @@ static int playerL_addShip( lua_State *L )
       return 0;
    }
 
-   /* Add the ship. */
+   /* Add the ship, look in case it's cancelled. */
    do {
-      ret = player_newShip( s, name, 0 );
-   } while (ret != 0);
+      new_ship = player_newShip( s, name, 0, noname );
+   } while (new_ship == NULL);
+
+   /* Undo the horrible hack. */
+   if (pnt != NULL)
+      land_planet = t;
+
+   return new_ship;
+}
+
+
+/**
+ * @brief Gives the player a new ship.
+ *
+ * @note Should be given when landed, ideally on a planet with a shipyard.
+ *
+ * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
+ *
+ *    @luaparam ship Name of the ship to add.
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
+ *    @luaparam loc Location to add to, if nil or ommitted it adds it to local planet (must be landed).
+ *    @luaparam noname If true does not let the player name the ship (defaults to false).
+ * @luafunc addShip( ship, name, loc, noname )
+ */
+static int playerL_addShip( lua_State *L )
+{
+   playerL_newShip( L );
+   return 0;
+}
+
+
+/**
+ * @brief Swaps the player's current ship with a new ship given to him.
+ *    @luaparam ship Name of the ship to add.
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
+ *    @luaparam loc Location to add to, if nil or ommitted it adds it to local planet (must be landed).
+ *    @luaparam noname If true does not let the player name the ship (defaults to false).
+ *    @luaparam remove If true removes the player's current ship (so it replaces and doesn't swap).
+ * @luafunc swapShip( ship, name, loc, noname, remove )
+ */
+static int playerL_swapShip( lua_State *L )
+{
+   Pilot *p;
+   char *cur;
+   int remship;
+
+   remship = lua_toboolean(L,5);
+   p = playerL_newShip( L );
+   cur = player.p->name;
+   player_swapShip( p->name );
+   if (remship)
+      player_rmShip( cur );
 
    return 0;
 }

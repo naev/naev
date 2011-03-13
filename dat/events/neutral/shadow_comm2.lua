@@ -19,7 +19,7 @@ end
 
 -- Make the ship hail the player
 function hailme()
-    evt.misnStart("Dark Shadow")
+    naev.missionStart("Dark Shadow")
     evt.finish()
 end
 

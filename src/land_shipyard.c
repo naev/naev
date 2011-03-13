@@ -307,7 +307,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
 
    /* player just gots a new ship */
-   if (player_newShip( ship, NULL, 0 ) != 0) {
+   if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
       /* Player actually aborted naming process. */
       return;
    }
@@ -457,7 +457,7 @@ static void shipyard_trade( unsigned int wid, char* str )
    }
 
    /* player just gots a new ship */
-   if (player_newShip( ship, NULL, 1 ) != 0)
+   if (player_newShip( ship, NULL, 1, 0 ) == NULL)
       return; /* Player aborted the naming process. */
 
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
