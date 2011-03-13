@@ -63,6 +63,6 @@ end
 
 -- Helper function for starting the tutorial modules
 function startModule(module)
-    naev.missionStart(module)
+    naev.startMission(module)
     evt.finish(true) -- While the module is running, the event should not.
 end

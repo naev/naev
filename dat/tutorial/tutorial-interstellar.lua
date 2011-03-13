@@ -39,8 +39,6 @@ Congratulations! This concludes tutorial: Interstellar flight.]]
 end
 
 function create()
-    misn.accept()
-    
     -- Set up the player here.
     player.teleport("Mohawk")
     player.msgClear()
@@ -114,5 +112,7 @@ end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
-    -- Function to return to the tutorial menu here
+    naev.keyEnableAll()
+    naev.eventStart("Tutorial")
+    evt.finish(true)
 end

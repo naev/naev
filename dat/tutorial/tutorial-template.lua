@@ -12,8 +12,6 @@ else -- default english
 end
 
 function create()
-    misn.accept()
-    
     -- Set up the player here.
     player.teleport("Mohawk")
 end
@@ -26,5 +24,6 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()
-    -- Function to return to the tutorial menu here
+    naev.eventStart("Tutorial")
+    evt.finish(true)
 end

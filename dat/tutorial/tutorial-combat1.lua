@@ -111,8 +111,6 @@ Target the drone, then shoot at it until it becomes disabled.]]
 end
 
 function create()
-    misn.accept()
-    
     -- Set up the player here.
     player.teleport("Cherokee")
     pilot.clear()
@@ -135,7 +133,7 @@ function create()
     tkMsg(title1, message2:format(tutGetKey("primary")), enable)
 
     waitenergy = true
-    flytime = 1 -- seconds of fly time
+    flytime = 10 -- seconds of fly time
 
     omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
     hook.timer(1000, "flyUpdate")
@@ -159,7 +157,7 @@ function flyUpdate()
             enable = {"menu", "left", "right", "primary", "secondary"}
             enableKeys(enable)
 
-            flytime = 1
+            flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("secondary"), flytime), 0)
             hook.timer(1000, "flyUpdate")
         else
@@ -191,7 +189,7 @@ function input(inputname, inputpress)
     if inputname == "info" and inputpress and waitinfo then
         waitinfo = false
         pp:rmOutfit("all")
-        pp:addOutfit("Mace Launcher", 1)
+        pp:addOutfit("Mace Launcher", 10)
         pp:addOutfit("Laser Cannon MK2", 2)
         
         player.omsgRm(omsg)
@@ -276,5 +274,7 @@ end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
-    -- Function to return to the tutorial menu here
+    naev.keyEnableAll()
+    naev.eventStart("Tutorial")
+    evt.finish(true)
 end
