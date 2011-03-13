@@ -554,8 +554,10 @@ static int hook_pilot( lua_State *L )
       p           = luaL_checkpilot(L,1);
    else if (lua_isnil(L,1))
       p           = NULL;
-   else
-      NLUA_INVALID_PARAMETER(L);
+   else {
+      NLUA_ERROR(L, "Invalid parameter #1 for hook.pilot, expecting pilot or nil.");
+      return 0;
+   }
    hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
