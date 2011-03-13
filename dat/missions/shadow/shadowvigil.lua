@@ -55,8 +55,8 @@ else -- default english
     diplomatdeathtitle = "The diplomat is dead!"
     diplomatdeathtext = [[The diplomat you were supposed to be protecting has perished! Your mission has failed.]]
     
-    diplomatnojumptitle = "You have left your protegee behind!"
-    diplomatnojumptext = [[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]
+    diplomatnoruntitle = "You have left your protegee behind!"
+    diplomatnoruntext = [[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]
     
     diplomatdistress = "Diplomatic vessel under fire!"
     
@@ -163,7 +163,7 @@ end
 -- Function hooked to jumpout. Used to retain information about the previously visited system.
 function jumpout()
     if stage == 3 and not dpjump then
-        tk.msg(diplomatnojumptitle, diplomatnojumptext)
+        tk.msg(diplomatnoruntitle, diplomatnoruntext)
         abort()
     end
     oldsys = system.cur()

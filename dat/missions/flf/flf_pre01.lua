@@ -124,7 +124,7 @@ function enter()
         pilot.clear()
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_nojump", jumppos)
+        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_norun", jumppos)
         
         faction.get("FLF"):modPlayerRaw(-200)
         
@@ -169,7 +169,7 @@ function wakeUpGregarYouLazyBugger()
             j:setInvincible(true)
             j:setFriendly()
             j:setHealth(100,100)
-            j:changeAI("flf_nojump")
+            j:changeAI("flf_norun")
             j:setHilight(true)
             flfdead = false
         end

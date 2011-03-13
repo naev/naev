@@ -121,9 +121,9 @@ function create()
 
     pp = player.pilot()
     pp:setPos(vec2.new(0, 0))
+    player.swapShip("Lancelot", "Lancelot", "Paul 2", true, true)
     pp:rmOutfit("all")
     pp:addOutfit("Laser Cannon MK2", 2)
-    -- TODO: switch to Lancelot.
     player.msgClear()
 
     enable = {"menu", "left", "right", "primary"}
@@ -189,7 +189,7 @@ function input(inputname, inputpress)
     if inputname == "info" and inputpress and waitinfo then
         waitinfo = false
         pp:rmOutfit("all")
-        pp:addOutfit("Mace Launcher", 10)
+        pp:addOutfit("Mace Launcher", 2)
         pp:addOutfit("Laser Cannon MK2", 2)
         
         player.omsgRm(omsg)
@@ -208,7 +208,7 @@ function dummypractice()
     hook.pilot(drone, "attacked", "dronedamage")
     tkMsg(title1, message6:format(tutGetKey("target_hostile"), tutGetKey("face")), enable)
     
-    enable = {"menu", "left", "right", "primary", "secondary", "info", "target_hostile", "face"}
+    enable = {"menu", "left", "right", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
     enableKeys(enable)
 end
 
@@ -227,10 +227,10 @@ function captainpractice()
     tkMsg(title1, message7, enable)
     tkMsg(title1, message8, enable)
 
-    enable = {"menu", "left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face"}
+    enable = {"menu", "left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
     enableKeys(enable)
     
-    captainTP = pilot.add("Civilian Llama", "baddie")[1]
+    captainTP = pilot.add("Civilian Llama", "baddie_norun")[1]
     captainTP:rename("Captain T. Practice")
     captainTP:setHostile()
     captainTP:rmOutfit("all")
@@ -238,6 +238,8 @@ function captainpractice()
     captainTP:setNodisable(true)
     captainTP:setVisplayer(true)
     hook.pilot(captainTP, "death", "captainTPdeath")
+    shieldtaunt = 0
+    armourtaunt = 0
     taunthook = hook.timer(7000, "taunt")
 end
 
@@ -248,7 +250,7 @@ end
 
 -- Taunt function.
 function taunt()
-	armour, shield = captaintTP:health()
+	armour, shield = captainTP:health()
     if shield >= 40 then
         if #shield30 > shieldtaunt then
             shieldtaunt = shieldtaunt + 1

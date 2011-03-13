@@ -319,7 +319,7 @@ function hail()
             for i, j in ipairs(fleetDV) do
                 if j:exists() then
                     j:setFriendly()
-                    j:changeAI("dvaered_nojump")
+                    j:changeAI("dvaered_norun")
                     if j:ship():class() == "Destroyer" then
                         j:setInvincible(true) -- You're not going to lose at this point anyway, and Urnus shouldn't die, we still need him.
                     end
@@ -390,7 +390,7 @@ end
 -- Spawns a small Dvaered patrol
 function spawnSmallDV()
     player.allowLand(false, "FLF scum isn't welcome here!")
-    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_nojump", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
+    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_norun", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
     for i, j in ipairs(fleetDV) do
         j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         hook.pilot(j, "death", "DVdeath")
@@ -401,7 +401,7 @@ function spawnSmallDV()
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
             j:setFaction("FLF")
-            j:changeAI("flf_nojump")
+            j:changeAI("flf_norun")
         end
     end
     hook.timer(3000, "commFLF", flfcomm[1])
@@ -410,7 +410,7 @@ end
 -- Spawns a big Dvaered patrol
 function spawnBigDV()
     player.allowLand(false, "FLF scum isn't welcome here!")
-    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_nojump", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
+    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_norun", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then -- It's a mini-boss of sorts, but it should still be dumbed down.
             boss = j
@@ -434,7 +434,7 @@ function spawnBigDV()
     for i, j in ipairs (fleetFLF) do
         if j:exists() then
             j:setFaction("FLF")
-            j:changeAI("flf_nojump")
+            j:changeAI("flf_norun")
         end
     end
     
