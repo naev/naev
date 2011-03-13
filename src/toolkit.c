@@ -2016,6 +2016,7 @@ void toolkit_update (void)
       toolkit_open = 0; /* disable toolkit */
       if (paused)
          unpause_game();
+      return; /*  No need to handle anything else. */
    }
 
    /* Must have a key pressed. */
