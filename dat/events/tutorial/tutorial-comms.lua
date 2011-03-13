@@ -40,7 +40,7 @@ function create()
     
     pilot.clear()
     pilot.toggleSpawn(false)
-    commdrone = pilot.add("Civilian Llama", "dummy", pp:pos() + vec2.new(0, 250))
+    commdrone = pilot.add("Civilian Llama", "dummy", pp:pos() + vec2.new(0, 250))[1]
     
     enable = {"hail", "target_next", "target_planet", "target_clear"}
     enableKeys(enable)
@@ -60,7 +60,7 @@ function haildrone()
 
     tkMsg(title1, message3, enable)
     tkMsg(title1, message4, enable)
-    commship = pilot.add("Civilian Gawain", "dummy", panet.get("Paul 2"))[1]
+    commship = pilot.add("Civilian Gawain", "dummy", planet.get("Paul 2"))[1]
     commship:hailPlayer()
     hook.timer(4000, "shiptakeoff")
 
@@ -70,8 +70,8 @@ end
 
 -- Timer hook to allow the ship to take off fully.
 function shiptakeoff()
-    tkMsg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")))
-    omsg = player.omsgAdd(hailomsg:format(tutGetKey("autohail")), 0)
+    tkMsg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")), enable)
+    omsg = player.omsgAdd(autohailomsg:format(tutGetKey("autohail")), 0)
     shiphook = hook.pilot(commship, "hail", "hailship")
 
     enable = {"autohail", "target_next", "target_planet", "target_clear"}
@@ -83,6 +83,7 @@ function hailship()
     hook.rm(shiphook)
     player.commClose()
     tkMsg(title1, message6, enable)
+    tkMsg(title1, message7, enable)
     cleanup()
 end
 
