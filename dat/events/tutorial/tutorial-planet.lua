@@ -1,6 +1,6 @@
 -- This is tutorial: the planetary screen.
 
-include("dat/tutorial/tutorial-common.lua")
+include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()

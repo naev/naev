@@ -1,7 +1,7 @@
 -- This is the first tutorial: basic operation.
 
 include("scripts/proximity.lua")
-include("dat/tutorial/tutorial-common.lua")
+include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -149,6 +149,7 @@ end
 -- Land hook.
 function land()
     tkMsg(title1, message10:format(tutGetKey("land")), enable)
+    player.takeoff()
     cleanup()
 end
 

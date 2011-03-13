@@ -2,7 +2,7 @@
 -- Each module should start by setting up the tutorial environment and enforcing rules.
 -- Each module should clean up and return to the main tutorial menu when ending or aborting.
 
-include("dat/tutorial/tutorial-common.lua")
+include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -14,7 +14,6 @@ end
 function create()
     -- Set up the player here.
     player.teleport("Mohawk")
-    player.msgClear()
 end
 
 -- Abort hook.
