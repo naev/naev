@@ -14,6 +14,8 @@ end
 function create()
     -- Set up the player here.
     player.teleport("Mohawk")
+    player.pilot():setPos(vec2.new(0, 0))
+    player.msgClear()
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.

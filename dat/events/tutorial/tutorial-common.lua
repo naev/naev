@@ -5,9 +5,9 @@ function tkMsg(title, msg, keys)
     enableKeys(keys)
 end
 
--- Capsule function for enabling the keys passed to it in a table, and ONLY those keys.
+-- Capsule function for enabling the keys passed to it in a table, plus some defaults.
 function enableKeys(keys)
-    local alwaysEnable = { "speed", "menu", "screenshot" }
+    local alwaysEnable = { "speed", "menu", "screenshot", "console" }
     naev.keyDisableAll()
     for _, key in ipairs(keys) do
         naev.keyEnable(key, true)
@@ -17,7 +17,7 @@ function enableKeys(keys)
     end
 end
 
--- Capsule function for naev.getKey() that adds a color code to the return string.
+-- Capsule function for naev.keyGet() that adds a color code to the return string.
 function tutGetKey(command)
     return "\027b" .. naev.keyGet(command) .. "\0270"
 end

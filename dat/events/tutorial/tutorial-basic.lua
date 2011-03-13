@@ -50,7 +50,7 @@ function create()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
     
-    enable = {"menu", "accel", "left", "right"}
+    enable = {"accel", "left", "right"}
     enableKeys(enable)
     
     tkMsg(title1, message1, enable)
@@ -70,7 +70,7 @@ function flyUpdate()
         player.omsgRm(omsg)
         tkMsg(title1, message3:format(tutGetKey("reverse")), enable)
 
-        enable = {"menu", "accel", "reverse"}
+        enable = {"accel", "reverse"}
         enableKeys(enable)
     
         omsg = player.omsgAdd(stopomsg:format(tutGetKey("reverse")), 0)
@@ -99,7 +99,7 @@ function checkBrake()
         waitmap = true
         hook.input("input")
 
-        enable = {"menu", "overlay"}
+        enable = {"overlay"}
         enableKeys(enable)
     else
         hook.timer(500, "checkBrake")
@@ -130,7 +130,7 @@ function proxytrigger()
     tkMsg(title1, message7:format(tutGetKey("target_next"), tutGetKey("board")), enable)
     omsg = player.omsgAdd(boardomsg:format(tutGetKey("target_next"), tutGetKey("board")), 0)
 
-    enable = {"menu", "accel", "left", "right", "reverse", "target_next", "board", "overlay"}
+    enable = {"accel", "left", "right", "reverse", "target_next", "board", "overlay"}
     enableKeys(enable)
 end
 
@@ -142,7 +142,7 @@ function board()
     player.omsgChange(omsg, landomsg:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), 0)
     hook.land("land")
 
-    enable = {"menu", "accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
+    enable = {"accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
     enableKeys(enable)
 end
 

@@ -23,6 +23,10 @@
   <lua>tutorial/tutorial-missions</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Communications">
+  <lua>tutorial/tutorial-comms</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Derelict">
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
