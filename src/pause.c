@@ -59,16 +59,6 @@ void unpause_game (void)
    paused = 0; /* officially unpaused */
 }
 
-
-/**
- * @brief Sets the timers back.
- *    @param delay Delay to set timers back.
- */
-void pause_delay( unsigned int delay )
-{
-   (void) delay;
-}
-
 /**
  * @brief Adjusts the game's dt modifier.
  */

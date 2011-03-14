@@ -729,7 +729,6 @@ static void update_all (void)
    double nf, microdt;
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
-      pause_delay((unsigned int)game_dt*1000);
       fps_skipped = 1;
       return;
    }
@@ -742,7 +741,6 @@ static void update_all (void)
 
       /* Update as much as needed, evenly. */
       for (i=0; i<n; i++) {
-         pause_delay( (unsigned int)(microdt*1000));
          update_routine(microdt);
       }
 
