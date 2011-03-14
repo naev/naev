@@ -2154,12 +2154,13 @@ void pilots_update( double dt )
    Pilot *p;
 
    /* Now update all the pilots. */
-   for ( i=0; i < pilot_nstack; i++ ) {
+   for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
 
       /* Destroy pilot and go on. */
       if (pilot_isFlag(p, PILOT_DELETE)) {
          pilot_destroy(p);
+         i--; /* Must decrement iterator. */
          continue;
       }
 
@@ -2168,24 +2169,40 @@ void pilots_update( double dt )
          continue;
 
       /* See if should think. */
-      if (p->think && !pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_DEAD)) {
+      if (!p->think)
+         continue;
+      if (pilot_isDisabled(p))
+         continue;
+      if (pilot_isFlag(p,PILOT_DEAD))
+         continue;
 
-         /* Hyperspace gets special treatment */
-         if (pilot_isFlag(p, PILOT_HYP_PREP))
-            pilot_hyperspace(p, dt);
-         /* Entering hyperspace. */
-         else if (pilot_isFlag(p, PILOT_HYP_END)) {
-            if (VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) )
-               pilot_rmFlag(p, PILOT_HYP_END);
-         }
-         /* Must not be boarding to think. */
-         else if (!pilot_isFlag(p, PILOT_BOARDING) &&
-               !pilot_isFlag(p, PILOT_REFUELBOARDING) &&
-               /* Must not be landing nor taking off. */
-               !pilot_isFlag(p, PILOT_LANDING) &&
-               !pilot_isFlag(p, PILOT_TAKEOFF))
-            p->think(p, dt);
+      /* Hyperspace gets special treatment */
+      if (pilot_isFlag(p, PILOT_HYP_PREP))
+         pilot_hyperspace(p, dt);
+      /* Entering hyperspace. */
+      else if (pilot_isFlag(p, PILOT_HYP_END)) {
+         if (VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) )
+            pilot_rmFlag(p, PILOT_HYP_END);
       }
+      /* Must not be boarding to think. */
+      else if (!pilot_isFlag(p, PILOT_BOARDING) &&
+            !pilot_isFlag(p, PILOT_REFUELBOARDING) &&
+            /* Must not be landing nor taking off. */
+            !pilot_isFlag(p, PILOT_LANDING) &&
+            !pilot_isFlag(p, PILOT_TAKEOFF))
+         p->think(p, dt);
+
+   /* Now update all the pilots. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Ignore. */
+      if (pilot_isFlag(p, PILOT_DELETE))
+         continue;
+
+      /* Invisible, not doing anything. */
+      if (pilot_isFlag(p, PILOT_INVISIBLE))
+         continue;
 
       /* Just update the pilot. */
       if (p->update) /* update */
