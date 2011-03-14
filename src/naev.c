@@ -588,6 +588,7 @@ void unload_all (void)
    var_cleanup(); /* cleans up mission variables */
 }
 
+
 /**
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */

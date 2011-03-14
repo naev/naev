@@ -7,7 +7,18 @@
  *
  * @brief Handles hooks.
  *
- * Currently only used in the mission system.
+ * Hooks have a major issue, they are sort of like a poor man's threading. This means get
+ *  all the issues related to threading. The main issues here are the fact that the hooks
+ *  can mess with the game state during the update and break everything. The solution is
+ *  to handle hooks either before the update stage (input stage) or after update stage
+ *  (render stage). This leaves the update stage as sort of an atomic block that doesn't
+ *  have to worry  about state corruption.
+ *
+ * The flaw in this design is that it's still possible for hooks to bash other hooks.
+ *  Notably the player.teleport() is a very dangerous function as it'll destroy the entire
+ *  current Naev state which will most likely cause all the other hooks to fail.
+ *
+ * Therefore we must tread carefully. Hooks are serious business.
  */
 
 
