@@ -35,6 +35,7 @@
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
+#include "board.h"
 #include "land_outfits.h"
 #include "gui.h"
 #include "gui_omsg.h"
@@ -1033,10 +1034,12 @@ static int playerL_teleport( lua_State *L )
    const char *name;
 
    /* Must not be landed. */
-   if (landed) {
+   if (landed)
       NLUA_ERROR(L,"Can not teleport the player while landed!");
-      return 0;
-   }
+   if (comm_isOpen())
+      NLUA_ERROR(L,"Can not teleport the player while the comm is open!");
+   if (player_isBoarded())
+      NLUA_ERROR(L,"Can not teleport the player while he is boarded!");
 
    /* Get a system. */
    if (lua_issystem(L,1)) {

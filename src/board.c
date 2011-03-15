@@ -31,6 +31,7 @@
 
 
 static int board_stopboard = 0; /**< Whether or not to unboard. */
+static int board_boarded   = 0;
 
 
 /*
@@ -46,6 +47,15 @@ static void board_update( unsigned int wdw );
 
 
 /**
+ * @brief Gets if the player is boarded.
+ */
+int player_isBoarded (void)
+{
+   return board_boarded;
+}
+
+
+/**
  * @fn void player_board (void)
  *
  * @brief Attempt to board the player's target.
@@ -58,7 +68,6 @@ void player_board (void)
    unsigned int wdw;
    char c;
    HookParam hparam[2];
-
 
    if (player.p->target==PLAYER_ID) {
       player_message("\erYou need a target to board first!");
@@ -101,6 +110,8 @@ void player_board (void)
       }
    }
 
+   /* Is boarded. */
+   board_boarded =1 ;
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED);
@@ -168,6 +179,9 @@ static void board_exit( unsigned int wdw, char* str )
 {
    (void) str;
    window_destroy( wdw );
+
+   /* Is not boarded. */
+   board_boarded =1 ;
 }
 
 

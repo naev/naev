@@ -10,6 +10,7 @@
 #include "pilot.h"
 
 
+int player_isBoarded (void);
 void player_board (void);
 void board_unboard (void);
 int pilot_board( Pilot *p );
