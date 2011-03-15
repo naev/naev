@@ -511,7 +511,7 @@ static int hook_mouse( lua_State *L )
  *    @luareturn Hook identifier.
  * @luafunc safe( funcname, arg )
  */
-static int hook_safe( lua_State *L );
+static int hook_safe( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "safe", 0., 1, 0 );
