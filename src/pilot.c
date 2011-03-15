@@ -2191,6 +2191,7 @@ void pilots_update( double dt )
             !pilot_isFlag(p, PILOT_LANDING) &&
             !pilot_isFlag(p, PILOT_TAKEOFF))
          p->think(p, dt);
+   }
 
    /* Now update all the pilots. */
    for (i=0; i<pilot_nstack; i++) {

@@ -45,13 +45,26 @@
 
 
 /**
+ * @brief Hook queue to delay execution.
+ */
+typedef struct HookQueue_s {
+   struct HookQueue_s *next; /**< Next in linked list. */
+   char *stack;         /**< Stack to run. */
+   unsigned int id;     /**< Run specific hook. */
+   HookParam hparam[3]; /**< Parameters. */
+} HookQueue_t;
+static HookQueue_t *hook_queue   = NULL; /**< The hook queue. */
+static int hook_atomic           = 0;
+
+
+/**
  * @brief Types of hook.
  */
 typedef enum HookType_e {
-   HOOK_TYPE_NULL, /**< Invalid hook type. */
-   HOOK_TYPE_MISN, /**< Mission hook type. */
-   HOOK_TYPE_EVENT, /**< Event hook type. */
-   HOOK_TYPE_FUNC /**< C function hook type. */
+   HOOK_TYPE_NULL,   /**< Invalid hook type. */
+   HOOK_TYPE_MISN,   /**< Mission hook type. */
+   HOOK_TYPE_EVENT,  /**< Event hook type. */
+   HOOK_TYPE_FUNC    /**< C function hook type. */
 } HookType_t;
 
 
@@ -107,6 +120,8 @@ static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
 /*
  * prototypes
  */
+/* Execution. */
+static int hooks_executeParam( const char* stack, HookParam *param );
 /* intern */
 static void hooks_purgeList (void);
 static Hook* hook_get( unsigned int id );
@@ -123,6 +138,86 @@ static int hook_parse( xmlNodePtr base );
 /* externed */
 int hook_save( xmlTextWriterPtr writer );
 int hook_load( xmlNodePtr parent );
+
+
+/** 
+ * Adds a hook to the queue.
+ */
+static int hq_add( HookQueue_t *hq )
+{
+   HookQueue_t *c;
+
+   /* Set as head. */
+   if (hook_queue == NULL) {
+      hook_queue = hq;
+      return 0;
+   }
+
+   /* Find tail. */
+   for (c=hook_queue; c->next != NULL; c=c->next);
+   c->next = hq;
+   return 0;
+}
+
+
+/**
+ * @brief Frees a queued hook.
+ */
+static void hq_free( HookQueue_t *hq )
+{
+   if (hq->stack != NULL)
+      free(hq->stack);
+   free(hq);
+}
+
+
+/**
+ * @brief Clears the queued hooks.
+ */
+static void hq_clear (void)
+{
+   HookQueue_t *hq;
+   while (hook_queue != NULL) {
+      hq = hook_queue;
+      hook_queue = hq->next;
+      hq_free( hq );
+   }
+}
+
+
+/**
+ * @brief Starts the hook exclusion zone, this makes hooks queue until exclusion is done.
+ */
+void hook_exclusionStart (void)
+{
+   hook_atomic = 1;
+}
+
+
+/**
+ * @brief Ends exclusion zone and runs all the queued hooks.
+ */
+void hook_exclusionEnd (void)
+{
+   HookQueue_t *hq;
+   hook_atomic = 0;
+
+   /* Handle hook queue. */
+   while (hook_queue != NULL) {
+      /* Move hook down. */
+      hq = hook_queue;
+      hook_queue = hq->next;
+
+      /* Execute. */
+      hooks_executeParam( hq->stack, hq->hparam );
+
+      /* Clean up. */
+      hq_free( hq );
+   }
+
+   /* Purge the dead. */
+   hooks_purgeList();
+}
 
 
 /**
@@ -749,13 +844,8 @@ int hook_hasEventParent( unsigned int parent )
 }
 
 
-/**
- * @brief Runs all the hooks of stack.
- *
- *    @param stack Stack to run.
- *    @return 0 on success.
- */
-int hooks_runParam( const char* stack, HookParam *param )
+
+static int hooks_executeParam( const char* stack, HookParam *param )
 {
    int j;
    int run;
@@ -786,15 +876,43 @@ int hooks_runParam( const char* stack, HookParam *param )
       }
    }
    hook_runningstack = 0; /* not running hooks anymore */
-  
-   /* Clear dead. */
-   hooks_purgeList();
 
    /* Check claims. */
    if (run)
       claim_activateAll();
 
    return run;
+}
+
+
+/**
+ * @brief Runs all the hooks of stack.
+ *
+ *    @param stack Stack to run.
+ *    @return 0 on success.
+ */
+int hooks_runParam( const char* stack, HookParam *param )
+{
+   int i;
+   HookQueue_t *hq;
+
+   /* Don't update if player is dead. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
+      return 0;
+
+   /* Not time to run hooks, so queue them. */
+   if (hook_atomic) {
+      hq = calloc( 1, sizeof(HookQueue_t) );
+      hq->stack = strdup(stack);
+      for (i=0; param[i].type != HOOK_PARAM_SENTINAL; i++)
+         memcpy( &hq->hparam[i], &param[i], sizeof(HookParam) );
+      hq->hparam[i].type = HOOK_PARAM_SENTINAL;
+      hq_add( hq );
+      return 0;
+   }
+
+   /* Execute. */
+   return hooks_executeParam( stack, param );
 }
 
 
@@ -901,6 +1019,9 @@ static void hook_free( Hook *h )
 void hook_cleanup (void)
 {
    Hook *h, *hn;
+
+   /* Clear queued hooks. */
+   hq_clear();
 
    h = hook_list;
    while (h != NULL) {

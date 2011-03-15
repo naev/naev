@@ -12,6 +12,9 @@
 #include "nlua_pilot.h"
 
 
+#define HOOK_MAX_PARAM  3 /**< Maximum hook params, to avoid dynamic allocation. */
+
+
 /**
  * @Brief The hook parameter types.
  */
@@ -37,6 +40,11 @@ typedef struct HookParam_s {
    } u; /**< Hook parameter data. */
 } HookParam;
 
+/*
+ * Exclusion.
+ */
+void hook_exclusionStart (void);
+void hook_exclusionEnd (void);
 
 /* add/run hooks */
 unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack );

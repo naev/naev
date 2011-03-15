@@ -760,6 +760,8 @@ static void update_all (void)
  */
 void update_routine( double dt )
 {
+   hook_exclusionStart();
+
    /* Update time. */
    ntime_update( dt );
 
@@ -772,6 +774,8 @@ void update_routine( double dt )
 
    /* Update camera. */
    cam_update( dt );
+
+   hook_exclusionEnd();
 }
 
 
