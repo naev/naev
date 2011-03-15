@@ -73,7 +73,7 @@
  */
 extern const double fps_min;
 void fps_setPos( double x, double y );
-void update_routine( double dt );
+void update_routine( double dt, int enter_sys );
 char *naev_version( int long_version );
 int naev_versionParse( int version[3], char *buf, int nbuf );
 int naev_versionCompare( int version[3] );

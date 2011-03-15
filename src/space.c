@@ -1076,7 +1076,7 @@ void space_init ( const char* sysname )
    ntime_allowUpdate( 0 );
    n = SYSTEM_SIMULATE_TIME / fps_min;
    for (i=0; i<n; i++)
-      update_routine( fps_min );
+      update_routine( fps_min, 1 );
    ntime_allowUpdate( 1 );
    sound_disabled = s;
    player_messageToggle( 1 );

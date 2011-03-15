@@ -1615,7 +1615,10 @@ void player_brokeHyperspace (void)
       }
    }
 
-   player_setFlag( PLAYER_HOOK_JUMPIN );
+   /* Safe since this is run in the player hook section. */
+   hooks_run( "jumpin" );
+   hooks_run( "enter" );
+   events_trigger( EVENT_TRIGGER_ENTER );
 
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );

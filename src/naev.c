@@ -741,13 +741,13 @@ static void update_all (void)
 
       /* Update as much as needed, evenly. */
       for (i=0; i<n; i++) {
-         update_routine(microdt);
+         update_routine(microdt, 0);
       }
 
       /* Note we don't touch game_dt so that fps_display works well */
    }
    else /* Standard, just update with the last dt */
-      update_routine(game_dt);
+      update_routine(game_dt, 0);
 
    fps_skipped = 0;
 }
@@ -758,12 +758,14 @@ static void update_all (void)
  *
  *    @param[in] dt Current delta tick.
  */
-void update_routine( double dt )
+void update_routine( double dt, int enter_sys )
 {
-   hook_exclusionStart();
+   if (!enter_sys) {
+      hook_exclusionStart();
 
-   /* Update time. */
-   ntime_update( dt );
+      /* Update time. */
+      ntime_update( dt );
+   }
 
    /* Update engine stuff. */
    space_update(dt);
@@ -775,7 +777,8 @@ void update_routine( double dt )
    /* Update camera. */
    cam_update( dt );
 
-   hook_exclusionEnd();
+   if (!enter_sys)
+      hook_exclusionEnd();
 }
 
 
