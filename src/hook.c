@@ -54,7 +54,7 @@ typedef struct HookQueue_s {
    HookParam hparam[3]; /**< Parameters. */
 } HookQueue_t;
 static HookQueue_t *hook_queue   = NULL; /**< The hook queue. */
-static int hook_atomic           = 0; /**< WHether or not hooks should be queued. */
+static int hook_atomic           = 0; /**< Whether or not hooks should be queued. */
 static ntime_t hook_time_accum   = 0; /**< Time accumulator. */
 
 
@@ -926,6 +926,7 @@ int hooks_runParam( const char* stack, HookParam *param )
 
    /* Not time to run hooks, so queue them. */
    if (hook_atomic) {
+      WARN("Stack '%s' being run in hook exclusion area!", stack);
       hq = calloc( 1, sizeof(HookQueue_t) );
       hq->stack = strdup(stack);
       for (i=0; param[i].type != HOOK_PARAM_SENTINAL; i++)
