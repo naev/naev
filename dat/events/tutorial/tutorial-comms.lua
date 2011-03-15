@@ -20,7 +20,7 @@ To proceed to the next step, target the nearby ship and contact it. You may cont
 But wait, what's this? A ship is taking off from the planet below, and it seems it's interested in talking to you!]]
     message5 = [[As you just witnessed, ships that are trying to contact you will have an animated icon next to them. You will also be notified in the message log, and a sound will alert you that someone's hailing you.
 
-Let's respond to the ship. You could do this in the same way you just learned, by targeting the ship and pressing %s, but that can be inconvenient when ther are many ships around. An easy way to respond to the incoming call is by using the auto-respond shortcut, which is %s. Try answering the ship now.]]
+Let's respond to the ship. You could do this in the same way you just learned, by targeting the ship and pressing %s, but that can be inconvenient when there are many ships around. An easy way to respond to the incoming call is by using the auto-respond shortcut, which is %s. Try answering the ship now.]]
     message6 = [[Excellent. Ships won't often hail you, but when they do it's highly likely they have something important to say. Keep a look out for ships trying to contact you!]]
     message7 = [[You now know how to talk to ships and planets, and you know what to do when ships want to talk to you. As a final tip, remember that auto-responding to a ship will automatically target it, so be sure not to accidentally attack it!
 
