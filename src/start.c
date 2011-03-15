@@ -187,27 +187,23 @@ int start_load (void)
 }
 
 
+#define MEMFREE(x)   if ((x) != NULL) free(x)
 /**
  * @brief Cleans up after the module start data.
  */
 void start_cleanup (void)
 {
-   if (start_data.name != NULL)
-      free(start_data.name);
-   if (start_data.ship != NULL)
-      free(start_data.ship);
-   if (start_data.system != NULL)
-      free(start_data.system);
-   if (start_data.mission != NULL)
-      free(start_data.mission);
-   if (start_data.event != NULL)
-      free(start_data.event);
-   if (start_data.tutmisn != NULL)
-      free(start_data.tutmisn);
-   if (start_data.tutevt != NULL)
-      free(start_data.tutevt);
+   MEMFREE( start_data.name );
+   MEMFREE( start_data.ship );
+   MEMFREE( start_data.system );
+   MEMFREE( start_data.mission );
+   MEMFREE( start_data.event );
+   MEMFREE( start_data.tutsys );
+   MEMFREE( start_data.tutmisn );
+   MEMFREE( start_data.tutevt );
    memset( &start_data, 0, sizeof(start_data) );
 }
+#undef MEMFREE
 
 
 /**
