@@ -671,7 +671,7 @@ static void hooks_updateDateExecute( ntime_t change )
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
-   hook_runningstack = 1; /* running hooks */
+   hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
          /* Find valid timer hooks. */
@@ -692,7 +692,7 @@ static void hooks_updateDateExecute( ntime_t change )
             h->acc -= h->res;
       }
    }
-   hook_runningstack = 0; /* not running hooks anymore */
+   hook_runningstack--; /* not running hooks anymore */
 
    /* Second pass to delete. */
    hooks_purgeList();
@@ -751,9 +751,12 @@ void hooks_update( double dt )
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
-   hook_runningstack = 1; /* running hooks */
+   hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
+         /* Not be deleting. */
+         if (h->delete)
+            continue;
          /* Find valid timer hooks. */
          if (h->is_timer == 0)
             continue;
@@ -769,7 +772,7 @@ void hooks_update( double dt )
          h->delete = 1; /* Mark for deletion. */
       }
    }
-   hook_runningstack = 0; /* not running hooks anymore */
+   hook_runningstack--; /* not running hooks anymore */
 
    /* Second pass to delete. */
    hooks_purgeList();
@@ -907,22 +910,22 @@ static int hooks_executeParam( const char* stack, HookParam *param )
       h->ran_once = 0;
 
    run = 0;
-   hook_runningstack = 1; /* running hooks */
+   hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
          /* Should be deleted. */
          if (h->delete)
             continue;
+         if (h->ran_once)
+            continue;
          /* Doesn't match stack. */
          if (strcmp(stack, h->stack) != 0)
-            continue;
-         if (h->ran_once)
             continue;
          hook_run( h, param, j );
          run++;
       }
    }
-   hook_runningstack = 0; /* not running hooks anymore */
+   hook_runningstack--; /* not running hooks anymore */
 
    /* Check claims. */
    if (run)
