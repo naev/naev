@@ -64,6 +64,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
  *
  * Currently used:
  *  - General
+ *    - "safe" - Runs once each frame at a same time (last in the frame), good place to do breaking stuff.
  *    - "takeoff" - When taking off
  *    - "jumpin" - When player jumps (after changing system)
  *    - "jumpout" - When player jumps (before changing system)

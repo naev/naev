@@ -226,6 +226,9 @@ void hook_exclusionEnd (void)
    hook_time_accum = 0;
    hooks_updateDateExecute( temp );
 
+   /* Safe hooks. */
+   hooks_run( "safe" );
+
    /* Purge the dead. */
    hooks_purgeList();
 }

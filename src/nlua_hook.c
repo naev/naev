@@ -48,6 +48,7 @@ static int hook_commbuy( lua_State *L );
 static int hook_commsell( lua_State *L );
 static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
+static int hook_safe( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -64,6 +65,7 @@ static const luaL_reg hook_methods[] = {
    { "comm_sell", hook_commsell },
    { "input", hook_input },
    { "mouse", hook_mouse },
+   { "safe", hook_safe },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -496,6 +498,23 @@ static int hook_mouse( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "mouse", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hook run at the end of each frame.
+ *
+ * This hook is a good way to do possibly breaking stuff like for example player.teleport().
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc safe( funcname, arg )
+ */
+static int hook_safe( lua_State *L );
+{
+   unsigned int h;
+   h = hook_generic( L, "safe", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
