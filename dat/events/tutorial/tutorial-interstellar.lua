@@ -88,7 +88,7 @@ end
 function jumpin()
     if not firstjump then player.refuel() end
     if system.cur() == system.get("Navajo") then
-        hook.land("cleanup")
+        hook.land( "land_clean" )
         hook.timer(2000, "jumpmsg", message7)
         player.omsgRm(omsg)
 
@@ -103,6 +103,12 @@ end
 -- Delay this tk.msg by a bit to make the jump less jarring.
 function jumpmsg(message)
     tkMsg(title1, message, enable)
+end
+
+-- Safe land function, takes off and cleans
+function land_clean ()
+   player.takeoff()
+   hook.safe("cleanup")
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.

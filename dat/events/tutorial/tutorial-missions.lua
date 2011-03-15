@@ -86,7 +86,7 @@ function takeoff()
     if player.misnDone("Tutorial Mission") then
         tk.msg(title1, message5)
         tk.msg(title1, message6)
-        cleanup()
+        hook.safe("cleanup")
     end
 end
 

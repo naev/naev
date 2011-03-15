@@ -258,7 +258,7 @@ function captainTPrip()
     tkMsg(title1, message9, enable)
     tkMsg(title1, message10, enable)
     tkMsg(title1, message11, enable)
-    cleanup()
+    hook.safe( "cleanup" )
 end
 
 -- Taunt function.

@@ -155,7 +155,7 @@ end
 
 -- WHen takes off.
 function landTakeoff()
-   cleanup()
+   hook.safe( "cleanup" )
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
