@@ -81,6 +81,7 @@ typedef struct Hook_ {
    char *stack; /**< stack it's a part of */
    int delete; /**< indicates it should be deleted when possible */
    int ran_once; /**< Indicates if the hook already ran, useful when iterating. */
+   int once; /**< Only run the hook once. */
 
    /* Timer information. */
    int is_timer; /**< Whether or not is actually a timer. */
@@ -316,7 +317,11 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 
    /* Make sure it's claimed. */
    if ((claims > 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
-      return 0;
+      return 1;
+
+   /* Delete if only supposed to run once. */
+   if (hook->once)
+      hook->delete = 1;
 
    /* Set up hook parameters. */
    L = misn_runStart( misn, hook->u.misn.func );
@@ -352,7 +357,11 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 
    /* Must match claims. */
    if ((claims > 0) && (event_testClaims( hook->u.event.parent, cur_system->id ) != claims))
-      return 0;
+      return 1;
+
+   /* Delete if only supposed to run once. */
+   if (hook->once)
+      hook->delete = 1;
 
    /* Simplicity. */
    id = hook->id;
@@ -412,6 +421,8 @@ static int hook_runFunc( Hook *hook )
  */
 static int hook_run( Hook *hook, HookParam *param, int claims )
 {
+   int ret;
+
    if (hook->delete)
       return 0; /* hook should be deleted not run */
 
@@ -421,19 +432,24 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
 
    switch (hook->type) {
       case HOOK_TYPE_MISN:
-         return hook_runMisn(hook, param, claims);
+         ret = hook_runMisn(hook, param, claims);
+         break;
 
       case HOOK_TYPE_EVENT:
-         return hook_runEvent(hook, param, claims);
+         ret = hook_runEvent(hook, param, claims);
+         break;
 
       case HOOK_TYPE_FUNC:
-         return hook_runFunc(hook);
+         ret = hook_runFunc(hook);
+         break;
 
       default:
          WARN("Invalid hook type '%d', deleting.", hook->type);
          hook->delete = 1;
          return -1;
    }
+
+   return ret;
 }
 
 
@@ -469,22 +485,25 @@ static unsigned int hook_genID (void)
  */
 static Hook* hook_new( HookType_t type, const char *stack )
 {
-   Hook *new_hook, *h, *hl;
+   Hook *new_hook, *h;
 
    /* Get and create new hook. */
    new_hook = calloc( 1, sizeof(Hook) );
    if (hook_list == NULL)
       hook_list = new_hook;
    else {
-      for (h=hook_list; h!=NULL; h=h->next)
-         hl = h;
-      hl->next = new_hook;
+      for (h=hook_list; h->next!=NULL; h=h->next);
+      h->next = new_hook;
    }
 
    /* Fill out generic details. */
    new_hook->type    = type;
    new_hook->id      = hook_genID();
    new_hook->stack   = strdup(stack);
+
+   /** @TODO fix this hack. */
+   if (strcmp(stack,"safe")==0)
+      new_hook->once = 1;
 
    return new_hook;
 }
@@ -596,6 +615,10 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
 static void hooks_purgeList (void)
 {
    Hook *h, *hl;
+
+   /* Do not run while stack is being run. */
+   if (hook_runningstack)
+      return;
 
    /* Second pass to delete. */
    hl = NULL;
@@ -1044,6 +1067,9 @@ static void hook_free( Hook *h )
 void hook_cleanup (void)
 {
    Hook *h, *hn;
+
+   if (hook_runningstack)
+      WARN("Running hook_cleanup while hook stack is being run!");
 
    /* Clear queued hooks. */
    hq_clear();
