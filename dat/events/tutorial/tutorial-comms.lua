@@ -84,7 +84,7 @@ function hailship()
     player.commClose()
     tkMsg(title1, message6, enable)
     tkMsg(title1, message7, enable)
-    cleanup()
+    hook.safe( "cleanup" )
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
