@@ -150,12 +150,7 @@ end
 function land()
     tkMsg(title1, message10:format(tutGetKey("land")), enable)
     player.takeoff()
-    hook.takeoff("landTakeoff")
-end
-
--- WHen takes off.
-function landTakeoff()
-   hook.safe( "cleanup" )
+    hook.safe( "cleanup" )
 end
 
 -- Cleanup function. Should be the exit point for the module in all cases.
