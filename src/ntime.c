@@ -243,7 +243,6 @@ void ntime_setR( int scu, int stp, int stu, double rem )
 void ntime_inc( ntime_t t )
 {
    naev_time += t;
-   hooks_run("time");
    economy_update( t );
 
    /* Run hooks. */
@@ -307,7 +306,6 @@ void ntime_refresh (void)
 
       /* Run hook stuff and actually update time. */
       naev_time += ntu->inc;
-      hooks_run("time");
       economy_update( ntu->inc );
 
       /* Remove the increment. */
