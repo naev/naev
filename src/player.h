@@ -28,6 +28,9 @@
 #define PLAYER_DOUBLESPEED (1<<19)  /**< player is running at double speed. */
 #define PLAYER_CINEMATICS_GUI (1<<20) /**< Disable rendering the GUI when in cinematics mode. */
 #define PLAYER_CINEMATICS_2X (1<<21) /**< Disables usage of the 2x button when in cinematics mode. */
+#define PLAYER_HOOK_LAND   (1<<25)
+#define PLAYER_HOOK_JUMPIN (1<<26)
+#define PLAYER_HOOK_HYPER  (1<<27)
 #define PLAYER_TUTORIAL    (1<<30)  /**< Player is doing the tutorial. */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
@@ -87,6 +90,11 @@ void player_newTutorial (void);
 Pilot* player_newShip( Ship* ship, const char *def_name,
       int trade, int noname );
 void player_cleanup (void);
+
+/*
+ * Hook voodoo.
+ */
+void player_runHooks (void);
 
 
 /*

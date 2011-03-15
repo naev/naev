@@ -1615,10 +1615,7 @@ void player_brokeHyperspace (void)
       }
    }
 
-   /* run the jump hooks */
-   hooks_run( "jumpin" );
-   hooks_run( "enter" );
-   events_trigger( EVENT_TRIGGER_ENTER );
+   player_setFlag( PLAYER_HOOK_JUMPIN );
 
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );
@@ -2465,6 +2462,28 @@ char **player_getLicenses( int *nlicenses )
 {
    *nlicenses = player_nlicenses;
    return player_licenses;
+}
+
+
+/**
+ * @brief Runs hooks for the player.
+ */
+void player_runHooks (void)
+{
+   if (player_isFlag( PLAYER_HOOK_HYPER)) {
+      player_brokeHyperspace();
+      player_rmFlag( PLAYER_HOOK_HYPER );
+   }
+   if (player_isFlag( PLAYER_HOOK_JUMPIN)) {
+      hooks_run( "jumpin" );
+      hooks_run( "enter" );
+      events_trigger( EVENT_TRIGGER_ENTER );
+      player_rmFlag( PLAYER_HOOK_JUMPIN );
+   }
+   if (player_isFlag( PLAYER_HOOK_LAND )) {
+      land( cur_system->planets[ player.p->nav_planet ], 0 );
+      player_rmFlag( PLAYER_HOOK_LAND );
+   }
 }
 
 

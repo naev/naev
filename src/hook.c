@@ -54,7 +54,8 @@ typedef struct HookQueue_s {
    HookParam hparam[3]; /**< Parameters. */
 } HookQueue_t;
 static HookQueue_t *hook_queue   = NULL; /**< The hook queue. */
-static int hook_atomic           = 0;
+static int hook_atomic           = 0; /**< WHether or not hooks should be queued. */
+static ntime_t hook_time_accum   = 0; /**< Time accumulator. */
 
 
 /**
@@ -122,6 +123,7 @@ static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
  */
 /* Execution. */
 static int hooks_executeParam( const char* stack, HookParam *param );
+static void hooks_updateDateExecute( ntime_t change );
 /* intern */
 static void hooks_purgeList (void);
 static Hook* hook_get( unsigned int id );
@@ -200,6 +202,7 @@ void hook_exclusionStart (void)
 void hook_exclusionEnd (void)
 {
    HookQueue_t *hq;
+   ntime_t temp;
    hook_atomic = 0;
 
    /* Handle hook queue. */
@@ -214,6 +217,14 @@ void hook_exclusionEnd (void)
       /* Clean up. */
       hq_free( hq );
    }
+
+   /* Run assorted hooks. */
+   player_runHooks();
+
+   /* Time hooks. */
+   temp = hook_time_accum;
+   hook_time_accum = 0;
+   hooks_updateDateExecute( temp );
 
    /* Purge the dead. */
    hooks_purgeList();
@@ -613,9 +624,19 @@ static void hooks_purgeList (void)
 
 
 /**
- * @brief Updates date hooks and runs them if necessary.
+ * @brief Updates the time to see if it should be updated.
  */
 void hooks_updateDate( ntime_t change )
+{
+   if (change > 0)
+      hook_time_accum += change;
+}
+
+
+/**
+ * @brief Updates date hooks and runs them if necessary.
+ */
+static void hooks_updateDateExecute( ntime_t change )
 {
    int j;
    Hook *h;

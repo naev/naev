@@ -1210,7 +1210,7 @@ void pilot_update( Pilot* pilot, const double dt )
    else if (pilot_isFlag(pilot,PILOT_LANDING)) {
       if (pilot->ptimer < 0.) {
          if (pilot_isPlayer(pilot)) {
-            land( cur_system->planets[ pilot->nav_planet ], 0 );
+            player_setFlag( PLAYER_HOOK_LAND );
             pilot->ptimer = 0.;
          }
          else
@@ -1449,7 +1449,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          pilot_setFlag( p, PILOT_HYP_END );
          pilot_setThrust( p, 0. );
          if (p->id == PLAYER_ID) { /* player.p just broke hyperspace */
-            player_brokeHyperspace();
+            player_setFlag( PLAYER_HOOK_HYPER );
          }
          else {
             pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
