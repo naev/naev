@@ -120,6 +120,9 @@
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
 #define AI_INCLUDE      "include/" /**< Where to search for includes. */
 
+#define AI_MEM          "__mem" /**< Internal pilot memory. */
+#define AI_MEM_DEF      "def" /**< Default pilot memory. */
+
 
 /*
  * all the AI profiles
@@ -385,7 +388,7 @@ static void ai_setMemory (void)
    lua_State *L;
    L = cur_pilot->ai->L;
 
-   lua_getglobal(L, "pilotmem"); /* pm */
+   lua_getglobal(L, AI_MEM); /* pm */
    lua_pushnumber(L, cur_pilot->id); /* pm, id */
    lua_gettable(L, -2); /* pm, t */
    lua_setglobal(L, "mem"); /* pm */
@@ -485,14 +488,14 @@ int ai_pinit( Pilot *p, const char *ai )
    }
 
    /* Adds a new pilot memory in the memory table. */
-   lua_getglobal(L, "pilotmem"); /* pm */
+   lua_getglobal(L, AI_MEM); /* pm */
    lua_newtable(L);              /* pm, nt */
    lua_pushnumber(L, p->id);     /* pm, nt, n */
    lua_pushvalue(L,-2);          /* pm, nt, n, nt */
    lua_settable(L,-4);           /* pm, nt */
 
    /* Copy defaults over. */
-   lua_pushstring(L, "default"); /* pm, nt, s */
+   lua_pushstring(L, AI_MEM_DEF);/* pm, nt, s */
    lua_gettable(L, -3);          /* pm, nt, dt */
    lua_pushnil(L);               /* pm, nt, dt, nil */
    while (lua_next(L,-2) != 0) { /* pm, nt, dt, k, v */
@@ -536,7 +539,7 @@ void ai_destroy( Pilot* p )
    L = p->ai->L;
 
    /* Get rid of pilot's memory. */
-   lua_getglobal(L, "pilotmem");
+   lua_getglobal(L, AI_MEM);
    lua_pushnumber(L, p->id);
    lua_pushnil(L);
    lua_settable(L,-3);
@@ -674,12 +677,12 @@ static int ai_loadProfile( const char* filename )
 
    /* Add the player memory table. */
    lua_newtable(L);
-   lua_setglobal(L, "pilotmem");
+   lua_setglobal(L, AI_MEM );
 
    /* Set "mem" to be default template. */
-   lua_getglobal(L, "pilotmem"); /* pm */
+   lua_getglobal(L, AI_MEM);     /* pm */
    lua_newtable(L);              /* pm, nt */
-   lua_pushstring(L, "default"); /* pm, nt, s */
+   lua_pushstring(L, AI_MEM_DEF);/* pm, nt, s */
    lua_pushvalue(L,-2);          /* pm, nt, s, nt */
    lua_settable(L,-4);           /* pm, nt */
    lua_setglobal(L, "mem");      /* pm */
@@ -834,7 +837,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    if (attacked->ai == NULL)
       return;
 
-   ai_setPilot(attacked);
+   ai_setPilot( attacked ); /* Sets cur_pilot. */
    L = cur_pilot->ai->L;
    lua_getglobal(L, "attacked");
    lua_pushnumber(L, attacker);
