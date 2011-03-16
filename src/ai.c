@@ -488,7 +488,7 @@ int ai_pinit( Pilot *p, const char *ai )
    }
 
    /* Adds a new pilot memory in the memory table. */
-   lua_getglobal(L, AI_MEM); /* pm */
+   lua_getglobal(L, AI_MEM);     /* pm */
    lua_newtable(L);              /* pm, nt */
    lua_pushnumber(L, p->id);     /* pm, nt, n */
    lua_pushvalue(L,-2);          /* pm, nt, n, nt */
