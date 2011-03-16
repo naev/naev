@@ -1,4 +1,8 @@
 <Events>
+ <event name="start_event">
+  <lua>start</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial">
   <lua>tutorial/tutorial</lua>
   <trigger>none</trigger>
