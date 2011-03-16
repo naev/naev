@@ -111,7 +111,7 @@ void player_board (void)
    }
 
    /* Is boarded. */
-   board_boarded =1 ;
+   board_boarded = 1;
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED);
@@ -129,8 +129,10 @@ void player_board (void)
    hooks_runParam( "board", hparam );
    pilot_runHook(p, PILOT_HOOK_BOARD);
 
-   if (board_stopboard)
+   if (board_stopboard) {
+      board_boarded = 0;
       return;
+   }
 
    /*
     * create the boarding window
