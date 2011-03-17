@@ -10,8 +10,8 @@ NAEV README
 
 1) DEPENDENCIES
 
-   NAEV's dependencies are intended to be relatively common. In addition to
-   an OpenGL-capable graphics card and driver, NAEV requires the following:
+   Naev's dependencies are intended to be relatively common. In addition to
+   an OpenGL-capable graphics card and driver, Naev requires the following:
       * SDL
       * libxml2
       * freetype2
@@ -47,7 +47,7 @@ NAEV README
 
 3) INSTALLATION
 
-   NAEV currently supports make install which will install everything that
+   Naev currently supports make install which will install everything that
    is needed.
 
    If you wish to create a .desktop for your desktop environment, logos
@@ -59,10 +59,10 @@ NAEV README
    bug report, as it covers a number of common gameplay questions and
    common issues.
 
-   If NAEV is crashing during gameplay, please file a bug report after
+   If Naev is crashing during gameplay, please file a bug report after
    reading http://wiki.naev.org/wiki/Bugs
 
-   If NAEV crashes on launch with an error such as 'undefined symbol:
+   If Naev crashes on launch with an error such as 'undefined symbol:
    ov_read_filter', your version of libvorbis is outdated, please see
    the appropriate FAQ entry: http://wiki.naev.org/wiki/FAQ
 
@@ -73,13 +73,13 @@ NAEV README
 
    5A) Introduction
       5A1) About
-         NAEV uses a dynamic keybinding system that allows you to set 
+         Naev uses a dynamic keybinding system that allows you to set 
          the keybindings to joystick, keyboard or a mixture of both.
 
          This can changed via ~/.naev/conf.lua, or with the in-game editor.
 
    5B) Joystick
-      If you have a joystick you'll have to tell NAEV which joystick
+      If you have a joystick you'll have to tell Naev which joystick
       to use.  You can either use the -j or -J parameter from the
       command-line or put it in the conf.lua file.
       Examples:
