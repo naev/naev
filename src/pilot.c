@@ -2006,15 +2006,15 @@ void pilot_free( Pilot* p )
       pilot_cargoRmRaw( p, p->commodities[0].commodity,
             p->commodities[0].quantity, 1 );
 
+   /* Clean up data. */
+   if (p->ai != NULL)
+      ai_destroy(p); /* Must be destroyed first if applicable. */
+
    /* Free name and title. */
    if (p->name != NULL)
       free(p->name);
    if (p->title != NULL)
       free(p->title);
-
-   /* Clean up data. */
-   if (p->ai != NULL)
-      ai_destroy(p); /* Must be destroyed first if applicable. */
    /* Case if pilot is the player. */
    if (player.p==p)
       player.p = NULL;

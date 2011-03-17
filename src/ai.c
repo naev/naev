@@ -544,11 +544,13 @@ void ai_destroy( Pilot* p )
    L = p->ai->L;
 
    /* Get rid of pilot's memory. */
-   lua_getglobal(L, AI_MEM);  /* t */
-   lua_pushnumber(L, p->id);  /* t, id */
-   lua_pushnil(L);            /* t, id, nil */
-   lua_settable(L,-3);        /* t */
-   lua_pop(L,1);              /* */
+   if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
+      lua_getglobal(L, AI_MEM);  /* t */
+      lua_pushnumber(L, p->id);  /* t, id */
+      lua_pushnil(L);            /* t, id, nil */
+      lua_settable(L,-3);        /* t */
+      lua_pop(L,1);              /* */
+   }
 
    /* Clear the tasks. */
    ai_cleartasks( p );
@@ -839,7 +841,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
 
-   /* Must have an AI profile. */
+   /* Must have an AI profile and not be player. */
    if (attacked->ai == NULL)
       return;
 
