@@ -772,13 +772,12 @@ void update_routine( double dt, int enter_sys )
    weapons_update(dt);
    spfx_update(dt);
    pilots_update(dt);
-   hooks_update(dt);
 
    /* Update camera. */
    cam_update( dt );
 
    if (!enter_sys)
-      hook_exclusionEnd();
+      hook_exclusionEnd( dt );
 }
 
 

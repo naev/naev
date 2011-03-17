@@ -200,7 +200,7 @@ void hook_exclusionStart (void)
 /**
  * @brief Ends exclusion zone and runs all the queued hooks.
  */
-void hook_exclusionEnd (void)
+void hook_exclusionEnd( double dt )
 {
    HookQueue_t *hq;
    ntime_t temp;
@@ -218,6 +218,9 @@ void hook_exclusionEnd (void)
       /* Clean up. */
       hq_free( hq );
    }
+
+   /* Update timer hooks. */
+   hooks_update( dt );
 
    /* Run assorted hooks. */
    player_runHooks();

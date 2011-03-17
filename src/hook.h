@@ -44,7 +44,7 @@ typedef struct HookParam_s {
  * Exclusion.
  */
 void hook_exclusionStart (void);
-void hook_exclusionEnd (void);
+void hook_exclusionEnd( double dt );
 
 /* add/run hooks */
 unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack );
