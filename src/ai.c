@@ -497,6 +497,11 @@ int ai_pinit( Pilot *p, const char *ai )
    /* Copy defaults over. */
    lua_pushstring(L, AI_MEM_DEF);/* pm, nt, s */
    lua_gettable(L, -3);          /* pm, nt, dt */
+#if DEBUGGING
+   if (lua_isnil(L,-1))
+      WARN( "AI profile '%s' has no default memory for pilot '%s'.",
+            buf, p->name );
+#endif
    lua_pushnil(L);               /* pm, nt, dt, nil */
    while (lua_next(L,-2) != 0) { /* pm, nt, dt, k, v */
       lua_pushvalue(L,-2);       /* pm, nt, dt, k, v, k */
@@ -539,11 +544,11 @@ void ai_destroy( Pilot* p )
    L = p->ai->L;
 
    /* Get rid of pilot's memory. */
-   lua_getglobal(L, AI_MEM);
-   lua_pushnumber(L, p->id);
-   lua_pushnil(L);
-   lua_settable(L,-3);
-   lua_pop(L,1);
+   lua_getglobal(L, AI_MEM);  /* t */
+   lua_pushnumber(L, p->id);  /* t, id */
+   lua_pushnil(L);            /* t, id, nil */
+   lua_settable(L,-3);        /* t */
+   lua_pop(L,1);              /* */
 
    /* Clear the tasks. */
    ai_cleartasks( p );
@@ -643,23 +648,25 @@ static int ai_loadProfile( const char* filename )
    AI_Profile *prof;
    size_t len;
 
+   /* Create array if necessary. */
    if (profiles == NULL)
       profiles = array_create( AI_Profile );
 
+   /* Grow array. */
    prof = &array_grow(&profiles);
 
+   /* Set name. */
    len = strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX);
    prof->name = malloc(sizeof(char)*(len+1) );
    strncpy( prof->name, &filename[strlen(AI_PREFIX)], len );
    prof->name[len] = '\0';
 
+   /* Create Lua. */
    prof->L = nlua_newState();
-
    if (prof->L == NULL) {
       WARN("Unable to create a new Lua state");
       return -1;
    }
-
    L = prof->L;
 
    /* open basic lua stuff */
@@ -676,19 +683,18 @@ static int ai_loadProfile( const char* filename )
    nlua_loadVector(L);
 
    /* Add the player memory table. */
-   lua_newtable(L);
-   lua_setglobal(L, AI_MEM );
+   lua_newtable(L);              /* pm */
+   lua_pushvalue(L,-1);          /* pm, pm */
+   lua_setglobal(L, AI_MEM );    /* pm */
 
    /* Set "mem" to be default template. */
-   lua_getglobal(L, AI_MEM);     /* pm */
    lua_newtable(L);              /* pm, nt */
-   lua_pushstring(L, AI_MEM_DEF);/* pm, nt, s */
-   lua_pushvalue(L,-2);          /* pm, nt, s, nt */
-   lua_settable(L,-4);           /* pm, nt */
+   lua_pushvalue(L,-1);          /* pm, nt, nt */
+   lua_setfield(L,-3,AI_MEM_DEF); /* pm, nt */
    lua_setglobal(L, "mem");      /* pm */
    lua_pop(L,1);                 /* */
 
-   /* now load the file since all the functions have been previously loaded */
+   /* Now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
       WARN("Error loading AI file: %s\n"
