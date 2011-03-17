@@ -500,7 +500,7 @@ static Pilot* player_newShipMake( const char* name )
    pilot_setFlagRaw( flags, PILOT_PLAYER );
 
    /* in case we're respawning */
-   player_rmFlag(PLAYER_CREATING);
+   player_rmFlag( PLAYER_CREATING );
 
    /* create the player */
    if (player.p == NULL) {
@@ -532,7 +532,7 @@ static Pilot* player_newShipMake( const char* name )
       ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
       ship->loc   = strdup( land_planet->name );
       player_nstack++;
-      new_pilot = ship->p;
+      new_pilot   = ship->p;
    }
 
    if (player.p == NULL)
