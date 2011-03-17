@@ -5,7 +5,7 @@
 /**
  * @file ntime.c
  *
- * @brief Handles the NAEV time.
+ * @brief Handles the Naev time.
  *
  * 1 SCU =  5e3 STP = 50e6 STU
  * 1 STP = 10e3 STU

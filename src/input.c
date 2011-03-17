@@ -43,7 +43,7 @@
 
 /* keybinding structure */
 /**
- * @brief NAEV Keybinding.
+ * @brief Naev Keybinding.
  */
 typedef struct Keybind_ {
    int disabled; /**< Whether or not it's disabled. */
@@ -605,10 +605,10 @@ const char* input_getKeybindDescription( const char *keybind )
 
 
 /**
- * @brief Translates SDL modifier to NAEV modifier.
+ * @brief Translates SDL modifier to Naev modifier.
  *
  *    @param mod SDL modifier to translate.
- *    @return NAEV modifier.
+ *    @return Naev modifier.
  */
 SDLMod input_translateMod( SDLMod mod )
 {
@@ -1072,7 +1072,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod, const
    int i;
    SDLMod mod_filtered;
 
-   /* Filter to "NAEV" modifiers. */
+   /* Filter to "Naev" modifiers. */
    mod_filtered = input_translateMod(mod);
 
    for (i=0; i<input_numbinds; i++) {

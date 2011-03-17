@@ -5,7 +5,7 @@
 /**
  * @file colour.c
  *
- * @brief Predefined colours for use with NAEV.
+ * @brief Predefined colours for use with Naev.
  */
 
 

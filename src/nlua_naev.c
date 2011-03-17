@@ -5,7 +5,7 @@
 /**
  * @file nlua_naev.c
  *
- * @brief Contains NAEV generic Lua bindings.
+ * @brief Contains Naev generic Lua bindings.
  */
 
 #include "nlua_naev.h"
@@ -23,7 +23,7 @@
 #include "input.h"
 
 
-/* NAEV methods. */
+/* Naev methods. */
 static int naev_lang( lua_State *L );
 static int naev_keyGet( lua_State *L );
 static int naev_keyEnable( lua_State *L );
@@ -40,11 +40,11 @@ static const luaL_reg naev_methods[] = {
    { "eventStart", naev_eventStart },
    { "missionStart", naev_missionStart },
    {0,0}
-}; /**< NAEV Lua methods. */
+}; /**< Naev Lua methods. */
 
 
 /**
- * @brief Loads the NAEV Lua library.
+ * @brief Loads the Naev Lua library.
  *
  *    @param L Lua state.
  *    @return 0 on success.
@@ -56,7 +56,7 @@ int nlua_loadNaev( lua_State *L )
 }
 
 /**
- * @brief NAEV generic Lua bindings.
+ * @brief Naev generic Lua bindings.
  *
  * An example would be:
  * @code
@@ -68,7 +68,7 @@ int nlua_loadNaev( lua_State *L )
  * @luamod naev
  */
 /**
- * @brief Gets the language NAEV is currently using.
+ * @brief Gets the language Naev is currently using.
  *
  * @usage if naev.lang() == "en" then -- Language is english
  *

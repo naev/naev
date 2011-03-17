@@ -24,7 +24,7 @@
 /*
  * Prototypes
  */
-GLAPI void APIENTRY glGenerateMipmapNAEV( GLenum target );
+GLAPI void APIENTRY glGenerateMipmapNaev( GLenum target );
 static void* gl_extGetProc( const char *proc );
 static int gl_extVBO (void);
 static int gl_extMultitexture (void);
@@ -125,7 +125,7 @@ static int gl_extVBO (void)
 /**
  * @brief Wrapper for glGenerateMipmap around GL_SGIS_generate_mipmap
  */
-GLAPI void APIENTRY glGenerateMipmapNAEV( GLenum target )
+GLAPI void APIENTRY glGenerateMipmapNaev( GLenum target )
 {
    glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
    glTexParameteri(target, GL_GENERATE_MIPMAP, GL_TRUE);
@@ -149,7 +149,7 @@ static int gl_extMipmaps (void)
       nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
    }
    else if (gl_hasExt("GL_SGIS_generate_mipmap")) {
-      nglGenerateMipmap = glGenerateMipmapNAEV;
+      nglGenerateMipmap = glGenerateMipmapNaev;
    }
    else {
       nglGenerateMipmap = NULL;

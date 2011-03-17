@@ -194,7 +194,7 @@ extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 /**
  * @brief Represents a star system.
  *
- * The star system is the basic setting in NAEV.
+ * The star system is the basic setting in Naev.
  */
 struct StarSystem_ {
    int id; /**< Star system index. */

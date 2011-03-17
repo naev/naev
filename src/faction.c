@@ -5,7 +5,7 @@
 /**
  * @file faction.c
  *
- * @brief Handles the NAEV factions.
+ * @brief Handles the Naev factions.
  */
 
 

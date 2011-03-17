@@ -1,6 +1,6 @@
 --[[
 
-EVENT TITLE: NAEV Needs You!
+EVENT TITLE: Naev Needs You!
 DESCRIPTION: 
          An event that pops up to encourage new players to contribute to the project.
 
@@ -19,7 +19,7 @@ else -- default english
 -- Stage one: something goes wrong in fabric of reality.
    title = {}
    text = {}
-   title[1] = "NAEV received SIGSEGV (address not mapped to object)!"
+   title[1] = "Naev received SIGSEGV (address not mapped to object)!"
    text[1] = [[As you step out of your ship, suddenly the sunlight flickers. In the sky, the local star turns blue, then a deep purple, and then goes dark. The whole planet plunges into darkness.
 
 Then a voice speaks, louder than an earthquake. It seems to sound inside your bones and from the very centre of the earth. "Oh crap..." it says.

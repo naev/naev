@@ -5,7 +5,7 @@
 /**
  * @file nlua_tk.c
  *
- * @brief NAEV toolkit Lua module.
+ * @brief Naev toolkit Lua module.
  */
 
 #include "nlua_tk.h"

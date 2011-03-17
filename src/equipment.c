@@ -1628,7 +1628,7 @@ void equipment_setGui( unsigned int wid, char* str )
    /* In case there are none. */
    if (guis == NULL) {
       WARN("No GUI available.");
-      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the NAEV maintainer." );
+      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer." );
       return;
    }
 

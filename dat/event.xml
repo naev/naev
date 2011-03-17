@@ -120,7 +120,7 @@
    <unique />
   </flags>
  </event>
- <event name="NAEV Needs You!">
+ <event name="Naev Needs You!">
   <lua>naev_needs_YOU</lua>
   <trigger>land</trigger>
   <chance>8</chance>

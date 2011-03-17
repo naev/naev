@@ -241,7 +241,7 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
       */
       if (NULL != transition->tex) {
          /* Scrolling is happening faster than fading... */
-         fprintf( stderr, "NAEV error: scrolling is too fast!\n" );
+         WARN( "Intro scrolling too fast!" );
          gl_freeTexture( transition->tex );
       }
       transition->tex = gl_newImage( img_file, 0 );
@@ -421,8 +421,7 @@ int intro_display( const char *text, const char *mus )
                break;
             case 'o': /* fade out image. */
                if (NULL == side_image.tex) {
-                  fprintf( stderr, "NAEV error: %s\n",
-                           "Tried to fade out without an image.\n" );
+                  WARN("Tried to fade out without an image." );
                   break;
                }
                side_image.fade_rate = -0.1;

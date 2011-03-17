@@ -73,7 +73,7 @@ int nlua_loadGFX( lua_State *L, int readonly )
 
 
 /**
- * @brief Lua bindings to interact with rendering and the NAEV graphical environment.
+ * @brief Lua bindings to interact with rendering and the Naev graphical environment.
  *
  * An example would be:
  * @code
@@ -86,11 +86,11 @@ int nlua_loadGFX( lua_State *L, int readonly )
 
 
 /**
- * @brief Gets the dimensions of the NAEV window.
+ * @brief Gets the dimensions of the Naev window.
  *
  * @usage screen_w, screen_h = gfx.dim()
  *
- *    @luareturn The width and height of the NAEV window.
+ *    @luareturn The width and height of the Naev window.
  * @luafunc dim()
  */
 static int gfxL_dim( lua_State *L )

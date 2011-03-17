@@ -5,7 +5,7 @@
 /**
  * @file nlua_rnd.c
  *
- * @brief Lua bindings for the NAEV random number generator.
+ * @brief Lua bindings for the Naev random number generator.
  */
 
 #include "nlua_rnd.h"

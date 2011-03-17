@@ -182,7 +182,7 @@ static int nlua_packfileLoader( lua_State* L )
 
 
 /**
- * @brief Loads the standard NAEV Lua API.
+ * @brief Loads the standard Naev Lua API.
  *
  * Loads the modules:
  *  - naev

@@ -69,7 +69,7 @@ char* nfile_basePath (void)
       }
       snprintf( naev_base, PATH_MAX, "%s/naev/", home );
 #else
-#error "Feature needs implementation on this Operating System for NAEV to work."
+#error "Feature needs implementation on this Operating System for Naev to work."
 #endif
    }
 
@@ -157,7 +157,7 @@ int nfile_dirMakeExist( const char* path, ... )
       closedir(d);
    }
 #else
-#error "Feature needs implementation on this Operating System for NAEV to work."
+#error "Feature needs implementation on this Operating System for Naev to work."
 #endif
 
    return 0;

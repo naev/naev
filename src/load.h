@@ -19,8 +19,8 @@ typedef struct nsave_s {
    char *name; /**< Player name. */
    char *path; /**< File path. */
 
-   /* NAEV info. */
-   char *version; /**< NAEV version. */
+   /* Naev info. */
+   char *version; /**< Naev version. */
    char *data; /**< Data name. */
 
    /* Player info. */

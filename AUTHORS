@@ -40,7 +40,7 @@ Contributions
    Amir Taaki <genjix@gmail.com>
    Rob Loach <http://robloach.net>
       * SDL_collide
-    Although we don't use the SDL_collide library itself, it was inspirational for NAEV's own collision routines.
+    Although we don't use the SDL_collide library itself, it was inspirational for Naev's own collision routines.
 
    Pete Shinners <pete@shinners.org>
       * SavePNG
@@ -56,7 +56,7 @@ Contributions
 
    J.C. Wilk
       * Turbulence noise
-    After the horrible failure of our own plasma fractal attempt, TCOD's turbulence noise seemed to do everything perfectly where we screwed up. With heavy optimization the code was introduced to NAEV.
+    After the horrible failure of our own plasma fractal attempt, TCOD's turbulence noise seemed to do everything perfectly where we screwed up. With heavy optimization the code was introduced to Naev.
 
    Jordi Pegueroles Queralt "pegue" <j.pegueroles.queralt@gmail.com>
       * Mace Rocket model
@@ -67,11 +67,11 @@ Contributions
 
    Camilo Polymeris <cpolymeris@gmx.net>
       * Art and code
-    Great to see someone else working on NAEV code and Lua documentation.
+    Great to see someone else working on Naev code and Lua documentation.
 
    Dimitry Marakasov
       * FreeBSD port and CMake
-    Talented coder who did the first official port of NAEV.
+    Talented coder who did the first official port of Naev.
 
    Elderman
       * Many cool missions
@@ -89,7 +89,7 @@ Contributions
       * Sped up nebula generation by a lot
 
    Unavowed <unavowed@vexillium.org>
-      * Ported NAEV's build system to autotools.
+      * Ported Naev's build system to autotools.
     Probably the cleanest autotools implementation I've ever seen.
 
    Felix Schneider "Scaatis" <fsfuenf@gmail.com>
