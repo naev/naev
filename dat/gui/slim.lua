@@ -830,7 +830,7 @@ function largeNumber( number )
 end
 
 function roundto(num, idp)
-   return tonumber( string.format("%.0" .. (idp or 0) .. "f", num) )
+   return string.format("%.0" .. (idp or 0) .. "f", num)
 end
 
 function round(num)
