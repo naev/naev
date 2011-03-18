@@ -84,6 +84,7 @@ static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
+static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
@@ -163,6 +164,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
+   { "setActiveBoard", pilotL_setActiveBoard },
    { "disable", pilotL_disable },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
@@ -1641,7 +1643,7 @@ static int pilotL_setVisible( lua_State *L )
  *
  * This makes the pilot stand out in the map overlay and radar to increase noticeability.
  *
- * @usage p:setVisplayer( true )
+ * @usage p:setHilight( true )
  *
  *    @luaparam p Pilot to set hilight status of.
  *    @luaparam state State to set hilight, defaults to true.
@@ -1666,6 +1668,39 @@ static int pilotL_setHilight( lua_State *L )
       pilot_setFlag(p, PILOT_HILIGHT);
    else
       pilot_rmFlag(p, PILOT_HILIGHT);
+
+   return 0;
+}
+
+
+/**
+ * @brief Allows the pilot to be boarded when not disabled.
+ *
+ * @usage p:setActiveBoard( true )
+ *
+ *    @luaparam p Pilot to set boardability of.
+ *    @luaparam state State to set boardability, defaults to true.
+ * @luafunc setActiveBoard( p, state )
+ */
+static int pilotL_setActiveBoard( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_BOARDABLE);
+   else
+      pilot_rmFlag(p, PILOT_BOARDABLE);
 
    return 0;
 }

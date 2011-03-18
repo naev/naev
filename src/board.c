@@ -77,7 +77,15 @@ void player_board (void)
    p = pilot_get(player.p->target);
    c = pilot_getFactionColourChar( p );
 
-   if (!pilot_isDisabled(p)) {
+   if (pilot_isFlag(p,PILOT_NOBOARD)) {
+      player_message("\erTarget ship can not be boarded.");
+      return;
+   }
+   else if (pilot_isFlag(p,PILOT_BOARDED)) {
+      player_message("\erYour target cannot be boarded again.");
+      return;
+   }
+   else if (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) {
       player_message("\erYou cannot board a ship that isn't disabled!");
       return;
    }
@@ -90,14 +98,6 @@ void player_board (void)
             pow2(VY(player.p->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       player_message("\erYou are going too fast to board the ship.");
-      return;
-   }
-   else if (pilot_isFlag(p,PILOT_NOBOARD)) {
-      player_message("\erTarget ship can not be boarded.");
-      return;
-   }
-   else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message("\erYour target cannot be boarded again.");
       return;
    }
    /* We'll recover it if it's the pilot's ex-escort. */
