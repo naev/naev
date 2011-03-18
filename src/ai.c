@@ -769,6 +769,10 @@ void ai_think( Pilot* pilot, const double dt )
 
    lua_State *L;
 
+   /* Must have AI. */
+   if (cur_pilot->ai == NULL)
+      return;
+
    ai_setPilot(pilot);
    L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
@@ -896,6 +900,10 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
       return;
 
+   /* Must have AI. */
+   if (cur_pilot->ai == NULL)
+      return;
+
    /* Set up the environment. */
    ai_setPilot(p);
    L = cur_pilot->ai->L;
@@ -935,23 +943,27 @@ static void ai_create( Pilot* pilot, char *param )
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
       aiL_status = AI_STATUS_CREATE;
 
-   /* Prepare AI. */
-   ai_setPilot( pilot );
-
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
             !pilot_isFlag(pilot, PILOT_EMPTY))) {
       L = equip_L;
       lua_getglobal(L, "equip");
-      lp.pilot = cur_pilot->id;
+      lp.pilot = pilot->id;
       lua_pushpilot(L,lp);
-      lf.f = cur_pilot->faction;
+      lf.f = pilot->faction;
       lua_pushfaction(L,lf);
       if (lua_pcall(L, 2, 0, 0)) { /* Error has occurred. */
-         WARN("Pilot '%s' equip -> '%s': %s", cur_pilot->name, "equip", lua_tostring(L,-1));
+         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, "equip", lua_tostring(L,-1));
          lua_pop(L,1);
       }
    }
+
+   /* Must have AI. */
+   if (pilot->ai == NULL)
+      return;
+
+   /* Prepare AI. */
+   ai_setPilot( pilot );
 
    /* Prepare stack. */
    L = cur_pilot->ai->L;
