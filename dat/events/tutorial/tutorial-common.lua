@@ -1,17 +1,28 @@
 -- Capsule function for tk.msg that disables all key input WHILE the msg is open.
 function tkMsg(title, msg, keys)
     naev.keyDisableAll()
+    enableBasicKeys()
     tk.msg(title, msg)
-    enableKeys(keys)
+    if keys ~= nil then
+       enableKeys(keys)
+    else
+       naev.keyEnableAll()
+    end
 end
+
 
 -- Capsule function for enabling the keys passed to it in a table, plus some defaults.
 function enableKeys(keys)
-    local alwaysEnable = { "speed", "menu", "screenshot", "console" }
     naev.keyDisableAll()
     for _, key in ipairs(keys) do
         naev.keyEnable(key, true)
     end
+    enableBasicKeys()
+end
+
+-- Capsule function for enabling basic, important keys.
+function enableBasicKeys()
+    local alwaysEnable = { "speed", "menu", "screenshot", "console" }
     for _, key in ipairs(alwaysEnable) do
         naev.keyEnable(key, true)
     end
