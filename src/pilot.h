@@ -109,7 +109,9 @@
 #define PILOT_HILIGHT      36 /**< Pilot is hilighted when visible (this does not increase visibility). */
 #define PILOT_INVISIBLE    37 /**< Pilot is invisible to other pilots. */
 #define PILOT_BOARDABLE    38 /**< Pilot can be boarded even while active. */
-#define PILOT_FLAGS_MAX    PILOT_BOARDABLE+1 /* Maximum number of flags. */
+#define PILOT_NOJUMP       39 /**< Pilot cannot engage hyperspace engines. */
+#define PILOT_NOLAND       40 /**< Pilot cannot land on stations or planets. */
+#define PILOT_FLAGS_MAX    PILOT_NOLAND+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
