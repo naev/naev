@@ -200,15 +200,15 @@ static int planetL_cur( lua_State *L )
 {
    LuaPlanet planet;
    LuaSystem sys;
-   if (land_planet != NULL) {
-      planet.id = planet_index(land_planet);
-      lua_pushplanet(L,planet);
-      sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
-      lua_pushsystem(L,sys);
-      return 2;
+   if (land_planet == NULL) {
+      NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
+      return 0; /* Not landed. */
    }
-   NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
-   return 0; /* Not landed. */
+   planet.id = planet_index(land_planet);
+   lua_pushplanet(L,planet);
+   sys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
+   lua_pushsystem(L,sys);
+   return 2;
 }
 
 
