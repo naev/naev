@@ -127,7 +127,6 @@ function create()
     pp:addOutfit("Laser Cannon MK2", 2)
     player.msgClear()
 
-    enable = {"left", "right", "primary"}
     player.pilot():setNoLand()
     player.pilot():setNoJump()
 
@@ -156,8 +155,6 @@ function flyUpdate()
             pp:rmOutfit("all")
             pp:addOutfit("Mace Launcher", 1)
 
-            enable = {"left", "right", "primary", "secondary"}
-
             flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("secondary"), flytime), 0)
             hook.timer(1000, "flyUpdate")
@@ -173,8 +170,6 @@ function flyUpdate()
             
             tk.msg(title1, message4:format(tutGetKey("info")))
             omsg = player.omsgAdd(infoomsg:format(tutGetKey("info")), 0)
-
-            enable = {"left", "right", "info"}
 
             hook.input("input")
         else
@@ -207,8 +202,6 @@ function dummypractice()
     hook.pilot(drone, "disable", "dronedisable")
     hook.pilot(drone, "attacked", "dronedamage")
     tk.msg(title1, message6:format(tutGetKey("target_hostile"), tutGetKey("face")))
-    
-    enable = {"left", "right", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
 end
 
 -- Drone disable hook.
@@ -226,8 +219,6 @@ function captainpractice()
     tk.msg(title1, message7)
     tk.msg(title1, message8)
 
-    enable = {"left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
-    
     pp:rmOutfit("all")
     pp:addOutfit("Mace Launcher", 2)
     pp:addOutfit("Laser Cannon MK2", 2)

@@ -49,8 +49,6 @@ function create()
     player.pilot():setPos(planet.get("Paul 2"):pos())
     player.msgClear()
     
-    enable = {}
-    
     tk.msg(title1, message1)
     
     player.pilot():rmOutfit("all")

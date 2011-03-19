@@ -47,8 +47,6 @@ function create()
 
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
 
-    enable = {"thyperspace"}
-
     tk.msg(title1, message1)
     tkMsg(title1, message2:format(tutGetKey"thyperspace"))
     omsg = player.omsgAdd(thyperomsg:format(tutGetKey"thyperspace"), 0)
@@ -71,16 +69,12 @@ function input(inputname, inputpress)
             tkMsg(title1, message4:format(tutGetKey("starmap")))
             omsg = player.omsgAdd(starmapomsg:format(tutGetKey("starmap")), 0)
             waitmap = true
-
-            enable = {"thyperspace", "starmap"}
         end
     elseif inputname == "starmap" and waitmap then
         waitmap = false
         tk.msg(title1, message5:format(tutGetKey("autonav")))
         player.omsgChange(omsg, hyperomsg:format(tutGetKey("thyperspace"), tutGetKey("autonav"), tutGetKey("jump")), 0)
         firstjump = true
-
-        enable = {"menu", "thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse", "overlay"}
     end
 end
 
@@ -91,8 +85,6 @@ function jumpin()
         hook.land( "land_clean" )
         hook.timer(2000, "jumpmsg", message7)
         player.omsgChange(omsg, hyperomsg3:format(tutGetKey("land")), 0)
-
-        enable = {"thyperspace", "starmap", "autonav", "jump", "left", "right", "accel", "reverse", "land", "overlay"}
     elseif firstjump then
         hook.timer(2000, "jumpmsg", message6)
         firstjump = false

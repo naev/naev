@@ -43,7 +43,6 @@ function create()
     commdrone = pilot.add("Civilian Llama", "dummy", pp:pos() + vec2.new(0, 250))[1]
     commdrone:setVisplayer()
     
-    enable = {"hail", "target_next", "target_planet", "target_clear"}
     player.pilot():setNoLand()
     player.pilot():setNoJump()
     
@@ -66,8 +65,6 @@ function haildrone()
     commship:setVisplayer()
     commship:hailPlayer()
     hook.timer(4000, "shiptakeoff")
-
-    enable = {}
 end
 
 -- Timer hook to allow the ship to take off fully.
@@ -75,8 +72,6 @@ function shiptakeoff()
     tk.msg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")))
     omsg = player.omsgAdd(autohailomsg:format(tutGetKey("autohail")), 0)
     shiphook = hook.pilot(commship, "hail", "hailship")
-
-    enable = {"autohail", "target_next", "target_planet", "target_clear"}
 end
 
 -- Hail hook.

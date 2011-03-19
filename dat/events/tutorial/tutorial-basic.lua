@@ -50,7 +50,6 @@ function create()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
     
-    enable = {"accel", "left", "right"}
     player.pilot():setNoLand()
     player.pilot():setNoJump()
     
@@ -71,8 +70,6 @@ function flyUpdate()
         player.omsgRm(omsg)
         tk.msg(title1, message3:format(tutGetKey("reverse")))
 
-        enable = {"accel", "reverse"}
-    
         omsg = player.omsgAdd(stopomsg:format(tutGetKey("reverse")), 0)
         braketime = 0 -- ticks for brake check.
         hook.timer(500, "checkBrake")
@@ -98,8 +95,6 @@ function checkBrake()
         player.pilot():setVel(vec2.new()) -- Stop the player completely
         waitmap = true
         hook.input("input")
-
-        enable = {"overlay"}
     else
         hook.timer(500, "checkBrake")
     end
@@ -128,8 +123,6 @@ function proxytrigger()
     tk.msg(title1, message6)
     tk.msg(title1, message7:format(tutGetKey("target_next"), tutGetKey("board")))
     omsg = player.omsgAdd(boardomsg:format(tutGetKey("target_next"), tutGetKey("board")), 0)
-
-    enable = {"accel", "left", "right", "reverse", "target_next", "board", "overlay"}
 end
 
 -- Board hook for the board practice ship.
@@ -139,8 +132,6 @@ function board()
     tk.msg(title1, message9:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")))
     player.omsgChange(omsg, landomsg:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), 0)
     hook.land("land")
-
-    enable = {"accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
     player.pilot():setNoLand(false)
 end
 
