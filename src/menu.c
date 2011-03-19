@@ -44,6 +44,7 @@
 #include "start.h"
 #include "camera.h"
 #include "load.h"
+#include "board.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -394,7 +395,7 @@ static void menu_small_close( unsigned int wid, char* str )
 static void menu_small_exit( unsigned int wid, char* str )
 {
    (void) str;
-   unsigned int info_wid;
+   unsigned int info_wid, board_wid;
 
    /* if landed we must save anyways */
    if (landed) {
@@ -407,6 +408,12 @@ static void menu_small_exit( unsigned int wid, char* str )
       info_wid = window_get("Info");
       window_destroy( info_wid );
       menu_Close(MENU_INFO);
+   }
+
+   /* Force unboard. */
+   if (player_isBoarded()) {
+      board_wid = window_get("Boarding");
+      board_exit(board_wid, NULL);
    }
 
    /* Stop player sounds because sometimes they hang. */

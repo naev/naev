@@ -37,7 +37,6 @@ static int board_boarded   = 0;
 /*
  * prototypes
  */
-static void board_exit( unsigned int wdw, char* str );
 static void board_stealCreds( unsigned int wdw, char* str );
 static void board_stealCargo( unsigned int wdw, char* str );
 static void board_stealFuel( unsigned int wdw, char* str );
@@ -177,13 +176,13 @@ void board_unboard (void)
  *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_exit( unsigned int wdw, char* str )
+void board_exit( unsigned int wdw, char* str )
 {
    (void) str;
    window_destroy( wdw );
 
    /* Is not boarded. */
-   board_boarded =1 ;
+   board_boarded = 0;
 }
 
 
