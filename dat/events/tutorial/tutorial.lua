@@ -23,6 +23,7 @@ function create()
     -- Set defaults just in case.
     player.teleport("Mohawk")
     player.pilot():setPos(vec2.new(0, 0))
+    player.pilot():setVel(vec2.new(0, 0))
     player.msgClear()
     
     system.get("Mohawk"):setKnown(false)
