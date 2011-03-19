@@ -44,12 +44,11 @@ function create()
     commdrone:setVisplayer()
     
     enable = {"hail", "target_next", "target_planet", "target_clear"}
-    enableKeys(enable)
     player.pilot():setNoLand()
     player.pilot():setNoJump()
     
-    tkMsg(title1, message1, enable)
-    tkMsg(title1, message2:format(tutGetKey("hail"), tutGetKey("target_clear")), enable)
+    tk.msg(title1, message1)
+    tk.msg(title1, message2:format(tutGetKey("hail"), tutGetKey("target_clear")))
     
     dronehook = hook.pilot(commdrone, "hail", "haildrone")
     omsg = player.omsgAdd(hailomsg:format(tutGetKey("hail")), 0)
@@ -61,33 +60,31 @@ function haildrone()
     player.commClose()
     player.omsgRm(omsg)
 
-    tkMsg(title1, message3, enable)
-    tkMsg(title1, message4, enable)
+    tk.msg(title1, message3)
+    tk.msg(title1, message4)
     commship = pilot.add("Civilian Gawain", "dummy", planet.get("Paul 2"))[1]
     commship:setVisplayer()
     commship:hailPlayer()
     hook.timer(4000, "shiptakeoff")
 
     enable = {}
-    enableKeys(enable)
 end
 
 -- Timer hook to allow the ship to take off fully.
 function shiptakeoff()
-    tkMsg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")), enable)
+    tk.msg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")))
     omsg = player.omsgAdd(autohailomsg:format(tutGetKey("autohail")), 0)
     shiphook = hook.pilot(commship, "hail", "hailship")
 
     enable = {"autohail", "target_next", "target_planet", "target_clear"}
-    enableKeys(enable)
 end
 
 -- Hail hook.
 function hailship()
     hook.rm(shiphook)
     player.commClose()
-    tkMsg(title1, message6, enable)
-    tkMsg(title1, message7, enable)
+    tk.msg(title1, message6)
+    tk.msg(title1, message7)
     hook.safe( "cleanup" )
 end
 

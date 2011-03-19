@@ -51,7 +51,7 @@ function create()
     
     enable = {}
     
-    tkMsg(title1, message1, enable)
+    tk.msg(title1, message1)
     
     player.pilot():rmOutfit("all")
     player.pay(-player.credits())
@@ -76,37 +76,37 @@ end
 
 -- Land hook.
 function land()
-    tkMsg(title1, message2, enable)
+    tk.msg(title1, message2)
     hook.rm(mainland)
 end
 
 function outfits()
-    tkMsg(title1, message3, enable)
+    tk.msg(title1, message3)
     hook.rm(outfitsland)
 end
 
 function bar()
-    tkMsg(title1, message4, enable)
+    tk.msg(title1, message4)
     hook.rm(barland)
 end
 
 function mission()
-    tkMsg(title1, message5, enable)
+    tk.msg(title1, message5)
     hook.rm(missionland)
 end
 
 function equipment()
-    tkMsg(title1, message6, enable)
+    tk.msg(title1, message6)
     hook.rm(equipmentland)
 end
 
 function shipyard()
-    tkMsg(title1, message7, enable)
+    tk.msg(title1, message7)
     hook.rm(shipyardland)
 end
 
 function commodity()
-    tkMsg(title1, message8, enable)
+    tk.msg(title1, message8)
     hook.rm(commodityland)
 end
 
