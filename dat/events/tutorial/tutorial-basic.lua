@@ -52,6 +52,8 @@ function create()
     
     enable = {"accel", "left", "right"}
     enableKeys(enable)
+    player.pilot():setNoLand()
+    player.pilot():setNoJump()
     
     tkMsg(title1, message1, enable)
     tkMsg(title1, message2:format(tutGetKey("left"), tutGetKey("right"), tutGetKey("accel")), enable)
@@ -144,6 +146,7 @@ function board()
 
     enable = {"accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
     enableKeys(enable)
+    player.pilot():setNoLand(false)
 end
 
 -- Land hook.

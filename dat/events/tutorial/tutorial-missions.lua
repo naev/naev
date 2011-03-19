@@ -60,7 +60,7 @@ end
 
 -- Helper land hook.
 function bar()
-    if seen then return
+    if seen or planet.cur() ~= planet.get("Rin") then return
     else
         tk.msg(title1, message4)
         seen = true

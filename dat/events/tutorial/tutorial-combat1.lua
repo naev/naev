@@ -129,6 +129,8 @@ function create()
 
     enable = {"left", "right", "primary"}
     enableKeys(enable)
+    player.pilot():setNoLand()
+    player.pilot():setNoJump()
 
     tkMsg(title1, message1, enable)
     tkMsg(title1, message2:format(tutGetKey("primary")), enable)

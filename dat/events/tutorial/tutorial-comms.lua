@@ -41,9 +41,12 @@ function create()
     pilot.clear()
     pilot.toggleSpawn(false)
     commdrone = pilot.add("Civilian Llama", "dummy", pp:pos() + vec2.new(0, 250))[1]
+    commdrone:setVisplayer()
     
     enable = {"hail", "target_next", "target_planet", "target_clear"}
     enableKeys(enable)
+    player.pilot():setNoLand()
+    player.pilot():setNoJump()
     
     tkMsg(title1, message1, enable)
     tkMsg(title1, message2:format(tutGetKey("hail"), tutGetKey("target_clear")), enable)
@@ -61,6 +64,7 @@ function haildrone()
     tkMsg(title1, message3, enable)
     tkMsg(title1, message4, enable)
     commship = pilot.add("Civilian Gawain", "dummy", planet.get("Paul 2"))[1]
+    commship:setVisplayer()
     commship:hailPlayer()
     hook.timer(4000, "shiptakeoff")
 

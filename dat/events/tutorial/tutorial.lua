@@ -29,7 +29,10 @@ function create()
     system.get("Cherokee"):setKnown(false)
     system.get("Iroquois"):setKnown(false)
     system.get("Navajo"):setKnown(false)
-    
+
+    player.pilot():setNoLand(false)
+    player.pilot():setNoJump(false)
+
     -- Create menu.
     _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menuadvcombat, menuplanet, menutrade, menumissions, menux)
     
