@@ -2565,6 +2565,10 @@ static int aiL_land( lua_State *L )
          (double)pow2(MAX_HYPERSPACE_VEL))
       ret++;
 
+   /* Check landing functionality. */
+   if (pilot_isFlag(cur_pilot, PILOT_NOLAND))
+      ret++;
+
    if (!ret) {
       cur_pilot->ptimer = PILOT_LANDING_DELAY;
       pilot_setFlag( cur_pilot, PILOT_LANDING );

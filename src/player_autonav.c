@@ -54,6 +54,11 @@ void player_autonavStart (void)
       return;
    }
 
+   if (pilot_isFlag( player.p, PILOT_NOJUMP)) {
+      player_message("\erHyperspace drive is offline.");
+      return;
+   }
+
    player_autonavSetup();
    player.autonav = AUTONAV_JUMP_APPROACH;
 }

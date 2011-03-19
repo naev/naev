@@ -1311,18 +1311,50 @@ void player_land (void)
          pilot_isFlag( player.p, PILOT_TAKEOFF)))
       return;
 
-   if (player_isFlag( PLAYER_NOLAND)) {
-      player_message( "\er%s", player_message_noland );
-      return;
-   }
-
    /* Check if there are planets to land on. */
    if (cur_system->nplanets == 0) {
       player_messageRaw( "\erThere are no planets to land on." );
       return;
    }
 
-   if (player.p->nav_planet >= 0) { /* attempt to land */
+   if (player.p->nav_planet == -1) { /* get nearest planet target */
+
+      if (cur_system->nplanets == 0) {
+         player_messageRaw("\erThere are no planets to land on.");
+         return;
+      }
+
+      td = -1; /* temporary distance */
+      tp = -1; /* temporary planet */
+      for (i=0; i<cur_system->nplanets; i++) {
+         planet = cur_system->planets[i];
+         d = vect_dist(&player.p->solid->pos,&planet->pos);
+         if (pilot_inRangePlanet( player.p, i ) &&
+               planet_hasService(planet,PLANET_SERVICE_LAND) &&
+               ((tp==-1) || ((td == -1) || (td > d)))) {
+            tp = i;
+            td = d;
+         }
+      }
+      player_targetPlanetSet( tp );
+      player_rmFlag(PLAYER_LANDACK);
+      player_hyperspacePreempt(0);
+
+      /* no landable planet */
+      if (player.p->nav_planet < 0)
+         return;
+
+      player_land(); /* rerun land protocol */
+   }
+   else if (player_isFlag(PLAYER_NOLAND)) {
+      player_message( "\er%s", player_message_noland );
+      return;
+   }
+   else if (pilot_isFlag( player.p, PILOT_NOLAND)) {
+      player_message( "\erDocking stabilizers malfunctioning, cannot land." );
+      return;
+   }
+   else { /* attempt to land at selected planet */
       planet = cur_system->planets[player.p->nav_planet];
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
          player_messageRaw( "\erYou can't land here." );
@@ -1369,35 +1401,6 @@ void player_land (void)
       pilot_setThrust( player.p, 0. );
       pilot_setTurn( player.p, 0. );
       runcount++;
-   }
-   else { /* get nearest planet target */
-
-      if (cur_system->nplanets == 0) {
-         player_messageRaw("\erThere are no planets to land on.");
-         return;
-      }
-
-      td = -1; /* temporary distance */
-      tp = -1; /* temporary planet */
-      for (i=0; i<cur_system->nplanets; i++) {
-         planet = cur_system->planets[i];
-         d = vect_dist(&player.p->solid->pos,&planet->pos);
-         if (pilot_inRangePlanet( player.p, i ) &&
-               planet_hasService(planet,PLANET_SERVICE_LAND) &&
-               ((tp==-1) || ((td == -1) || (td > d)))) {
-            tp = i;
-            td = d;
-         }
-      }
-      player_targetPlanetSet( tp );
-      player_rmFlag(PLAYER_LANDACK);
-      player_hyperspacePreempt(0);
-
-      /* no landable planet */
-      if (player.p->nav_planet < 0)
-         return;
-
-      player_land(); /* rerun land protocol */
    }
 }
 
@@ -1541,7 +1544,7 @@ void player_jump (void)
    if (i == -1)
       player_message("\erYou are too far from a jump point to initiate hyperspace.");
    else if (i == -2)
-      player_message("\erYou are moving too fast to enter hyperspace.");
+      player_message("\erHyperspace drive is offline.");
    else if (i == -3)
       player_message("\erYou do not have enough fuel to hyperspace jump.");
    else {

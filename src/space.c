@@ -297,6 +297,8 @@ int space_canHyperspace( Pilot* p )
  */
 int space_hyperspace( Pilot* p )
 {
+   if (pilot_isFlag(p, PILOT_NOJUMP))
+      return -2;
    if (p->fuel < HYPERSPACE_FUEL)
       return -3;
    if (!space_canHyperspace(p))

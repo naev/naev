@@ -86,6 +86,8 @@ static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_disable( lua_State *L );
+static int pilotL_setNoJump( lua_State *L );
+static int pilotL_setNoLand( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
@@ -166,6 +168,8 @@ static const luaL_reg pilotL_methods[] = {
    { "setHilight", pilotL_setHilight },
    { "setActiveBoard", pilotL_setActiveBoard },
    { "disable", pilotL_disable },
+   { "setNoJump", pilotL_setNoJump },
+   { "setNoLand", pilotL_setNoLand },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
    { "comm", pilotL_comm },
@@ -1725,6 +1729,70 @@ static int pilotL_disable( lua_State *L )
    p->shield = 0.;
    p->armour = PILOT_DISABLED_ARMOR * p->ship->armour;
    pilot_setFlag( p, PILOT_DISABLED );
+
+   return 0;
+}
+
+
+/**
+ * @brief Enables or disables a pilot's hyperspace engine.
+ *
+ * @usage p:setNoJump( true )
+ *
+ *    @luaparam p Pilot to modify.
+ * @luafunc setNoJump( p, state )
+ */
+static int pilotL_setNoJump( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_NOJUMP);
+   else
+      pilot_rmFlag(p, PILOT_NOJUMP);
+
+   return 0;
+}
+
+
+/**
+ * @brief Enables or disables landing for a pilot.
+ *
+ * @usage p:setNoLand( true )
+ *
+ *    @luaparam p Pilot to modify.
+ * @luafunc setNoLand( p, state )
+ */
+static int pilotL_setNoLand( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_NOLAND);
+   else
+      pilot_rmFlag(p, PILOT_NOLAND);
 
    return 0;
 }
