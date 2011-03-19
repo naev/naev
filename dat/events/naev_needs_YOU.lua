@@ -90,14 +90,13 @@ function create()
       end
       
       -- everything returns to normal
-      
       music.stop()
-      music.load( background_music)
-      music.play() --
-      
+      if background_music ~= nil then
+         music.load( background_music )
+         music.play()
+      end
 
       evt.finish( true)
-
 end
 
 --[[
