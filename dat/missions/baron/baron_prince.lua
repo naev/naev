@@ -346,21 +346,17 @@ function enter()
 end
 
 function idle()
-    if stopping then
-        pinnacle:disable()
-    else
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
-    end
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
 end
 
 function hail()
     tk.msg(title[3], text[3])
     pinnacle:taskClear()
     pinnacle:brake()
-    stopping = true
+    pinnacle:setActiveBoard(true)
     boardhook = hook.pilot(pinnacle, "board")
 end
 
