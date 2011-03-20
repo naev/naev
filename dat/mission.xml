@@ -12,6 +12,7 @@
  <mission name="Cargo">
   <lua>neutral/cargo</lua>
   <avail>
+   <priority>6</priority>
    <chance>960</chance>
    <location>Computer</location>
    <faction>Independent</faction>
@@ -25,6 +26,7 @@
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>
+   <priority>5</priority>
    <chance>960</chance>
    <location>Computer</location>
    <faction>Independent</faction>
