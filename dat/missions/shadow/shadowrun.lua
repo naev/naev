@@ -249,7 +249,8 @@ function enter()
         mypos = vec2.new(-1500, 600)
         seiryuu = pilot.add( "Seiryuu", nil, mypos )[1]
 
-        seiryuu:disable()
+        seiryuu:setActiveBoard(true)
+        seiryuu:control()
         seiryuu:setInvincible(true)
         seiryuu:setHilight(true)
         
@@ -274,6 +275,7 @@ function board()
     seiryuu:setHealth(100, 100)
     seiryuu:changeAI("flee")
     seiryuu:setHilight(false)
+    seiryuu:control(false)
 
     if var.peek("shadowrun") then
        var.pop("shadowrun") -- in case it was used

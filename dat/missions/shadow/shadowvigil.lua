@@ -264,7 +264,6 @@ function jumpin()
             dvaerplomat:control()
             dvaerplomat:setHilight(true)
             dvaerplomat:setVisplayer()
-            dvaerplomat:disable()
             dvaerplomat:setDir(180)
             dvaerplomat:setFaction("Diplomatic")
             diplomat:setInvincible(true)
@@ -311,7 +310,8 @@ function jumpin()
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
         seiryuu:setInvincible(true)
         if missend then
-            seiryuu:disable()
+            seiryuu:setActiveBoard(true)
+            seiryuu:control()
             seiryuu:setHilight(true)
             hook.pilot(seiryuu, "board", "board")
         end

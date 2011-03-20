@@ -126,20 +126,16 @@ function jumpin()
         pinnacle:control()
         pinnacle:setHilight(true)
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
-        hook.pilot(pinnacle, "idle", "idle")
+        idlehook = hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
     end
 end
 
 function idle()
-    if stopping then
-        pinnacle:disable()
-    else
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-        pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
-    end
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
+    pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
 end
 
 function hail()
@@ -147,8 +143,9 @@ function hail()
         tk.msg(title[4], text[4])
         pinnacle:taskClear()
         pinnacle:brake()
-        stopping = true
+        pinnacle:setActiveBoard(true)
         hook.pilot(pinnacle, "board", "board")
+        hook.rm(idlehook)
     end
 end
 
