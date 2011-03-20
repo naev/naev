@@ -405,9 +405,13 @@ static void load_menu_load( unsigned int wdw, char *str )
 
    /* Close menus before loading for proper rendering. */
    load_menu_close(wdw, NULL);
+
+   /* Close the main menu. */
    menu_main_close();
 
+   /* Try to load the game. */
    if (load_game( ns[pos].path )) {
+      /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
    }

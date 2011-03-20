@@ -37,7 +37,7 @@
 #include "menu.h"
 
 
-int dialogue_open; /**< Number of dialogues open. */
+static int dialogue_open; /**< Number of dialogues open. */
 
 
 /*
@@ -80,6 +80,8 @@ static void dialogue_close( unsigned int wid, char* str )
    window_destroy( wid );
    *loop_done = 1;
    dialogue_open--;
+   if (dialogue_open < 0)
+      WARN("Dialogue counter not in sync!");
 }
 
 
@@ -94,6 +96,8 @@ static void dialogue_cancel( unsigned int wid, char* str )
    window_destroy( wid );
    *loop_done = -1;
    dialogue_open--;
+   if (dialogue_open < 0)
+      WARN("Dialogue counter not in sync!");
 }
 
 
@@ -401,9 +405,11 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    }
 
    /* cleanup */
-   window_destroy( input_wid );
+   if (input != NULL) {
+      window_destroy( input_wid );
+      dialogue_open--;
+   }
    input_wid = 0;
-   dialogue_open--;
 
    /* return the result */
    return input;

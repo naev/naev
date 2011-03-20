@@ -151,6 +151,11 @@ void menu_main (void)
    glTexture *tex;
    int h, y;
 
+   if (menu_isOpen(MENU_MAIN)) {
+      WARN("Menu main is already open.");
+      return;
+   }
+
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
    player_soundStop(); /* Stop sound. */
@@ -255,6 +260,8 @@ void menu_main_close (void)
 {
    if (window_exists("Main Menu"))
       window_destroy( window_get("Main Menu") );
+   else
+      WARN("Main menu does not exist.");
 
    menu_Close(MENU_MAIN);
    pause_game();
@@ -277,9 +284,13 @@ static void menu_main_new( unsigned int wid, char* str )
 {
    (void) str;
    (void) wid;
+
+   /* Closes the main menu window. */
    window_destroy( wid );
    menu_Close(MENU_MAIN);
    pause_game();
+
+   /* Start the new player. */
    player_new();
 }
 /**

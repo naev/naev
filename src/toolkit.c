@@ -336,8 +336,8 @@ int window_exists( const char* wdwname )
    if (windows == NULL)
       return 0;
    for (w = windows; w != NULL; w = w->next)
-      if (strcmp(w->name,wdwname)==0)
-         return !window_isFlag(w, WINDOW_KILL); /* exists */
+      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
+         return 1;
    return 0; /* doesn't exist */
 }
 
@@ -354,7 +354,7 @@ unsigned int window_get( const char* wdwname )
    if (windows == NULL)
       return 0;
    for (w = windows; w != NULL; w = w->next)
-      if (strcmp(w->name,wdwname)==0)
+      if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
          return w->id;
    return 0;
 }
@@ -427,8 +427,12 @@ unsigned int window_create( const char* name,
    if (windows == NULL)
       windows = wdw;
    else {
-      for (wcur = windows; wcur != NULL; wcur = wcur->next)
+      for (wcur = windows; wcur != NULL; wcur = wcur->next) {
+         if ((strcmp(wcur->name,name)==0) && !window_isFlag(wcur, WINDOW_KILL) &&
+               !window_isFlag(wcur, WINDOW_NOFOCUS))
+            WARN("Window with name '%s' already exists!",wcur->name);
          wlast = wcur;
+      }
       wlast->next = wdw;
    }
 
@@ -701,6 +705,10 @@ void window_destroy( const unsigned int wid )
 
       /* Not the window we're looking for. */
       if (wdw->id != wid)
+         continue;
+
+      /* Already being killed, skip. */
+      if (window_isFlag( wdw, WINDOW_KILL ))
          continue;
 
       /* Mark children for death. */
