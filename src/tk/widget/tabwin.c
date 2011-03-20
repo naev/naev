@@ -149,7 +149,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
  */
 static int tab_mouse( Widget* tab, SDL_Event *event )
 {
-   int i, p;
+   int i, p, change;
    Window *parent;
    int x, y, rx, ry;
    Uint8 type;
@@ -176,7 +176,16 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       p += 10 + tab->dat.tab.namelen[i];
       /* Mark as active. */
       if (x < p) {
-         tab->dat.tab.active = i;
+         change = -1;
+         if (event->button.button == SDL_BUTTON_WHEELUP)
+            change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+            change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+         else
+            tab->dat.tab.active =i;
+
+         if ((change != -1) && (change < tab->dat.tab.ntabs))
+            tab->dat.tab.active = change;
 
          /* Create event. */
          if (tab->dat.tab.onChange != NULL)
