@@ -7,7 +7,7 @@ lang = naev.lang()
 if lang == "es" then
 else -- default english
     title1 = "Tutorial: Missions and events"
-    message1 = [[Welcome to tutorial: Communications.
+    message1 = [[Welcome to the communications tutorial.
     
 This tutorial will show you how you can contact other ships, as well as planets and stations.]]
     message2 = [[Your ship comes with a built-in communications array. To use it, target whatever you want to contact (be it a ship or a planet) and press %s. But be careful, if you have both a planet and a ship targeted, you will contact the ship rather than the planet. If you want to speak to a planet, you should first clear your target with %s.
@@ -24,7 +24,7 @@ Let's respond to the ship. You could do this in the same way you just learned, b
     message6 = [[Excellent. Ships won't often hail you, but when they do it's highly likely they have something important to say. Keep a look out for ships trying to contact you!]]
     message7 = [[You now know how to talk to ships and planets, and you know what to do when ships want to talk to you. As a final tip, remember that auto-responding to a ship will automatically target it, so be sure not to accidentally attack it!
 
-Congratulations! This concludes tutorial: Communications.]]
+Congratulations! This concludes the communications tutorial.]]
 
     hailomsg = "Target the drone and use %s to contact it"
     autohailomsg = "Use %s to respond to the hail "

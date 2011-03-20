@@ -5,18 +5,18 @@
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    menutitle = "Tutorial menu"
-    menutext = "Welcome to the Naev tutorial menu. Please select a tutorial module from the list below."
+    menutitle = "Tutorial Menu"
+    menutext = "Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:"
 
-    menubasic = "Tutorial: Basic operation"
-    menuinterstellar = "Tutorial: Interstellar flight"
-    menubasiccombat = "Tutorial: Basic combat"
-    menuadvcombat = "Tutorial: Advanced combat"
-    menuplanet = "Tutorial: The planetary screen"
+    menubasic = "Tutorial: Basic Operation"
+    menuinterstellar = "Tutorial: Interstellar Flight"
+    menubasiccombat = "Tutorial: Basic Combat"
+    menuadvcombat = "Tutorial: Advanced Combat"
+    menuplanet = "Tutorial: The Planetary Screen"
     menutrade = "Tutorial: Trade"
-    menumissions = "Tutorial: Missions and events"
+    menumissions = "Tutorial: Missions and Events"
     menucomms = "Tutorial: Communications"
-    menux = "Quit to main menu"
+    menux = "Quit to Main Menu"
 end
 
 function create()
@@ -64,7 +64,7 @@ end
 
 -- Placeholder not-implemented function
 function placeholder()
-    tk.msg("Not implemented", "This tutorial has not been implemented yet because the subject matter is still in development.")
+    tk.msg("Not Implemented", "This tutorial has not been implemented yet because the subject matter is still in development.")
     create()
 end
 

@@ -6,8 +6,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Basic combat"
-    message1 = [[Welcome to tutorial: Basic combat.
+    title1 = "Tutorial: Basic Combat"
+    message1 = [[Welcome to the basic combat tutorial.
 
 Combat is an important aspect of Naev, and you will have to fight off enemies sooner or later, no matter what career you decide to pursue. In this tutorial, you will learn the basic principles of combat.]]
     message2 = [[For this tutorial, you will be flying a Lancelot fighter. It comes equipped with two advanced laser cannons. You can fire your weapons by pressing %s. Try this now.]]
@@ -35,7 +35,7 @@ Target the drone, then shoot at it until it becomes disabled.]]
     message10 = [[Another thing you might have noticed is that your weapons started lose accuracy during the battle. This is because of heat. Weapons heat up when fired, and when they become too hot they will first lose accuracy, and then firing rate, to the point where they won't fire at all anymore. If you find your weapons are overheating a lot, consider switching them out for a while using weapon groups.]]
     message11 = [[You now know the basic principles of combat. As a final tip, you can target specific enemies at long range by clicking on them on the overlay map.
     
-Congratulations! This concludes tutorial: Basic combat.]]
+Congratulations! This concludes the basic combat tutorial.]]
 
     wepomsg = [[Use %s to test your weapons (%ds remaining)]]
     infoomsg = [[Use %s to to open the info menu]]

@@ -6,8 +6,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Interstellar flight"
-    message1 = [[Welcome to tutorial: Interstellar flight.
+    title1 = "Tutorial: Interstellar Flight"
+    message1 = [[Welcome to the interstellar flight tutorial.
 
 In this tutorial you will learn how to travel from one star system to another, and how to use the galaxy map.]]
     message2 = [[In this tutorial we will leave the Mohawk system and travel the stars.
@@ -31,7 +31,7 @@ But watch out! That jump just now has drained your fuel reserves, as the bottom 
 For the remainder of this tutorial, you will have unlimited fuel. Continue to make hyperjumps until you reach system Navajo.]]
     message7 = [[Excellent. You have learned how to make hyperspace jumps and explore the galaxy. You may continue jumping around if you wish. Once you're ready to move on, land on either Rin in the Navajo system, or Paul 2 in the Mohawk system. As a final tip, you can hold down \027bshift\0270 while clicking on the galaxy map to specify a manual path for the autonav.
 
-Congratulations! This concludes tutorial: Interstellar flight.]]
+Congratulations! This concludes the interstellar flight tutorial.]]
 
     thyperomsg = "Press %s to target a jump point"
     starmapomsg = "Press %s to open the galaxy map"

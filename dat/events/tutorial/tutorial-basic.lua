@@ -7,8 +7,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Basic operation"
-    message1 = [[Welcome to tutorial: Basic operation.
+    title1 = "Tutorial: Basic Operation"
+    message1 = [[Welcome to the basic operation tutorial.
 
 This tutorial will teach you what Naev is about, and show you the elementary controls of your ship.]]
     message2 = [[We will start by flying around. Use %s and %s to turn, and %s to accelerate. Try flying around the planet.]]
@@ -32,7 +32,7 @@ There is a marker on the map. Order your ship to fly to it. You can close the ov
 Land on Paul 2 now. Remember, you can use the overlay map to get there quicker!]]
     message10 = [[Good job, you have landed on Paul 2. Your game will automatically be saved whenever you land. As a final tip, you can press %s even if you haven't targeted a planet or station - you will automatically target the nearest landable one.
 
-Congratulations! This concludes tutorial: Basic operation.]]
+Congratulations! This concludes the basic operation tutorial.]]
     
     flyomsg = "Fly around (%ds remaining)"
     stopomsg = "Press and hold %s until you stop turning, then thrust until you come to a (near) stop"
