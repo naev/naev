@@ -1495,20 +1495,23 @@ void player_hailStart (void)
 
 /**
  * @brief Actually attempts to jump in hyperspace.
+ *
+ *    @return 1 if actually started a jump, 0 otherwise.
  */
-void player_jump (void)
+int player_jump (void)
 {
    int i, j;
    double dist, mindist;
 
    /* Must have a jump target and not be already jumping. */
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
-      return;
+      return 0;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
+      return 0;
 
+   /* Select nearest jump if not target. */
    if (player.p->nav_hyperspace == -1) {
       j        = -1;
       mindist  = INFINITY;
@@ -1520,7 +1523,7 @@ void player_jump (void)
          }
       }
       if (j  < 0)
-         return;
+         return 0;
 
       player.p->nav_hyperspace = j;
       player_soundPlay(snd_nav,1);
@@ -1529,18 +1532,18 @@ void player_jump (void)
 
       /* Only follow through if within range. */
       if (mindist > pow2( cur_system->jumps[j].radius ))
-         return;
+         return 0;
    }
 
    /* Already jumping, so we break jump. */
    if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       pilot_hyperspaceAbort(player.p);
       player_message("\erAborting hyperspace sequence.");
-      return;
+      return 0;
    }
 
+   /* TRy to hyperspace. */
    i = space_hyperspace(player.p);
-
    if (i == -1)
       player_message("\erYou are too far from a jump point to initiate hyperspace.");
    else if (i == -2)
@@ -1554,7 +1557,9 @@ void player_jump (void)
       /* Stop possible shooting. */
       pilot_shootStop( player.p, 0 );
       pilot_shootStop( player.p, 1 );
+      return 1;
    }
+   return 0;
 }
 
 /**

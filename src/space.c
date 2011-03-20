@@ -269,6 +269,10 @@ int space_canHyperspace( Pilot* p )
    double d, r;
    JumpPoint *jp;
 
+   /* Must not have the nojump flag. */
+   if (pilot_isFlag(p, PILOT_NOJUMP))
+      return 0;
+
    /* Must have fuel. */
    if (p->fuel < HYPERSPACE_FUEL)
       return 0;
@@ -306,7 +310,6 @@ int space_hyperspace( Pilot* p )
 
    /* pilot is now going to get automatically ready for hyperspace */
    pilot_setFlag(p, PILOT_HYP_PREP);
-
    return 0;
 }
 

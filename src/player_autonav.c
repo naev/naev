@@ -200,13 +200,11 @@ static void player_autonav (void)
          jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
          ret   = player_autonavBrake();
          /* Try to jump or see if braked. */
-         if (space_canHyperspace(player.p)) {
+         if (ret) {
+            if (space_canHyperspace(player.p))
+               player_jump();
             player.autonav = AUTONAV_JUMP_APPROACH;
-            player_accelOver();
-            player_jump();
          }
-         else if (ret)
-            player.autonav = AUTONAV_JUMP_APPROACH;
 
          /* See if should ramp down. */
          if (!tc_rampdown && (map_npath<=1)) {
