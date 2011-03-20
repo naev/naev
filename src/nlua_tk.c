@@ -172,6 +172,8 @@ static int tk_choice( lua_State *L )
    for (i=0; i<opts; i++)
       dialogue_addChoice( title, str, luaL_checkstring(L,i+3) );
    result = dialogue_runChoice();
+   if (result == NULL) /* Something went wrong, return nil. */
+      return 0;
 
    /* Handle results. */
    ret = -1;

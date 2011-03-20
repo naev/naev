@@ -54,7 +54,7 @@ function create()
     else
         -- This point should never be reached!
         tk.msg("Error", "You've apparently selected an invalid menu option. This shouldn't happen. Please report.")
-        create()
+        tut.main_menu();
     end
 end
 
