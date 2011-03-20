@@ -6,8 +6,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Basic combat"
-    message1 = [[Welcome to tutorial: Basic combat.
+    title1 = "Tutorial: Basic Combat"
+    message1 = [[Welcome to the basic combat tutorial.
 
 Combat is an important aspect of Naev, and you will have to fight off enemies sooner or later, no matter what career you decide to pursue. In this tutorial, you will learn the basic principles of combat.]]
     message2 = [[For this tutorial, you will be flying a Lancelot fighter. It comes equipped with two advanced laser cannons. You can fire your weapons by pressing %s. Try this now.]]
@@ -35,7 +35,7 @@ Target the drone, then shoot at it until it becomes disabled.]]
     message10 = [[Another thing you might have noticed is that your weapons started lose accuracy during the battle. This is because of heat. Weapons heat up when fired, and when they become too hot they will first lose accuracy, and then firing rate, to the point where they won't fire at all anymore. If you find your weapons are overheating a lot, consider switching them out for a while using weapon groups.]]
     message11 = [[You now know the basic principles of combat. As a final tip, you can target specific enemies at long range by clicking on them on the overlay map.
     
-Congratulations! This concludes tutorial: Basic combat.]]
+Congratulations! This concludes the basic combat tutorial.]]
 
     wepomsg = [[Use %s to test your weapons (%ds remaining)]]
     infoomsg = [[Use %s to to open the info menu]]
@@ -127,11 +127,11 @@ function create()
     pp:addOutfit("Laser Cannon MK2", 2)
     player.msgClear()
 
-    enable = {"left", "right", "primary"}
-    enableKeys(enable)
+    player.pilot():setNoLand()
+    player.pilot():setNoJump()
 
-    tkMsg(title1, message1, enable)
-    tkMsg(title1, message2:format(tutGetKey("primary")), enable)
+    tk.msg(title1, message1)
+    tk.msg(title1, message2:format(tutGetKey("primary")))
 
     waitenergy = true
     flytime = 10 -- seconds of fly time
@@ -150,13 +150,10 @@ function flyUpdate()
             waitammo = true
 
             player.omsgRm(omsg)
-            tkMsg(title1, message3:format(tutGetKey("secondary")), enable)
+            tk.msg(title1, message3:format(tutGetKey("secondary")))
 
             pp:rmOutfit("all")
             pp:addOutfit("Mace Launcher", 1)
-
-            enable = {"left", "right", "primary", "secondary"}
-            enableKeys(enable)
 
             flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("secondary"), flytime), 0)
@@ -171,11 +168,8 @@ function flyUpdate()
             waitammo = false
             waitinfo = true
             
-            tkMsg(title1, message4:format(tutGetKey("info")), enable)
+            tk.msg(title1, message4:format(tutGetKey("info")))
             omsg = player.omsgAdd(infoomsg:format(tutGetKey("info")), 0)
-
-            enable = {"left", "right", "info"}
-            enableKeys(enable)
 
             hook.input("input")
         else
@@ -194,7 +188,7 @@ function input(inputname, inputpress)
         pp:addOutfit("Laser Cannon MK2", 2)
         
         player.omsgRm(omsg)
-        tkMsg(title1, message5:format(tutGetKey("primary"), tutGetKey("secondary"), tutGetKey("weapset1"), tutGetKey("weapset2"), tutGetKey("weapset3"), tutGetKey("weapset4"), tutGetKey("weapset5"), tutGetKey("weapset6"), tutGetKey("weapset7"), tutGetKey("weapset8"), tutGetKey("weapset9"), tutGetKey("weapset0")), enable)
+        tk.msg(title1, message5:format(tutGetKey("primary"), tutGetKey("secondary"), tutGetKey("weapset1"), tutGetKey("weapset2"), tutGetKey("weapset3"), tutGetKey("weapset4"), tutGetKey("weapset5"), tutGetKey("weapset6"), tutGetKey("weapset7"), tutGetKey("weapset8"), tutGetKey("weapset9"), tutGetKey("weapset0")))
         
         hook.timer(1, "dummypractice") -- Ugly way to detect the closure of the info menu.
     end
@@ -207,10 +201,7 @@ function dummypractice()
     drone:setHostile()
     hook.pilot(drone, "disable", "dronedisable")
     hook.pilot(drone, "attacked", "dronedamage")
-    tkMsg(title1, message6:format(tutGetKey("target_hostile"), tutGetKey("face")), enable)
-    
-    enable = {"left", "right", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
-    enableKeys(enable)
+    tk.msg(title1, message6:format(tutGetKey("target_hostile"), tutGetKey("face")))
 end
 
 -- Drone disable hook.
@@ -225,12 +216,9 @@ function dronedamage()
 end
 
 function captainpractice()
-    tkMsg(title1, message7, enable)
-    tkMsg(title1, message8, enable)
+    tk.msg(title1, message7)
+    tk.msg(title1, message8)
 
-    enable = {"left", "right", "accel", "primary", "secondary", "info", "target_hostile", "face", "weapset1", "weapset2", "weapset3", "weapset4", "weapset5", "weapset6", "weapset7", "weapset8", "weapset9", "weapset0", "overlay"}
-    enableKeys(enable)
-    
     pp:rmOutfit("all")
     pp:addOutfit("Mace Launcher", 2)
     pp:addOutfit("Laser Cannon MK2", 2)
@@ -255,9 +243,9 @@ end
 
 -- Captain T. Practice is dead. Long live captain T. Practice.
 function captainTPrip()
-    tkMsg(title1, message9, enable)
-    tkMsg(title1, message10, enable)
-    tkMsg(title1, message11, enable)
+    tk.msg(title1, message9)
+    tk.msg(title1, message10)
+    tk.msg(title1, message11)
     hook.safe( "cleanup" )
 end
 

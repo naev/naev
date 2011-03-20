@@ -6,8 +6,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Missions and events"
-    message1 = [[Welcome to tutorial: Missions and events.
+    title1 = "Tutorial: Missions and Events"
+    message1 = [[Welcome to the missions and events tutorial.
     
 This tutorial explains missions, which are the main driving force behind the game, as well as events, which give flavor to the game.
 
@@ -21,7 +21,7 @@ It's worth noting here that not all NPCs you encounter in the spaceport bars wil
     message5 = [[Now that you know how missions work, it's easy to explain what events are. Events work much the same as missions, but they happen by themselves. You don't get to search them out, you don't get to accept or decline them, nor can you abort them. If an event happens to you, you're just going to have to ride it out, for better or for worse. In fact, one is happening to you right now, since this tutorial itself is an event as well!]]
     message6 = [[You now know how to play missions. Missions are where most of the action in the game happens, and your career will depend greatly on which missions you choose to accept. As a final tip, some missions only appear in certain areas of space, so be sure to travel around a lot and check the spaceport bars wherever you go.
 
-Congratulations! This concludes tutorial: Missions and events.]]
+Congratulations! This concludes the missions and events tutorial.]]
     
     landomsg = "Land on Rin and visit the spaceport bar"
 end
@@ -60,7 +60,7 @@ end
 
 -- Helper land hook.
 function bar()
-    if seen then return
+    if seen or planet.cur() ~= planet.get("Rin") then return
     else
         tk.msg(title1, message4)
         seen = true

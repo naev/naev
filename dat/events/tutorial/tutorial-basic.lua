@@ -7,8 +7,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Basic operation"
-    message1 = [[Welcome to tutorial: Basic operation.
+    title1 = "Tutorial: Basic Operation"
+    message1 = [[Welcome to the basic operation tutorial.
 
 This tutorial will teach you what Naev is about, and show you the elementary controls of your ship.]]
     message2 = [[We will start by flying around. Use %s and %s to turn, and %s to accelerate. Try flying around the planet.]]
@@ -32,7 +32,7 @@ There is a marker on the map. Order your ship to fly to it. You can close the ov
 Land on Paul 2 now. Remember, you can use the overlay map to get there quicker!]]
     message10 = [[Good job, you have landed on Paul 2. Your game will automatically be saved whenever you land. As a final tip, you can press %s even if you haven't targeted a planet or station - you will automatically target the nearest landable one.
 
-Congratulations! This concludes tutorial: Basic operation.]]
+Congratulations! This concludes the basic operation tutorial.]]
     
     flyomsg = "Fly around (%ds remaining)"
     stopomsg = "Press and hold %s until you stop turning, then thrust until you come to a (near) stop"
@@ -50,11 +50,11 @@ function create()
     pilot.toggleSpawn(false) -- To prevent NPCs from getting targeted for now.
     player.pilot():setPos(planet.get("Paul 2"):pos() + vec2.new(0, 250))
     
-    enable = {"accel", "left", "right"}
-    enableKeys(enable)
+    player.pilot():setNoLand()
+    player.pilot():setNoJump()
     
-    tkMsg(title1, message1, enable)
-    tkMsg(title1, message2:format(tutGetKey("left"), tutGetKey("right"), tutGetKey("accel")), enable)
+    tk.msg(title1, message1)
+    tk.msg(title1, message2:format(tutGetKey("left"), tutGetKey("right"), tutGetKey("accel")))
     
     flytime = 10 -- seconds of fly time
     
@@ -68,11 +68,8 @@ function flyUpdate()
     
     if flytime == 0 then
         player.omsgRm(omsg)
-        tkMsg(title1, message3:format(tutGetKey("reverse")), enable)
+        tk.msg(title1, message3:format(tutGetKey("reverse")))
 
-        enable = {"accel", "reverse"}
-        enableKeys(enable)
-    
         omsg = player.omsgAdd(stopomsg:format(tutGetKey("reverse")), 0)
         braketime = 0 -- ticks for brake check.
         hook.timer(500, "checkBrake")
@@ -93,14 +90,11 @@ function checkBrake()
     if braketime > 4 then
         -- Have been stationary (or close enough) for long enough
         player.omsgRm(omsg)
-        tkMsg(title1, message4:format(tutGetKey("overlay")), enable)
+        tk.msg(title1, message4:format(tutGetKey("overlay")))
         omsg = player.omsgAdd(mapomsg:format(tutGetKey("overlay")), 0)
         player.pilot():setVel(vec2.new()) -- Stop the player completely
         waitmap = true
         hook.input("input")
-
-        enable = {"overlay"}
-        enableKeys(enable)
     else
         hook.timer(500, "checkBrake")
     end
@@ -110,7 +104,7 @@ end
 function input(inputname, inputpress)
     if waitmap and inputname == "overlay" then
         player.omsgRm(omsg)
-        tkMsg(title1, message5, enable)
+        tk.msg(title1, message5)
         targetpos = vec2.new(-3500, 3500) -- May need an alternative?
         marker = system.mrkAdd("Fly here", targetpos)
         waitmap = false
@@ -126,29 +120,24 @@ end
 -- Function that runs when the player approaches the indicated coordinates.
 function proxytrigger()
     system.mrkClear()
-    tkMsg(title1, message6, enable)
-    tkMsg(title1, message7:format(tutGetKey("target_next"), tutGetKey("board")), enable)
+    tk.msg(title1, message6)
+    tk.msg(title1, message7:format(tutGetKey("target_next"), tutGetKey("board")))
     omsg = player.omsgAdd(boardomsg:format(tutGetKey("target_next"), tutGetKey("board")), 0)
-
-    enable = {"accel", "left", "right", "reverse", "target_next", "board", "overlay"}
-    enableKeys(enable)
 end
 
 -- Board hook for the board practice ship.
 function board()
     player.unboard()
-    tkMsg(title1, message8, enable)
-    tkMsg(title1, message9:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), enable)
+    tk.msg(title1, message8)
+    tk.msg(title1, message9:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")))
     player.omsgChange(omsg, landomsg:format(tutGetKey("target_planet"), tutGetKey("land"), tutGetKey("land")), 0)
     hook.land("land")
-
-    enable = {"accel", "left", "right", "reverse", "overlay", "target_planet", "land"}
-    enableKeys(enable)
+    player.pilot():setNoLand(false)
 end
 
 -- Land hook.
 function land()
-    tkMsg(title1, message10:format(tutGetKey("land")), enable)
+    tk.msg(title1, message10:format(tutGetKey("land")))
     player.takeoff()
     hook.safe( "cleanup" )
 end

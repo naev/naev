@@ -7,23 +7,23 @@
   <lua>tutorial/tutorial</lua>
   <trigger>none</trigger>
  </event>
- <event name="Tutorial: Basic operation">
+ <event name="Tutorial: Basic Operation">
   <lua>tutorial/tutorial-basic</lua>
   <trigger>none</trigger>
  </event>
- <event name="Tutorial: Interstellar flight">
+ <event name="Tutorial: Interstellar Flight">
   <lua>tutorial/tutorial-interstellar</lua>
   <trigger>none</trigger>
  </event>
- <event name="Tutorial: Basic combat">
+ <event name="Tutorial: Basic Combat">
   <lua>tutorial/tutorial-combat1</lua>
   <trigger>none</trigger>
  </event>
- <event name="Tutorial: The planetary screen">
+ <event name="Tutorial: The Planetary Screen">
   <lua>tutorial/tutorial-planet</lua>
   <trigger>none</trigger>
  </event>
- <event name="Tutorial: Missions and events">
+ <event name="Tutorial: Missions and Events">
   <lua>tutorial/tutorial-missions</lua>
   <trigger>none</trigger>
  </event>

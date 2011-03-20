@@ -6,8 +6,8 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: The planetary screen"
-    message1 = [[Welcome to tutorial: The planetary screen.
+    title1 = "Tutorial: The Planetary Screen"
+    message1 = [[Welcome to the planetary screen tutorial.
 
 In this tutorial you will learn about what you can expect on a planet or station once you land on it. We'll start by landing on Paul 2. Landing is covered in another tutorial, so for now we'll land automatically.]]
     message2 = [[Once landed, you will be presented with the landing screen. This is the default screen for all planets or stations you land on. The landing screen gives you information about the planet or station in general and lets you refuel.
@@ -49,9 +49,7 @@ function create()
     player.pilot():setPos(planet.get("Paul 2"):pos())
     player.msgClear()
     
-    enable = {}
-    
-    tkMsg(title1, message1, enable)
+    tk.msg(title1, message1)
     
     player.pilot():rmOutfit("all")
     player.pay(-player.credits())
@@ -76,37 +74,37 @@ end
 
 -- Land hook.
 function land()
-    tkMsg(title1, message2, enable)
+    tk.msg(title1, message2)
     hook.rm(mainland)
 end
 
 function outfits()
-    tkMsg(title1, message3, enable)
+    tk.msg(title1, message3)
     hook.rm(outfitsland)
 end
 
 function bar()
-    tkMsg(title1, message4, enable)
+    tk.msg(title1, message4)
     hook.rm(barland)
 end
 
 function mission()
-    tkMsg(title1, message5, enable)
+    tk.msg(title1, message5)
     hook.rm(missionland)
 end
 
 function equipment()
-    tkMsg(title1, message6, enable)
+    tk.msg(title1, message6)
     hook.rm(equipmentland)
 end
 
 function shipyard()
-    tkMsg(title1, message7, enable)
+    tk.msg(title1, message7)
     hook.rm(shipyardland)
 end
 
 function commodity()
-    tkMsg(title1, message8, enable)
+    tk.msg(title1, message8)
     hook.rm(commodityland)
 end
 
