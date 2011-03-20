@@ -126,7 +126,7 @@ function jumpin()
         pinnacle:control()
         pinnacle:setHilight(true)
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
-        hook.pilot(pinnacle, "idle", "idle")
+        idlehook = hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
     end
 end
@@ -145,6 +145,7 @@ function hail()
         pinnacle:brake()
         pinnacle:setActiveBoard(true)
         hook.pilot(pinnacle, "board", "board")
+        hook.rm(idlehook)
     end
 end
 

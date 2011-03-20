@@ -176,13 +176,11 @@ function board()
         hook.land("land")
         player.unboard()
         pinnacle:setHealth(100,100)
-        stopping = false
         idle()
     elseif stage == 2 then
         tk.msg(title[6], text[7]:format(flintplanet, flintsys))
         player.unboard()
         pinnacle:setHealth(100,100)
-        stopping = false
         idle()
     elseif stage == 3 then
         tk.msg(title[11], text[16]:format(mangle(player.name()), mangle(player.name()), mangle(player.name())))
@@ -319,7 +317,7 @@ function enter()
         pinnacle:control()
         pinnacle:setHilight(true)
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
-        hook.pilot(pinnacle, "idle", "idle")
+        idlehook = hook.pilot(pinnacle, "idle", "idle")
         hook.pilot(pinnacle, "hail", "hail")
     elseif artefactA ~= nil or artefactB ~= nil or artefactC ~= nil then
         -- Spawn artefact hunters, maybe.
@@ -358,6 +356,7 @@ function hail()
     pinnacle:brake()
     pinnacle:setActiveBoard(true)
     boardhook = hook.pilot(pinnacle, "board")
+    hook.rm(idlehook)
 end
 
 -- Function that tries to misspell whatever string is passed to it.
