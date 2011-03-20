@@ -816,6 +816,8 @@ void hook_rm( unsigned int id )
    Hook *h;
 
    h = hook_get( id );
+   if (h==NULL)
+      return;
    h->delete = 1;
 }
 
