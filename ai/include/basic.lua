@@ -321,6 +321,9 @@ function hyperspace ()
    local target = ai.target()
    if target == nil then
       target = ai.rndhyptarget()
+      if target == nil then
+         return
+      end
    end
    ai.pushsubtask( "__hyp_approach", target )
 end
