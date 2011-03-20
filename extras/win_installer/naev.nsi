@@ -44,7 +44,7 @@ Var StartMenuFolder
 ;Pages
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "legal/gpl-3.0.txt"
+!insertmacro MUI_PAGE_LICENSE "legal\gpl-3.0.txt"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
@@ -106,7 +106,6 @@ Section "Naev Engine" BinarySection
       CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
       CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Naev.lnk" "$INSTDIR\naev.exe"
       CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev.exe"
-      CreateShortCut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
    !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -155,7 +154,6 @@ Section "Uninstall"
    !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
 
    Delete "$SMPROGRAMS\$StartMenuFolder\Naev.lnk"
-   Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
    RMDir "$SMPROGRAMS\$StartMenuFolder"
 
    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev"
