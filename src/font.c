@@ -107,8 +107,6 @@ static int font_limitSize( const glFont *ft_font, int *width,
       /* Ignore escape sequence. */
       if (text[i] == '\e') {
          if (text[i+1] != '\0')
-            i += 2;
-         else
             i += 1;
          continue;
       }
