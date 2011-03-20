@@ -266,7 +266,7 @@ static int player_autonavApproach( Vector2d *pos, double *dist2, int count_targe
       0.5*(player.p->thrust/player.p->solid->mass)*time*time;
 
    /* Output distance^2 */
-   d        = vect_dist( pos, &player.p->solid->pos ) ;
+   d        = vect_dist( pos, &player.p->solid->pos );
    dist     = d - dist;
    if (count_target)
       *dist2   = dist;
