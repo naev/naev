@@ -1142,18 +1142,16 @@
     <missions/>
     <commodity/>
     <outfits/>
-    <shipyard/>
    </services>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
    </commodities>
-   <description>While Bon Sebb was once a popular tourist destination, the stop in neighbouring Apez, with its well-known Dowue Syndrome, has resulted in the tourism industry waning. It is now primarily known for its all-natural crops and herbal remedies.</description>
-   <bar>Someone appears to have carved "ZEED WAS HERE" into the door. The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past.</bar>
+   <description>Bon Sebb is a mysterious place. Objects from all over the galaxy have a habit of turning up here. In fact, a large area of the planet's surface is a gigantic junk yard, known as the "Junkle", where the locals "hunt" for useful equipment they can sell to each other, or to passing travelers.</description>
+   <bar>The bar on Bon Sebb is built out of things scavenged from the Junkle. The walls and furniture are all patchworks of various designs and materials. The only somewhat symmetrical feature of the bar is a holoportrait of the Creator of the Universe, hanging over the lopsided bar.</bar>
   </general>
   <tech>
    <item>All Outfits</item>
-   <item>All Ships</item>
   </tech>
  </asset>
  <asset name="Brandt Station">
@@ -9853,28 +9851,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
- <asset name="Saturn VI">
-  <pos>
-   <x>-1312.431500</x>
-   <y>447.514367</y>
-  </pos>
-  <GFX>
-   <space>J00.png</space>
-   <exterior>traderoom.png</exterior>
-  </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>J</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
  <asset name="Scipio">
   <pos>
    <x>31800.000000</x>
@@ -10521,6 +10497,42 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </general>
   <tech>
    <item>Sirius Military Ships</item>
+  </tech>
+ </asset>
+ <asset name="Sixbat Station">
+  <pos>
+   <x>717.568500</x>
+   <y>1277.514367</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Independent</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>40000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+<description>Sixbat Station is a marvel of technology. It's not so much a station as it is a gigantic mass replicator, capable of replicating entire spaceships given design blueprints and enough raw materials. The facility is of unknown origin. Some believe it to be alien, but there is no proof of this. So far, mankind has yet to design a ship too big for Sixbat to handle.</description>
+   <bar>The bar is where customers come to enjoy a few drinks and pleasant conversation while they select which ship they want and in what color, and then wait for it to finish replicating.</bar>
+  </general>
+  <tech>
+   <item>All Ships</item>
   </tech>
  </asset>
  <asset name="Sroolu">
