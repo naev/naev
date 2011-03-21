@@ -208,8 +208,8 @@ const char *pilot_weapSetName( Pilot* p, int id )
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
- *    @param level Level of the trigger.
  *    @param o Outfit to add.
+ *    @param level Level of the trigger.
  */
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 {
@@ -824,7 +824,7 @@ void pilot_weaponAuto( Pilot *p )
 
       /* Must have outfit. */
       if (o == NULL) {
-         slot->level = -1;
+         slot->level = -1; /* Clear level. */
          continue;
       }
 
@@ -847,21 +847,21 @@ void pilot_weaponAuto( Pilot *p )
       /* Ignore rest. */
       else
          continue;
-
-      /* Add the slot. */
+   
+      /* Add to it's base group. */
       pilot_weapSetAdd( p, id, slot, level );
-
-      /* Add to group 0 also. */
+   
+      /* Also add another copy to another group. */
       if (id == 1) { /* Forward. */
-         pilot_weapSetAdd( p, 0, slot, level );
-         pilot_weapSetAdd( p, 3, slot, 0 );
+         pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
+         pilot_weapSetAdd( p, 3, slot, 0 );     /* Also get added to 'Fwd/Tur'. */
       }
       else if (id == 2) { /* Turrets. */
-         pilot_weapSetAdd( p, 0, slot, level );
-         pilot_weapSetAdd( p, 3, slot, 1 );
+         pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
+         pilot_weapSetAdd( p, 3, slot, 1 );     /* Also get added to 'Fwd/Tur'. */
       }
       else if (id == 4) { /* Seekers */
-         pilot_weapSetAdd( p, 0, slot, level );
+         pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
       }
    }
 }
