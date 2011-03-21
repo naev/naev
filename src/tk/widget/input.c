@@ -242,7 +242,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          inp->dat.inp.pos--;
          memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
                &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-               sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 2) );
+               sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
          inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
          if (inp->dat.inp.view > 0) {
