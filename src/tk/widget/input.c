@@ -110,7 +110,7 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
-      m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX );
+      m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX-1 );
       strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
       buf[ m ] = '\0';
       w = gl_printWidthRaw( inp->dat.inp.font, buf );
