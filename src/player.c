@@ -3449,6 +3449,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
             continue;
          }
 
+         /* Get id. */
          xmlr_attr(cur,"id",id);
          if (id == NULL) {
             WARN("Player ship '%s' missing 'id' tag for weapon set.",ship->name);
