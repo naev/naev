@@ -3442,9 +3442,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       /* Parse weapon sets. */
       cur = node->xmlChildrenNode;
       do { /* Load each weapon set. */
-         if (!xml_isNode(cur,"weaponset"))
+         xml_onlyNodes(cur);
+         if (!xml_isNode(cur,"weaponset")) {
+            WARN("Player ship '%s' has unknown node '%s' in 'weaponsets' (expected 'weaponset').",
+                  ship->name, cur->name);
             continue;
+         }
 
+         /* Get id. */
          xmlr_attr(cur,"id",id);
          if (id == NULL) {
             WARN("Player ship '%s' missing 'id' tag for weapon set.",ship->name);
@@ -3483,12 +3488,20 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
          do {
-            if (!xml_isNode(ccur,"weapon"))
-               continue;
+            /* Only nodes. */
+            xml_onlyNodes(ccur);
 
+            /* Only weapon nodes. */
+            if (!xml_isNode(ccur,"weapon")) {
+               WARN("Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon').", 
+                     ship->name, ccur->name );
+               continue;
+            }
+
+            /* Get level. */
             xmlr_attr(ccur,"level",id);
             if (id == NULL) {
-               WARN("Player ship '%s' missing 'level' tag for weapon set weapon.",ship->name);
+               WARN("Player ship '%s' missing 'level' tag for weapon set weapon.", ship->name);
                continue;
             }
             level = atoi(id);
@@ -3500,7 +3513,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
                continue;
             }
 
+            /* Add the weapon set. */
             pilot_weapSetAdd( ship, i, ship->outfits[weapid], level );
+
          } while (xml_nextNode(ccur));
       } while (xml_nextNode(cur));
    } while (xml_nextNode(node));
